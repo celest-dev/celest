@@ -1,0 +1,6 @@
+openapi: 3.0.3
+info:
+  title: simple
+  version: 'v1'
+components:
+  {}

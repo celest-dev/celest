@@ -57,6 +57,49 @@
               }
             }
           ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {
+                "method": {
+                  "$": "DartString",
+                  "value": "GET",
+                  "staticType": {
+                    "symbol": "String",
+                    "url": "dart:core"
+                  }
+                }
+              },
+              "staticType": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              }
+            }
+          ],
           "docs": [],
           "location": {
             "start": {

@@ -211,7 +211,8 @@ if ($event.containsKey('error')) {
           }
           ..docs.addAll(function.docs)
           ..annotations.addAll(
-            function.annotations.map((annotation) => annotation.stripConst),
+            function.annotationExpressions
+                .map((annotation) => annotation.stripConst),
           )
           ..annotations.add(
             DartTypes.celest.cloudFunction.newInstance([], {
@@ -225,9 +226,9 @@ if ($event.containsKey('error')) {
                     (p) => p
                       ..name = param.name
                       ..type = param.type.noBound
-                      ..defaultTo = param.defaultTo?.code
+                      ..defaultTo = param.defaultToExpression?.code
                       ..annotations.addAll(
-                        param.annotations
+                        param.annotationExpressions
                             .map((annotation) => annotation.stripConst),
                       ),
                   ),
@@ -241,9 +242,9 @@ if ($event.containsKey('error')) {
                       ..type = param.type.noBound
                       ..named = param.named
                       ..required = param.required
-                      ..defaultTo = param.defaultTo?.code
+                      ..defaultTo = param.defaultToExpression?.code
                       ..annotations.addAll(
-                        param.annotations
+                        param.annotationExpressions
                             .map((annotation) => annotation.stripConst),
                       ),
                   ),

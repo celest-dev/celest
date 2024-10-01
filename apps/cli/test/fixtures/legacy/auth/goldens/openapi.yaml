@@ -1,0 +1,207 @@
+openapi: 3.0.3
+info:
+  title: auth
+  version: 'v1'
+paths:
+  '/lib/say-hello-authenticated':
+    post:
+      operationId: lib.sayHelloAuthenticated
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+                nullable: false
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/lib/stream-hello-authenticated':
+    post:
+      operationId: lib.streamHelloAuthenticated
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+                nullable: false
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/lib/say-hello-public':
+    post:
+      operationId: lib.sayHelloPublic
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+                nullable: false
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/lib/stream-hello-public':
+    post:
+      operationId: lib.streamHelloPublic
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+                nullable: false
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/lib/say-hello':
+    post:
+      operationId: lib.sayHello
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+                nullable: false
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/lib/stream-hello':
+    post:
+      operationId: lib.streamHello
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+                nullable: false
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/authenticated-lib/say-hello':
+    post:
+      operationId: authenticated_lib.sayHello
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+                nullable: false
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/authenticated-lib/stream-hello':
+    post:
+      operationId: authenticated_lib.streamHello
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+                nullable: false
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/public-lib/say-hello':
+    post:
+      operationId: public_lib.sayHello
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+                nullable: false
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/public-lib/stream-hello':
+    post:
+      operationId: public_lib.streamHello
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+                nullable: false
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+components:
+  {}

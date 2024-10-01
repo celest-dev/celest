@@ -1,0 +1,884 @@
+openapi: 3.0.3
+info:
+  title: api
+  version: 'v1'
+paths:
+  '/http-status/ok':
+    post:
+      operationId: http_status.ok
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/http-status/created':
+    post:
+      operationId: http_status.created
+      responses:
+        '201':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/http-status/accepted':
+    post:
+      operationId: http_status.accepted
+      responses:
+        '202':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/http-status/bad-request':
+    post:
+      operationId: http_status.badRequest
+      responses:
+        '400':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/http-status/internal-server-error':
+    post:
+      operationId: http_status.internalServerError
+      responses:
+        '500':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/http-method/get':
+    get:
+      operationId: http_method.get
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/http-method/post':
+    post:
+      operationId: http_method.post
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/http-method/put':
+    put:
+      operationId: http_method.put
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/http-method/delete':
+    delete:
+      operationId: http_method.delete
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/http-method/patch':
+    patch:
+      operationId: http_method.patch
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/http-query/query':
+    post:
+      operationId: http_query.query
+      parameters:
+        - name: aString
+          in: query
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - name: anInt
+          in: query
+          required: true
+          schema:
+            type: integer
+            nullable: false
+            format: int64
+        - name: aDouble
+          in: query
+          required: true
+          schema:
+            type: number
+            nullable: false
+            format: double
+        - name: aNum
+          in: query
+          required: true
+          schema:
+            type: number
+            nullable: false
+        - name: aBool
+          in: query
+          required: true
+          schema:
+            type: boolean
+            nullable: false
+        - name: aDateTime
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/DateTime'
+        - name: aNullableString
+          in: query
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: aNullableInt
+          in: query
+          required: true
+          schema:
+            type: integer
+            nullable: true
+            format: int64
+        - name: aNullableDouble
+          in: query
+          required: true
+          schema:
+            type: number
+            nullable: true
+            format: double
+        - name: aNullableNum
+          in: query
+          required: true
+          schema:
+            type: number
+            nullable: true
+        - name: aNullableBool
+          in: query
+          required: true
+          schema:
+            type: boolean
+            nullable: true
+        - name: aNullableDateTime
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/DateTime'
+        - name: aListOfString
+          in: query
+          required: true
+          schema:
+            type: array
+            nullable: false
+            items:
+              type: string
+              nullable: false
+            uniqueItems: false
+        - name: aListOfInt
+          in: query
+          required: true
+          schema:
+            type: array
+            nullable: false
+            items:
+              type: integer
+              nullable: false
+              format: int64
+            uniqueItems: false
+        - name: aListOfDouble
+          in: query
+          required: true
+          schema:
+            type: array
+            nullable: false
+            items:
+              type: number
+              nullable: false
+              format: double
+            uniqueItems: false
+        - name: aListOfNum
+          in: query
+          required: true
+          schema:
+            type: array
+            nullable: false
+            items:
+              type: number
+              nullable: false
+            uniqueItems: false
+        - name: aListOfBool
+          in: query
+          required: true
+          schema:
+            type: array
+            nullable: false
+            items:
+              type: boolean
+              nullable: false
+            uniqueItems: false
+        - name: aListOfDateTime
+          in: query
+          required: true
+          schema:
+            type: array
+            nullable: false
+            items:
+              $ref: '#/components/schemas/DateTime'
+            uniqueItems: false
+        - name: aNullableListOfString
+          in: query
+          required: true
+          schema:
+            type: array
+            nullable: true
+            items:
+              type: string
+              nullable: false
+            uniqueItems: false
+        - name: aNullableListOfInt
+          in: query
+          required: true
+          schema:
+            type: array
+            nullable: true
+            items:
+              type: integer
+              nullable: false
+              format: int64
+            uniqueItems: false
+        - name: aNullableListOfDouble
+          in: query
+          required: true
+          schema:
+            type: array
+            nullable: true
+            items:
+              type: number
+              nullable: false
+              format: double
+            uniqueItems: false
+        - name: aNullableListOfNum
+          in: query
+          required: true
+          schema:
+            type: array
+            nullable: true
+            items:
+              type: number
+              nullable: false
+            uniqueItems: false
+        - name: aNullableListOfBool
+          in: query
+          required: true
+          schema:
+            type: array
+            nullable: true
+            items:
+              type: boolean
+              nullable: false
+            uniqueItems: false
+        - name: aNullableListOfDateTime
+          in: query
+          required: true
+          schema:
+            type: array
+            nullable: true
+            items:
+              $ref: '#/components/schemas/DateTime'
+            uniqueItems: false
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.v1.HttpQueryParams'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/http-errors/http-errors':
+    post:
+      operationId: http_errors.httpErrors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api.v1.HttpErrorsHttpErrorsRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        '403':
+          description: |-
+              Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths//http-errors/http-errors/post/responses/403'
+        '412':
+          description: |-
+              Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths//http-errors/http-errors/post/responses/412'
+        '401':
+          description: |-
+              Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths//http-errors/http-errors/post/responses/401'
+        '404':
+          description: |-
+              Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths//http-errors/http-errors/post/responses/404'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/http-header/headers':
+    post:
+      operationId: http_header.headers
+      parameters:
+        - name: aString
+          in: header
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - name: anInt
+          in: header
+          required: true
+          schema:
+            type: integer
+            nullable: false
+            format: int64
+        - name: aDouble
+          in: header
+          required: true
+          schema:
+            type: number
+            nullable: false
+            format: double
+        - name: aNum
+          in: header
+          required: true
+          schema:
+            type: number
+            nullable: false
+        - name: aBool
+          in: header
+          required: true
+          schema:
+            type: boolean
+            nullable: false
+        - name: aDateTime
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/DateTime'
+        - name: aNullableString
+          in: header
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: aNullableInt
+          in: header
+          required: true
+          schema:
+            type: integer
+            nullable: true
+            format: int64
+        - name: aNullableDouble
+          in: header
+          required: true
+          schema:
+            type: number
+            nullable: true
+            format: double
+        - name: aNullableNum
+          in: header
+          required: true
+          schema:
+            type: number
+            nullable: true
+        - name: aNullableBool
+          in: header
+          required: true
+          schema:
+            type: boolean
+            nullable: true
+        - name: aNullableDateTime
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/DateTime'
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api.v1.HttpHeaderParams'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+components:
+  schemas:
+    api.v1.HttpQueryParams:
+      type: object
+      properties:
+        aString:
+          type: string
+          nullable: false
+        anInt:
+          type: integer
+          nullable: false
+          format: int64
+        aDouble:
+          type: number
+          nullable: false
+          format: double
+        aNum:
+          type: number
+          nullable: false
+        aBool:
+          type: boolean
+          nullable: false
+        aDateTime:
+          $ref: '#/components/schemas/DateTime'
+        aNullableString:
+          type: string
+          nullable: true
+        aNullableInt:
+          type: integer
+          nullable: true
+          format: int64
+        aNullableDouble:
+          type: number
+          nullable: true
+          format: double
+        aNullableNum:
+          type: number
+          nullable: true
+        aNullableBool:
+          type: boolean
+          nullable: true
+        aNullableDateTime:
+          $ref: '#/components/schemas/DateTime'
+        aListOfString:
+          type: array
+          nullable: false
+          items:
+            type: string
+            nullable: false
+          uniqueItems: false
+        aListOfInt:
+          type: array
+          nullable: false
+          items:
+            type: integer
+            nullable: false
+            format: int64
+          uniqueItems: false
+        aListOfDouble:
+          type: array
+          nullable: false
+          items:
+            type: number
+            nullable: false
+            format: double
+          uniqueItems: false
+        aListOfNum:
+          type: array
+          nullable: false
+          items:
+            type: number
+            nullable: false
+          uniqueItems: false
+        aListOfBool:
+          type: array
+          nullable: false
+          items:
+            type: boolean
+            nullable: false
+          uniqueItems: false
+        aListOfDateTime:
+          type: array
+          nullable: false
+          items:
+            $ref: '#/components/schemas/DateTime'
+          uniqueItems: false
+        aNullableListOfString:
+          type: array
+          nullable: true
+          items:
+            type: string
+            nullable: false
+          uniqueItems: false
+        aNullableListOfInt:
+          type: array
+          nullable: true
+          items:
+            type: integer
+            nullable: false
+            format: int64
+          uniqueItems: false
+        aNullableListOfDouble:
+          type: array
+          nullable: true
+          items:
+            type: number
+            nullable: false
+            format: double
+          uniqueItems: false
+        aNullableListOfNum:
+          type: array
+          nullable: true
+          items:
+            type: number
+            nullable: false
+          uniqueItems: false
+        aNullableListOfBool:
+          type: array
+          nullable: true
+          items:
+            type: boolean
+            nullable: false
+          uniqueItems: false
+        aNullableListOfDateTime:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/DateTime'
+          uniqueItems: false
+      additionalProperties: false
+      required:
+        - aString
+        - anInt
+        - aDouble
+        - aNum
+        - aBool
+        - aDateTime
+        - aListOfString
+        - aListOfInt
+        - aListOfDouble
+        - aListOfNum
+        - aListOfBool
+        - aListOfDateTime
+    api.v1.ExceptionType:
+      type: object
+      additionalProperties: false
+    api.v1.HttpErrorsHttpErrorsRequest:
+      type: object
+      nullable: false
+      properties:
+        type:
+          $ref: '#/components/schemas/api.v1.ExceptionType'
+      additionalProperties: false
+    api.v1.ForbiddenException:
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/celest.core.v1.JsonValue'
+        message:
+          type: string
+          nullable: false
+      additionalProperties: false
+      required:
+        - message
+    api.v1.HttpErrorsHttpErrorsError_403:
+      type: object
+      nullable: false
+      properties:
+        code:
+          type: string
+          nullable: false
+          enum:
+            - api.v1.ForbiddenException
+        message:
+          type: string
+          nullable: true
+        details:
+          $ref: '#/components/schemas/api.v1.ForbiddenException'
+    api.v1.CustomBadRequestException:
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/celest.core.v1.JsonValue'
+        message:
+          type: string
+          nullable: false
+      additionalProperties: false
+      required:
+        - message
+    api.v1.HttpErrorsHttpErrorsError_412:
+      type: object
+      nullable: false
+      properties:
+        code:
+          type: string
+          nullable: false
+          enum:
+            - api.v1.CustomBadRequestException
+        message:
+          type: string
+          nullable: true
+        details:
+          $ref: '#/components/schemas/api.v1.CustomBadRequestException'
+    celest.core.v1.UnauthorizedException:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: false
+        details:
+          $ref: '#/components/schemas/celest.core.v1.JsonValue'
+      additionalProperties: false
+      required:
+        - message
+    api.v1.HttpErrorsHttpErrorsError_401:
+      type: object
+      nullable: false
+      properties:
+        code:
+          type: string
+          nullable: false
+          enum:
+            - celest.core.v1.UnauthorizedException
+        message:
+          type: string
+          nullable: true
+        details:
+          $ref: '#/components/schemas/celest.core.v1.UnauthorizedException'
+    api.v1.NotFoundException:
+      type: object
+      additionalProperties: false
+    celest.core.v1.InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: false
+        details:
+          $ref: '#/components/schemas/celest.core.v1.JsonValue'
+      additionalProperties: false
+      required:
+        - message
+    api.v1.HttpErrorsHttpErrorsError_404:
+      type: object
+      nullable: false
+      oneOf:
+        - type: object
+          nullable: false
+          properties:
+            code:
+              type: string
+              nullable: false
+              enum:
+                - api.v1.NotFoundException
+            message:
+              type: string
+              nullable: true
+            details:
+              $ref: '#/components/schemas/api.v1.NotFoundException'
+        - type: object
+          nullable: false
+          properties:
+            code:
+              type: string
+              nullable: false
+              enum:
+                - celest.core.v1.InternalServerError
+            message:
+              type: string
+              nullable: true
+            details:
+              $ref: '#/components/schemas/celest.core.v1.InternalServerError'
+      discriminator:
+        propertyName: code
+        mapping:
+          api.v1.NotFoundException: '#/components/schemas/api.v1.NotFoundException'
+          celest.core.v1.InternalServerError: '#/components/schemas/celest.core.v1.InternalServerError'
+    api.v1.HttpHeaderParams:
+      type: object
+      properties:
+        aString:
+          type: string
+          nullable: false
+        anInt:
+          type: integer
+          nullable: false
+          format: int64
+        aDouble:
+          type: number
+          nullable: false
+          format: double
+        aNum:
+          type: number
+          nullable: false
+        aBool:
+          type: boolean
+          nullable: false
+        aDateTime:
+          $ref: '#/components/schemas/DateTime'
+        aNullableString:
+          type: string
+          nullable: true
+        aNullableInt:
+          type: integer
+          nullable: true
+          format: int64
+        aNullableDouble:
+          type: number
+          nullable: true
+          format: double
+        aNullableNum:
+          type: number
+          nullable: true
+        aNullableBool:
+          type: boolean
+          nullable: true
+        aNullableDateTime:
+          $ref: '#/components/schemas/DateTime'
+      additionalProperties: false
+      required:
+        - aString
+        - anInt
+        - aDouble
+        - aNum
+        - aBool
+        - aDateTime

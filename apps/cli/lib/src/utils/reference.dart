@@ -2,9 +2,15 @@ import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:code_builder/code_builder.dart';
 
 extension ReferenceHelper on Reference {
+  bool get isPackageCelest => switch (url) {
+        final url? => url.startsWith('package:celest') &&
+            !url.startsWith('package:celest_backend'),
+        _ => false,
+      };
   bool get isFunctionContext =>
       symbol == 'FunctionContext' &&
       (url?.startsWith('package:celest') ?? false);
@@ -95,6 +101,36 @@ extension ReferenceHelper on Reference {
             typeRef.types.map((t) => t.fullType()),
       ),
     ]);
+  }
+
+  /// A unique, readable name for this type which can be used in generated code
+  /// and over the wire.
+  ///
+  /// We try to follow protobuf versioning guidelines and use the package name,
+  /// organization name, and the version to give types unique names which are
+  /// easy to interpret and do not expose implementation details.
+  String? externalUri(String projectName) {
+    assert(symbol != null, 'Symbol is null for $this');
+    if (url == null) {
+      // Would only be an anonymous record type.
+      return null;
+    }
+    final sourceUri = Uri.parse(url!);
+    final externalPackageId = switch (sourceUri) {
+      Uri(scheme: 'dart') => 'dart.${sourceUri.pathSegments.single}',
+      // TODO(dnys1): Include organization name
+      // TODO(dnys1): Include version tag
+      Uri(scheme: 'package', pathSegments: ['celest_backend', ...]) ||
+      Uri(pathSegments: []) =>
+        '$projectName.v1',
+      Uri(scheme: 'package', pathSegments: [final package, ...])
+          when isPackageCelest =>
+        '${package.split('_').join('.')}.v1',
+      // TODO(dnys1): Should this include the package's major version?
+      Uri(scheme: 'package', :final pathSegments) => pathSegments.first,
+      _ => unreachable('Unexpected source URI: $sourceUri'),
+    };
+    return '$externalPackageId.$symbol';
   }
 }
 

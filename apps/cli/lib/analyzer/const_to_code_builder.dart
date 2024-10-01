@@ -2,10 +2,13 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/src/dart/constant/value.dart';
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:collection/collection.dart';
 
 extension ConstToCodeBuilder on DartObject {
   R accept<R>(DartObjectVisitor<R> visitor) {
@@ -13,23 +16,14 @@ extension ConstToCodeBuilder on DartObject {
   }
 
   Expression? get toCodeBuilder => accept(const _ConstToCodeBuilder());
+  ast.DartValue get toDartValue => accept(const _ConstToDartValue());
 }
 
 abstract base class DartObjectVisitor<R> {
   const DartObjectVisitor();
 
   R visit(DartObjectImpl node) {
-    if (node.variable
-        case VariableElement(:final library?, isPrivate: false) &&
-            final variable?
-        // Private variable references cannot be copied to the generated code, so
-        // we use the raw value instead.
-        //
-        // Variables defined outside `lib/` cannot be copied to the generated
-        // code, so we use the raw value instead.
-        when !library.isWithinProject || library.isWithinProjectLib) {
-      return visitVariableReference(variable);
-    } else if (node.toBoolValue() case final boolValue?) {
+    if (node.toBoolValue() case final boolValue?) {
       return visitBoolValue(boolValue);
     } else if (node.toDoubleValue() case final doubleValue?) {
       return visitDoubleValue(doubleValue);
@@ -44,15 +38,16 @@ abstract base class DartObjectVisitor<R> {
     } else if (node.toIntValue() case final intValue?) {
       return visitIntValue(intValue);
     } else if (node.toListValue() case final listValue?) {
-      return visitListValue(listValue);
+      return visitListValue(listValue, node.type);
     } else if (node.toMapValue() case final mapValue?) {
-      return visitMapValue(mapValue);
+      return visitMapValue(mapValue, node.type);
     } else if (node.isNull) {
       return visitNullValue();
     } else if (node.state case final RecordState record) {
       return visitRecordValue(
         record.positionalFields,
         record.namedFields,
+        node.type,
       );
     } else if (node.toStringValue() case final stringValue?) {
       return visitStringValue(stringValue);
@@ -75,15 +70,19 @@ abstract base class DartObjectVisitor<R> {
 
   R visitIntValue(int value);
 
-  R visitListValue(List<DartObjectImpl> value);
+  R visitListValue(List<DartObjectImpl> value, DartType staticType);
 
-  R visitMapValue(Map<DartObjectImpl, DartObjectImpl> value);
+  R visitMapValue(
+    Map<DartObjectImpl, DartObjectImpl> value,
+    DartType staticType,
+  );
 
   R visitNullValue();
 
   R visitRecordValue(
     List<DartObjectImpl> positionalFields,
     Map<String, DartObjectImpl> namedFields,
+    DartType staticType,
   );
 
   R visitStringValue(String value);
@@ -97,6 +96,22 @@ abstract base class DartObjectVisitor<R> {
 
 final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
   const _ConstToCodeBuilder();
+
+  @override
+  Expression? visit(DartObjectImpl node) {
+    if (node.variable
+        case VariableElement(:final library?, isPrivate: false) &&
+            final variable?
+        // Private variable references cannot be copied to the generated code, so
+        // we use the raw value instead.
+        //
+        // Variables defined outside `lib/` cannot be copied to the generated
+        // code, so we use the raw value instead.
+        when !library.isWithinProject || library.isWithinProjectLib) {
+      return visitVariableReference(variable);
+    }
+    return super.visit(node);
+  }
 
   @override
   Expression visitBoolValue(bool value) => literalBool(value);
@@ -135,12 +150,19 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
   Expression visitIntValue(int value) => literalNum(value);
 
   @override
-  Expression visitListValue(List<DartObjectImpl> value) => literalConstList(
+  Expression visitListValue(
+    List<DartObjectImpl> value,
+    DartType staticType,
+  ) =>
+      literalConstList(
         value.map((el) => el.toCodeBuilder ?? literalNull).toList(),
       );
 
   @override
-  Expression visitMapValue(Map<DartObjectImpl, DartObjectImpl> mapValue) =>
+  Expression visitMapValue(
+    Map<DartObjectImpl, DartObjectImpl> mapValue,
+    DartType staticType,
+  ) =>
       literalConstMap({
         for (final MapEntry(:key, :value) in mapValue.entries)
           key.toCodeBuilder: value.toCodeBuilder ?? literalNull,
@@ -153,6 +175,7 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
   Expression visitRecordValue(
     List<DartObjectImpl> positionalFields,
     Map<String, DartObjectImpl> namedFields,
+    DartType staticType,
   ) {
     return literalConstRecord(
       positionalFields.map((el) => el.toCodeBuilder ?? literalNull).toList(),
@@ -184,5 +207,140 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
         ).property(variable.name),
       _ => unreachable('Invalid variable element: $variable'),
     };
+  }
+}
+
+final class _ConstToDartValue extends DartObjectVisitor<ast.DartValue> {
+  const _ConstToDartValue();
+
+  @override
+  ast.DartValue visitBoolValue(bool value) {
+    return ast.DartBool(value);
+  }
+
+  @override
+  ast.DartValue visitDoubleValue(double value) {
+    return ast.DartDouble(value);
+  }
+
+  @override
+  ast.DartValue visitEnumValue(DartType type, String name) {
+    return ast.DartEnum(typeHelper.toReference(type).toTypeReference, name);
+  }
+
+  @override
+  ast.DartValue visitInstanceCreation(ConstructorInvocation invocation) {
+    final constructorEl = invocation.constructor;
+    final namedParameters = invocation.namedArguments.map((name, value) {
+      return MapEntry(name, value.accept(this));
+    });
+    final positionalParameterNames = constructorEl.parameters
+        .where((it) => it.isPositional)
+        .map((it) => it.name)
+        .toList();
+    final positionalParameterValues =
+        invocation.positionalArguments.map((el) => el.accept(this)).toList();
+    final className = constructorEl.enclosingElement.displayName;
+    final classRef = typeHelper
+        .toReference(constructorEl.enclosingElement.thisType)
+        .toTypeReference;
+    assert(() {
+      if (positionalParameterNames.length < positionalParameterValues.length) {
+        final constructorName = switch (constructorEl.name) {
+          final name when name.isEmpty => 'new',
+          final name => name,
+        };
+        throw StateError(
+          'Mismatched positional parameters for type $classRef '
+          '("$className.$constructorName"): '
+          'names $positionalParameterNames, '
+          'values $positionalParameterValues.',
+        );
+      }
+      return true;
+    }());
+    return ast.DartInstance(
+      classRef: classRef,
+      constructor: constructorEl.name,
+      positionalArguments: Map.fromEntries(
+        positionalParameterValues.mapIndexed((index, value) {
+          return MapEntry(positionalParameterNames[index], value);
+        }),
+      ),
+      namedArguments: namedParameters,
+      staticType:
+          typeHelper.toReference(constructorEl.returnType).toTypeReference,
+    );
+  }
+
+  @override
+  ast.DartValue visitIntValue(int value) {
+    return ast.DartInt(value);
+  }
+
+  @override
+  ast.DartValue visitListValue(
+    List<DartObjectImpl> value,
+    DartType staticType,
+  ) {
+    return ast.DartList(
+      value.map((el) => el.accept(this)).toList(),
+      staticType: typeHelper.toReference(staticType).toTypeReference,
+    );
+  }
+
+  @override
+  ast.DartValue visitMapValue(
+    Map<DartObjectImpl, DartObjectImpl> value,
+    DartType staticType,
+  ) {
+    return ast.DartMap(
+      value.map(
+        (key, value) => MapEntry(key.accept(this), value.accept(this)),
+      ),
+      staticType: typeHelper.toReference(staticType).toTypeReference,
+    );
+  }
+
+  @override
+  ast.DartValue visitNullValue() {
+    return ast.DartNull();
+  }
+
+  @override
+  ast.DartValue visitRecordValue(
+    List<DartObjectImpl> positionalFields,
+    Map<String, DartObjectImpl> namedFields,
+    DartType staticType,
+  ) {
+    return ast.DartRecord(
+      positionalFields: positionalFields.map((el) => el.accept(this)).toList(),
+      namedFields: namedFields.map(
+        (name, value) => MapEntry(name, value.accept(this)),
+      ),
+      staticType: typeHelper.toReference(staticType).toTypeReference,
+    );
+  }
+
+  @override
+  ast.DartValue visitStringValue(String value) {
+    return ast.DartString(value);
+  }
+
+  @override
+  ast.DartValue visitSymbolValue(String value) {
+    return ast.DartSymbolLiteral(value);
+  }
+
+  @override
+  ast.DartValue visitTypeValue(DartType value) {
+    return ast.DartTypeLiteral(
+      typeHelper.toReference(value).toTypeReference,
+    );
+  }
+
+  @override
+  ast.DartValue visitVariableReference(VariableElement variable) {
+    unreachable('Should use the raw value instead.');
   }
 }

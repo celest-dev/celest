@@ -11,8 +11,8 @@ import 'package:analyzer/src/dart/analysis/search.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:analyzer/src/dart/element/type.dart';
 import 'package:analyzer/src/generated/source.dart';
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/analyzer/const_to_code_builder.dart';
-import 'package:celest_cli/ast/ast.dart' as ast;
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
@@ -380,7 +380,7 @@ extension DartTypeHelper on DartType {
   /// We try to follow protobuf versioning guidelines and use the package name,
   /// organization name, and the version to give types unique names which are
   /// easy to interpret and do not expose implementation details.
-  String externalUri(String projectName) {
+  String? externalUri(String projectName) {
     final symbol = switch (this) {
       final RecordType type => type.symbol,
       _ => element?.name,
@@ -388,11 +388,16 @@ extension DartTypeHelper on DartType {
     assert(symbol != null, 'Symbol is null for $this');
     final sourceUri = switch (this) {
       // Don't consider aliases for non-record types.
-      RecordType(:final alias?) => alias.element.sourceLocation?.sourceUrl,
+      RecordType(:final alias) => alias?.element.sourceLocation?.sourceUrl,
       _ => element?.sourceLocation?.sourceUrl,
     };
-    final externalPackageId = switch (sourceUri!) {
-      Uri(scheme: 'dart') => 'dart.${sourceUri.pathSegments.single}',
+    if (sourceUri == null) {
+      // Anonymous record type.
+      return null;
+    }
+    final externalPackageId = switch (sourceUri) {
+      Uri(scheme: 'dart', pathSegments: [final library, ...]) =>
+        'dart.$library',
       // TODO(dnys1): Include organization name
       // TODO(dnys1): Include version tag
       Uri(scheme: 'package', pathSegments: ['celest_backend', ...]) ||
@@ -670,17 +675,39 @@ extension AnnotationIsPrivate on ElementAnnotation {
     }
     return constant.toCodeBuilder;
   }
+
+  ast.DartValue? get toDartValue {
+    if (isPrivate) {
+      return null;
+    }
+    final constant = computeConstantValue();
+    if (constant == null) {
+      return null;
+    }
+    return constant.toDartValue;
+  }
 }
 
 extension ParameterDefaultTo on ParameterElement {
   /// The parameter's default value as a [codegen.Expression].
-  codegen.Expression? get defaultTo => switch (this) {
+  codegen.Expression? get defaultToExpression => switch (this) {
         // TODO(dnys1): File ticket with Dart team
         // Required, named, non-nullable parameters have a default value
         // of `null` for some reason.
         _ when isRequired && isNamed => null,
         final ConstVariableElement constVar =>
           constVar.computeConstantValue()?.toCodeBuilder,
+        _ => null,
+      };
+
+  /// The parameter's default value as a [ast.DartValue].
+  ast.DartValue? get defaultToValue => switch (this) {
+        // TODO(dnys1): File ticket with Dart team
+        // Required, named, non-nullable parameters have a default value
+        // of `null` for some reason.
+        _ when isRequired && isNamed => null,
+        final ConstVariableElement constVar =>
+          constVar.computeConstantValue()?.toDartValue,
         _ => null,
       };
 }

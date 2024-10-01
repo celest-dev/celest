@@ -25,6 +25,7 @@
               },
               "required": true,
               "named": false,
+              "annotations": [],
               "location": {
                 "start": {
                   "offset": 189,
@@ -51,6 +52,7 @@
               },
               "required": true,
               "named": false,
+              "annotations": [],
               "location": {
                 "start": {
                   "offset": 201,
@@ -77,6 +79,7 @@
               },
               "required": true,
               "named": false,
+              "annotations": [],
               "location": {
                 "start": {
                   "offset": 211,
@@ -115,6 +118,24 @@
             "isNullable": false
           },
           "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
           "docs": [],
           "location": {
             "start": {
@@ -147,6 +168,7 @@
               },
               "required": true,
               "named": false,
+              "annotations": [],
               "location": {
                 "start": {
                   "offset": 309,
@@ -173,6 +195,7 @@
               },
               "required": true,
               "named": false,
+              "annotations": [],
               "location": {
                 "start": {
                   "offset": 324,
@@ -211,6 +234,24 @@
             "isNullable": false
           },
           "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
           "docs": [],
           "location": {
             "start": {
@@ -386,6 +427,24 @@
             "url": "dart:typed_data"
           },
           "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
           "docs": [],
           "location": {
             "start": {

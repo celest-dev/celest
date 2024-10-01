@@ -1121,7 +1121,7 @@ extension on ExecutableElement? {
             isPositional: parameter.isPositional,
             isOptional: parameter.isOptional,
             isNamed: parameter.isNamed,
-            defaultValue: parameter.declaration.defaultTo,
+            defaultValue: parameter.declaration.defaultToExpression,
           ),
       ];
 }

@@ -1,0 +1,149 @@
+openapi: 3.0.3
+info:
+  title: flutter
+  version: 'v1'
+paths:
+  '/dart-ui/lerp-color':
+    post:
+      operationId: dart_ui.lerpColor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/flutter.v1.DartUiLerpColorRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dart.ui.Color'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/dart-ui/add-country-code':
+    post:
+      operationId: dart_ui.addCountryCode
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/flutter.v1.DartUiAddCountryCodeRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dart.ui.Locale'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/flutter/paint-widget':
+    post:
+      operationId: flutter.paintWidget
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Uint8List'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+components:
+  schemas:
+    dart.ui.Color:
+      type: object
+      properties:
+        value:
+          type: integer
+          nullable: false
+          format: int64
+        alpha:
+          type: integer
+          nullable: false
+          format: int64
+        opacity:
+          type: number
+          nullable: false
+          format: double
+        red:
+          type: integer
+          nullable: false
+          format: int64
+        green:
+          type: integer
+          nullable: false
+          format: int64
+        blue:
+          type: integer
+          nullable: false
+          format: int64
+      additionalProperties: false
+      required:
+        - value
+        - alpha
+        - opacity
+        - red
+        - green
+        - blue
+    flutter.v1.DartUiLerpColorRequest:
+      type: object
+      nullable: false
+      properties:
+        a:
+          $ref: '#/components/schemas/dart.ui.Color'
+        b:
+          $ref: '#/components/schemas/dart.ui.Color'
+        t:
+          type: number
+          nullable: false
+          format: double
+      additionalProperties: false
+    dart.ui.Locale:
+      type: object
+      properties:
+        languageCode:
+          type: string
+          nullable: false
+        scriptCode:
+          type: string
+          nullable: true
+        countryCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+      required:
+        - languageCode
+    flutter.v1.DartUiAddCountryCodeRequest:
+      type: object
+      nullable: false
+      properties:
+        locale:
+          $ref: '#/components/schemas/dart.ui.Locale'
+        countryCode:
+          type: string
+          nullable: false
+      additionalProperties: false

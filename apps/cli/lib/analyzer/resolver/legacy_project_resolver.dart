@@ -850,10 +850,15 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
                 streamType: streamType,
               ),
               annotations: param.metadata
+                  .map((annotation) => annotation.toDartValue)
+                  .nonNulls
+                  .toList(),
+              annotationExpressions: param.metadata
                   .map((annotation) => annotation.toCodeBuilder)
                   .nonNulls
                   .toList(),
-              defaultTo: param.defaultTo,
+              defaultTo: param.defaultToValue,
+              defaultToExpression: param.defaultToExpression,
             );
             if (parameter.name.startsWith(r'$')) {
               // Ensures that we can have all local variables in the generated
@@ -906,6 +911,10 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           location: func.sourceLocation!,
           metadata: functionMetadata,
           annotations: func.metadata
+              .map((annotation) => annotation.toDartValue)
+              .nonNulls
+              .toList(),
+          annotationExpressions: func.metadata
               .map((annotation) => annotation.toCodeBuilder)
               .nonNulls
               .toList(),

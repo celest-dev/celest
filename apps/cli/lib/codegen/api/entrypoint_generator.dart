@@ -97,7 +97,7 @@ final class EntrypointGenerator {
         final deserialized = fromString(
           toType,
           serialized,
-          defaultValue: param.defaultTo,
+          defaultValue: param.defaultToExpression,
         );
         if (!isList) {
           if (isNullable) {
@@ -206,7 +206,7 @@ final class EntrypointGenerator {
               final deserialized = jsonGenerator.fromJson(
                 param.type,
                 fromMap,
-                defaultValue: param.defaultTo,
+                defaultValue: param.defaultToExpression,
               );
               paramExp = deserialized;
             }

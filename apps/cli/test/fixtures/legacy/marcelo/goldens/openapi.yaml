@@ -1,0 +1,584 @@
+openapi: 3.0.3
+info:
+  title: marcelo
+  version: 'v1'
+paths:
+  '/exceptions/throws-user-exception':
+    post:
+      operationId: exceptions.throwsUserException
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/marcelo.v1.ExceptionsThrowsUserExceptionRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/exceptions/calls-throws-user-exception':
+    post:
+      operationId: exceptions.callsThrowsUserException
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/marcelo.v1.ExceptionsCallsThrowsUserExceptionRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/exceptions/throws-app-error':
+    post:
+      operationId: exceptions.throwsAppError
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/marcelo.v1.ExceptionsThrowsAppErrorRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/exceptions/throws-app-exception':
+    post:
+      operationId: exceptions.throwsAppException
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/exceptions/throws-not-yet-implemented-error':
+    post:
+      operationId: exceptions.throwsNotYetImplementedError
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/exceptions/throws-validate-error':
+    post:
+      operationId: exceptions.throwsValidateError
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/exceptions/throws-user-exception-show-in-console':
+    post:
+      operationId: exceptions.throwsUserException_ShowInConsole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/marcelo.v1.ExceptionsThrowsUserExceptionShowInConsoleRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                nullable: true
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/models/available-stock':
+    post:
+      operationId: models.availableStock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/marcelo.v1.ModelsAvailableStockRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_common.AvailableStock'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/models/available-stocks':
+    post:
+      operationId: models.availableStocks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/marcelo.v1.ModelsAvailableStocksRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_common.AvailableStocks'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/models/cash-balance':
+    post:
+      operationId: models.cashBalance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/marcelo.v1.ModelsCashBalanceRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_common.CashBalance'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/models/portfolio':
+    post:
+      operationId: models.portfolio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/marcelo.v1.ModelsPortfolioRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_common.Portfolio'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/models/stock':
+    post:
+      operationId: models.stock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/marcelo.v1.ModelsStockRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_common.Stock'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+  '/models/ui':
+    post:
+      operationId: models.ui
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/marcelo.v1.ModelsUiRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_common.Ui'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+components:
+  schemas:
+    celest.core.v1.JsonValue:
+      type: object
+      properties:
+        value:
+          nullable: false
+      additionalProperties: false
+      required:
+        - value
+    marcelo.v1.ExceptionsThrowsUserExceptionRequest:
+      type: object
+      nullable: false
+      properties:
+        cause:
+          $ref: '#/components/schemas/celest.core.v1.JsonValue'
+      additionalProperties: false
+    marcelo.v1.ExceptionsCallsThrowsUserExceptionRequest:
+      type: object
+      nullable: false
+      properties:
+        cause:
+          $ref: '#/components/schemas/celest.core.v1.JsonValue'
+      additionalProperties: false
+    marcelo.v1.ExceptionsThrowsAppErrorRequest:
+      type: object
+      nullable: false
+      properties:
+        message:
+          type: string
+          nullable: false
+        error:
+          $ref: '#/components/schemas/celest.core.v1.JsonValue'
+      additionalProperties: false
+    marcelo.v1.ExceptionsThrowsUserExceptionShowInConsoleRequest:
+      type: object
+      nullable: false
+      properties:
+        message:
+          type: string
+          nullable: false
+        cause:
+          $ref: '#/components/schemas/celest.core.v1.JsonValue'
+      additionalProperties: false
+    _common.AvailableStock:
+      type: object
+      properties:
+        _:
+          $ref: '#/components/schemas/_common.AvailableStock'
+      additionalProperties: false
+      required:
+        - _
+    marcelo.v1.ModelsAvailableStockRequest:
+      type: object
+      nullable: false
+      properties:
+        availableStock:
+          $ref: '#/components/schemas/_common.AvailableStock'
+      additionalProperties: false
+    marcelo.v1.AvailableStock:
+      type: object
+      properties:
+        _:
+          $ref: '#/components/schemas/_common.AvailableStock'
+      additionalProperties: false
+      required:
+        - _
+    fast_immutable_collections.ConfigList:
+      type: object
+      properties:
+        isDeepEquals:
+          type: boolean
+          nullable: false
+        cacheHashCode:
+          type: boolean
+          nullable: false
+      additionalProperties: false
+      required:
+        - isDeepEquals
+        - cacheHashCode
+    fast_immutable_collections.IList:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/fast_immutable_collections.ConfigList'
+        withIdentityEquals:
+          $ref: '#/components/schemas/fast_immutable_collections.IList'
+        withDeepEquals:
+          $ref: '#/components/schemas/fast_immutable_collections.IList'
+        isDeepEquals:
+          type: boolean
+          nullable: false
+        isIdentityEquals:
+          type: boolean
+          nullable: false
+        unlock:
+          type: array
+          nullable: false
+          items:
+            $ref: '#/components/schemas/_common.AvailableStock'
+          uniqueItems: false
+        unlockView:
+          type: array
+          nullable: false
+          items:
+            $ref: '#/components/schemas/_common.AvailableStock'
+          uniqueItems: false
+        unlockLazy:
+          type: array
+          nullable: false
+          items:
+            $ref: '#/components/schemas/_common.AvailableStock'
+          uniqueItems: false
+        isEmpty:
+          type: boolean
+          nullable: false
+        isNotEmpty:
+          type: boolean
+          nullable: false
+        flush:
+          $ref: '#/components/schemas/fast_immutable_collections.IList'
+        isFlushed:
+          type: boolean
+          nullable: false
+        length:
+          type: integer
+          nullable: false
+          format: int64
+        first:
+          $ref: '#/components/schemas/_common.AvailableStock'
+        last:
+          $ref: '#/components/schemas/_common.AvailableStock'
+        single:
+          $ref: '#/components/schemas/_common.AvailableStock'
+        firstOrNull:
+          $ref: '#/components/schemas/_common.AvailableStock'
+        lastOrNull:
+          $ref: '#/components/schemas/_common.AvailableStock'
+        singleOrNull:
+          $ref: '#/components/schemas/_common.AvailableStock'
+        head:
+          $ref: '#/components/schemas/_common.AvailableStock'
+        tail:
+          type: array
+          nullable: false
+          items:
+            $ref: '#/components/schemas/_common.AvailableStock'
+          uniqueItems: false
+        init:
+          type: array
+          nullable: false
+          items:
+            $ref: '#/components/schemas/_common.AvailableStock'
+          uniqueItems: false
+        reversed:
+          $ref: '#/components/schemas/fast_immutable_collections.IList'
+      additionalProperties: false
+      required:
+        - config
+        - withIdentityEquals
+        - withDeepEquals
+        - isDeepEquals
+        - isIdentityEquals
+        - unlock
+        - unlockView
+        - unlockLazy
+        - isEmpty
+        - isNotEmpty
+        - flush
+        - isFlushed
+        - length
+        - first
+        - last
+        - single
+        - head
+        - tail
+        - init
+        - reversed
+    _common.AvailableStocks:
+      type: object
+      properties:
+        list:
+          $ref: '#/components/schemas/fast_immutable_collections.IList'
+      additionalProperties: false
+      required:
+        - list
+    marcelo.v1.ModelsAvailableStocksRequest:
+      type: object
+      nullable: false
+      properties:
+        availableStocks:
+          $ref: '#/components/schemas/_common.AvailableStocks'
+      additionalProperties: false
+    _common.CashBalance:
+      type: object
+      properties:
+        _:
+          $ref: '#/components/schemas/_common.CashBalance'
+      additionalProperties: false
+      required:
+        - _
+    marcelo.v1.ModelsCashBalanceRequest:
+      type: object
+      nullable: false
+      properties:
+        cashBalance:
+          $ref: '#/components/schemas/_common.CashBalance'
+      additionalProperties: false
+    marcelo.v1.CashBalance:
+      type: object
+      properties:
+        _:
+          $ref: '#/components/schemas/_common.CashBalance'
+      additionalProperties: false
+      required:
+        - _
+    _common.Stock:
+      type: object
+      properties:
+        _:
+          $ref: '#/components/schemas/_common.Stock'
+      additionalProperties: false
+      required:
+        - _
+    marcelo.v1.Stock:
+      type: object
+      properties:
+        _:
+          $ref: '#/components/schemas/_common.Stock'
+      additionalProperties: false
+      required:
+        - _
+    _common.Portfolio:
+      type: object
+      properties:
+        _:
+          $ref: '#/components/schemas/_common.Portfolio'
+      additionalProperties: false
+      required:
+        - _
+    marcelo.v1.ModelsPortfolioRequest:
+      type: object
+      nullable: false
+      properties:
+        portfolio:
+          $ref: '#/components/schemas/_common.Portfolio'
+      additionalProperties: false
+    marcelo.v1.ModelsStockRequest:
+      type: object
+      nullable: false
+      properties:
+        stock:
+          $ref: '#/components/schemas/_common.Stock'
+      additionalProperties: false
+    _common.ScreenChoice:
+      type: object
+      additionalProperties: false
+    _common.Ui:
+      type: object
+      properties:
+        _:
+          $ref: '#/components/schemas/_common.Ui'
+      additionalProperties: false
+      required:
+        - _
+    marcelo.v1.ModelsUiRequest:
+      type: object
+      nullable: false
+      properties:
+        ui:
+          $ref: '#/components/schemas/_common.Ui'
+      additionalProperties: false

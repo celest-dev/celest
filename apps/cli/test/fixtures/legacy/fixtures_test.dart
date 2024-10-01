@@ -13,6 +13,7 @@ import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
+import 'package:celest_cli/openapi/renderer/openapi_renderer.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
@@ -177,8 +178,17 @@ class TestRunner {
       );
       project.accept(codegen);
 
-      for (final MapEntry(key: path, value: content)
-          in codegen.fileOutputs.entries) {
+      final openApiSpec = OpenApiRenderer(
+        project: project,
+        resolvedProject: projectResolver.resolvedProject,
+      ).renderToYaml();
+
+      final fileOutputs = {
+        ...codegen.fileOutputs,
+        p.join(goldensDir.path, 'openapi.yaml'): openApiSpec,
+      };
+
+      for (final MapEntry(key: path, value: content) in fileOutputs.entries) {
         final goldenFile = File(path);
         if (updateGoldens) {
           await goldenFile.create(recursive: true);

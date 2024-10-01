@@ -55,6 +55,49 @@
               }
             }
           ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {
+                "statusCode": {
+                  "$": "DartInt",
+                  "value": 200,
+                  "staticType": {
+                    "symbol": "int",
+                    "url": "dart:core"
+                  }
+                }
+              },
+              "staticType": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              }
+            }
+          ],
           "docs": [],
           "location": {
             "start": {
@@ -114,6 +157,49 @@
                   "column": 37
                 },
                 "text": "@http(statusCode: HttpStatus.created)"
+              }
+            }
+          ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {
+                "statusCode": {
+                  "$": "DartInt",
+                  "value": 201,
+                  "staticType": {
+                    "symbol": "int",
+                    "url": "dart:core"
+                  }
+                }
+              },
+              "staticType": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
               }
             }
           ],
@@ -179,6 +265,49 @@
               }
             }
           ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {
+                "statusCode": {
+                  "$": "DartInt",
+                  "value": 202,
+                  "staticType": {
+                    "symbol": "int",
+                    "url": "dart:core"
+                  }
+                }
+              },
+              "staticType": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              }
+            }
+          ],
           "docs": [],
           "location": {
             "start": {
@@ -241,6 +370,49 @@
               }
             }
           ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {
+                "statusCode": {
+                  "$": "DartInt",
+                  "value": 400,
+                  "staticType": {
+                    "symbol": "int",
+                    "url": "dart:core"
+                  }
+                }
+              },
+              "staticType": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              }
+            }
+          ],
           "docs": [],
           "location": {
             "start": {
@@ -300,6 +472,49 @@
                   "column": 49
                 },
                 "text": "@http(statusCode: HttpStatus.internalServerError)"
+              }
+            }
+          ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {
+                "statusCode": {
+                  "$": "DartInt",
+                  "value": 500,
+                  "staticType": {
+                    "symbol": "int",
+                    "url": "dart:core"
+                  }
+                }
+              },
+              "staticType": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
               }
             }
           ],
@@ -497,6 +712,49 @@
               }
             }
           ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {
+                "method": {
+                  "$": "DartString",
+                  "value": "GET",
+                  "staticType": {
+                    "symbol": "String",
+                    "url": "dart:core"
+                  }
+                }
+              },
+              "staticType": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              }
+            }
+          ],
           "docs": [],
           "location": {
             "start": {
@@ -556,6 +814,49 @@
                   "column": 30
                 },
                 "text": "@http(method: HttpMethod.post)"
+              }
+            }
+          ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {
+                "method": {
+                  "$": "DartString",
+                  "value": "POST",
+                  "staticType": {
+                    "symbol": "String",
+                    "url": "dart:core"
+                  }
+                }
+              },
+              "staticType": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
               }
             }
           ],
@@ -621,6 +922,49 @@
               }
             }
           ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {
+                "method": {
+                  "$": "DartString",
+                  "value": "PUT",
+                  "staticType": {
+                    "symbol": "String",
+                    "url": "dart:core"
+                  }
+                }
+              },
+              "staticType": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              }
+            }
+          ],
           "docs": [],
           "location": {
             "start": {
@@ -683,6 +1027,49 @@
               }
             }
           ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {
+                "method": {
+                  "$": "DartString",
+                  "value": "DELETE",
+                  "staticType": {
+                    "symbol": "String",
+                    "url": "dart:core"
+                  }
+                }
+              },
+              "staticType": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              }
+            }
+          ],
           "docs": [],
           "location": {
             "start": {
@@ -742,6 +1129,49 @@
                   "column": 31
                 },
                 "text": "@http(method: HttpMethod.patch)"
+              }
+            }
+          ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {
+                "method": {
+                  "$": "DartString",
+                  "value": "PATCH",
+                  "staticType": {
+                    "symbol": "String",
+                    "url": "dart:core"
+                  }
+                }
+              },
+              "staticType": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
               }
             }
           ],
@@ -909,6 +1339,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aString",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 205,
@@ -939,6 +1396,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "anInt",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 240,
@@ -969,6 +1453,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aDouble",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 278,
@@ -999,6 +1510,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNum",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 312,
@@ -1029,6 +1567,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aBool",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 345,
@@ -1058,6 +1623,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aDateTime",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 387,
@@ -1088,6 +1680,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableString",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 438,
@@ -1118,6 +1737,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableInt",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 489,
@@ -1148,6 +1794,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableDouble",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 543,
@@ -1178,6 +1851,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableNum",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 594,
@@ -1208,6 +1908,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableBool",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 644,
@@ -1238,6 +1965,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableDateTime",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 703,
@@ -1276,6 +2030,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aListOfString",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 765,
@@ -1314,6 +2095,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aListOfInt",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 817,
@@ -1352,6 +2160,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aListOfDouble",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 872,
@@ -1390,6 +2225,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aListOfNum",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 924,
@@ -1428,6 +2290,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aListOfBool",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 975,
@@ -1465,6 +2354,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aListOfDateTime",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 1035,
@@ -1503,6 +2419,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableListOfString",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 1104,
@@ -1541,6 +2484,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableListOfInt",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 1173,
@@ -1579,6 +2549,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableListOfDouble",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 1245,
@@ -1617,6 +2614,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableListOfNum",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 1314,
@@ -1655,6 +2679,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableListOfBool",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 1382,
@@ -1692,6 +2743,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableListOfDateTime",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpQuery",
+                    "url": "package:celest/src/functions/http/http_query.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 1459,
@@ -1734,6 +2812,24 @@
             "isNullable": false
           },
           "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
           "docs": [],
           "location": {
             "start": {
@@ -1898,6 +2994,7 @@
               },
               "required": true,
               "named": false,
+              "annotations": [],
               "location": {
                 "start": {
                   "offset": 512,
@@ -2052,6 +3149,189 @@
                   "column": 71
                 },
                 "text": "@httpError(HttpStatus.notFound, NotFoundException, InternalServerError)"
+              }
+            }
+          ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "httpError",
+                "url": "package:celest_core/src/http/http_error.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {
+                "statusCode": {
+                  "$": "DartInt",
+                  "value": 403,
+                  "staticType": {
+                    "symbol": "int",
+                    "url": "dart:core"
+                  }
+                },
+                "type": {
+                  "$": "DartTypeLiteral",
+                  "type": {
+                    "symbol": "ForbiddenException",
+                    "url": "package:celest_backend/exceptions/http_errors.dart",
+                    "isNullable": false
+                  },
+                  "staticType": {
+                    "symbol": "ForbiddenException",
+                    "url": "package:celest_backend/exceptions/http_errors.dart",
+                    "isNullable": false
+                  }
+                }
+              },
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "httpError",
+                "url": "package:celest_core/src/http/http_error.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "httpError",
+                "url": "package:celest_core/src/http/http_error.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {
+                "statusCode": {
+                  "$": "DartInt",
+                  "value": 412,
+                  "staticType": {
+                    "symbol": "int",
+                    "url": "dart:core"
+                  }
+                },
+                "type": {
+                  "$": "DartTypeLiteral",
+                  "type": {
+                    "symbol": "CustomBadRequestException",
+                    "url": "package:celest_backend/exceptions/http_errors.dart",
+                    "isNullable": false
+                  },
+                  "staticType": {
+                    "symbol": "CustomBadRequestException",
+                    "url": "package:celest_backend/exceptions/http_errors.dart",
+                    "isNullable": false
+                  }
+                }
+              },
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "httpError",
+                "url": "package:celest_core/src/http/http_error.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "httpError",
+                "url": "package:celest_core/src/http/http_error.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {
+                "statusCode": {
+                  "$": "DartInt",
+                  "value": 401,
+                  "staticType": {
+                    "symbol": "int",
+                    "url": "dart:core"
+                  }
+                },
+                "type": {
+                  "$": "DartTypeLiteral",
+                  "type": {
+                    "symbol": "UnauthorizedException",
+                    "url": "package:celest_core/src/exception/cloud_exception.dart",
+                    "isNullable": false
+                  },
+                  "staticType": {
+                    "symbol": "UnauthorizedException",
+                    "url": "package:celest_core/src/exception/cloud_exception.dart",
+                    "isNullable": false
+                  }
+                }
+              },
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "httpError",
+                "url": "package:celest_core/src/http/http_error.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "httpError",
+                "url": "package:celest_core/src/http/http_error.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {
+                "statusCode": {
+                  "$": "DartInt",
+                  "value": 404,
+                  "staticType": {
+                    "symbol": "int",
+                    "url": "dart:core"
+                  }
+                },
+                "type": {
+                  "$": "DartTypeLiteral",
+                  "type": {
+                    "symbol": "NotFoundException",
+                    "url": "package:celest_backend/exceptions/http_errors.dart",
+                    "isNullable": false
+                  },
+                  "staticType": {
+                    "symbol": "NotFoundException",
+                    "url": "package:celest_backend/exceptions/http_errors.dart",
+                    "isNullable": false
+                  }
+                },
+                "type1": {
+                  "$": "DartTypeLiteral",
+                  "type": {
+                    "symbol": "InternalServerError",
+                    "url": "package:celest_core/src/exception/cloud_exception.dart",
+                    "isNullable": false
+                  },
+                  "staticType": {
+                    "symbol": "InternalServerError",
+                    "url": "package:celest_core/src/exception/cloud_exception.dart",
+                    "isNullable": false
+                  }
+                }
+              },
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "httpError",
+                "url": "package:celest_core/src/http/http_error.dart",
+                "isNullable": false
               }
             }
           ],
@@ -2249,6 +3529,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aString",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 209,
@@ -2279,6 +3586,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "anInt",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 245,
@@ -2309,6 +3643,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aDouble",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 284,
@@ -2339,6 +3700,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNum",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 319,
@@ -2369,6 +3757,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aBool",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 353,
@@ -2398,6 +3813,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aDateTime",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 396,
@@ -2428,6 +3870,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableString",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 448,
@@ -2458,6 +3927,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableInt",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 500,
@@ -2488,6 +3984,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableDouble",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 555,
@@ -2518,6 +4041,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableNum",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 607,
@@ -2548,6 +4098,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableBool",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 658,
@@ -2578,6 +4155,33 @@
               },
               "required": true,
               "named": false,
+              "annotations": [
+                {
+                  "$": "DartInstance",
+                  "classRef": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  },
+                  "constructor": "",
+                  "positionalArguments": {
+                    "name": {
+                      "$": "DartString",
+                      "value": "aNullableDateTime",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
+                  "namedArguments": {},
+                  "staticType": {
+                    "symbol": "httpHeader",
+                    "url": "package:celest/src/functions/http/http_header.dart",
+                    "isNullable": false
+                  }
+                }
+              ],
               "location": {
                 "start": {
                   "offset": 718,
@@ -2620,6 +4224,24 @@
             "isNullable": false
           },
           "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
           "docs": [],
           "location": {
             "start": {
