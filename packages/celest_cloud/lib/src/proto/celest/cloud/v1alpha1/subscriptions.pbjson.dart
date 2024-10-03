@@ -629,3 +629,181 @@ final $typed_data.Uint8List quantityDescriptor = $convert.base64Decode(
     'CghRdWFudGl0eRI9CgdtZWFzdXJlGAEgASgOMh4uY2VsZXN0LmNsb3VkLnYxYWxwaGExLk1lYX'
     'N1cmVCA+BBAVIHbWVhc3VyZRIgCgV1bml0cxgCIAEoA0IK4EECukgEIgIoAFIFdW5pdHMSIAoF'
     'bmFub3MYAyABKAVCCuBBArpIBBoCKABSBW5hbm9z');
+
+@$core.Deprecated('Use describePricingRequestDescriptor instead')
+const DescribePricingRequest$json = {
+  '1': 'DescribePricingRequest',
+  '2': [
+    {'1': 'region_code', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'regionCode'},
+    {
+      '1': 'currency_code',
+      '3': 2,
+      '4': 1,
+      '5': 9,
+      '8': {},
+      '10': 'currencyCode'
+    },
+  ],
+};
+
+/// Descriptor for `DescribePricingRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List describePricingRequestDescriptor = $convert.base64Decode(
+    'ChZEZXNjcmliZVByaWNpbmdSZXF1ZXN0EnwKC3JlZ2lvbl9jb2RlGAEgASgJQlvgQQG6SFW6AU'
+    '8KEXZhbGlkX3JlZ2lvbl9jb2RlEhttdXN0IGJlIGEgdmFsaWQgcmVnaW9uIGNvZGUaHXRoaXMu'
+    'bWF0Y2hlcygnXlthLXpBLVpdezJ9JCcp0AEBUgpyZWdpb25Db2RlEoEBCg1jdXJyZW5jeV9jb2'
+    'RlGAIgASgJQlzgQQG6SFa6AVAKDnZhbGlkX2N1cnJlbmN5Eh1tdXN0IGJlIGEgdmFsaWQgY3Vy'
+    'cmVuY3kgY29kZRofdGhpcy5tYXRjaGVzKCdeW2EtekEtWl17Myw0fSQnKdABAVIMY3VycmVuY3'
+    'lDb2Rl');
+
+@$core.Deprecated('Use describePricingResponseDescriptor instead')
+const DescribePricingResponse$json = {
+  '1': 'DescribePricingResponse',
+  '2': [
+    {'1': 'region_code', '3': 1, '4': 1, '5': 9, '10': 'regionCode'},
+    {'1': 'currency_code', '3': 2, '4': 1, '5': 9, '10': 'currencyCode'},
+    {
+      '1': 'prices',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.celest.cloud.v1alpha1.Pricing',
+      '10': 'prices'
+    },
+  ],
+};
+
+/// Descriptor for `DescribePricingResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List describePricingResponseDescriptor = $convert.base64Decode(
+    'ChdEZXNjcmliZVByaWNpbmdSZXNwb25zZRIfCgtyZWdpb25fY29kZRgBIAEoCVIKcmVnaW9uQ2'
+    '9kZRIjCg1jdXJyZW5jeV9jb2RlGAIgASgJUgxjdXJyZW5jeUNvZGUSNgoGcHJpY2VzGAMgAygL'
+    'Mh4uY2VsZXN0LmNsb3VkLnYxYWxwaGExLlByaWNpbmdSBnByaWNlcw==');
+
+@$core.Deprecated('Use pricingDescriptor instead')
+const Pricing$json = {
+  '1': 'Pricing',
+  '2': [
+    {
+      '1': 'community',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.cloud.v1alpha1.CommunitySubscriptionPlan',
+      '9': 0,
+      '10': 'community'
+    },
+    {
+      '1': 'builder',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.cloud.v1alpha1.BuilderSubscriptionPlan',
+      '9': 0,
+      '10': 'builder'
+    },
+    {
+      '1': 'enterprise',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.cloud.v1alpha1.EnterpriseSubscriptionPlan',
+      '9': 0,
+      '10': 'enterprise'
+    },
+    {
+      '1': 'price',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.google.type.Money',
+      '8': {},
+      '10': 'price'
+    },
+    {
+      '1': 'promotions',
+      '3': 5,
+      '4': 3,
+      '5': 11,
+      '6': '.celest.cloud.v1alpha1.Pricing.Promotion',
+      '8': {},
+      '10': 'promotions'
+    },
+  ],
+  '3': [Pricing_Promotion$json],
+  '8': [
+    {'1': 'plan'},
+  ],
+};
+
+@$core.Deprecated('Use pricingDescriptor instead')
+const Pricing_Promotion$json = {
+  '1': 'Promotion',
+  '2': [
+    {'1': 'coupon_code', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'couponCode'},
+    {
+      '1': 'amount',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.google.type.Money',
+      '9': 0,
+      '10': 'amount'
+    },
+    {'1': 'percentage', '3': 3, '4': 1, '5': 5, '9': 0, '10': 'percentage'},
+    {
+      '1': 'forever',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.Empty',
+      '9': 1,
+      '10': 'forever'
+    },
+    {
+      '1': 'once',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.Empty',
+      '9': 1,
+      '10': 'once'
+    },
+    {
+      '1': 'repeating',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.Duration',
+      '9': 1,
+      '10': 'repeating'
+    },
+    {
+      '1': 'expire_time',
+      '3': 7,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.Timestamp',
+      '10': 'expireTime'
+    },
+  ],
+  '8': [
+    {'1': 'discount'},
+    {'1': 'duration'},
+  ],
+};
+
+/// Descriptor for `Pricing`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pricingDescriptor = $convert.base64Decode(
+    'CgdQcmljaW5nElAKCWNvbW11bml0eRgBIAEoCzIwLmNlbGVzdC5jbG91ZC52MWFscGhhMS5Db2'
+    '1tdW5pdHlTdWJzY3JpcHRpb25QbGFuSABSCWNvbW11bml0eRJKCgdidWlsZGVyGAIgASgLMi4u'
+    'Y2VsZXN0LmNsb3VkLnYxYWxwaGExLkJ1aWxkZXJTdWJzY3JpcHRpb25QbGFuSABSB2J1aWxkZX'
+    'ISUwoKZW50ZXJwcmlzZRgDIAEoCzIxLmNlbGVzdC5jbG91ZC52MWFscGhhMS5FbnRlcnByaXNl'
+    'U3Vic2NyaXB0aW9uUGxhbkgAUgplbnRlcnByaXNlEi0KBXByaWNlGAQgASgLMhIuZ29vZ2xlLn'
+    'R5cGUuTW9uZXlCA+BBAlIFcHJpY2USTQoKcHJvbW90aW9ucxgFIAMoCzIoLmNlbGVzdC5jbG91'
+    'ZC52MWFscGhhMS5QcmljaW5nLlByb21vdGlvbkID4EEBUgpwcm9tb3Rpb25zGvMCCglQcm9tb3'
+    'Rpb24SJAoLY291cG9uX2NvZGUYASABKAlCA+BBAlIKY291cG9uQ29kZRIsCgZhbW91bnQYAiAB'
+    'KAsyEi5nb29nbGUudHlwZS5Nb25leUgAUgZhbW91bnQSIAoKcGVyY2VudGFnZRgDIAEoBUgAUg'
+    'pwZXJjZW50YWdlEjIKB2ZvcmV2ZXIYBCABKAsyFi5nb29nbGUucHJvdG9idWYuRW1wdHlIAVIH'
+    'Zm9yZXZlchIsCgRvbmNlGAUgASgLMhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5SAFSBG9uY2USOQ'
+    'oJcmVwZWF0aW5nGAYgASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uSAFSCXJlcGVhdGlu'
+    'ZxI7CgtleHBpcmVfdGltZRgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSCmV4cG'
+    'lyZVRpbWVCCgoIZGlzY291bnRCCgoIZHVyYXRpb25CBgoEcGxhbg==');

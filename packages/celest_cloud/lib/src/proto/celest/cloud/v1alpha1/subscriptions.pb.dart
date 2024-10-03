@@ -14,7 +14,10 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import '../../../google/protobuf/duration.pb.dart' as $17;
+import '../../../google/protobuf/empty.pb.dart' as $1;
 import '../../../google/protobuf/timestamp.pb.dart' as $20;
+import '../../../google/type/money.pb.dart' as $57;
 import 'subscriptions.pbenum.dart';
 
 export 'subscriptions.pbenum.dart';
@@ -172,7 +175,7 @@ class Subscription extends $pb.GeneratedMessage {
 
   ///  Identifier. The resource name of the subscription.
   ///
-  ///  Format: `users/{user}/subscriptions/{subscription}`
+  ///  Format: `users/{user}/subscription`
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -1788,6 +1791,549 @@ class Quantity extends $pb.GeneratedMessage {
   $core.bool hasNanos() => $_has(2);
   @$pb.TagNumber(3)
   void clearNanos() => clearField(3);
+}
+
+/// The request message for the `DescribePricing` method.
+class DescribePricingRequest extends $pb.GeneratedMessage {
+  factory DescribePricingRequest({
+    $core.String? regionCode,
+    $core.String? currencyCode,
+  }) {
+    final $result = create();
+    if (regionCode != null) {
+      $result.regionCode = regionCode;
+    }
+    if (currencyCode != null) {
+      $result.currencyCode = currencyCode;
+    }
+    return $result;
+  }
+  DescribePricingRequest._() : super();
+  factory DescribePricingRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory DescribePricingRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'DescribePricingRequest',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'regionCode')
+    ..aOS(2, _omitFieldNames ? '' : 'currencyCode')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  DescribePricingRequest clone() =>
+      DescribePricingRequest()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  DescribePricingRequest copyWith(
+          void Function(DescribePricingRequest) updates) =>
+      super.copyWith((message) => updates(message as DescribePricingRequest))
+          as DescribePricingRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static DescribePricingRequest create() => DescribePricingRequest._();
+  DescribePricingRequest createEmptyInstance() => create();
+  static $pb.PbList<DescribePricingRequest> createRepeated() =>
+      $pb.PbList<DescribePricingRequest>();
+  @$core.pragma('dart2js:noInline')
+  static DescribePricingRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<DescribePricingRequest>(create);
+  static DescribePricingRequest? _defaultInstance;
+
+  /// Optional. The region code to get pricing for.
+  @$pb.TagNumber(1)
+  $core.String get regionCode => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set regionCode($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasRegionCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRegionCode() => clearField(1);
+
+  /// Optional. The currency code to get pricing for.
+  @$pb.TagNumber(2)
+  $core.String get currencyCode => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set currencyCode($core.String v) {
+    $_setString(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasCurrencyCode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCurrencyCode() => clearField(2);
+}
+
+/// The response message for the `DescribePricing` method.
+class DescribePricingResponse extends $pb.GeneratedMessage {
+  factory DescribePricingResponse({
+    $core.String? regionCode,
+    $core.String? currencyCode,
+    $core.Iterable<Pricing>? prices,
+  }) {
+    final $result = create();
+    if (regionCode != null) {
+      $result.regionCode = regionCode;
+    }
+    if (currencyCode != null) {
+      $result.currencyCode = currencyCode;
+    }
+    if (prices != null) {
+      $result.prices.addAll(prices);
+    }
+    return $result;
+  }
+  DescribePricingResponse._() : super();
+  factory DescribePricingResponse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory DescribePricingResponse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'DescribePricingResponse',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'regionCode')
+    ..aOS(2, _omitFieldNames ? '' : 'currencyCode')
+    ..pc<Pricing>(3, _omitFieldNames ? '' : 'prices', $pb.PbFieldType.PM,
+        subBuilder: Pricing.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  DescribePricingResponse clone() =>
+      DescribePricingResponse()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  DescribePricingResponse copyWith(
+          void Function(DescribePricingResponse) updates) =>
+      super.copyWith((message) => updates(message as DescribePricingResponse))
+          as DescribePricingResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static DescribePricingResponse create() => DescribePricingResponse._();
+  DescribePricingResponse createEmptyInstance() => create();
+  static $pb.PbList<DescribePricingResponse> createRepeated() =>
+      $pb.PbList<DescribePricingResponse>();
+  @$core.pragma('dart2js:noInline')
+  static DescribePricingResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<DescribePricingResponse>(create);
+  static DescribePricingResponse? _defaultInstance;
+
+  /// The region code for the pricing.
+  @$pb.TagNumber(1)
+  $core.String get regionCode => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set regionCode($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasRegionCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRegionCode() => clearField(1);
+
+  /// The currency code for the pricing.
+  @$pb.TagNumber(2)
+  $core.String get currencyCode => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set currencyCode($core.String v) {
+    $_setString(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasCurrencyCode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCurrencyCode() => clearField(2);
+
+  /// The pricing information for all subscription plans.
+  @$pb.TagNumber(3)
+  $core.List<Pricing> get prices => $_getList(2);
+}
+
+enum Pricing_Promotion_Discount { amount, percentage, notSet }
+
+enum Pricing_Promotion_Duration { forever, once, repeating, notSet }
+
+/// A promotion for a subscription plan.
+class Pricing_Promotion extends $pb.GeneratedMessage {
+  factory Pricing_Promotion({
+    $core.String? couponCode,
+    $57.Money? amount,
+    $core.int? percentage,
+    $1.Empty? forever,
+    $1.Empty? once,
+    $17.Duration? repeating,
+    $20.Timestamp? expireTime,
+  }) {
+    final $result = create();
+    if (couponCode != null) {
+      $result.couponCode = couponCode;
+    }
+    if (amount != null) {
+      $result.amount = amount;
+    }
+    if (percentage != null) {
+      $result.percentage = percentage;
+    }
+    if (forever != null) {
+      $result.forever = forever;
+    }
+    if (once != null) {
+      $result.once = once;
+    }
+    if (repeating != null) {
+      $result.repeating = repeating;
+    }
+    if (expireTime != null) {
+      $result.expireTime = expireTime;
+    }
+    return $result;
+  }
+  Pricing_Promotion._() : super();
+  factory Pricing_Promotion.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory Pricing_Promotion.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, Pricing_Promotion_Discount>
+      _Pricing_Promotion_DiscountByTag = {
+    2: Pricing_Promotion_Discount.amount,
+    3: Pricing_Promotion_Discount.percentage,
+    0: Pricing_Promotion_Discount.notSet
+  };
+  static const $core.Map<$core.int, Pricing_Promotion_Duration>
+      _Pricing_Promotion_DurationByTag = {
+    4: Pricing_Promotion_Duration.forever,
+    5: Pricing_Promotion_Duration.once,
+    6: Pricing_Promotion_Duration.repeating,
+    0: Pricing_Promotion_Duration.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'Pricing.Promotion',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
+      createEmptyInstance: create)
+    ..oo(0, [2, 3])
+    ..oo(1, [4, 5, 6])
+    ..aOS(1, _omitFieldNames ? '' : 'couponCode')
+    ..aOM<$57.Money>(2, _omitFieldNames ? '' : 'amount',
+        subBuilder: $57.Money.create)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'percentage', $pb.PbFieldType.O3)
+    ..aOM<$1.Empty>(4, _omitFieldNames ? '' : 'forever',
+        subBuilder: $1.Empty.create)
+    ..aOM<$1.Empty>(5, _omitFieldNames ? '' : 'once',
+        subBuilder: $1.Empty.create)
+    ..aOM<$17.Duration>(6, _omitFieldNames ? '' : 'repeating',
+        subBuilder: $17.Duration.create)
+    ..aOM<$20.Timestamp>(7, _omitFieldNames ? '' : 'expireTime',
+        subBuilder: $20.Timestamp.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  Pricing_Promotion clone() => Pricing_Promotion()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  Pricing_Promotion copyWith(void Function(Pricing_Promotion) updates) =>
+      super.copyWith((message) => updates(message as Pricing_Promotion))
+          as Pricing_Promotion;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static Pricing_Promotion create() => Pricing_Promotion._();
+  Pricing_Promotion createEmptyInstance() => create();
+  static $pb.PbList<Pricing_Promotion> createRepeated() =>
+      $pb.PbList<Pricing_Promotion>();
+  @$core.pragma('dart2js:noInline')
+  static Pricing_Promotion getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Pricing_Promotion>(create);
+  static Pricing_Promotion? _defaultInstance;
+
+  Pricing_Promotion_Discount whichDiscount() =>
+      _Pricing_Promotion_DiscountByTag[$_whichOneof(0)]!;
+  void clearDiscount() => clearField($_whichOneof(0));
+
+  Pricing_Promotion_Duration whichDuration() =>
+      _Pricing_Promotion_DurationByTag[$_whichOneof(1)]!;
+  void clearDuration() => clearField($_whichOneof(1));
+
+  /// The coupon code for the promotion.
+  @$pb.TagNumber(1)
+  $core.String get couponCode => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set couponCode($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasCouponCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCouponCode() => clearField(1);
+
+  /// The discount amount.
+  @$pb.TagNumber(2)
+  $57.Money get amount => $_getN(1);
+  @$pb.TagNumber(2)
+  set amount($57.Money v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasAmount() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAmount() => clearField(2);
+  @$pb.TagNumber(2)
+  $57.Money ensureAmount() => $_ensure(1);
+
+  /// The discount percentage.
+  @$pb.TagNumber(3)
+  $core.int get percentage => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set percentage($core.int v) {
+    $_setSignedInt32(2, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasPercentage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPercentage() => clearField(3);
+
+  /// The promotion is applied forever.
+  @$pb.TagNumber(4)
+  $1.Empty get forever => $_getN(3);
+  @$pb.TagNumber(4)
+  set forever($1.Empty v) {
+    setField(4, v);
+  }
+
+  @$pb.TagNumber(4)
+  $core.bool hasForever() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearForever() => clearField(4);
+  @$pb.TagNumber(4)
+  $1.Empty ensureForever() => $_ensure(3);
+
+  /// The promotion is applied once.
+  @$pb.TagNumber(5)
+  $1.Empty get once => $_getN(4);
+  @$pb.TagNumber(5)
+  set once($1.Empty v) {
+    setField(5, v);
+  }
+
+  @$pb.TagNumber(5)
+  $core.bool hasOnce() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearOnce() => clearField(5);
+  @$pb.TagNumber(5)
+  $1.Empty ensureOnce() => $_ensure(4);
+
+  /// The duration of the promotion.
+  @$pb.TagNumber(6)
+  $17.Duration get repeating => $_getN(5);
+  @$pb.TagNumber(6)
+  set repeating($17.Duration v) {
+    setField(6, v);
+  }
+
+  @$pb.TagNumber(6)
+  $core.bool hasRepeating() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearRepeating() => clearField(6);
+  @$pb.TagNumber(6)
+  $17.Duration ensureRepeating() => $_ensure(5);
+
+  /// Optional. The time the promotion expires.
+  @$pb.TagNumber(7)
+  $20.Timestamp get expireTime => $_getN(6);
+  @$pb.TagNumber(7)
+  set expireTime($20.Timestamp v) {
+    setField(7, v);
+  }
+
+  @$pb.TagNumber(7)
+  $core.bool hasExpireTime() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearExpireTime() => clearField(7);
+  @$pb.TagNumber(7)
+  $20.Timestamp ensureExpireTime() => $_ensure(6);
+}
+
+enum Pricing_Plan { community, builder, enterprise, notSet }
+
+/// Pricing information for a subscription plan.
+class Pricing extends $pb.GeneratedMessage {
+  factory Pricing({
+    CommunitySubscriptionPlan? community,
+    BuilderSubscriptionPlan? builder,
+    EnterpriseSubscriptionPlan? enterprise,
+    $57.Money? price,
+    $core.Iterable<Pricing_Promotion>? promotions,
+  }) {
+    final $result = create();
+    if (community != null) {
+      $result.community = community;
+    }
+    if (builder != null) {
+      $result.builder = builder;
+    }
+    if (enterprise != null) {
+      $result.enterprise = enterprise;
+    }
+    if (price != null) {
+      $result.price = price;
+    }
+    if (promotions != null) {
+      $result.promotions.addAll(promotions);
+    }
+    return $result;
+  }
+  Pricing._() : super();
+  factory Pricing.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory Pricing.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, Pricing_Plan> _Pricing_PlanByTag = {
+    1: Pricing_Plan.community,
+    2: Pricing_Plan.builder,
+    3: Pricing_Plan.enterprise,
+    0: Pricing_Plan.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'Pricing',
+      package: const $pb.PackageName(
+          _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
+      createEmptyInstance: create)
+    ..oo(0, [1, 2, 3])
+    ..aOM<CommunitySubscriptionPlan>(1, _omitFieldNames ? '' : 'community',
+        subBuilder: CommunitySubscriptionPlan.create)
+    ..aOM<BuilderSubscriptionPlan>(2, _omitFieldNames ? '' : 'builder',
+        subBuilder: BuilderSubscriptionPlan.create)
+    ..aOM<EnterpriseSubscriptionPlan>(3, _omitFieldNames ? '' : 'enterprise',
+        subBuilder: EnterpriseSubscriptionPlan.create)
+    ..aOM<$57.Money>(4, _omitFieldNames ? '' : 'price',
+        subBuilder: $57.Money.create)
+    ..pc<Pricing_Promotion>(
+        5, _omitFieldNames ? '' : 'promotions', $pb.PbFieldType.PM,
+        subBuilder: Pricing_Promotion.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  Pricing clone() => Pricing()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  Pricing copyWith(void Function(Pricing) updates) =>
+      super.copyWith((message) => updates(message as Pricing)) as Pricing;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static Pricing create() => Pricing._();
+  Pricing createEmptyInstance() => create();
+  static $pb.PbList<Pricing> createRepeated() => $pb.PbList<Pricing>();
+  @$core.pragma('dart2js:noInline')
+  static Pricing getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Pricing>(create);
+  static Pricing? _defaultInstance;
+
+  Pricing_Plan whichPlan() => _Pricing_PlanByTag[$_whichOneof(0)]!;
+  void clearPlan() => clearField($_whichOneof(0));
+
+  /// The Community plan.
+  @$pb.TagNumber(1)
+  CommunitySubscriptionPlan get community => $_getN(0);
+  @$pb.TagNumber(1)
+  set community(CommunitySubscriptionPlan v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasCommunity() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCommunity() => clearField(1);
+  @$pb.TagNumber(1)
+  CommunitySubscriptionPlan ensureCommunity() => $_ensure(0);
+
+  /// A Builder plan.
+  @$pb.TagNumber(2)
+  BuilderSubscriptionPlan get builder => $_getN(1);
+  @$pb.TagNumber(2)
+  set builder(BuilderSubscriptionPlan v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasBuilder() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearBuilder() => clearField(2);
+  @$pb.TagNumber(2)
+  BuilderSubscriptionPlan ensureBuilder() => $_ensure(1);
+
+  /// An Enterprise plan.
+  @$pb.TagNumber(3)
+  EnterpriseSubscriptionPlan get enterprise => $_getN(2);
+  @$pb.TagNumber(3)
+  set enterprise(EnterpriseSubscriptionPlan v) {
+    setField(3, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasEnterprise() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearEnterprise() => clearField(3);
+  @$pb.TagNumber(3)
+  EnterpriseSubscriptionPlan ensureEnterprise() => $_ensure(2);
+
+  /// The price of the plan.
+  @$pb.TagNumber(4)
+  $57.Money get price => $_getN(3);
+  @$pb.TagNumber(4)
+  set price($57.Money v) {
+    setField(4, v);
+  }
+
+  @$pb.TagNumber(4)
+  $core.bool hasPrice() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPrice() => clearField(4);
+  @$pb.TagNumber(4)
+  $57.Money ensurePrice() => $_ensure(3);
+
+  /// Optional. The active promotions for the plan, if any.
+  @$pb.TagNumber(5)
+  $core.List<Pricing_Promotion> get promotions => $_getList(4);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

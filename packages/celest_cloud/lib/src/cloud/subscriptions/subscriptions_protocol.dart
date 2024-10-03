@@ -5,4 +5,7 @@ abstract interface class SubscriptionsProtocol {
   Future<ChangePlanResponse> changePlan(ChangePlanRequest request);
   Future<PauseSubscriptionResponse> pause(PauseSubscriptionRequest request);
   Future<CancelSubscriptionResponse> cancel(CancelSubscriptionRequest request);
+  Future<DescribePricingResponse> describePricing(
+    DescribePricingRequest request,
+  );
 }
