@@ -471,8 +471,9 @@ final class CelestFrontend {
       );
       logger.fine('Created project: $project');
       final dbProject = await projects.put(project.toDb());
-      cliLogger
-          .success('Your project has been created! Starting deployment...');
+      progress.complete(
+        'Your project has been created! Starting deployment...',
+      );
       return dbProject.id;
     } on Object catch (e, st) {
       logger.fine('Failed to create project', e, st);
