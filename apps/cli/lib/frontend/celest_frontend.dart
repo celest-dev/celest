@@ -371,77 +371,114 @@ final class CelestFrontend {
     }
   }
 
+  Future<pb.Organization?> _getOrCreateOrganization({
+    required ast.Project project,
+  }) async {
+    var organization = await organizations.primary;
+    // TODO(dnys1): Handle all lifecycle states.
+    if (organization?.state != pb.LifecycleState.ACTIVE) {
+      var organizationId = organization?.organizationId;
+      var organizationDisplayName = organization?.displayName;
+      if (organizationId == null) {
+        organizationDisplayName = cliLogger.prompt(
+          'What should we call your organization?',
+        );
+        if (organizationDisplayName.isEmpty) {
+          return null;
+        }
+        organizationId = organizationDisplayName.paramCase;
+      }
+      // First, create the organization.
+      final progress = cliLogger.progress(
+        'Creating organization $organizationId',
+      );
+      try {
+        final operation = cloud.organizations.create(
+          organizationId: organizationId,
+          organization: pb.Organization(
+            displayName: organizationDisplayName,
+            primaryRegion: switch (project.primaryRegion) {
+              Region.europe => pb.Region.EUROPE,
+              Region.asiaPacific => pb.Region.ASIA_PACIFIC,
+              Region.northAmerica => pb.Region.NORTH_AMERICA,
+              _ => pb.Region.REGION_UNSPECIFIED,
+            },
+          ),
+        );
+        final waiter = CloudCliOperation(
+          operation,
+          resourceType: 'organization',
+          logger: logger,
+        );
+        organization = await waiter.run(
+          verbs: const (
+            run: 'create',
+            running: 'Creating',
+            completed: 'created',
+          ),
+          cancelTrigger: _stopSignal.future,
+          resource: pb.Organization(),
+        );
+        logger.fine('Created organization: $organization');
+        progress.complete('Created organization $organizationId');
+      } on Object catch (e, st) {
+        logger.fine('Failed to create organization', e, st);
+        progress.fail('Failed to create organization');
+        rethrow;
+      }
+    }
+    return organization;
+  }
+
   /// Gets or creates a project with the given [projectName] in the authenticated
   /// user's organization.
   Future<String?> _createProject({
     required ast.Project projectDefinition,
     required String projectName,
   }) async {
-    var organization = await organizations.primary;
+    final organization = await _getOrCreateOrganization(
+      project: projectDefinition,
+    );
     if (organization == null) {
-      final organizationName = cliLogger.prompt(
-        'What should we call your organization?',
-      );
-      if (organizationName.isEmpty) {
-        return null;
-      }
-      // First, create the organization.
-      logger.fine('Creating organization');
-      final operation = cloud.organizations.create(
-        organizationId: organizationName.paramCase,
-        organization: pb.Organization(
-          displayName: organizationName,
-          primaryRegion: pb.Region.NORTH_AMERICA,
-        ),
+      return null;
+    }
+    final progress = cliLogger.progress('Creating project $projectName');
+    try {
+      final operation = cloud.projects.create(
+        parent: organization.name,
+        projectId: projectName.paramCase,
+        displayName: projectDefinition.displayName,
+        regions: switch (projectDefinition.primaryRegion) {
+          ast.Region.northAmerica => const [pb.Region.NORTH_AMERICA],
+          ast.Region.europe => const [pb.Region.EUROPE],
+          ast.Region.asiaPacific => const [pb.Region.ASIA_PACIFIC],
+          _ => null,
+        },
       );
       final waiter = CloudCliOperation(
         operation,
-        resourceType: 'organization',
+        resourceType: 'project',
         logger: logger,
       );
-      final cloudOrganization = await waiter.run(
+      final project = await waiter.run(
         verbs: const (
           run: 'create',
           running: 'Creating',
           completed: 'created',
         ),
         cancelTrigger: _stopSignal.future,
-        resource: pb.Organization(),
+        resource: pb.Project(),
       );
-      logger.fine('Created organization: $cloudOrganization');
-      organization = cloudOrganization.toDb();
-      await organizations.put(organization);
+      logger.fine('Created project: $project');
+      final dbProject = await projects.put(project.toDb());
+      cliLogger
+          .success('Your project has been created! Starting deployment...');
+      return dbProject.id;
+    } on Object catch (e, st) {
+      logger.fine('Failed to create project', e, st);
+      progress.fail('Failed to create project');
+      rethrow;
     }
-    logger.finest('Creating project with name: $projectName');
-    final operation = cloud.projects.create(
-      parent: 'organizations/${organization.id}',
-      projectId: projectName.paramCase,
-      displayName: projectDefinition.displayName,
-      regions: switch (projectDefinition.primaryRegion) {
-        ast.Region.northAmerica => const [pb.Region.NORTH_AMERICA],
-        ast.Region.europe => const [pb.Region.EUROPE],
-        ast.Region.asiaPacific => const [pb.Region.ASIA_PACIFIC],
-        _ => null,
-      },
-    );
-    final waiter = CloudCliOperation(
-      operation,
-      resourceType: 'project',
-      logger: logger,
-    );
-    final project = await waiter.run(
-      verbs: const (
-        run: 'create',
-        running: 'Creating',
-        completed: 'created',
-      ),
-      cancelTrigger: _stopSignal.future,
-      resource: pb.Project(),
-    );
-    logger.fine('Created project: $project');
-    final dbProject = await projects.put(project.toDb());
-    cliLogger.success('Your project has been created! Starting deployment...');
-    return dbProject.id;
   }
 
   /// Builds the current project for deployment to the cloud.

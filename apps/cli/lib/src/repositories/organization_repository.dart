@@ -28,15 +28,11 @@ final class OrganizationRepository {
     return null;
   }
 
-  Future<Organization?> get primary async {
-    final dbOrgs = await _db.listOrganizations().get();
-    if (dbOrgs.isNotEmpty) {
-      return dbOrgs.single;
-    }
+  Future<cloud.Organization?> get primary async {
     try {
       final cloudOrgs = await _cloud.organizations.list();
       if (cloudOrgs.organizations.isNotEmpty) {
-        return await put(cloudOrgs.organizations.first.toDb());
+        return cloudOrgs.organizations.first;
       }
     } on Object catch (e, st) {
       _logger.fine('Failed to fetch organizations from cloud.', e, st);
