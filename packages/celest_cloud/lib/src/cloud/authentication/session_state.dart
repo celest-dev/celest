@@ -155,6 +155,111 @@ final class EmailSessionSuccess extends SessionSuccess
       };
 }
 
+sealed class SmsSessionState extends SessionState {
+  SmsSessionState({
+    required super.sessionId,
+    required super.sessionToken,
+    required this.phoneNumber,
+  });
+
+  final String phoneNumber;
+}
+
+final class SmsSessionVerifyCode extends SmsSessionState {
+  SmsSessionVerifyCode({
+    required super.sessionId,
+    required super.sessionToken,
+    required super.phoneNumber,
+  });
+
+  factory SmsSessionVerifyCode.fromJson(Map<String, Object?> json) {
+    return SmsSessionVerifyCode(
+      sessionId: json['sessionId'] as String,
+      sessionToken: json['sessionToken'] as String,
+      phoneNumber: json['phoneNumber'] as String,
+    );
+  }
+
+  @override
+  Map<String, Object?> toJson() => {
+        '@type': 'SmsSessionVerifyCode',
+        'sessionId': sessionId,
+        'sessionToken': sessionToken,
+        'phoneNumber': phoneNumber,
+      };
+}
+
+sealed class SmsSessionNeedsConfirmation
+    implements SmsSessionState, SessionNeedsConfirmation {}
+
+final class SmsSessionRegisterUser extends SmsSessionState
+    implements SmsSessionNeedsConfirmation, SessionRegisterUser {
+  SmsSessionRegisterUser({
+    required super.sessionId,
+    required super.sessionToken,
+    required super.phoneNumber,
+    required this.user,
+  });
+
+  factory SmsSessionRegisterUser.fromJson(Map<String, Object?> json) {
+    return SmsSessionRegisterUser(
+      sessionId: json['sessionId'] as String,
+      sessionToken: json['sessionToken'] as String,
+      phoneNumber: json['phoneNumber'] as String,
+      user: User()..mergeFromProto3Json(json['user'] as Map<String, Object?>),
+    );
+  }
+
+  @override
+  final User user;
+
+  @override
+  Map<String, Object?> toJson() => {
+        '@type': 'SmsSessionRegisterUser',
+        'sessionId': sessionId,
+        'sessionToken': sessionToken,
+        'phoneNumber': phoneNumber,
+        'user': user.toProto3Json(),
+      };
+}
+
+final class SmsSessionSuccess extends SessionSuccess
+    implements SmsSessionState {
+  SmsSessionSuccess({
+    required super.sessionId,
+    required super.sessionToken,
+    required super.isNewUser,
+    required super.identityToken,
+    required super.user,
+    required this.phoneNumber,
+  });
+
+  factory SmsSessionSuccess.fromJson(Map<String, Object?> json) {
+    return SmsSessionSuccess(
+      sessionId: json['sessionId'] as String,
+      sessionToken: json['sessionToken'] as String,
+      isNewUser: json['isNewUser'] as bool,
+      identityToken: json['identityToken'] as String,
+      user: User()..mergeFromProto3Json(json['user'] as Map<String, Object?>),
+      phoneNumber: json['phoneNumber'] as String,
+    );
+  }
+
+  @override
+  final String phoneNumber;
+
+  @override
+  Map<String, Object?> toJson() => {
+        '@type': 'SmsSessionSuccess',
+        'sessionId': sessionId,
+        'sessionToken': sessionToken,
+        'isNewUser': isNewUser,
+        'identityToken': identityToken,
+        'user': user.toProto3Json(),
+        'phoneNumber': phoneNumber,
+      };
+}
+
 sealed class IdpSessionState extends SessionState {
   IdpSessionState({
     required super.sessionId,

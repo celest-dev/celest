@@ -16,6 +16,7 @@ import 'package:stream_transform/stream_transform.dart';
 
 export 'flows/email_flow.dart';
 export 'flows/idp_flow.dart';
+export 'flows/sms_flow.dart';
 
 final class AuthImpl implements Auth {
   AuthImpl(

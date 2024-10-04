@@ -29,6 +29,12 @@ final class Authentication with BaseService {
     _clientType,
   );
 
+  late final SmsAuthentication sms = SmsAuthentication._(
+    _protocol,
+    logger,
+    _clientType,
+  );
+
   Future<Uri?> endSession(SessionState? state) async {
     final request = EndSessionRequest(
       sessionId: state?.sessionId,
@@ -192,6 +198,157 @@ final class EmailAuthentication with BaseService {
           user: response.success.user,
           isNewUser: response.success.isNewUser,
           email: state.email,
+        ),
+      _ => throw StateError('Unexpected response: $response'),
+    };
+  }
+}
+
+final class SmsAuthentication with BaseService {
+  SmsAuthentication._(this._client, this.logger, this._clientType);
+
+  final AuthenticationProtocol _client;
+  @override
+  final Logger? logger;
+  final ClientType _clientType;
+
+  Future<SmsSessionState> start({
+    required String phoneNumber,
+  }) async {
+    final request = StartSessionRequest(
+      smsOtp: AuthenticationFactorSmsOtp(
+        phoneNumber: phoneNumber,
+      ),
+      client: SessionClient(
+        clientType: _clientType,
+      ),
+    );
+    final response = await run(
+      'Sms.StartSession',
+      request: request,
+      action: _client.startSession,
+    );
+    return switch (response.whichState()) {
+      Session_State.nextStep
+          when response.nextStep.hasNeedsProof() &&
+              response.nextStep.needsProof.hasSmsOtp() =>
+        SmsSessionVerifyCode(
+          sessionId: response.sessionId,
+          sessionToken: response.sessionToken,
+          phoneNumber: phoneNumber,
+        ),
+      Session_State.nextStep when response.nextStep.hasPendingConfirmation() =>
+        switch (response.nextStep.pendingConfirmation.whichPending()) {
+          AuthenticationPendingConfirmation_Pending.registerUser =>
+            SmsSessionRegisterUser(
+              sessionId: response.sessionId,
+              sessionToken: response.sessionToken,
+              phoneNumber: phoneNumber,
+              user: response.nextStep.pendingConfirmation.registerUser,
+            ),
+          _ => throw StateError('Unexpected response: $response'),
+        },
+      _ => throw StateError('Unexpected response: $response'),
+    };
+  }
+
+  Future<SmsSessionVerifyCode> resendCode({
+    required SmsSessionVerifyCode state,
+  }) async {
+    final request = ContinueSessionRequest(
+      sessionId: state.sessionId,
+      sessionToken: state.sessionToken,
+      resend: AuthenticationFactor(
+        smsOtp: AuthenticationFactorSmsOtp(
+          phoneNumber: state.phoneNumber,
+        ),
+      ),
+    );
+    final response = await run(
+      'Sms.ContinueSession',
+      request: request,
+      action: _client.continueSession,
+    );
+    return switch (response.whichState()) {
+      Session_State.nextStep
+          when response.nextStep.hasNeedsProof() &&
+              response.nextStep.needsProof.hasSmsOtp() =>
+        SmsSessionVerifyCode(
+          sessionId: response.sessionId,
+          sessionToken: response.sessionToken,
+          phoneNumber: state.phoneNumber,
+        ),
+      _ => throw StateError('Unexpected response: $response'),
+    };
+  }
+
+  Future<SmsSessionSuccess> verifyCode({
+    required SmsSessionVerifyCode state,
+    required String code,
+  }) async {
+    final request = ContinueSessionRequest(
+      sessionId: state.sessionId,
+      sessionToken: state.sessionToken,
+      proof: AuthenticationFactor(
+        smsOtp: AuthenticationFactorSmsOtp(
+          phoneNumber: state.phoneNumber,
+          code: code,
+        ),
+      ),
+    );
+    final response = await run(
+      'Sms.ContinueSession',
+      request: request,
+      action: _client.continueSession,
+    );
+    if (response.whichState() != Session_State.success) {
+      throw StateError('Unexpected response: $response');
+    }
+    return SmsSessionSuccess(
+      sessionId: response.sessionId,
+      sessionToken: response.sessionToken,
+      isNewUser: response.success.isNewUser,
+      identityToken: response.success.identityToken,
+      user: response.success.user,
+      phoneNumber: state.phoneNumber,
+    );
+  }
+
+  Future<SmsSessionState> confirm({
+    required SmsSessionNeedsConfirmation state,
+  }) async {
+    final request = ContinueSessionRequest(
+      sessionId: state.sessionId,
+      sessionToken: state.sessionToken,
+      confirmation: switch (state) {
+        SmsSessionRegisterUser(:final user) =>
+          AuthenticationPendingConfirmation(
+            registerUser: user,
+          ),
+      },
+    );
+    final response = await run(
+      'Sms.ContinueSession',
+      request: request,
+      action: _client.continueSession,
+    );
+    return switch (response.whichState()) {
+      Session_State.nextStep when response.nextStep.hasNeedsProof() => switch (
+            response.nextStep.needsProof.whichFactor()) {
+          AuthenticationFactor_Factor.smsOtp => SmsSessionVerifyCode(
+              sessionId: response.sessionId,
+              sessionToken: response.sessionToken,
+              phoneNumber: state.phoneNumber,
+            ),
+          _ => throw StateError('Unexpected response: $response'),
+        },
+      Session_State.success => SmsSessionSuccess(
+          sessionId: response.sessionId,
+          sessionToken: response.sessionToken,
+          identityToken: response.success.identityToken,
+          user: response.success.user,
+          isNewUser: response.success.isNewUser,
+          phoneNumber: state.phoneNumber,
         ),
       _ => throw StateError('Unexpected response: $response'),
     };
