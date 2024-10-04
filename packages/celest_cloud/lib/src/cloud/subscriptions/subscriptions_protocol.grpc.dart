@@ -29,4 +29,11 @@ final class SubscriptionsProtocolGrpc implements SubscriptionsProtocol {
   Future<PauseSubscriptionResponse> pause(PauseSubscriptionRequest request) {
     return _client.pauseSubscription(request);
   }
+
+  @override
+  Future<DescribePricingResponse> describePricing(
+    DescribePricingRequest request,
+  ) {
+    return _client.describePricing(request);
+  }
 }

@@ -74,6 +74,21 @@ final class Subscriptions with BaseService {
       action: _protocol.cancel,
     );
   }
+
+  Future<DescribePricingResponse> describePricing({
+    String? regionCode,
+    String? currencyCode,
+  }) {
+    final request = DescribePricingRequest(
+      regionCode: regionCode,
+      currencyCode: currencyCode,
+    );
+    return run(
+      'Subscriptions.DescribePricing',
+      request: request,
+      action: _protocol.describePricing,
+    );
+  }
 }
 
 sealed class SubscriptionPlan {

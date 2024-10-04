@@ -44,6 +44,12 @@ class SubscriptionsClient extends $grpc.Client {
       ($11.CancelSubscriptionRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) =>
           $11.CancelSubscriptionResponse.fromBuffer(value));
+  static final _$describePricing = $grpc.ClientMethod<
+          $11.DescribePricingRequest, $11.DescribePricingResponse>(
+      '/celest.cloud.v1alpha1.Subscriptions/DescribePricing',
+      ($11.DescribePricingRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $11.DescribePricingResponse.fromBuffer(value));
 
   SubscriptionsClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -72,6 +78,12 @@ class SubscriptionsClient extends $grpc.Client {
       $11.CancelSubscriptionRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$cancelSubscription, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$11.DescribePricingResponse> describePricing(
+      $11.DescribePricingRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$describePricing, request, options: options);
   }
 }
 
@@ -116,6 +128,15 @@ abstract class SubscriptionsServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $11.CancelSubscriptionRequest.fromBuffer(value),
         ($11.CancelSubscriptionResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$11.DescribePricingRequest,
+            $11.DescribePricingResponse>(
+        'DescribePricing',
+        describePricing_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $11.DescribePricingRequest.fromBuffer(value),
+        ($11.DescribePricingResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$11.Subscription> getSubscription_Pre($grpc.ServiceCall call,
@@ -140,6 +161,12 @@ abstract class SubscriptionsServiceBase extends $grpc.Service {
     return cancelSubscription(call, await request);
   }
 
+  $async.Future<$11.DescribePricingResponse> describePricing_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$11.DescribePricingRequest> request) async {
+    return describePricing(call, await request);
+  }
+
   $async.Future<$11.Subscription> getSubscription(
       $grpc.ServiceCall call, $11.GetSubscriptionRequest request);
   $async.Future<$11.ChangePlanResponse> changePlan(
@@ -148,4 +175,6 @@ abstract class SubscriptionsServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $11.PauseSubscriptionRequest request);
   $async.Future<$11.CancelSubscriptionResponse> cancelSubscription(
       $grpc.ServiceCall call, $11.CancelSubscriptionRequest request);
+  $async.Future<$11.DescribePricingResponse> describePricing(
+      $grpc.ServiceCall call, $11.DescribePricingRequest request);
 }
