@@ -29,10 +29,22 @@ sealed class AuthFlowInProgress extends AuthState {
   void cancel();
 }
 
+/// {@template celest_auth.otp_needs_verification}
+/// The user is in the process of authenticating with an OTP code.
+/// {@endtemplate}
+abstract interface class OtpNeedsVerification implements AuthFlowInProgress {
+  /// Resend the verification code.
+  Future<void> resend();
+
+  /// Verify the [otpCode] sent to the user.
+  Future<User> verify({required String otpCode});
+}
+
 /// {@template celest_auth.email_needs_verification}
 /// The user is in the process of authenticating with their email.
 /// {@endtemplate}
-abstract class EmailNeedsVerification extends AuthFlowInProgress {
+abstract class EmailNeedsVerification extends AuthFlowInProgress
+    implements OtpNeedsVerification {
   /// {@macro celest_auth.email_needs_verification}
   const EmailNeedsVerification({
     required this.email,
@@ -40,12 +52,20 @@ abstract class EmailNeedsVerification extends AuthFlowInProgress {
 
   /// The email address to be verified.
   final String email;
+}
 
-  /// Resend the verification code.
-  Future<void> resend();
+/// {@template celest_auth.sms_needs_verification}
+/// The user is in the process of authenticating with their phone number.
+/// {@endtemplate}
+abstract class SmsNeedsVerification extends AuthFlowInProgress
+    implements OtpNeedsVerification {
+  /// {@macro celest_auth.sms_needs_verification}
+  const SmsNeedsVerification({
+    required this.phoneNumber,
+  });
 
-  /// Verify the [otpCode] sent to the [email].
-  Future<User> verify({required String otpCode});
+  /// The phone number to be verified.
+  final String phoneNumber;
 }
 
 /// {@template celest_auth.auth_link_user}
