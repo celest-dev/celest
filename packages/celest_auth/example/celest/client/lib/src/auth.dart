@@ -19,4 +19,6 @@ extension type CelestAuth._(_$celest.AuthImpl _hub) implements _$celest.Auth {
         );
 
   _$celest.Email get email => _$celest.Email(_hub);
+
+  _$celest.Sms get sms => _$celest.Sms(_hub);
 }

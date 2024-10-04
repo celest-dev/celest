@@ -15,13 +15,25 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   final _emailController = TextEditingController();
+  final _phoneNumberController = TextEditingController();
   final _otpController = TextEditingController();
   Future<Object>? _request;
 
   Future<void> signUp() async {
     try {
-      await celest.auth.email.authenticate(email: _emailController.text);
+      await switch ((_emailController.text, _phoneNumberController.text)) {
+        (final email, _) when email.isNotEmpty =>
+          celest.auth.email.authenticate(
+            email: _emailController.text,
+          ),
+        (_, final phoneNumber) when phoneNumber.isNotEmpty =>
+          celest.auth.sms.authenticate(
+            phoneNumber: _phoneNumberController.text,
+          ),
+        _ => throw Exception('Email or phone number required'),
+      };
       _emailController.clear();
+      _phoneNumberController.clear();
     } on Exception catch (e, st) {
       debugPrint('Error: $e');
       debugPrint('Stacktrace: $st');
@@ -78,7 +90,7 @@ class _MainAppState extends State<MainApp> {
                     ],
                     const SizedBox(height: 16),
                     ...switch (state) {
-                      EmailNeedsVerification() => [
+                      OtpNeedsVerification() => [
                           TextField(
                             key: const ValueKey('otp'),
                             controller: _otpController,
@@ -111,9 +123,21 @@ class _MainAppState extends State<MainApp> {
                             keyboardType: TextInputType.emailAddress,
                           ),
                           const SizedBox(height: 16),
+                          TextField(
+                            key: const ValueKey('phoneNumber'),
+                            controller: _phoneNumberController,
+                            decoration: const InputDecoration(
+                              labelText: 'Phone Number',
+                            ),
+                            autofillHints: const [
+                              AutofillHints.telephoneNumber,
+                            ],
+                            keyboardType: TextInputType.phone,
+                          ),
+                          const SizedBox(height: 16),
                           TextButton(
                             onPressed: signUp,
-                            child: const Text('Sign In with Email'),
+                            child: const Text('Sign In'),
                           ),
                         ],
                       Authenticated() => [
