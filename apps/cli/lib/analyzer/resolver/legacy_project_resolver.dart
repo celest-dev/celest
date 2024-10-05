@@ -1022,6 +1022,8 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
       switch (authProvider.type) {
         case InterfaceType(isAuthProviderEmail: true):
           type = ast.AuthProviderType.email;
+        case InterfaceType(isAuthProviderSms: true):
+          type = ast.AuthProviderType.sms;
         default:
           reportError(
             'Unknown auth provider type: ${authProvider.type}',

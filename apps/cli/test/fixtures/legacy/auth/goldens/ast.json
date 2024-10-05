@@ -1758,15 +1758,34 @@
         "type": "email",
         "location": {
           "start": {
-            "offset": 44,
-            "uri": "auth.dart",
-            "line": 2,
+            "offset": 84,
+            "uri": "project.dart",
+            "line": 4,
             "column": 6
           },
           "end": {
-            "offset": 48,
-            "uri": "auth.dart",
-            "line": 2,
+            "offset": 88,
+            "uri": "project.dart",
+            "line": 4,
+            "column": 10
+          },
+          "text": "auth"
+        }
+      },
+      {
+        "name": "sms",
+        "type": "sms",
+        "location": {
+          "start": {
+            "offset": 84,
+            "uri": "project.dart",
+            "line": 4,
+            "column": 6
+          },
+          "end": {
+            "offset": 88,
+            "uri": "project.dart",
+            "line": 4,
             "column": 10
           },
           "text": "auth"
@@ -1775,15 +1794,15 @@
     ],
     "location": {
       "start": {
-        "offset": 44,
-        "uri": "auth.dart",
-        "line": 2,
+        "offset": 84,
+        "uri": "project.dart",
+        "line": 4,
         "column": 6
       },
       "end": {
-        "offset": 48,
-        "uri": "auth.dart",
-        "line": 2,
+        "offset": 88,
+        "uri": "project.dart",
+        "line": 4,
         "column": 10
       },
       "text": "auth"

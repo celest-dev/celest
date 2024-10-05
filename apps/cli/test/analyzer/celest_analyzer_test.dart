@@ -2472,21 +2472,23 @@ void sayHello(
       // );
 
       testNoErrors(
-        name: 'valid_inline_provider',
+        name: 'valid_inline_providers',
         authDart: '''
 const auth = Auth(
   providers: [
     AuthProvider.email(),
+    AuthProvider.sms(),
   ],
 );
 ''',
         expectProject: (project) {
           check(project.auth)
               .isNotNull()
-              .has((it) => it.providers, 'providers')
-              .single
-              .has((it) => it.type, 'type')
-              .equals(AuthProviderType.email);
+              .has((it) => it.providers.map((it) => it.type), 'providers')
+              .unorderedEquals([
+            AuthProviderType.email,
+            AuthProviderType.sms,
+          ]);
         },
       );
 

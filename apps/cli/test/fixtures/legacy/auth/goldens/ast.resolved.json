@@ -389,6 +389,10 @@
       {
         "name": "email",
         "type": "email"
+      },
+      {
+        "name": "sms",
+        "type": "sms"
       }
     ]
   }

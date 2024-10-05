@@ -108,6 +108,12 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
+  bool get isAuthProviderSms => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == '_SmsAuthProvider' && library.isPackageCelest,
+        _ => false,
+      };
+
   // bool get isAuthProviderGoogle => switch (element) {
   //       ClassElement(:final name, :final library) =>
   //         name == '_GoogleAuthProvider' && library.isPackageCelest,

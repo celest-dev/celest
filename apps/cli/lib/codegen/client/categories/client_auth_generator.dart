@@ -83,6 +83,29 @@ final class ClientAuthGenerator {
                 ..body = emailClass.newInstance([refer('_hub')]).code,
             ),
           );
+        case ast.AuthProviderType.sms:
+          final smsClass = refer(
+            'Sms',
+            'package:celest_auth/src/auth_impl.dart',
+          );
+          _client.methods.add(
+            Method(
+              (m) => m
+                ..returns = smsClass
+                ..type = MethodType.getter
+                ..name = 'sms'
+                ..lambda = true
+                ..body = smsClass.newInstance([refer('_hub')]).code,
+            ),
+          );
+
+        // TODO(dnys1): Implement the rest of the providers
+        case ast.AuthProviderType.apple:
+          break;
+        case ast.AuthProviderType.gitub:
+          break;
+        case ast.AuthProviderType.google:
+          break;
       }
     }
 
