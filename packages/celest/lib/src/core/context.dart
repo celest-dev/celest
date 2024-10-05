@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'package:celest/src/config/env.dart';
 import 'package:celest/src/core/environment.dart';
 import 'package:celest/src/runtime/gcp/gcp.dart';
 import 'package:celest_core/_internal.dart';
@@ -8,6 +8,7 @@ import 'package:celest_core/_internal.dart';
 import 'package:celest_core/src/auth/user.dart';
 import 'package:cloud_http/cloud_http.dart';
 import 'package:meta/meta.dart';
+import 'package:platform/platform.dart';
 import 'package:shelf/shelf.dart' as shelf;
 
 /// The [Context] for the current request.
@@ -36,6 +37,9 @@ final class Context {
 
   /// The [Context] for the current execution scope.
   static Context get current => Context.of(Zone.current);
+
+  /// The platform of the current context.
+  final Platform platform = const LocalPlatform();
 
   /// Context-specific values.
   final Map<ContextKey<Object>, Object> _values = {};
@@ -80,7 +84,10 @@ final class Context {
 
   /// The Celest [Environment] of the running service.
   Environment get environment {
-    return Environment(Platform.environment['ENV']!);
+    return switch (get(env.environment)) {
+      final env? => Environment(env),
+      _ => throw StateError('No environment set in context'),
+    };
   }
 
   (Context, V)? _get<V extends Object>(ContextKey<V> key) {
