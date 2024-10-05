@@ -23,6 +23,7 @@ final class AuthImpl implements Auth {
     this.celest, {
     NativeStorage? storage,
     celest_cloud.CelestCloud? cloud,
+    this.authProviders = const [],
   }) : _storage = (storage ?? celest.nativeStorage).scoped('/celest/auth') {
     this.cloud = cloud ??
         celest_cloud.CelestCloud(
@@ -53,20 +54,60 @@ final class AuthImpl implements Auth {
   StreamSubscription<AuthState>? _authStateSubscription;
   StreamSubscription<AuthState>? _authFlowSubscription;
 
+  final Map<AuthProviderType, StreamSubscription<void>> _authProviderSubs = {};
+
   @override
-  Future<AuthState> init() {
+  Future<AuthState> init({
+    TokenSource? externalAuth,
+  }) {
     return _init ??= Future.sync(() async {
       _authStateSubscription =
           _authStateController.stream.listen((state) => _authState = state);
-      final initialState = await _initialState.onError((e, st) {
-        return const Unauthenticated();
-      });
+      final initialState = await _initialState(externalAuth: externalAuth)
+          .onError((e, st) => const Unauthenticated());
       _authStateController.add(initialState);
       return initialState;
     });
   }
 
-  Future<AuthState> get _initialState async {
+  void _subscribeToExternalAuth(
+    AuthProviderType type,
+    Stream<String?> tokenSource,
+  ) {
+    if (_authProviderSubs.containsKey(type)) {
+      throw StateError('Internal error. Duplicate auth provider subscription');
+    }
+    _authProviderSubs[type] = tokenSource.listen(
+      (token) async {
+        if (token == null) {
+          _reset();
+          _authStateController.add(const Unauthenticated());
+          return;
+        }
+        await secureStorage.write('cork', token);
+        if (_authState is! Authenticated) {
+          final user = await cloud.users.get('users/me');
+          _authStateController.add(Authenticated(user: user.toCelest()));
+        }
+      },
+      onError: _authStateController.addError,
+      cancelOnError: false,
+    );
+  }
+
+  Future<AuthState> _initialState({
+    TokenSource? externalAuth,
+  }) async {
+    if (externalAuth != null) {
+      _subscribeToExternalAuth(externalAuth.provider, externalAuth);
+    } else if (authProviders.isNotEmpty) {
+      final provider = authProviders.first;
+      throw StateError(
+        'Celest Auth is configured to use external auth, but no token '
+        'source was provided. Provide a token source by calling '
+        '`celest.init(externalAuth: ExternalAuthProvider.${provider.name}(...))`.',
+      );
+    }
     var initialState = await _hydrateSession();
     if (initialState != null) {
       return initialState;
@@ -173,10 +214,16 @@ final class AuthImpl implements Auth {
   final NativeAuthentication nativeAuth = NativeAuthentication();
   final NativeStorage _storage;
 
+  final List<AuthProviderType> authProviders;
+
   NativeStorage get localStorage => _storage;
   IsolatedNativeStorage get secureStorage => _storage.secure.isolated;
 
   Future<void> close() async {
+    for (final subscription in _authProviderSubs.values) {
+      subscription.cancel().ignore();
+    }
+    _authProviderSubs.clear();
     await _authStateSubscription?.cancel();
     await _authFlowSubscription?.cancel();
     await _authStateController.close();
