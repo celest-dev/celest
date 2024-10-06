@@ -8,13 +8,15 @@
           "name": "callsThrowsCommonException",
           "route": "/external/calls-throws-common-exception",
           "apiName": "external",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "callsThrowsCustomException": {
           "name": "callsThrowsCustomException",
           "route": "/external/calls-throws-custom-exception",
           "apiName": "external",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -25,25 +27,29 @@
           "name": "callsThrowsCustomError",
           "route": "/nonthrowing/calls-throws-custom-error",
           "apiName": "nonthrowing",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "callsThrowsBaseError": {
           "name": "callsThrowsBaseError",
           "route": "/nonthrowing/calls-throws-base-error",
           "apiName": "nonthrowing",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "callsThrowsCustomException": {
           "name": "callsThrowsCustomException",
           "route": "/nonthrowing/calls-throws-custom-exception",
           "apiName": "nonthrowing",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "callsThrowsBaseException": {
           "name": "callsThrowsBaseException",
           "route": "/nonthrowing/calls-throws-base-exception",
           "apiName": "nonthrowing",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -54,30 +60,35 @@
           "name": "throwsCustomError",
           "route": "/throwing/throws-custom-error",
           "apiName": "throwing",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsBaseError": {
           "name": "throwsBaseError",
           "route": "/throwing/throws-base-error",
           "apiName": "throwing",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsCustomException": {
           "name": "throwsCustomException",
           "route": "/throwing/throws-custom-exception",
           "apiName": "throwing",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsBaseException": {
           "name": "throwsBaseException",
           "route": "/throwing/throws-base-exception",
           "apiName": "throwing",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     }
   },
   "envVars": [],
+  "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],

@@ -9,6 +9,7 @@
           "route": "/lib/say-hello-authenticated",
           "apiName": "lib",
           "envVars": [],
+          "secrets": [],
           "policySet": {
             "policies": {
               "Celest::CloudFunction::sayHelloAuthenticated_authenticated_0": {
@@ -86,6 +87,7 @@
           "route": "/lib/stream-hello-authenticated",
           "apiName": "lib",
           "envVars": [],
+          "secrets": [],
           "streamType": "unidirectionalServer",
           "policySet": {
             "policies": {
@@ -164,6 +166,7 @@
           "route": "/lib/say-hello-public",
           "apiName": "lib",
           "envVars": [],
+          "secrets": [],
           "policySet": {
             "policies": {
               "Celest::CloudFunction::sayHelloPublic_public_0": {
@@ -197,6 +200,7 @@
           "route": "/lib/stream-hello-public",
           "apiName": "lib",
           "envVars": [],
+          "secrets": [],
           "streamType": "unidirectionalServer",
           "policySet": {
             "policies": {
@@ -230,13 +234,15 @@
           "name": "sayHello",
           "route": "/lib/say-hello",
           "apiName": "lib",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "streamHello": {
           "name": "streamHello",
           "route": "/lib/stream-hello",
           "apiName": "lib",
           "envVars": [],
+          "secrets": [],
           "streamType": "unidirectionalServer"
         }
       }
@@ -248,13 +254,15 @@
           "name": "sayHello",
           "route": "/authenticated-lib/say-hello",
           "apiName": "authenticated_lib",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "streamHello": {
           "name": "streamHello",
           "route": "/authenticated-lib/stream-hello",
           "apiName": "authenticated_lib",
           "envVars": [],
+          "secrets": [],
           "streamType": "unidirectionalServer"
         }
       },
@@ -337,13 +345,15 @@
           "name": "sayHello",
           "route": "/public-lib/say-hello",
           "apiName": "public_lib",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "streamHello": {
           "name": "streamHello",
           "route": "/public-lib/stream-hello",
           "apiName": "public_lib",
           "envVars": [],
+          "secrets": [],
           "streamType": "unidirectionalServer"
         }
       },
@@ -377,6 +387,7 @@
     }
   },
   "envVars": [],
+  "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],
@@ -387,12 +398,14 @@
   "auth": {
     "providers": [
       {
-        "name": "email",
-        "type": "email"
+        "$": "ResolvedEmailAuthProvider",
+        "name": "EMAIL_OTP",
+        "type": "EMAIL_OTP"
       },
       {
-        "name": "sms",
-        "type": "sms"
+        "$": "ResolvedSmsAuthProvider",
+        "name": "SMS_OTP",
+        "type": "SMS_OTP"
       }
     ]
   }

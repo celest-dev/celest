@@ -67,8 +67,8 @@ final class ClientAuthGenerator {
 
   Library generate() {
     for (final provider in auth.providers) {
-      switch (provider.type) {
-        case ast.AuthProviderType.email:
+      switch (provider) {
+        case ast.EmailAuthProvider():
           final emailClass = refer(
             'Email',
             'package:celest_auth/src/auth_impl.dart',
@@ -83,7 +83,7 @@ final class ClientAuthGenerator {
                 ..body = emailClass.newInstance([refer('_hub')]).code,
             ),
           );
-        case ast.AuthProviderType.sms:
+        case ast.SmsAuthProvider():
           final smsClass = refer(
             'Sms',
             'package:celest_auth/src/auth_impl.dart',
@@ -98,14 +98,51 @@ final class ClientAuthGenerator {
                 ..body = smsClass.newInstance([refer('_hub')]).code,
             ),
           );
-
-        // TODO(dnys1): Implement the rest of the providers
-        case ast.AuthProviderType.apple:
-          break;
-        case ast.AuthProviderType.gitub:
-          break;
-        case ast.AuthProviderType.google:
-          break;
+        case ast.AppleAuthProvider():
+          final appleClass = refer(
+            'Apple',
+            'package:celest_auth/src/auth_impl.dart',
+          );
+          _client.methods.add(
+            Method(
+              (m) => m
+                ..returns = appleClass
+                ..type = MethodType.getter
+                ..name = 'apple'
+                ..lambda = true
+                ..body = appleClass.newInstance([refer('_hub')]).code,
+            ),
+          );
+        case ast.GitHubAuthProvider():
+          final gitHubClass = refer(
+            'GitHub',
+            'package:celest_auth/src/auth_impl.dart',
+          );
+          _client.methods.add(
+            Method(
+              (m) => m
+                ..returns = gitHubClass
+                ..type = MethodType.getter
+                ..name = 'gitHub'
+                ..lambda = true
+                ..body = gitHubClass.newInstance([refer('_hub')]).code,
+            ),
+          );
+        case ast.GoogleAuthProvider():
+          final googleClass = refer(
+            'Google',
+            'package:celest_auth/src/auth_impl.dart',
+          );
+          _client.methods.add(
+            Method(
+              (m) => m
+                ..returns = googleClass
+                ..type = MethodType.getter
+                ..name = 'google'
+                ..lambda = true
+                ..body = googleClass.newInstance([refer('_hub')]).code,
+            ),
+          );
       }
     }
 

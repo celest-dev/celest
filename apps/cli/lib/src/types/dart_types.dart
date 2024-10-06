@@ -590,9 +590,12 @@ class _Celest {
   DartTypeReference get cloudWidget =>
       const DartTypeReference('CloudWidget', _url);
 
-  /// Creates a [celest.EnvironmentVariable] reference.
+  /// Creates a [celest.env] reference.
   DartTypeReference get environmentVariable =>
-      const DartTypeReference('EnvironmentVariable', _url);
+      const DartTypeReference('env', _url);
+
+  /// Creates a [celest.secret] reference.
+  DartTypeReference get secret => const DartTypeReference('secret', _url);
 
   /// Creates a [celest_core.InternalServerError] reference.
   DartTypeReference get internalServerError =>

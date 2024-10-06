@@ -1,20 +1,19 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/diagnostic/diagnostic.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
+import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
 import 'package:celest_cli/analyzer/resolver/legacy_project_resolver.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
-import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/config/feature_flags.dart';
 import 'package:celest_cli/database/cache/cache_database.dart';
 import 'package:celest_cli/pub/project_dependency.dart';
@@ -102,7 +101,7 @@ const project = Project(name: 'cache_warmup');
   }
 
   @override
-  AnalysisContext get context => celestProject.analysisContext;
+  DriverBasedAnalysisContext get context => celestProject.analysisContext;
 
   final List<CelestAnalysisError> _errors = [];
   final List<CelestAnalysisError> _warnings = [];
@@ -188,6 +187,7 @@ const project = Project(name: 'cache_warmup');
       dartTypedData as LibraryElementResult,
       celestCoreExceptions,
       celestCoreUser,
+      celestConfigEnv,
     ) = await (
       context.currentSession.getLibraryByUri('dart:core'),
       context.currentSession.getLibraryByUri('dart:typed_data'),
@@ -200,12 +200,22 @@ const project = Project(name: 'cache_warmup');
       context.currentSession.getLibraryByUri(
         'package:celest_core/src/auth/user.dart',
       ),
+      context.currentSession.getLibraryByUri(
+        'package:celest/src/config/env.dart',
+      )
     ).wait;
     if (celestCoreExceptions is! LibraryElementResult ||
         celestCoreUser is! LibraryElementResult) {
       await dumpPackageConfig();
       throw StateError('Failed to resolve celest_core');
     }
+    if (celestConfigEnv is! LibraryElementResult) {
+      await dumpPackageConfig();
+      throw StateError('Failed to resolve celest');
+    }
+
+    final envElement = celestConfigEnv.getClassElement('env');
+    final secretElement = celestConfigEnv.getClassElement('secret');
     typeHelper
       ..coreTypes = CoreTypes(
         typeProvider: dartCore.element.typeProvider,
@@ -225,6 +235,10 @@ const project = Project(name: 'cache_warmup');
             celestCoreExceptions.getClassType('InternalServerError'),
         userType: celestCoreUser.getClassType('User'),
         cloudExceptionType: celestCoreExceptions.getClassType('CloudException'),
+        celestEnvType: envElement.thisType,
+        celestEnvElement: envElement,
+        celestSecretType: secretElement.thisType,
+        celestSecretElement: secretElement,
       )
       ..typeSystem = dartCore.element.typeSystem
       ..typeProvider = dartCore.element.typeProvider;
@@ -281,19 +295,12 @@ const project = Project(name: 'cache_warmup');
     );
     _project.envVars.replace(envVars);
 
-    // Regenerate resources.dart before analyzing remaining project files.
-    // TODO(dnys1): Find a better way to do this.
-    if (updateResources) {
-      _logger.fine('Regenerating resources.dart');
-      final resourcesDart = fileSystem.file(projectPaths.resourcesDart);
-      if (!resourcesDart.existsSync()) {
-        await resourcesDart.create(recursive: true);
-      }
-      await resourcesDart.writeAsString(
-        CloudCodeGenerator.generateResourcesDart(_project.build()),
-      );
-      await celestProject.invalidate({projectPaths.resourcesDart});
-    }
+    final secrets = await performance.trace(
+      'CelestAnalyzer',
+      'resolveSecrets',
+      resolver.resolveSecrets,
+    );
+    _project.secrets.replace(secrets);
 
     final hasAuth = await performance.trace(
       'CelestAnalyzer',
@@ -429,6 +436,7 @@ const project = Project(name: 'cache_warmup');
         apiName: apiName,
         apiLibrary: apiLibraryResult,
         environmentVariables: _project.envVars.build(),
+        secrets: _project.secrets.build(),
         hasAuth: hasAuth,
       );
       if (baseApi == null) {

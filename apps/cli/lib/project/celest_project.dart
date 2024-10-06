@@ -12,6 +12,7 @@ import 'package:celest_cli/analyzer/analysis_options.dart';
 import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/database/cache/cache_database.dart';
 import 'package:celest_cli/database/cloud/cloud_database.dart';
+import 'package:celest_cli/database/project/project_database.dart';
 import 'package:celest_cli/env/env_manager.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/utils/run.dart';
@@ -69,7 +70,6 @@ final class CelestProject {
     required this.projectPaths,
     required AnalysisOptions analysisOptions,
     required this.config,
-    required this.envManager,
     required this.parentProject,
     required this.cacheDb,
     required ByteStore byteStore,
@@ -102,9 +102,6 @@ final class CelestProject {
     _logger
       ..finest('Loaded analysis options: $analysisOptions')
       ..finest('Loaded Celest config: $config');
-    final envManager = EnvManager(projectPaths.envFile);
-    await envManager.spawn();
-    envManager.envVars.ignore();
     _logger.finest('Spawned env manager');
     final cacheDb = await CacheDatabase.open(projectRoot, verbose: verbose);
     final byteStore = MemoryCachingByteStore(
@@ -115,7 +112,6 @@ final class CelestProject {
       projectPaths: projectPaths,
       analysisOptions: analysisOptions,
       config: config,
-      envManager: envManager,
       parentProject: parentProject,
       cacheDb: cacheDb,
       byteStore: byteStore,
@@ -159,7 +155,7 @@ final class CelestProject {
     };
   }
 
-  final EnvManager envManager;
+  final EnvManager envManager = EnvManager();
   final ParentProject? parentProject;
 
   /// The [AnalysisContext] for the current project.
@@ -177,6 +173,12 @@ final class CelestProject {
   /// The [CloudDatabase] for the current project.
   late final CloudDatabase cloudDb = CloudDatabase(
     config,
+    verbose: verbose,
+  );
+
+  /// The [ProjectDatabase] for the current project.
+  late final ProjectDatabase projectDb = ProjectDatabase(
+    projectRoot: projectPaths.projectRoot,
     verbose: verbose,
   );
 

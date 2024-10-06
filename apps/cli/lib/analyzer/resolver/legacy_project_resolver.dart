@@ -1,14 +1,17 @@
-import 'package:analyzer/dart/analysis/analysis_context.dart';
+import 'dart:collection';
+
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
 import 'package:analyzer/src/source/source_resource.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
+import 'package:celest_cli/analyzer/resolver/config_value_resolver.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/config/feature_flags.dart';
 import 'package:celest_cli/project/celest_project.dart';
@@ -43,7 +46,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
   final FeatureFlags featureFlags;
 
   @override
-  final AnalysisContext context;
+  final DriverBasedAnalysisContext context;
 
   @override
   Set<InterfaceElement> customModelTypes = {};
@@ -298,7 +301,24 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
   @override
   Future<Iterable<ast.EnvironmentVariable>>
       resolveEnvironmentVariables() async {
-    return celestProject.envManager.envVars;
+    // TODO(dnys1): Check reserved names
+    // TODO(dnys1): Check for conflict with secrets
+    final resolver = ConfigValueResolver(
+      context: context,
+      configValueElement: typeHelper.coreTypes.celestEnvElement,
+      errorReporter: this,
+    );
+    return resolver.resolve(ast.EnvironmentVariable.new);
+  }
+
+  @override
+  Future<Iterable<ast.Secret>> resolveSecrets() async {
+    final resolver = ConfigValueResolver(
+      context: context,
+      configValueElement: typeHelper.coreTypes.celestSecretElement,
+      errorReporter: this,
+    );
+    return resolver.resolve(ast.Secret.new);
   }
 
   (List<ast.ApiMetadata>, bool isCloud) _collectApiMetadata(
@@ -462,6 +482,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
   ast.NodeReference? _parameterReference(
     ParameterElement parameter, {
     required Iterable<ast.EnvironmentVariable> environmentVariables,
+    required Iterable<ast.Secret> secrets,
     required ast.ApiAuth? applicableAuth,
     required ast.StreamType? streamType,
   }) {
@@ -491,9 +512,11 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
       reportError('Could not resolve annotation', location: location);
       return null;
     }
+    const reservedEnvVars = ['PORT'];
     switch (annotationType) {
       case DartType(isEnvironmentVariable: true):
         // Check for migration
+        // TODO(dnys1): Update for V1
         if (migrateProject) {
           switch ((annotation.element, annotation.library)) {
             case (
@@ -524,21 +547,26 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         if (!validEnvTypes.isExactlyType(parameter.type)) {
           reportError(
             'The type of an environment variable parameter must be one of: '
-            '`String`, `Uri`, `int`, `double`, `num`, or `bool`',
+            '`String`, `Uint8List`, `Uri`, `int`, `double`, `num`, or `bool`',
             location: parameter.sourceLocation,
           );
           return null;
         }
-        final name = value.getField('name')?.toStringValue();
+        final name = (value.getField('name') ??
+                value.getField('(super)')?.getField('name'))
+            ?.toStringValue();
         if (name == null) {
           reportError(
-            'The `name` field is required on `EnvironmentVariable` annotations',
+            'The `name` field is required for environment variables',
             location: location,
           );
           return null;
         }
-        const reservedEnvVars = ['PORT'];
-        if (reservedEnvVars.contains(name)) {
+        final reservedCelestVariableOutsideCelest =
+            name.toUpperCase().startsWith('CELEST_') &&
+                !(annotation.element?.library?.isPackageCelest ?? false);
+        if (reservedEnvVars.contains(name) ||
+            reservedCelestVariableOutsideCelest) {
           reportError(
             'The environment variable name `$name` is reserved by Celest',
             location: parameter.sourceLocation,
@@ -554,6 +582,47 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         }
         return ast.NodeReference(
           type: ast.NodeType.environmentVariable,
+          name: name,
+        );
+      case DartType(isSecret: true):
+        if (!validEnvTypes.isExactlyType(parameter.type)) {
+          reportError(
+            'The type of an secret parameter must be one of: '
+            '`String`, `Uint8List`, `Uri`, `int`, `double`, `num`, or `bool`',
+            location: parameter.sourceLocation,
+          );
+          return null;
+        }
+        final name = (value.getField('name') ??
+                value.getField('(super)')?.getField('name'))
+            ?.toStringValue();
+        if (name == null) {
+          reportError(
+            'The `name` field is required for secrets',
+            location: location,
+          );
+          return null;
+        }
+        final reservedCelestVariableOutsideCelest =
+            name.toUpperCase().startsWith('CELEST_') &&
+                !(annotation.element?.library?.isPackageCelest ?? false);
+        if (reservedEnvVars.contains(name) ||
+            reservedCelestVariableOutsideCelest) {
+          reportError(
+            'The secret name `$name` is reserved by Celest',
+            location: parameter.sourceLocation,
+          );
+          return null;
+        }
+        if (secrets.none((secret) => secret.envName == name)) {
+          reportError(
+            'The secret `$name` does not exist',
+            location: location,
+          );
+          return null;
+        }
+        return ast.NodeReference(
+          type: ast.NodeType.secret,
           name: name,
         );
       case DartType(isUserContext: true):
@@ -712,6 +781,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     required String apiName,
     required ResolvedLibraryResult apiLibrary,
     required Iterable<ast.EnvironmentVariable> environmentVariables,
+    required Iterable<ast.Secret> secrets,
     required bool hasAuth,
   }) async {
     final library = apiLibrary.element;
@@ -847,6 +917,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
                 param,
                 applicableAuth: applicableAuth,
                 environmentVariables: environmentVariables,
+                secrets: secrets,
                 streamType: streamType,
               ),
               annotations: param.metadata
@@ -1016,14 +1087,23 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
       return null;
     }
 
-    final uniqueAuthProviders = <ast.AuthProvider>{};
+    final uniqueAuthProviders = LinkedHashSet<ast.AuthProvider>(
+      equals: (a, b) => a.type == b.type,
+      hashCode: (a) => a.type.hashCode,
+    );
     for (final authProvider in authProviders) {
-      final ast.AuthProviderType type;
+      final ast.AuthProviderBuilder provider;
       switch (authProvider.type) {
         case InterfaceType(isAuthProviderEmail: true):
-          type = ast.AuthProviderType.email;
+          provider = ast.EmailAuthProviderBuilder();
         case InterfaceType(isAuthProviderSms: true):
-          type = ast.AuthProviderType.sms;
+          provider = ast.SmsAuthProviderBuilder();
+        case InterfaceType(isAuthProviderApple: true):
+          provider = ast.AppleAuthProviderBuilder();
+        case InterfaceType(isAuthProviderGitHub: true):
+          provider = ast.GitHubAuthProviderBuilder();
+        case InterfaceType(isAuthProviderGoogle: true):
+          provider = ast.GoogleAuthProviderBuilder();
         default:
           reportError(
             'Unknown auth provider type: ${authProvider.type}',
@@ -1031,13 +1111,13 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           );
           continue;
       }
-      final astAuthProvider = ast.AuthProvider(
-        type: type,
-        location: authDefinitionLocation!,
-      );
+      provider
+        ..name = authProvider.variable?.name
+        ..location = authDefinitionLocation;
+      final astAuthProvider = provider.build();
       if (!uniqueAuthProviders.add(astAuthProvider)) {
         reportError(
-          'Duplicate auth provider: $type',
+          'Duplicate ${astAuthProvider.type.name} auth provider',
           location: authDefinitionLocation,
         );
       }

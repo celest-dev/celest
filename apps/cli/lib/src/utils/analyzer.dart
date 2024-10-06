@@ -96,6 +96,12 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
+  bool get isCelestEnvironmentVariable =>
+      element == typeHelper.coreTypes.celestEnvElement;
+
+  bool get isCelestSecret =>
+      element == typeHelper.coreTypes.celestSecretElement;
+
   bool get isAuth => switch (element) {
         ClassElement(:final name, :final library) =>
           name == 'Auth' && library.isPackageCelest,
@@ -114,11 +120,23 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
-  // bool get isAuthProviderGoogle => switch (element) {
-  //       ClassElement(:final name, :final library) =>
-  //         name == '_GoogleAuthProvider' && library.isPackageCelest,
-  //       _ => false,
-  //     };
+  bool get isAuthProviderGitHub => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == '_GitHubAuthProvider' && library.isPackageCelest,
+        _ => false,
+      };
+
+  bool get isAuthProviderApple => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == '_AppleAuthProvider' && library.isPackageCelest,
+        _ => false,
+      };
+
+  bool get isAuthProviderGoogle => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == '_GoogleAuthProvider' && library.isPackageCelest,
+        _ => false,
+      };
 
   bool get isProject => switch (element) {
         ClassElement(:final name, :final library) =>
@@ -174,11 +192,10 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
-  bool get isEnvironmentVariable => switch (element) {
-        ClassElement(:final name, :final library) =>
-          name == 'EnvironmentVariable' && library.isPackageCelest,
-        _ => false,
-      };
+  bool get isEnvironmentVariable =>
+      element == typeHelper.coreTypes.celestEnvElement;
+
+  bool get isSecret => element == typeHelper.coreTypes.celestSecretElement;
 
   bool get isUserContext => switch (element) {
         ClassElement(:final name, :final library) =>
@@ -437,7 +454,7 @@ extension _SubtypeResultX on SubtypeResult {
       );
 }
 
-extension on InterfaceElement {
+extension InterfaceElementHelpers on InterfaceElement {
   AnalysisDriver get _driver =>
       (library.session.analysisContext as DriverBasedAnalysisContext).driver;
 
@@ -461,6 +478,21 @@ extension on InterfaceElement {
         .whereType<ClassElement>()
         .map((res) => res.thisType)
         .toList();
+  }
+
+  Stream<SearchResult> references() async* {
+    final elementReferences =
+        await _driver.search.references(this, _searchedFiles);
+    for (final reference in elementReferences) {
+      yield reference;
+    }
+    if (unnamedConstructor case final constructor?) {
+      final constructorReferences =
+          await _driver.search.references(constructor, _searchedFiles);
+      for (final reference in constructorReferences) {
+        yield reference;
+      }
+    }
   }
 }
 
@@ -667,6 +699,14 @@ extension AnnotationIsPrivate on ElementAnnotation {
     if (isPrivate) {
       return null;
     }
+    if (element
+        case VariableElement(:final type) ||
+            PropertyAccessorElement(returnType: final type) ||
+            ConstructorElement(returnType: final DartType type)
+        when type == typeHelper.coreTypes.celestEnvType ||
+            type == typeHelper.coreTypes.celestSecretType) {
+      return null;
+    }
     final constant = computeConstantValue();
     if (constant == null) {
       return null;
@@ -684,6 +724,14 @@ extension AnnotationIsPrivate on ElementAnnotation {
 
   ast.DartValue? get toDartValue {
     if (isPrivate) {
+      return null;
+    }
+    if (element
+        case VariableElement(:final type) ||
+            PropertyAccessorElement(returnType: final type) ||
+            ConstructorElement(returnType: final DartType type)
+        when type == typeHelper.coreTypes.celestEnvType ||
+            type == typeHelper.coreTypes.celestSecretType) {
       return null;
     }
     final constant = computeConstantValue();

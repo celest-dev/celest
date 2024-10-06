@@ -50,22 +50,30 @@ final class EntrypointGenerator {
   ) {
     Expression paramExp;
     switch (reference.type) {
-      case NodeType.environmentVariable:
-        paramExp = DartTypes.io.platform
-            .property('environment')
-            .index(literalString(reference.name, raw: true))
-            .nullChecked;
-        final toType = switch (param.type.symbol) {
-          'int' => DartTypes.core.int,
-          'double' => DartTypes.core.double,
-          'bool' => DartTypes.core.bool,
-          'num' => DartTypes.core.num,
-          'Uri' => DartTypes.core.uri,
-          'String' => null,
-          _ => unreachable(),
-        };
-        if (toType != null) {
-          paramExp = toType.property('parse').call([paramExp]);
+      case NodeType.environmentVariable || NodeType.secret:
+        final dartType = reference.type == NodeType.environmentVariable
+            ? DartTypes.celest.environmentVariable
+            : DartTypes.celest.secret;
+        paramExp = DartTypes.celest.globalContext.property('get').call([
+          dartType.constInstance([
+            literalString(reference.name, raw: true),
+          ]),
+        ]).nullChecked;
+        if (param.type.symbol == 'Uint8List') {
+          paramExp = DartTypes.convert.base64Decode.call([paramExp]);
+        } else {
+          final toType = switch (param.type.symbol) {
+            'int' => DartTypes.core.int,
+            'double' => DartTypes.core.double,
+            'bool' => DartTypes.core.bool,
+            'num' => DartTypes.core.num,
+            'Uri' => DartTypes.core.uri,
+            'String' => null,
+            _ => unreachable(),
+          };
+          if (toType != null) {
+            paramExp = toType.property('parse').call([paramExp]);
+          }
         }
       case NodeType.userContext:
         paramExp = DartTypes.celest.globalContext

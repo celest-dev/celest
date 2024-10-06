@@ -22,7 +22,9 @@ extension CloudFunctionParameterExt on CloudFunctionParameter {
   bool get includeInClient {
     if (type.isFunctionContext) return false;
     switch (references?.type) {
-      case NodeType.environmentVariable || NodeType.userContext:
+      case NodeType.environmentVariable ||
+            NodeType.secret ||
+            NodeType.userContext:
         return false;
       default:
         break;

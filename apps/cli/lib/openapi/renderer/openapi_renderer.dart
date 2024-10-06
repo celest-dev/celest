@@ -419,6 +419,9 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
     ast.EnvironmentVariable variable,
     covariant String context,
   ) {}
+
+  @override
+  void visitSecret(ast.Secret secret, covariant String context) {}
 }
 
 extension on ast.ResolvedCloudFunction {

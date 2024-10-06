@@ -197,9 +197,9 @@ final class ResourcesGenerator {
     //   _beginClass('Apis').fields.addAll(apis.build().values);
     //   _beginClass('Functions').fields.addAll(functions.build().values);
     // }
-    if (project.envVars.isNotEmpty) {
-      _generateEnv(project.envVars);
-    }
+    // if (project.envVars.isNotEmpty) {
+    //   _generateEnv(project.envVars);
+    // }
     return _library.build();
   }
 }

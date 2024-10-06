@@ -96,10 +96,8 @@ import 'package:celest/celest.dart';
 $authDart
 '''),
     if (config.isNotEmpty)
-      d.dir('config', [
-        for (final MapEntry(key: fileName, value: contents) in config.entries)
-          d.file(fileName, contents),
-      ]),
+      for (final MapEntry(key: fileName, value: contents) in config.entries)
+        d.file(fileName, contents),
     d.dir('lib', [
       d.file('models.dart', models ?? ''),
       d.file('exceptions.dart', exceptions ?? ''),
@@ -2299,35 +2297,28 @@ const auth = Auth(
       testNoErrors(
         name: 'good_envs',
         config: {
-          '.env': '''
+          '.env.local': '''
 MY_NAME=Celest
 MY_AGE=28
 ''',
         },
-        resourcesDart: '''
-import 'package:celest/celest.dart';
-
-abstract final class env {
-  static const myName = EnvironmentVariable(name: r'MY_NAME');
-  static const myAge = EnvironmentVariable(name: r'MY_AGE');
-}
-''',
         apis: {
           'greeting.dart': r'''
 import 'package:celest/celest.dart';
 
-import '../generated/resources.dart';
+const myName = env('MY_NAME');
+const myAge = env('MY_AGE');
 
 @cloud
 void sayHelloPositional(
-  @env.myName String name,
-  @env.myAge int age,
+  @myName String name,
+  @myAge int age,
 ) => 'Hello, $name. I am $age years old.';
 
 @cloud
 void sayHelloNamed({
-  @env.myName required String name,
-  @env.myAge required int age,  
+  @myName required String name,
+  @myAge required int age,  
 }) => 'Hello, $name. I am $age years old.';
 ''',
         },
@@ -2371,55 +2362,36 @@ void sayHelloNamed({
       testErrors(
         name: 'bad_parameter_type',
         config: {
-          '.env': '''
+          '.env.local': '''
 MY_NAME=Celest
 ''',
         },
-        resourcesDart: '''
-import 'package:celest/celest.dart';
-
-abstract final class env {
-  static const myName = EnvironmentVariable(name: r'MY_NAME');
-}
-''',
         apis: {
           'greeting.dart': r'''
 import 'package:celest/celest.dart';
 
-import '../generated/resources.dart';
-
 @cloud
-void sayHello(@env.myName List<String> name) => 'Hello, $name';
+void sayHello(@env('MY_NAME') List<String> name) => 'Hello, $name';
 ''',
         },
         errors: [
-          'The type of an environment variable parameter must be one of: '
-              '`String`, `Uri`, `int`, `double`, `num`, or `bool`',
+          'The type of an environment variable parameter must be one of',
         ],
       );
 
       testErrors(
         name: 'reserved_name',
         config: {
-          '.env': '''
+          '.env.local': '''
 PORT=8080
 ''',
         },
-        resourcesDart: '''
-import 'package:celest/celest.dart';
-
-abstract final class env {
-  static const port = EnvironmentVariable(name: r'PORT');
-}
-''',
         apis: {
           'greeting.dart': r'''
 import 'package:celest/celest.dart';
 
-import '../generated/resources.dart';
-
 @cloud
-void sayHello(@env.port int port) => 'Hello, $port';
+void sayHello(@env('PORT') int port) => 'Hello, $port';
 ''',
         },
         errors: [
@@ -2430,27 +2402,18 @@ void sayHello(@env.port int port) => 'Hello, $port';
       testErrors(
         name: 'multiple_env_applications',
         config: {
-          '.env': '''
-PORT=8080
+          '.env.local': '''
+TEST=Hello
 ''',
         },
-        resourcesDart: '''
-import 'package:celest/celest.dart';
-
-abstract final class env {
-  static const port = EnvironmentVariable(name: r'PORT');
-}
-''',
         apis: {
           'greeting.dart': r'''
 import 'package:celest/celest.dart';
 
-import '../generated/resources.dart';
-
 @cloud
 void sayHello(
-  @env.port
-  @env.port
+  @env('TEST')
+  @env('TEST')
     int port,
 ) => 'Hello, $port';
 ''',
@@ -2486,8 +2449,8 @@ const auth = Auth(
               .isNotNull()
               .has((it) => it.providers.map((it) => it.type), 'providers')
               .unorderedEquals([
-            AuthProviderType.email,
-            AuthProviderType.sms,
+            EmailAuthProvider.$type,
+            SmsAuthProvider.$type,
           ]);
         },
       );
@@ -2506,7 +2469,7 @@ const auth = Auth(
               .has((it) => it.providers, 'providers')
               .single
               .has((it) => it.type, 'type')
-              .equals(AuthProviderType.email);
+              .equals(EmailAuthProvider.$type);
         },
       );
 
@@ -2526,12 +2489,17 @@ const auth = Auth(
         name: 'duplicate_provider',
         authDart: '''
 const email = AuthProvider.email();
+const sms = AuthProvider.sms();
 const auth = Auth(
-  providers: [email, email],
+  providers: [
+    email, email,
+    sms, sms,
+  ],
 );
 ''',
         errors: [
-          'Duplicate auth provider',
+          'Duplicate EMAIL_OTP auth provider',
+          'Duplicate SMS_OTP auth provider',
         ],
       );
     });

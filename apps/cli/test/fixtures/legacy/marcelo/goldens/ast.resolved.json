@@ -8,43 +8,50 @@
           "name": "throwsUserException",
           "route": "/exceptions/throws-user-exception",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "callsThrowsUserException": {
           "name": "callsThrowsUserException",
           "route": "/exceptions/calls-throws-user-exception",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsAppError": {
           "name": "throwsAppError",
           "route": "/exceptions/throws-app-error",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsAppException": {
           "name": "throwsAppException",
           "route": "/exceptions/throws-app-exception",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsNotYetImplementedError": {
           "name": "throwsNotYetImplementedError",
           "route": "/exceptions/throws-not-yet-implemented-error",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsValidateError": {
           "name": "throwsValidateError",
           "route": "/exceptions/throws-validate-error",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsUserException_ShowInConsole": {
           "name": "throwsUserException_ShowInConsole",
           "route": "/exceptions/throws-user-exception-show-in-console",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -55,42 +62,49 @@
           "name": "availableStock",
           "route": "/models/available-stock",
           "apiName": "models",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "availableStocks": {
           "name": "availableStocks",
           "route": "/models/available-stocks",
           "apiName": "models",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "cashBalance": {
           "name": "cashBalance",
           "route": "/models/cash-balance",
           "apiName": "models",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "portfolio": {
           "name": "portfolio",
           "route": "/models/portfolio",
           "apiName": "models",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stock": {
           "name": "stock",
           "route": "/models/stock",
           "apiName": "models",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "ui": {
           "name": "ui",
           "route": "/models/ui",
           "apiName": "models",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     }
   },
   "envVars": [],
+  "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],

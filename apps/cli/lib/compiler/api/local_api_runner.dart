@@ -45,7 +45,8 @@ final class LocalApiRunner {
 
   static Future<LocalApiRunner> start({
     required String path,
-    required Iterable<String> envVars,
+    required String environmentId,
+    required Map<String, String> configValues,
     required bool verbose,
     List<String> additionalSources = const [],
     int? port,
@@ -56,15 +57,6 @@ final class LocalApiRunner {
     // hub and is never exposed to the user.
     @visibleForTesting PortFinder portFinder = const RandomPortFinder(),
   }) async {
-    final env = <String, String>{};
-    for (final envVar in envVars) {
-      final value = Platform.environment[envVar] ??
-          await celestProject.envManager.valueFor(envVar);
-      if (value == null) {
-        throw StateError('Missing value for environment variable: $envVar');
-      }
-      env[envVar] = value;
-    }
     final packageConfigPath = await transformPackageConfig(
       packageConfigPath: projectPaths.packagesConfig,
       fromRoot: projectPaths.projectRoot,
@@ -183,13 +175,17 @@ final class LocalApiRunner {
 
     port = await portFinder.checkOrUpdatePort(port, excluding: [vmServicePort]);
     _logger.finer('Starting local API on port $port...');
+    _logger.finer(
+      'Running with configuration: ${prettyPrintJson(configValues)}',
+    );
     final localApiProcess = await processManager.start(
       command,
       workingDirectory: projectPaths.outputsDir,
       environment: {
+        ...configValues,
         // The HTTP port to serve Celest on.
         'PORT': platform.environment['PORT'] ?? '$port',
-        ...env,
+        'CELEST_ENVIRONMENT': environmentId,
       },
     );
 

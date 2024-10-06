@@ -1729,6 +1729,7 @@
     }
   },
   "envVars": [],
+  "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],
@@ -1754,8 +1755,9 @@
   "auth": {
     "providers": [
       {
-        "name": "email",
-        "type": "email",
+        "$": "EmailAuthProvider",
+        "name": "EMAIL_OTP",
+        "type": "EMAIL_OTP",
         "location": {
           "start": {
             "offset": 84,
@@ -1773,8 +1775,9 @@
         }
       },
       {
-        "name": "sms",
-        "type": "sms",
+        "$": "SmsAuthProvider",
+        "name": "SMS_OTP",
+        "type": "SMS_OTP",
         "location": {
           "start": {
             "offset": 84,

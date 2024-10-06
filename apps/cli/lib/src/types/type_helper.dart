@@ -38,6 +38,10 @@ final class CoreTypes implements TypeProvider {
     required this.internalServerErrorType,
     required this.userType,
     required this.cloudExceptionType,
+    required this.celestEnvType,
+    required this.celestEnvElement,
+    required this.celestSecretType,
+    required this.celestSecretElement,
   }) : _typeProvider = typeProvider;
 
   final TypeProvider _typeProvider;
@@ -57,6 +61,10 @@ final class CoreTypes implements TypeProvider {
   final DartType internalServerErrorType;
   final DartType userType;
   final DartType cloudExceptionType;
+  final InterfaceType celestEnvType;
+  final ClassElement celestEnvElement;
+  final InterfaceType celestSecretType;
+  final ClassElement celestSecretElement;
 
   @override
   ClassElement get boolElement => _typeProvider.boolElement;

@@ -4389,6 +4389,7 @@
     }
   },
   "envVars": [],
+  "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],

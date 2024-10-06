@@ -310,6 +310,14 @@ typedef TopLevelConstant = ({
 });
 
 extension GetClassType on LibraryElementResult {
-  DartType getClassType(String name) =>
-      (element.exportNamespace.get(name) as ClassElement).thisType;
+  ClassElement getClassElement(String name) =>
+      element.exportNamespace.get(name) as ClassElement;
+
+  DartType getClassType(String name) => getClassElement(name).thisType;
+
+  ExtensionTypeElement getExtensionTypeElement(String name) =>
+      element.exportNamespace.get(name) as ExtensionTypeElement;
+
+  DartType getExtensionType(String name) =>
+      getExtensionTypeElement(name).thisType;
 }

@@ -6,9 +6,13 @@ import 'package:test/test.dart';
 class Test {
   const Test({
     this.apis,
+    this.environmentVariables = const {},
+    this.secrets = const {},
   });
 
   final Map<String, ApiTest>? apis;
+  final Map<String, String> environmentVariables;
+  final Map<String, String> secrets;
 }
 
 class ApiTest {

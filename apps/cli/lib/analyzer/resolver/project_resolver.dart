@@ -29,6 +29,9 @@ abstract base class CelestProjectResolver with CelestAnalysisHelpers {
   /// Collects the environment variables of the project.
   Future<Iterable<ast.EnvironmentVariable>> resolveEnvironmentVariables();
 
+  /// Collects the secrets of the project.
+  Future<Iterable<ast.Secret>> resolveSecrets();
+
   /// Collects the Celest Auth component of the project.
   ///
   /// Returns `true` if the project uses Celest Auth.
@@ -44,5 +47,6 @@ abstract base class CelestProjectResolver with CelestAnalysisHelpers {
     required ResolvedLibraryResult apiLibrary,
     required bool hasAuth,
     required Iterable<ast.EnvironmentVariable> environmentVariables,
+    required Iterable<ast.Secret> secrets,
   });
 }

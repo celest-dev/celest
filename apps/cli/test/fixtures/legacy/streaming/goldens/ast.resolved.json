@@ -9,6 +9,7 @@
           "route": "/server-side/hello",
           "apiName": "server_side",
           "envVars": [],
+          "secrets": [],
           "streamType": "unidirectionalServer"
         },
         "stockTicker": {
@@ -16,6 +17,7 @@
           "route": "/server-side/stock-ticker",
           "apiName": "server_side",
           "envVars": [],
+          "secrets": [],
           "streamType": "unidirectionalServer"
         },
         "jsonValues": {
@@ -23,12 +25,14 @@
           "route": "/server-side/json-values",
           "apiName": "server_side",
           "envVars": [],
+          "secrets": [],
           "streamType": "unidirectionalServer"
         }
       }
     }
   },
   "envVars": [],
+  "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],

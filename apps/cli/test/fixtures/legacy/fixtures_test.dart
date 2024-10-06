@@ -167,7 +167,10 @@ class TestRunner {
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
-      final projectResolver = ProjectResolver();
+      final envManager = await celestProject.envManager.environment('local');
+      final projectResolver = ProjectResolver(
+        configValues: await envManager.readAll(),
+      );
       project!.acceptWithArg(projectResolver, project);
 
       final codegen = CloudCodeGenerator(
@@ -211,7 +214,10 @@ class TestRunner {
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
-      final projectResolver = ProjectResolver();
+      final envManager = await celestProject.envManager.environment('local');
+      final projectResolver = ProjectResolver(
+        configValues: await envManager.readAll(),
+      );
       project!.acceptWithArg(projectResolver, project);
       final resolvedAstFile = File(
         p.join(projectPaths.outputsDir, 'ast.resolved.json'),
@@ -293,10 +299,11 @@ class TestRunner {
 
       setUpAll(() async {
         final entrypoint = projectPaths.localApiEntrypoint;
+        final envManager = await celestProject.envManager.environment('local');
         apiRunner = await LocalApiRunner.start(
           path: entrypoint,
-          envVars:
-              (await celestProject.envManager.envVars).map((el) => el.envName),
+          configValues: await envManager.readAll(),
+          environmentId: 'local',
           verbose: false,
           stdoutPipe: logSink,
           stderrPipe: logSink,
@@ -327,6 +334,7 @@ class TestRunner {
           apiTest.functionTests[functionName] ?? const [],
           apiTest.eventTests[functionName] ?? const [],
           logs,
+          () => apiRunner,
           () => apiUri,
         );
       }
@@ -339,6 +347,7 @@ class TestRunner {
     List<HttpTest> httpTests,
     List<EventTest> eventTests,
     List<String> logs,
+    LocalApiRunner Function() runner,
     Uri Function() apiUri,
   ) {
     group(functionName, () {
@@ -386,6 +395,7 @@ class TestRunner {
               expect(logs, containsAllInOrder(expectedLogs.map(contains)));
             }
           } on Object {
+            await runner().close();
             print(logs.join('\n'));
             rethrow;
           }
@@ -422,6 +432,7 @@ class TestRunner {
               expect(logs, containsAllInOrder(expectedLogs.map(contains)));
             }
           } on Object {
+            await runner().close();
             print(logs.join('\n'));
             rethrow;
           }
@@ -3685,8 +3696,9 @@ final tests = <String, Test>{
                 'website': 'https://dillonnys.com',
               },
               logs: [
-                'Dillon is 28 years old, 5.83ft tall, 130 lbs, and is cool. '
+                '(local) Dillon is 28 years old, 5.83ft tall, 130 lbs, and is cool. '
                     'Find him at https://dillonnys.com.',
+                'Super secret: Hi',
               ],
             ),
           ],

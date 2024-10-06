@@ -69,6 +69,9 @@ final class _ReferencedTypesCollector extends ast.AstVisitor<void> {
 
   @override
   void visitEnvironmentVariable(ast.EnvironmentVariable variable) {}
+
+  @override
+  void visitSecret(ast.Secret secret) {}
 }
 
 final class ClientGenerator {

@@ -8,13 +8,15 @@
           "name": "lerpColor",
           "route": "/dart-ui/lerp-color",
           "apiName": "dart_ui",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "addCountryCode": {
           "name": "addCountryCode",
           "route": "/dart-ui/add-country-code",
           "apiName": "dart_ui",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -25,12 +27,14 @@
           "name": "paintWidget",
           "route": "/flutter/paint-widget",
           "apiName": "flutter",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     }
   },
   "envVars": [],
+  "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],

@@ -25,45 +25,19 @@
               },
               "required": true,
               "named": true,
-              "annotations": [
-                {
-                  "$": "DartInstance",
-                  "classRef": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  },
-                  "constructor": "",
-                  "positionalArguments": {},
-                  "namedArguments": {
-                    "name": {
-                      "$": "DartString",
-                      "value": "MY_NAME",
-                      "staticType": {
-                        "symbol": "String",
-                        "url": "dart:core"
-                      }
-                    }
-                  },
-                  "staticType": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  }
-                }
-              ],
+              "annotations": [],
               "location": {
                 "start": {
-                  "offset": 184,
+                  "offset": 198,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 7,
-                  "column": 30
+                  "line": 9,
+                  "column": 26
                 },
                 "end": {
-                  "offset": 188,
+                  "offset": 202,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 7,
-                  "column": 34
+                  "line": 9,
+                  "column": 30
                 },
                 "text": "name"
               },
@@ -82,45 +56,19 @@
               },
               "required": true,
               "named": true,
-              "annotations": [
-                {
-                  "$": "DartInstance",
-                  "classRef": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  },
-                  "constructor": "",
-                  "positionalArguments": {},
-                  "namedArguments": {
-                    "name": {
-                      "$": "DartString",
-                      "value": "MY_AGE",
-                      "staticType": {
-                        "symbol": "String",
-                        "url": "dart:core"
-                      }
-                    }
-                  },
-                  "staticType": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  }
-                }
-              ],
+              "annotations": [],
               "location": {
                 "start": {
-                  "offset": 216,
+                  "offset": 226,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 8,
-                  "column": 26
+                  "line": 10,
+                  "column": 22
                 },
                 "end": {
-                  "offset": 219,
+                  "offset": 229,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 8,
-                  "column": 29
+                  "line": 10,
+                  "column": 25
                 },
                 "text": "age"
               },
@@ -164,15 +112,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 143,
+              "offset": 161,
               "uri": "package:celest_backend/src/functions/injected.dart",
-              "line": 6,
+              "line": 8,
               "column": 7
             },
             "end": {
-              "offset": 151,
+              "offset": 169,
               "uri": "package:celest_backend/src/functions/injected.dart",
-              "line": 6,
+              "line": 8,
               "column": 15
             },
             "text": "sayHello"
@@ -193,45 +141,19 @@
               },
               "required": true,
               "named": true,
-              "annotations": [
-                {
-                  "$": "DartInstance",
-                  "classRef": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  },
-                  "constructor": "",
-                  "positionalArguments": {},
-                  "namedArguments": {
-                    "name": {
-                      "$": "DartString",
-                      "value": "MY_NAME",
-                      "staticType": {
-                        "symbol": "String",
-                        "url": "dart:core"
-                      }
-                    }
-                  },
-                  "staticType": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  }
-                }
-              ],
+              "annotations": [],
               "location": {
                 "start": {
-                  "offset": 337,
+                  "offset": 343,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 15,
-                  "column": 30
+                  "line": 17,
+                  "column": 26
                 },
                 "end": {
-                  "offset": 341,
+                  "offset": 347,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 15,
-                  "column": 34
+                  "line": 17,
+                  "column": 30
                 },
                 "text": "name"
               },
@@ -250,45 +172,19 @@
               },
               "required": true,
               "named": true,
-              "annotations": [
-                {
-                  "$": "DartInstance",
-                  "classRef": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  },
-                  "constructor": "",
-                  "positionalArguments": {},
-                  "namedArguments": {
-                    "name": {
-                      "$": "DartString",
-                      "value": "MY_AGE",
-                      "staticType": {
-                        "symbol": "String",
-                        "url": "dart:core"
-                      }
-                    }
-                  },
-                  "staticType": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  }
-                }
-              ],
+              "annotations": [],
               "location": {
                 "start": {
-                  "offset": 369,
+                  "offset": 371,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 16,
-                  "column": 26
+                  "line": 18,
+                  "column": 22
                 },
                 "end": {
-                  "offset": 372,
+                  "offset": 374,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 16,
-                  "column": 29
+                  "line": 18,
+                  "column": 25
                 },
                 "text": "age"
               },
@@ -307,45 +203,19 @@
               },
               "required": true,
               "named": true,
-              "annotations": [
-                {
-                  "$": "DartInstance",
-                  "classRef": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  },
-                  "constructor": "",
-                  "positionalArguments": {},
-                  "namedArguments": {
-                    "name": {
-                      "$": "DartString",
-                      "value": "MY_HEIGHT",
-                      "staticType": {
-                        "symbol": "String",
-                        "url": "dart:core"
-                      }
-                    }
-                  },
-                  "staticType": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  }
-                }
-              ],
+              "annotations": [],
               "location": {
                 "start": {
-                  "offset": 406,
+                  "offset": 404,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 17,
-                  "column": 32
+                  "line": 19,
+                  "column": 28
                 },
                 "end": {
-                  "offset": 412,
+                  "offset": 410,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 17,
-                  "column": 38
+                  "line": 19,
+                  "column": 34
                 },
                 "text": "height"
               },
@@ -364,50 +234,54 @@
               },
               "required": true,
               "named": true,
-              "annotations": [
-                {
-                  "$": "DartInstance",
-                  "classRef": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  },
-                  "constructor": "",
-                  "positionalArguments": {},
-                  "namedArguments": {
-                    "name": {
-                      "$": "DartString",
-                      "value": "MY_WEIGHT",
-                      "staticType": {
-                        "symbol": "String",
-                        "url": "dart:core"
-                      }
-                    }
-                  },
-                  "staticType": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  }
-                }
-              ],
+              "annotations": [],
               "location": {
                 "start": {
-                  "offset": 443,
+                  "offset": 445,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 18,
-                  "column": 29
+                  "line": 20,
+                  "column": 33
                 },
                 "end": {
-                  "offset": 449,
+                  "offset": 451,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 18,
-                  "column": 35
+                  "line": 20,
+                  "column": 39
                 },
                 "text": "weight"
               },
               "references": {
                 "name": "MY_WEIGHT",
+                "type": "environmentVariable"
+              }
+            },
+            {
+              "name": "website",
+              "type": {
+                "$": "Reference",
+                "symbol": "Uri",
+                "url": "dart:core"
+              },
+              "required": true,
+              "named": true,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 487,
+                  "uri": "package:celest_backend/src/functions/injected.dart",
+                  "line": 21,
+                  "column": 34
+                },
+                "end": {
+                  "offset": 494,
+                  "uri": "package:celest_backend/src/functions/injected.dart",
+                  "line": 21,
+                  "column": 41
+                },
+                "text": "website"
+              },
+              "references": {
+                "name": "MY_WEBSITE",
                 "type": "environmentVariable"
               }
             },
@@ -421,45 +295,19 @@
               },
               "required": true,
               "named": true,
-              "annotations": [
-                {
-                  "$": "DartInstance",
-                  "classRef": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  },
-                  "constructor": "",
-                  "positionalArguments": {},
-                  "namedArguments": {
-                    "name": {
-                      "$": "DartString",
-                      "value": "IM_COOL",
-                      "staticType": {
-                        "symbol": "String",
-                        "url": "dart:core"
-                      }
-                    }
-                  },
-                  "staticType": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  }
-                }
-              ],
+              "annotations": [],
               "location": {
                 "start": {
-                  "offset": 479,
+                  "offset": 528,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 19,
-                  "column": 28
+                  "line": 22,
+                  "column": 32
                 },
                 "end": {
-                  "offset": 485,
+                  "offset": 534,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 19,
-                  "column": 34
+                  "line": 22,
+                  "column": 38
                 },
                 "text": "isCool"
               },
@@ -469,58 +317,63 @@
               }
             },
             {
-              "name": "website",
+              "name": "superSecret",
               "type": {
                 "$": "Reference",
-                "symbol": "Uri",
-                "url": "dart:core"
+                "symbol": "Uint8List",
+                "url": "dart:typed_data"
               },
               "required": true,
               "named": true,
-              "annotations": [
-                {
-                  "$": "DartInstance",
-                  "classRef": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  },
-                  "constructor": "",
-                  "positionalArguments": {},
-                  "namedArguments": {
-                    "name": {
-                      "$": "DartString",
-                      "value": "MY_WEBSITE",
-                      "staticType": {
-                        "symbol": "String",
-                        "url": "dart:core"
-                      }
-                    }
-                  },
-                  "staticType": {
-                    "symbol": "EnvironmentVariable",
-                    "url": "package:celest/src/config/env.dart",
-                    "isNullable": false
-                  }
-                }
-              ],
+              "annotations": [],
               "location": {
                 "start": {
-                  "offset": 517,
+                  "offset": 581,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 20,
-                  "column": 30
+                  "line": 23,
+                  "column": 45
                 },
                 "end": {
-                  "offset": 524,
+                  "offset": 592,
                   "uri": "package:celest_backend/src/functions/injected.dart",
-                  "line": 20,
-                  "column": 37
+                  "line": 23,
+                  "column": 56
                 },
-                "text": "website"
+                "text": "superSecret"
               },
               "references": {
-                "name": "MY_WEBSITE",
+                "name": "SUPER_SECRET",
+                "type": "secret"
+              }
+            },
+            {
+              "name": "currentEnvironment",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 629,
+                  "uri": "package:celest_backend/src/functions/injected.dart",
+                  "line": 24,
+                  "column": 35
+                },
+                "end": {
+                  "offset": 647,
+                  "uri": "package:celest_backend/src/functions/injected.dart",
+                  "line": 24,
+                  "column": 53
+                },
+                "text": "currentEnvironment"
+              },
+              "references": {
+                "name": "CELEST_ENVIRONMENT",
                 "type": "environmentVariable"
               }
             }
@@ -559,15 +412,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 290,
+              "offset": 300,
               "uri": "package:celest_backend/src/functions/injected.dart",
-              "line": 14,
+              "line": 16,
               "column": 7
             },
             "end": {
-              "offset": 304,
+              "offset": 314,
               "uri": "package:celest_backend/src/functions/injected.dart",
-              "line": 14,
+              "line": 16,
               "column": 21
             },
             "text": "sayHelloPerson"
@@ -707,108 +560,146 @@
       "envName": "MY_NAME",
       "location": {
         "start": {
-          "offset": 0,
-          "uri": ".env",
-          "line": 0,
-          "column": 0
+          "offset": 44,
+          "uri": "package:celest_backend/src/config/env.dart",
+          "line": 2,
+          "column": 6
         },
         "end": {
-          "offset": 15,
-          "uri": ".env",
-          "line": 1,
-          "column": 0
+          "offset": 50,
+          "uri": "package:celest_backend/src/config/env.dart",
+          "line": 2,
+          "column": 12
         },
-        "text": "MY_NAME=Dillon\n"
+        "text": "myName"
       }
     },
     {
       "envName": "MY_AGE",
       "location": {
         "start": {
-          "offset": 15,
-          "uri": ".env",
-          "line": 1,
-          "column": 0
+          "offset": 75,
+          "uri": "package:celest_backend/src/config/env.dart",
+          "line": 3,
+          "column": 6
         },
         "end": {
-          "offset": 25,
-          "uri": ".env",
-          "line": 2,
-          "column": 0
+          "offset": 80,
+          "uri": "package:celest_backend/src/config/env.dart",
+          "line": 3,
+          "column": 11
         },
-        "text": "MY_AGE=28\n"
+        "text": "myAge"
       }
     },
     {
       "envName": "MY_HEIGHT",
       "location": {
         "start": {
-          "offset": 25,
-          "uri": ".env",
-          "line": 2,
-          "column": 0
-        },
-        "end": {
-          "offset": 40,
-          "uri": ".env",
-          "line": 3,
-          "column": 0
-        },
-        "text": "MY_HEIGHT=5.83\n"
-      }
-    },
-    {
-      "envName": "MY_WEIGHT",
-      "location": {
-        "start": {
-          "offset": 40,
-          "uri": ".env",
-          "line": 3,
-          "column": 0
-        },
-        "end": {
-          "offset": 54,
-          "uri": ".env",
+          "offset": 104,
+          "uri": "package:celest_backend/src/config/env.dart",
           "line": 4,
-          "column": 0
+          "column": 6
         },
-        "text": "MY_WEIGHT=130\n"
+        "end": {
+          "offset": 112,
+          "uri": "package:celest_backend/src/config/env.dart",
+          "line": 4,
+          "column": 14
+        },
+        "text": "myHeight"
       }
     },
     {
       "envName": "IM_COOL",
       "location": {
         "start": {
-          "offset": 54,
-          "uri": ".env",
-          "line": 4,
-          "column": 0
+          "offset": 219,
+          "uri": "package:celest_backend/src/config/env.dart",
+          "line": 8,
+          "column": 6
         },
         "end": {
-          "offset": 67,
-          "uri": ".env",
-          "line": 5,
-          "column": 0
+          "offset": 227,
+          "uri": "package:celest_backend/src/config/env.dart",
+          "line": 8,
+          "column": 14
         },
-        "text": "IM_COOL=true\n"
+        "text": "myWeight"
       }
     },
     {
       "envName": "MY_WEBSITE",
       "location": {
         "start": {
-          "offset": 67,
-          "uri": ".env",
-          "line": 5,
-          "column": 0
+          "offset": 341,
+          "uri": "package:celest_backend/src/config/env.dart",
+          "line": 12,
+          "column": 6
         },
         "end": {
-          "offset": 101,
-          "uri": ".env",
-          "line": 5,
-          "column": 34
+          "offset": 350,
+          "uri": "package:celest_backend/src/config/env.dart",
+          "line": 12,
+          "column": 15
         },
-        "text": "MY_WEBSITE=\"https://dillonnys.com\""
+        "text": "myWebsite"
+      }
+    },
+    {
+      "envName": "CELEST_ENVIRONMENT",
+      "location": {
+        "start": {
+          "offset": 629,
+          "uri": "package:celest_backend/src/functions/injected.dart",
+          "line": 24,
+          "column": 35
+        },
+        "end": {
+          "offset": 647,
+          "uri": "package:celest_backend/src/functions/injected.dart",
+          "line": 24,
+          "column": 53
+        },
+        "text": "currentEnvironment"
+      }
+    },
+    {
+      "envName": "MY_WEIGHT",
+      "location": {
+        "start": {
+          "offset": 445,
+          "uri": "package:celest_backend/src/functions/injected.dart",
+          "line": 20,
+          "column": 33
+        },
+        "end": {
+          "offset": 451,
+          "uri": "package:celest_backend/src/functions/injected.dart",
+          "line": 20,
+          "column": 39
+        },
+        "text": "weight"
+      }
+    }
+  ],
+  "secrets": [
+    {
+      "envName": "SUPER_SECRET",
+      "location": {
+        "start": {
+          "offset": 581,
+          "uri": "package:celest_backend/src/functions/injected.dart",
+          "line": 23,
+          "column": 45
+        },
+        "end": {
+          "offset": 592,
+          "uri": "package:celest_backend/src/functions/injected.dart",
+          "line": 23,
+          "column": 56
+        },
+        "text": "superSecret"
       }
     }
   ],

@@ -40,6 +40,8 @@ final class ProjectPaths {
   late final String legacyApisDir = p.join(projectRoot, 'functions');
   late final String configDir = p.join(projectRoot, 'config');
   late final String envFile = p.join(projectRoot, 'config', '.env');
+  String envFileFor(String environment) =>
+      p.join(projectRoot, '.env.$environment');
 
   late final String modelsDir = p.join(projectRoot, 'lib', 'models');
   late final String modelsDart = p.join(projectRoot, 'lib', 'models.dart');

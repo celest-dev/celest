@@ -8,61 +8,71 @@
           "name": "nonAliasedNamedFields",
           "route": "/records/non-aliased-named-fields",
           "apiName": "records",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncNonAliasedNamedFields": {
           "name": "asyncNonAliasedNamedFields",
           "route": "/records/async-non-aliased-named-fields",
           "apiName": "records",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "aliasedNamedFields": {
           "name": "aliasedNamedFields",
           "route": "/records/aliased-named-fields",
           "apiName": "records",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncAliasedNamedFields": {
           "name": "asyncAliasedNamedFields",
           "route": "/records/async-aliased-named-fields",
           "apiName": "records",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "namedFields": {
           "name": "namedFields",
           "route": "/records/named-fields",
           "apiName": "records",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncNamedFields": {
           "name": "asyncNamedFields",
           "route": "/records/async-named-fields",
           "apiName": "records",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nested": {
           "name": "nested",
           "route": "/records/nested",
           "apiName": "records",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncNested": {
           "name": "asyncNested",
           "route": "/records/async-nested",
           "apiName": "records",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nullableNested": {
           "name": "nullableNested",
           "route": "/records/nullable-nested",
           "apiName": "records",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncNullableNested": {
           "name": "asyncNullableNested",
           "route": "/records/async-nullable-nested",
           "apiName": "records",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -73,115 +83,134 @@
           "name": "area",
           "route": "/sealed-classes/area",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "sealedClass": {
           "name": "sealedClass",
           "route": "/sealed-classes/sealed-class",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "rectangle": {
           "name": "rectangle",
           "route": "/sealed-classes/rectangle",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "circle": {
           "name": "circle",
           "route": "/sealed-classes/circle",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "sealedClassWithInheritedCustomJson": {
           "name": "sealedClassWithInheritedCustomJson",
           "route": "/sealed-classes/sealed-class-with-inherited-custom-json",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "sealedClassWithCustomJson": {
           "name": "sealedClassWithCustomJson",
           "route": "/sealed-classes/sealed-class-with-custom-json",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "sealedClassWithOverriddenCustomJson": {
           "name": "sealedClassWithOverriddenCustomJson",
           "route": "/sealed-classes/sealed-class-with-overridden-custom-json",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "rectangleWithOverriddenCustomJson": {
           "name": "rectangleWithOverriddenCustomJson",
           "route": "/sealed-classes/rectangle-with-overridden-custom-json",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "circleWithOverriddenCustomJson": {
           "name": "circleWithOverriddenCustomJson",
           "route": "/sealed-classes/circle-with-overridden-custom-json",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "okShapeResults": {
           "name": "okShapeResults",
           "route": "/sealed-classes/ok-shape-results",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "errShapeResults": {
           "name": "errShapeResults",
           "route": "/sealed-classes/err-shape-results",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "shapeResults": {
           "name": "shapeResults",
           "route": "/sealed-classes/shape-results",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "aliasedOkShapeResults": {
           "name": "aliasedOkShapeResults",
           "route": "/sealed-classes/aliased-ok-shape-results",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "aliasedErrShapeResults": {
           "name": "aliasedErrShapeResults",
           "route": "/sealed-classes/aliased-err-shape-results",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "aliasedShapeResults": {
           "name": "aliasedShapeResults",
           "route": "/sealed-classes/aliased-shape-results",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "swappedResult": {
           "name": "swappedResult",
           "route": "/sealed-classes/swapped-result",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "genericResult": {
           "name": "genericResult",
           "route": "/sealed-classes/generic-result",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "multipleGenericResult": {
           "name": "multipleGenericResult",
           "route": "/sealed-classes/multiple-generic-result",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "okShapeResult": {
           "name": "okShapeResult",
           "route": "/sealed-classes/ok-shape-result",
           "apiName": "sealed_classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -192,19 +221,22 @@
           "name": "simple",
           "route": "/parameter-types/simple",
           "apiName": "parameter_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "simpleOptional": {
           "name": "simpleOptional",
           "route": "/parameter-types/simple-optional",
           "apiName": "parameter_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "complex": {
           "name": "complex",
           "route": "/parameter-types/complex",
           "apiName": "parameter_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -215,25 +247,29 @@
           "name": "createTree",
           "route": "/cycles/create-tree",
           "apiName": "cycles",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "printTree": {
           "name": "printTree",
           "route": "/cycles/print-tree",
           "apiName": "cycles",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "combineTrees": {
           "name": "combineTrees",
           "route": "/cycles/combine-trees",
           "apiName": "cycles",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "selfReferencing": {
           "name": "selfReferencing",
           "route": "/cycles/self-referencing",
           "apiName": "cycles",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -244,241 +280,281 @@
           "name": "string",
           "route": "/extension-types/string",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrString": {
           "name": "asyncOrString",
           "route": "/extension-types/async-or-string",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncString": {
           "name": "asyncString",
           "route": "/extension-types/async-string",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringImpl": {
           "name": "stringImpl",
           "route": "/extension-types/string-impl",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringToFromJson": {
           "name": "stringToFromJson",
           "route": "/extension-types/string-to-from-json",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringToJson": {
           "name": "stringToJson",
           "route": "/extension-types/string-to-json",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringToJsonImpl": {
           "name": "stringToJsonImpl",
           "route": "/extension-types/string-to-json-impl",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringFromJson": {
           "name": "stringFromJson",
           "route": "/extension-types/string-from-json",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringFromJsonImpl": {
           "name": "stringFromJsonImpl",
           "route": "/extension-types/string-from-json-impl",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringFromJsonStatic": {
           "name": "stringFromJsonStatic",
           "route": "/extension-types/string-from-json-static",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringPrivateField": {
           "name": "stringPrivateField",
           "route": "/extension-types/string-private-field",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringPrivateFieldImpl": {
           "name": "stringPrivateFieldImpl",
           "route": "/extension-types/string-private-field-impl",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringPrivateCtor": {
           "name": "stringPrivateCtor",
           "route": "/extension-types/string-private-ctor",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringPrivateCtorImpl": {
           "name": "stringPrivateCtorImpl",
           "route": "/extension-types/string-private-ctor-impl",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "value": {
           "name": "value",
           "route": "/extension-types/value",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "valueX": {
           "name": "valueX",
           "route": "/extension-types/value-x",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "valueXImpl": {
           "name": "valueXImpl",
           "route": "/extension-types/value-x-impl",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "valueXToFromJson": {
           "name": "valueXToFromJson",
           "route": "/extension-types/value-x-to-from-json",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "valueXToJson": {
           "name": "valueXToJson",
           "route": "/extension-types/value-x-to-json",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "valueXToJsonImpl": {
           "name": "valueXToJsonImpl",
           "route": "/extension-types/value-x-to-json-impl",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "valueXFromJson": {
           "name": "valueXFromJson",
           "route": "/extension-types/value-x-from-json",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "valueXFromJsonImpl": {
           "name": "valueXFromJsonImpl",
           "route": "/extension-types/value-x-from-json-impl",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "valueXFromJsonStatic": {
           "name": "valueXFromJsonStatic",
           "route": "/extension-types/value-x-from-json-static",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "color": {
           "name": "color",
           "route": "/extension-types/color",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "colorX": {
           "name": "colorX",
           "route": "/extension-types/color-x",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "colorXImpl": {
           "name": "colorXImpl",
           "route": "/extension-types/color-x-impl",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "colorXToFromJson": {
           "name": "colorXToFromJson",
           "route": "/extension-types/color-x-to-from-json",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "colorXToJson": {
           "name": "colorXToJson",
           "route": "/extension-types/color-x-to-json",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "colorXToJsonImpl": {
           "name": "colorXToJsonImpl",
           "route": "/extension-types/color-x-to-json-impl",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "colorXFromJson": {
           "name": "colorXFromJson",
           "route": "/extension-types/color-x-from-json",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "colorXFromJsonImpl": {
           "name": "colorXFromJsonImpl",
           "route": "/extension-types/color-x-from-json-impl",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "colorXFromJsonStatic": {
           "name": "colorXFromJsonStatic",
           "route": "/extension-types/color-x-from-json-static",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "jsonValue": {
           "name": "jsonValue",
           "route": "/extension-types/json-value",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "jsonString": {
           "name": "jsonString",
           "route": "/extension-types/json-string",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "jsonNum": {
           "name": "jsonNum",
           "route": "/extension-types/json-num",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "jsonInt": {
           "name": "jsonInt",
           "route": "/extension-types/json-int",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "jsonDouble": {
           "name": "jsonDouble",
           "route": "/extension-types/json-double",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "jsonBool": {
           "name": "jsonBool",
           "route": "/extension-types/json-bool",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "jsonList": {
           "name": "jsonList",
           "route": "/extension-types/json-list",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "jsonMap": {
           "name": "jsonMap",
           "route": "/extension-types/json-map",
           "apiName": "extension_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -489,25 +565,29 @@
           "name": "portfolio",
           "route": "/typedefs/portfolio",
           "apiName": "typedefs",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "json": {
           "name": "json",
           "route": "/typedefs/json",
           "apiName": "typedefs",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nullableJson": {
           "name": "nullableJson",
           "route": "/typedefs/nullable-json",
           "apiName": "typedefs",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "mixedJson": {
           "name": "mixedJson",
           "route": "/typedefs/mixed-json",
           "apiName": "typedefs",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -518,355 +598,414 @@
           "name": "asyncVoidReturn",
           "route": "/return-types/async-void-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncStringReturn": {
           "name": "asyncStringReturn",
           "route": "/return-types/async-string-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncIntReturn": {
           "name": "asyncIntReturn",
           "route": "/return-types/async-int-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncDoubleReturn": {
           "name": "asyncDoubleReturn",
           "route": "/return-types/async-double-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncBoolReturn": {
           "name": "asyncBoolReturn",
           "route": "/return-types/async-bool-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncIterableReturn": {
           "name": "asyncIterableReturn",
           "route": "/return-types/async-iterable-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncListReturn": {
           "name": "asyncListReturn",
           "route": "/return-types/async-list-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncMapReturn": {
           "name": "asyncMapReturn",
           "route": "/return-types/async-map-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncStructReturn": {
           "name": "asyncStructReturn",
           "route": "/return-types/async-struct-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncStructReturnNullable": {
           "name": "asyncStructReturnNullable",
           "route": "/return-types/async-struct-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncComplexStructReturn": {
           "name": "asyncComplexStructReturn",
           "route": "/return-types/async-complex-struct-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncComplexStructReturnNullable": {
           "name": "asyncComplexStructReturnNullable",
           "route": "/return-types/async-complex-struct-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncComplexClassReturn": {
           "name": "asyncComplexClassReturn",
           "route": "/return-types/async-complex-class-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncClassReturnNullable": {
           "name": "asyncClassReturnNullable",
           "route": "/return-types/async-class-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrVoidReturn": {
           "name": "asyncOrVoidReturn",
           "route": "/return-types/async-or-void-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrStringReturn": {
           "name": "asyncOrStringReturn",
           "route": "/return-types/async-or-string-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrIntReturn": {
           "name": "asyncOrIntReturn",
           "route": "/return-types/async-or-int-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrDoubleReturn": {
           "name": "asyncOrDoubleReturn",
           "route": "/return-types/async-or-double-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrBoolReturn": {
           "name": "asyncOrBoolReturn",
           "route": "/return-types/async-or-bool-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrIterableReturn": {
           "name": "asyncOrIterableReturn",
           "route": "/return-types/async-or-iterable-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrListReturn": {
           "name": "asyncOrListReturn",
           "route": "/return-types/async-or-list-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrMapReturn": {
           "name": "asyncOrMapReturn",
           "route": "/return-types/async-or-map-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrStructReturn": {
           "name": "asyncOrStructReturn",
           "route": "/return-types/async-or-struct-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrComplexStructReturn": {
           "name": "asyncOrComplexStructReturn",
           "route": "/return-types/async-or-complex-struct-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrVoidReturnNullable": {
           "name": "asyncOrVoidReturnNullable",
           "route": "/return-types/async-or-void-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrStringReturnNullable": {
           "name": "asyncOrStringReturnNullable",
           "route": "/return-types/async-or-string-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrIntReturnNullable": {
           "name": "asyncOrIntReturnNullable",
           "route": "/return-types/async-or-int-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrDoubleReturnNullable": {
           "name": "asyncOrDoubleReturnNullable",
           "route": "/return-types/async-or-double-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrBoolReturnNullable": {
           "name": "asyncOrBoolReturnNullable",
           "route": "/return-types/async-or-bool-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrIterableReturnNullable": {
           "name": "asyncOrIterableReturnNullable",
           "route": "/return-types/async-or-iterable-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrListReturnNullable": {
           "name": "asyncOrListReturnNullable",
           "route": "/return-types/async-or-list-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrMapReturnNullable": {
           "name": "asyncOrMapReturnNullable",
           "route": "/return-types/async-or-map-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrStructReturnNullable": {
           "name": "asyncOrStructReturnNullable",
           "route": "/return-types/async-or-struct-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrComplexStructReturnNullable": {
           "name": "asyncOrComplexStructReturnNullable",
           "route": "/return-types/async-or-complex-struct-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrSimpleClassReturnNullable": {
           "name": "asyncOrSimpleClassReturnNullable",
           "route": "/return-types/async-or-simple-class-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOrComplexClassReturnNullable": {
           "name": "asyncOrComplexClassReturnNullable",
           "route": "/return-types/async-or-complex-class-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "voidReturn": {
           "name": "voidReturn",
           "route": "/return-types/void-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringReturn": {
           "name": "stringReturn",
           "route": "/return-types/string-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "intReturn": {
           "name": "intReturn",
           "route": "/return-types/int-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "doubleReturn": {
           "name": "doubleReturn",
           "route": "/return-types/double-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "boolReturn": {
           "name": "boolReturn",
           "route": "/return-types/bool-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "iterableReturn": {
           "name": "iterableReturn",
           "route": "/return-types/iterable-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "listReturn": {
           "name": "listReturn",
           "route": "/return-types/list-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "mapReturn": {
           "name": "mapReturn",
           "route": "/return-types/map-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "structReturn": {
           "name": "structReturn",
           "route": "/return-types/struct-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "complexReturn": {
           "name": "complexReturn",
           "route": "/return-types/complex-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "simpleClassReturn": {
           "name": "simpleClassReturn",
           "route": "/return-types/simple-class-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "complexClassReturn": {
           "name": "complexClassReturn",
           "route": "/return-types/complex-class-return",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "stringReturnNullable": {
           "name": "stringReturnNullable",
           "route": "/return-types/string-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "intReturnNullable": {
           "name": "intReturnNullable",
           "route": "/return-types/int-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "doubleReturnNullable": {
           "name": "doubleReturnNullable",
           "route": "/return-types/double-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "boolReturnNullable": {
           "name": "boolReturnNullable",
           "route": "/return-types/bool-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "iterableReturnNullable": {
           "name": "iterableReturnNullable",
           "route": "/return-types/iterable-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "listReturnNullable": {
           "name": "listReturnNullable",
           "route": "/return-types/list-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "mapReturnNullable": {
           "name": "mapReturnNullable",
           "route": "/return-types/map-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "structReturnNullable": {
           "name": "structReturnNullable",
           "route": "/return-types/struct-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "complexReturnNullable": {
           "name": "complexReturnNullable",
           "route": "/return-types/complex-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "simpleClassReturnNullable": {
           "name": "simpleClassReturnNullable",
           "route": "/return-types/simple-class-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "complexClassReturnNullable": {
           "name": "complexClassReturnNullable",
           "route": "/return-types/complex-class-return-nullable",
           "apiName": "return_types",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -877,55 +1016,64 @@
           "name": "commonNestedParent",
           "route": "/overrides/common-nested-parent",
           "apiName": "overrides",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "commonNestedChild": {
           "name": "commonNestedChild",
           "route": "/overrides/common-nested-child",
           "apiName": "overrides",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nestedGrandparent": {
           "name": "nestedGrandparent",
           "route": "/overrides/nested-grandparent",
           "apiName": "overrides",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nestedParent": {
           "name": "nestedParent",
           "route": "/overrides/nested-parent",
           "apiName": "overrides",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nestedChild": {
           "name": "nestedChild",
           "route": "/overrides/nested-child",
           "apiName": "overrides",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "callsThrowsCommonOverriddenException": {
           "name": "callsThrowsCommonOverriddenException",
           "route": "/overrides/calls-throws-common-overridden-exception",
           "apiName": "overrides",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsCommonOverriddenException": {
           "name": "throwsCommonOverriddenException",
           "route": "/overrides/throws-common-overridden-exception",
           "apiName": "overrides",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsOverriddenException": {
           "name": "throwsOverriddenException",
           "route": "/overrides/throws-overridden-exception",
           "apiName": "overrides",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "callsThrowsOverriddenException": {
           "name": "callsThrowsOverriddenException",
           "route": "/overrides/calls-throws-overridden-exception",
           "apiName": "overrides",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -936,175 +1084,204 @@
           "name": "empty",
           "route": "/classes/empty",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncEmpty": {
           "name": "asyncEmpty",
           "route": "/classes/async-empty",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "fields": {
           "name": "fields",
           "route": "/classes/fields",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncFields": {
           "name": "asyncFields",
           "route": "/classes/async-fields",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nullableFields": {
           "name": "nullableFields",
           "route": "/classes/nullable-fields",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncNullableFields": {
           "name": "asyncNullableFields",
           "route": "/classes/async-nullable-fields",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "namedFields": {
           "name": "namedFields",
           "route": "/classes/named-fields",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncNamedFields": {
           "name": "asyncNamedFields",
           "route": "/classes/async-named-fields",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "mixedFields": {
           "name": "mixedFields",
           "route": "/classes/mixed-fields",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncMixedFields": {
           "name": "asyncMixedFields",
           "route": "/classes/async-mixed-fields",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "defaultValues": {
           "name": "defaultValues",
           "route": "/classes/default-values",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncDefaultValues": {
           "name": "asyncDefaultValues",
           "route": "/classes/async-default-values",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nestedClass": {
           "name": "nestedClass",
           "route": "/classes/nested-class",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncNestedClass": {
           "name": "asyncNestedClass",
           "route": "/classes/async-nested-class",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "onlyFromJson": {
           "name": "onlyFromJson",
           "route": "/classes/only-from-json",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOnlyFromJson": {
           "name": "asyncOnlyFromJson",
           "route": "/classes/async-only-from-json",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "onlyToJson": {
           "name": "onlyToJson",
           "route": "/classes/only-to-json",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOnlyToJson": {
           "name": "asyncOnlyToJson",
           "route": "/classes/async-only-to-json",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "onlyToJsonWithDefaults": {
           "name": "onlyToJsonWithDefaults",
           "route": "/classes/only-to-json-with-defaults",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncOnlyToJsonWithDefaults": {
           "name": "asyncOnlyToJsonWithDefaults",
           "route": "/classes/async-only-to-json-with-defaults",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "fromAndToJson": {
           "name": "fromAndToJson",
           "route": "/classes/from-and-to-json",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncFromAndToJson": {
           "name": "asyncFromAndToJson",
           "route": "/classes/async-from-and-to-json",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nonMapToJson": {
           "name": "nonMapToJson",
           "route": "/classes/non-map-to-json",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncNonMapToJson": {
           "name": "asyncNonMapToJson",
           "route": "/classes/async-non-map-to-json",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nonMapToJsonWithDefaults": {
           "name": "nonMapToJsonWithDefaults",
           "route": "/classes/non-map-to-json-with-defaults",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncNonMapToJsonWithDefaults": {
           "name": "asyncNonMapToJsonWithDefaults",
           "route": "/classes/async-non-map-to-json-with-defaults",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nonMapFromAndToJson": {
           "name": "nonMapFromAndToJson",
           "route": "/classes/non-map-from-and-to-json",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "asyncNonMapFromAndToJson": {
           "name": "asyncNonMapFromAndToJson",
           "route": "/classes/async-non-map-from-and-to-json",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "fromJsonStatic": {
           "name": "fromJsonStatic",
           "route": "/classes/from-json-static",
           "apiName": "classes",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -1115,43 +1292,50 @@
           "name": "throwsException",
           "route": "/exceptions/throws-exception",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsError": {
           "name": "throwsError",
           "route": "/exceptions/throws-error",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsCustomException": {
           "name": "throwsCustomException",
           "route": "/exceptions/throws-custom-exception",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsCustomExceptionToFromJson": {
           "name": "throwsCustomExceptionToFromJson",
           "route": "/exceptions/throws-custom-exception-to-from-json",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsCustomError": {
           "name": "throwsCustomError",
           "route": "/exceptions/throws-custom-error",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsCustomErrorToFromJson": {
           "name": "throwsCustomErrorToFromJson",
           "route": "/exceptions/throws-custom-error-to-from-json",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "throwsCustomErrorWithStackTrace": {
           "name": "throwsCustomErrorWithStackTrace",
           "route": "/exceptions/throws-custom-error-with-stack-trace",
           "apiName": "exceptions",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -1162,121 +1346,141 @@
           "name": "hasDocComments",
           "route": "/metadata/has-doc-comments",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "hasDeprecatedAnnotation": {
           "name": "hasDeprecatedAnnotation",
           "route": "/metadata/has-deprecated-annotation",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "hasConstructedDeprecatedAnnotation": {
           "name": "hasConstructedDeprecatedAnnotation",
           "route": "/metadata/has-constructed-deprecated-annotation",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "hasNamedConstructedAnnotation": {
           "name": "hasNamedConstructedAnnotation",
           "route": "/metadata/has-named-constructed-annotation",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "hasLiteralsAnnotation": {
           "name": "hasLiteralsAnnotation",
           "route": "/metadata/has-literals-annotation",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "hasExportableAnnotation": {
           "name": "hasExportableAnnotation",
           "route": "/metadata/has-exportable-annotation",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "hasExportableConstructedAnnotation": {
           "name": "hasExportableConstructedAnnotation",
           "route": "/metadata/has-exportable-constructed-annotation",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "hasNotExportableAnnotation": {
           "name": "hasNotExportableAnnotation",
           "route": "/metadata/has-not-exportable-annotation",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "positionalDefaultValues": {
           "name": "positionalDefaultValues",
           "route": "/metadata/positional-default-values",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nullablePositionalDefaultValues": {
           "name": "nullablePositionalDefaultValues",
           "route": "/metadata/nullable-positional-default-values",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "namedDefaultValues": {
           "name": "namedDefaultValues",
           "route": "/metadata/named-default-values",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nullableNamedDefaultValues": {
           "name": "nullableNamedDefaultValues",
           "route": "/metadata/nullable-named-default-values",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "positionalDefaultValueVars": {
           "name": "positionalDefaultValueVars",
           "route": "/metadata/positional-default-value-vars",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nullablePositionalDefaultValueVars": {
           "name": "nullablePositionalDefaultValueVars",
           "route": "/metadata/nullable-positional-default-value-vars",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "namedDefaultValueVars": {
           "name": "namedDefaultValueVars",
           "route": "/metadata/named-default-value-vars",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nullableNamedDefaultValueVars": {
           "name": "nullableNamedDefaultValueVars",
           "route": "/metadata/nullable-named-default-value-vars",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "positionalDefaultValueVarsPrivate": {
           "name": "positionalDefaultValueVarsPrivate",
           "route": "/metadata/positional-default-value-vars-private",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nullablePositionalDefaultValueVarsPrivate": {
           "name": "nullablePositionalDefaultValueVarsPrivate",
           "route": "/metadata/nullable-positional-default-value-vars-private",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "namedDefaultValueVarsPrivate": {
           "name": "namedDefaultValueVarsPrivate",
           "route": "/metadata/named-default-value-vars-private",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "nullableNamedDefaultValueVarsPrivate": {
           "name": "nullableNamedDefaultValueVarsPrivate",
           "route": "/metadata/nullable-named-default-value-vars-private",
           "apiName": "metadata",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -1287,25 +1491,29 @@
           "name": "optionalPositional",
           "route": "/parameters/optional-positional",
           "apiName": "parameters",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "optionalNamed": {
           "name": "optionalNamed",
           "route": "/parameters/optional-named",
           "apiName": "parameters",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "requiredPositional": {
           "name": "requiredPositional",
           "route": "/parameters/required-positional",
           "apiName": "parameters",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "requiredNamed": {
           "name": "requiredNamed",
           "route": "/parameters/required-named",
           "apiName": "parameters",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -1316,43 +1524,50 @@
           "name": "simpleList",
           "route": "/collections/simple-list",
           "apiName": "collections",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "complexList": {
           "name": "complexList",
           "route": "/collections/complex-list",
           "apiName": "collections",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "simpleMap": {
           "name": "simpleMap",
           "route": "/collections/simple-map",
           "apiName": "collections",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "dynamicMap": {
           "name": "dynamicMap",
           "route": "/collections/dynamic-map",
           "apiName": "collections",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "objectMap": {
           "name": "objectMap",
           "route": "/collections/object-map",
           "apiName": "collections",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "objectNullableMap": {
           "name": "objectNullableMap",
           "route": "/collections/object-nullable-map",
           "apiName": "collections",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "complexMap": {
           "name": "complexMap",
           "route": "/collections/complex-map",
           "apiName": "collections",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -1363,19 +1578,22 @@
           "name": "genericWrappers",
           "route": "/generic-wrappers/generic-wrappers",
           "apiName": "generic_wrappers",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "genericWrappersAsync": {
           "name": "genericWrappersAsync",
           "route": "/generic-wrappers/generic-wrappers-async",
           "apiName": "generic_wrappers",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         },
         "genericWrapperParameters": {
           "name": "genericWrapperParameters",
           "route": "/generic-wrappers/generic-wrapper-parameters",
           "apiName": "generic_wrappers",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -1386,7 +1604,8 @@
           "name": "sayHello",
           "route": "/demo/say-hello",
           "apiName": "demo",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -1397,12 +1616,14 @@
           "name": "assertsEnabled",
           "route": "/asserts/asserts-enabled",
           "apiName": "asserts",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     }
   },
   "envVars": [],
+  "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],

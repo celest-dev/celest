@@ -11,7 +11,8 @@
           "envVars": [
             "MY_NAME",
             "MY_AGE"
-          ]
+          ],
+          "secrets": []
         },
         "sayHelloPerson": {
           "name": "sayHelloPerson",
@@ -22,8 +23,12 @@
             "MY_AGE",
             "MY_HEIGHT",
             "MY_WEIGHT",
+            "MY_WEBSITE",
             "IM_COOL",
-            "MY_WEBSITE"
+            "CELEST_ENVIRONMENT"
+          ],
+          "secrets": [
+            "SUPER_SECRET"
           ]
         }
       }
@@ -43,16 +48,26 @@
       "value": "5.83"
     },
     {
-      "name": "MY_WEIGHT",
-      "value": "130"
-    },
-    {
       "name": "IM_COOL",
       "value": "true"
     },
     {
       "name": "MY_WEBSITE",
       "value": "https://dillonnys.com"
+    },
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    },
+    {
+      "name": "MY_WEIGHT",
+      "value": "130"
+    }
+  ],
+  "secrets": [
+    {
+      "name": "SUPER_SECRET",
+      "value": "SGk="
     }
   ],
   "sdkInfo": {

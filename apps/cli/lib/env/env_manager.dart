@@ -16,8 +16,25 @@ typedef _EnvRequest = ({
   List<(ast.EnvironmentVariable, String)>? envVars,
 });
 
+typedef EnvironmentID = String;
+
 final class EnvManager {
-  EnvManager(this.envFile);
+  final Map<EnvironmentID, SingleEnvManager> _managers = {};
+
+  Future<SingleEnvManager> environment(EnvironmentID environment) async {
+    // TODO(dnys1): Merge `.env` with `.env.<environment>`
+    if (_managers[environment] case final manager?) {
+      return manager;
+    }
+    final envFile = projectPaths.envFileFor(environment);
+    final manager = SingleEnvManager(envFile);
+    await manager.spawn();
+    return manager;
+  }
+}
+
+final class SingleEnvManager {
+  SingleEnvManager(this.envFile);
 
   final String envFile;
 
@@ -114,6 +131,17 @@ final class EnvManager {
       _cache[envVar.envName] = value;
     }
     return envVars.map((it) => it.$1).toList();
+  }
+
+  Future<Map<String, String>> readAll() async {
+    final envVars = await this.envVars;
+    final values = await Future.wait([
+      for (final envVar in envVars)
+        valueFor(envVar.envName).then(
+          (value) => MapEntry(envVar.envName, value!),
+        ),
+    ]);
+    return Map.fromEntries(values);
   }
 
   Future<void> close({bool force = false}) async {

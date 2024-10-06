@@ -9,6 +9,7 @@
           "route": "/http-status/ok",
           "apiName": "http_status",
           "envVars": [],
+          "secrets": [],
           "httpConfig": {
             "method": "POST",
             "statusCode": 200,
@@ -20,6 +21,7 @@
           "route": "/http-status/created",
           "apiName": "http_status",
           "envVars": [],
+          "secrets": [],
           "httpConfig": {
             "method": "POST",
             "statusCode": 201,
@@ -31,6 +33,7 @@
           "route": "/http-status/accepted",
           "apiName": "http_status",
           "envVars": [],
+          "secrets": [],
           "httpConfig": {
             "method": "POST",
             "statusCode": 202,
@@ -42,6 +45,7 @@
           "route": "/http-status/bad-request",
           "apiName": "http_status",
           "envVars": [],
+          "secrets": [],
           "httpConfig": {
             "method": "POST",
             "statusCode": 400,
@@ -53,6 +57,7 @@
           "route": "/http-status/internal-server-error",
           "apiName": "http_status",
           "envVars": [],
+          "secrets": [],
           "httpConfig": {
             "method": "POST",
             "statusCode": 500,
@@ -69,6 +74,7 @@
           "route": "/http-method/get",
           "apiName": "http_method",
           "envVars": [],
+          "secrets": [],
           "httpConfig": {
             "method": "GET",
             "statusCode": 200,
@@ -80,6 +86,7 @@
           "route": "/http-method/post",
           "apiName": "http_method",
           "envVars": [],
+          "secrets": [],
           "httpConfig": {
             "method": "POST",
             "statusCode": 200,
@@ -91,6 +98,7 @@
           "route": "/http-method/put",
           "apiName": "http_method",
           "envVars": [],
+          "secrets": [],
           "httpConfig": {
             "method": "PUT",
             "statusCode": 200,
@@ -102,6 +110,7 @@
           "route": "/http-method/delete",
           "apiName": "http_method",
           "envVars": [],
+          "secrets": [],
           "httpConfig": {
             "method": "DELETE",
             "statusCode": 200,
@@ -113,6 +122,7 @@
           "route": "/http-method/patch",
           "apiName": "http_method",
           "envVars": [],
+          "secrets": [],
           "httpConfig": {
             "method": "PATCH",
             "statusCode": 200,
@@ -128,7 +138,8 @@
           "name": "query",
           "route": "/http-query/query",
           "apiName": "http_query",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     },
@@ -140,6 +151,7 @@
           "route": "/http-errors/http-errors",
           "apiName": "http_errors",
           "envVars": [],
+          "secrets": [],
           "httpConfig": {
             "method": "POST",
             "statusCode": 200,
@@ -161,12 +173,14 @@
           "name": "headers",
           "route": "/http-header/headers",
           "apiName": "http_header",
-          "envVars": []
+          "envVars": [],
+          "secrets": []
         }
       }
     }
   },
   "envVars": [],
+  "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],

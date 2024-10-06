@@ -114,6 +114,9 @@ final class CloudCodeGenerator extends AstVisitor<void> {
   void visitEnvironmentVariable(EnvironmentVariable variable) {}
 
   @override
+  void visitSecret(Secret secret) {}
+
+  @override
   void visitAuth(Auth auth) {
     throw UnimplementedError();
   }
