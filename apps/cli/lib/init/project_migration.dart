@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:celest_cli/init/migrations/add_generated_folder.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/project_dependency.dart';
@@ -10,45 +8,135 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
+sealed class ProjectMigrationResult {
+  const ProjectMigrationResult();
+
+  bool get needsAnalyzerMigration => false;
+
+  ProjectMigrationResult operator &(ProjectMigrationResult other);
+}
+
+final class ProjectMigrationSuccess extends ProjectMigrationResult {
+  const ProjectMigrationSuccess({this.needsAnalyzerMigration = false});
+
+  @override
+  final bool needsAnalyzerMigration;
+
+  @override
+  ProjectMigrationResult operator &(ProjectMigrationResult other) {
+    return switch (other) {
+      ProjectMigrationSkipped() => this,
+      ProjectMigrationSuccess(:final needsAnalyzerMigration) =>
+        ProjectMigrationSuccess(
+          needsAnalyzerMigration:
+              this.needsAnalyzerMigration || needsAnalyzerMigration,
+        ),
+    };
+  }
+
+  @override
+  String toString() =>
+      'ProjectMigrationSuccess(needsAnalyzerMigration: $needsAnalyzerMigration)';
+}
+
+final class ProjectMigrationSkipped extends ProjectMigrationResult {
+  const ProjectMigrationSkipped();
+
+  @override
+  ProjectMigrationResult operator &(ProjectMigrationResult other) => other;
+
+  @override
+  String toString() => 'ProjectMigrationSkipped()';
+}
+
+final class ProjectMigrationReport {
+  ProjectMigrationReport();
+
+  final Map<String, ProjectMigrationResult> migrations = {};
+
+  ProjectMigrationResult get result {
+    return migrations.values.fold(
+      const ProjectMigrationSkipped(),
+      (result, migration) => result & migration,
+    );
+  }
+
+  @override
+  String toString() {
+    final buffer = StringBuffer('ProjectMigrationReport(\n');
+    for (final entry in migrations.entries) {
+      final value = switch (entry.value) {
+        ProjectMigrationSuccess(needsAnalyzerMigration: false) => 'success',
+        ProjectMigrationSuccess(needsAnalyzerMigration: true) => 'partial',
+        ProjectMigrationSkipped() => 'skipped',
+      };
+      buffer.writeln('  ${entry.key}: $value,');
+    }
+    buffer.write(')');
+    return buffer.toString();
+  }
+}
+
 abstract class ProjectMigration {
-  const ProjectMigration();
+  const ProjectMigration(this.projectRoot);
+
+  String get name;
+  bool get needsMigration;
+
+  final String projectRoot;
+  Directory get projectDir => fileSystem.directory(projectRoot);
 
   /// Creates the item in the given [projectRoot].
-  Future<void> create(String projectRoot);
+  Future<ProjectMigrationResult> create();
 }
 
 sealed class ProjectFile extends ProjectMigration {
-  const ProjectFile();
+  const ProjectFile(super.projectRoot);
 
-  const factory ProjectFile.gitIgnore() = _GitIgnore;
+  const factory ProjectFile.gitIgnore(String projectRoot) = _GitIgnore;
 
-  const factory ProjectFile.analysisOptions() = _AnalysisOptions;
+  const factory ProjectFile.analysisOptions(String projectRoot) =
+      _AnalysisOptions;
 
   const factory ProjectFile.pubspec(
+    String projectRoot,
     String projectName,
     ParentProject? parentProject,
   ) = PubspecFile;
 
-  factory ProjectFile.client(String projectName) = ProjectClient;
+  factory ProjectFile.client(String projectRoot, String projectName) =
+      ProjectClient;
+
+  @override
+  String get name => 'core.project.file["$relativePath"]';
 
   /// The relative path of the item from the project root.
   String get relativePath;
+
+  @override
+  bool get needsMigration {
+    final entity = relativePath.endsWith('/')
+        ? projectDir.childDirectory
+        : projectDir.childFile;
+    return !entity(relativePath).existsSync();
+  }
 }
 
 final class _GitIgnore extends ProjectFile {
-  const _GitIgnore();
+  const _GitIgnore(super.projectRoot);
 
   @override
   String get relativePath => '.gitignore';
 
   @override
-  Future<void> create(String projectRoot) async {
+  Future<ProjectMigrationResult> create() async {
     await _createFile(
       p.join(projectRoot, relativePath),
       '''
@@ -60,17 +148,18 @@ pubspec.lock
 **/.env
 ''',
     );
+    return const ProjectMigrationSuccess();
   }
 }
 
 final class _AnalysisOptions extends ProjectFile {
-  const _AnalysisOptions();
+  const _AnalysisOptions(super.projectRoot);
 
   @override
   String get relativePath => 'analysis_options.yaml';
 
   @override
-  Future<void> create(String projectRoot) async {
+  Future<ProjectMigrationResult> create() async {
     await _createFile(
       p.join(projectRoot, relativePath),
       '''
@@ -81,11 +170,12 @@ analyzer:
     depend_on_referenced_packages: ignore
 ''',
     );
+    return const ProjectMigrationSuccess();
   }
 }
 
 final class PubspecFile extends ProjectFile {
-  const PubspecFile(this.projectName, this.parentProject);
+  const PubspecFile(super.projectRoot, this.projectName, this.parentProject);
 
   final String projectName;
   final ParentProject? parentProject;
@@ -149,24 +239,10 @@ final class PubspecFile extends ProjectFile {
   }
 
   @override
-  Future<void> create(String projectRoot) async {
+  Future<ProjectMigrationResult> create() async {
     final file = fileSystem.file(p.join(projectRoot, relativePath));
     await file.create(recursive: true);
 
-    // TODO(dnys1): Make this work with existing projects too
-    var celestLocalPath = platform.environment['CELEST_LOCAL_PATH'];
-    if (celestLocalPath != null) {
-      celestLocalPath = p.canonicalize(p.normalize(celestLocalPath));
-      if (fileSystem.directory(celestLocalPath).existsSync()) {
-        logger.finest('Using local Celest at $celestLocalPath');
-      } else {
-        logger.warning(
-          'CELEST_LOCAL_PATH is set to $celestLocalPath, but the directory '
-          'does not exist. Ignoring.',
-        );
-        celestLocalPath = null;
-      }
-    }
     final pubspec = Pubspec(
       'celest_backend',
       // '${projectName.snakeCase}_backend',
@@ -189,11 +265,12 @@ final class PubspecFile extends ProjectFile {
     );
     await file.writeAsString(pubspec.toYaml());
     await _updateAppPubspec();
+    return const ProjectMigrationSuccess();
   }
 }
 
 final class ProjectClient extends ProjectFile {
-  ProjectClient(this.projectName);
+  ProjectClient(super.projectRoot, this.projectName);
 
   final String projectName;
   final _operations = <Future<void>>[];
@@ -204,7 +281,7 @@ final class ProjectClient extends ProjectFile {
   String get relativePath => 'client/';
 
   @override
-  Future<void> create(String projectRoot) async {
+  Future<ProjectMigrationResult> create() async {
     final clientOutputsDir = fileSystem.directory(projectPaths.clientRoot);
     if (!clientOutputsDir.existsSync()) {
       await clientOutputsDir.create(recursive: true);
@@ -225,6 +302,16 @@ final class ProjectClient extends ProjectFile {
           ...ProjectDependency.dependencies,
           ProjectDependency.nativeStorage.name:
               ProjectDependency.nativeStorage.pubDependency,
+        },
+        dependencyOverrides: switch (celestLocalPath) {
+          null => null,
+          final localPath => {
+              'celest': PathDependency('$localPath/packages/celest'),
+              'celest_cloud':
+                  PathDependency('$localPath/packages/celest_cloud'),
+              'celest_core': PathDependency('$localPath/packages/celest_core'),
+              'celest_auth': PathDependency('$localPath/packages/celest_auth'),
+            },
         },
       );
       final pubspecYaml = pubspec.toYaml();
@@ -249,22 +336,30 @@ final class ProjectClient extends ProjectFile {
     );
 
     await Future.wait(_operations);
+    return const ProjectMigrationSuccess();
   }
 }
 
 sealed class ProjectTemplate extends ProjectMigration {
-  const ProjectTemplate();
+  const ProjectTemplate(super.projectRoot);
 
-  factory ProjectTemplate.hello(String projectName) = _HelloProject;
+  factory ProjectTemplate.hello(String projectRoot, String projectName) =
+      _HelloProject;
 }
 
 final class _HelloProject extends ProjectTemplate {
-  _HelloProject(this.projectName);
+  _HelloProject(super.projectRoot, this.projectName);
+
+  @override
+  String get name => 'core.template.hello';
+
+  @override
+  bool get needsMigration => true;
 
   final String projectName;
 
   @override
-  Future<void> create(String projectRoot) async {
+  Future<ProjectMigrationResult> create() async {
     await Future.wait([
       _createFile(
         projectPaths.projectDart,
@@ -337,14 +432,6 @@ void main() {
 }
 ''',
       ),
-      _createFile(
-        p.join(projectRoot, '.vscode', 'settings.json'),
-        jsonEncode({
-          'files.exclude': {
-            'lib/**': true,
-          },
-        }),
-      ),
 
       // Generated
       _createFile(
@@ -353,13 +440,14 @@ void main() {
       ),
 
       // Client
-      ProjectFile.client(projectName).create(projectRoot),
+      ProjectFile.client(projectRoot, projectName).create(),
 
       // Symlinks
       fileSystem
           .link(p.join(projectRoot, 'functions'))
           .create(projectPaths.apisDir, recursive: true),
     ]);
+    return const ProjectMigrationSuccess();
   }
 }
 

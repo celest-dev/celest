@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:celest_cli/init/project_migration.dart';
@@ -9,21 +10,29 @@ import 'package:stream_transform/stream_transform.dart';
 /// Updates the macOS entitlements plist to include the network client
 /// capability.
 final class MacOsEntitlements extends ProjectMigration {
-  const MacOsEntitlements(this.appRoot);
+  const MacOsEntitlements(super.projectRoot, this.appRoot);
 
   final String appRoot;
 
   static final _logger = Logger('MacOsEntitlements');
 
   @override
-  Future<void> create(String projectRoot) async {
+  String get name => 'core.flutter.macos_entitlements';
+
+  @override
+  bool get needsMigration =>
+      platform.isMacOS &&
+      fileSystem.directory(appRoot).childDirectory('macos').existsSync();
+
+  @override
+  Future<ProjectMigrationResult> create() async {
     if (!platform.isMacOS) {
-      return;
+      return const ProjectMigrationSkipped();
     }
     final macosDir = fileSystem.directory(appRoot).childDirectory('macos');
-    if (!await macosDir.exists()) {
+    if (!macosDir.existsSync()) {
       _logger.finest('No macos directory. Skipping entitlements update.');
-      return;
+      return const ProjectMigrationSkipped();
     }
     final entitlementFiles = await macosDir
         .list()
@@ -67,5 +76,6 @@ final class MacOsEntitlements extends ProjectMigration {
         continue;
       }
     }
+    return const ProjectMigrationSuccess();
   }
 }

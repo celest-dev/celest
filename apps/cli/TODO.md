@@ -12,6 +12,7 @@
     - [ ] Fix `required` fields (take into account nullability + default values)
     - [ ] Fix `default` values
 - Generate Dockerfiles
+- Generate full client as part of `celest init`. To prevent lengthy starts, maybe bundle the generated client.
 
 ## Functions
 

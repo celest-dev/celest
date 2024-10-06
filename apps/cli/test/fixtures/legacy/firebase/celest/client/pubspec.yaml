@@ -1,0 +1,20 @@
+name: firebase_test_client
+description: The Celest client for firebase_test.
+publish_to: none
+
+environment:
+  sdk: ^3.4.0
+
+dependencies:
+  celest: ^0.5.0-0
+  celest_backend:
+    path: ../
+  celest_core: ^0.5.0-0
+  firebase_auth: ^5.2.0
+  http: ">=0.13.0 <2.0.0"
+  native_storage: ^0.2.2
+
+dev_dependencies:
+  test: any
+
+dependency_overrides: {celest: {path: /Users/dillonnys/celest/cloud/celest/packages/celest}, celest_auth: {path: /Users/dillonnys/celest/cloud/celest/packages/celest_auth}, celest_cloud: {path: /Users/dillonnys/celest/cloud/celest/packages/celest_cloud}, celest_core: {path: /Users/dillonnys/celest/cloud/celest/packages/celest_core}}

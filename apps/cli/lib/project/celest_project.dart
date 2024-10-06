@@ -15,6 +15,7 @@ import 'package:celest_cli/database/cloud/cloud_database.dart';
 import 'package:celest_cli/database/project/project_database.dart';
 import 'package:celest_cli/env/env_manager.dart';
 import 'package:celest_cli/project/project_paths.dart';
+import 'package:celest_cli/pub/cached_pubspec.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:logging/logging.dart';
@@ -85,6 +86,7 @@ final class CelestProject {
     required String projectRoot,
     ParentProject? parentProject,
     String? configHome,
+    String? clientDir,
     String? outputsDir,
     @visibleForTesting CacheDatabase? cacheDb,
     @visibleForTesting ByteStore? byteStore,
@@ -94,6 +96,7 @@ final class CelestProject {
     final projectPaths = ProjectPaths(
       projectRoot,
       parentAppRoot: parentProject?.path,
+      clientDir: clientDir,
       outputsDir: outputsDir,
     );
     final [
@@ -189,10 +192,17 @@ final class CelestProject {
       );
   ProjectDatabase? _projectDb;
 
-  Pubspec get pubspec => Pubspec.parse(
-        fileSystem.file(projectPaths.pubspecYaml).readAsStringSync(),
-        sourceUrl: Uri.file(projectPaths.pubspecYaml),
-      );
+  late final _cachedPubspec = CachedPubspec(
+    fileSystem.file(projectPaths.pubspecYaml),
+  );
+  Pubspec get pubspec => _cachedPubspec.pubspec;
+  String get pubspecYaml => _cachedPubspec.pubspecYaml;
+
+  late final _cachedClientPubspec = CachedPubspec(
+    fileSystem.directory(projectPaths.clientRoot).childFile('pubspec.yaml'),
+  );
+  Pubspec get clientPubspec => _cachedClientPubspec.pubspec;
+  String get clientPubspecYaml => _cachedClientPubspec.pubspecYaml;
 
   Future<Set<String>> invalidate(Iterable<String> files) async {
     for (final file in files) {

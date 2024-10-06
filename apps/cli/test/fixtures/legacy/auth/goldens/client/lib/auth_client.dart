@@ -17,6 +17,7 @@ import 'src/functions.dart';
 import 'src/serializers.dart';
 
 export 'package:celest_auth/celest_auth.dart';
+export 'src/auth.dart';
 
 final Celest celest = Celest();
 
@@ -71,13 +72,16 @@ class Celest with _$celest.CelestBase {
 
   CelestAuth get auth => _checkInitialized(() => _auth);
 
-  void init({CelestEnvironment environment = CelestEnvironment.local}) {
+  void init({
+    CelestEnvironment environment = CelestEnvironment.local,
+    ExternalAuth? externalAuth,
+  }) {
     if (_initialized && environment != _currentEnvironment) {
       _auth.signOut();
     }
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
-    _$async.scheduleMicrotask(_auth.init);
+    _$async.scheduleMicrotask(() => _auth.init(externalAuth: externalAuth));
     if (!_initialized) {
       initSerializers();
     }

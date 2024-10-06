@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "dev": "prj-d-firebase-test",
+    "nonprod": "prj-n-firebase-test"
+  },
+  "targets": {},
+  "etags": {}
+}

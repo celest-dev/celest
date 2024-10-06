@@ -58,8 +58,9 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater = PubspecUpdater(null, _projectName);
-      await updater.create(projectPaths.projectRoot);
+      final updater =
+          PubspecUpdater(projectPaths.projectRoot, null, _projectName);
+      await updater.create();
 
       final updatedPubspec =
           await fileSystem.file(projectPaths.pubspecYaml).readAsString();
@@ -76,8 +77,9 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater = PubspecUpdater(null, _projectName);
-      await updater.create(projectPaths.projectRoot);
+      final updater =
+          PubspecUpdater(projectPaths.projectRoot, null, _projectName);
+      await updater.create();
 
       final updatedPubspec =
           await fileSystem.file(projectPaths.pubspecYaml).readAsString();
@@ -98,8 +100,9 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater = PubspecUpdater(null, _projectName);
-      await updater.create(projectPaths.projectRoot);
+      final updater =
+          PubspecUpdater(projectPaths.projectRoot, null, _projectName);
+      await updater.create();
 
       final updatedPubspec =
           await fileSystem.file(projectPaths.pubspecYaml).readAsString();
@@ -120,8 +123,9 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater = PubspecUpdater(null, _projectName);
-      await updater.create(projectPaths.projectRoot);
+      final updater =
+          PubspecUpdater(projectPaths.projectRoot, null, _projectName);
+      await updater.create();
 
       final updatedPubspec =
           await fileSystem.file(projectPaths.pubspecYaml).readAsString();
@@ -142,8 +146,9 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater = PubspecUpdater(null, _projectName);
-      await updater.create(projectPaths.projectRoot);
+      final updater =
+          PubspecUpdater(projectPaths.projectRoot, null, _projectName);
+      await updater.create();
 
       final updatedPubspec =
           await fileSystem.file(projectPaths.pubspecYaml).readAsString();
@@ -183,6 +188,7 @@ environment:
 
       await tempDir.childFile('pubspec.yaml').writeAsString(pubspecYaml);
       await PubspecFile(
+        p.join(tempDir.path, 'celest'),
         'barebones',
         ParentProject(
           name: 'barebones',
@@ -191,7 +197,7 @@ environment:
           pubspecYaml: pubspecYaml,
           type: ParentProjectType.dart,
         ),
-      ).create(p.join(tempDir.path, 'celest'));
+      ).create();
 
       final updatedPubspecYaml =
           await tempDir.childFile('pubspec.yaml').readAsString();
@@ -237,6 +243,7 @@ dev_dependencies:
 
       await tempDir.childFile('pubspec.yaml').writeAsString(pubspecYaml);
       await PubspecFile(
+        p.join(tempDir.path, 'celest'),
         'empty',
         ParentProject(
           name: 'empty',
@@ -245,7 +252,7 @@ dev_dependencies:
           pubspecYaml: pubspecYaml,
           type: ParentProjectType.dart,
         ),
-      ).create(p.join(tempDir.path, 'celest'));
+      ).create();
 
       final updatedPubspecYaml =
           await tempDir.childFile('pubspec.yaml').readAsString();
@@ -295,6 +302,7 @@ dev_dependencies:
 
       await tempDir.childFile('pubspec.yaml').writeAsString(pubspecYaml);
       await PubspecFile(
+        p.join(tempDir.path, 'celest'),
         'existing',
         ParentProject(
           name: 'existing',
@@ -303,7 +311,7 @@ dev_dependencies:
           pubspecYaml: pubspecYaml,
           type: ParentProjectType.dart,
         ),
-      ).create(p.join(tempDir.path, 'celest'));
+      ).create();
 
       final updatedPubspecYaml =
           await tempDir.childFile('pubspec.yaml').readAsString();
@@ -355,6 +363,7 @@ dev_dependencies:
 
       await tempDir.childFile('pubspec.yaml').writeAsString(pubspecYaml);
       await PubspecFile(
+        p.join(tempDir.path, 'celest'),
         'existing',
         ParentProject(
           name: 'existing',
@@ -363,7 +372,7 @@ dev_dependencies:
           pubspecYaml: pubspecYaml,
           type: ParentProjectType.dart,
         ),
-      ).create(p.join(tempDir.path, 'celest'));
+      ).create();
 
       final updatedPubspecYaml =
           await tempDir.childFile('pubspec.yaml').readAsString();

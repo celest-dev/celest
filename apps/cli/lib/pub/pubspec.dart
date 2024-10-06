@@ -41,6 +41,27 @@ extension PubspecCopyWith on Pubspec {
       flutter: flutter ?? this.flutter,
     );
   }
+
+  Pubspec addDeps({
+    Map<String, Dependency>? dependencies,
+    Map<String, Dependency>? devDependencies,
+    Map<String, Dependency>? dependencyOverrides,
+  }) {
+    return copyWith(
+      dependencies: {
+        ...this.dependencies,
+        ...?dependencies,
+      },
+      devDependencies: {
+        ...this.devDependencies,
+        ...?devDependencies,
+      },
+      dependencyOverrides: {
+        ...this.dependencyOverrides,
+        ...?dependencyOverrides,
+      },
+    );
+  }
 }
 
 extension PubspecToYaml on Pubspec {

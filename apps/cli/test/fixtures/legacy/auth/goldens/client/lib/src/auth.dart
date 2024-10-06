@@ -7,7 +7,10 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest_auth/celest_auth.dart' as _$celest;
 import 'package:celest_auth/src/auth_impl.dart' as _$celest;
 import 'package:celest_core/_internal.dart' as _$celest;
+import 'package:firebase_auth/firebase_auth.dart' as _$firebase_auth;
+import 'package:gotrue/gotrue.dart' as _$gotrue;
 import 'package:native_storage/native_storage.dart' as _$native_storage;
+import 'package:stream_transform/stream_transform.dart';
 
 extension type CelestAuth._(_$celest.AuthImpl _hub) implements _$celest.Auth {
   CelestAuth(
@@ -21,4 +24,63 @@ extension type CelestAuth._(_$celest.AuthImpl _hub) implements _$celest.Auth {
   _$celest.Email get email => _$celest.Email(_hub);
 
   _$celest.Sms get sms => _$celest.Sms(_hub);
+}
+
+/// External authentication providers which can be used to sign in to Celest.
+///
+/// This class is passed to `celest.init` to configure the token sources for
+/// the external auth providers.
+class ExternalAuth extends _$celest.TokenSource {
+  /// {@macro celest_auth.token_source.of}
+  const ExternalAuth.of({
+    required super.provider,
+    required super.stream,
+  }) : super.of();
+
+  /// Creates an instance of [ExternalAuth] for Firebase Auth.
+  ///
+  /// See the [Firebase docs](https://firebase.google.com/docs/flutter/setup)
+  /// for more information on how to initialize Firebase.
+  ///
+  /// ```dart
+  /// Future<void> main() async {
+  ///   WidgetsFlutterBinding.ensureInitialized();
+  ///   await Firebase.initializeApp();
+  ///   celest.init(
+  ///     externalAuth: ExternalAuth.firebase(FirebaseAuth.instance),
+  ///   );
+  /// }
+  /// ```
+  factory ExternalAuth.firebase(_$firebase_auth.FirebaseAuth firebase) {
+    return ExternalAuth.of(
+      provider: _$celest.AuthProviderType.firebase,
+      stream: firebase.idTokenChanges().asyncMap((user) => user?.getIdToken()),
+    );
+  }
+
+  /// ### Supabase
+  ///
+  /// See the [Supabase docs](https://supabase.com/docs/reference/dart/introduction)
+  /// for more information on how to initialize Supabase.
+  ///
+  /// ```dart
+  /// Future<void> main() async {
+  ///   WidgetsFlutterBinding.ensureInitialized();
+  ///   await Supabase.initialize(
+  ///     url: 'https://<your-project-id>.supabase.co',
+  ///     ...
+  ///   );
+  ///   celest.init(
+  ///     externalAuth: ExternalAuth.supabase(supabase.auth),
+  ///   );
+  /// }
+  /// ```
+  factory ExternalAuth.supabase(_$gotrue.GoTrueClient supabase) {
+    return ExternalAuth.of(
+      provider: _$celest.AuthProviderType.supabase,
+      stream: supabase.onAuthStateChange
+          .map((state) => state.session?.accessToken)
+          .startWith(supabase.currentSession?.accessToken),
+    );
+  }
 }

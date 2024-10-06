@@ -216,7 +216,7 @@ base mixin Configure on CelestCommand {
       parentProject: parentProject,
     );
 
-    final needsMigration = celestProject.cacheDb.needsProjectUpgrade;
+    final postUpgrade = celestProject.cacheDb.needsProjectUpgrade;
     var needsAnalyzerMigration = false;
     Future<void>? upgradePackages;
     if (!isExistingProject) {
@@ -230,13 +230,13 @@ base mixin Configure on CelestCommand {
       } else {
         _throwNoProject();
       }
-    } else if (this case final Migrate projectMigrator when needsMigration) {
+    } else if (this case final Migrate projectMigrator) {
       yield const MigratingProject();
       needsAnalyzerMigration = await projectMigrator.migrateProject(
         parentProject: parentProject,
       );
       await (upgradePackages = _pubUpgrade());
-      if (needsMigration && parentProject != null) {
+      if (postUpgrade && parentProject != null) {
         await processManager.run(
           <String>[
             Sdk.current.dart,

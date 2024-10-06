@@ -5,8 +5,9 @@ final class ProjectPaths {
   ProjectPaths(
     this.projectRoot, {
     this.parentAppRoot,
+    String? clientDir,
     String? outputsDir,
-  })  : clientRoot = p.join(outputsDir ?? projectRoot, 'client'),
+  })  : clientRoot = clientDir ?? p.join(outputsDir ?? projectRoot, 'client'),
         outputsDir =
             outputsDir ?? fileSystem.systemTempDirectory.createTempSync().path;
 

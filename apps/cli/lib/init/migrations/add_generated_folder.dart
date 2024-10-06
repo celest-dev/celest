@@ -5,14 +5,23 @@ import 'package:celest_cli/src/context.dart';
 import 'package:file/file.dart';
 
 final class GeneratedFolder extends ProjectMigration {
+  const GeneratedFolder(super.projectRoot);
+
   @override
-  Future<void> create(String projectRoot) async {
+  bool get needsMigration => false;
+
+  @override
+  String get name => 'core.layout.generated';
+
+  @override
+  Future<ProjectMigrationResult> create() async {
     final generatedDir =
         fileSystem.directory(projectRoot).childDirectory('generated');
     await _createIfNotExists(
       generatedDir.childFile('README.md'),
       generated_README,
     );
+    return const ProjectMigrationSuccess();
   }
 }
 

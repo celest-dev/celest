@@ -392,24 +392,30 @@
       "value": "prj-d-firebase-test"
     }
   ],
-  "secrets": [],
+  "secrets": [
+    {
+      "name": "SUPABASE_JWT_SECRET",
+      "value": "super-secret-jwt-token-with-at-least-32-characters-long"
+    }
+  ],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
-    ]
+    ],
+    "flutterSdkVersion": "3.24.3"
   },
   "auth": {
     "providers": [
       {
         "$": "ResolvedEmailAuthProvider",
-        "name": "EMAIL_OTP",
+        "name": "emailOtp",
         "type": "EMAIL_OTP"
       },
       {
         "$": "ResolvedSmsAuthProvider",
-        "name": "SMS_OTP",
+        "name": "smsOtp",
         "type": "SMS_OTP"
       }
     ],
@@ -420,8 +426,17 @@
           "name": "FIREBASE_PROJECT_ID",
           "value": "prj-d-firebase-test"
         },
-        "name": "FIREBASE",
+        "name": "firebase",
         "type": "FIREBASE"
+      },
+      {
+        "$": "ResolvedSupabaseExternalAuthProvider",
+        "jwtSecret": {
+          "name": "SUPABASE_JWT_SECRET",
+          "value": "super-secret-jwt-token-with-at-least-32-characters-long"
+        },
+        "name": "supabase",
+        "type": "SUPABASE"
       }
     ]
   }

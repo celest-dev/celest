@@ -1748,13 +1748,33 @@
       }
     }
   ],
-  "secrets": [],
+  "secrets": [
+    {
+      "envName": "SUPABASE_JWT_SECRET",
+      "location": {
+        "start": {
+          "offset": 84,
+          "uri": "project.dart",
+          "line": 4,
+          "column": 6
+        },
+        "end": {
+          "offset": 88,
+          "uri": "project.dart",
+          "line": 4,
+          "column": 10
+        },
+        "text": "auth"
+      }
+    }
+  ],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],
     "featureFlags": [
       "streaming"
-    ]
+    ],
+    "flutterSdkVersion": "3.24.3"
   },
   "location": {
     "start": {
@@ -1775,7 +1795,7 @@
     "providers": [
       {
         "$": "EmailAuthProvider",
-        "name": "EMAIL_OTP",
+        "name": "emailOtp",
         "type": "EMAIL_OTP",
         "location": {
           "start": {
@@ -1795,7 +1815,7 @@
       },
       {
         "$": "SmsAuthProvider",
-        "name": "SMS_OTP",
+        "name": "smsOtp",
         "type": "SMS_OTP",
         "location": {
           "start": {
@@ -1835,8 +1855,46 @@
             "text": "auth"
           }
         },
-        "name": "FIREBASE",
+        "name": "firebase",
         "type": "FIREBASE",
+        "location": {
+          "start": {
+            "offset": 84,
+            "uri": "project.dart",
+            "line": 4,
+            "column": 6
+          },
+          "end": {
+            "offset": 88,
+            "uri": "project.dart",
+            "line": 4,
+            "column": 10
+          },
+          "text": "auth"
+        }
+      },
+      {
+        "$": "SupabaseExternalAuthProvider",
+        "jwtSecret": {
+          "envName": "SUPABASE_JWT_SECRET",
+          "location": {
+            "start": {
+              "offset": 84,
+              "uri": "project.dart",
+              "line": 4,
+              "column": 6
+            },
+            "end": {
+              "offset": 88,
+              "uri": "project.dart",
+              "line": 4,
+              "column": 10
+            },
+            "text": "auth"
+          }
+        },
+        "name": "supabase",
+        "type": "SUPABASE",
         "location": {
           "start": {
             "offset": 84,

@@ -29,6 +29,7 @@ Future<ProjectPaths> init({
   required String projectRoot,
   ParentProject? parentProject,
   String? configHome,
+  String? clientDir,
   String? outputsDir,
   @visibleForTesting CacheDatabase? cacheDb,
   @visibleForTesting ByteStore? byteStore,
@@ -38,6 +39,7 @@ Future<ProjectPaths> init({
     projectRoot: projectRoot,
     parentProject: parentProject,
     configHome: configHome,
+    clientDir: clientDir,
     outputsDir: outputsDir,
     // ignore: invalid_use_of_visible_for_testing_member
     cacheDb: cacheDb,
@@ -68,3 +70,21 @@ final CelestCloud cloud = CelestCloud(
       _cloudLogger.finest(record.message, record.error, record.stackTrace);
     }),
 );
+
+/// The path to the local checkout of the `celest-dev/celest` repo, if set.
+String? get celestLocalPath {
+  var celestLocalPath = ctx.platform.environment['CELEST_LOCAL_PATH'];
+  if (celestLocalPath != null) {
+    celestLocalPath = ctx.p.canonicalize(ctx.p.normalize(celestLocalPath));
+    if (ctx.fileSystem.directory(celestLocalPath).existsSync()) {
+      Logger.root.finest('Using local Celest at $celestLocalPath');
+    } else {
+      Logger.root.warning(
+        'CELEST_LOCAL_PATH is set to $celestLocalPath, but the directory '
+        'does not exist. Ignoring.',
+      );
+      celestLocalPath = null;
+    }
+  }
+  return celestLocalPath;
+}

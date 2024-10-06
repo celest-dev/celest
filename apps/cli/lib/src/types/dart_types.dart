@@ -12,6 +12,7 @@ import 'package:built_value/json_object.dart' as built_value_json_object;
 import 'package:built_value/serializer.dart' as built_value_serializer;
 import 'package:celest/celest.dart' as celest;
 import 'package:celest/src/runtime/serve.dart' as celest_runtime;
+import 'package:celest_auth/celest_auth.dart' as celest_auth;
 import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_core/celest_core.dart' as celest_core;
@@ -100,6 +101,9 @@ abstract class DartTypes {
 
   /// `package:celest` types.
   static const celest = _Celest();
+
+  /// `package:celest_auth` types.
+  static const celestAuth = _CelestAuth();
 
   /// `package:collection` types.
   static const collection = _Collection();
@@ -656,6 +660,21 @@ class _Celest {
   /// Creates a `ContextKey` reference.
   DartTypeReference get contextKey =>
       const DartTypeReference('ContextKey', _contextUrl);
+}
+
+/// `package:celest_auth` types
+class _CelestAuth {
+  const _CelestAuth();
+
+  static const _url = 'package:celest_auth/celest_auth.dart';
+
+  /// Creates a [celest_auth.AuthProviderType] reference.
+  DartTypeReference get authProviderType =>
+      const DartTypeReference('AuthProviderType', _url);
+
+  /// Creates a [celest_auth.TokenSource] reference.
+  DartTypeReference get tokenSource =>
+      const DartTypeReference('TokenSource', _url);
 }
 
 class _Collection {

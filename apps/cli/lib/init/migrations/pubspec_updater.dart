@@ -13,13 +13,18 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:yaml_edit/yaml_edit.dart' hide SourceEdit;
 
 final class PubspecUpdater extends ProjectMigration {
-  PubspecUpdater(this.parentProject, this.projectName);
+  const PubspecUpdater(super.projectRoot, this.parentProject, this.projectName);
 
   static final _logger = Logger('PubspecUpdater');
 
   final ParentProject? parentProject;
   final String projectName;
-  late final String projectRoot;
+
+  @override
+  String get name => 'core.project.pubspec';
+
+  @override
+  bool get needsMigration => true;
 
   // TODO(dnys1): Update project names when we can update all Dart code which
   /// currently references `celest_backend`.
@@ -92,6 +97,20 @@ final class PubspecUpdater extends ProjectMigration {
           entry.key:
               ProjectDependency.devDependencies[entry.key] ?? entry.value,
       },
+      dependencyOverrides: switch (celestLocalPath) {
+        null => {
+            for (final entry in pubspec.dependencies.entries)
+              if (!ProjectDependency.all.containsKey(entry.key))
+                entry.key: entry.value,
+          },
+        final localPath => {
+            ...pubspec.dependencyOverrides,
+            'celest': PathDependency('$localPath/packages/celest'),
+            'celest_cloud': PathDependency('$localPath/packages/celest_cloud'),
+            'celest_core': PathDependency('$localPath/packages/celest_core'),
+            'celest_auth': PathDependency('$localPath/packages/celest_auth'),
+          },
+      },
     );
     pubspecYaml = pubspec.toYaml(source: pubspecYaml);
     await pubspecFile.writeAsString(pubspecYaml);
@@ -123,6 +142,20 @@ final class PubspecUpdater extends ProjectMigration {
         for (final entry in pubspec.devDependencies.entries)
           entry.key:
               ProjectDependency.devDependencies[entry.key] ?? entry.value,
+      },
+      dependencyOverrides: switch (celestLocalPath) {
+        null => {
+            for (final entry in pubspec.dependencies.entries)
+              if (!ProjectDependency.all.containsKey(entry.key))
+                entry.key: entry.value,
+          },
+        final localPath => {
+            ...pubspec.dependencyOverrides,
+            'celest': PathDependency('$localPath/packages/celest'),
+            'celest_cloud': PathDependency('$localPath/packages/celest_cloud'),
+            'celest_core': PathDependency('$localPath/packages/celest_core'),
+            'celest_auth': PathDependency('$localPath/packages/celest_auth'),
+          },
       },
     );
     pubspecYaml = pubspec.toYaml(source: pubspecYaml);
@@ -162,11 +195,10 @@ final class PubspecUpdater extends ProjectMigration {
   }
 
   @override
-  Future<bool> create(String projectRoot) async {
+  Future<ProjectMigrationResult> create() async {
     _logger.fine('Updating project pubspec...');
-    this.projectRoot = projectRoot;
 
-    var needsMigration = false;
+    var needsAnalyzerMigration = false;
     final operations = <Future<void>>[];
 
     // Update backend dependencies
@@ -180,8 +212,9 @@ final class PubspecUpdater extends ProjectMigration {
         pubspecFile: pubspecFile,
       );
       // await _updateProjectName();
-      needsMigration |= fromVersion != null && fromVersion < Version(0, 4, 0);
-      if (needsMigration) {
+      needsAnalyzerMigration |=
+          fromVersion != null && fromVersion < Version(1, 0, 0).firstPreRelease;
+      if (needsAnalyzerMigration) {
         operations.add(
           runPub(
             action: PubAction.get,
@@ -203,7 +236,7 @@ final class PubspecUpdater extends ProjectMigration {
         pubspecYaml: clientPubspecYaml,
         pubspecFile: clientPubspecFile,
       );
-      needsMigration |= clientNeedsMigration;
+      needsAnalyzerMigration |= clientNeedsMigration;
       if (clientNeedsMigration) {
         operations.add(
           runPub(
@@ -218,6 +251,8 @@ final class PubspecUpdater extends ProjectMigration {
     // Update app pubspec
     await _updateAppPubspec();
 
-    return needsMigration;
+    return ProjectMigrationSuccess(
+      needsAnalyzerMigration: needsAnalyzerMigration,
+    );
   }
 }

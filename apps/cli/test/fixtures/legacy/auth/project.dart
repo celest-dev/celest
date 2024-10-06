@@ -7,5 +7,6 @@ const auth = Auth(
     AuthProvider.email(),
     AuthProvider.sms(),
     ExternalAuthProvider.firebase(),
+    ExternalAuthProvider.supabase(),
   ],
 );

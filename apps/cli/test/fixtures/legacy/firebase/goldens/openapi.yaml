@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: firebase_test
+  version: 'v1'
+paths:
+  '/greeting/say-hello':
+    post:
+      summary: "Says hello to a [person]."
+      description: |-
+          /// Says hello to a [person].
+      operationId: greeting.sayHello
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/firebase_test.v1.GreetingSayHelloRequest'
+        required: true
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                type: string
+                nullable: false
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
+components:
+  schemas:
+    firebase_test.v1.Person:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+      additionalProperties: false
+      required:
+        - name
+    firebase_test.v1.GreetingSayHelloRequest:
+      type: object
+      nullable: false
+      properties:
+        person:
+          $ref: '#/components/schemas/firebase_test.v1.Person'
+      additionalProperties: false

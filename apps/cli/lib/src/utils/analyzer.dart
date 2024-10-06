@@ -145,6 +145,12 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
+  bool get isExternalAuthProviderSupabase => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == '_SupabaseExternalAuthProvider' && library.isPackageCelest,
+        _ => false,
+      };
+
   bool get isProject => switch (element) {
         ClassElement(:final name, :final library) =>
           name == 'Project' && library.isPackageCelest,

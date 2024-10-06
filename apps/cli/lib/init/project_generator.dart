@@ -29,19 +29,17 @@ class ProjectGenerator {
   Future<void> generate() async {
     await Future.wait(
       [
-        const ProjectFile.gitIgnore(),
-        const ProjectFile.analysisOptions(),
-        ProjectFile.pubspec(projectName, parentProject),
-        ProjectTemplate.hello(projectName),
+        ProjectFile.gitIgnore(projectRoot),
+        ProjectFile.analysisOptions(projectRoot),
+        ProjectFile.pubspec(projectRoot, projectName, parentProject),
+        ProjectTemplate.hello(projectRoot, projectName),
         if (parentProject
-            case ParentProject(
-              path: final appRoot,
-              type: ParentProjectType.flutter
-            ))
-          MacOsEntitlements(appRoot),
-        if (parentProject case final parentProject?)
-          AddAnalyzerPlugin(parentProject),
-      ].map((item) => item.create(projectRoot)),
+            case ParentProject(path: final appRoot, :final type)) ...[
+          AddAnalyzerPlugin(projectRoot, appRoot),
+          if (type == ParentProjectType.flutter)
+            MacOsEntitlements(projectRoot, appRoot),
+        ],
+      ].map((item) => item.create()),
     );
   }
 }

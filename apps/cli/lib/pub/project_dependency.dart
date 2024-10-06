@@ -19,6 +19,18 @@ final class ProjectDependency {
   final DependencyType type;
   final HostedDependency pubDependency;
 
+  static final Map<String, ProjectDependency> all = {
+    celest.name: celest,
+    celestCore.name: celestCore,
+    firebaseAuth.name: firebaseAuth,
+    gotrue.name: gotrue,
+    http.name: http,
+    nativeStorage.name: nativeStorage,
+    streamTransform.name: streamTransform,
+    lints.name: lints,
+    test.name: test,
+  };
+
   static final ProjectDependency celest = ProjectDependency._(
     'celest',
     DependencyType.dependency,
@@ -32,6 +44,22 @@ final class ProjectDependency {
     DependencyType.dependency,
     HostedDependency(
       version: VersionConstraint.compatibleWith(currentMinorVersion),
+    ),
+  );
+
+  static final ProjectDependency firebaseAuth = ProjectDependency._(
+    'firebase_auth',
+    DependencyType.dependency,
+    HostedDependency(
+      version: VersionConstraint.compatibleWith(Version.parse('5.2.0')),
+    ),
+  );
+
+  static final ProjectDependency gotrue = ProjectDependency._(
+    'gotrue',
+    DependencyType.dependency,
+    HostedDependency(
+      version: VersionConstraint.compatibleWith(Version.parse('2.8.0')),
     ),
   );
 
@@ -53,6 +81,14 @@ final class ProjectDependency {
     DependencyType.dependency,
     HostedDependency(
       version: VersionConstraint.compatibleWith(Version.parse('0.2.2')),
+    ),
+  );
+
+  static final ProjectDependency streamTransform = ProjectDependency._(
+    'stream_transform',
+    DependencyType.dependency,
+    HostedDependency(
+      version: VersionConstraint.compatibleWith(Version.parse('2.1.0')),
     ),
   );
 

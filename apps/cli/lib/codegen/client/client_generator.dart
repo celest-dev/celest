@@ -5,7 +5,9 @@ import 'package:celest_cli/codegen/client/categories/client_serializers_generato
 import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/serialization/serializer_generator.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/path.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
@@ -88,9 +90,18 @@ final class ClientGenerator {
       ..name = ''
       ..comments.addAll(kClientHeader)
       ..directives.addAll([
-        // TODO(dnys1): This may cause conflicts with other packages/types
-        if (project.auth != null)
+        if (project.auth != null) ...[
+          Directive.export(
+            p
+                .relative(
+                  ClientPaths.auth,
+                  from: p.dirname(ClientPaths.client),
+                )
+                .to(p.posix),
+          ),
+          // TODO(dnys1): This may cause conflicts with other packages/types
           Directive.export('package:celest_auth/celest_auth.dart'),
+        ],
         ...referencedTypes.types.groupSetsBy((ref) => ref.url!).entries.map(
               (symbols) => Directive.export(
                 symbols.key,
@@ -291,6 +302,8 @@ final class ClientGenerator {
     var customSerializers = <SerializerDefinition>{};
     var anonymousRecordTypes = <String, RecordType>{};
 
+    final hasExternalAuth = project.auth?.externalProviders.isNotEmpty ?? false;
+
     final apis = project.apis.values;
     if (apis.isNotEmpty) {
       final functionsGenerator = ClientFunctionsGenerator(
@@ -364,7 +377,15 @@ final class ClientGenerator {
         )
         ..addExpression(
           refer('scheduleMicrotask', 'dart:async').call([
-            refer('_auth').property('init'),
+            if (hasExternalAuth)
+              Method(
+                (m) => m
+                  ..body = refer('_auth').property('init').call([], {
+                    'externalAuth': refer('externalAuth'),
+                  }).code,
+              ).closure
+            else
+              refer('_auth').property('init'),
           ]),
         );
     }
@@ -392,7 +413,7 @@ final class ClientGenerator {
       (m) => m
         ..name = 'init'
         ..returns = DartTypes.core.void$
-        ..optionalParameters.add(
+        ..optionalParameters.addAll([
           Parameter(
             (p) => p
               ..name = 'environment'
@@ -400,7 +421,14 @@ final class ClientGenerator {
               ..named = true
               ..defaultTo = refer('CelestEnvironment').property('local').code,
           ),
-        )
+          if (hasExternalAuth)
+            Parameter(
+              (p) => p
+                ..name = 'externalAuth'
+                ..type = refer('ExternalAuth', ClientPaths.auth).nullable
+                ..named = true,
+            ),
+        ])
         ..body = clientInitBody.build(),
     );
     _clientClass.methods.add(clientInit);

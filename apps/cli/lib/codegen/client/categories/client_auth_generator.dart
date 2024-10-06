@@ -1,7 +1,9 @@
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/codegen/client/client_generator.dart';
 import 'package:celest_cli/codegen/client/client_types.dart';
+import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class ClientAuthGenerator {
@@ -64,6 +66,148 @@ final class ClientAuthGenerator {
 
   static final _hubClass =
       refer('AuthImpl', 'package:celest_auth/src/auth_impl.dart');
+
+  static const _externalProviderDocs = <ast.AuthProviderType, List<String>>{
+    ast.AuthProviderType.firebase: [
+      '/// Creates an instance of [ExternalAuth] for Firebase Auth.',
+      '///',
+      '/// See the [Firebase docs](https://firebase.google.com/docs/flutter/setup)',
+      '/// for more information on how to initialize Firebase.',
+      '///',
+      '/// ```dart',
+      '/// Future<void> main() async {',
+      '///   WidgetsFlutterBinding.ensureInitialized();',
+      '///   await Firebase.initializeApp();',
+      '///   celest.init(',
+      '///     externalAuth: ExternalAuth.firebase(FirebaseAuth.instance),',
+      '///   );',
+      '/// }',
+      '/// ```',
+    ],
+    ast.AuthProviderType.supabase: [
+      '/// ### Supabase',
+      '///',
+      '/// See the [Supabase docs](https://supabase.com/docs/reference/dart/introduction)',
+      '/// for more information on how to initialize Supabase.',
+      '///',
+      '/// ```dart',
+      '/// Future<void> main() async {',
+      '///   WidgetsFlutterBinding.ensureInitialized();',
+      '///   await Supabase.initialize(',
+      "///     url: 'https://<your-project-id>.supabase.co',",
+      '///     ...',
+      '///   );',
+      '///   celest.init(',
+      '///     externalAuth: ExternalAuth.supabase(supabase.auth),',
+      '///   );',
+      '/// }',
+      '/// ```',
+    ],
+  };
+
+  Class? get _externalAuthClass {
+    if (auth.externalProviders.isEmpty) {
+      return null;
+    }
+    final cls = ClassBuilder()
+      ..name = 'ExternalAuth'
+      ..extend = DartTypes.celestAuth.tokenSource
+      ..docs.addAll([
+        '/// External authentication providers which can be used to sign in to Celest.',
+        '///',
+        '/// This class is passed to `celest.init` to configure the token sources for',
+        '/// the external auth providers.',
+      ])
+      ..constructors.add(
+        Constructor(
+          (c) => c
+            ..name = 'of'
+            ..constant = true
+            ..docs.add('/// {@macro celest_auth.token_source.of}')
+            ..optionalParameters.addAll([
+              Parameter(
+                (p) => p
+                  ..name = 'provider'
+                  ..toSuper = true
+                  ..named = true
+                  ..required = true,
+              ),
+              Parameter(
+                (p) => p
+                  ..name = 'stream'
+                  ..toSuper = true
+                  ..named = true
+                  ..required = true,
+              ),
+            ])
+            ..initializers.add(
+              refer('super').property('of').call([]).code,
+            ),
+        ),
+      );
+    for (final provider in auth.externalProviders) {
+      switch (provider.type) {
+        case ast.AuthProviderType.firebase:
+          ClientDependencies.current.add('firebase_auth');
+        case ast.AuthProviderType.supabase:
+          ClientDependencies.current.add('gotrue');
+          ClientDependencies.current.add('stream_transform');
+          _library.directives.add(
+            Directive.import('package:stream_transform/stream_transform.dart'),
+          );
+        default:
+          break;
+      }
+      cls.constructors.add(
+        Constructor(
+          (c) => c
+            ..name = provider.name
+            ..factory = true
+            ..docs.addAll(_externalProviderDocs[provider.type]!)
+            ..requiredParameters.add(
+              Parameter(
+                (p) => p
+                  ..name = provider.type.name
+                  ..type = switch (provider.type) {
+                    ast.AuthProviderType.firebase => refer(
+                        'FirebaseAuth',
+                        'package:firebase_auth/firebase_auth.dart',
+                      ),
+                    ast.AuthProviderType.supabase =>
+                      refer('GoTrueClient', 'package:gotrue/gotrue.dart'),
+                    _ => unreachable(),
+                  },
+              ),
+            )
+            ..body = refer('ExternalAuth')
+                .newInstanceNamed('of', [], {
+                  'provider': DartTypes.celestAuth.authProviderType
+                      .property(provider.type.name),
+                  'stream': switch (provider.type) {
+                    ast.AuthProviderType.firebase => CodeExpression(
+                        Code(
+                          '${provider.type.name}.idTokenChanges()'
+                          '.asyncMap((user) => user?.getIdToken())',
+                        ),
+                      ),
+                    ast.AuthProviderType.supabase => CodeExpression(
+                        Code(
+                          '${provider.type.name}.onAuthStateChange'
+                          '.map((state) => state.session?.accessToken)'
+                          // From `package:stream_transform`
+                          '.startWith(supabase.currentSession?.accessToken)',
+                        ),
+                      ),
+                    _ => unreachable(),
+                  },
+                })
+                .returned
+                .statement,
+        ),
+      );
+    }
+    return cls.build();
+  }
 
   Library generate() {
     for (final provider in auth.providers) {
@@ -144,6 +288,10 @@ final class ClientAuthGenerator {
             ),
           );
       }
+    }
+
+    if (_externalAuthClass case final externalAuth?) {
+      _library.body.add(externalAuth);
     }
 
     return _library.build();

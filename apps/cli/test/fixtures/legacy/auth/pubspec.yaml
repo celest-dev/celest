@@ -9,8 +9,11 @@ dependencies:
     path: ../../../../../../celest/packages/celest
   celest_core:
     path: ../../../../../../celest/packages/celest_core
+  firebase_auth: ^5.3.1
+  gotrue: ^2.9.0
   http: ^1.0.0
   shelf: ^1.4.1
+  stream_transform: ^2.1.0
 
 dependency_overrides:
   cedar:

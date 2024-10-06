@@ -48,6 +48,7 @@ import 'package:logging/logging.dart';
 /// different parts.
 final class V1FolderStructure extends ProjectMigration {
   V1FolderStructure(
+    super.projectRoot,
     this.projectName,
     this.parentProject,
   );
@@ -55,18 +56,57 @@ final class V1FolderStructure extends ProjectMigration {
   final String projectName;
   final ParentProject? parentProject;
 
+  @override
+  String get name => 'core.layout.v1';
+
   static final _logger = Logger('V1FolderStructure');
 
   final _operations = <Future<void>>[];
 
+  late final generatedClientEntities = [
+    projectDir.childDirectory('lib').childFile('client.dart'),
+    fileSystem.directory(projectPaths.legacyClientOutputsDir),
+  ];
+
+  late final symlinkdDirs = [
+    (
+      projectDir.childDirectory('functions'),
+      projectDir
+          .childDirectory('lib')
+          .childDirectory('src')
+          .childDirectory('functions'),
+    ),
+    (
+      projectDir.childDirectory('generated'),
+      projectDir
+          .childDirectory('lib')
+          .childDirectory('src')
+          .childDirectory('generated'),
+    ),
+  ];
+
   @override
-  Future<bool> create(String projectRoot) async {
+  bool get needsMigration {
+    for (final entity in generatedClientEntities) {
+      if (entity.existsSync()) {
+        return true;
+      }
+    }
+    for (final dir in symlinkdDirs) {
+      if (!dir.$2.existsSync()) {
+        return true;
+      }
+    }
+    if (!projectDir.childDirectory('client').existsSync()) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  Future<ProjectMigrationResult> create() async {
     final rootDir = fileSystem.directory(projectRoot);
     // Start by removing all pre-V1 generated client code.
-    final generatedClientEntities = [
-      rootDir.childDirectory('lib').childFile('client.dart'),
-      fileSystem.directory(projectPaths.legacyClientOutputsDir),
-    ];
     for (final entity in generatedClientEntities) {
       if (entity.existsSync()) {
         _logger.finest('Removing ${entity.path}...');
@@ -75,26 +115,12 @@ final class V1FolderStructure extends ProjectMigration {
     }
 
     // Create the new client folder layout.
-    _operations.add(ProjectFile.client(projectName).create(projectRoot));
+    final clientMigration = ProjectFile.client(projectRoot, projectName);
+    if (clientMigration.needsMigration) {
+      _operations.add(clientMigration.create());
+    }
 
     // Move `functions` to `lib/src` and create symlinks.
-    final symlinkdDirs = [
-      (
-        rootDir.childDirectory('functions'),
-        rootDir
-            .childDirectory('lib')
-            .childDirectory('src')
-            .childDirectory('functions'),
-      ),
-      (
-        rootDir.childDirectory('generated'),
-        rootDir
-            .childDirectory('lib')
-            .childDirectory('src')
-            .childDirectory('generated'),
-      ),
-    ];
-
     final moveOperations = <Future<Link>>[];
     for (final (from, to) in symlinkdDirs) {
       if (!from.existsSync() || fileSystem.isLinkSync(from.path)) {
@@ -156,8 +182,12 @@ transforms:
       );
     }
 
+    if (_operations.isEmpty) {
+      return const ProjectMigrationSkipped();
+    }
+
     await Future.wait(_operations);
-    return _operations.isNotEmpty;
+    return const ProjectMigrationSuccess(needsAnalyzerMigration: true);
   }
 
   /// Moves one directory to another.

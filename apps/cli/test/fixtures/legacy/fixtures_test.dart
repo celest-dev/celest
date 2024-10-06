@@ -2,7 +2,7 @@
 library;
 
 import 'dart:convert';
-import 'dart:io';
+import 'dart:io' hide Directory;
 import 'dart:math';
 
 import 'package:async/async.dart';
@@ -21,6 +21,7 @@ import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:file/file.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
 import 'package:stream_transform/stream_transform.dart';
@@ -29,7 +30,12 @@ import 'package:test/test.dart';
 import '../../common.dart';
 import 'types.dart';
 
-final testDir = p.join(Directory.current.path, 'test', 'fixtures', 'legacy');
+final testDir = p.join(
+  fileSystem.currentDirectory.path,
+  'test',
+  'fixtures',
+  'legacy',
+);
 
 void main() {
   final updateGoldens = switch (Platform.environment['UPDATE_GOLDENS']) {
@@ -44,43 +50,61 @@ void main() {
     );
   }
 
-  final allTests = Directory(testDir)
-      .listSync()
-      .whereType<Directory>()
-      .where((dir) => File(p.join(dir.path, 'pubspec.yaml')).existsSync())
-      .where((dir) => !p.basename(dir.path).startsWith('_'))
-      .where(
-        (dir) =>
-            includeTests == null || includeTests.contains(p.basename(dir.path)),
-      );
+  final testRunners = <TestRunner>[];
+  final testDirs =
+      fileSystem.directory(testDir).listSync().whereType<Directory>();
+  for (final testDir in testDirs) {
+    final (projectDir, useCelestLayout) =
+        testDir.childDirectory('celest').existsSync()
+            ? (testDir.childDirectory('celest'), true)
+            : (testDir, false);
+    if (!projectDir.childFile('pubspec.yaml').existsSync()) {
+      continue;
+    }
+    if (p.basename(projectDir.path).startsWith('_')) {
+      continue;
+    }
+    if (includeTests != null &&
+        !includeTests.contains(p.basename(testDir.path))) {
+      continue;
+    }
+    final testRunner = TestRunner(
+      testName: p.basename(testDir.path),
+      projectRoot: projectDir.path,
+      updateGoldens: updateGoldens,
+      clientDir: useCelestLayout ? projectDir.childDirectory('client') : null,
+      goldensDir: fileSystem.directory(
+        p.join(testDir.path, 'goldens'),
+      ),
+    );
+    testRunners.add(testRunner);
+  }
+
   group('Fixture', () {
     setUpAll(initTests);
 
-    for (final testDir in allTests) {
-      final projectRoot = testDir.path;
-      final goldensDir = Directory(p.join(projectRoot, 'goldens'));
-      TestRunner(
-        updateGoldens: updateGoldens,
-        projectRoot: projectRoot,
-        goldensDir: goldensDir,
-      ).run();
+    for (final runner in testRunners) {
+      runner.run();
     }
   });
 }
 
 class TestRunner {
   TestRunner({
+    required this.testName,
     required this.projectRoot,
     required this.updateGoldens,
+    this.clientDir,
     required this.goldensDir,
   });
 
+  final String testName;
   final String projectRoot;
   final bool updateGoldens;
+  final Directory? clientDir;
   final Directory goldensDir;
 
   late final testCases = tests[testName];
-  late final testName = p.basename(projectRoot);
 
   late Client client;
   late CelestAnalyzer analyzer;
@@ -98,6 +122,7 @@ class TestRunner {
         }
         await init(
           projectRoot: projectRoot,
+          clientDir: clientDir?.path,
           outputsDir: goldensDir.path,
           cacheDb: await CacheDatabase.memory(),
           projectDb: ProjectDatabase.memory(),
@@ -118,7 +143,9 @@ class TestRunner {
       testCodegen();
       testClient();
 
-      final apisDir = Directory(p.join(projectRoot, 'lib', 'src', 'functions'));
+      final apisDir = fileSystem.directory(
+        p.join(projectRoot, 'lib', 'src', 'functions'),
+      );
       if (apisDir.existsSync()) {
         testApis(apisDir);
       }
@@ -141,7 +168,9 @@ class TestRunner {
         // Cannot check/update goldens on Windows due to path differences.
         return;
       }
-      final goldenAst = File(p.join(projectPaths.outputsDir, 'ast.json'));
+      final goldenAst = fileSystem.file(
+        p.join(projectPaths.outputsDir, 'ast.json'),
+      );
       if (updateGoldens) {
         await goldenAst.writeAsString(
           const JsonEncoder.withIndent('  ').convert(project!.toJson()),
@@ -191,7 +220,7 @@ class TestRunner {
       };
 
       for (final MapEntry(key: path, value: content) in fileOutputs.entries) {
-        final goldenFile = File(path);
+        final goldenFile = fileSystem.file(path);
         if (updateGoldens) {
           await goldenFile.create(recursive: true);
           await goldenFile.writeAsString(content);
@@ -221,7 +250,7 @@ class TestRunner {
         configValues: configValues,
       );
       project.acceptWithArg(projectResolver, project);
-      final resolvedAstFile = File(
+      final resolvedAstFile = fileSystem.file(
         p.join(projectPaths.outputsDir, 'ast.resolved.json'),
       );
       final resolvedAst = projectResolver.resolvedProject.toJson();
@@ -262,7 +291,7 @@ class TestRunner {
         outputs.forEach((path, library) {
           expect(
             library,
-            equalsIgnoringWhitespace(File(path).readAsStringSync()),
+            equalsIgnoringWhitespace(fileSystem.file(path).readAsStringSync()),
           );
         });
       }

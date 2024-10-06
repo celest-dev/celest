@@ -22,6 +22,9 @@ final class UpgradeCommand extends CelestCommand {
   @override
   String get category => 'Tools';
 
+  @override
+  List<String> get aliases => ['update'];
+
   late final bool includeDev = argResults!.flag('dev');
 
   @override

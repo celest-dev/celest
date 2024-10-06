@@ -39,8 +39,10 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
   Future<String?> _readFromGlobalConfig(Directory searchDir) async {
     final globalConfig = await FirebaseConfiguration.load();
     if (globalConfig == null) {
+      _logger.finest('No Firebase projects found in global configuration');
       return null;
     }
+    _logger.finest('Active Firebase projects: ${globalConfig.activeProjects}');
     return globalConfig.activeProjects[searchDir.path];
   }
 
@@ -51,6 +53,7 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
     try {
       final firebaseJsonFile = searchDir.childFile('firebase.json');
       if (!firebaseJsonFile.existsSync()) {
+        _logger.finest('No firebase.json found in $searchDir');
         return const {};
       }
       final firebaseJson = jsonDecode(await firebaseJsonFile.readAsString());
@@ -82,6 +85,7 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
       }
       // The `platforms` map is useless for us since it only records a single
       // `default` entry even in a project using multiple environments/aliases.
+      _logger.finest('No project IDs found in firebase.json');
       return const {};
     } on Object catch (e, st) {
       _logger.fine('Failed to read firebase.json', e, st);
@@ -94,6 +98,7 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
     try {
       final firebaseRcFile = searchDir.childFile('.firebaserc');
       if (!firebaseRcFile.existsSync()) {
+        _logger.finest('No .firebaserc found in $searchDir');
         return const {};
       }
       final firebaseRc = jsonDecode(await firebaseRcFile.readAsString());
@@ -125,6 +130,7 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
         throwOnFailure: false,
       );
       if (firebaseToolsCli == null) {
+        _logger.finest('Firebase CLI not found');
         return const [];
       }
       final ProcessResult(
@@ -146,6 +152,10 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
       }
       final resultJsonStart = stdout.indexOf('{');
       if (resultJsonStart == -1) {
+        _logger.finer(
+          'Failed to parse Firebase projects list from firebase-tools CLI',
+          stdout,
+        );
         return const [];
       }
       final resultJson = stdout.substring(resultJsonStart).trimRight();
@@ -192,9 +202,11 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
 
       // Read any aliases from the `.firebaserc` file.
       aliasesByProjectId.addAll(await _readFromFirebaseRc(searchDir));
+      _logger.finest('Aliases found in .firebaserc: $aliasesByProjectId');
 
       // Read all project IDs from the `firebase.json` file.
       final flutterfireConfig = await _readFromFirebaseJson(searchDir);
+      _logger.finest('Project IDs found in firebase.json: $flutterfireConfig');
       for (final MapEntry(key: projectId, value: alias)
           in flutterfireConfig.entries) {
         if (alias != null || !aliasesByProjectId.containsKey(projectId)) {
@@ -207,12 +219,16 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
       // The file stores the active projects as a map of project paths to
       // project IDs/aliases.
       final activeProject = await _readFromGlobalConfig(searchDir);
+      _logger.finest('Active project found in global config: $activeProject');
 
       // When there is an alias matching the environment ID, we always use that.
       final matchingEnvironmentId = aliasesByProjectId.entries
           .firstWhereOrNull((entry) => entry.value == environmentId)
           ?.key;
       if (matchingEnvironmentId != null) {
+        _logger.finest(
+          'Found project matching environment ID: $matchingEnvironmentId',
+        );
         return [
           (
             active: true,
@@ -256,9 +272,13 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
   Future<String> solve(ConfigurationValue configValue) async {
     // Search for Firebase projects in the local environment and FS.
     var projects = await searchLocalEnvironment();
+    _logger.finest('Found Firebase projects: $projects');
 
     // A resolution to a single project indicates we are done searching.
     if (projects case [final singleProject]) {
+      _logger.finest(
+        'Resolved to single project: ${singleProject.projectId}',
+      );
       return storeEnvironmentVariable(
         configValue.envName,
         singleProject.projectId,
@@ -267,14 +287,19 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
 
     // Otherwise, we use the `firebase-tools` CLI to list projects, if
     // installed.
-    projects ??= [
-      for (final projectId in await _readFromFirebaseToolsCli())
-        (
-          active: false,
-          projectId: projectId,
-          alias: null,
-        ),
-    ];
+    if (projects == null) {
+      projects = [
+        for (final projectId in await _readFromFirebaseToolsCli())
+          (
+            active: false,
+            projectId: projectId,
+            alias: null,
+          ),
+      ];
+      _logger.finest(
+        'Found Firebase projects using firebase-tools CLI: $projects',
+      );
+    }
 
     // If multiple projects are available, prompt the user to choose one.
     if (projects.isNotEmpty) {
@@ -284,6 +309,7 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
     }
 
     // Otherwise, we must prompt them to enter the project ID manually.
+    _logger.finest('No Firebase projects found in local environment');
     return super.solve(configValue);
   }
 }

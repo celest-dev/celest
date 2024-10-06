@@ -1124,6 +1124,19 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           externalProvider = ast.FirebaseExternalAuthProviderBuilder()
             ..projectId.envName = projectIdEnvName
             ..projectId.location = authDefinitionLocation;
+
+        case InterfaceType(isExternalAuthProviderSupabase: true):
+          final jwtSecretValue = authProvider.getField('jwtSecret');
+          if (jwtSecretValue == null) {
+            // This should be impossible since it's non-nullable.
+            unreachable(
+              'The `jwtSecret` field is required for Supabase auth providers',
+            );
+          }
+          final jwtSecretName = jwtSecretValue.configValueName;
+          externalProvider = ast.SupabaseExternalAuthProviderBuilder()
+            ..jwtSecret.envName = jwtSecretName
+            ..jwtSecret.location = authDefinitionLocation;
         default:
           reportError(
             'Unknown auth provider type: ${authProvider.type}',
