@@ -577,6 +577,44 @@ final class EntrypointGenerator {
       }
     }
 
+    final authMiddleware = <Expression>[];
+    final authMetadata = function.metadata.whereType<ApiAuth>();
+    final authRequired = authMetadata.whereType<ApiAuthenticated>().isNotEmpty;
+    if (authMetadata.isNotEmpty) {
+      final externalAuthProviders = [
+        ...?project.auth?.externalProviders,
+      ];
+      for (final externalAuthProvider in externalAuthProviders) {
+        switch (externalAuthProvider) {
+          case FirebaseExternalAuthProvider(:final projectId):
+            authMiddleware.add(
+              DartTypes.celest.firebaseAuthMiddleware.newInstance([], {
+                'projectId':
+                    DartTypes.celest.globalContext.property('get').call([
+                  DartTypes.celest.environmentVariable.constInstance([
+                    literalString(
+                      projectId.envName,
+                      raw: projectId.envName.contains(r'$'),
+                    ),
+                  ]),
+                ]).nullChecked,
+                'required': literalBool(false),
+              }),
+            );
+          default:
+            continue;
+        }
+      }
+    }
+    final middlewares = [
+      if (authMiddleware.isNotEmpty)
+        DartTypes.celest.authMiddleware.newInstanceNamed('oneOf', [
+          literalList(authMiddleware),
+        ], {
+          'required': literalBool(authRequired),
+        }),
+    ];
+
     final target = Class(
       (c) => c
         ..name = targetName
@@ -597,6 +635,16 @@ final class EntrypointGenerator {
               ..lambda = true
               ..body = literalString(function.name).code,
           ),
+          if (middlewares.isNotEmpty)
+            Method(
+              (m) => m
+                ..name = 'middlewares'
+                ..annotations.add(DartTypes.core.override)
+                ..returns = DartTypes.core.list(DartTypes.shelf.middleware)
+                ..type = MethodType.getter
+                ..lambda = true
+                ..body = literalList(middlewares).code,
+            ),
           if (function.streamType == null)
             Method(
               (m) => m
@@ -606,8 +654,8 @@ final class EntrypointGenerator {
                 ..type = MethodType.getter
                 ..lambda = true
                 ..body = literalString(httpConfig?.method ?? 'POST').code,
-            ),
-          if (function.streamType != null)
+            )
+          else
             Method(
               (m) => m
                 ..name = 'hasBody'

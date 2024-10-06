@@ -54,6 +54,20 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
   @override
   Set<InterfaceElement> customExceptionTypes = {};
 
+  late final _envVariableResolver = ConfigValueResolver(
+    context: context,
+    configValueElement: typeHelper.coreTypes.celestEnvElement,
+    errorReporter: this,
+    factory: ast.EnvironmentVariable.new,
+  );
+
+  late final _secretResolver = ConfigValueResolver(
+    context: context,
+    configValueElement: typeHelper.coreTypes.celestSecretElement,
+    errorReporter: this,
+    factory: ast.Secret.new,
+  );
+
   @override
   void reportError(
     String error, {
@@ -299,26 +313,15 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
   }
 
   @override
-  Future<Iterable<ast.EnvironmentVariable>>
-      resolveEnvironmentVariables() async {
+  Future<Set<ast.EnvironmentVariable>> resolveEnvironmentVariables() async {
     // TODO(dnys1): Check reserved names
     // TODO(dnys1): Check for conflict with secrets
-    final resolver = ConfigValueResolver(
-      context: context,
-      configValueElement: typeHelper.coreTypes.celestEnvElement,
-      errorReporter: this,
-    );
-    return resolver.resolve(ast.EnvironmentVariable.new);
+    return _envVariableResolver.resolve();
   }
 
   @override
-  Future<Iterable<ast.Secret>> resolveSecrets() async {
-    final resolver = ConfigValueResolver(
-      context: context,
-      configValueElement: typeHelper.coreTypes.celestSecretElement,
-      errorReporter: this,
-    );
-    return resolver.resolve(ast.Secret.new);
+  Future<Set<ast.Secret>> resolveSecrets() async {
+    return _secretResolver.resolve();
   }
 
   (List<ast.ApiMetadata>, bool isCloud) _collectApiMetadata(
@@ -1091,8 +1094,13 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
       equals: (a, b) => a.type == b.type,
       hashCode: (a) => a.type.hashCode,
     );
+    final uniqueExternalAuthProviders = LinkedHashSet<ast.ExternalAuthProvider>(
+      equals: (a, b) => a.type == b.type,
+      hashCode: (a) => a.type.hashCode,
+    );
     for (final authProvider in authProviders) {
-      final ast.AuthProviderBuilder provider;
+      ast.AuthProviderBuilder? provider;
+      ast.ExternalAuthProviderBuilder? externalProvider;
       switch (authProvider.type) {
         case InterfaceType(isAuthProviderEmail: true):
           provider = ast.EmailAuthProviderBuilder();
@@ -1104,6 +1112,18 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           provider = ast.GitHubAuthProviderBuilder();
         case InterfaceType(isAuthProviderGoogle: true):
           provider = ast.GoogleAuthProviderBuilder();
+        case InterfaceType(isExternalAuthProviderFirebase: true):
+          final projectIdValue = authProvider.getField('projectId');
+          if (projectIdValue == null) {
+            // This should be impossible since it's non-nullable.
+            unreachable(
+              'The `projectId` field is required for Firebase auth providers',
+            );
+          }
+          final projectIdEnvName = projectIdValue.configValueName;
+          externalProvider = ast.FirebaseExternalAuthProviderBuilder()
+            ..projectId.envName = projectIdEnvName
+            ..projectId.location = authDefinitionLocation;
         default:
           reportError(
             'Unknown auth provider type: ${authProvider.type}',
@@ -1111,20 +1131,34 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           );
           continue;
       }
-      provider
-        ..name = authProvider.variable?.name
-        ..location = authDefinitionLocation;
-      final astAuthProvider = provider.build();
-      if (!uniqueAuthProviders.add(astAuthProvider)) {
-        reportError(
-          'Duplicate ${astAuthProvider.type.name} auth provider',
-          location: authDefinitionLocation,
-        );
+      if (provider != null) {
+        provider
+          ..name = authProvider.variable?.name
+          ..location = authDefinitionLocation;
+        final astAuthProvider = provider.build();
+        if (!uniqueAuthProviders.add(astAuthProvider)) {
+          reportError(
+            'Duplicate ${astAuthProvider.type.name} auth provider',
+            location: authDefinitionLocation,
+          );
+        }
+      } else {
+        externalProvider!
+          ..name = authProvider.variable?.name
+          ..location = authDefinitionLocation;
+        final astExternalAuthProvider = externalProvider.build();
+        if (!uniqueExternalAuthProviders.add(astExternalAuthProvider)) {
+          reportError(
+            'Duplicate ${astExternalAuthProvider.type.name} auth provider',
+            location: authDefinitionLocation,
+          );
+        }
       }
     }
     return ast.Auth(
       location: authDefinitionLocation!,
       providers: uniqueAuthProviders.toList(),
+      externalProviders: uniqueExternalAuthProviders.toList(),
     );
   }
 }

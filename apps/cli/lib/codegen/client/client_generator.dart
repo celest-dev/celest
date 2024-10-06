@@ -72,6 +72,9 @@ final class _ReferencedTypesCollector extends ast.AstVisitor<void> {
 
   @override
   void visitSecret(ast.Secret secret) {}
+
+  @override
+  void visitExternalAuthProvider(ast.ExternalAuthProvider provider) {}
 }
 
 final class ClientGenerator {

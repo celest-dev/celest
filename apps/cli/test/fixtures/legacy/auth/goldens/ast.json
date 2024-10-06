@@ -1728,7 +1728,26 @@
       }
     }
   },
-  "envVars": [],
+  "envVars": [
+    {
+      "envName": "FIREBASE_PROJECT_ID",
+      "location": {
+        "start": {
+          "offset": 84,
+          "uri": "project.dart",
+          "line": 4,
+          "column": 6
+        },
+        "end": {
+          "offset": 88,
+          "uri": "project.dart",
+          "line": 4,
+          "column": 10
+        },
+        "text": "auth"
+      }
+    }
+  ],
   "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
@@ -1778,6 +1797,46 @@
         "$": "SmsAuthProvider",
         "name": "SMS_OTP",
         "type": "SMS_OTP",
+        "location": {
+          "start": {
+            "offset": 84,
+            "uri": "project.dart",
+            "line": 4,
+            "column": 6
+          },
+          "end": {
+            "offset": 88,
+            "uri": "project.dart",
+            "line": 4,
+            "column": 10
+          },
+          "text": "auth"
+        }
+      }
+    ],
+    "externalProviders": [
+      {
+        "$": "FirebaseExternalAuthProvider",
+        "projectId": {
+          "envName": "FIREBASE_PROJECT_ID",
+          "location": {
+            "start": {
+              "offset": 84,
+              "uri": "project.dart",
+              "line": 4,
+              "column": 6
+            },
+            "end": {
+              "offset": 88,
+              "uri": "project.dart",
+              "line": 4,
+              "column": 10
+            },
+            "text": "auth"
+          }
+        },
+        "name": "FIREBASE",
+        "type": "FIREBASE",
         "location": {
           "start": {
             "offset": 84,

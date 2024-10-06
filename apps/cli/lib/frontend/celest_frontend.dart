@@ -9,7 +9,6 @@ import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
-import 'package:celest_cli/analyzer/resolver/config_value_resolver.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/commands/cloud_command.dart';
@@ -17,6 +16,7 @@ import 'package:celest_cli/compiler/api/entrypoint_compiler.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/database/cloud/cloud_database.dart'
     show ProjectEnvironment;
+import 'package:celest_cli/env/config_value_solver.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
@@ -641,87 +641,20 @@ final class CelestFrontend {
         return codeGenerator.fileOutputs.keys.toList();
       });
 
-  Future<String> _collectEnvVariable({
-    required String name,
-    required String environmentId,
-  }) async {
-    String? value;
-    cliLogger.info('Missing value for environment variable "$name"');
-    while (value == null) {
-      value = cliLogger.prompt('Enter the value for $name');
-    }
-    final environment = await celestProject.projectDb
-        .lookupEnvironment(id: environmentId)
-        .getSingle();
-    await celestProject.projectDb.upsertEnvironmentVariable(
-      environmentId: environment.id,
-      name: name,
-      value: value,
-    );
-    return value;
-  }
-
-  Future<String> _collectSecret({
-    required String projectName,
-    required String name,
-    required String environmentId,
-  }) async {
-    String? value;
-    cliLogger.info('Missing value for secret "$name"');
-    while (value == null) {
-      value = cliLogger.prompt('Enter the value for $name');
-    }
-    final environment = await celestProject.projectDb
-        .lookupEnvironment(id: environmentId)
-        .getSingle();
-    final (scope, key) = (
-      'projects/$projectName/environments/${environment.id}',
-      name,
-    );
-    secureStorage.scoped(scope).write(key, value);
-    await celestProject.projectDb.upsertSecret(
-      environmentId: environment.id,
-      name: name,
-      valueRef: '$scope/$key',
-    );
-    return value;
-  }
-
   /// Resolves the project AST applying transformations for things such as authorization.
   Future<ResolvedProject> _resolveProject(
     ast.Project project, {
     required String environmentId,
   }) =>
       performance.trace('CelestFrontend', 'resolveProject', () async {
+        logger.fine('Resolving configuration values...');
+        final configValues = await ConfigValueSolver(
+          project: project,
+          environmentId: environmentId,
+        ).solveAll();
         logger.fine('Resolving project...');
-        final [environmentVariables, secrets] = await Future.wait([
-          project.envVars.retrieveValues(environmentId: environmentId),
-          project.secrets.retrieveValues(environmentId: environmentId),
-        ]);
-        final missingEnvironmentVariables = environmentVariables.keys
-            .toSet()
-            .difference(project.envVars.map((it) => it.envName).toSet());
-        for (final envVar in missingEnvironmentVariables) {
-          environmentVariables[envVar] = await _collectEnvVariable(
-            name: envVar,
-            environmentId: environmentId,
-          );
-        }
-        final missingSecrets = secrets.keys
-            .toSet()
-            .difference(project.secrets.map((it) => it.envName).toSet());
-        for (final secret in missingSecrets) {
-          secrets[secret] = await _collectSecret(
-            projectName: project.name,
-            name: secret,
-            environmentId: environmentId,
-          );
-        }
         final projectResolver = ProjectResolver(
-          configValues: {
-            ...environmentVariables,
-            ...secrets,
-          },
+          configValues: configValues,
         );
         project.acceptWithArg(projectResolver, project);
         return projectResolver.resolvedProject;

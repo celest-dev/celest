@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -135,6 +136,12 @@ extension DartTypeHelper on DartType {
   bool get isAuthProviderGoogle => switch (element) {
         ClassElement(:final name, :final library) =>
           name == '_GoogleAuthProvider' && library.isPackageCelest,
+        _ => false,
+      };
+
+  bool get isExternalAuthProviderFirebase => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == '_FirebaseExternalAuthProvider' && library.isPackageCelest,
         _ => false,
       };
 
@@ -772,5 +779,19 @@ extension NonPrivate on String {
       return substring(1);
     }
     return this;
+  }
+}
+
+extension DartObjectHelpers on DartObject {
+  String get configValueName {
+    if (getField('name')?.toStringValue() case final name?) {
+      return name;
+    }
+    final name = getField('(super)')?.getField('name')?.toStringValue();
+    if (name != null) {
+      return name;
+    }
+    // Should never happen since `name` is non-nullable.
+    unreachable('Missing name for config value: $this');
   }
 }

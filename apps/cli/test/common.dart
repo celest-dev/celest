@@ -1,4 +1,5 @@
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:drift/drift.dart';
 import 'package:file/file.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
@@ -14,6 +15,7 @@ Future<void> initTests({
   if (kCelestTest) {
     return;
   }
+  driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
   kCelestTest = true;
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {

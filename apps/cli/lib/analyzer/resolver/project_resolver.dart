@@ -27,10 +27,10 @@ abstract base class CelestProjectResolver with CelestAnalysisHelpers {
   });
 
   /// Collects the environment variables of the project.
-  Future<Iterable<ast.EnvironmentVariable>> resolveEnvironmentVariables();
+  Future<Set<ast.EnvironmentVariable>> resolveEnvironmentVariables();
 
   /// Collects the secrets of the project.
-  Future<Iterable<ast.Secret>> resolveSecrets();
+  Future<Set<ast.Secret>> resolveSecrets();
 
   /// Collects the Celest Auth component of the project.
   ///

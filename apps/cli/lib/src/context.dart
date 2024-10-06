@@ -1,5 +1,8 @@
+import 'package:analyzer/src/dart/analysis/byte_store.dart';
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
 import 'package:celest_cli/auth/cli_auth.dart';
+import 'package:celest_cli/database/cache/cache_database.dart';
+import 'package:celest_cli/database/project/project_database.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/serialization/json_generator.dart';
@@ -7,6 +10,7 @@ import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli_common/src/context.dart' as ctx;
 import 'package:celest_cloud/celest_cloud.dart';
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 
 export 'package:celest_cli_common/src/context.dart';
@@ -26,12 +30,21 @@ Future<ProjectPaths> init({
   ParentProject? parentProject,
   String? configHome,
   String? outputsDir,
+  @visibleForTesting CacheDatabase? cacheDb,
+  @visibleForTesting ByteStore? byteStore,
+  @visibleForTesting ProjectDatabase? projectDb,
 }) async {
   celestProject = await CelestProject.init(
     projectRoot: projectRoot,
     parentProject: parentProject,
     configHome: configHome,
     outputsDir: outputsDir,
+    // ignore: invalid_use_of_visible_for_testing_member
+    cacheDb: cacheDb,
+    // ignore: invalid_use_of_visible_for_testing_member
+    byteStore: byteStore,
+    // ignore: invalid_use_of_visible_for_testing_member
+    projectDb: projectDb,
   );
   return celestProject.projectPaths;
 }

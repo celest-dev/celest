@@ -415,6 +415,12 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
   void visitAuthProvider(ast.AuthProvider provider, covariant String context) {}
 
   @override
+  void visitExternalAuthProvider(
+    ast.ExternalAuthProvider provider,
+    covariant String context,
+  ) {}
+
+  @override
   void visitEnvironmentVariable(
     ast.EnvironmentVariable variable,
     covariant String context,

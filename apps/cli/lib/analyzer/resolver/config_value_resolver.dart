@@ -11,6 +11,7 @@ import 'package:celest_cli/database/project/project_database.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/run.dart';
+import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 
@@ -20,31 +21,138 @@ typedef ConfigValueFactory<T extends ast.ConfigurationValue> = T Function(
   required FileSpan location,
 });
 
-final class ConfigValueResolver {
+final class ConfigValueSet<T extends ast.ConfigurationValue>
+    extends DelegatingSet<T> {
+  ConfigValueSet()
+      : super(
+          LinkedHashSet<T>(
+            equals: (a, b) => a.envName == b.envName,
+            hashCode: (a) => a.envName.hashCode,
+          ),
+        );
+
+  factory ConfigValueSet.of(Iterable<T> values) {
+    return ConfigValueSet()..addAll(values);
+  }
+}
+
+final class ConfigValueMap<T extends ast.ConfigurationValue>
+    extends DelegatingMap<T, String> {
+  factory ConfigValueMap.from(Iterable<T> values) {
+    return ConfigValueMap()
+      ..addEntries(values.map((it) => MapEntry(it, it.envName)));
+  }
+  ConfigValueMap()
+      : super(
+          LinkedHashMap<T, String>(
+            equals: (a, b) => a.envName == b.envName,
+            hashCode: (a) => a.envName.hashCode,
+          ),
+        );
+
+  @override
+  ConfigValueSet<T> get keys => ConfigValueSet.of(super.keys);
+}
+
+final class ConfigValueResolver<T extends ast.ConfigurationValue> {
   ConfigValueResolver({
     required this.context,
     required this.configValueElement,
     required this.errorReporter,
+    required this.factory,
   });
 
   final AnalysisContext context;
   final InterfaceElement configValueElement;
   final CelestErrorReporter errorReporter;
+  final ConfigValueFactory<T> factory;
 
   static final Logger _logger = Logger('ConfigValueResolver');
 
-  Future<Iterable<T>> resolve<T extends ast.ConfigurationValue>(
-    ConfigValueFactory<T> factory,
-  ) async {
-    final variables = await _resolveConfigValues(
-      configValueElement: configValueElement,
+  Future<ConfigValueSet<T>> resolve() async {
+    final variables = ConfigValueSet<T>();
+    final references = await configValueElement.references().toList();
+    for (final reference in references) {
+      _logger.finest(
+        'Reference: kind=${reference.kind}, '
+        'elementKind=${reference.enclosingElement.kind}, '
+        'location=${reference.enclosingElement.sourceLocation}',
+      );
+    }
+
+    final topLevelDefinitions = references
+        .map((ref) => ref.enclosingElement)
+        .whereType<TopLevelVariableElement>();
+    final topLevelResolutions = <Future<(String, FileSpan)?>>[];
+    for (final variable in topLevelDefinitions) {
+      topLevelResolutions.add(
+        resolveVariable(
+          variable: variable,
+          value: variable.computeConstantValue(),
+          location: variable.sourceLocation!,
+        ),
+      );
+    }
+    final topLevelVariables = await Future.wait(
+      topLevelResolutions,
+      eagerError: true,
     );
-    return variables.map((variable) {
-      return factory(variable.$1, location: variable.$2);
-    });
+    variables.addAll(
+      topLevelVariables.nonNulls.map((it) {
+        final (name, location) = it;
+        return factory(name, location: location);
+      }),
+    );
+
+    final parameters = references
+        .map((ref) => ref.enclosingElement)
+        .whereType<ParameterElement>();
+    final parameterResolutions = <Future<(String, FileSpan)?>>[];
+    for (final parameter in parameters) {
+      for (final metadata in parameter.metadata) {
+        _logger.finer(
+          'Resolving parameter: name=${parameter.name}, '
+          'type=${metadata.element?.runtimeType}',
+        );
+        final element = metadata.element;
+        final location = parameter.sourceLocation!;
+        switch (element) {
+          case ConstructorElement(:final enclosingElement)
+              when enclosingElement == configValueElement:
+            parameterResolutions.add(
+              resolveVariable(
+                variable: element,
+                value: metadata.computeConstantValue(),
+                location: location,
+              ),
+            );
+          case PropertyAccessorElement(:final returnType)
+              when returnType == configValueElement.thisType:
+            parameterResolutions.add(
+              resolveVariable(
+                variable: element,
+                value: metadata.computeConstantValue(),
+                location: location,
+              ),
+            );
+        }
+      }
+    }
+    final parameterVariables = await Future.wait(
+      parameterResolutions,
+      eagerError: true,
+    );
+    variables.addAll(
+      parameterVariables.nonNulls.map((it) {
+        final (name, location) = it;
+        return factory(name, location: location);
+      }),
+    );
+
+    return variables;
   }
 
-  String? _resolveConfigValueNode(VariableDeclaration node) {
+  String? resolveConfigValueNode(VariableDeclaration node) {
     final initializer = node.initializer;
     final argumentList = switch (initializer) {
       MethodInvocation(:final argumentList) => argumentList,
@@ -65,7 +173,7 @@ final class ConfigValueResolver {
     };
   }
 
-  Future<(String name, FileSpan location)?> _resolveVariable({
+  Future<(String name, FileSpan location)?> resolveVariable({
     required Element variable,
     required DartObject? value,
     required FileSpan location,
@@ -103,7 +211,7 @@ final class ConfigValueResolver {
       }
       _logger.finest('Resolved declaration: ${declaration?.node.runtimeType}');
       if (declaration?.node case final VariableDeclaration declaration) {
-        name = _resolveConfigValueNode(declaration);
+        name = resolveConfigValueNode(declaration);
         _logger.finest('Resolved name: $name');
       }
     }
@@ -116,96 +224,19 @@ final class ConfigValueResolver {
     }
     return (name, location);
   }
-
-  Future<List<(String name, FileSpan location)>> _resolveConfigValues({
-    required InterfaceElement configValueElement,
-  }) async {
-    final variables = LinkedHashSet<(String name, FileSpan location)>(
-      equals: (a, b) => a.$1 == b.$1,
-      hashCode: (a) => a.$1.hashCode,
-    );
-    final references = await configValueElement.references().toList();
-    for (final reference in references) {
-      _logger.finest(
-        'Reference: kind=${reference.kind}, '
-        'elementKind=${reference.enclosingElement.kind}, '
-        'location=${reference.enclosingElement.sourceLocation}',
-      );
-    }
-
-    final topLevelDefinitions = references
-        .map((ref) => ref.enclosingElement)
-        .whereType<TopLevelVariableElement>();
-    final topLevelResolutions = <Future<(String, FileSpan)?>>[];
-    for (final variable in topLevelDefinitions) {
-      topLevelResolutions.add(
-        _resolveVariable(
-          variable: variable,
-          value: variable.computeConstantValue(),
-          location: variable.sourceLocation!,
-        ),
-      );
-    }
-    final topLevelVariables = await Future.wait(
-      topLevelResolutions,
-      eagerError: true,
-    );
-    variables.addAll(topLevelVariables.nonNulls);
-
-    final parameters = references
-        .map((ref) => ref.enclosingElement)
-        .whereType<ParameterElement>();
-    final parameterResolutions = <Future<(String, FileSpan)?>>[];
-    for (final parameter in parameters) {
-      for (final metadata in parameter.metadata) {
-        _logger.finer(
-          'Resolving parameter: name=${parameter.name}, '
-          'type=${metadata.element?.runtimeType}',
-        );
-        final element = metadata.element;
-        final location = parameter.sourceLocation!;
-        switch (element) {
-          case ConstructorElement(:final enclosingElement)
-              when enclosingElement == configValueElement:
-            parameterResolutions.add(
-              _resolveVariable(
-                variable: element,
-                value: metadata.computeConstantValue(),
-                location: location,
-              ),
-            );
-          case PropertyAccessorElement(:final returnType)
-              when returnType == configValueElement.thisType:
-            parameterResolutions.add(
-              _resolveVariable(
-                variable: element,
-                value: metadata.computeConstantValue(),
-                location: location,
-              ),
-            );
-        }
-      }
-    }
-    final parameterVariables = await Future.wait(
-      parameterResolutions,
-      eagerError: true,
-    );
-    variables.addAll(parameterVariables.nonNulls);
-
-    return variables.toList();
-  }
 }
 
-extension on ProjectDatabase {
-  Future<R> _withEnvironment<R>(
+extension WithEnvironment on ProjectDatabase {
+  Future<R> withEnvironment<R>(
     Future<R> Function(Environment environment) withEnv, {
     required String environmentId,
   }) {
     return transaction(() async {
-      final environment = (await upsertEnvironment(
-        id: environmentId,
-      ))
-          .single;
+      if (await lookupEnvironment(id: environmentId).get()
+          case [final environment]) {
+        return withEnv(environment);
+      }
+      final [environment] = await createEnvironment(id: environmentId);
       return withEnv(environment);
     });
   }
@@ -216,7 +247,7 @@ extension ResolveConfigurationValue on ast.ConfigurationValue {
     required String environmentId,
   }) async {
     final db = celestProject.projectDb;
-    return db._withEnvironment(
+    return db.withEnvironment(
       environmentId: environmentId,
       (environment) async {
         switch (this) {
@@ -256,7 +287,7 @@ extension ResolveConfigurationValues<T extends ast.ConfigurationValue>
       return const {};
     }
     final db = celestProject.projectDb;
-    return db._withEnvironment(
+    return db.withEnvironment(
       environmentId: environmentId,
       (environment) async {
         final variableNames = map((it) => it.envName).toList();

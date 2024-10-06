@@ -14,6 +14,7 @@ import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
 import 'package:celest_cli/analyzer/resolver/legacy_project_resolver.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
+import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/config/feature_flags.dart';
 import 'package:celest_cli/database/cache/cache_database.dart';
 import 'package:celest_cli/pub/project_dependency.dart';
@@ -293,24 +294,32 @@ const project = Project(name: 'cache_warmup');
       'resolveEnvVariables',
       resolver.resolveEnvironmentVariables,
     );
-    _project.envVars.replace(envVars);
 
     final secrets = await performance.trace(
       'CelestAnalyzer',
       'resolveSecrets',
       resolver.resolveSecrets,
     );
-    _project.secrets.replace(secrets);
 
-    final hasAuth = await performance.trace(
+    final auth = await performance.trace(
       'CelestAnalyzer',
       'collectAuth',
       () => _collectAuth(migrateProject: migrateProject),
     );
+    if (auth != null) {
+      _project.auth.replace(auth);
+      envVars.addAll(auth.environmentVariables.values);
+      secrets.addAll(auth.secrets.values);
+    }
+
     await performance.trace(
       'CelestAnalyzer',
       'collectApis',
-      () => _collectApis(hasAuth: hasAuth),
+      () => _collectApis(
+        hasAuth: auth != null,
+        envVars: envVars,
+        secrets: secrets,
+      ),
     );
 
     if (migrateProject) {
@@ -320,6 +329,11 @@ const project = Project(name: 'cache_warmup');
         _applyMigrations,
       );
     }
+
+    // Add config values only at the end since other components may contribute
+    // to them.
+    _project.envVars.replace(envVars);
+    _project.secrets.replace(secrets);
 
     return CelestAnalysisResult.success(
       project: _project.build(),
@@ -382,6 +396,8 @@ const project = Project(name: 'cache_warmup');
 
   Future<void> _collectApis({
     required bool hasAuth,
+    required Set<ast.EnvironmentVariable> envVars,
+    required Set<ast.Secret> secrets,
   }) async {
     final apiDir = fileSystem.directory(projectPaths.apisDir);
     if (!await apiDir.exists()) {
@@ -435,8 +451,8 @@ const project = Project(name: 'cache_warmup');
         apiFilepath: apiPath,
         apiName: apiName,
         apiLibrary: apiLibraryResult,
-        environmentVariables: _project.envVars.build(),
-        secrets: _project.secrets.build(),
+        environmentVariables: envVars,
+        secrets: secrets,
         hasAuth: hasAuth,
       );
       if (baseApi == null) {
@@ -448,7 +464,7 @@ const project = Project(name: 'cache_warmup');
     }
   }
 
-  Future<bool> _collectAuth({required bool migrateProject}) async {
+  Future<ast.Auth?> _collectAuth({required bool migrateProject}) async {
     final potentialAuthFiles = [
       projectPaths.authDart,
       projectPaths.projectDart,
@@ -473,7 +489,7 @@ const project = Project(name: 'cache_warmup');
           ),
         );
       }
-      return false;
+      return null;
     }
 
     for (final library in authLibraries) {
@@ -482,11 +498,10 @@ const project = Project(name: 'cache_warmup');
         authLibrary: library,
       );
       if (auth != null) {
-        _project.auth.replace(auth);
-        return true;
+        return auth;
       }
     }
-    return false;
+    return null;
   }
 
   Future<void> _applyMigrations() async {

@@ -386,7 +386,12 @@
       }
     }
   },
-  "envVars": [],
+  "envVars": [
+    {
+      "name": "FIREBASE_PROJECT_ID",
+      "value": "prj-d-firebase-test"
+    }
+  ],
   "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
@@ -406,6 +411,17 @@
         "$": "ResolvedSmsAuthProvider",
         "name": "SMS_OTP",
         "type": "SMS_OTP"
+      }
+    ],
+    "externalProviders": [
+      {
+        "$": "ResolvedFirebaseExternalAuthProvider",
+        "projectId": {
+          "name": "FIREBASE_PROJECT_ID",
+          "value": "prj-d-firebase-test"
+        },
+        "name": "FIREBASE",
+        "type": "FIREBASE"
       }
     ]
   }

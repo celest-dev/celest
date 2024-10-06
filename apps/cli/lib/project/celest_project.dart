@@ -18,6 +18,7 @@ import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 import 'package:native_storage/native_storage.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
@@ -73,8 +74,10 @@ final class CelestProject {
     required this.parentProject,
     required this.cacheDb,
     required ByteStore byteStore,
+    ProjectDatabase? projectDb,
   })  : _analysisOptions = analysisOptions,
-        _byteStore = byteStore;
+        _byteStore = byteStore,
+        _projectDb = projectDb;
 
   static final _logger = Logger('CelestProject');
 
@@ -83,6 +86,9 @@ final class CelestProject {
     ParentProject? parentProject,
     String? configHome,
     String? outputsDir,
+    @visibleForTesting CacheDatabase? cacheDb,
+    @visibleForTesting ByteStore? byteStore,
+    @visibleForTesting ProjectDatabase? projectDb,
   }) async {
     _logger.finest('Loading celest project at root: "$projectRoot"...');
     final projectPaths = ProjectPaths(
@@ -103,8 +109,8 @@ final class CelestProject {
       ..finest('Loaded analysis options: $analysisOptions')
       ..finest('Loaded Celest config: $config');
     _logger.finest('Spawned env manager');
-    final cacheDb = await CacheDatabase.open(projectRoot, verbose: verbose);
-    final byteStore = MemoryCachingByteStore(
+    cacheDb ??= await CacheDatabase.open(projectRoot, verbose: verbose);
+    byteStore ??= MemoryCachingByteStore(
       cacheDb.byteStore,
       1 << 30, // 1 GB
     );
@@ -177,10 +183,11 @@ final class CelestProject {
   );
 
   /// The [ProjectDatabase] for the current project.
-  late final ProjectDatabase projectDb = ProjectDatabase(
-    projectRoot: projectPaths.projectRoot,
-    verbose: verbose,
-  );
+  ProjectDatabase get projectDb => _projectDb ??= ProjectDatabase(
+        projectRoot: projectPaths.projectRoot,
+        verbose: verbose,
+      );
+  ProjectDatabase? _projectDb;
 
   Pubspec get pubspec => Pubspec.parse(
         fileSystem.file(projectPaths.pubspecYaml).readAsStringSync(),

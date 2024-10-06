@@ -568,6 +568,10 @@ class _Celest {
   static const _runtimeUrl = 'package:celest/src/runtime/serve.dart';
   static const _contextUrl = 'package:celest/src/core/context.dart';
 
+  /// Creates a [celest_runtime.AuthMiddleware] reference.
+  DartTypeReference get authMiddleware =>
+      const DartTypeReference('AuthMiddleware', _runtimeUrl);
+
   /// Creates a [celest.BadRequestException] reference.
   DartTypeReference get badRequestException =>
       const DartTypeReference('BadRequestException', _coreUrl);
@@ -596,6 +600,10 @@ class _Celest {
 
   /// Creates a [celest.secret] reference.
   DartTypeReference get secret => const DartTypeReference('secret', _url);
+
+  /// Creates a [celest_runtime.FirebaseAuthMiddleware] reference.
+  DartTypeReference get firebaseAuthMiddleware =>
+      const DartTypeReference('FirebaseAuthMiddleware', _runtimeUrl);
 
   /// Creates a [celest_core.InternalServerError] reference.
   DartTypeReference get internalServerError =>

@@ -19,6 +19,8 @@ part 'cache_database.g.dart';
 
 @DriftDatabase(include: {'cache.drift'})
 final class CacheDatabase extends _$CacheDatabase {
+  CacheDatabase(super.e);
+
   CacheDatabase._(
     String projectRoot, {
     required Completer<Database> rawDatabase,
@@ -30,6 +32,19 @@ final class CacheDatabase extends _$CacheDatabase {
             rawDatabase: rawDatabase,
           ),
         );
+
+  static Future<CacheDatabase> memory() async {
+    final completer = Completer<Database>();
+    final db = CacheDatabase(
+      NativeDatabase.memory(
+        setup: _setup(completer),
+      ),
+    );
+    await db.customSelect('SELECT 1').get();
+    final rawDb = await completer.future;
+    db.byteStore = CachingByteStore(rawDb);
+    return db;
+  }
 
   static Future<CacheDatabase> open(
     String projectRoot, {

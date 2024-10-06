@@ -194,7 +194,7 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   @override
   ResolvedEnvironmentVariable visitEnvironmentVariable(
     EnvironmentVariable variable,
-    Project context,
+    AstNode context,
   ) {
     final envName = variable.envName;
     final envValue = configValues[envName];
@@ -227,6 +227,11 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
     return ResolvedAuth.build((b) {
       for (final authProvider in auth.providers) {
         b.providers.add(visitAuthProvider(authProvider, auth));
+      }
+      for (final externalAuthProvider in auth.externalProviders) {
+        b.externalProviders.add(
+          visitExternalAuthProvider(externalAuthProvider, auth),
+        );
       }
     });
   }
@@ -273,6 +278,31 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
           privateKey: visitSecret(privateKey, context),
         );
     }
+  }
+
+  @override
+  ResolvedExternalAuthProvider visitExternalAuthProvider(
+    ExternalAuthProvider provider,
+    covariant AstNode context,
+  ) {
+    return switch (provider) {
+      FirebaseExternalAuthProvider(
+        :final name,
+        :final projectId,
+      ) =>
+        ResolvedFirebaseExternalAuthProvider(
+          name: name,
+          projectId: visitEnvironmentVariable(projectId, context),
+        ),
+      SupabaseExternalAuthProvider(
+        :final name,
+        :final jwtSecret,
+      ) =>
+        ResolvedSupabaseExternalAuthProvider(
+          name: name,
+          jwtSecret: visitSecret(jwtSecret, context),
+        ),
+    };
   }
 
   @override

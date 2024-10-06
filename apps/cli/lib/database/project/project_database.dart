@@ -20,6 +20,12 @@ final class ProjectDatabase extends _$ProjectDatabase {
             verbose: verbose,
           ),
         );
+
+  ProjectDatabase.memory()
+      : super(
+          NativeDatabase.memory(setup: _setup),
+        );
+
   @override
   int get schemaVersion => 1;
 

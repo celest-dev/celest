@@ -2502,6 +2502,59 @@ const auth = Auth(
           'Duplicate SMS_OTP auth provider',
         ],
       );
+
+      testNoErrors(
+        name: 'valid_external_provider',
+        authDart: '''
+const auth = Auth(
+  providers: [
+    ExternalAuthProvider.firebase(),
+  ],
+);
+''',
+        expectProject: (project) {
+          check(project.auth).isNotNull()
+            ..has((it) => it.providers, 'providers').isEmpty()
+            ..has(
+              (it) => it.externalProviders.map((it) => it.type),
+              'providers',
+            ).single.equals(FirebaseExternalAuthProvider.$type);
+
+          // The default env variable is created.
+          check(project.envVars)
+              .single
+              .has((it) => it.envName, 'envName')
+              .equals('FIREBASE_PROJECT_ID');
+        },
+      );
+
+      testNoErrors(
+        name: 'valid_external_provider_custom_config',
+        authDart: '''
+const firebaseProjectId = env('PROJECT_ID');
+const auth = Auth(
+  providers: [
+    ExternalAuthProvider.firebase(
+      projectId: firebaseProjectId,
+    ),
+  ],
+);
+''',
+        expectProject: (project) {
+          check(project.auth).isNotNull()
+            ..has((it) => it.providers, 'providers').isEmpty()
+            ..has(
+              (it) => it.externalProviders.map((it) => it.type),
+              'providers',
+            ).single.equals(FirebaseExternalAuthProvider.$type);
+
+          // The custom env variable is used.
+          check(project.envVars)
+              .single
+              .has((it) => it.envName, 'envName')
+              .equals('PROJECT_ID');
+        },
+      );
     });
   });
 }

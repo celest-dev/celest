@@ -13,6 +13,9 @@ import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
+import 'package:celest_cli/database/cache/cache_database.dart';
+import 'package:celest_cli/database/project/project_database.dart';
+import 'package:celest_cli/env/config_value_solver.dart';
 import 'package:celest_cli/openapi/renderer/openapi_renderer.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/pub/pub_action.dart';
@@ -26,8 +29,6 @@ import 'package:test/test.dart';
 import '../../common.dart';
 import 'types.dart';
 
-final hubTestsDir =
-    Directory.current.uri.resolve('../../services/hub/test/test_data').path;
 final testDir = p.join(Directory.current.path, 'test', 'fixtures', 'legacy');
 
 void main() {
@@ -95,16 +96,11 @@ class TestRunner {
         if (updateGoldens && goldensDir.existsSync()) {
           goldensDir.deleteSync(recursive: true);
         }
-        final cacheDir = fileSystem
-            .directory(projectRoot)
-            .childDirectory('.dart_tool')
-            .childDirectory('celest');
-        if (cacheDir.existsSync()) {
-          cacheDir.deleteSync(recursive: true);
-        }
         await init(
           projectRoot: projectRoot,
           outputsDir: goldensDir.path,
+          cacheDb: await CacheDatabase.memory(),
+          projectDb: ProjectDatabase.memory(),
         );
         analyzer = CelestAnalyzer();
         goldensDir.createSync();
@@ -167,11 +163,14 @@ class TestRunner {
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
-      final envManager = await celestProject.envManager.environment('local');
+      final configValues = await ConfigValueSolver(
+        project: project!,
+        environmentId: 'local',
+      ).solveAll();
       final projectResolver = ProjectResolver(
-        configValues: await envManager.readAll(),
+        configValues: configValues,
       );
-      project!.acceptWithArg(projectResolver, project);
+      project.acceptWithArg(projectResolver, project);
 
       final codegen = CloudCodeGenerator(
         project: project,
@@ -214,11 +213,14 @@ class TestRunner {
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
-      final envManager = await celestProject.envManager.environment('local');
+      final configValues = await ConfigValueSolver(
+        project: project!,
+        environmentId: 'local',
+      ).solveAll();
       final projectResolver = ProjectResolver(
-        configValues: await envManager.readAll(),
+        configValues: configValues,
       );
-      project!.acceptWithArg(projectResolver, project);
+      project.acceptWithArg(projectResolver, project);
       final resolvedAstFile = File(
         p.join(projectPaths.outputsDir, 'ast.resolved.json'),
       );
@@ -228,8 +230,7 @@ class TestRunner {
           ..createSync(recursive: true)
           ..writeAsStringSync(
             const JsonEncoder.withIndent('  ').convert(resolvedAst),
-          )
-          ..copySync(p.join(hubTestsDir, '$testName.resolved.json'));
+          );
       } else {
         final expectedAst = jsonDecode(resolvedAstFile.readAsStringSync());
         expect(resolvedAst, expectedAst);
@@ -299,10 +300,20 @@ class TestRunner {
 
       setUpAll(() async {
         final entrypoint = projectPaths.localApiEntrypoint;
-        final envManager = await celestProject.envManager.environment('local');
+        final CelestAnalysisResult(:project, :errors) =
+            await analyzer.analyzeProject(
+          migrateProject: false,
+          updateResources: updateGoldens,
+        );
+        expect(errors, isEmpty);
+        expect(project, isNotNull);
+        final configValues = await ConfigValueSolver(
+          project: project!,
+          environmentId: 'local',
+        ).solveAll();
         apiRunner = await LocalApiRunner.start(
           path: entrypoint,
-          configValues: await envManager.readAll(),
+          configValues: configValues,
           environmentId: 'local',
           verbose: false,
           stdoutPipe: logSink,

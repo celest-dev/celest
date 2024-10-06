@@ -125,4 +125,9 @@ final class CloudCodeGenerator extends AstVisitor<void> {
   void visitAuthProvider(AuthProvider provider) {
     throw UnimplementedError();
   }
+
+  @override
+  void visitExternalAuthProvider(ExternalAuthProvider provider) {
+    throw UnimplementedError();
+  }
 }
