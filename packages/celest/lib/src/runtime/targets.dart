@@ -15,6 +15,9 @@ abstract base class CloudFunctionTarget {
   /// The name of the [CloudFunction] this class targets.
   String get name;
 
+  /// The middlewares to apply to this target.
+  List<Middleware> get middlewares => const [];
+
   /// Initializes this target.
   ///
   /// This is called once when the target is instantiated.
@@ -48,7 +51,11 @@ abstract base class CloudFunctionHttpTarget extends CloudFunctionTarget {
 
   @override
   void _apply(Router router, String route) {
-    router.add(method, route, _handler);
+    var pipeline = const Pipeline();
+    for (final middleware in middlewares) {
+      pipeline = pipeline.addMiddleware(middleware);
+    }
+    router.add(method, route, pipeline.addHandler(_handler));
   }
 
   /// Handles a JSON [request] to this target.
@@ -66,8 +73,12 @@ abstract base class CloudFunctionHttpTarget extends CloudFunctionTarget {
 abstract base class CloudEventSourceTarget extends CloudFunctionTarget {
   @override
   void _apply(Router router, String route) {
-    router.add('GET', route, _handler);
-    router.add('POST', route, _sseHandler);
+    var pipeline = const Pipeline();
+    for (final middleware in middlewares) {
+      pipeline = pipeline.addMiddleware(middleware);
+    }
+    router.add('GET', route, pipeline.addHandler(_handler));
+    router.add('POST', route, pipeline.addHandler(_sseHandler));
   }
 
   late final Handler _sseHandler = sseHandler(_handleConnection);

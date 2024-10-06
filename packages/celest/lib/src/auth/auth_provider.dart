@@ -35,14 +35,51 @@ sealed class AuthProvider {
 
   /// A provider which enables Sign In with Apple.
   ///
-  /// [clientId], [teamId], [keyId], and [key] are required to authenticate
-  /// with Apple.
+  /// [clientId], [teamId], [keyId], and [privateKey] are required to
+  /// authenticate with Apple.
   const factory AuthProvider.apple({
     required secret clientId,
     required secret teamId,
     required secret keyId,
-    required secret key,
+    required secret privateKey,
   }) = _AppleAuthProvider;
+}
+
+/// {@template celest.auth.external_auth_provider}
+/// An external authentication provider which can be used to sign in to Celest.
+///
+/// External auth providers can be used to managed users outside of Celest.
+/// Users sign in through the external provider and are authenticated to Celest
+/// by passing the ID token to `celest.auth`.
+/// {@endtemplate}
+sealed class ExternalAuthProvider implements AuthProvider {
+  /// {@macro celest.auth.external_auth_provider}
+  const ExternalAuthProvider();
+
+  /// A provider which enables Firebase as an external identity provider.
+  ///
+  /// When using Firebase as your identity provider, users are managed entirely
+  /// by Firebase. This provider is useful when you want to use Firebase's
+  /// authentication system to manage your users.
+  ///
+  /// You may specify a custom environment variable for the [projectId] if
+  /// desired. If not provided, a default environment variable will be created
+  /// for you.
+  const factory ExternalAuthProvider.firebase({
+    env projectId,
+  }) = _FirebaseExternalAuthProvider;
+
+  /// A provider which enables Supabase as an external identity provider.
+  ///
+  /// When using Supabase as your identity provider, users are managed entirely
+  /// by Supabase. This provider is useful when you want to use Supabase's
+  /// authentication system to manage your users.
+  ///
+  /// You may specify a custom secret value for the [jwtSecret] if desired. If
+  /// not provided, a default secret will be created for you.
+  const factory ExternalAuthProvider.supabase({
+    secret jwtSecret,
+  }) = _SupabaseExternalAuthProvider;
 }
 
 final class _EmailAuthProvider extends AuthProvider {
@@ -78,11 +115,27 @@ final class _AppleAuthProvider extends AuthProvider {
     required this.clientId,
     required this.teamId,
     required this.keyId,
-    required this.key,
+    required this.privateKey,
   });
 
   final secret clientId;
   final secret teamId;
   final secret keyId;
-  final secret key;
+  final secret privateKey;
+}
+
+final class _FirebaseExternalAuthProvider extends ExternalAuthProvider {
+  const _FirebaseExternalAuthProvider({
+    this.projectId = const env('FIREBASE_PROJECT_ID'),
+  });
+
+  final env projectId;
+}
+
+final class _SupabaseExternalAuthProvider extends ExternalAuthProvider {
+  const _SupabaseExternalAuthProvider({
+    this.jwtSecret = const secret('SUPABASE_JWT_SECRET'),
+  });
+
+  final secret jwtSecret;
 }

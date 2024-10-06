@@ -19,6 +19,9 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:stream_channel/stream_channel.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+export 'auth/auth_middleware.dart';
+export 'auth/firebase/firebase_auth_middleware.dart';
+
 part 'targets.dart';
 
 /// The default port on which Celest runs locally.
