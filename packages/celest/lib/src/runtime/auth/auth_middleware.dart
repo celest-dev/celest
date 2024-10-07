@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:celest/src/core/context.dart';
+import 'package:celest/src/runtime/http/middleware.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:logging/logging.dart';
 import 'package:shelf/shelf.dart' as shelf;
@@ -8,7 +9,7 @@ import 'package:shelf/shelf.dart' as shelf;
 /// {@template celest.runtime.auth_middleware}
 /// The base class for Celest authentication middleware.
 /// {@endtemplate}
-abstract base class AuthMiddleware {
+abstract base class AuthMiddleware implements Middleware {
   /// {@macro celest.runtime.auth_middleware}
   const AuthMiddleware();
 
@@ -28,8 +29,8 @@ abstract base class AuthMiddleware {
   /// Whether the user is required to be authenticated.
   bool get required;
 
-  /// Implements [shelf.Middleware].
-  shelf.Handler call(shelf.Handler innerHandler) {
+  @override
+  shelf.Handler call(shelf.Handler inner) {
     return (shelf.Request request) async {
       final user = await authenticate(request);
       if (user == null && required) {
@@ -38,10 +39,14 @@ abstract base class AuthMiddleware {
       if (user != null) {
         context.put(ContextKey.principal, user);
       }
-      return innerHandler(request);
+      return inner(request);
     };
   }
 }
+
+// Interface guard
+// ignore: unused_element
+final shelf.Middleware _ = const _OneOfAuthMiddleware([]).call;
 
 final class _OneOfAuthMiddleware extends AuthMiddleware {
   const _OneOfAuthMiddleware(
@@ -77,9 +82,6 @@ final class _OneOfAuthMiddleware extends AuthMiddleware {
     }
     if (internalError case (final error, final stackTrace)) {
       Error.throwWithStackTrace(error, stackTrace);
-    }
-    if (required) {
-      throw const CloudException.unauthorized('Unauthorized');
     }
     return null;
   }

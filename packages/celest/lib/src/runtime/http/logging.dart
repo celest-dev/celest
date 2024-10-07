@@ -1,3 +1,6 @@
+@internal
+library;
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
@@ -8,6 +11,7 @@ import 'package:celest/src/runtime/gcp/gcp.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:cloud_http/cloud_http.dart';
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 /// Configures logging depending on the environment in which

@@ -84,7 +84,7 @@ class CelestFunctionsGreeting {
             .deserialize<_$celest.SerializationException>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,

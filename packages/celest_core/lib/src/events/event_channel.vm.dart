@@ -41,7 +41,7 @@ final class EventChannelPlatform extends EventChannel {
   );
 
   @override
-  Stream<Map<String, Object?>> get stream => _ws.stream.map(JsonUtf8.decodeAny);
+  Stream<Map<String, Object?>> get stream => _ws.stream.map(JsonUtf8.decodeMap);
 
   @override
   StreamSink<Map<String, Object?>> get sink => _wsSink;

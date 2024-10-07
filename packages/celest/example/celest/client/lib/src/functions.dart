@@ -89,7 +89,7 @@ class CelestFunctionsGreeting {
             .deserialize<BadNameException>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,

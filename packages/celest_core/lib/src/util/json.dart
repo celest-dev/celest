@@ -27,8 +27,8 @@ extension JsonUtf8 on Object {
     );
   }
 
-  /// Decodes a JSON [body] of type [List<int>] or [String].
-  static Map<String, Object?> decodeAny(Object? body) {
+  /// Decodes a JSON map [body] from a `List<int>` or [String].
+  static Map<String, Object?> decodeMap(Object? body) {
     Object? decoded;
     switch (body) {
       case List<int>():
@@ -38,11 +38,12 @@ extension JsonUtf8 on Object {
         if (body.isEmpty) return const {};
         decoded = jsonDecode(body);
       default:
-        _invalidJson(body);
+        decoded = body;
     }
     return switch (decoded) {
       null => const <String, Object?>{},
       Map<String, Object?>() => decoded,
+      Map() => decoded.cast(),
       _ => _invalidJson(decoded),
     };
   }

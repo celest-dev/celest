@@ -1,8 +1,5 @@
 part of 'serve.dart';
 
-/// The response of a [CloudFunctionTarget].
-typedef CelestResponse = ({int statusCode, Object? body});
-
 /// {@template celest.runtime.cloud_function_target}
 /// An instantiation of a [CloudFunction].
 /// {@endtemplate}
@@ -32,17 +29,10 @@ abstract base class CloudFunctionTarget {
 abstract base class CloudFunctionHttpTarget extends CloudFunctionTarget {
   Future<Response> _handler(Request request) async {
     final bodyJson = await request.decodeJson();
-    final response = await handle(
+    return handle(
       bodyJson,
       headers: request.headersAll,
       queryParameters: request.url.queryParametersAll,
-    );
-    return Response(
-      response.statusCode,
-      body: jsonEncode(response.body),
-      headers: {
-        contentTypeHeader: jsonContentType,
-      },
     );
   }
 
@@ -53,13 +43,13 @@ abstract base class CloudFunctionHttpTarget extends CloudFunctionTarget {
   void _apply(Router router, String route) {
     var pipeline = const Pipeline();
     for (final middleware in middlewares) {
-      pipeline = pipeline.addMiddleware(middleware);
+      pipeline = pipeline.addMiddleware(middleware.call);
     }
     router.add(method, route, pipeline.addHandler(_handler));
   }
 
   /// Handles a JSON [request] to this target.
-  Future<CelestResponse> handle(
+  Future<Response> handle(
     Map<String, Object?> request, {
     required Map<String, List<String>> headers,
     required Map<String, List<String>> queryParameters,
@@ -75,7 +65,7 @@ abstract base class CloudEventSourceTarget extends CloudFunctionTarget {
   void _apply(Router router, String route) {
     var pipeline = const Pipeline();
     for (final middleware in middlewares) {
-      pipeline = pipeline.addMiddleware(middleware);
+      pipeline = pipeline.addMiddleware(middleware.call);
     }
     router.add('GET', route, pipeline.addHandler(_handler));
     router.add('POST', route, pipeline.addHandler(_sseHandler));
@@ -89,7 +79,7 @@ abstract base class CloudEventSourceTarget extends CloudFunctionTarget {
           StreamChannelTransformer(
             StreamTransformer.fromHandlers(
               handleData: (data, sink) {
-                sink.add(JsonUtf8.decodeAny(data));
+                sink.add(JsonUtf8.decodeMap(data));
               },
             ),
             StreamSinkTransformer.fromHandlers(
@@ -104,14 +94,14 @@ abstract base class CloudEventSourceTarget extends CloudFunctionTarget {
   );
 
   Future<void> _handleConnection(
-    StreamChannel<Map<String, Object?>> connection,
+    StreamChannel<Object?> connection,
   ) async {
     await runZonedGuarded(
       () async {
         final requests = StreamQueue(connection.stream);
         var request = const <String, Object?>{};
         if (hasBody) {
-          request = await requests.next;
+          request = await requests.next as Map<String, Object?>;
         }
         final (headers, queryParameters) = switch (connection) {
           SseConnection(:final headers, :final queryParameters) => (
@@ -162,7 +152,7 @@ abstract base class CloudEventSourceTarget extends CloudFunctionTarget {
   bool get hasBody;
 
   /// Handles a JSON [request] to this target.
-  Stream<Map<String, Object?>> handle(
+  Stream<Object?> handle(
     Map<String, Object?> request, {
     required Map<String, List<String>> headers,
     required Map<String, List<String>> queryParameters,
