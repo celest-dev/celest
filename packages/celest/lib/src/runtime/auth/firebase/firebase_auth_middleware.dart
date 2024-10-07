@@ -45,6 +45,6 @@ final class FirebaseAuthMiddleware extends AuthMiddleware {
     if (token == null) {
       return null;
     }
-    return _tokenVerifier.verifyIdToken(token);
+    return _tokenVerifier.verify(token);
   }
 }

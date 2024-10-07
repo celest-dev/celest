@@ -30,10 +30,22 @@ final class env extends ConfigurationValue {
   /// {@macro celest.config.environment_variable}
   const env(super.name) : super._();
 
+  /// A static environment variable with a fixed value across all environments.
+  const factory env.static(String name, String value) = _staticEnv;
+
   /// The active Celest environment.
   ///
   /// For example, `production`.
   static const env environment = env('CELEST_ENVIRONMENT');
+
+  @override
+  String toString() => 'env($name)';
+}
+
+final class _staticEnv extends env {
+  const _staticEnv(super.name, this.value);
+
+  final String value;
 }
 
 /// {@template celest.config.secret}
@@ -45,4 +57,7 @@ final class env extends ConfigurationValue {
 final class secret extends ConfigurationValue {
   /// {@macro celest.config.secret}
   const secret(super.name) : super._();
+
+  @override
+  String toString() => 'secret($name)';
 }

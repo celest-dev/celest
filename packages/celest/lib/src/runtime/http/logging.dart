@@ -23,7 +23,7 @@ void configureLogging() {
         level: record.level.value,
         name: record.loggerName,
         zone: record.zone,
-        error: record.error,
+        error: record.error?.toString(),
         stackTrace: record.stackTrace,
       );
     }

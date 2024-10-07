@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show HandshakeException, HttpClient, SocketException;
 
 import 'package:celest/src/config/env.dart';
 import 'package:celest/src/core/environment.dart';
@@ -7,6 +8,10 @@ import 'package:celest_core/_internal.dart';
 // ignore: implementation_imports
 import 'package:celest_core/src/auth/user.dart';
 import 'package:cloud_http/cloud_http.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart' as http;
+import 'package:http/retry.dart' as http;
+import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:platform/platform.dart';
 import 'package:shelf/shelf.dart' as shelf;
@@ -90,6 +95,45 @@ final class Context {
     };
   }
 
+  /// The HTTP client for the current context.
+  http.Client get httpClient =>
+      get(ContextKey.httpClient) ?? _defaultHttpClient;
+
+  /// The default HTTP client.
+  static final http.Client _defaultHttpClient = http.RetryClient(
+    http.IOClient(
+      HttpClient()
+        ..idleTimeout = const Duration(seconds: 5)
+        ..connectionTimeout = const Duration(seconds: 5),
+    ),
+    retries: 3,
+    when: (response) {
+      return switch (response.statusCode) {
+        HttpStatus.gatewayTimeout ||
+        HttpStatus.internalServerError ||
+        HttpStatus.requestTimeout ||
+        HttpStatus.serviceUnavailable =>
+          true,
+        _ => false,
+      };
+    },
+    whenError: (error, stackTrace) {
+      context.logger.warning('HTTP client error', error, stackTrace);
+      return switch (error) {
+        SocketException() || HandshakeException() || TimeoutException() => true,
+        _ => false,
+      };
+    },
+    onRetry: (request, response, retryCount) {
+      context.logger.warning(
+        'Retrying request to ${request.url} (retry=$retryCount)',
+      );
+    },
+  );
+
+  /// The logger for the current context.
+  Logger get logger => get(ContextKey.logger) ?? Logger.root;
+
   (Context, V)? _get<V extends Object>(ContextKey<V> key) {
     if (key.read(this) case final value?) {
       return (this, value);
@@ -147,6 +191,12 @@ abstract interface class ContextKey<V extends Object> {
 
   /// The context key for the current [User].
   static const ContextKey<User> principal = _PrincipalContextKey();
+
+  /// The context key for the context [http.Client].
+  static const ContextKey<http.Client> httpClient = ContextKey('http client');
+
+  /// The context key for for the context [Logger].
+  static const ContextKey<Logger> logger = ContextKey('logger');
 
   /// Reads the value for `this` from the given [context].
   V? read(Context context);
