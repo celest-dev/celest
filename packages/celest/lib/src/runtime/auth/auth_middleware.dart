@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:celest/src/core/context.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:logging/logging.dart';
@@ -56,6 +58,7 @@ final class _OneOfAuthMiddleware extends AuthMiddleware {
 
   @override
   Future<User?> authenticate(shelf.Request request) async {
+    (Object, StackTrace)? internalError;
     for (final middleware in middlewares) {
       try {
         final user = await middleware.authenticate(request);
@@ -68,8 +71,12 @@ final class _OneOfAuthMiddleware extends AuthMiddleware {
           e,
           st,
         );
+        internalError ??= (e, st);
         continue;
       }
+    }
+    if (internalError case (final error, final stackTrace)) {
+      Error.throwWithStackTrace(error, stackTrace);
     }
     if (required) {
       throw const CloudException.unauthorized('Unauthorized');

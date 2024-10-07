@@ -61,13 +61,7 @@ sealed class ExternalAuthProvider implements AuthProvider {
   /// When using Firebase as your identity provider, users are managed entirely
   /// by Firebase. This provider is useful when you want to use Firebase's
   /// authentication system to manage your users.
-  ///
-  /// You may specify a custom environment variable for the [projectId] if
-  /// desired. If not provided, a default environment variable will be created
-  /// for you.
-  const factory ExternalAuthProvider.firebase({
-    env projectId,
-  }) = _FirebaseExternalAuthProvider;
+  const factory ExternalAuthProvider.firebase() = _FirebaseExternalAuthProvider;
 
   /// A provider which enables Supabase as an external identity provider.
   ///
@@ -75,10 +69,11 @@ sealed class ExternalAuthProvider implements AuthProvider {
   /// by Supabase. This provider is useful when you want to use Supabase's
   /// authentication system to manage your users.
   ///
-  /// You may specify a custom secret value for the [jwtSecret] if desired. If
-  /// not provided, a default secret will be created for you.
+  /// If [jwtSecret] is provided, it will be used to verify the JWT token.
+  /// Otherwise, a request will be made to the Supabase server to fetch the
+  /// user's information.
   const factory ExternalAuthProvider.supabase({
-    secret jwtSecret,
+    secret? jwtSecret,
   }) = _SupabaseExternalAuthProvider;
 }
 
@@ -126,6 +121,7 @@ final class _AppleAuthProvider extends AuthProvider {
 
 final class _FirebaseExternalAuthProvider extends ExternalAuthProvider {
   const _FirebaseExternalAuthProvider({
+    // ignore: unused_element
     this.projectId = const env('FIREBASE_PROJECT_ID'),
   });
 
@@ -134,8 +130,11 @@ final class _FirebaseExternalAuthProvider extends ExternalAuthProvider {
 
 final class _SupabaseExternalAuthProvider extends ExternalAuthProvider {
   const _SupabaseExternalAuthProvider({
-    this.jwtSecret = const secret('SUPABASE_JWT_SECRET'),
+    // ignore: unused_element
+    this.url = const env('SUPABASE_URL'),
+    this.jwtSecret,
   });
 
-  final secret jwtSecret;
+  final env url;
+  final secret? jwtSecret;
 }

@@ -21,6 +21,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 export 'auth/auth_middleware.dart';
 export 'auth/firebase/firebase_auth_middleware.dart';
+export 'auth/supabase/supabase_auth_middleware.dart';
 
 part 'targets.dart';
 

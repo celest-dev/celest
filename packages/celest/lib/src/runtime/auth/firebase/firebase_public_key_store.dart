@@ -4,9 +4,9 @@ library;
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:celest/src/core/context.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/retry.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:x509/x509.dart' hide AlgorithmIdentifier;
@@ -39,15 +39,8 @@ final class FirebasePublicKeyStore {
 
   Map<String, X509Certificate>? _publicKeys;
   Future<Map<String, X509Certificate>> _loadPublicKeys() async {
-    final client = http.RetryClient(
-      http.Client(),
-      retries: 3,
-      onRetry: (request, response, retryCount) {
-        _logger.warning('Retrying request to ${request.url} ($retryCount)');
-      },
-    );
     try {
-      final response = await client.get(_publicKeysUri);
+      final response = await context.httpClient.get(_publicKeysUri);
       if (response.statusCode != 200) {
         throw http.ClientException(
           'Failed to load public keys: ${response.statusCode}\n'
@@ -87,8 +80,6 @@ final class FirebasePublicKeyStore {
     } on Object catch (e, st) {
       _logger.severe('Failed to load public keys', e, st);
       throw CloudException.internalServerError('Failed to load public keys');
-    } finally {
-      client.close();
     }
   }
 }

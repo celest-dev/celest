@@ -30,9 +30,9 @@ final class FirebaseTokenVerifier {
     return _decoder.convert(decoded);
   }
 
-  /// Verifies the given [idToken] and returns the user identified by the token.
-  Future<User> verifyIdToken(String idToken) async {
-    final (header, payload, signature) = switch (idToken.split('.')) {
+  /// Verifies the given [token] and returns the user identified by the token.
+  Future<User> verify(String token) async {
+    final (header, payload, signature) = switch (token.split('.')) {
       [final header, final payload, final signature] => (
           header,
           payload,
