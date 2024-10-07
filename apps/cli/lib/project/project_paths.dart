@@ -40,9 +40,18 @@ final class ProjectPaths {
   late final String apisDir = p.join(projectRoot, 'lib', 'src', 'functions');
   late final String legacyApisDir = p.join(projectRoot, 'functions');
   late final String configDir = p.join(projectRoot, 'config');
-  late final String envFile = p.join(projectRoot, 'config', '.env');
+
+  String get envFile {
+    final legacyEnvFile =
+        fileSystem.file(p.join(projectRoot, 'config', '.env'));
+    if (legacyEnvFile.existsSync()) {
+      return legacyEnvFile.path;
+    }
+    return p.join(projectRoot, '.env');
+  }
+
   String envFileFor(String environment) =>
-      p.join(projectRoot, '.env.$environment');
+      p.join(p.dirname(envFile), '.env.$environment');
 
   late final String modelsDir = p.join(projectRoot, 'lib', 'models');
   late final String modelsDart = p.join(projectRoot, 'lib', 'models.dart');

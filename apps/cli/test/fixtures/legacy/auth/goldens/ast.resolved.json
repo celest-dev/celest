@@ -390,14 +390,13 @@
     {
       "name": "FIREBASE_PROJECT_ID",
       "value": "prj-d-firebase-test"
-    }
-  ],
-  "secrets": [
+    },
     {
-      "name": "SUPABASE_JWT_SECRET",
-      "value": "super-secret-jwt-token-with-at-least-32-characters-long"
+      "name": "SUPABASE_URL",
+      "value": "https://vduqtbtlcxxozghvhdqu.supabase.co"
     }
   ],
+  "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],
@@ -431,9 +430,9 @@
       },
       {
         "$": "ResolvedSupabaseExternalAuthProvider",
-        "jwtSecret": {
-          "name": "SUPABASE_JWT_SECRET",
-          "value": "super-secret-jwt-token-with-at-least-32-characters-long"
+        "projectUrl": {
+          "name": "SUPABASE_URL",
+          "value": "https://vduqtbtlcxxozghvhdqu.supabase.co"
         },
         "name": "supabase",
         "type": "SUPABASE"

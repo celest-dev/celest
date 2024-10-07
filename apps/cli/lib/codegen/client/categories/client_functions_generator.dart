@@ -90,6 +90,7 @@ final class ClientFunctionsGenerator {
                 .fromJson(
                   function.flattenedReturnType,
                   refer(r'$body').index(literalString('response')),
+                  inNullableContext: true,
                 )
                 .returned
                 .statement;
@@ -136,6 +137,7 @@ final class ClientFunctionsGenerator {
                 .fromJson(
                   function.flattenedReturnType,
                   refer(r'$event').index(literalString('response')),
+                  inNullableContext: true,
                 )
                 .returned
                 .statement;
@@ -438,6 +440,7 @@ if ($event.containsKey('error')) {
               final deserializedException = jsonGenerator.fromJson(
                 exceptionType,
                 refer(r'$details'),
+                inNullableContext: true,
               );
               b.statements.addAll([
                 Code(

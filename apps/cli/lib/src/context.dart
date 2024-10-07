@@ -52,7 +52,14 @@ Future<ProjectPaths> init({
 }
 
 late CelestProject celestProject;
-ProjectPaths get projectPaths => celestProject.projectPaths;
+
+ProjectPaths? _projectPaths;
+ProjectPaths get projectPaths => _projectPaths ?? celestProject.projectPaths;
+
+@visibleForTesting
+set projectPaths(ProjectPaths? value) {
+  _projectPaths = value;
+}
 
 // Need a new instance of InheritanceManager3 for each invocation since it
 // has a builtin cache.
@@ -71,8 +78,18 @@ final CelestCloud cloud = CelestCloud(
     }),
 );
 
+String? _celestLocalPath;
+
+@visibleForTesting
+set celestLocalPath(String? value) {
+  _celestLocalPath = value;
+}
+
 /// The path to the local checkout of the `celest-dev/celest` repo, if set.
 String? get celestLocalPath {
+  if (_celestLocalPath case final localPathOverride?) {
+    return localPathOverride;
+  }
   var celestLocalPath = ctx.platform.environment['CELEST_LOCAL_PATH'];
   if (celestLocalPath != null) {
     celestLocalPath = ctx.p.canonicalize(ctx.p.normalize(celestLocalPath));

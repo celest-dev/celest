@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:http/http.dart';
 import 'package:test/test.dart';
 
 /// A description of an e2e test.
@@ -33,6 +34,7 @@ sealed class FunctionTest {
     this.headers = const {},
     this.queryParameters = const {},
     this.logs,
+    this.setup,
   });
 
   final String name;
@@ -41,6 +43,7 @@ sealed class FunctionTest {
   final Map<String, String> headers;
   final Map<String, List<String>> queryParameters;
   final List<String>? logs;
+  final Future<void> Function(Request request)? setup;
 }
 
 sealed class HttpTest extends FunctionTest {
@@ -51,6 +54,7 @@ sealed class HttpTest extends FunctionTest {
     super.headers,
     super.queryParameters,
     super.logs,
+    super.setup,
   });
 }
 
@@ -64,6 +68,7 @@ class FunctionTestSuccess extends HttpTest {
     this.statusCode = 200,
     required Object? output,
     super.logs,
+    super.setup,
   }) : output = {
           'response': output,
         };
@@ -82,6 +87,7 @@ class FunctionTestError extends HttpTest {
     required this.statusCode,
     required this.output,
     super.logs,
+    super.setup,
   });
 
   final int statusCode;
@@ -96,6 +102,7 @@ sealed class EventTest extends FunctionTest {
     super.headers,
     super.queryParameters,
     super.logs,
+    super.setup,
   });
 }
 
@@ -108,6 +115,7 @@ class EventTestSuccess extends EventTest {
     super.queryParameters,
     required List<Object>? events,
     super.logs,
+    super.setup,
   }) : output = emitsInOrder([
           for (final event in events ?? const [])
             jsonEncode({
@@ -128,6 +136,7 @@ class EventTestError extends EventTest {
     super.queryParameters,
     required this.error,
     super.logs,
+    super.setup,
   });
 
   final Object? error;

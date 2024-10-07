@@ -1,0 +1,130 @@
+{
+  "name": "supabase",
+  "apis": {
+    "auth": {
+      "name": "auth",
+      "functions": {
+        "currentUser": {
+          "name": "currentUser",
+          "route": "/auth/current-user",
+          "apiName": "auth",
+          "envVars": [],
+          "secrets": [],
+          "httpConfig": {
+            "method": "GET",
+            "statusCode": 200,
+            "errorStatuses": {}
+          },
+          "policySet": {
+            "policies": {
+              "Celest::CloudFunction::currentUser_authenticated_0": {
+                "effect": "permit",
+                "principal": {
+                  "op": "in",
+                  "entity": {
+                    "type": "Celest::Role",
+                    "id": "$authenticated"
+                  }
+                },
+                "action": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::Action",
+                    "id": "invoke"
+                  }
+                },
+                "resource": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::CloudFunction",
+                    "id": "auth.currentUser"
+                  }
+                },
+                "conditions": []
+              },
+              "Celest::CloudFunction::currentUser_authenticated_1": {
+                "effect": "forbid",
+                "principal": {
+                  "op": "All"
+                },
+                "action": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::Action",
+                    "id": "invoke"
+                  }
+                },
+                "resource": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::CloudFunction",
+                    "id": "auth.currentUser"
+                  }
+                },
+                "conditions": [
+                  {
+                    "kind": "unless",
+                    "body": {
+                      "in": {
+                        "left": {
+                          "Var": "principal"
+                        },
+                        "right": {
+                          "Value": {
+                            "__entity": {
+                              "type": "Celest::Role",
+                              "id": "$authenticated"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "templates": {},
+            "templateLinks": []
+          }
+        }
+      }
+    }
+  },
+  "envVars": [
+    {
+      "name": "SUPABASE_URL",
+      "value": "http://127.0.0.1:54321"
+    }
+  ],
+  "secrets": [
+    {
+      "name": "SUPABASE_JWT_SECRET",
+      "value": "super-secret-jwt-token-with-at-least-32-characters-long"
+    }
+  ],
+  "sdkInfo": {
+    "sdkVersion": "3.5.3",
+    "enabledExperiments": [],
+    "featureFlags": [
+      "streaming"
+    ]
+  },
+  "auth": {
+    "providers": [],
+    "externalProviders": [
+      {
+        "$": "ResolvedSupabaseExternalAuthProvider",
+        "projectUrl": {
+          "name": "SUPABASE_URL",
+          "value": "http://127.0.0.1:54321"
+        },
+        "name": "supabase",
+        "type": "SUPABASE",
+        "jwtSecret": {
+          "name": "SUPABASE_JWT_SECRET",
+          "value": "super-secret-jwt-token-with-at-least-32-characters-long"
+        }
+      }
+    ]
+  }
+}

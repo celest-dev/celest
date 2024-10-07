@@ -6,6 +6,7 @@ import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/pub/pubspec.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/path.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
@@ -145,7 +146,8 @@ final class _GitIgnore extends ProjectFile {
 pubspec.lock
 
 # Celest
-**/.env
+.env
+.env.*
 ''',
     );
     return const ProjectMigrationSuccess();
@@ -253,15 +255,9 @@ final class PubspecFile extends ProjectFile {
       },
       dependencies: ProjectDependency.dependencies,
       devDependencies: ProjectDependency.devDependencies,
-      dependencyOverrides: switch (celestLocalPath) {
-        null => null,
-        final localPath => {
-            'celest': PathDependency('$localPath/packages/celest'),
-            'celest_cloud': PathDependency('$localPath/packages/celest_cloud'),
-            'celest_core': PathDependency('$localPath/packages/celest_core'),
-            'celest_auth': PathDependency('$localPath/packages/celest_auth'),
-          },
-      },
+      dependencyOverrides: ProjectDependency.localDependencyOverrides(
+        projectRoot: projectRoot,
+      ),
     );
     await file.writeAsString(pubspec.toYaml());
     await _updateAppPubspec();
@@ -282,13 +278,13 @@ final class ProjectClient extends ProjectFile {
 
   @override
   Future<ProjectMigrationResult> create() async {
-    final clientOutputsDir = fileSystem.directory(projectPaths.clientRoot);
-    if (!clientOutputsDir.existsSync()) {
-      await clientOutputsDir.create(recursive: true);
+    final clientRoot = fileSystem.directory(projectPaths.clientRoot);
+    if (!clientRoot.existsSync()) {
+      await clientRoot.create(recursive: true);
     }
 
     // pubspec.yaml
-    final pubspecFile = clientOutputsDir.childFile('pubspec.yaml');
+    final pubspecFile = clientRoot.childFile('pubspec.yaml');
     if (!pubspecFile.existsSync()) {
       final pubspec = Pubspec(
         '${projectName.snakeCase}_client',
@@ -298,21 +294,19 @@ final class ProjectClient extends ProjectFile {
           'sdk': VersionConstraint.compatibleWith(minSupportedDartSdk),
         },
         dependencies: {
-          'celest_backend': PathDependency('../'),
+          'celest_backend': PathDependency(
+            p.url.relative(
+              projectRoot.to(p.url),
+              from: clientRoot.path.to(p.url),
+            ),
+          ),
           ...ProjectDependency.dependencies,
           ProjectDependency.nativeStorage.name:
               ProjectDependency.nativeStorage.pubDependency,
         },
-        dependencyOverrides: switch (celestLocalPath) {
-          null => null,
-          final localPath => {
-              'celest': PathDependency('$localPath/packages/celest'),
-              'celest_cloud':
-                  PathDependency('$localPath/packages/celest_cloud'),
-              'celest_core': PathDependency('$localPath/packages/celest_core'),
-              'celest_auth': PathDependency('$localPath/packages/celest_auth'),
-            },
-        },
+        dependencyOverrides: ProjectDependency.localDependencyOverrides(
+          projectRoot: clientRoot.path,
+        ),
       );
       final pubspecYaml = pubspec.toYaml();
       _logger.finest('Writing pubspec.yaml to ${pubspecFile.path}...');
@@ -321,7 +315,7 @@ final class ProjectClient extends ProjectFile {
         pubspecFile.writeAsString(pubspecYaml, flush: true).then((_) {
           return runPub(
             action: PubAction.get,
-            workingDirectory: clientOutputsDir.path,
+            workingDirectory: clientRoot.path,
           );
         }),
       );
@@ -329,7 +323,7 @@ final class ProjectClient extends ProjectFile {
 
     // Create `lib/src` in the client folder.
     _operations.add(
-      clientOutputsDir
+      clientRoot
           .childDirectory('lib')
           .childDirectory('src')
           .create(recursive: true),

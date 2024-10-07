@@ -3,6 +3,7 @@ library;
 
 import 'dart:convert';
 import 'dart:io' hide Directory;
+import 'dart:isolate';
 import 'dart:math';
 
 import 'package:async/async.dart';
@@ -13,14 +14,16 @@ import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
-import 'package:celest_cli/database/cache/cache_database.dart';
 import 'package:celest_cli/database/project/project_database.dart';
 import 'package:celest_cli/env/config_value_solver.dart';
+import 'package:celest_cli/init/project_migrator.dart';
 import 'package:celest_cli/openapi/renderer/openapi_renderer.dart';
+import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:file/file.dart';
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
@@ -72,9 +75,11 @@ void main() {
       testName: p.basename(testDir.path),
       projectRoot: projectDir.path,
       updateGoldens: updateGoldens,
+      parentProject:
+          useCelestLayout ? ParentProject.loadSync(testDir.path) : null,
       clientDir: useCelestLayout ? projectDir.childDirectory('client') : null,
       goldensDir: fileSystem.directory(
-        p.join(testDir.path, 'goldens'),
+        p.join(projectDir.path, 'goldens'),
       ),
     );
     testRunners.add(testRunner);
@@ -94,6 +99,7 @@ class TestRunner {
     required this.testName,
     required this.projectRoot,
     required this.updateGoldens,
+    this.parentProject,
     this.clientDir,
     required this.goldensDir,
   });
@@ -102,12 +108,17 @@ class TestRunner {
   final String projectRoot;
   final bool updateGoldens;
   final Directory? clientDir;
+  final ParentProject? parentProject;
   final Directory goldensDir;
 
   late final testCases = tests[testName];
 
   late Client client;
   late CelestAnalyzer analyzer;
+
+  static Future<void> _warmUp(String projectRoot) {
+    return Isolate.run(() => CelestAnalyzer.warmUp(projectRoot));
+  }
 
   void run() {
     group(testName, () {
@@ -122,14 +133,24 @@ class TestRunner {
         }
         await init(
           projectRoot: projectRoot,
+          parentProject: parentProject,
           clientDir: clientDir?.path,
           outputsDir: goldensDir.path,
-          cacheDb: await CacheDatabase.memory(),
           projectDb: ProjectDatabase.memory(),
         );
         analyzer = CelestAnalyzer();
         goldensDir.createSync();
         client = Client();
+
+        final migrator = ProjectMigrator(
+          projectRoot: projectRoot,
+          projectName: celestProject.projectName,
+          parentProject: parentProject,
+        );
+        await (
+          _warmUp(projectRoot),
+          migrator.migrate(),
+        ).wait;
       });
 
       tearDownAll(() async {
@@ -198,6 +219,7 @@ class TestRunner {
       ).solveAll();
       final projectResolver = ProjectResolver(
         configValues: configValues,
+        environmentId: 'local',
       );
       project.acceptWithArg(projectResolver, project);
 
@@ -248,6 +270,7 @@ class TestRunner {
       ).solveAll();
       final projectResolver = ProjectResolver(
         configValues: configValues,
+        environmentId: 'local',
       );
       project.acceptWithArg(projectResolver, project);
       final resolvedAstFile = fileSystem.file(
@@ -404,6 +427,9 @@ class TestRunner {
               ...testCase.headers,
             })
             ..body = jsonEncode(testCase.input);
+          if (testCase.setup case final setup?) {
+            await setup(request);
+          }
           print('${request.method} ${request.url}');
           final response = client.send(request);
           final result = await Result.capture(response);
@@ -2537,7 +2563,8 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'FormatException',
+                  'code': 'dart.core.FormatException',
+                  'details': anything,
                 },
               },
             ),
@@ -2551,7 +2578,8 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'Error',
+                  'code': 'dart.core.Error',
+                  'details': anything,
                 },
               },
             ),
@@ -2563,7 +2591,8 @@ final tests = <String, Test>{
               },
               output: {
                 'error': {
-                  'code': 'ArgumentError',
+                  'code': 'dart.core.ArgumentError',
+                  'details': anything,
                 },
               },
             ),
@@ -4822,34 +4851,36 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'currentUser',
               method: 'GET',
+              setup: (request) async {
+                final jwt = JWT(
+                  {
+                    'aud': 'authenticated',
+                    'exp': DateTime.now()
+                            .add(const Duration(days: 1))
+                            .millisecondsSinceEpoch ~/
+                        1000,
+                    'sub': '123',
+                    'email': 'someone@email.com',
+                    'app_metadata': {'provider': 'email'},
+                    'user_metadata': null,
+                    'role': 'authenticated',
+                  },
+                  header: {
+                    'alg': 'HS256',
+                    'typ': 'JWT',
+                  },
+                );
+                final jwk = SecretKey(
+                  'super-secret-jwt-token-with-at-least-32-characters-long',
+                );
+                final token = jwt.sign(jwk);
+                request.headers['Authorization'] = 'Bearer $token';
+              },
               input: {},
               output: {
-                'id': '123',
-                'app_metadata': {
-                  'provider': 'email',
-                },
-                'user_metadata': {
-                  'name': 'Celest',
-                },
-                'aud': 'aud',
-                'confirmation_sent_at': null,
-                'recovery_sent_at': null,
-                'email_change_sent_at': null,
-                'new_email': null,
-                'invited_at': null,
-                'action_link': null,
-                'email': 'email',
-                'phone': 'phone',
-                'created_at': 'createdAt',
-                'confirmed_at': null,
-                'email_confirmed_at': null,
-                'phone_confirmed_at': null,
-                'last_sign_in_at': null,
-                'role': 'role',
-                'updated_at': 'updatedAt',
-                'identities': null,
-                'factors': null,
-                'is_anonymous': false,
+                'sub': '123',
+                'email': 'someone@email.com',
+                'email_verified': false,
               },
             ),
           ],

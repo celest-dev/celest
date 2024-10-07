@@ -105,9 +105,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
   }
 
   @override
-  Verdict visitDynamicType(DynamicType type) => const VerdictNo([
-        VerdictReason('Dynamic values are not supported'),
-      ]);
+  Verdict visitDynamicType(DynamicType type) => const VerdictYes();
 
   @override
   Verdict visitFunctionType(FunctionType type) => const VerdictNo([
@@ -545,9 +543,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     }
 
     if (type.isDartCoreObject) {
-      return const VerdictNo([
-        VerdictReason('Object types are not supported'),
-      ]);
+      return const Verdict.yes();
     }
     if (type.isDartCoreIterable || type.isDartCoreList) {
       return typeHelper.isSerializable(type.typeArguments.single);

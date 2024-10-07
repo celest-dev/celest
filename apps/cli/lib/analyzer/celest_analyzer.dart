@@ -203,7 +203,7 @@ const project = Project(name: 'cache_warmup');
       ),
       context.currentSession.getLibraryByUri(
         'package:celest/src/config/env.dart',
-      )
+      ),
     ).wait;
     if (celestCoreExceptions is! LibraryElementResult ||
         celestCoreUser is! LibraryElementResult) {

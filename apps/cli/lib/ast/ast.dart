@@ -41,17 +41,23 @@ extension AuthConfigurationValues on Auth {
       for (final authProvider in providers) {
         switch (authProvider) {
           case EmailAuthProvider():
+            break;
           case SmsAuthProvider():
+            break;
           case GitHubAuthProvider():
+            break;
           case GoogleAuthProvider():
+            break;
           case AppleAuthProvider():
+            break;
         }
       }
       for (final externalAuthProvider in externalProviders) {
         switch (externalAuthProvider) {
           case FirebaseExternalAuthProvider(:final projectId):
             b.add(FirebaseExternalAuthProvider.$type, projectId);
-          case SupabaseExternalAuthProvider():
+          case SupabaseExternalAuthProvider(:final projectUrl):
+            b.add(SupabaseExternalAuthProvider.$type, projectUrl);
         }
       }
     });
@@ -90,8 +96,8 @@ extension AuthConfigurationValues on Auth {
         switch (externalAuthProvider) {
           case FirebaseExternalAuthProvider():
             break;
-          case SupabaseExternalAuthProvider(:final jwtSecret):
-            b.add(SupabaseExternalAuthProvider.$type, jwtSecret);
+          case SupabaseExternalAuthProvider():
+            break;
         }
       }
     });

@@ -634,6 +634,10 @@ class _Celest {
   DartTypeReference get serializers =>
       const DartTypeReference('Serializers', _coreUrl);
 
+  /// Creates a [celest_runtime.SupabaseAuthMiddleware] reference.
+  DartTypeReference get supabaseAuthMiddleware =>
+      const DartTypeReference('SupabaseAuthMiddleware', _runtimeUrl);
+
   /// Creates a [celest_core.TypeToken] reference.
   DartTypeReference get typeToken =>
       const DartTypeReference('TypeToken', _coreUrl);

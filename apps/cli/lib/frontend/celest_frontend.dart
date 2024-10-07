@@ -655,6 +655,7 @@ final class CelestFrontend {
         logger.fine('Resolving project...');
         final projectResolver = ProjectResolver(
           configValues: configValues,
+          environmentId: environmentId,
         );
         project.acceptWithArg(projectResolver, project);
         return projectResolver.resolvedProject;

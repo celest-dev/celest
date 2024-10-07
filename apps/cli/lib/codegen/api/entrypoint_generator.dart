@@ -11,6 +11,7 @@ import 'package:celest_cli/serialization/from_string_generator.dart';
 import 'package:celest_cli/serialization/serializer_generator.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/types/type_graph.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
@@ -54,11 +55,11 @@ final class EntrypointGenerator {
         final dartType = reference.type == NodeType.environmentVariable
             ? DartTypes.celest.environmentVariable
             : DartTypes.celest.secret;
-        paramExp = DartTypes.celest.globalContext.property('get').call([
+        paramExp = DartTypes.celest.globalContext.property('expect').call([
           dartType.constInstance([
             literalString(reference.name, raw: true),
           ]),
-        ]).nullChecked;
+        ]);
         if (param.type.symbol == 'Uint8List') {
           paramExp = DartTypes.convert.base64Decode.call([paramExp]);
         } else {
@@ -215,6 +216,7 @@ final class EntrypointGenerator {
                 param.type,
                 fromMap,
                 defaultValue: param.defaultToExpression,
+                inNullableContext: true,
               );
               paramExp = deserialized;
             }
@@ -298,15 +300,14 @@ final class EntrypointGenerator {
               }
           }
 
-          final exceptionTypes = List.of(api.exceptionTypes)
-            ..sort((a, b) {
-              final dtA = typeHelper.fromReference(a);
-              final dtB = typeHelper.fromReference(b);
-              // Subtypes rank before supertypes so that switch/try-catch blocks
-              // are in order of decreasing specificity. That is, more general
-              // catch blocks should come after more specific catch blocks.
-              return typeHelper.typeSystem.isSubtypeOf(dtA, dtB) ? -1 : 1;
-            });
+          final typeHiearchy = topologicallySortTypes(
+            api.exceptionTypes.map(typeHelper.fromReference),
+          );
+          final exceptionTypes = typeHiearchy
+              .where(
+                (type) => !identical(type, typeHelper.coreTypes.objectType),
+              )
+              .map(typeHelper.toReference);
           final dartExceptionTypes = {
             for (final exceptionType in exceptionTypes)
               exceptionType: typeHelper.fromReference(exceptionType),
@@ -590,14 +591,42 @@ final class EntrypointGenerator {
             authMiddleware.add(
               DartTypes.celest.firebaseAuthMiddleware.newInstance([], {
                 'projectId':
-                    DartTypes.celest.globalContext.property('get').call([
+                    DartTypes.celest.globalContext.property('expect').call([
                   DartTypes.celest.environmentVariable.constInstance([
                     literalString(
-                      projectId.envName,
-                      raw: projectId.envName.contains(r'$'),
+                      projectId.name,
+                      raw: projectId.name.contains(r'$'),
                     ),
                   ]),
-                ]).nullChecked,
+                ]),
+                'required': literalBool(false),
+              }),
+            );
+          case SupabaseExternalAuthProvider(
+              :final projectUrl,
+              :final jwtSecret
+            ):
+            authMiddleware.add(
+              DartTypes.celest.supabaseAuthMiddleware.newInstance([], {
+                'url': DartTypes.celest.globalContext.property('expect').call([
+                  DartTypes.celest.environmentVariable.constInstance([
+                    literalString(
+                      projectUrl.name,
+                      raw: projectUrl.name.contains(r'$'),
+                    ),
+                  ]),
+                ]),
+                if (jwtSecret != null)
+                  'jwtSecret': DartTypes.convert.utf8.property('encode').call([
+                    DartTypes.celest.globalContext.property('expect').call([
+                      DartTypes.celest.secret.constInstance([
+                        literalString(
+                          jwtSecret.name,
+                          raw: jwtSecret.name.contains(r'$'),
+                        ),
+                      ]),
+                    ]),
+                  ]),
                 'required': literalBool(false),
               }),
             );

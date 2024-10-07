@@ -276,6 +276,198 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
+          "symbol": "AsyncError",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TimeoutException",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "JsonUnsupportedObjectError",
+          "url": "dart:convert",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "Error",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AssertionError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TypeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ArgumentError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "RangeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IndexError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnsupportedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StateError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ConcurrentModificationError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfMemoryError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StackOverflowError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FormatException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IntegerDivisionByZeroException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IsolateSpawnException",
+          "url": "dart:isolate",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OSError",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FileSystemException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PathAccessException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PathExistsException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PathNotFoundException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SignalException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ProcessException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TlsException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "HandshakeException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CertificateException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StdoutException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StdinException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "HttpException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "WebSocketException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CloudException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -465,6 +657,198 @@
       },
       "docs": [],
       "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "AsyncError",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TimeoutException",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "JsonUnsupportedObjectError",
+          "url": "dart:convert",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "Error",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AssertionError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TypeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ArgumentError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "RangeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IndexError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnsupportedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StateError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ConcurrentModificationError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfMemoryError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StackOverflowError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FormatException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IntegerDivisionByZeroException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IsolateSpawnException",
+          "url": "dart:isolate",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OSError",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FileSystemException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PathAccessException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PathExistsException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PathNotFoundException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SignalException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ProcessException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TlsException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "HandshakeException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CertificateException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StdoutException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StdinException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "HttpException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "WebSocketException",
+          "url": "dart:io",
+          "isNullable": false
+        },
         {
           "$": "TypeReference",
           "symbol": "CloudException",

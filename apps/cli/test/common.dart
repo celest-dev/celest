@@ -1,3 +1,6 @@
+import 'dart:io' as io;
+
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:drift/drift.dart';
 import 'package:file/file.dart';
@@ -17,6 +20,8 @@ Future<void> initTests({
   }
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
   kCelestTest = true;
+  celestLocalPath =
+      io.Directory.current.uri.resolve('../../celest').toFilePath();
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
     print('[${record.loggerName}] ${record.level.name}: ${record.message}');

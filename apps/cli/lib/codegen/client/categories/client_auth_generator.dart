@@ -4,6 +4,7 @@ import 'package:celest_cli/codegen/client/client_types.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/run.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class ClientAuthGenerator {
@@ -153,7 +154,11 @@ final class ClientAuthGenerator {
           ClientDependencies.current.add('gotrue');
           ClientDependencies.current.add('stream_transform');
           _library.directives.add(
-            Directive.import('package:stream_transform/stream_transform.dart'),
+            // For `.startWith` Stream extension
+            Directive.import(
+              'package:stream_transform/stream_transform.dart',
+              show: const ['Concatenate'],
+            ),
           );
         default:
           break;
@@ -190,14 +195,26 @@ final class ClientAuthGenerator {
                           '.asyncMap((user) => user?.getIdToken())',
                         ),
                       ),
-                    ast.AuthProviderType.supabase => CodeExpression(
-                        Code(
-                          '${provider.type.name}.onAuthStateChange'
-                          '.map((state) => state.session?.accessToken)'
-                          // From `package:stream_transform`
-                          '.startWith(supabase.currentSession?.accessToken)',
-                        ),
-                      ),
+                    ast.AuthProviderType.supabase => run(() {
+                        final authChangeEvent = refer(
+                          'AuthChangeEvent',
+                          'package:gotrue/gotrue.dart',
+                        );
+                        return CodeExpression(
+                          Code.scope(
+                            (alloc) => '${provider.type.name}.onAuthStateChange'
+                                '.where((state) => const ['
+                                '  ${alloc(authChangeEvent)}.initialSession, '
+                                '  ${alloc(authChangeEvent)}.tokenRefreshed, '
+                                '  ${alloc(authChangeEvent)}.signedIn, '
+                                '  ${alloc(authChangeEvent)}.signedOut, '
+                                '].contains(state.event),)'
+                                '.map((state) => state.session?.accessToken)'
+                                // From `package:stream_transform`
+                                '.startWith(supabase.currentSession?.accessToken)',
+                          ),
+                        );
+                      }),
                     _ => unreachable(),
                   },
                 })

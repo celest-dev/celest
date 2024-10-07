@@ -431,6 +431,108 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
+          "symbol": "Error",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AssertionError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TypeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ArgumentError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "RangeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IndexError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnsupportedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StateError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ConcurrentModificationError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfMemoryError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StackOverflowError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FormatException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IntegerDivisionByZeroException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "JsonUnsupportedObjectError",
+          "url": "dart:convert",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AsyncError",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TimeoutException",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CloudException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -557,7 +659,7 @@
   },
   "envVars": [
     {
-      "envName": "MY_NAME",
+      "name": "MY_NAME",
       "location": {
         "start": {
           "offset": 44,
@@ -575,7 +677,7 @@
       }
     },
     {
-      "envName": "MY_AGE",
+      "name": "MY_AGE",
       "location": {
         "start": {
           "offset": 75,
@@ -593,7 +695,7 @@
       }
     },
     {
-      "envName": "MY_HEIGHT",
+      "name": "MY_HEIGHT",
       "location": {
         "start": {
           "offset": 104,
@@ -611,7 +713,7 @@
       }
     },
     {
-      "envName": "IM_COOL",
+      "name": "IM_COOL",
       "location": {
         "start": {
           "offset": 219,
@@ -629,7 +731,7 @@
       }
     },
     {
-      "envName": "MY_WEBSITE",
+      "name": "MY_WEBSITE",
       "location": {
         "start": {
           "offset": 341,
@@ -647,7 +749,7 @@
       }
     },
     {
-      "envName": "CELEST_ENVIRONMENT",
+      "name": "CELEST_ENVIRONMENT",
       "location": {
         "start": {
           "offset": 629,
@@ -665,7 +767,7 @@
       }
     },
     {
-      "envName": "MY_WEIGHT",
+      "name": "MY_WEIGHT",
       "location": {
         "start": {
           "offset": 445,
@@ -685,7 +787,7 @@
   ],
   "secrets": [
     {
-      "envName": "SUPER_SECRET",
+      "name": "SUPER_SECRET",
       "location": {
         "start": {
           "offset": 581,

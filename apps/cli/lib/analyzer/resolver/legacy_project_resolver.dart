@@ -23,6 +23,7 @@ import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/list.dart';
 import 'package:celest_cli/src/utils/reference.dart';
+import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
@@ -65,7 +66,9 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     context: context,
     configValueElement: typeHelper.coreTypes.celestSecretElement,
     errorReporter: this,
-    factory: ast.Secret.new,
+    factory: (name, {value, required location}) {
+      return ast.Secret(name, location: location);
+    },
   );
 
   @override
@@ -576,7 +579,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           );
           return null;
         }
-        if (environmentVariables.none((envVar) => envVar.envName == name)) {
+        if (environmentVariables.none((envVar) => envVar.name == name)) {
           reportError(
             'The environment variable `$name` does not exist',
             location: location,
@@ -617,7 +620,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           );
           return null;
         }
-        if (secrets.none((secret) => secret.envName == name)) {
+        if (secrets.none((secret) => secret.name == name)) {
           reportError(
             'The secret `$name` does not exist',
             location: location,
@@ -789,7 +792,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
   }) async {
     final library = apiLibrary.element;
     final (libraryMetdata, _) = _collectApiMetadata(library, hasAuth: hasAuth);
-    final apiExceptionTypes = collectExceptionTypes(library);
+    final apiExceptionTypes = await collectExceptionTypes(library);
     final functions = Map.fromEntries(
       (await library.topLevelElements
               .whereType<FunctionElement>()
@@ -1122,21 +1125,32 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           }
           final projectIdEnvName = projectIdValue.configValueName;
           externalProvider = ast.FirebaseExternalAuthProviderBuilder()
-            ..projectId.envName = projectIdEnvName
+            ..projectId.name = projectIdEnvName
             ..projectId.location = authDefinitionLocation;
 
         case InterfaceType(isExternalAuthProviderSupabase: true):
-          final jwtSecretValue = authProvider.getField('jwtSecret');
-          if (jwtSecretValue == null) {
+          final urlValue = authProvider.getField('url');
+          if (urlValue == null) {
             // This should be impossible since it's non-nullable.
             unreachable(
-              'The `jwtSecret` field is required for Supabase auth providers',
+              'The `url` field is required for Supabase auth providers',
             );
           }
-          final jwtSecretName = jwtSecretValue.configValueName;
-          externalProvider = ast.SupabaseExternalAuthProviderBuilder()
-            ..jwtSecret.envName = jwtSecretName
-            ..jwtSecret.location = authDefinitionLocation;
+          final urlVarName = urlValue.configValueName;
+          final jwtSecretVariable = authProvider.getField('jwtSecret');
+          externalProvider = ast.SupabaseExternalAuthProviderBuilder().let((b) {
+            b
+              ..projectUrl.name = urlVarName
+              ..projectUrl.location = authDefinitionLocation;
+            if (jwtSecretVariable != null && !jwtSecretVariable.isNull) {
+              final jwtSecretVarName = jwtSecretVariable.configValueName;
+              b
+                ..jwtSecret.name = jwtSecretVarName
+                ..jwtSecret.location = authDefinitionLocation;
+            }
+            return b;
+          });
+
         default:
           reportError(
             'Unknown auth provider type: ${authProvider.type}',

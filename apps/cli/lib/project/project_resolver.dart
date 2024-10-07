@@ -2,6 +2,7 @@ import 'package:cedar/ast.dart';
 import 'package:cedar/cedar.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/run.dart';
 import 'package:collection/collection.dart';
 
 extension on AstNode {
@@ -61,7 +62,7 @@ extension on ApiAuth {
 final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   ProjectResolver({
     required Map<String, String> configValues,
-    String environmentId = 'local',
+    required String environmentId,
   }) : configValues = {
           ...configValues,
           'CELEST_ENVIRONMENT': environmentId,
@@ -196,29 +197,29 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
     EnvironmentVariable variable,
     AstNode context,
   ) {
-    final envName = variable.envName;
-    final envValue = configValues[envName];
-    if (envValue == null) {
+    final name = variable.name;
+    final value = configValues[name];
+    if (value == null) {
       // Should have been caught before this.
-      unreachable('Missing value for environment variable: $envName');
+      unreachable('Missing value for environment variable: $name');
     }
     return ResolvedEnvironmentVariable(
-      name: envName,
-      value: envValue,
+      name: name,
+      value: value,
     );
   }
 
   @override
   ResolvedSecret visitSecret(Secret secret, covariant AstNode context) {
-    final envName = secret.envName;
-    final envValue = configValues[envName];
-    if (envValue == null) {
+    final name = secret.name;
+    final value = configValues[name];
+    if (value == null) {
       // Should have been caught before this.
-      unreachable('Missing value for secret: $envName');
+      unreachable('Missing value for secret: $name');
     }
     return ResolvedSecret(
-      name: envName,
-      value: envValue,
+      name: name,
+      value: value,
     );
   }
 
@@ -296,11 +297,13 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
         ),
       SupabaseExternalAuthProvider(
         :final name,
+        :final projectUrl,
         :final jwtSecret,
       ) =>
         ResolvedSupabaseExternalAuthProvider(
           name: name,
-          jwtSecret: visitSecret(jwtSecret, context),
+          projectUrl: visitEnvironmentVariable(projectUrl, context),
+          jwtSecret: jwtSecret?.let((secret) => visitSecret(secret, context)),
         ),
     };
   }

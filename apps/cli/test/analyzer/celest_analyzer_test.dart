@@ -431,11 +431,6 @@ void sayHello({
   required List<void> listOfVoid,
   required Iterable<void> iterableOfVoid,
   required Set<String> set,
-  required Object obj,
-  required Object? nullableObj,
-  required dynamic dyn,
-  required List<dynamic> listOfDyn,
-  required Iterable<dynamic> iterableOfDyn,
   required Symbol symbol,
   required List<Symbol> listOfSymbol,
   required Iterable<Symbol> iterableOfSymbol,
@@ -461,11 +456,6 @@ void sayHello({
           'Void types are not supported', // List<void>
           'Void types are not supported', // Iterable<void>
           'Set types are not supported', // Set<String>
-          'Object types are not supported', // Object
-          'Object types are not supported', // Object?
-          'Dynamic values are not supported', // dynamic
-          'Dynamic values are not supported', // List<dynamic>
-          'Dynamic values are not supported', // Iterable<dynamic>
           'Symbol types are not supported', // Symbol
           'Symbol types are not supported', // List<Symbol>
           'Symbol types are not supported', // Iterable<Symbol>
@@ -522,11 +512,6 @@ extension type VoidX(void _) {}
 extension type ListOfVoidX(List<void> _) {}
 extension type IterableOfVoidX(Iterable<void> _) {}
 extension type SetX(Set<String> _) {}
-extension type ObjectX(Object _) {}
-extension type NullableObjectX(Object? _) {}
-extension type DynamicX(dynamic _) {}
-extension type ListOfDynamicX(List<dynamic> _) {}
-extension type IterableOfDynamicX(Iterable<dynamic> _) {}
 extension type SymbolX(Symbol _) {}
 extension type ListOfSymbolX(List<Symbol> _) {}
 extension type IterableOfSymbolX(Iterable<Symbol> _) {}
@@ -557,16 +542,6 @@ extension type StreamX(Stream _) {}
           'Void types are not supported', // Iterable<void>
           'The representation type of SetX is not serializable',
           'Set types are not supported', // Set<String>
-          'The representation type of ObjectX is not serializable',
-          'Object types are not supported', // Object
-          'The representation type of NullableObjectX is not serializable',
-          'Object types are not supported', // Object?
-          'The representation type of DynamicX is not serializable',
-          'Dynamic values are not supported', // dynamic
-          'The representation type of ListOfDynamicX is not serializable',
-          'Dynamic values are not supported', // List<dynamic>
-          'The representation type of IterableOfDynamicX is not serializable',
-          'Dynamic values are not supported', // Iterable<dynamic>
           'The representation type of SymbolX is not serializable',
           'Symbol types are not supported', // Symbol
           'The representation type of ListOfSymbolX is not serializable',
@@ -614,11 +589,6 @@ typedef ReturnTypes = ({
   List<void> listOfVoid,
   Iterable<void> iterableOfVoid,
   Set<String> set,
-  Object obj,
-  Object? nullableObj,
-  dynamic dyn,
-  List<dynamic> listOfDyn,
-  Iterable<dynamic> iterableOfDyn,
   Symbol symbol,
   List<Symbol> listOfSymbol,
   Iterable<Symbol> iterableOfSymbol,
@@ -646,11 +616,6 @@ typedef ReturnTypes = ({
           'Void types are not supported', // List<void>
           'Void types are not supported', // Iterable<void>
           'Set types are not supported', // Set<String>
-          'Object types are not supported', // Object
-          'Object types are not supported', // Object?
-          'Dynamic values are not supported', // dynamic
-          'Dynamic values are not supported', // List<dynamic>
-          'Dynamic values are not supported', // Iterable<dynamic>
           'Symbol types are not supported', // Symbol
           'Symbol types are not supported', // List<Symbol>
           'Symbol types are not supported', // Iterable<Symbol>
@@ -708,11 +673,6 @@ typedef ReturnTypes = ({
   ListOfVoidX listOfVoid,
   IterableOfVoidX iterableOfVoid,
   SetX set,
-  ObjectX obj,
-  NullableObjectX nullableObj,
-  DynamicX dyn,
-  ListOfDynamicX listOfDyn,
-  IterableOfDynamicX iterableOfDyn,
   SymbolX symbol,
   ListOfSymbolX listOfSymbol,
   IterableOfSymbolX iterableOfSymbol,
@@ -745,16 +705,6 @@ typedef ReturnTypes = ({
           'The representation type of SetX is not serializable',
           'Set types are not supported', // Set<String>
           'The representation type of ObjectX is not serializable',
-          'Object types are not supported', // Object
-          'The representation type of NullableObjectX is not serializable',
-          'Object types are not supported', // Object?
-          'The representation type of DynamicX is not serializable',
-          'Dynamic values are not supported', // dynamic
-          'The representation type of ListOfDynamicX is not serializable',
-          'Dynamic values are not supported', // List<dynamic>
-          'The representation type of IterableOfDynamicX is not serializable',
-          'Dynamic values are not supported', // Iterable<dynamic>
-          'The representation type of SymbolX is not serializable',
           'Symbol types are not supported', // Symbol
           'The representation type of ListOfSymbolX is not serializable',
           'Symbol types are not supported', // List<Symbol>
@@ -896,29 +846,6 @@ Map<String, Object> mapStringObject(Map<String, Object> map) => map;
 Map<String, Object?> mapStringObjectNullable(Map<String, Object?> map) => map;
 ''',
         },
-      );
-
-      testErrors(
-        name: 'disallows_list_dynamic_object',
-        apis: {
-          'greeting.dart': '''
-import 'package:celest/celest.dart';
-
-@cloud
-List<dynamic> listDynamic() => [];
-
-@cloud
-List<Object> listObject() => [];
-
-@cloud
-List<Object?> listObjectNullable() => [];
-''',
-        },
-        errors: [
-          'Dynamic values are not supported',
-          'Object types are not supported',
-          'Object types are not supported',
-        ],
       );
 
       testErrors(
@@ -2324,7 +2251,7 @@ void sayHelloNamed({
         },
         expectProject: (project) {
           expect(
-            project.envVars.map((env) => env.envName),
+            project.envVars.map((env) => env.name),
             unorderedEquals(['MY_NAME', 'MY_AGE']),
           );
           expect(
@@ -2523,7 +2450,7 @@ const auth = Auth(
           // The default env variable is created.
           check(project.envVars)
               .single
-              .has((it) => it.envName, 'envName')
+              .has((it) => it.name, 'name')
               .equals('FIREBASE_PROJECT_ID');
         },
       );
@@ -2551,7 +2478,7 @@ const auth = Auth(
           // The custom env variable is used.
           check(project.envVars)
               .single
-              .has((it) => it.envName, 'envName')
+              .has((it) => it.name, 'name')
               .equals('PROJECT_ID');
         },
       );

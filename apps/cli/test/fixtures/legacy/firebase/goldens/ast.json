@@ -238,7 +238,7 @@
   },
   "envVars": [
     {
-      "envName": "FIREBASE_PROJECT_ID",
+      "name": "FIREBASE_PROJECT_ID",
       "location": {
         "start": {
           "offset": 98,
@@ -285,7 +285,7 @@
       {
         "$": "FirebaseExternalAuthProvider",
         "projectId": {
-          "envName": "FIREBASE_PROJECT_ID",
+          "name": "FIREBASE_PROJECT_ID",
           "location": {
             "start": {
               "offset": 98,

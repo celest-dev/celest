@@ -16,45 +16,46 @@ import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 
 typedef ConfigValue = (String name, FileSpan location);
-typedef ConfigValueFactory<T extends ast.ConfigurationValue> = T Function(
+typedef ConfigValueFactory<T extends ast.ConfigurationVariable> = T Function(
   String, {
+  String? value,
   required FileSpan location,
 });
 
-final class ConfigValueSet<T extends ast.ConfigurationValue>
+final class ConfigVarSet<T extends ast.ConfigurationVariable>
     extends DelegatingSet<T> {
-  ConfigValueSet()
+  ConfigVarSet()
       : super(
           LinkedHashSet<T>(
-            equals: (a, b) => a.envName == b.envName,
-            hashCode: (a) => a.envName.hashCode,
+            equals: (a, b) => a.name == b.name,
+            hashCode: (a) => a.name.hashCode,
           ),
         );
 
-  factory ConfigValueSet.of(Iterable<T> values) {
-    return ConfigValueSet()..addAll(values);
+  factory ConfigVarSet.of(Iterable<T> values) {
+    return ConfigVarSet()..addAll(values);
   }
 }
 
-final class ConfigValueMap<T extends ast.ConfigurationValue>
+final class ConfigVarMap<T extends ast.ConfigurationVariable>
     extends DelegatingMap<T, String> {
-  factory ConfigValueMap.from(Iterable<T> values) {
-    return ConfigValueMap()
-      ..addEntries(values.map((it) => MapEntry(it, it.envName)));
+  factory ConfigVarMap.from(Iterable<T> values) {
+    return ConfigVarMap()
+      ..addEntries(values.map((it) => MapEntry(it, it.name)));
   }
-  ConfigValueMap()
+  ConfigVarMap()
       : super(
           LinkedHashMap<T, String>(
-            equals: (a, b) => a.envName == b.envName,
-            hashCode: (a) => a.envName.hashCode,
+            equals: (a, b) => a.name == b.name,
+            hashCode: (a) => a.name.hashCode,
           ),
         );
 
   @override
-  ConfigValueSet<T> get keys => ConfigValueSet.of(super.keys);
+  ConfigVarSet<T> get keys => ConfigVarSet.of(super.keys);
 }
 
-final class ConfigValueResolver<T extends ast.ConfigurationValue> {
+final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
   ConfigValueResolver({
     required this.context,
     required this.configValueElement,
@@ -69,8 +70,8 @@ final class ConfigValueResolver<T extends ast.ConfigurationValue> {
 
   static final Logger _logger = Logger('ConfigValueResolver');
 
-  Future<ConfigValueSet<T>> resolve() async {
-    final variables = ConfigValueSet<T>();
+  Future<ConfigVarSet<T>> resolve() async {
+    final variables = ConfigVarSet<T>();
     final references = await configValueElement.references().toList();
     for (final reference in references) {
       _logger.finest(
@@ -83,7 +84,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationValue> {
     final topLevelDefinitions = references
         .map((ref) => ref.enclosingElement)
         .whereType<TopLevelVariableElement>();
-    final topLevelResolutions = <Future<(String, FileSpan)?>>[];
+    final topLevelResolutions = <Future<(String, String?, FileSpan)?>>[];
     for (final variable in topLevelDefinitions) {
       topLevelResolutions.add(
         resolveVariable(
@@ -99,15 +100,15 @@ final class ConfigValueResolver<T extends ast.ConfigurationValue> {
     );
     variables.addAll(
       topLevelVariables.nonNulls.map((it) {
-        final (name, location) = it;
-        return factory(name, location: location);
+        final (name, value, location) = it;
+        return factory(name, value: value, location: location);
       }),
     );
 
     final parameters = references
         .map((ref) => ref.enclosingElement)
         .whereType<ParameterElement>();
-    final parameterResolutions = <Future<(String, FileSpan)?>>[];
+    final parameterResolutions = <Future<(String, String?, FileSpan)?>>[];
     for (final parameter in parameters) {
       for (final metadata in parameter.metadata) {
         _logger.finer(
@@ -144,8 +145,8 @@ final class ConfigValueResolver<T extends ast.ConfigurationValue> {
     );
     variables.addAll(
       parameterVariables.nonNulls.map((it) {
-        final (name, location) = it;
-        return factory(name, location: location);
+        final (name, value, location) = it;
+        return factory(name, value: value, location: location);
       }),
     );
 
@@ -173,18 +174,23 @@ final class ConfigValueResolver<T extends ast.ConfigurationValue> {
     };
   }
 
-  Future<(String name, FileSpan location)?> resolveVariable({
+  Future<(String name, String? staticValue, FileSpan location)?>
+      resolveVariable({
     required Element variable,
     required DartObject? value,
     required FileSpan location,
   }) async {
     String? name;
+    String? staticValue;
     if (value != null) {
       _logger.finest('Resolved value: $value');
       name = (value.getField('name') ??
               value.getField('(super)')?.getField('name'))
           ?.toStringValue();
-      _logger.finest('Resolved name: $name');
+      staticValue = (value.getField('value') ??
+              value.getField('(super)')?.getField('value'))
+          ?.toStringValue();
+      _logger.finest('Resolved name: $name ($staticValue)');
     } else if (variable.library case final libraryElement?) {
       // Only resolve variables in the project backend
       if (libraryElement.source.uri
@@ -222,7 +228,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationValue> {
       );
       return null;
     }
-    return (name, location);
+    return (name, staticValue, location);
   }
 }
 
@@ -242,7 +248,7 @@ extension WithEnvironment on ProjectDatabase {
   }
 }
 
-extension ResolveConfigurationValue on ast.ConfigurationValue {
+extension ResolveConfigurationVariable on ast.ConfigurationVariable {
   Future<String?> retrieveValue({
     required String environmentId,
   }) async {
@@ -251,19 +257,19 @@ extension ResolveConfigurationValue on ast.ConfigurationValue {
       environmentId: environmentId,
       (environment) async {
         switch (this) {
-          case ast.EnvironmentVariable(:final envName):
+          case ast.EnvironmentVariable(:final name):
             final value = await db
                 .getEnvironmentVariable(
                   environmentId: environment.id,
-                  name: envName,
+                  name: name,
                 )
                 .get();
             return value.singleOrNull;
-          case ast.Secret(:final envName):
+          case ast.Secret(:final name):
             final value = await db
                 .getSecret(
                   environmentId: environment.id,
-                  name: envName,
+                  name: name,
                 )
                 .get();
             final ref = value.singleOrNull;
@@ -278,7 +284,7 @@ extension ResolveConfigurationValue on ast.ConfigurationValue {
   }
 }
 
-extension ResolveConfigurationValues<T extends ast.ConfigurationValue>
+extension ResolveConfigurationVariables<T extends ast.ConfigurationVariable>
     on Iterable<T> {
   Future<Map<String, String>> retrieveValues({
     required String environmentId,
@@ -290,7 +296,7 @@ extension ResolveConfigurationValues<T extends ast.ConfigurationValue>
     return db.withEnvironment(
       environmentId: environmentId,
       (environment) async {
-        final variableNames = map((it) => it.envName).toList();
+        final variableNames = map((it) => it.name).toList();
         final values = <String, String>{};
         switch (first) {
           case ast.EnvironmentVariable():

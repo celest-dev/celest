@@ -64,6 +64,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
 
   final pendingEdits = <String, Set<SourceEdit>>{};
 
+  static final Logger _logger = Logger('CelestAnalyzer');
+
   @mustCallSuper
   void reset() {
     pendingEdits.clear();
@@ -121,6 +123,18 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     }
   }
 
+  Future<LibraryElement> resolveLibraryByUri(String uri) async {
+    final library = await context.currentSession.getLibraryByUri(uri);
+    switch (library) {
+      case LibraryElementResult(:final element):
+        return element;
+      default:
+        throw StateError(
+          'Could not resolve library by URI "$uri": ${library.runtimeType}',
+        );
+    }
+  }
+
   Future<ResolvedLibraryResult> _resolvePartFile(String path) async {
     final unit = await context.currentSession.getResolvedUnit(path);
     if (unit case ResolvedUnitResult(:final libraryElement)) {
@@ -138,67 +152,91 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     );
   }
 
-  Set<DartType> collectExceptionTypes(LibraryElement apiLibrary) {
-    final apiNamespace = namespaceForLibrary(apiLibrary, recursive: true);
+  /// Collects exception types from project and imported libraries.
+  Future<Set<DartType>> collectExceptionTypes(LibraryElement apiLibrary) async {
     final exceptionTypes = <DartType>{};
-    for (var interfaceElement in apiNamespace) {
-      final overriddenBy = typeHelper.overrides[interfaceElement.thisType];
-      final isOverriden = overriddenBy != null;
-      if (isOverriden) {
-        interfaceElement = overriddenBy.element;
+
+    final apiNamespace = namespaceForLibrary(apiLibrary, recursive: true);
+    for (final interfaceElement in apiNamespace) {
+      if (_validateExceptionType(interfaceElement) case final validType?) {
+        exceptionTypes.add(validType);
       }
-      final interfaceType = interfaceElement.thisType;
-      final interfaceUri = interfaceElement.library.source.uri;
-      final isDartType = interfaceUri.scheme == 'dart';
-      if (isDartType && !isOverriden) {
-        continue;
-      }
-      final isExceptionType = typeHelper.typeSystem.isSubtypeOf(
-        interfaceType.extensionTypeErasure,
-        typeHelper.coreTypes.coreExceptionType,
-      );
-      final isErrorType = typeHelper.typeSystem.isSubtypeOf(
-        interfaceType.extensionTypeErasure,
-        typeHelper.coreTypes.coreErrorType,
-      );
-      final isExceptionOrErrorType = isExceptionType || isErrorType;
-      if (!isExceptionOrErrorType) {
-        continue;
-      }
-      // Only types defined within the celest/ project folder need to be in
-      // lib/ since all others can be imported on the client side.
-      final (mustBeExportedFromExceptionsDart, exportedFromExceptionsDart) =
-          switch (context.currentSession.uriConverter.uriToPath(interfaceUri)) {
-        final path? => (
-            p.isWithin(projectPaths.projectRoot, path),
-            p.isWithin(projectPaths.projectLib, path),
-          ),
-        _ => (false, false),
-      };
-      if (!exportedFromExceptionsDart && mustBeExportedFromExceptionsDart) {
+    }
+    return exceptionTypes;
+  }
+
+  InterfaceType? _validateExceptionType(
+    InterfaceElement interfaceElement, {
+    bool reportErrors = true,
+  }) {
+    final typeUri =
+        '${interfaceElement.library.source.uri}#${interfaceElement.name}';
+    final overriddenBy = typeHelper.overrides[interfaceElement.thisType];
+    final isOverriden = overriddenBy != null;
+    if (isOverriden) {
+      interfaceElement = overriddenBy.element;
+    }
+    final interfaceType = interfaceElement.thisType;
+    final interfaceUri = interfaceElement.library.source.uri;
+    final isExceptionType = identical(
+          interfaceElement,
+          typeHelper.coreTypes.coreExceptionType.element,
+        ) ||
+        typeHelper.typeSystem.isSubtypeOf(
+          interfaceType.extensionTypeErasure,
+          typeHelper.coreTypes.coreExceptionType,
+        );
+    final isErrorType = identical(
+          interfaceElement,
+          typeHelper.coreTypes.coreErrorType.element,
+        ) ||
+        typeHelper.typeSystem.isSubtypeOf(
+          interfaceType.extensionTypeErasure,
+          typeHelper.coreTypes.coreErrorType,
+        );
+    final isExceptionOrErrorType = isExceptionType || isErrorType;
+    if (!isExceptionOrErrorType) {
+      return null;
+    }
+    // Only types defined within the celest/ project folder need to be in
+    // lib/ since all others can be imported on the client side.
+    final (mustBeExportedFromExceptionsDart, exportedFromExceptionsDart) =
+        switch (context.currentSession.uriConverter.uriToPath(interfaceUri)) {
+      final path? => (
+          p.isWithin(projectPaths.projectRoot, path),
+          p.isWithin(projectPaths.projectLib, path),
+        ),
+      _ => (false, false),
+    };
+    if (!exportedFromExceptionsDart && mustBeExportedFromExceptionsDart) {
+      if (reportErrors) {
         reportError(
           'Custom exception types referenced in APIs must be defined within the '
           '`celest/lib/exceptions` folder',
           location: interfaceElement.sourceLocation,
         );
-        continue;
       }
-      final isInstantiable = switch (interfaceElement) {
-        final ClassElement classElement => classElement.isConstructable ||
-            classElement.constructors.any((ctor) => ctor.isFactory),
-        ExtensionTypeElement() || EnumElement() => true,
-        _ => false,
-      };
-      if (!isInstantiable) {
-        continue;
-      }
-      final isSerializable = typeHelper.isSerializable(interfaceType);
-      if (!isSerializable.isSerializable) {
-        // Serialization issues are only reported if the type is a custom type
-        // (e.g. exported from `exceptions/`). Otherwise, users are still
-        // allowed to throw it, but it will not be serialized in the response.
-        if (exportedFromExceptionsDart) {
-          for (final reason in isSerializable.reasons) {
+      return null;
+    }
+    final isInstantiable = switch (interfaceElement) {
+      final ClassElement classElement => classElement.isConstructable ||
+          classElement.constructors.any((ctor) => ctor.isFactory),
+      ExtensionTypeElement() || EnumElement() => true,
+      _ => false,
+    };
+    if (!isInstantiable) {
+      _logger.fine('❌ $typeUri', 'Cannot be instantiated');
+      return null;
+    }
+    final isSerializable = typeHelper.isSerializable(interfaceType);
+    if (!isSerializable.isSerializable) {
+      _logger.fine('❌ $typeUri', isSerializable.reasons.join(', '));
+      // Serialization issues are only reported if the type is a custom type
+      // (e.g. exported from `exceptions/`). Otherwise, users are still
+      // allowed to throw it, but it will not be serialized in the response.
+      if (exportedFromExceptionsDart) {
+        for (final reason in isSerializable.reasons) {
+          if (reportErrors) {
             // TODO(dnys1): Add a helpful link/description for this error.
             reportError(
               'The exception type "${interfaceElement.name}" cannot be serialized '
@@ -208,6 +246,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
             );
           }
         }
+      }
+      if (reportErrors) {
         // TODO(dnys1): Warn based on whether the type is thrown directly or
         // just indirectly imported.
         //
@@ -220,11 +260,11 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
           severity: AnalysisErrorSeverity.warning,
           location: interfaceElement.sourceLocation,
         );
-        continue;
       }
-      exceptionTypes.add(interfaceType);
+      return null;
     }
-    return exceptionTypes;
+
+    return interfaceType;
   }
 
   /// Ensures that a referenced type which will be surfaced in the client

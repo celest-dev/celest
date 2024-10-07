@@ -368,10 +368,8 @@ final class LocalApiRunner {
         // TODO(dnys1): Should this be the project name or something to help
         // distinguish logs?
         const defaultLoggerName = '';
-        final loggerName = record.loggerName?.valueAsString?.let(
-              (name) => name.isNotEmpty ? '.$name' : defaultLoggerName,
-            ) ??
-            defaultLoggerName;
+        final loggerName =
+            record.loggerName?.valueAsString ?? defaultLoggerName;
         final logger = Logger(loggerName);
         final level = record.level?.let(
               (level) => Level.LEVELS.firstWhere((l) => l.value == level),

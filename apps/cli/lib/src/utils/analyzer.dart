@@ -205,8 +205,21 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
-  bool get isEnvironmentVariable =>
-      element == typeHelper.coreTypes.celestEnvElement;
+  bool get isEnvironmentVariable {
+    return switch (this) {
+      InterfaceType(:final allSupertypes) => [
+          this,
+          ...allSupertypes,
+        ].any((type) => identical(type, typeHelper.coreTypes.celestEnvType)),
+      _ => false,
+    };
+  }
+
+  bool get isStaticEnvironmentVariable => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == '_staticEnv' && library.isPackageCelest,
+        _ => false,
+      };
 
   bool get isSecret => element == typeHelper.coreTypes.celestSecretElement;
 
@@ -293,8 +306,8 @@ extension DartTypeHelper on DartType {
   Uri? get sourceUri {
     final sourceUri = switch (this) {
       // Don't consider aliases for non-record types.
-      RecordType(:final alias?) => alias.element.sourceLocation?.sourceUrl,
-      _ => element?.sourceLocation?.sourceUrl,
+      RecordType(:final alias?) => alias.element.library.source.uri,
+      _ => element?.library?.source.uri,
     };
     if (sourceUri == null) {
       return null;

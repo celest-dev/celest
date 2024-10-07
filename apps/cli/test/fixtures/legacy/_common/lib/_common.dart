@@ -3,18 +3,18 @@
 library;
 
 final class CustomException implements Exception {
-  final String message;
-
   CustomException(this.message);
+
+  final String message;
 
   @override
   String toString() => 'CustomException: $message';
 }
 
 final class CommonException implements Exception {
-  final String message;
-
   CommonException(this.message);
+
+  final String message;
 
   @override
   String toString() => 'CommonException: $message';
@@ -64,5 +64,5 @@ final class OverriddenException implements Exception {
 }
 
 void throwsOverriddenException() {
-  throw OverriddenException('message');
+  throw const OverriddenException('message');
 }

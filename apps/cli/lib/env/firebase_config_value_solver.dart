@@ -269,7 +269,7 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
   }
 
   @override
-  Future<String> solve(ConfigurationValue configValue) async {
+  Future<String> solve(ConfigurationVariable configVar) async {
     // Search for Firebase projects in the local environment and FS.
     var projects = await searchLocalEnvironment();
     _logger.finest('Found Firebase projects: $projects');
@@ -280,7 +280,7 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
         'Resolved to single project: ${singleProject.projectId}',
       );
       return storeEnvironmentVariable(
-        configValue.envName,
+        configVar.name,
         singleProject.projectId,
       );
     }
@@ -304,13 +304,13 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
     // If multiple projects are available, prompt the user to choose one.
     if (projects.isNotEmpty) {
       if (_pick(projects) case final selected?) {
-        return storeEnvironmentVariable(configValue.envName, selected);
+        return storeEnvironmentVariable(configVar.name, selected);
       }
     }
 
     // Otherwise, we must prompt them to enter the project ID manually.
     _logger.finest('No Firebase projects found in local environment');
-    return super.solve(configValue);
+    return super.solve(configVar);
   }
 }
 

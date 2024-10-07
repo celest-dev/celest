@@ -1,6 +1,9 @@
-// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _$async;
+import 'dart:convert' as _$convert;
+
 import 'package:celest_backend/exceptions/http_errors.dart';
 import 'package:celest_backend/models/http_errors.dart';
 import 'package:celest_backend/models/http_header_query.dart';
@@ -11,6 +14,187 @@ import 'package:celest_core/src/exception/serialization_exception.dart'
 import 'package:celest_core/src/serialization/json_value.dart' as _$celest;
 
 void initSerializers() {
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<_$async.AsyncError, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'error': $value.error,
+      r'stackTrace': _$celest.Serializers.instance
+          .serialize<StackTrace>($value.stackTrace),
+    },
+    deserialize: ($serialized) {
+      return _$async.AsyncError(
+        $serialized[r'error']!,
+        _$celest.Serializers.instance
+            .deserialize<StackTrace?>($serialized[r'stackTrace']),
+      );
+    },
+  ));
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$async.TimeoutException, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'duration':
+          _$celest.Serializers.instance.serialize<Duration?>($value.duration),
+    },
+    deserialize: ($serialized) {
+      return _$async.TimeoutException(
+        ($serialized[r'message'] as String?),
+        _$celest.Serializers.instance
+            .deserialize<Duration?>($serialized[r'duration']),
+      );
+    },
+  ));
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      _$convert.JsonUnsupportedObjectError, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'unsupportedObject': $value.unsupportedObject,
+      r'cause': $value.cause,
+      r'partialResult': $value.partialResult,
+    },
+    deserialize: ($serialized) {
+      return _$convert.JsonUnsupportedObjectError(
+        $serialized[r'unsupportedObject'],
+        cause: $serialized[r'cause'],
+        partialResult: ($serialized[r'partialResult'] as String?),
+      );
+    },
+  ));
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<ArgumentError, Map<String, Object?>?>(
+    serialize: ($value) => {
+      r'invalidValue': $value.invalidValue,
+      r'name': $value.name,
+      r'message': $value.message,
+    },
+    deserialize: ($serialized) {
+      return ArgumentError(
+        $serialized?[r'message'],
+        ($serialized?[r'name'] as String?),
+      );
+    },
+  ));
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<AssertionError, Map<String, Object?>?>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return AssertionError($serialized?[r'message']);
+    },
+  ));
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      ConcurrentModificationError, Map<String, Object?>?>(
+    serialize: ($value) => {r'modifiedObject': $value.modifiedObject},
+    deserialize: ($serialized) {
+      return ConcurrentModificationError($serialized?[r'modifiedObject']);
+    },
+  ));
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<Error, Map<String, Object?>?>(
+    serialize: ($value) => {
+      r'stackTrace': _$celest.Serializers.instance
+          .serialize<StackTrace?>($value.stackTrace)
+    },
+    deserialize: ($serialized) {
+      return Error();
+    },
+  ));
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<FormatException, Map<String, Object?>?>(
+    serialize: ($value) => {
+      r'message': $value.message,
+      r'source': $value.source,
+      r'offset': $value.offset,
+    },
+    deserialize: ($serialized) {
+      return FormatException(
+        (($serialized?[r'message'] as String?)) ?? '',
+        $serialized?[r'source'],
+        ($serialized?[r'offset'] as num?)?.toInt(),
+      );
+    },
+  ));
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<IndexError, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'name': $value.name,
+      r'message': $value.message,
+      r'indexable': $value.indexable,
+      r'length': $value.length,
+      r'invalidValue': $value.invalidValue,
+      r'start': $value.start,
+      r'end': $value.end,
+    },
+    deserialize: ($serialized) {
+      return IndexError(
+        ($serialized[r'invalidValue'] as num).toInt(),
+        $serialized[r'indexable'],
+        ($serialized[r'name'] as String?),
+        ($serialized[r'message'] as String?),
+        ($serialized[r'length'] as num?)?.toInt(),
+      );
+    },
+  ));
+  _$celest.Serializers.instance.put(_$celest.Serializer.define<
+      IntegerDivisionByZeroException, Map<String, Object?>?>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return IntegerDivisionByZeroException();
+    },
+  ));
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<OutOfMemoryError, Map<String, Object?>?>(
+    serialize: ($value) => {},
+    deserialize: ($serialized) {
+      return OutOfMemoryError();
+    },
+  ));
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<RangeError, Map<String, Object?>>(
+    serialize: ($value) => {
+      r'name': $value.name,
+      r'message': $value.message,
+      r'start': $value.start,
+      r'end': $value.end,
+      r'invalidValue': $value.invalidValue,
+    },
+    deserialize: ($serialized) {
+      return RangeError($serialized[r'message']);
+    },
+  ));
+  _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<StackOverflowError, Map<String, Object?>?>(
+    serialize: ($value) => {},
+    deserialize: ($serialized) {
+      return StackOverflowError();
+    },
+  ));
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<StateError, Map<String, Object?>>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return StateError(($serialized[r'message'] as String));
+    },
+  ));
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<TypeError, Map<String, Object?>?>(
+    serialize: ($value) => {},
+    deserialize: ($serialized) {
+      return TypeError();
+    },
+  ));
+  _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<UnimplementedError, Map<String, Object?>?>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return UnimplementedError(($serialized?[r'message'] as String?));
+    },
+  ));
+  _$celest.Serializers.instance
+      .put(_$celest.Serializer.define<UnsupportedError, Map<String, Object?>>(
+    serialize: ($value) => {r'message': $value.message},
+    deserialize: ($serialized) {
+      return UnsupportedError(($serialized[r'message'] as String));
+    },
+  ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       AnotherNotFoundException, Map<String, Object?>?>(
     serialize: ($value) => {},

@@ -38,25 +38,27 @@ final class ParentProject {
   });
 
   static Future<ParentProject?> load(String path) async {
-    return Isolate.run(() async {
-      final dir = fileSystem.directory(path);
-      final pubspecFile = dir.childFile('pubspec.yaml');
-      if (!pubspecFile.existsSync()) {
-        return null;
-      }
-      final pubspecYaml = await pubspecFile.readAsString();
-      final pubspec = Pubspec.parse(pubspecYaml, sourceUrl: pubspecFile.uri);
-      return ParentProject(
-        name: pubspec.name,
-        path: path,
-        pubspec: pubspec,
-        pubspecYaml: pubspecYaml,
-        type: switch (pubspec.dependencies.containsKey('flutter')) {
-          true => ParentProjectType.flutter,
-          false => ParentProjectType.dart,
-        },
-      );
-    });
+    return Isolate.run(() => loadSync(path));
+  }
+
+  static ParentProject? loadSync(String path) {
+    final dir = fileSystem.directory(path);
+    final pubspecFile = dir.childFile('pubspec.yaml');
+    if (!pubspecFile.existsSync()) {
+      return null;
+    }
+    final pubspecYaml = pubspecFile.readAsStringSync();
+    final pubspec = Pubspec.parse(pubspecYaml, sourceUrl: pubspecFile.uri);
+    return ParentProject(
+      name: pubspec.name,
+      path: path,
+      pubspec: pubspec,
+      pubspecYaml: pubspecYaml,
+      type: switch (pubspec.dependencies.containsKey('flutter')) {
+        true => ParentProjectType.flutter,
+        false => ParentProjectType.dart,
+      },
+    );
   }
 
   final String name;

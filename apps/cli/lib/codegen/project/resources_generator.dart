@@ -29,7 +29,7 @@ final class ResourcesGenerator {
       (final Api a, final Api b) => a.name.compareTo(b.name),
       (final CloudFunction a, final CloudFunction b) => a.compareTo(b),
       (final EnvironmentVariable a, final EnvironmentVariable b) =>
-        a.envName.compareTo(b.envName),
+        a.name.compareTo(b.name),
       (Api(), _) => -1,
       (CloudFunction(), Api()) => 1,
       (CloudFunction(), EnvironmentVariable()) => -1,
@@ -124,7 +124,7 @@ final class ResourcesGenerator {
   void _generateEnv(Iterable<EnvironmentVariable> envVars) {
     final env = _beginClass('env', 'Env');
     for (final envVar in envVars) {
-      final fieldName = envVar.envName.camelCase;
+      final fieldName = envVar.name.camelCase;
       env.fields.add(
         Field(
           (f) => f
@@ -133,7 +133,7 @@ final class ResourcesGenerator {
             ..name = fieldName
             ..assignment =
                 DartTypes.celest.environmentVariable.constInstance([], {
-              'name': literalString(envVar.envName, raw: true),
+              'name': literalString(envVar.name, raw: true),
             }).code,
         ),
       );

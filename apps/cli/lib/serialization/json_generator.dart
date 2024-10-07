@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/element/type.dart';
 import 'package:celest_cli/serialization/serialization_verdict.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
@@ -27,7 +28,8 @@ final class JsonGenerator {
         dartType.isDartCoreNum ||
         dartType.isDartCoreString ||
         dartType.isDartCoreObject ||
-        dartType.isDartCoreNull) {
+        dartType.isDartCoreNull ||
+        dartType is DynamicType) {
       return ref;
     }
     if (dartType.isDartCoreEnum || dartType.isDartCoreSet) {
@@ -110,21 +112,32 @@ final class JsonGenerator {
   Expression fromJson(
     Reference type,
     Expression ref, {
+    required bool inNullableContext,
     Expression? defaultValue,
   }) {
     type = type.withNullability(
       type.isNullableOrFalse || defaultValue != null,
     );
-    var fromJson = _fromJson(type, ref);
+    var fromJson = _fromJson(type, ref, inNullableContext: inNullableContext);
     if (defaultValue != null) {
       fromJson = fromJson.parenthesized.ifNullThen(defaultValue);
     }
     return fromJson;
   }
 
-  Expression _fromJson(Reference type, Expression ref) {
+  Expression _fromJson(
+    Reference type,
+    Expression ref, {
+    required bool inNullableContext,
+  }) {
     final dartType = typeHelper.fromReference(type);
+    if (dartType is DynamicType) {
+      return ref;
+    }
     if (dartType.isDartCoreObject) {
+      if (!type.isNullableOrFalse && inNullableContext) {
+        return ref.nullChecked;
+      }
       return ref;
     }
     if (dartType.isDartCoreBool ||
@@ -158,7 +171,11 @@ final class JsonGenerator {
       );
       final element = refer('el');
       final elementType = type.toTypeReference.types.single;
-      final serializedElement = fromJson(elementType, element);
+      final serializedElement = fromJson(
+        elementType,
+        element,
+        inNullableContext: true,
+      );
       if (element == serializedElement) {
         return cast.nullableProperty('toList', type.isNullableOrFalse).call([]);
       }
@@ -200,7 +217,7 @@ final class JsonGenerator {
       } else if (valueType.isDynamic || valueType.isDartCoreObject) {
         return cast;
       } else {
-        serializedValue = fromJson(valueType, value);
+        serializedValue = fromJson(valueType, value, inNullableContext: true);
       }
       if (value == serializedValue) {
         return cast;

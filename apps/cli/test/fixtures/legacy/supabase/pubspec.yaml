@@ -1,23 +1,21 @@
-name: celest_backend
-publish_to: none
+name: supabase_test
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
 
 environment:
-  sdk: ^3.4.0
+  sdk: ^3.5.3
 
 dependencies:
-  celest:
-    path: ../../../../../../celest/packages/celest
-  supabase: ^2.2.2
+  flutter:
+    sdk: flutter
+  supabase_client:
+    path: celest/client/
 
-dependency_overrides:
-  cedar:
-    path: ../../../../../../cedar/packages/cedar
-  celest:
-    path: ../../../../../../celest/packages/celest
-  celest_auth:
-    path: ../../../../../../celest/packages/celest_auth
-  celest_cloud:
-    path: ../../../../../../celest/packages/celest_cloud
-  celest_core:
-    path: ../../../../../../celest/packages/celest_core
-  native_storage: ^0.2.0
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true

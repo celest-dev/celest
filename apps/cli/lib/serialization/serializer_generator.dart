@@ -222,7 +222,7 @@ final class SerializerGenerator {
   bool get isSubtype => _parent != null;
 
   /// The `fromJson` method to use and whether it is inherited from a parent.
-  (Expression fromJson, bool usesParent)? get fromJson {
+  (Expression fromJson, bool usesParent, bool requiresNullCheck)? get fromJson {
     Reference? typeReference;
     var usesParent = false;
     if (serializationSpec.fromJsonType case final fromJsonType?) {
@@ -241,7 +241,11 @@ final class SerializerGenerator {
     if (typeReference == null) {
       return null;
     }
-    return (typeReference.property('fromJson'), usesParent);
+    return (
+      typeReference.nonNullable.property('fromJson'),
+      usesParent,
+      typeReference.isNullableOrFalse,
+    );
   }
 
   bool get hasToJson {
@@ -467,7 +471,12 @@ final class SerializerGenerator {
     String from, {
     required bool mayBeAbsent,
   }) {
-    if (fromJson case (final fromJson, final usesParent)?) {
+    if (fromJson
+        case (
+          final fromJson,
+          final usesParent,
+          final requiresNullCheck,
+        )?) {
       Expression ref = _reference(from, isNullable: false);
       if (mayBeAbsent) {
         ref = ref.ifNullThen(literalConstMap({}));
@@ -475,21 +484,23 @@ final class SerializerGenerator {
       final genericDeserializers = <Expression>[];
       if (type case ast.InterfaceType(:final typeArguments)) {
         for (final typeArgument in typeArguments) {
+          final typeArgumentRef = typeHelper.toReference(typeArgument);
           genericDeserializers.add(
             Method(
               (m) => m
                 ..requiredParameters.add(Parameter((p) => p..name = 'value'))
                 ..body = jsonGenerator
                     .fromJson(
-                      typeHelper.toReference(typeArgument),
+                      typeArgumentRef,
                       refer('value'),
+                      inNullableContext: typeArgumentRef.isNullableOrFalse,
                     )
                     .code,
             ).closure,
           );
         }
       }
-      final deserialized = fromJson([
+      var deserialized = fromJson([
         // If a subtype uses a parent's fromJson method, then the discriminator
         // key is needed so that the parent's fromJson method can distinguish the
         // map.
@@ -505,6 +516,9 @@ final class SerializerGenerator {
           ref,
         ...genericDeserializers,
       ]);
+      if (requiresNullCheck) {
+        deserialized = deserialized.nullChecked;
+      }
       if (usesParent) {
         return deserialized.asA(typeReference).returned.statement;
       }
@@ -564,6 +578,7 @@ final class SerializerGenerator {
       final deserialized = jsonGenerator.fromJson(
         representationTypeRef,
         ref,
+        inNullableContext: mayBeAbsent,
       );
       // No params means no constructor. Just cast into the extension type.
       if (serializationSpec.parameters.isEmpty) {
@@ -579,12 +594,15 @@ final class SerializerGenerator {
     for (final parameter in serializationSpec.parameters) {
       final parameterWireName = parameter.name.nonPrivate;
       final reference = typeHelper.toReference(parameter.type);
+      final (serialized, inNullableContext) =
+          typeHelper.fromReference(serializationSpec.wireType).isDartCoreMap
+              ? (ref.index(literalString(parameterWireName, raw: true)), true)
+              : (ref, mayBeAbsent);
       final deserialized = jsonGenerator.fromJson(
         reference,
-        typeHelper.fromReference(serializationSpec.wireType).isDartCoreMap
-            ? ref.index(literalString(parameterWireName, raw: true))
-            : ref,
+        serialized,
         defaultValue: parameter.defaultValue,
+        inNullableContext: inNullableContext,
       );
       if (parameter.isPositional) {
         deserializedPositional.add(deserialized);

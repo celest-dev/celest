@@ -321,7 +321,13 @@ final class TypeHelper {
     if (_dartTypeToReference[type] case final reference?) {
       return reference;
     }
-    final reference = type.accept(const _TypeToCodeBuilder());
+    var reference = type.accept(const _TypeToCodeBuilder());
+    // Fix Dart internal types
+    if (reference.url == 'dart:_http') {
+      reference = (reference as codegen.TypeReference).rebuild(
+        (b) => b.url = 'dart:io',
+      );
+    }
     _dartTypeToReference[type] ??= reference;
     _referenceToDartType[reference] ??= type;
     _referenceToDartType[reference.toTypeReference] ??= type;

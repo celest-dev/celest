@@ -4,6 +4,7 @@ import 'package:celest_cli/analyzer/resolver/config_value_resolver.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/database/project/project_database.dart';
 import 'package:celest_cli/env/firebase_config_value_solver.dart';
+import 'package:celest_cli/env/supabase_config_value_solver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:meta/meta.dart';
 
@@ -33,19 +34,25 @@ final class ConfigValueSolver {
   }
 
   Future<Map<String, String>> solveAll() async {
-    final [envVars, secrets] = await Future.wait([
+    final [envValues, secretValues] = await Future.wait([
       project.envVars.retrieveValues(environmentId: environmentId),
       project.secrets.retrieveValues(environmentId: environmentId),
     ]);
     final envManager =
         await celestProject.envManager.environment(environmentId);
-    final allConfigValues = ConfigValueSet()
+    final allConfigValues = ConfigVarSet()
       ..addAll(project.envVars)
       ..addAll(project.secrets);
     final allConfigEntries = {
-      ...envVars,
-      ...secrets,
+      ...envValues,
+      ...secretValues,
       ...await envManager.readAll(),
+
+      // Static values
+      for (final envVar in project.envVars)
+        if (envVar.value case final value?) envVar.name: value,
+
+      // Default values
       ...defaultValues,
     };
 
@@ -53,16 +60,15 @@ final class ConfigValueSolver {
     // resolution logic.
     final authEnvironmentVariables = project.auth?.environmentVariables;
     final authSecrets = project.auth?.secrets;
-    final authConfigValues =
-        BuiltListMultimap<ast.AuthProviderType, ast.ConfigurationValue>.build(
-            (b) {
+    final authConfigValues = BuiltListMultimap<ast.AuthProviderType,
+        ast.ConfigurationVariable>.build((b) {
       authEnvironmentVariables?.forEach(b.add);
       authSecrets?.forEach(b.add);
     });
     for (final MapEntry(key: provider, value: configValues)
         in authConfigValues.toMap().entries) {
       for (final configValue in configValues) {
-        if (allConfigEntries.containsKey(configValue.envName)) {
+        if (allConfigEntries.containsKey(configValue.name)) {
           continue;
         }
         switch (provider) {
@@ -72,7 +78,16 @@ final class ConfigValueSolver {
               environmentId: environmentId,
             );
             final value = await solver.solve(configValue);
-            allConfigEntries[configValue.envName] = value;
+            allConfigEntries[configValue.name] = value;
+          case ast.AuthProviderType.supabase:
+            final solver = SupabaseConfigValueSolver(
+              projectName: project.name,
+              environmentId: environmentId,
+            );
+            final value = await solver.solve(configValue);
+            allConfigEntries[configValue.name] = value;
+          default:
+            break;
         }
       }
     }
@@ -82,11 +97,11 @@ final class ConfigValueSolver {
       environmentId: environmentId,
     );
     for (final configValue in allConfigValues) {
-      if (allConfigEntries.containsKey(configValue.envName)) {
+      if (allConfigEntries.containsKey(configValue.name)) {
         continue;
       }
       final value = await promptSolver.solve(configValue);
-      allConfigEntries[configValue.envName] = value;
+      allConfigEntries[configValue.name] = value;
     }
 
     return allConfigEntries;
@@ -104,7 +119,7 @@ abstract base class BaseConfigValueSolver {
   final String environmentId;
   final ProjectDatabase? _projectDb;
 
-  Future<String> solve(ast.ConfigurationValue configValue);
+  Future<String> solve(ast.ConfigurationVariable configVar);
 
   Future<String> storeEnvironmentVariable(String name, String value) async {
     final projectDb = _projectDb ?? celestProject.projectDb;
@@ -154,20 +169,23 @@ base class PromptConfigValueSolver extends BaseConfigValueSolver {
 
     String? value;
     while (value == null) {
-      value = cliLogger.prompt('Enter the value for $name');
+      value = cliLogger.prompt(
+        'Enter the value for $name',
+        hidden: type == ConfigValueType.secret,
+      );
     }
     return value;
   }
 
   @override
-  Future<String> solve(ast.ConfigurationValue configValue) async {
-    switch (configValue) {
-      case ast.EnvironmentVariable(:final envName):
-        final value = prompt(envName, ConfigValueType.environmentVariable);
-        return storeEnvironmentVariable(envName, value);
-      case ast.Secret(:final envName):
-        final value = prompt(envName, ConfigValueType.secret);
-        return storeSecret(envName, value);
+  Future<String> solve(ast.ConfigurationVariable configVar) async {
+    switch (configVar) {
+      case ast.EnvironmentVariable(:final name):
+        final value = prompt(name, ConfigValueType.environmentVariable);
+        return storeEnvironmentVariable(name, value);
+      case ast.Secret(:final name):
+        final value = prompt(name, ConfigValueType.secret);
+        return storeSecret(name, value);
     }
   }
 }

@@ -951,6 +951,108 @@
           "symbol": "SerializationException",
           "url": "package:celest_core/src/exception/serialization_exception.dart",
           "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "Error",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AssertionError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TypeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ArgumentError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "RangeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IndexError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnsupportedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StateError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ConcurrentModificationError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfMemoryError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StackOverflowError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FormatException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IntegerDivisionByZeroException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AsyncError",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TimeoutException",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "JsonUnsupportedObjectError",
+          "url": "dart:convert",
+          "isNullable": false
         }
       ],
       "location": {
@@ -1322,6 +1424,108 @@
           "$": "TypeReference",
           "symbol": "SerializationException",
           "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "Error",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AssertionError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TypeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ArgumentError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "RangeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IndexError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnsupportedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StateError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ConcurrentModificationError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfMemoryError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StackOverflowError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FormatException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IntegerDivisionByZeroException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AsyncError",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TimeoutException",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "JsonUnsupportedObjectError",
+          "url": "dart:convert",
           "isNullable": false
         }
       ],
@@ -1709,6 +1913,108 @@
           "symbol": "SerializationException",
           "url": "package:celest_core/src/exception/serialization_exception.dart",
           "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "Error",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AssertionError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TypeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ArgumentError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "RangeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IndexError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnsupportedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StateError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ConcurrentModificationError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfMemoryError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StackOverflowError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FormatException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IntegerDivisionByZeroException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AsyncError",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TimeoutException",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "JsonUnsupportedObjectError",
+          "url": "dart:convert",
+          "isNullable": false
         }
       ],
       "location": {
@@ -1730,7 +2036,7 @@
   },
   "envVars": [
     {
-      "envName": "FIREBASE_PROJECT_ID",
+      "name": "FIREBASE_PROJECT_ID",
       "location": {
         "start": {
           "offset": 84,
@@ -1746,11 +2052,9 @@
         },
         "text": "auth"
       }
-    }
-  ],
-  "secrets": [
+    },
     {
-      "envName": "SUPABASE_JWT_SECRET",
+      "name": "SUPABASE_URL",
       "location": {
         "start": {
           "offset": 84,
@@ -1768,6 +2072,7 @@
       }
     }
   ],
+  "secrets": [],
   "sdkInfo": {
     "sdkVersion": "3.5.3",
     "enabledExperiments": [],
@@ -1838,7 +2143,7 @@
       {
         "$": "FirebaseExternalAuthProvider",
         "projectId": {
-          "envName": "FIREBASE_PROJECT_ID",
+          "name": "FIREBASE_PROJECT_ID",
           "location": {
             "start": {
               "offset": 84,
@@ -1875,8 +2180,8 @@
       },
       {
         "$": "SupabaseExternalAuthProvider",
-        "jwtSecret": {
-          "envName": "SUPABASE_JWT_SECRET",
+        "projectUrl": {
+          "name": "SUPABASE_URL",
           "location": {
             "start": {
               "offset": 84,

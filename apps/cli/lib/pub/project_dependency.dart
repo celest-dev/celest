@@ -1,5 +1,7 @@
 import 'package:celest_cli/pub/pubspec.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/path.dart';
 import 'package:celest_cli/src/version.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
@@ -18,6 +20,28 @@ final class ProjectDependency {
   final String name;
   final DependencyType type;
   final HostedDependency pubDependency;
+
+  static Map<String, PathDependency>? localDependencyOverrides({
+    required String projectRoot,
+  }) {
+    final localPath = celestLocalPath;
+    if (localPath == null) {
+      return null;
+    }
+
+    String packagePath(String packageName) {
+      return p.url.relative(
+        p.join(localPath, 'packages', packageName).to(p.url),
+        from: projectRoot.to(p.url),
+      );
+    }
+
+    const packages = ['celest', 'celest_core', 'celest_auth', 'celest_cloud'];
+    return {
+      for (final packageName in packages)
+        packageName: PathDependency(packagePath(packageName)),
+    };
+  }
 
   static final Map<String, ProjectDependency> all = {
     celest.name: celest,

@@ -65,8 +65,7 @@ final class PubspecUpdater extends ProjectMigration {
     final currentSdkVersion = pubspec.environment?['sdk'];
     final requiredSdkVersion = PubEnvironment.dartSdkConstraint;
     if (ProjectDependency.celest.upToDate(pubspec) &&
-        currentSdkVersion == requiredSdkVersion &&
-        !pubspec.dependencies.containsKey('celest_core')) {
+        currentSdkVersion == requiredSdkVersion) {
       _logger.fine('Project dependencies are up to date.');
       return null;
     }
@@ -79,11 +78,6 @@ final class PubspecUpdater extends ProjectMigration {
       _ => Version.none,
     };
     _logger.fine('Updating project dependencies to latest versions...');
-    if (pubspec.dependencies.containsKey('celest_core')) {
-      final editor = YamlEditor(pubspecYaml)
-        ..remove(['dependencies', 'celest_core']);
-      pubspecYaml = editor.toString();
-    }
     pubspec = pubspec.copyWith(
       environment: {
         'sdk': PubEnvironment.dartSdkConstraint,
@@ -91,25 +85,17 @@ final class PubspecUpdater extends ProjectMigration {
       dependencies: {
         for (final entry in pubspec.dependencies.entries)
           entry.key: ProjectDependency.dependencies[entry.key] ?? entry.value,
-      }..remove('celest_core'),
+      },
       devDependencies: {
         for (final entry in pubspec.devDependencies.entries)
           entry.key:
               ProjectDependency.devDependencies[entry.key] ?? entry.value,
       },
-      dependencyOverrides: switch (celestLocalPath) {
-        null => {
-            for (final entry in pubspec.dependencies.entries)
-              if (!ProjectDependency.all.containsKey(entry.key))
-                entry.key: entry.value,
-          },
-        final localPath => {
-            ...pubspec.dependencyOverrides,
-            'celest': PathDependency('$localPath/packages/celest'),
-            'celest_cloud': PathDependency('$localPath/packages/celest_cloud'),
-            'celest_core': PathDependency('$localPath/packages/celest_core'),
-            'celest_auth': PathDependency('$localPath/packages/celest_auth'),
-          },
+      dependencyOverrides: {
+        ...pubspec.dependencyOverrides,
+        ...?ProjectDependency.localDependencyOverrides(
+          projectRoot: projectRoot,
+        ),
       },
     );
     pubspecYaml = pubspec.toYaml(source: pubspecYaml);
@@ -118,6 +104,7 @@ final class PubspecUpdater extends ProjectMigration {
   }
 
   Future<bool> _updateClientDependencies({
+    required Directory clientRoot,
     required Pubspec pubspec,
     required String pubspecYaml,
     required File pubspecFile,
@@ -143,19 +130,11 @@ final class PubspecUpdater extends ProjectMigration {
           entry.key:
               ProjectDependency.devDependencies[entry.key] ?? entry.value,
       },
-      dependencyOverrides: switch (celestLocalPath) {
-        null => {
-            for (final entry in pubspec.dependencies.entries)
-              if (!ProjectDependency.all.containsKey(entry.key))
-                entry.key: entry.value,
-          },
-        final localPath => {
-            ...pubspec.dependencyOverrides,
-            'celest': PathDependency('$localPath/packages/celest'),
-            'celest_cloud': PathDependency('$localPath/packages/celest_cloud'),
-            'celest_core': PathDependency('$localPath/packages/celest_core'),
-            'celest_auth': PathDependency('$localPath/packages/celest_auth'),
-          },
+      dependencyOverrides: {
+        ...pubspec.dependencyOverrides,
+        ...?ProjectDependency.localDependencyOverrides(
+          projectRoot: clientRoot.path,
+        ),
       },
     );
     pubspecYaml = pubspec.toYaml(source: pubspecYaml);
@@ -226,12 +205,13 @@ final class PubspecUpdater extends ProjectMigration {
     }
 
     // Update client dependencies
-    final clientOutputsDir = fileSystem.directory(projectPaths.clientRoot);
-    final clientPubspecFile = clientOutputsDir.childFile('pubspec.yaml');
+    final clientRoot = fileSystem.directory(projectPaths.clientRoot);
+    final clientPubspecFile = clientRoot.childFile('pubspec.yaml');
     if (clientPubspecFile.existsSync()) {
       final clientPubspecYaml = await clientPubspecFile.readAsString();
       final clientPubspec = Pubspec.parse(clientPubspecYaml);
       final clientNeedsMigration = await _updateClientDependencies(
+        clientRoot: clientRoot,
         pubspec: clientPubspec,
         pubspecYaml: clientPubspecYaml,
         pubspecFile: clientPubspecFile,
@@ -241,7 +221,7 @@ final class PubspecUpdater extends ProjectMigration {
         operations.add(
           runPub(
             action: PubAction.get,
-            workingDirectory: clientOutputsDir.path,
+            workingDirectory: clientRoot.path,
           ),
         );
       }
