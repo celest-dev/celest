@@ -88,12 +88,7 @@ final class Context {
   Traceparent get currentTrace => expect(ContextKey.currentTrace);
 
   /// The Celest [Environment] of the running service.
-  Environment get environment {
-    return switch (get(env.environment)) {
-      final env? => Environment(env),
-      _ => throw StateError('No environment set in context'),
-    };
-  }
+  Environment get environment => expect(env.environment) as Environment;
 
   /// The HTTP client for the current context.
   http.Client get httpClient =>
