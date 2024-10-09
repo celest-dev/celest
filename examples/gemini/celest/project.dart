@@ -1,5 +1,1 @@
-import 'package:celest/celest.dart';
-
-const project = Project(
-  name: 'gemini_example',
-);
+/Users/dillonnys/celest/cloud/celest/examples/gemini/celest/lib/src/project.dart

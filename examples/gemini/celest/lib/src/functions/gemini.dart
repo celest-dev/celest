@@ -4,9 +4,8 @@
 import 'dart:convert';
 
 import 'package:celest/celest.dart';
+import 'package:celest_backend/src/project.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-
-import '../generated/resources.dart';
 
 /// Returns a list of available models.
 @cloud
@@ -24,11 +23,11 @@ const _availableModels = [
 ///
 /// Returns the generated text.
 @cloud
-Future<String> generateContent({
+Stream<String> generateContent({
   required String modelName,
   required String prompt,
-  @env.geminiApiKey required String apiKey,
-}) async {
+  @geminiApiKey required String apiKey,
+}) async* {
   if (!_availableModels.contains(modelName)) {
     throw BadRequestException('Invalid model: $modelName');
   }
@@ -39,16 +38,19 @@ Future<String> generateContent({
   ];
   print('Sending prompt: $prompt');
 
-  final response = await model.generateContent(request);
-  print('Got response: ${_prettyJson(response.toJson())}');
+  await for (final response in model.generateContentStream(request)) {
+    print('Got response: ${_prettyJson(response.toJson())}');
 
-  switch (response.text) {
-    case final text?:
-      print('Selected answer: $text');
-      return text;
-    case _:
-      throw InternalServerError('Failed to generate content');
+    switch (response.text) {
+      case final text?:
+        print(text);
+        yield text;
+      case _:
+        throw InternalServerError('Failed to generate content');
+    }
   }
+
+  print('Finished generating content');
 }
 
 extension on GenerateContentResponse {

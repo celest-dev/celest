@@ -18,9 +18,9 @@ $ flutter pub get
 
 Download Celest from the [Celest download page](https://celest.dev/download), and run the installer to get the Celest CLI.
 
-Open this folder (`examples/gemini`) in your favorite IDE, navigate to the `celest/config` folder, and create a `.env` file. This will contain your Gemini API key. To learn more about obtaining an Gemini API key, follow this [guide](https://ai.google.dev/tutorials/setup).
+Open this folder (`examples/gemini`) in your favorite IDE, navigate to the `celest` folder, and create a `.env` file. This will contain your Gemini API key. To learn more about obtaining an Gemini API key, follow this [guide](https://ai.google.dev/tutorials/setup).
 
-The `.env` file you created in the `config` folder should contain the following key-value pair:
+The `.env` file you created should contain the following key-value pair:
 
 ```shell
 GEMINI_API_KEY=<your-gemini-api-key>
