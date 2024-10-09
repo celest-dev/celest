@@ -156,10 +156,12 @@ final class FieldSpec {
   const FieldSpec({
     required this.name,
     required this.type,
+    this.ignore = false,
   });
 
   final String name;
   final DartType type;
+  final bool ignore;
 
   @override
   bool operator ==(Object other) {
@@ -182,6 +184,7 @@ final class ParameterSpec {
     required this.isOptional,
     required this.isNamed,
     required this.defaultValue,
+    this.ignore = false,
   });
 
   final String name;
@@ -190,6 +193,7 @@ final class ParameterSpec {
   final bool isOptional;
   final bool isNamed;
   final code_builder.Expression? defaultValue;
+  final bool ignore;
 
   @override
   bool operator ==(Object other) {

@@ -157,7 +157,7 @@ class CelestFunctionsHttpErrors {
             .deserialize<BadGatewayError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -301,7 +301,7 @@ class CelestFunctionsHttpHeader {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -472,7 +472,7 @@ class CelestFunctionsHttpMethod {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -693,7 +693,7 @@ class CelestFunctionsHttpQuery {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -900,7 +900,7 @@ class CelestFunctionsHttpStatus {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,

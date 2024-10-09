@@ -154,13 +154,8 @@ final class EntrypointGenerator {
     final innerHandle = Method(
       (m) => m
         ..returns = switch (function.streamType) {
-          null => DartTypes.core.future(DartTypes.celest.celestResponse),
-          _ => DartTypes.core.stream(
-              DartTypes.core.map(
-                DartTypes.core.string,
-                DartTypes.core.object.nullable,
-              ),
-            ),
+          null => DartTypes.core.future(DartTypes.shelf.response),
+          _ => DartTypes.core.stream(DartTypes.core.object.nullable),
         }
         ..name = 'innerHandle'
         ..types.addAll(function.typeParameters)
@@ -251,16 +246,20 @@ final class EntrypointGenerator {
           }
           switch (flattenedReturnType.symbol) {
             case 'void':
-              final resultBody = literalMap({
-                'response': literalNull,
-              });
+              const resultBody = literalNull;
               switch (function.streamType) {
                 case null:
                   b.addExpression(response);
                   b.addExpression(
-                    literalRecord([], {
-                      'statusCode': literalNum(httpConfig?.statusCode ?? 200),
-                      'body': resultBody,
+                    DartTypes.shelf.response.newInstance([
+                      literalNum(httpConfig?.statusCode ?? 200),
+                    ], {
+                      'headers': literalConstMap({
+                        'Content-Type': 'application/json',
+                      }),
+                      'body': DartTypes.celest.jsonUtf8
+                          .property('encode')
+                          .call([resultBody]),
                     }).returned,
                   );
                 default:
@@ -276,25 +275,28 @@ final class EntrypointGenerator {
                 flattenedReturnType,
                 refer('response'),
               );
-              final resultBody = literalMap({
-                'response': result,
-              });
               switch (function.streamType) {
                 case null:
                   b.addExpression(
                     declareFinal('response').assign(response),
                   );
                   b.addExpression(
-                    literalRecord([], {
-                      'statusCode': literalNum(httpConfig?.statusCode ?? 200),
-                      'body': resultBody,
+                    DartTypes.shelf.response([
+                      literalNum(httpConfig?.statusCode ?? 200),
+                    ], {
+                      'headers': literalConstMap({
+                        'Content-Type': 'application/json',
+                      }),
+                      'body': DartTypes.celest.jsonUtf8
+                          .property('encode')
+                          .call([result]),
                     }).returned,
                   );
                 default:
                   b.statements.addAll([
                     response.code,
                     const Code('yield '),
-                    resultBody.statement,
+                    result.statement,
                     const Code('}'),
                   ]);
               }
@@ -355,9 +357,7 @@ final class EntrypointGenerator {
                 ...exceptionElement.allSupertypes.map((it) => it.element),
               ]
                   .map(
-                    (el) => el.metadata.firstWhereOrNull(
-                      (m) => m.isHttpError,
-                    ),
+                    (el) => el.metadata.firstWhereOrNull((m) => m.isHttpError),
                   )
                   .nonNulls
                   .firstOrNull;
@@ -368,10 +368,7 @@ final class EntrypointGenerator {
             }
 
             // Fallback based on the type hierarchy.
-            statusCode ??= typeHelper.typeSystem.isSubtypeOf(
-              dartExceptionType,
-              typeHelper.coreTypes.coreErrorType,
-            )
+            statusCode ??= dartExceptionType.isErrorType
                 ? literalNum(500)
                 : literalNum(400);
 
@@ -383,47 +380,78 @@ final class EntrypointGenerator {
 
             b.statements.add(
               Code.scope(
-                (alloc) => '} on ${alloc(exceptionType)} catch (e) {',
+                (alloc) => '} on ${alloc(exceptionType)} catch (e, st) {',
               ),
             );
             final statusCode = exceptionCodes[exceptionType]!;
             b.addExpression(
               declareConst('statusCode').assign(statusCode),
             );
+
+            final messageExpression = switch (dartExceptionType) {
+              ast.DartType(isCloudExceptionType: true) =>
+                refer('e').property('message'),
+              ast.DartType(element: ast.InterfaceElement(:final fields))
+                  when fields.any(
+                    (f) => f.name == 'message' && f.type.isDartCoreString,
+                  ) =>
+                refer('e').property('message'),
+              _ => null,
+            };
+
             b.addExpression(
-              refer('print').call([
-                literalString(r'$statusCode $e'),
+              DartTypes.celest.globalContext
+                  .property('logger')
+                  .property('severe')
+                  .call([
+                messageExpression ?? refer('e').property('toString').call([]),
+                refer('e'),
+                refer('st'),
               ]),
             );
 
-            final isCloudException = typeHelper.typeSystem.isSubtypeOf(
-              dartExceptionType,
-              typeHelper.coreTypes.cloudExceptionType,
+            b.addExpression(
+              declareFinal('meta').assign(
+                literalMap({
+                  'code': dartExceptionType.externalUri(project.name),
+                  if (messageExpression != null) 'message': messageExpression,
+                  'status': refer('statusCode'),
+                }),
+              ),
             );
             b.addExpression(
               declareFinal('error').assign(
-                isCloudException
-                    ? literalMap({
-                        'message': refer('e').property('message'),
-                        'code': dartExceptionType.externalUri(project.name),
-                        'details': refer('e').property('details'),
-                      })
-                    : literalMap({
-                        'code': dartExceptionType.externalUri(project.name),
-                        'details':
-                            jsonGenerator.toJson(exceptionType, refer('e')),
-                      }),
+                jsonGenerator.toJson(exceptionType, refer('e')),
               ),
             );
             final errorBody = literalMap({
-              'error': refer('error'),
+              '@error': refer('meta'),
+              literalSpread(): refer('error')
+                  .isA(
+                    DartTypes.core.map(
+                      DartTypes.core.string,
+                      DartTypes.core.object.nullable,
+                    ),
+                  )
+                  .conditional(
+                    refer('error'),
+                    literalMap({
+                      '@': refer('error'),
+                    }),
+                  ),
             });
             switch (function.streamType) {
               case null:
                 b.addExpression(
-                  literalRecord([], {
-                    'statusCode': refer('statusCode'),
-                    'body': errorBody,
+                  DartTypes.shelf.response.newInstance([
+                    refer('statusCode'),
+                  ], {
+                    'headers': literalConstMap({
+                      'Content-Type': 'application/json',
+                    }),
+                    'body': DartTypes.celest.jsonUtf8.property('encode').call([
+                      errorBody,
+                    ]),
                   }).returned,
                 );
               default:
@@ -516,13 +544,8 @@ final class EntrypointGenerator {
     final handle = Method(
       (m) => m
         ..returns = switch (function.streamType) {
-          null => DartTypes.core.future(DartTypes.celest.celestResponse),
-          _ => DartTypes.core.stream(
-              DartTypes.core.map(
-                DartTypes.core.string,
-                DartTypes.core.object.nullable,
-              ),
-            ),
+          null => DartTypes.core.future(DartTypes.shelf.response),
+          _ => DartTypes.core.stream(DartTypes.core.object.nullable),
         }
         ..annotations.add(DartTypes.core.override)
         ..name = 'handle'
@@ -669,7 +692,7 @@ final class EntrypointGenerator {
               (m) => m
                 ..name = 'middlewares'
                 ..annotations.add(DartTypes.core.override)
-                ..returns = DartTypes.core.list(DartTypes.shelf.middleware)
+                ..returns = DartTypes.core.list(DartTypes.celest.middleware)
                 ..type = MethodType.getter
                 ..lambda = true
                 ..body = literalList(middlewares).code,

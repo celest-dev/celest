@@ -2,20 +2,14 @@
 /// recursive imports and serialized correctly.
 library;
 
-import 'package:celest/celest.dart';
 import 'package:_common/_common.dart' as common;
+import 'package:celest/celest.dart';
 
-@cloud
-@cloud
-@cloud
 @cloud
 void callsThrowsCommonException() {
   common.throwsCommonException();
 }
 
-@cloud
-@cloud
-@cloud
 @cloud
 void callsThrowsCustomException() {
   common.throwsCustomException();

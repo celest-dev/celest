@@ -189,6 +189,7 @@ const project = Project(name: 'cache_warmup');
       celestCoreExceptions,
       celestCoreUser,
       celestConfigEnv,
+      jsonAnnotation,
     ) = await (
       context.currentSession.getLibraryByUri('dart:core'),
       context.currentSession.getLibraryByUri('dart:typed_data'),
@@ -204,6 +205,12 @@ const project = Project(name: 'cache_warmup');
       context.currentSession.getLibraryByUri(
         'package:celest/src/config/env.dart',
       ),
+
+      // `package:json_annotation/json_annotation.dart` is used in the
+      // generated code when serializing/deserializing models.
+      context.currentSession.getLibraryByUri(
+        'package:json_annotation/src/json_key.dart',
+      ),
     ).wait;
     if (celestCoreExceptions is! LibraryElementResult ||
         celestCoreUser is! LibraryElementResult) {
@@ -213,6 +220,18 @@ const project = Project(name: 'cache_warmup');
     if (celestConfigEnv is! LibraryElementResult) {
       await dumpPackageConfig();
       throw StateError('Failed to resolve celest');
+    }
+    final jsonAnnotationLib = switch (jsonAnnotation) {
+      LibraryElementResult() => jsonAnnotation,
+      _ => null,
+    };
+    if (jsonAnnotationLib == null) {
+      await dumpPackageConfig();
+      _logger.fine(
+        'Failed to resolve package:json_annotation',
+        jsonAnnotation,
+        StackTrace.current,
+      );
     }
 
     final envElement = celestConfigEnv.getClassElement('env');
@@ -240,6 +259,7 @@ const project = Project(name: 'cache_warmup');
         celestEnvElement: envElement,
         celestSecretType: secretElement.thisType,
         celestSecretElement: secretElement,
+        jsonKeyElement: jsonAnnotationLib?.getClassElement('JsonKey'),
       )
       ..typeSystem = dartCore.element.typeSystem
       ..typeProvider = dartCore.element.typeProvider;

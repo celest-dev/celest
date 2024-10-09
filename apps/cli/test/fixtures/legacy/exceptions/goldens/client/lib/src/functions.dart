@@ -40,6 +40,61 @@ class CelestFunctionsExternal {
     final $message = ($error['message'] as String?);
     final $details = ($error['details'] as _$celest.JsonMap?);
     switch ($code) {
+      case r'_common.CustomException':
+        throw _$celest.Serializers.instance
+            .deserialize<_$_common.CustomException>($details);
+      case r'_common.CommonException':
+        throw _$celest.Serializers.instance
+            .deserialize<_$_common.CommonException>($details);
+      case r'_common.OverriddenException':
+        throw _$celest.Serializers.instance
+            .deserialize<_$_common.OverriddenException>($details);
+      case r'dart.core.Error':
+        throw _$celest.Serializers.instance.deserialize<Error>($details);
+      case r'dart.core.AssertionError':
+        throw _$celest.Serializers.instance
+            .deserialize<AssertionError>($details);
+      case r'dart.core.TypeError':
+        throw _$celest.Serializers.instance.deserialize<TypeError>($details);
+      case r'dart.core.ArgumentError':
+        throw _$celest.Serializers.instance
+            .deserialize<ArgumentError>($details);
+      case r'dart.core.RangeError':
+        throw _$celest.Serializers.instance.deserialize<RangeError>($details);
+      case r'dart.core.IndexError':
+        throw _$celest.Serializers.instance.deserialize<IndexError>($details);
+      case r'dart.core.UnsupportedError':
+        throw _$celest.Serializers.instance
+            .deserialize<UnsupportedError>($details);
+      case r'dart.core.UnimplementedError':
+        throw _$celest.Serializers.instance
+            .deserialize<UnimplementedError>($details);
+      case r'dart.core.StateError':
+        throw _$celest.Serializers.instance.deserialize<StateError>($details);
+      case r'dart.core.ConcurrentModificationError':
+        throw _$celest.Serializers.instance
+            .deserialize<ConcurrentModificationError>($details);
+      case r'dart.core.OutOfMemoryError':
+        throw _$celest.Serializers.instance
+            .deserialize<OutOfMemoryError>($details);
+      case r'dart.core.StackOverflowError':
+        throw _$celest.Serializers.instance
+            .deserialize<StackOverflowError>($details);
+      case r'dart.core.FormatException':
+        throw _$celest.Serializers.instance
+            .deserialize<FormatException>($details);
+      case r'dart.core.IntegerDivisionByZeroException':
+        throw _$celest.Serializers.instance
+            .deserialize<IntegerDivisionByZeroException>($details);
+      case r'dart.async.AsyncError':
+        throw _$celest.Serializers.instance
+            .deserialize<_$async.AsyncError>($details);
+      case r'dart.async.TimeoutException':
+        throw _$celest.Serializers.instance
+            .deserialize<_$async.TimeoutException>($details);
+      case r'dart.convert.JsonUnsupportedObjectError':
+        throw _$celest.Serializers.instance
+            .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       case r'celest.core.v1.CloudException':
         throw _$celest.Serializers.instance
             .deserialize<_$celest.CloudException>($details);
@@ -94,64 +149,9 @@ class CelestFunctionsExternal {
       case r'celest.core.v1.SerializationException':
         throw _$celest.Serializers.instance
             .deserialize<_$celest.SerializationException>($details);
-      case r'dart.core.Error':
-        throw _$celest.Serializers.instance.deserialize<Error>($details);
-      case r'dart.core.AssertionError':
-        throw _$celest.Serializers.instance
-            .deserialize<AssertionError>($details);
-      case r'dart.core.TypeError':
-        throw _$celest.Serializers.instance.deserialize<TypeError>($details);
-      case r'dart.core.ArgumentError':
-        throw _$celest.Serializers.instance
-            .deserialize<ArgumentError>($details);
-      case r'dart.core.RangeError':
-        throw _$celest.Serializers.instance.deserialize<RangeError>($details);
-      case r'dart.core.IndexError':
-        throw _$celest.Serializers.instance.deserialize<IndexError>($details);
-      case r'dart.core.UnsupportedError':
-        throw _$celest.Serializers.instance
-            .deserialize<UnsupportedError>($details);
-      case r'dart.core.UnimplementedError':
-        throw _$celest.Serializers.instance
-            .deserialize<UnimplementedError>($details);
-      case r'dart.core.StateError':
-        throw _$celest.Serializers.instance.deserialize<StateError>($details);
-      case r'dart.core.ConcurrentModificationError':
-        throw _$celest.Serializers.instance
-            .deserialize<ConcurrentModificationError>($details);
-      case r'dart.core.OutOfMemoryError':
-        throw _$celest.Serializers.instance
-            .deserialize<OutOfMemoryError>($details);
-      case r'dart.core.StackOverflowError':
-        throw _$celest.Serializers.instance
-            .deserialize<StackOverflowError>($details);
-      case r'dart.core.FormatException':
-        throw _$celest.Serializers.instance
-            .deserialize<FormatException>($details);
-      case r'dart.core.IntegerDivisionByZeroException':
-        throw _$celest.Serializers.instance
-            .deserialize<IntegerDivisionByZeroException>($details);
-      case r'dart.async.AsyncError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$async.AsyncError>($details);
-      case r'dart.async.TimeoutException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$async.TimeoutException>($details);
-      case r'dart.convert.JsonUnsupportedObjectError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$convert.JsonUnsupportedObjectError>($details);
-      case r'_common.CustomException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$_common.CustomException>($details);
-      case r'_common.CommonException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$_common.CommonException>($details);
-      case r'_common.OverriddenException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$_common.OverriddenException>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -323,7 +323,7 @@ class CelestFunctionsNonthrowing {
         throw _$celest.Serializers.instance.deserialize<CustomError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -534,7 +534,7 @@ class CelestFunctionsThrowing {
         throw _$celest.Serializers.instance.deserialize<CustomError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,

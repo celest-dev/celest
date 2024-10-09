@@ -459,12 +459,19 @@ final class SerializerGenerator {
     }
     final serialized = <Expression, Expression>{};
     for (final field in serializationSpec.representationType.fields) {
+      if (field.ignore) {
+        continue;
+      }
       serialized[literalString(field.name, raw: true)] = jsonGenerator.toJson(
         typeHelper.toReference(field.type),
         ref.property(field.name),
       );
     }
-    return literalMap(serialized);
+    return (serialized.isEmpty ? literalConstMap : literalMap)(
+      serialized,
+      DartTypes.core.string,
+      DartTypes.core.object.nullable,
+    );
   }
 
   Code _deserialize(
@@ -592,6 +599,9 @@ final class SerializerGenerator {
     final deserializedPositional = <Expression>[];
     final deserializedNamed = <String, Expression>{};
     for (final parameter in serializationSpec.parameters) {
+      if (parameter.ignore) {
+        continue;
+      }
       final parameterWireName = parameter.name.nonPrivate;
       final reference = typeHelper.toReference(parameter.type);
       final (serialized, inNullableContext) =

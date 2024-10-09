@@ -135,7 +135,7 @@ class CelestFunctionsAuthenticatedLib {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -291,7 +291,7 @@ class CelestFunctionsLib {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -517,7 +517,7 @@ class CelestFunctionsPublicLib {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,

@@ -267,10 +267,22 @@ extension DartTypeHelper on DartType {
       isEnum;
 
   bool get isThrowable {
+    return isExceptionType || isErrorType;
+  }
+
+  bool get isExceptionType {
     return typeHelper.typeSystem
-            .isSubtypeOf(this, typeHelper.coreTypes.coreErrorType) ||
-        typeHelper.typeSystem
-            .isSubtypeOf(this, typeHelper.coreTypes.coreExceptionType);
+        .isSubtypeOf(this, typeHelper.coreTypes.coreExceptionType);
+  }
+
+  bool get isCloudExceptionType {
+    return typeHelper.typeSystem
+        .isSubtypeOf(this, typeHelper.coreTypes.cloudExceptionType);
+  }
+
+  bool get isErrorType {
+    return typeHelper.typeSystem
+        .isSubtypeOf(this, typeHelper.coreTypes.coreErrorType);
   }
 
   bool get isExtensionType => element is ExtensionTypeElement;

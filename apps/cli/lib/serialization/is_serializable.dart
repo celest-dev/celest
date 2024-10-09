@@ -698,6 +698,15 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
     var verdict = const Verdict.yes();
     var fieldsVerdict = const Verdict.yes();
     for (final field in List.of(fields)) {
+      final (:ignoreFromJson, :ignoreToJson) = type._ignoredByJsonKey(field);
+      final ignore = switch (position) {
+        TypePosition.parameter => ignoreFromJson,
+        TypePosition.return$ => ignoreToJson,
+      };
+      if (ignore) {
+        continue;
+      }
+
       if (const DartTypeEquality().equals(type, field.type)) {
         fieldsVerdict &= Verdict.no(
           'Classes are not allowed to have fields of their own type.',
@@ -747,16 +756,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
     } else {
       final parameters = unnamedConstructor.parameters;
       for (final parameter in parameters) {
-        FieldElement? fieldFormal(ParameterElement param) {
-          return switch (param) {
-            FieldFormalParameterElement(:final field?) => field,
-            SuperFormalParameterElement(:final superConstructorParameter?) =>
-              fieldFormal(superConstructorParameter),
-            _ => fields.firstWhereOrNull((field) => field.name == param.name),
-          };
-        }
-
-        final parameterField = fieldFormal(parameter);
+        final parameterField = parameter.fieldFormal(fields);
         if (parameterField == null && parameter.isRequired) {
           constructorVerdict &= Verdict.no(
             'Required parameter "${parameter.displayName}" cannot be '
@@ -854,10 +854,97 @@ extension on InterfaceType {
     return unnamedConstructor;
   }
 
+  /// Checks if a field is ignored by `@JsonKey(ignore: true)` or one of
+  /// `@JsonKey(includeToJson: false)` or `@JsonKey(includeFromJson: false)`.
+  ({
+    bool ignoreToJson,
+    bool ignoreFromJson,
+  }) _ignoredByJsonKey(FieldElement field) {
+    // Collect all metadata on the field up the ancestor chain.
+    //
+    // We only include the element itself, any mixins, and all superclasses.
+    // We do not include interfaces (e.g. `implements X`) because classes do
+    // not inherit metadata from interfaces.
+    final allMetadata = <ElementAnnotation>{
+      ...field.metadata,
+      if (field.getter case final getter?) ...getter.metadata,
+    };
+
+    void addMixins(InterfaceElement element) {
+      allMetadata.addAll(
+        element.mixins.expand((mixin) sync* {
+          final mixinField = mixin.element.getField(field.name);
+          if (mixinField == null) {
+            return;
+          }
+          yield* mixinField.metadata;
+          if (mixinField.getter case final getter?) {
+            yield* getter.metadata;
+          }
+        }),
+      );
+    }
+
+    addMixins(element);
+
+    var enclosingElement = element.supertype?.element;
+    while (enclosingElement != null) {
+      if (enclosingElement.getField(field.name) case final field?) {
+        allMetadata.addAll(field.metadata);
+        if (field.getter case final getter?) {
+          allMetadata.addAll(getter.metadata);
+        }
+      }
+      addMixins(enclosingElement);
+      enclosingElement = enclosingElement.supertype?.element;
+    }
+
+    // Check for `@JsonKey` annotations from `package:json_annotation`.
+    for (final annotation in allMetadata) {
+      final value = annotation.computeConstantValue();
+      if (value == null) {
+        continue;
+      }
+      final isJsonKey = switch (value.type) {
+        final type? => identical(
+            type,
+            typeHelper.coreTypes.jsonKeyElement?.thisType,
+          ),
+        _ => false,
+      };
+      if (!isJsonKey) {
+        continue;
+      }
+      // Ignore as requested. If later we determine the field is needed to
+      // construct the object, we'll error then.
+      if (value.getField('ignore')?.toBoolValue() case final ignore?) {
+        return (ignoreToJson: ignore, ignoreFromJson: ignore);
+      }
+      final (includeFromJson, includeToJson) = (
+        value.getField('includeFromJson')?.toBoolValue() ?? true,
+        value.getField('includeToJson')?.toBoolValue() ?? true,
+      );
+      return (
+        ignoreToJson: !includeToJson,
+        ignoreFromJson: !includeFromJson,
+      );
+    }
+
+    return (ignoreToJson: false, ignoreFromJson: false);
+  }
+
   List<FieldSpec> get fieldSpecs => switch (element) {
         final ClassElement element => [
             for (final field in element.sortedFields(this))
-              FieldSpec(name: field.displayName, type: field.type),
+              run(() {
+                final (:ignoreToJson, :ignoreFromJson) =
+                    _ignoredByJsonKey(field);
+                return FieldSpec(
+                  name: field.displayName,
+                  type: field.type,
+                  ignore: ignoreToJson,
+                );
+              }),
           ],
         EnumElement() => const [],
         ExtensionTypeElement(:final representation) => [
@@ -1108,16 +1195,53 @@ class _FieldSet implements Comparable<_FieldSet> {
   }
 }
 
+extension on ParameterElement {
+  FieldElement? fieldFormal(List<FieldElement> fields) {
+    return switch (this) {
+      FieldFormalParameterElement(:final field?) => field,
+      SuperFormalParameterElement(:final superConstructorParameter?) =>
+        superConstructorParameter.fieldFormal(fields),
+      _ => fields.firstWhereOrNull((field) => field.name == name),
+    };
+  }
+}
+
 extension on ExecutableElement? {
-  List<ParameterSpec> get parameterSpecs => [
-        for (final parameter in this?.parameters ?? const <ParameterElement>[])
-          ParameterSpec(
-            name: parameter.displayName,
-            type: parameter.type,
-            isPositional: parameter.isPositional,
-            isOptional: parameter.isOptional,
-            isNamed: parameter.isNamed,
-            defaultValue: parameter.declaration.defaultToExpression,
-          ),
-      ];
+  List<ParameterSpec> get parameterSpecs {
+    final parameters = this?.parameters;
+    if (parameters == null) {
+      return const [];
+    }
+    final specs = <ParameterSpec>[];
+    final fields = switch (this) {
+      ParameterElement(
+        enclosingElement: Element(:final ClassElement enclosingElement)
+      ) =>
+        enclosingElement.sortedFields(enclosingElement.thisType),
+      _ => const <FieldElement>[],
+    };
+    for (final parameter in parameters) {
+      final fieldFormal = parameter.fieldFormal(fields);
+      final (:ignoreFromJson, ignoreToJson: _) = switch (parameter) {
+        ParameterElement(
+          enclosingElement: Element(:final ClassElement enclosingElement)
+        )
+            when fieldFormal != null =>
+          enclosingElement.thisType._ignoredByJsonKey(fieldFormal),
+        _ => (ignoreFromJson: false, ignoreToJson: false),
+      };
+      specs.add(
+        ParameterSpec(
+          name: parameter.displayName,
+          type: parameter.type,
+          isPositional: parameter.isPositional,
+          isOptional: parameter.isOptional,
+          isNamed: parameter.isNamed,
+          defaultValue: parameter.declaration.defaultToExpression,
+          ignore: ignoreFromJson,
+        ),
+      );
+    }
+    return specs;
+  }
 }

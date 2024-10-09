@@ -201,7 +201,7 @@ class CelestFunctionsAsserts {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -345,7 +345,7 @@ class CelestFunctionsClasses {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -1168,7 +1168,7 @@ class CelestFunctionsCollections {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -1479,7 +1479,7 @@ class CelestFunctionsCycles {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -1706,7 +1706,7 @@ class CelestFunctionsDemo {
             .deserialize<BadNameException>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -1864,7 +1864,7 @@ class CelestFunctionsExceptions {
             .deserialize<CustomErrorWithStackTrace>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -2136,7 +2136,7 @@ class CelestFunctionsExtensionTypes {
             .deserialize<_$celest.SerializationException>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -3420,7 +3420,7 @@ class CelestFunctionsGenericWrappers {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -3671,7 +3671,7 @@ class CelestFunctionsMetadata {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -4643,7 +4643,7 @@ class CelestFunctionsOverrides {
             .deserialize<OverriddenException>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -4971,7 +4971,7 @@ class CelestFunctionsParameterTypes {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -5813,7 +5813,7 @@ class CelestFunctionsParameters {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -6044,7 +6044,7 @@ class CelestFunctionsRecords {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -6438,7 +6438,7 @@ class CelestFunctionsReturnTypes {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -7832,7 +7832,7 @@ class CelestFunctionsSealedClasses {
             .deserialize<CustomErrorWithStackTrace>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,
@@ -8496,7 +8496,7 @@ class CelestFunctionsTypedefs {
             .deserialize<_$convert.JsonUnsupportedObjectError>($details);
       default:
         throw _$celest.CloudException.http(
-          statusCode: $statusCode,
+          status: $statusCode,
           code: $code,
           message: $message,
           details: $details,

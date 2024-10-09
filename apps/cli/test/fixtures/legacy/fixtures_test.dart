@@ -46,6 +46,7 @@ void main() {
     _ => false,
   };
   final includeTests = Platform.environment['INCLUDE_TESTS']?.split(',');
+  final includeApis = Platform.environment['INCLUDE_APIS']?.split(',');
 
   if (updateGoldens && Platform.isWindows) {
     throw Exception(
@@ -81,6 +82,7 @@ void main() {
       goldensDir: fileSystem.directory(
         p.join(projectDir.path, 'goldens'),
       ),
+      includeApis: includeApis,
     );
     testRunners.add(testRunner);
   }
@@ -102,6 +104,7 @@ class TestRunner {
     this.parentProject,
     this.clientDir,
     required this.goldensDir,
+    this.includeApis,
   });
 
   final String testName;
@@ -110,6 +113,7 @@ class TestRunner {
   final Directory? clientDir;
   final ParentProject? parentProject;
   final Directory goldensDir;
+  final List<String>? includeApis;
 
   late final testCases = tests[testName];
 
@@ -168,7 +172,7 @@ class TestRunner {
         p.join(projectRoot, 'lib', 'src', 'functions'),
       );
       if (apisDir.existsSync()) {
-        testApis(apisDir);
+        testApis(apisDir, includeApis);
       }
     });
   }
@@ -331,13 +335,16 @@ class TestRunner {
     });
   }
 
-  void testApis(Directory apisDir) {
+  void testApis(Directory apisDir, List<String>? includeApis) {
     final apis = testCases?.apis ?? const {};
     if (apis.isEmpty) {
       return;
     }
     group('apis', () {
       for (final MapEntry(key: apiName, value: apiTest) in apis.entries) {
+        if (includeApis != null && !includeApis.contains(apiName)) {
+          continue;
+        }
         testApi(apiName, apiTest);
       }
     });
@@ -1744,12 +1751,11 @@ final tests = <String, Test>{
               input: {},
               statusCode: 400,
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.OverriddenException',
-                  'details': {
-                    'message': 'message',
-                  },
+                  'status': 400,
                 },
+                'message': 'message',
               },
             ),
           ],
@@ -1759,12 +1765,11 @@ final tests = <String, Test>{
               input: {},
               statusCode: 400,
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.OverriddenException',
-                  'details': {
-                    'message': 'message',
-                  },
+                  'status': 400,
                 },
+                'message': 'message',
               },
             ),
           ],
@@ -1774,12 +1779,11 @@ final tests = <String, Test>{
               input: {},
               statusCode: 400,
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.OverriddenException',
-                  'details': {
-                    'message': 'message',
-                  },
+                  'status': 400,
                 },
+                'message': 'message',
               },
             ),
           ],
@@ -1789,12 +1793,11 @@ final tests = <String, Test>{
               input: {},
               statusCode: 400,
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.OverriddenException',
-                  'details': {
-                    'message': 'message',
-                  },
+                  'status': 400,
                 },
+                'message': 'message',
               },
             ),
           ],
@@ -2550,8 +2553,10 @@ final tests = <String, Test>{
                 'type': 'Exception',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': '_Exception',
+                  'status': 400,
+                  'message': 'Exception: Something bad happened',
                 },
               },
             ),
@@ -2562,10 +2567,14 @@ final tests = <String, Test>{
                 'type': 'FormatException',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'dart.core.FormatException',
-                  'details': anything,
+                  'message': 'Bad format',
+                  'status': 400,
                 },
+                'message': 'Bad format',
+                'source': null,
+                'offset': null,
               },
             ),
           ],
@@ -2577,10 +2586,11 @@ final tests = <String, Test>{
                 'type': 'Error',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'dart.core.Error',
-                  'details': anything,
+                  'status': 500,
                 },
+                'stackTrace': anything,
               },
             ),
             FunctionTestError(
@@ -2590,10 +2600,13 @@ final tests = <String, Test>{
                 'type': 'ArgumentError',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'dart.core.ArgumentError',
-                  'details': anything,
+                  'status': 500,
                 },
+                'name': 'someArg',
+                'message': 'Bad argument',
+                'invalidValue': null,
               },
             ),
           ],
@@ -2603,14 +2616,14 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.CustomException',
-                  'details': {
-                    'message': 'This is a custom exception',
-                    'additionalInfo': {
-                      'hello': 'world',
-                    },
-                  },
+                  'message': 'This is a custom exception',
+                  'status': 400,
+                },
+                'message': 'This is a custom exception',
+                'additionalInfo': {
+                  'hello': 'world',
                 },
               },
             ),
@@ -2621,14 +2634,13 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.CustomExceptionToFromJson',
-                  'details': {
-                    'message': 'This is a custom exception',
-                    'hello': 'world',
-                    'another': 'value',
-                  },
+                  'status': 400,
                 },
+                'message': 'This is a custom exception',
+                'hello': 'world',
+                'another': 'value',
               },
             ),
           ],
@@ -2638,14 +2650,14 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.CustomError',
-                  'details': {
-                    'message': 'This is a custom error',
-                    'additionalInfo': {
-                      'hello': 'world',
-                    },
-                  },
+                  'message': 'This is a custom error',
+                  'status': 500,
+                },
+                'message': 'This is a custom error',
+                'additionalInfo': {
+                  'hello': 'world',
                 },
               },
             ),
@@ -2656,14 +2668,13 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.CustomErrorToFromJson',
-                  'details': {
-                    'message': 'This is a custom error',
-                    'hello': 'world',
-                    'another': 'value',
-                  },
+                  'status': 500,
                 },
+                'message': 'This is a custom error',
+                'hello': 'world',
+                'another': 'value',
               },
             ),
           ],
@@ -2673,16 +2684,16 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.CustomErrorWithStackTrace',
-                  'details': {
-                    'message': 'This is a custom error',
-                    'additionalInfo': {
-                      'hello': 'world',
-                    },
-                    'stackTrace': '',
-                  },
+                  'message': 'This is a custom error',
+                  'status': 500,
                 },
+                'message': 'This is a custom error',
+                'additionalInfo': {
+                  'hello': 'world',
+                },
+                'stackTrace': '',
               },
             ),
           ],
@@ -3785,12 +3796,11 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'exceptions.v1.BaseError',
-                  'details': {
-                    'fault': 'base: message',
-                  },
+                  'status': 500,
                 },
+                'fault': 'base: message',
               },
             ),
           ],
@@ -3800,12 +3810,11 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'exceptions.v1.CustomError',
-                  'details': {
-                    'fault': 'base: custom: message',
-                  },
+                  'status': 500,
                 },
+                'fault': 'base: custom: message',
               },
             ),
           ],
@@ -3815,12 +3824,11 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'exceptions.v1.BaseException',
-                  'details': {
-                    'fault': 'base: message',
-                  },
+                  'status': 400,
                 },
+                'fault': 'base: message',
               },
             ),
           ],
@@ -3830,12 +3838,11 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'exceptions.v1.CustomException',
-                  'details': {
-                    'fault': 'base: custom: message',
-                  },
+                  'status': 400,
                 },
+                'fault': 'base: custom: message',
               },
             ),
           ],
@@ -3849,12 +3856,11 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'exceptions.v1.BaseError',
-                  'details': {
-                    'fault': 'base: message',
-                  },
+                  'status': 500,
                 },
+                'fault': 'base: message',
               },
             ),
           ],
@@ -3864,12 +3870,11 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'exceptions.v1.CustomError',
-                  'details': {
-                    'fault': 'base: custom: message',
-                  },
+                  'status': 500,
                 },
+                'fault': 'base: custom: message',
               },
             ),
           ],
@@ -3879,12 +3884,11 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'exceptions.v1.BaseException',
-                  'details': {
-                    'fault': 'base: message',
-                  },
+                  'status': 400,
                 },
+                'fault': 'base: message',
               },
             ),
           ],
@@ -3894,12 +3898,11 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'exceptions.v1.CustomException',
-                  'details': {
-                    'fault': 'base: custom: message',
-                  },
+                  'status': 400,
                 },
+                'fault': 'base: custom: message',
               },
             ),
           ],
@@ -3913,12 +3916,12 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': '_common.CommonException',
-                  'details': {
-                    'message': 'message',
-                  },
+                  'message': 'message',
+                  'status': 400,
                 },
+                'message': 'message',
               },
             ),
           ],
@@ -3928,12 +3931,12 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': '_common.CustomException',
-                  'details': {
-                    'message': 'message',
-                  },
+                  'message': 'message',
+                  'status': 400,
                 },
+                'message': 'message',
               },
             ),
           ],
@@ -4010,11 +4013,13 @@ final tests = <String, Test>{
                 'type': 'badRequest',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'celest.core.v1.BadRequestException',
                   'message': '',
-                  'details': null,
+                  'status': 400,
                 },
+                'message': '',
+                'details': null,
               },
             ),
             FunctionTestError(
@@ -4024,11 +4029,13 @@ final tests = <String, Test>{
                 'type': 'customBadRequest',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.CustomBadRequestException',
                   'message': '',
-                  'details': null,
+                  'status': 412,
                 },
+                'message': '',
+                'details': null,
               },
             ),
             FunctionTestError(
@@ -4038,11 +4045,13 @@ final tests = <String, Test>{
                 'type': 'unauthorized',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'celest.core.v1.UnauthorizedException',
                   'message': '',
-                  'details': null,
+                  'status': 401,
                 },
+                'message': '',
+                'details': null,
               },
             ),
             FunctionTestError(
@@ -4052,11 +4061,13 @@ final tests = <String, Test>{
                 'type': 'forbidden',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.ForbiddenException',
                   'message': '',
-                  'details': null,
+                  'status': 403,
                 },
+                'message': '',
+                'details': null,
               },
             ),
             FunctionTestError(
@@ -4066,9 +4077,9 @@ final tests = <String, Test>{
                 'type': 'notFound',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.NotFoundException',
-                  'details': <String, Object?>{},
+                  'status': 404,
                 },
               },
             ),
@@ -4079,9 +4090,9 @@ final tests = <String, Test>{
                 'type': 'anotherNotFound',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.AnotherNotFoundException',
-                  'details': <String, Object?>{},
+                  'status': 404,
                 },
               },
             ),
@@ -4092,11 +4103,13 @@ final tests = <String, Test>{
                 'type': 'internalServerError',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'celest.core.v1.InternalServerError',
                   'message': '',
-                  'details': null,
+                  'status': 404,
                 },
+                'message': '',
+                'details': null,
               },
             ),
             FunctionTestError(
@@ -4106,11 +4119,13 @@ final tests = <String, Test>{
                 'type': 'badGateway',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'api.v1.BadGatewayError',
                   'message': '',
-                  'details': null,
+                  'status': 404,
                 },
+                'message': '',
+                'details': null,
               },
             ),
           ],
@@ -4418,12 +4433,11 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': '_common.UserException',
-                  'details': {
-                    'msg': 'message',
-                  },
+                  'status': 400,
                 },
+                'msg': 'message',
               },
             ),
             FunctionTestError(
@@ -4433,13 +4447,12 @@ final tests = <String, Test>{
                 'cause': 'Bad thing happened',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': '_common.UserException',
-                  'details': {
-                    'msg': 'message',
-                    'cause': 'Bad thing happened',
-                  },
+                  'status': 400,
                 },
+                'msg': 'message',
+                'cause': 'Bad thing happened',
               },
             ),
             FunctionTestError(
@@ -4451,13 +4464,12 @@ final tests = <String, Test>{
                 },
               },
               output: {
-                'error': {
+                '@error': {
                   'code': '_common.UserException',
-                  'details': {
-                    'msg': 'message',
-                    'cause': '{reason: Bad thing happened}', // cause.toString()
-                  },
+                  'status': 400,
                 },
+                'msg': 'message',
+                'cause': '{reason: Bad thing happened}', // cause.toString()
               },
             ),
           ],
@@ -4467,12 +4479,11 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': '_common.UserException',
-                  'details': {
-                    'msg': 'message',
-                  },
+                  'status': 400,
                 },
+                'msg': 'message',
               },
             ),
             FunctionTestError(
@@ -4482,13 +4493,12 @@ final tests = <String, Test>{
                 'cause': 'Bad thing happened',
               },
               output: {
-                'error': {
+                '@error': {
                   'code': '_common.UserException',
-                  'details': {
-                    'msg': 'message',
-                    'cause': 'Bad thing happened',
-                  },
+                  'status': 400,
                 },
+                'msg': 'message',
+                'cause': 'Bad thing happened',
               },
             ),
             FunctionTestError(
@@ -4500,13 +4510,12 @@ final tests = <String, Test>{
                 },
               },
               output: {
-                'error': {
+                '@error': {
                   'code': '_common.UserException',
-                  'details': {
-                    'msg': 'message',
-                    'cause': '{reason: Bad thing happened}', // cause.toString()
-                  },
+                  'status': 400,
                 },
+                'msg': 'message',
+                'cause': '{reason: Bad thing happened}', // cause.toString()
               },
             ),
           ],
@@ -4516,13 +4525,12 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'marcelo.v1.AppError',
-                  'details': {
-                    'msg': 'message',
-                    'error': null,
-                  },
+                  'status': 500,
                 },
+                'msg': 'message',
+                'error': null,
               },
             ),
             FunctionTestError(
@@ -4533,13 +4541,12 @@ final tests = <String, Test>{
                 'error': 123,
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'marcelo.v1.AppError',
-                  'details': {
-                    'msg': 'test',
-                    'error': 123,
-                  },
+                  'status': 500,
                 },
+                'msg': 'test',
+                'error': 123,
               },
             ),
           ],
@@ -4549,13 +4556,12 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'marcelo.v1.AppException',
-                  'details': {
-                    'msg': 'message',
-                    'error': 'error',
-                  },
+                  'status': 400,
                 },
+                'msg': 'message',
+                'error': 'error',
               },
             ),
           ],
@@ -4565,13 +4571,12 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'marcelo.v1.NotYetImplementedError',
-                  'details': {
-                    'msg': 'message',
-                    'message': null,
-                  },
+                  'status': 500,
                 },
+                'msg': 'message',
+                'message': null,
               },
             ),
           ],
@@ -4581,12 +4586,11 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': '_common.ValidateError',
-                  'details': {
-                    'msg': 'message',
-                  },
+                  'status': 500,
                 },
+                'msg': 'message',
               },
             ),
           ],
@@ -4596,14 +4600,13 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                'error': {
+                '@error': {
                   'code': 'marcelo.v1.UserException_ShowInConsole',
-                  'details': {
-                    'msg': 'message',
-                    'code': null,
-                    'cause': null,
-                  },
+                  'status': 400,
                 },
+                'msg': 'message',
+                'code': null,
+                'cause': null,
               },
             ),
             FunctionTestError(
@@ -4614,14 +4617,13 @@ final tests = <String, Test>{
                 'cause': 123,
               },
               output: {
-                'error': {
+                '@error': {
                   'code': 'marcelo.v1.UserException_ShowInConsole',
-                  'details': {
-                    'msg': 'test',
-                    'code': null,
-                    'cause': 123,
-                  },
+                  'status': 400,
                 },
+                'msg': 'test',
+                'code': null,
+                'cause': 123,
               },
             ),
           ],

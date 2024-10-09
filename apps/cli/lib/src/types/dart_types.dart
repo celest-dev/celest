@@ -580,10 +580,6 @@ class _Celest {
   DartTypeReference get badRequestException =>
       const DartTypeReference('BadRequestException', _coreUrl);
 
-  /// Creates a [celest_runtime.CelestResponse] reference.
-  DartTypeReference get celestResponse =>
-      const DartTypeReference('CelestResponse', _runtimeUrl);
-
   /// Creates a [celest.CloudApi] reference.
   DartTypeReference get cloudApi => const DartTypeReference('CloudApi', _url);
 
@@ -615,6 +611,14 @@ class _Celest {
 
   /// Creates a [celest_core.JsonMap] reference.
   DartTypeReference get jsonMap => const DartTypeReference('JsonMap', _coreUrl);
+
+  /// Creates a [celest_core.JsonUtf8] reference.
+  DartTypeReference get jsonUtf8 =>
+      const DartTypeReference('JsonUtf8', _coreUrl);
+
+  /// Creates a [celest_runtime.Middleware] reference.
+  DartTypeReference get middleware =>
+      const DartTypeReference('Middleware', _runtimeUrl);
 
   /// Creates a [celest_core.Serializer] reference.
   TypeReference serializer([Reference? dartType]) => TypeReference(
@@ -732,6 +736,10 @@ class _Convert {
   /// Creates a [convert.jsonEncode] reference.
   DartTypeReference get jsonEncode =>
       const DartTypeReference('jsonEncode', _url);
+
+  /// Creates a [convert.JsonUtf8Encoder] reference.
+  DartTypeReference get jsonUtf8Encoder =>
+      const DartTypeReference('JsonUtf8Encoder', _url);
 
   /// Creates a [convert.jsonDecode] reference.
   DartTypeReference get jsonDecode =>

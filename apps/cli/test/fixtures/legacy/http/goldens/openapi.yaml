@@ -709,16 +709,33 @@ components:
         type:
           $ref: '#/components/schemas/api.v1.ExceptionType'
       additionalProperties: false
+    celest.core.v1.HttpStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          nullable: false
+          format: int64
+      additionalProperties: false
+      required:
+        - code
     api.v1.ForbiddenException:
       type: object
       properties:
-        details:
-          $ref: '#/components/schemas/celest.core.v1.JsonValue'
+        code:
+          type: string
+          nullable: false
+        httpStatus:
+          $ref: '#/components/schemas/celest.core.v1.HttpStatus'
         message:
           type: string
           nullable: false
+        details:
+          $ref: '#/components/schemas/celest.core.v1.JsonValue'
       additionalProperties: false
       required:
+        - code
+        - httpStatus
         - message
     api.v1.HttpErrorsHttpErrorsError_403:
       type: object
@@ -737,13 +754,20 @@ components:
     api.v1.CustomBadRequestException:
       type: object
       properties:
-        details:
-          $ref: '#/components/schemas/celest.core.v1.JsonValue'
+        code:
+          type: string
+          nullable: false
+        httpStatus:
+          $ref: '#/components/schemas/celest.core.v1.HttpStatus'
         message:
           type: string
           nullable: false
+        details:
+          $ref: '#/components/schemas/celest.core.v1.JsonValue'
       additionalProperties: false
       required:
+        - code
+        - httpStatus
         - message
     api.v1.HttpErrorsHttpErrorsError_412:
       type: object
@@ -762,6 +786,11 @@ components:
     celest.core.v1.UnauthorizedException:
       type: object
       properties:
+        code:
+          type: string
+          nullable: false
+        httpStatus:
+          $ref: '#/components/schemas/celest.core.v1.HttpStatus'
         message:
           type: string
           nullable: false
@@ -769,6 +798,8 @@ components:
           $ref: '#/components/schemas/celest.core.v1.JsonValue'
       additionalProperties: false
       required:
+        - code
+        - httpStatus
         - message
     api.v1.HttpErrorsHttpErrorsError_401:
       type: object
@@ -790,6 +821,11 @@ components:
     celest.core.v1.InternalServerError:
       type: object
       properties:
+        code:
+          type: string
+          nullable: false
+        httpStatus:
+          $ref: '#/components/schemas/celest.core.v1.HttpStatus'
         message:
           type: string
           nullable: false
@@ -797,6 +833,8 @@ components:
           $ref: '#/components/schemas/celest.core.v1.JsonValue'
       additionalProperties: false
       required:
+        - code
+        - httpStatus
         - message
     api.v1.HttpErrorsHttpErrorsError_404:
       type: object

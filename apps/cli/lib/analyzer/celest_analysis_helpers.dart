@@ -225,12 +225,12 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       _ => false,
     };
     if (!isInstantiable) {
-      _logger.fine('❌ $typeUri', 'Cannot be instantiated');
+      _logger.finest('❌ $typeUri', 'Cannot be instantiated');
       return null;
     }
     final isSerializable = typeHelper.isSerializable(interfaceType);
     if (!isSerializable.isSerializable) {
-      _logger.fine('❌ $typeUri', isSerializable.reasons.join(', '));
+      _logger.finest('❌ $typeUri', isSerializable.reasons.join(', '));
       // Serialization issues are only reported if the type is a custom type
       // (e.g. exported from `exceptions/`). Otherwise, users are still
       // allowed to throw it, but it will not be serialized in the response.

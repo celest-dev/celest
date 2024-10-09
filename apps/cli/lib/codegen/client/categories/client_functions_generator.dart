@@ -456,7 +456,7 @@ if ($event.containsKey('error')) {
                     'http',
                     [],
                     {
-                      'statusCode': refer(r'$statusCode'),
+                      'status': refer(r'$statusCode'),
                       'code': refer(r'$code'),
                       'message': refer(r'$message'),
                       'details': refer(r'$details'),

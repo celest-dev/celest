@@ -42,6 +42,7 @@ final class CoreTypes implements TypeProvider {
     required this.celestEnvElement,
     required this.celestSecretType,
     required this.celestSecretElement,
+    required this.jsonKeyElement,
   }) : _typeProvider = typeProvider;
 
   final TypeProvider _typeProvider;
@@ -65,6 +66,7 @@ final class CoreTypes implements TypeProvider {
   final ClassElement celestEnvElement;
   final InterfaceType celestSecretType;
   final ClassElement celestSecretElement;
+  final ClassElement? jsonKeyElement;
 
   @override
   ClassElement get boolElement => _typeProvider.boolElement;

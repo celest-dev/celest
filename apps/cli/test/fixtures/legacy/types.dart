@@ -66,12 +66,10 @@ class FunctionTestSuccess extends HttpTest {
     super.headers,
     super.queryParameters,
     this.statusCode = 200,
-    required Object? output,
+    required this.output,
     super.logs,
     super.setup,
-  }) : output = {
-          'response': output,
-        };
+  });
 
   final int statusCode;
   final Object? output;
@@ -117,10 +115,7 @@ class EventTestSuccess extends EventTest {
     super.logs,
     super.setup,
   }) : output = emitsInOrder([
-          for (final event in events ?? const [])
-            jsonEncode({
-              'response': event,
-            }),
+          for (final event in events ?? const []) jsonEncode(event),
           emitsDone,
         ]);
 

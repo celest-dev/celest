@@ -13,7 +13,7 @@ import 'package:celest_core/src/serialization/json_value.dart' as _$celest;
 void initSerializers() {
   _$celest.Serializers.instance
       .put(_$celest.Serializer.define<_$async.AsyncError, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'error': $value.error,
       r'stackTrace': _$celest.Serializers.instance
           .serialize<StackTrace>($value.stackTrace),
@@ -28,7 +28,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$async.TimeoutException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'duration':
           _$celest.Serializers.instance.serialize<Duration?>($value.duration),
@@ -43,7 +43,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$convert.JsonUnsupportedObjectError, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'unsupportedObject': $value.unsupportedObject,
       r'cause': $value.cause,
       r'partialResult': $value.partialResult,
@@ -58,7 +58,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance
       .put(_$celest.Serializer.define<ArgumentError, Map<String, Object?>?>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'invalidValue': $value.invalidValue,
       r'name': $value.name,
       r'message': $value.message,
@@ -72,21 +72,22 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance
       .put(_$celest.Serializer.define<AssertionError, Map<String, Object?>?>(
-    serialize: ($value) => {r'message': $value.message},
+    serialize: ($value) => <String, Object?>{r'message': $value.message},
     deserialize: ($serialized) {
       return AssertionError($serialized?[r'message']);
     },
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       ConcurrentModificationError, Map<String, Object?>?>(
-    serialize: ($value) => {r'modifiedObject': $value.modifiedObject},
+    serialize: ($value) =>
+        <String, Object?>{r'modifiedObject': $value.modifiedObject},
     deserialize: ($serialized) {
       return ConcurrentModificationError($serialized?[r'modifiedObject']);
     },
   ));
   _$celest.Serializers.instance
       .put(_$celest.Serializer.define<Error, Map<String, Object?>?>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'stackTrace': _$celest.Serializers.instance
           .serialize<StackTrace?>($value.stackTrace)
     },
@@ -96,7 +97,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance
       .put(_$celest.Serializer.define<FormatException, Map<String, Object?>?>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'source': $value.source,
       r'offset': $value.offset,
@@ -111,7 +112,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance
       .put(_$celest.Serializer.define<IndexError, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'name': $value.name,
       r'message': $value.message,
       r'indexable': $value.indexable,
@@ -132,21 +133,21 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       IntegerDivisionByZeroException, Map<String, Object?>?>(
-    serialize: ($value) => {r'message': $value.message},
+    serialize: ($value) => <String, Object?>{r'message': $value.message},
     deserialize: ($serialized) {
       return IntegerDivisionByZeroException();
     },
   ));
   _$celest.Serializers.instance
       .put(_$celest.Serializer.define<OutOfMemoryError, Map<String, Object?>?>(
-    serialize: ($value) => {},
+    serialize: ($value) => const <String, Object?>{},
     deserialize: ($serialized) {
       return OutOfMemoryError();
     },
   ));
   _$celest.Serializers.instance
       .put(_$celest.Serializer.define<RangeError, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'name': $value.name,
       r'message': $value.message,
       r'start': $value.start,
@@ -159,42 +160,42 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(
       _$celest.Serializer.define<StackOverflowError, Map<String, Object?>?>(
-    serialize: ($value) => {},
+    serialize: ($value) => const <String, Object?>{},
     deserialize: ($serialized) {
       return StackOverflowError();
     },
   ));
   _$celest.Serializers.instance
       .put(_$celest.Serializer.define<StateError, Map<String, Object?>>(
-    serialize: ($value) => {r'message': $value.message},
+    serialize: ($value) => <String, Object?>{r'message': $value.message},
     deserialize: ($serialized) {
       return StateError(($serialized[r'message'] as String));
     },
   ));
   _$celest.Serializers.instance
       .put(_$celest.Serializer.define<TypeError, Map<String, Object?>?>(
-    serialize: ($value) => {},
+    serialize: ($value) => const <String, Object?>{},
     deserialize: ($serialized) {
       return TypeError();
     },
   ));
   _$celest.Serializers.instance.put(
       _$celest.Serializer.define<UnimplementedError, Map<String, Object?>?>(
-    serialize: ($value) => {r'message': $value.message},
+    serialize: ($value) => <String, Object?>{r'message': $value.message},
     deserialize: ($serialized) {
       return UnimplementedError(($serialized?[r'message'] as String?));
     },
   ));
   _$celest.Serializers.instance
       .put(_$celest.Serializer.define<UnsupportedError, Map<String, Object?>>(
-    serialize: ($value) => {r'message': $value.message},
+    serialize: ($value) => <String, Object?>{r'message': $value.message},
     deserialize: ($serialized) {
       return UnsupportedError(($serialized[r'message'] as String));
     },
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.AbortedException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -213,7 +214,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.AlreadyExistsException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -232,7 +233,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.BadRequestException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -251,7 +252,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.CancelledException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -270,7 +271,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(
       _$celest.Serializer.define<_$celest.CloudException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -283,7 +284,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(
       _$celest.Serializer.define<_$celest.DataLossError, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -302,7 +303,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.DeadlineExceededError, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -321,7 +322,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.FailedPreconditionException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -340,7 +341,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.InternalServerError, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -359,7 +360,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.NotFoundException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -378,7 +379,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.OutOfRangeException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -397,7 +398,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.PermissionDeniedException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -416,7 +417,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.ResourceExhaustedException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -435,7 +436,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.UnauthorizedException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -454,7 +455,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.UnavailableError, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -473,7 +474,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.UnimplementedError, Map<String, Object?>?>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -486,7 +487,7 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(
       _$celest.Serializer.define<_$celest.UnknownError, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
@@ -505,10 +506,8 @@ void initSerializers() {
   ));
   _$celest.Serializers.instance.put(_$celest.Serializer.define<
       _$celest.SerializationException, Map<String, Object?>>(
-    serialize: ($value) => {
+    serialize: ($value) => <String, Object?>{
       r'message': $value.message,
-      r'offset': $value.offset,
-      r'source': $value.source,
       r'details': _$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
         $value.details,
         const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
