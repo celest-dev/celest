@@ -1,6 +1,6 @@
 name: celest_cli
 description: The command-line interface for Celest.
-version: 0.5.0-dev.1
+version: 0.5.0-dev.3
 publish_to: none
 
 environment:
