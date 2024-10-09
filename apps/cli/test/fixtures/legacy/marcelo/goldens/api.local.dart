@@ -3,19 +3,32 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime/serve.dart' as _i1;
 
-import 'functions/exceptions/callsThrowsUserException.dart' as _i2;
-import 'functions/exceptions/throwsAppError.dart' as _i3;
-import 'functions/exceptions/throwsAppException.dart' as _i4;
-import 'functions/exceptions/throwsNotYetImplementedError.dart' as _i5;
-import 'functions/exceptions/throwsUserException.dart' as _i6;
-import 'functions/exceptions/throwsUserException_ShowInConsole.dart' as _i7;
-import 'functions/exceptions/throwsValidateError.dart' as _i8;
-import 'functions/models/availableStock.dart' as _i9;
-import 'functions/models/availableStocks.dart' as _i10;
-import 'functions/models/cashBalance.dart' as _i11;
-import 'functions/models/portfolio.dart' as _i12;
-import 'functions/models/stock.dart' as _i13;
-import 'functions/models/ui.dart' as _i14;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/exceptions/callsThrowsUserException.dart'
+    as _i2;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/exceptions/throwsAppError.dart'
+    as _i3;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/exceptions/throwsAppException.dart'
+    as _i4;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/exceptions/throwsNotYetImplementedError.dart'
+    as _i5;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/exceptions/throwsUserException.dart'
+    as _i6;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/exceptions/throwsUserException_ShowInConsole.dart'
+    as _i7;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/exceptions/throwsValidateError.dart'
+    as _i8;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/models/availableStock.dart'
+    as _i9;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/models/availableStocks.dart'
+    as _i10;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/models/cashBalance.dart'
+    as _i11;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/models/portfolio.dart'
+    as _i12;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/models/stock.dart'
+    as _i13;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/goldens/functions/models/ui.dart'
+    as _i14;
 
 Future<void> main() async {
   return start();

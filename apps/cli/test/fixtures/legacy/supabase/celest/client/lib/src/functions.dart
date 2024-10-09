@@ -13,8 +13,7 @@ import 'package:celest_core/src/auth/user.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
-
-import '../supabase_client.dart';
+import 'package:supabase_client/supabase_client.dart';
 
 class CelestFunctions {
   final auth = CelestFunctionsAuth();

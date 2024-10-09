@@ -145,6 +145,7 @@ final class CelestProject {
     byteStore: _byteStore,
   );
 
+  // TODO(dnys1): Use this value in the AST.
   Future<CelestProjectType> determineProjectType() async {
     final packageConfigFile = fileSystem.file(projectPaths.packagesConfig);
     if (packageConfigFile.existsSync()) {

@@ -9,6 +9,7 @@ import 'dart:convert' as _$convert;
 import 'dart:typed_data' as _$typed_data;
 
 import 'package:_common/_common.dart' as _$_common;
+import 'package:api_client/api_client.dart';
 import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_backend/exceptions/demo.dart';
 import 'package:celest_backend/exceptions/exceptions.dart';
@@ -33,8 +34,6 @@ import 'package:celest_core/src/exception/serialization_exception.dart'
 import 'package:celest_core/src/serialization/json_value.dart' as _$celest;
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _$ilist;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _$imap;
-
-import '../api_client.dart';
 
 class CelestFunctions {
   final asserts = CelestFunctionsAsserts();

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:celest_cli/commands/analysis_server_command.dart';
 import 'package:celest_cli/commands/auth_command.dart';
+import 'package:celest_cli/commands/build_command.dart';
 import 'package:celest_cli/commands/deploy_command.dart';
 import 'package:celest_cli/commands/init_command.dart';
 import 'package:celest_cli/commands/organizations/organizations_command.dart';
@@ -49,6 +50,7 @@ void main(List<String> args) async {
   )
     ..addCommand(InitCommand())
     ..addCommand(StartCommand())
+    ..addCommand(BuildCommand())
     ..addCommand(DeployCommand())
     ..addCommand(AnalysisServerCommand())
     ..addCommand(SubscribeCommand())

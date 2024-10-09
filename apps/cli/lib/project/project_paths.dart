@@ -1,5 +1,6 @@
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
+import 'package:celest_cli/src/utils/path.dart';
 
 final class ProjectPaths {
   ProjectPaths(
@@ -8,8 +9,8 @@ final class ProjectPaths {
     String? clientDir,
     String? outputsDir,
   })  : clientRoot = clientDir ?? p.join(outputsDir ?? projectRoot, 'client'),
-        outputsDir =
-            outputsDir ?? fileSystem.systemTempDirectory.createTempSync().path;
+        outputsDir = outputsDir ??
+            p.join(projectRoot, '.dart_tool', 'celest', 'outputs');
 
   final String projectRoot;
   final String outputsDir;
@@ -17,6 +18,7 @@ final class ProjectPaths {
   final String? parentAppRoot;
   String get celestConfig => celestProject.config.configDir.path;
 
+  late final String packageRoot = p.join(projectRoot, 'lib');
   late final String packagesConfig =
       p.join(projectRoot, '.dart_tool', 'package_config.json');
   late final String pubspecYaml = p.join(projectRoot, 'pubspec.yaml');
@@ -29,6 +31,7 @@ final class ProjectPaths {
   late final String legacyClientOutputsDir =
       p.join(projectRoot, 'lib', 'src', 'client');
   final String clientRoot;
+  late final String clientPackageRoot = p.join(clientRoot, 'lib');
   late final String clientOutputsDir = p.join(clientRoot, 'lib', 'src');
   late final String projectCacheDir =
       p.join(projectRoot, '.dart_tool', 'celest');
@@ -36,6 +39,7 @@ final class ProjectPaths {
   // Generated
   late final String generatedDir =
       p.join(projectRoot, 'lib', 'src', 'generated');
+  late final String buildDir = p.join(projectRoot, 'build');
 
   late final String apisDir = p.join(projectRoot, 'lib', 'src', 'functions');
   late final String legacyApisDir = p.join(projectRoot, 'functions');
@@ -71,7 +75,7 @@ final class ProjectPaths {
 
   Uri normalizeUri(Uri uri) {
     return switch (uri) {
-      Uri(scheme: 'file' || '') => _fileToProjectUri(uri),
+      Uri(scheme: 'file' || '', :final path) => fileToPackageUri(path),
       Uri(scheme: 'dart') => normalizeDartUrl(uri),
       Uri(scheme: 'package') => uri,
       _ => uri,
@@ -79,23 +83,52 @@ final class ProjectPaths {
   }
 
   Uri denormalizeUri(Uri uri) {
-    return switch (uri.scheme) {
-      'project' => _projectToFileUri(uri),
+    return switch (uri) {
+      Uri(
+        scheme: 'package',
+        pathSegments: [final package, ...final pathSegments]
+      )
+          when package == 'celest_backend' ||
+              package == celestProject.clientPubspec.name =>
+        packageToFileUri(package, pathSegments),
       _ => uri,
     };
   }
 
-  Uri _fileToProjectUri(Uri uri) {
-    // Store relative location in posix format for convenience and easier
-    // cross-platform testing.
-    final relativePath = p.relative(
-      p.fromUri(uri),
-      from: projectRoot,
-    );
-    return Uri(scheme: 'project', path: relativePath);
+  Uri fileToPackageUri(String path) {
+    if (!p.isRelative(path)) {
+      path = p.absolute(path);
+    }
+    if (p.isWithin(packageRoot, path)) {
+      path = p.relative(path, from: packageRoot).to(p.url);
+      return Uri(
+        scheme: 'package',
+        pathSegments: [
+          'celest_backend',
+          ...p.url.split(path),
+        ],
+      );
+    }
+    if (p.isWithin(clientPackageRoot, path)) {
+      path = p.relative(path, from: clientPackageRoot).to(p.url);
+      return Uri(
+        scheme: 'package',
+        pathSegments: [
+          celestProject.clientPubspec.name,
+          ...p.url.split(path),
+        ],
+      );
+    }
+    return p.toUri(path);
   }
 
-  Uri _projectToFileUri(Uri uri) {
-    return Uri.file(p.join(projectRoot, 'lib', 'src', uri.path));
+  Uri packageToFileUri(String package, List<String> pathSegments) {
+    if (package == 'celest_backend') {
+      return Uri.file(p.joinAll([packageRoot, ...pathSegments]));
+    }
+    if (package == celestProject.clientPubspec.name) {
+      return Uri.file(p.joinAll([clientPackageRoot, ...pathSegments]));
+    }
+    throw ArgumentError('Cannot denormalize package $package');
   }
 }

@@ -2,17 +2,17 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use
 
-library; // ignore_for_file: no_leading_underscores_for_library_prefixes
+library;
 
-import 'package:celest/celest.dart' as _i1;
-import 'package:celest/src/core/context.dart' as _i2;
+import 'package:celest/celest.dart';
+import 'package:celest/src/core/context.dart';
 
 /// An environment of a deployed Celest service.
 ///
 /// Celest services can have multiple isolated branches, for example
 /// a `development` and `production` environment.
 extension type const CelestEnvironment._(String _env)
-    implements _i1.Environment, String {
+    implements Environment, String {
   /// The local Celest environment, used to delineate when a
   /// Celest service is running on a developer machine as opposed
   /// to the cloud.
@@ -41,29 +41,29 @@ class CelestEnvironmentVariables {
   ///
   /// This is set by the deployment environment and is used to
   /// determine the current environment of the Celest service.
-  String get currentEnvironment => _i2.context.expect(_i1.env.environment);
+  String get currentEnvironment => context.expect(env.environment);
 
   /// The value of the `MY_NAME` environment variable.
-  String get myName => _i2.context.expect(const _i1.env('MY_NAME'));
+  String get myName => context.expect(const env('MY_NAME'));
 
   /// The value of the `MY_AGE` environment variable.
-  String get myAge => _i2.context.expect(const _i1.env('MY_AGE'));
+  String get myAge => context.expect(const env('MY_AGE'));
 
   /// The value of the `MY_HEIGHT` environment variable.
-  String get myHeight => _i2.context.expect(const _i1.env('MY_HEIGHT'));
+  String get myHeight => context.expect(const env('MY_HEIGHT'));
 
   /// The value of the `IM_COOL` environment variable.
-  String get imCool => _i2.context.expect(const _i1.env('IM_COOL'));
+  String get imCool => context.expect(const env('IM_COOL'));
 
   /// The value of the `MY_WEBSITE` environment variable.
-  String get myWebsite => _i2.context.expect(const _i1.env('MY_WEBSITE'));
+  String get myWebsite => context.expect(const env('MY_WEBSITE'));
 
   /// The value of the `CELEST_ENVIRONMENT` environment variable.
   String get celestEnvironment =>
-      _i2.context.expect(const _i1.env('CELEST_ENVIRONMENT'));
+      context.expect(const env('CELEST_ENVIRONMENT'));
 
   /// The value of the `MY_WEIGHT` environment variable.
-  String get myWeight => _i2.context.expect(const _i1.env('MY_WEIGHT'));
+  String get myWeight => context.expect(const env('MY_WEIGHT'));
 }
 
 /// The secrets for the Celest service.
@@ -74,5 +74,5 @@ class CelestSecrets {
   const CelestSecrets();
 
   /// The value of the `SUPER_SECRET` secret.
-  String get superSecret => _i2.context.expect(const _i1.env('SUPER_SECRET'));
+  String get superSecret => context.expect(const env('SUPER_SECRET'));
 }

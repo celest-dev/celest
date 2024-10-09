@@ -128,8 +128,15 @@ base mixin Configure on CelestCommand {
 
   /// Returns true if the project needs to be migrated.
   Stream<ConfigureState> _configure() async* {
-    final currentDir = fileSystem.currentDirectory;
-    final pubspecFile = currentDir.childFile('pubspec.yaml');
+    var currentDir = fileSystem.currentDirectory;
+    var pubspecFile = currentDir.childFile('pubspec.yaml');
+    while (!pubspecFile.existsSync()) {
+      if (currentDir == currentDir.parent) {
+        _throwNoProject();
+      }
+      currentDir = currentDir.parent;
+      pubspecFile = currentDir.childFile('pubspec.yaml');
+    }
     final projectFile = currentDir.childFile('project.dart');
 
     final (celestDir, isExistingProject, parentProject) =

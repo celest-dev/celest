@@ -11,16 +11,11 @@
         - For custom fromJson, request types can only be a base type like `object` or `string`
     - [ ] Fix `required` fields (take into account nullability + default values)
     - [ ] Fix `default` values
-- Generate Dockerfiles
 - Generate full client as part of `celest init`. To prevent lengthy starts, maybe bundle the generated client.
 
 ## Functions
 
 - Allow returning `Response` from functions for raw response control.
-
-## Environment Variables
-
-- Overhaul environment variables to avoid intermediate `Env` generation
 
 ## Runtime
 

@@ -3,7 +3,7 @@
   "reference": {
     "$": "Reference",
     "symbol": "project",
-    "url": "project:lib/src/project.dart"
+    "url": "package:celest_backend/src/project.dart"
   },
   "apis": {
     "records": {

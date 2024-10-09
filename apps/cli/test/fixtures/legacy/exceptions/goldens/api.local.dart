@@ -3,16 +3,26 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime/serve.dart' as _i1;
 
-import 'functions/external/callsThrowsCommonException.dart' as _i2;
-import 'functions/external/callsThrowsCustomException.dart' as _i3;
-import 'functions/nonthrowing/callsThrowsBaseError.dart' as _i4;
-import 'functions/nonthrowing/callsThrowsBaseException.dart' as _i5;
-import 'functions/nonthrowing/callsThrowsCustomError.dart' as _i6;
-import 'functions/nonthrowing/callsThrowsCustomException.dart' as _i7;
-import 'functions/throwing/throwsBaseError.dart' as _i8;
-import 'functions/throwing/throwsBaseException.dart' as _i9;
-import 'functions/throwing/throwsCustomError.dart' as _i10;
-import 'functions/throwing/throwsCustomException.dart' as _i11;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/exceptions/goldens/functions/external/callsThrowsCommonException.dart'
+    as _i2;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/exceptions/goldens/functions/external/callsThrowsCustomException.dart'
+    as _i3;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/exceptions/goldens/functions/nonthrowing/callsThrowsBaseError.dart'
+    as _i4;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/exceptions/goldens/functions/nonthrowing/callsThrowsBaseException.dart'
+    as _i5;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/exceptions/goldens/functions/nonthrowing/callsThrowsCustomError.dart'
+    as _i6;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/exceptions/goldens/functions/nonthrowing/callsThrowsCustomException.dart'
+    as _i7;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/exceptions/goldens/functions/throwing/throwsBaseError.dart'
+    as _i8;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/exceptions/goldens/functions/throwing/throwsBaseException.dart'
+    as _i9;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/exceptions/goldens/functions/throwing/throwsCustomError.dart'
+    as _i10;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/exceptions/goldens/functions/throwing/throwsCustomException.dart'
+    as _i11;
 
 Future<void> main() async {
   return start();

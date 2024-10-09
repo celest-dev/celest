@@ -12,10 +12,9 @@ import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/util/globals.dart' as _$celest;
 import 'package:http/http.dart' as _$http;
 import 'package:native_storage/native_storage.dart' as _$native_storage;
-
-import 'src/auth.dart';
-import 'src/functions.dart';
-import 'src/serializers.dart';
+import 'package:supabase_client/src/auth.dart';
+import 'package:supabase_client/src/functions.dart';
+import 'package:supabase_client/src/serializers.dart';
 
 export 'package:celest_auth/celest_auth.dart';
 export 'src/auth.dart';

@@ -10,7 +10,6 @@ import 'package:async/async.dart';
 import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
-import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/compiler/api/local_api_runner.dart';
@@ -239,8 +238,6 @@ class TestRunner {
       final codegen = CloudCodeGenerator(
         project: project,
         resolvedProject: projectResolver.resolvedProject,
-        // Since paths will always be relative, this is okay.
-        pathStrategy: PathStrategy.pretty,
       );
       project.accept(codegen);
 

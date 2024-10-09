@@ -18,7 +18,7 @@ void main() {
         final allocator = CelestAllocator(
           forFile: generatingForPath,
           pathStrategy: PathStrategy.robust,
-          prefixingStrategy: PrefixingStrategy.none,
+          prefixingStrategy: PrefixingStrategy.pretty,
         );
         final symbol = allocator.allocate(reference);
         expect(symbol, r'_$greeting.sayHello');

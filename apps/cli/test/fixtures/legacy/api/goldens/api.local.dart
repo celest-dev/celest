@@ -3,231 +3,446 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime/serve.dart' as _i1;
 
-import 'functions/asserts/assertsEnabled.dart' as _i2;
-import 'functions/classes/asyncDefaultValues.dart' as _i3;
-import 'functions/classes/asyncEmpty.dart' as _i4;
-import 'functions/classes/asyncFields.dart' as _i5;
-import 'functions/classes/asyncFromAndToJson.dart' as _i6;
-import 'functions/classes/asyncMixedFields.dart' as _i7;
-import 'functions/classes/asyncNamedFields.dart' as _i8;
-import 'functions/classes/asyncNestedClass.dart' as _i9;
-import 'functions/classes/asyncNonMapFromAndToJson.dart' as _i10;
-import 'functions/classes/asyncNonMapToJson.dart' as _i11;
-import 'functions/classes/asyncNonMapToJsonWithDefaults.dart' as _i12;
-import 'functions/classes/asyncNullableFields.dart' as _i13;
-import 'functions/classes/asyncOnlyFromJson.dart' as _i14;
-import 'functions/classes/asyncOnlyToJson.dart' as _i15;
-import 'functions/classes/asyncOnlyToJsonWithDefaults.dart' as _i16;
-import 'functions/classes/defaultValues.dart' as _i17;
-import 'functions/classes/empty.dart' as _i18;
-import 'functions/classes/fields.dart' as _i19;
-import 'functions/classes/fromAndToJson.dart' as _i20;
-import 'functions/classes/fromJsonStatic.dart' as _i21;
-import 'functions/classes/mixedFields.dart' as _i22;
-import 'functions/classes/namedFields.dart' as _i23;
-import 'functions/classes/nestedClass.dart' as _i24;
-import 'functions/classes/nonMapFromAndToJson.dart' as _i25;
-import 'functions/classes/nonMapToJson.dart' as _i26;
-import 'functions/classes/nonMapToJsonWithDefaults.dart' as _i27;
-import 'functions/classes/nullableFields.dart' as _i28;
-import 'functions/classes/onlyFromJson.dart' as _i29;
-import 'functions/classes/onlyToJson.dart' as _i30;
-import 'functions/classes/onlyToJsonWithDefaults.dart' as _i31;
-import 'functions/collections/complexList.dart' as _i32;
-import 'functions/collections/complexMap.dart' as _i33;
-import 'functions/collections/dynamicMap.dart' as _i34;
-import 'functions/collections/objectMap.dart' as _i35;
-import 'functions/collections/objectNullableMap.dart' as _i36;
-import 'functions/collections/simpleList.dart' as _i37;
-import 'functions/collections/simpleMap.dart' as _i38;
-import 'functions/cycles/combineTrees.dart' as _i39;
-import 'functions/cycles/createTree.dart' as _i40;
-import 'functions/cycles/printTree.dart' as _i41;
-import 'functions/cycles/selfReferencing.dart' as _i42;
-import 'functions/demo/sayHello.dart' as _i43;
-import 'functions/exceptions/throwsCustomError.dart' as _i44;
-import 'functions/exceptions/throwsCustomErrorToFromJson.dart' as _i45;
-import 'functions/exceptions/throwsCustomErrorWithStackTrace.dart' as _i46;
-import 'functions/exceptions/throwsCustomException.dart' as _i47;
-import 'functions/exceptions/throwsCustomExceptionToFromJson.dart' as _i48;
-import 'functions/exceptions/throwsError.dart' as _i49;
-import 'functions/exceptions/throwsException.dart' as _i50;
-import 'functions/extension_types/asyncOrString.dart' as _i51;
-import 'functions/extension_types/asyncString.dart' as _i52;
-import 'functions/extension_types/color.dart' as _i53;
-import 'functions/extension_types/colorX.dart' as _i54;
-import 'functions/extension_types/colorXFromJson.dart' as _i55;
-import 'functions/extension_types/colorXFromJsonImpl.dart' as _i56;
-import 'functions/extension_types/colorXFromJsonStatic.dart' as _i57;
-import 'functions/extension_types/colorXImpl.dart' as _i58;
-import 'functions/extension_types/colorXToFromJson.dart' as _i59;
-import 'functions/extension_types/colorXToJson.dart' as _i60;
-import 'functions/extension_types/colorXToJsonImpl.dart' as _i61;
-import 'functions/extension_types/jsonBool.dart' as _i62;
-import 'functions/extension_types/jsonDouble.dart' as _i63;
-import 'functions/extension_types/jsonInt.dart' as _i64;
-import 'functions/extension_types/jsonList.dart' as _i65;
-import 'functions/extension_types/jsonMap.dart' as _i66;
-import 'functions/extension_types/jsonNum.dart' as _i67;
-import 'functions/extension_types/jsonString.dart' as _i68;
-import 'functions/extension_types/jsonValue.dart' as _i69;
-import 'functions/extension_types/string.dart' as _i70;
-import 'functions/extension_types/stringFromJson.dart' as _i71;
-import 'functions/extension_types/stringFromJsonImpl.dart' as _i72;
-import 'functions/extension_types/stringFromJsonStatic.dart' as _i73;
-import 'functions/extension_types/stringImpl.dart' as _i74;
-import 'functions/extension_types/stringPrivateCtor.dart' as _i75;
-import 'functions/extension_types/stringPrivateCtorImpl.dart' as _i76;
-import 'functions/extension_types/stringPrivateField.dart' as _i77;
-import 'functions/extension_types/stringPrivateFieldImpl.dart' as _i78;
-import 'functions/extension_types/stringToFromJson.dart' as _i79;
-import 'functions/extension_types/stringToJson.dart' as _i80;
-import 'functions/extension_types/stringToJsonImpl.dart' as _i81;
-import 'functions/extension_types/value.dart' as _i82;
-import 'functions/extension_types/valueX.dart' as _i83;
-import 'functions/extension_types/valueXFromJson.dart' as _i84;
-import 'functions/extension_types/valueXFromJsonImpl.dart' as _i85;
-import 'functions/extension_types/valueXFromJsonStatic.dart' as _i86;
-import 'functions/extension_types/valueXImpl.dart' as _i87;
-import 'functions/extension_types/valueXToFromJson.dart' as _i88;
-import 'functions/extension_types/valueXToJson.dart' as _i89;
-import 'functions/extension_types/valueXToJsonImpl.dart' as _i90;
-import 'functions/generic_wrappers/genericWrapperParameters.dart' as _i91;
-import 'functions/generic_wrappers/genericWrappers.dart' as _i92;
-import 'functions/generic_wrappers/genericWrappersAsync.dart' as _i93;
-import 'functions/metadata/hasConstructedDeprecatedAnnotation.dart' as _i94;
-import 'functions/metadata/hasDeprecatedAnnotation.dart' as _i95;
-import 'functions/metadata/hasDocComments.dart' as _i96;
-import 'functions/metadata/hasExportableAnnotation.dart' as _i97;
-import 'functions/metadata/hasExportableConstructedAnnotation.dart' as _i98;
-import 'functions/metadata/hasLiteralsAnnotation.dart' as _i99;
-import 'functions/metadata/hasNamedConstructedAnnotation.dart' as _i100;
-import 'functions/metadata/hasNotExportableAnnotation.dart' as _i101;
-import 'functions/metadata/namedDefaultValues.dart' as _i104;
-import 'functions/metadata/namedDefaultValueVars.dart' as _i102;
-import 'functions/metadata/namedDefaultValueVarsPrivate.dart' as _i103;
-import 'functions/metadata/nullableNamedDefaultValues.dart' as _i107;
-import 'functions/metadata/nullableNamedDefaultValueVars.dart' as _i105;
-import 'functions/metadata/nullableNamedDefaultValueVarsPrivate.dart' as _i106;
-import 'functions/metadata/nullablePositionalDefaultValues.dart' as _i110;
-import 'functions/metadata/nullablePositionalDefaultValueVars.dart' as _i108;
-import 'functions/metadata/nullablePositionalDefaultValueVarsPrivate.dart'
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/asserts/assertsEnabled.dart'
+    as _i2;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncDefaultValues.dart'
+    as _i3;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncEmpty.dart'
+    as _i4;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncFields.dart'
+    as _i5;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncFromAndToJson.dart'
+    as _i6;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncMixedFields.dart'
+    as _i7;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncNamedFields.dart'
+    as _i8;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncNestedClass.dart'
+    as _i9;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncNonMapFromAndToJson.dart'
+    as _i10;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncNonMapToJson.dart'
+    as _i11;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncNonMapToJsonWithDefaults.dart'
+    as _i12;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncNullableFields.dart'
+    as _i13;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncOnlyFromJson.dart'
+    as _i14;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncOnlyToJson.dart'
+    as _i15;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/asyncOnlyToJsonWithDefaults.dart'
+    as _i16;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/defaultValues.dart'
+    as _i17;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/empty.dart'
+    as _i18;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/fields.dart'
+    as _i19;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/fromAndToJson.dart'
+    as _i20;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/fromJsonStatic.dart'
+    as _i21;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/mixedFields.dart'
+    as _i22;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/namedFields.dart'
+    as _i23;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/nestedClass.dart'
+    as _i24;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/nonMapFromAndToJson.dart'
+    as _i25;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/nonMapToJson.dart'
+    as _i26;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/nonMapToJsonWithDefaults.dart'
+    as _i27;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/nullableFields.dart'
+    as _i28;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/onlyFromJson.dart'
+    as _i29;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/onlyToJson.dart'
+    as _i30;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/classes/onlyToJsonWithDefaults.dart'
+    as _i31;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/collections/complexList.dart'
+    as _i32;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/collections/complexMap.dart'
+    as _i33;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/collections/dynamicMap.dart'
+    as _i34;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/collections/objectMap.dart'
+    as _i35;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/collections/objectNullableMap.dart'
+    as _i36;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/collections/simpleList.dart'
+    as _i37;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/collections/simpleMap.dart'
+    as _i38;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/cycles/combineTrees.dart'
+    as _i39;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/cycles/createTree.dart'
+    as _i40;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/cycles/printTree.dart'
+    as _i41;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/cycles/selfReferencing.dart'
+    as _i42;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/demo/sayHello.dart'
+    as _i43;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/exceptions/throwsCustomError.dart'
+    as _i44;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/exceptions/throwsCustomErrorToFromJson.dart'
+    as _i45;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/exceptions/throwsCustomErrorWithStackTrace.dart'
+    as _i46;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/exceptions/throwsCustomException.dart'
+    as _i47;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/exceptions/throwsCustomExceptionToFromJson.dart'
+    as _i48;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/exceptions/throwsError.dart'
+    as _i49;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/exceptions/throwsException.dart'
+    as _i50;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/asyncOrString.dart'
+    as _i51;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/asyncString.dart'
+    as _i52;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/color.dart'
+    as _i53;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/colorX.dart'
+    as _i54;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/colorXFromJson.dart'
+    as _i55;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/colorXFromJsonImpl.dart'
+    as _i56;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/colorXFromJsonStatic.dart'
+    as _i57;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/colorXImpl.dart'
+    as _i58;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/colorXToFromJson.dart'
+    as _i59;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/colorXToJson.dart'
+    as _i60;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/colorXToJsonImpl.dart'
+    as _i61;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/jsonBool.dart'
+    as _i62;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/jsonDouble.dart'
+    as _i63;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/jsonInt.dart'
+    as _i64;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/jsonList.dart'
+    as _i65;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/jsonMap.dart'
+    as _i66;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/jsonNum.dart'
+    as _i67;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/jsonString.dart'
+    as _i68;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/jsonValue.dart'
+    as _i69;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/string.dart'
+    as _i70;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/stringFromJson.dart'
+    as _i71;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/stringFromJsonImpl.dart'
+    as _i72;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/stringFromJsonStatic.dart'
+    as _i73;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/stringImpl.dart'
+    as _i74;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/stringPrivateCtor.dart'
+    as _i75;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/stringPrivateCtorImpl.dart'
+    as _i76;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/stringPrivateField.dart'
+    as _i77;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/stringPrivateFieldImpl.dart'
+    as _i78;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/stringToFromJson.dart'
+    as _i79;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/stringToJson.dart'
+    as _i80;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/stringToJsonImpl.dart'
+    as _i81;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/value.dart'
+    as _i82;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/valueX.dart'
+    as _i83;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/valueXFromJson.dart'
+    as _i84;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/valueXFromJsonImpl.dart'
+    as _i85;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/valueXFromJsonStatic.dart'
+    as _i86;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/valueXImpl.dart'
+    as _i87;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/valueXToFromJson.dart'
+    as _i88;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/valueXToJson.dart'
+    as _i89;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/extension_types/valueXToJsonImpl.dart'
+    as _i90;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/generic_wrappers/genericWrapperParameters.dart'
+    as _i91;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/generic_wrappers/genericWrappers.dart'
+    as _i92;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/generic_wrappers/genericWrappersAsync.dart'
+    as _i93;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/hasConstructedDeprecatedAnnotation.dart'
+    as _i94;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/hasDeprecatedAnnotation.dart'
+    as _i95;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/hasDocComments.dart'
+    as _i96;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/hasExportableAnnotation.dart'
+    as _i97;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/hasExportableConstructedAnnotation.dart'
+    as _i98;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/hasLiteralsAnnotation.dart'
+    as _i99;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/hasNamedConstructedAnnotation.dart'
+    as _i100;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/hasNotExportableAnnotation.dart'
+    as _i101;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/namedDefaultValues.dart'
+    as _i104;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/namedDefaultValueVars.dart'
+    as _i102;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/namedDefaultValueVarsPrivate.dart'
+    as _i103;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/nullableNamedDefaultValues.dart'
+    as _i107;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/nullableNamedDefaultValueVars.dart'
+    as _i105;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/nullableNamedDefaultValueVarsPrivate.dart'
+    as _i106;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/nullablePositionalDefaultValues.dart'
+    as _i110;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/nullablePositionalDefaultValueVars.dart'
+    as _i108;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/nullablePositionalDefaultValueVarsPrivate.dart'
     as _i109;
-import 'functions/metadata/positionalDefaultValues.dart' as _i113;
-import 'functions/metadata/positionalDefaultValueVars.dart' as _i111;
-import 'functions/metadata/positionalDefaultValueVarsPrivate.dart' as _i112;
-import 'functions/overrides/callsThrowsCommonOverriddenException.dart' as _i114;
-import 'functions/overrides/callsThrowsOverriddenException.dart' as _i115;
-import 'functions/overrides/commonNestedChild.dart' as _i116;
-import 'functions/overrides/commonNestedParent.dart' as _i117;
-import 'functions/overrides/nestedChild.dart' as _i118;
-import 'functions/overrides/nestedGrandparent.dart' as _i119;
-import 'functions/overrides/nestedParent.dart' as _i120;
-import 'functions/overrides/throwsCommonOverriddenException.dart' as _i121;
-import 'functions/overrides/throwsOverriddenException.dart' as _i122;
-import 'functions/parameter_types/complex.dart' as _i123;
-import 'functions/parameter_types/simple.dart' as _i124;
-import 'functions/parameter_types/simpleOptional.dart' as _i125;
-import 'functions/parameters/optionalNamed.dart' as _i126;
-import 'functions/parameters/optionalPositional.dart' as _i127;
-import 'functions/parameters/requiredNamed.dart' as _i128;
-import 'functions/parameters/requiredPositional.dart' as _i129;
-import 'functions/records/aliasedNamedFields.dart' as _i130;
-import 'functions/records/asyncAliasedNamedFields.dart' as _i131;
-import 'functions/records/asyncNamedFields.dart' as _i132;
-import 'functions/records/asyncNested.dart' as _i133;
-import 'functions/records/asyncNonAliasedNamedFields.dart' as _i134;
-import 'functions/records/asyncNullableNested.dart' as _i135;
-import 'functions/records/namedFields.dart' as _i136;
-import 'functions/records/nested.dart' as _i137;
-import 'functions/records/nonAliasedNamedFields.dart' as _i138;
-import 'functions/records/nullableNested.dart' as _i139;
-import 'functions/return_types/asyncBoolReturn.dart' as _i140;
-import 'functions/return_types/asyncClassReturnNullable.dart' as _i141;
-import 'functions/return_types/asyncComplexClassReturn.dart' as _i142;
-import 'functions/return_types/asyncComplexStructReturn.dart' as _i143;
-import 'functions/return_types/asyncComplexStructReturnNullable.dart' as _i144;
-import 'functions/return_types/asyncDoubleReturn.dart' as _i145;
-import 'functions/return_types/asyncIntReturn.dart' as _i146;
-import 'functions/return_types/asyncIterableReturn.dart' as _i147;
-import 'functions/return_types/asyncListReturn.dart' as _i148;
-import 'functions/return_types/asyncMapReturn.dart' as _i149;
-import 'functions/return_types/asyncOrBoolReturn.dart' as _i150;
-import 'functions/return_types/asyncOrBoolReturnNullable.dart' as _i151;
-import 'functions/return_types/asyncOrComplexClassReturnNullable.dart' as _i152;
-import 'functions/return_types/asyncOrComplexStructReturn.dart' as _i153;
-import 'functions/return_types/asyncOrComplexStructReturnNullable.dart'
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/positionalDefaultValues.dart'
+    as _i113;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/positionalDefaultValueVars.dart'
+    as _i111;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/metadata/positionalDefaultValueVarsPrivate.dart'
+    as _i112;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/overrides/callsThrowsCommonOverriddenException.dart'
+    as _i114;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/overrides/callsThrowsOverriddenException.dart'
+    as _i115;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/overrides/commonNestedChild.dart'
+    as _i116;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/overrides/commonNestedParent.dart'
+    as _i117;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/overrides/nestedChild.dart'
+    as _i118;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/overrides/nestedGrandparent.dart'
+    as _i119;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/overrides/nestedParent.dart'
+    as _i120;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/overrides/throwsCommonOverriddenException.dart'
+    as _i121;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/overrides/throwsOverriddenException.dart'
+    as _i122;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/parameter_types/complex.dart'
+    as _i123;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/parameter_types/simple.dart'
+    as _i124;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/parameter_types/simpleOptional.dart'
+    as _i125;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/parameters/optionalNamed.dart'
+    as _i126;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/parameters/optionalPositional.dart'
+    as _i127;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/parameters/requiredNamed.dart'
+    as _i128;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/parameters/requiredPositional.dart'
+    as _i129;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/records/aliasedNamedFields.dart'
+    as _i130;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/records/asyncAliasedNamedFields.dart'
+    as _i131;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/records/asyncNamedFields.dart'
+    as _i132;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/records/asyncNested.dart'
+    as _i133;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/records/asyncNonAliasedNamedFields.dart'
+    as _i134;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/records/asyncNullableNested.dart'
+    as _i135;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/records/namedFields.dart'
+    as _i136;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/records/nested.dart'
+    as _i137;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/records/nonAliasedNamedFields.dart'
+    as _i138;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/records/nullableNested.dart'
+    as _i139;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncBoolReturn.dart'
+    as _i140;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncClassReturnNullable.dart'
+    as _i141;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncComplexClassReturn.dart'
+    as _i142;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncComplexStructReturn.dart'
+    as _i143;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncComplexStructReturnNullable.dart'
+    as _i144;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncDoubleReturn.dart'
+    as _i145;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncIntReturn.dart'
+    as _i146;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncIterableReturn.dart'
+    as _i147;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncListReturn.dart'
+    as _i148;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncMapReturn.dart'
+    as _i149;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrBoolReturn.dart'
+    as _i150;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrBoolReturnNullable.dart'
+    as _i151;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrComplexClassReturnNullable.dart'
+    as _i152;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrComplexStructReturn.dart'
+    as _i153;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrComplexStructReturnNullable.dart'
     as _i154;
-import 'functions/return_types/asyncOrDoubleReturn.dart' as _i155;
-import 'functions/return_types/asyncOrDoubleReturnNullable.dart' as _i156;
-import 'functions/return_types/asyncOrIntReturn.dart' as _i157;
-import 'functions/return_types/asyncOrIntReturnNullable.dart' as _i158;
-import 'functions/return_types/asyncOrIterableReturn.dart' as _i159;
-import 'functions/return_types/asyncOrIterableReturnNullable.dart' as _i160;
-import 'functions/return_types/asyncOrListReturn.dart' as _i161;
-import 'functions/return_types/asyncOrListReturnNullable.dart' as _i162;
-import 'functions/return_types/asyncOrMapReturn.dart' as _i163;
-import 'functions/return_types/asyncOrMapReturnNullable.dart' as _i164;
-import 'functions/return_types/asyncOrSimpleClassReturnNullable.dart' as _i165;
-import 'functions/return_types/asyncOrStringReturn.dart' as _i166;
-import 'functions/return_types/asyncOrStringReturnNullable.dart' as _i167;
-import 'functions/return_types/asyncOrStructReturn.dart' as _i168;
-import 'functions/return_types/asyncOrStructReturnNullable.dart' as _i169;
-import 'functions/return_types/asyncOrVoidReturn.dart' as _i170;
-import 'functions/return_types/asyncOrVoidReturnNullable.dart' as _i171;
-import 'functions/return_types/asyncStringReturn.dart' as _i172;
-import 'functions/return_types/asyncStructReturn.dart' as _i173;
-import 'functions/return_types/asyncStructReturnNullable.dart' as _i174;
-import 'functions/return_types/asyncVoidReturn.dart' as _i175;
-import 'functions/return_types/boolReturn.dart' as _i176;
-import 'functions/return_types/boolReturnNullable.dart' as _i177;
-import 'functions/return_types/complexClassReturn.dart' as _i178;
-import 'functions/return_types/complexClassReturnNullable.dart' as _i179;
-import 'functions/return_types/complexReturn.dart' as _i180;
-import 'functions/return_types/complexReturnNullable.dart' as _i181;
-import 'functions/return_types/doubleReturn.dart' as _i182;
-import 'functions/return_types/doubleReturnNullable.dart' as _i183;
-import 'functions/return_types/intReturn.dart' as _i184;
-import 'functions/return_types/intReturnNullable.dart' as _i185;
-import 'functions/return_types/iterableReturn.dart' as _i186;
-import 'functions/return_types/iterableReturnNullable.dart' as _i187;
-import 'functions/return_types/listReturn.dart' as _i188;
-import 'functions/return_types/listReturnNullable.dart' as _i189;
-import 'functions/return_types/mapReturn.dart' as _i190;
-import 'functions/return_types/mapReturnNullable.dart' as _i191;
-import 'functions/return_types/simpleClassReturn.dart' as _i192;
-import 'functions/return_types/simpleClassReturnNullable.dart' as _i193;
-import 'functions/return_types/stringReturn.dart' as _i194;
-import 'functions/return_types/stringReturnNullable.dart' as _i195;
-import 'functions/return_types/structReturn.dart' as _i196;
-import 'functions/return_types/structReturnNullable.dart' as _i197;
-import 'functions/return_types/voidReturn.dart' as _i198;
-import 'functions/sealed_classes/aliasedErrShapeResults.dart' as _i199;
-import 'functions/sealed_classes/aliasedOkShapeResults.dart' as _i200;
-import 'functions/sealed_classes/aliasedShapeResults.dart' as _i201;
-import 'functions/sealed_classes/area.dart' as _i202;
-import 'functions/sealed_classes/circle.dart' as _i203;
-import 'functions/sealed_classes/circleWithOverriddenCustomJson.dart' as _i204;
-import 'functions/sealed_classes/errShapeResults.dart' as _i205;
-import 'functions/sealed_classes/genericResult.dart' as _i206;
-import 'functions/sealed_classes/multipleGenericResult.dart' as _i207;
-import 'functions/sealed_classes/okShapeResult.dart' as _i208;
-import 'functions/sealed_classes/okShapeResults.dart' as _i209;
-import 'functions/sealed_classes/rectangle.dart' as _i210;
-import 'functions/sealed_classes/rectangleWithOverriddenCustomJson.dart'
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrDoubleReturn.dart'
+    as _i155;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrDoubleReturnNullable.dart'
+    as _i156;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrIntReturn.dart'
+    as _i157;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrIntReturnNullable.dart'
+    as _i158;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrIterableReturn.dart'
+    as _i159;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrIterableReturnNullable.dart'
+    as _i160;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrListReturn.dart'
+    as _i161;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrListReturnNullable.dart'
+    as _i162;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrMapReturn.dart'
+    as _i163;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrMapReturnNullable.dart'
+    as _i164;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrSimpleClassReturnNullable.dart'
+    as _i165;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrStringReturn.dart'
+    as _i166;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrStringReturnNullable.dart'
+    as _i167;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrStructReturn.dart'
+    as _i168;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrStructReturnNullable.dart'
+    as _i169;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrVoidReturn.dart'
+    as _i170;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncOrVoidReturnNullable.dart'
+    as _i171;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncStringReturn.dart'
+    as _i172;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncStructReturn.dart'
+    as _i173;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncStructReturnNullable.dart'
+    as _i174;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/asyncVoidReturn.dart'
+    as _i175;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/boolReturn.dart'
+    as _i176;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/boolReturnNullable.dart'
+    as _i177;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/complexClassReturn.dart'
+    as _i178;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/complexClassReturnNullable.dart'
+    as _i179;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/complexReturn.dart'
+    as _i180;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/complexReturnNullable.dart'
+    as _i181;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/doubleReturn.dart'
+    as _i182;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/doubleReturnNullable.dart'
+    as _i183;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/intReturn.dart'
+    as _i184;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/intReturnNullable.dart'
+    as _i185;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/iterableReturn.dart'
+    as _i186;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/iterableReturnNullable.dart'
+    as _i187;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/listReturn.dart'
+    as _i188;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/listReturnNullable.dart'
+    as _i189;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/mapReturn.dart'
+    as _i190;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/mapReturnNullable.dart'
+    as _i191;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/simpleClassReturn.dart'
+    as _i192;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/simpleClassReturnNullable.dart'
+    as _i193;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/stringReturn.dart'
+    as _i194;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/stringReturnNullable.dart'
+    as _i195;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/structReturn.dart'
+    as _i196;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/structReturnNullable.dart'
+    as _i197;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/return_types/voidReturn.dart'
+    as _i198;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/aliasedErrShapeResults.dart'
+    as _i199;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/aliasedOkShapeResults.dart'
+    as _i200;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/aliasedShapeResults.dart'
+    as _i201;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/area.dart'
+    as _i202;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/circle.dart'
+    as _i203;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/circleWithOverriddenCustomJson.dart'
+    as _i204;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/errShapeResults.dart'
+    as _i205;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/genericResult.dart'
+    as _i206;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/multipleGenericResult.dart'
+    as _i207;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/okShapeResult.dart'
+    as _i208;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/okShapeResults.dart'
+    as _i209;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/rectangle.dart'
+    as _i210;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/rectangleWithOverriddenCustomJson.dart'
     as _i211;
-import 'functions/sealed_classes/sealedClass.dart' as _i212;
-import 'functions/sealed_classes/sealedClassWithCustomJson.dart' as _i213;
-import 'functions/sealed_classes/sealedClassWithInheritedCustomJson.dart'
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/sealedClass.dart'
+    as _i212;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/sealedClassWithCustomJson.dart'
+    as _i213;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/sealedClassWithInheritedCustomJson.dart'
     as _i214;
-import 'functions/sealed_classes/sealedClassWithOverriddenCustomJson.dart'
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/sealedClassWithOverriddenCustomJson.dart'
     as _i215;
-import 'functions/sealed_classes/shapeResults.dart' as _i216;
-import 'functions/sealed_classes/swappedResult.dart' as _i217;
-import 'functions/typedefs/json.dart' as _i218;
-import 'functions/typedefs/mixedJson.dart' as _i219;
-import 'functions/typedefs/nullableJson.dart' as _i220;
-import 'functions/typedefs/portfolio.dart' as _i221;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/shapeResults.dart'
+    as _i216;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/sealed_classes/swappedResult.dart'
+    as _i217;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/typedefs/json.dart'
+    as _i218;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/typedefs/mixedJson.dart'
+    as _i219;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/typedefs/nullableJson.dart'
+    as _i220;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/goldens/functions/typedefs/portfolio.dart'
+    as _i221;
 
 Future<void> main() async {
   return start();

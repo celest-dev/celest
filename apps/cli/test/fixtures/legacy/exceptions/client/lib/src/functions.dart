@@ -14,8 +14,7 @@ import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
-
-import '../exceptions_client.dart';
+import 'package:exceptions_client/exceptions_client.dart';
 
 class CelestFunctions {
   /// Tests that types thrown from external packages can be detected via

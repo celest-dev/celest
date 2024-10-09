@@ -7,18 +7,15 @@ import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:meta/meta.dart';
 
 final class CloudCodeGenerator extends AstVisitor<void> {
   CloudCodeGenerator({
     required this.project,
     required this.resolvedProject,
-    @visibleForTesting this.pathStrategy = PathStrategy.robust,
   });
 
   final Project project;
   final ResolvedProject resolvedProject;
-  final PathStrategy pathStrategy;
 
   /// A map of generated files to their contents.
   final Map<String, String> fileOutputs = {};
@@ -36,10 +33,12 @@ final class CloudCodeGenerator extends AstVisitor<void> {
     final cloudClientLibraries =
         CloudClientGenerator(project: project).generate();
     for (final library in cloudClientLibraries.entries) {
-      fileOutputs[library.key] = CodeGenerator.emit(
+      final filePath = projectPaths.denormalizeUri(library.key).toFilePath();
+      fileOutputs[filePath] = CodeGenerator.emit(
         library.value,
-        forFile: library.key,
-        pathStrategy: pathStrategy,
+        forFile: filePath,
+        pathStrategy: PathStrategy.pretty,
+        prefixingStrategy: PrefixingStrategy.none,
       );
     }
 
@@ -57,7 +56,7 @@ final class CloudCodeGenerator extends AstVisitor<void> {
       fileOutputs[localApiFile] = CodeGenerator.emit(
         localApi,
         forFile: localApiFile,
-        pathStrategy: pathStrategy,
+        pathStrategy: PathStrategy.pretty,
       );
     }
   }
@@ -80,7 +79,7 @@ final class CloudCodeGenerator extends AstVisitor<void> {
       fileOutputs[entrypointFile] = CodeGenerator.emit(
         entrypoint,
         forFile: entrypointFile,
-        pathStrategy: pathStrategy,
+        pathStrategy: PathStrategy.pretty,
       );
       _targets[function.route] = refer(
         generator.targetName,

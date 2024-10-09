@@ -3,7 +3,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime/serve.dart' as _i1;
 
-import 'functions/auth/currentUser.dart' as _i2;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/supabase/celest/goldens/functions/auth/currentUser.dart'
+    as _i2;
 
 Future<void> main() async {
   return start();

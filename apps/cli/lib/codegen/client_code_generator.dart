@@ -36,7 +36,7 @@ final class ClientCodeGenerator {
           CodeGenerator.emit(
             library,
             forFile: path,
-            prefixingStrategy: PrefixingStrategy.none,
+            prefixingStrategy: PrefixingStrategy.pretty,
             pathStrategy: PathStrategy.pretty,
           ),
         ),

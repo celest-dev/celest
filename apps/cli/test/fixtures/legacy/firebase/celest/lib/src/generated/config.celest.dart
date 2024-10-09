@@ -2,17 +2,17 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use
 
-library; // ignore_for_file: no_leading_underscores_for_library_prefixes
+library;
 
-import 'package:celest/celest.dart' as _i1;
-import 'package:celest/src/core/context.dart' as _i2;
+import 'package:celest/celest.dart';
+import 'package:celest/src/core/context.dart';
 
 /// An environment of a deployed Celest service.
 ///
 /// Celest services can have multiple isolated branches, for example
 /// a `development` and `production` environment.
 extension type const CelestEnvironment._(String _env)
-    implements _i1.Environment, String {
+    implements Environment, String {
   /// The local Celest environment, used to delineate when a
   /// Celest service is running on a developer machine as opposed
   /// to the cloud.
@@ -41,11 +41,11 @@ class CelestEnvironmentVariables {
   ///
   /// This is set by the deployment environment and is used to
   /// determine the current environment of the Celest service.
-  String get currentEnvironment => _i2.context.expect(_i1.env.environment);
+  String get currentEnvironment => context.expect(env.environment);
 
   /// The value of the `FIREBASE_PROJECT_ID` environment variable.
   String get firebaseProjectId =>
-      _i2.context.expect(const _i1.env('FIREBASE_PROJECT_ID'));
+      context.expect(const env('FIREBASE_PROJECT_ID'));
 }
 
 /// The secrets for the Celest service.

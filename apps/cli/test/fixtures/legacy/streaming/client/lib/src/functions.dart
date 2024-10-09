@@ -14,8 +14,7 @@ import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
 import 'package:celest_core/src/serialization/json_value.dart' as _$celest;
-
-import '../streaming_client.dart';
+import 'package:streaming_client/streaming_client.dart';
 
 class CelestFunctions {
   /// Tests the ability to use server-side streaming.

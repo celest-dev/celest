@@ -13,8 +13,7 @@ import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
-
-import '../firebase_test_client.dart';
+import 'package:firebase_test_client/firebase_test_client.dart';
 
 class CelestFunctions {
   final greeting = CelestFunctionsGreeting();

@@ -1,11 +1,12 @@
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:celest_cli/src/utils/path.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:logging/logging.dart';
 import 'package:path/path.dart' as path;
 
 enum PrefixingStrategy {
   indexed,
+  pretty,
   none,
 
   /// Useful for generating part of libraries.
@@ -38,6 +39,7 @@ final class CelestAllocator implements Allocator {
     'dart:core',
     'package:meta/meta.dart',
   ];
+  static final Logger _logger = Logger('CelestAllocator');
 
   final String forFile;
   final PrefixingStrategy prefixingStrategy;
@@ -67,27 +69,48 @@ final class CelestAllocator implements Allocator {
       }
       uri = fileUri;
     }
-    switch (uri.scheme) {
-      case '' || 'file':
-        final urlPath = p.fromUri(uri);
-        if (p.equals(urlPath, forFile)) {
+    switch (uri) {
+      case Uri(scheme: '' || 'file', :final path):
+        final absolutePath =
+            _fileContext.isRelative(path) ? _fileContext.absolute(path) : path;
+        if (p.equals(absolutePath, forFile)) {
           return symbol;
         }
-        url = switch (pathStrategy) {
-          PathStrategy.pretty => p.isRelative(urlPath)
-              ? urlPath.to(p.url)
-              : _fileContext.relative(urlPath).to(p.url),
-          PathStrategy.robust => uri.toString(),
-        };
-      case 'project':
-        url = switch (pathStrategy) {
-          PathStrategy.pretty => _fileContext
-              .relative(p.join(projectPaths.projectRoot, uri.path))
-              .to(p.url),
-          PathStrategy.robust =>
-            Uri.file(p.join(projectPaths.projectRoot, uri.path)).toString(),
-        };
-      case 'package' || 'dart':
+
+        final normalizedUri = projectPaths.fileToPackageUri(absolutePath);
+        if (normalizedUri.scheme != 'package') {
+          _logger.finest('Failed to normalize $normalizedUri');
+          // Likely, we're importing from `.dart_tool` or some other folder
+          // where an absolute file path is desired.
+          //
+          // Assert we are only importing from non-lib/ paths as well.
+          assert(!p.isWithin(projectPaths.packageRoot, forFile));
+          url = absolutePath;
+          uri = Uri.file(absolutePath);
+          break;
+        }
+
+        _logger.finest('Normalized $uri to $normalizedUri');
+        uri = normalizedUri;
+        url = uri.toString();
+
+      case Uri(
+            scheme: 'package',
+            pathSegments: [final package, ...final segments]
+          )
+          when package == 'celest_backend' ||
+              package == celestProject.clientPubspec.name:
+        final importFilepath = p.joinAll([
+          if (package == 'celest_backend')
+            projectPaths.packageRoot
+          else
+            projectPaths.clientPackageRoot,
+          ...segments,
+        ]);
+        if (p.equals(importFilepath, forFile)) {
+          return symbol;
+        }
+      case Uri(scheme: 'package' || 'dart'):
         break;
       default:
         unreachable('Unexpected reference URL: $url ($uri)');
@@ -99,7 +122,7 @@ final class CelestAllocator implements Allocator {
     switch (prefixingStrategy) {
       case PrefixingStrategy.indexed:
         return '${_imports.putIfAbsent(url, _nextKey)}.$symbol';
-      case PrefixingStrategy.none:
+      case PrefixingStrategy.pretty:
         final import = _imports.putIfAbsent(
           url,
           () => _prefixForUrl(uri),
@@ -108,6 +131,9 @@ final class CelestAllocator implements Allocator {
           final import? => '$import.$symbol',
           null => symbol,
         };
+      case PrefixingStrategy.none:
+        _imports.putIfAbsent(url, () => null);
+        return symbol;
       case PrefixingStrategy.noImports:
         return symbol;
     }
@@ -117,7 +143,9 @@ final class CelestAllocator implements Allocator {
     final allocatedPrefixes = _imports.values.nonNulls.toSet();
     String prefix;
     switch (uri) {
-      case Uri(scheme: 'package', pathSegments: ['celest_backend', ...]):
+      case Uri(scheme: 'package', pathSegments: [final package, ...])
+          when package == 'celest_backend' ||
+              package == celestProject.clientPubspec.name:
         return null;
       case Uri(scheme: 'package', pathSegments: [final package, ...])
           when package.startsWith('celest'):

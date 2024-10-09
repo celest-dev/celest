@@ -282,8 +282,8 @@ final class CloudClientGenerator {
       ]);
   });
 
-  Map<String, Library> generate() {
-    final libraries = <String, Library>{};
+  Map<Uri, Library> generate() {
+    final libraries = <Uri, Library>{};
     libraries[CloudPaths.client] = _library.build();
     libraries[CloudPaths.config] = _configLibrary.build();
     return libraries;

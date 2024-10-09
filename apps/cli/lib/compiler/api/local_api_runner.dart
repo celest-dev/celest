@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:celest_cli/compiler/frontend_server_client.dart';
-import 'package:celest_cli/compiler/package_config_transform.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/cli.dart';
@@ -57,11 +56,6 @@ final class LocalApiRunner {
     // hub and is never exposed to the user.
     @visibleForTesting PortFinder portFinder = const RandomPortFinder(),
   }) async {
-    final packageConfigPath = await transformPackageConfig(
-      packageConfigPath: projectPaths.packagesConfig,
-      fromRoot: projectPaths.projectRoot,
-      toRoot: projectPaths.outputsDir,
-    );
     final projectType = await celestProject.determineProjectType();
     final (target, platformDill, sdkRoot) = switch (projectType) {
       CelestProjectType.flutter => (
@@ -95,7 +89,7 @@ final class LocalApiRunner {
         '--target',
         target,
         '--packages',
-        Uri.file(packageConfigPath).toString(),
+        Uri.file(projectPaths.packagesConfig).toString(),
         '--output-dill',
         outputDill, // Must be path
         Uri.file(path).toString(),
@@ -152,7 +146,7 @@ final class LocalApiRunner {
           '--no-dds', // We want to talk directly to VM service.
           '--enable-asserts',
           '--packages',
-          packageConfigPath,
+          projectPaths.packagesConfig,
           outputDill,
         ],
       CelestProjectType.flutter => <String>[
@@ -162,7 +156,7 @@ final class LocalApiRunner {
           '--run-forever',
           '--icu-data-file-path='
               '${p.join(Sdk.current.flutterOsArtifacts, 'icudtl.dat')}',
-          '--packages=$packageConfigPath',
+          '--packages=${projectPaths.packagesConfig}',
           '--log-tag=_CELEST',
           if (verbose) '--verbose-logging',
           '--enable-platform-isolates',

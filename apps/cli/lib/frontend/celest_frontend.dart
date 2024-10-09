@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io' as io show Platform;
 import 'dart:io';
 import 'dart:math';
@@ -9,6 +10,7 @@ import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
+import 'package:celest_cli/codegen/api/dockerfile_generator.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/commands/cloud_command.dart';
@@ -492,6 +494,74 @@ final class CelestFrontend {
   /// Builds the current project for deployment to the cloud.
   Future<int> build({
     required bool migrateProject,
+    required Progress currentProgress,
+    required String environmentId,
+  }) async {
+    try {
+      int fail(List<CelestAnalysisError> errors) {
+        currentProgress.fail(
+          'Project has errors. Please fix them and save the '
+          'corresponding files.',
+        );
+        return _logErrors(errors);
+      }
+
+      final analysisResult = await _analyzeProject(
+        migrateProject: migrateProject,
+      );
+      migrateProject = false;
+      switch (analysisResult) {
+        case AnalysisFailureResult(:final errors):
+          return fail(errors);
+        case AnalysisSuccessResult(:final errors) when errors.isNotEmpty:
+          return fail(errors);
+        case AnalysisSuccessResult(:final project):
+          final resolvedProject = await _resolveProject(
+            project,
+            environmentId: environmentId,
+          );
+          await _generateBackendCode(
+            project: project,
+            resolvedProject: resolvedProject,
+          );
+          try {
+            await _writeProjectOutputs(
+              project: project,
+              resolvedProject: resolvedProject,
+              environmentId: environmentId,
+            );
+          } on CompilationException catch (e, st) {
+            cliLogger.err(
+              'Project has errors. Please fix them and try again.',
+            );
+            performance.captureError(e, stackTrace: st);
+            return 1;
+          }
+
+          currentProgress.complete(
+            'Celest project has been built for deployment',
+          );
+
+          final buildDir = p.relative(
+            projectPaths.buildDir,
+            from: projectPaths.projectRoot,
+          );
+          cliLogger.detail(
+            'Outputs have been written to the `$buildDir` directory.',
+          );
+          return 0;
+      }
+    } on CancellationException {
+      return 0;
+    } finally {
+      currentProgress.cancel();
+      await close();
+    }
+  }
+
+  /// Deploys the current project to Celest Cloud.
+  Future<int> deploy({
+    required bool migrateProject,
   }) async {
     Progress? currentProgress;
     var projectId = await _loadProjectId();
@@ -660,6 +730,48 @@ final class CelestFrontend {
         project.acceptWithArg(projectResolver, project);
         return projectResolver.resolvedProject;
       });
+
+  Future<void> _writeProjectOutputs({
+    required Project project,
+    required ResolvedProject resolvedProject,
+    required String environmentId,
+  }) async {
+    final entrypointCompiler = EntrypointCompiler(
+      logger: logger,
+      verbose: verbose,
+      enabledExperiments: celestProject.analysisOptions.enabledExperiments,
+    );
+    final kernel = await entrypointCompiler.compile(
+      resolvedProject.id,
+      projectPaths.localApiEntrypoint,
+    );
+
+    final buildOutputs = fileSystem.directory(projectPaths.buildDir);
+    if (!buildOutputs.existsSync()) {
+      await buildOutputs.create(recursive: true);
+    }
+
+    await buildOutputs
+        .childFile('celest.aot.dill')
+        .writeAsBytes(kernel.outputDill);
+
+    final dockerfile = DockerfileGenerator(project: project);
+    await buildOutputs
+        .childFile('Dockerfile')
+        .writeAsString(dockerfile.generate());
+
+    final configJson = {
+      'environmentVariables': {
+        for (final env in resolvedProject.envVars) env.name: env.value,
+      },
+      'secrets': {
+        for (final secret in resolvedProject.secrets) secret.name: secret.value,
+      },
+    };
+    await buildOutputs
+        .childFile('config.json')
+        .writeAsString(jsonEncode(configJson));
+  }
 
   Future<ast.LocalDeployedProject> _startLocalApi(
     List<String> invalidatedPaths, {

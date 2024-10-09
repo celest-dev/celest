@@ -10,10 +10,9 @@ import 'package:celest_core/_internal.dart' as _$celest;
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/util/globals.dart' as _$celest;
 import 'package:http/http.dart' as _$http;
+import 'package:marcelo_client/src/functions.dart';
+import 'package:marcelo_client/src/serializers.dart';
 import 'package:native_storage/native_storage.dart' as _$native_storage;
-
-import 'src/functions.dart';
-import 'src/serializers.dart';
 
 export 'package:celest_backend/exceptions/overrides.dart'
     show

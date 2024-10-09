@@ -11,9 +11,8 @@ import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/util/globals.dart' as _$celest;
 import 'package:http/http.dart' as _$http;
 import 'package:native_storage/native_storage.dart' as _$native_storage;
-
-import 'src/functions.dart';
-import 'src/serializers.dart';
+import 'package:streaming_client/src/functions.dart';
+import 'package:streaming_client/src/serializers.dart';
 
 final Celest celest = Celest();
 

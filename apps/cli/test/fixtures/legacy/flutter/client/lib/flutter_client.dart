@@ -9,11 +9,10 @@ import 'dart:io' as _$io;
 import 'package:celest_core/_internal.dart' as _$celest;
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/util/globals.dart' as _$celest;
+import 'package:flutter_client/src/functions.dart';
+import 'package:flutter_client/src/serializers.dart';
 import 'package:http/http.dart' as _$http;
 import 'package:native_storage/native_storage.dart' as _$native_storage;
-
-import 'src/functions.dart';
-import 'src/serializers.dart';
 
 export 'package:celest_backend/src/functions/flutter.dart' show HelloWorld;
 

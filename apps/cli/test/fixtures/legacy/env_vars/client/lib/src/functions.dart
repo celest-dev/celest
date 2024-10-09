@@ -13,8 +13,7 @@ import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
-
-import '../env_vars_client.dart';
+import 'package:env_vars_client/env_vars_client.dart';
 
 class CelestFunctions {
   final injected = CelestFunctionsInjected();

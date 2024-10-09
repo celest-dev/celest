@@ -7,13 +7,12 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _$async;
 import 'dart:convert' as _$convert;
 
+import 'package:auth_client/auth_client.dart';
 import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
-
-import '../auth_client.dart';
 
 class CelestFunctions {
   final authenticatedLib = CelestFunctionsAuthenticatedLib();

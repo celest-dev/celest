@@ -3,10 +3,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/runtime/serve.dart' as _i1;
 
-import 'functions/dart_ui/addCountryCode.dart' as _i2;
-import 'functions/dart_ui/lerpColor.dart' as _i3;
-import 'functions/flutter/helloWorld.dart' as _i4;
-import 'functions/flutter/paintWidget.dart' as _i5;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/flutter/goldens/functions/dart_ui/addCountryCode.dart'
+    as _i2;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/flutter/goldens/functions/dart_ui/lerpColor.dart'
+    as _i3;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/flutter/goldens/functions/flutter/helloWorld.dart'
+    as _i4;
+import '/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/flutter/goldens/functions/flutter/paintWidget.dart'
+    as _i5;
 
 Future<void> main() async {
   return start();

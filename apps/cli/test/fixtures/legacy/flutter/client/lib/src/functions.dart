@@ -18,8 +18,7 @@ import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
 import 'package:flutter/src/painting/image_provider.dart' as _$image_provider;
-
-import '../flutter_client.dart';
+import 'package:flutter_client/flutter_client.dart';
 
 class CelestFunctions {
   /// Tests that dart:ui types can be used as inputs/outputs in functions.

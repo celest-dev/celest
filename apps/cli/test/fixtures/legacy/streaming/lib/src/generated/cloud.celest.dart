@@ -2,9 +2,9 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use
 
-library; // ignore_for_file: no_leading_underscores_for_library_prefixes
+library;
 
-import 'config.celest.dart' as _i1;
+import 'package:celest_backend/src/generated/config.celest.dart';
 
 /// The interface to your Celest backend.
 ///
@@ -25,19 +25,18 @@ class CelestCloud {
   ///
   /// This is determined by the `CELEST_ENVIRONMENT` environment variable
   /// which is set for you by the deployment environment.
-  _i1.CelestEnvironment get currentEnvironment =>
-      (env.currentEnvironment as _i1.CelestEnvironment);
+  CelestEnvironment get currentEnvironment =>
+      (env.currentEnvironment as CelestEnvironment);
 
   /// The environment variables for the Celest service.
   ///
   /// This class provides access to the environment variable values
   /// that are configured for the [currentEnvironment].
-  _i1.CelestEnvironmentVariables get env =>
-      const _i1.CelestEnvironmentVariables();
+  CelestEnvironmentVariables get env => const CelestEnvironmentVariables();
 
   /// The secrets for the Celest service.
   ///
   /// This class provides access to the secret values that are configured
   /// for the [currentEnvironment].
-  _i1.CelestSecrets get secrets => const _i1.CelestSecrets();
+  CelestSecrets get secrets => const CelestSecrets();
 }

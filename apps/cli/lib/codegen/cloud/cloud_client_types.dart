@@ -1,11 +1,10 @@
-import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart';
 
 abstract final class CloudPaths {
-  static String get client =>
-      p.join(projectPaths.generatedDir, 'cloud.celest.dart');
-  static String get config =>
-      p.join(projectPaths.generatedDir, 'config.celest.dart');
+  static Uri get client =>
+      Uri.parse('package:celest_backend/src/generated/cloud.celest.dart');
+  static Uri get config =>
+      Uri.parse('package:celest_backend/src/generated/config.celest.dart');
 }
 
 final class CloudClientTypes {
@@ -23,7 +22,7 @@ final class CloudClientTypes {
       CloudClientTypes._('CelestSecrets', CloudPaths.config);
 
   final String name;
-  final String uri;
+  final Uri uri;
 
-  Reference get ref => refer(name, p.toUri(uri).toString());
+  Reference get ref => refer(name, uri.toString());
 }
