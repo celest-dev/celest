@@ -13,11 +13,7 @@ final class CloudExceptionSerializer extends Serializer<CloudException> {
   @override
   Map<String, Object?> serialize(CloudException value) {
     return {
-      '@error': {
-        'code': value.code,
-        'message': value.message,
-        'status': value.httpStatus,
-      },
+      'code': value.code,
       'message': value.message,
       'details': value.details,
     };

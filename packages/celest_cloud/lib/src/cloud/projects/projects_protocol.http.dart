@@ -7,6 +7,7 @@ import 'package:celest_cloud/src/cloud/project_environments/project_environments
 import 'package:celest_cloud/src/cloud/projects/projects_protocol.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/projects.pb.dart';
 import 'package:celest_cloud/src/proto/google/longrunning/operations.pb.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:http/http.dart' as http;
 
 final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
@@ -47,16 +48,16 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -79,16 +80,16 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
         // JSON for Empty has `value` field for some reason.
         ignoreUnknownFields: true,
@@ -102,16 +103,16 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
     final req = http.Request('GET', uri)
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Project()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -135,16 +136,16 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
     final req = http.Request('GET', uri)
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return ListProjectsResponse()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -172,16 +173,16 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -199,16 +200,16 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }

@@ -5,6 +5,7 @@ import 'package:celest_cloud/src/cloud/cloud.dart';
 import 'package:celest_cloud/src/cloud/project_environments/project_environments_protocol.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/project_environments.pb.dart';
 import 'package:celest_cloud/src/proto/google/longrunning/operations.pb.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:http/http.dart' as http;
 
 final class ProjectEnvironmentsProtocolHttp
@@ -41,16 +42,16 @@ final class ProjectEnvironmentsProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -73,16 +74,16 @@ final class ProjectEnvironmentsProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
         // JSON for Empty has `value` field for some reason.
         ignoreUnknownFields: true,
@@ -96,16 +97,16 @@ final class ProjectEnvironmentsProtocolHttp
     final req = http.Request('GET', uri)
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return ProjectEnvironment()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -127,16 +128,16 @@ final class ProjectEnvironmentsProtocolHttp
     final req = http.Request('GET', uri)
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return ListProjectEnvironmentsResponse()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -165,16 +166,16 @@ final class ProjectEnvironmentsProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -192,16 +193,16 @@ final class ProjectEnvironmentsProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }

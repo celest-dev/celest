@@ -4,6 +4,7 @@ import 'package:celest_cloud/src/cloud/authentication/authentication_protocol.da
 import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
 import 'package:celest_cloud/src/cloud/cloud.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/auth/v1alpha1/authentication.pb.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:http/http.dart' as http;
 
 final class AuthenticationProtocolHttp
@@ -34,16 +35,16 @@ final class AuthenticationProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Session()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -61,16 +62,16 @@ final class AuthenticationProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Session()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -88,16 +89,16 @@ final class AuthenticationProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return EndSessionResponse()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }

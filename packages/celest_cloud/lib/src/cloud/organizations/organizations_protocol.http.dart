@@ -5,6 +5,7 @@ import 'package:celest_cloud/src/cloud/cloud.dart';
 import 'package:celest_cloud/src/cloud/organizations/organizations_protocol.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/organizations.pb.dart';
 import 'package:celest_cloud/src/proto/google/longrunning/operations.pb.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:http/http.dart' as http;
 
 final class OrganizationsProtocolHttp
@@ -41,16 +42,16 @@ final class OrganizationsProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -73,16 +74,16 @@ final class OrganizationsProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
         // JSON for Empty has `value` field for some reason.
         ignoreUnknownFields: true,
@@ -96,16 +97,16 @@ final class OrganizationsProtocolHttp
     final req = http.Request('GET', uri)
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Organization()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -129,16 +130,16 @@ final class OrganizationsProtocolHttp
     final req = http.Request('GET', uri)
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return ListOrganizationsResponse()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -166,16 +167,16 @@ final class OrganizationsProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -193,16 +194,16 @@ final class OrganizationsProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }

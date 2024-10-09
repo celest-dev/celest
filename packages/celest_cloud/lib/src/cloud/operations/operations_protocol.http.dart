@@ -4,6 +4,7 @@ import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
 import 'package:celest_cloud/src/cloud/cloud.dart';
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.dart';
 import 'package:celest_cloud/src/proto/google/longrunning/operations.pb.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:http/http.dart' as http;
 
 final class OperationsProtocolHttp
@@ -32,10 +33,10 @@ final class OperationsProtocolHttp
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
     if (res.statusCode != 200) {
-      final body = await res.stream.bytesToString();
-      httpError(
+      final body = await res.stream.toBytes();
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
   }
@@ -48,16 +49,16 @@ final class OperationsProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return Operation()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
@@ -80,16 +81,16 @@ final class OperationsProtocolHttp
       ..headers['content-type'] = 'application/json'
       ..headers['accept'] = 'application/json';
     final res = await _client.send(req);
-    final body = await res.stream.bytesToString();
+    final body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      httpError(
+      throwError(
         statusCode: res.statusCode,
-        body: body,
+        bodyBytes: body,
       );
     }
     return ListOperationsResponse()
       ..mergeFromProto3Json(
-        jsonDecode(body),
+        JsonUtf8.decode(body),
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
