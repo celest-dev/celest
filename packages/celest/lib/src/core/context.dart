@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io' show HandshakeException, HttpClient, SocketException;
 
-import 'package:celest/src/config/env.dart';
+import 'package:celest/src/config/config_values.dart';
 import 'package:celest/src/core/environment.dart';
 import 'package:celest/src/runtime/gcp/gcp.dart';
 import 'package:celest_core/_internal.dart';

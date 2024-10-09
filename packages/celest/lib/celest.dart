@@ -14,7 +14,7 @@ export 'src/auth/auth.dart';
 export 'src/auth/auth_provider.dart';
 
 /// Config
-export 'src/config/env.dart';
+export 'src/config/config_values.dart';
 
 /// Core
 export 'src/core/annotations.dart';

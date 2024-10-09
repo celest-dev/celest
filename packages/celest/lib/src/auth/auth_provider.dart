@@ -1,4 +1,4 @@
-import 'package:celest/src/config/env.dart';
+import 'package:celest/src/config/config_values.dart';
 
 /// {@template celest.auth.auth_provider}
 /// An authentication provider which can be used to sign in to Celest.
