@@ -1,17 +1,4 @@
-## 0.5.0-dev.3
-
-## 0.5.0-dev.2
-
-## 0.5.0-dev.1
-
-- chore: Update dependencies
-
-## 0.5.0-dev.0
-
-- chore: Update dependencies
-- chore: Add all HTTP exceptions to `CloudException`
-- chore: Improve HTTP authentication
-- chore: Migrate to new Cloud API
+## 1.0.0-dev.0
 
 ## 0.4.2
 

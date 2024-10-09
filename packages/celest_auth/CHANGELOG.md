@@ -1,17 +1,4 @@
-## 0.5.0-dev.3
-
-## 0.5.0-dev.2
-
-## 0.5.0-dev.1
-
-- chore: Bump dependencies
-- fix: Catch errors on init
-
-## 0.5.0-dev.0
-
-- feat: Add social sign-in support
-- chore: Disambiguate native storage scoping
-- chore: Migrate to new Cloud API
+## 1.0.0-dev.0
 
 ## 0.4.1
 
