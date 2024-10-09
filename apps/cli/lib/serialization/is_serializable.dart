@@ -403,7 +403,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     final hasToJson = toJsonMethod != null;
     if (hasToJson) {
       verdict &= _checkCustomSerializer(type, toJsonMethod);
-    } else if (!type.extensionTypeErasure.isEnum) {
+    } else if (!type.extensionTypeErasure.isEnumLike) {
       // When no toJson method is provided, we must check the representation
       // type's fields and constructor, even if this is an extension type, since
       // we will just cast into the extension type at the end, but we only have
@@ -421,22 +421,21 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         fromJsonCtor,
         wireType,
       );
-    } else if (!type.extensionTypeErasure.isEnum) {
+    } else if (!type.extensionTypeErasure.isEnumLike) {
       // Same rationale as the toJson check re: erasure type.
       verdict &= type.extensionTypeErasure.accept(
         const _IsSerializableClass(TypePosition.parameter),
       );
     }
     final wireConstructor = type.wireConstructor;
-    if (wireConstructor == null &&
-        fromJsonCtor == null &&
-        !type.extensionTypeErasure.isEnum) {
+    if (wireConstructor == null && fromJsonCtor == null && !type.isEnumLike) {
       return verdict &
           Verdict.no(
             'Class ${element.displayName} must have an unnamed constructor '
             'with the same number of parameters as fields or a `fromJson` '
             'constructor.',
             location: element.sourceLocation,
+            isBecauseOfFlutter: type.isFlutterType,
           );
     }
 
@@ -454,7 +453,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     );
     verdict = verdict.withPrimarySpec(spec);
 
-    if (type.isEnum) {
+    if (type.isEnumLike) {
       return verdict;
     }
 
@@ -599,6 +598,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
   @override
   Verdict visitRecordType(RecordType type) {
     if (type.positionalFields.isNotEmpty) {
+      // TODO(dnys1): Remove this limitation. Follow package:json_serializable format.
       return Verdict.no(
         'Positional fields are not supported in record types',
         location: type.alias?.element.sourceLocation,
@@ -655,9 +655,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             'bound': 'unbounded',
           },
         );
-        return const VerdictNo([
-          VerdictReason('Unbounded generic types are not supported'),
-        ]);
+        return const Verdict.yes();
       default:
         analytics.capture(
           'type_parameter',
@@ -694,8 +692,42 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
       unreachable('Not a class type');
 
   Verdict _visitClass(InterfaceType type, ClassElement element) {
-    final fields = element.sortedFields(type);
     var verdict = const Verdict.yes();
+    final unnamedConstructor = type.wireConstructor;
+    var constructorVerdict = const Verdict.yes();
+
+    if (unnamedConstructor == null) {
+      constructorVerdict &= Verdict.no(
+        'Class ${element.displayName} must have an unnamed constructor with '
+        'the same number of parameters as fields.',
+        location: element.sourceLocation,
+        isBecauseOfFlutter: type.isFlutterType,
+      );
+    } else if (element.isAbstract &&
+        !element.isSealed &&
+        !unnamedConstructor.isFactory) {
+      constructorVerdict &= Verdict.no(
+        'Class ${element.displayName} is abstract and must have an unnamed factory '
+        'or fromJson factory constructor to be used.',
+        location: element.sourceLocation,
+        isBecauseOfFlutter: type.isFlutterType,
+      );
+    }
+
+    // If the class is abstract and/or its primary constructor is redirecting,
+    // we need to check the fields of the redirected class since that is what
+    // will be instantiated.
+    final fields = switch (unnamedConstructor) {
+      ConstructorElement(
+        redirectedConstructor: Element(
+          // TODO(dnys1): This is missing some edge cases. For example, a class
+          // could redirect to another redirecting constructor.
+          enclosingElement: final ClassElement redirectedClass,
+        )
+      ) =>
+        redirectedClass.sortedFields(redirectedClass.thisType),
+      _ => element.sortedFields(type),
+    };
     var fieldsVerdict = const Verdict.yes();
     for (final field in List.of(fields)) {
       final (:ignoreFromJson, :ignoreToJson) = type._ignoredByJsonKey(field);
@@ -729,6 +761,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
             'Field "${field.displayName}" of type "${element.displayName}" is '
             'not serializable: $fieldVerdict',
             location: field.sourceLocation,
+            isBecauseOfFlutter: type.isFlutterType,
           );
       }
     }
@@ -736,25 +769,8 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
       verdict &= fieldsVerdict;
     }
 
-    final unnamedConstructor = type.wireConstructor;
-    var constructorVerdict = const Verdict.yes();
-
-    if (unnamedConstructor == null) {
-      constructorVerdict &= Verdict.no(
-        'Class ${element.displayName} must have an unnamed constructor with '
-        'the same number of parameters as fields.',
-        location: element.sourceLocation,
-      );
-    } else if (element.isAbstract &&
-        !element.isSealed &&
-        !unnamedConstructor.isFactory) {
-      constructorVerdict &= Verdict.no(
-        'Class ${element.displayName} is abstract and must have an unnamed factory '
-        'or fromJson factory constructor to be used.',
-        location: element.sourceLocation,
-      );
-    } else {
-      final parameters = unnamedConstructor.parameters;
+    if (constructorVerdict is VerdictYes) {
+      final parameters = unnamedConstructor!.parameters;
       for (final parameter in parameters) {
         final parameterField = parameter.fieldFormal(fields);
         if (parameterField == null && parameter.isRequired) {
@@ -763,6 +779,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
             'populated because it has no matching fields. Available fields: '
             '${fields.map((field) => field.name).join(', ')}',
             location: parameter.sourceLocation,
+            isBecauseOfFlutter: type.isFlutterType,
           );
           continue;
         }
@@ -778,6 +795,7 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
             'Constructor parameter "${parameter.displayName}" is not '
             'a field of the class ${element.displayName}.',
             location: parameter.sourceLocation,
+            isBecauseOfFlutter: type.isFlutterType,
           );
           continue;
         }
@@ -942,7 +960,7 @@ extension on InterfaceType {
                 return FieldSpec(
                   name: field.displayName,
                   type: field.type,
-                  ignore: ignoreToJson,
+                  ignore: ignoreToJson || field.type.isDartCoreNull,
                 );
               }),
           ],

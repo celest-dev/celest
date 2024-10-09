@@ -29,6 +29,18 @@
           "apiName": "flutter",
           "envVars": [],
           "secrets": []
+        },
+        "helloWorld": {
+          "name": "helloWorld",
+          "route": "/flutter/hello-world",
+          "apiName": "flutter",
+          "envVars": [],
+          "secrets": [],
+          "httpConfig": {
+            "method": "GET",
+            "statusCode": 200,
+            "errorStatuses": {}
+          }
         }
       }
     }

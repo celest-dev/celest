@@ -655,9 +655,10 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
     _i3.Serializers.instance
         .put(_i3.Serializer.define<_i7.TimeoutException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        r'duration':
-            _i3.Serializers.instance.serialize<Duration?>($value.duration),
+        if ($value.message case final message?) r'message': message,
+        if (_i3.Serializers.instance.serialize<Duration?>($value.duration)
+            case final duration?)
+          r'duration': duration,
       },
       deserialize: ($serialized) {
         return _i7.TimeoutException(
@@ -670,9 +671,11 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
     _i3.Serializers.instance.put(_i3.Serializer.define<
         _i8.JsonUnsupportedObjectError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
-        r'unsupportedObject': $value.unsupportedObject,
-        r'cause': $value.cause,
-        r'partialResult': $value.partialResult,
+        if ($value.unsupportedObject case final unsupportedObject?)
+          r'unsupportedObject': unsupportedObject,
+        if ($value.cause case final cause?) r'cause': cause,
+        if ($value.partialResult case final partialResult?)
+          r'partialResult': partialResult,
       },
       deserialize: ($serialized) {
         return _i8.JsonUnsupportedObjectError(
@@ -686,7 +689,7 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         .put(_i3.Serializer.define<ArgumentError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'invalidValue': $value.invalidValue,
-        r'name': $value.name,
+        if ($value.name case final name?) r'name': name,
         r'message': $value.message,
       },
       deserialize: ($serialized) {
@@ -698,15 +701,19 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
     ));
     _i3.Serializers.instance
         .put(_i3.Serializer.define<AssertionError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
+      serialize: ($value) => <String, Object?>{
+        if ($value.message case final message?) r'message': message
+      },
       deserialize: ($serialized) {
         return AssertionError($serialized?[r'message']);
       },
     ));
     _i3.Serializers.instance.put(_i3.Serializer.define<
         ConcurrentModificationError, Map<String, Object?>?>(
-      serialize: ($value) =>
-          <String, Object?>{r'modifiedObject': $value.modifiedObject},
+      serialize: ($value) => <String, Object?>{
+        if ($value.modifiedObject case final modifiedObject?)
+          r'modifiedObject': modifiedObject
+      },
       deserialize: ($serialized) {
         return ConcurrentModificationError($serialized?[r'modifiedObject']);
       },
@@ -714,8 +721,9 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
     _i3.Serializers.instance
         .put(_i3.Serializer.define<Error, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
-        r'stackTrace':
-            _i3.Serializers.instance.serialize<StackTrace?>($value.stackTrace)
+        if (_i3.Serializers.instance.serialize<StackTrace?>($value.stackTrace)
+            case final stackTrace?)
+          r'stackTrace': stackTrace
       },
       deserialize: ($serialized) {
         return Error();
@@ -726,7 +734,7 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
         r'source': $value.source,
-        r'offset': $value.offset,
+        if ($value.offset case final offset?) r'offset': offset,
       },
       deserialize: ($serialized) {
         return FormatException(
@@ -739,9 +747,9 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
     _i3.Serializers.instance
         .put(_i3.Serializer.define<IndexError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
-        r'name': $value.name,
+        if ($value.name case final name?) r'name': name,
         r'message': $value.message,
-        r'indexable': $value.indexable,
+        if ($value.indexable case final indexable?) r'indexable': indexable,
         r'length': $value.length,
         r'invalidValue': $value.invalidValue,
         r'start': $value.start,
@@ -759,7 +767,9 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
     ));
     _i3.Serializers.instance.put(_i3.Serializer.define<
         IntegerDivisionByZeroException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
+      serialize: ($value) => <String, Object?>{
+        if ($value.message case final message?) r'message': message
+      },
       deserialize: ($serialized) {
         return IntegerDivisionByZeroException();
       },
@@ -774,11 +784,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
     _i3.Serializers.instance
         .put(_i3.Serializer.define<RangeError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
-        r'name': $value.name,
+        if ($value.name case final name?) r'name': name,
         r'message': $value.message,
-        r'start': $value.start,
-        r'end': $value.end,
-        r'invalidValue': $value.invalidValue,
+        if ($value.start case final start?) r'start': start,
+        if ($value.end case final end?) r'end': end,
+        if ($value.invalidValue case final invalidValue?)
+          r'invalidValue': invalidValue,
       },
       deserialize: ($serialized) {
         return RangeError($serialized[r'message']);
@@ -807,14 +818,18 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
     ));
     _i3.Serializers.instance
         .put(_i3.Serializer.define<UnimplementedError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
+      serialize: ($value) => <String, Object?>{
+        if ($value.message case final message?) r'message': message
+      },
       deserialize: ($serialized) {
         return UnimplementedError(($serialized?[r'message'] as String?));
       },
     ));
     _i3.Serializers.instance
         .put(_i3.Serializer.define<UnsupportedError, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
+      serialize: ($value) => <String, Object?>{
+        if ($value.message case final message?) r'message': message
+      },
       deserialize: ($serialized) {
         return UnsupportedError(($serialized[r'message'] as String));
       },
@@ -823,10 +838,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         .put(_i3.Serializer.define<_i5.AbortedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.AbortedException(
@@ -842,10 +859,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         _i3.Serializer.define<_i5.AlreadyExistsException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.AlreadyExistsException(
@@ -861,10 +880,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         _i3.Serializer.define<_i5.BadRequestException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.BadRequestException(
@@ -880,10 +901,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         _i3.Serializer.define<_i5.CancelledException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.CancelledException(
@@ -899,10 +922,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         .put(_i3.Serializer.define<_i5.CloudException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.CloudException.fromJson($serialized);
@@ -912,10 +937,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         .put(_i3.Serializer.define<_i5.DataLossError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.DataLossError(
@@ -931,10 +958,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         _i3.Serializer.define<_i5.DeadlineExceededError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.DeadlineExceededError(
@@ -950,10 +979,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         _i5.FailedPreconditionException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.FailedPreconditionException(
@@ -969,10 +1000,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         _i3.Serializer.define<_i5.InternalServerError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.InternalServerError(
@@ -988,10 +1021,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         .put(_i3.Serializer.define<_i5.NotFoundException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.NotFoundException(
@@ -1007,10 +1042,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         _i3.Serializer.define<_i5.OutOfRangeException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.OutOfRangeException(
@@ -1026,10 +1063,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         _i5.PermissionDeniedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.PermissionDeniedException(
@@ -1045,10 +1084,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         _i5.ResourceExhaustedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.ResourceExhaustedException(
@@ -1064,10 +1105,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         _i3.Serializer.define<_i5.UnauthorizedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.UnauthorizedException(
@@ -1083,10 +1126,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         .put(_i3.Serializer.define<_i5.UnavailableError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.UnavailableError(
@@ -1102,10 +1147,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         _i3.Serializer.define<_i5.UnimplementedError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.UnimplementedError(($serialized?[r'message'] as String?));
@@ -1115,10 +1162,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         .put(_i3.Serializer.define<_i5.UnknownError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i5.UnknownError(
@@ -1134,10 +1183,12 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         _i3.Serializer.define<_i9.SerializationException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i3.Serializers.instance.serialize<_i4.JsonValue?>(
+        if (_i3.Serializers.instance.serialize<_i4.JsonValue?>(
           $value.details,
           const _i3.TypeToken<_i4.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i9.SerializationException(($serialized[r'message'] as String));

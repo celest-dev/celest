@@ -298,7 +298,7 @@ final class SerializerGenerator {
         (parameters.isEmpty || parameters.every((p) => p.isOptional)) &&
             serializationSpec.subtypes.isEmpty;
     final wireType = switch (type) {
-      ast.InterfaceType(isEnum: true) => this.wireType,
+      ast.InterfaceType(isEnumLike: true) => this.wireType,
       _ => castType.withNullability(mayBeAbsent),
     };
     final deserialize = _deserialize(r'$serialized', mayBeAbsent: mayBeAbsent);
@@ -444,6 +444,8 @@ final class SerializerGenerator {
     }
     if (type.isEnum) {
       return ref.property('name');
+    } else if (type.isEnumLike) {
+      return ref.property('toString').call([]);
     }
     if (_isExtensionTypeWithIdentity) {
       return jsonGenerator.toJson(
@@ -462,10 +464,19 @@ final class SerializerGenerator {
       if (field.ignore) {
         continue;
       }
-      serialized[literalString(field.name, raw: true)] = jsonGenerator.toJson(
-        typeHelper.toReference(field.type),
+      final variableName = field.name;
+      final fieldTypeRef = typeHelper.toReference(field.type);
+      final serializedField = jsonGenerator.toJson(
+        fieldTypeRef,
         ref.property(field.name),
       );
+      if (fieldTypeRef.isNullableOrFalse) {
+        final binding = nullCheckBind(variableName, serializedField);
+        final key = mapIf(binding, literalString(field.name, raw: true));
+        serialized[key] = refer(variableName);
+      } else {
+        serialized[literalString(field.name, raw: true)] = serializedField;
+      }
     }
     return (serialized.isEmpty ? literalConstMap : literalMap)(
       serialized,
@@ -578,6 +589,25 @@ final class SerializerGenerator {
           .property('values')
           .property('byName')
           .call([ref])
+          .returned
+          .statement;
+    } else if (type.isEnumLike) {
+      return typeReference.nonNullable
+          .property('values')
+          .property('firstWhere')
+          .call([
+            Method(
+              (m) => m
+                ..requiredParameters.add(
+                  Parameter((p) => p..name = 'el'),
+                )
+                ..body = ref
+                    .equalTo(
+                      refer('el').property('toString').call([]),
+                    )
+                    .code,
+            ).closure,
+          ])
           .returned
           .statement;
     }

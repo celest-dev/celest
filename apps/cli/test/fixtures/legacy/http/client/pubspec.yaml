@@ -1,0 +1,19 @@
+name: api_client
+description: The Celest client for api.
+publish_to: none
+
+environment:
+  sdk: ^3.4.0
+
+dependencies:
+  celest: ^0.5.0-0
+  celest_backend:
+    path: ..
+  celest_core: ^0.5.0-0
+  http: ">=0.13.0 <2.0.0"
+  native_storage: ^0.2.2
+
+dev_dependencies:
+  test:
+
+dependency_overrides: {celest: {path: ../../../../../../../celest/packages/celest}, celest_auth: {path: ../../../../../../../celest/packages/celest_auth}, celest_cloud: {path: ../../../../../../../celest/packages/celest_cloud}, celest_core: {path: ../../../../../../../celest/packages/celest_core}}

@@ -242,11 +242,11 @@ final class JsonGenerator {
         ).closure,
       ]);
     }
-    final serializationVerdict = typeHelper.isSerializable(dartType);
-    assert(
-      serializationVerdict is VerdictYes,
-      'Should not have passed analyzer if no: $serializationVerdict',
-    );
+    // final serializationVerdict = typeHelper.isSerializable(dartType);
+    // assert(
+    //   serializationVerdict is VerdictYes,
+    //   'Should not have passed analyzer if no: $serializationVerdict',
+    // );
     return _serializers.property('deserialize').call(
       [
         ref,

@@ -8,6 +8,7 @@ import 'dart:async' as _$async;
 import 'dart:io' as _$io;
 
 import 'package:celest_core/_internal.dart' as _$celest;
+import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/util/globals.dart' as _$celest;
 import 'package:http/http.dart' as _$http;
 import 'package:native_storage/native_storage.dart' as _$native_storage;
@@ -76,6 +77,7 @@ class Celest with _$celest.CelestBase {
 
   void init({
     CelestEnvironment environment = CelestEnvironment.local,
+    _$celest.Serializers? serializers,
     ExternalAuth? externalAuth,
   }) {
     if (_initialized && environment != _currentEnvironment) {
@@ -85,7 +87,7 @@ class Celest with _$celest.CelestBase {
     _baseUri = environment.baseUri;
     _$async.scheduleMicrotask(() => _auth.init(externalAuth: externalAuth));
     if (!_initialized) {
-      initSerializers();
+      initSerializers(serializers: serializers);
     }
     _initialized = true;
   }

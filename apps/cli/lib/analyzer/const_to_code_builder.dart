@@ -16,7 +16,7 @@ extension ConstToCodeBuilder on DartObject {
   }
 
   Expression? get toCodeBuilder => accept(const _ConstToCodeBuilder());
-  ast.DartValue get toDartValue => accept(const _ConstToDartValue());
+  ast.DartValue? get toDartValue => accept(const _ConstToDartValue());
 }
 
 abstract base class DartObjectVisitor<R> {
@@ -56,7 +56,7 @@ abstract base class DartObjectVisitor<R> {
     } else if (node.toTypeValue() case final typeValue?) {
       return visitTypeValue(typeValue);
     } else {
-      throw StateError('Invalid DartObjectImpl: $node');
+      return null as R;
     }
   }
 

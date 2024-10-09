@@ -450,7 +450,10 @@ final class TypeHelper {
   final Map<InterfaceElement, List<InterfaceType>> subtypes = Map.identity();
 
   /// Maps 3p types to their extension type overrides.
-  final Map<InterfaceType, InterfaceType> overrides = Map.identity();
+  final Map<InterfaceType, InterfaceType> overrides = HashMap(
+    equals: const DartTypeEquality(ignoreNullability: true).equals,
+    hashCode: const DartTypeEquality(ignoreNullability: true).hash,
+  );
 
   /// Reset all caches.
   void reset() {

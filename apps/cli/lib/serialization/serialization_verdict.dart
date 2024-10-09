@@ -11,6 +11,7 @@ sealed class Verdict {
   factory Verdict.no(
     String reason, {
     FileSpan? location,
+    bool isBecauseOfFlutter,
   }) = VerdictNo.single;
 
   bool get isSerializable;
@@ -81,17 +82,34 @@ final class VerdictYes extends Verdict {
 }
 
 final class VerdictNo extends Verdict {
-  const VerdictNo(this.reasons);
+  const VerdictNo(this._reasons);
+
   VerdictNo.single(
     String reason, {
     FileSpan? location,
-  }) : reasons = [VerdictReason(reason, location: location)];
+    bool isBecauseOfFlutter = false,
+  }) : _reasons = [
+          VerdictReason(
+            reason,
+            location: location,
+            isBecauseOfFlutter: isBecauseOfFlutter,
+          ),
+        ];
 
   @override
-  bool get isSerializable => false;
+  bool get isSerializable {
+    // if (reasons.every((r) => r.isBecauseOfFlutter)) {
+    //   return true;
+    // }
+    return false;
+  }
+
+  final List<VerdictReason> _reasons;
 
   @override
-  final List<VerdictReason> reasons;
+  List<VerdictReason> get reasons =>
+      // _reasons.where((reason) => !reason.isBecauseOfFlutter).toList();
+      _reasons;
 
   @override
   Verdict withPrimarySpec(SerializationSpec spec) => this;
@@ -104,8 +122,13 @@ final class VerdictNo extends Verdict {
 }
 
 final class VerdictReason {
-  const VerdictReason(this.reason, {this.location});
+  const VerdictReason(
+    this.reason, {
+    this.location,
+    this.isBecauseOfFlutter = false,
+  });
 
+  final bool isBecauseOfFlutter;
   final String reason;
   final FileSpan? location;
 

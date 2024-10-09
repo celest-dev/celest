@@ -137,6 +137,9 @@ final class _GitIgnore extends ProjectFile {
   String get relativePath => '.gitignore';
 
   @override
+  bool get needsMigration => true;
+
+  @override
   Future<ProjectMigrationResult> create() async {
     await _createFile(
       p.join(projectRoot, relativePath),

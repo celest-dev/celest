@@ -8,7 +8,7 @@ environment:
 dependencies:
   celest: ^0.5.0-0
   celest_backend:
-    path: ../
+    path: ..
   celest_core: ^0.5.0-0
   gotrue: ^2.8.0
   http: ">=0.13.0 <2.0.0"

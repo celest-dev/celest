@@ -398,7 +398,9 @@ final class ClientGenerator {
       libraries[ClientPaths.serializers] = clientSerializers.generate();
 
       final initSerializers =
-          refer('initSerializers', ClientPaths.serializers).call([]).statement;
+          refer('initSerializers', ClientPaths.serializers).call([], {
+        'serializers': refer('serializers'),
+      }).statement;
       clientInitBody.statements.add(
         initSerializers.wrapWithBlockIf(refer('_initialized').negate()),
       );
@@ -420,6 +422,12 @@ final class ClientGenerator {
               ..type = refer('CelestEnvironment')
               ..named = true
               ..defaultTo = refer('CelestEnvironment').property('local').code,
+          ),
+          Parameter(
+            (p) => p
+              ..name = 'serializers'
+              ..type = DartTypes.celest.serializers.nullable
+              ..named = true,
           ),
           if (hasExternalAuth)
             Parameter(

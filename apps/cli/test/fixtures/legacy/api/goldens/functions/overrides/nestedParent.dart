@@ -864,9 +864,10 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
     _i4.Serializers.instance
         .put(_i4.Serializer.define<_i8.TimeoutException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        r'duration':
-            _i4.Serializers.instance.serialize<Duration?>($value.duration),
+        if ($value.message case final message?) r'message': message,
+        if (_i4.Serializers.instance.serialize<Duration?>($value.duration)
+            case final duration?)
+          r'duration': duration,
       },
       deserialize: ($serialized) {
         return _i8.TimeoutException(
@@ -879,9 +880,11 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
     _i4.Serializers.instance.put(_i4.Serializer.define<
         _i10.JsonUnsupportedObjectError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
-        r'unsupportedObject': $value.unsupportedObject,
-        r'cause': $value.cause,
-        r'partialResult': $value.partialResult,
+        if ($value.unsupportedObject case final unsupportedObject?)
+          r'unsupportedObject': unsupportedObject,
+        if ($value.cause case final cause?) r'cause': cause,
+        if ($value.partialResult case final partialResult?)
+          r'partialResult': partialResult,
       },
       deserialize: ($serialized) {
         return _i10.JsonUnsupportedObjectError(
@@ -895,7 +898,7 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         .put(_i4.Serializer.define<ArgumentError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'invalidValue': $value.invalidValue,
-        r'name': $value.name,
+        if ($value.name case final name?) r'name': name,
         r'message': $value.message,
       },
       deserialize: ($serialized) {
@@ -907,15 +910,19 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
     ));
     _i4.Serializers.instance
         .put(_i4.Serializer.define<AssertionError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
+      serialize: ($value) => <String, Object?>{
+        if ($value.message case final message?) r'message': message
+      },
       deserialize: ($serialized) {
         return AssertionError($serialized?[r'message']);
       },
     ));
     _i4.Serializers.instance.put(_i4.Serializer.define<
         ConcurrentModificationError, Map<String, Object?>?>(
-      serialize: ($value) =>
-          <String, Object?>{r'modifiedObject': $value.modifiedObject},
+      serialize: ($value) => <String, Object?>{
+        if ($value.modifiedObject case final modifiedObject?)
+          r'modifiedObject': modifiedObject
+      },
       deserialize: ($serialized) {
         return ConcurrentModificationError($serialized?[r'modifiedObject']);
       },
@@ -923,8 +930,9 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
     _i4.Serializers.instance
         .put(_i4.Serializer.define<Error, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
-        r'stackTrace':
-            _i4.Serializers.instance.serialize<StackTrace?>($value.stackTrace)
+        if (_i4.Serializers.instance.serialize<StackTrace?>($value.stackTrace)
+            case final stackTrace?)
+          r'stackTrace': stackTrace
       },
       deserialize: ($serialized) {
         return Error();
@@ -935,7 +943,7 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
         r'source': $value.source,
-        r'offset': $value.offset,
+        if ($value.offset case final offset?) r'offset': offset,
       },
       deserialize: ($serialized) {
         return FormatException(
@@ -948,9 +956,9 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
     _i4.Serializers.instance
         .put(_i4.Serializer.define<IndexError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
-        r'name': $value.name,
+        if ($value.name case final name?) r'name': name,
         r'message': $value.message,
-        r'indexable': $value.indexable,
+        if ($value.indexable case final indexable?) r'indexable': indexable,
         r'length': $value.length,
         r'invalidValue': $value.invalidValue,
         r'start': $value.start,
@@ -968,7 +976,9 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
     ));
     _i4.Serializers.instance.put(_i4.Serializer.define<
         IntegerDivisionByZeroException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
+      serialize: ($value) => <String, Object?>{
+        if ($value.message case final message?) r'message': message
+      },
       deserialize: ($serialized) {
         return IntegerDivisionByZeroException();
       },
@@ -983,11 +993,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
     _i4.Serializers.instance
         .put(_i4.Serializer.define<RangeError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
-        r'name': $value.name,
+        if ($value.name case final name?) r'name': name,
         r'message': $value.message,
-        r'start': $value.start,
-        r'end': $value.end,
-        r'invalidValue': $value.invalidValue,
+        if ($value.start case final start?) r'start': start,
+        if ($value.end case final end?) r'end': end,
+        if ($value.invalidValue case final invalidValue?)
+          r'invalidValue': invalidValue,
       },
       deserialize: ($serialized) {
         return RangeError($serialized[r'message']);
@@ -1016,14 +1027,18 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
     ));
     _i4.Serializers.instance
         .put(_i4.Serializer.define<UnimplementedError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
+      serialize: ($value) => <String, Object?>{
+        if ($value.message case final message?) r'message': message
+      },
       deserialize: ($serialized) {
         return UnimplementedError(($serialized?[r'message'] as String?));
       },
     ));
     _i4.Serializers.instance
         .put(_i4.Serializer.define<UnsupportedError, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
+      serialize: ($value) => <String, Object?>{
+        if ($value.message case final message?) r'message': message
+      },
       deserialize: ($serialized) {
         return UnsupportedError(($serialized[r'message'] as String));
       },
@@ -1073,10 +1088,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         .put(_i4.Serializer.define<_i6.AbortedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.AbortedException(
@@ -1092,10 +1109,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         _i4.Serializer.define<_i6.AlreadyExistsException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.AlreadyExistsException(
@@ -1111,10 +1130,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         _i4.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.BadRequestException(
@@ -1130,10 +1151,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         _i4.Serializer.define<_i6.CancelledException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.CancelledException(
@@ -1149,10 +1172,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         .put(_i4.Serializer.define<_i6.CloudException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.CloudException.fromJson($serialized);
@@ -1162,10 +1187,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         .put(_i4.Serializer.define<_i6.DataLossError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.DataLossError(
@@ -1181,10 +1208,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         _i4.Serializer.define<_i6.DeadlineExceededError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.DeadlineExceededError(
@@ -1200,10 +1229,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         _i6.FailedPreconditionException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.FailedPreconditionException(
@@ -1219,10 +1250,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         _i4.Serializer.define<_i6.InternalServerError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.InternalServerError(
@@ -1238,10 +1271,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         .put(_i4.Serializer.define<_i6.NotFoundException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.NotFoundException(
@@ -1257,10 +1292,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         _i4.Serializer.define<_i6.OutOfRangeException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.OutOfRangeException(
@@ -1276,10 +1313,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         _i6.PermissionDeniedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.PermissionDeniedException(
@@ -1295,10 +1334,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         _i6.ResourceExhaustedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.ResourceExhaustedException(
@@ -1314,10 +1355,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         _i4.Serializer.define<_i6.UnauthorizedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.UnauthorizedException(
@@ -1333,10 +1376,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         .put(_i4.Serializer.define<_i6.UnavailableError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.UnavailableError(
@@ -1352,10 +1397,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         _i4.Serializer.define<_i6.UnimplementedError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.UnimplementedError(($serialized?[r'message'] as String?));
@@ -1365,10 +1412,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         .put(_i4.Serializer.define<_i6.UnknownError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i6.UnknownError(
@@ -1384,10 +1433,12 @@ final class NestedParentTarget extends _i1.CloudFunctionHttpTarget {
         _i12.SerializationException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'message': $value.message,
-        r'details': _i4.Serializers.instance.serialize<_i13.JsonValue?>(
+        if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
           $value.details,
           const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-        ),
+        )
+            case final details?)
+          r'details': details,
       },
       deserialize: ($serialized) {
         return _i12.SerializationException(($serialized[r'message'] as String));

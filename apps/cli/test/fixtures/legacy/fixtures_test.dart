@@ -78,7 +78,7 @@ void main() {
       updateGoldens: updateGoldens,
       parentProject:
           useCelestLayout ? ParentProject.loadSync(testDir.path) : null,
-      clientDir: useCelestLayout ? projectDir.childDirectory('client') : null,
+      clientDir: projectDir.childDirectory('client'),
       goldensDir: fileSystem.directory(
         p.join(projectDir.path, 'goldens'),
       ),
@@ -102,7 +102,7 @@ class TestRunner {
     required this.projectRoot,
     required this.updateGoldens,
     this.parentProject,
-    this.clientDir,
+    required this.clientDir,
     required this.goldensDir,
     this.includeApis,
   });
@@ -110,7 +110,7 @@ class TestRunner {
   final String testName;
   final String projectRoot;
   final bool updateGoldens;
-  final Directory? clientDir;
+  final Directory clientDir;
   final ParentProject? parentProject;
   final Directory goldensDir;
   final List<String>? includeApis;
@@ -132,13 +132,18 @@ class TestRunner {
           action: PubAction.upgrade,
           workingDirectory: projectRoot,
         ).timeout(const Duration(seconds: 10));
-        if (updateGoldens && goldensDir.existsSync()) {
-          goldensDir.deleteSync(recursive: true);
+        if (updateGoldens) {
+          if (goldensDir.existsSync()) {
+            goldensDir.deleteSync(recursive: true);
+          }
+          if (clientDir.existsSync()) {
+            clientDir.deleteSync(recursive: true);
+          }
         }
         await init(
           projectRoot: projectRoot,
           parentProject: parentProject,
-          clientDir: clientDir?.path,
+          clientDir: clientDir.path,
           outputsDir: goldensDir.path,
           projectDb: ProjectDatabase.memory(),
         );
@@ -330,7 +335,7 @@ class TestRunner {
       expect(
         analyzeResult.exitCode,
         0,
-        reason: analyzeResult.stderr.toString(),
+        reason: '${analyzeResult.stdout}\n${analyzeResult.stderr}',
       );
     });
   }
@@ -3982,7 +3987,6 @@ final tests = <String, Test>{
               output: {
                 'languageCode': 'en',
                 'countryCode': 'US',
-                'scriptCode': null,
               },
             ),
           ],
@@ -3995,6 +3999,14 @@ final tests = <String, Test>{
               name: 'paintImage',
               input: {},
               output: startsWith('iVBORw0'),
+            ),
+          ],
+          'helloWorld': [
+            FunctionTestSuccess(
+              name: 'helloWorld',
+              method: 'GET',
+              input: {},
+              output: {},
             ),
           ],
         },
@@ -4019,7 +4031,6 @@ final tests = <String, Test>{
                   'status': 400,
                 },
                 'message': '',
-                'details': null,
               },
             ),
             FunctionTestError(
@@ -4035,7 +4046,6 @@ final tests = <String, Test>{
                   'status': 412,
                 },
                 'message': '',
-                'details': null,
               },
             ),
             FunctionTestError(
@@ -4051,7 +4061,6 @@ final tests = <String, Test>{
                   'status': 401,
                 },
                 'message': '',
-                'details': null,
               },
             ),
             FunctionTestError(
@@ -4067,7 +4076,6 @@ final tests = <String, Test>{
                   'status': 403,
                 },
                 'message': '',
-                'details': null,
               },
             ),
             FunctionTestError(
@@ -4109,7 +4117,6 @@ final tests = <String, Test>{
                   'status': 404,
                 },
                 'message': '',
-                'details': null,
               },
             ),
             FunctionTestError(
@@ -4125,7 +4132,6 @@ final tests = <String, Test>{
                   'status': 404,
                 },
                 'message': '',
-                'details': null,
               },
             ),
           ],
@@ -4182,12 +4188,6 @@ final tests = <String, Test>{
                 'aNum': 42,
                 'aBool': true,
                 'aDateTime': '2021-07-01T00:00:00.000Z',
-                'aNullableString': null,
-                'aNullableInt': null,
-                'aNullableDouble': null,
-                'aNullableNum': null,
-                'aNullableBool': null,
-                'aNullableDateTime': null,
               },
             ),
           ],
@@ -4289,12 +4289,6 @@ final tests = <String, Test>{
                 'aNum': 42,
                 'aBool': true,
                 'aDateTime': '2021-07-01T00:00:00.000Z',
-                'aNullableString': null,
-                'aNullableInt': null,
-                'aNullableDouble': null,
-                'aNullableNum': null,
-                'aNullableBool': null,
-                'aNullableDateTime': null,
                 'aListOfString': ['a', 'b', 'c'],
                 'aListOfInt': [1, 2, 3],
                 'aListOfDouble': [1.1, 2.2, 3.3],
@@ -4304,12 +4298,6 @@ final tests = <String, Test>{
                   '2021-07-01T00:00:00.000Z',
                   '2021-07-01T00:00:00.000Z',
                 ],
-                'aNullableListOfString': null,
-                'aNullableListOfInt': null,
-                'aNullableListOfDouble': null,
-                'aNullableListOfNum': null,
-                'aNullableListOfBool': null,
-                'aNullableListOfDateTime': null,
               },
             ),
           ],
@@ -4576,7 +4564,6 @@ final tests = <String, Test>{
                   'status': 500,
                 },
                 'msg': 'message',
-                'message': null,
               },
             ),
           ],
@@ -4605,8 +4592,6 @@ final tests = <String, Test>{
                   'status': 400,
                 },
                 'msg': 'message',
-                'code': null,
-                'cause': null,
               },
             ),
             FunctionTestError(
@@ -4622,7 +4607,6 @@ final tests = <String, Test>{
                   'status': 400,
                 },
                 'msg': 'test',
-                'code': null,
                 'cause': 123,
               },
             ),

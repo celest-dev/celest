@@ -8,7 +8,7 @@ environment:
 dependencies:
   celest: ^0.5.0-0
   celest_backend:
-    path: ../
+    path: ..
   celest_core: ^0.5.0-0
   firebase_auth: ^5.2.0
   http: ">=0.13.0 <2.0.0"
@@ -17,4 +17,4 @@ dependencies:
 dev_dependencies:
   test: any
 
-dependency_overrides: {celest: {path: /Users/dillonnys/celest/cloud/celest/packages/celest}, celest_auth: {path: /Users/dillonnys/celest/cloud/celest/packages/celest_auth}, celest_cloud: {path: /Users/dillonnys/celest/cloud/celest/packages/celest_cloud}, celest_core: {path: /Users/dillonnys/celest/cloud/celest/packages/celest_core}}
+dependency_overrides: {celest: {path: ../../../../../../../../celest/packages/celest}, celest_auth: {path: ../../../../../../../../celest/packages/celest_auth}, celest_cloud: {path: ../../../../../../../../celest/packages/celest_cloud}, celest_core: {path: ../../../../../../../../celest/packages/celest_core}}

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:celest/celest.dart';
+import 'package:celest/http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
@@ -27,6 +28,12 @@ Future<Uint8List> paintWidget() async {
   }
 
   return imageBytes.buffer.asUint8List();
+}
+
+@cloud
+@http(method: HttpMethod.get)
+Future<HelloWorld> helloWorld() async {
+  return const HelloWorld();
 }
 
 class HelloWorld extends StatelessWidget {

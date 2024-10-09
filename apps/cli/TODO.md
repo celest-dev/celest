@@ -21,3 +21,12 @@
 ## Environment Variables
 
 - Overhaul environment variables to avoid intermediate `Env` generation
+
+## Runtime
+
+- SerializationException describes calling `celest.init` even on the backend
+- We're only searching the models/exceptions folders still for overrides
+
+## CLI
+
+- Restarting a Flutter backend changes the port number every time

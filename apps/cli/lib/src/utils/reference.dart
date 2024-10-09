@@ -134,6 +134,73 @@ extension ReferenceHelper on Reference {
   }
 }
 
+Expression mapIf(Expression condition, Expression key) =>
+    _MapIfExpression(condition: condition, key: key);
+
+final class _MapIfExpression extends Expression {
+  _MapIfExpression({
+    required this.condition,
+    required this.key,
+  });
+
+  final Expression condition;
+  final Expression key;
+
+  @override
+  R accept<R>(covariant ExpressionVisitor<R> visitor, [R? context]) {
+    return visitor.visitCodeExpression(
+      CodeExpression(
+        Block.of([
+          const Code('if ('),
+          condition.code,
+          const Code(') '),
+          key.code,
+        ]),
+      ),
+      context,
+    );
+  }
+}
+
+Expression nullCheckBind(
+  String variableName,
+  Expression expression, {
+  bool isNullable = true,
+}) =>
+    NullCheckCaseExpression(
+      variableName: variableName,
+      caseClause: expression,
+      isNullable: isNullable,
+    );
+
+// Creates a `value case final variable?` expression.
+final class NullCheckCaseExpression extends Expression {
+  NullCheckCaseExpression({
+    required this.caseClause,
+    required this.variableName,
+    this.isNullable = true,
+  });
+
+  final Expression caseClause;
+  final String variableName;
+  final bool isNullable;
+
+  @override
+  R accept<R>(covariant ExpressionVisitor<R> visitor, [R? context]) {
+    return visitor.visitCodeExpression(
+      CodeExpression(
+        Block.of([
+          caseClause.code,
+          const Code(' case final '),
+          Code(variableName),
+          if (isNullable) const Code('?'),
+        ]),
+      ),
+      context,
+    );
+  }
+}
+
 extension ExpressionUtil on Expression {
   /// The property getter, given [isNullable].
   Expression nullableProperty(String name, bool isNullable) {

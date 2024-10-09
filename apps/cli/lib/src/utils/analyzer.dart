@@ -255,6 +255,37 @@ extension DartTypeHelper on DartType {
   }
 
   bool get isEnum => element is EnumElement;
+  bool get isEnumLike => switch (element) {
+        EnumElement() => true,
+        ClassElementImpl(isEnumLike: true) && final element => switch (
+              element.getField('values')) {
+            FieldElement(
+              isStatic: true,
+              isConst: true,
+              type: InterfaceType(
+                isDartCoreList: true,
+                typeArguments: [final typeArg]
+              )
+            ) =>
+              const DartTypeEquality(ignoreNullability: true)
+                  .equals(typeArg, this),
+            _ => false,
+          },
+        _ => false,
+      };
+
+  /// Used to patch over/ignore the limitations of serializing Flutter
+  /// types for now.
+  bool get isFlutterType => switch (element) {
+        ClassElement(:final library) => switch (library.source.uri) {
+            // dart:ui
+            Uri(scheme: 'dart', pathSegments: ['ui', ...]) => true,
+            // package:flutter
+            Uri(scheme: 'package', pathSegments: ['flutter', ...]) => true,
+            _ => false,
+          },
+        _ => false,
+      };
 
   bool get isSimpleJson =>
       isDartCoreBool ||
@@ -264,7 +295,7 @@ extension DartTypeHelper on DartType {
       isDartCoreString ||
       isDartCoreObject ||
       isDartCoreNull ||
-      isEnum;
+      isEnumLike;
 
   bool get isThrowable {
     return isExceptionType || isErrorType;

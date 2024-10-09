@@ -640,18 +640,125 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 251,
+              "offset": 286,
               "uri": "package:celest_backend/src/functions/flutter.dart",
-              "line": 10,
+              "line": 11,
               "column": 18
             },
             "end": {
-              "offset": 262,
+              "offset": 297,
               "uri": "package:celest_backend/src/functions/flutter.dart",
-              "line": 10,
+              "line": 11,
               "column": 29
             },
             "text": "paintWidget"
+          }
+        },
+        "helloWorld": {
+          "name": "helloWorld",
+          "apiName": "flutter",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "HelloWorld",
+                "url": "package:celest_backend/src/functions/flutter.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "HelloWorld",
+            "url": "package:celest_backend/src/functions/flutter.dart",
+            "isNullable": false
+          },
+          "metadata": [
+            {
+              "$": "ApiHttpConfig",
+              "method": "GET",
+              "statusCode": 200,
+              "location": {
+                "start": {
+                  "offset": 1001,
+                  "uri": "package:celest_backend/src/functions/flutter.dart",
+                  "line": 33,
+                  "column": 0
+                },
+                "end": {
+                  "offset": 1030,
+                  "uri": "package:celest_backend/src/functions/flutter.dart",
+                  "line": 33,
+                  "column": 29
+                },
+                "text": "@http(method: HttpMethod.get)"
+              }
+            }
+          ],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            },
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {
+                "method": {
+                  "$": "DartString",
+                  "value": "GET",
+                  "staticType": {
+                    "symbol": "String",
+                    "url": "dart:core"
+                  }
+                }
+              },
+              "staticType": {
+                "symbol": "http",
+                "url": "package:celest/src/functions/http/http.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 1050,
+              "uri": "package:celest_backend/src/functions/flutter.dart",
+              "line": 34,
+              "column": 19
+            },
+            "end": {
+              "offset": 1060,
+              "uri": "package:celest_backend/src/functions/flutter.dart",
+              "line": 34,
+              "column": 29
+            },
+            "text": "helloWorld"
           }
         }
       },

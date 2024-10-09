@@ -72,6 +72,25 @@ paths:
               schema:
                 nullable: true
                 additionalProperties: false
+  '/flutter/hello-world':
+    get:
+      operationId: flutter.helloWorld
+      responses:
+        '200':
+          description: |-
+              Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/flutter.v1.HelloWorld'
+        default:
+          description: |-
+              Default response. This should never be returned.
+          content:
+            application/json:
+              schema:
+                nullable: true
+                additionalProperties: false
 components:
   schemas:
     dart.ui.Color:
@@ -146,4 +165,13 @@ components:
         countryCode:
           type: string
           nullable: false
+      additionalProperties: false
+    flutter.Key:
+      type: object
+      additionalProperties: false
+    flutter.v1.HelloWorld:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/flutter.Key'
       additionalProperties: false
