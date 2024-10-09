@@ -1,5 +1,5 @@
 name: gemini
-description: "A new Flutter project."
+description: An example of how to use Gemini AI from Celest.
 publish_to: 'none'
 version: 0.1.0
 
@@ -8,10 +8,11 @@ environment:
   flutter: ">=3.19.0"
 
 dependencies:
-  celest_backend:
-    path: celest/
   flutter:
     sdk: flutter
+  gemini_example_client:
+    path: celest/client/
+  stream_transform: ^2.1.0
 
 dependency_overrides:
   celest:
