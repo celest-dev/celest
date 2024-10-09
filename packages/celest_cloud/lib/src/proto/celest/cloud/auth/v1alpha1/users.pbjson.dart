@@ -125,6 +125,16 @@ const User$json = {
       '8': {},
       '10': 'externalIdentities'
     },
+    {
+      '1': 'company',
+      '3': 13,
+      '4': 1,
+      '5': 9,
+      '8': {},
+      '9': 6,
+      '10': 'company',
+      '17': true
+    },
   ],
   '7': {},
   '8': [
@@ -134,6 +144,7 @@ const User$json = {
     {'1': '_language_code'},
     {'1': '_email'},
     {'1': '_phone_number'},
+    {'1': '_company'},
   ],
 };
 
@@ -151,9 +162,10 @@ final $typed_data.Uint8List userDescriptor = $convert.base64Decode(
     'VtYmVyGAsgASgLMicuY2VsZXN0LmNsb3VkLmF1dGgudjFhbHBoYTEuUGhvbmVOdW1iZXJCA+BB'
     'AUgFUgtwaG9uZU51bWJlcogBARJiChNleHRlcm5hbF9pZGVudGl0aWVzGAwgAygLMiwuY2VsZX'
     'N0LmNsb3VkLmF1dGgudjFhbHBoYTEuRXh0ZXJuYWxJZGVudGl0eUID4EEDUhJleHRlcm5hbElk'
-    'ZW50aXRpZXM6NepBMgoVY2xvdWQuY2VsZXN0LmRldi9Vc2VyEgx1c2Vycy97dXNlcn0qBXVzZX'
-    'JzMgR1c2VyQg0KC19naXZlbl9uYW1lQg4KDF9mYW1pbHlfbmFtZUIMCgpfdGltZV96b25lQhAK'
-    'Dl9sYW5ndWFnZV9jb2RlQggKBl9lbWFpbEIPCg1fcGhvbmVfbnVtYmVy');
+    'ZW50aXRpZXMSIgoHY29tcGFueRgNIAEoCUID4EEBSAZSB2NvbXBhbnmIAQE6NepBMgoVY2xvdW'
+    'QuY2VsZXN0LmRldi9Vc2VyEgx1c2Vycy97dXNlcn0qBXVzZXJzMgR1c2VyQg0KC19naXZlbl9u'
+    'YW1lQg4KDF9mYW1pbHlfbmFtZUIMCgpfdGltZV96b25lQhAKDl9sYW5ndWFnZV9jb2RlQggKBl'
+    '9lbWFpbEIPCg1fcGhvbmVfbnVtYmVyQgoKCF9jb21wYW55');
 
 @$core.Deprecated('Use emailDescriptor instead')
 const Email$json = {
@@ -167,8 +179,9 @@ const Email$json = {
 
 /// Descriptor for `Email`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List emailDescriptor = $convert.base64Decode(
-    'CgVFbWFpbBIZCgVlbWFpbBgBIAEoCUID4EEDUgVlbWFpbBIfCgh2ZXJpZmllZBgCIAEoCEID4E'
-    'EDUgh2ZXJpZmllZBIdCgdwcmltYXJ5GAMgASgIQgPgQQNSB3ByaW1hcnk=');
+    'CgVFbWFpbBJZCgVlbWFpbBgBIAEoCUJD4EECukg9ugE6Cgt2YWxpZF9lbWFpbBIbZW1haWwgbX'
+    'VzdCBiZSBhIHZhbGlkIGVtYWlsGg50aGlzLmlzRW1haWwoKVIFZW1haWwSHwoIdmVyaWZpZWQY'
+    'AiABKAhCA+BBA1IIdmVyaWZpZWQSHQoHcHJpbWFyeRgDIAEoCEID4EEDUgdwcmltYXJ5');
 
 @$core.Deprecated('Use phoneNumberDescriptor instead')
 const PhoneNumber$json = {
@@ -190,9 +203,11 @@ const PhoneNumber$json = {
 
 /// Descriptor for `PhoneNumber`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List phoneNumberDescriptor = $convert.base64Decode(
-    'CgtQaG9uZU51bWJlchJGCgxwaG9uZV9udW1iZXIYASABKAsyHi5pMThuLnBob25lbnVtYmVycy'
-    '5QaG9uZU51bWJlckID4EEDUgtwaG9uZU51bWJlchIfCgh2ZXJpZmllZBgCIAEoCEID4EEDUgh2'
-    'ZXJpZmllZBIdCgdwcmltYXJ5GAMgASgIQgPgQQNSB3ByaW1hcnk=');
+    'CgtQaG9uZU51bWJlchKqAQoMcGhvbmVfbnVtYmVyGAEgASgLMh4uaTE4bi5waG9uZW51bWJlcn'
+    'MuUGhvbmVOdW1iZXJCZ+BBArpIYboBXgoSdmFsaWRfcGhvbmVfbnVtYmVyEihwaG9uZV9udW1i'
+    'ZXIgbXVzdCBpbmNsdWRlIGEgY291bnRyeSBjb2RlGh50aGlzLnJhd19pbnB1dC5zdGFydHNXaX'
+    'RoKCcrJylSC3Bob25lTnVtYmVyEh8KCHZlcmlmaWVkGAIgASgIQgPgQQNSCHZlcmlmaWVkEh0K'
+    'B3ByaW1hcnkYAyABKAhCA+BBA1IHcHJpbWFyeQ==');
 
 @$core.Deprecated('Use externalIdentityDescriptor instead')
 const ExternalIdentity$json = {
@@ -347,11 +362,12 @@ final $typed_data.Uint8List updateUserRequestDescriptor = $convert.base64Decode(
     'ChFVcGRhdGVVc2VyUmVxdWVzdBI5CgR1c2VyGAEgASgLMiAuY2VsZXN0LmNsb3VkLmF1dGgudj'
     'FhbHBoYTEuVXNlckID4EECUgR1c2VyEkAKC3VwZGF0ZV9tYXNrGAIgASgLMhouZ29vZ2xlLnBy'
     'b3RvYnVmLkZpZWxkTWFza0ID4EEBUgp1cGRhdGVNYXNrEigKDXZhbGlkYXRlX29ubHkYAyABKA'
-    'hCA+BBAVIMdmFsaWRhdGVPbmx5OuEBukjdARraAQoQdmFsaWRfZmllbGRfbWFzaxJXdXBkYXRl'
-    'X21hc2sgbWF5IG9ubHkgaW5jbHVkZTogJ2dpdmVuX25hbWUnLCAnZmFtaWx5X25hbWUnLCAndG'
-    'ltZV96b25lJywgJ2xhbmd1YWdlX2NvZGUnGm10aGlzLnVwZGF0ZV9tYXNrLnBhdGhzLmFsbChw'
-    'YXRoLCBwYXRoIGluIFsnbmFtZScsICdnaXZlbl9uYW1lJywgJ2ZhbWlseV9uYW1lJywgJ3RpbW'
-    'Vfem9uZScsICdsYW5ndWFnZV9jb2RlJ10p');
+    'hCA+BBAVIMdmFsaWRhdGVPbmx5OpQCukiQAhqNAgoQdmFsaWRfZmllbGRfbWFzaxJwdXBkYXRl'
+    'X21hc2sgbWF5IG9ubHkgaW5jbHVkZTogJ2dpdmVuX25hbWUnLCAnZmFtaWx5X25hbWUnLCAnZW'
+    '1haWwnLCAncGhvbmVfbnVtYmVyJywgJ3RpbWVfem9uZScsICdsYW5ndWFnZV9jb2RlJxqGAXRo'
+    'aXMudXBkYXRlX21hc2sucGF0aHMuYWxsKHBhdGgsIHBhdGggaW4gWyduYW1lJywgJ2dpdmVuX2'
+    '5hbWUnLCAnZmFtaWx5X25hbWUnLCAnZW1haWwnLCAncGhvbmVfbnVtYmVyJywgJ3RpbWVfem9u'
+    'ZScsICdsYW5ndWFnZV9jb2RlJ10p');
 
 @$core.Deprecated('Use deleteUserRequestDescriptor instead')
 const DeleteUserRequest$json = {

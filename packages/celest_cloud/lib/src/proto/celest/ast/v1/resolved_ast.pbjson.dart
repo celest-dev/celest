@@ -212,9 +212,10 @@ const ResolvedFunction$json = {
       '8': {},
       '10': 'environmentVariables'
     },
+    {'1': 'secrets', '3': 7, '4': 3, '5': 9, '8': {}, '10': 'secrets'},
     {
       '1': 'policy_set',
-      '3': 7,
+      '3': 8,
       '4': 1,
       '5': 11,
       '6': '.cedar.v3.PolicySet',
@@ -231,8 +232,8 @@ final $typed_data.Uint8List resolvedFunctionDescriptor = $convert.base64Decode(
     'LnYxLlJlc29sdmVkSHR0cENvbmZpZ0ID4EECUgRodHRwEi4KEGNsaWVudF9zdHJlYW1pbmcYBC'
     'ABKAhCA+BBAVIPY2xpZW50U3RyZWFtaW5nEi4KEHNlcnZlcl9zdHJlYW1pbmcYBSABKAhCA+BB'
     'AVIPc2VydmVyU3RyZWFtaW5nEjgKFWVudmlyb25tZW50X3ZhcmlhYmxlcxgGIAMoCUID4EEBUh'
-    'RlbnZpcm9ubWVudFZhcmlhYmxlcxI3Cgpwb2xpY3lfc2V0GAcgASgLMhMuY2VkYXIudjMuUG9s'
-    'aWN5U2V0QgPgQQFSCXBvbGljeVNldA==');
+    'RlbnZpcm9ubWVudFZhcmlhYmxlcxIdCgdzZWNyZXRzGAcgAygJQgPgQQFSB3NlY3JldHMSNwoK'
+    'cG9saWN5X3NldBgIIAEoCzITLmNlZGFyLnYzLlBvbGljeVNldEID4EEBUglwb2xpY3lTZXQ=');
 
 @$core.Deprecated('Use resolvedHttpConfigDescriptor instead')
 const ResolvedHttpConfig$json = {
@@ -392,13 +393,24 @@ const ResolvedAuth$json = {
       '8': {},
       '10': 'providers'
     },
+    {
+      '1': 'external_providers',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedExternalAuthProvider',
+      '8': {},
+      '10': 'externalProviders'
+    },
   ],
 };
 
 /// Descriptor for `ResolvedAuth`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List resolvedAuthDescriptor = $convert.base64Decode(
     'CgxSZXNvbHZlZEF1dGgSRgoJcHJvdmlkZXJzGAEgAygLMiMuY2VsZXN0LmFzdC52MS5SZXNvbH'
-    'ZlZEF1dGhQcm92aWRlckID4EECUglwcm92aWRlcnM=');
+    'ZlZEF1dGhQcm92aWRlckID4EEBUglwcm92aWRlcnMSXwoSZXh0ZXJuYWxfcHJvdmlkZXJzGAIg'
+    'AygLMisuY2VsZXN0LmFzdC52MS5SZXNvbHZlZEV4dGVybmFsQXV0aFByb3ZpZGVyQgPgQQFSEW'
+    'V4dGVybmFsUHJvdmlkZXJz');
 
 @$core.Deprecated('Use resolvedAuthProviderDescriptor instead')
 const ResolvedAuthProvider$json = {
@@ -446,9 +458,18 @@ const ResolvedAuthProvider$json = {
       '3': 6,
       '4': 1,
       '5': 11,
-      '6': '.celest.ast.v1.ResolvedGithubOAuthProviderConfig',
+      '6': '.celest.ast.v1.ResolvedGitHubOAuthProviderConfig',
       '9': 0,
       '10': 'github'
+    },
+    {
+      '1': 'apple',
+      '3': 7,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedAppleOAuthProviderConfig',
+      '9': 0,
+      '10': 'apple'
     },
   ],
   '4': [ResolvedAuthProvider_Type$json],
@@ -478,10 +499,11 @@ final $typed_data.Uint8List resolvedAuthProviderDescriptor = $convert.base64Deco
     'lkZXJDb25maWdIAFIIZW1haWxPdHASRgoHc21zX290cBgEIAEoCzIrLmNlbGVzdC5hc3QudjEu'
     'UmVzb2x2ZWRTbXNPdHBQcm92aWRlckNvbmZpZ0gAUgZzbXNPdHASSgoGZ29vZ2xlGAUgASgLMj'
     'AuY2VsZXN0LmFzdC52MS5SZXNvbHZlZEdvb2dsZU9BdXRoUHJvdmlkZXJDb25maWdIAFIGZ29v'
-    'Z2xlEkoKBmdpdGh1YhgGIAEoCzIwLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWRHaXRodWJPQXV0aF'
-    'Byb3ZpZGVyQ29uZmlnSABSBmdpdGh1YiJpCgRUeXBlEiIKHkFVVEhfUFJPVklERVJfVFlQRV9V'
-    'TlNQRUNJRklFRBAAEg0KCUVNQUlMX09UUBABEgsKB1NNU19PVFAQAhIKCgZHT09HTEUQAxIKCg'
-    'ZHSVRIVUIQBBIJCgVBUFBMRRAFQggKBmNvbmZpZw==');
+    'Z2xlEkoKBmdpdGh1YhgGIAEoCzIwLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWRHaXRIdWJPQXV0aF'
+    'Byb3ZpZGVyQ29uZmlnSABSBmdpdGh1YhJHCgVhcHBsZRgHIAEoCzIvLmNlbGVzdC5hc3QudjEu'
+    'UmVzb2x2ZWRBcHBsZU9BdXRoUHJvdmlkZXJDb25maWdIAFIFYXBwbGUiaQoEVHlwZRIiCh5BVV'
+    'RIX1BST1ZJREVSX1RZUEVfVU5TUEVDSUZJRUQQABINCglFTUFJTF9PVFAQARILCgdTTVNfT1RQ'
+    'EAISCgoGR09PR0xFEAMSCgoGR0lUSFVCEAQSCQoFQVBQTEUQBUIICgZjb25maWc=');
 
 @$core.Deprecated('Use resolvedEmailOtpProviderConfigDescriptor instead')
 const ResolvedEmailOtpProviderConfig$json = {
@@ -534,9 +556,9 @@ final $typed_data.Uint8List resolvedGoogleOAuthProviderConfigDescriptor =
         'c2VjcmV0GAIgASgLMh0uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFNlY3JldEID4EECUgxjbGllbn'
         'RTZWNyZXQ=');
 
-@$core.Deprecated('Use resolvedGithubOAuthProviderConfigDescriptor instead')
-const ResolvedGithubOAuthProviderConfig$json = {
-  '1': 'ResolvedGithubOAuthProviderConfig',
+@$core.Deprecated('Use resolvedGitHubOAuthProviderConfigDescriptor instead')
+const ResolvedGitHubOAuthProviderConfig$json = {
+  '1': 'ResolvedGitHubOAuthProviderConfig',
   '2': [
     {
       '1': 'client_id',
@@ -559,13 +581,185 @@ const ResolvedGithubOAuthProviderConfig$json = {
   ],
 };
 
-/// Descriptor for `ResolvedGithubOAuthProviderConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List resolvedGithubOAuthProviderConfigDescriptor =
+/// Descriptor for `ResolvedGitHubOAuthProviderConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedGitHubOAuthProviderConfigDescriptor =
     $convert.base64Decode(
-        'CiFSZXNvbHZlZEdpdGh1Yk9BdXRoUHJvdmlkZXJDb25maWcSPwoJY2xpZW50X2lkGAEgASgLMh'
+        'CiFSZXNvbHZlZEdpdEh1Yk9BdXRoUHJvdmlkZXJDb25maWcSPwoJY2xpZW50X2lkGAEgASgLMh'
         '0uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFNlY3JldEID4EECUghjbGllbnRJZBJHCg1jbGllbnRf'
         'c2VjcmV0GAIgASgLMh0uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFNlY3JldEID4EECUgxjbGllbn'
         'RTZWNyZXQ=');
+
+@$core.Deprecated('Use resolvedAppleOAuthProviderConfigDescriptor instead')
+const ResolvedAppleOAuthProviderConfig$json = {
+  '1': 'ResolvedAppleOAuthProviderConfig',
+  '2': [
+    {
+      '1': 'client_id',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedSecret',
+      '8': {},
+      '10': 'clientId'
+    },
+    {
+      '1': 'team_id',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedSecret',
+      '8': {},
+      '10': 'teamId'
+    },
+    {
+      '1': 'key_id',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedSecret',
+      '8': {},
+      '10': 'keyId'
+    },
+    {
+      '1': 'private_key',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedSecret',
+      '8': {},
+      '10': 'privateKey'
+    },
+  ],
+};
+
+/// Descriptor for `ResolvedAppleOAuthProviderConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedAppleOAuthProviderConfigDescriptor = $convert.base64Decode(
+    'CiBSZXNvbHZlZEFwcGxlT0F1dGhQcm92aWRlckNvbmZpZxI/CgljbGllbnRfaWQYASABKAsyHS'
+    '5jZWxlc3QuYXN0LnYxLlJlc29sdmVkU2VjcmV0QgPgQQJSCGNsaWVudElkEjsKB3RlYW1faWQY'
+    'AiABKAsyHS5jZWxlc3QuYXN0LnYxLlJlc29sdmVkU2VjcmV0QgPgQQJSBnRlYW1JZBI5CgZrZX'
+    'lfaWQYAyABKAsyHS5jZWxlc3QuYXN0LnYxLlJlc29sdmVkU2VjcmV0QgPgQQJSBWtleUlkEkMK'
+    'C3ByaXZhdGVfa2V5GAQgASgLMh0uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFNlY3JldEID4EECUg'
+    'pwcml2YXRlS2V5');
+
+@$core.Deprecated('Use resolvedExternalAuthProviderDescriptor instead')
+const ResolvedExternalAuthProvider$json = {
+  '1': 'ResolvedExternalAuthProvider',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'id'},
+    {
+      '1': 'type',
+      '3': 2,
+      '4': 1,
+      '5': 14,
+      '6': '.celest.ast.v1.ResolvedExternalAuthProvider.Type',
+      '8': {},
+      '10': 'type'
+    },
+    {
+      '1': 'firebase',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedFirebaseExternalAuthProviderConfig',
+      '9': 0,
+      '10': 'firebase'
+    },
+    {
+      '1': 'supabase',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedSupabaseExternalAuthProviderConfig',
+      '9': 0,
+      '10': 'supabase'
+    },
+  ],
+  '4': [ResolvedExternalAuthProvider_Type$json],
+  '8': [
+    {'1': 'config'},
+  ],
+};
+
+@$core.Deprecated('Use resolvedExternalAuthProviderDescriptor instead')
+const ResolvedExternalAuthProvider_Type$json = {
+  '1': 'Type',
+  '2': [
+    {'1': 'EXTERNAL_AUTH_PROVIDER_TYPE_UNSPECIFIED', '2': 0},
+    {'1': 'FIREBASE', '2': 1},
+    {'1': 'SUPABASE', '2': 2},
+  ],
+};
+
+/// Descriptor for `ResolvedExternalAuthProvider`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedExternalAuthProviderDescriptor = $convert.base64Decode(
+    'ChxSZXNvbHZlZEV4dGVybmFsQXV0aFByb3ZpZGVyEhMKAmlkGAEgASgJQgPgQQJSAmlkEkkKBH'
+    'R5cGUYAiABKA4yMC5jZWxlc3QuYXN0LnYxLlJlc29sdmVkRXh0ZXJuYWxBdXRoUHJvdmlkZXIu'
+    'VHlwZUID4EECUgR0eXBlElcKCGZpcmViYXNlGAMgASgLMjkuY2VsZXN0LmFzdC52MS5SZXNvbH'
+    'ZlZEZpcmViYXNlRXh0ZXJuYWxBdXRoUHJvdmlkZXJDb25maWdIAFIIZmlyZWJhc2USVwoIc3Vw'
+    'YWJhc2UYBCABKAsyOS5jZWxlc3QuYXN0LnYxLlJlc29sdmVkU3VwYWJhc2VFeHRlcm5hbEF1dG'
+    'hQcm92aWRlckNvbmZpZ0gAUghzdXBhYmFzZSJPCgRUeXBlEisKJ0VYVEVSTkFMX0FVVEhfUFJP'
+    'VklERVJfVFlQRV9VTlNQRUNJRklFRBAAEgwKCEZJUkVCQVNFEAESDAoIU1VQQUJBU0UQAkIICg'
+    'Zjb25maWc=');
+
+@$core.Deprecated(
+    'Use resolvedFirebaseExternalAuthProviderConfigDescriptor instead')
+const ResolvedFirebaseExternalAuthProviderConfig$json = {
+  '1': 'ResolvedFirebaseExternalAuthProviderConfig',
+  '2': [
+    {
+      '1': 'project_id',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedEnvironmentVariable',
+      '8': {},
+      '10': 'projectId'
+    },
+  ],
+};
+
+/// Descriptor for `ResolvedFirebaseExternalAuthProviderConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List
+    resolvedFirebaseExternalAuthProviderConfigDescriptor =
+    $convert.base64Decode(
+        'CipSZXNvbHZlZEZpcmViYXNlRXh0ZXJuYWxBdXRoUHJvdmlkZXJDb25maWcSTgoKcHJvamVjdF'
+        '9pZBgBIAEoCzIqLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWRFbnZpcm9ubWVudFZhcmlhYmxlQgPg'
+        'QQJSCXByb2plY3RJZA==');
+
+@$core.Deprecated(
+    'Use resolvedSupabaseExternalAuthProviderConfigDescriptor instead')
+const ResolvedSupabaseExternalAuthProviderConfig$json = {
+  '1': 'ResolvedSupabaseExternalAuthProviderConfig',
+  '2': [
+    {
+      '1': 'project_url',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedEnvironmentVariable',
+      '8': {},
+      '10': 'projectUrl'
+    },
+    {
+      '1': 'jwt_secret',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedSecret',
+      '8': {},
+      '10': 'jwtSecret'
+    },
+  ],
+};
+
+/// Descriptor for `ResolvedSupabaseExternalAuthProviderConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List
+    resolvedSupabaseExternalAuthProviderConfigDescriptor =
+    $convert.base64Decode(
+        'CipSZXNvbHZlZFN1cGFiYXNlRXh0ZXJuYWxBdXRoUHJvdmlkZXJDb25maWcSUAoLcHJvamVjdF'
+        '91cmwYASABKAsyKi5jZWxlc3QuYXN0LnYxLlJlc29sdmVkRW52aXJvbm1lbnRWYXJpYWJsZUID'
+        '4EECUgpwcm9qZWN0VXJsEkEKCmp3dF9zZWNyZXQYAiABKAsyHS5jZWxlc3QuYXN0LnYxLlJlc2'
+        '9sdmVkU2VjcmV0QgPgQQFSCWp3dFNlY3JldA==');
 
 @$core.Deprecated('Use sdkInfoDescriptor instead')
 const SdkInfo$json = {

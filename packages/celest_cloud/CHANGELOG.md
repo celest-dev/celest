@@ -1,3 +1,7 @@
+# 0.1.4-wip
+
+- chore: Update protos
+
 # 0.1.3
 
 - feat: Add SMS OTP flow

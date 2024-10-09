@@ -35,6 +35,7 @@ class User extends $pb.GeneratedMessage {
     Email? email,
     PhoneNumber? phoneNumber,
     $core.Iterable<ExternalIdentity>? externalIdentities,
+    $core.String? company,
   }) {
     final $result = create();
     if (name != null) {
@@ -73,6 +74,9 @@ class User extends $pb.GeneratedMessage {
     if (externalIdentities != null) {
       $result.externalIdentities.addAll(externalIdentities);
     }
+    if (company != null) {
+      $result.company = company;
+    }
     return $result;
   }
   User._() : super();
@@ -104,7 +108,8 @@ class User extends $pb.GeneratedMessage {
         subBuilder: PhoneNumber.create)
     ..pc<ExternalIdentity>(
         12, _omitFieldNames ? '' : 'externalIdentities', $pb.PbFieldType.PM,
-        subBuilder: ExternalIdentity.create);
+        subBuilder: ExternalIdentity.create)
+    ..aOS(13, _omitFieldNames ? '' : 'company');
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -286,9 +291,22 @@ class User extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   PhoneNumber ensurePhoneNumber() => $_ensure(10);
 
-  /// Optional. The user's external identities.
+  /// Output only. The user's external identities.
   @$pb.TagNumber(12)
   $core.List<ExternalIdentity> get externalIdentities => $_getList(11);
+
+  /// Optional. The user's company.
+  @$pb.TagNumber(13)
+  $core.String get company => $_getSZ(12);
+  @$pb.TagNumber(13)
+  set company($core.String v) {
+    $_setString(12, v);
+  }
+
+  @$pb.TagNumber(13)
+  $core.bool hasCompany() => $_has(12);
+  @$pb.TagNumber(13)
+  void clearCompany() => clearField(13);
 }
 
 /// A email address used within Celest Cloud.

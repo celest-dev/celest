@@ -287,6 +287,7 @@ class ResolvedFunction extends $pb.GeneratedMessage {
     $core.bool? clientStreaming,
     $core.bool? serverStreaming,
     $core.Iterable<$core.String>? environmentVariables,
+    $core.Iterable<$core.String>? secrets,
     $53.PolicySet? policySet,
   }) {
     final $result = create();
@@ -307,6 +308,9 @@ class ResolvedFunction extends $pb.GeneratedMessage {
     }
     if (environmentVariables != null) {
       $result.environmentVariables.addAll(environmentVariables);
+    }
+    if (secrets != null) {
+      $result.secrets.addAll(secrets);
     }
     if (policySet != null) {
       $result.policySet = policySet;
@@ -332,7 +336,8 @@ class ResolvedFunction extends $pb.GeneratedMessage {
     ..aOB(4, _omitFieldNames ? '' : 'clientStreaming')
     ..aOB(5, _omitFieldNames ? '' : 'serverStreaming')
     ..pPS(6, _omitFieldNames ? '' : 'environmentVariables')
-    ..aOM<$53.PolicySet>(7, _omitFieldNames ? '' : 'policySet',
+    ..pPS(7, _omitFieldNames ? '' : 'secrets')
+    ..aOM<$53.PolicySet>(8, _omitFieldNames ? '' : 'policySet',
         subBuilder: $53.PolicySet.create)
     ..hasRequiredFields = false;
 
@@ -433,20 +438,24 @@ class ResolvedFunction extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.List<$core.String> get environmentVariables => $_getList(5);
 
+  /// The secrets required by the function.
+  @$pb.TagNumber(7)
+  $core.List<$core.String> get secrets => $_getList(6);
+
   /// The policy set declared by the function.
-  @$pb.TagNumber(7)
-  $53.PolicySet get policySet => $_getN(6);
-  @$pb.TagNumber(7)
+  @$pb.TagNumber(8)
+  $53.PolicySet get policySet => $_getN(7);
+  @$pb.TagNumber(8)
   set policySet($53.PolicySet v) {
-    setField(7, v);
+    setField(8, v);
   }
 
-  @$pb.TagNumber(7)
-  $core.bool hasPolicySet() => $_has(6);
-  @$pb.TagNumber(7)
-  void clearPolicySet() => clearField(7);
-  @$pb.TagNumber(7)
-  $53.PolicySet ensurePolicySet() => $_ensure(6);
+  @$pb.TagNumber(8)
+  $core.bool hasPolicySet() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearPolicySet() => clearField(8);
+  @$pb.TagNumber(8)
+  $53.PolicySet ensurePolicySet() => $_ensure(7);
 }
 
 /// The HTTP configuration of a [ResolvedFunction][].
@@ -926,10 +935,14 @@ class ResolvedSecret extends $pb.GeneratedMessage {
 class ResolvedAuth extends $pb.GeneratedMessage {
   factory ResolvedAuth({
     $core.Iterable<ResolvedAuthProvider>? providers,
+    $core.Iterable<ResolvedExternalAuthProvider>? externalProviders,
   }) {
     final $result = create();
     if (providers != null) {
       $result.providers.addAll(providers);
+    }
+    if (externalProviders != null) {
+      $result.externalProviders.addAll(externalProviders);
     }
     return $result;
   }
@@ -948,6 +961,9 @@ class ResolvedAuth extends $pb.GeneratedMessage {
     ..pc<ResolvedAuthProvider>(
         1, _omitFieldNames ? '' : 'providers', $pb.PbFieldType.PM,
         subBuilder: ResolvedAuthProvider.create)
+    ..pc<ResolvedExternalAuthProvider>(
+        2, _omitFieldNames ? '' : 'externalProviders', $pb.PbFieldType.PM,
+        subBuilder: ResolvedExternalAuthProvider.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -976,9 +992,21 @@ class ResolvedAuth extends $pb.GeneratedMessage {
   /// The auth providers of the project.
   @$pb.TagNumber(1)
   $core.List<ResolvedAuthProvider> get providers => $_getList(0);
+
+  /// The external auth providers of the project.
+  @$pb.TagNumber(2)
+  $core.List<ResolvedExternalAuthProvider> get externalProviders =>
+      $_getList(1);
 }
 
-enum ResolvedAuthProvider_Config { emailOtp, smsOtp, google, github, notSet }
+enum ResolvedAuthProvider_Config {
+  emailOtp,
+  smsOtp,
+  google,
+  github,
+  apple,
+  notSet
+}
 
 /// A resolved auth provider configuration.
 class ResolvedAuthProvider extends $pb.GeneratedMessage {
@@ -988,7 +1016,8 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
     ResolvedEmailOtpProviderConfig? emailOtp,
     ResolvedSmsOtpProviderConfig? smsOtp,
     ResolvedGoogleOAuthProviderConfig? google,
-    ResolvedGithubOAuthProviderConfig? github,
+    ResolvedGitHubOAuthProviderConfig? github,
+    ResolvedAppleOAuthProviderConfig? apple,
   }) {
     final $result = create();
     if (id != null) {
@@ -1009,6 +1038,9 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
     if (github != null) {
       $result.github = github;
     }
+    if (apple != null) {
+      $result.apple = apple;
+    }
     return $result;
   }
   ResolvedAuthProvider._() : super();
@@ -1025,13 +1057,14 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
     4: ResolvedAuthProvider_Config.smsOtp,
     5: ResolvedAuthProvider_Config.google,
     6: ResolvedAuthProvider_Config.github,
+    7: ResolvedAuthProvider_Config.apple,
     0: ResolvedAuthProvider_Config.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ResolvedAuthProvider',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
-    ..oo(0, [3, 4, 5, 6])
+    ..oo(0, [3, 4, 5, 6, 7])
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..e<ResolvedAuthProvider_Type>(
         2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
@@ -1045,8 +1078,10 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
         subBuilder: ResolvedSmsOtpProviderConfig.create)
     ..aOM<ResolvedGoogleOAuthProviderConfig>(5, _omitFieldNames ? '' : 'google',
         subBuilder: ResolvedGoogleOAuthProviderConfig.create)
-    ..aOM<ResolvedGithubOAuthProviderConfig>(6, _omitFieldNames ? '' : 'github',
-        subBuilder: ResolvedGithubOAuthProviderConfig.create)
+    ..aOM<ResolvedGitHubOAuthProviderConfig>(6, _omitFieldNames ? '' : 'github',
+        subBuilder: ResolvedGitHubOAuthProviderConfig.create)
+    ..aOM<ResolvedAppleOAuthProviderConfig>(7, _omitFieldNames ? '' : 'apple',
+        subBuilder: ResolvedAppleOAuthProviderConfig.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1150,9 +1185,9 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
 
   /// The configuration of a Github OAuth provider.
   @$pb.TagNumber(6)
-  ResolvedGithubOAuthProviderConfig get github => $_getN(5);
+  ResolvedGitHubOAuthProviderConfig get github => $_getN(5);
   @$pb.TagNumber(6)
-  set github(ResolvedGithubOAuthProviderConfig v) {
+  set github(ResolvedGitHubOAuthProviderConfig v) {
     setField(6, v);
   }
 
@@ -1161,7 +1196,22 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   void clearGithub() => clearField(6);
   @$pb.TagNumber(6)
-  ResolvedGithubOAuthProviderConfig ensureGithub() => $_ensure(5);
+  ResolvedGitHubOAuthProviderConfig ensureGithub() => $_ensure(5);
+
+  /// The configuration of an Apple OAuth provider.
+  @$pb.TagNumber(7)
+  ResolvedAppleOAuthProviderConfig get apple => $_getN(6);
+  @$pb.TagNumber(7)
+  set apple(ResolvedAppleOAuthProviderConfig v) {
+    setField(7, v);
+  }
+
+  @$pb.TagNumber(7)
+  $core.bool hasApple() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearApple() => clearField(7);
+  @$pb.TagNumber(7)
+  ResolvedAppleOAuthProviderConfig ensureApple() => $_ensure(6);
 }
 
 /// The configuration of an email OTP provider.
@@ -1346,9 +1396,9 @@ class ResolvedGoogleOAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedSecret ensureClientSecret() => $_ensure(1);
 }
 
-/// The configuration of a Github OAuth provider.
-class ResolvedGithubOAuthProviderConfig extends $pb.GeneratedMessage {
-  factory ResolvedGithubOAuthProviderConfig({
+/// The configuration of a GitHub OAuth provider.
+class ResolvedGitHubOAuthProviderConfig extends $pb.GeneratedMessage {
+  factory ResolvedGitHubOAuthProviderConfig({
     ResolvedSecret? clientId,
     ResolvedSecret? clientSecret,
   }) {
@@ -1361,16 +1411,16 @@ class ResolvedGithubOAuthProviderConfig extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ResolvedGithubOAuthProviderConfig._() : super();
-  factory ResolvedGithubOAuthProviderConfig.fromBuffer($core.List<$core.int> i,
+  ResolvedGitHubOAuthProviderConfig._() : super();
+  factory ResolvedGitHubOAuthProviderConfig.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory ResolvedGithubOAuthProviderConfig.fromJson($core.String i,
+  factory ResolvedGitHubOAuthProviderConfig.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ResolvedGithubOAuthProviderConfig',
+      _omitMessageNames ? '' : 'ResolvedGitHubOAuthProviderConfig',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
     ..aOM<ResolvedSecret>(1, _omitFieldNames ? '' : 'clientId',
@@ -1382,30 +1432,30 @@ class ResolvedGithubOAuthProviderConfig extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ResolvedGithubOAuthProviderConfig clone() =>
-      ResolvedGithubOAuthProviderConfig()..mergeFromMessage(this);
+  ResolvedGitHubOAuthProviderConfig clone() =>
+      ResolvedGitHubOAuthProviderConfig()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ResolvedGithubOAuthProviderConfig copyWith(
-          void Function(ResolvedGithubOAuthProviderConfig) updates) =>
+  ResolvedGitHubOAuthProviderConfig copyWith(
+          void Function(ResolvedGitHubOAuthProviderConfig) updates) =>
       super.copyWith((message) =>
-              updates(message as ResolvedGithubOAuthProviderConfig))
-          as ResolvedGithubOAuthProviderConfig;
+              updates(message as ResolvedGitHubOAuthProviderConfig))
+          as ResolvedGitHubOAuthProviderConfig;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ResolvedGithubOAuthProviderConfig create() =>
-      ResolvedGithubOAuthProviderConfig._();
-  ResolvedGithubOAuthProviderConfig createEmptyInstance() => create();
-  static $pb.PbList<ResolvedGithubOAuthProviderConfig> createRepeated() =>
-      $pb.PbList<ResolvedGithubOAuthProviderConfig>();
+  static ResolvedGitHubOAuthProviderConfig create() =>
+      ResolvedGitHubOAuthProviderConfig._();
+  ResolvedGitHubOAuthProviderConfig createEmptyInstance() => create();
+  static $pb.PbList<ResolvedGitHubOAuthProviderConfig> createRepeated() =>
+      $pb.PbList<ResolvedGitHubOAuthProviderConfig>();
   @$core.pragma('dart2js:noInline')
-  static ResolvedGithubOAuthProviderConfig getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<ResolvedGithubOAuthProviderConfig>(
+  static ResolvedGitHubOAuthProviderConfig getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ResolvedGitHubOAuthProviderConfig>(
           create);
-  static ResolvedGithubOAuthProviderConfig? _defaultInstance;
+  static ResolvedGitHubOAuthProviderConfig? _defaultInstance;
 
   /// The client ID of the Github OAuth provider.
   @$pb.TagNumber(1)
@@ -1436,6 +1486,454 @@ class ResolvedGithubOAuthProviderConfig extends $pb.GeneratedMessage {
   void clearClientSecret() => clearField(2);
   @$pb.TagNumber(2)
   ResolvedSecret ensureClientSecret() => $_ensure(1);
+}
+
+/// The configuration of an Apple OAuth provider.
+class ResolvedAppleOAuthProviderConfig extends $pb.GeneratedMessage {
+  factory ResolvedAppleOAuthProviderConfig({
+    ResolvedSecret? clientId,
+    ResolvedSecret? teamId,
+    ResolvedSecret? keyId,
+    ResolvedSecret? privateKey,
+  }) {
+    final $result = create();
+    if (clientId != null) {
+      $result.clientId = clientId;
+    }
+    if (teamId != null) {
+      $result.teamId = teamId;
+    }
+    if (keyId != null) {
+      $result.keyId = keyId;
+    }
+    if (privateKey != null) {
+      $result.privateKey = privateKey;
+    }
+    return $result;
+  }
+  ResolvedAppleOAuthProviderConfig._() : super();
+  factory ResolvedAppleOAuthProviderConfig.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ResolvedAppleOAuthProviderConfig.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ResolvedAppleOAuthProviderConfig',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
+      createEmptyInstance: create)
+    ..aOM<ResolvedSecret>(1, _omitFieldNames ? '' : 'clientId',
+        subBuilder: ResolvedSecret.create)
+    ..aOM<ResolvedSecret>(2, _omitFieldNames ? '' : 'teamId',
+        subBuilder: ResolvedSecret.create)
+    ..aOM<ResolvedSecret>(3, _omitFieldNames ? '' : 'keyId',
+        subBuilder: ResolvedSecret.create)
+    ..aOM<ResolvedSecret>(4, _omitFieldNames ? '' : 'privateKey',
+        subBuilder: ResolvedSecret.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ResolvedAppleOAuthProviderConfig clone() =>
+      ResolvedAppleOAuthProviderConfig()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ResolvedAppleOAuthProviderConfig copyWith(
+          void Function(ResolvedAppleOAuthProviderConfig) updates) =>
+      super.copyWith(
+              (message) => updates(message as ResolvedAppleOAuthProviderConfig))
+          as ResolvedAppleOAuthProviderConfig;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ResolvedAppleOAuthProviderConfig create() =>
+      ResolvedAppleOAuthProviderConfig._();
+  ResolvedAppleOAuthProviderConfig createEmptyInstance() => create();
+  static $pb.PbList<ResolvedAppleOAuthProviderConfig> createRepeated() =>
+      $pb.PbList<ResolvedAppleOAuthProviderConfig>();
+  @$core.pragma('dart2js:noInline')
+  static ResolvedAppleOAuthProviderConfig getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ResolvedAppleOAuthProviderConfig>(
+          create);
+  static ResolvedAppleOAuthProviderConfig? _defaultInstance;
+
+  /// The client ID of the Apple OAuth provider.
+  @$pb.TagNumber(1)
+  ResolvedSecret get clientId => $_getN(0);
+  @$pb.TagNumber(1)
+  set clientId(ResolvedSecret v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasClientId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearClientId() => clearField(1);
+  @$pb.TagNumber(1)
+  ResolvedSecret ensureClientId() => $_ensure(0);
+
+  /// The team ID of the Apple OAuth provider.
+  @$pb.TagNumber(2)
+  ResolvedSecret get teamId => $_getN(1);
+  @$pb.TagNumber(2)
+  set teamId(ResolvedSecret v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasTeamId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTeamId() => clearField(2);
+  @$pb.TagNumber(2)
+  ResolvedSecret ensureTeamId() => $_ensure(1);
+
+  /// The key ID of the Apple OAuth provider.
+  @$pb.TagNumber(3)
+  ResolvedSecret get keyId => $_getN(2);
+  @$pb.TagNumber(3)
+  set keyId(ResolvedSecret v) {
+    setField(3, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasKeyId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearKeyId() => clearField(3);
+  @$pb.TagNumber(3)
+  ResolvedSecret ensureKeyId() => $_ensure(2);
+
+  /// The private key of the Apple OAuth provider.
+  @$pb.TagNumber(4)
+  ResolvedSecret get privateKey => $_getN(3);
+  @$pb.TagNumber(4)
+  set privateKey(ResolvedSecret v) {
+    setField(4, v);
+  }
+
+  @$pb.TagNumber(4)
+  $core.bool hasPrivateKey() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPrivateKey() => clearField(4);
+  @$pb.TagNumber(4)
+  ResolvedSecret ensurePrivateKey() => $_ensure(3);
+}
+
+enum ResolvedExternalAuthProvider_Config { firebase, supabase, notSet }
+
+/// A resolved external auth provider configuration.
+class ResolvedExternalAuthProvider extends $pb.GeneratedMessage {
+  factory ResolvedExternalAuthProvider({
+    $core.String? id,
+    ResolvedExternalAuthProvider_Type? type,
+    ResolvedFirebaseExternalAuthProviderConfig? firebase,
+    ResolvedSupabaseExternalAuthProviderConfig? supabase,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    if (type != null) {
+      $result.type = type;
+    }
+    if (firebase != null) {
+      $result.firebase = firebase;
+    }
+    if (supabase != null) {
+      $result.supabase = supabase;
+    }
+    return $result;
+  }
+  ResolvedExternalAuthProvider._() : super();
+  factory ResolvedExternalAuthProvider.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ResolvedExternalAuthProvider.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, ResolvedExternalAuthProvider_Config>
+      _ResolvedExternalAuthProvider_ConfigByTag = {
+    3: ResolvedExternalAuthProvider_Config.firebase,
+    4: ResolvedExternalAuthProvider_Config.supabase,
+    0: ResolvedExternalAuthProvider_Config.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ResolvedExternalAuthProvider',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
+      createEmptyInstance: create)
+    ..oo(0, [3, 4])
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..e<ResolvedExternalAuthProvider_Type>(
+        2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
+        defaultOrMaker: ResolvedExternalAuthProvider_Type
+            .EXTERNAL_AUTH_PROVIDER_TYPE_UNSPECIFIED,
+        valueOf: ResolvedExternalAuthProvider_Type.valueOf,
+        enumValues: ResolvedExternalAuthProvider_Type.values)
+    ..aOM<ResolvedFirebaseExternalAuthProviderConfig>(
+        3, _omitFieldNames ? '' : 'firebase',
+        subBuilder: ResolvedFirebaseExternalAuthProviderConfig.create)
+    ..aOM<ResolvedSupabaseExternalAuthProviderConfig>(
+        4, _omitFieldNames ? '' : 'supabase',
+        subBuilder: ResolvedSupabaseExternalAuthProviderConfig.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ResolvedExternalAuthProvider clone() =>
+      ResolvedExternalAuthProvider()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ResolvedExternalAuthProvider copyWith(
+          void Function(ResolvedExternalAuthProvider) updates) =>
+      super.copyWith(
+              (message) => updates(message as ResolvedExternalAuthProvider))
+          as ResolvedExternalAuthProvider;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ResolvedExternalAuthProvider create() =>
+      ResolvedExternalAuthProvider._();
+  ResolvedExternalAuthProvider createEmptyInstance() => create();
+  static $pb.PbList<ResolvedExternalAuthProvider> createRepeated() =>
+      $pb.PbList<ResolvedExternalAuthProvider>();
+  @$core.pragma('dart2js:noInline')
+  static ResolvedExternalAuthProvider getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ResolvedExternalAuthProvider>(create);
+  static ResolvedExternalAuthProvider? _defaultInstance;
+
+  ResolvedExternalAuthProvider_Config whichConfig() =>
+      _ResolvedExternalAuthProvider_ConfigByTag[$_whichOneof(0)]!;
+  void clearConfig() => clearField($_whichOneof(0));
+
+  /// The ID of the external auth provider.
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  /// The type of the external auth provider.
+  @$pb.TagNumber(2)
+  ResolvedExternalAuthProvider_Type get type => $_getN(1);
+  @$pb.TagNumber(2)
+  set type(ResolvedExternalAuthProvider_Type v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasType() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearType() => clearField(2);
+
+  /// The configuration of a Firebase auth provider.
+  @$pb.TagNumber(3)
+  ResolvedFirebaseExternalAuthProviderConfig get firebase => $_getN(2);
+  @$pb.TagNumber(3)
+  set firebase(ResolvedFirebaseExternalAuthProviderConfig v) {
+    setField(3, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasFirebase() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearFirebase() => clearField(3);
+  @$pb.TagNumber(3)
+  ResolvedFirebaseExternalAuthProviderConfig ensureFirebase() => $_ensure(2);
+
+  /// The configuration of a Supabase auth provider.
+  @$pb.TagNumber(4)
+  ResolvedSupabaseExternalAuthProviderConfig get supabase => $_getN(3);
+  @$pb.TagNumber(4)
+  set supabase(ResolvedSupabaseExternalAuthProviderConfig v) {
+    setField(4, v);
+  }
+
+  @$pb.TagNumber(4)
+  $core.bool hasSupabase() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSupabase() => clearField(4);
+  @$pb.TagNumber(4)
+  ResolvedSupabaseExternalAuthProviderConfig ensureSupabase() => $_ensure(3);
+}
+
+/// The configuration of an external Firebase auth provider.
+class ResolvedFirebaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
+  factory ResolvedFirebaseExternalAuthProviderConfig({
+    ResolvedEnvironmentVariable? projectId,
+  }) {
+    final $result = create();
+    if (projectId != null) {
+      $result.projectId = projectId;
+    }
+    return $result;
+  }
+  ResolvedFirebaseExternalAuthProviderConfig._() : super();
+  factory ResolvedFirebaseExternalAuthProviderConfig.fromBuffer(
+          $core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ResolvedFirebaseExternalAuthProviderConfig.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ResolvedFirebaseExternalAuthProviderConfig',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
+      createEmptyInstance: create)
+    ..aOM<ResolvedEnvironmentVariable>(1, _omitFieldNames ? '' : 'projectId',
+        subBuilder: ResolvedEnvironmentVariable.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ResolvedFirebaseExternalAuthProviderConfig clone() =>
+      ResolvedFirebaseExternalAuthProviderConfig()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ResolvedFirebaseExternalAuthProviderConfig copyWith(
+          void Function(ResolvedFirebaseExternalAuthProviderConfig) updates) =>
+      super.copyWith((message) =>
+              updates(message as ResolvedFirebaseExternalAuthProviderConfig))
+          as ResolvedFirebaseExternalAuthProviderConfig;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ResolvedFirebaseExternalAuthProviderConfig create() =>
+      ResolvedFirebaseExternalAuthProviderConfig._();
+  ResolvedFirebaseExternalAuthProviderConfig createEmptyInstance() => create();
+  static $pb.PbList<ResolvedFirebaseExternalAuthProviderConfig>
+      createRepeated() =>
+          $pb.PbList<ResolvedFirebaseExternalAuthProviderConfig>();
+  @$core.pragma('dart2js:noInline')
+  static ResolvedFirebaseExternalAuthProviderConfig getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
+          ResolvedFirebaseExternalAuthProviderConfig>(create);
+  static ResolvedFirebaseExternalAuthProviderConfig? _defaultInstance;
+
+  /// The Firebase project ID.
+  @$pb.TagNumber(1)
+  ResolvedEnvironmentVariable get projectId => $_getN(0);
+  @$pb.TagNumber(1)
+  set projectId(ResolvedEnvironmentVariable v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasProjectId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearProjectId() => clearField(1);
+  @$pb.TagNumber(1)
+  ResolvedEnvironmentVariable ensureProjectId() => $_ensure(0);
+}
+
+/// The configuration of an external Supabase auth provider.
+class ResolvedSupabaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
+  factory ResolvedSupabaseExternalAuthProviderConfig({
+    ResolvedEnvironmentVariable? projectUrl,
+    ResolvedSecret? jwtSecret,
+  }) {
+    final $result = create();
+    if (projectUrl != null) {
+      $result.projectUrl = projectUrl;
+    }
+    if (jwtSecret != null) {
+      $result.jwtSecret = jwtSecret;
+    }
+    return $result;
+  }
+  ResolvedSupabaseExternalAuthProviderConfig._() : super();
+  factory ResolvedSupabaseExternalAuthProviderConfig.fromBuffer(
+          $core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ResolvedSupabaseExternalAuthProviderConfig.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ResolvedSupabaseExternalAuthProviderConfig',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
+      createEmptyInstance: create)
+    ..aOM<ResolvedEnvironmentVariable>(1, _omitFieldNames ? '' : 'projectUrl',
+        subBuilder: ResolvedEnvironmentVariable.create)
+    ..aOM<ResolvedSecret>(2, _omitFieldNames ? '' : 'jwtSecret',
+        subBuilder: ResolvedSecret.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ResolvedSupabaseExternalAuthProviderConfig clone() =>
+      ResolvedSupabaseExternalAuthProviderConfig()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ResolvedSupabaseExternalAuthProviderConfig copyWith(
+          void Function(ResolvedSupabaseExternalAuthProviderConfig) updates) =>
+      super.copyWith((message) =>
+              updates(message as ResolvedSupabaseExternalAuthProviderConfig))
+          as ResolvedSupabaseExternalAuthProviderConfig;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ResolvedSupabaseExternalAuthProviderConfig create() =>
+      ResolvedSupabaseExternalAuthProviderConfig._();
+  ResolvedSupabaseExternalAuthProviderConfig createEmptyInstance() => create();
+  static $pb.PbList<ResolvedSupabaseExternalAuthProviderConfig>
+      createRepeated() =>
+          $pb.PbList<ResolvedSupabaseExternalAuthProviderConfig>();
+  @$core.pragma('dart2js:noInline')
+  static ResolvedSupabaseExternalAuthProviderConfig getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
+          ResolvedSupabaseExternalAuthProviderConfig>(create);
+  static ResolvedSupabaseExternalAuthProviderConfig? _defaultInstance;
+
+  /// Required. The Supabase project URL.
+  @$pb.TagNumber(1)
+  ResolvedEnvironmentVariable get projectUrl => $_getN(0);
+  @$pb.TagNumber(1)
+  set projectUrl(ResolvedEnvironmentVariable v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasProjectUrl() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearProjectUrl() => clearField(1);
+  @$pb.TagNumber(1)
+  ResolvedEnvironmentVariable ensureProjectUrl() => $_ensure(0);
+
+  /// Optional. The Supabase JWT secret.
+  @$pb.TagNumber(2)
+  ResolvedSecret get jwtSecret => $_getN(1);
+  @$pb.TagNumber(2)
+  set jwtSecret(ResolvedSecret v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasJwtSecret() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearJwtSecret() => clearField(2);
+  @$pb.TagNumber(2)
+  ResolvedSecret ensureJwtSecret() => $_ensure(1);
 }
 
 /// Information about the Dart or Flutter SDK used to deploy the project.
