@@ -1,3 +1,1 @@
-import 'package:celest/celest.dart';
-
-const project = Project(name: 'simple');
+/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/simple/lib/src/project.dart

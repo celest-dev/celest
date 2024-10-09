@@ -1,11 +1,1 @@
-import 'package:celest/celest.dart';
-
-const project = Project(
-  name: 'firebase_test',
-);
-
-const auth = Auth(
-  providers: [
-    ExternalAuthProvider.firebase(),
-  ],
-);
+/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/firebase/celest/lib/src/project.dart

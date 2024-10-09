@@ -146,6 +146,7 @@ final class _GitIgnore extends ProjectFile {
 pubspec.lock
 
 # Celest
+build/
 .env
 .env.*
 ''',

@@ -1,12 +1,1 @@
-import 'package:celest/celest.dart';
-
-const project = Project(name: 'auth');
-
-const auth = Auth(
-  providers: [
-    AuthProvider.email(),
-    AuthProvider.sms(),
-    ExternalAuthProvider.firebase(),
-    ExternalAuthProvider.supabase(),
-  ],
-);
+/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/auth/lib/src/project.dart

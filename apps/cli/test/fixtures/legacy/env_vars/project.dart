@@ -1,5 +1,1 @@
-import 'package:celest/celest.dart';
-
-const project = Project(
-  name: 'env_vars',
-);
+/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/env_vars/lib/src/project.dart

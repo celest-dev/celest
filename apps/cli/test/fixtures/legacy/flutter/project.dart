@@ -1,3 +1,1 @@
-import 'package:celest/celest.dart';
-
-const project = Project(name: 'flutter');
+/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/flutter/lib/src/project.dart

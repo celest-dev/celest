@@ -1,13 +1,1 @@
-import 'package:celest/celest.dart';
-
-const project = Project(name: 'supabase');
-
-const supabaseJwtSecret = secret('SUPABASE_JWT_SECRET');
-
-const auth = Auth(
-  providers: [
-    ExternalAuthProvider.supabase(
-      jwtSecret: supabaseJwtSecret,
-    ),
-  ],
-);
+/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/supabase/celest/lib/src/project.dart

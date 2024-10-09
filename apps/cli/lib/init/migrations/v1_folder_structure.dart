@@ -85,6 +85,21 @@ final class V1FolderStructure extends ProjectMigration {
     ),
   ];
 
+  late final symlinkdFiles = [
+    (
+      projectDir.childFile('project.dart'),
+      projectDir
+          .childDirectory('lib')
+          .childDirectory('src')
+          .childFile('project.dart'),
+    ),
+  ];
+
+  late final symlinkdEntities = [
+    ...symlinkdDirs,
+    ...symlinkdFiles,
+  ];
+
   @override
   bool get needsMigration {
     for (final entity in generatedClientEntities) {
@@ -92,8 +107,8 @@ final class V1FolderStructure extends ProjectMigration {
         return true;
       }
     }
-    for (final dir in symlinkdDirs) {
-      if (!dir.$2.existsSync()) {
+    for (final entity in symlinkdEntities) {
+      if (!entity.$2.existsSync()) {
         return true;
       }
     }
@@ -133,6 +148,17 @@ final class V1FolderStructure extends ProjectMigration {
         );
       }
       moveOperations.add(_move(from, to));
+    }
+    for (final (from, to) in symlinkdFiles) {
+      if (fileSystem.isLinkSync(from.path)) {
+        continue;
+      }
+      moveOperations.add(
+        from.copy(to.path).then((_) async {
+          await from.delete();
+          return fileSystem.link(from.path).create(to.path);
+        }),
+      );
     }
     if (moveOperations.isNotEmpty) {
       _operations.add(

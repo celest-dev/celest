@@ -1,3 +1,1 @@
-import 'package:celest/celest.dart';
-
-const project = Project(name: 'streaming');
+/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/streaming/lib/src/project.dart
