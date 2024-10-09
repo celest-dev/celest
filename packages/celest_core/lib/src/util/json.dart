@@ -28,6 +28,23 @@ extension JsonUtf8 on Object {
   }
 
   /// Decodes a JSON map [body] from a `List<int>` or [String].
+  static Object? decodeAny(Object? body) {
+    return switch (body) {
+      List<int>() => body.isEmpty ? const {} : decode(body),
+      String() => body.isEmpty
+          ? const {}
+          : () {
+              try {
+                return jsonDecode(body);
+              } on Object {
+                return body;
+              }
+            }(),
+      _ => body,
+    };
+  }
+
+  /// Decodes a JSON map [body] from a `List<int>` or [String].
   static Map<String, Object?> decodeMap(Object? body) {
     Object? decoded;
     switch (body) {
@@ -36,7 +53,11 @@ extension JsonUtf8 on Object {
         decoded = decode(body);
       case String():
         if (body.isEmpty) return const {};
-        decoded = jsonDecode(body);
+        try {
+          decoded = jsonDecode(body);
+        } on Object {
+          decoded = body;
+        }
       default:
         decoded = body;
     }

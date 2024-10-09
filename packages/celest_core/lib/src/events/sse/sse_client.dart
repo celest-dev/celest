@@ -7,7 +7,7 @@ import 'package:stream_channel/stream_channel.dart';
 /// {@template celest.runtime.sse_client}
 /// A Server-Sent Events (SSE) client.
 /// {@endtemplate}
-abstract class SseClient with StreamChannelMixin<Map<String, Object?>> {
+abstract class SseClient with StreamChannelMixin<Object?> {
   /// Creates a new [SseClient] connected to the server at [serverUri].
   factory SseClient({
     required Uri serverUri,

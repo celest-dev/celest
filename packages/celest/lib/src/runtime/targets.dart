@@ -79,7 +79,7 @@ abstract base class CloudEventSourceTarget extends CloudFunctionTarget {
           StreamChannelTransformer(
             StreamTransformer.fromHandlers(
               handleData: (data, sink) {
-                sink.add(JsonUtf8.decodeMap(data));
+                sink.add(JsonUtf8.decodeAny(data));
               },
             ),
             StreamSinkTransformer.fromHandlers(

@@ -4,7 +4,7 @@ import 'package:celest_core/src/events/event_channel.vm.dart'
 import 'package:http/http.dart' as http;
 import 'package:stream_channel/stream_channel.dart';
 
-abstract class EventChannel with StreamChannelMixin<Map<String, Object?>> {
+abstract class EventChannel with StreamChannelMixin<Object?> {
   EventChannel();
   factory EventChannel.connect(
     Uri uri, {

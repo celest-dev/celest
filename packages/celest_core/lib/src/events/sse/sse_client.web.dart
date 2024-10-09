@@ -56,18 +56,16 @@ final class SseClientPlatform extends SseClient {
 
   var _lastMessageId = -1;
 
-  late final StreamController<Map<String, Object?>> _incomingController =
+  late final StreamController<Object?> _incomingController =
       StreamController(onCancel: close);
 
   @override
-  Stream<Map<String, Object?>> get stream => _incomingController.stream;
+  Stream<Object?> get stream => _incomingController.stream;
 
-  late final StreamController<Map<String, Object?>> _outgoingController =
-      StreamController();
+  late final StreamController<Object?> _outgoingController = StreamController();
 
   @override
-  late final StreamSink<Map<String, Object?>> sink =
-      _outgoingController.sink.transform(
+  late final StreamSink<Object?> sink = _outgoingController.sink.transform(
     StreamSinkTransformer.fromHandlers(
       handleError: (error, stackTrace, sink) {
         _closeWithError(error, stackTrace);
@@ -118,9 +116,6 @@ final class SseClientPlatform extends SseClient {
     _logger.finest('Message event: $data');
     try {
       final message = jsonDecode(data);
-      if (message is! Map<String, Object?>) {
-        throw FormatException('Expected a Map, got ${message.runtimeType}');
-      }
       _incomingController.add(message);
     } on Object catch (e, st) {
       _logger.severe('Invalid message: $data', e, st);
@@ -131,7 +126,7 @@ final class SseClientPlatform extends SseClient {
     }
   }
 
-  Future<void> _onOutgoingMessage(Map<String, Object?> message) async {
+  Future<void> _onOutgoingMessage(Object? message) async {
     final uri = serverUri.replace(
       queryParameters: {
         ...serverUri.queryParametersAll,
