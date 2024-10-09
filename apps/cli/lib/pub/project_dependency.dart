@@ -49,6 +49,7 @@ final class ProjectDependency {
     firebaseAuth.name: firebaseAuth,
     gotrue.name: gotrue,
     http.name: http,
+    meta.name: meta,
     nativeStorage.name: nativeStorage,
     streamTransform.name: streamTransform,
     lints.name: lints,
@@ -100,6 +101,14 @@ final class ProjectDependency {
     ),
   );
 
+  static final ProjectDependency meta = ProjectDependency._(
+    'meta',
+    DependencyType.dependency,
+    HostedDependency(
+      version: VersionConstraint.compatibleWith(Version.parse('1.12.0')),
+    ),
+  );
+
   static final ProjectDependency nativeStorage = ProjectDependency._(
     'native_storage',
     DependencyType.dependency,
@@ -132,7 +141,13 @@ final class ProjectDependency {
     ),
   );
 
-  static final Map<String, HostedDependency> dependencies = {
+  static final Map<String, HostedDependency> backendDependencies = {
+    celest.name: celest.pubDependency,
+    celestCore.name: celestCore.pubDependency,
+    meta.name: meta.pubDependency,
+  };
+
+  static final Map<String, HostedDependency> clientDependencies = {
     celest.name: celest.pubDependency,
     celestCore.name: celestCore.pubDependency,
     http.name: http.pubDependency,
@@ -145,7 +160,11 @@ final class ProjectDependency {
 
   bool upToDate(Pubspec pubspec) {
     final (expected, actual) = switch (type) {
-      DependencyType.dependency => (dependencies, pubspec.dependencies),
+      DependencyType.dependency when pubspec.name == 'celest_backend' => (
+          backendDependencies,
+          pubspec.dependencies
+        ),
+      DependencyType.dependency => (clientDependencies, pubspec.dependencies),
       DependencyType.devDependency => (
           devDependencies,
           pubspec.devDependencies

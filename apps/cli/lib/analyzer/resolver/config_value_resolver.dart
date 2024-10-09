@@ -19,6 +19,8 @@ typedef ConfigValue = (String name, FileSpan location);
 typedef ConfigValueFactory<T extends ast.ConfigurationVariable> = T Function(
   String, {
   String? value,
+  String? dartName,
+  Iterable<String> docs,
   required FileSpan location,
 });
 
@@ -84,24 +86,38 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
     final topLevelDefinitions = references
         .map((ref) => ref.enclosingElement)
         .whereType<TopLevelVariableElement>();
-    final topLevelResolutions = <Future<(String, String?, FileSpan)?>>[];
+    final topLevelResolutions = <(
+      String dartName,
+      Iterable<String> docs,
+      Future<(String, String?, FileSpan)?> resolution,
+    )>[];
     for (final variable in topLevelDefinitions) {
       topLevelResolutions.add(
-        resolveVariable(
-          variable: variable,
-          value: variable.computeConstantValue(),
-          location: variable.sourceLocation!,
+        (
+          variable.name,
+          variable.docLines,
+          resolveVariable(
+            variable: variable,
+            value: variable.computeConstantValue(),
+            location: variable.sourceLocation!,
+          ),
         ),
       );
     }
     final topLevelVariables = await Future.wait(
-      topLevelResolutions,
+      topLevelResolutions.map((it) => it.$3),
       eagerError: true,
     );
     variables.addAll(
-      topLevelVariables.nonNulls.map((it) {
+      topLevelVariables.nonNulls.mapIndexed((index, it) {
         final (name, value, location) = it;
-        return factory(name, value: value, location: location);
+        return factory(
+          name,
+          dartName: topLevelResolutions[index].$1,
+          docs: topLevelResolutions[index].$2,
+          value: value,
+          location: location,
+        );
       }),
     );
 
@@ -146,7 +162,12 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
     variables.addAll(
       parameterVariables.nonNulls.map((it) {
         final (name, value, location) = it;
-        return factory(name, value: value, location: location);
+        return factory(
+          name,
+          dartName: null,
+          value: value,
+          location: location,
+        );
       }),
     );
 

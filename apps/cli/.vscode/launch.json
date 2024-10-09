@@ -8,7 +8,7 @@
       "program": "test/fixtures/legacy/fixtures_test.dart",
       "env": {
         "UPDATE_GOLDENS": "true",
-        "INCLUDE_TESTS": "api"
+        "INCLUDE_TESTS": "flutter"
       },
       "args": ["--timeout=none"]
     },

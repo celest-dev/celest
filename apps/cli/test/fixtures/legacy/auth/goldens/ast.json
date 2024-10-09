@@ -3,7 +3,7 @@
   "reference": {
     "$": "Reference",
     "symbol": "project",
-    "url": "project:project.dart"
+    "url": "project:lib/src/project.dart"
   },
   "apis": {
     "lib": {
@@ -2036,40 +2036,42 @@
   },
   "envVars": [
     {
-      "name": "FIREBASE_PROJECT_ID",
       "location": {
         "start": {
           "offset": 84,
-          "uri": "project.dart",
+          "uri": "package:celest_backend/src/project.dart",
           "line": 4,
           "column": 6
         },
         "end": {
           "offset": 88,
-          "uri": "project.dart",
+          "uri": "package:celest_backend/src/project.dart",
           "line": 4,
           "column": 10
         },
         "text": "auth"
-      }
+      },
+      "name": "FIREBASE_PROJECT_ID",
+      "docs": []
     },
     {
-      "name": "SUPABASE_URL",
       "location": {
         "start": {
           "offset": 84,
-          "uri": "project.dart",
+          "uri": "package:celest_backend/src/project.dart",
           "line": 4,
           "column": 6
         },
         "end": {
           "offset": 88,
-          "uri": "project.dart",
+          "uri": "package:celest_backend/src/project.dart",
           "line": 4,
           "column": 10
         },
         "text": "auth"
-      }
+      },
+      "name": "SUPABASE_URL",
+      "docs": []
     }
   ],
   "secrets": [],
@@ -2105,13 +2107,13 @@
         "location": {
           "start": {
             "offset": 84,
-            "uri": "project.dart",
+            "uri": "package:celest_backend/src/project.dart",
             "line": 4,
             "column": 6
           },
           "end": {
             "offset": 88,
-            "uri": "project.dart",
+            "uri": "package:celest_backend/src/project.dart",
             "line": 4,
             "column": 10
           },
@@ -2125,13 +2127,13 @@
         "location": {
           "start": {
             "offset": 84,
-            "uri": "project.dart",
+            "uri": "package:celest_backend/src/project.dart",
             "line": 4,
             "column": 6
           },
           "end": {
             "offset": 88,
-            "uri": "project.dart",
+            "uri": "package:celest_backend/src/project.dart",
             "line": 4,
             "column": 10
           },
@@ -2143,35 +2145,36 @@
       {
         "$": "FirebaseExternalAuthProvider",
         "projectId": {
-          "name": "FIREBASE_PROJECT_ID",
           "location": {
             "start": {
               "offset": 84,
-              "uri": "project.dart",
+              "uri": "package:celest_backend/src/project.dart",
               "line": 4,
               "column": 6
             },
             "end": {
               "offset": 88,
-              "uri": "project.dart",
+              "uri": "package:celest_backend/src/project.dart",
               "line": 4,
               "column": 10
             },
             "text": "auth"
-          }
+          },
+          "name": "FIREBASE_PROJECT_ID",
+          "docs": []
         },
         "name": "firebase",
         "type": "FIREBASE",
         "location": {
           "start": {
             "offset": 84,
-            "uri": "project.dart",
+            "uri": "package:celest_backend/src/project.dart",
             "line": 4,
             "column": 6
           },
           "end": {
             "offset": 88,
-            "uri": "project.dart",
+            "uri": "package:celest_backend/src/project.dart",
             "line": 4,
             "column": 10
           },
@@ -2181,35 +2184,36 @@
       {
         "$": "SupabaseExternalAuthProvider",
         "projectUrl": {
-          "name": "SUPABASE_URL",
           "location": {
             "start": {
               "offset": 84,
-              "uri": "project.dart",
+              "uri": "package:celest_backend/src/project.dart",
               "line": 4,
               "column": 6
             },
             "end": {
               "offset": 88,
-              "uri": "project.dart",
+              "uri": "package:celest_backend/src/project.dart",
               "line": 4,
               "column": 10
             },
             "text": "auth"
-          }
+          },
+          "name": "SUPABASE_URL",
+          "docs": []
         },
         "name": "supabase",
         "type": "SUPABASE",
         "location": {
           "start": {
             "offset": 84,
-            "uri": "project.dart",
+            "uri": "package:celest_backend/src/project.dart",
             "line": 4,
             "column": 6
           },
           "end": {
             "offset": 88,
-            "uri": "project.dart",
+            "uri": "package:celest_backend/src/project.dart",
             "line": 4,
             "column": 10
           },
@@ -2220,13 +2224,13 @@
     "location": {
       "start": {
         "offset": 84,
-        "uri": "project.dart",
+        "uri": "package:celest_backend/src/project.dart",
         "line": 4,
         "column": 6
       },
       "end": {
         "offset": 88,
-        "uri": "project.dart",
+        "uri": "package:celest_backend/src/project.dart",
         "line": 4,
         "column": 10
       },

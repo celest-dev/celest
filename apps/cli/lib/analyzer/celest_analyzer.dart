@@ -55,13 +55,13 @@ final class CelestAnalyzer
       // If the project hasn't been created yet, create a dummy project to warm
       // up the caches.
       projectDir = fileSystem.systemTempDirectory.createTempSync('celest_');
-      dependencies = ProjectDependency.dependencies.keys;
+      dependencies = ProjectDependency.backendDependencies.keys;
       final pubspec = Pubspec(
         'warmup_celest_cache',
         environment: {
           'sdk': VersionConstraint.compatibleWith(minSupportedDartSdk),
         },
-        dependencies: ProjectDependency.dependencies,
+        dependencies: ProjectDependency.backendDependencies,
       );
       await [
         projectDir.childFile('pubspec.yaml').writeAsString(pubspec.toYaml()),
@@ -514,7 +514,8 @@ const project = Project(name: 'cache_warmup');
 
     for (final library in authLibraries) {
       final auth = await resolver.resolveAuth(
-        authFilepath: library.element.source.uri.toFilePath(),
+        authFilepath: context.currentSession.uriConverter
+            .uriToPath(library.element.source.uri)!,
         authLibrary: library,
       );
       if (auth != null) {
@@ -553,20 +554,7 @@ const project = Project(name: 'cache_warmup');
         );
       }
 
-      // Replace resources.dart imports
-      source = source.replaceFirst(
-        "../resources.dart';",
-        "../generated/resources.dart';",
-      );
-
       fileChanges.add(fileSystem.file(path).writeAsString(source));
-    }
-
-    final oldResources = fileSystem
-        .directory(projectPaths.projectRoot)
-        .childFile('resources.dart');
-    if (oldResources.existsSync()) {
-      fileChanges.add(oldResources.delete());
     }
 
     await Future.wait(fileChanges);

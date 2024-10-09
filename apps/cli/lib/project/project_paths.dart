@@ -22,7 +22,8 @@ final class ProjectPaths {
   late final String pubspecYaml = p.join(projectRoot, 'pubspec.yaml');
   late final String analysisOptionsYaml =
       p.join(projectRoot, 'analysis_options.yaml');
-  late final String projectDart = p.join(projectRoot, 'project.dart');
+  late final String projectDart =
+      p.join(projectRoot, 'lib', 'src', 'project.dart');
   late final String projectLib = p.join(projectRoot, 'lib');
   late final String localApiEntrypoint = p.join(outputsDir, 'api.local.dart');
   late final String legacyClientOutputsDir =
@@ -35,7 +36,6 @@ final class ProjectPaths {
   // Generated
   late final String generatedDir =
       p.join(projectRoot, 'lib', 'src', 'generated');
-  late final String resourcesDart = p.join(generatedDir, 'resources.dart');
 
   late final String apisDir = p.join(projectRoot, 'lib', 'src', 'functions');
   late final String legacyApisDir = p.join(projectRoot, 'functions');

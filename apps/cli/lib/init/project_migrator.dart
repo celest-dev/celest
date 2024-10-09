@@ -36,6 +36,7 @@ class ProjectMigrator {
     final migrations = [
       PubspecUpdater(projectRoot, parentProject, projectName),
       V1FolderStructure(projectRoot, projectName, parentProject),
+      RemoveResourcesDartFile(projectRoot),
       if (parentProject
           case ParentProject(path: final appRoot, :final type)) ...[
         AddAnalyzerPlugin(projectRoot, appRoot),

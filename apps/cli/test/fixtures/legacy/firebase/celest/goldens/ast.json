@@ -3,7 +3,7 @@
   "reference": {
     "$": "Reference",
     "symbol": "project",
-    "url": "project:project.dart"
+    "url": "project:lib/src/project.dart"
   },
   "apis": {
     "greeting": {
@@ -340,22 +340,23 @@
   },
   "envVars": [
     {
-      "name": "FIREBASE_PROJECT_ID",
       "location": {
         "start": {
           "offset": 98,
-          "uri": "project.dart",
+          "uri": "package:celest_backend/src/project.dart",
           "line": 6,
           "column": 6
         },
         "end": {
           "offset": 102,
-          "uri": "project.dart",
+          "uri": "package:celest_backend/src/project.dart",
           "line": 6,
           "column": 10
         },
         "text": "auth"
-      }
+      },
+      "name": "FIREBASE_PROJECT_ID",
+      "docs": []
     }
   ],
   "secrets": [],
@@ -387,35 +388,36 @@
       {
         "$": "FirebaseExternalAuthProvider",
         "projectId": {
-          "name": "FIREBASE_PROJECT_ID",
           "location": {
             "start": {
               "offset": 98,
-              "uri": "project.dart",
+              "uri": "package:celest_backend/src/project.dart",
               "line": 6,
               "column": 6
             },
             "end": {
               "offset": 102,
-              "uri": "project.dart",
+              "uri": "package:celest_backend/src/project.dart",
               "line": 6,
               "column": 10
             },
             "text": "auth"
-          }
+          },
+          "name": "FIREBASE_PROJECT_ID",
+          "docs": []
         },
         "name": "firebase",
         "type": "FIREBASE",
         "location": {
           "start": {
             "offset": 98,
-            "uri": "project.dart",
+            "uri": "package:celest_backend/src/project.dart",
             "line": 6,
             "column": 6
           },
           "end": {
             "offset": 102,
-            "uri": "project.dart",
+            "uri": "package:celest_backend/src/project.dart",
             "line": 6,
             "column": 10
           },
@@ -426,13 +428,13 @@
     "location": {
       "start": {
         "offset": 98,
-        "uri": "project.dart",
+        "uri": "package:celest_backend/src/project.dart",
         "line": 6,
         "column": 6
       },
       "end": {
         "offset": 102,
-        "uri": "project.dart",
+        "uri": "package:celest_backend/src/project.dart",
         "line": 6,
         "column": 10
       },

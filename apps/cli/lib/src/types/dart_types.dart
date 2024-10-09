@@ -594,6 +594,10 @@ class _Celest {
   DartTypeReference get cloudWidget =>
       const DartTypeReference('CloudWidget', _url);
 
+  /// Creates a [celest.Environment] reference.
+  DartTypeReference get environment =>
+      const DartTypeReference('Environment', _url);
+
   /// Creates a [celest.env] reference.
   DartTypeReference get environmentVariable =>
       const DartTypeReference('env', _url);

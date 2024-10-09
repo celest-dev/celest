@@ -257,7 +257,7 @@ final class PubspecFile extends ProjectFile {
       environment: {
         'sdk': PubEnvironment.dartSdkConstraint,
       },
-      dependencies: ProjectDependency.dependencies,
+      dependencies: ProjectDependency.backendDependencies,
       devDependencies: ProjectDependency.devDependencies,
       dependencyOverrides: ProjectDependency.localDependencyOverrides(
         projectRoot: projectRoot,
@@ -304,7 +304,7 @@ final class ProjectClient extends ProjectFile {
               from: clientRoot.path.to(p.url),
             ),
           ),
-          ...ProjectDependency.dependencies,
+          ...ProjectDependency.backendDependencies,
           ProjectDependency.nativeStorage.name:
               ProjectDependency.nativeStorage.pubDependency,
         },

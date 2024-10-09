@@ -136,7 +136,7 @@ final class V1FolderStructure extends ProjectMigration {
     }
 
     // Move `functions` to `lib/src` and create symlinks.
-    final moveOperations = <Future<Link>>[];
+    final moveOperations = <Future<Link?>>[];
     for (final (from, to) in symlinkdDirs) {
       if (!from.existsSync() || fileSystem.isLinkSync(from.path)) {
         continue;
@@ -163,7 +163,7 @@ final class V1FolderStructure extends ProjectMigration {
     if (moveOperations.isNotEmpty) {
       _operations.add(
         Future.wait(moveOperations).then((links) {
-          return _stageChangesInGit(rootDir, links);
+          return _stageChangesInGit(rootDir);
         }),
       );
     }
@@ -219,7 +219,7 @@ transforms:
   /// Moves one directory to another.
   ///
   /// Returns the new symlink.
-  Future<Link> _move(Directory from, Directory to) async {
+  Future<Link?> _move(Directory from, Directory to) async {
     await for (final file in from.list(recursive: true, followLinks: false)) {
       final relativePath = p.relative(file.path, from: from.path);
       final destination = to.childFile(relativePath);
@@ -237,6 +237,10 @@ transforms:
       }
     }
     await from.delete(recursive: true);
+    if (p.basename(from.path) == 'generated') {
+      // Don't create a link for the generated folder.
+      return null;
+    }
     return fileSystem.link(from.path).create(to.path);
   }
 
@@ -244,10 +248,7 @@ transforms:
   ///
   /// In projects with a `.git` directory, `git add .` seems to work fine so
   /// we just do that for them.
-  Future<void> _stageChangesInGit(
-    Directory projectDir,
-    List<Link> symlinks,
-  ) async {
+  Future<void> _stageChangesInGit(Directory projectDir) async {
     var gitRoot = projectDir;
     while (gitRoot.parent != gitRoot) {
       if (gitRoot.childDirectory('.git').existsSync()) {
@@ -271,4 +272,24 @@ transforms:
       );
     }
   }
+}
+
+final class RemoveResourcesDartFile extends ProjectMigration {
+  RemoveResourcesDartFile(super.projectRoot);
+
+  late final oldResourcesFile = fileSystem.file(
+    p.join(projectRoot, 'lib', 'src', 'generated', 'resources.dart'),
+  );
+
+  @override
+  Future<ProjectMigrationResult> create() async {
+    await oldResourcesFile.delete();
+    return const ProjectMigrationSuccess(needsAnalyzerMigration: false);
+  }
+
+  @override
+  String get name => 'core.layout.v1.remove_resources_dart';
+
+  @override
+  bool get needsMigration => oldResourcesFile.existsSync();
 }

@@ -6,7 +6,7 @@ const myHeight = env('MY_HEIGHT');
 
 // Non-const variables should be allowed.
 // ignore: prefer_const_declarations
-final myWeight = const env('IM_COOL');
+final imCool = const env('IM_COOL');
 
 // Non-const initializers should be allowed.
 // ignore: prefer_const_constructors

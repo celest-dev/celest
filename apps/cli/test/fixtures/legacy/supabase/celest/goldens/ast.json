@@ -3,7 +3,7 @@
   "reference": {
     "$": "Reference",
     "symbol": "project",
-    "url": "project:project.dart"
+    "url": "project:lib/src/project.dart"
   },
   "apis": {
     "auth": {
@@ -433,42 +433,45 @@
   },
   "envVars": [
     {
-      "name": "SUPABASE_URL",
       "location": {
         "start": {
           "offset": 146,
-          "uri": "project.dart",
+          "uri": "package:celest_backend/src/project.dart",
           "line": 6,
           "column": 6
         },
         "end": {
           "offset": 150,
-          "uri": "project.dart",
+          "uri": "package:celest_backend/src/project.dart",
           "line": 6,
           "column": 10
         },
         "text": "auth"
-      }
+      },
+      "name": "SUPABASE_URL",
+      "docs": []
     }
   ],
   "secrets": [
     {
-      "name": "SUPABASE_JWT_SECRET",
       "location": {
         "start": {
           "offset": 88,
-          "uri": "project.dart",
+          "uri": "package:celest_backend/src/project.dart",
           "line": 4,
           "column": 6
         },
         "end": {
           "offset": 105,
-          "uri": "project.dart",
+          "uri": "package:celest_backend/src/project.dart",
           "line": 4,
           "column": 23
         },
         "text": "supabaseJwtSecret"
-      }
+      },
+      "name": "SUPABASE_JWT_SECRET",
+      "docs": [],
+      "dartName": "supabaseJwtSecret"
     }
   ],
   "sdkInfo": {
@@ -499,70 +502,72 @@
       {
         "$": "SupabaseExternalAuthProvider",
         "projectUrl": {
-          "name": "SUPABASE_URL",
           "location": {
             "start": {
               "offset": 146,
-              "uri": "project.dart",
+              "uri": "package:celest_backend/src/project.dart",
               "line": 6,
               "column": 6
             },
             "end": {
               "offset": 150,
-              "uri": "project.dart",
+              "uri": "package:celest_backend/src/project.dart",
               "line": 6,
               "column": 10
             },
             "text": "auth"
-          }
+          },
+          "name": "SUPABASE_URL",
+          "docs": []
         },
         "name": "supabase",
         "type": "SUPABASE",
         "location": {
           "start": {
             "offset": 146,
-            "uri": "project.dart",
+            "uri": "package:celest_backend/src/project.dart",
             "line": 6,
             "column": 6
           },
           "end": {
             "offset": 150,
-            "uri": "project.dart",
+            "uri": "package:celest_backend/src/project.dart",
             "line": 6,
             "column": 10
           },
           "text": "auth"
         },
         "jwtSecret": {
-          "name": "SUPABASE_JWT_SECRET",
           "location": {
             "start": {
               "offset": 146,
-              "uri": "project.dart",
+              "uri": "package:celest_backend/src/project.dart",
               "line": 6,
               "column": 6
             },
             "end": {
               "offset": 150,
-              "uri": "project.dart",
+              "uri": "package:celest_backend/src/project.dart",
               "line": 6,
               "column": 10
             },
             "text": "auth"
-          }
+          },
+          "name": "SUPABASE_JWT_SECRET",
+          "docs": []
         }
       }
     ],
     "location": {
       "start": {
         "offset": 146,
-        "uri": "project.dart",
+        "uri": "package:celest_backend/src/project.dart",
         "line": 6,
         "column": 6
       },
       "end": {
         "offset": 150,
-        "uri": "project.dart",
+        "uri": "package:celest_backend/src/project.dart",
         "line": 6,
         "column": 10
       },

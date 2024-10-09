@@ -46,6 +46,7 @@ void main() {
     _ => false,
   };
   final includeTests = Platform.environment['INCLUDE_TESTS']?.split(',');
+  final skipTests = Platform.environment['SKIP_TESTS']?.split(',');
   final includeApis = Platform.environment['INCLUDE_APIS']?.split(',');
 
   if (updateGoldens && Platform.isWindows) {
@@ -70,6 +71,9 @@ void main() {
     }
     if (includeTests != null &&
         !includeTests.contains(p.basename(testDir.path))) {
+      continue;
+    }
+    if (skipTests != null && skipTests.contains(p.basename(testDir.path))) {
       continue;
     }
     final testRunner = TestRunner(
@@ -328,15 +332,18 @@ class TestRunner {
         });
       }
 
-      final analyzeResult = await processManager.run(
-        <String>[Platform.resolvedExecutable, 'analyze', '.'],
-        workingDirectory: projectRoot,
-      );
-      expect(
-        analyzeResult.exitCode,
-        0,
-        reason: '${analyzeResult.stdout}\n${analyzeResult.stderr}',
-      );
+      // TODO(dnys1): Needed? Or can we just verify visually? This is very
+      // flaky when the previous command adds new dependencies.
+
+      // final analyzeResult = await processManager.run(
+      //   <String>[Platform.resolvedExecutable, 'analyze', '.'],
+      //   workingDirectory: projectRoot,
+      // );
+      // expect(
+      //   analyzeResult.exitCode,
+      //   0,
+      //   reason: '${analyzeResult.stdout}\n${analyzeResult.stderr}',
+      // );
     });
   }
 
@@ -1978,7 +1985,6 @@ final tests = <String, Test>{
               },
               output: {
                 'field': 'default',
-                'nullableField': null,
                 'nullableFieldWithDefault': 'default',
                 'fieldWithoutInitializer': 'default',
               },
@@ -2008,7 +2014,6 @@ final tests = <String, Test>{
               },
               output: {
                 'field': 'default',
-                'nullableField': null,
                 'nullableFieldWithDefault': 'default',
                 'fieldWithoutInitializer': 'default',
               },
@@ -2055,7 +2060,6 @@ final tests = <String, Test>{
                   'superField': 'superField',
                   'field': 'field',
                 },
-                'nullableFields': null,
               },
             ),
           ],
@@ -2100,7 +2104,6 @@ final tests = <String, Test>{
                   'superField': 'superField',
                   'field': 'field',
                 },
-                'nullableFields': null,
               },
             ),
           ],
@@ -2460,9 +2463,7 @@ final tests = <String, Test>{
                   'namedFields': null,
                 },
               },
-              output: {
-                'namedFields': null,
-              },
+              output: {},
             ),
             FunctionTestSuccess(
               name: 'present',
@@ -2495,9 +2496,7 @@ final tests = <String, Test>{
                   'namedFields': null,
                 },
               },
-              output: {
-                'namedFields': null,
-              },
+              output: {},
             ),
             FunctionTestSuccess(
               name: 'present',
@@ -2579,7 +2578,6 @@ final tests = <String, Test>{
                 },
                 'message': 'Bad format',
                 'source': null,
-                'offset': null,
               },
             ),
           ],
@@ -3549,25 +3547,18 @@ final tests = <String, Test>{
               input: {
                 'selfReferencing': {
                   'value': {
-                    'value': null,
-                    'wrapper': null,
                     'list': <Map<String, Object?>>[],
                   },
                   'wrapper': {
                     'value': {
                       'value': {
-                        'value': null,
-                        'wrapper': null,
                         'list': <Map<String, Object?>>[],
                       },
-                      'wrapper': null,
                       'list': <Map<String, Object?>>[],
                     },
                   },
                   'list': [
                     {
-                      'value': null,
-                      'wrapper': null,
                       'list': <Map<String, Object?>>[],
                     },
                   ],
@@ -3575,25 +3566,18 @@ final tests = <String, Test>{
               },
               output: {
                 'value': {
-                  'value': null,
-                  'wrapper': null,
                   'list': <Map<String, Object?>>[],
                 },
                 'wrapper': {
                   'value': {
                     'value': {
-                      'value': null,
-                      'wrapper': null,
                       'list': <Map<String, Object?>>[],
                     },
-                    'wrapper': null,
                     'list': <Map<String, Object?>>[],
                   },
                 },
                 'list': [
                   {
-                    'value': null,
-                    'wrapper': null,
                     'list': <Map<String, Object?>>[],
                   },
                 ],

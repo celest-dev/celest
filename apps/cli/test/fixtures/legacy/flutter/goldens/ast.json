@@ -3,7 +3,7 @@
   "reference": {
     "$": "Reference",
     "symbol": "project",
-    "url": "project:project.dart"
+    "url": "project:lib/src/project.dart"
   },
   "apis": {
     "dart_ui": {

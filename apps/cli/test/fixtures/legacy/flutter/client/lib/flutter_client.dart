@@ -20,12 +20,14 @@ export 'package:celest_backend/src/functions/flutter.dart' show HelloWorld;
 final Celest celest = Celest();
 
 enum CelestEnvironment {
-  local;
+  local,
+  production;
 
   Uri get baseUri => switch (this) {
         local => _$celest.kIsWeb || !_$io.Platform.isAndroid
-            ? Uri.parse('http://localhost:7787')
-            : Uri.parse('http://10.0.2.2:7787'),
+            ? Uri.parse('http://localhost:7777')
+            : Uri.parse('http://10.0.2.2:7777'),
+        production => Uri.parse('https://example.celest.run'),
       };
 }
 

@@ -66,8 +66,13 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     context: context,
     configValueElement: typeHelper.coreTypes.celestSecretElement,
     errorReporter: this,
-    factory: (name, {value, required location}) {
-      return ast.Secret(name, location: location);
+    factory: (name, {dartName, docs = const [], value, required location}) {
+      return ast.Secret(
+        name,
+        docs: docs,
+        dartName: dartName,
+        location: location,
+      );
     },
   );
 

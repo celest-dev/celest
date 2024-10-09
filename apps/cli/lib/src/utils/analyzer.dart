@@ -621,6 +621,17 @@ extension SourceToSpan on Source {
       contents.data,
       url: uri,
     );
+
+    // TODO(dnys1): Something to do with caching, but when files are being
+    // changed, sometimes the range is no longer valid by the time we call this
+    // with outdated source.
+    if (start >= sourceFile.length) {
+      return sourceFile.span(0);
+    }
+    if (end != null && end >= sourceFile.length) {
+      end = null;
+    }
+
     return sourceFile.span(start, end);
   }
 }

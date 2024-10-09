@@ -3,7 +3,7 @@
   "reference": {
     "$": "Reference",
     "symbol": "project",
-    "url": "project:project.dart"
+    "url": "project:lib/src/project.dart"
   },
   "apis": {
     "injected": {
@@ -659,7 +659,6 @@
   },
   "envVars": [
     {
-      "name": "MY_NAME",
       "location": {
         "start": {
           "offset": 44,
@@ -674,10 +673,12 @@
           "column": 12
         },
         "text": "myName"
-      }
+      },
+      "name": "MY_NAME",
+      "docs": [],
+      "dartName": "myName"
     },
     {
-      "name": "MY_AGE",
       "location": {
         "start": {
           "offset": 75,
@@ -692,10 +693,12 @@
           "column": 11
         },
         "text": "myAge"
-      }
+      },
+      "name": "MY_AGE",
+      "docs": [],
+      "dartName": "myAge"
     },
     {
-      "name": "MY_HEIGHT",
       "location": {
         "start": {
           "offset": 104,
@@ -710,10 +713,12 @@
           "column": 14
         },
         "text": "myHeight"
-      }
+      },
+      "name": "MY_HEIGHT",
+      "docs": [],
+      "dartName": "myHeight"
     },
     {
-      "name": "IM_COOL",
       "location": {
         "start": {
           "offset": 219,
@@ -722,34 +727,38 @@
           "column": 6
         },
         "end": {
-          "offset": 227,
+          "offset": 225,
           "uri": "package:celest_backend/src/config/env.dart",
           "line": 8,
-          "column": 14
+          "column": 12
         },
-        "text": "myWeight"
-      }
+        "text": "imCool"
+      },
+      "name": "IM_COOL",
+      "docs": [],
+      "dartName": "imCool"
     },
     {
-      "name": "MY_WEBSITE",
       "location": {
         "start": {
-          "offset": 341,
+          "offset": 339,
           "uri": "package:celest_backend/src/config/env.dart",
           "line": 12,
           "column": 6
         },
         "end": {
-          "offset": 350,
+          "offset": 348,
           "uri": "package:celest_backend/src/config/env.dart",
           "line": 12,
           "column": 15
         },
         "text": "myWebsite"
-      }
+      },
+      "name": "MY_WEBSITE",
+      "docs": [],
+      "dartName": "myWebsite"
     },
     {
-      "name": "CELEST_ENVIRONMENT",
       "location": {
         "start": {
           "offset": 629,
@@ -764,10 +773,11 @@
           "column": 53
         },
         "text": "currentEnvironment"
-      }
+      },
+      "name": "CELEST_ENVIRONMENT",
+      "docs": []
     },
     {
-      "name": "MY_WEIGHT",
       "location": {
         "start": {
           "offset": 445,
@@ -782,12 +792,13 @@
           "column": 39
         },
         "text": "weight"
-      }
+      },
+      "name": "MY_WEIGHT",
+      "docs": []
     }
   ],
   "secrets": [
     {
-      "name": "SUPER_SECRET",
       "location": {
         "start": {
           "offset": 581,
@@ -802,7 +813,9 @@
           "column": 56
         },
         "text": "superSecret"
-      }
+      },
+      "name": "SUPER_SECRET",
+      "docs": []
     }
   ],
   "sdkInfo": {

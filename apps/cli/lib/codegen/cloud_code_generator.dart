@@ -2,8 +2,8 @@ import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/api/entrypoint_generator.dart';
 import 'package:celest_cli/codegen/api/local_api_generator.dart';
+import 'package:celest_cli/codegen/cloud/cloud_client_generator.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
-import 'package:celest_cli/codegen/project/resources_generator.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart';
@@ -26,17 +26,6 @@ final class CloudCodeGenerator extends AstVisitor<void> {
   /// A map of API routes to their target reference.
   final Map<String, Reference> _targets = {};
 
-  static String generateResourcesDart(Project project) {
-    final resourcesFile = projectPaths.resourcesDart;
-    final resources = ResourcesGenerator(project: project).generate();
-    return CodeGenerator.emit(
-      resources,
-      forFile: resourcesFile,
-      prefixingStrategy: PrefixingStrategy.none,
-      pathStrategy: PathStrategy.pretty,
-    );
-  }
-
   Map<String, String> generate() {
     visitProject(project);
     return fileOutputs;
@@ -44,7 +33,15 @@ final class CloudCodeGenerator extends AstVisitor<void> {
 
   @override
   void visitProject(Project project) {
-    fileOutputs[projectPaths.resourcesDart] = generateResourcesDart(project);
+    final cloudClientLibraries =
+        CloudClientGenerator(project: project).generate();
+    for (final library in cloudClientLibraries.entries) {
+      fileOutputs[library.key] = CodeGenerator.emit(
+        library.value,
+        forFile: library.key,
+        pathStrategy: pathStrategy,
+      );
+    }
 
     project.apis.values.forEach(visitApi);
 

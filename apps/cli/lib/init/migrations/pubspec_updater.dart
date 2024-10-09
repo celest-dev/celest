@@ -84,7 +84,8 @@ final class PubspecUpdater extends ProjectMigration {
       },
       dependencies: {
         for (final entry in pubspec.dependencies.entries)
-          entry.key: ProjectDependency.dependencies[entry.key] ?? entry.value,
+          entry.key:
+              ProjectDependency.backendDependencies[entry.key] ?? entry.value,
       },
       devDependencies: {
         for (final entry in pubspec.devDependencies.entries)
@@ -123,7 +124,8 @@ final class PubspecUpdater extends ProjectMigration {
       },
       dependencies: {
         for (final entry in pubspec.dependencies.entries)
-          entry.key: ProjectDependency.dependencies[entry.key] ?? entry.value,
+          entry.key:
+              ProjectDependency.clientDependencies[entry.key] ?? entry.value,
       },
       devDependencies: {
         for (final entry in pubspec.devDependencies.entries)
