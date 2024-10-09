@@ -9,12 +9,12 @@ sealed class ConfigurationValue implements ContextKey<String> {
 
   @override
   String? read(Context context) {
-    return context.platform.environment[name];
+    return context[this] as String? ?? context.platform.environment[name];
   }
 
   @override
   void set(Context context, String? value) {
-    throw UnsupportedError('Cannot set a configuration value at runtime.');
+    context[this] = value;
   }
 }
 
@@ -40,6 +40,14 @@ final class env extends ConfigurationValue {
 
   @override
   String toString() => 'env($name)';
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is env && other.name == name;
+  }
+
+  @override
+  int get hashCode => Object.hash(env, name);
 }
 
 final class _staticEnv extends env {
@@ -60,4 +68,12 @@ final class secret extends ConfigurationValue {
 
   @override
   String toString() => 'secret($name)';
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is secret && other.name == name;
+  }
+
+  @override
+  int get hashCode => Object.hash(secret, name);
 }
