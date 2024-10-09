@@ -5,6 +5,7 @@ library;
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:async/async.dart';
 import 'package:celest_core/_internal.dart';
@@ -205,6 +206,9 @@ final class _SseHandler {
     });
   }
 
+  static final _jsonUtf8Decoder =
+      utf8.decoder.fuse(json.decoder).cast<Uint8List, Object?>();
+
   Future<Response> _handleIncomingMessage(Request request) async {
     final clientId = request.url.queryParameters['sseClientId'];
     if (clientId == null) {
@@ -222,11 +226,7 @@ final class _SseHandler {
       request.url.queryParameters['messageId'] ?? '0',
     );
     try {
-      final message = await request
-          .read()
-          .transform(utf8.decoder)
-          .transform(json.decoder)
-          .single;
+      final message = await request.read().transform(_jsonUtf8Decoder).first;
       connection._handleIncoming(messageId, message);
       return Response(HttpStatus.accepted);
     } on Object catch (e, st) {

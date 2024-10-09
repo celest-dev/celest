@@ -55,7 +55,7 @@ mixin BaseProtocol {
     };
   }
 
-  Stream<Map<String, Object?>> connect(
+  Stream<Object?> connect(
     String path, {
     required Map<String, Object?> payload,
   }) {
@@ -84,10 +84,10 @@ mixin BaseProtocol {
       );
     }
     final json = jsonDecode(response.body) as Map<String, Object?>;
-    final error = json['error'] as Map<String, Object?>?;
+    final error = json['@error'] as Map<String, Object?>?;
     throw createError(
-      error?['message'] as String?,
-      details: switch (error?['details']) {
+      error?['message'] as String? ?? json['message'] as String?,
+      details: switch (json['details']) {
         null => null,
         final Object details => JsonValue(details),
       },

@@ -31,8 +31,7 @@ final class EventChannelPlatform extends EventChannel {
   }
 
   final WebSocketChannel _ws;
-  late final StreamSink<Map<String, Object?>> _wsSink =
-      _ws.sink.rejectErrors().transform(
+  late final StreamSink<Object?> _wsSink = _ws.sink.rejectErrors().transform(
     StreamSinkTransformer.fromHandlers(
       handleData: (data, sink) {
         sink.add(jsonEncode(data));
@@ -41,10 +40,10 @@ final class EventChannelPlatform extends EventChannel {
   );
 
   @override
-  Stream<Map<String, Object?>> get stream => _ws.stream.map(JsonUtf8.decodeMap);
+  Stream<Object?> get stream => _ws.stream.map(JsonUtf8.decodeAny);
 
   @override
-  StreamSink<Map<String, Object?>> get sink => _wsSink;
+  StreamSink<Object?> get sink => _wsSink;
 
   @override
   void close() {
