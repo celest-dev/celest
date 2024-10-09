@@ -5,10 +5,10 @@ import 'dart:convert';
 
 import 'package:celest/celest.dart';
 import 'package:celest_backend/models.dart';
+import 'package:celest_backend/src/project.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
-import 'package:chat_gpt_sdk/src/model/chat_complete/response/chat_choice.dart';
-
-import '../generated/resources.dart';
+// ignore: implementation_imports
+import 'package:chat_gpt_sdk/src/model/chat_complete/response/chat_choice_sse.dart';
 
 /// Creates an instance of the OpenAI client.
 OpenAI _createOpenAI(String token) => OpenAI.instance.build(
@@ -34,12 +34,12 @@ const _availableModels = [
 ///
 /// Returns the generated text.
 @cloud
-Future<String> openAIRequest({
+Stream<String> openAIRequest({
   required String model,
   required String prompt,
   ModelParameters parameters = const ModelParameters(),
-  @env.openAiToken required String openAiToken,
-}) async {
+  @openAiToken required String openAiToken,
+}) async* {
   final openAI = _createOpenAI(openAiToken);
 
   if (!_availableModels.contains(model)) {
@@ -56,18 +56,18 @@ Future<String> openAIRequest({
   final requestJson = _prettyJson(request.toJson());
   print('OpenAI request: $requestJson');
 
-  final response = await openAI.onChatCompletion(request: request);
+  await for (final response in openAI.onChatCompletionSSE(request: request)) {
+    final responseJson = _prettyJson(response.toJson());
+    print('OpenAI response: $responseJson');
 
-  final responseJson = _prettyJson(response?.toJson());
-  print('OpenAI response: $responseJson');
-
-  switch (response) {
-    case ChatCTResponse(choices: [ChatChoice(:final message?), ...]):
-      return message.content.trim();
-    default:
-      throw InternalServerError(
-        "Couldn't complete request. Please try again later.",
-      );
+    switch (response) {
+      case ChatResponseSSE(choices: [ChatChoiceSSE(:final message?), ...]):
+        yield message.content.trim();
+      default:
+        throw InternalServerError(
+          "Couldn't complete request. Please try again later.",
+        );
+    }
   }
 }
 

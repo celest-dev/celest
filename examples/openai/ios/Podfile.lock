@@ -1,0 +1,28 @@
+PODS:
+  - Flutter (1.0.0)
+  - native_authentication (0.0.1):
+    - Flutter
+  - objective_c (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - native_authentication (from `.symlinks/plugins/native_authentication/ios`)
+  - objective_c (from `.symlinks/plugins/objective_c/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  native_authentication:
+    :path: ".symlinks/plugins/native_authentication/ios"
+  objective_c:
+    :path: ".symlinks/plugins/objective_c/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  native_authentication: 694c13e929d3623caaa1183461d4ed1e1b14e6e7
+  objective_c: 77e887b5ba1827970907e10e832eec1683f3431d
+
+PODFILE CHECKSUM: ade96bceabe3919b69c16573938e4268fe3a6c9d
+
+COCOAPODS: 1.15.2
