@@ -1,5 +1,1 @@
-import 'package:celest/celest.dart';
-
-const project = Project(
-  name: 'openai_example',
-);
+/Users/dillonnys/celest/cloud/celest/examples/openai/celest/lib/src/project.dart

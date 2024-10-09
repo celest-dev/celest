@@ -1,5 +1,5 @@
 name: celest_project
-description: "A new Flutter project."
+description: An example of how to use OpenAI from Celest.
 publish_to: 'none'
 version: 0.1.0
 
@@ -8,11 +8,11 @@ environment:
   flutter: ">=3.19.0"
 
 dependencies:
-  celest_backend:
-    path: celest/
   flutter:
     sdk: flutter
   logger: ^2.0.0
+  openai_example_client:
+    path: celest/client/
 
 dependency_overrides:
   celest:
