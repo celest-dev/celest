@@ -7,12 +7,13 @@ import 'dart:io';
 import 'package:async/async.dart';
 import 'package:celest/celest.dart';
 import 'package:celest/src/runtime/gcp/gcp.dart';
+import 'package:celest/src/runtime/http/cloud_middleware.dart';
 import 'package:celest/src/runtime/http/logging.dart';
 import 'package:celest/src/runtime/http/middleware.dart';
 import 'package:celest/src/runtime/json_utils.dart';
 import 'package:celest/src/runtime/sse/sse_handler.dart';
 import 'package:celest_core/_internal.dart';
-import 'package:shelf/shelf.dart';
+import 'package:shelf/shelf.dart' hide Middleware;
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -22,6 +23,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 export 'auth/auth_middleware.dart';
 export 'auth/firebase/firebase_auth_middleware.dart';
 export 'auth/supabase/supabase_auth_middleware.dart';
+export 'http/middleware.dart';
 
 part 'targets.dart';
 
@@ -42,9 +44,9 @@ Future<void> serve({
     target._apply(router, route);
   }
   final pipeline = const Pipeline()
-      .addMiddleware(rootMiddleware)
-      .addMiddleware(corsMiddleware)
-      .addMiddleware(cloudExceptionMiddleware)
+      .addMiddleware(const RootMiddleware().call)
+      .addMiddleware(const CorsMiddleware().call)
+      .addMiddleware(const CloudExceptionMiddleware().call)
       .addHandler(router.call);
   final port = switch (Platform.environment['PORT']) {
     final port? =>

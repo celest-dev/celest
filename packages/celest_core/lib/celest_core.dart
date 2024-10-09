@@ -17,3 +17,6 @@ export 'src/exception/serialization_exception.dart';
 /// Serialization
 export 'src/serialization/json_value.dart';
 export 'src/serialization/serializer.dart';
+
+/// Utils
+export 'src/util/json.dart';

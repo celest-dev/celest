@@ -15,7 +15,7 @@ mixin BaseProtocol {
       final message = error['message'] as String?;
       final details = error['details'] as JsonValue?;
       throw CloudException.http(
-        statusCode: statusCode,
+        status: statusCode,
         code: code,
         message: message,
         details: details,

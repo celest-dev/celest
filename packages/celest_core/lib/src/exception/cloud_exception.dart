@@ -12,6 +12,8 @@ import 'package:celest_core/src/serialization/json_value.dart';
 import 'package:celest_core/src/util/json.dart';
 import 'package:grpc/grpc_or_grpcweb.dart' show StatusCode, GrpcError;
 import 'package:http/http.dart' as http show Response;
+import 'package:json_annotation/json_annotation.dart' show JsonKey;
+import 'package:meta/meta.dart';
 
 /// An exception thrown by a Cloud Widget.
 abstract mixin class CloudException implements CelestException {
@@ -182,95 +184,102 @@ abstract mixin class CloudException implements CelestException {
 
   /// Creates a [CloudException] from the given JSON body.
   factory CloudException.fromJson(Map<String, Object?> json) {
-    final error = json['error'] as Map? ?? json;
-    final code = error['code'];
-    final message = error['message'] as String?;
-    final details = switch (error['details']) {
-      null => null,
-      final Map<Object?, Object?> map => JsonMap(map.cast()) as JsonValue,
-      final List<Object?> list => JsonList(list.cast()),
-      final Object value => JsonValue(value),
+    return switch (json) {
+      {
+        '@error': {
+          'code': final String code,
+          'status': final num status,
+        },
+        'message': final String message,
+      } =>
+        CloudException.http(
+          status: status.toInt(),
+          code: code,
+          message: message,
+          details: json['details'] as JsonValue?,
+        ),
+      _ => CloudException.http(
+          message: json['message'] as String?,
+          details: json['details'] as JsonValue?,
+        ),
     };
-    return CloudException.http(
-      code: code,
-      message: message,
-      details: details,
-    );
   }
 
   /// Creates a [CloudException] from the given HTTP [response].
   factory CloudException.fromHttpResponse(http.Response response) {
     try {
-      final json = JsonUtf8.decodeAny(response.bodyBytes);
+      final json = JsonUtf8.decodeMap(response.bodyBytes);
       return CloudException.fromJson(json);
     } on Object {
       // OK
     }
     return CloudException.http(
-      statusCode: response.statusCode,
+      status: response.statusCode,
       message: response.body,
     );
   }
 
   /// Creates a [CloudException] from the given HTTP response parameters.
   factory CloudException.http({
-    int? statusCode,
+    int? status,
     Object? code,
     String? message,
     JsonValue? details,
   }) {
     if (code is String) {
       return switch (code) {
-        'BadRequestException' => BadRequestException(
+        'celest.core.v1.BadRequestException' => BadRequestException(
             message,
             details: details,
           ),
-        'UnauthorizedException' => UnauthorizedException(
+        'celest.core.v1.UnauthorizedException' => UnauthorizedException(
             message,
             details: details,
           ),
-        'NotFoundException' => NotFoundException(
+        'celest.core.v1.NotFoundException' => NotFoundException(
             message,
             details: details,
           ),
-        'AlreadyExistsException' => AlreadyExistsException(
+        'celest.core.v1.AlreadyExistsException' => AlreadyExistsException(
             message,
             details: details,
           ),
-        'PermissionDeniedException' => PermissionDeniedException(
+        'celest.core.v1.PermissionDeniedException' => PermissionDeniedException(
             message,
             details: details,
           ),
-        'ResourceExhaustedException' => ResourceExhaustedException(
+        'celest.core.v1.ResourceExhaustedException' =>
+          ResourceExhaustedException(
             message,
             details: details,
           ),
-        'FailedPreconditionException' => FailedPreconditionException(
+        'celest.core.v1.FailedPreconditionException' =>
+          FailedPreconditionException(
             message,
             details: details,
           ),
-        'AbortedException' => AbortedException(
+        'celest.core.v1.AbortedException' => AbortedException(
             message,
             details: details,
           ),
-        'OutOfRangeException' => OutOfRangeException(
+        'celest.core.v1.OutOfRangeException' => OutOfRangeException(
             message,
             details: details,
           ),
-        'UnimplementedError' => UnimplementedError(message),
-        'InternalServerError' => InternalServerError(
+        'celest.core.v1.UnimplementedError' => UnimplementedError(message),
+        'celest.core.v1.InternalServerError' => InternalServerError(
             message,
             details: details,
           ),
-        'UnavailableError' => UnavailableError(
+        'celest.core.v1.UnavailableError' => UnavailableError(
             message,
             details: details,
           ),
-        'DataLossError' => DataLossError(
+        'celest.core.v1.DataLossError' => DataLossError(
             message,
             details: details,
           ),
-        'DeadlineExceededError' => DeadlineExceededError(
+        'celest.core.v1.DeadlineExceededError' => DeadlineExceededError(
             message,
             details: details,
           ),
@@ -280,7 +289,7 @@ abstract mixin class CloudException implements CelestException {
           ),
       };
     }
-    return switch (code ?? statusCode) {
+    return switch (code ?? status) {
       HttpStatus.badRequest ||
       StatusCode.invalidArgument =>
         BadRequestException(
@@ -351,6 +360,16 @@ abstract mixin class CloudException implements CelestException {
     };
   }
 
+  const CloudException._();
+
+  /// The code identifying the exception.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  String get code;
+
+  /// The HTTP status associated with the exception.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  HttpStatus get httpStatus;
+
   @override
   String get message;
 
@@ -382,6 +401,12 @@ class CancelledException with CloudException {
       : message = message ?? 'Cancelled';
 
   @override
+  String get code => 'celest.core.v1.CancelledException';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.clientClosedRequest;
+
+  @override
   final String message;
 
   @override
@@ -400,6 +425,12 @@ class UnknownError extends Error with CloudException {
       : message = message ?? 'Unknown error';
 
   @override
+  String get code => 'celest.core.v1.UnknownError';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.internalServerError;
+
+  @override
   final String message;
 
   @override
@@ -411,29 +442,35 @@ class UnknownError extends Error with CloudException {
 /// data or otherwise lead to a recoverable exception.
 /// {@endtemplate}
 @httpError(HttpStatus.badRequest)
-abstract mixin class BadRequestException implements CloudException {
+abstract base class BadRequestException extends CloudException {
   /// Creates a [BadRequestException] with the given [message].
   ///
   /// {@macro celest_core.exception.bad_request_exception}
   const factory BadRequestException(String? message, {JsonValue? details}) =
       _BadRequestException;
 
-  @override
-  String get message;
+  @protected
+  const BadRequestException.base(
+    this.message, {
+    this.details,
+  }) : super._();
 
   @override
-  JsonValue? get details;
-}
+  String get code => 'celest.core.v1.BadRequestException';
 
-final class _BadRequestException with CloudException, BadRequestException {
-  const _BadRequestException(String? message, {this.details})
-      : message = message ?? 'Bad request';
+  @override
+  HttpStatus get httpStatus => HttpStatus.badRequest;
 
   @override
   final String message;
 
   @override
   final JsonValue? details;
+}
+
+final class _BadRequestException extends BadRequestException {
+  const _BadRequestException(String? message, {super.details})
+      : super.base(message ?? 'Bad request');
 }
 
 /// {@template celest_core.exception.unauthorized_exception}
@@ -446,6 +483,12 @@ class UnauthorizedException with CloudException {
   /// {@macro celest_core.exception.unauthorized_exception}
   const UnauthorizedException(String? message, {this.details})
       : message = message ?? 'Unauthorized';
+
+  @override
+  String get code => 'celest.core.v1.UnauthorizedException';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.unauthorized;
 
   @override
   final String message;
@@ -467,6 +510,12 @@ class NotFoundException with CloudException {
       : message = message ?? 'Not found';
 
   @override
+  String get code => 'celest.core.v1.NotFoundException';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.notFound;
+
+  @override
   final String message;
 
   @override
@@ -483,6 +532,12 @@ class AlreadyExistsException with CloudException {
   /// {@macro celest_core.exception.already_exists_exception}
   const AlreadyExistsException(String? message, {this.details})
       : message = message ?? 'Already exists';
+
+  @override
+  String get code => 'celest.core.v1.AlreadyExistsException';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.conflict;
 
   @override
   final String message;
@@ -504,6 +559,12 @@ class PermissionDeniedException with CloudException {
       : message = message ?? 'Permission denied';
 
   @override
+  String get code => 'celest.core.v1.PermissionDeniedException';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.forbidden;
+
+  @override
   final String message;
 
   @override
@@ -520,6 +581,12 @@ class ResourceExhaustedException with CloudException {
   /// {@macro celest_core.exception.resource_exhausted_exception}
   const ResourceExhaustedException(String? message, {this.details})
       : message = message ?? 'Resource exhausted';
+
+  @override
+  String get code => 'celest.core.v1.ResourceExhaustedException';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.tooManyRequests;
 
   @override
   final String message;
@@ -541,6 +608,12 @@ class FailedPreconditionException with CloudException {
       : message = message ?? 'Failed precondition';
 
   @override
+  String get code => 'celest.core.v1.FailedPreconditionException';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.preconditionFailed;
+
+  @override
   final String message;
 
   @override
@@ -557,6 +630,12 @@ class AbortedException with CloudException {
   /// {@macro celest_core.exception.aborted_exception}
   const AbortedException(String? message, {this.details})
       : message = message ?? 'Aborted';
+
+  @override
+  String get code => 'celest.core.v1.AbortedException';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.conflict;
 
   @override
   final String message;
@@ -577,6 +656,12 @@ class OutOfRangeException with CloudException {
       : message = message ?? 'Out of range';
 
   @override
+  String get code => 'celest.core.v1.OutOfRangeException';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.requestedRangeNotSatisfiable;
+
+  @override
   final String message;
 
   @override
@@ -592,6 +677,12 @@ class UnimplementedError extends core.UnimplementedError with CloudException {
   ///
   /// {@macro celest_core.exception.unimplemented_error}
   UnimplementedError([String? message]) : super(message ?? 'Unimplemented');
+
+  @override
+  String get code => 'celest.core.v1.UnimplementedError';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.notImplemented;
 
   @override
   String get message => super.message!;
@@ -613,6 +704,12 @@ class InternalServerError extends Error with CloudException {
       : message = message ?? 'Internal error';
 
   @override
+  String get code => 'celest.core.v1.InternalServerError';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.internalServerError;
+
+  @override
   final String message;
 
   @override
@@ -629,6 +726,12 @@ class UnavailableError extends Error with CloudException {
   /// {@macro celest_core.exception.unavailable_error}
   UnavailableError(String? message, {this.details})
       : message = message ?? 'Unavailable';
+
+  @override
+  String get code => 'celest.core.v1.UnavailableError';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.serviceUnavailable;
 
   @override
   final String message;
@@ -649,6 +752,12 @@ class DataLossError extends Error with CloudException {
       : message = message ?? 'Unrecoverable data loss';
 
   @override
+  String get code => 'celest.core.v1.DataLossError';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.internalServerError;
+
+  @override
   final String message;
 
   @override
@@ -665,6 +774,12 @@ class DeadlineExceededError extends Error with CloudException {
   /// {@macro celest_core.exception.deadline_exceeded_error}
   DeadlineExceededError(String? message, {this.details})
       : message = message ?? 'Deadline exceeded';
+
+  @override
+  String get code => 'celest.core.v1.DeadlineExceededError';
+
+  @override
+  HttpStatus get httpStatus => HttpStatus.gatewayTimeout;
 
   @override
   final String message;

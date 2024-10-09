@@ -7,19 +7,19 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:async/async.dart';
-import 'package:celest/http.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:collection/collection.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:logging/logging.dart';
 import 'package:shelf/shelf.dart';
 import 'package:stream_channel/stream_channel.dart';
 
-typedef _SseMessage = ({int id, Map<String, Object?> message});
+typedef _SseMessage = ({int id, Object? message});
 
 /// {@template celest.runtime.sse_connection}
 /// A Server-Sent Events (SSE) connection.
 /// {@endtemplate}
-final class SseConnection with StreamChannelMixin<Map<String, Object?>> {
+final class SseConnection with StreamChannelMixin<Object?> {
   /// {@macro celest.runtime.sse_connection}
   SseConnection(
     this._socket, {
@@ -30,8 +30,6 @@ final class SseConnection with StreamChannelMixin<Map<String, Object?>> {
     _logger.finest('Created connection');
     _handleOutgoing();
   }
-
-  static final _jsonEncoder = JsonUtf8Encoder();
 
   /// The ID of the connected client.
   final String clientId;
@@ -47,12 +45,12 @@ final class SseConnection with StreamChannelMixin<Map<String, Object?>> {
   final Socket _socket;
 
   /// Incoming messages from the client.
-  late final _incomingController = StreamController<Map<String, Object?>>(
+  late final _incomingController = StreamController<Object?>(
     onCancel: () => close(force: true),
   );
 
   /// Outgoing messages to the client.
-  late final _outgoingController = StreamController<Map<String, Object?>>();
+  late final _outgoingController = StreamController<Object?>();
 
   /// The id of the last processed incoming message.
   int _lastProcessedId = -1;
@@ -74,7 +72,7 @@ final class SseConnection with StreamChannelMixin<Map<String, Object?>> {
         _logger.finest('Sending message: $message');
         _socket
           ..add('data: '.codeUnits)
-          ..add(_jsonEncoder.convert(message))
+          ..add(JsonUtf8.encode(message))
           ..add('\n\n'.codeUnits);
         _socket.flush().ignore();
       },
@@ -82,7 +80,7 @@ final class SseConnection with StreamChannelMixin<Map<String, Object?>> {
     _haltOutgoingQueue.future.whenComplete(subscription.cancel);
   }
 
-  void _handleIncoming(int id, Map<String, Object?> message) {
+  void _handleIncoming(int id, Object? message) {
     _pendingMessages.add((id: id, message: message));
     while (_pendingMessages.isNotEmpty) {
       final pendingMessage = _pendingMessages.first;
@@ -104,11 +102,10 @@ final class SseConnection with StreamChannelMixin<Map<String, Object?>> {
   }
 
   @override
-  Stream<Map<String, Object?>> get stream => _incomingController.stream;
+  Stream<Object?> get stream => _incomingController.stream;
 
   @override
-  late final StreamSink<Map<String, Object?>> sink =
-      _outgoingController.sink.transform(
+  late final StreamSink<Object?> sink = _outgoingController.sink.transform(
     StreamSinkTransformer.fromHandlers(
       handleError: (error, stackTrace, sink) {
         _logger.warning('Error handling SSE', error, stackTrace);
@@ -225,14 +222,11 @@ final class _SseHandler {
       request.url.queryParameters['messageId'] ?? '0',
     );
     try {
-      final body = await request.readAsString();
-      final message = jsonDecode(body);
-      if (message is! Map<String, Object?>) {
-        connection._logger.warning(
-          'Invalid JSON. Expected Map, got ${message.runtimeType}',
-        );
-        return _badJson;
-      }
+      final message = await request
+          .read()
+          .transform(utf8.decoder)
+          .transform(json.decoder)
+          .single;
       connection._handleIncoming(messageId, message);
       return Response(HttpStatus.accepted);
     } on Object catch (e, st) {
