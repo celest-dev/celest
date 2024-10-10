@@ -12,6 +12,7 @@
     - [ ] Fix `required` fields (take into account nullability + default values)
     - [ ] Fix `default` values
 - Generate full client as part of `celest init`. To prevent lengthy starts, maybe bundle the generated client.
+- Add `CloudException.withCode` or `.copyWith` and use that when serializing exceptions w/ custom codes.
 
 ## Functions
 

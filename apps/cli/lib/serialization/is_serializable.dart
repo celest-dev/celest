@@ -352,8 +352,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             type.interfaceMembers;
         // The representation type is either a built-in or a primitive at
         // this point.
-        final wireType =
-            builtInTypes[erasureType] ?? typeHelper.toReference(erasureType);
+        final wireType = builtInTypeToReference[erasureType] ??
+            typeHelper.toReference(erasureType);
         return erasureVerdict.withPrimarySpec(
           SerializationSpec(
             type: type,
@@ -573,7 +573,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     // TODO(dnys1): Test
     // TODO(dnys1): Test for extends/implements these types
     // TODO(dnys1): Test for extends/implements these types w/ custom serde
-    if (supportedDartSdkType.isExactlyType(type)) {
+    if (builtInTypeChecker.isExactlyType(type)) {
       return const Verdict.yes();
     }
 

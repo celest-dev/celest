@@ -57,16 +57,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.AbortedException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.AbortedException',
+              'value':
+                  _i6.Serializers.instance.serialize<_i5.AbortedException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<_i5.AbortedException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.AlreadyExistsException catch (e, st) {
       const statusCode = 409;
       _i2.context.logger.severe(
@@ -74,17 +83,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.AlreadyExistsException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.AlreadyExistsException',
+              'value': _i6.Serializers.instance
+                  .serialize<_i5.AlreadyExistsException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i5.AlreadyExistsException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on AssertionError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -92,15 +109,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.AssertionError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.AssertionError',
+              'value': _i6.Serializers.instance.serialize<AssertionError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<AssertionError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i7.AsyncError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -108,15 +134,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.async.AsyncError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.async.AsyncError',
+              'value': _i6.Serializers.instance.serialize<_i7.AsyncError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<_i7.AsyncError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.CancelledException catch (e, st) {
       const statusCode = 499;
       _i2.context.logger.severe(
@@ -124,17 +159,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.CancelledException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.CancelledException',
+              'value':
+                  _i6.Serializers.instance.serialize<_i5.CancelledException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i5.CancelledException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on ConcurrentModificationError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -142,16 +185,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.ConcurrentModificationError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.ConcurrentModificationError',
+              'value': _i6.Serializers.instance
+                  .serialize<ConcurrentModificationError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<ConcurrentModificationError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.DataLossError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -159,16 +211,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.DataLossError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.DataLossError',
+              'value': _i6.Serializers.instance.serialize<_i5.DataLossError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<_i5.DataLossError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.DeadlineExceededError catch (e, st) {
       const statusCode = 504;
       _i2.context.logger.severe(
@@ -176,17 +236,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.DeadlineExceededError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.DeadlineExceededError',
+              'value': _i6.Serializers.instance
+                  .serialize<_i5.DeadlineExceededError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i5.DeadlineExceededError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.FailedPreconditionException catch (e, st) {
       const statusCode = 412;
       _i2.context.logger.severe(
@@ -194,17 +262,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.FailedPreconditionException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.FailedPreconditionException',
+              'value': _i6.Serializers.instance
+                  .serialize<_i5.FailedPreconditionException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance
-          .serialize<_i5.FailedPreconditionException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on IndexError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -212,15 +288,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.IndexError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.IndexError',
+              'value': _i6.Serializers.instance.serialize<IndexError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<IndexError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on IntegerDivisionByZeroException catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -228,17 +313,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.IntegerDivisionByZeroException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.core.IntegerDivisionByZeroException',
+              'value': _i6.Serializers.instance
+                  .serialize<IntegerDivisionByZeroException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<IntegerDivisionByZeroException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.InternalServerError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -246,17 +339,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.InternalServerError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.InternalServerError',
+              'value': _i6.Serializers.instance
+                  .serialize<_i5.InternalServerError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i5.InternalServerError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i8.JsonUnsupportedObjectError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -264,16 +365,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.convert.JsonUnsupportedObjectError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.convert.JsonUnsupportedObjectError',
+              'value': _i6.Serializers.instance
+                  .serialize<_i8.JsonUnsupportedObjectError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i8.JsonUnsupportedObjectError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.NotFoundException catch (e, st) {
       const statusCode = 404;
       _i2.context.logger.severe(
@@ -281,17 +391,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.NotFoundException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.NotFoundException',
+              'value':
+                  _i6.Serializers.instance.serialize<_i5.NotFoundException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i5.NotFoundException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on OutOfMemoryError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -299,15 +417,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.OutOfMemoryError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.OutOfMemoryError',
+              'value': _i6.Serializers.instance.serialize<OutOfMemoryError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<OutOfMemoryError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.OutOfRangeException catch (e, st) {
       const statusCode = 416;
       _i2.context.logger.severe(
@@ -315,17 +442,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.OutOfRangeException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.OutOfRangeException',
+              'value': _i6.Serializers.instance
+                  .serialize<_i5.OutOfRangeException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i5.OutOfRangeException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.PermissionDeniedException catch (e, st) {
       const statusCode = 403;
       _i2.context.logger.severe(
@@ -333,17 +468,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.PermissionDeniedException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.PermissionDeniedException',
+              'value': _i6.Serializers.instance
+                  .serialize<_i5.PermissionDeniedException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i5.PermissionDeniedException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on RangeError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -351,15 +494,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.RangeError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.RangeError',
+              'value': _i6.Serializers.instance.serialize<RangeError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<RangeError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on ArgumentError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -367,15 +519,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.ArgumentError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.ArgumentError',
+              'value': _i6.Serializers.instance.serialize<ArgumentError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<ArgumentError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.ResourceExhaustedException catch (e, st) {
       const statusCode = 429;
       _i2.context.logger.severe(
@@ -383,17 +544,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.ResourceExhaustedException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.ResourceExhaustedException',
+              'value': _i6.Serializers.instance
+                  .serialize<_i5.ResourceExhaustedException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i5.ResourceExhaustedException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i9.SerializationException catch (e, st) {
       const statusCode = 400;
       _i2.context.logger.severe(
@@ -401,17 +570,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.SerializationException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.SerializationException',
+              'value': _i6.Serializers.instance
+                  .serialize<_i9.SerializationException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i9.SerializationException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.BadRequestException catch (e, st) {
       const statusCode = 400;
       _i2.context.logger.severe(
@@ -419,17 +596,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.BadRequestException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.BadRequestException',
+              'value': _i6.Serializers.instance
+                  .serialize<_i5.BadRequestException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i5.BadRequestException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on FormatException catch (e, st) {
       const statusCode = 400;
       _i2.context.logger.severe(
@@ -437,16 +622,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.FormatException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.core.FormatException',
+              'value': _i6.Serializers.instance.serialize<FormatException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<FormatException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on StackOverflowError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -454,15 +647,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.StackOverflowError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.StackOverflowError',
+              'value':
+                  _i6.Serializers.instance.serialize<StackOverflowError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<StackOverflowError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on StateError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -470,16 +673,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.StateError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.core.StateError',
+              'value': _i6.Serializers.instance.serialize<StateError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<StateError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i7.TimeoutException catch (e, st) {
       const statusCode = 400;
       _i2.context.logger.severe(
@@ -487,16 +698,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.async.TimeoutException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.async.TimeoutException',
+              'value':
+                  _i6.Serializers.instance.serialize<_i7.TimeoutException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<_i7.TimeoutException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on TypeError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -504,15 +724,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.TypeError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.TypeError',
+              'value': _i6.Serializers.instance.serialize<TypeError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<TypeError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.UnauthorizedException catch (e, st) {
       const statusCode = 401;
       _i2.context.logger.severe(
@@ -520,17 +749,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.UnauthorizedException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.UnauthorizedException',
+              'value': _i6.Serializers.instance
+                  .serialize<_i5.UnauthorizedException>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i5.UnauthorizedException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.UnavailableError catch (e, st) {
       const statusCode = 503;
       _i2.context.logger.severe(
@@ -538,16 +775,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.UnavailableError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.UnavailableError',
+              'value':
+                  _i6.Serializers.instance.serialize<_i5.UnavailableError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<_i5.UnavailableError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.UnimplementedError catch (e, st) {
       const statusCode = 501;
       _i2.context.logger.severe(
@@ -555,17 +801,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.UnimplementedError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.UnimplementedError',
+              'value':
+                  _i6.Serializers.instance.serialize<_i5.UnimplementedError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i6.Serializers.instance.serialize<_i5.UnimplementedError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on UnimplementedError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -573,16 +827,25 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.UnimplementedError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.core.UnimplementedError',
+              'value':
+                  _i6.Serializers.instance.serialize<UnimplementedError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<UnimplementedError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on _i5.UnknownError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -590,33 +853,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.UnknownError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.UnknownError',
+              'value': _i6.Serializers.instance.serialize<_i5.UnknownError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<_i5.UnknownError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
-    } on _i5.CloudException catch (e, st) {
-      const statusCode = 400;
-      _i2.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
-      final meta = {
-        'code': 'celest.core.v1.CloudException',
-        'message': e.message,
-        'status': statusCode,
-      };
-      final error = _i6.Serializers.instance.serialize<_i5.CloudException>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on UnsupportedError catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -624,16 +878,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.UnsupportedError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.core.UnsupportedError',
+              'value': _i6.Serializers.instance.serialize<UnsupportedError>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<UnsupportedError>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     } on Error catch (e, st) {
       const statusCode = 500;
       _i2.context.logger.severe(
@@ -641,15 +903,24 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.Error',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.Error',
+              'value': _i6.Serializers.instance.serialize<Error>(e),
+            },
+            if (_i2.context.environment != _i3.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i6.Serializers.instance.serialize<Error>(e);
-      yield {
-        '@error': meta,
-        ...error is Map<String, Object?> ? error : {'@': error},
-      };
+      yield status;
     }
   }
 
@@ -862,6 +1133,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance
         .put(_i6.Serializer.define<_i5.AbortedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -873,6 +1145,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.AbortedException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -883,6 +1156,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance.put(
         _i6.Serializer.define<_i5.AlreadyExistsException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -894,6 +1168,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.AlreadyExistsException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -904,6 +1179,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance.put(
         _i6.Serializer.define<_i5.BadRequestException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -915,6 +1191,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.BadRequestException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -925,6 +1202,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance.put(
         _i6.Serializer.define<_i5.CancelledException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -936,6 +1214,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.CancelledException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -944,23 +1223,9 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       },
     ));
     _i6.Serializers.instance
-        .put(_i6.Serializer.define<_i5.CloudException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
-          $value.details,
-          const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i5.CloudException.fromJson($serialized);
-      },
-    ));
-    _i6.Serializers.instance
         .put(_i6.Serializer.define<_i5.DataLossError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -972,6 +1237,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.DataLossError(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -982,6 +1248,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance.put(
         _i6.Serializer.define<_i5.DeadlineExceededError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -993,6 +1260,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.DeadlineExceededError(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -1003,6 +1271,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance.put(_i6.Serializer.define<
         _i5.FailedPreconditionException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -1014,6 +1283,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.FailedPreconditionException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -1024,6 +1294,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance.put(
         _i6.Serializer.define<_i5.InternalServerError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -1035,6 +1306,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.InternalServerError(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -1045,6 +1317,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance
         .put(_i6.Serializer.define<_i5.NotFoundException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -1056,6 +1329,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.NotFoundException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -1066,6 +1340,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance.put(
         _i6.Serializer.define<_i5.OutOfRangeException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -1077,6 +1352,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.OutOfRangeException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -1087,6 +1363,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance.put(_i6.Serializer.define<
         _i5.PermissionDeniedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -1098,6 +1375,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.PermissionDeniedException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -1108,6 +1386,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance.put(_i6.Serializer.define<
         _i5.ResourceExhaustedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -1119,6 +1398,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.ResourceExhaustedException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -1129,6 +1409,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance.put(
         _i6.Serializer.define<_i5.UnauthorizedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -1140,6 +1421,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.UnauthorizedException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -1150,6 +1432,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance
         .put(_i6.Serializer.define<_i5.UnavailableError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -1161,6 +1444,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.UnavailableError(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -1169,8 +1453,9 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       },
     ));
     _i6.Serializers.instance.put(
-        _i6.Serializer.define<_i5.UnimplementedError, Map<String, Object?>?>(
+        _i6.Serializer.define<_i5.UnimplementedError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -1180,12 +1465,20 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
           r'details': details,
       },
       deserialize: ($serialized) {
-        return _i5.UnimplementedError(($serialized?[r'message'] as String?));
+        return _i5.UnimplementedError(
+          ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
+          details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized[r'details'],
+            const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
+          ),
+        );
       },
     ));
     _i6.Serializers.instance
         .put(_i6.Serializer.define<_i5.UnknownError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,
@@ -1197,6 +1490,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
       deserialize: ($serialized) {
         return _i5.UnknownError(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i6.Serializers.instance.deserialize<_i11.JsonValue?>(
             $serialized[r'details'],
             const _i6.TypeToken<_i11.JsonValue?>('JsonValue'),
@@ -1207,6 +1501,7 @@ final class StreamHelloPublicTarget extends _i1.CloudEventSourceTarget {
     _i6.Serializers.instance.put(
         _i6.Serializer.define<_i9.SerializationException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i6.Serializers.instance.serialize<_i11.JsonValue?>(
           $value.details,

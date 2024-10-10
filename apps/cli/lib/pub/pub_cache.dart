@@ -20,9 +20,9 @@ final class PubCache {
     'native_storage': '>=0.2.2 <1.0.0',
     'native_authentication': '>=0.1.0 <1.0.0',
     'jni': '>=0.11.0 <1.0.0',
-    'celest_auth': '>=$currentMinorVersion <1.0.0',
-    'celest': '>=$currentMinorVersion <1.0.0',
-    'celest_core': '>=$currentMinorVersion <1.0.0',
+    'celest_auth': '>=$currentMinorVersion <2.0.0',
+    'celest': '>=$currentMinorVersion <2.0.0',
+    'celest_core': '>=$currentMinorVersion <2.0.0',
     'objective_c': '>=2.0.0',
   };
   static final _logger = Logger('PubCache');

@@ -188,7 +188,7 @@ const project = Project(name: 'cache_warmup');
       dartTypedData as LibraryElementResult,
       celestCoreExceptions,
       celestCoreUser,
-      celestConfigEnv,
+      celestConfigValues,
       jsonAnnotation,
     ) = await (
       context.currentSession.getLibraryByUri('dart:core'),
@@ -203,7 +203,7 @@ const project = Project(name: 'cache_warmup');
         'package:celest_core/src/auth/user.dart',
       ),
       context.currentSession.getLibraryByUri(
-        'package:celest/src/config/env.dart',
+        'package:celest/src/config/config_values.dart',
       ),
 
       // `package:json_annotation/json_annotation.dart` is used in the
@@ -217,7 +217,7 @@ const project = Project(name: 'cache_warmup');
       await dumpPackageConfig();
       throw StateError('Failed to resolve celest_core');
     }
-    if (celestConfigEnv is! LibraryElementResult) {
+    if (celestConfigValues is! LibraryElementResult) {
       await dumpPackageConfig();
       throw StateError('Failed to resolve celest');
     }
@@ -234,8 +234,8 @@ const project = Project(name: 'cache_warmup');
       );
     }
 
-    final envElement = celestConfigEnv.getClassElement('env');
-    final secretElement = celestConfigEnv.getClassElement('secret');
+    final envElement = celestConfigValues.getClassElement('env');
+    final secretElement = celestConfigValues.getClassElement('secret');
     typeHelper
       ..coreTypes = CoreTypes(
         typeProvider: dartCore.element.typeProvider,

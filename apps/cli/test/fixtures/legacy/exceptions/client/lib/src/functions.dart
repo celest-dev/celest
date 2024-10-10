@@ -31,129 +31,258 @@ class CelestFunctions {
 /// recursive imports and serialized correctly.
 class CelestFunctionsExternal {
   Never _throwError({
-    required int $statusCode,
-    required Map<String, Object?> $body,
+    int? code,
+    required Map<String, Object?> body,
   }) {
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $message = ($error['message'] as String?);
-    final $details = ($error['details'] as _$celest.JsonMap?);
-    switch ($code) {
-      case r'_common.CustomException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$_common.CustomException>($details);
-      case r'_common.CommonException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$_common.CommonException>($details);
-      case r'_common.OverriddenException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$_common.OverriddenException>($details);
-      case r'dart.core.Error':
-        throw _$celest.Serializers.instance.deserialize<Error>($details);
-      case r'dart.core.AssertionError':
-        throw _$celest.Serializers.instance
-            .deserialize<AssertionError>($details);
-      case r'dart.core.TypeError':
-        throw _$celest.Serializers.instance.deserialize<TypeError>($details);
-      case r'dart.core.ArgumentError':
-        throw _$celest.Serializers.instance
-            .deserialize<ArgumentError>($details);
-      case r'dart.core.RangeError':
-        throw _$celest.Serializers.instance.deserialize<RangeError>($details);
-      case r'dart.core.IndexError':
-        throw _$celest.Serializers.instance.deserialize<IndexError>($details);
-      case r'dart.core.UnsupportedError':
-        throw _$celest.Serializers.instance
-            .deserialize<UnsupportedError>($details);
-      case r'dart.core.UnimplementedError':
-        throw _$celest.Serializers.instance
-            .deserialize<UnimplementedError>($details);
-      case r'dart.core.StateError':
-        throw _$celest.Serializers.instance.deserialize<StateError>($details);
-      case r'dart.core.ConcurrentModificationError':
-        throw _$celest.Serializers.instance
-            .deserialize<ConcurrentModificationError>($details);
-      case r'dart.core.OutOfMemoryError':
-        throw _$celest.Serializers.instance
-            .deserialize<OutOfMemoryError>($details);
-      case r'dart.core.StackOverflowError':
-        throw _$celest.Serializers.instance
-            .deserialize<StackOverflowError>($details);
-      case r'dart.core.FormatException':
-        throw _$celest.Serializers.instance
-            .deserialize<FormatException>($details);
-      case r'dart.core.IntegerDivisionByZeroException':
-        throw _$celest.Serializers.instance
-            .deserialize<IntegerDivisionByZeroException>($details);
-      case r'dart.async.AsyncError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$async.AsyncError>($details);
-      case r'dart.async.TimeoutException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$async.TimeoutException>($details);
-      case r'dart.convert.JsonUnsupportedObjectError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$convert.JsonUnsupportedObjectError>($details);
-      case r'celest.core.v1.CloudException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.CloudException>($details);
-      case r'celest.core.v1.CancelledException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.CancelledException>($details);
-      case r'celest.core.v1.UnknownError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.UnknownError>($details);
-      case r'celest.core.v1.BadRequestException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.BadRequestException>($details);
-      case r'celest.core.v1.UnauthorizedException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.UnauthorizedException>($details);
-      case r'celest.core.v1.NotFoundException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.NotFoundException>($details);
-      case r'celest.core.v1.AlreadyExistsException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.AlreadyExistsException>($details);
-      case r'celest.core.v1.PermissionDeniedException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.PermissionDeniedException>($details);
-      case r'celest.core.v1.ResourceExhaustedException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.ResourceExhaustedException>($details);
-      case r'celest.core.v1.FailedPreconditionException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.FailedPreconditionException>($details);
-      case r'celest.core.v1.AbortedException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.AbortedException>($details);
-      case r'celest.core.v1.OutOfRangeException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.OutOfRangeException>($details);
-      case r'celest.core.v1.UnimplementedError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.UnimplementedError>($details);
-      case r'celest.core.v1.InternalServerError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.InternalServerError>($details);
-      case r'celest.core.v1.UnavailableError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.UnavailableError>($details);
-      case r'celest.core.v1.DataLossError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.DataLossError>($details);
-      case r'celest.core.v1.DeadlineExceededError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.DeadlineExceededError>($details);
-      case r'celest.core.v1.SerializationException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.SerializationException>($details);
+    final status = body['@status'] as Map<String, Object?>?;
+    final message = status?['message'] as String?;
+    final details = status?['details'] as _$celest.JsonList?;
+    final (errorType, errorValue, stackTrace) = switch (details) {
+      null || [] => const (null, null, StackTrace.empty),
+      [
+        final errorDetails as Map<String, Object?>,
+        {
+          '@type': 'dart.core.StackTrace',
+          'value': final stackTraceValue as String
+        },
+        ...
+      ] =>
+        (
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.fromString(stackTraceValue),
+        ),
+      [final errorDetails as Map<String, Object?>, ...] => (
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
+    };
+
+    switch (errorType) {
+      case '_common.CustomException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$_common.CustomException>(errorValue),
+          stackTrace,
+        );
+      case '_common.CommonException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$_common.CommonException>(errorValue),
+          stackTrace,
+        );
+      case '_common.OverriddenException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$_common.OverriddenException>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.Error':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<Error>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.AssertionError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<AssertionError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.TypeError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<TypeError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.ArgumentError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<ArgumentError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.RangeError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<RangeError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.IndexError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IndexError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.UnsupportedError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.UnimplementedError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.StateError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<StateError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.ConcurrentModificationError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<ConcurrentModificationError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.OutOfMemoryError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.StackOverflowError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.FormatException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.IntegerDivisionByZeroException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<IntegerDivisionByZeroException>(errorValue),
+          stackTrace,
+        );
+      case 'dart.async.AsyncError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$async.AsyncError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.async.TimeoutException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$async.TimeoutException>(errorValue),
+          stackTrace,
+        );
+      case 'dart.convert.JsonUnsupportedObjectError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$convert.JsonUnsupportedObjectError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.CancelledException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CancelledException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.UnknownError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.BadRequestException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.BadRequestException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.UnauthorizedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnauthorizedException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.NotFoundException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.AlreadyExistsException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AlreadyExistsException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.PermissionDeniedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.PermissionDeniedException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.ResourceExhaustedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.ResourceExhaustedException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.FailedPreconditionException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.FailedPreconditionException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.AbortedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.OutOfRangeException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.OutOfRangeException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.UnimplementedError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnimplementedError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.InternalServerError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.InternalServerError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.UnavailableError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.DataLossError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.DeadlineExceededError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DeadlineExceededError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.SerializationException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.SerializationException>(errorValue),
+          stackTrace,
+        );
       default:
-        throw _$celest.CloudException.http(
-          status: $statusCode,
-          code: $code,
-          message: $message,
-          details: $details,
+        Error.throwWithStackTrace(
+          _$celest.CloudException.http(
+            code: code,
+            message: message,
+            details: ((details ?? body) as _$celest.JsonValue),
+          ),
+          StackTrace.empty,
         );
     }
   }
@@ -165,14 +294,16 @@ class CelestFunctionsExternal {
   Future<void> callsThrowsCommonException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/external/calls-throws-common-exception'),
-      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      headers: const {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
     );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
       _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
+        code: $response.statusCode,
+        body: ($body as Map<String, Object?>),
       );
     }
     return;
@@ -185,14 +316,16 @@ class CelestFunctionsExternal {
   Future<void> callsThrowsCustomException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/external/calls-throws-custom-exception'),
-      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      headers: const {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
     );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
       _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
+        code: $response.statusCode,
+        body: ($body as Map<String, Object?>),
       );
     }
     return;
@@ -202,130 +335,261 @@ class CelestFunctionsExternal {
 /// A library with methods that do not through but call methods that do throw.
 class CelestFunctionsNonthrowing {
   Never _throwError({
-    required int $statusCode,
-    required Map<String, Object?> $body,
+    int? code,
+    required Map<String, Object?> body,
   }) {
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $message = ($error['message'] as String?);
-    final $details = ($error['details'] as _$celest.JsonMap?);
-    switch ($code) {
-      case r'celest.core.v1.CloudException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.CloudException>($details);
-      case r'celest.core.v1.CancelledException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.CancelledException>($details);
-      case r'celest.core.v1.UnknownError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.UnknownError>($details);
-      case r'celest.core.v1.BadRequestException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.BadRequestException>($details);
-      case r'celest.core.v1.UnauthorizedException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.UnauthorizedException>($details);
-      case r'celest.core.v1.NotFoundException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.NotFoundException>($details);
-      case r'celest.core.v1.AlreadyExistsException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.AlreadyExistsException>($details);
-      case r'celest.core.v1.PermissionDeniedException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.PermissionDeniedException>($details);
-      case r'celest.core.v1.ResourceExhaustedException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.ResourceExhaustedException>($details);
-      case r'celest.core.v1.FailedPreconditionException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.FailedPreconditionException>($details);
-      case r'celest.core.v1.AbortedException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.AbortedException>($details);
-      case r'celest.core.v1.OutOfRangeException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.OutOfRangeException>($details);
-      case r'celest.core.v1.UnimplementedError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.UnimplementedError>($details);
-      case r'celest.core.v1.InternalServerError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.InternalServerError>($details);
-      case r'celest.core.v1.UnavailableError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.UnavailableError>($details);
-      case r'celest.core.v1.DataLossError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.DataLossError>($details);
-      case r'celest.core.v1.DeadlineExceededError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.DeadlineExceededError>($details);
-      case r'celest.core.v1.SerializationException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.SerializationException>($details);
-      case r'dart.core.Error':
-        throw _$celest.Serializers.instance.deserialize<Error>($details);
-      case r'dart.core.AssertionError':
-        throw _$celest.Serializers.instance
-            .deserialize<AssertionError>($details);
-      case r'dart.core.TypeError':
-        throw _$celest.Serializers.instance.deserialize<TypeError>($details);
-      case r'dart.core.ArgumentError':
-        throw _$celest.Serializers.instance
-            .deserialize<ArgumentError>($details);
-      case r'dart.core.RangeError':
-        throw _$celest.Serializers.instance.deserialize<RangeError>($details);
-      case r'dart.core.IndexError':
-        throw _$celest.Serializers.instance.deserialize<IndexError>($details);
-      case r'dart.core.UnsupportedError':
-        throw _$celest.Serializers.instance
-            .deserialize<UnsupportedError>($details);
-      case r'dart.core.UnimplementedError':
-        throw _$celest.Serializers.instance
-            .deserialize<UnimplementedError>($details);
-      case r'dart.core.StateError':
-        throw _$celest.Serializers.instance.deserialize<StateError>($details);
-      case r'dart.core.ConcurrentModificationError':
-        throw _$celest.Serializers.instance
-            .deserialize<ConcurrentModificationError>($details);
-      case r'dart.core.OutOfMemoryError':
-        throw _$celest.Serializers.instance
-            .deserialize<OutOfMemoryError>($details);
-      case r'dart.core.StackOverflowError':
-        throw _$celest.Serializers.instance
-            .deserialize<StackOverflowError>($details);
-      case r'dart.core.FormatException':
-        throw _$celest.Serializers.instance
-            .deserialize<FormatException>($details);
-      case r'dart.core.IntegerDivisionByZeroException':
-        throw _$celest.Serializers.instance
-            .deserialize<IntegerDivisionByZeroException>($details);
-      case r'dart.async.AsyncError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$async.AsyncError>($details);
-      case r'dart.async.TimeoutException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$async.TimeoutException>($details);
-      case r'dart.convert.JsonUnsupportedObjectError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$convert.JsonUnsupportedObjectError>($details);
-      case r'exceptions.v1.BaseException':
-        throw _$celest.Serializers.instance
-            .deserialize<BaseException>($details);
-      case r'exceptions.v1.CustomException':
-        throw _$celest.Serializers.instance
-            .deserialize<CustomException>($details);
-      case r'exceptions.v1.BaseError':
-        throw _$celest.Serializers.instance.deserialize<BaseError>($details);
-      case r'exceptions.v1.CustomError':
-        throw _$celest.Serializers.instance.deserialize<CustomError>($details);
+    final status = body['@status'] as Map<String, Object?>?;
+    final message = status?['message'] as String?;
+    final details = status?['details'] as _$celest.JsonList?;
+    final (errorType, errorValue, stackTrace) = switch (details) {
+      null || [] => const (null, null, StackTrace.empty),
+      [
+        final errorDetails as Map<String, Object?>,
+        {
+          '@type': 'dart.core.StackTrace',
+          'value': final stackTraceValue as String
+        },
+        ...
+      ] =>
+        (
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.fromString(stackTraceValue),
+        ),
+      [final errorDetails as Map<String, Object?>, ...] => (
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
+    };
+
+    switch (errorType) {
+      case 'celest.core.v1.CancelledException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CancelledException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.UnknownError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.BadRequestException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.BadRequestException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.UnauthorizedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnauthorizedException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.NotFoundException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.AlreadyExistsException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AlreadyExistsException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.PermissionDeniedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.PermissionDeniedException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.ResourceExhaustedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.ResourceExhaustedException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.FailedPreconditionException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.FailedPreconditionException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.AbortedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.OutOfRangeException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.OutOfRangeException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.UnimplementedError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnimplementedError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.InternalServerError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.InternalServerError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.UnavailableError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.DataLossError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.DeadlineExceededError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DeadlineExceededError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.SerializationException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.SerializationException>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.Error':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<Error>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.AssertionError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<AssertionError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.TypeError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<TypeError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.ArgumentError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<ArgumentError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.RangeError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<RangeError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.IndexError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IndexError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.UnsupportedError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.UnimplementedError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.StateError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<StateError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.ConcurrentModificationError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<ConcurrentModificationError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.OutOfMemoryError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.StackOverflowError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.FormatException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.IntegerDivisionByZeroException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<IntegerDivisionByZeroException>(errorValue),
+          stackTrace,
+        );
+      case 'dart.async.AsyncError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$async.AsyncError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.async.TimeoutException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$async.TimeoutException>(errorValue),
+          stackTrace,
+        );
+      case 'dart.convert.JsonUnsupportedObjectError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$convert.JsonUnsupportedObjectError>(errorValue),
+          stackTrace,
+        );
+      case 'exceptions.v1.BaseException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<BaseException>(errorValue),
+          stackTrace,
+        );
+      case 'exceptions.v1.CustomException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<CustomException>(errorValue),
+          stackTrace,
+        );
+      case 'exceptions.v1.BaseError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<BaseError>(errorValue),
+          stackTrace,
+        );
+      case 'exceptions.v1.CustomError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<CustomError>(errorValue),
+          stackTrace,
+        );
       default:
-        throw _$celest.CloudException.http(
-          status: $statusCode,
-          code: $code,
-          message: $message,
-          details: $details,
+        Error.throwWithStackTrace(
+          _$celest.CloudException.http(
+            code: code,
+            message: message,
+            details: ((details ?? body) as _$celest.JsonValue),
+          ),
+          StackTrace.empty,
         );
     }
   }
@@ -337,14 +601,16 @@ class CelestFunctionsNonthrowing {
   Future<void> callsThrowsCustomError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-custom-error'),
-      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      headers: const {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
     );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
       _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
+        code: $response.statusCode,
+        body: ($body as Map<String, Object?>),
       );
     }
     return;
@@ -357,14 +623,16 @@ class CelestFunctionsNonthrowing {
   Future<void> callsThrowsBaseError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-base-error'),
-      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      headers: const {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
     );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
       _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
+        code: $response.statusCode,
+        body: ($body as Map<String, Object?>),
       );
     }
     return;
@@ -377,14 +645,16 @@ class CelestFunctionsNonthrowing {
   Future<void> callsThrowsCustomException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-custom-exception'),
-      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      headers: const {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
     );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
       _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
+        code: $response.statusCode,
+        body: ($body as Map<String, Object?>),
       );
     }
     return;
@@ -397,14 +667,16 @@ class CelestFunctionsNonthrowing {
   Future<void> callsThrowsBaseException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-base-exception'),
-      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      headers: const {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
     );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
       _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
+        code: $response.statusCode,
+        body: ($body as Map<String, Object?>),
       );
     }
     return;
@@ -413,130 +685,261 @@ class CelestFunctionsNonthrowing {
 
 class CelestFunctionsThrowing {
   Never _throwError({
-    required int $statusCode,
-    required Map<String, Object?> $body,
+    int? code,
+    required Map<String, Object?> body,
   }) {
-    final $error = ($body['error'] as Map<String, Object?>);
-    final $code = ($error['code'] as String);
-    final $message = ($error['message'] as String?);
-    final $details = ($error['details'] as _$celest.JsonMap?);
-    switch ($code) {
-      case r'celest.core.v1.CloudException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.CloudException>($details);
-      case r'celest.core.v1.CancelledException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.CancelledException>($details);
-      case r'celest.core.v1.UnknownError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.UnknownError>($details);
-      case r'celest.core.v1.BadRequestException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.BadRequestException>($details);
-      case r'celest.core.v1.UnauthorizedException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.UnauthorizedException>($details);
-      case r'celest.core.v1.NotFoundException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.NotFoundException>($details);
-      case r'celest.core.v1.AlreadyExistsException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.AlreadyExistsException>($details);
-      case r'celest.core.v1.PermissionDeniedException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.PermissionDeniedException>($details);
-      case r'celest.core.v1.ResourceExhaustedException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.ResourceExhaustedException>($details);
-      case r'celest.core.v1.FailedPreconditionException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.FailedPreconditionException>($details);
-      case r'celest.core.v1.AbortedException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.AbortedException>($details);
-      case r'celest.core.v1.OutOfRangeException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.OutOfRangeException>($details);
-      case r'celest.core.v1.UnimplementedError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.UnimplementedError>($details);
-      case r'celest.core.v1.InternalServerError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.InternalServerError>($details);
-      case r'celest.core.v1.UnavailableError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.UnavailableError>($details);
-      case r'celest.core.v1.DataLossError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.DataLossError>($details);
-      case r'celest.core.v1.DeadlineExceededError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.DeadlineExceededError>($details);
-      case r'celest.core.v1.SerializationException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$celest.SerializationException>($details);
-      case r'dart.core.Error':
-        throw _$celest.Serializers.instance.deserialize<Error>($details);
-      case r'dart.core.AssertionError':
-        throw _$celest.Serializers.instance
-            .deserialize<AssertionError>($details);
-      case r'dart.core.TypeError':
-        throw _$celest.Serializers.instance.deserialize<TypeError>($details);
-      case r'dart.core.ArgumentError':
-        throw _$celest.Serializers.instance
-            .deserialize<ArgumentError>($details);
-      case r'dart.core.RangeError':
-        throw _$celest.Serializers.instance.deserialize<RangeError>($details);
-      case r'dart.core.IndexError':
-        throw _$celest.Serializers.instance.deserialize<IndexError>($details);
-      case r'dart.core.UnsupportedError':
-        throw _$celest.Serializers.instance
-            .deserialize<UnsupportedError>($details);
-      case r'dart.core.UnimplementedError':
-        throw _$celest.Serializers.instance
-            .deserialize<UnimplementedError>($details);
-      case r'dart.core.StateError':
-        throw _$celest.Serializers.instance.deserialize<StateError>($details);
-      case r'dart.core.ConcurrentModificationError':
-        throw _$celest.Serializers.instance
-            .deserialize<ConcurrentModificationError>($details);
-      case r'dart.core.OutOfMemoryError':
-        throw _$celest.Serializers.instance
-            .deserialize<OutOfMemoryError>($details);
-      case r'dart.core.StackOverflowError':
-        throw _$celest.Serializers.instance
-            .deserialize<StackOverflowError>($details);
-      case r'dart.core.FormatException':
-        throw _$celest.Serializers.instance
-            .deserialize<FormatException>($details);
-      case r'dart.core.IntegerDivisionByZeroException':
-        throw _$celest.Serializers.instance
-            .deserialize<IntegerDivisionByZeroException>($details);
-      case r'dart.async.AsyncError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$async.AsyncError>($details);
-      case r'dart.async.TimeoutException':
-        throw _$celest.Serializers.instance
-            .deserialize<_$async.TimeoutException>($details);
-      case r'dart.convert.JsonUnsupportedObjectError':
-        throw _$celest.Serializers.instance
-            .deserialize<_$convert.JsonUnsupportedObjectError>($details);
-      case r'exceptions.v1.BaseException':
-        throw _$celest.Serializers.instance
-            .deserialize<BaseException>($details);
-      case r'exceptions.v1.CustomException':
-        throw _$celest.Serializers.instance
-            .deserialize<CustomException>($details);
-      case r'exceptions.v1.BaseError':
-        throw _$celest.Serializers.instance.deserialize<BaseError>($details);
-      case r'exceptions.v1.CustomError':
-        throw _$celest.Serializers.instance.deserialize<CustomError>($details);
+    final status = body['@status'] as Map<String, Object?>?;
+    final message = status?['message'] as String?;
+    final details = status?['details'] as _$celest.JsonList?;
+    final (errorType, errorValue, stackTrace) = switch (details) {
+      null || [] => const (null, null, StackTrace.empty),
+      [
+        final errorDetails as Map<String, Object?>,
+        {
+          '@type': 'dart.core.StackTrace',
+          'value': final stackTraceValue as String
+        },
+        ...
+      ] =>
+        (
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.fromString(stackTraceValue),
+        ),
+      [final errorDetails as Map<String, Object?>, ...] => (
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
+    };
+
+    switch (errorType) {
+      case 'celest.core.v1.CancelledException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CancelledException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.UnknownError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.BadRequestException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.BadRequestException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.UnauthorizedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnauthorizedException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.NotFoundException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.AlreadyExistsException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AlreadyExistsException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.PermissionDeniedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.PermissionDeniedException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.ResourceExhaustedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.ResourceExhaustedException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.FailedPreconditionException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.FailedPreconditionException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.AbortedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.OutOfRangeException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.OutOfRangeException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.UnimplementedError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnimplementedError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.InternalServerError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.InternalServerError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.UnavailableError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.DataLossError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.DeadlineExceededError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DeadlineExceededError>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.SerializationException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.SerializationException>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.Error':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<Error>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.AssertionError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<AssertionError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.TypeError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<TypeError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.ArgumentError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<ArgumentError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.RangeError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<RangeError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.IndexError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IndexError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.UnsupportedError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.UnimplementedError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.StateError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<StateError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.ConcurrentModificationError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<ConcurrentModificationError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.OutOfMemoryError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.StackOverflowError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.FormatException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
+          stackTrace,
+        );
+      case 'dart.core.IntegerDivisionByZeroException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<IntegerDivisionByZeroException>(errorValue),
+          stackTrace,
+        );
+      case 'dart.async.AsyncError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$async.AsyncError>(errorValue),
+          stackTrace,
+        );
+      case 'dart.async.TimeoutException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$async.TimeoutException>(errorValue),
+          stackTrace,
+        );
+      case 'dart.convert.JsonUnsupportedObjectError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$convert.JsonUnsupportedObjectError>(errorValue),
+          stackTrace,
+        );
+      case 'exceptions.v1.BaseException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<BaseException>(errorValue),
+          stackTrace,
+        );
+      case 'exceptions.v1.CustomException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<CustomException>(errorValue),
+          stackTrace,
+        );
+      case 'exceptions.v1.BaseError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<BaseError>(errorValue),
+          stackTrace,
+        );
+      case 'exceptions.v1.CustomError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<CustomError>(errorValue),
+          stackTrace,
+        );
       default:
-        throw _$celest.CloudException.http(
-          status: $statusCode,
-          code: $code,
-          message: $message,
-          details: $details,
+        Error.throwWithStackTrace(
+          _$celest.CloudException.http(
+            code: code,
+            message: message,
+            details: ((details ?? body) as _$celest.JsonValue),
+          ),
+          StackTrace.empty,
         );
     }
   }
@@ -548,14 +951,16 @@ class CelestFunctionsThrowing {
   Future<void> throwsCustomError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-custom-error'),
-      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      headers: const {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
     );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
       _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
+        code: $response.statusCode,
+        body: ($body as Map<String, Object?>),
       );
     }
     return;
@@ -568,14 +973,16 @@ class CelestFunctionsThrowing {
   Future<void> throwsBaseError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-base-error'),
-      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      headers: const {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
     );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
       _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
+        code: $response.statusCode,
+        body: ($body as Map<String, Object?>),
       );
     }
     return;
@@ -588,14 +995,16 @@ class CelestFunctionsThrowing {
   Future<void> throwsCustomException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-custom-exception'),
-      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      headers: const {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
     );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
       _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
+        code: $response.statusCode,
+        body: ($body as Map<String, Object?>),
       );
     }
     return;
@@ -608,14 +1017,16 @@ class CelestFunctionsThrowing {
   Future<void> throwsBaseException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-base-exception'),
-      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      headers: const {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
     );
-    final $body =
-        (_$convert.jsonDecode($response.body) as Map<String, Object?>);
+    final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
       _throwError(
-        $statusCode: $response.statusCode,
-        $body: $body,
+        code: $response.statusCode,
+        body: ($body as Map<String, Object?>),
       );
     }
     return;

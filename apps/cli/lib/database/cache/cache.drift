@@ -22,5 +22,6 @@ CREATE TABLE IF NOT EXISTS version_info (
   flutter TEXT
 );
 
-getVersionInfo: SELECT * FROM version_info LIMIT 1;
+getVersionInfo: SELECT * FROM version_info WHERE rowid = 1 LIMIT 1;
 setVersionInfo: INSERT INTO version_info (celest, dart, flutter) VALUES (:celest, :dart, :flutter);
+updateVersionInfo: UPDATE version_info SET celest = :celest, dart = :dart, flutter = :flutter WHERE rowid = 1;

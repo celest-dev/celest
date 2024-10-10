@@ -351,7 +351,7 @@ class TestRunner {
     }
     group('apis', () {
       for (final MapEntry(key: apiName, value: apiTest) in apis.entries) {
-        if (includeApis != null && !includeApis.contains(apiName)) {
+        if (includeApis != null && (!includeApis.contains(apiName) || includeApis.contains('none'))) {
           continue;
         }
         testApi(apiName, apiTest);
@@ -1760,11 +1760,23 @@ final tests = <String, Test>{
               input: {},
               statusCode: 400,
               output: {
-                '@error': {
-                  'code': 'api.v1.OverriddenException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'api.v1.OverriddenException',
+                      'value': {
+                        'code': 400,
+                        'message': 'message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': 'message',
               },
             ),
           ],
@@ -1774,11 +1786,23 @@ final tests = <String, Test>{
               input: {},
               statusCode: 400,
               output: {
-                '@error': {
-                  'code': 'api.v1.OverriddenException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'api.v1.OverriddenException',
+                      'value': {
+                        'code': 400,
+                        'message': 'message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': 'message',
               },
             ),
           ],
@@ -1788,11 +1812,23 @@ final tests = <String, Test>{
               input: {},
               statusCode: 400,
               output: {
-                '@error': {
-                  'code': 'api.v1.OverriddenException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'api.v1.OverriddenException',
+                      'value': {
+                        'code': 400,
+                        'message': 'message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': 'message',
               },
             ),
           ],
@@ -1802,11 +1838,23 @@ final tests = <String, Test>{
               input: {},
               statusCode: 400,
               output: {
-                '@error': {
-                  'code': 'api.v1.OverriddenException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'api.v1.OverriddenException',
+                      'value': {
+                        'code': 400,
+                        'message': 'message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': 'message',
               },
             ),
           ],
@@ -2554,10 +2602,21 @@ final tests = <String, Test>{
                 'type': 'Exception',
               },
               output: {
-                '@error': {
-                  'code': '_Exception',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
                   'message': 'Exception: Something bad happened',
+                  'details': [
+                    {
+                      '@type': 'dart.core.Exception',
+                      'value': {
+                        'message': 'Exception: Something bad happened',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
               },
             ),
@@ -2568,13 +2627,23 @@ final tests = <String, Test>{
                 'type': 'FormatException',
               },
               output: {
-                '@error': {
-                  'code': 'dart.core.FormatException',
+                '@status': {
+                  'code': 400,
                   'message': 'Bad format',
-                  'status': 400,
+                  'details': [
+                    {
+                      '@type': 'dart.core.FormatException',
+                      'value': {
+                        'message': 'Bad format',
+                        'source': null,
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': 'Bad format',
-                'source': null,
               },
             ),
           ],
@@ -2586,11 +2655,21 @@ final tests = <String, Test>{
                 'type': 'Error',
               },
               output: {
-                '@error': {
-                  'code': 'dart.core.Error',
-                  'status': 500,
+                '@status': {
+                  'code': 500,
+                  'details': [
+                    {
+                      '@type': 'dart.core.Error',
+                      'value': {
+                        'stackTrace': anything,
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'stackTrace': anything,
               },
             ),
             FunctionTestError(
@@ -2600,13 +2679,24 @@ final tests = <String, Test>{
                 'type': 'ArgumentError',
               },
               output: {
-                '@error': {
-                  'code': 'dart.core.ArgumentError',
-                  'status': 500,
+                '@status': {
+                  'code': 500,
+                  'message': 'Bad argument',
+                  'details': [
+                    {
+                      '@type': 'dart.core.ArgumentError',
+                      'value': {
+                        'name': 'someArg',
+                        'message': 'Bad argument',
+                        'invalidValue': null,
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'name': 'someArg',
-                'message': 'Bad argument',
-                'invalidValue': null,
               },
             ),
           ],
@@ -2616,14 +2706,24 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                '@error': {
-                  'code': 'api.v1.CustomException',
+                '@status': {
+                  'code': 400,
                   'message': 'This is a custom exception',
-                  'status': 400,
-                },
-                'message': 'This is a custom exception',
-                'additionalInfo': {
-                  'hello': 'world',
+                  'details': [
+                    {
+                      '@type': 'api.v1.CustomException',
+                      'value': {
+                        'message': 'This is a custom exception',
+                        'additionalInfo': {
+                          'hello': 'world',
+                        },
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
               },
             ),
@@ -2634,13 +2734,24 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                '@error': {
-                  'code': 'api.v1.CustomExceptionToFromJson',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': 'This is a custom exception',
+                  'details': [
+                    {
+                      '@type': 'api.v1.CustomExceptionToFromJson',
+                      'value': {
+                        'message': 'This is a custom exception',
+                        'hello': 'world',
+                        'another': 'value',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': 'This is a custom exception',
-                'hello': 'world',
-                'another': 'value',
               },
             ),
           ],
@@ -2650,14 +2761,24 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                '@error': {
-                  'code': 'api.v1.CustomError',
+                '@status': {
+                  'code': 500,
                   'message': 'This is a custom error',
-                  'status': 500,
-                },
-                'message': 'This is a custom error',
-                'additionalInfo': {
-                  'hello': 'world',
+                  'details': [
+                    {
+                      '@type': 'api.v1.CustomError',
+                      'value': {
+                        'message': 'This is a custom error',
+                        'additionalInfo': {
+                          'hello': 'world',
+                        },
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
               },
             ),
@@ -2668,13 +2789,24 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                '@error': {
-                  'code': 'api.v1.CustomErrorToFromJson',
-                  'status': 500,
+                '@status': {
+                  'code': 500,
+                  'message': 'This is a custom error',
+                  'details': [
+                    {
+                      '@type': 'api.v1.CustomErrorToFromJson',
+                      'value': {
+                        'message': 'This is a custom error',
+                        'hello': 'world',
+                        'another': 'value',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': 'This is a custom error',
-                'hello': 'world',
-                'another': 'value',
               },
             ),
           ],
@@ -2684,16 +2816,26 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                '@error': {
-                  'code': 'api.v1.CustomErrorWithStackTrace',
+                '@status': {
+                  'code': 500,
                   'message': 'This is a custom error',
-                  'status': 500,
+                  'details': [
+                    {
+                      '@type': 'api.v1.CustomErrorWithStackTrace',
+                      'value': {
+                        'message': 'This is a custom error',
+                        'additionalInfo': {
+                          'hello': 'world',
+                        },
+                        'stackTrace': '',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': 'This is a custom error',
-                'additionalInfo': {
-                  'hello': 'world',
-                },
-                'stackTrace': '',
               },
             ),
           ],
@@ -3782,11 +3924,22 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                '@error': {
-                  'code': 'exceptions.v1.BaseError',
-                  'status': 500,
+                '@status': {
+                  'code': 500,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'exceptions.v1.BaseError',
+                      'value': {
+                        'fault': 'base: message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'fault': 'base: message',
               },
             ),
           ],
@@ -3796,11 +3949,22 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                '@error': {
-                  'code': 'exceptions.v1.CustomError',
-                  'status': 500,
+                '@status': {
+                  'code': 500,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'exceptions.v1.CustomError',
+                      'value': {
+                        'fault': 'base: custom: message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'fault': 'base: custom: message',
               },
             ),
           ],
@@ -3810,11 +3974,22 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                '@error': {
-                  'code': 'exceptions.v1.BaseException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'exceptions.v1.BaseException',
+                      'value': {
+                        'fault': 'base: message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'fault': 'base: message',
               },
             ),
           ],
@@ -3824,11 +3999,22 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                '@error': {
-                  'code': 'exceptions.v1.CustomException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'exceptions.v1.CustomException',
+                      'value': {
+                        'fault': 'base: custom: message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'fault': 'base: custom: message',
               },
             ),
           ],
@@ -3842,11 +4028,22 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                '@error': {
-                  'code': 'exceptions.v1.BaseError',
-                  'status': 500,
+                '@status': {
+                  'code': 500,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'exceptions.v1.BaseError',
+                      'value': {
+                        'fault': 'base: message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'fault': 'base: message',
               },
             ),
           ],
@@ -3856,11 +4053,22 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                '@error': {
-                  'code': 'exceptions.v1.CustomError',
-                  'status': 500,
+                '@status': {
+                  'code': 500,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'exceptions.v1.CustomError',
+                      'value': {
+                        'fault': 'base: custom: message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'fault': 'base: custom: message',
               },
             ),
           ],
@@ -3870,11 +4078,22 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                '@error': {
-                  'code': 'exceptions.v1.BaseException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'exceptions.v1.BaseException',
+                      'value': {
+                        'fault': 'base: message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'fault': 'base: message',
               },
             ),
           ],
@@ -3884,11 +4103,22 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                '@error': {
-                  'code': 'exceptions.v1.CustomException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'exceptions.v1.CustomException',
+                      'value': {
+                        'fault': 'base: custom: message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'fault': 'base: custom: message',
               },
             ),
           ],
@@ -3902,12 +4132,22 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                '@error': {
-                  'code': '_common.CommonException',
+                '@status': {
+                  'code': 400,
                   'message': 'message',
-                  'status': 400,
+                  'details': [
+                    {
+                      '@type': '_common.CommonException',
+                      'value': {
+                        'message': 'message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': 'message',
               },
             ),
           ],
@@ -3917,12 +4157,22 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                '@error': {
-                  'code': '_common.CustomException',
+                '@status': {
+                  'code': 400,
                   'message': 'message',
-                  'status': 400,
+                  'details': [
+                    {
+                      '@type': '_common.CustomException',
+                      'value': {
+                        'message': 'message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': 'message',
               },
             ),
           ],
@@ -4006,12 +4256,23 @@ final tests = <String, Test>{
                 'type': 'badRequest',
               },
               output: {
-                '@error': {
-                  'code': 'celest.core.v1.BadRequestException',
+                '@status': {
+                  'code': 400,
                   'message': '',
-                  'status': 400,
+                  'details': [
+                    {
+                      '@type': 'celest.core.v1.BadRequestException',
+                      'value': {
+                        'code': 400,
+                        'message': '',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': '',
               },
             ),
             FunctionTestError(
@@ -4021,12 +4282,23 @@ final tests = <String, Test>{
                 'type': 'customBadRequest',
               },
               output: {
-                '@error': {
-                  'code': 'api.v1.CustomBadRequestException',
+                '@status': {
+                  'code': 412,
                   'message': '',
-                  'status': 412,
+                  'details': [
+                    {
+                      '@type': 'api.v1.CustomBadRequestException',
+                      'value': {
+                        'code': 400,
+                        'message': '',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': '',
               },
             ),
             FunctionTestError(
@@ -4036,12 +4308,23 @@ final tests = <String, Test>{
                 'type': 'unauthorized',
               },
               output: {
-                '@error': {
-                  'code': 'celest.core.v1.UnauthorizedException',
+                '@status': {
+                  'code': 401,
                   'message': '',
-                  'status': 401,
+                  'details': [
+                    {
+                      '@type': 'celest.core.v1.UnauthorizedException',
+                      'value': {
+                        'code': 401,
+                        'message': '',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': '',
               },
             ),
             FunctionTestError(
@@ -4051,12 +4334,23 @@ final tests = <String, Test>{
                 'type': 'forbidden',
               },
               output: {
-                '@error': {
-                  'code': 'api.v1.ForbiddenException',
+                '@status': {
+                  'code': 403,
                   'message': '',
-                  'status': 403,
+                  'details': [
+                    {
+                      '@type': 'api.v1.ForbiddenException',
+                      'value': {
+                        'code': 403,
+                        'message': '',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': '',
               },
             ),
             FunctionTestError(
@@ -4066,9 +4360,19 @@ final tests = <String, Test>{
                 'type': 'notFound',
               },
               output: {
-                '@error': {
-                  'code': 'api.v1.NotFoundException',
-                  'status': 404,
+                '@status': {
+                  'code': 404,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'api.v1.NotFoundException',
+                      'value': <String, Object?>{},
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
               },
             ),
@@ -4079,9 +4383,19 @@ final tests = <String, Test>{
                 'type': 'anotherNotFound',
               },
               output: {
-                '@error': {
-                  'code': 'api.v1.AnotherNotFoundException',
-                  'status': 404,
+                '@status': {
+                  'code': 404,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'api.v1.AnotherNotFoundException',
+                      'value': <String, Object?>{},
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
               },
             ),
@@ -4092,12 +4406,23 @@ final tests = <String, Test>{
                 'type': 'internalServerError',
               },
               output: {
-                '@error': {
-                  'code': 'celest.core.v1.InternalServerError',
+                '@status': {
+                  'code': 404,
                   'message': '',
-                  'status': 404,
+                  'details': [
+                    {
+                      '@type': 'celest.core.v1.InternalServerError',
+                      'value': {
+                        'code': 404,
+                        'message': '',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': '',
               },
             ),
             FunctionTestError(
@@ -4107,12 +4432,22 @@ final tests = <String, Test>{
                 'type': 'badGateway',
               },
               output: {
-                '@error': {
-                  'code': 'api.v1.BadGatewayError',
+                '@status': {
+                  'code': 404,
                   'message': '',
-                  'status': 404,
+                  'details': [
+                    {
+                      '@type': 'api.v1.BadGatewayError',
+                      'value': {
+                        'message': '',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'message': '',
               },
             ),
           ],
@@ -4402,11 +4737,22 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                '@error': {
-                  'code': '_common.UserException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': '_common.UserException',
+                      'value': {
+                        'msg': 'message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'message',
               },
             ),
             FunctionTestError(
@@ -4416,12 +4762,23 @@ final tests = <String, Test>{
                 'cause': 'Bad thing happened',
               },
               output: {
-                '@error': {
-                  'code': '_common.UserException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': '_common.UserException',
+                      'value': {
+                        'msg': 'message',
+                        'cause': 'Bad thing happened',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'message',
-                'cause': 'Bad thing happened',
               },
             ),
             FunctionTestError(
@@ -4433,12 +4790,24 @@ final tests = <String, Test>{
                 },
               },
               output: {
-                '@error': {
-                  'code': '_common.UserException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': '_common.UserException',
+                      'value': {
+                        'msg': 'message',
+                        'cause':
+                            '{reason: Bad thing happened}', // cause.toString()
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'message',
-                'cause': '{reason: Bad thing happened}', // cause.toString()
               },
             ),
           ],
@@ -4448,11 +4817,22 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                '@error': {
-                  'code': '_common.UserException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': '_common.UserException',
+                      'value': {
+                        'msg': 'message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'message',
               },
             ),
             FunctionTestError(
@@ -4462,12 +4842,23 @@ final tests = <String, Test>{
                 'cause': 'Bad thing happened',
               },
               output: {
-                '@error': {
-                  'code': '_common.UserException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': '_common.UserException',
+                      'value': {
+                        'msg': 'message',
+                        'cause': 'Bad thing happened',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'message',
-                'cause': 'Bad thing happened',
               },
             ),
             FunctionTestError(
@@ -4479,12 +4870,24 @@ final tests = <String, Test>{
                 },
               },
               output: {
-                '@error': {
-                  'code': '_common.UserException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': '_common.UserException',
+                      'value': {
+                        'msg': 'message',
+                        'cause':
+                            '{reason: Bad thing happened}', // cause.toString()
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'message',
-                'cause': '{reason: Bad thing happened}', // cause.toString()
               },
             ),
           ],
@@ -4494,12 +4897,23 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                '@error': {
-                  'code': 'marcelo.v1.AppError',
-                  'status': 500,
+                '@status': {
+                  'code': 500,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'marcelo.v1.AppError',
+                      'value': {
+                        'msg': 'message',
+                        'error': null,
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'message',
-                'error': null,
               },
             ),
             FunctionTestError(
@@ -4510,12 +4924,23 @@ final tests = <String, Test>{
                 'error': 123,
               },
               output: {
-                '@error': {
-                  'code': 'marcelo.v1.AppError',
-                  'status': 500,
+                '@status': {
+                  'code': 500,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'marcelo.v1.AppError',
+                      'value': {
+                        'msg': 'test',
+                        'error': 123,
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'test',
-                'error': 123,
               },
             ),
           ],
@@ -4525,12 +4950,23 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                '@error': {
-                  'code': 'marcelo.v1.AppException',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'marcelo.v1.AppException',
+                      'value': {
+                        'msg': 'message',
+                        'error': 'error',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'message',
-                'error': 'error',
               },
             ),
           ],
@@ -4540,11 +4976,22 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                '@error': {
-                  'code': 'marcelo.v1.NotYetImplementedError',
-                  'status': 500,
+                '@status': {
+                  'code': 500,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'marcelo.v1.NotYetImplementedError',
+                      'value': {
+                        'msg': 'message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'message',
               },
             ),
           ],
@@ -4554,11 +5001,22 @@ final tests = <String, Test>{
               statusCode: 500,
               input: {},
               output: {
-                '@error': {
-                  'code': '_common.ValidateError',
-                  'status': 500,
+                '@status': {
+                  'code': 500,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': '_common.ValidateError',
+                      'value': {
+                        'msg': 'message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'message',
               },
             ),
           ],
@@ -4568,11 +5026,22 @@ final tests = <String, Test>{
               statusCode: 400,
               input: {},
               output: {
-                '@error': {
-                  'code': 'marcelo.v1.UserException_ShowInConsole',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'marcelo.v1.UserException_ShowInConsole',
+                      'value': {
+                        'msg': 'message',
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'message',
               },
             ),
             FunctionTestError(
@@ -4583,12 +5052,23 @@ final tests = <String, Test>{
                 'cause': 123,
               },
               output: {
-                '@error': {
-                  'code': 'marcelo.v1.UserException_ShowInConsole',
-                  'status': 400,
+                '@status': {
+                  'code': 400,
+                  'message': null,
+                  'details': [
+                    {
+                      '@type': 'marcelo.v1.UserException_ShowInConsole',
+                      'value': {
+                        'msg': 'test',
+                        'cause': 123,
+                      },
+                    },
+                    {
+                      '@type': 'dart.core.StackTrace',
+                      'value': anything,
+                    },
+                  ],
                 },
-                'msg': 'test',
-                'cause': 123,
               },
             ),
           ],

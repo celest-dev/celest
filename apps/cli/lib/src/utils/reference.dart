@@ -162,6 +162,34 @@ final class _MapIfExpression extends Expression {
   }
 }
 
+Expression collectionIf(Expression condition, Expression ifTrue) =>
+    _ListIfExpression(condition: condition, ifTrue: ifTrue);
+
+final class _ListIfExpression extends Expression {
+  _ListIfExpression({
+    required this.condition,
+    required this.ifTrue,
+  });
+
+  final Expression condition;
+  final Expression ifTrue;
+
+  @override
+  R accept<R>(covariant ExpressionVisitor<R> visitor, [R? context]) {
+    return visitor.visitCodeExpression(
+      CodeExpression(
+        Block.of([
+          const Code('if ('),
+          condition.code,
+          const Code(') '),
+          ifTrue.code,
+        ]),
+      ),
+      context,
+    );
+  }
+}
+
 Expression nullCheckBind(
   String variableName,
   Expression expression, {

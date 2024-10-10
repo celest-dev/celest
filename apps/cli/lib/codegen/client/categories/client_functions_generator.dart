@@ -63,13 +63,13 @@ final class ClientFunctionsGenerator {
     final functionCall = httpClient.property('post').call([
       uri,
     ], {
-      'headers': literalMap({
-        'Content-Type': literalString(
-          'application/json; charset=utf-8',
-        ),
+      'headers': (headers.isEmpty ? literalConstMap : literalMap)({
+        'Content-Type': literalString('application/json'),
+        'Accept': literalString('application/json'),
         ...headers,
       }),
-      if (payload != null) 'body': DartTypes.convert.jsonEncode.call([payload]),
+      if (payload != null)
+        'body': DartTypes.celest.jsonUtf8.property('encode').call([payload]),
     }).awaited;
 
     b.addExpression(
@@ -77,9 +77,9 @@ final class ClientFunctionsGenerator {
     );
     b.addExpression(
       declareFinal(r'$body').assign(
-        DartTypes.convert.jsonDecode.call([
-          refer(r'$response').property('body'),
-        ]).asA(typeHelper.toReference(jsonMapType)),
+        DartTypes.celest.jsonUtf8.property('decode').call([
+          refer(r'$response').property('bodyBytes'),
+        ]),
       ),
     );
 
@@ -89,15 +89,15 @@ final class ClientFunctionsGenerator {
             : jsonGenerator
                 .fromJson(
                   function.flattenedReturnType,
-                  refer(r'$body').index(literalString('response')),
+                  refer(r'$body'),
                   inNullableContext: true,
                 )
                 .returned
                 .statement;
 
     final handleError = refer('_throwError').call([], {
-      r'$statusCode': refer(r'$response').property('statusCode'),
-      r'$body': refer(r'$body'),
+      'code': refer(r'$response').property('statusCode'),
+      'body': refer(r'$body').asA(typeHelper.toReference(jsonMapType)),
     });
 
     b.statements
@@ -136,7 +136,7 @@ final class ClientFunctionsGenerator {
             : jsonGenerator
                 .fromJson(
                   function.flattenedReturnType,
-                  refer(r'$event').index(literalString('response')),
+                  refer(r'$event'),
                   inNullableContext: true,
                 )
                 .returned
@@ -150,8 +150,8 @@ final class ClientFunctionsGenerator {
             )
             ..body = Block.of([
               const Code(r'''
-if ($event.containsKey('error')) {
-  _throwError($statusCode: -1, $body: $event);
+if ($event is Map<String, Object?> && $event.containsKey('@error')) {
+  _throwError(body: $event);
 }'''),
               returnedBody,
             ]),
@@ -391,79 +391,86 @@ if ($event.containsKey('error')) {
           ..optionalParameters.addAll([
             Parameter(
               (p) => p
-                ..name = r'$statusCode'
+                ..name = 'code'
                 ..named = true
-                ..required = true
-                ..type = DartTypes.core.int,
+                ..type = DartTypes.core.int.nullable,
             ),
             Parameter(
               (p) => p
-                ..name = r'$body'
+                ..name = 'body'
                 ..named = true
                 ..required = true
                 ..type = typeHelper.toReference(jsonMapType),
             ),
           ])
           ..body = Block((b) {
-            b
-              ..addExpression(
-                declareFinal(r'$error').assign(
-                  refer(r'$body').index(literalString('error')).asA(
-                        typeHelper.toReference(jsonMapType),
-                      ),
-                ),
-              )
-              ..addExpression(
-                declareFinal(r'$code').assign(
-                  refer(r'$error')
-                      .index(literalString('code'))
-                      .asA(DartTypes.core.string),
-                ),
-              )
-              ..addExpression(
-                declareFinal(r'$message').assign(
-                  refer(r'$error')
-                      .index(literalString('message'))
-                      .asA(DartTypes.core.string.nullable),
-                ),
-              )
-              ..addExpression(
-                declareFinal(r'$details').assign(
-                  refer(r'$error')
-                      .index(literalString('details'))
-                      .asA(DartTypes.celest.jsonMap.nullable),
-                ),
-              );
-            b.statements.add(const Code(r'switch ($code) {'));
+            b.statements.add(
+              Code.scope(
+                (alloc) => '''
+final status = body['@status'] as Map<String, Object?>?;
+final message = status?['message'] as String?;
+final details = status?['details'] as ${alloc(DartTypes.celest.jsonList)}?;
+final (errorType, errorValue, stackTrace) = switch (details) {
+  null || [] => const (null, null, StackTrace.empty),
+  [
+    final errorDetails as Map<String, Object?>,
+    {
+      '@type': 'dart.core.StackTrace',
+      'value': final stackTraceValue as String
+    },
+    ...
+  ] =>
+    (
+      errorDetails['@type'],
+      errorDetails['value'],
+      StackTrace.fromString(stackTraceValue),
+    ),
+  [final errorDetails as Map<String, Object?>, ...] => (
+      errorDetails['@type'],
+      errorDetails['value'],
+      StackTrace.empty,
+    ),
+};
+''',
+              ),
+            );
+            b.statements.add(const Code('switch (errorType) {'));
             for (final exceptionType in api.exceptionTypes) {
               final dartExceptionType = typeHelper.fromReference(exceptionType);
               final deserializedException = jsonGenerator.fromJson(
                 exceptionType,
-                refer(r'$details'),
+                refer('errorValue'),
                 inNullableContext: true,
               );
+              final exceptionUri = dartExceptionType.externalUri(project.name)!;
               b.statements.addAll([
-                Code(
-                  "case r'${dartExceptionType.externalUri(project.name)}': ",
-                ),
-                deserializedException.thrown.statement,
+                const Code('case '),
+                literalString(exceptionUri, raw: exceptionUri.contains(r'$'))
+                    .code,
+                const Code(': '),
+                DartTypes.core.error.property('throwWithStackTrace').call([
+                  deserializedException,
+                  refer('stackTrace'),
+                ]).statement,
               ]);
             }
             b.statements.addAll([
               const Code('default: '),
-              DartTypes.celest.cloudException
-                  .newInstanceNamed(
-                    'http',
-                    [],
-                    {
-                      'status': refer(r'$statusCode'),
-                      'code': refer(r'$code'),
-                      'message': refer(r'$message'),
-                      'details': refer(r'$details'),
-                    },
-                  )
-                  .thrown
-                  .statement,
+              DartTypes.core.error.property('throwWithStackTrace').call([
+                DartTypes.celest.cloudException.newInstanceNamed(
+                  'http',
+                  [],
+                  {
+                    'code': refer('code'),
+                    'message': refer('message'),
+                    'details': refer('details')
+                        .ifNullThen(refer('body'))
+                        .parenthesized
+                        .asA(DartTypes.celest.jsonValue),
+                  },
+                ),
+                DartTypes.core.stackTrace.property('empty'),
+              ]).statement,
               const Code('}'),
             ]);
           });

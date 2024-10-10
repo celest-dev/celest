@@ -229,8 +229,18 @@ final class CelestProject {
   /// We parse the `project.dart` file to retrieve it since it is cheap and
   /// follows a consistent pattern.
   String get projectName {
-    final projectDart = fileSystem.file(projectPaths.projectDart);
-    if (!projectDart.existsSync()) {
+    final projectDartFiles = [
+      projectPaths.projectDart,
+      projectPaths.projectDartLegacy,
+    ].map(fileSystem.file);
+    File? projectDart;
+    for (final projectDartFile in projectDartFiles) {
+      if (projectDartFile.existsSync()) {
+        projectDart = projectDartFile;
+        break;
+      }
+    }
+    if (projectDart == null) {
       // Shouldn't ever happen since we shouldn't be requesting this before
       // the project is generated.
       throw StateError(

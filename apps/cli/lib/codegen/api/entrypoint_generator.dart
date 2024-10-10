@@ -411,35 +411,35 @@ final class EntrypointGenerator {
             );
 
             b.addExpression(
-              declareFinal('meta').assign(
+              declareFinal('status').assign(
                 literalMap({
-                  'code': dartExceptionType.externalUri(project.name),
-                  if (messageExpression != null) 'message': messageExpression,
-                  'status': refer('statusCode'),
+                  '@status': literalMap({
+                    'code': refer('statusCode'),
+                    'message': messageExpression,
+                    'details': literalList([
+                      literalMap({
+                        '@type': dartExceptionType.externalUri(project.name),
+                        'value':
+                            jsonGenerator.toJson(exceptionType, refer('e')),
+                      }),
+                      collectionIf(
+                        DartTypes.celest.globalContext
+                            .property('environment')
+                            .notEqualTo(DartTypes.celest.environment.property('production')),
+                        literalMap({
+                          '@type': typeHelper.coreTypes.stackTraceType
+                              .externalUri(project.name),
+                          'value': jsonGenerator.toJson(
+                            DartTypes.core.stackTrace,
+                            refer('st'),
+                          ),
+                        }),
+                      ),
+                    ]),
+                  }),
                 }),
               ),
             );
-            b.addExpression(
-              declareFinal('error').assign(
-                jsonGenerator.toJson(exceptionType, refer('e')),
-              ),
-            );
-            final errorBody = literalMap({
-              '@error': refer('meta'),
-              literalSpread(): refer('error')
-                  .isA(
-                    DartTypes.core.map(
-                      DartTypes.core.string,
-                      DartTypes.core.object.nullable,
-                    ),
-                  )
-                  .conditional(
-                    refer('error'),
-                    literalMap({
-                      '@': refer('error'),
-                    }),
-                  ),
-            });
             switch (function.streamType) {
               case null:
                 b.addExpression(
@@ -450,15 +450,12 @@ final class EntrypointGenerator {
                       'Content-Type': 'application/json',
                     }),
                     'body': DartTypes.celest.jsonUtf8.property('encode').call([
-                      errorBody,
+                      refer('status'),
                     ]),
                   }).returned,
                 );
               default:
-                b.statements.addAll([
-                  const Code('yield '),
-                  errorBody.statement,
-                ]);
+                b.statements.add(const Code('yield status;'));
             }
           }
           if (api.exceptionTypes.isNotEmpty) {
@@ -480,6 +477,7 @@ final class EntrypointGenerator {
           .statement;
     } else {
       handleBody = Block((b) {
+        // TODO: `@type.T`
         final request = refer('request');
         final types = <Reference>[];
         for (final typeParameter in function.typeParameters) {

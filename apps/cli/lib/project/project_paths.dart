@@ -26,6 +26,7 @@ final class ProjectPaths {
       p.join(projectRoot, 'analysis_options.yaml');
   late final String projectDart =
       p.join(projectRoot, 'lib', 'src', 'project.dart');
+  late final String projectDartLegacy = p.join(projectRoot, 'project.dart');
   late final String projectLib = p.join(projectRoot, 'lib');
   late final String localApiEntrypoint = p.join(outputsDir, 'api.local.dart');
   late final String legacyClientOutputsDir =

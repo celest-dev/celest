@@ -613,8 +613,16 @@ class _Celest {
   DartTypeReference get internalServerError =>
       const DartTypeReference('InternalServerError', _coreUrl);
 
+  /// Creates a [celest_core.JsonList] reference.
+  DartTypeReference get jsonList =>
+      const DartTypeReference('JsonList', _coreUrl);
+
   /// Creates a [celest_core.JsonMap] reference.
   DartTypeReference get jsonMap => const DartTypeReference('JsonMap', _coreUrl);
+
+  /// Creates a [celest_core.JsonValue] reference.
+  DartTypeReference get jsonValue =>
+      const DartTypeReference('JsonValue', _coreUrl);
 
   /// Creates a [celest_core.JsonUtf8] reference.
   DartTypeReference get jsonUtf8 =>

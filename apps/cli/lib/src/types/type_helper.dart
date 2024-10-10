@@ -302,6 +302,7 @@ final class TypeHelper {
 
   set coreTypes(CoreTypes coreTypes) {
     _coreTypes = coreTypes;
+    _init();
   }
 
   // TODO(dnys1): File ticket with Dart team around hashcode/equality of DartType
@@ -455,6 +456,14 @@ final class TypeHelper {
     hashCode: const DartTypeEquality(ignoreNullability: true).hash,
   );
 
+  /// Hydrate the caches with built-in types.
+  void _init() {
+    for (final builtInType in builtInTypeToReference.keys) {
+      final reference = toReference(builtInType);
+      fromReference(reference);
+    }
+  }
+
   /// Reset all caches.
   void reset() {
     _dartTypeToReference.clear();
@@ -522,7 +531,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
         ..types.addAll(typeArguments)
         ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
     );
-    return builtInTypes[type] ?? ref;
+    return builtInTypeToReference[type] ?? ref;
   }
 
   @override

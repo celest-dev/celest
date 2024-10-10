@@ -1126,12 +1126,6 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -3532,12 +3526,6 @@
       },
       "docs": [],
       "exceptionTypes": [
-        {
-          "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",
@@ -8672,12 +8660,6 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -9324,12 +9306,6 @@
         "/// of indirection."
       ],
       "exceptionTypes": [
-        {
-          "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",
@@ -12920,12 +12896,6 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -13525,12 +13495,6 @@
         "/// Checks that typedefs work as expected."
       ],
       "exceptionTypes": [
-        {
-          "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",
@@ -17470,12 +17434,6 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -18314,12 +18272,6 @@
         "/// using extension types."
       ],
       "exceptionTypes": [
-        {
-          "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",
@@ -21032,12 +20984,6 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -21677,12 +21623,6 @@
       },
       "docs": [],
       "exceptionTypes": [
-        {
-          "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",
@@ -29806,12 +29746,6 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -30522,12 +30456,6 @@
       },
       "docs": [],
       "exceptionTypes": [
-        {
-          "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",
@@ -31637,12 +31565,6 @@
         "/// return types."
       ],
       "exceptionTypes": [
-        {
-          "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",
@@ -32766,12 +32688,6 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -33091,12 +33007,6 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -33384,12 +33294,6 @@
       },
       "docs": [],
       "exceptionTypes": [
-        {
-          "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",

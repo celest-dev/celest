@@ -720,12 +720,6 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -1472,12 +1466,6 @@
           "$": "TypeReference",
           "symbol": "JsonUnsupportedObjectError",
           "url": "dart:convert",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
         {

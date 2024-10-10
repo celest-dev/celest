@@ -68,14 +68,15 @@ final class CacheDatabase extends _$CacheDatabase {
       if (Sdk.current.version != dartCacheVersion ||
           Sdk.current.flutterVersion != flutterCacheVersion) {
         await database.clear();
-        await database._updateVersionInfo();
+        await database._setVersionInfo(update: true);
       }
       if (semver.Version.parse(celest) < semver.Version.parse(packageVersion)) {
         database._needsProjectUpgrade = true;
+        await database._setVersionInfo(update: true);
       }
     } else if (versionInfo == null) {
       database._needsProjectUpgrade = true;
-      await database._updateVersionInfo();
+      await database._setVersionInfo(update: false);
     }
     final rawDb = await rawCompleter.future;
     database.byteStore = CachingByteStore(rawDb);
@@ -85,12 +86,20 @@ final class CacheDatabase extends _$CacheDatabase {
   bool _needsProjectUpgrade = false;
   bool get needsProjectUpgrade => _needsProjectUpgrade;
 
-  Future<void> _updateVersionInfo() async {
-    await setVersionInfo(
-      celest: packageVersion,
-      dart: Sdk.current.version.toString(),
-      flutter: Sdk.current.flutterVersion?.toString(),
-    );
+  Future<void> _setVersionInfo({required bool update}) async {
+    if (update) {
+      await updateVersionInfo(
+        celest: packageVersion,
+        dart: Sdk.current.version.toString(),
+        flutter: Sdk.current.flutterVersion?.toString(),
+      );
+    } else {
+      await setVersionInfo(
+        celest: packageVersion,
+        dart: Sdk.current.version.toString(),
+        flutter: Sdk.current.flutterVersion?.toString(),
+      );
+    }
   }
 
   Future<void> clear() async {

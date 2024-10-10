@@ -391,7 +391,7 @@ abstract class _$CacheDatabase extends GeneratedDatabase {
   late final AnalyzerByteStore analyzerByteStore = AnalyzerByteStore(this);
   late final VersionInfo versionInfo = VersionInfo(this);
   Selectable<VersionInfoData> getVersionInfo() {
-    return customSelect('SELECT * FROM version_info LIMIT 1',
+    return customSelect('SELECT * FROM version_info WHERE "rowid" = 1 LIMIT 1',
         variables: [],
         readsFrom: {
           versionInfo,
@@ -408,6 +408,20 @@ abstract class _$CacheDatabase extends GeneratedDatabase {
         Variable<String>(flutter)
       ],
       updates: {versionInfo},
+    );
+  }
+
+  Future<int> updateVersionInfo(
+      {required String celest, required String dart, String? flutter}) {
+    return customUpdate(
+      'UPDATE version_info SET celest = ?1, dart = ?2, flutter = ?3 WHERE "rowid" = 1',
+      variables: [
+        Variable<String>(celest),
+        Variable<String>(dart),
+        Variable<String>(flutter)
+      ],
+      updates: {versionInfo},
+      updateKind: UpdateKind.update,
     );
   }
 

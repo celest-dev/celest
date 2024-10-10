@@ -205,7 +205,7 @@ final class DartTypeToOpenApi
     );
 
     assert(() {
-      for (final type in builtInTypes.keys) {
+      for (final type in builtInTypeToReference.keys) {
         if (!coreTypes.containsKey(typeHelper.toReference(type))) {
           throw StateError('Missing core type: $type');
         }

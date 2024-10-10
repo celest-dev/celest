@@ -54,19 +54,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.AbortedException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.AbortedException',
+              'value':
+                  _i7.Serializers.instance.serialize<_i9.AbortedException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<_i9.AbortedException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.AlreadyExistsException catch (e, st) {
       const statusCode = 409;
@@ -75,20 +84,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.AlreadyExistsException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.AlreadyExistsException',
+              'value': _i7.Serializers.instance
+                  .serialize<_i9.AlreadyExistsException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i9.AlreadyExistsException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on AssertionError catch (e, st) {
       const statusCode = 500;
@@ -97,18 +114,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.AssertionError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.AssertionError',
+              'value': _i7.Serializers.instance.serialize<AssertionError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<AssertionError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i10.AsyncError catch (e, st) {
       const statusCode = 500;
@@ -117,18 +143,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.async.AsyncError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.async.AsyncError',
+              'value': _i7.Serializers.instance.serialize<_i10.AsyncError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<_i10.AsyncError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.CancelledException catch (e, st) {
       const statusCode = 499;
@@ -137,20 +172,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.CancelledException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.CancelledException',
+              'value':
+                  _i7.Serializers.instance.serialize<_i9.CancelledException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i9.CancelledException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on ConcurrentModificationError catch (e, st) {
       const statusCode = 500;
@@ -159,19 +202,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.ConcurrentModificationError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.ConcurrentModificationError',
+              'value': _i7.Serializers.instance
+                  .serialize<ConcurrentModificationError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<ConcurrentModificationError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.DataLossError catch (e, st) {
       const statusCode = 500;
@@ -180,19 +232,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.DataLossError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.DataLossError',
+              'value': _i7.Serializers.instance.serialize<_i9.DataLossError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<_i9.DataLossError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.DeadlineExceededError catch (e, st) {
       const statusCode = 504;
@@ -201,20 +261,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.DeadlineExceededError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.DeadlineExceededError',
+              'value': _i7.Serializers.instance
+                  .serialize<_i9.DeadlineExceededError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i9.DeadlineExceededError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.FailedPreconditionException catch (e, st) {
       const statusCode = 412;
@@ -223,20 +291,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.FailedPreconditionException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.FailedPreconditionException',
+              'value': _i7.Serializers.instance
+                  .serialize<_i9.FailedPreconditionException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance
-          .serialize<_i9.FailedPreconditionException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on IndexError catch (e, st) {
       const statusCode = 500;
@@ -245,18 +321,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.IndexError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.IndexError',
+              'value': _i7.Serializers.instance.serialize<IndexError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<IndexError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on IntegerDivisionByZeroException catch (e, st) {
       const statusCode = 500;
@@ -265,20 +350,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.IntegerDivisionByZeroException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.core.IntegerDivisionByZeroException',
+              'value': _i7.Serializers.instance
+                  .serialize<IntegerDivisionByZeroException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<IntegerDivisionByZeroException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.InternalServerError catch (e, st) {
       const statusCode = 500;
@@ -287,20 +380,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.InternalServerError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.InternalServerError',
+              'value': _i7.Serializers.instance
+                  .serialize<_i9.InternalServerError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i9.InternalServerError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i6.JsonUnsupportedObjectError catch (e, st) {
       const statusCode = 500;
@@ -309,19 +410,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.convert.JsonUnsupportedObjectError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.convert.JsonUnsupportedObjectError',
+              'value': _i7.Serializers.instance
+                  .serialize<_i6.JsonUnsupportedObjectError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i6.JsonUnsupportedObjectError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.NotFoundException catch (e, st) {
       const statusCode = 404;
@@ -330,20 +440,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.NotFoundException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.NotFoundException',
+              'value':
+                  _i7.Serializers.instance.serialize<_i9.NotFoundException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i9.NotFoundException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on OutOfMemoryError catch (e, st) {
       const statusCode = 500;
@@ -352,18 +470,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.OutOfMemoryError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.OutOfMemoryError',
+              'value': _i7.Serializers.instance.serialize<OutOfMemoryError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<OutOfMemoryError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.OutOfRangeException catch (e, st) {
       const statusCode = 416;
@@ -372,20 +499,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.OutOfRangeException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.OutOfRangeException',
+              'value': _i7.Serializers.instance
+                  .serialize<_i9.OutOfRangeException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i9.OutOfRangeException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.PermissionDeniedException catch (e, st) {
       const statusCode = 403;
@@ -394,20 +529,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.PermissionDeniedException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.PermissionDeniedException',
+              'value': _i7.Serializers.instance
+                  .serialize<_i9.PermissionDeniedException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i9.PermissionDeniedException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on RangeError catch (e, st) {
       const statusCode = 500;
@@ -416,18 +559,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.RangeError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.RangeError',
+              'value': _i7.Serializers.instance.serialize<RangeError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<RangeError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on ArgumentError catch (e, st) {
       const statusCode = 500;
@@ -436,18 +588,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.ArgumentError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.ArgumentError',
+              'value': _i7.Serializers.instance.serialize<ArgumentError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<ArgumentError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.ResourceExhaustedException catch (e, st) {
       const statusCode = 429;
@@ -456,20 +617,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.ResourceExhaustedException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.ResourceExhaustedException',
+              'value': _i7.Serializers.instance
+                  .serialize<_i9.ResourceExhaustedException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i9.ResourceExhaustedException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i11.SerializationException catch (e, st) {
       const statusCode = 400;
@@ -478,20 +647,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.SerializationException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.SerializationException',
+              'value': _i7.Serializers.instance
+                  .serialize<_i11.SerializationException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i11.SerializationException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.BadRequestException catch (e, st) {
       const statusCode = 400;
@@ -500,20 +677,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.BadRequestException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.BadRequestException',
+              'value': _i7.Serializers.instance
+                  .serialize<_i9.BadRequestException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i9.BadRequestException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on FormatException catch (e, st) {
       const statusCode = 400;
@@ -522,19 +707,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.FormatException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.core.FormatException',
+              'value': _i7.Serializers.instance.serialize<FormatException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<FormatException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on StackOverflowError catch (e, st) {
       const statusCode = 500;
@@ -543,18 +736,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.StackOverflowError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.StackOverflowError',
+              'value':
+                  _i7.Serializers.instance.serialize<StackOverflowError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<StackOverflowError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on StateError catch (e, st) {
       const statusCode = 500;
@@ -563,19 +766,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.StateError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.core.StateError',
+              'value': _i7.Serializers.instance.serialize<StateError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<StateError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i10.TimeoutException catch (e, st) {
       const statusCode = 400;
@@ -584,20 +795,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.async.TimeoutException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.async.TimeoutException',
+              'value':
+                  _i7.Serializers.instance.serialize<_i10.TimeoutException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i10.TimeoutException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on TypeError catch (e, st) {
       const statusCode = 500;
@@ -606,18 +825,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.TypeError',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.TypeError',
+              'value': _i7.Serializers.instance.serialize<TypeError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<TypeError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.UnauthorizedException catch (e, st) {
       const statusCode = 401;
@@ -626,20 +854,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.UnauthorizedException',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.UnauthorizedException',
+              'value': _i7.Serializers.instance
+                  .serialize<_i9.UnauthorizedException>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i9.UnauthorizedException>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.UnavailableError catch (e, st) {
       const statusCode = 503;
@@ -648,19 +884,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.UnavailableError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.UnavailableError',
+              'value':
+                  _i7.Serializers.instance.serialize<_i9.UnavailableError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<_i9.UnavailableError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.UnimplementedError catch (e, st) {
       const statusCode = 501;
@@ -669,20 +914,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.UnimplementedError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.UnimplementedError',
+              'value':
+                  _i7.Serializers.instance.serialize<_i9.UnimplementedError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error =
-          _i7.Serializers.instance.serialize<_i9.UnimplementedError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on UnimplementedError catch (e, st) {
       const statusCode = 500;
@@ -691,19 +944,28 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.UnimplementedError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.core.UnimplementedError',
+              'value':
+                  _i7.Serializers.instance.serialize<UnimplementedError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<UnimplementedError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on _i9.UnknownError catch (e, st) {
       const statusCode = 500;
@@ -712,40 +974,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'celest.core.v1.UnknownError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.UnknownError',
+              'value': _i7.Serializers.instance.serialize<_i9.UnknownError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<_i9.UnknownError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
-      );
-    } on _i9.CloudException catch (e, st) {
-      const statusCode = 400;
-      _i4.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
-      final meta = {
-        'code': 'celest.core.v1.CloudException',
-        'message': e.message,
-        'status': statusCode,
-      };
-      final error = _i7.Serializers.instance.serialize<_i9.CloudException>(e);
-      return _i2.Response(
-        statusCode,
-        headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on UnsupportedError catch (e, st) {
       const statusCode = 500;
@@ -754,19 +1003,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.UnsupportedError',
-        'message': e.message,
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.core.UnsupportedError',
+              'value': _i7.Serializers.instance.serialize<UnsupportedError>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<UnsupportedError>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     } on Error catch (e, st) {
       const statusCode = 500;
@@ -775,18 +1032,27 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
         e,
         st,
       );
-      final meta = {
-        'code': 'dart.core.Error',
-        'status': statusCode,
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.Error',
+              'value': _i7.Serializers.instance.serialize<Error>(e),
+            },
+            if (_i4.context.environment != _i5.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i7.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
       };
-      final error = _i7.Serializers.instance.serialize<Error>(e);
       return _i2.Response(
         statusCode,
         headers: const {'Content-Type': 'application/json'},
-        body: _i7.JsonUtf8.encode({
-          '@error': meta,
-          ...error is Map<String, Object?> ? error : {'@': error},
-        }),
+        body: _i7.JsonUtf8.encode(status),
       );
     }
   }
@@ -1015,6 +1281,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance
         .put(_i7.Serializer.define<_i9.AbortedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1026,6 +1293,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.AbortedException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1036,6 +1304,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance.put(
         _i7.Serializer.define<_i9.AlreadyExistsException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1047,6 +1316,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.AlreadyExistsException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1057,6 +1327,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance.put(
         _i7.Serializer.define<_i9.BadRequestException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1068,6 +1339,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.BadRequestException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1078,6 +1350,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance.put(
         _i7.Serializer.define<_i9.CancelledException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1089,6 +1362,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.CancelledException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1097,23 +1371,9 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       },
     ));
     _i7.Serializers.instance
-        .put(_i7.Serializer.define<_i9.CloudException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
-          $value.details,
-          const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i9.CloudException.fromJson($serialized);
-      },
-    ));
-    _i7.Serializers.instance
         .put(_i7.Serializer.define<_i9.DataLossError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1125,6 +1385,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.DataLossError(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1135,6 +1396,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance.put(
         _i7.Serializer.define<_i9.DeadlineExceededError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1146,6 +1408,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.DeadlineExceededError(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1156,6 +1419,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance.put(_i7.Serializer.define<
         _i9.FailedPreconditionException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1167,6 +1431,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.FailedPreconditionException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1177,6 +1442,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance.put(
         _i7.Serializer.define<_i9.InternalServerError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1188,6 +1454,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.InternalServerError(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1198,6 +1465,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance
         .put(_i7.Serializer.define<_i9.NotFoundException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1209,6 +1477,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.NotFoundException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1219,6 +1488,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance.put(
         _i7.Serializer.define<_i9.OutOfRangeException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1230,6 +1500,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.OutOfRangeException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1240,6 +1511,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance.put(_i7.Serializer.define<
         _i9.PermissionDeniedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1251,6 +1523,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.PermissionDeniedException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1261,6 +1534,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance.put(_i7.Serializer.define<
         _i9.ResourceExhaustedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1272,6 +1546,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.ResourceExhaustedException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1282,6 +1557,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance.put(
         _i7.Serializer.define<_i9.UnauthorizedException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1293,6 +1569,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.UnauthorizedException(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1303,6 +1580,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance
         .put(_i7.Serializer.define<_i9.UnavailableError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1314,6 +1592,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.UnavailableError(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1322,8 +1601,9 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       },
     ));
     _i7.Serializers.instance.put(
-        _i7.Serializer.define<_i9.UnimplementedError, Map<String, Object?>?>(
+        _i7.Serializer.define<_i9.UnimplementedError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1333,12 +1613,20 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
           r'details': details,
       },
       deserialize: ($serialized) {
-        return _i9.UnimplementedError(($serialized?[r'message'] as String?));
+        return _i9.UnimplementedError(
+          ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
+          details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
+            $serialized[r'details'],
+            const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
+          ),
+        );
       },
     ));
     _i7.Serializers.instance
         .put(_i7.Serializer.define<_i9.UnknownError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,
@@ -1350,6 +1638,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
       deserialize: ($serialized) {
         return _i9.UnknownError(
           ($serialized[r'message'] as String?),
+          code: ($serialized[r'code'] as num?)?.toInt(),
           details: _i7.Serializers.instance.deserialize<_i12.JsonValue?>(
             $serialized[r'details'],
             const _i7.TypeToken<_i12.JsonValue?>('JsonValue'),
@@ -1360,6 +1649,7 @@ final class SayHelloPersonTarget extends _i1.CloudFunctionHttpTarget {
     _i7.Serializers.instance.put(_i7.Serializer.define<
         _i11.SerializationException, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
         r'message': $value.message,
         if (_i7.Serializers.instance.serialize<_i12.JsonValue?>(
           $value.details,

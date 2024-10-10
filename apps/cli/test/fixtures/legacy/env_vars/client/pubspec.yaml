@@ -13,7 +13,13 @@ dependencies:
   meta: ^1.12.0
   native_storage: ^0.2.2
 
-dev_dependencies:
-  test:
-
-dependency_overrides: {celest: {path: ../../../../../../../celest/packages/celest}, celest_auth: {path: ../../../../../../../celest/packages/celest_auth}, celest_cloud: {path: ../../../../../../../celest/packages/celest_cloud}, celest_core: {path: ../../../../../../../celest/packages/celest_core}}
+dependency_overrides:
+  celest:
+    path: ../../../../../../../celest/packages/celest
+  celest_auth:
+    path: ../../../../../../../celest/packages/celest_auth
+  celest_cloud:
+    path: ../../../../../../../celest/packages/celest_cloud
+  celest_core:
+    path: ../../../../../../../celest/packages/celest_core
+dev_dependencies: {}

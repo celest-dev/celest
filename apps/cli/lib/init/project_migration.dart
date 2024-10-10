@@ -281,6 +281,12 @@ final class ProjectClient extends ProjectFile {
   String get relativePath => 'client/';
 
   @override
+  bool get needsMigration => !fileSystem
+      .directory(projectPaths.clientRoot)
+      .childFile('pubspec.yaml')
+      .existsSync();
+
+  @override
   Future<ProjectMigrationResult> create() async {
     final clientRoot = fileSystem.directory(projectPaths.clientRoot);
     if (!clientRoot.existsSync()) {

@@ -238,6 +238,10 @@ transforms:
     }
     await from.delete(recursive: true);
     if (p.basename(from.path) == 'generated') {
+      final resourcesDart = to.childFile('resources.dart');
+      if (resourcesDart.existsSync()) {
+        await resourcesDart.delete();
+      }
       // Don't create a link for the generated folder.
       return null;
     }

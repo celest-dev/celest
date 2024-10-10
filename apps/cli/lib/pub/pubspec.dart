@@ -1,6 +1,8 @@
 import 'package:celest_cli/pub/pub_dependency.dart';
+import 'package:collection/collection.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
+import 'package:yaml/yaml.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
 enum DependencyType {
@@ -81,44 +83,42 @@ environment:
   sdk:
 
 dependencies:
-  dummy:
-
-dev_dependencies:
-  test:
 ''');
+    if (devDependencies.isNotEmpty) {
+      yaml.writeln();
+      yaml.writeln('dev_dependencies:');
+    }
     if (dependencyOverrides.isNotEmpty) {
       yaml
         ..writeln()
-        ..writeln('dependency_overrides: {}');
+        ..writeln('dependency_overrides:');
     }
     final editor = YamlEditor(source ?? yaml.toString());
     if (environment case final environment?) {
-      environment.forEach((key, constraint) {
-        editor.update(
-          ['environment', key],
-          constraint == null ? '' : constraint.toString(),
-        );
-      });
+      for (final key in environment.keys.sorted()) {
+        editor.update(['environment', key], environment[key]!.toYaml());
+      }
     }
 
     void addConstraints(
       Map<String, Dependency> constraints,
       DependencyType type,
     ) {
-      for (final MapEntry(key: dep, value: constraint) in constraints.entries) {
-        final path = <String>[type.key, dep];
-        editor.update(path, constraint.toYaml());
-      }
+      editor.update(
+        [type.key],
+        wrapAsYamlNode(
+          {
+            for (final dependency in constraints.keys.sorted())
+              dependency: constraints[dependency]!.toYaml(),
+          },
+          collectionStyle: CollectionStyle.BLOCK,
+        ),
+      );
     }
 
     addConstraints(dependencies, DependencyType.dependency);
     addConstraints(devDependencies, DependencyType.devDependency);
     addConstraints(dependencyOverrides, DependencyType.dependencyOverride);
-    try {
-      editor.remove(['dependencies', 'dummy']);
-    } on Object {
-      // OK
-    }
 
     return editor.toString();
   }
