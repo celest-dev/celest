@@ -41,6 +41,14 @@ part 'serializers.g.dart';
   FirebaseExternalAuthProvider,
   SupabaseExternalAuthProvider,
 
+  // Data
+  DatabaseSchema,
+  DatabaseSchemaType,
+  DriftDatabaseSchema,
+  Database,
+  DatabaseProviderType,
+  CelestDatabaseConfig,
+
   // Resolved AST
   ResolvedProject,
   ResolvedApi,
@@ -49,6 +57,8 @@ part 'serializers.g.dart';
   ResolvedHttpRoute,
   ResolvedVariable,
   ResolvedSecret,
+
+  // Resolved Auth
   ResolvedAuth,
   ResolvedAuthProvider,
   ResolvedEmailAuthProvider,
@@ -58,6 +68,12 @@ part 'serializers.g.dart';
   ResolvedAppleAuthProvider,
   ResolvedFirebaseExternalAuthProvider,
   ResolvedSupabaseExternalAuthProvider,
+
+  // Resolved Data
+  ResolvedDatabaseSchema,
+  ResolvedDriftDatabaseSchema,
+  ResolvedDatabase,
+  ResolvedCelestDatabaseConfig,
 
   // Dart values
   DartString,

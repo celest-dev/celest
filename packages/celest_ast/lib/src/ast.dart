@@ -40,6 +40,7 @@ abstract class Project implements Built<Project, ProjectBuilder>, AstNode {
     List<Variable> variables = const [],
     List<Secret> secrets = const [],
     Auth? auth,
+    Map<String, Database> databases = const {},
     required SdkConfiguration sdkConfig,
   }) {
     return _$Project._(
@@ -53,6 +54,7 @@ abstract class Project implements Built<Project, ProjectBuilder>, AstNode {
       variables: variables.build(),
       secrets: secrets.build(),
       auth: auth,
+      databases: databases.build(),
       sdkConfig: sdkConfig,
     );
   }
@@ -70,6 +72,7 @@ abstract class Project implements Built<Project, ProjectBuilder>, AstNode {
   BuiltList<Variable> get variables;
   BuiltList<Secret> get secrets;
   Auth? get auth;
+  BuiltMap<String, Database> get databases;
 
   SdkConfiguration get sdkConfig;
 
@@ -1056,4 +1059,176 @@ abstract class NodeReference
           as Map<String, dynamic>;
 
   static Serializer<NodeReference> get serializer => _$nodeReferenceSerializer;
+}
+
+sealed class DatabaseSchema implements AstNode {
+  /// The type of database schema.
+  DatabaseSchemaType get type;
+
+  /// The Dart type declaring the database schema.
+  TypeReference get declaration;
+}
+
+class DatabaseSchemaType extends EnumClass {
+  const DatabaseSchemaType._(super.name);
+
+  static const DatabaseSchemaType drift = _$drift;
+
+  static BuiltSet<DatabaseSchemaType> get values => _$DatabaseSchemaTypeValues;
+  static DatabaseSchemaType valueOf(String name) =>
+      _$DatabaseSchemaTypeValueOf(name);
+
+  static Serializer<DatabaseSchemaType> get serializer =>
+      _$databaseSchemaTypeSerializer;
+}
+
+abstract class DriftDatabaseSchema
+    implements
+        Built<DriftDatabaseSchema, DriftDatabaseSchemaBuilder>,
+        DatabaseSchema {
+  factory DriftDatabaseSchema({
+    required TypeReference declaration,
+    required FileSpan location,
+  }) {
+    return _$DriftDatabaseSchema._(
+      declaration: declaration,
+      location: location,
+    );
+  }
+
+  factory DriftDatabaseSchema.build(
+          [void Function(DriftDatabaseSchemaBuilder) updates]) =
+      _$DriftDatabaseSchema;
+
+  DriftDatabaseSchema._();
+
+  @override
+  DatabaseSchemaType get type => DatabaseSchemaType.drift;
+
+  /// The Drift type of the database schema.
+  ///
+  /// Must be a subtype of `GeneratedDatabase`.
+  @override
+  TypeReference get declaration;
+
+  @override
+  R accept<R>(AstVisitor<R> visitor) => visitor.visitDatabaseSchema(this);
+
+  @override
+  R acceptWithArg<R, A>(AstVisitorWithArg<R, A> visitor, A arg) =>
+      visitor.visitDatabaseSchema(this, arg);
+
+  Map<String, dynamic> toJson() =>
+      serializers.serializeWith(DriftDatabaseSchema.serializer, this)
+          as Map<String, dynamic>;
+
+  static Serializer<DriftDatabaseSchema> get serializer =>
+      _$driftDatabaseSchemaSerializer;
+}
+
+class DatabaseProviderType extends EnumClass {
+  const DatabaseProviderType._(super.name);
+
+  @BuiltValueEnumConst(wireName: 'CELEST')
+  static const DatabaseProviderType celest = _$celest;
+
+  static BuiltSet<DatabaseProviderType> get values => _$databaseProviderType;
+  static DatabaseProviderType valueOf(String name) =>
+      _$databaseProviderTypeValueOf(name);
+}
+
+abstract class Database implements Built<Database, DatabaseBuilder>, AstNode {
+  factory Database({
+    required String name,
+    required String dartName,
+    Iterable<String> docs = const [],
+    required DatabaseSchema schema,
+    required DatabaseConfig config,
+    required FileSpan location,
+  }) {
+    return _$Database._(
+      name: name,
+      dartName: dartName,
+      docs: docs.toBuiltList(),
+      schema: schema,
+      config: config,
+      location: location,
+    );
+  }
+
+  factory Database.build([void Function(DatabaseBuilder) updates]) = _$Database;
+
+  Database._();
+
+  /// The name of the database.
+  ///
+  /// Defaults to the name of the schema type.
+  String get name;
+
+  /// The name of the Dart variable declaring the database.
+  String get dartName;
+
+  /// Documentation comments attached to the database declaration, if any.
+  BuiltList<String> get docs;
+
+  /// The schema definition of the database.
+  DatabaseSchema get schema;
+
+  /// The configuration for the database host.
+  DatabaseConfig get config;
+
+  @override
+  FileSpan get location;
+
+  @override
+  R accept<R>(AstVisitor<R> visitor) => visitor.visitDatabase(this);
+
+  @override
+  R acceptWithArg<R, A>(AstVisitorWithArg<R, A> visitor, A arg) =>
+      visitor.visitDatabase(this, arg);
+
+  Map<String, dynamic> toJson() =>
+      serializers.serializeWith(Database.serializer, this)
+          as Map<String, dynamic>;
+
+  static Serializer<Database> get serializer => _$databaseSerializer;
+}
+
+sealed class DatabaseConfig {
+  DatabaseProviderType get provider;
+}
+
+// Holds the hostname and token for a Celest database.
+abstract class CelestDatabaseConfig
+    implements
+        DatabaseConfig,
+        Built<CelestDatabaseConfig, CelestDatabaseConfigBuilder> {
+  factory CelestDatabaseConfig({
+    required Variable hostname,
+    required Secret token,
+  }) {
+    return _$CelestDatabaseConfig._(
+      hostname: hostname,
+      token: token,
+    );
+  }
+
+  factory CelestDatabaseConfig.build(
+          [void Function(CelestDatabaseConfigBuilder) updates]) =
+      _$CelestDatabaseConfig;
+
+  CelestDatabaseConfig._();
+
+  @override
+  DatabaseProviderType get provider => DatabaseProviderType.celest;
+
+  Variable get hostname;
+  Secret get token;
+
+  Map<String, dynamic> toJson() =>
+      serializers.serializeWith(CelestDatabaseConfig.serializer, this)
+          as Map<String, dynamic>;
+
+  static Serializer<CelestDatabaseConfig> get serializer =>
+      _$celestDatabaseConfigSerializer;
 }

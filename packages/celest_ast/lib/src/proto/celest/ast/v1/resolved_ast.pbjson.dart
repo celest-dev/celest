@@ -63,6 +63,15 @@ const ResolvedProject$json = {
       '10': 'auth'
     },
     {
+      '1': 'databases',
+      '3': 7,
+      '4': 3,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedProject.DatabasesEntry',
+      '8': {},
+      '10': 'databases'
+    },
+    {
       '1': 'sdk_config',
       '3': 99,
       '4': 1,
@@ -72,7 +81,7 @@ const ResolvedProject$json = {
       '10': 'sdkConfig'
     },
   ],
-  '3': [ResolvedProject_ApisEntry$json],
+  '3': [ResolvedProject_ApisEntry$json, ResolvedProject_DatabasesEntry$json],
 };
 
 @$core.Deprecated('Use resolvedProjectDescriptor instead')
@@ -92,6 +101,23 @@ const ResolvedProject_ApisEntry$json = {
   '7': {'7': true},
 };
 
+@$core.Deprecated('Use resolvedProjectDescriptor instead')
+const ResolvedProject_DatabasesEntry$json = {
+  '1': 'DatabasesEntry',
+  '2': [
+    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {
+      '1': 'value',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedDatabase',
+      '10': 'value'
+    },
+  ],
+  '7': {'7': true},
+};
+
 /// Descriptor for `ResolvedProject`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List resolvedProjectDescriptor = $convert.base64Decode(
     'Cg9SZXNvbHZlZFByb2plY3QSIgoKcHJvamVjdF9pZBgBIAEoCUID4EECUglwcm9qZWN0SWQSKg'
@@ -100,10 +126,13 @@ final $typed_data.Uint8List resolvedProjectDescriptor = $convert.base64Decode(
     'oJdmFyaWFibGVzGAQgAygLMh8uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFZhcmlhYmxlQgPgQQFS'
     'CXZhcmlhYmxlcxI8CgdzZWNyZXRzGAUgAygLMh0uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFNlY3'
     'JldEID4EEBUgdzZWNyZXRzEjQKBGF1dGgYBiABKAsyGy5jZWxlc3QuYXN0LnYxLlJlc29sdmVk'
-    'QXV0aEID4EEBUgRhdXRoEkMKCnNka19jb25maWcYYyABKAsyHy5jZWxlc3QuYXN0LnYxLlNka0'
-    'NvbmZpZ3VyYXRpb25CA+BBAlIJc2RrQ29uZmlnGlMKCUFwaXNFbnRyeRIQCgNrZXkYASABKAlS'
-    'A2tleRIwCgV2YWx1ZRgCIAEoCzIaLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWRBcGlSBXZhbHVlOg'
-    'I4AQ==');
+    'QXV0aEID4EEBUgRhdXRoElAKCWRhdGFiYXNlcxgHIAMoCzItLmNlbGVzdC5hc3QudjEuUmVzb2'
+    'x2ZWRQcm9qZWN0LkRhdGFiYXNlc0VudHJ5QgPgQQFSCWRhdGFiYXNlcxJDCgpzZGtfY29uZmln'
+    'GGMgASgLMh8uY2VsZXN0LmFzdC52MS5TZGtDb25maWd1cmF0aW9uQgPgQQJSCXNka0NvbmZpZx'
+    'pTCglBcGlzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSMAoFdmFsdWUYAiABKAsyGi5jZWxlc3Qu'
+    'YXN0LnYxLlJlc29sdmVkQXBpUgV2YWx1ZToCOAEaXQoORGF0YWJhc2VzRW50cnkSEAoDa2V5GA'
+    'EgASgJUgNrZXkSNQoFdmFsdWUYAiABKAsyHy5jZWxlc3QuYXN0LnYxLlJlc29sdmVkRGF0YWJh'
+    'c2VSBXZhbHVlOgI4AQ==');
 
 @$core.Deprecated('Use resolvedApiDescriptor instead')
 const ResolvedApi$json = {
@@ -734,6 +763,174 @@ final $typed_data.Uint8List
         '91cmwYASABKAsyHy5jZWxlc3QuYXN0LnYxLlJlc29sdmVkVmFyaWFibGVCA+BBAlIKcHJvamVj'
         'dFVybBJBCgpqd3Rfc2VjcmV0GAIgASgLMh0uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFNlY3JldE'
         'ID4EEBUglqd3RTZWNyZXQ=');
+
+@$core.Deprecated('Use resolvedDatabaseDescriptor instead')
+const ResolvedDatabase$json = {
+  '1': 'ResolvedDatabase',
+  '2': [
+    {'1': 'database_id', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'databaseId'},
+    {
+      '1': 'type',
+      '3': 2,
+      '4': 1,
+      '5': 14,
+      '6': '.celest.ast.v1.ResolvedDatabase.Type',
+      '8': {},
+      '10': 'type'
+    },
+    {
+      '1': 'schema',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedDatabaseSchema',
+      '8': {},
+      '10': 'schema'
+    },
+    {
+      '1': 'celest',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedCelestDatabaseConfig',
+      '9': 0,
+      '10': 'celest'
+    },
+  ],
+  '4': [ResolvedDatabase_Type$json],
+  '8': [
+    {'1': 'config'},
+  ],
+};
+
+@$core.Deprecated('Use resolvedDatabaseDescriptor instead')
+const ResolvedDatabase_Type$json = {
+  '1': 'Type',
+  '2': [
+    {'1': 'DATABASE_TYPE_UNSPECIFIED', '2': 0},
+    {'1': 'CELEST', '2': 1},
+  ],
+};
+
+/// Descriptor for `ResolvedDatabase`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedDatabaseDescriptor = $convert.base64Decode(
+    'ChBSZXNvbHZlZERhdGFiYXNlEiQKC2RhdGFiYXNlX2lkGAEgASgJQgPgQQJSCmRhdGFiYXNlSW'
+    'QSPQoEdHlwZRgCIAEoDjIkLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWREYXRhYmFzZS5UeXBlQgPg'
+    'QQJSBHR5cGUSQgoGc2NoZW1hGAMgASgLMiUuY2VsZXN0LmFzdC52MS5SZXNvbHZlZERhdGFiYX'
+    'NlU2NoZW1hQgPgQQJSBnNjaGVtYRJFCgZjZWxlc3QYBCABKAsyKy5jZWxlc3QuYXN0LnYxLlJl'
+    'c29sdmVkQ2VsZXN0RGF0YWJhc2VDb25maWdIAFIGY2VsZXN0IjEKBFR5cGUSHQoZREFUQUJBU0'
+    'VfVFlQRV9VTlNQRUNJRklFRBAAEgoKBkNFTEVTVBABQggKBmNvbmZpZw==');
+
+@$core.Deprecated('Use resolvedCelestDatabaseConfigDescriptor instead')
+const ResolvedCelestDatabaseConfig$json = {
+  '1': 'ResolvedCelestDatabaseConfig',
+  '2': [
+    {
+      '1': 'hostname',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedVariable',
+      '8': {},
+      '10': 'hostname'
+    },
+    {
+      '1': 'token',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedSecret',
+      '8': {},
+      '10': 'token'
+    },
+  ],
+};
+
+/// Descriptor for `ResolvedCelestDatabaseConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedCelestDatabaseConfigDescriptor =
+    $convert.base64Decode(
+        'ChxSZXNvbHZlZENlbGVzdERhdGFiYXNlQ29uZmlnEkAKCGhvc3RuYW1lGAEgASgLMh8uY2VsZX'
+        'N0LmFzdC52MS5SZXNvbHZlZFZhcmlhYmxlQgPgQQJSCGhvc3RuYW1lEjgKBXRva2VuGAIgASgL'
+        'Mh0uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFNlY3JldEID4EECUgV0b2tlbg==');
+
+@$core.Deprecated('Use resolvedDatabaseSchemaDescriptor instead')
+const ResolvedDatabaseSchema$json = {
+  '1': 'ResolvedDatabaseSchema',
+  '2': [
+    {
+      '1': 'database_schema_id',
+      '3': 1,
+      '4': 1,
+      '5': 9,
+      '8': {},
+      '10': 'databaseSchemaId'
+    },
+    {
+      '1': 'type',
+      '3': 2,
+      '4': 1,
+      '5': 14,
+      '6': '.celest.ast.v1.ResolvedDatabaseSchema.Type',
+      '8': {},
+      '10': 'type'
+    },
+    {
+      '1': 'drift',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedDriftDatabaseSchema',
+      '9': 0,
+      '10': 'drift'
+    },
+  ],
+  '4': [ResolvedDatabaseSchema_Type$json],
+  '8': [
+    {'1': 'schema'},
+  ],
+};
+
+@$core.Deprecated('Use resolvedDatabaseSchemaDescriptor instead')
+const ResolvedDatabaseSchema_Type$json = {
+  '1': 'Type',
+  '2': [
+    {'1': 'DATABASE_SCHEMA_TYPE_UNSPECIFIED', '2': 0},
+    {'1': 'DRIFT', '2': 1},
+  ],
+};
+
+/// Descriptor for `ResolvedDatabaseSchema`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedDatabaseSchemaDescriptor = $convert.base64Decode(
+    'ChZSZXNvbHZlZERhdGFiYXNlU2NoZW1hEjEKEmRhdGFiYXNlX3NjaGVtYV9pZBgBIAEoCUID4E'
+    'ECUhBkYXRhYmFzZVNjaGVtYUlkEkMKBHR5cGUYAiABKA4yKi5jZWxlc3QuYXN0LnYxLlJlc29s'
+    'dmVkRGF0YWJhc2VTY2hlbWEuVHlwZUID4EECUgR0eXBlEkIKBWRyaWZ0GAMgASgLMiouY2VsZX'
+    'N0LmFzdC52MS5SZXNvbHZlZERyaWZ0RGF0YWJhc2VTY2hlbWFIAFIFZHJpZnQiNwoEVHlwZRIk'
+    'CiBEQVRBQkFTRV9TQ0hFTUFfVFlQRV9VTlNQRUNJRklFRBAAEgkKBURSSUZUEAFCCAoGc2NoZW'
+    '1h');
+
+@$core.Deprecated('Use resolvedDriftDatabaseSchemaDescriptor instead')
+const ResolvedDriftDatabaseSchema$json = {
+  '1': 'ResolvedDriftDatabaseSchema',
+  '2': [
+    {'1': 'version', '3': 1, '4': 1, '5': 5, '8': {}, '10': 'version'},
+    {
+      '1': 'schema_json',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.Struct',
+      '8': {},
+      '10': 'schemaJson'
+    },
+  ],
+};
+
+/// Descriptor for `ResolvedDriftDatabaseSchema`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedDriftDatabaseSchemaDescriptor =
+    $convert.base64Decode(
+        'ChtSZXNvbHZlZERyaWZ0RGF0YWJhc2VTY2hlbWESHQoHdmVyc2lvbhgBIAEoBUID4EECUgd2ZX'
+        'JzaW9uEj0KC3NjaGVtYV9qc29uGAIgASgLMhcuZ29vZ2xlLnByb3RvYnVmLlN0cnVjdEID4EEC'
+        'UgpzY2hlbWFKc29u');
 
 @$core.Deprecated('Use sdkConfigurationDescriptor instead')
 const SdkConfiguration$json = {

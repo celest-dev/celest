@@ -18,6 +18,8 @@ abstract class AstVisitor<T> {
         final AuthProvider provider => visitAuthProvider(provider),
         final ExternalAuthProvider provider =>
           visitExternalAuthProvider(provider),
+        final Database database => visitDatabase(database),
+        final DatabaseSchema schema => visitDatabaseSchema(schema),
       };
 
   T visitProject(Project project);
@@ -45,6 +47,10 @@ abstract class AstVisitor<T> {
   T visitAuthProvider(AuthProvider provider);
 
   T visitExternalAuthProvider(ExternalAuthProvider provider);
+
+  T visitDatabase(Database database);
+
+  T visitDatabaseSchema(DatabaseSchema schema);
 }
 
 abstract class AstVisitorWithArg<T, A> {
@@ -67,6 +73,8 @@ abstract class AstVisitorWithArg<T, A> {
         final AuthProvider provider => visitAuthProvider(provider, context),
         final ExternalAuthProvider provider =>
           visitExternalAuthProvider(provider, context),
+        final Database database => visitDatabase(database, context),
+        final DatabaseSchema schema => visitDatabaseSchema(schema, context),
       };
 
   T visitProject(Project project, covariant A context);
@@ -97,6 +105,10 @@ abstract class AstVisitorWithArg<T, A> {
     ExternalAuthProvider provider,
     covariant A context,
   );
+
+  T visitDatabase(Database database, covariant A context);
+
+  T visitDatabaseSchema(DatabaseSchema schema, covariant A context);
 }
 
 abstract class ResolvedAstVisitor<T> {
@@ -110,6 +122,8 @@ abstract class ResolvedAstVisitor<T> {
         final ResolvedAuthProvider provider => visitAuthProvider(provider),
         final ResolvedExternalAuthProvider provider =>
           visitExternalAuthProvider(provider),
+        final ResolvedDatabase database => visitDatabase(database),
+        final ResolvedDatabaseSchema schema => visitDatabaseSchema(schema),
       };
 
   T visitProject(ResolvedProject project);
@@ -127,6 +141,10 @@ abstract class ResolvedAstVisitor<T> {
   T visitAuthProvider(ResolvedAuthProvider provider);
 
   T visitExternalAuthProvider(ResolvedExternalAuthProvider provider);
+
+  T visitDatabase(ResolvedDatabase database);
+
+  T visitDatabaseSchema(ResolvedDatabaseSchema schema);
 }
 
 abstract class ResolvedAstVisitorWithArg<T, A> {
@@ -142,6 +160,9 @@ abstract class ResolvedAstVisitorWithArg<T, A> {
           visitAuthProvider(provider, context),
         final ResolvedExternalAuthProvider provider =>
           visitExternalAuthProvider(provider, context),
+        final ResolvedDatabase database => visitDatabase(database, context),
+        final ResolvedDatabaseSchema schema =>
+          visitDatabaseSchema(schema, context),
       };
 
   T visitProject(ResolvedProject project, covariant A context);
@@ -162,4 +183,8 @@ abstract class ResolvedAstVisitorWithArg<T, A> {
     ResolvedExternalAuthProvider provider,
     covariant A context,
   );
+
+  T visitDatabase(ResolvedDatabase database, covariant A context);
+
+  T visitDatabaseSchema(ResolvedDatabaseSchema schema, covariant A context);
 }

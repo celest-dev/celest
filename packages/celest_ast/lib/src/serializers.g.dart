@@ -16,6 +16,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(AppleAuthProvider.serializer)
       ..add(Auth.serializer)
       ..add(AuthProviderType.serializer)
+      ..add(CelestDatabaseConfig.serializer)
       ..add(CloudFunction.serializer)
       ..add(CloudFunctionParameter.serializer)
       ..add(DartBool.serializer)
@@ -30,6 +31,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(DartString.serializer)
       ..add(DartSymbolLiteral.serializer)
       ..add(DartTypeLiteral.serializer)
+      ..add(Database.serializer)
+      ..add(DatabaseSchemaType.serializer)
+      ..add(DriftDatabaseSchema.serializer)
       ..add(EmailAuthProvider.serializer)
       ..add(FeatureFlag.serializer)
       ..add(FirebaseExternalAuthProvider.serializer)
@@ -43,7 +47,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ResolvedApi.serializer)
       ..add(ResolvedAppleAuthProvider.serializer)
       ..add(ResolvedAuth.serializer)
+      ..add(ResolvedCelestDatabaseConfig.serializer)
       ..add(ResolvedCloudFunction.serializer)
+      ..add(ResolvedDatabase.serializer)
+      ..add(ResolvedDriftDatabaseSchema.serializer)
       ..add(ResolvedEmailAuthProvider.serializer)
       ..add(ResolvedFirebaseExternalAuthProvider.serializer)
       ..add(ResolvedGitHubAuthProvider.serializer)
@@ -128,6 +135,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(DartValue), const FullType(DartValue)]),
           () => new MapBuilder<DartValue, DartValue>())
@@ -141,6 +151,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Secret)]),
           () => new ListBuilder<Secret>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(Database)]),
+          () => new MapBuilder<String, Database>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(String), const FullType(DartValue)]),
@@ -170,6 +184,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ResolvedSecret)]),
           () => new ListBuilder<ResolvedSecret>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(ResolvedDatabase)]),
+          () => new MapBuilder<String, ResolvedDatabase>())
       ..addBuilderFactory(
           const FullType(BuiltMap, const [
             const FullType(String),

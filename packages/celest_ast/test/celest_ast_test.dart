@@ -5,6 +5,34 @@ import 'package:test/test.dart';
 
 void main() {
   test('Proto Interop', () {
+    final databaseSchemaJson = {
+      'entities': [
+        {
+          'id': 0,
+          'references': [],
+          'type': 'table',
+          'data': {
+            'name': 'organizations',
+            'was_declared_in_moor': true,
+            'columns': [
+              {
+                'name': 'id',
+                'getter_name': 'id',
+                'moor_type': 'string',
+                'nullable': false,
+                'customConstraints': 'NOT NULL PRIMARY KEY',
+                'default_dart': null,
+                'default_client_dart': null,
+                'dsl_features': ['primary-key']
+              },
+            ],
+            'is_virtual': false,
+            'without_rowid': false,
+            'constraints': []
+          }
+        },
+      ],
+    };
     final resolvedProject = ResolvedProject(
       projectId: 'test',
       environmentId: 'local',
@@ -99,6 +127,32 @@ void main() {
           value: 'world',
         ),
       ],
+      databases: {
+        'default': ResolvedDatabase(
+          databaseId: 'default',
+          schema: ResolvedDriftDatabaseSchema(
+            databaseSchemaId: 'default',
+            version: 1,
+            schemaJson: databaseSchemaJson,
+          ),
+          config: ResolvedCelestDatabaseConfig(
+            hostname: ResolvedVariable(
+              name: 'CELEST_DATABASE_DEFAULT_HOST',
+              value: '',
+            ),
+            token: ResolvedSecret(
+              name: 'CELEST_DATABASE_DEFAULT_TOKEN',
+              value: '',
+            ),
+          ),
+        )
+      },
+    );
+
+    expect(
+      resolvedProject.databases.values.first.schema,
+      isA<ResolvedDriftDatabaseSchema>()
+          .having((s) => s.schemaJson, 'schemaJson', databaseSchemaJson),
     );
 
     final proto = resolvedProject.toProto();
@@ -217,6 +271,57 @@ void main() {
             'value': 'world',
           },
         ],
+        'databases': {
+          'default': {
+            'databaseId': 'default',
+            'type': 'CELEST',
+            'schema': {
+              'databaseSchemaId': 'default',
+              'type': 'DRIFT',
+              'drift': {
+                'version': 1,
+                'schemaJson': {
+                  'entities': [
+                    {
+                      'id': 0,
+                      'references': [],
+                      'type': 'table',
+                      'data': {
+                        'name': 'organizations',
+                        'was_declared_in_moor': true,
+                        'columns': [
+                          {
+                            'name': 'id',
+                            'getter_name': 'id',
+                            'moor_type': 'string',
+                            'nullable': false,
+                            'customConstraints': 'NOT NULL PRIMARY KEY',
+                            'default_dart': null,
+                            'default_client_dart': null,
+                            'dsl_features': ['primary-key'],
+                          },
+                        ],
+                        'is_virtual': false,
+                        'without_rowid': false,
+                        'constraints': [],
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+            'celest': {
+              'hostname': {
+                'name': 'CELEST_DATABASE_DEFAULT_HOST',
+                'value': '',
+              },
+              'token': {
+                'name': 'CELEST_DATABASE_DEFAULT_TOKEN',
+                'value': '',
+              },
+            },
+          },
+        },
       },
     );
 
