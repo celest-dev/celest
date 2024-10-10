@@ -1,6 +1,6 @@
 {
-    "name": "celest_todo",
-    "short_name": "celest_todo",
+    "name": "celest_tasks",
+    "short_name": "celest_tasks",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

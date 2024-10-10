@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "celest_todo",
+            "name": "celest_tasks",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "celest_todo (profile mode)",
+            "name": "celest_tasks (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "celest_todo (release mode)",
+            "name": "celest_tasks (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

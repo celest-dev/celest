@@ -85,7 +85,9 @@ Future<CelestService> serve({
       ProcessSignal.sigint.watch(),
       if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
     ]).first.then((signal) {
-      print('Received signal $signal');
+      if (context.isRunningInCloud) {
+        print('Received signal $signal');
+      }
       return server.close(force: true);
     }),
   );

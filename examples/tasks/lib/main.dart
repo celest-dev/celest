@@ -1,9 +1,9 @@
 // Import the generated Celest client
 import 'dart:async';
+import 'dart:developer';
 
-import 'package:celest_backend/client.dart';
-import 'package:celest_backend/models.dart';
 import 'package:flutter/material.dart';
+import 'package:tasks_client/tasks_client.dart';
 
 void main() {
   // Initializes Celest in your Flutter app
@@ -31,17 +31,23 @@ class TaskList extends StatefulWidget {
 }
 
 class _TaskListState extends State<TaskList> {
-  var tasks = <String, Task>{};
+  var tasks = <int, Task>{};
+  late final _loadTasks = Future(() async {
+    tasks = {
+      for (final task in await celest.functions.tasks.listAllTasks())
+        task.id: task,
+    };
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Task App'),
+        title: const Text('Celest Tasks'),
       ),
       body: Center(
         child: FutureBuilder(
-          future: _loadTasks(),
+          future: _loadTasks,
           builder: (context, snapshot) => switch (snapshot) {
             AsyncSnapshot(connectionState: ConnectionState.done) => _tasksView,
             AsyncSnapshot(:final error?) =>
@@ -70,14 +76,16 @@ class _TaskListState extends State<TaskList> {
                 if (dir == DismissDirection.endToStart) {
                   return true;
                 } else if (dir == DismissDirection.startToEnd) {
-                  if (task.isCompleted) {
-                    // sneds request to the Celest backend to mark the Task as incomplete
-                    await celest.functions.tasks.markAsIncomplete(id: task.id);
-                  } else {
-                    // sneds request to the Celest backend to mark the Ttask as completed
-                    await celest.functions.tasks.markAsCompleted(id: task.id);
+                  final updatedTask = await switch (task.completed) {
+                    true =>
+                      celest.functions.tasks.markAsIncomplete(id: task.id),
+                    false => celest.functions.tasks.markAsComplete(id: task.id),
+                  };
+                  if (mounted) {
+                    setState(() {
+                      tasks[updatedTask.id] = updatedTask;
+                    });
                   }
-                  setState(() {});
                   return false;
                 }
                 return false;
@@ -93,44 +101,39 @@ class _TaskListState extends State<TaskList> {
                 children: [
                   Expanded(
                     child: Container(
+                      padding: const EdgeInsets.only(left: 12),
                       alignment: Alignment.centerLeft,
-                      color: Colors.green,
-                      child: task.isCompleted
-                          ? const Icon(
-                              Icons.cancel,
-                              color: Colors.red,
-                            )
-                          : const Icon(
-                              Icons.check,
-                              color: Colors.white,
-                            ),
+                      color: task.completed ? Colors.red : Colors.green,
+                      child: task.completed
+                          ? const Icon(Icons.cancel, color: Colors.white)
+                          : const Icon(Icons.check, color: Colors.white),
                     ),
                   ),
                   Expanded(
                     child: Container(
+                      padding: const EdgeInsets.only(right: 12),
                       alignment: Alignment.centerRight,
                       color: Colors.red,
-                      child: const Icon(Icons.delete),
+                      child: const Icon(Icons.delete, color: Colors.white),
                     ),
                   ),
                 ],
               ),
-              child: Card(
-                color: task.importance.color,
-                child: ListTile(
-                  title: Text(
-                    task.title,
-                    style: TextStyle(
-                      decoration:
-                          task.isCompleted ? TextDecoration.lineThrough : null,
-                    ),
-                  ),
-                  trailing: CircleAvatar(
-                    radius: 10,
-                    backgroundColor:
-                        task.isCompleted ? Colors.green : Colors.red,
+              child: ListTile(
+                title: Text(
+                  task.title,
+                  style: TextStyle(
+                    decoration:
+                        task.completed ? TextDecoration.lineThrough : null,
                   ),
                 ),
+                leading: Text(
+                  task.priority.icon,
+                  style: const TextStyle(fontSize: 24),
+                ),
+                trailing: task.completed
+                    ? const Icon(Icons.check, color: Colors.green)
+                    : null,
               ),
             ),
         ],
@@ -138,22 +141,22 @@ class _TaskListState extends State<TaskList> {
     );
   }
 
-  Future<void> _loadTasks() async {
-    tasks = await celest.functions.tasks.listAllTasks();
-  }
-
   Future<void> _createTask({
     required String title,
-    required Importance importance,
+    required Priority priority,
   }) async {
     try {
-      await celest.functions.tasks.addTask(
+      final task = await celest.functions.tasks.addTask(
         title: title,
-        importance: importance,
+        priority: priority,
       );
-      setState(() {});
+      if (mounted) {
+        setState(() {
+          tasks[task.id] = task;
+        });
+      }
     } on Exception catch (e) {
-      debugPrint(e.toString());
+      log('Failed to create task', error: e);
       if (mounted) {
         _showError(context, 'Failed to add task: $e');
       }
@@ -163,9 +166,8 @@ class _TaskListState extends State<TaskList> {
   Future<void> _deleteTask(Task task) async {
     try {
       await celest.functions.tasks.deleteTask(id: task.id);
-      setState(() {});
     } on Exception catch (e) {
-      debugPrint(e.toString());
+      log('Failed to delete task', error: e);
       if (mounted) {
         _showError(context, 'Failed to delete task: $e');
       }
@@ -179,12 +181,12 @@ class _TaskListState extends State<TaskList> {
       builder: (context) => const AddTaskDialog(),
     );
     if (data case (final title, final importance)) {
-      await _createTask(title: title, importance: importance);
+      await _createTask(title: title, priority: importance);
     }
   }
 }
 
-typedef AddTaskData = (String title, Importance importance);
+typedef AddTaskData = (String title, Priority importance);
 
 final class AddTaskDialog extends StatefulWidget {
   const AddTaskDialog({super.key});
@@ -196,7 +198,7 @@ final class AddTaskDialog extends StatefulWidget {
 final class _AddTaskDialogState extends State<AddTaskDialog> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
-  var _selectedImportance = Importance.low;
+  var _selectedImportance = Priority.low;
 
   @override
   Widget build(BuildContext context) {
@@ -223,21 +225,21 @@ final class _AddTaskDialogState extends State<AddTaskDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                for (final importance in Importance.values)
+                for (final priority in Priority.values)
                   InkWell(
                     onTap: () {
                       setState(() {
-                        _selectedImportance = importance;
+                        _selectedImportance = priority;
                       });
                     },
                     child: CircleAvatar(
                       radius: 18,
-                      backgroundColor: importance == _selectedImportance
+                      backgroundColor: priority == _selectedImportance
                           ? const Color.fromARGB(105, 76, 175, 79)
                           : null,
                       child: CircleAvatar(
                         radius: 15,
-                        backgroundColor: importance.color,
+                        child: Text(priority.icon),
                       ),
                     ),
                   ),
@@ -277,10 +279,10 @@ void _showError(BuildContext context, String message) {
     );
 }
 
-extension on Importance {
-  Color get color => switch (this) {
-        Importance.low => Colors.blue,
-        Importance.medium => Colors.yellow,
-        Importance.high => Colors.red,
+extension on Priority {
+  String get icon => switch (this) {
+        Priority.low => '☁️',
+        Priority.medium => '💪',
+        Priority.high => '🔥',
       };
 }

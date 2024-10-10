@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "celest_todo" "\0"
+            VALUE "FileDescription", "celest_tasks" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "celest_todo" "\0"
+            VALUE "InternalName", "celest_tasks" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "celest_todo.exe" "\0"
-            VALUE "ProductName", "celest_todo" "\0"
+            VALUE "OriginalFilename", "celest_tasks.exe" "\0"
+            VALUE "ProductName", "celest_tasks" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
