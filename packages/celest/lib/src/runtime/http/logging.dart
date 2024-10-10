@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 
-import 'package:celest/celest.dart';
+import 'package:celest/src/core/context.dart';
 import 'package:celest/src/runtime/gcp/gcp.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:cloud_http/cloud_http.dart';

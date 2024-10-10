@@ -28,8 +28,8 @@ abstract class SdkConfiguration
     required Version celest,
     required Sdk dart,
     Sdk? flutter,
-    required SdkType targetSdk,
-    required Iterable<FeatureFlag> featureFlags,
+    SdkType targetSdk = SdkType.dart,
+    Iterable<FeatureFlag> featureFlags = const [],
   }) {
     return _$SdkConfiguration._(
       celest: celest,

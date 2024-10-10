@@ -23,7 +23,8 @@ import 'package:shelf/shelf.dart' as shelf;
 Context get context => Context.current;
 
 /// {@template celest.runtime.celest_context}
-/// A per-request context object which propogates request information and common accessors to the Celest server environment.
+/// A per-request context object which propogates request information and common
+/// accessors to the Celest server environment.
 /// {@endtemplate}
 final class Context {
   /// {@macro celest.runtime.celest_context}

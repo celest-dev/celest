@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:celest/celest.dart';
+import 'package:celest/src/core/context.dart';
 import 'package:celest/src/runtime/auth/jwt/base64_raw_url.dart';
 import 'package:crypto_keys/crypto_keys.dart'
     show AlgorithmIdentifier, Signature, SymmetricKey;
