@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package celest.ast.v1;
+
+// Feature flags available to Celest projects.
+enum FeatureFlag {
+  // Unspecified feature flag.
+  FEATURE_FLAG_UNSPECIFIED = 0;
+
+  // Enables the use of `Stream` types in functions.
+  STREAMING = 1;
+}

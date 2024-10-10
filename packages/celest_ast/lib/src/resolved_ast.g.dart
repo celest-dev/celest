@@ -1,0 +1,3307 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'resolved_ast.dart';
+
+// **************************************************************************
+// BuiltValueGenerator
+// **************************************************************************
+
+Serializer<ResolvedProject> _$resolvedProjectSerializer =
+    new _$ResolvedProjectSerializer();
+Serializer<ResolvedApi> _$resolvedApiSerializer = new _$ResolvedApiSerializer();
+Serializer<ResolvedCloudFunction> _$resolvedCloudFunctionSerializer =
+    new _$ResolvedCloudFunctionSerializer();
+Serializer<ResolvedHttpConfig> _$resolvedHttpConfigSerializer =
+    new _$ResolvedHttpConfigSerializer();
+Serializer<ResolvedStreamConfig> _$resolvedStreamConfigSerializer =
+    new _$ResolvedStreamConfigSerializer();
+Serializer<ResolvedHttpRoute> _$resolvedHttpRouteSerializer =
+    new _$ResolvedHttpRouteSerializer();
+Serializer<ResolvedVariable> _$resolvedVariableSerializer =
+    new _$ResolvedVariableSerializer();
+Serializer<ResolvedSecret> _$resolvedSecretSerializer =
+    new _$ResolvedSecretSerializer();
+Serializer<ResolvedAuth> _$resolvedAuthSerializer =
+    new _$ResolvedAuthSerializer();
+Serializer<ResolvedEmailAuthProvider> _$resolvedEmailAuthProviderSerializer =
+    new _$ResolvedEmailAuthProviderSerializer();
+Serializer<ResolvedSmsAuthProvider> _$resolvedSmsAuthProviderSerializer =
+    new _$ResolvedSmsAuthProviderSerializer();
+Serializer<ResolvedGoogleAuthProvider> _$resolvedGoogleAuthProviderSerializer =
+    new _$ResolvedGoogleAuthProviderSerializer();
+Serializer<ResolvedAppleAuthProvider> _$resolvedAppleAuthProviderSerializer =
+    new _$ResolvedAppleAuthProviderSerializer();
+Serializer<ResolvedGitHubAuthProvider> _$resolvedGitHubAuthProviderSerializer =
+    new _$ResolvedGitHubAuthProviderSerializer();
+Serializer<ResolvedFirebaseExternalAuthProvider>
+    _$resolvedFirebaseExternalAuthProviderSerializer =
+    new _$ResolvedFirebaseExternalAuthProviderSerializer();
+Serializer<ResolvedSupabaseExternalAuthProvider>
+    _$resolvedSupabaseExternalAuthProviderSerializer =
+    new _$ResolvedSupabaseExternalAuthProviderSerializer();
+
+class _$ResolvedProjectSerializer
+    implements StructuredSerializer<ResolvedProject> {
+  @override
+  final Iterable<Type> types = const [ResolvedProject, _$ResolvedProject];
+  @override
+  final String wireName = 'ResolvedProject';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, ResolvedProject object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'projectId',
+      serializers.serialize(object.projectId,
+          specifiedType: const FullType(String)),
+      'environmentId',
+      serializers.serialize(object.environmentId,
+          specifiedType: const FullType(String)),
+      'apis',
+      serializers.serialize(object.apis,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(ResolvedApi)])),
+      'variables',
+      serializers.serialize(object.variables,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ResolvedVariable)])),
+      'secrets',
+      serializers.serialize(object.secrets,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ResolvedSecret)])),
+      'sdkConfig',
+      serializers.serialize(object.sdkConfig,
+          specifiedType: const FullType(SdkConfiguration)),
+    ];
+    Object? value;
+    value = object.auth;
+    if (value != null) {
+      result
+        ..add('auth')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(ResolvedAuth)));
+    }
+    return result;
+  }
+
+  @override
+  ResolvedProject deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedProjectBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'projectId':
+          result.projectId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'environmentId':
+          result.environmentId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'apis':
+          result.apis.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(ResolvedApi)
+              ]))!);
+          break;
+        case 'variables':
+          result.variables.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ResolvedVariable)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'secrets':
+          result.secrets.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ResolvedSecret)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'auth':
+          result.auth.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ResolvedAuth))! as ResolvedAuth);
+          break;
+        case 'sdkConfig':
+          result.sdkConfig.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(SdkConfiguration))!
+              as SdkConfiguration);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedApiSerializer implements StructuredSerializer<ResolvedApi> {
+  @override
+  final Iterable<Type> types = const [ResolvedApi, _$ResolvedApi];
+  @override
+  final String wireName = 'ResolvedApi';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, ResolvedApi object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'apiId',
+      serializers.serialize(object.apiId,
+          specifiedType: const FullType(String)),
+      'functions',
+      serializers.serialize(object.functions,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(ResolvedCloudFunction)
+          ])),
+    ];
+    Object? value;
+    value = object.policySet;
+    if (value != null) {
+      result
+        ..add('policySet')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(cedar.PolicySet)));
+    }
+    return result;
+  }
+
+  @override
+  ResolvedApi deserialize(Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedApiBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'apiId':
+          result.apiId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'functions':
+          result.functions.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(ResolvedCloudFunction)
+              ]))!);
+          break;
+        case 'policySet':
+          result.policySet.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(cedar.PolicySet))!
+              as cedar.PolicySet);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedCloudFunctionSerializer
+    implements StructuredSerializer<ResolvedCloudFunction> {
+  @override
+  final Iterable<Type> types = const [
+    ResolvedCloudFunction,
+    _$ResolvedCloudFunction
+  ];
+  @override
+  final String wireName = 'ResolvedCloudFunction';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, ResolvedCloudFunction object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'functionId',
+      serializers.serialize(object.functionId,
+          specifiedType: const FullType(String)),
+      'apiId',
+      serializers.serialize(object.apiId,
+          specifiedType: const FullType(String)),
+      'httpConfig',
+      serializers.serialize(object.httpConfig,
+          specifiedType: const FullType(ResolvedHttpConfig)),
+      'variables',
+      serializers.serialize(object.variables,
+          specifiedType:
+              const FullType(BuiltSet, const [const FullType(String)])),
+      'secrets',
+      serializers.serialize(object.secrets,
+          specifiedType:
+              const FullType(BuiltSet, const [const FullType(String)])),
+    ];
+    Object? value;
+    value = object.streamConfig;
+    if (value != null) {
+      result
+        ..add('streamConfig')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(ResolvedStreamConfig)));
+    }
+    value = object.policySet;
+    if (value != null) {
+      result
+        ..add('policySet')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(cedar.PolicySet)));
+    }
+    return result;
+  }
+
+  @override
+  ResolvedCloudFunction deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedCloudFunctionBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'functionId':
+          result.functionId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'apiId':
+          result.apiId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'httpConfig':
+          result.httpConfig.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedHttpConfig))!
+              as ResolvedHttpConfig);
+          break;
+        case 'streamConfig':
+          result.streamConfig.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedStreamConfig))!
+              as ResolvedStreamConfig);
+          break;
+        case 'variables':
+          result.variables.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltSet, const [const FullType(String)]))!
+              as BuiltSet<Object?>);
+          break;
+        case 'secrets':
+          result.secrets.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltSet, const [const FullType(String)]))!
+              as BuiltSet<Object?>);
+          break;
+        case 'policySet':
+          result.policySet.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(cedar.PolicySet))!
+              as cedar.PolicySet);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedHttpConfigSerializer
+    implements StructuredSerializer<ResolvedHttpConfig> {
+  @override
+  final Iterable<Type> types = const [ResolvedHttpConfig, _$ResolvedHttpConfig];
+  @override
+  final String wireName = 'ResolvedHttpConfig';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, ResolvedHttpConfig object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'method',
+      serializers.serialize(object.method,
+          specifiedType: const FullType(String)),
+      'route',
+      serializers.serialize(object.route,
+          specifiedType: const FullType(ResolvedHttpRoute)),
+      'status',
+      serializers.serialize(object.status, specifiedType: const FullType(int)),
+      'statusMappings',
+      serializers.serialize(object.statusMappings,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(TypeReference), const FullType(int)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedHttpConfig deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedHttpConfigBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'method':
+          result.method = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'route':
+          result.route.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedHttpRoute))!
+              as ResolvedHttpRoute);
+          break;
+        case 'status':
+          result.status = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'statusMappings':
+          result.statusMappings.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(TypeReference),
+                const FullType(int)
+              ]))!);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedStreamConfigSerializer
+    implements StructuredSerializer<ResolvedStreamConfig> {
+  @override
+  final Iterable<Type> types = const [
+    ResolvedStreamConfig,
+    _$ResolvedStreamConfig
+  ];
+  @override
+  final String wireName = 'ResolvedStreamConfig';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, ResolvedStreamConfig object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[];
+    Object? value;
+    value = object.type;
+    if (value != null) {
+      result
+        ..add('type')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(StreamType)));
+    }
+    return result;
+  }
+
+  @override
+  ResolvedStreamConfig deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedStreamConfigBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'type':
+          result.type = serializers.deserialize(value,
+              specifiedType: const FullType(StreamType)) as StreamType?;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedHttpRouteSerializer
+    implements StructuredSerializer<ResolvedHttpRoute> {
+  @override
+  final Iterable<Type> types = const [ResolvedHttpRoute, _$ResolvedHttpRoute];
+  @override
+  final String wireName = 'ResolvedHttpRoute';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, ResolvedHttpRoute object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'path',
+      serializers.serialize(object.path, specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedHttpRoute deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedHttpRouteBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'path':
+          result.path = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedVariableSerializer
+    implements StructuredSerializer<ResolvedVariable> {
+  @override
+  final Iterable<Type> types = const [ResolvedVariable, _$ResolvedVariable];
+  @override
+  final String wireName = 'ResolvedVariable';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, ResolvedVariable object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'value',
+      serializers.serialize(object.value,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedVariable deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedVariableBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'value':
+          result.value = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedSecretSerializer
+    implements StructuredSerializer<ResolvedSecret> {
+  @override
+  final Iterable<Type> types = const [ResolvedSecret, _$ResolvedSecret];
+  @override
+  final String wireName = 'ResolvedSecret';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, ResolvedSecret object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'value',
+      serializers.serialize(object.value,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedSecret deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedSecretBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'value':
+          result.value = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedAuthSerializer implements StructuredSerializer<ResolvedAuth> {
+  @override
+  final Iterable<Type> types = const [ResolvedAuth, _$ResolvedAuth];
+  @override
+  final String wireName = 'ResolvedAuth';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, ResolvedAuth object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'providers',
+      serializers.serialize(object.providers,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ResolvedAuthProvider)])),
+      'externalProviders',
+      serializers.serialize(object.externalProviders,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ResolvedExternalAuthProvider)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedAuth deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedAuthBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'providers':
+          result.providers.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ResolvedAuthProvider)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'externalProviders':
+          result.externalProviders.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(ResolvedExternalAuthProvider)
+              ]))! as BuiltList<Object?>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedEmailAuthProviderSerializer
+    implements StructuredSerializer<ResolvedEmailAuthProvider> {
+  @override
+  final Iterable<Type> types = const [
+    ResolvedEmailAuthProvider,
+    _$ResolvedEmailAuthProvider
+  ];
+  @override
+  final String wireName = 'ResolvedEmailAuthProvider';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, ResolvedEmailAuthProvider object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'authProviderId',
+      serializers.serialize(object.authProviderId,
+          specifiedType: const FullType(String)),
+      'type',
+      serializers.serialize(object.type,
+          specifiedType: const FullType(AuthProviderType)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedEmailAuthProvider deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedEmailAuthProviderBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'authProviderId':
+          result.authProviderId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'type':
+          result.type = serializers.deserialize(value,
+                  specifiedType: const FullType(AuthProviderType))!
+              as AuthProviderType;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedSmsAuthProviderSerializer
+    implements StructuredSerializer<ResolvedSmsAuthProvider> {
+  @override
+  final Iterable<Type> types = const [
+    ResolvedSmsAuthProvider,
+    _$ResolvedSmsAuthProvider
+  ];
+  @override
+  final String wireName = 'ResolvedSmsAuthProvider';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, ResolvedSmsAuthProvider object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'authProviderId',
+      serializers.serialize(object.authProviderId,
+          specifiedType: const FullType(String)),
+      'type',
+      serializers.serialize(object.type,
+          specifiedType: const FullType(AuthProviderType)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedSmsAuthProvider deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedSmsAuthProviderBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'authProviderId':
+          result.authProviderId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'type':
+          result.type = serializers.deserialize(value,
+                  specifiedType: const FullType(AuthProviderType))!
+              as AuthProviderType;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedGoogleAuthProviderSerializer
+    implements StructuredSerializer<ResolvedGoogleAuthProvider> {
+  @override
+  final Iterable<Type> types = const [
+    ResolvedGoogleAuthProvider,
+    _$ResolvedGoogleAuthProvider
+  ];
+  @override
+  final String wireName = 'ResolvedGoogleAuthProvider';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, ResolvedGoogleAuthProvider object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'clientId',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(ResolvedSecret)),
+      'clientSecret',
+      serializers.serialize(object.clientSecret,
+          specifiedType: const FullType(ResolvedSecret)),
+      'authProviderId',
+      serializers.serialize(object.authProviderId,
+          specifiedType: const FullType(String)),
+      'type',
+      serializers.serialize(object.type,
+          specifiedType: const FullType(AuthProviderType)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedGoogleAuthProvider deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedGoogleAuthProviderBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'clientId':
+          result.clientId.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedSecret))!
+              as ResolvedSecret);
+          break;
+        case 'clientSecret':
+          result.clientSecret.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedSecret))!
+              as ResolvedSecret);
+          break;
+        case 'authProviderId':
+          result.authProviderId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'type':
+          result.type = serializers.deserialize(value,
+                  specifiedType: const FullType(AuthProviderType))!
+              as AuthProviderType;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedAppleAuthProviderSerializer
+    implements StructuredSerializer<ResolvedAppleAuthProvider> {
+  @override
+  final Iterable<Type> types = const [
+    ResolvedAppleAuthProvider,
+    _$ResolvedAppleAuthProvider
+  ];
+  @override
+  final String wireName = 'ResolvedAppleAuthProvider';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, ResolvedAppleAuthProvider object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'clientId',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(ResolvedSecret)),
+      'teamId',
+      serializers.serialize(object.teamId,
+          specifiedType: const FullType(ResolvedSecret)),
+      'keyId',
+      serializers.serialize(object.keyId,
+          specifiedType: const FullType(ResolvedSecret)),
+      'privateKey',
+      serializers.serialize(object.privateKey,
+          specifiedType: const FullType(ResolvedSecret)),
+      'authProviderId',
+      serializers.serialize(object.authProviderId,
+          specifiedType: const FullType(String)),
+      'type',
+      serializers.serialize(object.type,
+          specifiedType: const FullType(AuthProviderType)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedAppleAuthProvider deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedAppleAuthProviderBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'clientId':
+          result.clientId.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedSecret))!
+              as ResolvedSecret);
+          break;
+        case 'teamId':
+          result.teamId.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedSecret))!
+              as ResolvedSecret);
+          break;
+        case 'keyId':
+          result.keyId.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedSecret))!
+              as ResolvedSecret);
+          break;
+        case 'privateKey':
+          result.privateKey.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedSecret))!
+              as ResolvedSecret);
+          break;
+        case 'authProviderId':
+          result.authProviderId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'type':
+          result.type = serializers.deserialize(value,
+                  specifiedType: const FullType(AuthProviderType))!
+              as AuthProviderType;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedGitHubAuthProviderSerializer
+    implements StructuredSerializer<ResolvedGitHubAuthProvider> {
+  @override
+  final Iterable<Type> types = const [
+    ResolvedGitHubAuthProvider,
+    _$ResolvedGitHubAuthProvider
+  ];
+  @override
+  final String wireName = 'ResolvedGitHubAuthProvider';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, ResolvedGitHubAuthProvider object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'clientId',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(ResolvedSecret)),
+      'clientSecret',
+      serializers.serialize(object.clientSecret,
+          specifiedType: const FullType(ResolvedSecret)),
+      'authProviderId',
+      serializers.serialize(object.authProviderId,
+          specifiedType: const FullType(String)),
+      'type',
+      serializers.serialize(object.type,
+          specifiedType: const FullType(AuthProviderType)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedGitHubAuthProvider deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedGitHubAuthProviderBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'clientId':
+          result.clientId.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedSecret))!
+              as ResolvedSecret);
+          break;
+        case 'clientSecret':
+          result.clientSecret.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedSecret))!
+              as ResolvedSecret);
+          break;
+        case 'authProviderId':
+          result.authProviderId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'type':
+          result.type = serializers.deserialize(value,
+                  specifiedType: const FullType(AuthProviderType))!
+              as AuthProviderType;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedFirebaseExternalAuthProviderSerializer
+    implements StructuredSerializer<ResolvedFirebaseExternalAuthProvider> {
+  @override
+  final Iterable<Type> types = const [
+    ResolvedFirebaseExternalAuthProvider,
+    _$ResolvedFirebaseExternalAuthProvider
+  ];
+  @override
+  final String wireName = 'ResolvedFirebaseExternalAuthProvider';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, ResolvedFirebaseExternalAuthProvider object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'projectId',
+      serializers.serialize(object.projectId,
+          specifiedType: const FullType(ResolvedVariable)),
+      'authProviderId',
+      serializers.serialize(object.authProviderId,
+          specifiedType: const FullType(String)),
+      'type',
+      serializers.serialize(object.type,
+          specifiedType: const FullType(AuthProviderType)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedFirebaseExternalAuthProvider deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedFirebaseExternalAuthProviderBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'projectId':
+          result.projectId.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedVariable))!
+              as ResolvedVariable);
+          break;
+        case 'authProviderId':
+          result.authProviderId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'type':
+          result.type = serializers.deserialize(value,
+                  specifiedType: const FullType(AuthProviderType))!
+              as AuthProviderType;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedSupabaseExternalAuthProviderSerializer
+    implements StructuredSerializer<ResolvedSupabaseExternalAuthProvider> {
+  @override
+  final Iterable<Type> types = const [
+    ResolvedSupabaseExternalAuthProvider,
+    _$ResolvedSupabaseExternalAuthProvider
+  ];
+  @override
+  final String wireName = 'ResolvedSupabaseExternalAuthProvider';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, ResolvedSupabaseExternalAuthProvider object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'projectUrl',
+      serializers.serialize(object.projectUrl,
+          specifiedType: const FullType(ResolvedVariable)),
+      'authProviderId',
+      serializers.serialize(object.authProviderId,
+          specifiedType: const FullType(String)),
+      'type',
+      serializers.serialize(object.type,
+          specifiedType: const FullType(AuthProviderType)),
+    ];
+    Object? value;
+    value = object.jwtSecret;
+    if (value != null) {
+      result
+        ..add('jwtSecret')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(ResolvedSecret)));
+    }
+    return result;
+  }
+
+  @override
+  ResolvedSupabaseExternalAuthProvider deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedSupabaseExternalAuthProviderBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'projectUrl':
+          result.projectUrl.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedVariable))!
+              as ResolvedVariable);
+          break;
+        case 'jwtSecret':
+          result.jwtSecret.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedSecret))!
+              as ResolvedSecret);
+          break;
+        case 'authProviderId':
+          result.authProviderId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'type':
+          result.type = serializers.deserialize(value,
+                  specifiedType: const FullType(AuthProviderType))!
+              as AuthProviderType;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedProject extends ResolvedProject {
+  @override
+  final String projectId;
+  @override
+  final String environmentId;
+  @override
+  final BuiltMap<String, ResolvedApi> apis;
+  @override
+  final BuiltList<ResolvedVariable> variables;
+  @override
+  final BuiltList<ResolvedSecret> secrets;
+  @override
+  final ResolvedAuth? auth;
+  @override
+  final SdkConfiguration sdkConfig;
+
+  factory _$ResolvedProject([void Function(ResolvedProjectBuilder)? updates]) =>
+      (new ResolvedProjectBuilder()..update(updates))._build();
+
+  _$ResolvedProject._(
+      {required this.projectId,
+      required this.environmentId,
+      required this.apis,
+      required this.variables,
+      required this.secrets,
+      this.auth,
+      required this.sdkConfig})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        projectId, r'ResolvedProject', 'projectId');
+    BuiltValueNullFieldError.checkNotNull(
+        environmentId, r'ResolvedProject', 'environmentId');
+    BuiltValueNullFieldError.checkNotNull(apis, r'ResolvedProject', 'apis');
+    BuiltValueNullFieldError.checkNotNull(
+        variables, r'ResolvedProject', 'variables');
+    BuiltValueNullFieldError.checkNotNull(
+        secrets, r'ResolvedProject', 'secrets');
+    BuiltValueNullFieldError.checkNotNull(
+        sdkConfig, r'ResolvedProject', 'sdkConfig');
+  }
+
+  @override
+  ResolvedProject rebuild(void Function(ResolvedProjectBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedProjectBuilder toBuilder() =>
+      new ResolvedProjectBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedProject &&
+        projectId == other.projectId &&
+        environmentId == other.environmentId &&
+        apis == other.apis &&
+        variables == other.variables &&
+        secrets == other.secrets &&
+        auth == other.auth &&
+        sdkConfig == other.sdkConfig;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, projectId.hashCode);
+    _$hash = $jc(_$hash, environmentId.hashCode);
+    _$hash = $jc(_$hash, apis.hashCode);
+    _$hash = $jc(_$hash, variables.hashCode);
+    _$hash = $jc(_$hash, secrets.hashCode);
+    _$hash = $jc(_$hash, auth.hashCode);
+    _$hash = $jc(_$hash, sdkConfig.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedProject')
+          ..add('projectId', projectId)
+          ..add('environmentId', environmentId)
+          ..add('apis', apis)
+          ..add('variables', variables)
+          ..add('secrets', secrets)
+          ..add('auth', auth)
+          ..add('sdkConfig', sdkConfig))
+        .toString();
+  }
+}
+
+class ResolvedProjectBuilder
+    implements Builder<ResolvedProject, ResolvedProjectBuilder> {
+  _$ResolvedProject? _$v;
+
+  String? _projectId;
+  String? get projectId => _$this._projectId;
+  set projectId(String? projectId) => _$this._projectId = projectId;
+
+  String? _environmentId;
+  String? get environmentId => _$this._environmentId;
+  set environmentId(String? environmentId) =>
+      _$this._environmentId = environmentId;
+
+  MapBuilder<String, ResolvedApi>? _apis;
+  MapBuilder<String, ResolvedApi> get apis =>
+      _$this._apis ??= new MapBuilder<String, ResolvedApi>();
+  set apis(MapBuilder<String, ResolvedApi>? apis) => _$this._apis = apis;
+
+  ListBuilder<ResolvedVariable>? _variables;
+  ListBuilder<ResolvedVariable> get variables =>
+      _$this._variables ??= new ListBuilder<ResolvedVariable>();
+  set variables(ListBuilder<ResolvedVariable>? variables) =>
+      _$this._variables = variables;
+
+  ListBuilder<ResolvedSecret>? _secrets;
+  ListBuilder<ResolvedSecret> get secrets =>
+      _$this._secrets ??= new ListBuilder<ResolvedSecret>();
+  set secrets(ListBuilder<ResolvedSecret>? secrets) =>
+      _$this._secrets = secrets;
+
+  ResolvedAuthBuilder? _auth;
+  ResolvedAuthBuilder get auth => _$this._auth ??= new ResolvedAuthBuilder();
+  set auth(ResolvedAuthBuilder? auth) => _$this._auth = auth;
+
+  SdkConfigurationBuilder? _sdkConfig;
+  SdkConfigurationBuilder get sdkConfig =>
+      _$this._sdkConfig ??= new SdkConfigurationBuilder();
+  set sdkConfig(SdkConfigurationBuilder? sdkConfig) =>
+      _$this._sdkConfig = sdkConfig;
+
+  ResolvedProjectBuilder();
+
+  ResolvedProjectBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _projectId = $v.projectId;
+      _environmentId = $v.environmentId;
+      _apis = $v.apis.toBuilder();
+      _variables = $v.variables.toBuilder();
+      _secrets = $v.secrets.toBuilder();
+      _auth = $v.auth?.toBuilder();
+      _sdkConfig = $v.sdkConfig.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ResolvedProject other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedProject;
+  }
+
+  @override
+  void update(void Function(ResolvedProjectBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedProject build() => _build();
+
+  _$ResolvedProject _build() {
+    _$ResolvedProject _$result;
+    try {
+      _$result = _$v ??
+          new _$ResolvedProject._(
+              projectId: BuiltValueNullFieldError.checkNotNull(
+                  projectId, r'ResolvedProject', 'projectId'),
+              environmentId: BuiltValueNullFieldError.checkNotNull(
+                  environmentId, r'ResolvedProject', 'environmentId'),
+              apis: apis.build(),
+              variables: variables.build(),
+              secrets: secrets.build(),
+              auth: _auth?.build(),
+              sdkConfig: sdkConfig.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'apis';
+        apis.build();
+        _$failedField = 'variables';
+        variables.build();
+        _$failedField = 'secrets';
+        secrets.build();
+        _$failedField = 'auth';
+        _auth?.build();
+        _$failedField = 'sdkConfig';
+        sdkConfig.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ResolvedProject', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedApi extends ResolvedApi {
+  @override
+  final String apiId;
+  @override
+  final BuiltMap<String, ResolvedCloudFunction> functions;
+  @override
+  final cedar.PolicySet? policySet;
+
+  factory _$ResolvedApi([void Function(ResolvedApiBuilder)? updates]) =>
+      (new ResolvedApiBuilder()..update(updates))._build();
+
+  _$ResolvedApi._(
+      {required this.apiId, required this.functions, this.policySet})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(apiId, r'ResolvedApi', 'apiId');
+    BuiltValueNullFieldError.checkNotNull(
+        functions, r'ResolvedApi', 'functions');
+  }
+
+  @override
+  ResolvedApi rebuild(void Function(ResolvedApiBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedApiBuilder toBuilder() => new ResolvedApiBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedApi &&
+        apiId == other.apiId &&
+        functions == other.functions &&
+        policySet == other.policySet;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, apiId.hashCode);
+    _$hash = $jc(_$hash, functions.hashCode);
+    _$hash = $jc(_$hash, policySet.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedApi')
+          ..add('apiId', apiId)
+          ..add('functions', functions)
+          ..add('policySet', policySet))
+        .toString();
+  }
+}
+
+class ResolvedApiBuilder implements Builder<ResolvedApi, ResolvedApiBuilder> {
+  _$ResolvedApi? _$v;
+
+  String? _apiId;
+  String? get apiId => _$this._apiId;
+  set apiId(String? apiId) => _$this._apiId = apiId;
+
+  MapBuilder<String, ResolvedCloudFunction>? _functions;
+  MapBuilder<String, ResolvedCloudFunction> get functions =>
+      _$this._functions ??= new MapBuilder<String, ResolvedCloudFunction>();
+  set functions(MapBuilder<String, ResolvedCloudFunction>? functions) =>
+      _$this._functions = functions;
+
+  cedar.PolicySetBuilder? _policySet;
+  cedar.PolicySetBuilder get policySet =>
+      _$this._policySet ??= new cedar.PolicySetBuilder();
+  set policySet(cedar.PolicySetBuilder? policySet) =>
+      _$this._policySet = policySet;
+
+  ResolvedApiBuilder();
+
+  ResolvedApiBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _apiId = $v.apiId;
+      _functions = $v.functions.toBuilder();
+      _policySet = $v.policySet?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ResolvedApi other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedApi;
+  }
+
+  @override
+  void update(void Function(ResolvedApiBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedApi build() => _build();
+
+  _$ResolvedApi _build() {
+    _$ResolvedApi _$result;
+    try {
+      _$result = _$v ??
+          new _$ResolvedApi._(
+              apiId: BuiltValueNullFieldError.checkNotNull(
+                  apiId, r'ResolvedApi', 'apiId'),
+              functions: functions.build(),
+              policySet: _policySet?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'functions';
+        functions.build();
+        _$failedField = 'policySet';
+        _policySet?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ResolvedApi', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedCloudFunction extends ResolvedCloudFunction {
+  @override
+  final String functionId;
+  @override
+  final String apiId;
+  @override
+  final ResolvedHttpConfig httpConfig;
+  @override
+  final ResolvedStreamConfig? streamConfig;
+  @override
+  final BuiltSet<String> variables;
+  @override
+  final BuiltSet<String> secrets;
+  @override
+  final cedar.PolicySet? policySet;
+
+  factory _$ResolvedCloudFunction(
+          [void Function(ResolvedCloudFunctionBuilder)? updates]) =>
+      (new ResolvedCloudFunctionBuilder()..update(updates))._build();
+
+  _$ResolvedCloudFunction._(
+      {required this.functionId,
+      required this.apiId,
+      required this.httpConfig,
+      this.streamConfig,
+      required this.variables,
+      required this.secrets,
+      this.policySet})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        functionId, r'ResolvedCloudFunction', 'functionId');
+    BuiltValueNullFieldError.checkNotNull(
+        apiId, r'ResolvedCloudFunction', 'apiId');
+    BuiltValueNullFieldError.checkNotNull(
+        httpConfig, r'ResolvedCloudFunction', 'httpConfig');
+    BuiltValueNullFieldError.checkNotNull(
+        variables, r'ResolvedCloudFunction', 'variables');
+    BuiltValueNullFieldError.checkNotNull(
+        secrets, r'ResolvedCloudFunction', 'secrets');
+  }
+
+  @override
+  ResolvedCloudFunction rebuild(
+          void Function(ResolvedCloudFunctionBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedCloudFunctionBuilder toBuilder() =>
+      new ResolvedCloudFunctionBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedCloudFunction &&
+        functionId == other.functionId &&
+        apiId == other.apiId &&
+        httpConfig == other.httpConfig &&
+        streamConfig == other.streamConfig &&
+        variables == other.variables &&
+        secrets == other.secrets &&
+        policySet == other.policySet;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, functionId.hashCode);
+    _$hash = $jc(_$hash, apiId.hashCode);
+    _$hash = $jc(_$hash, httpConfig.hashCode);
+    _$hash = $jc(_$hash, streamConfig.hashCode);
+    _$hash = $jc(_$hash, variables.hashCode);
+    _$hash = $jc(_$hash, secrets.hashCode);
+    _$hash = $jc(_$hash, policySet.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedCloudFunction')
+          ..add('functionId', functionId)
+          ..add('apiId', apiId)
+          ..add('httpConfig', httpConfig)
+          ..add('streamConfig', streamConfig)
+          ..add('variables', variables)
+          ..add('secrets', secrets)
+          ..add('policySet', policySet))
+        .toString();
+  }
+}
+
+class ResolvedCloudFunctionBuilder
+    implements Builder<ResolvedCloudFunction, ResolvedCloudFunctionBuilder> {
+  _$ResolvedCloudFunction? _$v;
+
+  String? _functionId;
+  String? get functionId => _$this._functionId;
+  set functionId(String? functionId) => _$this._functionId = functionId;
+
+  String? _apiId;
+  String? get apiId => _$this._apiId;
+  set apiId(String? apiId) => _$this._apiId = apiId;
+
+  ResolvedHttpConfigBuilder? _httpConfig;
+  ResolvedHttpConfigBuilder get httpConfig =>
+      _$this._httpConfig ??= new ResolvedHttpConfigBuilder();
+  set httpConfig(ResolvedHttpConfigBuilder? httpConfig) =>
+      _$this._httpConfig = httpConfig;
+
+  ResolvedStreamConfigBuilder? _streamConfig;
+  ResolvedStreamConfigBuilder get streamConfig =>
+      _$this._streamConfig ??= new ResolvedStreamConfigBuilder();
+  set streamConfig(ResolvedStreamConfigBuilder? streamConfig) =>
+      _$this._streamConfig = streamConfig;
+
+  SetBuilder<String>? _variables;
+  SetBuilder<String> get variables =>
+      _$this._variables ??= new SetBuilder<String>();
+  set variables(SetBuilder<String>? variables) => _$this._variables = variables;
+
+  SetBuilder<String>? _secrets;
+  SetBuilder<String> get secrets =>
+      _$this._secrets ??= new SetBuilder<String>();
+  set secrets(SetBuilder<String>? secrets) => _$this._secrets = secrets;
+
+  cedar.PolicySetBuilder? _policySet;
+  cedar.PolicySetBuilder get policySet =>
+      _$this._policySet ??= new cedar.PolicySetBuilder();
+  set policySet(cedar.PolicySetBuilder? policySet) =>
+      _$this._policySet = policySet;
+
+  ResolvedCloudFunctionBuilder();
+
+  ResolvedCloudFunctionBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _functionId = $v.functionId;
+      _apiId = $v.apiId;
+      _httpConfig = $v.httpConfig.toBuilder();
+      _streamConfig = $v.streamConfig?.toBuilder();
+      _variables = $v.variables.toBuilder();
+      _secrets = $v.secrets.toBuilder();
+      _policySet = $v.policySet?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ResolvedCloudFunction other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedCloudFunction;
+  }
+
+  @override
+  void update(void Function(ResolvedCloudFunctionBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedCloudFunction build() => _build();
+
+  _$ResolvedCloudFunction _build() {
+    _$ResolvedCloudFunction _$result;
+    try {
+      _$result = _$v ??
+          new _$ResolvedCloudFunction._(
+              functionId: BuiltValueNullFieldError.checkNotNull(
+                  functionId, r'ResolvedCloudFunction', 'functionId'),
+              apiId: BuiltValueNullFieldError.checkNotNull(
+                  apiId, r'ResolvedCloudFunction', 'apiId'),
+              httpConfig: httpConfig.build(),
+              streamConfig: _streamConfig?.build(),
+              variables: variables.build(),
+              secrets: secrets.build(),
+              policySet: _policySet?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'httpConfig';
+        httpConfig.build();
+        _$failedField = 'streamConfig';
+        _streamConfig?.build();
+        _$failedField = 'variables';
+        variables.build();
+        _$failedField = 'secrets';
+        secrets.build();
+        _$failedField = 'policySet';
+        _policySet?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ResolvedCloudFunction', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedHttpConfig extends ResolvedHttpConfig {
+  @override
+  final String method;
+  @override
+  final ResolvedHttpRoute route;
+  @override
+  final int status;
+  @override
+  final BuiltMap<TypeReference, int> statusMappings;
+
+  factory _$ResolvedHttpConfig(
+          [void Function(ResolvedHttpConfigBuilder)? updates]) =>
+      (new ResolvedHttpConfigBuilder()..update(updates))._build();
+
+  _$ResolvedHttpConfig._(
+      {required this.method,
+      required this.route,
+      required this.status,
+      required this.statusMappings})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        method, r'ResolvedHttpConfig', 'method');
+    BuiltValueNullFieldError.checkNotNull(
+        route, r'ResolvedHttpConfig', 'route');
+    BuiltValueNullFieldError.checkNotNull(
+        status, r'ResolvedHttpConfig', 'status');
+    BuiltValueNullFieldError.checkNotNull(
+        statusMappings, r'ResolvedHttpConfig', 'statusMappings');
+  }
+
+  @override
+  ResolvedHttpConfig rebuild(
+          void Function(ResolvedHttpConfigBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedHttpConfigBuilder toBuilder() =>
+      new ResolvedHttpConfigBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedHttpConfig &&
+        method == other.method &&
+        route == other.route &&
+        status == other.status &&
+        statusMappings == other.statusMappings;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, method.hashCode);
+    _$hash = $jc(_$hash, route.hashCode);
+    _$hash = $jc(_$hash, status.hashCode);
+    _$hash = $jc(_$hash, statusMappings.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedHttpConfig')
+          ..add('method', method)
+          ..add('route', route)
+          ..add('status', status)
+          ..add('statusMappings', statusMappings))
+        .toString();
+  }
+}
+
+class ResolvedHttpConfigBuilder
+    implements Builder<ResolvedHttpConfig, ResolvedHttpConfigBuilder> {
+  _$ResolvedHttpConfig? _$v;
+
+  String? _method;
+  String? get method => _$this._method;
+  set method(String? method) => _$this._method = method;
+
+  ResolvedHttpRouteBuilder? _route;
+  ResolvedHttpRouteBuilder get route =>
+      _$this._route ??= new ResolvedHttpRouteBuilder();
+  set route(ResolvedHttpRouteBuilder? route) => _$this._route = route;
+
+  int? _status;
+  int? get status => _$this._status;
+  set status(int? status) => _$this._status = status;
+
+  MapBuilder<TypeReference, int>? _statusMappings;
+  MapBuilder<TypeReference, int> get statusMappings =>
+      _$this._statusMappings ??= new MapBuilder<TypeReference, int>();
+  set statusMappings(MapBuilder<TypeReference, int>? statusMappings) =>
+      _$this._statusMappings = statusMappings;
+
+  ResolvedHttpConfigBuilder();
+
+  ResolvedHttpConfigBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _method = $v.method;
+      _route = $v.route.toBuilder();
+      _status = $v.status;
+      _statusMappings = $v.statusMappings.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ResolvedHttpConfig other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedHttpConfig;
+  }
+
+  @override
+  void update(void Function(ResolvedHttpConfigBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedHttpConfig build() => _build();
+
+  _$ResolvedHttpConfig _build() {
+    ResolvedHttpConfig._defaults(this);
+    _$ResolvedHttpConfig _$result;
+    try {
+      _$result = _$v ??
+          new _$ResolvedHttpConfig._(
+              method: BuiltValueNullFieldError.checkNotNull(
+                  method, r'ResolvedHttpConfig', 'method'),
+              route: route.build(),
+              status: BuiltValueNullFieldError.checkNotNull(
+                  status, r'ResolvedHttpConfig', 'status'),
+              statusMappings: statusMappings.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'route';
+        route.build();
+
+        _$failedField = 'statusMappings';
+        statusMappings.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ResolvedHttpConfig', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedStreamConfig extends ResolvedStreamConfig {
+  @override
+  final StreamType? type;
+
+  factory _$ResolvedStreamConfig(
+          [void Function(ResolvedStreamConfigBuilder)? updates]) =>
+      (new ResolvedStreamConfigBuilder()..update(updates))._build();
+
+  _$ResolvedStreamConfig._({this.type}) : super._();
+
+  @override
+  ResolvedStreamConfig rebuild(
+          void Function(ResolvedStreamConfigBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedStreamConfigBuilder toBuilder() =>
+      new ResolvedStreamConfigBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedStreamConfig && type == other.type;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedStreamConfig')
+          ..add('type', type))
+        .toString();
+  }
+}
+
+class ResolvedStreamConfigBuilder
+    implements Builder<ResolvedStreamConfig, ResolvedStreamConfigBuilder> {
+  _$ResolvedStreamConfig? _$v;
+
+  StreamType? _type;
+  StreamType? get type => _$this._type;
+  set type(StreamType? type) => _$this._type = type;
+
+  ResolvedStreamConfigBuilder();
+
+  ResolvedStreamConfigBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _type = $v.type;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ResolvedStreamConfig other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedStreamConfig;
+  }
+
+  @override
+  void update(void Function(ResolvedStreamConfigBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedStreamConfig build() => _build();
+
+  _$ResolvedStreamConfig _build() {
+    final _$result = _$v ?? new _$ResolvedStreamConfig._(type: type);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedHttpRoute extends ResolvedHttpRoute {
+  @override
+  final String path;
+
+  factory _$ResolvedHttpRoute(
+          [void Function(ResolvedHttpRouteBuilder)? updates]) =>
+      (new ResolvedHttpRouteBuilder()..update(updates))._build();
+
+  _$ResolvedHttpRoute._({required this.path}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(path, r'ResolvedHttpRoute', 'path');
+  }
+
+  @override
+  ResolvedHttpRoute rebuild(void Function(ResolvedHttpRouteBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedHttpRouteBuilder toBuilder() =>
+      new ResolvedHttpRouteBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedHttpRoute && path == other.path;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, path.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedHttpRoute')
+          ..add('path', path))
+        .toString();
+  }
+}
+
+class ResolvedHttpRouteBuilder
+    implements Builder<ResolvedHttpRoute, ResolvedHttpRouteBuilder> {
+  _$ResolvedHttpRoute? _$v;
+
+  String? _path;
+  String? get path => _$this._path;
+  set path(String? path) => _$this._path = path;
+
+  ResolvedHttpRouteBuilder();
+
+  ResolvedHttpRouteBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _path = $v.path;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ResolvedHttpRoute other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedHttpRoute;
+  }
+
+  @override
+  void update(void Function(ResolvedHttpRouteBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedHttpRoute build() => _build();
+
+  _$ResolvedHttpRoute _build() {
+    final _$result = _$v ??
+        new _$ResolvedHttpRoute._(
+            path: BuiltValueNullFieldError.checkNotNull(
+                path, r'ResolvedHttpRoute', 'path'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedVariable extends ResolvedVariable {
+  @override
+  final String name;
+  @override
+  final String value;
+
+  factory _$ResolvedVariable(
+          [void Function(ResolvedVariableBuilder)? updates]) =>
+      (new ResolvedVariableBuilder()..update(updates))._build();
+
+  _$ResolvedVariable._({required this.name, required this.value}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(name, r'ResolvedVariable', 'name');
+    BuiltValueNullFieldError.checkNotNull(value, r'ResolvedVariable', 'value');
+  }
+
+  @override
+  ResolvedVariable rebuild(void Function(ResolvedVariableBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedVariableBuilder toBuilder() =>
+      new ResolvedVariableBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedVariable &&
+        name == other.name &&
+        value == other.value;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, value.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedVariable')
+          ..add('name', name)
+          ..add('value', value))
+        .toString();
+  }
+}
+
+class ResolvedVariableBuilder
+    implements Builder<ResolvedVariable, ResolvedVariableBuilder> {
+  _$ResolvedVariable? _$v;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _value;
+  String? get value => _$this._value;
+  set value(String? value) => _$this._value = value;
+
+  ResolvedVariableBuilder();
+
+  ResolvedVariableBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _value = $v.value;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ResolvedVariable other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedVariable;
+  }
+
+  @override
+  void update(void Function(ResolvedVariableBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedVariable build() => _build();
+
+  _$ResolvedVariable _build() {
+    final _$result = _$v ??
+        new _$ResolvedVariable._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'ResolvedVariable', 'name'),
+            value: BuiltValueNullFieldError.checkNotNull(
+                value, r'ResolvedVariable', 'value'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedSecret extends ResolvedSecret {
+  @override
+  final String name;
+  @override
+  final String value;
+
+  factory _$ResolvedSecret([void Function(ResolvedSecretBuilder)? updates]) =>
+      (new ResolvedSecretBuilder()..update(updates))._build();
+
+  _$ResolvedSecret._({required this.name, required this.value}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(name, r'ResolvedSecret', 'name');
+    BuiltValueNullFieldError.checkNotNull(value, r'ResolvedSecret', 'value');
+  }
+
+  @override
+  ResolvedSecret rebuild(void Function(ResolvedSecretBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedSecretBuilder toBuilder() =>
+      new ResolvedSecretBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedSecret &&
+        name == other.name &&
+        value == other.value;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, value.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedSecret')
+          ..add('name', name)
+          ..add('value', value))
+        .toString();
+  }
+}
+
+class ResolvedSecretBuilder
+    implements Builder<ResolvedSecret, ResolvedSecretBuilder> {
+  _$ResolvedSecret? _$v;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _value;
+  String? get value => _$this._value;
+  set value(String? value) => _$this._value = value;
+
+  ResolvedSecretBuilder();
+
+  ResolvedSecretBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _value = $v.value;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ResolvedSecret other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedSecret;
+  }
+
+  @override
+  void update(void Function(ResolvedSecretBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedSecret build() => _build();
+
+  _$ResolvedSecret _build() {
+    final _$result = _$v ??
+        new _$ResolvedSecret._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'ResolvedSecret', 'name'),
+            value: BuiltValueNullFieldError.checkNotNull(
+                value, r'ResolvedSecret', 'value'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedAuth extends ResolvedAuth {
+  @override
+  final BuiltList<ResolvedAuthProvider> providers;
+  @override
+  final BuiltList<ResolvedExternalAuthProvider> externalProviders;
+
+  factory _$ResolvedAuth([void Function(ResolvedAuthBuilder)? updates]) =>
+      (new ResolvedAuthBuilder()..update(updates))._build();
+
+  _$ResolvedAuth._({required this.providers, required this.externalProviders})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        providers, r'ResolvedAuth', 'providers');
+    BuiltValueNullFieldError.checkNotNull(
+        externalProviders, r'ResolvedAuth', 'externalProviders');
+  }
+
+  @override
+  ResolvedAuth rebuild(void Function(ResolvedAuthBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedAuthBuilder toBuilder() => new ResolvedAuthBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedAuth &&
+        providers == other.providers &&
+        externalProviders == other.externalProviders;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, providers.hashCode);
+    _$hash = $jc(_$hash, externalProviders.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedAuth')
+          ..add('providers', providers)
+          ..add('externalProviders', externalProviders))
+        .toString();
+  }
+}
+
+class ResolvedAuthBuilder
+    implements Builder<ResolvedAuth, ResolvedAuthBuilder> {
+  _$ResolvedAuth? _$v;
+
+  ListBuilder<ResolvedAuthProvider>? _providers;
+  ListBuilder<ResolvedAuthProvider> get providers =>
+      _$this._providers ??= new ListBuilder<ResolvedAuthProvider>();
+  set providers(ListBuilder<ResolvedAuthProvider>? providers) =>
+      _$this._providers = providers;
+
+  ListBuilder<ResolvedExternalAuthProvider>? _externalProviders;
+  ListBuilder<ResolvedExternalAuthProvider> get externalProviders =>
+      _$this._externalProviders ??=
+          new ListBuilder<ResolvedExternalAuthProvider>();
+  set externalProviders(
+          ListBuilder<ResolvedExternalAuthProvider>? externalProviders) =>
+      _$this._externalProviders = externalProviders;
+
+  ResolvedAuthBuilder();
+
+  ResolvedAuthBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _providers = $v.providers.toBuilder();
+      _externalProviders = $v.externalProviders.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ResolvedAuth other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedAuth;
+  }
+
+  @override
+  void update(void Function(ResolvedAuthBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedAuth build() => _build();
+
+  _$ResolvedAuth _build() {
+    _$ResolvedAuth _$result;
+    try {
+      _$result = _$v ??
+          new _$ResolvedAuth._(
+              providers: providers.build(),
+              externalProviders: externalProviders.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'providers';
+        providers.build();
+        _$failedField = 'externalProviders';
+        externalProviders.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ResolvedAuth', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+abstract mixin class ResolvedAuthProviderBuilder {
+  void replace(ResolvedAuthProvider other);
+  void update(void Function(ResolvedAuthProviderBuilder) updates);
+  String? get authProviderId;
+  set authProviderId(String? authProviderId);
+
+  AuthProviderType? get type;
+  set type(AuthProviderType? type);
+}
+
+abstract mixin class ResolvedExternalAuthProviderBuilder {
+  void replace(ResolvedExternalAuthProvider other);
+  void update(void Function(ResolvedExternalAuthProviderBuilder) updates);
+  String? get authProviderId;
+  set authProviderId(String? authProviderId);
+
+  AuthProviderType? get type;
+  set type(AuthProviderType? type);
+}
+
+class _$ResolvedEmailAuthProvider extends ResolvedEmailAuthProvider {
+  @override
+  final String authProviderId;
+  @override
+  final AuthProviderType type;
+
+  factory _$ResolvedEmailAuthProvider(
+          [void Function(ResolvedEmailAuthProviderBuilder)? updates]) =>
+      (new ResolvedEmailAuthProviderBuilder()..update(updates))._build();
+
+  _$ResolvedEmailAuthProvider._(
+      {required this.authProviderId, required this.type})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        authProviderId, r'ResolvedEmailAuthProvider', 'authProviderId');
+    BuiltValueNullFieldError.checkNotNull(
+        type, r'ResolvedEmailAuthProvider', 'type');
+  }
+
+  @override
+  ResolvedEmailAuthProvider rebuild(
+          void Function(ResolvedEmailAuthProviderBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedEmailAuthProviderBuilder toBuilder() =>
+      new ResolvedEmailAuthProviderBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedEmailAuthProvider &&
+        authProviderId == other.authProviderId &&
+        type == other.type;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, authProviderId.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedEmailAuthProvider')
+          ..add('authProviderId', authProviderId)
+          ..add('type', type))
+        .toString();
+  }
+}
+
+class ResolvedEmailAuthProviderBuilder
+    implements
+        Builder<ResolvedEmailAuthProvider, ResolvedEmailAuthProviderBuilder>,
+        ResolvedAuthProviderBuilder {
+  _$ResolvedEmailAuthProvider? _$v;
+
+  String? _authProviderId;
+  String? get authProviderId => _$this._authProviderId;
+  set authProviderId(covariant String? authProviderId) =>
+      _$this._authProviderId = authProviderId;
+
+  AuthProviderType? _type;
+  AuthProviderType? get type => _$this._type;
+  set type(covariant AuthProviderType? type) => _$this._type = type;
+
+  ResolvedEmailAuthProviderBuilder();
+
+  ResolvedEmailAuthProviderBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _authProviderId = $v.authProviderId;
+      _type = $v.type;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(covariant ResolvedEmailAuthProvider other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedEmailAuthProvider;
+  }
+
+  @override
+  void update(void Function(ResolvedEmailAuthProviderBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedEmailAuthProvider build() => _build();
+
+  _$ResolvedEmailAuthProvider _build() {
+    ResolvedEmailAuthProvider._finalize(this);
+    final _$result = _$v ??
+        new _$ResolvedEmailAuthProvider._(
+            authProviderId: BuiltValueNullFieldError.checkNotNull(
+                authProviderId, r'ResolvedEmailAuthProvider', 'authProviderId'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'ResolvedEmailAuthProvider', 'type'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedSmsAuthProvider extends ResolvedSmsAuthProvider {
+  @override
+  final String authProviderId;
+  @override
+  final AuthProviderType type;
+
+  factory _$ResolvedSmsAuthProvider(
+          [void Function(ResolvedSmsAuthProviderBuilder)? updates]) =>
+      (new ResolvedSmsAuthProviderBuilder()..update(updates))._build();
+
+  _$ResolvedSmsAuthProvider._(
+      {required this.authProviderId, required this.type})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        authProviderId, r'ResolvedSmsAuthProvider', 'authProviderId');
+    BuiltValueNullFieldError.checkNotNull(
+        type, r'ResolvedSmsAuthProvider', 'type');
+  }
+
+  @override
+  ResolvedSmsAuthProvider rebuild(
+          void Function(ResolvedSmsAuthProviderBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedSmsAuthProviderBuilder toBuilder() =>
+      new ResolvedSmsAuthProviderBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedSmsAuthProvider &&
+        authProviderId == other.authProviderId &&
+        type == other.type;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, authProviderId.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedSmsAuthProvider')
+          ..add('authProviderId', authProviderId)
+          ..add('type', type))
+        .toString();
+  }
+}
+
+class ResolvedSmsAuthProviderBuilder
+    implements
+        Builder<ResolvedSmsAuthProvider, ResolvedSmsAuthProviderBuilder>,
+        ResolvedAuthProviderBuilder {
+  _$ResolvedSmsAuthProvider? _$v;
+
+  String? _authProviderId;
+  String? get authProviderId => _$this._authProviderId;
+  set authProviderId(covariant String? authProviderId) =>
+      _$this._authProviderId = authProviderId;
+
+  AuthProviderType? _type;
+  AuthProviderType? get type => _$this._type;
+  set type(covariant AuthProviderType? type) => _$this._type = type;
+
+  ResolvedSmsAuthProviderBuilder();
+
+  ResolvedSmsAuthProviderBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _authProviderId = $v.authProviderId;
+      _type = $v.type;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(covariant ResolvedSmsAuthProvider other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedSmsAuthProvider;
+  }
+
+  @override
+  void update(void Function(ResolvedSmsAuthProviderBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedSmsAuthProvider build() => _build();
+
+  _$ResolvedSmsAuthProvider _build() {
+    ResolvedSmsAuthProvider._finalize(this);
+    final _$result = _$v ??
+        new _$ResolvedSmsAuthProvider._(
+            authProviderId: BuiltValueNullFieldError.checkNotNull(
+                authProviderId, r'ResolvedSmsAuthProvider', 'authProviderId'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'ResolvedSmsAuthProvider', 'type'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedGoogleAuthProvider extends ResolvedGoogleAuthProvider {
+  @override
+  final ResolvedSecret clientId;
+  @override
+  final ResolvedSecret clientSecret;
+  @override
+  final String authProviderId;
+  @override
+  final AuthProviderType type;
+
+  factory _$ResolvedGoogleAuthProvider(
+          [void Function(ResolvedGoogleAuthProviderBuilder)? updates]) =>
+      (new ResolvedGoogleAuthProviderBuilder()..update(updates))._build();
+
+  _$ResolvedGoogleAuthProvider._(
+      {required this.clientId,
+      required this.clientSecret,
+      required this.authProviderId,
+      required this.type})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        clientId, r'ResolvedGoogleAuthProvider', 'clientId');
+    BuiltValueNullFieldError.checkNotNull(
+        clientSecret, r'ResolvedGoogleAuthProvider', 'clientSecret');
+    BuiltValueNullFieldError.checkNotNull(
+        authProviderId, r'ResolvedGoogleAuthProvider', 'authProviderId');
+    BuiltValueNullFieldError.checkNotNull(
+        type, r'ResolvedGoogleAuthProvider', 'type');
+  }
+
+  @override
+  ResolvedGoogleAuthProvider rebuild(
+          void Function(ResolvedGoogleAuthProviderBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedGoogleAuthProviderBuilder toBuilder() =>
+      new ResolvedGoogleAuthProviderBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedGoogleAuthProvider &&
+        clientId == other.clientId &&
+        clientSecret == other.clientSecret &&
+        authProviderId == other.authProviderId &&
+        type == other.type;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, clientId.hashCode);
+    _$hash = $jc(_$hash, clientSecret.hashCode);
+    _$hash = $jc(_$hash, authProviderId.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedGoogleAuthProvider')
+          ..add('clientId', clientId)
+          ..add('clientSecret', clientSecret)
+          ..add('authProviderId', authProviderId)
+          ..add('type', type))
+        .toString();
+  }
+}
+
+class ResolvedGoogleAuthProviderBuilder
+    implements
+        Builder<ResolvedGoogleAuthProvider, ResolvedGoogleAuthProviderBuilder>,
+        ResolvedAuthProviderBuilder {
+  _$ResolvedGoogleAuthProvider? _$v;
+
+  ResolvedSecretBuilder? _clientId;
+  ResolvedSecretBuilder get clientId =>
+      _$this._clientId ??= new ResolvedSecretBuilder();
+  set clientId(covariant ResolvedSecretBuilder? clientId) =>
+      _$this._clientId = clientId;
+
+  ResolvedSecretBuilder? _clientSecret;
+  ResolvedSecretBuilder get clientSecret =>
+      _$this._clientSecret ??= new ResolvedSecretBuilder();
+  set clientSecret(covariant ResolvedSecretBuilder? clientSecret) =>
+      _$this._clientSecret = clientSecret;
+
+  String? _authProviderId;
+  String? get authProviderId => _$this._authProviderId;
+  set authProviderId(covariant String? authProviderId) =>
+      _$this._authProviderId = authProviderId;
+
+  AuthProviderType? _type;
+  AuthProviderType? get type => _$this._type;
+  set type(covariant AuthProviderType? type) => _$this._type = type;
+
+  ResolvedGoogleAuthProviderBuilder();
+
+  ResolvedGoogleAuthProviderBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _clientId = $v.clientId.toBuilder();
+      _clientSecret = $v.clientSecret.toBuilder();
+      _authProviderId = $v.authProviderId;
+      _type = $v.type;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(covariant ResolvedGoogleAuthProvider other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedGoogleAuthProvider;
+  }
+
+  @override
+  void update(void Function(ResolvedGoogleAuthProviderBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedGoogleAuthProvider build() => _build();
+
+  _$ResolvedGoogleAuthProvider _build() {
+    ResolvedGoogleAuthProvider._finalize(this);
+    _$ResolvedGoogleAuthProvider _$result;
+    try {
+      _$result = _$v ??
+          new _$ResolvedGoogleAuthProvider._(
+              clientId: clientId.build(),
+              clientSecret: clientSecret.build(),
+              authProviderId: BuiltValueNullFieldError.checkNotNull(
+                  authProviderId,
+                  r'ResolvedGoogleAuthProvider',
+                  'authProviderId'),
+              type: BuiltValueNullFieldError.checkNotNull(
+                  type, r'ResolvedGoogleAuthProvider', 'type'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'clientId';
+        clientId.build();
+        _$failedField = 'clientSecret';
+        clientSecret.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ResolvedGoogleAuthProvider', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedAppleAuthProvider extends ResolvedAppleAuthProvider {
+  @override
+  final ResolvedSecret clientId;
+  @override
+  final ResolvedSecret teamId;
+  @override
+  final ResolvedSecret keyId;
+  @override
+  final ResolvedSecret privateKey;
+  @override
+  final String authProviderId;
+  @override
+  final AuthProviderType type;
+
+  factory _$ResolvedAppleAuthProvider(
+          [void Function(ResolvedAppleAuthProviderBuilder)? updates]) =>
+      (new ResolvedAppleAuthProviderBuilder()..update(updates))._build();
+
+  _$ResolvedAppleAuthProvider._(
+      {required this.clientId,
+      required this.teamId,
+      required this.keyId,
+      required this.privateKey,
+      required this.authProviderId,
+      required this.type})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        clientId, r'ResolvedAppleAuthProvider', 'clientId');
+    BuiltValueNullFieldError.checkNotNull(
+        teamId, r'ResolvedAppleAuthProvider', 'teamId');
+    BuiltValueNullFieldError.checkNotNull(
+        keyId, r'ResolvedAppleAuthProvider', 'keyId');
+    BuiltValueNullFieldError.checkNotNull(
+        privateKey, r'ResolvedAppleAuthProvider', 'privateKey');
+    BuiltValueNullFieldError.checkNotNull(
+        authProviderId, r'ResolvedAppleAuthProvider', 'authProviderId');
+    BuiltValueNullFieldError.checkNotNull(
+        type, r'ResolvedAppleAuthProvider', 'type');
+  }
+
+  @override
+  ResolvedAppleAuthProvider rebuild(
+          void Function(ResolvedAppleAuthProviderBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedAppleAuthProviderBuilder toBuilder() =>
+      new ResolvedAppleAuthProviderBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedAppleAuthProvider &&
+        clientId == other.clientId &&
+        teamId == other.teamId &&
+        keyId == other.keyId &&
+        privateKey == other.privateKey &&
+        authProviderId == other.authProviderId &&
+        type == other.type;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, clientId.hashCode);
+    _$hash = $jc(_$hash, teamId.hashCode);
+    _$hash = $jc(_$hash, keyId.hashCode);
+    _$hash = $jc(_$hash, privateKey.hashCode);
+    _$hash = $jc(_$hash, authProviderId.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedAppleAuthProvider')
+          ..add('clientId', clientId)
+          ..add('teamId', teamId)
+          ..add('keyId', keyId)
+          ..add('privateKey', privateKey)
+          ..add('authProviderId', authProviderId)
+          ..add('type', type))
+        .toString();
+  }
+}
+
+class ResolvedAppleAuthProviderBuilder
+    implements
+        Builder<ResolvedAppleAuthProvider, ResolvedAppleAuthProviderBuilder>,
+        ResolvedAuthProviderBuilder {
+  _$ResolvedAppleAuthProvider? _$v;
+
+  ResolvedSecretBuilder? _clientId;
+  ResolvedSecretBuilder get clientId =>
+      _$this._clientId ??= new ResolvedSecretBuilder();
+  set clientId(covariant ResolvedSecretBuilder? clientId) =>
+      _$this._clientId = clientId;
+
+  ResolvedSecretBuilder? _teamId;
+  ResolvedSecretBuilder get teamId =>
+      _$this._teamId ??= new ResolvedSecretBuilder();
+  set teamId(covariant ResolvedSecretBuilder? teamId) =>
+      _$this._teamId = teamId;
+
+  ResolvedSecretBuilder? _keyId;
+  ResolvedSecretBuilder get keyId =>
+      _$this._keyId ??= new ResolvedSecretBuilder();
+  set keyId(covariant ResolvedSecretBuilder? keyId) => _$this._keyId = keyId;
+
+  ResolvedSecretBuilder? _privateKey;
+  ResolvedSecretBuilder get privateKey =>
+      _$this._privateKey ??= new ResolvedSecretBuilder();
+  set privateKey(covariant ResolvedSecretBuilder? privateKey) =>
+      _$this._privateKey = privateKey;
+
+  String? _authProviderId;
+  String? get authProviderId => _$this._authProviderId;
+  set authProviderId(covariant String? authProviderId) =>
+      _$this._authProviderId = authProviderId;
+
+  AuthProviderType? _type;
+  AuthProviderType? get type => _$this._type;
+  set type(covariant AuthProviderType? type) => _$this._type = type;
+
+  ResolvedAppleAuthProviderBuilder();
+
+  ResolvedAppleAuthProviderBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _clientId = $v.clientId.toBuilder();
+      _teamId = $v.teamId.toBuilder();
+      _keyId = $v.keyId.toBuilder();
+      _privateKey = $v.privateKey.toBuilder();
+      _authProviderId = $v.authProviderId;
+      _type = $v.type;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(covariant ResolvedAppleAuthProvider other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedAppleAuthProvider;
+  }
+
+  @override
+  void update(void Function(ResolvedAppleAuthProviderBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedAppleAuthProvider build() => _build();
+
+  _$ResolvedAppleAuthProvider _build() {
+    ResolvedAppleAuthProvider._finalize(this);
+    _$ResolvedAppleAuthProvider _$result;
+    try {
+      _$result = _$v ??
+          new _$ResolvedAppleAuthProvider._(
+              clientId: clientId.build(),
+              teamId: teamId.build(),
+              keyId: keyId.build(),
+              privateKey: privateKey.build(),
+              authProviderId: BuiltValueNullFieldError.checkNotNull(
+                  authProviderId,
+                  r'ResolvedAppleAuthProvider',
+                  'authProviderId'),
+              type: BuiltValueNullFieldError.checkNotNull(
+                  type, r'ResolvedAppleAuthProvider', 'type'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'clientId';
+        clientId.build();
+        _$failedField = 'teamId';
+        teamId.build();
+        _$failedField = 'keyId';
+        keyId.build();
+        _$failedField = 'privateKey';
+        privateKey.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ResolvedAppleAuthProvider', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedGitHubAuthProvider extends ResolvedGitHubAuthProvider {
+  @override
+  final ResolvedSecret clientId;
+  @override
+  final ResolvedSecret clientSecret;
+  @override
+  final String authProviderId;
+  @override
+  final AuthProviderType type;
+
+  factory _$ResolvedGitHubAuthProvider(
+          [void Function(ResolvedGitHubAuthProviderBuilder)? updates]) =>
+      (new ResolvedGitHubAuthProviderBuilder()..update(updates))._build();
+
+  _$ResolvedGitHubAuthProvider._(
+      {required this.clientId,
+      required this.clientSecret,
+      required this.authProviderId,
+      required this.type})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        clientId, r'ResolvedGitHubAuthProvider', 'clientId');
+    BuiltValueNullFieldError.checkNotNull(
+        clientSecret, r'ResolvedGitHubAuthProvider', 'clientSecret');
+    BuiltValueNullFieldError.checkNotNull(
+        authProviderId, r'ResolvedGitHubAuthProvider', 'authProviderId');
+    BuiltValueNullFieldError.checkNotNull(
+        type, r'ResolvedGitHubAuthProvider', 'type');
+  }
+
+  @override
+  ResolvedGitHubAuthProvider rebuild(
+          void Function(ResolvedGitHubAuthProviderBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedGitHubAuthProviderBuilder toBuilder() =>
+      new ResolvedGitHubAuthProviderBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedGitHubAuthProvider &&
+        clientId == other.clientId &&
+        clientSecret == other.clientSecret &&
+        authProviderId == other.authProviderId &&
+        type == other.type;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, clientId.hashCode);
+    _$hash = $jc(_$hash, clientSecret.hashCode);
+    _$hash = $jc(_$hash, authProviderId.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedGitHubAuthProvider')
+          ..add('clientId', clientId)
+          ..add('clientSecret', clientSecret)
+          ..add('authProviderId', authProviderId)
+          ..add('type', type))
+        .toString();
+  }
+}
+
+class ResolvedGitHubAuthProviderBuilder
+    implements
+        Builder<ResolvedGitHubAuthProvider, ResolvedGitHubAuthProviderBuilder>,
+        ResolvedAuthProviderBuilder {
+  _$ResolvedGitHubAuthProvider? _$v;
+
+  ResolvedSecretBuilder? _clientId;
+  ResolvedSecretBuilder get clientId =>
+      _$this._clientId ??= new ResolvedSecretBuilder();
+  set clientId(covariant ResolvedSecretBuilder? clientId) =>
+      _$this._clientId = clientId;
+
+  ResolvedSecretBuilder? _clientSecret;
+  ResolvedSecretBuilder get clientSecret =>
+      _$this._clientSecret ??= new ResolvedSecretBuilder();
+  set clientSecret(covariant ResolvedSecretBuilder? clientSecret) =>
+      _$this._clientSecret = clientSecret;
+
+  String? _authProviderId;
+  String? get authProviderId => _$this._authProviderId;
+  set authProviderId(covariant String? authProviderId) =>
+      _$this._authProviderId = authProviderId;
+
+  AuthProviderType? _type;
+  AuthProviderType? get type => _$this._type;
+  set type(covariant AuthProviderType? type) => _$this._type = type;
+
+  ResolvedGitHubAuthProviderBuilder();
+
+  ResolvedGitHubAuthProviderBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _clientId = $v.clientId.toBuilder();
+      _clientSecret = $v.clientSecret.toBuilder();
+      _authProviderId = $v.authProviderId;
+      _type = $v.type;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(covariant ResolvedGitHubAuthProvider other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedGitHubAuthProvider;
+  }
+
+  @override
+  void update(void Function(ResolvedGitHubAuthProviderBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedGitHubAuthProvider build() => _build();
+
+  _$ResolvedGitHubAuthProvider _build() {
+    ResolvedGitHubAuthProvider._finalize(this);
+    _$ResolvedGitHubAuthProvider _$result;
+    try {
+      _$result = _$v ??
+          new _$ResolvedGitHubAuthProvider._(
+              clientId: clientId.build(),
+              clientSecret: clientSecret.build(),
+              authProviderId: BuiltValueNullFieldError.checkNotNull(
+                  authProviderId,
+                  r'ResolvedGitHubAuthProvider',
+                  'authProviderId'),
+              type: BuiltValueNullFieldError.checkNotNull(
+                  type, r'ResolvedGitHubAuthProvider', 'type'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'clientId';
+        clientId.build();
+        _$failedField = 'clientSecret';
+        clientSecret.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ResolvedGitHubAuthProvider', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedFirebaseExternalAuthProvider
+    extends ResolvedFirebaseExternalAuthProvider {
+  @override
+  final ResolvedVariable projectId;
+  @override
+  final String authProviderId;
+  @override
+  final AuthProviderType type;
+
+  factory _$ResolvedFirebaseExternalAuthProvider(
+          [void Function(ResolvedFirebaseExternalAuthProviderBuilder)?
+              updates]) =>
+      (new ResolvedFirebaseExternalAuthProviderBuilder()..update(updates))
+          ._build();
+
+  _$ResolvedFirebaseExternalAuthProvider._(
+      {required this.projectId,
+      required this.authProviderId,
+      required this.type})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        projectId, r'ResolvedFirebaseExternalAuthProvider', 'projectId');
+    BuiltValueNullFieldError.checkNotNull(authProviderId,
+        r'ResolvedFirebaseExternalAuthProvider', 'authProviderId');
+    BuiltValueNullFieldError.checkNotNull(
+        type, r'ResolvedFirebaseExternalAuthProvider', 'type');
+  }
+
+  @override
+  ResolvedFirebaseExternalAuthProvider rebuild(
+          void Function(ResolvedFirebaseExternalAuthProviderBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedFirebaseExternalAuthProviderBuilder toBuilder() =>
+      new ResolvedFirebaseExternalAuthProviderBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedFirebaseExternalAuthProvider &&
+        projectId == other.projectId &&
+        authProviderId == other.authProviderId &&
+        type == other.type;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, projectId.hashCode);
+    _$hash = $jc(_$hash, authProviderId.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedFirebaseExternalAuthProvider')
+          ..add('projectId', projectId)
+          ..add('authProviderId', authProviderId)
+          ..add('type', type))
+        .toString();
+  }
+}
+
+class ResolvedFirebaseExternalAuthProviderBuilder
+    implements
+        Builder<ResolvedFirebaseExternalAuthProvider,
+            ResolvedFirebaseExternalAuthProviderBuilder>,
+        ResolvedExternalAuthProviderBuilder {
+  _$ResolvedFirebaseExternalAuthProvider? _$v;
+
+  ResolvedVariableBuilder? _projectId;
+  ResolvedVariableBuilder get projectId =>
+      _$this._projectId ??= new ResolvedVariableBuilder();
+  set projectId(covariant ResolvedVariableBuilder? projectId) =>
+      _$this._projectId = projectId;
+
+  String? _authProviderId;
+  String? get authProviderId => _$this._authProviderId;
+  set authProviderId(covariant String? authProviderId) =>
+      _$this._authProviderId = authProviderId;
+
+  AuthProviderType? _type;
+  AuthProviderType? get type => _$this._type;
+  set type(covariant AuthProviderType? type) => _$this._type = type;
+
+  ResolvedFirebaseExternalAuthProviderBuilder();
+
+  ResolvedFirebaseExternalAuthProviderBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _projectId = $v.projectId.toBuilder();
+      _authProviderId = $v.authProviderId;
+      _type = $v.type;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(covariant ResolvedFirebaseExternalAuthProvider other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedFirebaseExternalAuthProvider;
+  }
+
+  @override
+  void update(
+      void Function(ResolvedFirebaseExternalAuthProviderBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedFirebaseExternalAuthProvider build() => _build();
+
+  _$ResolvedFirebaseExternalAuthProvider _build() {
+    ResolvedFirebaseExternalAuthProvider._finalize(this);
+    _$ResolvedFirebaseExternalAuthProvider _$result;
+    try {
+      _$result = _$v ??
+          new _$ResolvedFirebaseExternalAuthProvider._(
+              projectId: projectId.build(),
+              authProviderId: BuiltValueNullFieldError.checkNotNull(
+                  authProviderId,
+                  r'ResolvedFirebaseExternalAuthProvider',
+                  'authProviderId'),
+              type: BuiltValueNullFieldError.checkNotNull(
+                  type, r'ResolvedFirebaseExternalAuthProvider', 'type'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'projectId';
+        projectId.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ResolvedFirebaseExternalAuthProvider',
+            _$failedField,
+            e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedSupabaseExternalAuthProvider
+    extends ResolvedSupabaseExternalAuthProvider {
+  @override
+  final ResolvedVariable projectUrl;
+  @override
+  final ResolvedSecret? jwtSecret;
+  @override
+  final String authProviderId;
+  @override
+  final AuthProviderType type;
+
+  factory _$ResolvedSupabaseExternalAuthProvider(
+          [void Function(ResolvedSupabaseExternalAuthProviderBuilder)?
+              updates]) =>
+      (new ResolvedSupabaseExternalAuthProviderBuilder()..update(updates))
+          ._build();
+
+  _$ResolvedSupabaseExternalAuthProvider._(
+      {required this.projectUrl,
+      this.jwtSecret,
+      required this.authProviderId,
+      required this.type})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        projectUrl, r'ResolvedSupabaseExternalAuthProvider', 'projectUrl');
+    BuiltValueNullFieldError.checkNotNull(authProviderId,
+        r'ResolvedSupabaseExternalAuthProvider', 'authProviderId');
+    BuiltValueNullFieldError.checkNotNull(
+        type, r'ResolvedSupabaseExternalAuthProvider', 'type');
+  }
+
+  @override
+  ResolvedSupabaseExternalAuthProvider rebuild(
+          void Function(ResolvedSupabaseExternalAuthProviderBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedSupabaseExternalAuthProviderBuilder toBuilder() =>
+      new ResolvedSupabaseExternalAuthProviderBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedSupabaseExternalAuthProvider &&
+        projectUrl == other.projectUrl &&
+        jwtSecret == other.jwtSecret &&
+        authProviderId == other.authProviderId &&
+        type == other.type;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, projectUrl.hashCode);
+    _$hash = $jc(_$hash, jwtSecret.hashCode);
+    _$hash = $jc(_$hash, authProviderId.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedSupabaseExternalAuthProvider')
+          ..add('projectUrl', projectUrl)
+          ..add('jwtSecret', jwtSecret)
+          ..add('authProviderId', authProviderId)
+          ..add('type', type))
+        .toString();
+  }
+}
+
+class ResolvedSupabaseExternalAuthProviderBuilder
+    implements
+        Builder<ResolvedSupabaseExternalAuthProvider,
+            ResolvedSupabaseExternalAuthProviderBuilder>,
+        ResolvedExternalAuthProviderBuilder {
+  _$ResolvedSupabaseExternalAuthProvider? _$v;
+
+  ResolvedVariableBuilder? _projectUrl;
+  ResolvedVariableBuilder get projectUrl =>
+      _$this._projectUrl ??= new ResolvedVariableBuilder();
+  set projectUrl(covariant ResolvedVariableBuilder? projectUrl) =>
+      _$this._projectUrl = projectUrl;
+
+  ResolvedSecretBuilder? _jwtSecret;
+  ResolvedSecretBuilder get jwtSecret =>
+      _$this._jwtSecret ??= new ResolvedSecretBuilder();
+  set jwtSecret(covariant ResolvedSecretBuilder? jwtSecret) =>
+      _$this._jwtSecret = jwtSecret;
+
+  String? _authProviderId;
+  String? get authProviderId => _$this._authProviderId;
+  set authProviderId(covariant String? authProviderId) =>
+      _$this._authProviderId = authProviderId;
+
+  AuthProviderType? _type;
+  AuthProviderType? get type => _$this._type;
+  set type(covariant AuthProviderType? type) => _$this._type = type;
+
+  ResolvedSupabaseExternalAuthProviderBuilder();
+
+  ResolvedSupabaseExternalAuthProviderBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _projectUrl = $v.projectUrl.toBuilder();
+      _jwtSecret = $v.jwtSecret?.toBuilder();
+      _authProviderId = $v.authProviderId;
+      _type = $v.type;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(covariant ResolvedSupabaseExternalAuthProvider other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedSupabaseExternalAuthProvider;
+  }
+
+  @override
+  void update(
+      void Function(ResolvedSupabaseExternalAuthProviderBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedSupabaseExternalAuthProvider build() => _build();
+
+  _$ResolvedSupabaseExternalAuthProvider _build() {
+    ResolvedSupabaseExternalAuthProvider._finalize(this);
+    _$ResolvedSupabaseExternalAuthProvider _$result;
+    try {
+      _$result = _$v ??
+          new _$ResolvedSupabaseExternalAuthProvider._(
+              projectUrl: projectUrl.build(),
+              jwtSecret: _jwtSecret?.build(),
+              authProviderId: BuiltValueNullFieldError.checkNotNull(
+                  authProviderId,
+                  r'ResolvedSupabaseExternalAuthProvider',
+                  'authProviderId'),
+              type: BuiltValueNullFieldError.checkNotNull(
+                  type, r'ResolvedSupabaseExternalAuthProvider', 'type'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'projectUrl';
+        projectUrl.build();
+        _$failedField = 'jwtSecret';
+        _jwtSecret?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ResolvedSupabaseExternalAuthProvider',
+            _$failedField,
+            e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

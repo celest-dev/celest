@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package celest.ast.v1;
+
+import "google/api/field_behavior.proto";
+import "google/protobuf/struct.proto";
+
+// Information about an SDK used to deploy the project.
+message Sdk {
+  // The type of the SDK.
+  SdkType type = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The version of the SDK.
+  Version version = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The SDK experiments enabled for the project.
+  repeated string enabled_experiments = 3 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// A semantic version, broken down by its components.
+message Version {
+  // The major version number: "1" in "1.2.3".
+  int32 major = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The minor version number: "2" in "1.2.3".
+  int32 minor = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The patch version number: "3" in "1.2.3".
+  int32 patch = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The pre-release identifier: "foo" in "1.2.3-foo".
+  //
+  // This is split into a list of components, each of which may be either a
+  // string or a non-negative integer. It may also be empty, indicating that
+  // this version has no pre-release identifier.
+  repeated google.protobuf.Value pre_release = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // The build identifier: "foo" in "1.2.3+foo".
+  //
+  // This is split into a list of components, each of which may be either a
+  // string or a non-negative integer. It may also be empty, indicating that
+  // this version has no build identifier.
+  repeated google.protobuf.Value build = 5 [(google.api.field_behavior) = OPTIONAL];
+
+  // The canonicalized version string.
+  string canonicalized_version = 6 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// The type of SDK.
+enum SdkType {
+  // The SDK type is unspecified.
+  SDK_TYPE_UNSPECIFIED = 0;
+
+  // The Dart SDK.
+  DART = 1;
+
+  // The Flutter SDK.
+  FLUTTER = 2;
+}
