@@ -50,7 +50,4 @@ class CelestVariables {
 /// for the current [CelestEnvironment].
 class CelestSecrets {
   const CelestSecrets();
-
-  /// The value of the `GEMINI_API_KEY` secret.
-  String get geminiApiKey => context.expect(const env('GEMINI_API_KEY'));
 }

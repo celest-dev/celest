@@ -1,12 +1,1 @@
-import 'package:celest/celest.dart';
-
-const project = Project(
-  name: 'celest_auth_example',
-);
-
-const auth = Auth(
-  providers: [
-    AuthProvider.email(),
-    AuthProvider.sms(),
-  ],
-);
+/Users/dillonnys/celest/cloud/celest/packages/celest_auth/example/celest/lib/src/project.dart

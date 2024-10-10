@@ -6,15 +6,19 @@ environment:
   sdk: ^3.4.0
 
 dependencies:
-  celest: ^0.5.0-0
-  http: ">=0.13.0 <2.0.0"
-
-  celest_auth: any
+  celest: ^1.0.0-0
+  celest_ast: ^0.1.0
+  celest_auth: 'any'
+  celest_core: ^1.0.0-0
+  http: '>=0.13.0 <2.0.0'
+  meta: ^1.12.0
 dependency_overrides:
   celest:
     path: ../../../celest
+  celest_ast:
+    path: ../../../celest_ast
   celest_auth:
-    path: ../../
+    path: ../..
   celest_cloud:
     path: ../../../celest_cloud
   celest_core:
