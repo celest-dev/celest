@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/compiler/frontend_server_client.dart';
-import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli/src/utils/error.dart';
@@ -43,6 +43,7 @@ final class LocalApiRunner {
   late final StreamSubscription<String> _stderrSub;
 
   static Future<LocalApiRunner> start({
+    required ast.ResolvedProject resolvedProject,
     required String path,
     required String environmentId,
     required Map<String, String> configValues,
@@ -56,18 +57,19 @@ final class LocalApiRunner {
     // hub and is never exposed to the user.
     @visibleForTesting PortFinder portFinder = const RandomPortFinder(),
   }) async {
-    final projectType = await celestProject.determineProjectType();
-    final (target, platformDill, sdkRoot) = switch (projectType) {
-      CelestProjectType.flutter => (
+    final (target, platformDill, sdkRoot) =
+        switch (resolvedProject.sdkConfig.targetSdk) {
+      SdkType.flutter => (
           'flutter',
           Sdk.current.flutterPlatformDill!,
           Sdk.current.flutterPatchedSdk!
         ),
-      CelestProjectType.dart => (
+      SdkType.dart => (
           'vm',
           Sdk.current.vmPlatformDill,
           p.join(Sdk.current.sdkPath, 'lib', '_internal'),
         ),
+      final unknown => unreachable('Unknown SDK type: $unknown'),
     };
 
     // Create initial kernel file so that it links the platform
@@ -138,8 +140,8 @@ final class LocalApiRunner {
     // When we check the port below, it's valid because the VM service is not
     // started yet, but later the API fails because it picked the same port.
     final vmServicePort = await const RandomPortFinder().findOpenPort(port);
-    final command = switch (projectType) {
-      CelestProjectType.dart => <String>[
+    final command = switch (resolvedProject.sdkConfig.targetSdk) {
+      SdkType.dart => <String>[
           Sdk.current.dart,
           'run',
           '--enable-vm-service=$vmServicePort', // Start VM service
@@ -149,7 +151,7 @@ final class LocalApiRunner {
           projectPaths.packagesConfig,
           outputDill,
         ],
-      CelestProjectType.flutter => <String>[
+      SdkType.flutter => <String>[
           Sdk.current.flutterTester,
           '--non-interactive',
           '--vm-service-port=$vmServicePort',
@@ -164,7 +166,8 @@ final class LocalApiRunner {
           '--cache-dir-path=${flutterCacheDir.absolute.path}',
           // '--enable-impeller',
           outputDill,
-        ]
+        ],
+      final unknown => unreachable('Unknown SDK type: $unknown'),
     };
 
     port = await portFinder.checkOrUpdatePort(port, excluding: [vmServicePort]);

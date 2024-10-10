@@ -742,8 +742,8 @@ final class CelestFrontend {
       enabledExperiments: celestProject.analysisOptions.enabledExperiments,
     );
     final kernel = await entrypointCompiler.compile(
-      resolvedProject.id,
-      projectPaths.localApiEntrypoint,
+      resolvedProject: resolvedProject,
+      entrypointPath: projectPaths.localApiEntrypoint,
     );
 
     final buildOutputs = fileSystem.directory(projectPaths.buildDir);
@@ -787,6 +787,7 @@ final class CelestFrontend {
     if (_localApiRunner == null) {
       await performance.trace('LocalApiRunner', 'start', () async {
         _localApiRunner = await LocalApiRunner.start(
+          resolvedProject: resolvedProject,
           path: projectPaths.localApiEntrypoint,
           environmentId: environmentId,
           configValues: configValues,
@@ -805,6 +806,7 @@ final class CelestFrontend {
             logger.fine('Restarting local API...');
             await _localApiRunner!.close();
             _localApiRunner = await LocalApiRunner.start(
+              resolvedProject: resolvedProject,
               path: projectPaths.localApiEntrypoint,
               environmentId: environmentId,
               port: _localApiRunner?.port,
@@ -886,8 +888,8 @@ final class CelestFrontend {
                 celestProject.analysisOptions.enabledExperiments,
           );
           final kernel = await entrypointCompiler.compile(
-            resolvedProject.id,
-            projectPaths.localApiEntrypoint,
+            resolvedProject: resolvedProject,
+            entrypointPath: projectPaths.localApiEntrypoint,
           );
           final operation = cloud.projects.environments.deploy(
             'projects/$projectId/environments/$environmentId',

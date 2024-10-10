@@ -1,3 +1,4 @@
+import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/init/migrations/pubspec_updater.dart';
 import 'package:celest_cli/init/project_migration.dart';
 import 'package:celest_cli/project/celest_project.dart';
@@ -195,7 +196,7 @@ environment:
           path: tempDir.path,
           pubspec: Pubspec.parse(pubspecYaml),
           pubspecYaml: pubspecYaml,
-          type: ParentProjectType.dart,
+          type: SdkType.dart,
         ),
       ).create();
 
@@ -250,7 +251,7 @@ dev_dependencies:
           path: tempDir.path,
           pubspec: Pubspec.parse(pubspecYaml),
           pubspecYaml: pubspecYaml,
-          type: ParentProjectType.dart,
+          type: SdkType.dart,
         ),
       ).create();
 
@@ -309,7 +310,7 @@ dev_dependencies:
           path: tempDir.path,
           pubspec: Pubspec.parse(pubspecYaml),
           pubspecYaml: pubspecYaml,
-          type: ParentProjectType.dart,
+          type: SdkType.dart,
         ),
       ).create();
 
@@ -370,7 +371,7 @@ dev_dependencies:
           path: tempDir.path,
           pubspec: Pubspec.parse(pubspecYaml),
           pubspecYaml: pubspecYaml,
-          type: ParentProjectType.dart,
+          type: SdkType.dart,
         ),
       ).create();
 

@@ -1,7 +1,8 @@
 import 'dart:collection';
 
-import 'package:celest_cli/project/celest_project.dart';
+import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:code_builder/code_builder.dart';
 
 class LocalApiGenerator {
@@ -13,7 +14,7 @@ class LocalApiGenerator {
         // TODO(dnys1): Order by API then definition order.
         targets = SplayTreeMap.of(targets);
 
-  final CelestProjectType projectType;
+  final SdkType projectType;
   final SplayTreeMap<String, Reference> targets;
 
   Method get _mainMethod => Method(
@@ -23,7 +24,7 @@ class LocalApiGenerator {
           ..modifier = MethodModifier.async
           ..body = Code.scope(
             (alloc) => switch (projectType) {
-              CelestProjectType.dart => '''
+              SdkType.dart => '''
 return start();
 ''',
 
@@ -34,7 +35,7 @@ return start();
 //     ${alloc(DartTypes.isolate.isolate)}.run(start),
 // ]);
 // ''',
-              CelestProjectType.flutter => '''
+              SdkType.flutter => '''
 return start();
 ''',
 // TODO(dnys1): Not sure if this is possible...
@@ -45,6 +46,7 @@ return start();
 //     ${alloc(DartTypes.isolate.isolate)}.run(() => start(rootIsolateToken)),
 // ]);
 // '''
+              final unknown => unreachable('Unknown project type: $unknown'),
             },
           ),
       );

@@ -1,63 +1,6 @@
-import 'package:cedar/ast.dart';
-import 'package:cedar/cedar.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/run.dart';
-import 'package:collection/collection.dart';
-
-extension on AstNode {
-  ResourceConstraint get resource => switch (this) {
-        final Api api => ResourceIn(api.id),
-        final CloudFunction function => ResourceEquals(function.id),
-        _ => unreachable(),
-      };
-}
-
-extension on ApiAuth {
-  String get name => switch (this) {
-        ApiPublic() => 'public',
-        ApiAuthenticated() => 'authenticated',
-      };
-
-  List<Policy> policiesFor(AstNode node) {
-    return switch (this) {
-      ApiAuthenticated(:final role) => [
-          Policy(
-            effect: Effect.permit,
-            principal: PrincipalIn(role),
-            action: ActionEquals(CloudFunctionAction.invoke.id),
-            resource: node.resource,
-          ),
-
-          // Add a forbid policy for `@authenticated` so that it overrides
-          // any other allow policies, e.g. if the library has `@public`.
-          Policy(
-            effect: Effect.forbid,
-            principal: const PrincipalAll(),
-            action: ActionEquals(CloudFunctionAction.invoke.id),
-            resource: node.resource,
-            conditions: [
-              Condition(
-                kind: ConditionKind.unless,
-                body: Expr.in_(
-                  left: const Expr.variable(CedarVariable.principal),
-                  right: Expr.value(Value.entity(uid: role)),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ApiPublic() => [
-          Policy(
-            effect: Effect.permit,
-            principal: const PrincipalAll(),
-            action: ActionEquals(CloudFunctionAction.invoke.id),
-            resource: node.resource,
-          ),
-        ],
-    };
-  }
-}
 
 final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   ProjectResolver({
@@ -77,7 +20,7 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   ResolvedProject visitProject(Project project, AstNode context) {
     _resolvedProject
       ..name = project.name
-      ..sdkInfo.replace(project.sdkInfo);
+      ..sdkConfig.replace(project.sdkConfig);
     for (final envVar in project.envVars) {
       _resolvedProject.envVars.add(
         visitEnvironmentVariable(envVar, project),
@@ -99,19 +42,6 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   ResolvedApi visitApi(Api api, Project context) {
     return ResolvedApi.build((resolvedApi) {
       resolvedApi.name = api.name;
-      final apiAuth = api.metadata.whereType<ApiAuth>().singleOrNull;
-      if (apiAuth != null) {
-        final policies = apiAuth.policiesFor(api);
-        for (final (i, policy) in policies.indexed) {
-          final policyName = '${api.id.type}::${api.name}_${apiAuth.name}_$i';
-          resolvedApi.policySet.policies.updateValue(
-            policyName,
-            (_) => throw StateError('Duplicate policy name: $policyName'),
-            ifAbsent: () => policy,
-          );
-        }
-      }
-
       for (final f in api.functions.values) {
         resolvedApi.functions[f.name] = visitFunction(f, api);
       }
@@ -142,20 +72,6 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
           ..route = function.route
           ..apiName = function.apiName
           ..streamType = function.streamType;
-        final functionAuth =
-            function.metadata.whereType<ApiAuth>().singleOrNull;
-        if (functionAuth != null) {
-          final policies = functionAuth.policiesFor(function);
-          for (final (i, policy) in policies.indexed) {
-            final policyName =
-                '${function.id.type}::${function.name}_${functionAuth.name}_$i';
-            resolvedFunction.policySet.policies.updateValue(
-              policyName,
-              (_) => throw StateError('Duplicate policy name: $policyName'),
-              ifAbsent: () => policy,
-            );
-          }
-        }
 
         final funcHttpMetadata = [
           ...context.metadata.whereType<ApiHttpMetadata>(),

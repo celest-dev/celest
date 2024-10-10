@@ -3,10 +3,10 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 
-import 'package:cedar/cedar.dart';
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/compiler/package_config_transform.dart';
-import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:crypto/crypto.dart';
 import 'package:logging/logging.dart';
@@ -34,20 +34,17 @@ final class EntrypointDefinition {
 
 final class EntrypointResult {
   const EntrypointResult({
-    required this.nodeId,
     required this.outputDillPath,
     required this.outputDill,
     required this.outputDillDigest,
   });
 
-  final EntityUid nodeId;
   final String outputDillPath;
   final Uint8List outputDill;
   final Digest outputDillDigest;
 
   @override
   String toString() => prettyPrintJson({
-        'nodeId': nodeId.toJson(),
         'outputDillPath': outputDillPath,
         'outputDillSha256': outputDillDigest.toString(),
       });
@@ -64,10 +61,10 @@ final class EntrypointCompiler {
   final bool verbose;
   final List<String> enabledExperiments;
 
-  Future<EntrypointResult> compile(
-    EntityUid id,
-    String entrypointPath,
-  ) async {
+  Future<EntrypointResult> compile({
+    required ast.ResolvedProject resolvedProject,
+    required String entrypointPath,
+  }) async {
     logger.fine('Compiling entrypoint: $entrypointPath');
     if (!fileSystem.isFileSync(entrypointPath)) {
       throw StateError(
@@ -84,17 +81,18 @@ final class EntrypointCompiler {
     );
     final outputPath = '$pathWithoutDart.dill';
     final (target, platformDill, sdkRoot) =
-        switch (await celestProject.determineProjectType()) {
-      CelestProjectType.flutter => (
+        switch (resolvedProject.sdkConfig.targetSdk) {
+      SdkType.flutter => (
           'flutter',
           Sdk.current.flutterPlatformDill!,
           Sdk.current.flutterPatchedSdk!
         ),
-      CelestProjectType.dart => (
+      SdkType.dart => (
           'vm',
           Sdk.current.vmPlatformDill,
           p.join(Sdk.current.sdkPath, 'lib', '_internal'),
         ),
+      final unknown => unreachable('Unknown SDK type: $unknown'),
     };
 
     // NOTE: FE server requires file: URIs for *some* paths on Windows.
@@ -144,7 +142,6 @@ final class EntrypointCompiler {
       outputDill.asUnmodifiableView(),
     );
     return EntrypointResult(
-      nodeId: id,
       outputDillPath: outputPath,
       outputDill: outputDill,
       outputDillDigest: outputDillDigest,

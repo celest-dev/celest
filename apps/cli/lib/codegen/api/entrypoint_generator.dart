@@ -5,7 +5,6 @@ import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/codegen/api/local_api_generator.dart';
-import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/from_string_generator.dart';
 import 'package:celest_cli/serialization/serializer_generator.dart';
@@ -425,7 +424,10 @@ final class EntrypointGenerator {
                       collectionIf(
                         DartTypes.celest.globalContext
                             .property('environment')
-                            .notEqualTo(DartTypes.celest.environment.property('production')),
+                            .notEqualTo(
+                              DartTypes.celest.environment
+                                  .property('production'),
+                            ),
                         literalMap({
                           '@type': typeHelper.coreTypes.stackTraceType
                               .externalUri(project.name),
@@ -669,7 +671,7 @@ final class EntrypointGenerator {
       (c) => c
         ..name = targetName
         ..modifier = ClassModifier.final$
-        ..extend = project.sdkInfo.featureEnabled(FeatureFlag.streaming)
+        ..extend = project.sdkConfig.featureEnabled(FeatureFlag.streaming)
             ? switch (function.streamType) {
                 null => DartTypes.celest.cloudFunctionHttpTarget,
                 _ => DartTypes.celest.cloudEventSourceTarget,
@@ -752,9 +754,7 @@ final class EntrypointGenerator {
     );
 
     final entrypoint = LocalApiGenerator(
-      projectType: project.sdkInfo.flutterSdkVersion == null
-          ? CelestProjectType.dart
-          : CelestProjectType.flutter,
+      projectType: project.sdkConfig.targetSdk,
       targets: {'/': refer(targetName)},
     ).body;
     library.body.addAll([

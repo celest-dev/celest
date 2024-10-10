@@ -1,3 +1,4 @@
+import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/init/migrations/add_analyzer_plugin.dart';
 import 'package:celest_cli/init/migrations/macos_entitlements.dart';
 import 'package:celest_cli/init/migrations/pubspec_updater.dart';
@@ -40,8 +41,7 @@ class ProjectMigrator {
       if (parentProject
           case ParentProject(path: final appRoot, :final type)) ...[
         AddAnalyzerPlugin(projectRoot, appRoot),
-        if (type == ParentProjectType.flutter)
-          MacOsEntitlements(projectRoot, appRoot),
+        if (type == SdkType.flutter) MacOsEntitlements(projectRoot, appRoot),
       ],
     ];
     final report = ProjectMigrationReport();

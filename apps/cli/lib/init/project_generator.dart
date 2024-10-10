@@ -2,6 +2,7 @@ import 'package:celest_cli/init/migrations/add_analyzer_plugin.dart';
 import 'package:celest_cli/init/migrations/macos_entitlements.dart';
 import 'package:celest_cli/init/project_migration.dart';
 import 'package:celest_cli/project/celest_project.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 
 /// Manages the generation of a new Celest project.
 class ProjectGenerator {
@@ -36,8 +37,7 @@ class ProjectGenerator {
         if (parentProject
             case ParentProject(path: final appRoot, :final type)) ...[
           AddAnalyzerPlugin(projectRoot, appRoot),
-          if (type == ParentProjectType.flutter)
-            MacOsEntitlements(projectRoot, appRoot),
+          if (type == SdkType.flutter) MacOsEntitlements(projectRoot, appRoot),
         ],
       ].map((item) => item.create()),
     );

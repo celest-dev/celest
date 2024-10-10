@@ -14,7 +14,6 @@ import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
 import 'package:celest_cli/analyzer/resolver/config_value_resolver.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/config/feature_flags.dart';
-import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/serialization/common.dart';
 import 'package:celest_cli/serialization/serialization_verdict.dart';
 import 'package:celest_cli/src/context.dart';
@@ -24,12 +23,14 @@ import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/list.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli/src/utils/run.dart';
+import 'package:celest_cli/src/version.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 import 'package:file/file.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:logging/logging.dart';
+import 'package:pub_semver/pub_semver.dart';
 import 'package:source_span/source_span.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -307,13 +308,23 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         variableName!,
         projectPaths.normalizeUri(p.toUri(projectFilePath)).toString(),
       ),
-      sdkInfo: ast.SdkInfo(
-        sdkVersion: Sdk.current.version,
-        flutterSdkVersion: switch (await celestProject.determineProjectType()) {
-          CelestProjectType.flutter => Sdk.current.flutterVersion!,
+      sdkConfig: ast.SdkConfiguration(
+        celest: Version.parse(packageVersion),
+        dart: ast.Sdk(
+          type: ast.SdkType.dart,
+          version: Sdk.current.version,
+          enabledExperiments: celestProject.analysisOptions.enabledExperiments,
+        ),
+        flutter: switch (Sdk.current.flutterVersion) {
+          final flutterVersion? => ast.Sdk(
+              type: ast.SdkType.flutter,
+              version: flutterVersion,
+              enabledExperiments:
+                  celestProject.analysisOptions.enabledExperiments,
+            ),
           _ => null,
         },
-        enabledExperiments: celestProject.analysisOptions.enabledExperiments,
+        targetSdk: await celestProject.determineProjectType(),
         featureFlags: featureFlags.toAst(),
       ),
       location: projectDefineLocation!,

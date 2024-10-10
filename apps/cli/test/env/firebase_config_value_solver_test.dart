@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/database/cache/cache_database.dart';
 import 'package:celest_cli/database/project/project_database.dart';
 import 'package:celest_cli/env/firebase_config_value_solver.dart';
@@ -65,7 +66,7 @@ name: celest_backend
       path: appDir.path,
       pubspec: Pubspec('app'),
       pubspecYaml: '',
-      type: ParentProjectType.flutter,
+      type: SdkType.flutter,
     ),
     projectDb: projectDb,
     cacheDb: cacheDb,

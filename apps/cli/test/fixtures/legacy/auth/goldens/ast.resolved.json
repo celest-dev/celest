@@ -9,78 +9,7 @@
           "route": "/lib/say-hello-authenticated",
           "apiName": "lib",
           "envVars": [],
-          "secrets": [],
-          "policySet": {
-            "policies": {
-              "Celest::CloudFunction::sayHelloAuthenticated_authenticated_0": {
-                "effect": "permit",
-                "principal": {
-                  "op": "in",
-                  "entity": {
-                    "type": "Celest::Role",
-                    "id": "$authenticated"
-                  }
-                },
-                "action": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::Action",
-                    "id": "invoke"
-                  }
-                },
-                "resource": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::CloudFunction",
-                    "id": "lib.sayHelloAuthenticated"
-                  }
-                },
-                "conditions": []
-              },
-              "Celest::CloudFunction::sayHelloAuthenticated_authenticated_1": {
-                "effect": "forbid",
-                "principal": {
-                  "op": "All"
-                },
-                "action": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::Action",
-                    "id": "invoke"
-                  }
-                },
-                "resource": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::CloudFunction",
-                    "id": "lib.sayHelloAuthenticated"
-                  }
-                },
-                "conditions": [
-                  {
-                    "kind": "unless",
-                    "body": {
-                      "in": {
-                        "left": {
-                          "Var": "principal"
-                        },
-                        "right": {
-                          "Value": {
-                            "__entity": {
-                              "type": "Celest::Role",
-                              "id": "$authenticated"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
-            },
-            "templates": {},
-            "templateLinks": []
-          }
+          "secrets": []
         },
         "streamHelloAuthenticated": {
           "name": "streamHelloAuthenticated",
@@ -88,112 +17,14 @@
           "apiName": "lib",
           "envVars": [],
           "secrets": [],
-          "streamType": "unidirectionalServer",
-          "policySet": {
-            "policies": {
-              "Celest::CloudFunction::streamHelloAuthenticated_authenticated_0": {
-                "effect": "permit",
-                "principal": {
-                  "op": "in",
-                  "entity": {
-                    "type": "Celest::Role",
-                    "id": "$authenticated"
-                  }
-                },
-                "action": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::Action",
-                    "id": "invoke"
-                  }
-                },
-                "resource": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::CloudFunction",
-                    "id": "lib.streamHelloAuthenticated"
-                  }
-                },
-                "conditions": []
-              },
-              "Celest::CloudFunction::streamHelloAuthenticated_authenticated_1": {
-                "effect": "forbid",
-                "principal": {
-                  "op": "All"
-                },
-                "action": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::Action",
-                    "id": "invoke"
-                  }
-                },
-                "resource": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::CloudFunction",
-                    "id": "lib.streamHelloAuthenticated"
-                  }
-                },
-                "conditions": [
-                  {
-                    "kind": "unless",
-                    "body": {
-                      "in": {
-                        "left": {
-                          "Var": "principal"
-                        },
-                        "right": {
-                          "Value": {
-                            "__entity": {
-                              "type": "Celest::Role",
-                              "id": "$authenticated"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
-            },
-            "templates": {},
-            "templateLinks": []
-          }
+          "streamType": "unidirectionalServer"
         },
         "sayHelloPublic": {
           "name": "sayHelloPublic",
           "route": "/lib/say-hello-public",
           "apiName": "lib",
           "envVars": [],
-          "secrets": [],
-          "policySet": {
-            "policies": {
-              "Celest::CloudFunction::sayHelloPublic_public_0": {
-                "effect": "permit",
-                "principal": {
-                  "op": "All"
-                },
-                "action": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::Action",
-                    "id": "invoke"
-                  }
-                },
-                "resource": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::CloudFunction",
-                    "id": "lib.sayHelloPublic"
-                  }
-                },
-                "conditions": []
-              }
-            },
-            "templates": {},
-            "templateLinks": []
-          }
+          "secrets": []
         },
         "streamHelloPublic": {
           "name": "streamHelloPublic",
@@ -201,34 +32,7 @@
           "apiName": "lib",
           "envVars": [],
           "secrets": [],
-          "streamType": "unidirectionalServer",
-          "policySet": {
-            "policies": {
-              "Celest::CloudFunction::streamHelloPublic_public_0": {
-                "effect": "permit",
-                "principal": {
-                  "op": "All"
-                },
-                "action": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::Action",
-                    "id": "invoke"
-                  }
-                },
-                "resource": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::CloudFunction",
-                    "id": "lib.streamHelloPublic"
-                  }
-                },
-                "conditions": []
-              }
-            },
-            "templates": {},
-            "templateLinks": []
-          }
+          "streamType": "unidirectionalServer"
         },
         "sayHello": {
           "name": "sayHello",
@@ -265,77 +69,6 @@
           "secrets": [],
           "streamType": "unidirectionalServer"
         }
-      },
-      "policySet": {
-        "policies": {
-          "Celest::CloudApi::authenticated_lib_authenticated_0": {
-            "effect": "permit",
-            "principal": {
-              "op": "in",
-              "entity": {
-                "type": "Celest::Role",
-                "id": "$authenticated"
-              }
-            },
-            "action": {
-              "op": "==",
-              "entity": {
-                "type": "Celest::Action",
-                "id": "invoke"
-              }
-            },
-            "resource": {
-              "op": "in",
-              "entity": {
-                "type": "Celest::CloudApi",
-                "id": "authenticated_lib"
-              }
-            },
-            "conditions": []
-          },
-          "Celest::CloudApi::authenticated_lib_authenticated_1": {
-            "effect": "forbid",
-            "principal": {
-              "op": "All"
-            },
-            "action": {
-              "op": "==",
-              "entity": {
-                "type": "Celest::Action",
-                "id": "invoke"
-              }
-            },
-            "resource": {
-              "op": "in",
-              "entity": {
-                "type": "Celest::CloudApi",
-                "id": "authenticated_lib"
-              }
-            },
-            "conditions": [
-              {
-                "kind": "unless",
-                "body": {
-                  "in": {
-                    "left": {
-                      "Var": "principal"
-                    },
-                    "right": {
-                      "Value": {
-                        "__entity": {
-                          "type": "Celest::Role",
-                          "id": "$authenticated"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "templates": {},
-        "templateLinks": []
       }
     },
     "public_lib": {
@@ -356,33 +89,6 @@
           "secrets": [],
           "streamType": "unidirectionalServer"
         }
-      },
-      "policySet": {
-        "policies": {
-          "Celest::CloudApi::public_lib_public_0": {
-            "effect": "permit",
-            "principal": {
-              "op": "All"
-            },
-            "action": {
-              "op": "==",
-              "entity": {
-                "type": "Celest::Action",
-                "id": "invoke"
-              }
-            },
-            "resource": {
-              "op": "in",
-              "entity": {
-                "type": "Celest::CloudApi",
-                "id": "public_lib"
-              }
-            },
-            "conditions": []
-          }
-        },
-        "templates": {},
-        "templateLinks": []
       }
     }
   },
@@ -397,13 +103,22 @@
     }
   ],
   "secrets": [],
-  "sdkInfo": {
-    "sdkVersion": "3.5.3",
-    "enabledExperiments": [],
+  "sdkConfig": {
+    "celest": "1.0.0-dev.0",
+    "dart": {
+      "type": "dart",
+      "version": "3.5.3",
+      "enabledExperiments": []
+    },
+    "targetSdk": "flutter",
     "featureFlags": [
       "streaming"
     ],
-    "flutterSdkVersion": "3.24.3"
+    "flutter": {
+      "type": "flutter",
+      "version": "3.24.3",
+      "enabledExperiments": []
+    }
   },
   "auth": {
     "providers": [

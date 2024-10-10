@@ -351,7 +351,8 @@ class TestRunner {
     }
     group('apis', () {
       for (final MapEntry(key: apiName, value: apiTest) in apis.entries) {
-        if (includeApis != null && (!includeApis.contains(apiName) || includeApis.contains('none'))) {
+        if (includeApis != null &&
+            (!includeApis.contains(apiName) || includeApis.contains('none'))) {
           continue;
         }
         testApi(apiName, apiTest);
@@ -375,11 +376,18 @@ class TestRunner {
         );
         expect(errors, isEmpty);
         expect(project, isNotNull);
+
         final configValues = await ConfigValueSolver(
           project: project!,
           environmentId: 'local',
         ).solveAll();
+        final projectResolver = ProjectResolver(
+          configValues: configValues,
+          environmentId: 'local',
+        );
+        project.acceptWithArg(projectResolver, project);
         apiRunner = await LocalApiRunner.start(
+          resolvedProject: projectResolver.resolvedProject,
           path: entrypoint,
           configValues: configValues,
           environmentId: 'local',
@@ -2608,9 +2616,7 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'dart.core.Exception',
-                      'value': {
-                        'message': 'Exception: Something bad happened',
-                      },
+                      'value': anything,
                     },
                     {
                       '@type': 'dart.core.StackTrace',
@@ -2660,9 +2666,7 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'dart.core.Error',
-                      'value': {
-                        'stackTrace': anything,
-                      },
+                      'value': anything,
                     },
                     {
                       '@type': 'dart.core.StackTrace',

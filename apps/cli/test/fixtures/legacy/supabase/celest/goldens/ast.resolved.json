@@ -14,77 +14,6 @@
             "method": "GET",
             "statusCode": 200,
             "errorStatuses": {}
-          },
-          "policySet": {
-            "policies": {
-              "Celest::CloudFunction::currentUser_authenticated_0": {
-                "effect": "permit",
-                "principal": {
-                  "op": "in",
-                  "entity": {
-                    "type": "Celest::Role",
-                    "id": "$authenticated"
-                  }
-                },
-                "action": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::Action",
-                    "id": "invoke"
-                  }
-                },
-                "resource": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::CloudFunction",
-                    "id": "auth.currentUser"
-                  }
-                },
-                "conditions": []
-              },
-              "Celest::CloudFunction::currentUser_authenticated_1": {
-                "effect": "forbid",
-                "principal": {
-                  "op": "All"
-                },
-                "action": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::Action",
-                    "id": "invoke"
-                  }
-                },
-                "resource": {
-                  "op": "==",
-                  "entity": {
-                    "type": "Celest::CloudFunction",
-                    "id": "auth.currentUser"
-                  }
-                },
-                "conditions": [
-                  {
-                    "kind": "unless",
-                    "body": {
-                      "in": {
-                        "left": {
-                          "Var": "principal"
-                        },
-                        "right": {
-                          "Value": {
-                            "__entity": {
-                              "type": "Celest::Role",
-                              "id": "$authenticated"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
-            },
-            "templates": {},
-            "templateLinks": []
           }
         }
       }
@@ -102,12 +31,22 @@
       "value": "super-secret-jwt-token-with-at-least-32-characters-long"
     }
   ],
-  "sdkInfo": {
-    "sdkVersion": "3.5.3",
-    "enabledExperiments": [],
+  "sdkConfig": {
+    "celest": "1.0.0-dev.0",
+    "dart": {
+      "type": "dart",
+      "version": "3.5.3",
+      "enabledExperiments": []
+    },
+    "targetSdk": "dart",
     "featureFlags": [
       "streaming"
-    ]
+    ],
+    "flutter": {
+      "type": "flutter",
+      "version": "3.24.3",
+      "enabledExperiments": []
+    }
   },
   "auth": {
     "providers": [],

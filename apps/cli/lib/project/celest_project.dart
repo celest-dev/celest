@@ -8,6 +8,7 @@ import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/src/dart/analysis/byte_store.dart';
 import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
 import 'package:celest/src/runtime/serve.dart';
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_options.dart';
 import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/database/cache/cache_database.dart';
@@ -23,10 +24,6 @@ import 'package:meta/meta.dart';
 import 'package:native_storage/native_storage.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
-
-enum ParentProjectType { dart, flutter }
-
-enum CelestProjectType { dart, flutter }
 
 final class ParentProject {
   const ParentProject({
@@ -55,8 +52,8 @@ final class ParentProject {
       pubspec: pubspec,
       pubspecYaml: pubspecYaml,
       type: switch (pubspec.dependencies.containsKey('flutter')) {
-        true => ParentProjectType.flutter,
-        false => ParentProjectType.dart,
+        true => ast.SdkType.flutter,
+        false => ast.SdkType.dart,
       },
     );
   }
@@ -65,7 +62,7 @@ final class ParentProject {
   final String path;
   final Pubspec pubspec;
   final String pubspecYaml;
-  final ParentProjectType type;
+  final ast.SdkType type;
 }
 
 /// Static information about the current Celest project.
@@ -145,25 +142,24 @@ final class CelestProject {
     byteStore: _byteStore,
   );
 
-  // TODO(dnys1): Use this value in the AST.
-  Future<CelestProjectType> determineProjectType() async {
+  Future<ast.SdkType> determineProjectType() async {
     final packageConfigFile = fileSystem.file(projectPaths.packagesConfig);
     if (packageConfigFile.existsSync()) {
       final packageConfig = await loadPackageConfig(packageConfigFile);
       for (final package in packageConfig.packages) {
         if (package.name == 'flutter' || package.name == 'sky_engine') {
-          return CelestProjectType.flutter;
+          return ast.SdkType.flutter;
         }
       }
-      return CelestProjectType.dart;
+      return ast.SdkType.dart;
     }
     final pubspec = Pubspec.parse(
       await fileSystem.file(projectPaths.pubspecYaml).readAsString(),
       sourceUrl: Uri.file(projectPaths.pubspecYaml),
     );
     return switch (pubspec.dependencies.containsKey('flutter')) {
-      true => CelestProjectType.flutter,
-      false => CelestProjectType.dart,
+      true => ast.SdkType.flutter,
+      false => ast.SdkType.dart,
     };
   }
 

@@ -221,7 +221,7 @@ packages:
       path: "../../packages/celest_ast"
       relative: true
     source: path
-    version: "0.0.0"
+    version: "0.1.0"
   celest_auth:
     dependency: "direct main"
     description:
