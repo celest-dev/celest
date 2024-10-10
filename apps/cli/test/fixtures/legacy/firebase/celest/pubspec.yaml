@@ -7,14 +7,17 @@ environment:
 
 dependencies:
   celest: ^1.0.0-0
+  celest_ast: ^0.1.0
   celest_core: ^1.0.0-0
-  http: ">=0.13.0 <2.0.0"
+  meta: ^1.12.0
 
 dependency_overrides:
   cedar:
     path: ../../../../../../../cedar/packages/cedar
   celest:
     path: ../../../../../../../celest/packages/celest
+  celest_ast:
+    path: ../../../../../../../celest/packages/celest_ast
   celest_auth:
     path: ../../../../../../../celest/packages/celest_auth
   celest_cloud:

@@ -5,9 +5,11 @@ environment:
   sdk: ^3.4.0
 
 dependencies:
-  celest:
-    path: ../../../../../../../celest/packages/celest
+  celest: ^1.0.0-0
+  celest_ast: ^0.1.0
+  celest_core: ^1.0.0-0
   gotrue: ^2.9.0
+  meta: ^1.12.0
   supabase: ^2.2.2
 
 dependency_overrides:
@@ -15,9 +17,14 @@ dependency_overrides:
     path: ../../../../../../../cedar/packages/cedar
   celest:
     path: ../../../../../../../celest/packages/celest
+  celest_ast:
+    path: ../../../../../../../celest/packages/celest_ast
   celest_auth:
     path: ../../../../../../../celest/packages/celest_auth
   celest_cloud:
     path: ../../../../../../../celest/packages/celest_cloud
   celest_core:
     path: ../../../../../../../celest/packages/celest_core
+dev_dependencies:
+  lints: ^4.0.0
+  test: ^1.25.0

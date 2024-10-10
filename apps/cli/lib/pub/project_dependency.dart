@@ -36,7 +36,13 @@ final class ProjectDependency {
       );
     }
 
-    const packages = ['celest', 'celest_core', 'celest_auth', 'celest_cloud'];
+    const packages = [
+      'celest',
+      'celest_ast',
+      'celest_auth',
+      'celest_core',
+      'celest_cloud',
+    ];
     return {
       for (final packageName in packages)
         packageName: PathDependency(packagePath(packageName)),
@@ -45,6 +51,7 @@ final class ProjectDependency {
 
   static final Map<String, ProjectDependency> all = {
     celest.name: celest,
+    celestAst.name: celestAst,
     celestCore.name: celestCore,
     firebaseAuth.name: firebaseAuth,
     gotrue.name: gotrue,
@@ -61,6 +68,14 @@ final class ProjectDependency {
     DependencyType.dependency,
     HostedDependency(
       version: VersionConstraint.compatibleWith(currentMinorVersion),
+    ),
+  );
+
+  static final ProjectDependency celestAst = ProjectDependency._(
+    'celest_ast',
+    DependencyType.dependency,
+    HostedDependency(
+      version: VersionConstraint.compatibleWith(Version.parse('0.1.0')),
     ),
   );
 
@@ -92,12 +107,7 @@ final class ProjectDependency {
     'http',
     DependencyType.dependency,
     HostedDependency(
-      version: VersionRange(
-        min: Version.parse('0.13.0'),
-        max: Version.parse('2.0.0'),
-        includeMin: true,
-        includeMax: false,
-      ),
+      version: VersionConstraint.compatibleWith(Version.parse('1.0.0')),
     ),
   );
 
@@ -141,21 +151,23 @@ final class ProjectDependency {
     ),
   );
 
-  static final Map<String, HostedDependency> backendDependencies = {
-    celest.name: celest.pubDependency,
-    celestCore.name: celestCore.pubDependency,
-    meta.name: meta.pubDependency,
+  static final Map<String, ProjectDependency> backendDependencies = {
+    celest.name: celest,
+    celestAst.name: celestAst,
+    celestCore.name: celestCore,
+    meta.name: meta,
   };
 
-  static final Map<String, HostedDependency> clientDependencies = {
-    celest.name: celest.pubDependency,
-    celestCore.name: celestCore.pubDependency,
-    http.name: http.pubDependency,
+  static final Map<String, ProjectDependency> clientDependencies = {
+    celest.name: celest,
+    celestCore.name: celestCore,
+    http.name: http,
+    nativeStorage.name: nativeStorage,
   };
 
-  static final Map<String, HostedDependency> devDependencies = {
-    lints.name: lints.pubDependency,
-    test.name: test.pubDependency,
+  static final Map<String, ProjectDependency> devDependencies = {
+    lints.name: lints,
+    test.name: test,
   };
 
   bool upToDate(Pubspec pubspec) {
@@ -171,7 +183,7 @@ final class ProjectDependency {
         ),
       _ => unreachable(),
     };
-    final expectedVersion = expected[name]!.version;
+    final expectedVersion = expected[name]!.pubDependency.version;
     return switch (actual[name]) {
       // Add the dependency
       null => false,
@@ -182,5 +194,15 @@ final class ProjectDependency {
       // Don't overwrite path/git dependencies
       _ => true,
     };
+  }
+}
+
+extension DependencyMap on Map<String, ProjectDependency> {
+  bool upToDate(Pubspec pubspec) {
+    return values.every((dep) => dep.upToDate(pubspec));
+  }
+
+  Map<String, HostedDependency> toPub() {
+    return map((key, value) => MapEntry(key, value.pubDependency));
   }
 }

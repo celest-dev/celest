@@ -64,7 +64,7 @@ final class PubspecUpdater extends ProjectMigration {
   }) async {
     final currentSdkVersion = pubspec.environment?['sdk'];
     final requiredSdkVersion = PubEnvironment.dartSdkConstraint;
-    if (ProjectDependency.celest.upToDate(pubspec) &&
+    if (ProjectDependency.backendDependencies.upToDate(pubspec) &&
         currentSdkVersion == requiredSdkVersion) {
       _logger.fine('Project dependencies are up to date.');
       return null;
@@ -83,14 +83,12 @@ final class PubspecUpdater extends ProjectMigration {
         'sdk': PubEnvironment.dartSdkConstraint,
       },
       dependencies: {
-        for (final entry in pubspec.dependencies.entries)
-          entry.key:
-              ProjectDependency.backendDependencies[entry.key] ?? entry.value,
+        ...pubspec.dependencies,
+        ...ProjectDependency.backendDependencies.toPub(),
       },
       devDependencies: {
-        for (final entry in pubspec.devDependencies.entries)
-          entry.key:
-              ProjectDependency.devDependencies[entry.key] ?? entry.value,
+        ...pubspec.devDependencies,
+        ...ProjectDependency.devDependencies.toPub(),
       },
       dependencyOverrides: {
         ...pubspec.dependencyOverrides,
@@ -112,7 +110,7 @@ final class PubspecUpdater extends ProjectMigration {
   }) async {
     final currentSdkVersion = pubspec.environment?['sdk'];
     final requiredSdkVersion = PubEnvironment.dartSdkConstraint;
-    if (ProjectDependency.celestCore.upToDate(pubspec) &&
+    if (ProjectDependency.clientDependencies.upToDate(pubspec) &&
         currentSdkVersion == requiredSdkVersion) {
       _logger.fine('Project dependencies are up to date.');
       return false;
@@ -123,14 +121,12 @@ final class PubspecUpdater extends ProjectMigration {
         'sdk': PubEnvironment.dartSdkConstraint,
       },
       dependencies: {
-        for (final entry in pubspec.dependencies.entries)
-          entry.key:
-              ProjectDependency.clientDependencies[entry.key] ?? entry.value,
+        ...pubspec.dependencies,
+        ...ProjectDependency.clientDependencies.toPub(),
       },
       devDependencies: {
-        for (final entry in pubspec.devDependencies.entries)
-          entry.key:
-              ProjectDependency.devDependencies[entry.key] ?? entry.value,
+        ...pubspec.devDependencies,
+        ...ProjectDependency.devDependencies.toPub(),
       },
       dependencyOverrides: {
         ...pubspec.dependencyOverrides,

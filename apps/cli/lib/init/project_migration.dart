@@ -11,7 +11,6 @@ import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
-import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yaml_edit/yaml_edit.dart';
@@ -257,8 +256,8 @@ final class PubspecFile extends ProjectFile {
       environment: {
         'sdk': PubEnvironment.dartSdkConstraint,
       },
-      dependencies: ProjectDependency.backendDependencies,
-      devDependencies: ProjectDependency.devDependencies,
+      dependencies: ProjectDependency.backendDependencies.toPub(),
+      devDependencies: ProjectDependency.devDependencies.toPub(),
       dependencyOverrides: ProjectDependency.localDependencyOverrides(
         projectRoot: projectRoot,
       ),
@@ -281,10 +280,11 @@ final class ProjectClient extends ProjectFile {
   String get relativePath => 'client/';
 
   @override
-  bool get needsMigration => !fileSystem
-      .directory(projectPaths.clientRoot)
-      .childFile('pubspec.yaml')
-      .existsSync();
+  bool get needsMigration {
+    final file =
+        fileSystem.directory(projectPaths.clientRoot).childFile('pubspec.yaml');
+    return !file.existsSync();
+  }
 
   @override
   Future<ProjectMigrationResult> create() async {
@@ -301,7 +301,7 @@ final class ProjectClient extends ProjectFile {
         publishTo: 'none',
         description: 'The Celest client for $projectName.',
         environment: {
-          'sdk': VersionConstraint.compatibleWith(minSupportedDartSdk),
+          'sdk': PubEnvironment.dartSdkConstraint,
         },
         dependencies: {
           'celest_backend': PathDependency(
@@ -310,9 +310,7 @@ final class ProjectClient extends ProjectFile {
               from: clientRoot.path.to(p.url),
             ),
           ),
-          ...ProjectDependency.backendDependencies,
-          ProjectDependency.nativeStorage.name:
-              ProjectDependency.nativeStorage.pubDependency,
+          ...ProjectDependency.clientDependencies.toPub(),
         },
         dependencyOverrides: ProjectDependency.localDependencyOverrides(
           projectRoot: clientRoot.path,

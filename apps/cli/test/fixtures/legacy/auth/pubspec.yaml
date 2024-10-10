@@ -5,13 +5,12 @@ environment:
   sdk: ^3.4.0
 
 dependencies:
-  celest:
-    path: ../../../../../../celest/packages/celest
-  celest_core:
-    path: ../../../../../../celest/packages/celest_core
+  celest: ^1.0.0-0
+  celest_ast: ^0.1.0
+  celest_core: ^1.0.0-0
   firebase_auth: ^5.3.1
   gotrue: ^2.9.0
-  http: ^1.0.0
+  meta: ^1.12.0
   shelf: ^1.4.1
   stream_transform: ^2.1.0
 
@@ -20,6 +19,8 @@ dependency_overrides:
     path: ../../../../../../cedar/packages/cedar
   celest:
     path: ../../../../../../celest/packages/celest
+  celest_ast:
+    path: ../../../../../../celest/packages/celest_ast
   celest_auth:
     path: ../../../../../../celest/packages/celest_auth
   celest_cloud:
@@ -28,4 +29,5 @@ dependency_overrides:
     path: ../../../../../../celest/packages/celest_core
 
 dev_dependencies:
-  test: any
+  lints: ^4.0.0
+  test: ^1.25.0

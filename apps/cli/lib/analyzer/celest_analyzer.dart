@@ -19,6 +19,7 @@ import 'package:celest_cli/config/feature_flags.dart';
 import 'package:celest_cli/database/cache/cache_database.dart';
 import 'package:celest_cli/pub/project_dependency.dart';
 import 'package:celest_cli/pub/pub_action.dart';
+import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/pub/pubspec.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
@@ -26,7 +27,6 @@ import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
-import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:source_span/source_span.dart';
 import 'package:stream_transform/stream_transform.dart';
@@ -59,9 +59,9 @@ final class CelestAnalyzer
       final pubspec = Pubspec(
         'warmup_celest_cache',
         environment: {
-          'sdk': VersionConstraint.compatibleWith(minSupportedDartSdk),
+          'sdk': PubEnvironment.dartSdkConstraint,
         },
-        dependencies: ProjectDependency.backendDependencies,
+        dependencies: ProjectDependency.backendDependencies.toPub(),
       );
       await [
         projectDir.childFile('pubspec.yaml').writeAsString(pubspec.toYaml()),

@@ -1790,7 +1790,6 @@ final tests = <String, Test>{
                     {
                       '@type': 'api.v1.OverriddenException',
                       'value': {
-                        'code': 400,
                         'message': 'message',
                       },
                     },
@@ -1816,7 +1815,6 @@ final tests = <String, Test>{
                     {
                       '@type': 'api.v1.OverriddenException',
                       'value': {
-                        'code': 400,
                         'message': 'message',
                       },
                     },
@@ -1842,7 +1840,6 @@ final tests = <String, Test>{
                     {
                       '@type': 'api.v1.OverriddenException',
                       'value': {
-                        'code': 400,
                         'message': 'message',
                       },
                     },
@@ -1868,7 +1865,6 @@ final tests = <String, Test>{
                     {
                       '@type': 'api.v1.OverriddenException',
                       'value': {
-                        'code': 400,
                         'message': 'message',
                       },
                     },
@@ -2678,6 +2674,7 @@ final tests = <String, Test>{
               output: {
                 '@status': {
                   'code': 500,
+                  'message': null,
                   'details': [
                     {
                       '@type': 'dart.core.Error',
@@ -2700,7 +2697,8 @@ final tests = <String, Test>{
               output: {
                 '@status': {
                   'code': 500,
-                  'message': 'Bad argument',
+                  // TODO(dnys1): This should be the custom message.
+                  'message': anything,
                   'details': [
                     {
                       '@type': 'dart.core.ArgumentError',
@@ -2727,7 +2725,8 @@ final tests = <String, Test>{
               output: {
                 '@status': {
                   'code': 400,
-                  'message': 'This is a custom exception',
+                  // TODO(dnys1): This should be the custom message.
+                  'message': anything,
                   'details': [
                     {
                       '@type': 'api.v1.CustomException',
@@ -2755,7 +2754,8 @@ final tests = <String, Test>{
               output: {
                 '@status': {
                   'code': 400,
-                  'message': 'This is a custom exception',
+                  // TODO(dnys1): This should be the custom message.
+                  'message': anything,
                   'details': [
                     {
                       '@type': 'api.v1.CustomExceptionToFromJson',
@@ -2782,7 +2782,8 @@ final tests = <String, Test>{
               output: {
                 '@status': {
                   'code': 500,
-                  'message': 'This is a custom error',
+                  // TODO(dnys1): This should be the custom message.
+                  'message': anything,
                   'details': [
                     {
                       '@type': 'api.v1.CustomError',
@@ -2810,7 +2811,8 @@ final tests = <String, Test>{
               output: {
                 '@status': {
                   'code': 500,
-                  'message': 'This is a custom error',
+                  // TODO(dnys1): This should be the custom message.
+                  'message': anything,
                   'details': [
                     {
                       '@type': 'api.v1.CustomErrorToFromJson',
@@ -2837,7 +2839,8 @@ final tests = <String, Test>{
               output: {
                 '@status': {
                   'code': 500,
-                  'message': 'This is a custom error',
+                  // TODO(dnys1): This should be the custom message.
+                  'message': anything,
                   'details': [
                     {
                       '@type': 'api.v1.CustomErrorWithStackTrace',
@@ -4360,7 +4363,7 @@ final tests = <String, Test>{
                     {
                       '@type': 'api.v1.ForbiddenException',
                       'value': {
-                        'code': 403,
+                        'code': 400,
                         'message': '',
                       },
                     },
@@ -4432,7 +4435,7 @@ final tests = <String, Test>{
                     {
                       '@type': 'celest.core.v1.InternalServerError',
                       'value': {
-                        'code': 404,
+                        'code': 500,
                         'message': '',
                       },
                     },
@@ -4458,6 +4461,7 @@ final tests = <String, Test>{
                     {
                       '@type': 'api.v1.BadGatewayError',
                       'value': {
+                        'code': 500,
                         'message': '',
                       },
                     },

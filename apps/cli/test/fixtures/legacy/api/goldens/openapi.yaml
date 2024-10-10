@@ -7583,6 +7583,14 @@ components:
         color:
           $ref: '#/components/schemas/api.v1.ColorXFromJsonStatic'
       additionalProperties: false
+    celest.core.v1.JsonValue:
+      type: object
+      properties:
+        value:
+          nullable: false
+      additionalProperties: false
+      required:
+        - value
     api.v1.ExtensionTypesJsonValueRequest:
       type: object
       nullable: false
@@ -9134,6 +9142,19 @@ components:
         - isNotEmpty
         - isFlushed
         - length
+    fast_immutable_collections.ConfigList:
+      type: object
+      properties:
+        isDeepEquals:
+          type: boolean
+          nullable: false
+        cacheHashCode:
+          type: boolean
+          nullable: false
+      additionalProperties: false
+      required:
+        - isDeepEquals
+        - cacheHashCode
     fast_immutable_collections.IList:
       type: object
       properties:
