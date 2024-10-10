@@ -200,7 +200,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     }
 
     var verdict = const Verdict.yes();
-    for (final parameter in parameters) {
+    for (final parameter in parameters.where((p) => p.isPositional)) {
       switch (parameter.type) {
         case FunctionType(
             returnType: final TypeParameterType funcReturnType,
@@ -222,14 +222,13 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             );
           }
         default:
-          // return Verdict.no(
-          //   'The fromJson constructor of ${type.element.name} has an unexpected '
-          //   'parameter: ${parameter.name}. The only extra parameters allowed are '
-          //   'functions of the form `T Function(Object?) fromJsonT` where `T` is '
-          //   'a type parameter of ${type.element.name}.',
-          //   location: parameter.sourceLocation,
-          // );
-          continue;
+          return Verdict.no(
+            'The fromJson constructor of ${type.element.name} has an unexpected '
+            'parameter: ${parameter.name}. The only extra parameters allowed are '
+            'functions of the form `T Function(Object?) fromJsonT` where `T` is '
+            'a type parameter of ${type.element.name}.',
+            location: parameter.sourceLocation,
+          );
       }
     }
 

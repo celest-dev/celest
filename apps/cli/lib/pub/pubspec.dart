@@ -104,13 +104,30 @@ dependencies:
       Map<String, Dependency> constraints,
       DependencyType type,
     ) {
+      final dependencyMap = <String, YamlNode>{};
+      for (final dependency in constraints.keys.sorted()) {
+        var hasDependency = true;
+        final currentValue = editor.parseAt(
+          [type.key, dependency],
+          orElse: () {
+            hasDependency = false;
+            return YamlScalar.wrap(null);
+          },
+        ).value;
+
+        // Fixes an issue where if a dependency was specified with a null
+        // constraint, e.g. `test:` instead of `test: ^1.0.0`, the edit
+        // operation will produce invalid YAML.
+        if (hasDependency && currentValue == null) {
+          editor.remove([type.key, dependency]);
+        }
+        dependencyMap[dependency] = constraints[dependency]!.toYaml();
+      }
+
       editor.update(
         [type.key],
         wrapAsYamlNode(
-          {
-            for (final dependency in constraints.keys.sorted())
-              dependency: constraints[dependency]!.toYaml(),
-          },
+          dependencyMap,
           collectionStyle: CollectionStyle.BLOCK,
         ),
       );

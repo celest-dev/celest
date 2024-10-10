@@ -11,6 +11,7 @@ enum AnalysisErrorSeverity {
   error,
   warning,
   info,
+  debug,
 }
 
 final class CelestAnalysisError {

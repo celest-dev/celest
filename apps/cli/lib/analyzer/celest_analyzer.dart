@@ -107,6 +107,7 @@ const project = Project(name: 'cache_warmup');
   final List<CelestAnalysisError> _errors = [];
   final List<CelestAnalysisError> _warnings = [];
   final List<CelestAnalysisError> _infos = [];
+  final List<CelestAnalysisError> _debugs = [];
 
   late _ScopedWidgetCollector _widgetCollector;
   late ast.ProjectBuilder _project;
@@ -144,6 +145,14 @@ const project = Project(name: 'cache_warmup');
             severity: severity,
           ),
         );
+      case AnalysisErrorSeverity.debug:
+        _debugs.add(
+          CelestAnalysisError(
+            message: error,
+            location: location,
+            severity: severity,
+          ),
+        );
     }
   }
 
@@ -166,6 +175,7 @@ const project = Project(name: 'cache_warmup');
     _errors.clear();
     _warnings.clear();
     _infos.clear();
+    _debugs.clear();
     if (_lastAnalyzed != projectPaths.projectRoot) {
       reset();
     }

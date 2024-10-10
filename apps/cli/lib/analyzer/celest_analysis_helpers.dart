@@ -165,15 +165,19 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     return exceptionTypes;
   }
 
-  InterfaceType? _validateExceptionType(
-    InterfaceElement interfaceElement, {
-    bool reportErrors = true,
-  }) {
-    // TODO(dnys1): We have no way to serialize some types currently. For those
-    // types, simply ignore them for now.
-    reportErrors &= !interfaceElement.library.isDartSdk;
-    reportErrors &= !interfaceElement.library.isFlutterSdk;
-
+  InterfaceType? _validateExceptionType(InterfaceElement interfaceElement) {
+    final definitionPath = context.currentSession.uriConverter.uriToPath(
+      interfaceElement.library.source.uri,
+    );
+    final errorSeverity = switch (definitionPath) {
+      // We only care to report warnings for types defined within the project.
+      // There will be plenty of types in the Dart/Flutter SDKs and in the
+      // ecosystem that we don't support, but we don't want to spam the console
+      // with warnings for them.
+      final path? when p.isWithin(projectPaths.projectRoot, path) =>
+        AnalysisErrorSeverity.warning,
+      _ => AnalysisErrorSeverity.debug,
+    };
     final typeUri =
         '${interfaceElement.library.source.uri}#${interfaceElement.name}';
     final overriddenBy = typeHelper.overrides[interfaceElement.thisType];
@@ -214,13 +218,12 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       _ => (false, false),
     };
     if (!exportedFromExceptionsDart && mustBeExportedFromExceptionsDart) {
-      if (reportErrors) {
-        reportError(
-          'Custom exception types referenced in APIs must be defined within the '
-          '`celest/lib/exceptions` folder',
-          location: interfaceElement.sourceLocation,
-        );
-      }
+      reportError(
+        'Custom exception types referenced in APIs must be defined within the '
+        '`celest/lib/exceptions` folder',
+        location: interfaceElement.sourceLocation,
+        severity: errorSeverity,
+      );
       return null;
     }
     final isInstantiable = switch (interfaceElement) {
@@ -241,31 +244,28 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       // allowed to throw it, but it will not be serialized in the response.
       if (exportedFromExceptionsDart) {
         for (final reason in isSerializable.reasons) {
-          if (reportErrors) {
-            // TODO(dnys1): Add a helpful link/description for this error.
-            reportError(
-              'The exception type "${interfaceElement.name}" cannot be serialized '
-              'as JSON. Hide this type from the API or make it serializable: '
-              '$reason',
-              location: interfaceElement.sourceLocation,
-            );
-          }
+          // TODO(dnys1): Add a helpful link/description for this error.
+          reportError(
+            'The exception type "${interfaceElement.name}" cannot be serialized '
+            'as JSON. Hide this type from the API or make it serializable: '
+            '$reason',
+            location: interfaceElement.sourceLocation,
+            severity: errorSeverity,
+          );
         }
       }
-      if (reportErrors) {
-        // TODO(dnys1): Warn based on whether the type is thrown directly or
-        // just indirectly imported.
-        //
-        // Also codegen a comment in the generated client with the reason why
-        // it's not included instead of reporting in console. (put behind a
-        // --debug flag or something).
-        reportError(
-          'Cannot serialize the exception type "${interfaceElement.name}": '
-          '${isSerializable.reasons.join('\n')}',
-          severity: AnalysisErrorSeverity.warning,
-          location: interfaceElement.sourceLocation,
-        );
-      }
+      // TODO(dnys1): Warn based on whether the type is thrown directly or
+      // just indirectly imported.
+      //
+      // Also codegen a comment in the generated client with the reason why
+      // it's not included instead of reporting in console. (put behind a
+      // --debug flag or something).
+      reportError(
+        'Cannot serialize the exception type "${interfaceElement.name}": '
+        '${isSerializable.reasons.join('\n')}',
+        location: interfaceElement.sourceLocation,
+        severity: errorSeverity,
+      );
       return null;
     }
 
