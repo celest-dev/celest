@@ -1,0 +1,306 @@
+syntax = "proto3";
+
+package celest.ast.v1;
+
+import "cedar/v3/policy.proto";
+import "celest/ast/v1/features.proto";
+import "celest/ast/v1/sdks.proto";
+import "google/api/field_behavior.proto";
+
+// The resolved AST of a Celest project.
+message ResolvedProject {
+  // The user-provided identifier of the project.
+  string project_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The ID of the environment this projects resolves to.
+  string environment_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The project's API endpoints, keyed by their `name`.
+  map<string, ResolvedApi> apis = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // The project's environment variables.
+  repeated ResolvedVariable variables = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // The project's secrets.
+  repeated ResolvedSecret secrets = 5 [(google.api.field_behavior) = OPTIONAL];
+
+  // The project's auth configuration.
+  ResolvedAuth auth = 6 [(google.api.field_behavior) = OPTIONAL];
+
+  // Configuration of the Dart, Flutter, and Celest SDKs used to deploy the project.
+  SdkConfiguration sdk_config = 99 [(google.api.field_behavior) = REQUIRED];
+}
+
+// The resolved AST of a Celest API.
+message ResolvedApi {
+  // The unique identifier of the API within a project.
+  //
+  // Typically, this is the basename of the file where the API is defined, e.g.
+  //    `celest/functions/greeting.dart` -> `greeting`
+  string api_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The functions in the API.
+  map<string, ResolvedFunction> functions = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The policy set declared by the API.
+  //
+  // This policy set is applied to all functions within the API.
+  cedar.v3.PolicySet policy_set = 3 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// The resolved AST of a Celest function.
+message ResolvedFunction {
+  // The unique identifier of the function within its API.
+  //
+  // Typically, this is the name of the function as it appears in Dart, e.g.
+  //    `Future<String> sayHello()` -> `sayHello`
+  string function_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The ID of the function's parent API.
+  string parent_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The resolved HTTP configuration of the function.
+  ResolvedHttpConfig http_config = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The resolved stream configuration of the function.
+  ResolvedStreamConfig stream_config = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // The variables required by the function.
+  repeated string variables = 5 [(google.api.field_behavior) = OPTIONAL];
+
+  // The secrets required by the function.
+  repeated string secrets = 6 [(google.api.field_behavior) = OPTIONAL];
+
+  // The policy set declared by the function.
+  cedar.v3.PolicySet policy_set = 7 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// The HTTP configuration of a [ResolvedFunction][].
+message ResolvedHttpConfig {
+  // The HTTP method of the function.
+  string method = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The resolved route configuration of the function.
+  ResolvedHttpRoute route = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The successful status code of the function.
+  int32 status = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // A mapping of Dart types to HTTP status codes.
+  //
+  // Dart types are represented as URIs with a scheme, host and path identifying the location
+  // of the type's definition, and a fragment identifying the type itself.
+  //
+  // For example:
+  //
+  // - `dart:core#String`
+  // - `package:celest/functions/greeting.dart#GreetingError`
+  map<string, int32> status_mappings = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// A route to an HTTP endpoint.
+message ResolvedHttpRoute {
+  // The path of the HTTP endpoint.
+  string path = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// The stream configuration of a [ResolvedFunction][].
+message ResolvedStreamConfig {
+  // The type of the stream configuration.
+  enum Type {
+    // The stream configuration type is unspecified.
+    STREAM_CONFIG_TYPE_UNSPECIFIED = 0;
+
+    // The function streams unidirectionally from the client -> server.
+    UNIDIRECTIONAL_CLIENT = 1;
+
+    // The function streams unidirectionally from the server -> client.
+    UNIDIRECTIONAL_SERVER = 2;
+
+    // The function streams bidirectionally.
+    BIDIRECTIONAL = 3;
+  }
+
+  // The type of the stream configuration.
+  Type type = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// An environment variable and its value.
+message ResolvedVariable {
+  // The name of the environment variable.
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The value of the environment variable.
+  string value = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// A secret value.
+message ResolvedSecret {
+  // The name of the secret.
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Input only. The value of the secret.
+  optional string value = 2 [
+    (google.api.field_behavior) = INPUT_ONLY,
+    (google.api.field_behavior) = REQUIRED
+  ];
+}
+
+// The resolved AST of a Celest project's auth configuration.
+message ResolvedAuth {
+  // The auth providers of the project.
+  repeated ResolvedAuthProvider providers = 1 [(google.api.field_behavior) = OPTIONAL];
+
+  // The external auth providers of the project.
+  repeated ResolvedExternalAuthProvider external_providers = 2 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// A resolved auth provider configuration.
+message ResolvedAuthProvider {
+  // The type of an auth provider.
+  enum Type {
+    // The auth provider type is unspecified.
+    AUTH_PROVIDER_TYPE_UNSPECIFIED = 0;
+
+    // Email-based one time password (OTP) provider.
+    EMAIL_OTP = 1;
+
+    // SMS-based one time password (OTP) provider.
+    SMS_OTP = 2;
+
+    // Google OAuth provider.
+    GOOGLE = 3;
+
+    // Github OAuth provider.
+    GITHUB = 4;
+
+    // Apple OAuth provider.
+    APPLE = 5;
+  }
+
+  // The ID of the auth provider.
+  string auth_provider_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The type of the auth provider.
+  Type type = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The configuration of the auth provider.
+  oneof config {
+    // The configuration of an email OTP provider.
+    ResolvedEmailOtpProviderConfig email_otp = 3;
+
+    // The configuration of an SMS OTP provider.
+    ResolvedSmsOtpProviderConfig sms_otp = 4;
+
+    // The configuration of a Google OAuth provider.
+    ResolvedGoogleOAuthProviderConfig google = 5;
+
+    // The configuration of a Github OAuth provider.
+    ResolvedGitHubOAuthProviderConfig github = 6;
+
+    // The configuration of an Apple OAuth provider.
+    ResolvedAppleOAuthProviderConfig apple = 7;
+  }
+}
+
+// The configuration of an email OTP provider.
+message ResolvedEmailOtpProviderConfig {}
+
+// The configuration of an SMS OTP provider.
+message ResolvedSmsOtpProviderConfig {}
+
+// The configuration of a Google OAuth provider.
+message ResolvedGoogleOAuthProviderConfig {
+  // The client ID of the Google OAuth provider.
+  ResolvedSecret client_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The client secret of the Google OAuth provider.
+  ResolvedSecret client_secret = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// The configuration of a GitHub OAuth provider.
+message ResolvedGitHubOAuthProviderConfig {
+  // The client ID of the Github OAuth provider.
+  ResolvedSecret client_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The client secret of the Github OAuth provider.
+  ResolvedSecret client_secret = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// The configuration of an Apple OAuth provider.
+message ResolvedAppleOAuthProviderConfig {
+  // The client ID of the Apple OAuth provider.
+  ResolvedSecret client_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The team ID of the Apple OAuth provider.
+  ResolvedSecret team_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The key ID of the Apple OAuth provider.
+  ResolvedSecret key_id = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The private key of the Apple OAuth provider.
+  ResolvedSecret private_key = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// A resolved external auth provider configuration.
+message ResolvedExternalAuthProvider {
+  // The type of an auth provider.
+  enum Type {
+    // The external auth provider type is unspecified.
+    EXTERNAL_AUTH_PROVIDER_TYPE_UNSPECIFIED = 0;
+
+    // Firebase auth provider.
+    FIREBASE = 1;
+
+    // Supabase auth provider.
+    SUPABASE = 2;
+  }
+
+  // The ID of the external auth provider.
+  string auth_provider_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The type of the external auth provider.
+  Type type = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The configuration of the external auth provider.
+  oneof config {
+    // The configuration of a Firebase auth provider.
+    ResolvedFirebaseExternalAuthProviderConfig firebase = 3;
+
+    // The configuration of a Supabase auth provider.
+    ResolvedSupabaseExternalAuthProviderConfig supabase = 4;
+  }
+}
+
+// The configuration of an external Firebase auth provider.
+message ResolvedFirebaseExternalAuthProviderConfig {
+  // The Firebase project ID.
+  ResolvedVariable project_id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// The configuration of an external Supabase auth provider.
+message ResolvedSupabaseExternalAuthProviderConfig {
+  // Required. The Supabase project URL.
+  ResolvedVariable project_url = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. The Supabase JWT secret.
+  ResolvedSecret jwt_secret = 2 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Configuration of the SDKs used to deploy the project.
+message SdkConfiguration {
+  // The Celest version used to deploy the project.
+  Version celest = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The Dart SDK used to deploy the project.
+  Sdk dart = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The Flutter SDK used to deploy the project, if any.
+  optional Sdk flutter = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // The target SDK for deployment.
+  SdkType target_sdk = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // The feature flags enabled by the project.
+  repeated FeatureFlag feature_flags = 5 [(google.api.field_behavior) = OPTIONAL];
+}

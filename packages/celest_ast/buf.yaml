@@ -1,0 +1,14 @@
+version: v2
+deps:
+  - buf.build/celest-dev/cedar
+  - buf.build/googleapis/googleapis
+modules:
+  - path: proto
+    name: buf.build/celest-dev/ast
+breaking:
+  use:
+    - PACKAGE
+lint:
+  use:
+    - MINIMAL
+  disallow_comment_ignores: true
