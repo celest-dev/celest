@@ -7,6 +7,8 @@ import 'package:celest_core/src/serialization/serializers/big_int_serializer.dar
 import 'package:celest_core/src/serialization/serializers/cloud_exception_serializer.dart';
 import 'package:celest_core/src/serialization/serializers/date_time_serializer.dart';
 import 'package:celest_core/src/serialization/serializers/duration_serializer.dart';
+import 'package:celest_core/src/serialization/serializers/error_serializer.dart';
+import 'package:celest_core/src/serialization/serializers/exception_serializer.dart';
 import 'package:celest_core/src/serialization/serializers/regexp_serializer.dart';
 import 'package:celest_core/src/serialization/serializers/stack_trace_serializer.dart';
 import 'package:celest_core/src/serialization/serializers/uint8list_serializer.dart';
@@ -134,6 +136,8 @@ final class _Serializers extends Serializers {
     put<UriData>(const UriDataSerializer());
     put<Uint8List>(const Uint8ListSerializer());
     put<CloudException>(const CloudExceptionSerializer());
+    put<Exception>(const ExceptionSerializer());
+    put<Error>(const ErrorSerializer());
   }
 
   final _serializersByType = <TypeToken<Object?>, Serializer>{};

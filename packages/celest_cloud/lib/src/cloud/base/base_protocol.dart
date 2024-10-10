@@ -1,35 +1,11 @@
-import 'dart:convert';
-
 import 'package:celest_core/celest_core.dart';
 
 mixin BaseProtocol {
-  Never httpError({
+  Never throwError({
     required int statusCode,
-    required String body,
+    required List<int> bodyBytes,
   }) {
-    Map<String, Object?>? jsonBody;
-    try {
-      jsonBody = jsonDecode(body) as Map<String, dynamic>;
-      final error = jsonBody['error'] as Map? ?? jsonBody;
-      final code = error['code'];
-      final message = error['message'] as String?;
-      final details = error['details'] as JsonValue?;
-      throw CloudException.http(
-        status: statusCode,
-        code: code,
-        message: message,
-        details: details,
-      );
-    } on Object {
-      if (jsonBody == null) {
-        throw CloudException.unknownError(
-          body,
-        );
-      }
-      throw CloudException.unknownError(
-        null,
-        details: JsonMap(jsonBody),
-      );
-    }
+    final jsonBody = JsonUtf8.decodeMap(bodyBytes);
+    throw CloudException.fromJson(jsonBody, code: statusCode);
   }
 }

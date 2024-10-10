@@ -3,7 +3,6 @@
 library;
 
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:celest/celest.dart';
@@ -85,45 +84,74 @@ final class CloudExceptionMiddleware implements Middleware {
       } on CloudException catch (e, st) {
         context.logger.severe(e.message, e, st);
         return Response(
-          e.httpStatus,
-          body: JsonUtf8.encode({
-            '@error': {
-              'code': e.code,
-              'status': e.httpStatus,
-              'message': e.message,
-            },
-            ...Serializers.instance.serialize(e) as Map<String, Object?>,
-          }),
-          headers: {
-            'content-type': 'application/json',
+          e.code,
+          headers: const {
+            contentTypeHeader: jsonContentType,
           },
+          body: JsonUtf8.encode({
+            '@status': {
+              'code': e.type,
+              'message': e.message,
+              'details': [
+                {
+                  '@type': e.type,
+                  'value': Serializers.instance.serialize(e),
+                },
+                if (context.environment != Environment.production)
+                  {
+                    '@type': 'dart.core.StackTrace',
+                    'value': st.toString(),
+                  },
+              ],
+            },
+          }),
         );
       } on Exception catch (e, st) {
         if (e is HijackException) rethrow;
         context.logger.severe('An unexpected exception occurred', e, st);
         return Response.badRequest(
-          headers: {
+          headers: const {
             contentTypeHeader: jsonContentType,
           },
-          body: jsonEncode({
-            '@error': {
-              'code': e.runtimeType.toString(),
-              'status': HttpStatus.badRequest,
+          body: JsonUtf8.encode({
+            '@status': {
+              'code': HttpStatus.badRequest,
               'message': e.toString(),
+              'details': [
+                {
+                  '@type': 'dart.core.Exception',
+                  'value': Serializers.instance.serialize<Exception>(e),
+                },
+                if (context.environment != Environment.production)
+                  {
+                    '@type': 'dart.core.StackTrace',
+                    'value': st.toString(),
+                  },
+              ],
             },
           }),
         );
       } on Error catch (e, st) {
         context.logger.shout('An unexpected error occurred', e, st);
         return Response.internalServerError(
-          headers: {
+          headers: const {
             contentTypeHeader: jsonContentType,
           },
-          body: jsonEncode({
-            '@error': {
-              'code': e.runtimeType.toString(),
-              'status': HttpStatus.internalServerError,
+          body: JsonUtf8.encode({
+            '@status': {
+              'code': HttpStatus.internalServerError,
               'message': e.toString(),
+              'details': [
+                {
+                  '@type': 'dart.core.Error',
+                  'value': Serializers.instance.serialize<Error>(e),
+                },
+                if (context.environment != Environment.production)
+                  {
+                    '@type': 'dart.core.StackTrace',
+                    'value': st.toString(),
+                  },
+              ],
             },
           }),
         );
