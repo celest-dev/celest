@@ -74,6 +74,17 @@ void main() {
               value: 'test-123',
             ),
           ),
+          ResolvedSupabaseExternalAuthProvider(
+            authProviderId: 'supabase',
+            projectUrl: ResolvedVariable(
+              name: 'SUPABASE_URL',
+              value: 'https://test.supabase.co',
+            ),
+            jwtSecret: ResolvedSecret(
+              name: 'SUPABASE_JWT_SECRET',
+              value: 'jwt-secret',
+            ),
+          ),
         ],
       ),
       variables: [
@@ -175,6 +186,20 @@ void main() {
                 'projectId': {
                   'name': 'FIREBASE_PROJECT_ID',
                   'value': 'test-123',
+                },
+              },
+            },
+            {
+              'authProviderId': 'supabase',
+              'type': 'SUPABASE',
+              'supabase': {
+                'projectUrl': {
+                  'name': 'SUPABASE_URL',
+                  'value': 'https://test.supabase.co',
+                },
+                'jwtSecret': {
+                  'name': 'SUPABASE_JWT_SECRET',
+                  'value': 'jwt-secret',
                 },
               },
             },

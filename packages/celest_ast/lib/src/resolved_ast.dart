@@ -655,7 +655,13 @@ sealed class ResolvedExternalAuthProvider implements Node {
     return switch (proto.type) {
       pb.ResolvedExternalAuthProvider_Type.FIREBASE =>
         ResolvedFirebaseExternalAuthProvider.fromProto(proto),
-      _ => throw ArgumentError.value(proto.type, 'proto.type', 'Invalid type'),
+      pb.ResolvedExternalAuthProvider_Type.SUPABASE =>
+        ResolvedSupabaseExternalAuthProvider.fromProto(proto),
+      final unknown => throw ArgumentError.value(
+          unknown.name,
+          'proto.type',
+          'Invalid type',
+        ),
     };
   }
 
