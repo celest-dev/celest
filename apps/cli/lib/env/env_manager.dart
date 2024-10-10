@@ -13,7 +13,7 @@ typedef _EnvRequest = ({
   int id,
   String? name,
   String? value,
-  List<(ast.EnvironmentVariable, String)>? envVars,
+  List<(ast.Variable, String)>? variables,
 });
 
 typedef EnvironmentID = String;
@@ -133,14 +133,14 @@ final class SingleEnvManager implements EnvLoader {
     final (sendPort, envFile) = config;
     final channel = IsolateChannel<_EnvRequest>.connectSend(sendPort);
     final manager = _IsolatedEnvManager(envFile);
-    await for (final (:id, :name, envVars: _, value: _) in channel.stream) {
-      final envVars = manager.reload();
+    await for (final (:id, :name, variables: _, value: _) in channel.stream) {
+      final variables = manager.reload();
       channel.sink.add(
         (
           id: id,
           name: name,
           value: name == null ? null : manager.get(name),
-          envVars: envVars,
+          variables: variables,
         ),
       );
     }
@@ -164,7 +164,7 @@ final class SingleEnvManager implements EnvLoader {
     }
     final (id, completer) = _nextRequestId;
     try {
-      _channel!.sink.add((id: id, name: key, value: null, envVars: null));
+      _channel!.sink.add((id: id, name: key, value: null, variables: null));
       final response = await completer.future;
       return response;
     } finally {
@@ -172,20 +172,20 @@ final class SingleEnvManager implements EnvLoader {
     }
   }
 
-  Future<List<ast.EnvironmentVariable>> get envVars async {
+  Future<List<ast.Variable>> get variables async {
     final resp = await _send();
-    final envVars = resp.envVars!;
-    for (final (envVar, value) in envVars) {
+    final variables = resp.variables!;
+    for (final (envVar, value) in variables) {
       _cache[envVar.name] = value;
     }
-    return envVars.map((it) => it.$1).toList();
+    return variables.map((it) => it.$1).toList();
   }
 
   @override
   Future<Map<String, String>> readAll() async {
-    final envVars = await this.envVars;
+    final variables = await this.variables;
     final values = await Future.wait([
-      for (final envVar in envVars)
+      for (final envVar in variables)
         valueFor(envVar.name).then(
           (value) => MapEntry(envVar.name, value!),
         ),
@@ -233,10 +233,10 @@ final class _IsolatedEnvManager {
   final _changes = <String, String>{};
 
   Map<String, String> get env => _env;
-  List<(ast.EnvironmentVariable, String)> get envVars => _env.entries
+  List<(ast.Variable, String)> get variables => _env.entries
       .map(
         (entry) => (
-          ast.EnvironmentVariable(
+          ast.Variable(
             entry.key,
             dartName: null,
             location: _spans[entry.key]!,
@@ -246,11 +246,11 @@ final class _IsolatedEnvManager {
       )
       .toList();
 
-  List<(ast.EnvironmentVariable, String)> reload() {
+  List<(ast.Variable, String)> reload() {
     final (env, spans) = _load();
     _env = env;
     _spans = spans;
-    return envVars;
+    return variables;
   }
 
   (Map<String, String> env, Map<String, FileSpan> spans) _load() {

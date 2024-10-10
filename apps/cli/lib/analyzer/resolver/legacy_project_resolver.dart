@@ -60,7 +60,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     context: context,
     configValueElement: typeHelper.coreTypes.celestEnvElement,
     errorReporter: this,
-    factory: ast.EnvironmentVariable.new,
+    factory: ast.Variable.new,
   );
 
   late final _secretResolver = ConfigValueResolver(
@@ -302,6 +302,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
 
     return ast.Project(
       name: projectName,
+      environment: 'local', // TODO(dnys1): Pass in from CLI
       displayName: projectDisplayName,
       primaryRegion: projectRegion,
       reference: refer(
@@ -332,7 +333,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
   }
 
   @override
-  Future<Set<ast.EnvironmentVariable>> resolveEnvironmentVariables() async {
+  Future<Set<ast.Variable>> resolveVariables() async {
     // TODO(dnys1): Check reserved names
     // TODO(dnys1): Check for conflict with secrets
     return _envVariableResolver.resolve();
@@ -503,7 +504,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
 
   ast.NodeReference? _parameterReference(
     ParameterElement parameter, {
-    required Iterable<ast.EnvironmentVariable> environmentVariables,
+    required Iterable<ast.Variable> variables,
     required Iterable<ast.Secret> secrets,
     required ast.ApiAuth? applicableAuth,
     required ast.StreamType? streamType,
@@ -536,7 +537,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     }
     const reservedEnvVars = ['PORT'];
     switch (annotationType) {
-      case DartType(isEnvironmentVariable: true):
+      case DartType(isVariable: true):
         // Check for migration
         // TODO(dnys1): Update for V1
         if (migrateProject) {
@@ -595,7 +596,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           );
           return null;
         }
-        if (environmentVariables.none((envVar) => envVar.name == name)) {
+        if (variables.none((envVar) => envVar.name == name)) {
           reportError(
             'The environment variable `$name` does not exist',
             location: location,
@@ -603,7 +604,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           return null;
         }
         return ast.NodeReference(
-          type: ast.NodeType.environmentVariable,
+          type: ast.NodeType.variable,
           name: name,
         );
       case DartType(isSecret: true):
@@ -802,7 +803,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     required String apiFilepath,
     required String apiName,
     required ResolvedLibraryResult apiLibrary,
-    required Iterable<ast.EnvironmentVariable> environmentVariables,
+    required Iterable<ast.Variable> variables,
     required Iterable<ast.Secret> secrets,
     required bool hasAuth,
   }) async {
@@ -938,7 +939,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
               references: _parameterReference(
                 param,
                 applicableAuth: applicableAuth,
-                environmentVariables: environmentVariables,
+                variables: variables,
                 secrets: secrets,
                 streamType: streamType,
               ),

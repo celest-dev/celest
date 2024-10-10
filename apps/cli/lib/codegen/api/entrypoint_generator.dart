@@ -50,8 +50,8 @@ final class EntrypointGenerator {
   ) {
     Expression paramExp;
     switch (reference.type) {
-      case NodeType.environmentVariable || NodeType.secret:
-        final dartType = reference.type == NodeType.environmentVariable
+      case NodeType.variable || NodeType.secret:
+        final dartType = reference.type == NodeType.variable
             ? DartTypes.celest.environmentVariable
             : DartTypes.celest.secret;
         paramExp = DartTypes.celest.globalContext.property('expect').call([
@@ -251,7 +251,7 @@ final class EntrypointGenerator {
                   b.addExpression(response);
                   b.addExpression(
                     DartTypes.shelf.response.newInstance([
-                      literalNum(httpConfig?.statusCode ?? 200),
+                      literalNum(httpConfig?.status ?? 200),
                     ], {
                       'headers': literalConstMap({
                         'Content-Type': 'application/json',
@@ -281,7 +281,7 @@ final class EntrypointGenerator {
                   );
                   b.addExpression(
                     DartTypes.shelf.response([
-                      literalNum(httpConfig?.statusCode ?? 200),
+                      literalNum(httpConfig?.status ?? 200),
                     ], {
                       'headers': literalConstMap({
                         'Content-Type': 'application/json',
@@ -314,7 +314,7 @@ final class EntrypointGenerator {
               exceptionType: typeHelper.fromReference(exceptionType),
           };
 
-          final rawStatusCodes = httpConfig?.errorStatuses.toMap().map(
+          final rawStatusCodes = httpConfig?.statusMappings.toMap().map(
                 (type, status) => MapEntry(
                   typeHelper.fromReference(type),
                   status,
@@ -326,7 +326,7 @@ final class EntrypointGenerator {
             final dartExceptionType = dartExceptionTypes[exceptionType]!;
 
             var statusCode =
-                httpConfig?.errorStatuses[exceptionType]?.let(literalNum);
+                httpConfig?.statusMappings[exceptionType]?.let(literalNum);
             if (statusCode == null && rawStatusCodes != null) {
               final relevantExceptionCodes =
                   SplayTreeMap<ast.DartType, int>((a, b) {

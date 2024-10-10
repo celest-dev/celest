@@ -1,25 +1,29 @@
 {
-  "name": "supabase",
+  "projectId": "supabase",
+  "environmentId": "local",
   "apis": {
     "auth": {
-      "name": "auth",
+      "apiId": "auth",
       "functions": {
         "currentUser": {
-          "name": "currentUser",
-          "route": "/auth/current-user",
-          "apiName": "auth",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "currentUser",
+          "apiId": "auth",
           "httpConfig": {
             "method": "GET",
-            "statusCode": 200,
-            "errorStatuses": {}
-          }
+            "route": {
+              "path": "/auth/current-user"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     }
   },
-  "envVars": [
+  "variables": [
     {
       "name": "SUPABASE_URL",
       "value": "http://127.0.0.1:54321"
@@ -57,7 +61,7 @@
           "name": "SUPABASE_URL",
           "value": "http://127.0.0.1:54321"
         },
-        "name": "supabase",
+        "authProviderId": "supabase",
         "type": "SUPABASE",
         "jwtSecret": {
           "name": "SUPABASE_JWT_SECRET",

@@ -103,7 +103,7 @@ final class CloudCodeGenerator extends AstVisitor<void> {
   void visitParameter(CloudFunctionParameter parameter) {}
 
   @override
-  void visitEnvironmentVariable(EnvironmentVariable variable) {}
+  void visitVariable(Variable variable) {}
 
   @override
   void visitSecret(Secret secret) {}

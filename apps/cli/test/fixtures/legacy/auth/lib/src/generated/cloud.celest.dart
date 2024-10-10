@@ -23,16 +23,16 @@ class CelestCloud {
 
   /// The current environment of the Celest service.
   ///
-  /// This is determined by the `CELEST_ENVIRONMENT` environment variable
+  /// This is determined by the `CELEST_ENVIRONMENT` variable
   /// which is set for you by the deployment environment.
   CelestEnvironment get currentEnvironment =>
-      (env.currentEnvironment as CelestEnvironment);
+      (variables.currentEnvironment as CelestEnvironment);
 
-  /// The environment variables for the Celest service.
+  /// The variables of the Celest service.
   ///
-  /// This class provides access to the environment variable values
-  /// that are configured for the [currentEnvironment].
-  CelestEnvironmentVariables get env => const CelestEnvironmentVariables();
+  /// This class provides access to the values configured for the
+  /// [currentEnvironment].
+  CelestVariables get variables => const CelestVariables();
 
   /// The secrets for the Celest service.
   ///

@@ -1,5 +1,6 @@
 {
   "name": "exceptions",
+  "environment": "local",
   "reference": {
     "$": "Reference",
     "symbol": "project",
@@ -236,6 +237,12 @@
           "$": "TypeReference",
           "symbol": "JsonUnsupportedObjectError",
           "url": "dart:convert",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
         {
@@ -570,6 +577,12 @@
         "/// A library with methods that do not through but call methods that do throw."
       ],
       "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",
@@ -1028,6 +1041,12 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -1272,7 +1291,7 @@
       }
     }
   },
-  "envVars": [],
+  "variables": [],
   "secrets": [],
   "sdkConfig": {
     "celest": "1.0.0-dev.0",

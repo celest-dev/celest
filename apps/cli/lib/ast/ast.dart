@@ -23,9 +23,7 @@ extension CloudFunctionParameterExt on CloudFunctionParameter {
   bool get includeInClient {
     if (type.isFunctionContext) return false;
     switch (references?.type) {
-      case NodeType.environmentVariable ||
-            NodeType.secret ||
-            NodeType.userContext:
+      case NodeType.variable || NodeType.secret || NodeType.userContext:
         return false;
       default:
         break;
@@ -35,9 +33,8 @@ extension CloudFunctionParameterExt on CloudFunctionParameter {
 }
 
 extension AuthConfigurationValues on Auth {
-  BuiltListMultimap<AuthProviderType, EnvironmentVariable>
-      get environmentVariables {
-    return BuiltListMultimap<AuthProviderType, EnvironmentVariable>.build((b) {
+  BuiltListMultimap<AuthProviderType, Variable> get variables {
+    return BuiltListMultimap<AuthProviderType, Variable>.build((b) {
       for (final authProvider in providers) {
         switch (authProvider) {
           case EmailAuthProvider():

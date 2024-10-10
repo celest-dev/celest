@@ -1,5 +1,6 @@
 {
   "name": "firebase_test",
+  "environment": "local",
   "reference": {
     "$": "Reference",
     "symbol": "project",
@@ -108,6 +109,12 @@
           "$": "TypeReference",
           "symbol": "BadNameException",
           "url": "package:celest_backend/src/functions/greeting.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
         {
@@ -332,7 +339,7 @@
       }
     }
   },
-  "envVars": [
+  "variables": [
     {
       "location": {
         "start": {

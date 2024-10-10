@@ -21,7 +21,7 @@ dependencies:
   celest:
     path: ../../celest/packages/celest
   celest_ast:
-    path: ../../packages/celest_ast
+    path: ../../celest/packages/celest_ast
   celest_auth:
     path: ../../celest/packages/celest_auth
   celest_cli_common:
@@ -89,7 +89,7 @@ dependency_overrides:
   celest:
     path: ../../celest/packages/celest
   celest_ast:
-    path: ../../packages/celest_ast
+    path: ../../celest/packages/celest_ast
   celest_auth:
     path: ../../celest/packages/celest_auth
   celest_cli_common:

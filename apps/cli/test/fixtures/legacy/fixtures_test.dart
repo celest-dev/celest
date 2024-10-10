@@ -47,6 +47,7 @@ void main() {
   final includeTests = Platform.environment['INCLUDE_TESTS']?.split(',');
   final skipTests = Platform.environment['SKIP_TESTS']?.split(',');
   final includeApis = Platform.environment['INCLUDE_APIS']?.split(',');
+  final clearCache = Platform.environment['CLEAR_CACHE'] == 'true';
 
   if (updateGoldens && Platform.isWindows) {
     throw Exception(
@@ -79,6 +80,7 @@ void main() {
       testName: p.basename(testDir.path),
       projectRoot: projectDir.path,
       updateGoldens: updateGoldens,
+      clearCache: clearCache,
       parentProject:
           useCelestLayout ? ParentProject.loadSync(testDir.path) : null,
       clientDir: projectDir.childDirectory('client'),
@@ -104,6 +106,7 @@ class TestRunner {
     required this.testName,
     required this.projectRoot,
     required this.updateGoldens,
+    required this.clearCache,
     this.parentProject,
     required this.clientDir,
     required this.goldensDir,
@@ -113,6 +116,7 @@ class TestRunner {
   final String testName;
   final String projectRoot;
   final bool updateGoldens;
+  final bool clearCache;
   final Directory clientDir;
   final ParentProject? parentProject;
   final Directory goldensDir;
@@ -141,6 +145,14 @@ class TestRunner {
           }
           if (clientDir.existsSync()) {
             clientDir.deleteSync(recursive: true);
+          }
+        }
+        if (clearCache) {
+          final cacheDir = fileSystem.directory(
+            p.join(projectRoot, '.dart_tool', 'celest'),
+          );
+          if (cacheDir.existsSync()) {
+            cacheDir.deleteSync(recursive: true);
           }
         }
         await init(
@@ -189,12 +201,13 @@ class TestRunner {
     // Analyzer needs a bit longer.
     // TODO(dnys1): Benchmark + improve performance of analysis.
     test('analyzer', timeout: const Timeout.factor(3), () async {
-      final CelestAnalysisResult(:project, :errors) =
+      final CelestAnalysisResult(:project, :errors, :warnings) =
           await analyzer.analyzeProject(
         migrateProject: false,
         updateResources: updateGoldens,
       );
       expect(errors, isEmpty);
+      expect(warnings, isEmpty);
       expect(project, isNotNull);
 
       if (Platform.isWindows) {
@@ -217,12 +230,13 @@ class TestRunner {
 
   void testCodegen() {
     test('codegen', () async {
-      final CelestAnalysisResult(:project, :errors) =
+      final CelestAnalysisResult(:project, :errors, :warnings) =
           await analyzer.analyzeProject(
         migrateProject: false,
         updateResources: updateGoldens,
       );
       expect(errors, isEmpty);
+      expect(warnings, isEmpty);
       expect(project, isNotNull);
 
       final configValues = await ConfigValueSolver(
@@ -266,12 +280,13 @@ class TestRunner {
 
   void testResolve() {
     test('resolve', () async {
-      final CelestAnalysisResult(:project, :errors) =
+      final CelestAnalysisResult(:project, :errors, :warnings) =
           await analyzer.analyzeProject(
         migrateProject: false,
         updateResources: updateGoldens,
       );
       expect(errors, isEmpty);
+      expect(warnings, isEmpty);
       expect(project, isNotNull);
 
       final configValues = await ConfigValueSolver(

@@ -1,5 +1,6 @@
 {
   "name": "env_vars",
+  "environment": "local",
   "reference": {
     "$": "Reference",
     "symbol": "project",
@@ -43,7 +44,7 @@
               },
               "references": {
                 "name": "MY_NAME",
-                "type": "environmentVariable"
+                "type": "variable"
               }
             },
             {
@@ -74,7 +75,7 @@
               },
               "references": {
                 "name": "MY_AGE",
-                "type": "environmentVariable"
+                "type": "variable"
               }
             }
           ],
@@ -159,7 +160,7 @@
               },
               "references": {
                 "name": "MY_NAME",
-                "type": "environmentVariable"
+                "type": "variable"
               }
             },
             {
@@ -190,7 +191,7 @@
               },
               "references": {
                 "name": "MY_AGE",
-                "type": "environmentVariable"
+                "type": "variable"
               }
             },
             {
@@ -221,7 +222,7 @@
               },
               "references": {
                 "name": "MY_HEIGHT",
-                "type": "environmentVariable"
+                "type": "variable"
               }
             },
             {
@@ -252,7 +253,7 @@
               },
               "references": {
                 "name": "MY_WEIGHT",
-                "type": "environmentVariable"
+                "type": "variable"
               }
             },
             {
@@ -282,7 +283,7 @@
               },
               "references": {
                 "name": "MY_WEBSITE",
-                "type": "environmentVariable"
+                "type": "variable"
               }
             },
             {
@@ -313,7 +314,7 @@
               },
               "references": {
                 "name": "IM_COOL",
-                "type": "environmentVariable"
+                "type": "variable"
               }
             },
             {
@@ -374,7 +375,7 @@
               },
               "references": {
                 "name": "CELEST_ENVIRONMENT",
-                "type": "environmentVariable"
+                "type": "variable"
               }
             }
           ],
@@ -533,6 +534,12 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -651,7 +658,7 @@
       }
     }
   },
-  "envVars": [
+  "variables": [
     {
       "location": {
         "start": {

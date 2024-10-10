@@ -169,6 +169,11 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     InterfaceElement interfaceElement, {
     bool reportErrors = true,
   }) {
+    // TODO(dnys1): We have no way to serialize some types currently. For those
+    // types, simply ignore them for now.
+    reportErrors &= !interfaceElement.library.isDartSdk;
+    reportErrors &= !interfaceElement.library.isFlutterSdk;
+
     final typeUri =
         '${interfaceElement.library.source.uri}#${interfaceElement.name}';
     final overriddenBy = typeHelper.overrides[interfaceElement.thisType];

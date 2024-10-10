@@ -218,10 +218,10 @@ packages:
   celest_ast:
     dependency: "direct main"
     description:
-      path: "../../packages/celest_ast"
+      path: "../../celest/packages/celest_ast"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.2"
   celest_auth:
     dependency: "direct main"
     description:

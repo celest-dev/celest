@@ -1,37 +1,65 @@
 {
-  "name": "streaming",
+  "projectId": "streaming",
+  "environmentId": "local",
   "apis": {
     "server_side": {
-      "name": "server_side",
+      "apiId": "server_side",
       "functions": {
         "hello": {
-          "name": "hello",
-          "route": "/server-side/hello",
-          "apiName": "server_side",
-          "envVars": [],
+          "functionId": "hello",
+          "apiId": "server_side",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/server-side/hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
           "secrets": [],
-          "streamType": "unidirectionalServer"
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
         },
         "stockTicker": {
-          "name": "stockTicker",
-          "route": "/server-side/stock-ticker",
-          "apiName": "server_side",
-          "envVars": [],
+          "functionId": "stockTicker",
+          "apiId": "server_side",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/server-side/stock-ticker"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
           "secrets": [],
-          "streamType": "unidirectionalServer"
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
         },
         "jsonValues": {
-          "name": "jsonValues",
-          "route": "/server-side/json-values",
-          "apiName": "server_side",
-          "envVars": [],
+          "functionId": "jsonValues",
+          "apiId": "server_side",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/server-side/json-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
           "secrets": [],
-          "streamType": "unidirectionalServer"
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
         }
       }
     }
   },
-  "envVars": [],
+  "variables": [],
   "secrets": [],
   "sdkConfig": {
     "celest": "1.0.0-dev.0",

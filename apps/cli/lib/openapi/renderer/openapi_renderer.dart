@@ -70,7 +70,7 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
     String ref, {
     Object? defaultValue,
   }) {
-    final typeName = type.externalUri(resolved.name);
+    final typeName = type.externalUri(resolved.projectId);
     if (_builder.components.schemas[typeName] case final schema?) {
       return OpenApiComponentOrRef.reference(
         ref: ref,
@@ -101,7 +101,7 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
   }
 
   OpenApiSchema _exceptionType(TypeReference type, String ref) {
-    final typeName = type.externalUri(resolved.name);
+    final typeName = type.externalUri(resolved.projectId);
     final dartType = typeHelper.fromReference(type);
     final visitor = DartTypeToOpenApi(
       ref: ref,
@@ -159,7 +159,7 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
     OpenApiComponentOrRef<OpenApiRequestBody>? requestBody;
     if (function.hasHttpBody) {
       final requestBodyTypeName =
-          '${resolved.name}.v1.${operationId.pascalCase}Request';
+          '${resolved.projectId}.v1.${operationId.pascalCase}Request';
       final requestBodyRef = '#/components/schemas/$requestBodyTypeName';
       final requestBodyType = OpenApiSchema(
         ref: requestBodyRef,
@@ -248,9 +248,7 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
       responseRef,
     );
 
-    final successStatusCode = StatusCode(
-      resolvedFunction.httpConfig?.statusCode ?? 200,
-    );
+    final successStatusCode = StatusCode(resolvedFunction.httpConfig.status);
     final successResponse = OpenApiComponentOrRef.component(
       ref: responseRef,
       component: OpenApiResponse(
@@ -266,17 +264,16 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
 
     final exceptionalResponses =
         <StatusCodeOrRange, OpenApiComponentOrRef<OpenApiResponse>>{};
-    final errorStatuses =
-        resolvedFunction.httpConfig?.errorStatuses.toMap() ?? {};
+    final statusMappings = resolvedFunction.httpConfig.statusMappings.toMap();
     final errorsByStatusCode = <int, List<TypeReference>>{};
     for (final MapEntry(key: exceptionType, value: statusCode)
-        in errorStatuses.entries) {
+        in statusMappings.entries) {
       errorsByStatusCode.putIfAbsent(statusCode, () => []).add(exceptionType);
     }
     for (final MapEntry(key: statusCode, value: exceptionTypes)
         in errorsByStatusCode.entries) {
       final responseTypeName =
-          '${resolved.name}.v1.${operationId.pascalCase}Error_$statusCode';
+          '${resolved.projectId}.v1.${operationId.pascalCase}Error_$statusCode';
       final responseRef = '$ref/${operationType.name}/responses/$statusCode';
       final responseType = switch (exceptionTypes) {
         [final singleType] => _exceptionType(singleType, responseRef),
@@ -295,7 +292,7 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
               propertyName: 'code',
               mapping: {
                 for (final type in types.map(
-                  (it) => it.externalUri(resolved.name)!,
+                  (it) => it.externalUri(resolved.projectId)!,
                 ))
                   type: '#/components/schemas/$type',
               },
@@ -421,8 +418,8 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
   ) {}
 
   @override
-  void visitEnvironmentVariable(
-    ast.EnvironmentVariable variable,
+  void visitVariable(
+    ast.Variable variable,
     covariant String context,
   ) {}
 
@@ -432,8 +429,7 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
 
 extension on ast.ResolvedCloudFunction {
   OpenApiOperationType get operationType {
-    final method = httpConfig?.method ?? 'POST';
-    return switch (method) {
+    return switch (httpConfig.method) {
       'GET' => OpenApiOperationType.get,
       'POST' => OpenApiOperationType.post,
       'PUT' => OpenApiOperationType.put,
@@ -442,7 +438,7 @@ extension on ast.ResolvedCloudFunction {
       'HEAD' => OpenApiOperationType.head,
       'OPTIONS' => OpenApiOperationType.options,
       'TRACE' => OpenApiOperationType.trace,
-      _ => unreachable('Unknown HTTP method: $method'),
+      final unknown => unreachable('Unknown HTTP method: $unknown'),
     };
   }
 }

@@ -1,51 +1,79 @@
 {
-  "name": "flutter",
+  "projectId": "flutter",
+  "environmentId": "local",
   "apis": {
     "dart_ui": {
-      "name": "dart_ui",
+      "apiId": "dart_ui",
       "functions": {
         "lerpColor": {
-          "name": "lerpColor",
-          "route": "/dart-ui/lerp-color",
-          "apiName": "dart_ui",
-          "envVars": [],
-          "secrets": []
+          "functionId": "lerpColor",
+          "apiId": "dart_ui",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/dart-ui/lerp-color"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "addCountryCode": {
-          "name": "addCountryCode",
-          "route": "/dart-ui/add-country-code",
-          "apiName": "dart_ui",
-          "envVars": [],
-          "secrets": []
+          "functionId": "addCountryCode",
+          "apiId": "dart_ui",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/dart-ui/add-country-code"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "flutter": {
-      "name": "flutter",
+      "apiId": "flutter",
       "functions": {
         "paintWidget": {
-          "name": "paintWidget",
-          "route": "/flutter/paint-widget",
-          "apiName": "flutter",
-          "envVars": [],
-          "secrets": []
+          "functionId": "paintWidget",
+          "apiId": "flutter",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/flutter/paint-widget"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "helloWorld": {
-          "name": "helloWorld",
-          "route": "/flutter/hello-world",
-          "apiName": "flutter",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "helloWorld",
+          "apiId": "flutter",
           "httpConfig": {
             "method": "GET",
-            "statusCode": 200,
-            "errorStatuses": {}
-          }
+            "route": {
+              "path": "/flutter/hello-world"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     }
   },
-  "envVars": [],
+  "variables": [],
   "secrets": [],
   "sdkConfig": {
     "celest": "1.0.0-dev.0",

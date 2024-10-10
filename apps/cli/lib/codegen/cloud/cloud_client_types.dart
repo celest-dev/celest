@@ -16,8 +16,8 @@ final class CloudClientTypes {
       CloudClientTypes._('CelestCloud', CloudPaths.client);
   static CloudClientTypes get environmentClass =>
       CloudClientTypes._('CelestEnvironment', CloudPaths.config);
-  static CloudClientTypes get environmentVariablesClass =>
-      CloudClientTypes._('CelestEnvironmentVariables', CloudPaths.config);
+  static CloudClientTypes get variablesClass =>
+      CloudClientTypes._('CelestVariables', CloudPaths.config);
   static CloudClientTypes get secretsClass =>
       CloudClientTypes._('CelestSecrets', CloudPaths.config);
 

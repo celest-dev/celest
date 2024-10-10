@@ -1,98 +1,184 @@
 {
-  "name": "auth",
+  "projectId": "auth",
+  "environmentId": "local",
   "apis": {
     "lib": {
-      "name": "lib",
+      "apiId": "lib",
       "functions": {
         "sayHelloAuthenticated": {
-          "name": "sayHelloAuthenticated",
-          "route": "/lib/say-hello-authenticated",
-          "apiName": "lib",
-          "envVars": [],
-          "secrets": []
+          "functionId": "sayHelloAuthenticated",
+          "apiId": "lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/lib/say-hello-authenticated"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "streamHelloAuthenticated": {
-          "name": "streamHelloAuthenticated",
-          "route": "/lib/stream-hello-authenticated",
-          "apiName": "lib",
-          "envVars": [],
+          "functionId": "streamHelloAuthenticated",
+          "apiId": "lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/lib/stream-hello-authenticated"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
           "secrets": [],
-          "streamType": "unidirectionalServer"
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
         },
         "sayHelloPublic": {
-          "name": "sayHelloPublic",
-          "route": "/lib/say-hello-public",
-          "apiName": "lib",
-          "envVars": [],
-          "secrets": []
+          "functionId": "sayHelloPublic",
+          "apiId": "lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/lib/say-hello-public"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "streamHelloPublic": {
-          "name": "streamHelloPublic",
-          "route": "/lib/stream-hello-public",
-          "apiName": "lib",
-          "envVars": [],
+          "functionId": "streamHelloPublic",
+          "apiId": "lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/lib/stream-hello-public"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
           "secrets": [],
-          "streamType": "unidirectionalServer"
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
         },
         "sayHello": {
-          "name": "sayHello",
-          "route": "/lib/say-hello",
-          "apiName": "lib",
-          "envVars": [],
-          "secrets": []
+          "functionId": "sayHello",
+          "apiId": "lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/lib/say-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "streamHello": {
-          "name": "streamHello",
-          "route": "/lib/stream-hello",
-          "apiName": "lib",
-          "envVars": [],
+          "functionId": "streamHello",
+          "apiId": "lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/lib/stream-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
           "secrets": [],
-          "streamType": "unidirectionalServer"
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
         }
       }
     },
     "authenticated_lib": {
-      "name": "authenticated_lib",
+      "apiId": "authenticated_lib",
       "functions": {
         "sayHello": {
-          "name": "sayHello",
-          "route": "/authenticated-lib/say-hello",
-          "apiName": "authenticated_lib",
-          "envVars": [],
-          "secrets": []
+          "functionId": "sayHello",
+          "apiId": "authenticated_lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/authenticated-lib/say-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "streamHello": {
-          "name": "streamHello",
-          "route": "/authenticated-lib/stream-hello",
-          "apiName": "authenticated_lib",
-          "envVars": [],
+          "functionId": "streamHello",
+          "apiId": "authenticated_lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/authenticated-lib/stream-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
           "secrets": [],
-          "streamType": "unidirectionalServer"
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
         }
       }
     },
     "public_lib": {
-      "name": "public_lib",
+      "apiId": "public_lib",
       "functions": {
         "sayHello": {
-          "name": "sayHello",
-          "route": "/public-lib/say-hello",
-          "apiName": "public_lib",
-          "envVars": [],
-          "secrets": []
+          "functionId": "sayHello",
+          "apiId": "public_lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/public-lib/say-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "streamHello": {
-          "name": "streamHello",
-          "route": "/public-lib/stream-hello",
-          "apiName": "public_lib",
-          "envVars": [],
+          "functionId": "streamHello",
+          "apiId": "public_lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/public-lib/stream-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
           "secrets": [],
-          "streamType": "unidirectionalServer"
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
         }
       }
     }
   },
-  "envVars": [
+  "variables": [
     {
       "name": "FIREBASE_PROJECT_ID",
       "value": "prj-d-firebase-test"
@@ -124,12 +210,12 @@
     "providers": [
       {
         "$": "ResolvedEmailAuthProvider",
-        "name": "emailOtp",
+        "authProviderId": "emailOtp",
         "type": "EMAIL_OTP"
       },
       {
         "$": "ResolvedSmsAuthProvider",
-        "name": "smsOtp",
+        "authProviderId": "smsOtp",
         "type": "SMS_OTP"
       }
     ],
@@ -140,7 +226,7 @@
           "name": "FIREBASE_PROJECT_ID",
           "value": "prj-d-firebase-test"
         },
-        "name": "firebase",
+        "authProviderId": "firebase",
         "type": "FIREBASE"
       },
       {
@@ -149,7 +235,7 @@
           "name": "SUPABASE_URL",
           "value": "https://vduqtbtlcxxozghvhdqu.supabase.co"
         },
-        "name": "supabase",
+        "authProviderId": "supabase",
         "type": "SUPABASE"
       }
     ]

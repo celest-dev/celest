@@ -1,1628 +1,3389 @@
 {
-  "name": "api",
+  "projectId": "api",
+  "environmentId": "local",
   "apis": {
     "records": {
-      "name": "records",
+      "apiId": "records",
       "functions": {
         "nonAliasedNamedFields": {
-          "name": "nonAliasedNamedFields",
-          "route": "/records/non-aliased-named-fields",
-          "apiName": "records",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nonAliasedNamedFields",
+          "apiId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/non-aliased-named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncNonAliasedNamedFields": {
-          "name": "asyncNonAliasedNamedFields",
-          "route": "/records/async-non-aliased-named-fields",
-          "apiName": "records",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncNonAliasedNamedFields",
+          "apiId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/async-non-aliased-named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "aliasedNamedFields": {
-          "name": "aliasedNamedFields",
-          "route": "/records/aliased-named-fields",
-          "apiName": "records",
-          "envVars": [],
-          "secrets": []
+          "functionId": "aliasedNamedFields",
+          "apiId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/aliased-named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncAliasedNamedFields": {
-          "name": "asyncAliasedNamedFields",
-          "route": "/records/async-aliased-named-fields",
-          "apiName": "records",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncAliasedNamedFields",
+          "apiId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/async-aliased-named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "namedFields": {
-          "name": "namedFields",
-          "route": "/records/named-fields",
-          "apiName": "records",
-          "envVars": [],
-          "secrets": []
+          "functionId": "namedFields",
+          "apiId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncNamedFields": {
-          "name": "asyncNamedFields",
-          "route": "/records/async-named-fields",
-          "apiName": "records",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncNamedFields",
+          "apiId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/async-named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nested": {
-          "name": "nested",
-          "route": "/records/nested",
-          "apiName": "records",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nested",
+          "apiId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/nested"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncNested": {
-          "name": "asyncNested",
-          "route": "/records/async-nested",
-          "apiName": "records",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncNested",
+          "apiId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/async-nested"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nullableNested": {
-          "name": "nullableNested",
-          "route": "/records/nullable-nested",
-          "apiName": "records",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nullableNested",
+          "apiId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/nullable-nested"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncNullableNested": {
-          "name": "asyncNullableNested",
-          "route": "/records/async-nullable-nested",
-          "apiName": "records",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncNullableNested",
+          "apiId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/async-nullable-nested"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "sealed_classes": {
-      "name": "sealed_classes",
+      "apiId": "sealed_classes",
       "functions": {
         "area": {
-          "name": "area",
-          "route": "/sealed-classes/area",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "area",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/area"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "sealedClass": {
-          "name": "sealedClass",
-          "route": "/sealed-classes/sealed-class",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "sealedClass",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/sealed-class"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "rectangle": {
-          "name": "rectangle",
-          "route": "/sealed-classes/rectangle",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "rectangle",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/rectangle"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "circle": {
-          "name": "circle",
-          "route": "/sealed-classes/circle",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "circle",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/circle"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "sealedClassWithInheritedCustomJson": {
-          "name": "sealedClassWithInheritedCustomJson",
-          "route": "/sealed-classes/sealed-class-with-inherited-custom-json",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "sealedClassWithInheritedCustomJson",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/sealed-class-with-inherited-custom-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "sealedClassWithCustomJson": {
-          "name": "sealedClassWithCustomJson",
-          "route": "/sealed-classes/sealed-class-with-custom-json",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "sealedClassWithCustomJson",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/sealed-class-with-custom-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "sealedClassWithOverriddenCustomJson": {
-          "name": "sealedClassWithOverriddenCustomJson",
-          "route": "/sealed-classes/sealed-class-with-overridden-custom-json",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "sealedClassWithOverriddenCustomJson",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/sealed-class-with-overridden-custom-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "rectangleWithOverriddenCustomJson": {
-          "name": "rectangleWithOverriddenCustomJson",
-          "route": "/sealed-classes/rectangle-with-overridden-custom-json",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "rectangleWithOverriddenCustomJson",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/rectangle-with-overridden-custom-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "circleWithOverriddenCustomJson": {
-          "name": "circleWithOverriddenCustomJson",
-          "route": "/sealed-classes/circle-with-overridden-custom-json",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "circleWithOverriddenCustomJson",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/circle-with-overridden-custom-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "okShapeResults": {
-          "name": "okShapeResults",
-          "route": "/sealed-classes/ok-shape-results",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "okShapeResults",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/ok-shape-results"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "errShapeResults": {
-          "name": "errShapeResults",
-          "route": "/sealed-classes/err-shape-results",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "errShapeResults",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/err-shape-results"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "shapeResults": {
-          "name": "shapeResults",
-          "route": "/sealed-classes/shape-results",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "shapeResults",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/shape-results"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "aliasedOkShapeResults": {
-          "name": "aliasedOkShapeResults",
-          "route": "/sealed-classes/aliased-ok-shape-results",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "aliasedOkShapeResults",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/aliased-ok-shape-results"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "aliasedErrShapeResults": {
-          "name": "aliasedErrShapeResults",
-          "route": "/sealed-classes/aliased-err-shape-results",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "aliasedErrShapeResults",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/aliased-err-shape-results"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "aliasedShapeResults": {
-          "name": "aliasedShapeResults",
-          "route": "/sealed-classes/aliased-shape-results",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "aliasedShapeResults",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/aliased-shape-results"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "swappedResult": {
-          "name": "swappedResult",
-          "route": "/sealed-classes/swapped-result",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "swappedResult",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/swapped-result"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "genericResult": {
-          "name": "genericResult",
-          "route": "/sealed-classes/generic-result",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "genericResult",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/generic-result"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "multipleGenericResult": {
-          "name": "multipleGenericResult",
-          "route": "/sealed-classes/multiple-generic-result",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "multipleGenericResult",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/multiple-generic-result"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "okShapeResult": {
-          "name": "okShapeResult",
-          "route": "/sealed-classes/ok-shape-result",
-          "apiName": "sealed_classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "okShapeResult",
+          "apiId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/ok-shape-result"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "parameter_types": {
-      "name": "parameter_types",
+      "apiId": "parameter_types",
       "functions": {
         "simple": {
-          "name": "simple",
-          "route": "/parameter-types/simple",
-          "apiName": "parameter_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "simple",
+          "apiId": "parameter_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameter-types/simple"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "simpleOptional": {
-          "name": "simpleOptional",
-          "route": "/parameter-types/simple-optional",
-          "apiName": "parameter_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "simpleOptional",
+          "apiId": "parameter_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameter-types/simple-optional"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "complex": {
-          "name": "complex",
-          "route": "/parameter-types/complex",
-          "apiName": "parameter_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "complex",
+          "apiId": "parameter_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameter-types/complex"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "cycles": {
-      "name": "cycles",
+      "apiId": "cycles",
       "functions": {
         "createTree": {
-          "name": "createTree",
-          "route": "/cycles/create-tree",
-          "apiName": "cycles",
-          "envVars": [],
-          "secrets": []
+          "functionId": "createTree",
+          "apiId": "cycles",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/cycles/create-tree"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "printTree": {
-          "name": "printTree",
-          "route": "/cycles/print-tree",
-          "apiName": "cycles",
-          "envVars": [],
-          "secrets": []
+          "functionId": "printTree",
+          "apiId": "cycles",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/cycles/print-tree"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "combineTrees": {
-          "name": "combineTrees",
-          "route": "/cycles/combine-trees",
-          "apiName": "cycles",
-          "envVars": [],
-          "secrets": []
+          "functionId": "combineTrees",
+          "apiId": "cycles",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/cycles/combine-trees"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "selfReferencing": {
-          "name": "selfReferencing",
-          "route": "/cycles/self-referencing",
-          "apiName": "cycles",
-          "envVars": [],
-          "secrets": []
+          "functionId": "selfReferencing",
+          "apiId": "cycles",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/cycles/self-referencing"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "extension_types": {
-      "name": "extension_types",
+      "apiId": "extension_types",
       "functions": {
         "string": {
-          "name": "string",
-          "route": "/extension-types/string",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "string",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrString": {
-          "name": "asyncOrString",
-          "route": "/extension-types/async-or-string",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrString",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/async-or-string"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncString": {
-          "name": "asyncString",
-          "route": "/extension-types/async-string",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncString",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/async-string"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringImpl": {
-          "name": "stringImpl",
-          "route": "/extension-types/string-impl",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringImpl",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringToFromJson": {
-          "name": "stringToFromJson",
-          "route": "/extension-types/string-to-from-json",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringToFromJson",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-to-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringToJson": {
-          "name": "stringToJson",
-          "route": "/extension-types/string-to-json",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringToJson",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringToJsonImpl": {
-          "name": "stringToJsonImpl",
-          "route": "/extension-types/string-to-json-impl",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringToJsonImpl",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-to-json-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringFromJson": {
-          "name": "stringFromJson",
-          "route": "/extension-types/string-from-json",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringFromJson",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringFromJsonImpl": {
-          "name": "stringFromJsonImpl",
-          "route": "/extension-types/string-from-json-impl",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringFromJsonImpl",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-from-json-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringFromJsonStatic": {
-          "name": "stringFromJsonStatic",
-          "route": "/extension-types/string-from-json-static",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringFromJsonStatic",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-from-json-static"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringPrivateField": {
-          "name": "stringPrivateField",
-          "route": "/extension-types/string-private-field",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringPrivateField",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-private-field"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringPrivateFieldImpl": {
-          "name": "stringPrivateFieldImpl",
-          "route": "/extension-types/string-private-field-impl",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringPrivateFieldImpl",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-private-field-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringPrivateCtor": {
-          "name": "stringPrivateCtor",
-          "route": "/extension-types/string-private-ctor",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringPrivateCtor",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-private-ctor"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringPrivateCtorImpl": {
-          "name": "stringPrivateCtorImpl",
-          "route": "/extension-types/string-private-ctor-impl",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringPrivateCtorImpl",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-private-ctor-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "value": {
-          "name": "value",
-          "route": "/extension-types/value",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "value",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "valueX": {
-          "name": "valueX",
-          "route": "/extension-types/value-x",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "valueX",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "valueXImpl": {
-          "name": "valueXImpl",
-          "route": "/extension-types/value-x-impl",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "valueXImpl",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "valueXToFromJson": {
-          "name": "valueXToFromJson",
-          "route": "/extension-types/value-x-to-from-json",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "valueXToFromJson",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-to-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "valueXToJson": {
-          "name": "valueXToJson",
-          "route": "/extension-types/value-x-to-json",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "valueXToJson",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "valueXToJsonImpl": {
-          "name": "valueXToJsonImpl",
-          "route": "/extension-types/value-x-to-json-impl",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "valueXToJsonImpl",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-to-json-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "valueXFromJson": {
-          "name": "valueXFromJson",
-          "route": "/extension-types/value-x-from-json",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "valueXFromJson",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "valueXFromJsonImpl": {
-          "name": "valueXFromJsonImpl",
-          "route": "/extension-types/value-x-from-json-impl",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "valueXFromJsonImpl",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-from-json-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "valueXFromJsonStatic": {
-          "name": "valueXFromJsonStatic",
-          "route": "/extension-types/value-x-from-json-static",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "valueXFromJsonStatic",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-from-json-static"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "color": {
-          "name": "color",
-          "route": "/extension-types/color",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "color",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "colorX": {
-          "name": "colorX",
-          "route": "/extension-types/color-x",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "colorX",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "colorXImpl": {
-          "name": "colorXImpl",
-          "route": "/extension-types/color-x-impl",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "colorXImpl",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "colorXToFromJson": {
-          "name": "colorXToFromJson",
-          "route": "/extension-types/color-x-to-from-json",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "colorXToFromJson",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-to-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "colorXToJson": {
-          "name": "colorXToJson",
-          "route": "/extension-types/color-x-to-json",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "colorXToJson",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "colorXToJsonImpl": {
-          "name": "colorXToJsonImpl",
-          "route": "/extension-types/color-x-to-json-impl",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "colorXToJsonImpl",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-to-json-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "colorXFromJson": {
-          "name": "colorXFromJson",
-          "route": "/extension-types/color-x-from-json",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "colorXFromJson",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "colorXFromJsonImpl": {
-          "name": "colorXFromJsonImpl",
-          "route": "/extension-types/color-x-from-json-impl",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "colorXFromJsonImpl",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-from-json-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "colorXFromJsonStatic": {
-          "name": "colorXFromJsonStatic",
-          "route": "/extension-types/color-x-from-json-static",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "colorXFromJsonStatic",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-from-json-static"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "jsonValue": {
-          "name": "jsonValue",
-          "route": "/extension-types/json-value",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "jsonValue",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-value"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "jsonString": {
-          "name": "jsonString",
-          "route": "/extension-types/json-string",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "jsonString",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-string"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "jsonNum": {
-          "name": "jsonNum",
-          "route": "/extension-types/json-num",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "jsonNum",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-num"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "jsonInt": {
-          "name": "jsonInt",
-          "route": "/extension-types/json-int",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "jsonInt",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-int"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "jsonDouble": {
-          "name": "jsonDouble",
-          "route": "/extension-types/json-double",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "jsonDouble",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-double"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "jsonBool": {
-          "name": "jsonBool",
-          "route": "/extension-types/json-bool",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "jsonBool",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-bool"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "jsonList": {
-          "name": "jsonList",
-          "route": "/extension-types/json-list",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "jsonList",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-list"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "jsonMap": {
-          "name": "jsonMap",
-          "route": "/extension-types/json-map",
-          "apiName": "extension_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "jsonMap",
+          "apiId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-map"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "typedefs": {
-      "name": "typedefs",
+      "apiId": "typedefs",
       "functions": {
         "portfolio": {
-          "name": "portfolio",
-          "route": "/typedefs/portfolio",
-          "apiName": "typedefs",
-          "envVars": [],
-          "secrets": []
+          "functionId": "portfolio",
+          "apiId": "typedefs",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/typedefs/portfolio"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "json": {
-          "name": "json",
-          "route": "/typedefs/json",
-          "apiName": "typedefs",
-          "envVars": [],
-          "secrets": []
+          "functionId": "json",
+          "apiId": "typedefs",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/typedefs/json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nullableJson": {
-          "name": "nullableJson",
-          "route": "/typedefs/nullable-json",
-          "apiName": "typedefs",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nullableJson",
+          "apiId": "typedefs",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/typedefs/nullable-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "mixedJson": {
-          "name": "mixedJson",
-          "route": "/typedefs/mixed-json",
-          "apiName": "typedefs",
-          "envVars": [],
-          "secrets": []
+          "functionId": "mixedJson",
+          "apiId": "typedefs",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/typedefs/mixed-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "return_types": {
-      "name": "return_types",
+      "apiId": "return_types",
       "functions": {
         "asyncVoidReturn": {
-          "name": "asyncVoidReturn",
-          "route": "/return-types/async-void-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncVoidReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-void-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncStringReturn": {
-          "name": "asyncStringReturn",
-          "route": "/return-types/async-string-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncStringReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-string-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncIntReturn": {
-          "name": "asyncIntReturn",
-          "route": "/return-types/async-int-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncIntReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-int-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncDoubleReturn": {
-          "name": "asyncDoubleReturn",
-          "route": "/return-types/async-double-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncDoubleReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-double-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncBoolReturn": {
-          "name": "asyncBoolReturn",
-          "route": "/return-types/async-bool-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncBoolReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-bool-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncIterableReturn": {
-          "name": "asyncIterableReturn",
-          "route": "/return-types/async-iterable-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncIterableReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-iterable-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncListReturn": {
-          "name": "asyncListReturn",
-          "route": "/return-types/async-list-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncListReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-list-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncMapReturn": {
-          "name": "asyncMapReturn",
-          "route": "/return-types/async-map-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncMapReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-map-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncStructReturn": {
-          "name": "asyncStructReturn",
-          "route": "/return-types/async-struct-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncStructReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-struct-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncStructReturnNullable": {
-          "name": "asyncStructReturnNullable",
-          "route": "/return-types/async-struct-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncStructReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-struct-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncComplexStructReturn": {
-          "name": "asyncComplexStructReturn",
-          "route": "/return-types/async-complex-struct-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncComplexStructReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-complex-struct-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncComplexStructReturnNullable": {
-          "name": "asyncComplexStructReturnNullable",
-          "route": "/return-types/async-complex-struct-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncComplexStructReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-complex-struct-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncComplexClassReturn": {
-          "name": "asyncComplexClassReturn",
-          "route": "/return-types/async-complex-class-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncComplexClassReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-complex-class-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncClassReturnNullable": {
-          "name": "asyncClassReturnNullable",
-          "route": "/return-types/async-class-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncClassReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-class-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrVoidReturn": {
-          "name": "asyncOrVoidReturn",
-          "route": "/return-types/async-or-void-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrVoidReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-void-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrStringReturn": {
-          "name": "asyncOrStringReturn",
-          "route": "/return-types/async-or-string-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrStringReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-string-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrIntReturn": {
-          "name": "asyncOrIntReturn",
-          "route": "/return-types/async-or-int-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrIntReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-int-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrDoubleReturn": {
-          "name": "asyncOrDoubleReturn",
-          "route": "/return-types/async-or-double-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrDoubleReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-double-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrBoolReturn": {
-          "name": "asyncOrBoolReturn",
-          "route": "/return-types/async-or-bool-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrBoolReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-bool-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrIterableReturn": {
-          "name": "asyncOrIterableReturn",
-          "route": "/return-types/async-or-iterable-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrIterableReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-iterable-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrListReturn": {
-          "name": "asyncOrListReturn",
-          "route": "/return-types/async-or-list-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrListReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-list-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrMapReturn": {
-          "name": "asyncOrMapReturn",
-          "route": "/return-types/async-or-map-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrMapReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-map-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrStructReturn": {
-          "name": "asyncOrStructReturn",
-          "route": "/return-types/async-or-struct-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrStructReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-struct-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrComplexStructReturn": {
-          "name": "asyncOrComplexStructReturn",
-          "route": "/return-types/async-or-complex-struct-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrComplexStructReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-complex-struct-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrVoidReturnNullable": {
-          "name": "asyncOrVoidReturnNullable",
-          "route": "/return-types/async-or-void-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrVoidReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-void-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrStringReturnNullable": {
-          "name": "asyncOrStringReturnNullable",
-          "route": "/return-types/async-or-string-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrStringReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-string-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrIntReturnNullable": {
-          "name": "asyncOrIntReturnNullable",
-          "route": "/return-types/async-or-int-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrIntReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-int-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrDoubleReturnNullable": {
-          "name": "asyncOrDoubleReturnNullable",
-          "route": "/return-types/async-or-double-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrDoubleReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-double-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrBoolReturnNullable": {
-          "name": "asyncOrBoolReturnNullable",
-          "route": "/return-types/async-or-bool-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrBoolReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-bool-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrIterableReturnNullable": {
-          "name": "asyncOrIterableReturnNullable",
-          "route": "/return-types/async-or-iterable-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrIterableReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-iterable-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrListReturnNullable": {
-          "name": "asyncOrListReturnNullable",
-          "route": "/return-types/async-or-list-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrListReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-list-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrMapReturnNullable": {
-          "name": "asyncOrMapReturnNullable",
-          "route": "/return-types/async-or-map-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrMapReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-map-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrStructReturnNullable": {
-          "name": "asyncOrStructReturnNullable",
-          "route": "/return-types/async-or-struct-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrStructReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-struct-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrComplexStructReturnNullable": {
-          "name": "asyncOrComplexStructReturnNullable",
-          "route": "/return-types/async-or-complex-struct-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrComplexStructReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-complex-struct-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrSimpleClassReturnNullable": {
-          "name": "asyncOrSimpleClassReturnNullable",
-          "route": "/return-types/async-or-simple-class-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrSimpleClassReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-simple-class-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOrComplexClassReturnNullable": {
-          "name": "asyncOrComplexClassReturnNullable",
-          "route": "/return-types/async-or-complex-class-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOrComplexClassReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-complex-class-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "voidReturn": {
-          "name": "voidReturn",
-          "route": "/return-types/void-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "voidReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/void-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringReturn": {
-          "name": "stringReturn",
-          "route": "/return-types/string-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/string-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "intReturn": {
-          "name": "intReturn",
-          "route": "/return-types/int-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "intReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/int-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "doubleReturn": {
-          "name": "doubleReturn",
-          "route": "/return-types/double-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "doubleReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/double-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "boolReturn": {
-          "name": "boolReturn",
-          "route": "/return-types/bool-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "boolReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/bool-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "iterableReturn": {
-          "name": "iterableReturn",
-          "route": "/return-types/iterable-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "iterableReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/iterable-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "listReturn": {
-          "name": "listReturn",
-          "route": "/return-types/list-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "listReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/list-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "mapReturn": {
-          "name": "mapReturn",
-          "route": "/return-types/map-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "mapReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/map-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "structReturn": {
-          "name": "structReturn",
-          "route": "/return-types/struct-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "structReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/struct-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "complexReturn": {
-          "name": "complexReturn",
-          "route": "/return-types/complex-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "complexReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/complex-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "simpleClassReturn": {
-          "name": "simpleClassReturn",
-          "route": "/return-types/simple-class-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "simpleClassReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/simple-class-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "complexClassReturn": {
-          "name": "complexClassReturn",
-          "route": "/return-types/complex-class-return",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "complexClassReturn",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/complex-class-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stringReturnNullable": {
-          "name": "stringReturnNullable",
-          "route": "/return-types/string-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stringReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/string-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "intReturnNullable": {
-          "name": "intReturnNullable",
-          "route": "/return-types/int-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "intReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/int-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "doubleReturnNullable": {
-          "name": "doubleReturnNullable",
-          "route": "/return-types/double-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "doubleReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/double-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "boolReturnNullable": {
-          "name": "boolReturnNullable",
-          "route": "/return-types/bool-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "boolReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/bool-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "iterableReturnNullable": {
-          "name": "iterableReturnNullable",
-          "route": "/return-types/iterable-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "iterableReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/iterable-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "listReturnNullable": {
-          "name": "listReturnNullable",
-          "route": "/return-types/list-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "listReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/list-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "mapReturnNullable": {
-          "name": "mapReturnNullable",
-          "route": "/return-types/map-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "mapReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/map-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "structReturnNullable": {
-          "name": "structReturnNullable",
-          "route": "/return-types/struct-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "structReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/struct-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "complexReturnNullable": {
-          "name": "complexReturnNullable",
-          "route": "/return-types/complex-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "complexReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/complex-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "simpleClassReturnNullable": {
-          "name": "simpleClassReturnNullable",
-          "route": "/return-types/simple-class-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "simpleClassReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/simple-class-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "complexClassReturnNullable": {
-          "name": "complexClassReturnNullable",
-          "route": "/return-types/complex-class-return-nullable",
-          "apiName": "return_types",
-          "envVars": [],
-          "secrets": []
+          "functionId": "complexClassReturnNullable",
+          "apiId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/complex-class-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "overrides": {
-      "name": "overrides",
+      "apiId": "overrides",
       "functions": {
         "commonNestedParent": {
-          "name": "commonNestedParent",
-          "route": "/overrides/common-nested-parent",
-          "apiName": "overrides",
-          "envVars": [],
-          "secrets": []
+          "functionId": "commonNestedParent",
+          "apiId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/common-nested-parent"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "commonNestedChild": {
-          "name": "commonNestedChild",
-          "route": "/overrides/common-nested-child",
-          "apiName": "overrides",
-          "envVars": [],
-          "secrets": []
+          "functionId": "commonNestedChild",
+          "apiId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/common-nested-child"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nestedGrandparent": {
-          "name": "nestedGrandparent",
-          "route": "/overrides/nested-grandparent",
-          "apiName": "overrides",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nestedGrandparent",
+          "apiId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/nested-grandparent"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nestedParent": {
-          "name": "nestedParent",
-          "route": "/overrides/nested-parent",
-          "apiName": "overrides",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nestedParent",
+          "apiId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/nested-parent"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nestedChild": {
-          "name": "nestedChild",
-          "route": "/overrides/nested-child",
-          "apiName": "overrides",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nestedChild",
+          "apiId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/nested-child"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "callsThrowsCommonOverriddenException": {
-          "name": "callsThrowsCommonOverriddenException",
-          "route": "/overrides/calls-throws-common-overridden-exception",
-          "apiName": "overrides",
-          "envVars": [],
-          "secrets": []
+          "functionId": "callsThrowsCommonOverriddenException",
+          "apiId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/calls-throws-common-overridden-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsCommonOverriddenException": {
-          "name": "throwsCommonOverriddenException",
-          "route": "/overrides/throws-common-overridden-exception",
-          "apiName": "overrides",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsCommonOverriddenException",
+          "apiId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/throws-common-overridden-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsOverriddenException": {
-          "name": "throwsOverriddenException",
-          "route": "/overrides/throws-overridden-exception",
-          "apiName": "overrides",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsOverriddenException",
+          "apiId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/throws-overridden-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "callsThrowsOverriddenException": {
-          "name": "callsThrowsOverriddenException",
-          "route": "/overrides/calls-throws-overridden-exception",
-          "apiName": "overrides",
-          "envVars": [],
-          "secrets": []
+          "functionId": "callsThrowsOverriddenException",
+          "apiId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/calls-throws-overridden-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "classes": {
-      "name": "classes",
+      "apiId": "classes",
       "functions": {
         "empty": {
-          "name": "empty",
-          "route": "/classes/empty",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "empty",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/empty"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncEmpty": {
-          "name": "asyncEmpty",
-          "route": "/classes/async-empty",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncEmpty",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-empty"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "fields": {
-          "name": "fields",
-          "route": "/classes/fields",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "fields",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncFields": {
-          "name": "asyncFields",
-          "route": "/classes/async-fields",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncFields",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nullableFields": {
-          "name": "nullableFields",
-          "route": "/classes/nullable-fields",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nullableFields",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/nullable-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncNullableFields": {
-          "name": "asyncNullableFields",
-          "route": "/classes/async-nullable-fields",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncNullableFields",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-nullable-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "namedFields": {
-          "name": "namedFields",
-          "route": "/classes/named-fields",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "namedFields",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncNamedFields": {
-          "name": "asyncNamedFields",
-          "route": "/classes/async-named-fields",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncNamedFields",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "mixedFields": {
-          "name": "mixedFields",
-          "route": "/classes/mixed-fields",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "mixedFields",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/mixed-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncMixedFields": {
-          "name": "asyncMixedFields",
-          "route": "/classes/async-mixed-fields",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncMixedFields",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-mixed-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "defaultValues": {
-          "name": "defaultValues",
-          "route": "/classes/default-values",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "defaultValues",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/default-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncDefaultValues": {
-          "name": "asyncDefaultValues",
-          "route": "/classes/async-default-values",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncDefaultValues",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-default-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nestedClass": {
-          "name": "nestedClass",
-          "route": "/classes/nested-class",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nestedClass",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/nested-class"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncNestedClass": {
-          "name": "asyncNestedClass",
-          "route": "/classes/async-nested-class",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncNestedClass",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-nested-class"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "onlyFromJson": {
-          "name": "onlyFromJson",
-          "route": "/classes/only-from-json",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "onlyFromJson",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/only-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOnlyFromJson": {
-          "name": "asyncOnlyFromJson",
-          "route": "/classes/async-only-from-json",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOnlyFromJson",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-only-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "onlyToJson": {
-          "name": "onlyToJson",
-          "route": "/classes/only-to-json",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "onlyToJson",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/only-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOnlyToJson": {
-          "name": "asyncOnlyToJson",
-          "route": "/classes/async-only-to-json",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOnlyToJson",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-only-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "onlyToJsonWithDefaults": {
-          "name": "onlyToJsonWithDefaults",
-          "route": "/classes/only-to-json-with-defaults",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "onlyToJsonWithDefaults",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/only-to-json-with-defaults"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncOnlyToJsonWithDefaults": {
-          "name": "asyncOnlyToJsonWithDefaults",
-          "route": "/classes/async-only-to-json-with-defaults",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncOnlyToJsonWithDefaults",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-only-to-json-with-defaults"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "fromAndToJson": {
-          "name": "fromAndToJson",
-          "route": "/classes/from-and-to-json",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "fromAndToJson",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/from-and-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncFromAndToJson": {
-          "name": "asyncFromAndToJson",
-          "route": "/classes/async-from-and-to-json",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncFromAndToJson",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-from-and-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nonMapToJson": {
-          "name": "nonMapToJson",
-          "route": "/classes/non-map-to-json",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nonMapToJson",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/non-map-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncNonMapToJson": {
-          "name": "asyncNonMapToJson",
-          "route": "/classes/async-non-map-to-json",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncNonMapToJson",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-non-map-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nonMapToJsonWithDefaults": {
-          "name": "nonMapToJsonWithDefaults",
-          "route": "/classes/non-map-to-json-with-defaults",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nonMapToJsonWithDefaults",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/non-map-to-json-with-defaults"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncNonMapToJsonWithDefaults": {
-          "name": "asyncNonMapToJsonWithDefaults",
-          "route": "/classes/async-non-map-to-json-with-defaults",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncNonMapToJsonWithDefaults",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-non-map-to-json-with-defaults"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nonMapFromAndToJson": {
-          "name": "nonMapFromAndToJson",
-          "route": "/classes/non-map-from-and-to-json",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nonMapFromAndToJson",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/non-map-from-and-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "asyncNonMapFromAndToJson": {
-          "name": "asyncNonMapFromAndToJson",
-          "route": "/classes/async-non-map-from-and-to-json",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "asyncNonMapFromAndToJson",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-non-map-from-and-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "fromJsonStatic": {
-          "name": "fromJsonStatic",
-          "route": "/classes/from-json-static",
-          "apiName": "classes",
-          "envVars": [],
-          "secrets": []
+          "functionId": "fromJsonStatic",
+          "apiId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/from-json-static"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "exceptions": {
-      "name": "exceptions",
+      "apiId": "exceptions",
       "functions": {
         "throwsException": {
-          "name": "throwsException",
-          "route": "/exceptions/throws-exception",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsException",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsError": {
-          "name": "throwsError",
-          "route": "/exceptions/throws-error",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsError",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsCustomException": {
-          "name": "throwsCustomException",
-          "route": "/exceptions/throws-custom-exception",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsCustomException",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-custom-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsCustomExceptionToFromJson": {
-          "name": "throwsCustomExceptionToFromJson",
-          "route": "/exceptions/throws-custom-exception-to-from-json",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsCustomExceptionToFromJson",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-custom-exception-to-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsCustomError": {
-          "name": "throwsCustomError",
-          "route": "/exceptions/throws-custom-error",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsCustomError",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-custom-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsCustomErrorToFromJson": {
-          "name": "throwsCustomErrorToFromJson",
-          "route": "/exceptions/throws-custom-error-to-from-json",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsCustomErrorToFromJson",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-custom-error-to-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsCustomErrorWithStackTrace": {
-          "name": "throwsCustomErrorWithStackTrace",
-          "route": "/exceptions/throws-custom-error-with-stack-trace",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsCustomErrorWithStackTrace",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-custom-error-with-stack-trace"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "metadata": {
-      "name": "metadata",
+      "apiId": "metadata",
       "functions": {
         "hasDocComments": {
-          "name": "hasDocComments",
-          "route": "/metadata/has-doc-comments",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "hasDocComments",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-doc-comments"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "hasDeprecatedAnnotation": {
-          "name": "hasDeprecatedAnnotation",
-          "route": "/metadata/has-deprecated-annotation",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "hasDeprecatedAnnotation",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-deprecated-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "hasConstructedDeprecatedAnnotation": {
-          "name": "hasConstructedDeprecatedAnnotation",
-          "route": "/metadata/has-constructed-deprecated-annotation",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "hasConstructedDeprecatedAnnotation",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-constructed-deprecated-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "hasNamedConstructedAnnotation": {
-          "name": "hasNamedConstructedAnnotation",
-          "route": "/metadata/has-named-constructed-annotation",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "hasNamedConstructedAnnotation",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-named-constructed-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "hasLiteralsAnnotation": {
-          "name": "hasLiteralsAnnotation",
-          "route": "/metadata/has-literals-annotation",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "hasLiteralsAnnotation",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-literals-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "hasExportableAnnotation": {
-          "name": "hasExportableAnnotation",
-          "route": "/metadata/has-exportable-annotation",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "hasExportableAnnotation",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-exportable-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "hasExportableConstructedAnnotation": {
-          "name": "hasExportableConstructedAnnotation",
-          "route": "/metadata/has-exportable-constructed-annotation",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "hasExportableConstructedAnnotation",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-exportable-constructed-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "hasNotExportableAnnotation": {
-          "name": "hasNotExportableAnnotation",
-          "route": "/metadata/has-not-exportable-annotation",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "hasNotExportableAnnotation",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-not-exportable-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "positionalDefaultValues": {
-          "name": "positionalDefaultValues",
-          "route": "/metadata/positional-default-values",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "positionalDefaultValues",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/positional-default-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nullablePositionalDefaultValues": {
-          "name": "nullablePositionalDefaultValues",
-          "route": "/metadata/nullable-positional-default-values",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nullablePositionalDefaultValues",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/nullable-positional-default-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "namedDefaultValues": {
-          "name": "namedDefaultValues",
-          "route": "/metadata/named-default-values",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "namedDefaultValues",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/named-default-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nullableNamedDefaultValues": {
-          "name": "nullableNamedDefaultValues",
-          "route": "/metadata/nullable-named-default-values",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nullableNamedDefaultValues",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/nullable-named-default-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "positionalDefaultValueVars": {
-          "name": "positionalDefaultValueVars",
-          "route": "/metadata/positional-default-value-vars",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "positionalDefaultValueVars",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/positional-default-value-vars"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nullablePositionalDefaultValueVars": {
-          "name": "nullablePositionalDefaultValueVars",
-          "route": "/metadata/nullable-positional-default-value-vars",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nullablePositionalDefaultValueVars",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/nullable-positional-default-value-vars"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "namedDefaultValueVars": {
-          "name": "namedDefaultValueVars",
-          "route": "/metadata/named-default-value-vars",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "namedDefaultValueVars",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/named-default-value-vars"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nullableNamedDefaultValueVars": {
-          "name": "nullableNamedDefaultValueVars",
-          "route": "/metadata/nullable-named-default-value-vars",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nullableNamedDefaultValueVars",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/nullable-named-default-value-vars"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "positionalDefaultValueVarsPrivate": {
-          "name": "positionalDefaultValueVarsPrivate",
-          "route": "/metadata/positional-default-value-vars-private",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "positionalDefaultValueVarsPrivate",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/positional-default-value-vars-private"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nullablePositionalDefaultValueVarsPrivate": {
-          "name": "nullablePositionalDefaultValueVarsPrivate",
-          "route": "/metadata/nullable-positional-default-value-vars-private",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nullablePositionalDefaultValueVarsPrivate",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/nullable-positional-default-value-vars-private"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "namedDefaultValueVarsPrivate": {
-          "name": "namedDefaultValueVarsPrivate",
-          "route": "/metadata/named-default-value-vars-private",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "namedDefaultValueVarsPrivate",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/named-default-value-vars-private"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "nullableNamedDefaultValueVarsPrivate": {
-          "name": "nullableNamedDefaultValueVarsPrivate",
-          "route": "/metadata/nullable-named-default-value-vars-private",
-          "apiName": "metadata",
-          "envVars": [],
-          "secrets": []
+          "functionId": "nullableNamedDefaultValueVarsPrivate",
+          "apiId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/nullable-named-default-value-vars-private"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "parameters": {
-      "name": "parameters",
+      "apiId": "parameters",
       "functions": {
         "optionalPositional": {
-          "name": "optionalPositional",
-          "route": "/parameters/optional-positional",
-          "apiName": "parameters",
-          "envVars": [],
-          "secrets": []
+          "functionId": "optionalPositional",
+          "apiId": "parameters",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameters/optional-positional"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "optionalNamed": {
-          "name": "optionalNamed",
-          "route": "/parameters/optional-named",
-          "apiName": "parameters",
-          "envVars": [],
-          "secrets": []
+          "functionId": "optionalNamed",
+          "apiId": "parameters",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameters/optional-named"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "requiredPositional": {
-          "name": "requiredPositional",
-          "route": "/parameters/required-positional",
-          "apiName": "parameters",
-          "envVars": [],
-          "secrets": []
+          "functionId": "requiredPositional",
+          "apiId": "parameters",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameters/required-positional"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "requiredNamed": {
-          "name": "requiredNamed",
-          "route": "/parameters/required-named",
-          "apiName": "parameters",
-          "envVars": [],
-          "secrets": []
+          "functionId": "requiredNamed",
+          "apiId": "parameters",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameters/required-named"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "collections": {
-      "name": "collections",
+      "apiId": "collections",
       "functions": {
         "simpleList": {
-          "name": "simpleList",
-          "route": "/collections/simple-list",
-          "apiName": "collections",
-          "envVars": [],
-          "secrets": []
+          "functionId": "simpleList",
+          "apiId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/simple-list"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "complexList": {
-          "name": "complexList",
-          "route": "/collections/complex-list",
-          "apiName": "collections",
-          "envVars": [],
-          "secrets": []
+          "functionId": "complexList",
+          "apiId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/complex-list"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "simpleMap": {
-          "name": "simpleMap",
-          "route": "/collections/simple-map",
-          "apiName": "collections",
-          "envVars": [],
-          "secrets": []
+          "functionId": "simpleMap",
+          "apiId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/simple-map"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "dynamicMap": {
-          "name": "dynamicMap",
-          "route": "/collections/dynamic-map",
-          "apiName": "collections",
-          "envVars": [],
-          "secrets": []
+          "functionId": "dynamicMap",
+          "apiId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/dynamic-map"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "objectMap": {
-          "name": "objectMap",
-          "route": "/collections/object-map",
-          "apiName": "collections",
-          "envVars": [],
-          "secrets": []
+          "functionId": "objectMap",
+          "apiId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/object-map"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "objectNullableMap": {
-          "name": "objectNullableMap",
-          "route": "/collections/object-nullable-map",
-          "apiName": "collections",
-          "envVars": [],
-          "secrets": []
+          "functionId": "objectNullableMap",
+          "apiId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/object-nullable-map"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "complexMap": {
-          "name": "complexMap",
-          "route": "/collections/complex-map",
-          "apiName": "collections",
-          "envVars": [],
-          "secrets": []
+          "functionId": "complexMap",
+          "apiId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/complex-map"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "generic_wrappers": {
-      "name": "generic_wrappers",
+      "apiId": "generic_wrappers",
       "functions": {
         "genericWrappers": {
-          "name": "genericWrappers",
-          "route": "/generic-wrappers/generic-wrappers",
-          "apiName": "generic_wrappers",
-          "envVars": [],
-          "secrets": []
+          "functionId": "genericWrappers",
+          "apiId": "generic_wrappers",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/generic-wrappers/generic-wrappers"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "genericWrappersAsync": {
-          "name": "genericWrappersAsync",
-          "route": "/generic-wrappers/generic-wrappers-async",
-          "apiName": "generic_wrappers",
-          "envVars": [],
-          "secrets": []
+          "functionId": "genericWrappersAsync",
+          "apiId": "generic_wrappers",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/generic-wrappers/generic-wrappers-async"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "genericWrapperParameters": {
-          "name": "genericWrapperParameters",
-          "route": "/generic-wrappers/generic-wrapper-parameters",
-          "apiName": "generic_wrappers",
-          "envVars": [],
-          "secrets": []
+          "functionId": "genericWrapperParameters",
+          "apiId": "generic_wrappers",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/generic-wrappers/generic-wrapper-parameters"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "demo": {
-      "name": "demo",
+      "apiId": "demo",
       "functions": {
         "sayHello": {
-          "name": "sayHello",
-          "route": "/demo/say-hello",
-          "apiName": "demo",
-          "envVars": [],
-          "secrets": []
+          "functionId": "sayHello",
+          "apiId": "demo",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/demo/say-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "asserts": {
-      "name": "asserts",
+      "apiId": "asserts",
       "functions": {
         "assertsEnabled": {
-          "name": "assertsEnabled",
-          "route": "/asserts/asserts-enabled",
-          "apiName": "asserts",
-          "envVars": [],
-          "secrets": []
+          "functionId": "assertsEnabled",
+          "apiId": "asserts",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/asserts/asserts-enabled"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     }
   },
-  "envVars": [],
+  "variables": [],
   "secrets": [],
   "sdkConfig": {
     "celest": "1.0.0-dev.0",

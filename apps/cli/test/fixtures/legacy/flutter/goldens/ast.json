@@ -1,5 +1,6 @@
 {
   "name": "flutter",
+  "environment": "local",
   "reference": {
     "$": "Reference",
     "symbol": "project",
@@ -464,6 +465,12 @@
           "$": "TypeReference",
           "symbol": "WebSocketException",
           "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
         {
@@ -952,6 +959,12 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -1076,7 +1089,7 @@
       }
     }
   },
-  "envVars": [],
+  "variables": [],
   "secrets": [],
   "sdkConfig": {
     "celest": "1.0.0-dev.0",

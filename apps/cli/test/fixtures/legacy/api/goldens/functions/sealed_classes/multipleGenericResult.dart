@@ -1191,6 +1191,36 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i5.JsonUtf8.encode(status),
       );
+    } on _i7.CloudException catch (e, st) {
+      const statusCode = 400;
+      _i8.context.logger.severe(
+        e.message,
+        e,
+        st,
+      );
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.CloudException',
+              'value':
+                  _i5.Serializers.instance.serialize<_i7.CloudException>(e),
+            },
+            if (_i8.context.environment != _i9.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i5.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
+      };
+      return _i2.Response(
+        statusCode,
+        headers: const {'Content-Type': 'application/json'},
+        body: _i5.JsonUtf8.encode(status),
+      );
     } on UnsupportedError catch (e, st) {
       const statusCode = 500;
       _i8.context.logger.severe(
@@ -1799,6 +1829,22 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionHttpTarget {
             const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
           ),
         );
+      },
+    ));
+    _i5.Serializers.instance
+        .put(_i5.Serializer.define<_i7.CloudException, Map<String, Object?>>(
+      serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
+        r'message': $value.message,
+        if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
+          $value.details,
+          const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
+        )
+            case final details?)
+          r'details': details,
+      },
+      deserialize: ($serialized) {
+        return _i7.CloudException.fromJson($serialized);
       },
     ));
     _i5.Serializers.instance

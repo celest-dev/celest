@@ -1,20 +1,29 @@
 {
-  "name": "firebase_test",
+  "projectId": "firebase_test",
+  "environmentId": "local",
   "apis": {
     "greeting": {
-      "name": "greeting",
+      "apiId": "greeting",
       "functions": {
         "sayHello": {
-          "name": "sayHello",
-          "route": "/greeting/say-hello",
-          "apiName": "greeting",
-          "envVars": [],
-          "secrets": []
+          "functionId": "sayHello",
+          "apiId": "greeting",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/greeting/say-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     }
   },
-  "envVars": [
+  "variables": [
     {
       "name": "FIREBASE_PROJECT_ID",
       "value": "prj-d-firebase-test"
@@ -47,7 +56,7 @@
           "name": "FIREBASE_PROJECT_ID",
           "value": "prj-d-firebase-test"
         },
-        "name": "firebase",
+        "authProviderId": "firebase",
         "type": "FIREBASE"
       }
     ]

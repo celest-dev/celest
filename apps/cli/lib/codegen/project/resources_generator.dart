@@ -28,12 +28,11 @@ final class ResourcesGenerator {
     return switch ((a, b)) {
       (final Api a, final Api b) => a.name.compareTo(b.name),
       (final CloudFunction a, final CloudFunction b) => a.compareTo(b),
-      (final EnvironmentVariable a, final EnvironmentVariable b) =>
-        a.name.compareTo(b.name),
+      (final Variable a, final Variable b) => a.name.compareTo(b.name),
       (Api(), _) => -1,
       (CloudFunction(), Api()) => 1,
-      (CloudFunction(), EnvironmentVariable()) => -1,
-      (EnvironmentVariable(), _) => 1,
+      (CloudFunction(), Variable()) => -1,
+      (Variable(), _) => 1,
       _ => unreachable(),
     };
   });
@@ -121,9 +120,9 @@ final class ResourcesGenerator {
     }
   }
 
-  void _generateEnv(Iterable<EnvironmentVariable> envVars) {
+  void _generateEnv(Iterable<Variable> variables) {
     final env = _beginClass('env', 'Env');
-    for (final envVar in envVars) {
+    for (final envVar in variables) {
       final fieldName = envVar.name.camelCase;
       env.fields.add(
         Field(
@@ -197,8 +196,8 @@ final class ResourcesGenerator {
     //   _beginClass('Apis').fields.addAll(apis.build().values);
     //   _beginClass('Functions').fields.addAll(functions.build().values);
     // }
-    // if (project.envVars.isNotEmpty) {
-    //   _generateEnv(project.envVars);
+    // if (project.variables.isNotEmpty) {
+    //   _generateEnv(project.variables);
     // }
     return _library.build();
   }

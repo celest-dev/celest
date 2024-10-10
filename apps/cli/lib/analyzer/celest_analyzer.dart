@@ -309,10 +309,10 @@ const project = Project(name: 'cache_warmup');
     _widgetCollector = _ScopedWidgetCollector(
       errorReporter: reportError,
     );
-    final envVars = await performance.trace(
+    final variables = await performance.trace(
       'CelestAnalyzer',
       'resolveEnvVariables',
-      resolver.resolveEnvironmentVariables,
+      resolver.resolveVariables,
     );
 
     final secrets = await performance.trace(
@@ -328,7 +328,7 @@ const project = Project(name: 'cache_warmup');
     );
     if (auth != null) {
       _project.auth.replace(auth);
-      envVars.addAll(auth.environmentVariables.values);
+      variables.addAll(auth.variables.values);
       secrets.addAll(auth.secrets.values);
     }
 
@@ -337,7 +337,7 @@ const project = Project(name: 'cache_warmup');
       'collectApis',
       () => _collectApis(
         hasAuth: auth != null,
-        envVars: envVars,
+        variables: variables,
         secrets: secrets,
       ),
     );
@@ -352,7 +352,7 @@ const project = Project(name: 'cache_warmup');
 
     // Add config values only at the end since other components may contribute
     // to them.
-    _project.envVars.replace(envVars);
+    _project.variables.replace(variables);
     _project.secrets.replace(secrets);
 
     return CelestAnalysisResult.success(
@@ -416,7 +416,7 @@ const project = Project(name: 'cache_warmup');
 
   Future<void> _collectApis({
     required bool hasAuth,
-    required Set<ast.EnvironmentVariable> envVars,
+    required Set<ast.Variable> variables,
     required Set<ast.Secret> secrets,
   }) async {
     final apiDir = fileSystem.directory(projectPaths.apisDir);
@@ -471,7 +471,7 @@ const project = Project(name: 'cache_warmup');
         apiFilepath: apiPath,
         apiName: apiName,
         apiLibrary: apiLibraryResult,
-        environmentVariables: envVars,
+        variables: variables,
         secrets: secrets,
         hasAuth: hasAuth,
       );

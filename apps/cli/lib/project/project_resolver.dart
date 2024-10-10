@@ -19,11 +19,12 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   @override
   ResolvedProject visitProject(Project project, AstNode context) {
     _resolvedProject
-      ..name = project.name
+      ..projectId = project.name
+      ..environmentId = project.environment
       ..sdkConfig.replace(project.sdkConfig);
-    for (final envVar in project.envVars) {
-      _resolvedProject.envVars.add(
-        visitEnvironmentVariable(envVar, project),
+    for (final envVar in project.variables) {
+      _resolvedProject.variables.add(
+        visitVariable(envVar, project),
       );
     }
     for (final secret in project.secrets) {
@@ -41,7 +42,7 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   @override
   ResolvedApi visitApi(Api api, Project context) {
     return ResolvedApi.build((resolvedApi) {
-      resolvedApi.name = api.name;
+      resolvedApi.apiId = api.name;
       for (final f in api.functions.values) {
         resolvedApi.functions[f.name] = visitFunction(f, api);
       }
@@ -68,10 +69,10 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
     return ResolvedCloudFunction.build(
       (resolvedFunction) {
         resolvedFunction
-          ..name = function.name
-          ..route = function.route
-          ..apiName = function.apiName
-          ..streamType = function.streamType;
+          ..functionId = function.name
+          ..apiId = function.apiName
+          ..httpConfig.route.path = function.route
+          ..streamConfig.type = function.streamType;
 
         final funcHttpMetadata = [
           ...context.metadata.whereType<ApiHttpMetadata>(),
@@ -82,16 +83,16 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
             case ApiHttpConfig(:final method, :final statusCode):
               resolvedFunction.httpConfig
                 ..method = method
-                ..statusCode = statusCode;
+                ..status = statusCode;
             case ApiHttpError(:final type, :final statusCode):
-              resolvedFunction.httpConfig.errorStatuses[type] = statusCode;
+              resolvedFunction.httpConfig.statusMappings[type] = statusCode;
           }
         }
 
         for (final parameter in function.parameters) {
           switch (parameter.references) {
-            case NodeReference(type: NodeType.environmentVariable, :final name):
-              resolvedFunction.envVars.add(name);
+            case NodeReference(type: NodeType.variable, :final name):
+              resolvedFunction.variables.add(name);
             case NodeReference(type: NodeType.secret, :final name):
               resolvedFunction.secrets.add(name);
           }
@@ -109,8 +110,8 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   }
 
   @override
-  ResolvedEnvironmentVariable visitEnvironmentVariable(
-    EnvironmentVariable variable,
+  ResolvedVariable visitVariable(
+    Variable variable,
     AstNode context,
   ) {
     final name = variable.name;
@@ -119,7 +120,7 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
       // Should have been caught before this.
       unreachable('Missing value for environment variable: $name');
     }
-    return ResolvedEnvironmentVariable(
+    return ResolvedVariable(
       name: name,
       value: value,
     );
@@ -157,16 +158,16 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   ResolvedAuthProvider visitAuthProvider(AuthProvider provider, Auth context) {
     switch (provider) {
       case EmailAuthProvider(:final name):
-        return ResolvedEmailAuthProvider(name: name);
+        return ResolvedEmailAuthProvider(authProviderId: name);
       case SmsAuthProvider(:final name):
-        return ResolvedSmsAuthProvider(name: name);
+        return ResolvedSmsAuthProvider(authProviderId: name);
       case GoogleAuthProvider(
           :final name,
           :final clientId,
           :final clientSecret
         ):
         return ResolvedGoogleAuthProvider(
-          name: name,
+          authProviderId: name,
           clientId: visitSecret(clientId, context),
           clientSecret: visitSecret(clientSecret, context),
         );
@@ -176,7 +177,7 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
           :final clientSecret
         ):
         return ResolvedGitHubAuthProvider(
-          name: name,
+          authProviderId: name,
           clientId: visitSecret(clientId, context),
           clientSecret: visitSecret(clientSecret, context),
         );
@@ -188,7 +189,7 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
           :final privateKey
         ):
         return ResolvedAppleAuthProvider(
-          name: name,
+          authProviderId: name,
           clientId: visitSecret(clientId, context),
           teamId: visitSecret(teamId, context),
           keyId: visitSecret(keyId, context),
@@ -208,8 +209,8 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
         :final projectId,
       ) =>
         ResolvedFirebaseExternalAuthProvider(
-          name: name,
-          projectId: visitEnvironmentVariable(projectId, context),
+          authProviderId: name,
+          projectId: visitVariable(projectId, context),
         ),
       SupabaseExternalAuthProvider(
         :final name,
@@ -217,8 +218,8 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
         :final jwtSecret,
       ) =>
         ResolvedSupabaseExternalAuthProvider(
-          name: name,
-          projectUrl: visitEnvironmentVariable(projectUrl, context),
+          authProviderId: name,
+          projectUrl: visitVariable(projectUrl, context),
           jwtSecret: jwtSecret?.let((secret) => visitSecret(secret, context)),
         ),
     };

@@ -70,7 +70,7 @@ final class _ReferencedTypesCollector extends ast.AstVisitor<void> {
   void visitAuthProvider(ast.AuthProvider provider) {}
 
   @override
-  void visitEnvironmentVariable(ast.EnvironmentVariable variable) {}
+  void visitVariable(ast.Variable variable) {}
 
   @override
   void visitSecret(ast.Secret secret) {}

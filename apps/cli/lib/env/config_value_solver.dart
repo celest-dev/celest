@@ -35,13 +35,13 @@ final class ConfigValueSolver {
 
   Future<Map<String, String>> solveAll() async {
     final [envValues, secretValues] = await Future.wait([
-      project.envVars.retrieveValues(environmentId: environmentId),
+      project.variables.retrieveValues(environmentId: environmentId),
       project.secrets.retrieveValues(environmentId: environmentId),
     ]);
     final envManager =
         await celestProject.envManager.environment(environmentId);
     final allConfigValues = ConfigVarSet()
-      ..addAll(project.envVars)
+      ..addAll(project.variables)
       ..addAll(project.secrets);
     final allConfigEntries = {
       ...envValues,
@@ -49,7 +49,7 @@ final class ConfigValueSolver {
       ...await envManager.readAll(),
 
       // Static values
-      for (final envVar in project.envVars)
+      for (final envVar in project.variables)
         if (envVar.value case final value?) envVar.name: value,
 
       // Default values
@@ -58,11 +58,11 @@ final class ConfigValueSolver {
 
     // First, resolve Auth environment variables which may require special
     // resolution logic.
-    final authEnvironmentVariables = project.auth?.environmentVariables;
+    final authVariables = project.auth?.variables;
     final authSecrets = project.auth?.secrets;
     final authConfigValues = BuiltListMultimap<ast.AuthProviderType,
         ast.ConfigurationVariable>.build((b) {
-      authEnvironmentVariables?.forEach(b.add);
+      authVariables?.forEach(b.add);
       authSecrets?.forEach(b.add);
     });
     for (final MapEntry(key: provider, value: configValues)
@@ -121,7 +121,7 @@ abstract base class BaseConfigValueSolver {
 
   Future<String> solve(ast.ConfigurationVariable configVar);
 
-  Future<String> storeEnvironmentVariable(String name, String value) async {
+  Future<String> storeVariable(String name, String value) async {
     final projectDb = _projectDb ?? celestProject.projectDb;
     await projectDb.withEnvironment(
       environmentId: environmentId,
@@ -180,9 +180,9 @@ base class PromptConfigValueSolver extends BaseConfigValueSolver {
   @override
   Future<String> solve(ast.ConfigurationVariable configVar) async {
     switch (configVar) {
-      case ast.EnvironmentVariable(:final name):
+      case ast.Variable(:final name):
         final value = prompt(name, ConfigValueType.environmentVariable);
-        return storeEnvironmentVariable(name, value);
+        return storeVariable(name, value);
       case ast.Secret(:final name):
         final value = prompt(name, ConfigValueType.secret);
         return storeSecret(name, value);

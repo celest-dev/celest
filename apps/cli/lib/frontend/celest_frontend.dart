@@ -10,6 +10,8 @@ import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
+import 'package:celest_cli/ast/deployed_ast.dart';
+import 'package:celest_cli/ast/project_diff.dart';
 import 'package:celest_cli/codegen/api/dockerfile_generator.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud_code_generator.dart';
@@ -85,6 +87,12 @@ final class CelestFrontend {
       logger.severe(error.toString());
     }
     return 1;
+  }
+
+  void _logWarnings(List<CelestAnalysisError> warnings) {
+    for (final warning in warnings) {
+      logger.warning(warning.toString());
+    }
   }
 
   /// Signals that Celest is ready for the next batch of [_watcherSub] changes.
@@ -283,6 +291,8 @@ final class CelestFrontend {
           migrateProject: migrateProject,
         );
         migrateProject = false;
+
+        _logWarnings(analysisResult.warnings);
         switch (analysisResult) {
           case AnalysisFailureResult(:final errors):
             fail(errors);
@@ -510,6 +520,8 @@ final class CelestFrontend {
         migrateProject: migrateProject,
       );
       migrateProject = false;
+
+      _logWarnings(analysisResult.warnings);
       switch (analysisResult) {
         case AnalysisFailureResult(:final errors):
           return fail(errors);
@@ -584,6 +596,8 @@ final class CelestFrontend {
           migrateProject: migrateProject,
         );
         migrateProject = false;
+
+        _logWarnings(analysisResult.warnings);
         switch (analysisResult) {
           case AnalysisFailureResult(:final errors):
           case AnalysisSuccessResult(:final errors) when errors.isNotEmpty:
@@ -761,8 +775,8 @@ final class CelestFrontend {
         .writeAsString(dockerfile.generate());
 
     final configJson = {
-      'environmentVariables': {
-        for (final env in resolvedProject.envVars) env.name: env.value,
+      'variables': {
+        for (final env in resolvedProject.variables) env.name: env.value,
       },
       'secrets': {
         for (final secret in resolvedProject.secrets) secret.name: secret.value,
@@ -773,7 +787,7 @@ final class CelestFrontend {
         .writeAsString(jsonEncode(configJson));
   }
 
-  Future<ast.LocalDeployedProject> _startLocalApi(
+  Future<LocalDeployedProject> _startLocalApi(
     List<String> invalidatedPaths, {
     required String environmentId,
     required ResolvedProject resolvedProject,
@@ -781,7 +795,7 @@ final class CelestFrontend {
     required int? port,
   }) async {
     final configValues = {
-      for (final env in resolvedProject.envVars) env.name: env.value,
+      for (final env in resolvedProject.variables) env.name: env.value,
       for (final secret in resolvedProject.secrets) secret.name: secret.value,
     };
     if (_localApiRunner == null) {
@@ -819,7 +833,7 @@ final class CelestFrontend {
     if (stopped) {
       throw const CancellationException('Celest was stopped');
     }
-    return ast.LocalDeployedProject.from(
+    return LocalDeployedProject.from(
       projectAst: resolvedProject,
       port: _localApiRunner!.port,
     );
@@ -873,7 +887,7 @@ final class CelestFrontend {
     return dbEnvironment;
   }
 
-  Future<ast.RemoteDeployedProject> _deployProject({
+  Future<RemoteDeployedProject> _deployProject({
     required String projectId,
     required String environmentId,
     required ast.ResolvedProject resolvedProject,
@@ -928,7 +942,7 @@ final class CelestFrontend {
             host: deployment.database.host,
             token: deployment.database.token,
           );
-          return ast.RemoteDeployedProject.from(
+          return RemoteDeployedProject.from(
             projectAst: resolvedProject,
             baseUri: Uri.parse(deployment.uri),
           );

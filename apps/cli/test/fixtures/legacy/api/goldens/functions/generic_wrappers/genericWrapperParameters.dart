@@ -1030,6 +1030,36 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
+    } on _i9.CloudException catch (e, st) {
+      const statusCode = 400;
+      _i10.context.logger.severe(
+        e.message,
+        e,
+        st,
+      );
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'celest.core.v1.CloudException',
+              'value':
+                  _i4.Serializers.instance.serialize<_i9.CloudException>(e),
+            },
+            if (_i10.context.environment != _i11.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i4.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
+      };
+      return _i2.Response(
+        statusCode,
+        headers: const {'Content-Type': 'application/json'},
+        body: _i4.JsonUtf8.encode(status),
+      );
     } on UnsupportedError catch (e, st) {
       const statusCode = 500;
       _i10.context.logger.severe(
@@ -1478,6 +1508,22 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
       },
     ));
     _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i9.CloudException, Map<String, Object?>>(
+      serialize: ($value) => <String, Object?>{
+        r'code': $value.code,
+        r'message': $value.message,
+        if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+          $value.details,
+          const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+        )
+            case final details?)
+          r'details': details,
+      },
+      deserialize: ($serialized) {
+        return _i9.CloudException.fromJson($serialized);
+      },
+    ));
+    _i4.Serializers.instance
         .put(_i4.Serializer.define<_i9.DataLossError, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
@@ -1778,16 +1824,6 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
       ),
       const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
     );
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i5.IList<String>, dynamic>(
-      serialize: ($value) => $value.toJson((value) => value),
-      deserialize: ($serialized) {
-        return _i5.IList<String>.fromJson(
-          $serialized,
-          (value) => (value as String),
-        );
-      },
-    ));
     _i4.Serializers.instance.put(_i4.Serializer.define<_i5.IList<Uri>, dynamic>(
       serialize: ($value) => $value
           .toJson((value) => _i4.Serializers.instance.serialize<Uri>(value)),
@@ -1843,6 +1879,16 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
           $serialized,
           (value) => _i4.Serializers.instance
               .deserialize<_i5.IList<_i6.SimpleClass>>(value),
+        );
+      },
+    ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<_i5.IList<String>, dynamic>(
+      serialize: ($value) => $value.toJson((value) => value),
+      deserialize: ($serialized) {
+        return _i5.IList<String>.fromJson(
+          $serialized,
+          (value) => (value as String),
         );
       },
     ));

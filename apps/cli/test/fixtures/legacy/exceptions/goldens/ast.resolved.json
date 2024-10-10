@@ -1,93 +1,174 @@
 {
-  "name": "exceptions",
+  "projectId": "exceptions",
+  "environmentId": "local",
   "apis": {
     "external": {
-      "name": "external",
+      "apiId": "external",
       "functions": {
         "callsThrowsCommonException": {
-          "name": "callsThrowsCommonException",
-          "route": "/external/calls-throws-common-exception",
-          "apiName": "external",
-          "envVars": [],
-          "secrets": []
+          "functionId": "callsThrowsCommonException",
+          "apiId": "external",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/external/calls-throws-common-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "callsThrowsCustomException": {
-          "name": "callsThrowsCustomException",
-          "route": "/external/calls-throws-custom-exception",
-          "apiName": "external",
-          "envVars": [],
-          "secrets": []
+          "functionId": "callsThrowsCustomException",
+          "apiId": "external",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/external/calls-throws-custom-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "nonthrowing": {
-      "name": "nonthrowing",
+      "apiId": "nonthrowing",
       "functions": {
         "callsThrowsCustomError": {
-          "name": "callsThrowsCustomError",
-          "route": "/nonthrowing/calls-throws-custom-error",
-          "apiName": "nonthrowing",
-          "envVars": [],
-          "secrets": []
+          "functionId": "callsThrowsCustomError",
+          "apiId": "nonthrowing",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/nonthrowing/calls-throws-custom-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "callsThrowsBaseError": {
-          "name": "callsThrowsBaseError",
-          "route": "/nonthrowing/calls-throws-base-error",
-          "apiName": "nonthrowing",
-          "envVars": [],
-          "secrets": []
+          "functionId": "callsThrowsBaseError",
+          "apiId": "nonthrowing",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/nonthrowing/calls-throws-base-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "callsThrowsCustomException": {
-          "name": "callsThrowsCustomException",
-          "route": "/nonthrowing/calls-throws-custom-exception",
-          "apiName": "nonthrowing",
-          "envVars": [],
-          "secrets": []
+          "functionId": "callsThrowsCustomException",
+          "apiId": "nonthrowing",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/nonthrowing/calls-throws-custom-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "callsThrowsBaseException": {
-          "name": "callsThrowsBaseException",
-          "route": "/nonthrowing/calls-throws-base-exception",
-          "apiName": "nonthrowing",
-          "envVars": [],
-          "secrets": []
+          "functionId": "callsThrowsBaseException",
+          "apiId": "nonthrowing",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/nonthrowing/calls-throws-base-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "throwing": {
-      "name": "throwing",
+      "apiId": "throwing",
       "functions": {
         "throwsCustomError": {
-          "name": "throwsCustomError",
-          "route": "/throwing/throws-custom-error",
-          "apiName": "throwing",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsCustomError",
+          "apiId": "throwing",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/throwing/throws-custom-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsBaseError": {
-          "name": "throwsBaseError",
-          "route": "/throwing/throws-base-error",
-          "apiName": "throwing",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsBaseError",
+          "apiId": "throwing",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/throwing/throws-base-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsCustomException": {
-          "name": "throwsCustomException",
-          "route": "/throwing/throws-custom-exception",
-          "apiName": "throwing",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsCustomException",
+          "apiId": "throwing",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/throwing/throws-custom-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsBaseException": {
-          "name": "throwsBaseException",
-          "route": "/throwing/throws-base-exception",
-          "apiName": "throwing",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsBaseException",
+          "apiId": "throwing",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/throwing/throws-base-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     }
   },
-  "envVars": [],
+  "variables": [],
   "secrets": [],
   "sdkConfig": {
     "celest": "1.0.0-dev.0",

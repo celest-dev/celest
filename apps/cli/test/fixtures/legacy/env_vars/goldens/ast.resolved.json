@@ -1,24 +1,40 @@
 {
-  "name": "env_vars",
+  "projectId": "env_vars",
+  "environmentId": "local",
   "apis": {
     "injected": {
-      "name": "injected",
+      "apiId": "injected",
       "functions": {
         "sayHello": {
-          "name": "sayHello",
-          "route": "/injected/say-hello",
-          "apiName": "injected",
-          "envVars": [
+          "functionId": "sayHello",
+          "apiId": "injected",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/injected/say-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [
             "MY_NAME",
             "MY_AGE"
           ],
-          "secrets": []
+          "secrets": [],
+          "streamConfig": {}
         },
         "sayHelloPerson": {
-          "name": "sayHelloPerson",
-          "route": "/injected/say-hello-person",
-          "apiName": "injected",
-          "envVars": [
+          "functionId": "sayHelloPerson",
+          "apiId": "injected",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/injected/say-hello-person"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [
             "MY_NAME",
             "MY_AGE",
             "MY_HEIGHT",
@@ -29,12 +45,13 @@
           ],
           "secrets": [
             "SUPER_SECRET"
-          ]
+          ],
+          "streamConfig": {}
         }
       }
     }
   },
-  "envVars": [
+  "variables": [
     {
       "name": "MY_NAME",
       "value": "Dillon"

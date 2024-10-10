@@ -150,7 +150,7 @@ final class SupabaseConfigValueSolver extends PromptConfigValueSolver {
       final serverStatus = await getLocalServerStatus();
       if (serverStatus != null) {
         _logger.fine('Found local Supabase server: ${serverStatus.apiUrl}');
-        return storeEnvironmentVariable(configVar.name, serverStatus.apiUrl);
+        return storeVariable(configVar.name, serverStatus.apiUrl);
       }
     }
 
@@ -158,14 +158,14 @@ final class SupabaseConfigValueSolver extends PromptConfigValueSolver {
     final configUrl = await findConfigUrl();
     if (configUrl != null) {
       _logger.fine('Found Supabase config URL: $configUrl');
-      return storeEnvironmentVariable(configVar.name, configUrl);
+      return storeVariable(configVar.name, configUrl);
     }
 
     // Search for a Supabase directory and read the project ref from it.
     final projectRef = await findLinkedProjectRef();
     if (projectRef != null) {
       _logger.fine('Found Supabase project ref: $projectRef');
-      return storeEnvironmentVariable(
+      return storeVariable(
         configVar.name,
         'https://$projectRef.supabase.co',
       );

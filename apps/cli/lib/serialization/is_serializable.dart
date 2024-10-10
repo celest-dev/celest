@@ -147,7 +147,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     final namedParameters = fromJsonCtor.parameters
         .where((parameter) => parameter.isNamed)
         .toList();
-    if (positionalParameters.isEmpty || namedParameters.isNotEmpty) {
+    if (positionalParameters.isEmpty) {
       final functionSignature =
           'factory ${type.element.name}.fromJson(${wireType.getDisplayString(withNullability: true)} json)';
       return Verdict.no(
@@ -155,6 +155,16 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         'one required, positional parameter whose type matches the return '
         'type of its toJson method, e.g. $functionSignature',
         location: fromJsonCtor.sourceLocation,
+      );
+    }
+    final requiredNamedParameters = namedParameters.where((p) => p.isRequired);
+    if (requiredNamedParameters.isNotEmpty) {
+      final parameter = requiredNamedParameters.first;
+      return Verdict.no(
+        'The fromJson constructor of ${type.element.name} has an unexpected '
+        'parameter: ${parameter.name}. FromJson constructors can only have '
+        'positional parameters or optional named parameters.',
+        location: parameter.sourceLocation,
       );
     }
 
@@ -212,13 +222,14 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             );
           }
         default:
-          return Verdict.no(
-            'The fromJson constructor of ${type.element.name} has an unexpected '
-            'parameter: ${parameter.name}. The only extra parameters allowed are '
-            'functions of the form `T Function(Object?) fromJsonT` where `T` is '
-            'a type parameter of ${type.element.name}.',
-            location: parameter.sourceLocation,
-          );
+          // return Verdict.no(
+          //   'The fromJson constructor of ${type.element.name} has an unexpected '
+          //   'parameter: ${parameter.name}. The only extra parameters allowed are '
+          //   'functions of the form `T Function(Object?) fromJsonT` where `T` is '
+          //   'a type parameter of ${type.element.name}.',
+          //   location: parameter.sourceLocation,
+          // );
+          continue;
       }
     }
 

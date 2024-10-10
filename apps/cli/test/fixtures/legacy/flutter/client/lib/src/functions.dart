@@ -243,6 +243,12 @@ class CelestFunctionsDartUi {
               .deserialize<_$io.WebSocketException>(errorValue),
           stackTrace,
         );
+      case 'celest.core.v1.CloudException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
+          stackTrace,
+        );
       case 'celest.core.v1.CancelledException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
@@ -631,6 +637,12 @@ class CelestFunctionsFlutter {
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
               .deserialize<_$io.WebSocketException>(errorValue),
+          stackTrace,
+        );
+      case 'celest.core.v1.CloudException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':

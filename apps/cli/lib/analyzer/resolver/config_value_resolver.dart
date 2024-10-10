@@ -278,7 +278,7 @@ extension ResolveConfigurationVariable on ast.ConfigurationVariable {
       environmentId: environmentId,
       (environment) async {
         switch (this) {
-          case ast.EnvironmentVariable(:final name):
+          case ast.Variable(:final name):
             final value = await db
                 .getEnvironmentVariable(
                   environmentId: environment.id,
@@ -320,7 +320,7 @@ extension ResolveConfigurationVariables<T extends ast.ConfigurationVariable>
         final variableNames = map((it) => it.name).toList();
         final values = <String, String>{};
         switch (first) {
-          case ast.EnvironmentVariable():
+          case ast.Variable():
             final dbValues = await db
                 .getEnvironmentVariables(
                   environmentId: environment.id,

@@ -34,8 +34,8 @@ extension type const CelestEnvironment._(String _env)
 ///
 /// This class provides access to the environment variable values
 /// that are configured for the current [CelestEnvironment].
-class CelestEnvironmentVariables {
-  const CelestEnvironmentVariables();
+class CelestVariables {
+  const CelestVariables();
 
   /// The environment variable that determines the current environment.
   ///

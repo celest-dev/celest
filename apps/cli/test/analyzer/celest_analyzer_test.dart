@@ -5,6 +5,7 @@ import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/project/celest_project.dart';
+import 'package:celest_cli/pub/pub_cache.dart';
 import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
@@ -57,6 +58,12 @@ Future<CelestProject> newProject({
       relativeRoot: false,
     ),
     Package(
+      'json_annotation',
+      p.toUri(pubCache.latestVersionPath('json_annotation')!),
+      packageUriRoot: Uri.parse('lib/'),
+      relativeRoot: false,
+    ),
+    Package(
       name,
       p.toUri(d.path('$name/')),
       packageUriRoot: Uri.parse('lib/'),
@@ -87,14 +94,10 @@ environment:
 
 dependencies:
   celest: any
+  celest_core: any
+  json_annotation: any
 ''',
     ),
-    d.file('project.dart', projectDart),
-    if (authDart != null) d.file('auth.dart', '''
-import 'package:celest/celest.dart';
-
-$authDart
-'''),
     if (config.isNotEmpty)
       for (final MapEntry(key: fileName, value: contents) in config.entries)
         d.file(fileName, contents),
@@ -104,9 +107,13 @@ $authDart
       ..._nestedDescriptor(
         _mergeMaps(lib, {
           'src': {
-            'generated': {
-              'resources.dart': resourcesDart ?? '',
-            },
+            'project.dart': projectDart,
+            if (authDart != null)
+              'auth.dart': '''
+import 'package:celest/celest.dart';
+
+$authDart
+''',
             if (apis.isNotEmpty)
               'functions': {
                 for (final MapEntry(key: fileName, value: contents)
@@ -164,7 +171,8 @@ Iterable<d.Descriptor> _nestedDescriptor(
           name,
           _nestedDescriptor(contents.cast()),
         ),
-      _ => unreachable(),
+      final badContents =>
+        unreachable('Bad contents: ${badContents.runtimeType}'),
     };
   }
 }
@@ -568,7 +576,7 @@ extension type StreamX(Stream _) {}
 import 'package:celest/celest.dart';
 
 @cloud
-ReturnTypes sayHello() => throw UnimplementedError();
+ReturnTypes sayHello() => throw UnimplementedError(null);
 ''',
         },
         models: '''
@@ -634,7 +642,7 @@ typedef ReturnTypes = ({
 import 'package:celest/celest.dart';
 
 @cloud
-ReturnTypes sayHello() => throw UnimplementedError();
+ReturnTypes sayHello() => throw UnimplementedError(null);
 ''',
         },
         models: '''
@@ -968,8 +976,8 @@ ValidCustomJson sayHello(ValidCustomJson param) => param;
         },
         models: '''
 class ValidCustomJson {
-  factory ValidCustomJson.fromJson(Map<String, dynamic> _) => throw UnimplementedError();
-  Map<String, dynamic> toJson() => throw UnimplementedError();
+  factory ValidCustomJson.fromJson(Map<String, dynamic> _) => throw UnimplementedError(null);
+  Map<String, dynamic> toJson() => throw UnimplementedError(null);
 }
 ''',
       );
@@ -1021,8 +1029,8 @@ ValidFromJsonStatic sayHello(ValidFromJsonStatic param) => param;
         },
         models: '''
 class ValidFromJsonStatic {
-  static ValidFromJsonStatic fromJson(Map<String, dynamic> _) => throw UnimplementedError();
-  Map<String, dynamic> toJson() => throw UnimplementedError();
+  static ValidFromJsonStatic fromJson(Map<String, dynamic> _) => throw UnimplementedError(null);
+  Map<String, dynamic> toJson() => throw UnimplementedError(null);
 }
 ''',
       );
@@ -1039,8 +1047,8 @@ void sayHello(ValidFromJsonStatic param) {}
         },
         models: '''
 class ValidFromJsonStatic {
-  static ValidFromJsonStatic? fromJson(Map<String, dynamic> _) => throw UnimplementedError();
-  Map<String, dynamic> toJson() => throw UnimplementedError();
+  static ValidFromJsonStatic? fromJson(Map<String, dynamic> _) => throw UnimplementedError(null);
+  Map<String, dynamic> toJson() => throw UnimplementedError(null);
 }
 ''',
         errors: [
@@ -1105,7 +1113,7 @@ class ValidJsonableWrapper {
 import 'package:celest/celest.dart';
 
 @cloud
-NotJsonable sayHello() => throw UnimplementedError();
+NotJsonable sayHello() => throw UnimplementedError(null);
 ''',
         },
         models: '''
@@ -1944,7 +1952,7 @@ import 'package:celest/celest.dart';
 
 @cloud
 Stream<ComplexClass> greetings() async* {
-  throw UnimplementedError();
+  throw UnimplementedError(null);
 }
 ''',
         },
@@ -2038,7 +2046,7 @@ import 'package:celest/http.dart';
 Stream<String> greetings({
   @httpHeader('x-custom-string') required String customString,
 }) async* {
-  throw UnimplementedError();
+  throw UnimplementedError(null);
 }
 ''',
         },
@@ -2058,7 +2066,7 @@ import 'package:celest/http.dart';
 Stream<String> greetings({
   @httpQuery('x-custom-string') required String customString,
 }) async* {
-  throw UnimplementedError();
+  throw UnimplementedError(null);
 }
 ''',
         },
@@ -2251,7 +2259,7 @@ void sayHelloNamed({
         },
         expectProject: (project) {
           expect(
-            project.envVars.map((env) => env.name),
+            project.variables.map((env) => env.name),
             unorderedEquals(['MY_NAME', 'MY_AGE']),
           );
           expect(
@@ -2261,11 +2269,11 @@ void sayHelloNamed({
             unorderedEquals([
               NodeReference(
                 name: 'MY_NAME',
-                type: NodeType.environmentVariable,
+                type: NodeType.variable,
               ),
               NodeReference(
                 name: 'MY_AGE',
-                type: NodeType.environmentVariable,
+                type: NodeType.variable,
               ),
             ]),
           );
@@ -2275,11 +2283,11 @@ void sayHelloNamed({
             unorderedEquals([
               NodeReference(
                 name: 'MY_NAME',
-                type: NodeType.environmentVariable,
+                type: NodeType.variable,
               ),
               NodeReference(
                 name: 'MY_AGE',
-                type: NodeType.environmentVariable,
+                type: NodeType.variable,
               ),
             ]),
           );
@@ -2448,7 +2456,7 @@ const auth = Auth(
             ).single.equals(FirebaseExternalAuthProvider.$type);
 
           // The default env variable is created.
-          check(project.envVars)
+          check(project.variables)
               .single
               .has((it) => it.name, 'name')
               .equals('FIREBASE_PROJECT_ID');
@@ -2476,7 +2484,7 @@ const auth = Auth(
             ).single.equals(FirebaseExternalAuthProvider.$type);
 
           // The custom env variable is used.
-          check(project.envVars)
+          check(project.variables)
               .single
               .has((it) => it.name, 'name')
               .equals('PROJECT_ID');

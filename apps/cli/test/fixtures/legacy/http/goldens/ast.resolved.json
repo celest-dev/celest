@@ -1,185 +1,235 @@
 {
-  "name": "api",
+  "projectId": "api",
+  "environmentId": "local",
   "apis": {
     "http_status": {
-      "name": "http_status",
+      "apiId": "http_status",
       "functions": {
         "ok": {
-          "name": "ok",
-          "route": "/http-status/ok",
-          "apiName": "http_status",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "ok",
+          "apiId": "http_status",
           "httpConfig": {
             "method": "POST",
-            "statusCode": 200,
-            "errorStatuses": {}
-          }
+            "route": {
+              "path": "/http-status/ok"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "created": {
-          "name": "created",
-          "route": "/http-status/created",
-          "apiName": "http_status",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "created",
+          "apiId": "http_status",
           "httpConfig": {
             "method": "POST",
-            "statusCode": 201,
-            "errorStatuses": {}
-          }
+            "route": {
+              "path": "/http-status/created"
+            },
+            "status": 201,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "accepted": {
-          "name": "accepted",
-          "route": "/http-status/accepted",
-          "apiName": "http_status",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "accepted",
+          "apiId": "http_status",
           "httpConfig": {
             "method": "POST",
-            "statusCode": 202,
-            "errorStatuses": {}
-          }
+            "route": {
+              "path": "/http-status/accepted"
+            },
+            "status": 202,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "badRequest": {
-          "name": "badRequest",
-          "route": "/http-status/bad-request",
-          "apiName": "http_status",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "badRequest",
+          "apiId": "http_status",
           "httpConfig": {
             "method": "POST",
-            "statusCode": 400,
-            "errorStatuses": {}
-          }
+            "route": {
+              "path": "/http-status/bad-request"
+            },
+            "status": 400,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "internalServerError": {
-          "name": "internalServerError",
-          "route": "/http-status/internal-server-error",
-          "apiName": "http_status",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "internalServerError",
+          "apiId": "http_status",
           "httpConfig": {
             "method": "POST",
-            "statusCode": 500,
-            "errorStatuses": {}
-          }
+            "route": {
+              "path": "/http-status/internal-server-error"
+            },
+            "status": 500,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "http_method": {
-      "name": "http_method",
+      "apiId": "http_method",
       "functions": {
         "get": {
-          "name": "get",
-          "route": "/http-method/get",
-          "apiName": "http_method",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "get",
+          "apiId": "http_method",
           "httpConfig": {
             "method": "GET",
-            "statusCode": 200,
-            "errorStatuses": {}
-          }
+            "route": {
+              "path": "/http-method/get"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "post": {
-          "name": "post",
-          "route": "/http-method/post",
-          "apiName": "http_method",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "post",
+          "apiId": "http_method",
           "httpConfig": {
             "method": "POST",
-            "statusCode": 200,
-            "errorStatuses": {}
-          }
+            "route": {
+              "path": "/http-method/post"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "put": {
-          "name": "put",
-          "route": "/http-method/put",
-          "apiName": "http_method",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "put",
+          "apiId": "http_method",
           "httpConfig": {
             "method": "PUT",
-            "statusCode": 200,
-            "errorStatuses": {}
-          }
+            "route": {
+              "path": "/http-method/put"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "delete": {
-          "name": "delete",
-          "route": "/http-method/delete",
-          "apiName": "http_method",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "delete",
+          "apiId": "http_method",
           "httpConfig": {
             "method": "DELETE",
-            "statusCode": 200,
-            "errorStatuses": {}
-          }
+            "route": {
+              "path": "/http-method/delete"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "patch": {
-          "name": "patch",
-          "route": "/http-method/patch",
-          "apiName": "http_method",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "patch",
+          "apiId": "http_method",
           "httpConfig": {
             "method": "PATCH",
-            "statusCode": 200,
-            "errorStatuses": {}
-          }
+            "route": {
+              "path": "/http-method/patch"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "http_query": {
-      "name": "http_query",
+      "apiId": "http_query",
       "functions": {
         "query": {
-          "name": "query",
-          "route": "/http-query/query",
-          "apiName": "http_query",
-          "envVars": [],
-          "secrets": []
+          "functionId": "query",
+          "apiId": "http_query",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/http-query/query"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "http_errors": {
-      "name": "http_errors",
+      "apiId": "http_errors",
       "functions": {
         "httpErrors": {
-          "name": "httpErrors",
-          "route": "/http-errors/http-errors",
-          "apiName": "http_errors",
-          "envVars": [],
-          "secrets": [],
+          "functionId": "httpErrors",
+          "apiId": "http_errors",
           "httpConfig": {
             "method": "POST",
-            "statusCode": 200,
-            "errorStatuses": {
+            "route": {
+              "path": "/http-errors/http-errors"
+            },
+            "status": 200,
+            "statusMappings": {
               "{\"symbol\":\"ForbiddenException\",\"url\":\"package:celest_backend/exceptions/http_errors.dart\",\"isNullable\":false}": 403,
               "{\"symbol\":\"CustomBadRequestException\",\"url\":\"package:celest_backend/exceptions/http_errors.dart\",\"isNullable\":false}": 412,
               "{\"symbol\":\"UnauthorizedException\",\"url\":\"package:celest_core/src/exception/cloud_exception.dart\",\"isNullable\":false}": 401,
               "{\"symbol\":\"NotFoundException\",\"url\":\"package:celest_backend/exceptions/http_errors.dart\",\"isNullable\":false}": 404,
               "{\"symbol\":\"InternalServerError\",\"url\":\"package:celest_core/src/exception/cloud_exception.dart\",\"isNullable\":false}": 404
             }
-          }
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "http_header": {
-      "name": "http_header",
+      "apiId": "http_header",
       "functions": {
         "headers": {
-          "name": "headers",
-          "route": "/http-header/headers",
-          "apiName": "http_header",
-          "envVars": [],
-          "secrets": []
+          "functionId": "headers",
+          "apiId": "http_header",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/http-header/headers"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     }
   },
-  "envVars": [],
+  "variables": [],
   "secrets": [],
   "sdkConfig": {
     "celest": "1.0.0-dev.0",

@@ -279,7 +279,7 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
       _logger.finest(
         'Resolved to single project: ${singleProject.projectId}',
       );
-      return storeEnvironmentVariable(
+      return storeVariable(
         configVar.name,
         singleProject.projectId,
       );
@@ -304,7 +304,7 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
     // If multiple projects are available, prompt the user to choose one.
     if (projects.isNotEmpty) {
       if (_pick(projects) case final selected?) {
-        return storeEnvironmentVariable(configVar.name, selected);
+        return storeVariable(configVar.name, selected);
       }
     }
 

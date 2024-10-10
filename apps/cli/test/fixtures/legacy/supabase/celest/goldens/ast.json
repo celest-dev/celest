@@ -1,5 +1,6 @@
 {
   "name": "supabase",
+  "environment": "local",
   "reference": {
     "$": "Reference",
     "symbol": "project",
@@ -203,6 +204,12 @@
       },
       "docs": [],
       "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",
@@ -425,7 +432,7 @@
       }
     }
   },
-  "envVars": [
+  "variables": [
     {
       "location": {
         "start": {

@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:celest_cli/pub/project_dependency.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:collection/collection.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
+import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:yaml_edit/yaml_edit.dart';
@@ -55,6 +57,39 @@ final class PubCache {
       return null;
     }
     return p.join(home, '.pub-cache');
+  }
+
+  String? latestVersionPath(String packageName) {
+    final cachePath = _cachePath ??= findCachePath();
+    if (cachePath == null) {
+      return null;
+    }
+    final packageDir = fileSystem
+        .directory(cachePath)
+        .childDirectory('hosted')
+        .childDirectory('pub.dev');
+    if (!packageDir.existsSync()) {
+      return null;
+    }
+    final packageVersions = packageDir.listSync().whereType<Directory>();
+    final allVersions = <Version>[];
+    for (final packageVersion in packageVersions) {
+      final basename = p.basename(packageVersion.path);
+      if (!basename.startsWith(packageName)) {
+        continue;
+      }
+      final versionString = basename.substring(packageName.length + 1 /* - */);
+      allVersions.add(Version.parse(versionString));
+    }
+    if (allVersions.isEmpty) {
+      return null;
+    }
+    final latestVersion = maxBy(allVersions, (v) => v)!;
+    final path = p.join(
+      packageDir.path,
+      '$packageName-${latestVersion.canonicalizedVersion}',
+    );
+    return '$path/'; // Ensure it ends with a slash
   }
 
   /// Runs `pub cache add` for each package in [packagesToFix].

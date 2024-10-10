@@ -29,6 +29,11 @@ extension LibraryElementHelper on LibraryElement {
           packageName.startsWith('celest') && packageName != 'celest_backend',
         _ => false,
       };
+  bool get isDartSdk => source.uri.scheme == 'dart';
+  bool get isFlutterSdk =>
+      source.uri.scheme == 'package' &&
+      source.uri.pathSegments.first == 'flutter';
+
   bool get isWithinProject =>
       p.isWithin(projectPaths.projectRoot, source.fullName);
   bool get isWithinProjectLib =>
@@ -97,8 +102,7 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
-  bool get isCelestEnvironmentVariable =>
-      element == typeHelper.coreTypes.celestEnvElement;
+  bool get isCelestVariable => element == typeHelper.coreTypes.celestEnvElement;
 
   bool get isCelestSecret =>
       element == typeHelper.coreTypes.celestSecretElement;
@@ -205,7 +209,7 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
-  bool get isEnvironmentVariable {
+  bool get isVariable {
     return switch (this) {
       InterfaceType(:final allSupertypes) => [
           this,
@@ -215,7 +219,7 @@ extension DartTypeHelper on DartType {
     };
   }
 
-  bool get isStaticEnvironmentVariable => switch (element) {
+  bool get isStaticVariable => switch (element) {
         ClassElement(:final name, :final library) =>
           name == '_staticEnv' && library.isPackageCelest,
         _ => false,

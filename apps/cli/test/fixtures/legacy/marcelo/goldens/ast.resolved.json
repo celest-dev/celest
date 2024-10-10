@@ -1,109 +1,214 @@
 {
-  "name": "marcelo",
+  "projectId": "marcelo",
+  "environmentId": "local",
   "apis": {
     "exceptions": {
-      "name": "exceptions",
+      "apiId": "exceptions",
       "functions": {
         "throwsUserException": {
-          "name": "throwsUserException",
-          "route": "/exceptions/throws-user-exception",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsUserException",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-user-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "callsThrowsUserException": {
-          "name": "callsThrowsUserException",
-          "route": "/exceptions/calls-throws-user-exception",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "callsThrowsUserException",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/calls-throws-user-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsAppError": {
-          "name": "throwsAppError",
-          "route": "/exceptions/throws-app-error",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsAppError",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-app-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsAppException": {
-          "name": "throwsAppException",
-          "route": "/exceptions/throws-app-exception",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsAppException",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-app-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsNotYetImplementedError": {
-          "name": "throwsNotYetImplementedError",
-          "route": "/exceptions/throws-not-yet-implemented-error",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsNotYetImplementedError",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-not-yet-implemented-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsValidateError": {
-          "name": "throwsValidateError",
-          "route": "/exceptions/throws-validate-error",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsValidateError",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-validate-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "throwsUserException_ShowInConsole": {
-          "name": "throwsUserException_ShowInConsole",
-          "route": "/exceptions/throws-user-exception-show-in-console",
-          "apiName": "exceptions",
-          "envVars": [],
-          "secrets": []
+          "functionId": "throwsUserException_ShowInConsole",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-user-exception-show-in-console"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     },
     "models": {
-      "name": "models",
+      "apiId": "models",
       "functions": {
         "availableStock": {
-          "name": "availableStock",
-          "route": "/models/available-stock",
-          "apiName": "models",
-          "envVars": [],
-          "secrets": []
+          "functionId": "availableStock",
+          "apiId": "models",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/models/available-stock"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "availableStocks": {
-          "name": "availableStocks",
-          "route": "/models/available-stocks",
-          "apiName": "models",
-          "envVars": [],
-          "secrets": []
+          "functionId": "availableStocks",
+          "apiId": "models",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/models/available-stocks"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "cashBalance": {
-          "name": "cashBalance",
-          "route": "/models/cash-balance",
-          "apiName": "models",
-          "envVars": [],
-          "secrets": []
+          "functionId": "cashBalance",
+          "apiId": "models",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/models/cash-balance"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "portfolio": {
-          "name": "portfolio",
-          "route": "/models/portfolio",
-          "apiName": "models",
-          "envVars": [],
-          "secrets": []
+          "functionId": "portfolio",
+          "apiId": "models",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/models/portfolio"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "stock": {
-          "name": "stock",
-          "route": "/models/stock",
-          "apiName": "models",
-          "envVars": [],
-          "secrets": []
+          "functionId": "stock",
+          "apiId": "models",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/models/stock"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         },
         "ui": {
-          "name": "ui",
-          "route": "/models/ui",
-          "apiName": "models",
-          "envVars": [],
-          "secrets": []
+          "functionId": "ui",
+          "apiId": "models",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/models/ui"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
         }
       }
     }
   },
-  "envVars": [],
+  "variables": [],
   "secrets": [],
   "sdkConfig": {
     "celest": "1.0.0-dev.0",

@@ -27,7 +27,7 @@ final class CloudClientGenerator {
       ..comments.addAll(kClientHeader)
       ..body.addAll([
         _celestEnvironment,
-        _environmentVariablesClass,
+        _variablesClass,
         _secretsClass,
       ]);
   }
@@ -156,28 +156,27 @@ final class CloudClientGenerator {
           ..docs.addAll([
             '/// The current environment of the Celest service.',
             '///',
-            '/// This is determined by the `CELEST_ENVIRONMENT` environment variable',
+            '/// This is determined by the `CELEST_ENVIRONMENT` variable',
             '/// which is set for you by the deployment environment.',
           ])
-          ..body = refer('env')
+          ..body = refer('variables')
               .property('currentEnvironment')
               .asA(CloudClientTypes.environmentClass.ref)
               .code,
       ),
       Method(
         (m) => m
-          ..returns = CloudClientTypes.environmentVariablesClass.ref
+          ..returns = CloudClientTypes.variablesClass.ref
           ..type = MethodType.getter
-          ..name = 'env'
+          ..name = 'variables'
           ..lambda = true
           ..docs.addAll([
-            '/// The environment variables for the Celest service.',
+            '/// The variables of the Celest service.',
             '///',
-            '/// This class provides access to the environment variable values',
-            '/// that are configured for the [currentEnvironment].',
+            '/// This class provides access to the values configured for the',
+            '/// [currentEnvironment].',
           ])
-          ..body = CloudClientTypes.environmentVariablesClass.ref
-              .constInstance([]).code,
+          ..body = CloudClientTypes.variablesClass.ref.constInstance([]).code,
       ),
       Method(
         (m) => m
@@ -195,9 +194,9 @@ final class CloudClientGenerator {
       ),
     ]);
 
-  late final _environmentVariablesClass = Class((b) {
+  late final _variablesClass = Class((b) {
     b
-      ..name = CloudClientTypes.environmentVariablesClass.name
+      ..name = CloudClientTypes.variablesClass.name
       ..docs.addAll([
         '/// The environment variables for the Celest service.',
         '///',
@@ -225,7 +224,7 @@ final class CloudClientGenerator {
               DartTypes.celest.environmentVariable.property('environment'),
             ]).code;
         }),
-        for (final envVar in project.envVars)
+        for (final envVar in project.variables)
           Method((m) {
             m
               ..type = MethodType.getter
