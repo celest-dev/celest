@@ -6,10 +6,9 @@ import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:celest/celest.dart';
+import 'package:celest/src/runtime/configuration.dart';
 import 'package:celest/src/runtime/gcp/gcp.dart';
 import 'package:celest/src/runtime/http/cloud_middleware.dart';
-import 'package:celest/src/runtime/http/environment.dart';
-import 'package:celest/src/runtime/http/logging.dart';
 import 'package:celest/src/runtime/http/middleware.dart';
 import 'package:celest/src/runtime/json_utils.dart';
 import 'package:celest/src/runtime/sse/sse_handler.dart';
@@ -35,8 +34,7 @@ const int defaultCelestPort = 7777;
 Future<void> serve({
   required Map<String, CloudFunctionTarget> targets,
 }) async {
-  configureLogging();
-  await configureEnvironment();
+  await configure();
   final projectId = await googleCloudProject();
   if (projectId != null) {
     Context.root.put(googleCloudProjectKey, projectId);
