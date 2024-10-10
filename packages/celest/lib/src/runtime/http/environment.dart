@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:celest/src/config/env.dart';
+import 'package:celest/src/config/config_values.dart';
 import 'package:celest/src/core/context.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:logging/logging.dart';

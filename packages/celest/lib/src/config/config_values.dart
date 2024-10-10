@@ -7,9 +7,37 @@ sealed class ConfigurationValue implements ContextKey<String> {
   /// The name of the configuration value in the environment.
   final String name;
 
+  String _decodeValue(String value) {
+    if (!value.startsWith('data:')) {
+      return value;
+    }
+    final data = UriData.parse(value);
+    if (data.isBase64) {
+      return data.contentText;
+    } else {
+      return data.contentAsString();
+    }
+  }
+
   @override
   String? read(Context context) {
-    return context[this] as String? ?? context.platform.environment[name];
+    if (rawValue(context) case final rawValue?) {
+      return _decodeValue(rawValue);
+    }
+    return null;
+  }
+
+  /// Reads the raw value for `this` from the given [context].
+  ///
+  /// Unlike [read], this will not decode `data:` URIs.
+  String? rawValue(Context context) {
+    if (context[this] case final value?) {
+      return value as String;
+    }
+    if (context.platform.environment[name] case final platformValue?) {
+      return platformValue;
+    }
+    return null;
   }
 
   @override
