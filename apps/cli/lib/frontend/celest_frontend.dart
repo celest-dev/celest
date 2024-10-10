@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io' as io show Platform;
 import 'dart:io';
 import 'dart:math';
@@ -774,17 +773,9 @@ final class CelestFrontend {
         .childFile('Dockerfile')
         .writeAsString(dockerfile.generate());
 
-    final configJson = {
-      'variables': {
-        for (final env in resolvedProject.variables) env.name: env.value,
-      },
-      'secrets': {
-        for (final secret in resolvedProject.secrets) secret.name: secret.value,
-      },
-    };
-    await buildOutputs
-        .childFile('config.json')
-        .writeAsString(jsonEncode(configJson));
+    await buildOutputs.childFile('celest.json').writeAsBytes(
+          JsonUtf8.encode(resolvedProject.toProto().toProto3Json()),
+        );
   }
 
   Future<LocalDeployedProject> _startLocalApi(

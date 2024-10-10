@@ -183,6 +183,9 @@ final class LocalApiRunner {
         // The HTTP port to serve Celest on.
         'PORT': platform.environment['PORT'] ?? '$port',
         'CELEST_ENVIRONMENT': environmentId,
+        'CELEST_CONFIG_JSON': jsonEncode(
+          resolvedProject.toProto().toProto3Json(),
+        ),
       },
     );
 
