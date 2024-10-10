@@ -4,10 +4,13 @@ import 'dart:io' show HandshakeException, HttpClient, SocketException;
 import 'package:celest/src/config/config_values.dart';
 import 'package:celest/src/core/environment.dart';
 import 'package:celest/src/runtime/gcp/gcp.dart';
+import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_core/_internal.dart';
 // ignore: implementation_imports
 import 'package:celest_core/src/auth/user.dart';
 import 'package:cloud_http/cloud_http.dart';
+import 'package:file/file.dart';
+import 'package:file/local.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart' as http;
 import 'package:http/retry.dart' as http;
@@ -101,6 +104,10 @@ final class Context {
   /// The platform of the current context.
   Platform get platform => get(ContextKey.platform) ?? const LocalPlatform();
 
+  /// The file system of the current context.
+  FileSystem get fileSystem =>
+      get(ContextKey.fileSystem) ?? const LocalFileSystem();
+
   /// Whether Celest is running in the cloud.
   bool get isRunningInCloud => root.get(googleCloudProjectKey) != null;
 
@@ -112,6 +119,9 @@ final class Context {
 
   /// The Celest [Environment] of the running service.
   Environment get environment => expect(env.environment) as Environment;
+
+  /// The resolved project configuration for the current context.
+  ResolvedProject get project => expect(ContextKey.project);
 
   /// The HTTP client for the current context.
   http.Client get httpClient =>
@@ -235,8 +245,14 @@ abstract interface class ContextKey<V extends Object> {
   /// The context key for the context [Logger].
   static const ContextKey<Logger> logger = ContextKey('logger');
 
+  /// The context key for the context [FileSystem].
+  static const ContextKey<FileSystem> fileSystem = ContextKey('file system');
+
   /// The context key for the context [Platform].
   static const ContextKey<Platform> platform = ContextKey('platform');
+
+  /// The context key for the context [ResolvedProject].
+  static const ContextKey<ResolvedProject> project = ContextKey('project');
 
   /// Reads the value for `this` from the given [context].
   V? read(Context context);
