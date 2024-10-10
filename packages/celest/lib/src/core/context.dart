@@ -37,14 +37,28 @@ final class Context {
   /// when the Zone in which they were created is disposed.
   static final Expando<Context> _contexts = Expando('contexts');
 
+  static Context? _root;
+
   /// The root [Context].
-  static final Context root = Context.of(Zone.root);
+  static Context get root {
+    return _root ??= Context.of(Zone.root);
+  }
+
+  /// Sets the root [Context] for the current execution scope.
+  ///
+  /// This is only allowed in tests.
+  @visibleForTesting
+  static set root(Context value) {
+    if (!kDebugMode) {
+      throw UnsupportedError(
+        'Setting the root context is only allowed in tests',
+      );
+    }
+    _root = value;
+  }
 
   /// The [Context] for the current execution scope.
   static Context get current => Context.of(Zone.current);
-
-  /// The platform of the current context.
-  final Platform platform = const LocalPlatform();
 
   /// Context-specific values.
   final Map<ContextKey<Object>, Object> _values = {};
@@ -59,6 +73,9 @@ final class Context {
 
   /// Sets the value of the given [key] in this context.
   void operator []=(ContextKey<Object> key, Object? value) {
+    if (identical(this, root) && !identical(Zone.current, root._zone)) {
+      throw UnsupportedError('Cannot set values on the root context');
+    }
     if (value == null) {
       _values.remove(key);
     } else {
@@ -68,6 +85,9 @@ final class Context {
 
   /// The parent [Context] to `this`.
   Context? get parent {
+    if (identical(this, root)) {
+      return null;
+    }
     var parent = _zone.parent;
     while (parent != null) {
       if (_contexts[parent] case final parentContext?) {
@@ -75,8 +95,11 @@ final class Context {
       }
       parent = parent.parent;
     }
-    return null;
+    return root;
   }
+
+  /// The platform of the current context.
+  Platform get platform => get(ContextKey.platform) ?? const LocalPlatform();
 
   /// Whether Celest is running in the cloud.
   bool get isRunningInCloud => root.get(googleCloudProjectKey) != null;
@@ -141,7 +164,7 @@ final class Context {
     return _get(key)?.$2;
   }
 
-  /// Expects a value present in the given [context].
+  /// Expects a value present in this [Context] for the given [key].
   ///
   /// Throws a [StateError] if the value is not present.
   V expect<V extends Object>(ContextKey<V> key) {
@@ -157,6 +180,13 @@ final class Context {
     key.set(this, value);
   }
 
+  /// Sets the value of [key] in this [Context] if it is not already set.
+  void putIfAbsent<V extends Object>(ContextKey<V> key, V Function() value) {
+    if (get(key) == null) {
+      put(key, value());
+    }
+  }
+
   /// Updates the value of [key] in place.
   void update<V extends Object>(
     ContextKey<V> key,
@@ -165,6 +195,18 @@ final class Context {
     final (context, value) = _get(key) ?? (this, null);
     final updated = update(value);
     context.put(key, updated);
+  }
+
+  /// Removes [key] and its associated value, if present, from the [Context].
+  ///
+  /// Returns the value associated with [key] before it was removed. Returns
+  /// `null` if [key] was not in the map.
+  ///
+  /// **NOTE**: This will not remove the value from parent contexts, meaning
+  /// that [get] may still return a value for the given [key] if it is present
+  /// in a parent context.
+  V? remove<V extends Object>(ContextKey<V> key) {
+    return _values.remove(key) as V?;
   }
 }
 
@@ -190,8 +232,11 @@ abstract interface class ContextKey<V extends Object> {
   /// The context key for the context [http.Client].
   static const ContextKey<http.Client> httpClient = ContextKey('http client');
 
-  /// The context key for for the context [Logger].
+  /// The context key for the context [Logger].
   static const ContextKey<Logger> logger = ContextKey('logger');
+
+  /// The context key for the context [Platform].
+  static const ContextKey<Platform> platform = ContextKey('platform');
 
   /// Reads the value for `this` from the given [context].
   V? read(Context context);
