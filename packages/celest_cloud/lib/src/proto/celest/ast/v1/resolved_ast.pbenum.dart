@@ -66,4 +66,31 @@ class ResolvedAuthProvider_Type extends $pb.ProtobufEnum {
   const ResolvedAuthProvider_Type._($core.int v, $core.String n) : super(v, n);
 }
 
+/// The type of an auth provider.
+class ResolvedExternalAuthProvider_Type extends $pb.ProtobufEnum {
+  static const ResolvedExternalAuthProvider_Type
+      EXTERNAL_AUTH_PROVIDER_TYPE_UNSPECIFIED =
+      ResolvedExternalAuthProvider_Type._(
+          0, _omitEnumNames ? '' : 'EXTERNAL_AUTH_PROVIDER_TYPE_UNSPECIFIED');
+  static const ResolvedExternalAuthProvider_Type FIREBASE =
+      ResolvedExternalAuthProvider_Type._(1, _omitEnumNames ? '' : 'FIREBASE');
+  static const ResolvedExternalAuthProvider_Type SUPABASE =
+      ResolvedExternalAuthProvider_Type._(2, _omitEnumNames ? '' : 'SUPABASE');
+
+  static const $core.List<ResolvedExternalAuthProvider_Type> values =
+      <ResolvedExternalAuthProvider_Type>[
+    EXTERNAL_AUTH_PROVIDER_TYPE_UNSPECIFIED,
+    FIREBASE,
+    SUPABASE,
+  ];
+
+  static final $core.Map<$core.int, ResolvedExternalAuthProvider_Type>
+      _byValue = $pb.ProtobufEnum.initByValue(values);
+  static ResolvedExternalAuthProvider_Type? valueOf($core.int value) =>
+      _byValue[value];
+
+  const ResolvedExternalAuthProvider_Type._($core.int v, $core.String n)
+      : super(v, n);
+}
+
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');
