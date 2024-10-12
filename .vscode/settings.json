@@ -6,5 +6,8 @@
   "dart.analyzerLogFile": ".vscode/logs/analyzer.log",
   "dart.vmServiceLogFile": ".vscode/logs/vm_service/${name}.log",
   "dart.extensionLogFile": ".vscode/logs/dartcode_ext.log",
-  "dart.analyzerInstrumentationLogFile": ".vscode/logs/analyzer/instrumentation.log"
+  "dart.analyzerInstrumentationLogFile": ".vscode/logs/analyzer/instrumentation.log",
+  "yaml.schemas": {
+    "https://json.schemastore.org/pubspec.json": "file:///Users/dillonnys/celest/cloud/celest/examples/tasks/pubspec.yaml"
+  }
 }

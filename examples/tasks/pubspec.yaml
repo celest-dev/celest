@@ -1,5 +1,5 @@
-name: celest_todo
-description: "A new Flutter project."
+name: celest_tasks
+description: An example of how to use Celest Data to create a task tracker.
 publish_to: 'none'
 version: 0.1.0
 
@@ -8,10 +8,10 @@ environment:
   flutter: ">=3.19.0"
 
 dependencies:
-  celest_backend:
-    path: celest/
   flutter:
     sdk: flutter
+  tasks_client:
+    path: celest/client/
 
 dependency_overrides:
   celest:
