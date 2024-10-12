@@ -12,6 +12,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:dcli/dcli.dart' as dcli;
 import 'package:mason_logger/mason_logger.dart';
 
 base mixin ProjectCreator on Configure {
@@ -83,18 +84,20 @@ base mixin Configure on CelestCommand {
     final defaultName = baseName ?? 'hello';
     String? projectName;
     while (projectName == null) {
-      final input = cliLogger
-          .prompt('Enter a name for your project', defaultValue: defaultName)
-          .snakeCase;
+      final input = dcli
+          .ask('Enter a name for your project', defaultValue: defaultName)
+          .trim();
       if (input.isEmpty) {
         cliLogger.err('Project name cannot be empty.');
         continue;
       }
-      if (input.groupIntoWords().contains('celest')) {
-        cliLogger.err('Project name cannot contain "celest".');
-        continue;
+      final words = input.groupIntoWords();
+      for (final (index, word) in List.of(words).indexed) {
+        if (word == 'celest') {
+          words.removeAt(index);
+        }
       }
-      projectName = input;
+      projectName = words.snakeCase;
     }
     return projectName;
   }
@@ -130,12 +133,18 @@ base mixin Configure on CelestCommand {
   Stream<ConfigureState> _configure() async* {
     var currentDir = fileSystem.currentDirectory;
     var pubspecFile = currentDir.childFile('pubspec.yaml');
-    while (!pubspecFile.existsSync()) {
-      if (currentDir == currentDir.parent) {
-        _throwNoProject();
+    if (this case (StartCommand() || InitCommand())) {
+      // Do not search recursively for the pubspec file. Just search the current
+      // directory.
+    } else {
+      // For other commands, search recursively for the Celest pubspec file.
+      while (!pubspecFile.existsSync()) {
+        if (currentDir == currentDir.parent) {
+          _throwNoProject();
+        }
+        currentDir = currentDir.parent;
+        pubspecFile = currentDir.childFile('pubspec.yaml');
       }
-      currentDir = currentDir.parent;
-      pubspecFile = currentDir.childFile('pubspec.yaml');
     }
     final projectFiles = [
       // Legacy
@@ -187,8 +196,8 @@ base mixin Configure on CelestCommand {
       switch (this) {
         case StartCommand():
           cliLogger.warn('No Celest project found in the current directory.');
-          final createNew = cliLogger.confirm(
-            'Would you like to create a new one?',
+          final createNew = dcli.confirm(
+            dcli.green('Would you like to create a new one?', bold: true),
             defaultValue: true,
           );
           if (!createNew) {

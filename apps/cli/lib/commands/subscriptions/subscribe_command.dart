@@ -58,14 +58,15 @@ final class SubscribeCommand extends CelestCommand with Authenticate {
     final server = await shelf_io.serve(
       (request) async {
         if (subscribeCompletion.isCompleted) {
+          // Send to server but do not show to user.
           performance.captureError(
-            Exception(
+            StateError(
               'Multiple calls to subscription listener: ${request.url}',
             ),
           );
-          return Response.internalServerError();
         }
-        if (request.url.queryParameters['error'] case final error?) {
+        final error = request.url.queryParameters['error'];
+        if (error != null) {
           subscribeCompletion.completeError(
             CliException(
               'The subscription could not be completed. '
@@ -76,7 +77,16 @@ final class SubscribeCommand extends CelestCommand with Authenticate {
         } else {
           subscribeCompletion.complete();
         }
-        return Response.ok(null);
+        return Response.found(
+          Uri.parse('https://celest.dev/docs/cloud').replace(
+            queryParameters: {
+              'utm_source': 'cli',
+              'utm_medium': 'cli',
+              'utm_campaign': 'subscribe',
+              if (error == null) 'subscribed': '' else 'error': error,
+            },
+          ),
+        );
       },
       InternetAddress.anyIPv4,
       0,
@@ -138,6 +148,11 @@ final class SubscribeCommand extends CelestCommand with Authenticate {
       cliLogger.success(
         'Your subscription to Celest Cloud was successful! '
         'Welcome aboard! 🚀',
+      );
+      cliLogger.info(
+        'You can now deploy your projects to Celest Cloud by running '
+        '`celest deploy`.\n\n'
+        'To manage your subscription, run `celest subscription`.',
       );
     } finally {
       await server.close(force: true);

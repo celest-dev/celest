@@ -38,6 +38,8 @@ dependencies:
   corks_cedar: ^0.2.1
   crypto: ^3.0.3
   dart_style: ^2.3.4
+  dcli: ^6.0.5
+  dcli_terminal: ^6.0.3
   drift: ">=2.20.0 <2.21.0"
   email_validator: ^3.0.0
   file: ^7.0.0
@@ -49,6 +51,7 @@ dependencies:
   http: ^1.1.2
   http_parser: ^4.0.2
   intl: ^0.19.0
+  io: ^1.0.4
   json_annotation: ^4.9.0
   lib_openapi:
     path: ../../packages/lib_openapi

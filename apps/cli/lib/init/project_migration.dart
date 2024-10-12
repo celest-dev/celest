@@ -443,11 +443,6 @@ void main() {
 
       // Client
       ProjectFile.client(projectRoot, projectName).create(),
-
-      // Symlinks
-      fileSystem
-          .link(p.join(projectRoot, 'functions'))
-          .create(projectPaths.apisDir, recursive: true),
     ]);
     return const ProjectMigrationSuccess();
   }

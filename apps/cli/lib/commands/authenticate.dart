@@ -2,6 +2,7 @@ import 'package:celest_auth/celest_auth.dart';
 import 'package:celest_cli/auth/cli_auth.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_core/celest_core.dart';
+import 'package:dcli/dcli.dart';
 import 'package:email_validator/email_validator.dart';
 
 base mixin Authenticate on CelestCommand {
@@ -10,15 +11,11 @@ base mixin Authenticate on CelestCommand {
       "Welcome! To get started with Celest Cloud, we'll need to verify your "
       'email.',
     );
-    String? email;
-    while (email == null) {
-      final input = cliLogger.prompt('Email:');
-      if (input.isEmpty || !EmailValidator.validate(input, true)) {
-        cliLogger.err('Invalid email address');
-        continue;
-      }
-      email = input;
-    }
+    final email = ask(
+      'What is your email?',
+      required: true,
+      validator: const AskEmailValidator(),
+    );
     analytics.identifyUser(
       set: {
         'email': email,
@@ -31,10 +28,11 @@ base mixin Authenticate on CelestCommand {
         'We have sent you an email with a verification code. '
         'Please enter it below to verify your account.',
       );
-      final verificationCode = cliLogger.prompt('Verification code:');
-      if (verificationCode.isEmpty) {
-        return 1;
-      }
+      final verificationCode = ask(
+        'Verification Code:',
+        required: true,
+        validator: const AskOtpValidator(),
+      );
       final user = await flow.verify(otpCode: verificationCode);
 
       analytics.capture(
@@ -86,5 +84,35 @@ base mixin Authenticate on CelestCommand {
       'You must be logged in to run this command. '
       'Run `celest auth login` to log in or create an account.',
     );
+  }
+}
+
+final class AskEmailValidator implements AskValidator {
+  const AskEmailValidator();
+
+  @override
+  String validate(String line, {String? customErrorMessage}) {
+    if (!EmailValidator.validate(line.trim(), true)) {
+      throw AskValidatorException(
+        customErrorMessage ?? 'Invalid email address',
+      );
+    }
+    return line;
+  }
+}
+
+final class AskOtpValidator implements AskValidator {
+  const AskOtpValidator();
+
+  static final _validOtp = RegExp(r'^\d{6}$');
+
+  @override
+  String validate(String line, {String? customErrorMessage}) {
+    if (!_validOtp.hasMatch(line.trim())) {
+      throw AskValidatorException(
+        customErrorMessage ?? 'Invalid code. It should be 6 digits.',
+      );
+    }
+    return line;
   }
 }

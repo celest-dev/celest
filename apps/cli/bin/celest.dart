@@ -5,6 +5,7 @@ import 'package:celest_cli/commands/analysis_server_command.dart';
 import 'package:celest_cli/commands/auth_command.dart';
 import 'package:celest_cli/commands/build_command.dart';
 import 'package:celest_cli/commands/deploy_command.dart';
+import 'package:celest_cli/commands/experiments/experiments_command.dart';
 import 'package:celest_cli/commands/init_command.dart';
 import 'package:celest_cli/commands/organizations/organizations_command.dart';
 import 'package:celest_cli/commands/precache_command.dart';
@@ -64,6 +65,10 @@ void main(List<String> args) async {
   cli
     ..addCommand(OrganizationsCommand())
     ..addCommand(ProjectsCommand());
+
+  // Experiment commands (used for testing various CLI flows)
+  // Hidden and not exposed to users.
+  cli.addCommand(ExperimentsCommand());
 
   await cli.run(args);
 }

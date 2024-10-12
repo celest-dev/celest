@@ -6,6 +6,7 @@ import 'package:celest_cli/commands/authenticate.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cloud/celest_cloud.dart' show Subscription_State;
+import 'package:dcli/dcli.dart';
 import 'package:intl/intl.dart' as intl;
 
 final class SubscriptionPauseCommand extends CelestCommand with Authenticate {
@@ -30,8 +31,9 @@ final class SubscriptionPauseCommand extends CelestCommand with Authenticate {
 
     DateTime? resumeTime;
     while (true) {
-      final resumeTimeInput = cliLogger.prompt(
-        'When would you like to resume? (YYYY-MM-DD or empty for indefinite)',
+      final resumeTimeInput = ask(
+        '${ansiColorsEnabled ? grey('(YYYY-MM-DD) ') : '(YYYY-MM-DD) '}When would you like to resume? ',
+        defaultValue: 'indefinite',
       );
       if (resumeTimeInput case '' || 'indefinite') {
         break;

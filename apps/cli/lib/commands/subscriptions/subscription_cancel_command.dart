@@ -5,6 +5,7 @@ import 'package:celest_cli/commands/authenticate.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cloud/celest_cloud.dart';
+import 'package:dcli/dcli.dart';
 
 final class SubscriptionCancelCommand extends CelestCommand with Authenticate {
   @override
@@ -42,7 +43,7 @@ final class SubscriptionCancelCommand extends CelestCommand with Authenticate {
 
     String? comment;
     if (feedback != CancelSubscriptionDetails_Feedback.FEEDBACK_UNSPECIFIED) {
-      comment = cliLogger.prompt('What could we have done better?');
+      comment = ask('What could we have done better?').trim();
     }
 
     final cancelResp = await cloud.subscriptions.cancel(
