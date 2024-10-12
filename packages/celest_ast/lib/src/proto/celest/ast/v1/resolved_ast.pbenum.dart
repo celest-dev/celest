@@ -102,4 +102,48 @@ class ResolvedExternalAuthProvider_Type extends $pb.ProtobufEnum {
       : super(v, n);
 }
 
+/// The type of the database.
+class ResolvedDatabase_Type extends $pb.ProtobufEnum {
+  static const ResolvedDatabase_Type DATABASE_TYPE_UNSPECIFIED =
+      ResolvedDatabase_Type._(
+          0, _omitEnumNames ? '' : 'DATABASE_TYPE_UNSPECIFIED');
+  static const ResolvedDatabase_Type CELEST =
+      ResolvedDatabase_Type._(1, _omitEnumNames ? '' : 'CELEST');
+
+  static const $core.List<ResolvedDatabase_Type> values =
+      <ResolvedDatabase_Type>[
+    DATABASE_TYPE_UNSPECIFIED,
+    CELEST,
+  ];
+
+  static final $core.Map<$core.int, ResolvedDatabase_Type> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
+  static ResolvedDatabase_Type? valueOf($core.int value) => _byValue[value];
+
+  const ResolvedDatabase_Type._($core.int v, $core.String n) : super(v, n);
+}
+
+/// The type of the database schema.
+class ResolvedDatabaseSchema_Type extends $pb.ProtobufEnum {
+  static const ResolvedDatabaseSchema_Type DATABASE_SCHEMA_TYPE_UNSPECIFIED =
+      ResolvedDatabaseSchema_Type._(
+          0, _omitEnumNames ? '' : 'DATABASE_SCHEMA_TYPE_UNSPECIFIED');
+  static const ResolvedDatabaseSchema_Type DRIFT =
+      ResolvedDatabaseSchema_Type._(1, _omitEnumNames ? '' : 'DRIFT');
+
+  static const $core.List<ResolvedDatabaseSchema_Type> values =
+      <ResolvedDatabaseSchema_Type>[
+    DATABASE_SCHEMA_TYPE_UNSPECIFIED,
+    DRIFT,
+  ];
+
+  static final $core.Map<$core.int, ResolvedDatabaseSchema_Type> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
+  static ResolvedDatabaseSchema_Type? valueOf($core.int value) =>
+      _byValue[value];
+
+  const ResolvedDatabaseSchema_Type._($core.int v, $core.String n)
+      : super(v, n);
+}
+
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

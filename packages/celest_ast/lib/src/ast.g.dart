@@ -159,6 +159,38 @@ final BuiltSet<NodeType> _$values = new BuiltSet<NodeType>(const <NodeType>[
   _$httpLabel,
 ]);
 
+const DatabaseSchemaType _$drift = const DatabaseSchemaType._('drift');
+
+DatabaseSchemaType _$DatabaseSchemaTypeValueOf(String name) {
+  switch (name) {
+    case 'drift':
+      return _$drift;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<DatabaseSchemaType> _$DatabaseSchemaTypeValues =
+    new BuiltSet<DatabaseSchemaType>(const <DatabaseSchemaType>[
+  _$drift,
+]);
+
+const DatabaseProviderType _$celest = const DatabaseProviderType._('celest');
+
+DatabaseProviderType _$databaseProviderTypeValueOf(String name) {
+  switch (name) {
+    case 'celest':
+      return _$celest;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<DatabaseProviderType> _$databaseProviderType =
+    new BuiltSet<DatabaseProviderType>(const <DatabaseProviderType>[
+  _$celest,
+]);
+
 Serializer<Region> _$regionSerializer = new _$RegionSerializer();
 Serializer<Project> _$projectSerializer = new _$ProjectSerializer();
 Serializer<Api> _$apiSerializer = new _$ApiSerializer();
@@ -200,6 +232,13 @@ Serializer<SupabaseExternalAuthProvider>
 Serializer<NodeType> _$nodeTypeSerializer = new _$NodeTypeSerializer();
 Serializer<NodeReference> _$nodeReferenceSerializer =
     new _$NodeReferenceSerializer();
+Serializer<DatabaseSchemaType> _$databaseSchemaTypeSerializer =
+    new _$DatabaseSchemaTypeSerializer();
+Serializer<DriftDatabaseSchema> _$driftDatabaseSchemaSerializer =
+    new _$DriftDatabaseSchemaSerializer();
+Serializer<Database> _$databaseSerializer = new _$DatabaseSerializer();
+Serializer<CelestDatabaseConfig> _$celestDatabaseConfigSerializer =
+    new _$CelestDatabaseConfigSerializer();
 
 class _$RegionSerializer implements PrimitiveSerializer<Region> {
   @override
@@ -248,6 +287,10 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
       serializers.serialize(object.secrets,
           specifiedType:
               const FullType(BuiltList, const [const FullType(Secret)])),
+      'databases',
+      serializers.serialize(object.databases,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(Database)])),
       'sdkConfig',
       serializers.serialize(object.sdkConfig,
           specifiedType: const FullType(SdkConfiguration)),
@@ -331,6 +374,11 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
         case 'auth':
           result.auth.replace(serializers.deserialize(value,
               specifiedType: const FullType(Auth))! as Auth);
+          break;
+        case 'databases':
+          result.databases.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(Database)]))!);
           break;
         case 'sdkConfig':
           result.sdkConfig.replace(serializers.deserialize(value,
@@ -1715,6 +1763,207 @@ class _$NodeReferenceSerializer implements StructuredSerializer<NodeReference> {
   }
 }
 
+class _$DatabaseSchemaTypeSerializer
+    implements PrimitiveSerializer<DatabaseSchemaType> {
+  @override
+  final Iterable<Type> types = const <Type>[DatabaseSchemaType];
+  @override
+  final String wireName = 'DatabaseSchemaType';
+
+  @override
+  Object serialize(Serializers serializers, DatabaseSchemaType object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  DatabaseSchemaType deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      DatabaseSchemaType.valueOf(serialized as String);
+}
+
+class _$DriftDatabaseSchemaSerializer
+    implements StructuredSerializer<DriftDatabaseSchema> {
+  @override
+  final Iterable<Type> types = const [
+    DriftDatabaseSchema,
+    _$DriftDatabaseSchema
+  ];
+  @override
+  final String wireName = 'DriftDatabaseSchema';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, DriftDatabaseSchema object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'declaration',
+      serializers.serialize(object.declaration,
+          specifiedType: const FullType(TypeReference)),
+      'location',
+      serializers.serialize(object.location,
+          specifiedType: const FullType(FileSpan)),
+    ];
+
+    return result;
+  }
+
+  @override
+  DriftDatabaseSchema deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new DriftDatabaseSchemaBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'declaration':
+          result.declaration.replace(serializers.deserialize(value,
+              specifiedType: const FullType(TypeReference))! as TypeReference);
+          break;
+        case 'location':
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(FileSpan))! as FileSpan;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$DatabaseSerializer implements StructuredSerializer<Database> {
+  @override
+  final Iterable<Type> types = const [Database, _$Database];
+  @override
+  final String wireName = 'Database';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, Database object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'dartName',
+      serializers.serialize(object.dartName,
+          specifiedType: const FullType(String)),
+      'docs',
+      serializers.serialize(object.docs,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
+      'schema',
+      serializers.serialize(object.schema,
+          specifiedType: const FullType(DatabaseSchema)),
+      'config',
+      serializers.serialize(object.config,
+          specifiedType: const FullType(DatabaseConfig)),
+      'location',
+      serializers.serialize(object.location,
+          specifiedType: const FullType(FileSpan)),
+    ];
+
+    return result;
+  }
+
+  @override
+  Database deserialize(Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new DatabaseBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'dartName':
+          result.dartName = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'docs':
+          result.docs.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'schema':
+          result.schema = serializers.deserialize(value,
+              specifiedType: const FullType(DatabaseSchema))! as DatabaseSchema;
+          break;
+        case 'config':
+          result.config = serializers.deserialize(value,
+              specifiedType: const FullType(DatabaseConfig))! as DatabaseConfig;
+          break;
+        case 'location':
+          result.location = serializers.deserialize(value,
+              specifiedType: const FullType(FileSpan))! as FileSpan;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$CelestDatabaseConfigSerializer
+    implements StructuredSerializer<CelestDatabaseConfig> {
+  @override
+  final Iterable<Type> types = const [
+    CelestDatabaseConfig,
+    _$CelestDatabaseConfig
+  ];
+  @override
+  final String wireName = 'CelestDatabaseConfig';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, CelestDatabaseConfig object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'hostname',
+      serializers.serialize(object.hostname,
+          specifiedType: const FullType(Variable)),
+      'token',
+      serializers.serialize(object.token,
+          specifiedType: const FullType(Secret)),
+    ];
+
+    return result;
+  }
+
+  @override
+  CelestDatabaseConfig deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new CelestDatabaseConfigBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'hostname':
+          result.hostname.replace(serializers.deserialize(value,
+              specifiedType: const FullType(Variable))! as Variable);
+          break;
+        case 'token':
+          result.token.replace(serializers.deserialize(value,
+              specifiedType: const FullType(Secret))! as Secret);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$Project extends Project {
   @override
   final String name;
@@ -1735,6 +1984,8 @@ class _$Project extends Project {
   @override
   final Auth? auth;
   @override
+  final BuiltMap<String, Database> databases;
+  @override
   final SdkConfiguration sdkConfig;
   @override
   final FileSpan location;
@@ -1752,6 +2003,7 @@ class _$Project extends Project {
       required this.variables,
       required this.secrets,
       this.auth,
+      required this.databases,
       required this.sdkConfig,
       required this.location})
       : super._() {
@@ -1762,6 +2014,7 @@ class _$Project extends Project {
     BuiltValueNullFieldError.checkNotNull(apis, r'Project', 'apis');
     BuiltValueNullFieldError.checkNotNull(variables, r'Project', 'variables');
     BuiltValueNullFieldError.checkNotNull(secrets, r'Project', 'secrets');
+    BuiltValueNullFieldError.checkNotNull(databases, r'Project', 'databases');
     BuiltValueNullFieldError.checkNotNull(sdkConfig, r'Project', 'sdkConfig');
     BuiltValueNullFieldError.checkNotNull(location, r'Project', 'location');
   }
@@ -1786,6 +2039,7 @@ class _$Project extends Project {
         variables == other.variables &&
         secrets == other.secrets &&
         auth == other.auth &&
+        databases == other.databases &&
         sdkConfig == other.sdkConfig &&
         location == other.location;
   }
@@ -1802,6 +2056,7 @@ class _$Project extends Project {
     _$hash = $jc(_$hash, variables.hashCode);
     _$hash = $jc(_$hash, secrets.hashCode);
     _$hash = $jc(_$hash, auth.hashCode);
+    _$hash = $jc(_$hash, databases.hashCode);
     _$hash = $jc(_$hash, sdkConfig.hashCode);
     _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jf(_$hash);
@@ -1820,6 +2075,7 @@ class _$Project extends Project {
           ..add('variables', variables)
           ..add('secrets', secrets)
           ..add('auth', auth)
+          ..add('databases', databases)
           ..add('sdkConfig', sdkConfig)
           ..add('location', location))
         .toString();
@@ -1870,6 +2126,12 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
   AuthBuilder get auth => _$this._auth ??= new AuthBuilder();
   set auth(AuthBuilder? auth) => _$this._auth = auth;
 
+  MapBuilder<String, Database>? _databases;
+  MapBuilder<String, Database> get databases =>
+      _$this._databases ??= new MapBuilder<String, Database>();
+  set databases(MapBuilder<String, Database>? databases) =>
+      _$this._databases = databases;
+
   SdkConfigurationBuilder? _sdkConfig;
   SdkConfigurationBuilder get sdkConfig =>
       _$this._sdkConfig ??= new SdkConfigurationBuilder();
@@ -1894,6 +2156,7 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
       _variables = $v.variables.toBuilder();
       _secrets = $v.secrets.toBuilder();
       _auth = $v.auth?.toBuilder();
+      _databases = $v.databases.toBuilder();
       _sdkConfig = $v.sdkConfig.toBuilder();
       _location = $v.location;
       _$v = null;
@@ -1932,6 +2195,7 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
               variables: variables.build(),
               secrets: secrets.build(),
               auth: _auth?.build(),
+              databases: databases.build(),
               sdkConfig: sdkConfig.build(),
               location: BuiltValueNullFieldError.checkNotNull(
                   location, r'Project', 'location'));
@@ -1946,6 +2210,8 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
         secrets.build();
         _$failedField = 'auth';
         _auth?.build();
+        _$failedField = 'databases';
+        databases.build();
         _$failedField = 'sdkConfig';
         sdkConfig.build();
       } catch (e) {
@@ -4772,6 +5038,405 @@ class NodeReferenceBuilder
                 name, r'NodeReference', 'name'),
             type: BuiltValueNullFieldError.checkNotNull(
                 type, r'NodeReference', 'type'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$DriftDatabaseSchema extends DriftDatabaseSchema {
+  @override
+  final TypeReference declaration;
+  @override
+  final FileSpan location;
+
+  factory _$DriftDatabaseSchema(
+          [void Function(DriftDatabaseSchemaBuilder)? updates]) =>
+      (new DriftDatabaseSchemaBuilder()..update(updates))._build();
+
+  _$DriftDatabaseSchema._({required this.declaration, required this.location})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        declaration, r'DriftDatabaseSchema', 'declaration');
+    BuiltValueNullFieldError.checkNotNull(
+        location, r'DriftDatabaseSchema', 'location');
+  }
+
+  @override
+  DriftDatabaseSchema rebuild(
+          void Function(DriftDatabaseSchemaBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  DriftDatabaseSchemaBuilder toBuilder() =>
+      new DriftDatabaseSchemaBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is DriftDatabaseSchema &&
+        declaration == other.declaration &&
+        location == other.location;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, declaration.hashCode);
+    _$hash = $jc(_$hash, location.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'DriftDatabaseSchema')
+          ..add('declaration', declaration)
+          ..add('location', location))
+        .toString();
+  }
+}
+
+class DriftDatabaseSchemaBuilder
+    implements Builder<DriftDatabaseSchema, DriftDatabaseSchemaBuilder> {
+  _$DriftDatabaseSchema? _$v;
+
+  TypeReferenceBuilder? _declaration;
+  TypeReferenceBuilder get declaration =>
+      _$this._declaration ??= new TypeReferenceBuilder();
+  set declaration(TypeReferenceBuilder? declaration) =>
+      _$this._declaration = declaration;
+
+  FileSpan? _location;
+  FileSpan? get location => _$this._location;
+  set location(FileSpan? location) => _$this._location = location;
+
+  DriftDatabaseSchemaBuilder();
+
+  DriftDatabaseSchemaBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _declaration = $v.declaration.toBuilder();
+      _location = $v.location;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(DriftDatabaseSchema other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$DriftDatabaseSchema;
+  }
+
+  @override
+  void update(void Function(DriftDatabaseSchemaBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  DriftDatabaseSchema build() => _build();
+
+  _$DriftDatabaseSchema _build() {
+    _$DriftDatabaseSchema _$result;
+    try {
+      _$result = _$v ??
+          new _$DriftDatabaseSchema._(
+              declaration: declaration.build(),
+              location: BuiltValueNullFieldError.checkNotNull(
+                  location, r'DriftDatabaseSchema', 'location'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'declaration';
+        declaration.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'DriftDatabaseSchema', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$Database extends Database {
+  @override
+  final String name;
+  @override
+  final String dartName;
+  @override
+  final BuiltList<String> docs;
+  @override
+  final DatabaseSchema schema;
+  @override
+  final DatabaseConfig config;
+  @override
+  final FileSpan location;
+
+  factory _$Database([void Function(DatabaseBuilder)? updates]) =>
+      (new DatabaseBuilder()..update(updates))._build();
+
+  _$Database._(
+      {required this.name,
+      required this.dartName,
+      required this.docs,
+      required this.schema,
+      required this.config,
+      required this.location})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(name, r'Database', 'name');
+    BuiltValueNullFieldError.checkNotNull(dartName, r'Database', 'dartName');
+    BuiltValueNullFieldError.checkNotNull(docs, r'Database', 'docs');
+    BuiltValueNullFieldError.checkNotNull(schema, r'Database', 'schema');
+    BuiltValueNullFieldError.checkNotNull(config, r'Database', 'config');
+    BuiltValueNullFieldError.checkNotNull(location, r'Database', 'location');
+  }
+
+  @override
+  Database rebuild(void Function(DatabaseBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  DatabaseBuilder toBuilder() => new DatabaseBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is Database &&
+        name == other.name &&
+        dartName == other.dartName &&
+        docs == other.docs &&
+        schema == other.schema &&
+        config == other.config &&
+        location == other.location;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, dartName.hashCode);
+    _$hash = $jc(_$hash, docs.hashCode);
+    _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, config.hashCode);
+    _$hash = $jc(_$hash, location.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'Database')
+          ..add('name', name)
+          ..add('dartName', dartName)
+          ..add('docs', docs)
+          ..add('schema', schema)
+          ..add('config', config)
+          ..add('location', location))
+        .toString();
+  }
+}
+
+class DatabaseBuilder implements Builder<Database, DatabaseBuilder> {
+  _$Database? _$v;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _dartName;
+  String? get dartName => _$this._dartName;
+  set dartName(String? dartName) => _$this._dartName = dartName;
+
+  ListBuilder<String>? _docs;
+  ListBuilder<String> get docs => _$this._docs ??= new ListBuilder<String>();
+  set docs(ListBuilder<String>? docs) => _$this._docs = docs;
+
+  DatabaseSchema? _schema;
+  DatabaseSchema? get schema => _$this._schema;
+  set schema(DatabaseSchema? schema) => _$this._schema = schema;
+
+  DatabaseConfig? _config;
+  DatabaseConfig? get config => _$this._config;
+  set config(DatabaseConfig? config) => _$this._config = config;
+
+  FileSpan? _location;
+  FileSpan? get location => _$this._location;
+  set location(FileSpan? location) => _$this._location = location;
+
+  DatabaseBuilder();
+
+  DatabaseBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _dartName = $v.dartName;
+      _docs = $v.docs.toBuilder();
+      _schema = $v.schema;
+      _config = $v.config;
+      _location = $v.location;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(Database other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$Database;
+  }
+
+  @override
+  void update(void Function(DatabaseBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  Database build() => _build();
+
+  _$Database _build() {
+    _$Database _$result;
+    try {
+      _$result = _$v ??
+          new _$Database._(
+              name: BuiltValueNullFieldError.checkNotNull(
+                  name, r'Database', 'name'),
+              dartName: BuiltValueNullFieldError.checkNotNull(
+                  dartName, r'Database', 'dartName'),
+              docs: docs.build(),
+              schema: BuiltValueNullFieldError.checkNotNull(
+                  schema, r'Database', 'schema'),
+              config: BuiltValueNullFieldError.checkNotNull(
+                  config, r'Database', 'config'),
+              location: BuiltValueNullFieldError.checkNotNull(
+                  location, r'Database', 'location'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'docs';
+        docs.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'Database', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$CelestDatabaseConfig extends CelestDatabaseConfig {
+  @override
+  final Variable hostname;
+  @override
+  final Secret token;
+
+  factory _$CelestDatabaseConfig(
+          [void Function(CelestDatabaseConfigBuilder)? updates]) =>
+      (new CelestDatabaseConfigBuilder()..update(updates))._build();
+
+  _$CelestDatabaseConfig._({required this.hostname, required this.token})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        hostname, r'CelestDatabaseConfig', 'hostname');
+    BuiltValueNullFieldError.checkNotNull(
+        token, r'CelestDatabaseConfig', 'token');
+  }
+
+  @override
+  CelestDatabaseConfig rebuild(
+          void Function(CelestDatabaseConfigBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  CelestDatabaseConfigBuilder toBuilder() =>
+      new CelestDatabaseConfigBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is CelestDatabaseConfig &&
+        hostname == other.hostname &&
+        token == other.token;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, hostname.hashCode);
+    _$hash = $jc(_$hash, token.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'CelestDatabaseConfig')
+          ..add('hostname', hostname)
+          ..add('token', token))
+        .toString();
+  }
+}
+
+class CelestDatabaseConfigBuilder
+    implements Builder<CelestDatabaseConfig, CelestDatabaseConfigBuilder> {
+  _$CelestDatabaseConfig? _$v;
+
+  VariableBuilder? _hostname;
+  VariableBuilder get hostname => _$this._hostname ??= new VariableBuilder();
+  set hostname(VariableBuilder? hostname) => _$this._hostname = hostname;
+
+  SecretBuilder? _token;
+  SecretBuilder get token => _$this._token ??= new SecretBuilder();
+  set token(SecretBuilder? token) => _$this._token = token;
+
+  CelestDatabaseConfigBuilder();
+
+  CelestDatabaseConfigBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _hostname = $v.hostname.toBuilder();
+      _token = $v.token.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(CelestDatabaseConfig other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$CelestDatabaseConfig;
+  }
+
+  @override
+  void update(void Function(CelestDatabaseConfigBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  CelestDatabaseConfig build() => _build();
+
+  _$CelestDatabaseConfig _build() {
+    _$CelestDatabaseConfig _$result;
+    try {
+      _$result = _$v ??
+          new _$CelestDatabaseConfig._(
+              hostname: hostname.build(), token: token.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'hostname';
+        hostname.build();
+        _$failedField = 'token';
+        token.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'CelestDatabaseConfig', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

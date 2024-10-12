@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
+import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:cedar/cedar.dart' as cedar;
 // ignore: implementation_imports
@@ -7,7 +8,10 @@ import 'package:cedar/src/proto/cedar/v3/policy.pb.dart' as cedarpb;
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_ast/src/proto/cedar/v3/policy.pb.dart' as pb;
 import 'package:celest_ast/src/proto/celest/ast/v1/resolved_ast.pb.dart' as pb;
+import 'package:celest_ast/src/proto/google/protobuf/struct.pb.dart' as pb;
 import 'package:code_builder/code_builder.dart';
+// ignore: implementation_imports
+import 'package:protobuf/src/protobuf/mixins/well_known.dart';
 
 part 'resolved_ast.g.dart';
 
@@ -25,6 +29,7 @@ abstract class ResolvedProject
     List<ResolvedVariable> variables = const [],
     List<ResolvedSecret> secrets = const [],
     ResolvedAuth? auth,
+    Map<String, ResolvedDatabase> databases = const {},
     required SdkConfiguration sdkConfig,
   }) {
     return _$ResolvedProject._(
@@ -34,6 +39,7 @@ abstract class ResolvedProject
       variables: variables.build(),
       secrets: secrets.build(),
       auth: auth,
+      databases: databases.build(),
       sdkConfig: sdkConfig,
     );
   }
@@ -55,6 +61,9 @@ abstract class ResolvedProject
       variables: proto.variables.map(ResolvedVariable.fromProto).toList(),
       secrets: proto.secrets.map(ResolvedSecret.fromProto).toList(),
       auth: proto.hasAuth() ? ResolvedAuth.fromProto(proto.auth) : null,
+      databases: proto.databases.map(
+        (key, value) => MapEntry(key, ResolvedDatabase.fromProto(value)),
+      ),
       sdkConfig: SdkConfiguration.fromProto(proto.sdkConfig),
     );
   }
@@ -67,6 +76,7 @@ abstract class ResolvedProject
   BuiltList<ResolvedVariable> get variables;
   BuiltList<ResolvedSecret> get secrets;
   ResolvedAuth? get auth;
+  BuiltMap<String, ResolvedDatabase> get databases;
 
   SdkConfiguration get sdkConfig;
 
@@ -92,6 +102,8 @@ abstract class ResolvedProject
       variables: variables.map((e) => e.toProto()),
       secrets: secrets.map((e) => e.toProto()),
       auth: auth?.toProto(),
+      databases:
+          databases.map((key, value) => MapEntry(key, value.toProto())).toMap(),
       sdkConfig: sdkConfig.toProto(),
     );
   }
@@ -1147,4 +1159,285 @@ abstract class ResolvedSupabaseExternalAuthProvider
 
   static Serializer<ResolvedSupabaseExternalAuthProvider> get serializer =>
       _$resolvedSupabaseExternalAuthProviderSerializer;
+}
+
+@BuiltValue(instantiable: false)
+sealed class ResolvedDatabaseSchema implements Node {
+  static ResolvedDatabaseSchema fromProto(pb.ResolvedDatabaseSchema proto) {
+    return switch (proto.type) {
+      pb.ResolvedDatabaseSchema_Type.DRIFT =>
+        ResolvedDriftDatabaseSchema.fromProto(proto),
+      _ => throw ArgumentError.value(
+          proto.type.name,
+          'proto.type',
+          'Invalid database schema type',
+        ),
+    };
+  }
+
+  String get databaseSchemaId;
+  DatabaseSchemaType get type;
+
+  ResolvedDatabaseSchema rebuild(
+    void Function(ResolvedDatabaseSchemaBuilder) updates,
+  );
+  ResolvedDatabaseSchemaBuilder toBuilder();
+
+  pb.ResolvedDatabaseSchema toProto();
+}
+
+abstract class ResolvedDriftDatabaseSchema
+    implements
+        Built<ResolvedDriftDatabaseSchema, ResolvedDriftDatabaseSchemaBuilder>,
+        ResolvedDatabaseSchema {
+  factory ResolvedDriftDatabaseSchema({
+    required String databaseSchemaId,
+    required int version,
+    required Map<String, Object?> schemaJson,
+  }) {
+    return _$ResolvedDriftDatabaseSchema._(
+      type: $type,
+      databaseSchemaId: databaseSchemaId,
+      version: version,
+      $schemaJson: JsonObject(schemaJson),
+    );
+  }
+
+  factory ResolvedDriftDatabaseSchema.build(
+          [void Function(ResolvedDriftDatabaseSchemaBuilder) updates]) =
+      _$ResolvedDriftDatabaseSchema;
+
+  factory ResolvedDriftDatabaseSchema.fromJson(Map<String, dynamic> json) {
+    return serializers.deserializeWith(
+        ResolvedDriftDatabaseSchema.serializer, json)!;
+  }
+
+  factory ResolvedDriftDatabaseSchema.fromProto(
+      pb.ResolvedDatabaseSchema proto) {
+    return ResolvedDriftDatabaseSchema(
+      databaseSchemaId: proto.databaseSchemaId,
+      version: proto.drift.version,
+      schemaJson: proto.drift.schemaJson.jsonValue,
+    );
+  }
+
+  ResolvedDriftDatabaseSchema._();
+
+  static const DatabaseSchemaType $type = DatabaseSchemaType.drift;
+
+  @override
+  String get databaseSchemaId;
+
+  int get version;
+
+  @BuiltValueField(wireName: 'schemaJson')
+  JsonObject get $schemaJson;
+
+  Map<String, Object?> get schemaJson => $schemaJson.asMap.cast();
+
+  @override
+  R accept<R>(ResolvedAstVisitor<R> visitor) {
+    return visitor.visitDatabaseSchema(this);
+  }
+
+  @override
+  R acceptWithArg<R, A>(ResolvedAstVisitorWithArg<R, A> visitor, A arg) {
+    return visitor.visitDatabaseSchema(this, arg);
+  }
+
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(
+        ResolvedDriftDatabaseSchema.serializer, this) as Map<String, dynamic>;
+  }
+
+  static Serializer<ResolvedDriftDatabaseSchema> get serializer =>
+      _$resolvedDriftDatabaseSchemaSerializer;
+
+  @override
+  pb.ResolvedDatabaseSchema toProto() {
+    return pb.ResolvedDatabaseSchema(
+      databaseSchemaId: databaseSchemaId,
+      type: pb.ResolvedDatabaseSchema_Type.DRIFT,
+      drift: pb.ResolvedDriftDatabaseSchema(
+        version: version,
+        schemaJson: _ProtoStruct.wrap(schemaJson),
+      ),
+    );
+  }
+}
+
+abstract class ResolvedDatabase
+    implements Node, Built<ResolvedDatabase, ResolvedDatabaseBuilder> {
+  factory ResolvedDatabase({
+    required String databaseId,
+    required ResolvedDatabaseSchema schema,
+    required ResolvedDatabaseConfig config,
+  }) {
+    return _$ResolvedDatabase._(
+      databaseId: databaseId,
+      schema: schema,
+      config: config,
+    );
+  }
+
+  factory ResolvedDatabase.build(
+      [void Function(ResolvedDatabaseBuilder) updates]) = _$ResolvedDatabase;
+
+  factory ResolvedDatabase.fromJson(Map<String, dynamic> json) {
+    return serializers.deserializeWith(ResolvedDatabase.serializer, json)!;
+  }
+
+  factory ResolvedDatabase.fromProto(pb.ResolvedDatabase proto) {
+    return ResolvedDatabase(
+        databaseId: proto.databaseId,
+        schema: ResolvedDatabaseSchema.fromProto(proto.schema),
+        config: switch (proto.whichConfig()) {
+          pb.ResolvedDatabase_Config.celest =>
+            ResolvedCelestDatabaseConfig.fromProto(proto.celest),
+          pb.ResolvedDatabase_Config.notSet => throw ArgumentError.value(
+              proto,
+              'ResolvedDatabase.proto',
+              'Config not set',
+            ),
+        });
+  }
+
+  ResolvedDatabase._();
+
+  String get databaseId;
+  ResolvedDatabaseSchema get schema;
+  ResolvedDatabaseConfig get config;
+
+  @override
+  R accept<R>(ResolvedAstVisitor<R> visitor) {
+    return visitor.visitDatabase(this);
+  }
+
+  @override
+  R acceptWithArg<R, A>(ResolvedAstVisitorWithArg<R, A> visitor, A arg) {
+    return visitor.visitDatabase(this, arg);
+  }
+
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(ResolvedDatabase.serializer, this)
+        as Map<String, dynamic>;
+  }
+
+  static Serializer<ResolvedDatabase> get serializer =>
+      _$resolvedDatabaseSerializer;
+
+  pb.ResolvedDatabase toProto() {
+    final message = pb.ResolvedDatabase(
+      databaseId: databaseId,
+      schema: schema.toProto(),
+      type: switch (config) {
+        ResolvedCelestDatabaseConfig() => pb.ResolvedDatabase_Type.CELEST,
+      },
+    );
+    return switch (config) {
+      final ResolvedCelestDatabaseConfig celest => message
+        ..celest = celest.toProto(),
+    };
+  }
+}
+
+sealed class ResolvedDatabaseConfig {
+  DatabaseProviderType get provider;
+}
+
+abstract class ResolvedCelestDatabaseConfig
+    implements
+        ResolvedDatabaseConfig,
+        Built<ResolvedCelestDatabaseConfig,
+            ResolvedCelestDatabaseConfigBuilder> {
+  factory ResolvedCelestDatabaseConfig({
+    required ResolvedVariable hostname,
+    required ResolvedSecret token,
+  }) {
+    return _$ResolvedCelestDatabaseConfig._(
+      hostname: hostname,
+      token: token,
+    );
+  }
+
+  factory ResolvedCelestDatabaseConfig.build(
+          [void Function(ResolvedCelestDatabaseConfigBuilder) updates]) =
+      _$ResolvedCelestDatabaseConfig;
+
+  factory ResolvedCelestDatabaseConfig.fromJson(Map<String, Object?> json) {
+    return serializers.deserializeWith(
+        ResolvedCelestDatabaseConfig.serializer, json)!;
+  }
+
+  factory ResolvedCelestDatabaseConfig.fromProto(
+      pb.ResolvedCelestDatabaseConfig proto) {
+    return ResolvedCelestDatabaseConfig(
+      hostname: ResolvedVariable.fromProto(proto.hostname),
+      token: ResolvedSecret.fromProto(proto.token),
+    );
+  }
+
+  ResolvedCelestDatabaseConfig._();
+
+  @override
+  DatabaseProviderType get provider => DatabaseProviderType.celest;
+
+  ResolvedVariable get hostname;
+  ResolvedSecret get token;
+
+  Map<String, Object?> toJson() {
+    return serializers.serializeWith(
+        ResolvedCelestDatabaseConfig.serializer, this) as Map<String, Object?>;
+  }
+
+  pb.ResolvedCelestDatabaseConfig toProto() {
+    return pb.ResolvedCelestDatabaseConfig(
+      hostname: hostname.toProto(),
+      token: token.toProto(),
+    );
+  }
+
+  static Serializer<ResolvedCelestDatabaseConfig> get serializer =>
+      _$resolvedCelestDatabaseConfigSerializer;
+}
+
+extension _ProtoValue on ValueMixin {
+  static pb.Value wrap(Object? o) {
+    return switch (o) {
+      null => pb.Value(nullValue: pb.NullValue.NULL_VALUE),
+      num() => pb.Value(numberValue: o.toDouble()),
+      String() => pb.Value(stringValue: o),
+      bool() => pb.Value(boolValue: o),
+      List() => pb.Value(listValue: pb.ListValue(values: o.map(wrap).toList())),
+      Map() => pb.Value(
+          structValue:
+              pb.Struct(fields: o.map((k, v) => MapEntry(k, wrap(v))))),
+      _ => throw ArgumentError.value(o, 'o', 'Invalid value'),
+    };
+  }
+
+  Object? get jsonValue => switch (this) {
+        _ when hasNullValue() => null,
+        _ when hasNumberValue() => numberValue,
+        _ when hasStringValue() => stringValue,
+        _ when hasBoolValue() => boolValue,
+        _ when hasStructValue() => structValue.jsonValue,
+        _ when hasListValue() => listValue.jsonValue,
+        final invalid => throw StateError('Invalid proto Value: $invalid'),
+      };
+}
+
+extension on ListValueMixin {
+  List<Object?> get jsonValue => values.map((v) => v.jsonValue).toList();
+}
+
+extension _ProtoStruct on StructMixin {
+  static pb.Struct wrap(Map<String, Object?> fields) {
+    return pb.Struct(
+      fields: fields.map((k, v) => MapEntry(k, _ProtoValue.wrap(v))),
+    );
+  }
+
+  Map<String, Object?> get jsonValue =>
+      fields.map((k, v) => MapEntry(k, v.jsonValue));
 }

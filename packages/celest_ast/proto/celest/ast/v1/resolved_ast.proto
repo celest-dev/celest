@@ -6,6 +6,7 @@ import "cedar/v3/policy.proto";
 import "celest/ast/v1/features.proto";
 import "celest/ast/v1/sdks.proto";
 import "google/api/field_behavior.proto";
+import "google/protobuf/struct.proto";
 
 // The resolved AST of a Celest project.
 message ResolvedProject {
@@ -26,6 +27,9 @@ message ResolvedProject {
 
   // The project's auth configuration.
   ResolvedAuth auth = 6 [(google.api.field_behavior) = OPTIONAL];
+
+  // The project's databases.
+  map<string, ResolvedDatabase> databases = 7 [(google.api.field_behavior) = OPTIONAL];
 
   // Configuration of the Dart, Flutter, and Celest SDKs used to deploy the project.
   SdkConfiguration sdk_config = 99 [(google.api.field_behavior) = REQUIRED];
@@ -285,6 +289,75 @@ message ResolvedSupabaseExternalAuthProviderConfig {
 
   // Optional. The Supabase JWT secret.
   ResolvedSecret jwt_secret = 2 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// The resolved AST of a Celest database.
+message ResolvedDatabase {
+  // The unique identifier of the database within a project.
+  string database_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The type of the database.
+  enum Type {
+    // The database type is unspecified.
+    DATABASE_TYPE_UNSPECIFIED = 0;
+
+    // Celest database.
+    CELEST = 1;
+  }
+
+  // The type of the database.
+  Type type = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The schema of the database.
+  ResolvedDatabaseSchema schema = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The config of the database.
+  oneof config {
+    // The provider configuration of a Celest database.
+    ResolvedCelestDatabaseConfig celest = 4;
+  }
+}
+
+// The configuration of a Celest database.
+message ResolvedCelestDatabaseConfig {
+  // Required. The database hostname.
+  ResolvedVariable hostname = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Required. The database token.
+  ResolvedSecret token = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// The resolved AST of a Celest database schema.
+message ResolvedDatabaseSchema {
+  // The unique identifier of the database schema within a project.
+  string database_schema_id = 1 [(google.api.field_behavior) = REQUIRED];
+  
+  // The type of the database schema.
+  enum Type {
+    // The database schema type is unspecified.
+    DATABASE_SCHEMA_TYPE_UNSPECIFIED = 0;
+
+    // Drift database schema.
+    DRIFT = 1;
+  }
+
+  // The type of the database schema.
+  Type type = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The database schema.
+  oneof schema {
+    // The Drift database schema.
+    ResolvedDriftDatabaseSchema drift = 3;
+  }
+}
+
+// The resolved AST of a Drift database schema.
+message ResolvedDriftDatabaseSchema {
+  // Required. The Drift schema version.
+  int32 version = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Required. The Drift schema JSON.
+  google.protobuf.Struct schema_json = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Configuration of the SDKs used to deploy the project.

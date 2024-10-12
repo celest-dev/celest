@@ -39,6 +39,14 @@ Serializer<ResolvedFirebaseExternalAuthProvider>
 Serializer<ResolvedSupabaseExternalAuthProvider>
     _$resolvedSupabaseExternalAuthProviderSerializer =
     new _$ResolvedSupabaseExternalAuthProviderSerializer();
+Serializer<ResolvedDriftDatabaseSchema>
+    _$resolvedDriftDatabaseSchemaSerializer =
+    new _$ResolvedDriftDatabaseSchemaSerializer();
+Serializer<ResolvedDatabase> _$resolvedDatabaseSerializer =
+    new _$ResolvedDatabaseSerializer();
+Serializer<ResolvedCelestDatabaseConfig>
+    _$resolvedCelestDatabaseConfigSerializer =
+    new _$ResolvedCelestDatabaseConfigSerializer();
 
 class _$ResolvedProjectSerializer
     implements StructuredSerializer<ResolvedProject> {
@@ -69,6 +77,12 @@ class _$ResolvedProjectSerializer
       serializers.serialize(object.secrets,
           specifiedType: const FullType(
               BuiltList, const [const FullType(ResolvedSecret)])),
+      'databases',
+      serializers.serialize(object.databases,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(ResolvedDatabase)
+          ])),
       'sdkConfig',
       serializers.serialize(object.sdkConfig,
           specifiedType: const FullType(SdkConfiguration)),
@@ -126,6 +140,13 @@ class _$ResolvedProjectSerializer
         case 'auth':
           result.auth.replace(serializers.deserialize(value,
               specifiedType: const FullType(ResolvedAuth))! as ResolvedAuth);
+          break;
+        case 'databases':
+          result.databases.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(ResolvedDatabase)
+              ]))!);
           break;
         case 'sdkConfig':
           result.sdkConfig.replace(serializers.deserialize(value,
@@ -1087,6 +1108,186 @@ class _$ResolvedSupabaseExternalAuthProviderSerializer
   }
 }
 
+class _$ResolvedDriftDatabaseSchemaSerializer
+    implements StructuredSerializer<ResolvedDriftDatabaseSchema> {
+  @override
+  final Iterable<Type> types = const [
+    ResolvedDriftDatabaseSchema,
+    _$ResolvedDriftDatabaseSchema
+  ];
+  @override
+  final String wireName = 'ResolvedDriftDatabaseSchema';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, ResolvedDriftDatabaseSchema object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'databaseSchemaId',
+      serializers.serialize(object.databaseSchemaId,
+          specifiedType: const FullType(String)),
+      'version',
+      serializers.serialize(object.version, specifiedType: const FullType(int)),
+      'schemaJson',
+      serializers.serialize(object.$schemaJson,
+          specifiedType: const FullType(JsonObject)),
+      'type',
+      serializers.serialize(object.type,
+          specifiedType: const FullType(DatabaseSchemaType)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedDriftDatabaseSchema deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedDriftDatabaseSchemaBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'databaseSchemaId':
+          result.databaseSchemaId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'version':
+          result.version = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'schemaJson':
+          result.$schemaJson = serializers.deserialize(value,
+              specifiedType: const FullType(JsonObject))! as JsonObject;
+          break;
+        case 'type':
+          result.type = serializers.deserialize(value,
+                  specifiedType: const FullType(DatabaseSchemaType))!
+              as DatabaseSchemaType;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedDatabaseSerializer
+    implements StructuredSerializer<ResolvedDatabase> {
+  @override
+  final Iterable<Type> types = const [ResolvedDatabase, _$ResolvedDatabase];
+  @override
+  final String wireName = 'ResolvedDatabase';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, ResolvedDatabase object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'databaseId',
+      serializers.serialize(object.databaseId,
+          specifiedType: const FullType(String)),
+      'schema',
+      serializers.serialize(object.schema,
+          specifiedType: const FullType(ResolvedDatabaseSchema)),
+      'config',
+      serializers.serialize(object.config,
+          specifiedType: const FullType(ResolvedDatabaseConfig)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedDatabase deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedDatabaseBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'databaseId':
+          result.databaseId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'schema':
+          result.schema = serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedDatabaseSchema))!
+              as ResolvedDatabaseSchema;
+          break;
+        case 'config':
+          result.config = serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedDatabaseConfig))!
+              as ResolvedDatabaseConfig;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ResolvedCelestDatabaseConfigSerializer
+    implements StructuredSerializer<ResolvedCelestDatabaseConfig> {
+  @override
+  final Iterable<Type> types = const [
+    ResolvedCelestDatabaseConfig,
+    _$ResolvedCelestDatabaseConfig
+  ];
+  @override
+  final String wireName = 'ResolvedCelestDatabaseConfig';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, ResolvedCelestDatabaseConfig object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'hostname',
+      serializers.serialize(object.hostname,
+          specifiedType: const FullType(ResolvedVariable)),
+      'token',
+      serializers.serialize(object.token,
+          specifiedType: const FullType(ResolvedSecret)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ResolvedCelestDatabaseConfig deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ResolvedCelestDatabaseConfigBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'hostname':
+          result.hostname.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedVariable))!
+              as ResolvedVariable);
+          break;
+        case 'token':
+          result.token.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ResolvedSecret))!
+              as ResolvedSecret);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$ResolvedProject extends ResolvedProject {
   @override
   final String projectId;
@@ -1101,6 +1302,8 @@ class _$ResolvedProject extends ResolvedProject {
   @override
   final ResolvedAuth? auth;
   @override
+  final BuiltMap<String, ResolvedDatabase> databases;
+  @override
   final SdkConfiguration sdkConfig;
 
   factory _$ResolvedProject([void Function(ResolvedProjectBuilder)? updates]) =>
@@ -1113,6 +1316,7 @@ class _$ResolvedProject extends ResolvedProject {
       required this.variables,
       required this.secrets,
       this.auth,
+      required this.databases,
       required this.sdkConfig})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -1124,6 +1328,8 @@ class _$ResolvedProject extends ResolvedProject {
         variables, r'ResolvedProject', 'variables');
     BuiltValueNullFieldError.checkNotNull(
         secrets, r'ResolvedProject', 'secrets');
+    BuiltValueNullFieldError.checkNotNull(
+        databases, r'ResolvedProject', 'databases');
     BuiltValueNullFieldError.checkNotNull(
         sdkConfig, r'ResolvedProject', 'sdkConfig');
   }
@@ -1146,6 +1352,7 @@ class _$ResolvedProject extends ResolvedProject {
         variables == other.variables &&
         secrets == other.secrets &&
         auth == other.auth &&
+        databases == other.databases &&
         sdkConfig == other.sdkConfig;
   }
 
@@ -1158,6 +1365,7 @@ class _$ResolvedProject extends ResolvedProject {
     _$hash = $jc(_$hash, variables.hashCode);
     _$hash = $jc(_$hash, secrets.hashCode);
     _$hash = $jc(_$hash, auth.hashCode);
+    _$hash = $jc(_$hash, databases.hashCode);
     _$hash = $jc(_$hash, sdkConfig.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -1172,6 +1380,7 @@ class _$ResolvedProject extends ResolvedProject {
           ..add('variables', variables)
           ..add('secrets', secrets)
           ..add('auth', auth)
+          ..add('databases', databases)
           ..add('sdkConfig', sdkConfig))
         .toString();
   }
@@ -1211,6 +1420,12 @@ class ResolvedProjectBuilder
   ResolvedAuthBuilder get auth => _$this._auth ??= new ResolvedAuthBuilder();
   set auth(ResolvedAuthBuilder? auth) => _$this._auth = auth;
 
+  MapBuilder<String, ResolvedDatabase>? _databases;
+  MapBuilder<String, ResolvedDatabase> get databases =>
+      _$this._databases ??= new MapBuilder<String, ResolvedDatabase>();
+  set databases(MapBuilder<String, ResolvedDatabase>? databases) =>
+      _$this._databases = databases;
+
   SdkConfigurationBuilder? _sdkConfig;
   SdkConfigurationBuilder get sdkConfig =>
       _$this._sdkConfig ??= new SdkConfigurationBuilder();
@@ -1228,6 +1443,7 @@ class ResolvedProjectBuilder
       _variables = $v.variables.toBuilder();
       _secrets = $v.secrets.toBuilder();
       _auth = $v.auth?.toBuilder();
+      _databases = $v.databases.toBuilder();
       _sdkConfig = $v.sdkConfig.toBuilder();
       _$v = null;
     }
@@ -1261,6 +1477,7 @@ class ResolvedProjectBuilder
               variables: variables.build(),
               secrets: secrets.build(),
               auth: _auth?.build(),
+              databases: databases.build(),
               sdkConfig: sdkConfig.build());
     } catch (_) {
       late String _$failedField;
@@ -1273,6 +1490,8 @@ class ResolvedProjectBuilder
         secrets.build();
         _$failedField = 'auth';
         _auth?.build();
+        _$failedField = 'databases';
+        databases.build();
         _$failedField = 'sdkConfig';
         sdkConfig.build();
       } catch (e) {
@@ -3296,6 +3515,396 @@ class ResolvedSupabaseExternalAuthProviderBuilder
             r'ResolvedSupabaseExternalAuthProvider',
             _$failedField,
             e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+abstract mixin class ResolvedDatabaseSchemaBuilder {
+  void replace(ResolvedDatabaseSchema other);
+  void update(void Function(ResolvedDatabaseSchemaBuilder) updates);
+  String? get databaseSchemaId;
+  set databaseSchemaId(String? databaseSchemaId);
+
+  DatabaseSchemaType? get type;
+  set type(DatabaseSchemaType? type);
+}
+
+class _$ResolvedDriftDatabaseSchema extends ResolvedDriftDatabaseSchema {
+  @override
+  final String databaseSchemaId;
+  @override
+  final int version;
+  @override
+  final JsonObject $schemaJson;
+  @override
+  final DatabaseSchemaType type;
+
+  factory _$ResolvedDriftDatabaseSchema(
+          [void Function(ResolvedDriftDatabaseSchemaBuilder)? updates]) =>
+      (new ResolvedDriftDatabaseSchemaBuilder()..update(updates))._build();
+
+  _$ResolvedDriftDatabaseSchema._(
+      {required this.databaseSchemaId,
+      required this.version,
+      required this.$schemaJson,
+      required this.type})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        databaseSchemaId, r'ResolvedDriftDatabaseSchema', 'databaseSchemaId');
+    BuiltValueNullFieldError.checkNotNull(
+        version, r'ResolvedDriftDatabaseSchema', 'version');
+    BuiltValueNullFieldError.checkNotNull(
+        $schemaJson, r'ResolvedDriftDatabaseSchema', '\$schemaJson');
+    BuiltValueNullFieldError.checkNotNull(
+        type, r'ResolvedDriftDatabaseSchema', 'type');
+  }
+
+  @override
+  ResolvedDriftDatabaseSchema rebuild(
+          void Function(ResolvedDriftDatabaseSchemaBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedDriftDatabaseSchemaBuilder toBuilder() =>
+      new ResolvedDriftDatabaseSchemaBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedDriftDatabaseSchema &&
+        databaseSchemaId == other.databaseSchemaId &&
+        version == other.version &&
+        $schemaJson == other.$schemaJson &&
+        type == other.type;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, databaseSchemaId.hashCode);
+    _$hash = $jc(_$hash, version.hashCode);
+    _$hash = $jc(_$hash, $schemaJson.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedDriftDatabaseSchema')
+          ..add('databaseSchemaId', databaseSchemaId)
+          ..add('version', version)
+          ..add('\$schemaJson', $schemaJson)
+          ..add('type', type))
+        .toString();
+  }
+}
+
+class ResolvedDriftDatabaseSchemaBuilder
+    implements
+        Builder<ResolvedDriftDatabaseSchema,
+            ResolvedDriftDatabaseSchemaBuilder>,
+        ResolvedDatabaseSchemaBuilder {
+  _$ResolvedDriftDatabaseSchema? _$v;
+
+  String? _databaseSchemaId;
+  String? get databaseSchemaId => _$this._databaseSchemaId;
+  set databaseSchemaId(covariant String? databaseSchemaId) =>
+      _$this._databaseSchemaId = databaseSchemaId;
+
+  int? _version;
+  int? get version => _$this._version;
+  set version(covariant int? version) => _$this._version = version;
+
+  JsonObject? _$schemaJson;
+  JsonObject? get $schemaJson => _$this._$schemaJson;
+  set $schemaJson(covariant JsonObject? $schemaJson) =>
+      _$this._$schemaJson = $schemaJson;
+
+  DatabaseSchemaType? _type;
+  DatabaseSchemaType? get type => _$this._type;
+  set type(covariant DatabaseSchemaType? type) => _$this._type = type;
+
+  ResolvedDriftDatabaseSchemaBuilder();
+
+  ResolvedDriftDatabaseSchemaBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _databaseSchemaId = $v.databaseSchemaId;
+      _version = $v.version;
+      _$schemaJson = $v.$schemaJson;
+      _type = $v.type;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(covariant ResolvedDriftDatabaseSchema other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedDriftDatabaseSchema;
+  }
+
+  @override
+  void update(void Function(ResolvedDriftDatabaseSchemaBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedDriftDatabaseSchema build() => _build();
+
+  _$ResolvedDriftDatabaseSchema _build() {
+    final _$result = _$v ??
+        new _$ResolvedDriftDatabaseSchema._(
+            databaseSchemaId: BuiltValueNullFieldError.checkNotNull(
+                databaseSchemaId,
+                r'ResolvedDriftDatabaseSchema',
+                'databaseSchemaId'),
+            version: BuiltValueNullFieldError.checkNotNull(
+                version, r'ResolvedDriftDatabaseSchema', 'version'),
+            $schemaJson: BuiltValueNullFieldError.checkNotNull(
+                $schemaJson, r'ResolvedDriftDatabaseSchema', '\$schemaJson'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'ResolvedDriftDatabaseSchema', 'type'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedDatabase extends ResolvedDatabase {
+  @override
+  final String databaseId;
+  @override
+  final ResolvedDatabaseSchema schema;
+  @override
+  final ResolvedDatabaseConfig config;
+
+  factory _$ResolvedDatabase(
+          [void Function(ResolvedDatabaseBuilder)? updates]) =>
+      (new ResolvedDatabaseBuilder()..update(updates))._build();
+
+  _$ResolvedDatabase._(
+      {required this.databaseId, required this.schema, required this.config})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        databaseId, r'ResolvedDatabase', 'databaseId');
+    BuiltValueNullFieldError.checkNotNull(
+        schema, r'ResolvedDatabase', 'schema');
+    BuiltValueNullFieldError.checkNotNull(
+        config, r'ResolvedDatabase', 'config');
+  }
+
+  @override
+  ResolvedDatabase rebuild(void Function(ResolvedDatabaseBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedDatabaseBuilder toBuilder() =>
+      new ResolvedDatabaseBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedDatabase &&
+        databaseId == other.databaseId &&
+        schema == other.schema &&
+        config == other.config;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, databaseId.hashCode);
+    _$hash = $jc(_$hash, schema.hashCode);
+    _$hash = $jc(_$hash, config.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedDatabase')
+          ..add('databaseId', databaseId)
+          ..add('schema', schema)
+          ..add('config', config))
+        .toString();
+  }
+}
+
+class ResolvedDatabaseBuilder
+    implements Builder<ResolvedDatabase, ResolvedDatabaseBuilder> {
+  _$ResolvedDatabase? _$v;
+
+  String? _databaseId;
+  String? get databaseId => _$this._databaseId;
+  set databaseId(String? databaseId) => _$this._databaseId = databaseId;
+
+  ResolvedDatabaseSchema? _schema;
+  ResolvedDatabaseSchema? get schema => _$this._schema;
+  set schema(ResolvedDatabaseSchema? schema) => _$this._schema = schema;
+
+  ResolvedDatabaseConfig? _config;
+  ResolvedDatabaseConfig? get config => _$this._config;
+  set config(ResolvedDatabaseConfig? config) => _$this._config = config;
+
+  ResolvedDatabaseBuilder();
+
+  ResolvedDatabaseBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _databaseId = $v.databaseId;
+      _schema = $v.schema;
+      _config = $v.config;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ResolvedDatabase other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedDatabase;
+  }
+
+  @override
+  void update(void Function(ResolvedDatabaseBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedDatabase build() => _build();
+
+  _$ResolvedDatabase _build() {
+    final _$result = _$v ??
+        new _$ResolvedDatabase._(
+            databaseId: BuiltValueNullFieldError.checkNotNull(
+                databaseId, r'ResolvedDatabase', 'databaseId'),
+            schema: BuiltValueNullFieldError.checkNotNull(
+                schema, r'ResolvedDatabase', 'schema'),
+            config: BuiltValueNullFieldError.checkNotNull(
+                config, r'ResolvedDatabase', 'config'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ResolvedCelestDatabaseConfig extends ResolvedCelestDatabaseConfig {
+  @override
+  final ResolvedVariable hostname;
+  @override
+  final ResolvedSecret token;
+
+  factory _$ResolvedCelestDatabaseConfig(
+          [void Function(ResolvedCelestDatabaseConfigBuilder)? updates]) =>
+      (new ResolvedCelestDatabaseConfigBuilder()..update(updates))._build();
+
+  _$ResolvedCelestDatabaseConfig._(
+      {required this.hostname, required this.token})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        hostname, r'ResolvedCelestDatabaseConfig', 'hostname');
+    BuiltValueNullFieldError.checkNotNull(
+        token, r'ResolvedCelestDatabaseConfig', 'token');
+  }
+
+  @override
+  ResolvedCelestDatabaseConfig rebuild(
+          void Function(ResolvedCelestDatabaseConfigBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ResolvedCelestDatabaseConfigBuilder toBuilder() =>
+      new ResolvedCelestDatabaseConfigBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ResolvedCelestDatabaseConfig &&
+        hostname == other.hostname &&
+        token == other.token;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, hostname.hashCode);
+    _$hash = $jc(_$hash, token.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'ResolvedCelestDatabaseConfig')
+          ..add('hostname', hostname)
+          ..add('token', token))
+        .toString();
+  }
+}
+
+class ResolvedCelestDatabaseConfigBuilder
+    implements
+        Builder<ResolvedCelestDatabaseConfig,
+            ResolvedCelestDatabaseConfigBuilder> {
+  _$ResolvedCelestDatabaseConfig? _$v;
+
+  ResolvedVariableBuilder? _hostname;
+  ResolvedVariableBuilder get hostname =>
+      _$this._hostname ??= new ResolvedVariableBuilder();
+  set hostname(ResolvedVariableBuilder? hostname) =>
+      _$this._hostname = hostname;
+
+  ResolvedSecretBuilder? _token;
+  ResolvedSecretBuilder get token =>
+      _$this._token ??= new ResolvedSecretBuilder();
+  set token(ResolvedSecretBuilder? token) => _$this._token = token;
+
+  ResolvedCelestDatabaseConfigBuilder();
+
+  ResolvedCelestDatabaseConfigBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _hostname = $v.hostname.toBuilder();
+      _token = $v.token.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ResolvedCelestDatabaseConfig other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ResolvedCelestDatabaseConfig;
+  }
+
+  @override
+  void update(void Function(ResolvedCelestDatabaseConfigBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  ResolvedCelestDatabaseConfig build() => _build();
+
+  _$ResolvedCelestDatabaseConfig _build() {
+    _$ResolvedCelestDatabaseConfig _$result;
+    try {
+      _$result = _$v ??
+          new _$ResolvedCelestDatabaseConfig._(
+              hostname: hostname.build(), token: token.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'hostname';
+        hostname.build();
+        _$failedField = 'token';
+        token.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ResolvedCelestDatabaseConfig', _$failedField, e.toString());
       }
       rethrow;
     }
