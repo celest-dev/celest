@@ -44,22 +44,27 @@ Future<Map<String, Object?>?> _loadJsonFromFileSystem(
 }
 
 /// Configures the environment in which Celest is running.
-Future<void> configure() async {
+Future<void> configure({
+  ResolvedProject? config,
+}) async {
   configureLogging();
 
   final rootContext = Context.root;
 
-  final configJson = _loadJsonFromEnv(rootContext) ??
-      await _loadJsonFromFileSystem(rootContext);
-  if (configJson == null) {
-    throw StateError(
-      'No project configuration found. Create a celest.json file and set '
-      'CELEST_CONFIG with its path or CELEST_CONFIG_JSON with its contents.',
-    );
+  if (config == null) {
+    final configJson = _loadJsonFromEnv(rootContext) ??
+        await _loadJsonFromFileSystem(rootContext);
+    if (configJson == null) {
+      throw StateError(
+        'No project configuration found. Create a celest.json file and set '
+        'CELEST_CONFIG with its path or CELEST_CONFIG_JSON with its contents.',
+      );
+    }
+
+    final configPb = pb.ResolvedProject()..mergeFromProto3Json(configJson);
+    config = ResolvedProject.fromProto(configPb);
   }
 
-  final configPb = pb.ResolvedProject()..mergeFromProto3Json(configJson);
-  final config = ResolvedProject.fromProto(configPb);
   Logger.root
     ..config('Loaded project configuration')
     ..config(config);

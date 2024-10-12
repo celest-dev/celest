@@ -1,7 +1,7 @@
 @internal
 library;
 
-import 'package:celest/celest.dart';
+import 'package:celest/src/core/context.dart';
 import 'package:google_cloud/google_cloud.dart';
 import 'package:meta/meta.dart';
 

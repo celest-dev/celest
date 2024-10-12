@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:celest/celest.dart';
+import 'package:celest/src/core/context.dart';
 import 'package:celest/src/runtime/http/middleware.dart';
 import 'package:celest/src/runtime/json_utils.dart';
 import 'package:celest_core/_internal.dart';
