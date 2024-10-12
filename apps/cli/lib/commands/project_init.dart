@@ -137,10 +137,19 @@ base mixin Configure on CelestCommand {
       currentDir = currentDir.parent;
       pubspecFile = currentDir.childFile('pubspec.yaml');
     }
-    final projectFile = currentDir.childFile('project.dart');
+    final projectFiles = [
+      // Legacy
+      currentDir.childFile('project.dart'),
+      currentDir
+          .childDirectory('lib')
+          .childDirectory('src')
+          .childFile('project.dart'),
+    ];
 
-    final (celestDir, isExistingProject, parentProject) =
-        switch ((projectFile.existsSync(), pubspecFile.existsSync())) {
+    final (celestDir, isExistingProject, parentProject) = switch ((
+      projectFiles.any((f) => f.existsSync()),
+      pubspecFile.existsSync()
+    )) {
       // We're inside the `celest` directory.
       (true, _) => (
           currentDir,

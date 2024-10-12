@@ -290,6 +290,7 @@ final class CelestFrontend {
         final analysisResult = await _analyzeProject(
           migrateProject: migrateProject,
         );
+        _didFirstCompile = true;
         migrateProject = false;
 
         _logWarnings(analysisResult.warnings);
