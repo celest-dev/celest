@@ -18,116 +18,116 @@ import 'package:meta/meta.dart';
 /// An exception thrown by a Cloud Widget.
 abstract mixin class CloudException implements CelestException {
   /// {@macro celest_core.exception.bad_request_exception}
-  const factory CloudException.badRequest(
-    String? message, {
+  const factory CloudException.badRequest({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = BadRequestException;
+  }) = BadRequestException.of;
 
   /// {@macro celest_core.exception.unauthorized_exception}
-  const factory CloudException.unauthorized(
-    String? message, {
+  const factory CloudException.unauthorized({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = UnauthorizedException;
+  }) = UnauthorizedException.of;
 
   /// {@macro celest_core.exception.internal_server_error}
-  factory CloudException.internalServerError(
-    String? message, {
+  factory CloudException.internalServerError({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = InternalServerError;
+  }) = InternalServerError.of;
 
   /// {@macro celest_core.exception.cancelled_exception}
-  const factory CloudException.cancelled(
-    String? message, {
+  const factory CloudException.cancelled({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = CancelledException;
+  }) = CancelledException.of;
 
   /// {@macro celest_core.exception.unknown_error}
-  factory CloudException.unknownError(
-    String? message, {
+  factory CloudException.unknownError({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = UnknownError;
+  }) = UnknownError.of;
 
   /// {@macro celest_core.exception.not_found_exception}
-  const factory CloudException.notFound(
-    String? message, {
+  const factory CloudException.notFound({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = NotFoundException;
+  }) = NotFoundException.of;
 
   /// {@macro celest_core.exception.already_exists_exception}
-  const factory CloudException.alreadyExists(
-    String? message, {
+  const factory CloudException.alreadyExists({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = AlreadyExistsException;
+  }) = AlreadyExistsException.of;
 
   /// {@macro celest_core.exception.permission_denied_exception}
-  const factory CloudException.permissionDenied(
-    String? message, {
+  const factory CloudException.permissionDenied({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = PermissionDeniedException;
+  }) = PermissionDeniedException.of;
 
   /// {@macro celest_core.exception.resource_exhausted_exception}
-  const factory CloudException.resourceExhausted(
-    String? message, {
+  const factory CloudException.resourceExhausted({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = ResourceExhaustedException;
+  }) = ResourceExhaustedException.of;
 
   /// {@macro celest_core.exception.failed_precondition_exception}
-  const factory CloudException.failedPrecondition(
-    String? message, {
+  const factory CloudException.failedPrecondition({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = FailedPreconditionException;
+  }) = FailedPreconditionException.of;
 
   /// {@macro celest_core.exception.aborted_exception}
-  const factory CloudException.aborted(
-    String? message, {
+  const factory CloudException.aborted({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = AbortedException;
+  }) = AbortedException.of;
 
   /// {@macro celest_core.exception.out_of_range_exception}
-  const factory CloudException.outOfRange(
-    String? message, {
+  const factory CloudException.outOfRange({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = OutOfRangeException;
+  }) = OutOfRangeException.of;
 
   /// {@macro celest_core.exception.unimplemented_error}
-  factory CloudException.unimplemented(
-    String? message, {
+  factory CloudException.unimplemented({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = UnimplementedError;
+  }) = UnimplementedError.of;
 
   /// {@macro celest_core.exception.unavailable_error}
-  factory CloudException.unavailable(
-    String? message, {
+  factory CloudException.unavailable({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = UnavailableError;
+  }) = UnavailableError.of;
 
   /// {@macro celest_core.exception.data_loss_error}
-  factory CloudException.dataLoss(
-    String? message, {
+  factory CloudException.dataLoss({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = DataLossError;
+  }) = DataLossError.of;
 
   /// {@macro celest_core.exception.deadline_exceeded_error}
-  factory CloudException.deadlineExceeded(
-    String? message, {
+  factory CloudException.deadlineExceeded({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = DeadlineExceededError;
+  }) = DeadlineExceededError.of;
 
   /// Creates a [CloudException] from the given gRPC [error].
   factory CloudException.fromGrpcError(GrpcError error) {
@@ -147,66 +147,85 @@ abstract mixin class CloudException implements CelestException {
     JsonValue? details,
   }) {
     return switch (code) {
-      StatusCode.aborted => AbortedException(
-          message,
+      StatusCode.aborted => AbortedException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.alreadyExists => AlreadyExistsException(
-          message,
+      StatusCode.alreadyExists => AlreadyExistsException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.cancelled => CancelledException(
-          message,
+      StatusCode.cancelled => CancelledException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.dataLoss => DataLossError(
-          message,
+      StatusCode.dataLoss => DataLossError.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.deadlineExceeded => DeadlineExceededError(
-          message,
+      StatusCode.deadlineExceeded => DeadlineExceededError.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.failedPrecondition => FailedPreconditionException(
-          message,
+      StatusCode.failedPrecondition => FailedPreconditionException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.internal => InternalServerError(
-          message,
+      StatusCode.internal => InternalServerError.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.invalidArgument => BadRequestException(
-          message,
+      StatusCode.invalidArgument => BadRequestException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.notFound => NotFoundException(
-          message,
+      StatusCode.notFound => NotFoundException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.outOfRange => OutOfRangeException(
-          message,
+      StatusCode.outOfRange => OutOfRangeException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.permissionDenied => PermissionDeniedException(
-          message,
+      StatusCode.permissionDenied => PermissionDeniedException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.resourceExhausted => ResourceExhaustedException(
-          message,
+      StatusCode.resourceExhausted => ResourceExhaustedException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.unauthenticated => UnauthorizedException(
-          message,
+      StatusCode.unauthenticated => UnauthorizedException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.unavailable => UnavailableError(
-          message,
+      StatusCode.unavailable => UnavailableError.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      StatusCode.unimplemented => UnimplementedError(message),
-      _ => UnknownError(
-          message,
+      StatusCode.unimplemented => UnimplementedError.of(
+          message: message,
           details: details,
+          code: code,
+        ),
+      _ => UnknownError.of(
+          message: message,
+          details: details,
+          code: code,
         ),
     };
   }
@@ -264,75 +283,93 @@ abstract mixin class CloudException implements CelestException {
     return switch (code) {
       HttpStatus.badRequest ||
       StatusCode.invalidArgument =>
-        BadRequestException(
-          message,
+        BadRequestException.of(
+          message: message,
           details: details,
+          code: code,
         ),
       HttpStatus.unauthorized ||
       StatusCode.unauthenticated =>
-        UnauthorizedException(
-          message,
+        UnauthorizedException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      HttpStatus.notFound || StatusCode.notFound => NotFoundException(
-          message,
+      HttpStatus.notFound || StatusCode.notFound => NotFoundException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      HttpStatus.conflict || StatusCode.alreadyExists => AlreadyExistsException(
-          message,
+      HttpStatus.conflict ||
+      StatusCode.alreadyExists =>
+        AlreadyExistsException.of(
+          message: message,
           details: details,
+          code: code,
         ),
       HttpStatus.forbidden ||
       StatusCode.permissionDenied =>
-        PermissionDeniedException(
-          message,
+        PermissionDeniedException.of(
+          message: message,
           details: details,
+          code: code,
         ),
       HttpStatus.tooManyRequests ||
       StatusCode.resourceExhausted =>
-        ResourceExhaustedException(
-          message,
+        ResourceExhaustedException.of(
+          message: message,
           details: details,
+          code: code,
         ),
       HttpStatus.preconditionFailed ||
       StatusCode.failedPrecondition =>
-        FailedPreconditionException(
-          message,
+        FailedPreconditionException.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      HttpStatus.conflict || StatusCode.aborted => AbortedException(
-          message,
+      HttpStatus.conflict || StatusCode.aborted => AbortedException.of(
+          message: message,
           details: details,
+          code: code,
         ),
       HttpStatus.requestedRangeNotSatisfiable ||
       StatusCode.outOfRange =>
-        OutOfRangeException(
-          message,
+        OutOfRangeException.of(
+          message: message,
           details: details,
+          code: code,
         ),
       HttpStatus.notImplemented ||
       StatusCode.unimplemented =>
-        UnimplementedError(message),
+        UnimplementedError.of(
+          message: message,
+          details: details,
+          code: code,
+        ),
       HttpStatus.internalServerError ||
       StatusCode.internal =>
-        InternalServerError(
-          message,
+        InternalServerError.of(
+          message: message,
           details: details,
+          code: code,
         ),
       HttpStatus.serviceUnavailable ||
       StatusCode.unavailable =>
-        UnavailableError(
-          message,
+        UnavailableError.of(
+          message: message,
           details: details,
+          code: code,
         ),
-      _ => UnknownError(
-          message,
+      _ => UnknownError.of(
+          message: message,
           details: details,
+          code: code,
         ),
     };
   }
 
-  const CloudException._();
+  const CloudException.of();
 
   /// The type identifier of the exception.
   ///
@@ -370,8 +407,11 @@ class CancelledException with CloudException {
   /// Creates a [CancelledException] with the given [message].
   ///
   /// {@macro celest_core.exception.cancelled_exception}
-  const CancelledException(
-    String? message, {
+  const CancelledException([String? message, JsonValue? details, int? code])
+      : this.of(message: message, details: details, code: code);
+
+  const CancelledException.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.clientClosedRequest,
@@ -398,8 +438,11 @@ class UnknownError extends Error with CloudException {
   /// Creates a [UnknownError] with the given [message].
   ///
   /// {@macro celest_core.exception.unknown_error}
-  UnknownError(
-    String? message, {
+  UnknownError([String? message, JsonValue? details, int? code])
+      : this.of(message: message, details: details, code: code);
+
+  UnknownError.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.internalServerError,
@@ -427,19 +470,26 @@ abstract base class BadRequestException extends CloudException {
   /// Creates a [BadRequestException] with the given [message].
   ///
   /// {@macro celest_core.exception.bad_request_exception}
-  const factory BadRequestException(
-    String? message, {
+  const factory BadRequestException([
+    String? message,
+    JsonValue? details,
+    int? code,
+  ]) = _BadRequestException;
+
+  const factory BadRequestException.of({
+    String? message,
     int? code,
     JsonValue? details,
-  }) = _BadRequestException;
+  }) = _BadRequestException.of;
 
   @protected
-  const BadRequestException.base(
-    this.message, {
+  const BadRequestException.base({
+    String? message,
     int? code,
     this.details,
-  })  : code = code ?? HttpStatus.badRequest,
-        super._();
+  })  : message = message ?? 'Bad request',
+        code = code ?? HttpStatus.badRequest,
+        super.of();
 
   @override
   String get type => 'celest.core.v1.BadRequestException';
@@ -455,8 +505,14 @@ abstract base class BadRequestException extends CloudException {
 }
 
 final class _BadRequestException extends BadRequestException {
-  const _BadRequestException(String? message, {super.code, super.details})
-      : super.base(message ?? 'Bad request');
+  const _BadRequestException([String? message, JsonValue? details, int? code])
+      : super.base(message: message);
+
+  const _BadRequestException.of({
+    super.message,
+    super.code,
+    super.details,
+  }) : super.base();
 }
 
 /// {@template celest_core.exception.unauthorized_exception}
@@ -467,8 +523,11 @@ class UnauthorizedException with CloudException {
   /// Creates a [UnauthorizedException] with the given [message].
   ///
   /// {@macro celest_core.exception.unauthorized_exception}
-  const UnauthorizedException(
-    String? message, {
+  const UnauthorizedException([String? message, JsonValue? details, int? code])
+      : this.of(message: message, details: details, code: code);
+
+  const UnauthorizedException.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.unauthorized,
@@ -496,8 +555,11 @@ class NotFoundException with CloudException {
   /// Creates a [NotFoundException] with the given [message].
   ///
   /// {@macro celest_core.exception.not_found_exception}
-  const NotFoundException(
-    String? message, {
+  const NotFoundException([String? message, JsonValue? details, int? code])
+      : this.of(message: message, details: details, code: code);
+
+  const NotFoundException.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.notFound,
@@ -524,8 +586,11 @@ class AlreadyExistsException with CloudException {
   /// Creates a [AlreadyExistsException] with the given [message].
   ///
   /// {@macro celest_core.exception.already_exists_exception}
-  const AlreadyExistsException(
-    String? message, {
+  const AlreadyExistsException([String? message, JsonValue? details, int? code])
+      : this.of(message: message, details: details, code: code);
+
+  const AlreadyExistsException.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.conflict,
@@ -553,8 +618,14 @@ class PermissionDeniedException with CloudException {
   /// Creates a [PermissionDeniedException] with the given [message].
   ///
   /// {@macro celest_core.exception.permission_denied_exception}
-  const PermissionDeniedException(
-    String? message, {
+  const PermissionDeniedException([
+    String? message,
+    JsonValue? details,
+    int? code,
+  ]) : this.of(message: message, details: details, code: code);
+
+  const PermissionDeniedException.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.forbidden,
@@ -581,8 +652,14 @@ class ResourceExhaustedException with CloudException {
   /// Creates a [ResourceExhaustedException] with the given [message].
   ///
   /// {@macro celest_core.exception.resource_exhausted_exception}
-  const ResourceExhaustedException(
-    String? message, {
+  const ResourceExhaustedException([
+    String? message,
+    JsonValue? details,
+    int? code,
+  ]) : this.of(message: message, details: details, code: code);
+
+  const ResourceExhaustedException.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.tooManyRequests,
@@ -610,8 +687,14 @@ class FailedPreconditionException with CloudException {
   /// Creates a [FailedPreconditionException] with the given [message].
   ///
   /// {@macro celest_core.exception.failed_precondition_exception}
-  const FailedPreconditionException(
-    String? message, {
+  const FailedPreconditionException([
+    String? message,
+    JsonValue? details,
+    int? code,
+  ]) : this.of(message: message, details: details, code: code);
+
+  const FailedPreconditionException.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.preconditionFailed,
@@ -638,8 +721,11 @@ class AbortedException with CloudException {
   /// Creates a [AbortedException] with the given [message].
   ///
   /// {@macro celest_core.exception.aborted_exception}
-  const AbortedException(
-    String? message, {
+  const AbortedException([String? message, JsonValue? details, int? code])
+      : this.of(message: message, details: details, code: code);
+
+  const AbortedException.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.conflict,
@@ -666,8 +752,11 @@ class OutOfRangeException with CloudException {
   /// Creates a [OutOfRangeException] with the given [message].
   ///
   /// {@macro celest_core.exception.out_of_range_exception}
-  const OutOfRangeException(
-    String? message, {
+  const OutOfRangeException([String? message, JsonValue? details, int? code])
+      : this.of(message: message, details: details, code: code);
+
+  const OutOfRangeException.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.requestedRangeNotSatisfiable,
@@ -694,8 +783,11 @@ class UnimplementedError extends core.UnimplementedError with CloudException {
   /// Creates a [UnimplementedError] with the given [message].
   ///
   /// {@macro celest_core.exception.unimplemented_error}
-  UnimplementedError(
-    String? message, {
+  UnimplementedError([String? message, JsonValue? details, int? code])
+      : this.of(message: message, details: details, code: code);
+
+  UnimplementedError.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.notImplemented,
@@ -723,8 +815,11 @@ class InternalServerError extends Error with CloudException {
   /// Creates a [InternalServerError] with the given [message].
   ///
   /// {@macro celest_core.exception.internal_server_error}
-  InternalServerError(
-    String? message, {
+  InternalServerError([String? message, JsonValue? details, int? code])
+      : this.of(message: message, details: details, code: code);
+
+  InternalServerError.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.internalServerError,
@@ -751,8 +846,11 @@ class UnavailableError extends Error with CloudException {
   /// Creates a [UnavailableError] with the given [message].
   ///
   /// {@macro celest_core.exception.unavailable_error}
-  UnavailableError(
-    String? message, {
+  UnavailableError([String? message, JsonValue? details, int? code])
+      : this.of(message: message, details: details, code: code);
+
+  UnavailableError.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.serviceUnavailable,
@@ -779,8 +877,11 @@ class DataLossError extends Error with CloudException {
   /// Creates a [DataLossError] with the given [message].
   ///
   /// {@macro celest_core.exception.data_loss_error}
-  DataLossError(
-    String? message, {
+  DataLossError([String? message, JsonValue? details, int? code])
+      : this.of(message: message, details: details, code: code);
+
+  DataLossError.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.internalServerError,
@@ -807,8 +908,11 @@ class DeadlineExceededError extends Error with CloudException {
   /// Creates a [DeadlineExceededError] with the given [message].
   ///
   /// {@macro celest_core.exception.deadline_exceeded_error}
-  DeadlineExceededError(
-    String? message, {
+  DeadlineExceededError([String? message, JsonValue? details, int? code])
+      : this.of(message: message, details: details, code: code);
+
+  DeadlineExceededError.of({
+    String? message,
     int? code,
     this.details,
   })  : code = code ?? HttpStatus.gatewayTimeout,

@@ -14,7 +14,7 @@ final class SerializationException extends BadRequestException
   /// Creates a [SerializationException] with the given [message].
   ///
   /// {@macro celest_core_exceptions_serialization_exception}
-  const SerializationException(super.message) : super.base();
+  const SerializationException(String? message) : super.base(message: message);
 
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)

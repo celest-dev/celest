@@ -51,7 +51,7 @@ final class FirebaseTokenVerifier {
     final publicKey = await _publicKeysStore.get(keyId);
     final algorithm = AlgorithmIdentifier.getByJwaName(alg);
     if (algorithm == null) {
-      throw CloudException.unauthorized('Invalid JWT algorithm: $alg');
+      throw CloudException.unauthorized(message: 'Invalid JWT algorithm: $alg');
     }
     final verifier = publicKey.createVerifier(algorithm);
     final data = utf8.encode('$header.$payload');
@@ -60,7 +60,7 @@ final class FirebaseTokenVerifier {
       Signature(base64RawUrl.decode(signature)),
     );
     if (!validSignature) {
-      throw const CloudException.unauthorized('Invalid JWT signature');
+      throw const CloudException.unauthorized(message: 'Invalid JWT signature');
     }
     final claims = switch (_decodeJwtPart(payload)) {
       final Map<String, Object?> payload => payload,
@@ -69,10 +69,10 @@ final class FirebaseTokenVerifier {
 
     // Verify the issuer and audience.
     if (claims['iss'] != _issuer) {
-      throw const CloudException.unauthorized('Invalid JWT issuer');
+      throw const CloudException.unauthorized(message: 'Invalid JWT issuer');
     }
     if (claims['aud'] != _projectId) {
-      throw const CloudException.unauthorized('Invalid JWT audience');
+      throw const CloudException.unauthorized(message: 'Invalid JWT audience');
     }
 
     return User(

@@ -27,7 +27,6 @@ abstract mixin class BaseService {
         final CloudException ex => ex,
         final GrpcError ex => CloudException.fromGrpcError(ex),
         final Exception ex => CloudException.unknownError(
-            null,
             details: JsonString(ex.toString()),
           ),
         _ => e,
@@ -65,7 +64,6 @@ abstract mixin class BaseService {
         final CloudException ex => ex,
         final GrpcError ex => CloudException.fromGrpcError(ex),
         final Exception ex => CloudException.unknownError(
-            null,
             details: JsonString(ex.toString()),
           ),
         _ => e,

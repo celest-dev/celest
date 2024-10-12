@@ -34,7 +34,7 @@ abstract base class AuthMiddleware implements Middleware {
     return (shelf.Request request) async {
       final user = await authenticate(request);
       if (user == null && required) {
-        throw const CloudException.unauthorized('Unauthorized');
+        throw const CloudException.unauthorized();
       }
       if (user != null) {
         context.put(ContextKey.principal, user);
