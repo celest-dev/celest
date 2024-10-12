@@ -77,12 +77,14 @@ base mixin Authenticate on CelestCommand {
   }
 
   /// Asserts the user is authenticated.
-  Future<int> assertAuthenticated() async {
+  Future<User> assertAuthenticated() async {
     final authState = await auth.init();
-    if (authState is Unauthenticated) {
-      cliLogger.err('You must be authenticated to run this command.');
-      return 1;
+    if (authState case Authenticated(:final user)) {
+      return user;
     }
-    return 0;
+    throw const CliException(
+      'You must be logged in to run this command. '
+      'Run `celest auth login` to log in or create an account.',
+    );
   }
 }

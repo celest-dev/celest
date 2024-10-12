@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/codegen/allocator.dart';
 import 'package:celest_cli/codegen/api/entrypoint_generator.dart';
 import 'package:celest_cli/codegen/api/local_api_generator.dart';
+import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud/cloud_client_generator.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
+import 'package:celest_cli/codegen/code_outputs.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart';
 
@@ -15,6 +19,9 @@ final class CloudCodeGenerator extends AstVisitor<void> {
 
   final Project project;
   final ResolvedProject resolvedProject;
+  final _codegenDependencies = CodegenDependencies(
+    rootDir: projectPaths.projectRoot,
+  );
 
   /// A map of generated files to their contents.
   final Map<String, String> fileOutputs = {};
@@ -22,15 +29,20 @@ final class CloudCodeGenerator extends AstVisitor<void> {
   /// A map of API routes to their target reference.
   final Map<String, Reference> _targets = {};
 
-  Map<String, String> generate() {
+  CodeOutputs generate() {
     visitProject(project);
-    return fileOutputs;
+    return CodeOutputs(
+      fileOutputs,
+      codegenDependencies: _codegenDependencies,
+    );
   }
 
   @override
   void visitProject(Project project) {
-    final cloudClientLibraries =
-        CloudClientGenerator(project: project).generate();
+    final cloudClientLibraries = runZoned(
+      CloudClientGenerator(project: project).generate,
+      zoneValues: {CodegenDependencies: _codegenDependencies},
+    );
     for (final library in cloudClientLibraries.entries) {
       final filePath = projectPaths.denormalizeUri(library.key).toFilePath();
       fileOutputs[filePath] = CodeGenerator.emit(
@@ -47,7 +59,7 @@ final class CloudCodeGenerator extends AstVisitor<void> {
       final localApiFile = projectPaths.localApiEntrypoint;
       final localApi = LocalApiGenerator(
         targets: _targets,
-        projectType: resolvedProject.sdkConfig.targetSdk,
+        project: project,
       ).generate();
       fileOutputs[localApiFile] = CodeGenerator.emit(
         localApi,
@@ -122,4 +134,10 @@ final class CloudCodeGenerator extends AstVisitor<void> {
   void visitExternalAuthProvider(ExternalAuthProvider provider) {
     throw UnimplementedError();
   }
+
+  @override
+  void visitDatabase(Database database) {}
+
+  @override
+  void visitDatabaseSchema(DatabaseSchema schema) {}
 }

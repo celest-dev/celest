@@ -66,7 +66,7 @@ Future<void> main() async {
       '$tmpDir/hello_world.dart',
     ]);
     if (res.exitCode != 0) {
-      throw CelestException(
+      throw CliException(
         'Failed to compile hello_world.dart:\n${res.stderr}',
       );
     }

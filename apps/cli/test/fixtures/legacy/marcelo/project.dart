@@ -1,1 +1,0 @@
-/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/marcelo/lib/src/project.dart

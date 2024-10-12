@@ -13,6 +13,9 @@
     - [ ] Fix `default` values
 - Generate full client as part of `celest init`. To prevent lengthy starts, maybe bundle the generated client.
 - Add `CloudException.withCode` or `.copyWith` and use that when serializing exceptions w/ custom codes.
+- Fix client importing new dependencies which are not in transitive dependencies
+- Fix client import prefixes overlapping with other imports
+- Fix data exceptions internal only
 
 ## Functions
 
@@ -26,3 +29,8 @@
 ## CLI
 
 - Restarting a Flutter backend changes the port number every time
+
+## Build
+
+- `celest build` must work different depending on whether the user is logged in or not.
+   If they're not, for example, they will not have a Turso database.

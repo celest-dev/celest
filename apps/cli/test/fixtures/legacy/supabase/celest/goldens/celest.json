@@ -1,0 +1,99 @@
+{
+  "projectId": "supabase",
+  "environmentId": "local",
+  "apis": {
+    "auth": {
+      "apiId": "auth",
+      "functions": {
+        "currentUser": {
+          "functionId": "currentUser",
+          "parentId": "auth",
+          "httpConfig": {
+            "method": "GET",
+            "route": {
+              "path": "/auth/current-user"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "SUPABASE_URL",
+      "value": "http://127.0.0.1:54321"
+    },
+    {
+      "name": "SUPABASE_PROJECT_ID",
+      "value": "vduqtbtlcxxozghvhdqu"
+    },
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "secrets": [
+    {
+      "name": "SUPABASE_JWT_SECRET",
+      "value": "super-secret-jwt-token-with-at-least-32-characters-long"
+    }
+  ],
+  "auth": {
+    "externalProviders": [
+      {
+        "authProviderId": "supabase",
+        "type": "SUPABASE",
+        "supabase": {
+          "projectUrl": {
+            "name": "SUPABASE_URL",
+            "value": "http://127.0.0.1:54321"
+          },
+          "jwtSecret": {
+            "name": "SUPABASE_JWT_SECRET",
+            "value": "super-secret-jwt-token-with-at-least-32-characters-long"
+          }
+        }
+      }
+    ]
+  },
+  "databases": {},
+  "sdkConfig": {
+    "celest": {
+      "major": 1,
+      "minor": 0,
+      "patch": 0,
+      "preRelease": [
+        "dev",
+        0.0
+      ],
+      "canonicalizedVersion": "1.0.0-dev.0"
+    },
+    "dart": {
+      "type": "DART",
+      "version": {
+        "major": 3,
+        "minor": 5,
+        "patch": 3,
+        "canonicalizedVersion": "3.5.3"
+      }
+    },
+    "flutter": {
+      "type": "FLUTTER",
+      "version": {
+        "major": 3,
+        "minor": 24,
+        "patch": 3,
+        "canonicalizedVersion": "3.24.3"
+      }
+    },
+    "targetSdk": "DART",
+    "featureFlags": [
+      "STREAMING"
+    ]
+  }
+}

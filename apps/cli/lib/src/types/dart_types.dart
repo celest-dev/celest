@@ -114,6 +114,9 @@ abstract class DartTypes {
   /// `package:cross_file` types.
   static const crossFile = _XFile();
 
+  /// `package:drift` types.
+  static const drift = _Drift();
+
   /// `package:fixnum` types.
   static const fixNum = FixNum();
 
@@ -594,6 +597,10 @@ class _Celest {
   DartTypeReference get cloudWidget =>
       const DartTypeReference('CloudWidget', _url);
 
+  /// Creates a [celest.Context] reference.
+  DartTypeReference get context =>
+      const DartTypeReference('Context', _contextUrl);
+
   /// Creates a [celest.Environment] reference.
   DartTypeReference get environment =>
       const DartTypeReference('Environment', _url);
@@ -759,6 +766,27 @@ class _Convert {
 
   /// Creates a [convert.utf8] reference.
   DartTypeReference get utf8 => const DartTypeReference('utf8', _url);
+}
+
+/// `package:drift` types
+class _Drift {
+  const _Drift();
+  DartTypeReference get queryExecutor => const DartTypeReference(
+        'QueryExecutor',
+        'package:drift/src/runtime/executor/executor.dart',
+      );
+  DartTypeReference get generatedDatabase => const DartTypeReference(
+        'GeneratedDatabase',
+        'package:drift/src/runtime/api/runtime_api.dart',
+      );
+  DartTypeReference get nativeDatabase => const DartTypeReference(
+        'NativeDatabase',
+        'package:drift/native.dart',
+      );
+  DartTypeReference get hranaDatabase => const DartTypeReference(
+        'HranaDatabase',
+        'package:drift_hrana/drift_hrana.dart',
+      );
 }
 
 /// `package:libcoder` types

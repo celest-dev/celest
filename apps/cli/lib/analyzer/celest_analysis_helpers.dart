@@ -178,6 +178,10 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
         AnalysisErrorSeverity.warning,
       _ => AnalysisErrorSeverity.debug,
     };
+
+    // TODO(dnys1): If the exception type is not in the transitive dependency
+    // graph, we need to either: a) choose to add it, or b) skip the type.
+
     final typeUri =
         '${interfaceElement.library.source.uri}#${interfaceElement.name}';
     final overriddenBy = typeHelper.overrides[interfaceElement.thisType];

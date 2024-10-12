@@ -68,7 +68,7 @@ final class Initialized implements ConfigureState {
 base mixin Configure on CelestCommand {
   abstract Progress? currentProgress;
 
-  static Never _throwNoProject() => throw const CelestException(
+  static Never _throwNoProject() => throw const CliException(
         'No Celest project found in the current directory. '
         'To create a new project, run `celest init`.',
       );
@@ -204,7 +204,7 @@ base mixin Configure on CelestCommand {
             final projectRoot = p.join(currentDir.path, projectName);
             final projectDir = fileSystem.directory(projectRoot);
             if (projectDir.existsSync() && !await projectDir.list().isEmpty) {
-              throw CelestException(
+              throw CliException(
                 'A directory named "$projectName" already exists. '
                 'Please choose a different name, or run this command from a '
                 'different directory.',

@@ -158,4 +158,15 @@ final class ProjectDiff extends AstVisitorWithArg<void, ProjectDiffContext> {
     ExternalAuthProvider provider,
     covariant ProjectDiffContext context,
   ) {}
+
+  @override
+  void visitDatabase(Database database, covariant ProjectDiffContext context) {
+    // TODO: implement visitDatabase
+  }
+
+  @override
+  void visitDatabaseSchema(
+      DatabaseSchema schema, covariant ProjectDiffContext context) {
+    // TODO: implement visitSchema
+  }
 }

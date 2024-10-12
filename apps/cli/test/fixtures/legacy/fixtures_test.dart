@@ -2623,7 +2623,7 @@ final tests = <String, Test>{
               output: {
                 '@status': {
                   'code': 400,
-                  'message': 'Exception: Something bad happened',
+                  'message': null,
                   'details': [
                     {
                       '@type': 'dart.core.Exception',
@@ -3896,6 +3896,26 @@ final tests = <String, Test>{
               events: [
                 'Hello, anonymous!',
               ],
+            ),
+          ],
+        },
+      ),
+    },
+  ),
+  'data': Test(
+    apis: {
+      'tasks': ApiTest(
+        functionTests: {
+          'create': [
+            FunctionTestSuccess(
+              name: 'creates a todo',
+              input: {'title': 'Ship V1'},
+              output: {
+                'id': 1,
+                'title': 'Ship V1',
+                'priority': 'high',
+                'completed': false,
+              },
             ),
           ],
         },

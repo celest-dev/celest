@@ -59,9 +59,9 @@ class FrontendServerClient {
     String platformKernel, {
     required String workingDirectory,
     List<String>? enabledExperiments,
-    // List<String> fileSystemRoots = const [], // For `fileSystemScheme` uris,
-    // String fileSystemScheme =
-    //     'org-dartlang-root', // Custom scheme for virtual `fileSystemRoots`.
+    List<String> fileSystemRoots = const [], // For `fileSystemScheme` uris,
+    String fileSystemScheme =
+        'org-dartlang-root', // Custom scheme for virtual `fileSystemRoots`.
     required String frontendServerPath,
     String packagesJson = '.dart_tool/package_config.json',
     required String sdkRoot,
@@ -80,9 +80,9 @@ class FrontendServerClient {
         sdkRoot,
         '--platform=$platformKernel',
         '--target=$target',
-        // for (final root in fileSystemRoots) '--filesystem-root=$root',
-        // '--filesystem-scheme',
-        // fileSystemScheme,
+        for (final root in fileSystemRoots) '--filesystem-root=$root',
+        '--filesystem-scheme',
+        fileSystemScheme,
         '--output-dill',
         outputDillPath,
         '--packages=$packagesJson',

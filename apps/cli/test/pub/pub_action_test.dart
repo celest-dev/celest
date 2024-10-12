@@ -80,7 +80,7 @@ dependencies:
               workingDirectory: tempDir.path,
             ),
             throwsA(
-              isA<CelestException>().having(
+              isA<CliException>().having(
                 (e) => e.toString(),
                 'message',
                 contains(

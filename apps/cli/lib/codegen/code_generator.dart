@@ -9,6 +9,7 @@ abstract final class CodeGenerator {
     'unnecessary_cast',
     'unnecessary_import',
     'deprecated_member_use',
+    'invalid_use_of_internal_member',
   ];
   static final _header = 'ignore_for_file: ${_ignoredRules.join(', ')}';
   static final _formatter = DartFormatter(

@@ -5,15 +5,20 @@ import 'package:celest_cli/pub/pubspec.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
+import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
 final class CodeOutputs extends DelegatingMap<String, String> {
   const CodeOutputs(
     super.base, {
-    required this.clientDependencies,
+    required this.codegenDependencies,
   });
 
-  final ClientDependencies clientDependencies;
+  /// Dependencies added as part of the code generation process.
+  ///
+  /// These must be added to the respective pubspec.yaml after generation
+  /// to ensure referenced types are available.
+  final CodegenDependencies codegenDependencies;
 
   static final Logger _logger = Logger('CodeOutputs');
 
@@ -29,40 +34,45 @@ final class CodeOutputs extends DelegatingMap<String, String> {
         }),
       );
     });
-    if (clientDependencies.isNotEmpty) {
-      final currentDependencies =
-          Set.of(celestProject.clientPubspec.dependencies.keys);
+    if (codegenDependencies.isNotEmpty) {
+      var (pubspec, pubspecYaml) =
+          p.equals(codegenDependencies.rootDir, projectPaths.projectRoot)
+              ? (celestProject.pubspec, celestProject.pubspecYaml)
+              : (celestProject.clientPubspec, celestProject.clientPubspecYaml);
+      final pubspecFile = fileSystem
+          .directory(codegenDependencies.rootDir)
+          .childFile('pubspec.yaml');
+      final currentDependencies = Set.of(pubspec.dependencies.keys);
       final missingDependencies =
-          clientDependencies.difference(currentDependencies);
+          codegenDependencies.difference(currentDependencies);
       if (missingDependencies.isNotEmpty) {
         _logger.fine(
-          'Adding dependencies to client: ${missingDependencies.toList()}',
+          'Adding dependencies to ${pubspecFile.path}: '
+          '${missingDependencies.toList()}',
         );
-        final pubspec = celestProject.clientPubspec.addDeps(
+        pubspec = pubspec.addDeps(
           dependencies: {
-            for (final dependency in clientDependencies)
+            for (final dependency in codegenDependencies)
               dependency: ProjectDependency.all[dependency]?.pubDependency ??
-                  HostedDependency(),
+                  HostedDependency(version: VersionConstraint.any),
           },
         );
-        final clientPubspec = fileSystem
-            .directory(projectPaths.clientRoot)
-            .childFile('pubspec.yaml');
-        if (clientPubspec.existsSync()) {
-          final source = celestProject.clientPubspecYaml;
+        if (pubspecFile.existsSync()) {
           outputFutures.add(
-            clientPubspec
-                .writeAsString(pubspec.toYaml(source: source))
+            pubspecFile
+                .writeAsString(pubspec.toYaml(source: pubspecYaml))
                 .then((_) {
               return runPub(
                 action: PubAction.get,
-                workingDirectory: clientPubspec.parent.path,
+                workingDirectory: pubspecFile.parent.path,
               );
             }),
           );
         } else {
           _logger.fine(
-            'Skipping dependency update. Client pubspec not found: $clientPubspec',
+            'Skipping dependency update',
+            'Pubspec not found: ${pubspecFile.path}',
+            StackTrace.current,
           );
         }
       }

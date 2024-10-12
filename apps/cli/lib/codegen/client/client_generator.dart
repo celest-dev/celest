@@ -77,6 +77,16 @@ final class _ReferencedTypesCollector extends ast.AstVisitor<void> {
 
   @override
   void visitExternalAuthProvider(ast.ExternalAuthProvider provider) {}
+
+  @override
+  void visitDatabase(ast.Database database) {
+    // TODO: implement visitDatabase
+  }
+
+  @override
+  void visitDatabaseSchema(ast.DatabaseSchema schema) {
+    // TODO: implement visitSchema
+  }
 }
 
 final class ClientGenerator {

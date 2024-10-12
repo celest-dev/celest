@@ -587,7 +587,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         }
         final reservedCelestVariableOutsideCelest =
             name.toUpperCase().startsWith('CELEST_') &&
-                !(annotation.element?.library?.isPackageCelest ?? false);
+                !(annotation.element?.library?.isCelestSdk ?? false);
         if (reservedEnvVars.contains(name) ||
             reservedCelestVariableOutsideCelest) {
           reportError(
@@ -628,7 +628,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         }
         final reservedCelestVariableOutsideCelest =
             name.toUpperCase().startsWith('CELEST_') &&
-                !(annotation.element?.library?.isPackageCelest ?? false);
+                !(annotation.element?.library?.isCelestSdk ?? false);
         if (reservedEnvVars.contains(name) ||
             reservedCelestVariableOutsideCelest) {
           reportError(
@@ -1203,6 +1203,111 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
       location: authDefinitionLocation!,
       providers: uniqueAuthProviders.toList(),
       externalProviders: uniqueExternalAuthProviders.toList(),
+    );
+  }
+
+  @override
+  Future<ast.Database?> resolveDatabase({
+    required String databaseFilepath,
+    required ResolvedLibraryResult databaseLibrary,
+  }) async {
+    final (topLevelConstants, hasErrors) = databaseLibrary.element
+        .topLevelConstants(errorReporter: _errorReporter);
+    if (hasErrors) {
+      return null;
+    }
+    final databaseDefinition =
+        topLevelConstants.firstWhereOrNull((el) => el.element.type.isDatabase);
+    if (databaseDefinition == null) {
+      _logger.finest('No `Database` definition found in $databaseFilepath');
+      return null;
+    }
+
+    final (
+      element: databaseDefinitionElement,
+      value: databaseDefinitionValue,
+    ) = databaseDefinition;
+
+    // Validate `database` variable.
+    final databaseDefinitionLocation =
+        databaseDefinitionElement.sourceLocation!;
+    final databaseSchema = databaseDefinitionValue.getField('schema');
+    if (databaseSchema == null) {
+      reportError(
+        'The `schema` field is required on `Database` definitions',
+        location: databaseDefinitionLocation,
+      );
+      return null;
+    }
+
+    final schemaType = databaseSchema.type;
+    if (schemaType is! DartType || !schemaType.isDriftSchema) {
+      reportError(
+        'Invalid schema type: $schemaType.\n'
+        'Only `Schema.drift` is supported for database definitions currently.',
+        location: databaseDefinitionLocation,
+      );
+      return null;
+    }
+
+    final driftDatabaseType =
+        databaseSchema.getField('databaseType')?.toTypeValue();
+    if (driftDatabaseType is! InterfaceType) {
+      reportError(
+        'Failed to resolve the Dart type passed to `Schema.drift`',
+        location: databaseDefinitionLocation,
+      );
+      return null;
+    }
+
+    final isSubtypeOfDriftDatabase = driftDatabaseType.allSupertypes.any(
+      (type) => type.isDriftGeneratedDatabase,
+    );
+    if (!isSubtypeOfDriftDatabase) {
+      reportError(
+        'The type passed to `Schema.drift` must be a subtype of `GeneratedDatabase` '
+        'from the `drift` package',
+        location: databaseDefinitionLocation,
+      );
+      return null;
+    }
+
+    // Find a constructor we can use
+    final constructor = driftDatabaseType.element.constructors.firstWhereOrNull(
+      (ctor) =>
+          ctor.name.isEmpty &&
+          (ctor.parameters.elementAtOrNull(0)?.type.isDriftQueryExecutor ??
+              false),
+    );
+    if (constructor == null) {
+      reportError(
+        '$driftDatabaseType must have an unnamed constructor that takes a single `QueryExecutor` '
+        'parameter like `$driftDatabaseType(super.e)` or `$driftDatabaseType(QueryExecutor e)`',
+        location: databaseDefinitionLocation,
+      );
+      return null;
+    }
+
+    final schemaTypeReference = typeHelper.toReference(driftDatabaseType);
+    return ast.Database(
+      name: schemaTypeReference.symbol!,
+      dartName: databaseDefinitionElement.name,
+      docs: databaseDefinitionElement.docLines,
+      schema: ast.DriftDatabaseSchema(
+        declaration: schemaTypeReference.toTypeReference,
+        location: databaseDefinitionLocation,
+      ),
+      config: ast.CelestDatabaseConfig(
+        hostname: ast.Variable(
+          'CELEST_DATABASE_HOST',
+          location: databaseDefinitionLocation,
+        ),
+        token: ast.Secret(
+          'CELEST_DATABASE_TOKEN',
+          location: databaseDefinitionLocation,
+        ),
+      ),
+      location: databaseDefinitionLocation,
     );
   }
 }

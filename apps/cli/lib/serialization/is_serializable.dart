@@ -265,7 +265,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
               location: parameter.sourceLocation,
             );
           }
-        default:
+        case _ when parameter.isPositional || parameter.isRequired:
           return Verdict.no(
             'The toJson method of ${type.element.name} has an unexpected '
             'parameter: ${parameter.name}. The only parameters allowed are '
@@ -736,6 +736,11 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
         )
       ) =>
         redirectedClass.sortedFields(redirectedClass.thisType),
+      // Special case for Exception which is basically a redirecting constructor
+      // but uses `=>` syntax.
+      _ when element.name == 'Exception' && element.library.isDartCore =>
+        (element.library.getClass('_Exception') as ClassElement)
+            .let((impl) => impl.sortedFields(impl.thisType)),
       _ => element.sortedFields(type),
     };
     var fieldsVerdict = const Verdict.yes();

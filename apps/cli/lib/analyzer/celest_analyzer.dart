@@ -166,7 +166,6 @@ const project = Project(name: 'cache_warmup');
     _logger.finest('Clearing analyzer caches...');
     super.reset();
     _initFuture = null;
-    _lastAnalyzed = projectPaths.projectRoot;
     _resolver = null;
     typeHelper.reset();
   }
@@ -176,9 +175,6 @@ const project = Project(name: 'cache_warmup');
     _warnings.clear();
     _infos.clear();
     _debugs.clear();
-    if (_lastAnalyzed != projectPaths.projectRoot) {
-      reset();
-    }
     _resolver ??= LegacyCelestProjectResolver(
       featureFlags: await FeatureFlags.load(),
       migrateProject: migrateProject,
@@ -283,8 +279,6 @@ const project = Project(name: 'cache_warmup');
   Set<InterfaceElement> get customExceptionTypes =>
       _resolver?.customExceptionTypes ?? const {};
 
-  String? _lastAnalyzed;
-
   Future<CelestAnalysisResult> analyzeProject({
     bool migrateProject = false,
     bool updateResources = true,
@@ -351,6 +345,17 @@ const project = Project(name: 'cache_warmup');
         secrets: secrets,
       ),
     );
+
+    final databases = await performance.trace(
+      'CelestAnalyzer',
+      'resolveDatabases',
+      _resolveDatabases,
+    );
+    if (databases.isNotEmpty) {
+      _project.databases.addAll({
+        for (final database in databases) database.name: database,
+      });
+    }
 
     if (migrateProject) {
       await performance.trace(
@@ -533,6 +538,19 @@ const project = Project(name: 'cache_warmup');
       }
     }
     return null;
+  }
+
+  Future<List<ast.Database>> _resolveDatabases() async {
+    final databaseFile = fileSystem.file(projectPaths.projectDart);
+    if (!databaseFile.existsSync()) {
+      return const [];
+    }
+    final databaseLibrary = await resolveLibrary(databaseFile.path);
+    final database = await resolver.resolveDatabase(
+      databaseFilepath: databaseFile.path,
+      databaseLibrary: databaseLibrary,
+    );
+    return database == null ? const [] : [database];
   }
 
   Future<void> _applyMigrations() async {

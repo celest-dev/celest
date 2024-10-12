@@ -1,0 +1,256 @@
+{
+  "projectId": "auth",
+  "environmentId": "local",
+  "apis": {
+    "lib": {
+      "apiId": "lib",
+      "functions": {
+        "sayHelloAuthenticated": {
+          "functionId": "sayHelloAuthenticated",
+          "parentId": "lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/lib/say-hello-authenticated"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "streamHelloAuthenticated": {
+          "functionId": "streamHelloAuthenticated",
+          "parentId": "lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/lib/stream-hello-authenticated"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          }
+        },
+        "sayHelloPublic": {
+          "functionId": "sayHelloPublic",
+          "parentId": "lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/lib/say-hello-public"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "streamHelloPublic": {
+          "functionId": "streamHelloPublic",
+          "parentId": "lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/lib/stream-hello-public"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          }
+        },
+        "sayHello": {
+          "functionId": "sayHello",
+          "parentId": "lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/lib/say-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "streamHello": {
+          "functionId": "streamHello",
+          "parentId": "lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/lib/stream-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          }
+        }
+      }
+    },
+    "authenticated_lib": {
+      "apiId": "authenticated_lib",
+      "functions": {
+        "sayHello": {
+          "functionId": "sayHello",
+          "parentId": "authenticated_lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/authenticated-lib/say-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "streamHello": {
+          "functionId": "streamHello",
+          "parentId": "authenticated_lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/authenticated-lib/stream-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          }
+        }
+      }
+    },
+    "public_lib": {
+      "apiId": "public_lib",
+      "functions": {
+        "sayHello": {
+          "functionId": "sayHello",
+          "parentId": "public_lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/public-lib/say-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "streamHello": {
+          "functionId": "streamHello",
+          "parentId": "public_lib",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/public-lib/stream-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          }
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "FIREBASE_PROJECT_ID",
+      "value": "prj-d-firebase-test"
+    },
+    {
+      "name": "SUPABASE_URL",
+      "value": "https://vduqtbtlcxxozghvhdqu.supabase.co"
+    },
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "auth": {
+    "providers": [
+      {
+        "authProviderId": "emailOtp",
+        "type": "EMAIL_OTP",
+        "emailOtp": {}
+      },
+      {
+        "authProviderId": "smsOtp",
+        "type": "SMS_OTP",
+        "smsOtp": {}
+      }
+    ],
+    "externalProviders": [
+      {
+        "authProviderId": "firebase",
+        "type": "FIREBASE",
+        "firebase": {
+          "projectId": {
+            "name": "FIREBASE_PROJECT_ID",
+            "value": "prj-d-firebase-test"
+          }
+        }
+      },
+      {
+        "authProviderId": "supabase",
+        "type": "SUPABASE",
+        "supabase": {
+          "projectUrl": {
+            "name": "SUPABASE_URL",
+            "value": "https://vduqtbtlcxxozghvhdqu.supabase.co"
+          }
+        }
+      }
+    ]
+  },
+  "databases": {},
+  "sdkConfig": {
+    "celest": {
+      "major": 1,
+      "minor": 0,
+      "patch": 0,
+      "preRelease": [
+        "dev",
+        0.0
+      ],
+      "canonicalizedVersion": "1.0.0-dev.0"
+    },
+    "dart": {
+      "type": "DART",
+      "version": {
+        "major": 3,
+        "minor": 5,
+        "patch": 3,
+        "canonicalizedVersion": "3.5.3"
+      }
+    },
+    "flutter": {
+      "type": "FLUTTER",
+      "version": {
+        "major": 3,
+        "minor": 24,
+        "patch": 3,
+        "canonicalizedVersion": "3.24.3"
+      }
+    },
+    "targetSdk": "FLUTTER",
+    "featureFlags": [
+      "STREAMING"
+    ]
+  }
+}

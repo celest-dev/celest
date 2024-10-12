@@ -27,6 +27,14 @@
     {
       "name": "SUPABASE_URL",
       "value": "http://127.0.0.1:54321"
+    },
+    {
+      "name": "SUPABASE_PROJECT_ID",
+      "value": "vduqtbtlcxxozghvhdqu"
+    },
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
     }
   ],
   "secrets": [
@@ -35,6 +43,7 @@
       "value": "super-secret-jwt-token-with-at-least-32-characters-long"
     }
   ],
+  "databases": {},
   "sdkConfig": {
     "celest": "1.0.0-dev.0",
     "dart": {

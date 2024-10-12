@@ -1,17 +1,19 @@
-// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use, invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _$async;
-import 'dart:convert' as _$convert;
+import 'dart:async';
+import 'dart:convert';
 
-import 'package:_common/src/models/available_stock.dart' as _$available_stock;
-import 'package:_common/src/models/available_stocks.dart' as _$available_stocks;
-import 'package:_common/src/models/cash_balance.dart' as _$cash_balance;
+import 'package:_common/src/models/available_stock.dart'
+    as _$_common_available_stock;
+import 'package:_common/src/models/available_stocks.dart'
+    as _$_common_available_stocks;
+import 'package:_common/src/models/cash_balance.dart' as _$_common_cash_balance;
 import 'package:_common/src/models/errors_and_exceptions.dart'
-    as _$errors_and_exceptions;
-import 'package:_common/src/models/portfolio.dart' as _$portfolio;
-import 'package:_common/src/models/stock.dart' as _$stock;
-import 'package:_common/src/models/ui.dart' as _$ui;
+    as _$_common_errors_and_exceptions;
+import 'package:_common/src/models/portfolio.dart' as _$_common_portfolio;
+import 'package:_common/src/models/stock.dart' as _$_common_stock;
+import 'package:_common/src/models/ui.dart' as _$_common_ui;
 import 'package:celest_backend/exceptions/overrides.dart';
 import 'package:celest_backend/models/overrides.dart';
 import 'package:celest_core/celest_core.dart' as _$celest;
@@ -19,28 +21,29 @@ import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
 import 'package:celest_core/src/serialization/json_value.dart' as _$celest;
-import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _$ilist;
+import 'package:fast_immutable_collections/src/ilist/ilist.dart'
+    as _$fast_immutable_collections_ilist;
 
 void initSerializers({_$celest.Serializers? serializers}) {
-  return _$async.runZoned(
+  return runZoned(
     () {
-      _$celest.Serializers.instance.put(
-          _$celest.Serializer.define<_$async.AsyncError, Map<String, Object?>>(
+      _$celest.Serializers.instance
+          .put(_$celest.Serializer.define<AsyncError, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{
           r'error': $value.error,
           r'stackTrace': _$celest.Serializers.instance
               .serialize<StackTrace>($value.stackTrace),
         },
         deserialize: ($serialized) {
-          return _$async.AsyncError(
+          return AsyncError(
             $serialized[r'error']!,
             _$celest.Serializers.instance
                 .deserialize<StackTrace?>($serialized[r'stackTrace']),
           );
         },
       ));
-      _$celest.Serializers.instance.put(_$celest.Serializer.define<
-          _$async.TimeoutException, Map<String, Object?>>(
+      _$celest.Serializers.instance.put(
+          _$celest.Serializer.define<TimeoutException, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{
           if ($value.message case final message?) r'message': message,
           if (_$celest.Serializers.instance
@@ -49,7 +52,7 @@ void initSerializers({_$celest.Serializers? serializers}) {
             r'duration': duration,
         },
         deserialize: ($serialized) {
-          return _$async.TimeoutException(
+          return TimeoutException(
             ($serialized[r'message'] as String?),
             _$celest.Serializers.instance
                 .deserialize<Duration?>($serialized[r'duration']),
@@ -57,7 +60,7 @@ void initSerializers({_$celest.Serializers? serializers}) {
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
-          _$convert.JsonUnsupportedObjectError, Map<String, Object?>>(
+          JsonUnsupportedObjectError, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{
           if ($value.unsupportedObject case final unsupportedObject?)
             r'unsupportedObject': unsupportedObject,
@@ -66,7 +69,7 @@ void initSerializers({_$celest.Serializers? serializers}) {
             r'partialResult': partialResult,
         },
         deserialize: ($serialized) {
-          return _$convert.JsonUnsupportedObjectError(
+          return JsonUnsupportedObjectError(
             $serialized[r'unsupportedObject'],
             cause: $serialized[r'cause'],
             partialResult: ($serialized[r'partialResult'] as String?),
@@ -116,6 +119,13 @@ void initSerializers({_$celest.Serializers? serializers}) {
         },
         deserialize: ($serialized) {
           return Error();
+        },
+      ));
+      _$celest.Serializers.instance
+          .put(_$celest.Serializer.define<Exception, Map<String, Object?>?>(
+        serialize: ($value) => const <String, Object?>{},
+        deserialize: ($serialized) {
+          return Exception($serialized?[r'message']);
         },
       ));
       _$celest.Serializers.instance.put(
@@ -224,40 +234,42 @@ void initSerializers({_$celest.Serializers? serializers}) {
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
-          _$available_stocks.AvailableStocks, Map<String, Object?>>(
+          _$_common_available_stocks.AvailableStocks, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{
-          r'list': _$celest.Serializers.instance
-              .serialize<_$ilist.IList<_$available_stock.AvailableStock>>(
-                  $value.list)
+          r'list': _$celest.Serializers.instance.serialize<
+              _$fast_immutable_collections_ilist
+              .IList<_$_common_available_stock.AvailableStock>>($value.list)
         },
         deserialize: ($serialized) {
-          return _$available_stocks.AvailableStocks(
+          return _$_common_available_stocks.AvailableStocks(
               ($serialized[r'list'] as Iterable<Object?>)
                   .map((el) => _$celest.Serializers.instance
-                      .deserialize<_$available_stock.AvailableStock>(el))
+                      .deserialize<_$_common_available_stock.AvailableStock>(
+                          el))
                   .toList());
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
-          _$errors_and_exceptions.UserException, Map<String, dynamic>>(
+          _$_common_errors_and_exceptions.UserException, Map<String, dynamic>>(
         serialize: ($value) => $value.toJson(),
         deserialize: ($serialized) {
-          return _$errors_and_exceptions.UserException.fromJson($serialized);
+          return _$_common_errors_and_exceptions.UserException.fromJson(
+              $serialized);
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
-          _$errors_and_exceptions.ValidateError, Map<String, Object?>>(
+          _$_common_errors_and_exceptions.ValidateError, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{r'msg': $value.msg},
         deserialize: ($serialized) {
-          return _$errors_and_exceptions.ValidateError(
+          return _$_common_errors_and_exceptions.ValidateError(
               ($serialized[r'msg'] as String));
         },
       ));
       _$celest.Serializers.instance
-          .put(_$celest.Serializer.define<_$ui.ScreenChoice, String>(
+          .put(_$celest.Serializer.define<_$_common_ui.ScreenChoice, String>(
         serialize: ($value) => $value.name,
         deserialize: ($serialized) {
-          return _$ui.ScreenChoice.values.byName($serialized);
+          return _$_common_ui.ScreenChoice.values.byName($serialized);
         },
       ));
       _$celest.Serializers.instance
@@ -284,7 +296,7 @@ void initSerializers({_$celest.Serializers? serializers}) {
             r'msg': msg,
         },
         deserialize: ($serialized) {
-          return (_$errors_and_exceptions.AppException(
+          return (_$_common_errors_and_exceptions.AppException(
             $serialized?[r'msg'],
             $serialized?[r'error'],
           ) as AppException);
@@ -340,7 +352,7 @@ void initSerializers({_$celest.Serializers? serializers}) {
           r'currentPriceStr': $value.currentPriceStr,
         },
         deserialize: ($serialized) {
-          return (_$available_stock.AvailableStock(
+          return (_$_common_available_stock.AvailableStock(
             ($serialized[r'ticker'] as String),
             name: ($serialized[r'name'] as String),
             currentPrice: ($serialized[r'currentPrice'] as num).toDouble(),
@@ -351,30 +363,32 @@ void initSerializers({_$celest.Serializers? serializers}) {
           .put(_$celest.Serializer.define<CashBalance, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{r'amount': $value.amount},
         deserialize: ($serialized) {
-          return (_$cash_balance.CashBalance(
+          return (_$_common_cash_balance.CashBalance(
               ($serialized[r'amount'] as num).toDouble()) as CashBalance);
         },
       ));
       _$celest.Serializers.instance
           .put(_$celest.Serializer.define<Portfolio, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
-          r'stocks': _$celest.Serializers.instance
-              .serialize<_$ilist.IList<_$stock.Stock>>($value.stocks),
+          r'stocks': _$celest.Serializers.instance.serialize<
+              _$fast_immutable_collections_ilist
+              .IList<_$_common_stock.Stock>>($value.stocks),
           r'cashBalance': _$celest.Serializers.instance
-              .serialize<_$cash_balance.CashBalance>($value.cashBalance),
+              .serialize<_$_common_cash_balance.CashBalance>(
+                  $value.cashBalance),
           r'isEmpty': $value.isEmpty,
           r'totalCostBasis': $value.totalCostBasis,
         },
         deserialize: ($serialized) {
-          return (_$portfolio.Portfolio(
+          return (_$_common_portfolio.Portfolio(
             stocks: ($serialized?[r'stocks'] as Iterable<Object?>?)
                 ?.map((el) => _$celest.Serializers.instance
-                    .deserialize<_$stock.Stock>(el))
+                    .deserialize<_$_common_stock.Stock>(el))
                 .toList(),
             cashBalance: (_$celest.Serializers.instance
-                    .deserialize<_$cash_balance.CashBalance?>(
+                    .deserialize<_$_common_cash_balance.CashBalance?>(
                         $serialized?[r'cashBalance'])) ??
-                _$cash_balance.CashBalance.ZERO,
+                _$_common_cash_balance.CashBalance.ZERO,
           ) as Portfolio);
         },
       ));
@@ -388,7 +402,7 @@ void initSerializers({_$celest.Serializers? serializers}) {
           r'averagePriceStr': $value.averagePriceStr,
         },
         deserialize: ($serialized) {
-          return (_$stock.Stock(
+          return (_$_common_stock.Stock(
             ($serialized[r'ticker'] as String),
             howManyShares: ($serialized[r'howManyShares'] as num).toInt(),
             averagePrice: ($serialized[r'averagePrice'] as num).toDouble(),
@@ -400,15 +414,15 @@ void initSerializers({_$celest.Serializers? serializers}) {
         serialize: ($value) => <String, Object?>{
           r'isDarkMode': $value.isDarkMode,
           r'screenChoice': _$celest.Serializers.instance
-              .serialize<_$ui.ScreenChoice>($value.screenChoice),
+              .serialize<_$_common_ui.ScreenChoice>($value.screenChoice),
         },
         deserialize: ($serialized) {
-          return (_$ui.Ui(
+          return (_$_common_ui.Ui(
             isDarkMode: ($serialized[r'isDarkMode'] as bool),
             screenChoice: (_$celest.Serializers.instance
-                    .deserialize<_$ui.ScreenChoice?>(
+                    .deserialize<_$_common_ui.ScreenChoice?>(
                         $serialized[r'screenChoice'])) ??
-                _$ui.ScreenChoice.portfolioAndCashBalance,
+                _$_common_ui.ScreenChoice.portfolioAndCashBalance,
           ) as Ui);
         },
       ));
@@ -839,27 +853,33 @@ void initSerializers({_$celest.Serializers? serializers}) {
         const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       );
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
-          _$ilist.IList<_$available_stock.AvailableStock>, dynamic>(
+          _$fast_immutable_collections_ilist
+          .IList<_$_common_available_stock.AvailableStock>,
+          dynamic>(
         serialize: ($value) => $value.toJson((value) => _$celest
             .Serializers.instance
-            .serialize<_$available_stock.AvailableStock>(value)),
+            .serialize<_$_common_available_stock.AvailableStock>(value)),
         deserialize: ($serialized) {
-          return _$ilist.IList<_$available_stock.AvailableStock>.fromJson(
+          return _$fast_immutable_collections_ilist
+              .IList<_$_common_available_stock.AvailableStock>.fromJson(
             $serialized,
             (value) => _$celest.Serializers.instance
-                .deserialize<_$available_stock.AvailableStock>(value),
+                .deserialize<_$_common_available_stock.AvailableStock>(value),
           );
         },
       ));
-      _$celest.Serializers.instance.put(
-          _$celest.Serializer.define<_$ilist.IList<_$stock.Stock>, dynamic>(
-        serialize: ($value) => $value.toJson((value) =>
-            _$celest.Serializers.instance.serialize<_$stock.Stock>(value)),
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$fast_immutable_collections_ilist.IList<_$_common_stock.Stock>,
+          dynamic>(
+        serialize: ($value) => $value.toJson((value) => _$celest
+            .Serializers.instance
+            .serialize<_$_common_stock.Stock>(value)),
         deserialize: ($serialized) {
-          return _$ilist.IList<_$stock.Stock>.fromJson(
+          return _$fast_immutable_collections_ilist
+              .IList<_$_common_stock.Stock>.fromJson(
             $serialized,
-            (value) =>
-                _$celest.Serializers.instance.deserialize<_$stock.Stock>(value),
+            (value) => _$celest.Serializers.instance
+                .deserialize<_$_common_stock.Stock>(value),
           );
         },
       ));

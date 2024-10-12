@@ -2,6 +2,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 
 enum PrefixingStrategy {
@@ -33,7 +34,11 @@ final class CelestAllocator implements Allocator {
     required this.forFile,
     this.prefixingStrategy = PrefixingStrategy.indexed,
     required this.pathStrategy,
-  });
+    @visibleForTesting String? packageName,
+    @visibleForTesting String? clientPackageName,
+  })  : packageName = packageName ?? celestProject.pubspec.name,
+        clientPackageName =
+            clientPackageName ?? celestProject.clientPubspec.name;
 
   static const _doNotPrefix = [
     'dart:core',
@@ -45,11 +50,14 @@ final class CelestAllocator implements Allocator {
   final PrefixingStrategy prefixingStrategy;
   final PathStrategy pathStrategy;
 
+  final String packageName;
+  final String clientPackageName;
+
   late final _fileContext = path.Context(
     current: p.dirname(forFile),
     style: p.style,
   );
-  final _imports = <String, String?>{};
+  final importMap = <String, String?>{};
   var _keys = 1;
 
   @override
@@ -80,13 +88,19 @@ final class CelestAllocator implements Allocator {
         final normalizedUri = projectPaths.fileToPackageUri(absolutePath);
         if (normalizedUri.scheme != 'package') {
           _logger.finest('Failed to normalize $normalizedUri');
-          // Likely, we're importing from `.dart_tool` or some other folder
-          // where an absolute file path is desired.
-          //
-          // Assert we are only importing from non-lib/ paths as well.
-          assert(!p.isWithin(projectPaths.packageRoot, forFile));
-          url = absolutePath;
-          uri = Uri.file(absolutePath);
+          // Ensure that the path being imported is in the outputs directory,
+          // the only place we should ever use non-package: imports.
+          assert(p.isWithin(projectPaths.outputsDir, forFile));
+
+          // To prevent compilation issues, we must also assert that the file
+          // doing the import is also in the outputs directory.
+          assert(p.isWithin(projectPaths.outputsDir, path));
+
+          // We need to use relative paths because the path will be made
+          // absolute by the frontend server, but needs paths that translate
+          // to the virtual filesystem root.
+          url = p.relative(absolutePath, from: p.dirname(forFile));
+          uri = Uri.file(url);
           break;
         }
 
@@ -98,10 +112,9 @@ final class CelestAllocator implements Allocator {
             scheme: 'package',
             pathSegments: [final package, ...final segments]
           )
-          when package == 'celest_backend' ||
-              package == celestProject.clientPubspec.name:
+          when package == packageName || package == clientPackageName:
         final importFilepath = p.joinAll([
-          if (package == 'celest_backend')
+          if (package == packageName)
             projectPaths.packageRoot
           else
             projectPaths.clientPackageRoot,
@@ -121,59 +134,52 @@ final class CelestAllocator implements Allocator {
   String _importFor(String url, Uri uri, String symbol) {
     switch (prefixingStrategy) {
       case PrefixingStrategy.indexed:
-        return '${_imports.putIfAbsent(url, _nextKey)}.$symbol';
+        return '${importMap.putIfAbsent(url, _nextKey)}.$symbol';
       case PrefixingStrategy.pretty:
-        final import = _imports.putIfAbsent(
+        final import = importMap.putIfAbsent(
           url,
-          () => _prefixForUrl(uri),
+          () => prefixForUrl(uri),
         );
         return switch (import) {
           final import? => '$import.$symbol',
           null => symbol,
         };
       case PrefixingStrategy.none:
-        _imports.putIfAbsent(url, () => null);
+        importMap.putIfAbsent(url, () => null);
         return symbol;
       case PrefixingStrategy.noImports:
         return symbol;
     }
   }
 
-  String? _prefixForUrl(Uri uri) {
-    final allocatedPrefixes = _imports.values.nonNulls.toSet();
-    String prefix;
+  String? prefixForUrl(Uri uri) {
     switch (uri) {
       case Uri(scheme: 'package', pathSegments: [final package, ...])
-          when package == 'celest_backend' ||
-              package == celestProject.clientPubspec.name:
+          when package == packageName || package == clientPackageName:
         return null;
       case Uri(scheme: 'package', pathSegments: [final package, ...])
           when package.startsWith('celest'):
         return r'_$celest';
       case Uri(scheme: '' || 'file'):
         return null;
-      case Uri(:final path):
-        final segments = p.posix.split(path);
-        prefix =
-            segments.removeLast().replaceAll('.dart', '').replaceAll('.', '_');
-        while (allocatedPrefixes.contains(prefix)) {
-          if (segments.isEmpty) {
-            throw StateError('Could not allocate prefix for URL: $uri');
-          }
-          prefix = '${segments.removeLast().replaceAll('.', '_')}_$prefix';
-        }
+      case Uri(pathSegments: [final packageName, ..., final filename]):
+        // TODO(dnys1): This may start causing issues if, for example, Celest
+        // starts importing internal libraries where the types conflict with
+        // public members.
+        //
+        // But this should be fairly robust and I don't expect we'll see any
+        // issues.
+        return '_\$${packageName}_${p.url.basenameWithoutExtension(filename)}';
+      default:
+        _logger.fine('Could not allocate prefix.', 'Unexpected URI: $uri');
     }
-    if (!allocatedPrefixes.add(prefix)) {
-      // TODO(dnys1): What to do here?
-      throw StateError('Could not allocate prefix for URL: $uri');
-    }
-    return '_\$$prefix';
+    return null;
   }
 
   String _nextKey() => '_i${_keys++}';
 
   @override
-  Iterable<Directive> get imports => _imports.keys.map(
-        (u) => Directive.import(u, as: _imports[u]),
+  Iterable<Directive> get imports => importMap.keys.map(
+        (u) => Directive.import(u, as: importMap[u]),
       );
 }

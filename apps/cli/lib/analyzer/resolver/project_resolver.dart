@@ -49,4 +49,10 @@ abstract base class CelestProjectResolver with CelestAnalysisHelpers {
     required Iterable<ast.Variable> variables,
     required Iterable<ast.Secret> secrets,
   });
+
+  /// Collects the Celest Data components of the project.
+  Future<ast.Database?> resolveDatabase({
+    required String databaseFilepath,
+    required ResolvedLibraryResult databaseLibrary,
+  });
 }

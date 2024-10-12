@@ -361,6 +361,12 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "Exception",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "FormatException",
           "url": "dart:core",
           "isNullable": false
@@ -517,6 +523,7 @@
   },
   "variables": [],
   "secrets": [],
+  "databases": {},
   "sdkConfig": {
     "celest": "1.0.0-dev.0",
     "dart": {

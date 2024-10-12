@@ -25,10 +25,16 @@ import 'package:source_span/source_span.dart';
 
 extension LibraryElementHelper on LibraryElement {
   bool get isPackageCelest => switch (source.uri) {
+        Uri(scheme: 'package', pathSegments: ['celest', ...]) => true,
+        _ => false,
+      };
+
+  bool get isCelestSdk => switch (source.uri) {
         Uri(scheme: 'package', pathSegments: [final packageName, ...]) =>
           packageName.startsWith('celest') && packageName != 'celest_backend',
         _ => false,
       };
+
   bool get isDartSdk => source.uri.scheme == 'dart';
   bool get isFlutterSdk =>
       source.uri.scheme == 'package' &&
@@ -38,14 +44,13 @@ extension LibraryElementHelper on LibraryElement {
       p.isWithin(projectPaths.projectRoot, source.fullName);
   bool get isWithinProjectLib =>
       p.isWithin(projectPaths.projectLib, source.fullName);
-  bool get isCelestApi => isPackageCelest && name == 'api';
 }
 
 extension ElementAnnotationHelper on ElementAnnotation {
   bool get isCustomOverride => switch (element) {
         final PropertyAccessorElement propertyAccessor =>
           propertyAccessor.name == 'customOverride' &&
-              propertyAccessor.library.isPackageCelest,
+              propertyAccessor.library.isCelestSdk,
         _ => false,
       };
 
@@ -53,7 +58,7 @@ extension ElementAnnotationHelper on ElementAnnotation {
         ConstructorElement(
           enclosingElement: ClassElement(:final name, :final library)
         ) =>
-          name == 'httpError' && library.isPackageCelest,
+          name == 'httpError' && library.isCelestSdk,
         _ => false,
       };
 }
@@ -92,13 +97,13 @@ extension DartTypeHelper on DartType {
         NullabilitySuffix.none,
       );
 
-  bool get isPackageCelest => element?.library?.isPackageCelest ?? false;
+  bool get isCelestSdk => element?.library?.isCelestSdk ?? false;
 
   bool get isDartSdk => element?.library?.source.uri.scheme == 'dart';
 
   bool get isJsonExtensionType => switch (element) {
         ExtensionTypeElement(:final name, :final library) =>
-          name.startsWith('Json') && library.isPackageCelest,
+          name.startsWith('Json') && library.isCelestSdk,
         _ => false,
       };
 
@@ -143,6 +148,44 @@ extension DartTypeHelper on DartType {
         _ => false,
       };
 
+  bool get isDatabase => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == 'Database' && library.isPackageCelest,
+        _ => false,
+      };
+
+  bool get isDriftSchema => switch (element) {
+        ClassElement(:final name, :final library) =>
+          name == '_DriftSchema' && library.isPackageCelest,
+        _ => false,
+      };
+
+  bool get isDriftGeneratedDatabase => switch (element) {
+        ClassElement(
+          name: 'GeneratedDatabase',
+          library: LibraryElement(
+            source: Source(
+              uri: Uri(scheme: 'package', pathSegments: ['drift', ...])
+            )
+          )
+        ) =>
+          true,
+        _ => false,
+      };
+
+  bool get isDriftQueryExecutor => switch (element) {
+        ClassElement(
+          name: 'QueryExecutor',
+          library: LibraryElement(
+            source: Source(
+              uri: Uri(scheme: 'package', pathSegments: ['drift', ...])
+            )
+          )
+        ) =>
+          true,
+        _ => false,
+      };
+
   bool get isExternalAuthProviderFirebase => switch (element) {
         ClassElement(:final name, :final library) =>
           name == '_FirebaseExternalAuthProvider' && library.isPackageCelest,
@@ -181,31 +224,31 @@ extension DartTypeHelper on DartType {
 
   bool get isHttpConfig => switch (element) {
         ClassElement(:final name, :final library) =>
-          name == 'http' && library.isPackageCelest,
+          name == 'http' && library.isCelestSdk,
         _ => false,
       };
 
   bool get isHttpError => switch (element) {
         ClassElement(:final name, :final library) =>
-          name == 'httpError' && library.isPackageCelest,
+          name == 'httpError' && library.isCelestSdk,
         _ => false,
       };
 
   // bool get isHttpLabel => switch (element) {
   //       ClassElement(:final name, :final library) =>
-  //         name == 'httpLabel' && library.isPackageCelest,
+  //         name == 'httpLabel' && library.isCelestSdk,
   //       _ => false,
   //     };
 
   bool get isHttpQuery => switch (element) {
         ClassElement(:final name, :final library) =>
-          name == 'httpQuery' && library.isPackageCelest,
+          name == 'httpQuery' && library.isCelestSdk,
         _ => false,
       };
 
   bool get isHttpHeader => switch (element) {
         ClassElement(:final name, :final library) =>
-          name == 'httpHeader' && library.isPackageCelest,
+          name == 'httpHeader' && library.isCelestSdk,
         _ => false,
       };
 
@@ -500,7 +543,7 @@ extension DartTypeHelper on DartType {
       Uri(pathSegments: []) =>
         '$projectName.v1',
       Uri(scheme: 'package', pathSegments: [final package, ...])
-          when isPackageCelest =>
+          when isCelestSdk =>
         '${package.split('_').join('.')}.v1',
       // TODO(dnys1): Should this include the package's major version?
       Uri(scheme: 'package', :final pathSegments) => pathSegments.first,
@@ -796,7 +839,7 @@ extension AnnotationIsPrivate on ElementAnnotation {
       return null;
     }
     final type = constant.type;
-    if (type == null || type.isPackageCelest || type.isMiddleware) {
+    if (type == null || type.isCelestSdk || type.isMiddleware) {
       return null;
     }
     if (element case PropertyAccessorElement(:final name, :final library)

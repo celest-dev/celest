@@ -1,0 +1,3427 @@
+{
+  "projectId": "api",
+  "environmentId": "local",
+  "apis": {
+    "records": {
+      "apiId": "records",
+      "functions": {
+        "nonAliasedNamedFields": {
+          "functionId": "nonAliasedNamedFields",
+          "parentId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/non-aliased-named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncNonAliasedNamedFields": {
+          "functionId": "asyncNonAliasedNamedFields",
+          "parentId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/async-non-aliased-named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "aliasedNamedFields": {
+          "functionId": "aliasedNamedFields",
+          "parentId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/aliased-named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncAliasedNamedFields": {
+          "functionId": "asyncAliasedNamedFields",
+          "parentId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/async-aliased-named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "namedFields": {
+          "functionId": "namedFields",
+          "parentId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncNamedFields": {
+          "functionId": "asyncNamedFields",
+          "parentId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/async-named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nested": {
+          "functionId": "nested",
+          "parentId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/nested"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncNested": {
+          "functionId": "asyncNested",
+          "parentId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/async-nested"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nullableNested": {
+          "functionId": "nullableNested",
+          "parentId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/nullable-nested"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncNullableNested": {
+          "functionId": "asyncNullableNested",
+          "parentId": "records",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/records/async-nullable-nested"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "sealed_classes": {
+      "apiId": "sealed_classes",
+      "functions": {
+        "area": {
+          "functionId": "area",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/area"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "sealedClass": {
+          "functionId": "sealedClass",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/sealed-class"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "rectangle": {
+          "functionId": "rectangle",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/rectangle"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "circle": {
+          "functionId": "circle",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/circle"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "sealedClassWithInheritedCustomJson": {
+          "functionId": "sealedClassWithInheritedCustomJson",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/sealed-class-with-inherited-custom-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "sealedClassWithCustomJson": {
+          "functionId": "sealedClassWithCustomJson",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/sealed-class-with-custom-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "sealedClassWithOverriddenCustomJson": {
+          "functionId": "sealedClassWithOverriddenCustomJson",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/sealed-class-with-overridden-custom-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "rectangleWithOverriddenCustomJson": {
+          "functionId": "rectangleWithOverriddenCustomJson",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/rectangle-with-overridden-custom-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "circleWithOverriddenCustomJson": {
+          "functionId": "circleWithOverriddenCustomJson",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/circle-with-overridden-custom-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "okShapeResults": {
+          "functionId": "okShapeResults",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/ok-shape-results"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "errShapeResults": {
+          "functionId": "errShapeResults",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/err-shape-results"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "shapeResults": {
+          "functionId": "shapeResults",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/shape-results"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "aliasedOkShapeResults": {
+          "functionId": "aliasedOkShapeResults",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/aliased-ok-shape-results"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "aliasedErrShapeResults": {
+          "functionId": "aliasedErrShapeResults",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/aliased-err-shape-results"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "aliasedShapeResults": {
+          "functionId": "aliasedShapeResults",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/aliased-shape-results"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "swappedResult": {
+          "functionId": "swappedResult",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/swapped-result"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "genericResult": {
+          "functionId": "genericResult",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/generic-result"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "multipleGenericResult": {
+          "functionId": "multipleGenericResult",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/multiple-generic-result"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "okShapeResult": {
+          "functionId": "okShapeResult",
+          "parentId": "sealed_classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/sealed-classes/ok-shape-result"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "parameter_types": {
+      "apiId": "parameter_types",
+      "functions": {
+        "simple": {
+          "functionId": "simple",
+          "parentId": "parameter_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameter-types/simple"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "simpleOptional": {
+          "functionId": "simpleOptional",
+          "parentId": "parameter_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameter-types/simple-optional"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "complex": {
+          "functionId": "complex",
+          "parentId": "parameter_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameter-types/complex"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "cycles": {
+      "apiId": "cycles",
+      "functions": {
+        "createTree": {
+          "functionId": "createTree",
+          "parentId": "cycles",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/cycles/create-tree"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "printTree": {
+          "functionId": "printTree",
+          "parentId": "cycles",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/cycles/print-tree"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "combineTrees": {
+          "functionId": "combineTrees",
+          "parentId": "cycles",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/cycles/combine-trees"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "selfReferencing": {
+          "functionId": "selfReferencing",
+          "parentId": "cycles",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/cycles/self-referencing"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "extension_types": {
+      "apiId": "extension_types",
+      "functions": {
+        "string": {
+          "functionId": "string",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrString": {
+          "functionId": "asyncOrString",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/async-or-string"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncString": {
+          "functionId": "asyncString",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/async-string"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringImpl": {
+          "functionId": "stringImpl",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringToFromJson": {
+          "functionId": "stringToFromJson",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-to-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringToJson": {
+          "functionId": "stringToJson",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringToJsonImpl": {
+          "functionId": "stringToJsonImpl",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-to-json-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringFromJson": {
+          "functionId": "stringFromJson",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringFromJsonImpl": {
+          "functionId": "stringFromJsonImpl",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-from-json-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringFromJsonStatic": {
+          "functionId": "stringFromJsonStatic",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-from-json-static"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringPrivateField": {
+          "functionId": "stringPrivateField",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-private-field"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringPrivateFieldImpl": {
+          "functionId": "stringPrivateFieldImpl",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-private-field-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringPrivateCtor": {
+          "functionId": "stringPrivateCtor",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-private-ctor"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringPrivateCtorImpl": {
+          "functionId": "stringPrivateCtorImpl",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/string-private-ctor-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "value": {
+          "functionId": "value",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "valueX": {
+          "functionId": "valueX",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "valueXImpl": {
+          "functionId": "valueXImpl",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "valueXToFromJson": {
+          "functionId": "valueXToFromJson",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-to-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "valueXToJson": {
+          "functionId": "valueXToJson",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "valueXToJsonImpl": {
+          "functionId": "valueXToJsonImpl",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-to-json-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "valueXFromJson": {
+          "functionId": "valueXFromJson",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "valueXFromJsonImpl": {
+          "functionId": "valueXFromJsonImpl",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-from-json-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "valueXFromJsonStatic": {
+          "functionId": "valueXFromJsonStatic",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/value-x-from-json-static"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "color": {
+          "functionId": "color",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "colorX": {
+          "functionId": "colorX",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "colorXImpl": {
+          "functionId": "colorXImpl",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "colorXToFromJson": {
+          "functionId": "colorXToFromJson",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-to-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "colorXToJson": {
+          "functionId": "colorXToJson",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "colorXToJsonImpl": {
+          "functionId": "colorXToJsonImpl",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-to-json-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "colorXFromJson": {
+          "functionId": "colorXFromJson",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "colorXFromJsonImpl": {
+          "functionId": "colorXFromJsonImpl",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-from-json-impl"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "colorXFromJsonStatic": {
+          "functionId": "colorXFromJsonStatic",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/color-x-from-json-static"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "jsonValue": {
+          "functionId": "jsonValue",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-value"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "jsonString": {
+          "functionId": "jsonString",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-string"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "jsonNum": {
+          "functionId": "jsonNum",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-num"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "jsonInt": {
+          "functionId": "jsonInt",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-int"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "jsonDouble": {
+          "functionId": "jsonDouble",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-double"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "jsonBool": {
+          "functionId": "jsonBool",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-bool"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "jsonList": {
+          "functionId": "jsonList",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-list"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "jsonMap": {
+          "functionId": "jsonMap",
+          "parentId": "extension_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/extension-types/json-map"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "typedefs": {
+      "apiId": "typedefs",
+      "functions": {
+        "portfolio": {
+          "functionId": "portfolio",
+          "parentId": "typedefs",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/typedefs/portfolio"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "json": {
+          "functionId": "json",
+          "parentId": "typedefs",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/typedefs/json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nullableJson": {
+          "functionId": "nullableJson",
+          "parentId": "typedefs",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/typedefs/nullable-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "mixedJson": {
+          "functionId": "mixedJson",
+          "parentId": "typedefs",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/typedefs/mixed-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "return_types": {
+      "apiId": "return_types",
+      "functions": {
+        "asyncVoidReturn": {
+          "functionId": "asyncVoidReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-void-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncStringReturn": {
+          "functionId": "asyncStringReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-string-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncIntReturn": {
+          "functionId": "asyncIntReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-int-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncDoubleReturn": {
+          "functionId": "asyncDoubleReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-double-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncBoolReturn": {
+          "functionId": "asyncBoolReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-bool-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncIterableReturn": {
+          "functionId": "asyncIterableReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-iterable-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncListReturn": {
+          "functionId": "asyncListReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-list-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncMapReturn": {
+          "functionId": "asyncMapReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-map-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncStructReturn": {
+          "functionId": "asyncStructReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-struct-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncStructReturnNullable": {
+          "functionId": "asyncStructReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-struct-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncComplexStructReturn": {
+          "functionId": "asyncComplexStructReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-complex-struct-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncComplexStructReturnNullable": {
+          "functionId": "asyncComplexStructReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-complex-struct-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncComplexClassReturn": {
+          "functionId": "asyncComplexClassReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-complex-class-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncClassReturnNullable": {
+          "functionId": "asyncClassReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-class-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrVoidReturn": {
+          "functionId": "asyncOrVoidReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-void-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrStringReturn": {
+          "functionId": "asyncOrStringReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-string-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrIntReturn": {
+          "functionId": "asyncOrIntReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-int-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrDoubleReturn": {
+          "functionId": "asyncOrDoubleReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-double-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrBoolReturn": {
+          "functionId": "asyncOrBoolReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-bool-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrIterableReturn": {
+          "functionId": "asyncOrIterableReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-iterable-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrListReturn": {
+          "functionId": "asyncOrListReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-list-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrMapReturn": {
+          "functionId": "asyncOrMapReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-map-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrStructReturn": {
+          "functionId": "asyncOrStructReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-struct-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrComplexStructReturn": {
+          "functionId": "asyncOrComplexStructReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-complex-struct-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrVoidReturnNullable": {
+          "functionId": "asyncOrVoidReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-void-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrStringReturnNullable": {
+          "functionId": "asyncOrStringReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-string-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrIntReturnNullable": {
+          "functionId": "asyncOrIntReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-int-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrDoubleReturnNullable": {
+          "functionId": "asyncOrDoubleReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-double-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrBoolReturnNullable": {
+          "functionId": "asyncOrBoolReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-bool-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrIterableReturnNullable": {
+          "functionId": "asyncOrIterableReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-iterable-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrListReturnNullable": {
+          "functionId": "asyncOrListReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-list-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrMapReturnNullable": {
+          "functionId": "asyncOrMapReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-map-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrStructReturnNullable": {
+          "functionId": "asyncOrStructReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-struct-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrComplexStructReturnNullable": {
+          "functionId": "asyncOrComplexStructReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-complex-struct-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrSimpleClassReturnNullable": {
+          "functionId": "asyncOrSimpleClassReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-simple-class-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOrComplexClassReturnNullable": {
+          "functionId": "asyncOrComplexClassReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/async-or-complex-class-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "voidReturn": {
+          "functionId": "voidReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/void-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringReturn": {
+          "functionId": "stringReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/string-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "intReturn": {
+          "functionId": "intReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/int-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "doubleReturn": {
+          "functionId": "doubleReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/double-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "boolReturn": {
+          "functionId": "boolReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/bool-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "iterableReturn": {
+          "functionId": "iterableReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/iterable-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "listReturn": {
+          "functionId": "listReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/list-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "mapReturn": {
+          "functionId": "mapReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/map-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "structReturn": {
+          "functionId": "structReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/struct-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "complexReturn": {
+          "functionId": "complexReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/complex-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "simpleClassReturn": {
+          "functionId": "simpleClassReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/simple-class-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "complexClassReturn": {
+          "functionId": "complexClassReturn",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/complex-class-return"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stringReturnNullable": {
+          "functionId": "stringReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/string-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "intReturnNullable": {
+          "functionId": "intReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/int-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "doubleReturnNullable": {
+          "functionId": "doubleReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/double-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "boolReturnNullable": {
+          "functionId": "boolReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/bool-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "iterableReturnNullable": {
+          "functionId": "iterableReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/iterable-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "listReturnNullable": {
+          "functionId": "listReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/list-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "mapReturnNullable": {
+          "functionId": "mapReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/map-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "structReturnNullable": {
+          "functionId": "structReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/struct-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "complexReturnNullable": {
+          "functionId": "complexReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/complex-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "simpleClassReturnNullable": {
+          "functionId": "simpleClassReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/simple-class-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "complexClassReturnNullable": {
+          "functionId": "complexClassReturnNullable",
+          "parentId": "return_types",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/return-types/complex-class-return-nullable"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "overrides": {
+      "apiId": "overrides",
+      "functions": {
+        "commonNestedParent": {
+          "functionId": "commonNestedParent",
+          "parentId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/common-nested-parent"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "commonNestedChild": {
+          "functionId": "commonNestedChild",
+          "parentId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/common-nested-child"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nestedGrandparent": {
+          "functionId": "nestedGrandparent",
+          "parentId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/nested-grandparent"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nestedParent": {
+          "functionId": "nestedParent",
+          "parentId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/nested-parent"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nestedChild": {
+          "functionId": "nestedChild",
+          "parentId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/nested-child"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "callsThrowsCommonOverriddenException": {
+          "functionId": "callsThrowsCommonOverriddenException",
+          "parentId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/calls-throws-common-overridden-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsCommonOverriddenException": {
+          "functionId": "throwsCommonOverriddenException",
+          "parentId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/throws-common-overridden-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsOverriddenException": {
+          "functionId": "throwsOverriddenException",
+          "parentId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/throws-overridden-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "callsThrowsOverriddenException": {
+          "functionId": "callsThrowsOverriddenException",
+          "parentId": "overrides",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/overrides/calls-throws-overridden-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "classes": {
+      "apiId": "classes",
+      "functions": {
+        "empty": {
+          "functionId": "empty",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/empty"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncEmpty": {
+          "functionId": "asyncEmpty",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-empty"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "fields": {
+          "functionId": "fields",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncFields": {
+          "functionId": "asyncFields",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nullableFields": {
+          "functionId": "nullableFields",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/nullable-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncNullableFields": {
+          "functionId": "asyncNullableFields",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-nullable-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "namedFields": {
+          "functionId": "namedFields",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncNamedFields": {
+          "functionId": "asyncNamedFields",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-named-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "mixedFields": {
+          "functionId": "mixedFields",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/mixed-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncMixedFields": {
+          "functionId": "asyncMixedFields",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-mixed-fields"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "defaultValues": {
+          "functionId": "defaultValues",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/default-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncDefaultValues": {
+          "functionId": "asyncDefaultValues",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-default-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nestedClass": {
+          "functionId": "nestedClass",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/nested-class"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncNestedClass": {
+          "functionId": "asyncNestedClass",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-nested-class"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "onlyFromJson": {
+          "functionId": "onlyFromJson",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/only-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOnlyFromJson": {
+          "functionId": "asyncOnlyFromJson",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-only-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "onlyToJson": {
+          "functionId": "onlyToJson",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/only-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOnlyToJson": {
+          "functionId": "asyncOnlyToJson",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-only-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "onlyToJsonWithDefaults": {
+          "functionId": "onlyToJsonWithDefaults",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/only-to-json-with-defaults"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncOnlyToJsonWithDefaults": {
+          "functionId": "asyncOnlyToJsonWithDefaults",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-only-to-json-with-defaults"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "fromAndToJson": {
+          "functionId": "fromAndToJson",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/from-and-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncFromAndToJson": {
+          "functionId": "asyncFromAndToJson",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-from-and-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nonMapToJson": {
+          "functionId": "nonMapToJson",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/non-map-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncNonMapToJson": {
+          "functionId": "asyncNonMapToJson",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-non-map-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nonMapToJsonWithDefaults": {
+          "functionId": "nonMapToJsonWithDefaults",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/non-map-to-json-with-defaults"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncNonMapToJsonWithDefaults": {
+          "functionId": "asyncNonMapToJsonWithDefaults",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-non-map-to-json-with-defaults"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nonMapFromAndToJson": {
+          "functionId": "nonMapFromAndToJson",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/non-map-from-and-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "asyncNonMapFromAndToJson": {
+          "functionId": "asyncNonMapFromAndToJson",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/async-non-map-from-and-to-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "fromJsonStatic": {
+          "functionId": "fromJsonStatic",
+          "parentId": "classes",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/classes/from-json-static"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "exceptions": {
+      "apiId": "exceptions",
+      "functions": {
+        "throwsException": {
+          "functionId": "throwsException",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsError": {
+          "functionId": "throwsError",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsCustomException": {
+          "functionId": "throwsCustomException",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-custom-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsCustomExceptionToFromJson": {
+          "functionId": "throwsCustomExceptionToFromJson",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-custom-exception-to-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsCustomError": {
+          "functionId": "throwsCustomError",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-custom-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsCustomErrorToFromJson": {
+          "functionId": "throwsCustomErrorToFromJson",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-custom-error-to-from-json"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsCustomErrorWithStackTrace": {
+          "functionId": "throwsCustomErrorWithStackTrace",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-custom-error-with-stack-trace"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "metadata": {
+      "apiId": "metadata",
+      "functions": {
+        "hasDocComments": {
+          "functionId": "hasDocComments",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-doc-comments"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "hasDeprecatedAnnotation": {
+          "functionId": "hasDeprecatedAnnotation",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-deprecated-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "hasConstructedDeprecatedAnnotation": {
+          "functionId": "hasConstructedDeprecatedAnnotation",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-constructed-deprecated-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "hasNamedConstructedAnnotation": {
+          "functionId": "hasNamedConstructedAnnotation",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-named-constructed-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "hasLiteralsAnnotation": {
+          "functionId": "hasLiteralsAnnotation",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-literals-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "hasExportableAnnotation": {
+          "functionId": "hasExportableAnnotation",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-exportable-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "hasExportableConstructedAnnotation": {
+          "functionId": "hasExportableConstructedAnnotation",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-exportable-constructed-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "hasNotExportableAnnotation": {
+          "functionId": "hasNotExportableAnnotation",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/has-not-exportable-annotation"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "positionalDefaultValues": {
+          "functionId": "positionalDefaultValues",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/positional-default-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nullablePositionalDefaultValues": {
+          "functionId": "nullablePositionalDefaultValues",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/nullable-positional-default-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "namedDefaultValues": {
+          "functionId": "namedDefaultValues",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/named-default-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nullableNamedDefaultValues": {
+          "functionId": "nullableNamedDefaultValues",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/nullable-named-default-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "positionalDefaultValueVars": {
+          "functionId": "positionalDefaultValueVars",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/positional-default-value-vars"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nullablePositionalDefaultValueVars": {
+          "functionId": "nullablePositionalDefaultValueVars",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/nullable-positional-default-value-vars"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "namedDefaultValueVars": {
+          "functionId": "namedDefaultValueVars",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/named-default-value-vars"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nullableNamedDefaultValueVars": {
+          "functionId": "nullableNamedDefaultValueVars",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/nullable-named-default-value-vars"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "positionalDefaultValueVarsPrivate": {
+          "functionId": "positionalDefaultValueVarsPrivate",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/positional-default-value-vars-private"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nullablePositionalDefaultValueVarsPrivate": {
+          "functionId": "nullablePositionalDefaultValueVarsPrivate",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/nullable-positional-default-value-vars-private"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "namedDefaultValueVarsPrivate": {
+          "functionId": "namedDefaultValueVarsPrivate",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/named-default-value-vars-private"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "nullableNamedDefaultValueVarsPrivate": {
+          "functionId": "nullableNamedDefaultValueVarsPrivate",
+          "parentId": "metadata",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/metadata/nullable-named-default-value-vars-private"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "apiId": "parameters",
+      "functions": {
+        "optionalPositional": {
+          "functionId": "optionalPositional",
+          "parentId": "parameters",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameters/optional-positional"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "optionalNamed": {
+          "functionId": "optionalNamed",
+          "parentId": "parameters",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameters/optional-named"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "requiredPositional": {
+          "functionId": "requiredPositional",
+          "parentId": "parameters",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameters/required-positional"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "requiredNamed": {
+          "functionId": "requiredNamed",
+          "parentId": "parameters",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/parameters/required-named"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "collections": {
+      "apiId": "collections",
+      "functions": {
+        "simpleList": {
+          "functionId": "simpleList",
+          "parentId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/simple-list"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "complexList": {
+          "functionId": "complexList",
+          "parentId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/complex-list"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "simpleMap": {
+          "functionId": "simpleMap",
+          "parentId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/simple-map"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "dynamicMap": {
+          "functionId": "dynamicMap",
+          "parentId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/dynamic-map"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "objectMap": {
+          "functionId": "objectMap",
+          "parentId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/object-map"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "objectNullableMap": {
+          "functionId": "objectNullableMap",
+          "parentId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/object-nullable-map"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "complexMap": {
+          "functionId": "complexMap",
+          "parentId": "collections",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/collections/complex-map"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "generic_wrappers": {
+      "apiId": "generic_wrappers",
+      "functions": {
+        "genericWrappers": {
+          "functionId": "genericWrappers",
+          "parentId": "generic_wrappers",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/generic-wrappers/generic-wrappers"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "genericWrappersAsync": {
+          "functionId": "genericWrappersAsync",
+          "parentId": "generic_wrappers",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/generic-wrappers/generic-wrappers-async"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "genericWrapperParameters": {
+          "functionId": "genericWrapperParameters",
+          "parentId": "generic_wrappers",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/generic-wrappers/generic-wrapper-parameters"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "demo": {
+      "apiId": "demo",
+      "functions": {
+        "sayHello": {
+          "functionId": "sayHello",
+          "parentId": "demo",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/demo/say-hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "asserts": {
+      "apiId": "asserts",
+      "functions": {
+        "assertsEnabled": {
+          "functionId": "assertsEnabled",
+          "parentId": "asserts",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/asserts/asserts-enabled"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "databases": {},
+  "sdkConfig": {
+    "celest": {
+      "major": 1,
+      "minor": 0,
+      "patch": 0,
+      "preRelease": [
+        "dev",
+        0.0
+      ],
+      "canonicalizedVersion": "1.0.0-dev.0"
+    },
+    "dart": {
+      "type": "DART",
+      "version": {
+        "major": 3,
+        "minor": 5,
+        "patch": 3,
+        "canonicalizedVersion": "3.5.3"
+      }
+    },
+    "flutter": {
+      "type": "FLUTTER",
+      "version": {
+        "major": 3,
+        "minor": 24,
+        "patch": 3,
+        "canonicalizedVersion": "3.24.3"
+      }
+    },
+    "targetSdk": "DART",
+    "featureFlags": [
+      "STREAMING"
+    ]
+  }
+}

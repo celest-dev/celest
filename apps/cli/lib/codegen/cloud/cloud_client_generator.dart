@@ -1,6 +1,7 @@
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/codegen/cloud/cloud_client_types.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 
@@ -28,13 +29,20 @@ final class CloudClientGenerator {
       ..body.addAll([
         _celestEnvironment,
         _variablesClass,
-        _secretsClass,
+        if (project.secrets.isNotEmpty) _secretsClass,
+      ]);
+    _dataLibrary = LibraryBuilder()
+      ..name = ''
+      ..comments.addAll(kClientHeader)
+      ..body.addAll([
+        _dataClass,
       ]);
   }
 
   final ast.Project project;
   late final LibraryBuilder _library;
   late final LibraryBuilder _configLibrary;
+  late final LibraryBuilder _dataLibrary;
 
   final _client = Field(
     (f) => f
@@ -178,20 +186,36 @@ final class CloudClientGenerator {
           ])
           ..body = CloudClientTypes.variablesClass.ref.constInstance([]).code,
       ),
-      Method(
-        (m) => m
-          ..returns = CloudClientTypes.secretsClass.ref
-          ..type = MethodType.getter
-          ..name = 'secrets'
-          ..lambda = true
-          ..docs.addAll([
-            '/// The secrets for the Celest service.',
-            '///',
-            '/// This class provides access to the secret values that are configured',
-            '/// for the [currentEnvironment].',
-          ])
-          ..body = CloudClientTypes.secretsClass.ref.constInstance([]).code,
-      ),
+      if (project.secrets.isNotEmpty)
+        Method(
+          (m) => m
+            ..returns = CloudClientTypes.secretsClass.ref
+            ..type = MethodType.getter
+            ..name = 'secrets'
+            ..lambda = true
+            ..docs.addAll([
+              '/// The secrets for the Celest service.',
+              '///',
+              '/// This class provides access to the secret values that are configured',
+              '/// for the [currentEnvironment].',
+            ])
+            ..body = CloudClientTypes.secretsClass.ref.constInstance([]).code,
+        ),
+      if (project.databases.isNotEmpty)
+        Method(
+          (m) => m
+            ..returns = CloudClientTypes.dataClass.ref
+            ..type = MethodType.getter
+            ..name = 'data'
+            ..lambda = true
+            ..docs.addAll([
+              '/// The data services for the Celest backend.',
+              '///',
+              '/// This class provides access to the databases that are configured',
+              '/// for the [currentEnvironment].',
+            ])
+            ..body = CloudClientTypes.dataClass.ref.constInstance([]).code,
+        ),
     ]);
 
   late final _variablesClass = Class((b) {
@@ -281,10 +305,233 @@ final class CloudClientGenerator {
       ]);
   });
 
+  Iterable<Method> get _databaseInitGlobals sync* {
+    yield Method((m) {
+      m
+        ..name = '_checkConnection'
+        ..docs.addAll([
+          '/// Checks the connection to the database by running a simple query.',
+        ])
+        ..modifier = MethodModifier.async
+        ..returns = DartTypes.core.future(refer('Database'))
+        ..types.add(
+          TypeReference(
+            (t) => t
+              ..symbol = 'Database'
+              ..bound = DartTypes.drift.generatedDatabase,
+          ),
+        )
+        ..requiredParameters.add(
+          Parameter(
+            (p) => p
+              ..name = 'db'
+              ..type = refer('Database'),
+          ),
+        )
+        ..body = const Code('''
+  await db.transaction(() async {
+    await db.customSelect('SELECT 1').get();
+  });
+  return db;
+''');
+    });
+
+    yield Method((m) {
+      m
+        ..name = '_connect'
+        ..docs.addAll([
+          '/// Constructs a new [Database] and connects to it using the provided',
+          '/// [hostnameVariable] and [tokenSecret] configuration values.',
+        ])
+        ..modifier = MethodModifier.async
+        ..returns = DartTypes.core.future(refer('Database'))
+        ..types.add(
+          TypeReference(
+            (t) => t
+              ..symbol = 'Database'
+              ..bound = DartTypes.drift.generatedDatabase,
+          ),
+        )
+        ..requiredParameters.add(
+          Parameter(
+            (p) => p
+              ..name = 'context'
+              ..type = DartTypes.celest.context,
+          ),
+        )
+        ..optionalParameters.addAll([
+          Parameter(
+            (p) => p
+              ..name = 'name'
+              ..named = true
+              ..required = true
+              ..type = DartTypes.core.string,
+          ),
+          Parameter(
+            (p) => p
+              ..name = 'factory'
+              ..named = true
+              ..required = true
+              ..type = FunctionType(
+                (f) => f
+                  ..returnType = refer('Database')
+                  ..requiredParameters.add(DartTypes.drift.queryExecutor),
+              ),
+          ),
+          Parameter(
+            (p) => p
+              ..name = 'hostnameVariable'
+              ..named = true
+              ..required = true
+              ..type = DartTypes.celest.environmentVariable,
+          ),
+          Parameter(
+            (p) => p
+              ..name = 'tokenSecret'
+              ..named = true
+              ..required = true
+              ..type = DartTypes.celest.secret,
+          ),
+        ])
+        ..body = Code.scope(
+          (alloc) => '''
+if (context.environment == ${alloc(DartTypes.celest.environment)}.local) {
+  return _checkConnection(factory(${alloc(DartTypes.drift.nativeDatabase)}.memory()));
+}
+final host = context.get(hostnameVariable);
+final token = context.get(tokenSecret);
+if (host == null || token == null) {
+  throw StateError(
+    'Missing database hostname or token for \$name. '
+    'Please set the `\$hostnameVariable` and `\$tokenSecret` values '
+    'in the environment or Celest configuration file.',
+  );
+}
+final connector = ${alloc(DartTypes.drift.hranaDatabase)}(
+  Uri(scheme: 'libsql', host: host),
+  jwtToken: token,
+);
+return _checkConnection(factory(connector));
+''',
+        );
+    });
+  }
+
+  late final _dataClass = Class((b) {
+    b
+      ..name = CloudClientTypes.dataClass.name
+      ..docs.addAll([
+        '/// The data services for the Celest backend.',
+        '///',
+        '/// This class provides access to the databases that are configured',
+        '/// for the current [CelestEnvironment].',
+      ])
+      ..constructors.add(
+        Constructor(
+          (c) => c..constant = true,
+        ),
+      )
+      ..methods.addAll([
+        Method((m) {
+          m
+            ..static = true
+            ..name = 'init'
+            ..returns = DartTypes.core.future(DartTypes.core.void$)
+            ..requiredParameters.add(
+              Parameter(
+                (p) => p
+                  ..name = 'context'
+                  ..type = DartTypes.celest.context,
+              ),
+            )
+            ..modifier = MethodModifier.async
+            ..docs.addAll([
+              '/// Initializes the databases attached to this project in the given [context].',
+            ])
+            ..body = Block((b) {
+              for (final database in project.databases.values) {
+                final config = database.config as ast.CelestDatabaseConfig;
+                b.addExpression(
+                  refer('context').property('put').call([
+                    refer('_${database.dartName}Key'),
+                    refer('_connect').call(
+                      [refer('context')],
+                      {
+                        'name': literalString(
+                          database.name,
+                          raw: database.name.contains(r'$'),
+                        ),
+                        'factory': database.schema.declaration.property('new'),
+                        'hostnameVariable':
+                            DartTypes.celest.environmentVariable.constInstance([
+                          literalString(config.hostname.name),
+                        ]),
+                        'tokenSecret': DartTypes.celest.secret.constInstance([
+                          literalString(config.token.name),
+                        ]),
+                      },
+                    ).awaited,
+                  ]),
+                );
+              }
+            });
+        }),
+        for (final database in project.databases.values) ...[
+          Method((m) {
+            final schemaType = switch (database.schema) {
+              ast.DriftDatabaseSchema(:final declaration) => declaration,
+            };
+            m
+              ..type = MethodType.getter
+              ..returns = schemaType
+              ..name = database.dartName
+              ..docs.addAll(
+                database.docs.isNotEmpty
+                    ? database.docs
+                    : [
+                        '/// The `${schemaType.symbol}` instance for this project.',
+                      ],
+              )
+              ..body = DartTypes.celest.context
+                  .property('current')
+                  .property('expect')
+                  .call([
+                refer('_${database.dartName}Key'),
+              ]).code;
+          }),
+          Method((m) {
+            final schemaType = switch (database.schema) {
+              ast.DriftDatabaseSchema(:final declaration) => declaration,
+            };
+            m
+              ..static = true
+              ..type = MethodType.getter
+              ..returns = DartTypes.celest.contextKey.toTypeReference
+                  .rebuild((t) => t.types.add(schemaType))
+              ..name = '_${database.dartName}Key'
+              ..docs.addAll(
+                database.docs.isNotEmpty
+                    ? database.docs
+                    : [
+                        '/// The context key for the [${database.dartName}] instance.',
+                      ],
+              )
+              ..body = DartTypes.celest.contextKey.constInstance([
+                literalString(database.name),
+              ]).code;
+          }),
+        ],
+      ]);
+  });
+
   Map<Uri, Library> generate() {
     final libraries = <Uri, Library>{};
-    libraries[CloudPaths.client] = _library.build();
     libraries[CloudPaths.config] = _configLibrary.build();
+    if (project.databases.isNotEmpty) {
+      _dataLibrary.body.addAll(_databaseInitGlobals);
+      libraries[CloudPaths.data] = _dataLibrary.build();
+    }
+    libraries[CloudPaths.client] = _library.build();
     return libraries;
   }
 }

@@ -7,6 +7,7 @@ import 'package:celest_cli/compiler/frontend_server_client.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/path.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:collection/collection.dart';
@@ -92,9 +93,15 @@ final class LocalApiRunner {
         target,
         '--packages',
         Uri.file(projectPaths.packagesConfig).toString(),
+        '--filesystem-root=${projectPaths.projectRoot}',
+        '--filesystem-scheme=celest',
         '--output-dill',
         outputDill, // Must be path
-        Uri.file(path).toString(),
+        Uri(
+          scheme: 'celest',
+          path:
+              '/${p.relative(path, from: projectPaths.projectRoot).to(p.url)}',
+        ).toString(),
       ],
       workingDirectory: projectPaths.outputsDir,
     );
@@ -113,10 +120,15 @@ final class LocalApiRunner {
     }
 
     final client = await FrontendServerClient.start(
-      Uri.file(path).toString(), // entrypoint, must be URI
+      Uri(
+        scheme: 'celest',
+        path: '/${p.relative(path, from: projectPaths.projectRoot).to(p.url)}',
+      ).toString(), // entrypoint, must be URI
       outputDill, // outputDillPath, must be path
       Uri.file(platformDill).toString(), // platformKernel, must be URI
-      workingDirectory: projectPaths.outputsDir,
+      fileSystemRoots: [projectPaths.projectRoot],
+      fileSystemScheme: 'celest',
+      workingDirectory: projectPaths.projectRoot,
       target: target,
       verbose: verbose,
       sdkRoot: sdkRoot,
@@ -172,9 +184,13 @@ final class LocalApiRunner {
 
     port = await portFinder.checkOrUpdatePort(port, excluding: [vmServicePort]);
     _logger.finer('Starting local API on port $port...');
-    _logger.finer(
-      'Running with configuration: ${prettyPrintJson(configValues)}',
+    final celestConfig = prettyPrintJson(
+      resolvedProject.toProto().toProto3Json(),
     );
+    await fileSystem
+        .directory(projectPaths.outputsDir)
+        .childFile('celest.json')
+        .writeAsString(celestConfig);
     final localApiProcess = await processManager.start(
       command,
       workingDirectory: projectPaths.outputsDir,
@@ -183,9 +199,6 @@ final class LocalApiRunner {
         // The HTTP port to serve Celest on.
         'PORT': platform.environment['PORT'] ?? '$port',
         'CELEST_ENVIRONMENT': environmentId,
-        'CELEST_CONFIG_JSON': jsonEncode(
-          resolvedProject.toProto().toProto3Json(),
-        ),
       },
     );
 
@@ -418,7 +431,15 @@ final class LocalApiRunner {
   Future<void> hotReload(List<String> pathsToInvalidate) async {
     _logger.fine('Recompiling local API...');
     final result = await _client.compile([
-      for (final path in pathsToInvalidate) p.toUri(path),
+      for (final path in pathsToInvalidate)
+        if (p.isWithin(projectPaths.projectRoot, path))
+          Uri(
+            scheme: 'celest',
+            path:
+                '/${p.relative(path, from: projectPaths.projectRoot).to(p.url)}',
+          )
+        else
+          p.toUri(path),
     ]);
     final dillOutput = _client.expectOutput(result);
     _logger.fine('Hot reloading local API with entrypoint: $dillOutput');
@@ -501,6 +522,7 @@ extension on FrontendServerClient {
     );
     switch (result) {
       case CompileResult(errorCount: > 0):
+        _logger.finest('Error compiling local API', result.debugResult);
         throw CompilationException(
           'Error compiling local API: ${result.debugResult}',
         );

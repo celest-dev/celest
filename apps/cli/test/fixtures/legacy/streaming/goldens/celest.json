@@ -1,0 +1,97 @@
+{
+  "projectId": "streaming",
+  "environmentId": "local",
+  "apis": {
+    "server_side": {
+      "apiId": "server_side",
+      "functions": {
+        "hello": {
+          "functionId": "hello",
+          "parentId": "server_side",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/server-side/hello"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          }
+        },
+        "stockTicker": {
+          "functionId": "stockTicker",
+          "parentId": "server_side",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/server-side/stock-ticker"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          }
+        },
+        "jsonValues": {
+          "functionId": "jsonValues",
+          "parentId": "server_side",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/server-side/json-values"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          }
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "databases": {},
+  "sdkConfig": {
+    "celest": {
+      "major": 1,
+      "minor": 0,
+      "patch": 0,
+      "preRelease": [
+        "dev",
+        0.0
+      ],
+      "canonicalizedVersion": "1.0.0-dev.0"
+    },
+    "dart": {
+      "type": "DART",
+      "version": {
+        "major": 3,
+        "minor": 5,
+        "patch": 3,
+        "canonicalizedVersion": "3.5.3"
+      }
+    },
+    "flutter": {
+      "type": "FLUTTER",
+      "version": {
+        "major": 3,
+        "minor": 24,
+        "patch": 3,
+        "canonicalizedVersion": "3.24.3"
+      }
+    },
+    "targetSdk": "DART",
+    "featureFlags": [
+      "STREAMING"
+    ]
+  }
+}

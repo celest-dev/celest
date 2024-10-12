@@ -24,14 +24,14 @@ final class EntrypointGenerator {
     required this.project,
     required this.api,
     required this.function,
-    this.httpConfig,
+    required this.httpConfig,
     required this.outputDir,
   });
 
   final Project project;
   final Api api;
   final CloudFunction function;
-  final ResolvedHttpConfig? httpConfig;
+  final ResolvedHttpConfig httpConfig;
   final String outputDir;
 
   late final String projectRoot = projectPaths.projectRoot;
@@ -251,7 +251,7 @@ final class EntrypointGenerator {
                   b.addExpression(response);
                   b.addExpression(
                     DartTypes.shelf.response.newInstance([
-                      literalNum(httpConfig?.status ?? 200),
+                      literalNum(httpConfig.status),
                     ], {
                       'headers': literalConstMap({
                         'Content-Type': 'application/json',
@@ -281,7 +281,7 @@ final class EntrypointGenerator {
                   );
                   b.addExpression(
                     DartTypes.shelf.response([
-                      literalNum(httpConfig?.status ?? 200),
+                      literalNum(httpConfig.status),
                     ], {
                       'headers': literalConstMap({
                         'Content-Type': 'application/json',
@@ -314,7 +314,7 @@ final class EntrypointGenerator {
               exceptionType: typeHelper.fromReference(exceptionType),
           };
 
-          final rawStatusCodes = httpConfig?.statusMappings.toMap().map(
+          final rawStatusCodes = httpConfig.statusMappings.toMap().map(
                 (type, status) => MapEntry(
                   typeHelper.fromReference(type),
                   status,
@@ -326,8 +326,8 @@ final class EntrypointGenerator {
             final dartExceptionType = dartExceptionTypes[exceptionType]!;
 
             var statusCode =
-                httpConfig?.statusMappings[exceptionType]?.let(literalNum);
-            if (statusCode == null && rawStatusCodes != null) {
+                httpConfig.statusMappings[exceptionType]?.let(literalNum);
+            if (statusCode == null && httpConfig.statusMappings.isNotEmpty) {
               final relevantExceptionCodes =
                   SplayTreeMap<ast.DartType, int>((a, b) {
                 if (identical(a, b) || a == b) {
@@ -352,14 +352,10 @@ final class EntrypointGenerator {
             if (statusCode == null &&
                 exceptionElement is ast.InterfaceElement) {
               final errorConfig = [
-                exceptionElement,
-                ...exceptionElement.allSupertypes.map((it) => it.element),
-              ]
-                  .map(
-                    (el) => el.metadata.firstWhereOrNull((m) => m.isHttpError),
-                  )
-                  .nonNulls
-                  .firstOrNull;
+                ...exceptionElement.metadata,
+                ...exceptionElement.allSupertypes
+                    .expand((it) => it.element.metadata),
+              ].where((m) => m.isHttpError).firstOrNull;
               if (errorConfig?.computeConstantValue() case final value?) {
                 statusCode =
                     value.getField('statusCode')?.toIntValue()?.let(literalNum);
@@ -705,7 +701,7 @@ final class EntrypointGenerator {
                 ..returns = DartTypes.core.string
                 ..type = MethodType.getter
                 ..lambda = true
-                ..body = literalString(httpConfig?.method ?? 'POST').code,
+                ..body = literalString(httpConfig.method).code,
             )
           else
             Method(
@@ -754,7 +750,7 @@ final class EntrypointGenerator {
     );
 
     final entrypoint = LocalApiGenerator(
-      projectType: project.sdkConfig.targetSdk,
+      project: project,
       targets: {'/': refer(targetName)},
     ).body;
     library.body.addAll([

@@ -1,1 +1,0 @@
-/Users/dillonnys/celest/cloud/apps/cli/test/fixtures/legacy/api/lib/src/project.dart

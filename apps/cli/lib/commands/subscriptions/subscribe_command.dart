@@ -66,7 +66,7 @@ final class SubscribeCommand extends CelestCommand with Authenticate {
         }
         if (request.url.queryParameters['error'] case final error?) {
           subscribeCompletion.completeError(
-            CelestException(
+            CliException(
               'The subscription could not be completed. '
               'Please contact us before trying again.',
               additionalContext: {'error': error},

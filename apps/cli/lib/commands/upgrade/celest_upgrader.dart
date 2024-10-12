@@ -51,7 +51,7 @@ final class CelestUpgrader {
       http.Request('GET', downloadUri),
     );
     if (downloadResp.statusCode != 200) {
-      throw CelestException(
+      throw CliException(
         'Failed to download Celest. Please check your internet '
         'connection and try again or download directly from: '
         'https://celest.dev/download',
@@ -99,11 +99,11 @@ final class CelestUpgrader {
       }
     } on Object catch (e, st) {
       _progress?.cancel();
-      if (e is CelestException) {
+      if (e is CliException) {
         rethrow;
       }
       performance.captureError(e, stackTrace: st);
-      throw CelestException(
+      throw CliException(
         'Failed to upgrade Celest. Please install the latest version from '
         'https://celest.dev/download.',
         additionalContext: {

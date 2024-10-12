@@ -9,6 +9,7 @@
   "apis": {},
   "variables": [],
   "secrets": [],
+  "databases": {},
   "sdkConfig": {
     "celest": "1.0.0-dev.0",
     "dart": {

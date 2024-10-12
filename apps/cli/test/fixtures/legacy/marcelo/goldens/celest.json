@@ -1,0 +1,252 @@
+{
+  "projectId": "marcelo",
+  "environmentId": "local",
+  "apis": {
+    "exceptions": {
+      "apiId": "exceptions",
+      "functions": {
+        "throwsUserException": {
+          "functionId": "throwsUserException",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-user-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "callsThrowsUserException": {
+          "functionId": "callsThrowsUserException",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/calls-throws-user-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsAppError": {
+          "functionId": "throwsAppError",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-app-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsAppException": {
+          "functionId": "throwsAppException",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-app-exception"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsNotYetImplementedError": {
+          "functionId": "throwsNotYetImplementedError",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-not-yet-implemented-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsValidateError": {
+          "functionId": "throwsValidateError",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-validate-error"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "throwsUserException_ShowInConsole": {
+          "functionId": "throwsUserException_ShowInConsole",
+          "parentId": "exceptions",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/exceptions/throws-user-exception-show-in-console"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "models": {
+      "apiId": "models",
+      "functions": {
+        "availableStock": {
+          "functionId": "availableStock",
+          "parentId": "models",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/models/available-stock"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "availableStocks": {
+          "functionId": "availableStocks",
+          "parentId": "models",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/models/available-stocks"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "cashBalance": {
+          "functionId": "cashBalance",
+          "parentId": "models",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/models/cash-balance"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "portfolio": {
+          "functionId": "portfolio",
+          "parentId": "models",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/models/portfolio"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "stock": {
+          "functionId": "stock",
+          "parentId": "models",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/models/stock"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "ui": {
+          "functionId": "ui",
+          "parentId": "models",
+          "httpConfig": {
+            "method": "POST",
+            "route": {
+              "path": "/models/ui"
+            },
+            "status": 200,
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "databases": {},
+  "sdkConfig": {
+    "celest": {
+      "major": 1,
+      "minor": 0,
+      "patch": 0,
+      "preRelease": [
+        "dev",
+        0.0
+      ],
+      "canonicalizedVersion": "1.0.0-dev.0"
+    },
+    "dart": {
+      "type": "DART",
+      "version": {
+        "major": 3,
+        "minor": 5,
+        "patch": 3,
+        "canonicalizedVersion": "3.5.3"
+      }
+    },
+    "flutter": {
+      "type": "FLUTTER",
+      "version": {
+        "major": 3,
+        "minor": 24,
+        "patch": 3,
+        "canonicalizedVersion": "3.24.3"
+      }
+    },
+    "targetSdk": "DART",
+    "featureFlags": [
+      "STREAMING"
+    ]
+  }
+}

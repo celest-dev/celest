@@ -1,4 +1,4 @@
-// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use, invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i10;
@@ -1221,6 +1221,35 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i5.JsonUtf8.encode(status),
       );
+    } on Exception catch (e, st) {
+      const statusCode = 400;
+      _i8.context.logger.severe(
+        e.toString(),
+        e,
+        st,
+      );
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.Exception',
+              'value': _i5.Serializers.instance.serialize<Exception>(e),
+            },
+            if (_i8.context.environment != _i9.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i5.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
+      };
+      return _i2.Response(
+        statusCode,
+        headers: const {'Content-Type': 'application/json'},
+        body: _i5.JsonUtf8.encode(status),
+      );
     } on UnsupportedError catch (e, st) {
       const statusCode = 500;
       _i8.context.logger.severe(
@@ -1374,6 +1403,13 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return Error();
+      },
+    ));
+    _i5.Serializers.instance
+        .put(_i5.Serializer.define<Exception, Map<String, Object?>?>(
+      serialize: ($value) => const <String, Object?>{},
+      deserialize: ($serialized) {
+        return Exception($serialized?[r'message']);
       },
     ));
     _i5.Serializers.instance
@@ -1584,6 +1620,11 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionHttpTarget {
         return _i3.Circle(($serialized[r'radius'] as num).toDouble());
       },
     ));
+    _i5.Serializers.instance.put(const ErrResult_E_ShapeExceptionSerializer());
+    _i5.Serializers.instance
+        .put(const ErrResult_E_ShapeExceptionSerializer<_i4.ShapeException>());
+    _i5.Serializers.instance.put(
+        const ErrResult_E_ShapeExceptionSerializer<_i4.BadShapeException>());
     _i5.Serializers.instance.put(const ErrResult_T_ShapeSerializer());
     _i5.Serializers.instance
         .put(const ErrResult_T_ShapeSerializer<_i3.Shape>());
@@ -1591,11 +1632,6 @@ final class MultipleGenericResultTarget extends _i1.CloudFunctionHttpTarget {
         .put(const ErrResult_T_ShapeSerializer<_i3.Circle>());
     _i5.Serializers.instance
         .put(const ErrResult_T_ShapeSerializer<_i3.Rectangle>());
-    _i5.Serializers.instance.put(const ErrResult_E_ShapeExceptionSerializer());
-    _i5.Serializers.instance
-        .put(const ErrResult_E_ShapeExceptionSerializer<_i4.ShapeException>());
-    _i5.Serializers.instance.put(
-        const ErrResult_E_ShapeExceptionSerializer<_i4.BadShapeException>());
     _i5.Serializers.instance.put(const OkResult_T_ShapeSerializer());
     _i5.Serializers.instance.put(const OkResult_T_ShapeSerializer<_i3.Shape>());
     _i5.Serializers.instance
@@ -2165,7 +2201,10 @@ Future<void> main() async {
 }
 
 Future<void> start() async {
-  await _i1.serve(targets: {'/': MultipleGenericResultTarget()});
+  await _i1.serve(
+    targets: {'/': MultipleGenericResultTarget()},
+    setup: (_i8.Context context) async {},
+  );
 }
 
 final class ErrResult_E_ShapeExceptionSerializer<E extends _i4.ShapeException>

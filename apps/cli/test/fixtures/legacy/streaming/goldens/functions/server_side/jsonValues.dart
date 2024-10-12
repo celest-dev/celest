@@ -1,4 +1,4 @@
-// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use, invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i8;
@@ -880,6 +880,31 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
         }
       };
       yield status;
+    } on Exception catch (e, st) {
+      const statusCode = 400;
+      _i6.context.logger.severe(
+        e.toString(),
+        e,
+        st,
+      );
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.Exception',
+              'value': _i3.Serializers.instance.serialize<Exception>(e),
+            },
+            if (_i6.context.environment != _i7.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i3.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
+      };
+      yield status;
     } on UnsupportedError catch (e, st) {
       const statusCode = 500;
       _i6.context.logger.severe(
@@ -1025,6 +1050,13 @@ final class JsonValuesTarget extends _i1.CloudEventSourceTarget {
       },
       deserialize: ($serialized) {
         return Error();
+      },
+    ));
+    _i3.Serializers.instance
+        .put(_i3.Serializer.define<Exception, Map<String, Object?>?>(
+      serialize: ($value) => const <String, Object?>{},
+      deserialize: ($serialized) {
+        return Exception($serialized?[r'message']);
       },
     ));
     _i3.Serializers.instance
@@ -1549,5 +1581,8 @@ Future<void> main() async {
 }
 
 Future<void> start() async {
-  await _i1.serve(targets: {'/': JsonValuesTarget()});
+  await _i1.serve(
+    targets: {'/': JsonValuesTarget()},
+    setup: (_i6.Context context) async {},
+  );
 }

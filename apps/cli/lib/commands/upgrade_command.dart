@@ -52,7 +52,7 @@ final class UpgradeCommand extends CelestCommand {
       await upgrader.installRelease(installerFile);
     } on Object catch (e, st) {
       Error.throwWithStackTrace(
-        CelestException(
+        CliException(
           'Failed to upgrade Celest. Please visit https://celest.dev/download '
           'to upgrade manually.',
           additionalContext: {

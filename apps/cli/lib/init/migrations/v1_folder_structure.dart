@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:celest_cli/init/project_migration.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
@@ -31,14 +33,16 @@ import 'package:logging/logging.dart';
 ///
 /// celest/
 ///   pubspec.yaml
-///   project.dart
 ///   client/
 ///     pubspec.yaml
 ///     lib/
 ///       client.dart
-///   functions/
-///     hello_world.dart
-///   models/
+///   lib/
+///     src/
+///       project.dart
+///       functions/
+///         hello_world.dart
+///       models/
 ///
 /// To workaround Dart limitations, customers see the following folder
 /// structure (no `lib/` folder), but all of the top-level folders (functions,
@@ -63,7 +67,7 @@ final class V1FolderStructure extends ProjectMigration {
 
   final _operations = <Future<void>>[];
 
-  late final generatedClientEntities = [
+  late final legacyClientEntities = [
     projectDir.childDirectory('lib').childFile('client.dart'),
     fileSystem.directory(projectPaths.legacyClientOutputsDir),
   ];
@@ -102,7 +106,7 @@ final class V1FolderStructure extends ProjectMigration {
 
   @override
   bool get needsMigration {
-    for (final entity in generatedClientEntities) {
+    for (final entity in legacyClientEntities) {
       if (entity.existsSync()) {
         return true;
       }
@@ -115,6 +119,9 @@ final class V1FolderStructure extends ProjectMigration {
     if (!projectDir.childDirectory('client').existsSync()) {
       return true;
     }
+    if (fileSystem.file(projectPaths.legacyAuthDart).existsSync()) {
+      return true;
+    }
     return false;
   }
 
@@ -122,7 +129,7 @@ final class V1FolderStructure extends ProjectMigration {
   Future<ProjectMigrationResult> create() async {
     final rootDir = fileSystem.directory(projectRoot);
     // Start by removing all pre-V1 generated client code.
-    for (final entity in generatedClientEntities) {
+    for (final entity in legacyClientEntities) {
       if (entity.existsSync()) {
         _logger.finest('Removing ${entity.path}...');
         _operations.add(entity.delete(recursive: true));
@@ -136,27 +143,39 @@ final class V1FolderStructure extends ProjectMigration {
     }
 
     // Move `functions` to `lib/src` and create symlinks.
-    final moveOperations = <Future<Link?>>[];
+    final moveOperations = <Future<void>>[];
     for (final (from, to) in symlinkdDirs) {
-      if (!from.existsSync() || fileSystem.isLinkSync(from.path)) {
+      if (!from.existsSync()) {
         continue;
       }
       if (to.existsSync() && to.listSync().isNotEmpty) {
-        throw const CelestException(
-          'Project in partial migration state. Please follow the migration '
-          'guide at https://celest.dev/docs/v1-migration before continuing.',
-        );
+        if (fileSystem.isLinkSync(from.path)) {
+          moveOperations.add(from.delete());
+        } else {
+          throw const CliException(
+            'Project in partial migration state. Please follow the migration '
+            'guide at https://celest.dev/docs/v1-migration before continuing.',
+          );
+        }
+      } else {
+        moveOperations.add(_move(from, to));
       }
-      moveOperations.add(_move(from, to));
     }
     for (final (from, to) in symlinkdFiles) {
+      if (!from.existsSync()) {
+        continue;
+      }
       if (fileSystem.isLinkSync(from.path)) {
+        final link = fileSystem.link(from.path);
+        moveOperations.add(link.delete());
+        continue;
+      }
+      if (to.existsSync()) {
         continue;
       }
       moveOperations.add(
-        from.copy(to.path).then((_) async {
+        from.copy(to.path).then<void>((_) async {
           await from.delete();
-          return fileSystem.link(from.path).create(to.path);
         }),
       );
     }
@@ -198,12 +217,12 @@ transforms:
       );
     }
 
-    // Move legacy Auth file if present.
+    // Move legacy Auth contents if present.
     final legacyAuthFile = fileSystem.file(projectPaths.legacyAuthDart);
     if (legacyAuthFile.existsSync()) {
       _operations.add(
-        legacyAuthFile.rename(projectPaths.authDart).then<void>((_) async {
-          await legacyAuthFile.parent.delete();
+        Future.wait(moveOperations).then((_) {
+          return _moveAuthContentsToProjectDart(legacyAuthFile);
         }),
       );
     }
@@ -219,7 +238,7 @@ transforms:
   /// Moves one directory to another.
   ///
   /// Returns the new symlink.
-  Future<Link?> _move(Directory from, Directory to) async {
+  Future<void> _move(Directory from, Directory to) async {
     await for (final file in from.list(recursive: true, followLinks: false)) {
       final relativePath = p.relative(file.path, from: from.path);
       final destination = to.childFile(relativePath);
@@ -242,10 +261,39 @@ transforms:
       if (resourcesDart.existsSync()) {
         await resourcesDart.delete();
       }
-      // Don't create a link for the generated folder.
-      return null;
     }
-    return fileSystem.link(from.path).create(to.path);
+  }
+
+  Future<void> _moveAuthContentsToProjectDart(File authDart) async {
+    final contents = await authDart.readAsLines();
+    final nonImports = contents.skipWhile(
+      (line) => line.startsWith('import') || line.trim().isEmpty,
+    );
+    if (nonImports.isNotEmpty) {
+      if (!nonImports.first.startsWith('const')) {
+        _logger.finest('Unknown format in legacy auth.dart', nonImports.first);
+        return;
+      }
+      await fileSystem.file(projectPaths.projectDart).writeAsString(
+            ['', ...nonImports, ''].join(Platform.lineTerminator),
+            mode: FileMode.writeOnlyAppend,
+          );
+      await celestProject.invalidate([projectPaths.projectDart]);
+    }
+    await authDart.delete();
+    final authDir = authDart.parent;
+    final authEntities = await authDir.list(recursive: true).toList();
+    if (authEntities.whereType<File>().isNotEmpty) {
+      return _move(
+        authDir,
+        projectDir
+            .childDirectory('lib')
+            .childDirectory('src')
+            .childDirectory('auth'),
+      );
+    } else {
+      await authDir.delete(recursive: true);
+    }
   }
 
   /// The creation of symbolic links really throws git for a loop in VSCode.

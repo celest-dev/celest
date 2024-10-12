@@ -504,6 +504,12 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "Exception",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "FormatException",
           "url": "dart:core",
           "isNullable": false
@@ -819,6 +825,7 @@
       "docs": []
     }
   ],
+  "databases": {},
   "sdkConfig": {
     "celest": "1.0.0-dev.0",
     "dart": {

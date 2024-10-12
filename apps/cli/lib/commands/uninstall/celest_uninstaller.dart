@@ -54,7 +54,7 @@ class CelestUninstaller {
         'Failed to uninstall Celest from pub global.',
         '${result.stdout}\n${result.stderr}',
       );
-      throw const CelestException(
+      throw const CliException(
         'Failed to uninstall Celest from pub global.',
       );
     }
@@ -84,7 +84,7 @@ class CelestUninstaller {
           mode: ProcessStartMode.inheritStdio,
         );
         if (await uninstallOutput.exitCode != 0) {
-          throw const CelestException(
+          throw const CliException(
             'Celest was partially uninstalled. Please use dpkg to clean up '
             'remaining files.',
           );

@@ -30,6 +30,7 @@ import 'package:celest_cli/src/repositories/project_repository.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cloud/src/proto.dart' as pb;
 import 'package:celest_core/_internal.dart';
+import 'package:celest_core/celest_core.dart' show User;
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:stream_transform/stream_transform.dart';
@@ -502,6 +503,7 @@ final class CelestFrontend {
 
   /// Builds the current project for deployment to the cloud.
   Future<int> build({
+    required User user,
     required bool migrateProject,
     required Progress currentProgress,
     required String environmentId,
@@ -709,15 +711,7 @@ final class CelestFrontend {
         if (stopped) {
           throw const CancellationException('Celest was stopped');
         }
-        await Future.wait([
-          for (final MapEntry(key: path, value: contents) in outputs.entries)
-            Future<void>(() async {
-              assert(p.isAbsolute(path));
-              final file = fileSystem.file(path);
-              await file.create(recursive: true);
-              await file.writeAsString(contents);
-            }),
-        ]);
+        await outputs.write();
         if (stopped) {
           throw const CancellationException('Celest was stopped');
         }
@@ -773,8 +767,8 @@ final class CelestFrontend {
         .childFile('Dockerfile')
         .writeAsString(dockerfile.generate());
 
-    await buildOutputs.childFile('celest.json').writeAsBytes(
-          JsonUtf8.encode(resolvedProject.toProto().toProto3Json()),
+    await buildOutputs.childFile('celest.json').writeAsString(
+          prettyPrintJson(resolvedProject.toProto().toProto3Json()),
         );
   }
 
@@ -938,7 +932,7 @@ final class CelestFrontend {
             baseUri: Uri.parse(deployment.uri),
           );
         } on Exception catch (e, st) {
-          if (e case CancellationException() || CelestException()) {
+          if (e case CancellationException() || CliException()) {
             analytics.capture(
               'cancel_deployment',
               properties: {
@@ -950,7 +944,7 @@ final class CelestFrontend {
             rethrow;
           }
           Error.throwWithStackTrace(
-            CelestException(
+            CliException(
               'Failed to deploy project. Please contact the Celest team and '
               'reference deployment ID: $deploymentId',
               additionalContext: {

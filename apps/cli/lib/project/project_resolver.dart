@@ -6,15 +6,30 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   ProjectResolver({
     required Map<String, String> configValues,
     required String environmentId,
+    this.driftSchemas = const {},
   }) : configValues = {
           ...configValues,
           'CELEST_ENVIRONMENT': environmentId,
         };
 
   final _resolvedProject = ResolvedProjectBuilder();
-  late final ResolvedProject resolvedProject = _resolvedProject.build();
+  late final ResolvedProject resolvedProject = run(() {
+    final celestConfigValues =
+        configValues.keys.toSet().difference(_seenConfigValues);
+    for (final name in celestConfigValues) {
+      _resolvedProject.variables.add(
+        ResolvedVariable(
+          name: name,
+          value: configValues[name]!,
+        ),
+      );
+    }
+    return _resolvedProject.build();
+  });
 
   final Map<String, String> configValues;
+  final Set<String> _seenConfigValues = {};
+  final Map<String, DriftDatabaseSchema>? driftSchemas;
 
   @override
   ResolvedProject visitProject(Project project, AstNode context) {
@@ -22,10 +37,8 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
       ..projectId = project.name
       ..environmentId = project.environment
       ..sdkConfig.replace(project.sdkConfig);
-    for (final envVar in project.variables) {
-      _resolvedProject.variables.add(
-        visitVariable(envVar, project),
-      );
+    for (final variable in project.variables) {
+      _resolvedProject.variables.add(visitVariable(variable, project));
     }
     for (final secret in project.secrets) {
       _resolvedProject.secrets.add(visitSecret(secret, project));
@@ -35,6 +48,10 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
     }
     if (project.auth case final auth?) {
       _resolvedProject.auth.replace(visitAuth(auth, project));
+    }
+    for (final database in project.databases.values) {
+      _resolvedProject.databases[database.name] =
+          visitDatabase(database, project);
     }
     return resolvedProject;
   }
@@ -115,6 +132,7 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
     AstNode context,
   ) {
     final name = variable.name;
+    _seenConfigValues.add(name);
     final value = configValues[name];
     if (value == null) {
       // Should have been caught before this.
@@ -129,6 +147,7 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   @override
   ResolvedSecret visitSecret(Secret secret, covariant AstNode context) {
     final name = secret.name;
+    _seenConfigValues.add(name);
     final value = configValues[name];
     if (value == null) {
       // Should have been caught before this.
@@ -228,5 +247,40 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   @override
   Node? visitApiHttpMetadata(ApiHttpMetadata metadata, AstNode context) {
     return null;
+  }
+
+  @override
+  ResolvedDatabase visitDatabase(Database database, Project context) {
+    return ResolvedDatabase.build((b) {
+      b.databaseId = database.name;
+      b.config = switch (database.config) {
+        CelestDatabaseConfig(:final hostname, :final token) =>
+          ResolvedCelestDatabaseConfig(
+            // The deployed environments, values for these are filled in only
+            // after the project is deployed.
+            //
+            // For local environments, the values are never needed.
+            hostname: ResolvedVariable(name: hostname.name, value: ''),
+            token: ResolvedSecret(name: token.name, value: ''),
+          ),
+      };
+      b.schema = switch (database.schema) {
+        // TODO(dnys1): Use drift_dev to resolve the schema.
+        DriftDatabaseSchema() => ResolvedDriftDatabaseSchema(
+            databaseSchemaId: database.name,
+            version: 1,
+            schemaJson: {},
+          ),
+      };
+    });
+  }
+
+  @override
+  ResolvedDatabaseSchema visitDatabaseSchema(
+    DatabaseSchema schema,
+    Database context,
+  ) {
+    // TODO: implement visitSchema
+    throw UnimplementedError();
   }
 }

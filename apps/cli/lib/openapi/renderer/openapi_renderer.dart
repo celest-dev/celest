@@ -425,6 +425,17 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
 
   @override
   void visitSecret(ast.Secret secret, covariant String context) {}
+
+  @override
+  void visitDatabase(ast.Database database, covariant String context) {
+    // TODO: implement visitDatabase
+  }
+
+  @override
+  void visitDatabaseSchema(
+      ast.DatabaseSchema schema, covariant String context) {
+    // TODO: implement visitSchema
+  }
 }
 
 extension on ast.ResolvedCloudFunction {

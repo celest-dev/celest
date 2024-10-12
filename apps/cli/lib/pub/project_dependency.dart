@@ -54,6 +54,7 @@ final class ProjectDependency {
     celestAst.name: celestAst,
     celestCore.name: celestCore,
     firebaseAuth.name: firebaseAuth,
+    driftHrana.name: driftHrana,
     gotrue.name: gotrue,
     http.name: http,
     meta.name: meta,
@@ -84,6 +85,14 @@ final class ProjectDependency {
     DependencyType.dependency,
     HostedDependency(
       version: VersionConstraint.compatibleWith(currentMinorVersion),
+    ),
+  );
+
+  static final ProjectDependency driftHrana = ProjectDependency._(
+    'drift_hrana',
+    DependencyType.dependency,
+    HostedDependency(
+      version: VersionConstraint.compatibleWith(Version.parse('1.0.2')),
     ),
   );
 
@@ -153,7 +162,6 @@ final class ProjectDependency {
 
   static final Map<String, ProjectDependency> backendDependencies = {
     celest.name: celest,
-    celestAst.name: celestAst,
     celestCore.name: celestCore,
     meta.name: meta,
   };

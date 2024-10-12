@@ -6,6 +6,7 @@ import 'package:celest_cli/codegen/client/client_generator.dart';
 import 'package:celest_cli/codegen/code_generator.dart';
 import 'package:celest_cli/codegen/code_outputs.dart';
 import 'package:celest_cli/project/celest_project.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:collection/collection.dart';
 
 final class ClientCodeGenerator {
@@ -18,7 +19,9 @@ final class ClientCodeGenerator {
   final CelestProjectUris projectUris;
 
   CodeOutputs generate() {
-    final clientDeps = ClientDependencies();
+    final clientDeps = CodegenDependencies(
+      rootDir: projectPaths.clientRoot,
+    );
     final outputs = runZoned(
       () {
         final generator = ClientGenerator(
@@ -27,7 +30,7 @@ final class ClientCodeGenerator {
         );
         return generator.generate();
       },
-      zoneValues: {ClientDependencies: clientDeps},
+      zoneValues: {CodegenDependencies: clientDeps},
     );
     return CodeOutputs(
       outputs.map(
@@ -41,15 +44,19 @@ final class ClientCodeGenerator {
           ),
         ),
       ),
-      clientDependencies: clientDeps,
+      codegenDependencies: clientDeps,
     );
   }
 }
 
-final class ClientDependencies extends DelegatingSet<String> {
-  ClientDependencies() : super({});
+final class CodegenDependencies extends DelegatingSet<String> {
+  CodegenDependencies({
+    required this.rootDir,
+  }) : super({});
 
-  static ClientDependencies get current {
-    return Zone.current[ClientDependencies] as ClientDependencies;
+  final String rootDir;
+
+  static CodegenDependencies get current {
+    return Zone.current[CodegenDependencies] as CodegenDependencies;
   }
 }

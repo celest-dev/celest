@@ -149,10 +149,10 @@ final class ClientAuthGenerator {
     for (final provider in auth.externalProviders) {
       switch (provider.type) {
         case ast.AuthProviderType.firebase:
-          ClientDependencies.current.add('firebase_auth');
+          CodegenDependencies.current.add('firebase_auth');
         case ast.AuthProviderType.supabase:
-          ClientDependencies.current.add('gotrue');
-          ClientDependencies.current.add('stream_transform');
+          CodegenDependencies.current.add('gotrue');
+          CodegenDependencies.current.add('stream_transform');
           _library.directives.add(
             // For `.startWith` Stream extension
             Directive.import(

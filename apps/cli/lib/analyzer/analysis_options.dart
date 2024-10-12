@@ -10,7 +10,7 @@ final class AnalysisOptions {
 
   final List<String> enabledExperiments;
 
-  static const _empty = AnalysisOptions._();
+  static const AnalysisOptions empty = AnalysisOptions._();
   static final _logger = Logger('AnalysisOptions');
 
   static Future<AnalysisOptions> load(String path) async {
@@ -22,24 +22,24 @@ final class AnalysisOptions {
     final analysisOptionsFile = fileSystem.file(path);
     if (!await analysisOptionsFile.exists()) {
       _logger.finest('No analysis options file detected at $path');
-      return _empty;
+      return empty;
     }
     final analysisOptionsContent = await analysisOptionsFile.readAsString();
     final analysisOptions = loadYamlDocument(analysisOptionsContent);
     final analysisOptionsMap = analysisOptions.contents;
     if (analysisOptionsMap is! YamlMap) {
       _logger.finer('Invalid analysis options file: $analysisOptionsContent');
-      return _empty;
+      return empty;
     }
     final analyzerOptions = analysisOptionsMap.value['analyzer'];
     if (analyzerOptions is! YamlMap) {
       _logger.finer('No analyzer settings found');
-      return _empty;
+      return empty;
     }
     final enabledExperiments = analyzerOptions.value['enable-experiment'];
     if (enabledExperiments is! YamlList) {
       _logger.finer('No enabled experiments found');
-      return _empty;
+      return empty;
     }
     return AnalysisOptions._(
       enabledExperiments: enabledExperiments.value.cast<String>(),

@@ -1,4 +1,4 @@
-// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use
+// ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use, invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i8;
@@ -1017,6 +1017,35 @@ final class HasNotExportableAnnotationTarget
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
+    } on Exception catch (e, st) {
+      const statusCode = 400;
+      _i6.context.logger.severe(
+        e.toString(),
+        e,
+        st,
+      );
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': null,
+          'details': [
+            {
+              '@type': 'dart.core.Exception',
+              'value': _i4.Serializers.instance.serialize<Exception>(e),
+            },
+            if (_i6.context.environment != _i7.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i4.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        }
+      };
+      return _i2.Response(
+        statusCode,
+        headers: const {'Content-Type': 'application/json'},
+        body: _i4.JsonUtf8.encode(status),
+      );
     } on UnsupportedError catch (e, st) {
       const statusCode = 500;
       _i6.context.logger.severe(
@@ -1170,6 +1199,13 @@ final class HasNotExportableAnnotationTarget
       },
       deserialize: ($serialized) {
         return Error();
+      },
+    ));
+    _i4.Serializers.instance
+        .put(_i4.Serializer.define<Exception, Map<String, Object?>?>(
+      serialize: ($value) => const <String, Object?>{},
+      deserialize: ($serialized) {
+        return Exception($serialized?[r'message']);
       },
     ));
     _i4.Serializers.instance
@@ -1694,5 +1730,8 @@ Future<void> main() async {
 }
 
 Future<void> start() async {
-  await _i1.serve(targets: {'/': HasNotExportableAnnotationTarget()});
+  await _i1.serve(
+    targets: {'/': HasNotExportableAnnotationTarget()},
+    setup: (_i6.Context context) async {},
+  );
 }

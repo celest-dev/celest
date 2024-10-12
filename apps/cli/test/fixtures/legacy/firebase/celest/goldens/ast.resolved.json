@@ -27,9 +27,14 @@
     {
       "name": "FIREBASE_PROJECT_ID",
       "value": "prj-d-firebase-test"
+    },
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
     }
   ],
   "secrets": [],
+  "databases": {},
   "sdkConfig": {
     "celest": "1.0.0-dev.0",
     "dart": {

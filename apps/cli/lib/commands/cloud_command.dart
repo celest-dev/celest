@@ -8,7 +8,7 @@ import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cloud/celest_cloud.dart';
-import 'package:celest_core/celest_core.dart' hide CelestException;
+import 'package:celest_core/celest_core.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:protobuf/protobuf.dart';
@@ -79,9 +79,7 @@ base mixin CloudOperationCommand<R extends GeneratedMessage>
   Future<int> run() async {
     await super.run();
 
-    if (await assertAuthenticated() case final code when code != 0) {
-      return code;
-    }
+    await assertAuthenticated();
 
     final verbs = options.validateOnly
         ? const (
@@ -127,7 +125,7 @@ base mixin CloudOperationCommand<R extends GeneratedMessage>
       return 0;
     } on CloudException catch (e) {
       progress.fail('Failed to ${verbs.run} $resourceType');
-      throw CelestException(e.message);
+      throw CliException(e.message);
     } on Object {
       progress.fail('Failed to ${verbs.run} $resourceType');
       rethrow;
@@ -189,7 +187,7 @@ final class CloudCliOperation<R extends GeneratedMessage> {
         resource: resource,
       );
     } on CloudException catch (e) {
-      throw CelestException(e.message);
+      throw CliException(e.message);
     } on Object {
       rethrow;
     }
@@ -277,9 +275,7 @@ abstract base class CloudGetCommand<R extends GeneratedMessage>
   Future<int> run() async {
     await super.run();
 
-    if (await assertAuthenticated() case final code when code != 0) {
-      return code;
-    }
+    await assertAuthenticated();
 
     try {
       final resource = await callService();
@@ -290,7 +286,7 @@ abstract base class CloudGetCommand<R extends GeneratedMessage>
       stdout.writeln(resource);
       return 0;
     } on CloudException catch (e) {
-      throw CelestException(e.message);
+      throw CliException(e.message);
     }
   }
 }
@@ -353,9 +349,7 @@ abstract base class CloudListCommand<R extends GeneratedMessage>
   Future<int> run() async {
     await super.run();
 
-    if (await assertAuthenticated() case final code when code != 0) {
-      return code;
-    }
+    await assertAuthenticated();
 
     try {
       final result = await callService();
@@ -368,7 +362,7 @@ abstract base class CloudListCommand<R extends GeneratedMessage>
       }
       return 0;
     } on CloudException catch (e) {
-      throw CelestException(e.message);
+      throw CliException(e.message);
     }
   }
 }
@@ -462,7 +456,7 @@ extension type CloudCommandOptions(ArgResults argResults)
     if (id == null) {
       // celest <resource> <verb>
       final command = arguments.take(3).join(' ');
-      throw CelestException('Usage: $command <ID>');
+      throw CliException('Usage: $command <ID>');
     }
     return id;
   }
@@ -490,7 +484,7 @@ extension type CreateCommandArgResults(ArgResults argResults)
     for (final annotation in multiOption('annotation')) {
       final parts = annotation.split('=');
       if (parts.length != 2) {
-        throw CelestException(
+        throw CliException(
           'Invalid annotation: $annotation. Must be in the form KEY=VALUE',
         );
       }
@@ -516,7 +510,7 @@ extension type UpdateCommandArgResults(ArgResults argResults)
     for (final annotation in multiOption('annotation')) {
       final parts = annotation.split('=');
       if (parts.length != 2) {
-        throw CelestException(
+        throw CliException(
           'Invalid annotation: $annotation. Must be in the form KEY=VALUE',
         );
       }

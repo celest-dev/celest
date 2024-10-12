@@ -85,7 +85,7 @@ Future<void> runPub({
     }
     if (!completer.isCompleted) {
       completer.completeError(
-        CelestException(
+        CliException(
           'Failed to run `pub ${action.name}`. Please run `$exe pub ${action.name}` '
           'manually in $workingDirectory and try again.',
           additionalContext: {
@@ -99,7 +99,7 @@ Future<void> runPub({
     await Future.any([
       process.exitCode.then((exitCode) {
         if (exitCode != 0) {
-          throw CelestException(
+          throw CliException(
             'Failed to run `pub get`. Please run `$exe pub get` manually in '
             '$workingDirectory and try again.',
           );
