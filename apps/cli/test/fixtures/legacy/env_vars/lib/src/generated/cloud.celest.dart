@@ -4,6 +4,7 @@
 
 library;
 
+import 'package:celest/src/core/context.dart';
 import 'package:celest_backend/src/generated/config.celest.dart';
 
 /// The interface to your Celest backend.
@@ -12,6 +13,10 @@ import 'package:celest_backend/src/generated/config.celest.dart';
 /// provides access to the backend environment and services
 /// configured for your project.
 const CelestCloud celest = CelestCloud._();
+
+/// A per-request context object which propogates request information and common
+/// accessors to the Celest server environment.
+CelestContext get context => CelestContext._(context);
 
 /// The interface to your Celest backend.
 ///
@@ -40,3 +45,7 @@ class CelestCloud {
   /// for the [currentEnvironment].
   CelestSecrets get secrets => const CelestSecrets();
 }
+
+/// A per-request context object which propogates request information and common
+/// accessors to the Celest server environment.
+extension type CelestContext._(Context _context) implements Context {}

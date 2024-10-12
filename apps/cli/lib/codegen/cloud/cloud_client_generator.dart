@@ -21,7 +21,9 @@ final class CloudClientGenerator {
       ..comments.addAll(kClientHeader)
       ..body.addAll([
         _client,
+        _globalContext,
         lazySpec(_clientClass.build),
+        _contextWrapper,
       ]);
     _configLibrary = LibraryBuilder()
       ..name = ''
@@ -58,6 +60,21 @@ final class CloudClientGenerator {
       ..name = CloudClientTypes.topLevelClient.name
       ..assignment =
           CloudClientTypes.clientClass.ref.constInstanceNamed('_', []).code,
+  );
+
+  final _globalContext = Method(
+    (m) => m
+      ..docs.addAll([
+        '/// A per-request context object which propogates request information and common',
+        '/// accessors to the Celest server environment.',
+      ])
+      ..type = MethodType.getter
+      ..returns = CloudClientTypes.contextClass.ref
+      ..name = CloudClientTypes.topLevelContext.name
+      ..lambda = true
+      ..body = CloudClientTypes.contextClass.ref.newInstanceNamed('_', [
+        DartTypes.celest.globalContext,
+      ]).code,
   );
 
   late final _celestEnvironment = ExtensionType(
@@ -137,6 +154,22 @@ final class CloudClientGenerator {
         ),
       ]),
   );
+
+  late final _contextWrapper = ExtensionType((e) {
+    e
+      ..name = CloudClientTypes.contextClass.name
+      ..docs.addAll([
+        '/// A per-request context object which propogates request information and common',
+        '/// accessors to the Celest server environment.',
+      ])
+      ..primaryConstructorName = '_'
+      ..representationDeclaration = RepresentationDeclaration(
+        (d) => d
+          ..name = '_context'
+          ..declaredRepresentationType = DartTypes.celest.context,
+      )
+      ..implements.add(DartTypes.celest.context);
+  });
 
   late final _clientClass = ClassBuilder()
     ..name = CloudClientTypes.clientClass.name

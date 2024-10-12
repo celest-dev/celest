@@ -14,8 +14,12 @@ final class CloudClientTypes {
 
   static CloudClientTypes get topLevelClient =>
       CloudClientTypes._('celest', CloudPaths.client);
+  static CloudClientTypes get topLevelContext =>
+      CloudClientTypes._('context', CloudPaths.client);
   static CloudClientTypes get clientClass =>
       CloudClientTypes._('CelestCloud', CloudPaths.client);
+  static CloudClientTypes get contextClass =>
+      CloudClientTypes._('CelestContext', CloudPaths.client);
   static CloudClientTypes get environmentClass =>
       CloudClientTypes._('CelestEnvironment', CloudPaths.config);
   static CloudClientTypes get variablesClass =>
