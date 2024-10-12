@@ -35,7 +35,8 @@ final class SubscribeCommand extends CelestCommand with Authenticate {
     final currentSubscription = await cloud.subscriptions.get(
       'users/${user.userId}/subscription',
     );
-    if (currentSubscription != null) {
+    if (currentSubscription != null &&
+        currentSubscription.whichState() == Subscription_State.active) {
       cliLogger.success('You are already subscribed to Celest Cloud 🚀');
       return 0;
     }

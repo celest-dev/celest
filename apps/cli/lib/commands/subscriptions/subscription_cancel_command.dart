@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:celest_auth/celest_auth.dart';
 import 'package:celest_cli/auth/cli_auth.dart';
 import 'package:celest_cli/commands/authenticate.dart';
 import 'package:celest_cli/src/utils/error.dart';
@@ -18,12 +17,7 @@ final class SubscriptionCancelCommand extends CelestCommand with Authenticate {
   Future<int> run() async {
     await super.run();
 
-    await auth.init();
-    if (await authenticate() case final code when code != 0) {
-      return code;
-    }
-    final state = auth.authStateChanges.first as Authenticated;
-    final user = state.user;
+    final user = await assertAuthenticated();
 
     final feedback = cliLogger.chooseOne(
       "What's your main reason for canceling?",
@@ -45,7 +39,11 @@ final class SubscriptionCancelCommand extends CelestCommand with Authenticate {
         final unhandled => unreachable('Unhandled choice: $unhandled'),
       },
     );
-    final comment = cliLogger.prompt('What could we have done better?');
+
+    String? comment;
+    if (feedback != CancelSubscriptionDetails_Feedback.FEEDBACK_UNSPECIFIED) {
+      comment = cliLogger.prompt('What could we have done better?');
+    }
 
     final cancelResp = await cloud.subscriptions.cancel(
       name: 'users/${user.userId}/subscription',
