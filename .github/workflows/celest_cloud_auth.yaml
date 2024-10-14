@@ -33,7 +33,7 @@ jobs:
         working-directory: services/celest_cloud_auth
         run: dart format --set-exit-if-changed .
   test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     timeout-minutes: 15
     steps:
       - name: Git Checkout
