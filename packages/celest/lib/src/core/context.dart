@@ -18,9 +18,10 @@ import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:platform/platform.dart';
 import 'package:shelf/shelf.dart' as shelf;
+import 'package:shelf_router/shelf_router.dart';
 
 /// The [Context] for the current request.
-Context get context => Context.current;
+Context get context => Context._current ?? Context._(Zone.current).parent!;
 
 /// {@template celest.runtime.celest_context}
 /// A per-request context object which propogates request information and common
@@ -51,11 +52,11 @@ final class Context {
   /// Sets the root [Context] for the current execution scope.
   ///
   /// This is only allowed in tests.
-  @visibleForTesting
+  @internal
   static set root(Context value) {
-    if (!kDebugMode) {
+    if (_root != null && kReleaseMode) {
       throw UnsupportedError(
-        'Setting the root context is only allowed in tests',
+        'Cannot set the root context after it has already been set',
       );
     }
     _root = value;
@@ -63,6 +64,8 @@ final class Context {
 
   /// The [Context] for the current execution scope.
   static Context get current => Context.of(Zone.current);
+
+  static Context? get _current => _contexts[Zone.current];
 
   /// Context-specific values.
   final Map<ContextKey<Object>, Object> _values = {};
@@ -163,6 +166,14 @@ final class Context {
   /// The logger for the current context.
   Logger get logger => get(ContextKey.logger) ?? Logger.root;
 
+  /// Logs a message at the [Level.INFO] level.
+  void log(String message) {
+    logger.info(message);
+  }
+
+  /// The [Router] for the current context.
+  Router get router => expect(ContextKey.router);
+
   (Context, V)? _get<V extends Object>(ContextKey<V> key) {
     if (key.read(this) case final value?) {
       return (this, value);
@@ -187,8 +198,9 @@ final class Context {
   }
 
   /// Sets the value of [key] in the current [Context].
-  void put<V extends Object>(ContextKey<V> key, V value) {
+  V put<V extends Object>(ContextKey<V> key, V value) {
     key.set(this, value);
+    return value;
   }
 
   /// Sets the value of [key] in this [Context] if it is not already set.
@@ -218,6 +230,21 @@ final class Context {
   /// in a parent context.
   V? remove<V extends Object>(ContextKey<V> key) {
     return _values.remove(key) as V?;
+  }
+
+  final List<PostRequestCallback> _postRequestCallbacks = [];
+
+  /// Registers a callback to be run after the current context completes.
+  void after(
+    FutureOr<void> Function(shelf.Response) callback, {
+    FutureOr<void> Function(Object e, StackTrace st)? onError,
+  }) {
+    _postRequestCallbacks.add(
+      (
+        onResponse: _zone.bindUnaryCallback((response) => callback(response)),
+        onError: onError == null ? null : _zone.bindBinaryCallback(onError),
+      ),
+    );
   }
 }
 
@@ -254,6 +281,12 @@ abstract interface class ContextKey<V extends Object> {
 
   /// The context key for the context [ResolvedProject].
   static const ContextKey<ResolvedProject> project = ContextKey('project');
+
+  /// The context key for the global [Router].
+  ///
+  /// This is used to register routes for the current service and can be used
+  /// to dynamically add/remove routes at runtime.
+  static const ContextKey<Router> router = ContextKey('router');
 
   /// Reads the value for `this` from the given [context].
   V? read(Context context);
@@ -300,4 +333,33 @@ final class _ContextKey<V extends Object> implements ContextKey<V> {
 
 final class _PrincipalContextKey extends _ContextKey<User> {
   const _PrincipalContextKey() : super('principal');
+}
+
+/// A callback to be run after the current context completes.
+typedef PostRequestCallback = ({
+  FutureOr<void> Function(shelf.Response) onResponse,
+  FutureOr<void> Function(Object e, StackTrace st)? onError,
+});
+
+/// {@template celest.runtime.post_request_callbacks}
+/// The context key for post-request callbacks.
+/// {@endtemplate}
+final class PostRequestCallbacks
+    implements ContextKey<List<PostRequestCallback>> {
+  /// {@macro celest.runtime.post_request_callbacks}
+  const PostRequestCallbacks();
+
+  @override
+  List<PostRequestCallback> read(Context context) {
+    return context._postRequestCallbacks;
+  }
+
+  @override
+  void set(Context context, List<PostRequestCallback>? value) {
+    if (value == null) {
+      context._postRequestCallbacks.clear();
+    } else {
+      context._postRequestCallbacks.addAll(value);
+    }
+  }
 }

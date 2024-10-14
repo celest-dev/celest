@@ -7,7 +7,12 @@
   "dart.vmServiceLogFile": ".vscode/logs/vm_service/${name}.log",
   "dart.extensionLogFile": ".vscode/logs/dartcode_ext.log",
   "dart.analyzerInstrumentationLogFile": ".vscode/logs/analyzer/instrumentation.log",
+  "files.associations": {
+      "*.drift": "sql"
+  },
   "yaml.schemas": {
-    "https://json.schemastore.org/pubspec.json": "file:///Users/dillonnys/celest/cloud/celest/examples/tasks/pubspec.yaml"
-  }
+    "https://json.schemastore.org/pubspec.json": "${workspaceRoot}/celest/examples/tasks/pubspec.yaml"
+  },
+  // Don't timeout while debugging tests
+  "dart.testAdditionalArgs": ["--timeout=none"]
 }

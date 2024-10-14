@@ -468,20 +468,20 @@ class ResolvedFunction extends $pb.GeneratedMessage {
 /// The HTTP configuration of a [ResolvedFunction][].
 class ResolvedHttpConfig extends $pb.GeneratedMessage {
   factory ResolvedHttpConfig({
-    $core.String? method,
-    ResolvedHttpRoute? route,
     $core.int? status,
+    ResolvedHttpRoute? route,
+    $core.Iterable<ResolvedHttpRoute>? additionalRoutes,
     $core.Map<$core.String, $core.int>? statusMappings,
   }) {
     final $result = create();
-    if (method != null) {
-      $result.method = method;
+    if (status != null) {
+      $result.status = status;
     }
     if (route != null) {
       $result.route = route;
     }
-    if (status != null) {
-      $result.status = status;
+    if (additionalRoutes != null) {
+      $result.additionalRoutes.addAll(additionalRoutes);
     }
     if (statusMappings != null) {
       $result.statusMappings.addAll(statusMappings);
@@ -500,10 +500,12 @@ class ResolvedHttpConfig extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ResolvedHttpConfig',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'method')
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'status', $pb.PbFieldType.O3)
     ..aOM<ResolvedHttpRoute>(2, _omitFieldNames ? '' : 'route',
         subBuilder: ResolvedHttpRoute.create)
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'status', $pb.PbFieldType.O3)
+    ..pc<ResolvedHttpRoute>(
+        3, _omitFieldNames ? '' : 'additionalRoutes', $pb.PbFieldType.PM,
+        subBuilder: ResolvedHttpRoute.create)
     ..m<$core.String, $core.int>(4, _omitFieldNames ? '' : 'statusMappings',
         entryClassName: 'ResolvedHttpConfig.StatusMappingsEntry',
         keyFieldType: $pb.PbFieldType.OS,
@@ -534,18 +536,18 @@ class ResolvedHttpConfig extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<ResolvedHttpConfig>(create);
   static ResolvedHttpConfig? _defaultInstance;
 
-  /// The HTTP method of the function.
+  /// The successful status code of the function.
   @$pb.TagNumber(1)
-  $core.String get method => $_getSZ(0);
+  $core.int get status => $_getIZ(0);
   @$pb.TagNumber(1)
-  set method($core.String v) {
-    $_setString(0, v);
+  set status($core.int v) {
+    $_setSignedInt32(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasMethod() => $_has(0);
+  $core.bool hasStatus() => $_has(0);
   @$pb.TagNumber(1)
-  void clearMethod() => clearField(1);
+  void clearStatus() => clearField(1);
 
   /// The resolved route configuration of the function.
   @$pb.TagNumber(2)
@@ -562,18 +564,9 @@ class ResolvedHttpConfig extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   ResolvedHttpRoute ensureRoute() => $_ensure(1);
 
-  /// The successful status code of the function.
+  /// Additional route configurations of the function.
   @$pb.TagNumber(3)
-  $core.int get status => $_getIZ(2);
-  @$pb.TagNumber(3)
-  set status($core.int v) {
-    $_setSignedInt32(2, v);
-  }
-
-  @$pb.TagNumber(3)
-  $core.bool hasStatus() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearStatus() => clearField(3);
+  $core.List<ResolvedHttpRoute> get additionalRoutes => $_getList(2);
 
   ///  A mapping of Dart types to HTTP status codes.
   ///
@@ -591,9 +584,13 @@ class ResolvedHttpConfig extends $pb.GeneratedMessage {
 /// A route to an HTTP endpoint.
 class ResolvedHttpRoute extends $pb.GeneratedMessage {
   factory ResolvedHttpRoute({
+    $core.String? method,
     $core.String? path,
   }) {
     final $result = create();
+    if (method != null) {
+      $result.method = method;
+    }
     if (path != null) {
       $result.path = path;
     }
@@ -611,7 +608,8 @@ class ResolvedHttpRoute extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ResolvedHttpRoute',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'path')
+    ..aOS(1, _omitFieldNames ? '' : 'method')
+    ..aOS(2, _omitFieldNames ? '' : 'path')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -637,18 +635,31 @@ class ResolvedHttpRoute extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<ResolvedHttpRoute>(create);
   static ResolvedHttpRoute? _defaultInstance;
 
-  /// The path of the HTTP endpoint.
+  /// The HTTP method of the route.
   @$pb.TagNumber(1)
-  $core.String get path => $_getSZ(0);
+  $core.String get method => $_getSZ(0);
   @$pb.TagNumber(1)
-  set path($core.String v) {
+  set method($core.String v) {
     $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasPath() => $_has(0);
+  $core.bool hasMethod() => $_has(0);
   @$pb.TagNumber(1)
-  void clearPath() => clearField(1);
+  void clearMethod() => clearField(1);
+
+  /// The path to the HTTP endpoint.
+  @$pb.TagNumber(2)
+  $core.String get path => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set path($core.String v) {
+    $_setString(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasPath() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPath() => clearField(2);
 }
 
 /// The stream configuration of a [ResolvedFunction][].

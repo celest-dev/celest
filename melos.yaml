@@ -3,6 +3,7 @@ name: celest_dev
 packages:
   - examples/**
   - packages/**
+  - services/**
 ignore:
   - "examples/**/celest"
   - "packages/**/example/celest"

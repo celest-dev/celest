@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:celest/src/runtime/auth/firebase/firebase_public_key_store.dart';
 import 'package:celest/src/runtime/auth/jwt/base64_raw_url.dart';
-import 'package:celest_core/celest_core.dart' show CloudException, User;
+import 'package:celest_core/celest_core.dart' show CloudException, Email, User;
 import 'package:crypto_keys/crypto_keys.dart'
     show AlgorithmIdentifier, Signature;
 
@@ -77,8 +77,15 @@ final class FirebaseTokenVerifier {
 
     return User(
       userId: claims['sub'] as String,
-      email: claims['email'] as String?,
-      emailVerified: claims['email_verified'] as bool?,
+      emails: switch (claims['email'] as String?) {
+        final email? => [
+            Email(
+              email: email,
+              isVerified: claims['email_verified'] as bool? ?? false,
+            ),
+          ],
+        _ => [],
+      },
     );
   }
 }

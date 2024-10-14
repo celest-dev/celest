@@ -35,6 +35,9 @@ class CelestCloud {
                 authenticator: authenticator,
                 logger: logger,
               ),
+        _baseUri = uri,
+        _httpClient = httpClient,
+        _authenticator = authenticator,
         _clientType = clientType ?? _defaultClientType,
         _logger = logger ?? Logger('Celest.Cloud');
 
@@ -60,12 +63,23 @@ class CelestCloud {
     ProjectEnvironment(),
   ]);
 
+  final Uri _baseUri;
+  final http.Client? _httpClient;
+  final Authenticator _authenticator;
+
   final CloudProtocol _protocol;
   final ClientType _clientType;
   final Logger _logger;
 
+  late final CloudProtocolHttp _httpProtocol = CloudProtocolHttp(
+    uri: _baseUri,
+    authenticator: _authenticator,
+    httpClient: _httpClient,
+    logger: _logger,
+  );
+
   late final Authentication authentication = Authentication(
-    protocol: _protocol.authentication,
+    protocol: _httpProtocol.authentication,
     clientType: _clientType,
     logger: _logger,
   );
@@ -77,7 +91,7 @@ class CelestCloud {
   );
 
   late final Users users = Users(
-    protocol: _protocol.users,
+    protocol: _httpProtocol.users,
     logger: _logger,
   );
 

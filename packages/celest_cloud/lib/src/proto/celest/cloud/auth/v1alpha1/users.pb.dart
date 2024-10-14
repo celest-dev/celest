@@ -15,7 +15,6 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../../../../google/protobuf/field_mask.pb.dart' as $46;
 import '../../../../google/protobuf/timestamp.pb.dart' as $20;
-import '../../../../i18n/phonenumbers/phonenumber.pb.dart' as $52;
 import 'users.pbenum.dart';
 
 export 'users.pbenum.dart';
@@ -32,10 +31,9 @@ class User extends $pb.GeneratedMessage {
     $core.String? familyName,
     $core.String? timeZone,
     $core.String? languageCode,
-    Email? email,
-    PhoneNumber? phoneNumber,
+    $core.Iterable<Email>? emails,
+    $core.Iterable<PhoneNumber>? phoneNumbers,
     $core.Iterable<ExternalIdentity>? externalIdentities,
-    $core.String? company,
   }) {
     final $result = create();
     if (name != null) {
@@ -65,17 +63,14 @@ class User extends $pb.GeneratedMessage {
     if (languageCode != null) {
       $result.languageCode = languageCode;
     }
-    if (email != null) {
-      $result.email = email;
+    if (emails != null) {
+      $result.emails.addAll(emails);
     }
-    if (phoneNumber != null) {
-      $result.phoneNumber = phoneNumber;
+    if (phoneNumbers != null) {
+      $result.phoneNumbers.addAll(phoneNumbers);
     }
     if (externalIdentities != null) {
       $result.externalIdentities.addAll(externalIdentities);
-    }
-    if (company != null) {
-      $result.company = company;
     }
     return $result;
   }
@@ -103,13 +98,15 @@ class User extends $pb.GeneratedMessage {
     ..aOS(7, _omitFieldNames ? '' : 'familyName')
     ..aOS(8, _omitFieldNames ? '' : 'timeZone')
     ..aOS(9, _omitFieldNames ? '' : 'languageCode')
-    ..aOM<Email>(10, _omitFieldNames ? '' : 'email', subBuilder: Email.create)
-    ..aOM<PhoneNumber>(11, _omitFieldNames ? '' : 'phoneNumber',
+    ..pc<Email>(10, _omitFieldNames ? '' : 'emails', $pb.PbFieldType.PM,
+        subBuilder: Email.create)
+    ..pc<PhoneNumber>(
+        11, _omitFieldNames ? '' : 'phoneNumbers', $pb.PbFieldType.PM,
         subBuilder: PhoneNumber.create)
     ..pc<ExternalIdentity>(
         12, _omitFieldNames ? '' : 'externalIdentities', $pb.PbFieldType.PM,
         subBuilder: ExternalIdentity.create)
-    ..aOS(13, _omitFieldNames ? '' : 'company');
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -263,68 +260,33 @@ class User extends $pb.GeneratedMessage {
 
   /// Optional. The user's email address.
   @$pb.TagNumber(10)
-  Email get email => $_getN(9);
-  @$pb.TagNumber(10)
-  set email(Email v) {
-    setField(10, v);
-  }
-
-  @$pb.TagNumber(10)
-  $core.bool hasEmail() => $_has(9);
-  @$pb.TagNumber(10)
-  void clearEmail() => clearField(10);
-  @$pb.TagNumber(10)
-  Email ensureEmail() => $_ensure(9);
+  $core.List<Email> get emails => $_getList(9);
 
   /// Optional. The user's phone number.
   @$pb.TagNumber(11)
-  PhoneNumber get phoneNumber => $_getN(10);
-  @$pb.TagNumber(11)
-  set phoneNumber(PhoneNumber v) {
-    setField(11, v);
-  }
-
-  @$pb.TagNumber(11)
-  $core.bool hasPhoneNumber() => $_has(10);
-  @$pb.TagNumber(11)
-  void clearPhoneNumber() => clearField(11);
-  @$pb.TagNumber(11)
-  PhoneNumber ensurePhoneNumber() => $_ensure(10);
+  $core.List<PhoneNumber> get phoneNumbers => $_getList(10);
 
   /// Output only. The user's external identities.
   @$pb.TagNumber(12)
   $core.List<ExternalIdentity> get externalIdentities => $_getList(11);
-
-  /// Optional. The user's company.
-  @$pb.TagNumber(13)
-  $core.String get company => $_getSZ(12);
-  @$pb.TagNumber(13)
-  set company($core.String v) {
-    $_setString(12, v);
-  }
-
-  @$pb.TagNumber(13)
-  $core.bool hasCompany() => $_has(12);
-  @$pb.TagNumber(13)
-  void clearCompany() => clearField(13);
 }
 
 /// A email address used within Celest Cloud.
 class Email extends $pb.GeneratedMessage {
   factory Email({
     $core.String? email,
-    $core.bool? verified,
-    $core.bool? primary,
+    $core.bool? isVerified,
+    $core.bool? isPrimary,
   }) {
     final $result = create();
     if (email != null) {
       $result.email = email;
     }
-    if (verified != null) {
-      $result.verified = verified;
+    if (isVerified != null) {
+      $result.isVerified = isVerified;
     }
-    if (primary != null) {
-      $result.primary = primary;
+    if (isPrimary != null) {
+      $result.isPrimary = isPrimary;
     }
     return $result;
   }
@@ -342,8 +304,8 @@ class Email extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'email')
-    ..aOB(2, _omitFieldNames ? '' : 'verified')
-    ..aOB(3, _omitFieldNames ? '' : 'primary')
+    ..aOB(2, _omitFieldNames ? '' : 'isVerified')
+    ..aOB(3, _omitFieldNames ? '' : 'isPrimary')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -382,47 +344,47 @@ class Email extends $pb.GeneratedMessage {
 
   /// Whether the email address is verified.
   @$pb.TagNumber(2)
-  $core.bool get verified => $_getBF(1);
+  $core.bool get isVerified => $_getBF(1);
   @$pb.TagNumber(2)
-  set verified($core.bool v) {
+  set isVerified($core.bool v) {
     $_setBool(1, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasVerified() => $_has(1);
+  $core.bool hasIsVerified() => $_has(1);
   @$pb.TagNumber(2)
-  void clearVerified() => clearField(2);
+  void clearIsVerified() => clearField(2);
 
   /// Whether the email address is the primary email.
   @$pb.TagNumber(3)
-  $core.bool get primary => $_getBF(2);
+  $core.bool get isPrimary => $_getBF(2);
   @$pb.TagNumber(3)
-  set primary($core.bool v) {
+  set isPrimary($core.bool v) {
     $_setBool(2, v);
   }
 
   @$pb.TagNumber(3)
-  $core.bool hasPrimary() => $_has(2);
+  $core.bool hasIsPrimary() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPrimary() => clearField(3);
+  void clearIsPrimary() => clearField(3);
 }
 
 /// A phone number used within Celest Cloud.
 class PhoneNumber extends $pb.GeneratedMessage {
   factory PhoneNumber({
-    $52.PhoneNumber? phoneNumber,
-    $core.bool? verified,
-    $core.bool? primary,
+    $core.String? phoneNumber,
+    $core.bool? isVerified,
+    $core.bool? isPrimary,
   }) {
     final $result = create();
     if (phoneNumber != null) {
       $result.phoneNumber = phoneNumber;
     }
-    if (verified != null) {
-      $result.verified = verified;
+    if (isVerified != null) {
+      $result.isVerified = isVerified;
     }
-    if (primary != null) {
-      $result.primary = primary;
+    if (isPrimary != null) {
+      $result.isPrimary = isPrimary;
     }
     return $result;
   }
@@ -439,10 +401,10 @@ class PhoneNumber extends $pb.GeneratedMessage {
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
-    ..aOM<$52.PhoneNumber>(1, _omitFieldNames ? '' : 'phoneNumber',
-        subBuilder: $52.PhoneNumber.create)
-    ..aOB(2, _omitFieldNames ? '' : 'verified')
-    ..aOB(3, _omitFieldNames ? '' : 'primary');
+    ..aOS(1, _omitFieldNames ? '' : 'phoneNumber')
+    ..aOB(2, _omitFieldNames ? '' : 'isVerified')
+    ..aOB(3, _omitFieldNames ? '' : 'isPrimary')
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -468,44 +430,42 @@ class PhoneNumber extends $pb.GeneratedMessage {
 
   /// Output only. The parsed and decoded phone number.
   @$pb.TagNumber(1)
-  $52.PhoneNumber get phoneNumber => $_getN(0);
+  $core.String get phoneNumber => $_getSZ(0);
   @$pb.TagNumber(1)
-  set phoneNumber($52.PhoneNumber v) {
-    setField(1, v);
+  set phoneNumber($core.String v) {
+    $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasPhoneNumber() => $_has(0);
   @$pb.TagNumber(1)
   void clearPhoneNumber() => clearField(1);
-  @$pb.TagNumber(1)
-  $52.PhoneNumber ensurePhoneNumber() => $_ensure(0);
 
   /// Whether the phone number is verified.
   @$pb.TagNumber(2)
-  $core.bool get verified => $_getBF(1);
+  $core.bool get isVerified => $_getBF(1);
   @$pb.TagNumber(2)
-  set verified($core.bool v) {
+  set isVerified($core.bool v) {
     $_setBool(1, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasVerified() => $_has(1);
+  $core.bool hasIsVerified() => $_has(1);
   @$pb.TagNumber(2)
-  void clearVerified() => clearField(2);
+  void clearIsVerified() => clearField(2);
 
   /// Whether the phone number is the primary phone number.
   @$pb.TagNumber(3)
-  $core.bool get primary => $_getBF(2);
+  $core.bool get isPrimary => $_getBF(2);
   @$pb.TagNumber(3)
-  set primary($core.bool v) {
+  set isPrimary($core.bool v) {
     $_setBool(2, v);
   }
 
   @$pb.TagNumber(3)
-  $core.bool hasPrimary() => $_has(2);
+  $core.bool hasIsPrimary() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPrimary() => clearField(3);
+  void clearIsPrimary() => clearField(3);
 }
 
 /// An external identity used within Celest Cloud.
@@ -633,7 +593,8 @@ class CreateUserRequest extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'parent')
     ..aOM<User>(2, _omitFieldNames ? '' : 'user', subBuilder: User.create)
     ..aOS(3, _omitFieldNames ? '' : 'userId')
-    ..aOB(4, _omitFieldNames ? '' : 'validateOnly');
+    ..aOB(4, _omitFieldNames ? '' : 'validateOnly')
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -764,7 +725,7 @@ class GetUserRequest extends $pb.GeneratedMessage {
   static GetUserRequest? _defaultInstance;
 
   /// The name of the user to retrieve.
-  /// Format: `me` | `users/{user}` | `organizations/{organization}/users/{user}`
+  /// Format: `users/{user}` | `organizations/{organization}/users/{user}`
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -848,8 +809,12 @@ class ListUsersRequest extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<ListUsersRequest>(create);
   static ListUsersRequest? _defaultInstance;
 
-  /// The parent of the users to list.
-  /// Format: `organizations/{organization}` or `organizations/{organization}/projects/{project}`
+  ///  Optional. The parent of the users to list.
+  ///
+  ///  Format: `organizations/{organization}` or `organizations/{organization}/projects/{project}`
+  ///
+  ///  If the parent is not provided, the users for the current context (as identified by the bearer token)
+  ///  are listed.
   @$pb.TagNumber(1)
   $core.String get parent => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -945,7 +910,8 @@ class ListUsersResponse extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..pc<User>(1, _omitFieldNames ? '' : 'users', $pb.PbFieldType.PM,
         subBuilder: User.create)
-    ..aOS(2, _omitFieldNames ? '' : 'nextPageToken');
+    ..aOS(2, _omitFieldNames ? '' : 'nextPageToken')
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1023,7 +989,8 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
     ..aOM<User>(1, _omitFieldNames ? '' : 'user', subBuilder: User.create)
     ..aOM<$46.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
         subBuilder: $46.FieldMask.create)
-    ..aOB(3, _omitFieldNames ? '' : 'validateOnly');
+    ..aOB(3, _omitFieldNames ? '' : 'validateOnly')
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '

@@ -20,7 +20,8 @@ abstract base class CloudFunctionTarget {
   /// This is called once when the target is instantiated.
   void init() {}
 
-  void _apply(Router router, String route);
+  /// Applies this target to a [Router] at a given [route].
+  void apply(Router router, String route);
 }
 
 /// {@template celest.runtime.cloud_function_http_target}
@@ -40,7 +41,7 @@ abstract base class CloudFunctionHttpTarget extends CloudFunctionTarget {
   String get method => 'POST';
 
   @override
-  void _apply(Router router, String route) {
+  void apply(Router router, String route) {
     var pipeline = const Pipeline();
     for (final middleware in middlewares) {
       pipeline = pipeline.addMiddleware(middleware.call);
@@ -62,7 +63,7 @@ abstract base class CloudFunctionHttpTarget extends CloudFunctionTarget {
 /// {@endtemplate}
 abstract base class CloudEventSourceTarget extends CloudFunctionTarget {
   @override
-  void _apply(Router router, String route) {
+  void apply(Router router, String route) {
     var pipeline = const Pipeline();
     for (final middleware in middlewares) {
       pipeline = pipeline.addMiddleware(middleware.call);

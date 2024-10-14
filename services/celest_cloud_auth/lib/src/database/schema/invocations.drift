@@ -1,0 +1,62 @@
+import 'projects.drift';
+
+-- Stores Celest function invocation metadata.
+CREATE TABLE IF NOT EXISTS celest_invocations (
+    -- The unique identifier of the invocation.
+    invocation_id TEXT NOT NULL PRIMARY KEY,
+    
+    -- The ID of the function being invoked.
+    function_id TEXT NOT NULL,
+
+    -- The time the invocation started.
+    start_time DATETIME NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+
+    -- The time the invocation ended.
+    end_time DATETIME,
+
+    -- The result of the invocation.
+    result BLOB,
+
+    -- The error of the invocation.
+    error BLOB,
+
+    CONSTRAINT celest_invocations_function_fk FOREIGN KEY (function_id) REFERENCES celest_functions(function_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED
+);
+
+-- Index for the invocation's FK.
+CREATE INDEX IF NOT EXISTS celest_invocations_function_idx ON celest_invocations(function_id);
+
+-- Stores invocation log records.
+CREATE TABLE IF NOT EXISTS celest_invocation_logs (
+    -- The sequence number of the log.
+    sequence_id INTEGER NOT NULL,
+
+    -- The ID of the invocation.
+    invocation_id TEXT NOT NULL,
+
+    -- The time the log was created.
+    time DATETIME NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+
+    -- The severity of the log.
+    severity TEXT NOT NULL,
+
+    -- The message of the log.
+    message TEXT NOT NULL,
+
+    -- The error associated with the log.
+    error TEXT,
+
+    -- The stack trace associated with the log.
+    stack_trace TEXT,
+
+    PRIMARY KEY (sequence_id, invocation_id),
+
+    CONSTRAINT celest_invocation_logs_invocation_fk FOREIGN KEY (invocation_id) REFERENCES celest_invocations(invocation_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED
+);
+
+-- Index for the log's FK.
+CREATE INDEX IF NOT EXISTS celest_invocation_logs_invocation_idx ON celest_invocation_logs(invocation_id);
