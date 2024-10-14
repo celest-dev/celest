@@ -9,13 +9,13 @@ import 'package:celest/celest.dart';
 Future<String> sayHello({
   @principal required User user,
 }) async {
-  if (!user.emailVerified) {
+  if (user.primaryEmail == null) {
     throw UnauthorizedException('Email not verified');
   }
 
   print('Saying hello to user: $user');
 
-  if (user.displayName case final name?) {
+  if (user.givenName case final name?) {
     return 'Hello, $name!';
   }
   return 'Hello!';
