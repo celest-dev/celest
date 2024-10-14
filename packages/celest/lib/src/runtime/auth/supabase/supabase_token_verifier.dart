@@ -62,7 +62,7 @@ final class SupabaseTokenVerifier {
       Signature(base64RawUrl.decode(signature)),
     );
     if (!validSignature) {
-      throw const CloudException.unauthorized('Invalid JWT signature');
+      throw const CloudException.unauthorized(message: 'Invalid JWT signature');
     }
     final claims = switch (_decodeJwtPart(payload)) {
       final Map<String, Object?> payload => payload,

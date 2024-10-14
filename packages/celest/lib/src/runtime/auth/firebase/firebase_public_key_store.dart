@@ -23,7 +23,7 @@ final class FirebasePublicKeyStore {
     final publicKeys = _publicKeys ??= await _loadPublicKeys();
     final certificate = publicKeys[keyId];
     if (certificate == null) {
-      throw CloudException.unauthorized('Invalid JWT key ID: $keyId');
+      throw CloudException.unauthorized(message: 'Invalid JWT key ID: $keyId');
     }
     if (certificate.tbsCertificate.validity?.notAfter case final notAfter?) {
       Timer(
@@ -79,7 +79,9 @@ final class FirebasePublicKeyStore {
       return certificates;
     } on Object catch (e, st) {
       _logger.severe('Failed to load public keys', e, st);
-      throw CloudException.internalServerError('Failed to load public keys');
+      throw CloudException.internalServerError(
+        message: 'Failed to load public keys',
+      );
     }
   }
 }
