@@ -9,125 +9,79 @@ Celest is the Flutter cloud platform. We enable Flutter and Dart developers to d
 
 And to stay up-to-date on the future of Celest, including full server-side rendered Flutter apps, join our newsletter at [celest.dev](https://www.celest.dev/#stay-up-to-date).
 
-## Getting started with Celest
+## Getting Started
 
-### Prerequisites
+To get started with Celest, you'll need to configure your development environment so that you have Flutter and the Celest CLI installed on your machine.
 
-To use Celest in your Flutter app, you need the following prerequisites:
+1. Install [Flutter](https://docs.flutter.dev/get-started/install) from the official website
+3. [Download](https://celest.dev/download) and install the Celest CLI
 
-1. Install [Flutter](https://docs.flutter.dev/get-started/install)
-2. Create a new Flutter project (or choose an existing one)
-3. [Download](https://celest.dev/docs/download) and install the Celest CLI
+### Creating a project
 
-### Creating a Celest project
+Once you have the CLI installed, you can create a new project by running the following command:
 
-That’s it! You are now ready to start building your backend - all in Dart!
-
-Start by first creating a new Flutter project. If you have an existing Flutter project, you can use that instead. To start a new Flutter project, go to your console and run the following command.
-
-```shell
-$ flutter create <flutter_app>
+```bash
+$ celest init
 ```
+You can run this command from within your Flutter project which will create a new `celest/` directory for your project. Or you can run
+this in another directory to have a standalone Celest project.
 
-Then, navigate to your new Flutter app directory.
+Once you have a project, run `celest start` to start a local development environment.
 
-```shell
-$ cd <flutter_app>
-```
-
-Once you are in your Flutter app directory, run the following command to initialize your Celest project.
-
-```shell
+```bash
 $ celest start
+✓ Celest is running on http://localhost:7777
 ```
 
-Once the command executes, Celest will spin up a local environment and watch for changes made to your backend, generating a Dart client for you to test your changes.
+This command will start a local server which will run in the background as you write your backend logic. As you make changes to the files in the `celest/` directory, 
+the server will hot-reload those changes so you can see them live.
 
-The CLI will also create a folder in your project called `celest`, which will include the following files.
+To interact with the running environment, Celest will generate a Dart client which you can use in any Dart or Flutter project. This client 
+is generated in the `client/` directory of your `celest/` folder. As you make changes in the local environment, this client will be updated to reflect those changes.
 
-```shell
-flutter_app/
-└── celest/
-    ├── functions/                        # Celest Functions folder
-    |   └── greeting.dart                 # Example API file
-    ├── lib/
-    │   │── client.dart                   # Generated client for your Flutter app
-    │   ├── models/                       # Custom API models
-    |   |   └── person.dart
-    │   └── exceptions/                   # Custom API exceptions
-    |       └── bad_name_exception.dart
-    └── test/                             # Tests for your backend
-```
+### Example
 
-To start building your serverless cloud function, navigate to the `my_celest_app/celest/functions/` folder and create a file named `<api_name>.dart`. You can create as many APIs as you want in this directory.
-Each file groups and organizes multiple Celest Functions of similar functionality into a namespace.
-
-Celest Functions are defined as top-level functions as shown below.
+Here is an example of a simple Celest function:
 
 ```dart
+import 'package:celest/celest.dart';
+
 @cloud
 Future<String> sayHello(String name) async {
+  print('Saying hello to $name');
   return 'Hello, $name';
 }
-
-@cloud
-Future<String> sayGoodbye(String name) async {
-  return 'Goodbye, $name';
-}
 ```
 
-That's all you need to define your API! Now, you can connect your Flutter app to your cloud functions by using the Celest client as shown in the following example. Replace the contents of the `main.dart` file in your Flutter app to the following code-snippet.
+This function can be called from a Dart project like so:
 
-```dart {3,7,24}
-import 'package:flutter/material.dart';
-// Import the generated Celest client
-import 'package:celest_backend/client.dart';
+```dart
+import 'package:my_project_client/my_project_client.dart';
 
-void main() {
-  // Initialize Celest at the start of your app
+Future<void> main() async {
   celest.init(environment: CelestEnvironment.local);
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Homepage'),
-        ),
-        body: Center(
-          child: FutureBuilder(
-            // Call your function using the Celest client
-            future: celest.functions.greeting.sayHello('Celest'),
-            builder: (_, snapshot) => switch (snapshot) {
-              AsyncSnapshot(:final data?) => Text(data),
-              AsyncSnapshot(:final error?) =>
-                Text('${error.runtimeType}: $error'),
-              _ => const CircularProgressIndicator(),
-            },
-          ),
-        ),
-      ),
-    );
-  }
+  final response = await celest.functions.sayHello('World');
+  print(response); // Hello, World
 }
 ```
 
-You have now set up your Celest project and integrated it into your Flutter app. Follow our [documentation](https://celest.dev/docs/functions/introduction) to learn more about using Celest Functions.
+## What's Next?
+
+In addition to Dart cloud functions, Celest offers authentication and database services out-of-the-box. To learn more about these features, 
+and to see what else you can do with cloud functions, visit our [docs](https://celest.dev/docs) and explore the different examples and
+packages available in this repo.
 
 ## Examples
 
 [![Celest](https://github.com/celest-dev/celest/actions/workflows/examples.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/examples.yaml)
 
-| Example                    | Description                                                                               |
-| -------------------------- | ----------------------------------------------------------------------------------------- |
-| [Gemini](examples/gemini/) | Uses Google's [Gemini](https://ai.google.dev/) API for chat completion.                   |
-| [OpenAI](examples/openai/) | Uses the [OpenAI](https://platform.openai.com/docs/introduction) API for chat completion. |
-| [Todo](examples/todo/)     | A simple todo list application.                                                           |
+| Example                        | Description                                                                               |
+| ------------------------------ | ----------------------------------------------------------------------------------------- |
+| [Firebase](examples/firebase/) | Showcases how to integrate Firebase Auth with Celest.                                     |
+| [Gemini](examples/gemini/)     | Uses Google's [Gemini](https://ai.google.dev/) API for chat completion.                   |
+| [OpenAI](examples/openai/)     | Uses the [OpenAI](https://platform.openai.com/docs/introduction) API for chat completion. |
+| [Supabase](examples/supabase/) | Showcases how to integrate Supabase Auth with Celest.                                     |
+| [Tasks](examples/tasks/)       | Uses Celest Data to build a simple task tracking app with persistence.                    |
 
 ## Packages
 

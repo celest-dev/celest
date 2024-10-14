@@ -1,6 +1,8 @@
 name: celest_cloud_auth
 description: A Dart-native authentication and authorization service built on Celest, Cedar, and SQLite.
 version: 0.1.0
+homepage: https://celest.dev
+repository: https://github.com/celest-dev/celest/tree/main/services/celest_cloud_auth
 
 environment:
   sdk: ^3.4.0
