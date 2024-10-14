@@ -21,7 +21,7 @@ import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf_router/shelf_router.dart';
 
 /// The [Context] for the current request.
-Context get context => Context._current ?? Context._(Zone.current).parent!;
+Context get context => Context.current;
 
 /// {@template celest.runtime.celest_context}
 /// A per-request context object which propogates request information and common
@@ -64,8 +64,6 @@ final class Context {
 
   /// The [Context] for the current execution scope.
   static Context get current => Context.of(Zone.current);
-
-  static Context? get _current => _contexts[Zone.current];
 
   /// Context-specific values.
   final Map<ContextKey<Object>, Object> _values = {};

@@ -1,5 +1,5 @@
-import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:celest_cloud/src/proto.dart' as pb;
+import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:drift/drift.dart';
 import 'package:protobuf/protobuf.dart';
 

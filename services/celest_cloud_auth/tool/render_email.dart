@@ -43,7 +43,7 @@ Future<void> _handleRequests(HttpServer server) async {
 
 final templates = {
   'VerificationCode': (
-    VerificationCodeEmail(),
+    const VerificationCodeEmail(),
     const VerificationCodeEmailParams(
       email: 'test@celest.dev',
       code: '123456',

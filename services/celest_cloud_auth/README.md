@@ -1,49 +1,52 @@
-A server app built using [Shelf](https://pub.dev/packages/shelf),
-configured to enable running with [Docker](https://www.docker.com/).
+# Celest Cloud Auth
 
-This sample code handles HTTP GET requests to `/` and `/echo/<message>`
+A fully Dart-native solution for authenticating users and authorizing access to resources. Built on the [Cedar](https://www.cedarpolicy.com/en) policy engine and Celest Data.
 
-# Running the sample
+## Features
 
-## Running with the Dart SDK
+- **Authentication**: Securely authenticate users using email OTP, with support for passwordless and social logins coming soon.
+- **Authorization**: Define and enforce access control policies using the [Cedar](https://www.cedarpolicy.com/en) policy engine.
+- **Data**: Store user data and access control policies in SQLite or Celest Data.
 
-You can run the example with the [Dart SDK](https://dart.dev/get-dart)
-like this:
+## Getting Started
 
-```
-$ dart run bin/server.dart
-Server listening on port 8080
-```
+The easiest way to get started with Celest Cloud Auth is to use the [Celest CLI](https://celest.dev/docs/get-started) and add an [AuthProvider](https://pub.dev/documentation/celest/latest/celest/AuthProvider-class.html) to your project.
 
-And then from a second terminal:
-```
-$ curl http://0.0.0.0:8080
-Hello, World!
-$ curl http://0.0.0.0:8080/echo/I_love_Dart
-I_love_Dart
-```
+```dart
+import 'package:celest/celest.dart';
 
-## Running with Docker
+const project = Project(name: 'my-project');
 
-If you have [Docker Desktop](https://www.docker.com/get-started) installed, you
-can build and run with the `docker` command:
-
-```
-$ docker build . -t myserver
-$ docker run -it -p 8080:8080 myserver
-Server listening on port 8080
+const auth = Auth(
+  providers: [
+    AuthProvider.email(),
+  ],
+);
 ```
 
-And then from a second terminal:
-```
-$ curl http://0.0.0.0:8080
-Hello, World!
-$ curl http://0.0.0.0:8080/echo/I_love_Dart
-I_love_Dart
-```
+Celest will automatically generate the necessary code to integrate Celest Cloud Auth into your project so you can start
+authenticating users and controlling the resources they can access.
 
-You should see the logging printed in the first terminal:
-```
-2021-05-06T15:47:04.620417  0:00:00.000158 GET     [200] /
-2021-05-06T15:47:08.392928  0:00:00.001216 GET     [200] /echo/I_love_Dart
+Celest Cloud Auth can also be integrated into and Dart server, though, using the [shelf](https://pub.dev/packages/shelf) package.
+
+```dart
+Future<void> main() async {
+  final auth = await CelestCloudAuth.create(
+    database: AuthDatabase.memory(),
+  );
+
+  // Adds authentication routes.
+  final router = Router();
+  router.mount('/v1alpha1/auth/', auth.handler);
+
+  // Adds authorization middleware.
+  final pipeline = const Pipeline().addMiddleware(auth.middleware);
+
+  final server = await serve(
+    pipeline.addHandler(router.call),
+    InternetAddress.anyIpV4,
+    8080,
+  );
+  print('Serving at http://${server.address.host}:${server.port}');
+}
 ```

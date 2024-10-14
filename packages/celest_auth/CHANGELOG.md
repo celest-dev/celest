@@ -1,4 +1,8 @@
-## 1.0.0-dev.0
+## 1.0.0
+
+The first release of Celest V1!
+
+See the release notes for the [celest](https://pub.dev/packages/celest) package for more details.
 
 ## 0.4.1
 

@@ -1,8 +1,7 @@
 import 'package:celest_backend/exceptions/bad_name_exception.dart';
 import 'package:celest_backend/models/person.dart';
+import 'package:celest_backend/src/functions/greeting.dart';
 import 'package:test/test.dart';
-
-import '../../functions/greeting.dart';
 
 void main() {
   group('greeting', () {

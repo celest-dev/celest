@@ -3,6 +3,7 @@ import 'package:cedar/cedar.dart' hide Value;
 // ignore: invalid_use_of_internal_member
 import 'package:celest/src/runtime/http/cloud_middleware.dart';
 import 'package:celest_ast/celest_ast.dart' hide Variable;
+import 'package:celest_cloud/src/proto.dart' as pb;
 import 'package:celest_cloud_auth/src/authorization/authorization_middleware.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/authorization/celest_action.dart';
@@ -15,7 +16,6 @@ import 'package:celest_cloud_auth/src/model/interop.dart';
 import 'package:celest_cloud_auth/src/model/order_by.dart';
 import 'package:celest_cloud_auth/src/model/page_token.dart';
 import 'package:celest_cloud_auth/src/model/route_map.dart';
-import 'package:celest_cloud/src/proto.dart' as pb;
 import 'package:celest_core/celest_core.dart';
 import 'package:drift/drift.dart' as drift;
 import 'package:drift/drift.dart';
