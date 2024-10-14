@@ -8,6 +8,7 @@ import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cloud/celest_cloud.dart'
     show InstanceType, Subscription_State;
 import 'package:celest_cloud/src/cloud/subscriptions/subscriptions.dart';
+import 'package:celest_core/celest_core.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
@@ -35,10 +36,28 @@ final class SubscribeCommand extends CelestCommand with Authenticate {
     final currentSubscription = await cloud.subscriptions.get(
       'users/${user.userId}/subscription',
     );
-    if (currentSubscription != null &&
-        currentSubscription.whichState() == Subscription_State.active) {
-      cliLogger.success('You are already subscribed to Celest Cloud 🚀');
-      return 0;
+    switch (currentSubscription?.whichState()) {
+      case null ||
+            Subscription_State.notSet ||
+            Subscription_State.canceled ||
+            Subscription_State.paused:
+        break;
+      case Subscription_State.active:
+        cliLogger.success('You are already subscribed to Celest Cloud 🚀');
+        cliLogger.info(
+          'If you would like to change your plan, run '
+          '`celest subscription change`.',
+        );
+        return 0;
+      case Subscription_State.paymentRequired:
+        // TODO(dnys1): Redirect to payment URL, but ensure it's valid on server before sending it.
+        break;
+      case Subscription_State.suspended:
+        cliLogger.err(
+          'Your subscription to Celest Cloud is currently paused. '
+          'Please contact us to resume your subscription.',
+        );
+        return 1;
     }
 
     final instanceType = cliLogger.chooseOne(
@@ -54,7 +73,7 @@ final class SubscribeCommand extends CelestCommand with Authenticate {
       display: (instanceType) => instanceType.displayString,
     );
 
-    final subscribeCompletion = Completer<void>.sync();
+    final subscribeCompletion = Completer<void>();
     final server = await shelf_io.serve(
       (request) async {
         if (subscribeCompletion.isCompleted) {
@@ -143,7 +162,7 @@ final class SubscribeCommand extends CelestCommand with Authenticate {
         case Subscription_State.canceled:
         case Subscription_State.paused:
         case Subscription_State.suspended:
-          throw UnimplementedError();
+          throw UnimplementedError(null);
       }
       cliLogger.success(
         'Your subscription to Celest Cloud was successful! '
@@ -154,6 +173,9 @@ final class SubscribeCommand extends CelestCommand with Authenticate {
         '`celest deploy`.\n\n'
         'To manage your subscription, run `celest subscription`.',
       );
+    } on AlreadyExistsException {
+      cliLogger.success('You are already subscribed to that plan 🚀');
+      return 0;
     } finally {
       await server.close(force: true);
     }

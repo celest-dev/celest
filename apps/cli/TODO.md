@@ -34,3 +34,6 @@
 
 - `celest build` must work different depending on whether the user is logged in or not.
    If they're not, for example, they will not have a Turso database.
+
+- Stop exporting celest_core from celest
+- Only allow external or internal auth (only one type of auth)

@@ -1475,61 +1475,81 @@ typedef $OrganizationsUpdateCompanionBuilder = OrganizationsCompanion Function({
 });
 
 class $OrganizationsFilterComposer
-    extends FilterComposer<_$CloudDatabase, Organizations> {
-  $OrganizationsFilterComposer(super.$state);
-  ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$CloudDatabase, Organizations> {
+  $OrganizationsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get organizationId => $state.composableBuilder(
-      column: $state.table.organizationId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get organizationId => $composableBuilder(
+      column: $table.organizationId,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get displayName => $state.composableBuilder(
-      column: $state.table.displayName,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get primaryRegion => $state.composableBuilder(
-      column: $state.table.primaryRegion,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get primaryRegion => $composableBuilder(
+      column: $table.primaryRegion, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get etag => $state.composableBuilder(
-      column: $state.table.etag,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get etag => $composableBuilder(
+      column: $table.etag, builder: (column) => ColumnFilters(column));
 }
 
 class $OrganizationsOrderingComposer
-    extends OrderingComposer<_$CloudDatabase, Organizations> {
-  $OrganizationsOrderingComposer(super.$state);
-  ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$CloudDatabase, Organizations> {
+  $OrganizationsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get organizationId => $state.composableBuilder(
-      column: $state.table.organizationId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get organizationId => $composableBuilder(
+      column: $table.organizationId,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get displayName => $state.composableBuilder(
-      column: $state.table.displayName,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get primaryRegion => $state.composableBuilder(
-      column: $state.table.primaryRegion,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get primaryRegion => $composableBuilder(
+      column: $table.primaryRegion,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get etag => $state.composableBuilder(
-      column: $state.table.etag,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get etag => $composableBuilder(
+      column: $table.etag, builder: (column) => ColumnOrderings(column));
+}
+
+class $OrganizationsAnnotationComposer
+    extends Composer<_$CloudDatabase, Organizations> {
+  $OrganizationsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get organizationId => $composableBuilder(
+      column: $table.organizationId, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => column);
+
+  GeneratedColumn<String> get primaryRegion => $composableBuilder(
+      column: $table.primaryRegion, builder: (column) => column);
+
+  GeneratedColumn<String> get etag =>
+      $composableBuilder(column: $table.etag, builder: (column) => column);
 }
 
 class $OrganizationsTableManager extends RootTableManager<
@@ -1538,6 +1558,7 @@ class $OrganizationsTableManager extends RootTableManager<
     Organization,
     $OrganizationsFilterComposer,
     $OrganizationsOrderingComposer,
+    $OrganizationsAnnotationComposer,
     $OrganizationsCreateCompanionBuilder,
     $OrganizationsUpdateCompanionBuilder,
     (
@@ -1550,10 +1571,12 @@ class $OrganizationsTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $OrganizationsFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $OrganizationsOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $OrganizationsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $OrganizationsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $OrganizationsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
             Value<String> organizationId = const Value.absent(),
@@ -1599,6 +1622,7 @@ typedef $OrganizationsProcessedTableManager = ProcessedTableManager<
     Organization,
     $OrganizationsFilterComposer,
     $OrganizationsOrderingComposer,
+    $OrganizationsAnnotationComposer,
     $OrganizationsCreateCompanionBuilder,
     $OrganizationsUpdateCompanionBuilder,
     (
@@ -1626,72 +1650,87 @@ typedef $ProjectsUpdateCompanionBuilder = ProjectsCompanion Function({
   Value<int> rowid,
 });
 
-class $ProjectsFilterComposer
-    extends FilterComposer<_$CloudDatabase, Projects> {
-  $ProjectsFilterComposer(super.$state);
-  ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+class $ProjectsFilterComposer extends Composer<_$CloudDatabase, Projects> {
+  $ProjectsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get organizationId => $state.composableBuilder(
-      column: $state.table.organizationId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get organizationId => $composableBuilder(
+      column: $table.organizationId,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get projectId => $state.composableBuilder(
-      column: $state.table.projectId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get projectId => $composableBuilder(
+      column: $table.projectId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get displayName => $state.composableBuilder(
-      column: $state.table.displayName,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get region => $state.composableBuilder(
-      column: $state.table.region,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get region => $composableBuilder(
+      column: $table.region, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get etag => $state.composableBuilder(
-      column: $state.table.etag,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get etag => $composableBuilder(
+      column: $table.etag, builder: (column) => ColumnFilters(column));
 }
 
-class $ProjectsOrderingComposer
-    extends OrderingComposer<_$CloudDatabase, Projects> {
-  $ProjectsOrderingComposer(super.$state);
-  ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+class $ProjectsOrderingComposer extends Composer<_$CloudDatabase, Projects> {
+  $ProjectsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get organizationId => $state.composableBuilder(
-      column: $state.table.organizationId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get organizationId => $composableBuilder(
+      column: $table.organizationId,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get projectId => $state.composableBuilder(
-      column: $state.table.projectId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get projectId => $composableBuilder(
+      column: $table.projectId, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get displayName => $state.composableBuilder(
-      column: $state.table.displayName,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get region => $state.composableBuilder(
-      column: $state.table.region,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get region => $composableBuilder(
+      column: $table.region, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get etag => $state.composableBuilder(
-      column: $state.table.etag,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get etag => $composableBuilder(
+      column: $table.etag, builder: (column) => ColumnOrderings(column));
+}
+
+class $ProjectsAnnotationComposer extends Composer<_$CloudDatabase, Projects> {
+  $ProjectsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get organizationId => $composableBuilder(
+      column: $table.organizationId, builder: (column) => column);
+
+  GeneratedColumn<String> get projectId =>
+      $composableBuilder(column: $table.projectId, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => column);
+
+  GeneratedColumn<String> get region =>
+      $composableBuilder(column: $table.region, builder: (column) => column);
+
+  GeneratedColumn<String> get etag =>
+      $composableBuilder(column: $table.etag, builder: (column) => column);
 }
 
 class $ProjectsTableManager extends RootTableManager<
@@ -1700,6 +1739,7 @@ class $ProjectsTableManager extends RootTableManager<
     Project,
     $ProjectsFilterComposer,
     $ProjectsOrderingComposer,
+    $ProjectsAnnotationComposer,
     $ProjectsCreateCompanionBuilder,
     $ProjectsUpdateCompanionBuilder,
     (Project, BaseReferences<_$CloudDatabase, Projects, Project>),
@@ -1709,8 +1749,12 @@ class $ProjectsTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer: $ProjectsFilterComposer(ComposerState(db, table)),
-          orderingComposer: $ProjectsOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $ProjectsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $ProjectsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $ProjectsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
             Value<String> organizationId = const Value.absent(),
@@ -1760,6 +1804,7 @@ typedef $ProjectsProcessedTableManager = ProcessedTableManager<
     Project,
     $ProjectsFilterComposer,
     $ProjectsOrderingComposer,
+    $ProjectsAnnotationComposer,
     $ProjectsCreateCompanionBuilder,
     $ProjectsUpdateCompanionBuilder,
     (Project, BaseReferences<_$CloudDatabase, Projects, Project>),
@@ -1785,61 +1830,79 @@ typedef $ProjectEnvironmentsUpdateCompanionBuilder
 });
 
 class $ProjectEnvironmentsFilterComposer
-    extends FilterComposer<_$CloudDatabase, ProjectEnvironments> {
-  $ProjectEnvironmentsFilterComposer(super.$state);
-  ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$CloudDatabase, ProjectEnvironments> {
+  $ProjectEnvironmentsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get projectId => $state.composableBuilder(
-      column: $state.table.projectId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get projectId => $composableBuilder(
+      column: $table.projectId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get environmentId => $state.composableBuilder(
-      column: $state.table.environmentId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get environmentId => $composableBuilder(
+      column: $table.environmentId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get displayName => $state.composableBuilder(
-      column: $state.table.displayName,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get etag => $state.composableBuilder(
-      column: $state.table.etag,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get etag => $composableBuilder(
+      column: $table.etag, builder: (column) => ColumnFilters(column));
 }
 
 class $ProjectEnvironmentsOrderingComposer
-    extends OrderingComposer<_$CloudDatabase, ProjectEnvironments> {
-  $ProjectEnvironmentsOrderingComposer(super.$state);
-  ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$CloudDatabase, ProjectEnvironments> {
+  $ProjectEnvironmentsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get projectId => $state.composableBuilder(
-      column: $state.table.projectId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get projectId => $composableBuilder(
+      column: $table.projectId, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get environmentId => $state.composableBuilder(
-      column: $state.table.environmentId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get environmentId => $composableBuilder(
+      column: $table.environmentId,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get displayName => $state.composableBuilder(
-      column: $state.table.displayName,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get etag => $state.composableBuilder(
-      column: $state.table.etag,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get etag => $composableBuilder(
+      column: $table.etag, builder: (column) => ColumnOrderings(column));
+}
+
+class $ProjectEnvironmentsAnnotationComposer
+    extends Composer<_$CloudDatabase, ProjectEnvironments> {
+  $ProjectEnvironmentsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get projectId =>
+      $composableBuilder(column: $table.projectId, builder: (column) => column);
+
+  GeneratedColumn<String> get environmentId => $composableBuilder(
+      column: $table.environmentId, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+      column: $table.displayName, builder: (column) => column);
+
+  GeneratedColumn<String> get etag =>
+      $composableBuilder(column: $table.etag, builder: (column) => column);
 }
 
 class $ProjectEnvironmentsTableManager extends RootTableManager<
@@ -1848,6 +1911,7 @@ class $ProjectEnvironmentsTableManager extends RootTableManager<
     ProjectEnvironment,
     $ProjectEnvironmentsFilterComposer,
     $ProjectEnvironmentsOrderingComposer,
+    $ProjectEnvironmentsAnnotationComposer,
     $ProjectEnvironmentsCreateCompanionBuilder,
     $ProjectEnvironmentsUpdateCompanionBuilder,
     (
@@ -1861,10 +1925,12 @@ class $ProjectEnvironmentsTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $ProjectEnvironmentsFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $ProjectEnvironmentsOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $ProjectEnvironmentsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $ProjectEnvironmentsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $ProjectEnvironmentsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
             Value<String> projectId = const Value.absent(),
@@ -1910,6 +1976,7 @@ typedef $ProjectEnvironmentsProcessedTableManager = ProcessedTableManager<
     ProjectEnvironment,
     $ProjectEnvironmentsFilterComposer,
     $ProjectEnvironmentsOrderingComposer,
+    $ProjectEnvironmentsAnnotationComposer,
     $ProjectEnvironmentsCreateCompanionBuilder,
     $ProjectEnvironmentsUpdateCompanionBuilder,
     (
@@ -1936,51 +2003,73 @@ typedef $ProjectEnvironmentConfigUpdateCompanionBuilder
 });
 
 class $ProjectEnvironmentConfigFilterComposer
-    extends FilterComposer<_$CloudDatabase, ProjectEnvironmentConfig> {
-  $ProjectEnvironmentConfigFilterComposer(super.$state);
-  ColumnFilters<String> get environmentId => $state.composableBuilder(
-      column: $state.table.environmentId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$CloudDatabase, ProjectEnvironmentConfig> {
+  $ProjectEnvironmentConfigFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get environmentId => $composableBuilder(
+      column: $table.environmentId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get baseUri => $state.composableBuilder(
-      column: $state.table.baseUri,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get baseUri => $composableBuilder(
+      column: $table.baseUri, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get databaseHost => $state.composableBuilder(
-      column: $state.table.databaseHost,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get databaseHost => $composableBuilder(
+      column: $table.databaseHost, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get databaseTokenRef => $state.composableBuilder(
-      column: $state.table.databaseTokenRef,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get databaseTokenRef => $composableBuilder(
+      column: $table.databaseTokenRef,
+      builder: (column) => ColumnFilters(column));
 }
 
 class $ProjectEnvironmentConfigOrderingComposer
-    extends OrderingComposer<_$CloudDatabase, ProjectEnvironmentConfig> {
-  $ProjectEnvironmentConfigOrderingComposer(super.$state);
-  ColumnOrderings<String> get environmentId => $state.composableBuilder(
-      column: $state.table.environmentId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$CloudDatabase, ProjectEnvironmentConfig> {
+  $ProjectEnvironmentConfigOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get environmentId => $composableBuilder(
+      column: $table.environmentId,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get baseUri => $state.composableBuilder(
-      column: $state.table.baseUri,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get baseUri => $composableBuilder(
+      column: $table.baseUri, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get databaseHost => $state.composableBuilder(
-      column: $state.table.databaseHost,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get databaseHost => $composableBuilder(
+      column: $table.databaseHost,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get databaseTokenRef => $state.composableBuilder(
-      column: $state.table.databaseTokenRef,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get databaseTokenRef => $composableBuilder(
+      column: $table.databaseTokenRef,
+      builder: (column) => ColumnOrderings(column));
+}
+
+class $ProjectEnvironmentConfigAnnotationComposer
+    extends Composer<_$CloudDatabase, ProjectEnvironmentConfig> {
+  $ProjectEnvironmentConfigAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get environmentId => $composableBuilder(
+      column: $table.environmentId, builder: (column) => column);
+
+  GeneratedColumn<String> get baseUri =>
+      $composableBuilder(column: $table.baseUri, builder: (column) => column);
+
+  GeneratedColumn<String> get databaseHost => $composableBuilder(
+      column: $table.databaseHost, builder: (column) => column);
+
+  GeneratedColumn<String> get databaseTokenRef => $composableBuilder(
+      column: $table.databaseTokenRef, builder: (column) => column);
 }
 
 class $ProjectEnvironmentConfigTableManager extends RootTableManager<
@@ -1989,6 +2078,7 @@ class $ProjectEnvironmentConfigTableManager extends RootTableManager<
     ProjectEnvironmentConfigData,
     $ProjectEnvironmentConfigFilterComposer,
     $ProjectEnvironmentConfigOrderingComposer,
+    $ProjectEnvironmentConfigAnnotationComposer,
     $ProjectEnvironmentConfigCreateCompanionBuilder,
     $ProjectEnvironmentConfigUpdateCompanionBuilder,
     (
@@ -2003,10 +2093,13 @@ class $ProjectEnvironmentConfigTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $ProjectEnvironmentConfigFilterComposer(ComposerState(db, table)),
-          orderingComposer: $ProjectEnvironmentConfigOrderingComposer(
-              ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $ProjectEnvironmentConfigFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $ProjectEnvironmentConfigOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $ProjectEnvironmentConfigAnnotationComposer(
+                  $db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> environmentId = const Value.absent(),
             Value<String> baseUri = const Value.absent(),
@@ -2048,6 +2141,7 @@ typedef $ProjectEnvironmentConfigProcessedTableManager = ProcessedTableManager<
     ProjectEnvironmentConfigData,
     $ProjectEnvironmentConfigFilterComposer,
     $ProjectEnvironmentConfigOrderingComposer,
+    $ProjectEnvironmentConfigAnnotationComposer,
     $ProjectEnvironmentConfigCreateCompanionBuilder,
     $ProjectEnvironmentConfigUpdateCompanionBuilder,
     (

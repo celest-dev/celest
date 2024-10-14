@@ -1,6 +1,73 @@
+import 'package:cedar/ast.dart';
+import 'package:cedar/cedar.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/run.dart';
+
+extension on CloudFunction {
+  EntityUid get uid => EntityUid.of('Celest::Function', '$apiName/$name');
+}
+
+extension on Api {
+  EntityUid get uid => EntityUid.of('Celest::Api', name);
+}
+
+extension on AstNode {
+  EntityUid get uid => switch (this) {
+        final CloudFunction function => function.uid,
+        final Api api => api.uid,
+        _ => unreachable(),
+      };
+  ResourceConstraint get resource => switch (this) {
+        final Api api => ResourceIn(api.uid),
+        final CloudFunction function => ResourceEquals(function.uid),
+        _ => unreachable(),
+      };
+}
+
+extension on ApiAuth {
+  String get tag => switch (this) {
+        ApiPublic() => 'public',
+        ApiAuthenticated() => 'authenticated',
+      };
+
+  String get templateId => 'cloud.functions.$tag';
+
+  void appendPolicies(AstNode node, PolicySetBuilder builder) {
+    final policyId = '${node.uid.id}.$tag';
+    final templateLink = TemplateLink(
+      templateId: templateId,
+      newId: policyId,
+      values: {
+        SlotId.resource: node.uid,
+      },
+    );
+    builder.templateLinks.add(templateLink);
+    if (this is ApiAuthenticated) {
+      // Add a forbid policy for `@authenticated` so that it overrides
+      // any other allow policies, e.g. if the library has `@public`.
+      builder.policies['${policyId}_restrict'] = Policy(
+        effect: Effect.forbid,
+        principal: const PrincipalAll(),
+        action: const ActionEquals(
+          EntityUid.of('Celest::Action', 'invoke'),
+        ),
+        resource: node.resource,
+        conditions: [
+          Condition(
+            kind: ConditionKind.unless,
+            body: Expr.in_(
+              left: const Expr.variable(CedarVariable.principal),
+              right: Expr.value(
+                Value.entity(uid: EntityUid.of('Celest::Role', tag)),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+  }
+}
 
 final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   ProjectResolver({
@@ -63,6 +130,10 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
       for (final f in api.functions.values) {
         resolvedApi.functions[f.name] = visitFunction(f, api);
       }
+      final apiAuth = api.metadata.whereType<ApiAuth>().singleOrNull;
+      if (apiAuth != null) {
+        apiAuth.appendPolicies(api, resolvedApi.policySet);
+      }
     });
   }
 
@@ -99,11 +170,16 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
           switch (metadata) {
             case ApiHttpConfig(:final method, :final statusCode):
               resolvedFunction.httpConfig
-                ..method = method
-                ..status = statusCode;
+                ..status = statusCode
+                ..route.method = method;
             case ApiHttpError(:final type, :final statusCode):
               resolvedFunction.httpConfig.statusMappings[type] = statusCode;
           }
+        }
+        final functionAuth =
+            function.metadata.whereType<ApiAuth>().singleOrNull;
+        if (functionAuth != null) {
+          functionAuth.appendPolicies(function, resolvedFunction.policySet);
         }
 
         for (final parameter in function.parameters) {

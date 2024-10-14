@@ -22,6 +22,11 @@ final class DeployCommand extends CelestCommand
   @override
   Future<int> run() async {
     await super.run();
+
+    if (!devMode) {
+      throw const CliException('Coming soon! Stay tuned for updates');
+    }
+
     final needsMigration = await configure();
 
     if (await authenticate() case final code when code != 0) {

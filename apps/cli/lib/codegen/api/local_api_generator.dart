@@ -71,6 +71,13 @@ return start();
                   .call([refer('context')]).awaited,
             );
           }
+          if (project.auth?.providers.isNotEmpty ?? false) {
+            b.addExpression(
+              CloudClientTypes.authClass.ref
+                  .property('init')
+                  .call([refer('context')]).awaited,
+            );
+          }
         });
     });
   }

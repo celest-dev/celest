@@ -796,7 +796,7 @@ class CelestFunctionsFlutter {
     function: 'helloWorld',
   )
   Future<HelloWorld> helloWorld() async {
-    final $response = await celest.httpClient.post(
+    final $response = await celest.httpClient.get(
       celest.baseUri.resolve('/flutter/hello-world'),
       headers: const {
         'Content-Type': 'application/json',

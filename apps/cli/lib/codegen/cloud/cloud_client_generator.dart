@@ -40,12 +40,19 @@ final class CloudClientGenerator {
       ..body.addAll([
         _dataClass,
       ]);
+    _authLibrary = LibraryBuilder()
+      ..name = ''
+      ..comments.addAll(kClientHeader)
+      ..body.addAll([
+        _authClass,
+      ]);
   }
 
   final ast.Project project;
   late final LibraryBuilder _library;
   late final LibraryBuilder _configLibrary;
   late final LibraryBuilder _dataLibrary;
+  late final LibraryBuilder _authLibrary;
 
   final _client = Field(
     (f) => f
@@ -339,118 +346,6 @@ final class CloudClientGenerator {
       ]);
   });
 
-  Iterable<Method> get _databaseInitGlobals sync* {
-    yield Method((m) {
-      m
-        ..name = '_checkConnection'
-        ..docs.addAll([
-          '/// Checks the connection to the database by running a simple query.',
-        ])
-        ..modifier = MethodModifier.async
-        ..returns = DartTypes.core.future(refer('Database'))
-        ..types.add(
-          TypeReference(
-            (t) => t
-              ..symbol = 'Database'
-              ..bound = DartTypes.drift.generatedDatabase,
-          ),
-        )
-        ..requiredParameters.add(
-          Parameter(
-            (p) => p
-              ..name = 'db'
-              ..type = refer('Database'),
-          ),
-        )
-        ..body = const Code('''
-  await db.transaction(() async {
-    await db.customSelect('SELECT 1').get();
-  });
-  return db;
-''');
-    });
-
-    yield Method((m) {
-      m
-        ..name = '_connect'
-        ..docs.addAll([
-          '/// Constructs a new [Database] and connects to it using the provided',
-          '/// [hostnameVariable] and [tokenSecret] configuration values.',
-        ])
-        ..modifier = MethodModifier.async
-        ..returns = DartTypes.core.future(refer('Database'))
-        ..types.add(
-          TypeReference(
-            (t) => t
-              ..symbol = 'Database'
-              ..bound = DartTypes.drift.generatedDatabase,
-          ),
-        )
-        ..requiredParameters.add(
-          Parameter(
-            (p) => p
-              ..name = 'context'
-              ..type = DartTypes.celest.context,
-          ),
-        )
-        ..optionalParameters.addAll([
-          Parameter(
-            (p) => p
-              ..name = 'name'
-              ..named = true
-              ..required = true
-              ..type = DartTypes.core.string,
-          ),
-          Parameter(
-            (p) => p
-              ..name = 'factory'
-              ..named = true
-              ..required = true
-              ..type = FunctionType(
-                (f) => f
-                  ..returnType = refer('Database')
-                  ..requiredParameters.add(DartTypes.drift.queryExecutor),
-              ),
-          ),
-          Parameter(
-            (p) => p
-              ..name = 'hostnameVariable'
-              ..named = true
-              ..required = true
-              ..type = DartTypes.celest.environmentVariable,
-          ),
-          Parameter(
-            (p) => p
-              ..name = 'tokenSecret'
-              ..named = true
-              ..required = true
-              ..type = DartTypes.celest.secret,
-          ),
-        ])
-        ..body = Code.scope(
-          (alloc) => '''
-if (context.environment == ${alloc(DartTypes.celest.environment)}.local) {
-  return _checkConnection(factory(${alloc(DartTypes.drift.nativeDatabase)}.memory()));
-}
-final host = context.get(hostnameVariable);
-final token = context.get(tokenSecret);
-if (host == null || token == null) {
-  throw StateError(
-    'Missing database hostname or token for \$name. '
-    'Please set the `\$hostnameVariable` and `\$tokenSecret` values '
-    'in the environment or Celest configuration file.',
-  );
-}
-final connector = ${alloc(DartTypes.drift.hranaDatabase)}(
-  Uri(scheme: 'libsql', host: host),
-  jwtToken: token,
-);
-return _checkConnection(factory(connector));
-''',
-        );
-    });
-  }
-
   late final _dataClass = Class((b) {
     b
       ..name = CloudClientTypes.dataClass.name
@@ -488,7 +383,10 @@ return _checkConnection(factory(connector));
                 b.addExpression(
                   refer('context').property('put').call([
                     refer('_${database.dartName}Key'),
-                    refer('_connect').call(
+                    refer(
+                      'connect',
+                      'package:celest/src/runtime/data/connect.dart',
+                    ).call(
                       [refer('context')],
                       {
                         'name': literalString(
@@ -551,10 +449,93 @@ return _checkConnection(factory(connector));
                       ],
               )
               ..body = DartTypes.celest.contextKey.constInstance([
-                literalString(database.name),
+                literalString(
+                  database.name,
+                  raw: database.name.contains(r'$'),
+                ),
               ]).code;
           }),
         ],
+      ]);
+  });
+
+  late final _authClass = Class((b) {
+    b
+      ..name = CloudClientTypes.authClass.name
+      ..docs.addAll([
+        '/// The auth service for the Celest backend.',
+        '///',
+        '/// This class provides access to authentication and authorization',
+        '/// operations for the current [CelestEnvironment].',
+      ])
+      ..constructors.add(
+        Constructor(
+          (c) => c..constant = true,
+        ),
+      )
+      ..methods.addAll([
+        Method((m) {
+          m
+            ..static = true
+            ..name = 'init'
+            ..returns = DartTypes.core.future(DartTypes.core.void$)
+            ..requiredParameters.add(
+              Parameter(
+                (p) => p
+                  ..name = 'context'
+                  ..type = DartTypes.celest.context,
+              ),
+            )
+            ..modifier = MethodModifier.async
+            ..docs.addAll([
+              '/// Initializes the Celest Auth service in the given [context].',
+            ])
+            ..body = Block((b) {
+              final database = declareFinal('database').assign(
+                refer('connect', 'package:celest/src/runtime/data/connect.dart')
+                    .call(
+                  [refer('context')],
+                  {
+                    'name': literalString('CelestAuthDatabase'),
+                    'factory': refer(
+                      'AuthDatabase',
+                      'package:celest_cloud_auth/celest_cloud_auth.dart',
+                    ).property('new'),
+                    'hostnameVariable':
+                        DartTypes.celest.environmentVariable.constInstance([
+                      literalString('CELEST_AUTH_DATABASE_HOST'),
+                    ]),
+                    'tokenSecret': DartTypes.celest.secret.constInstance([
+                      literalString('CELEST_AUTH_DATABASE_TOKEN'),
+                    ]),
+                  },
+                ).awaited,
+              );
+              b.addExpression(database);
+              b.addExpression(
+                declareFinal('service').assign(
+                  refer(
+                    'CelestCloudAuth',
+                    'package:celest_cloud_auth/celest_cloud_auth.dart',
+                  ).property('create').call([], {
+                    'database': refer('database'),
+                  }).awaited,
+                ),
+              );
+              b.addExpression(
+                refer('context').property('router').property('mount').call([
+                  literalString('/v1alpha1/auth/'),
+                  refer('service').property('handler'),
+                ]),
+              );
+              b.addExpression(
+                refer('context').property('put').call([
+                  refer('CelestCloudAuth').property('contextKey'),
+                  refer('service'),
+                ]),
+              );
+            });
+        }),
       ]);
   });
 
@@ -563,8 +544,12 @@ return _checkConnection(factory(connector));
     libraries[CloudPaths.config] = _configLibrary.build();
     if (project.databases.isNotEmpty) {
       CodegenDependencies.current.add('drift_hrana');
-      _dataLibrary.body.addAll(_databaseInitGlobals);
       libraries[CloudPaths.data] = _dataLibrary.build();
+    }
+    if (project.auth?.providers.isNotEmpty ?? false) {
+      CodegenDependencies.current.add('celest_cloud_auth');
+      CodegenDependencies.current.add('drift_hrana');
+      libraries[CloudPaths.auth] = _authLibrary.build();
     }
     libraries[CloudPaths.client] = _library.build();
     return libraries;

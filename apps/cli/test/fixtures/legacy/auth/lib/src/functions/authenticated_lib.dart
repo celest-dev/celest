@@ -2,7 +2,6 @@
 library;
 
 import 'package:celest/celest.dart';
-import 'package:celest_core/celest_core.dart';
 
 @cloud
 Future<String> sayHello({

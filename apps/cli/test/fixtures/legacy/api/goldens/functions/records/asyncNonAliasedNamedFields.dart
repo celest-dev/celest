@@ -1328,7 +1328,7 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
     ));
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i5.AbortedException, Map<String, Object?>>(
+        .put(_i4.Serializer.define<_i5.AbortedException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1341,17 +1341,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.AbortedException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
-    _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i5.AlreadyExistsException, Map<String, Object?>>(
+    _i4.Serializers.instance.put(_i4.Serializer.define<
+        _i5.AlreadyExistsException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1364,17 +1364,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.AlreadyExistsException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i5.BadRequestException, Map<String, Object?>>(
+        _i4.Serializer.define<_i5.BadRequestException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1387,17 +1387,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.BadRequestException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i5.CancelledException, Map<String, Object?>>(
+        _i4.Serializer.define<_i5.CancelledException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1410,12 +1410,12 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.CancelledException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
@@ -1436,7 +1436,7 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
     ));
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i5.DataLossError, Map<String, Object?>>(
+        .put(_i4.Serializer.define<_i5.DataLossError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1449,17 +1449,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.DataLossError(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i5.DeadlineExceededError, Map<String, Object?>>(
+        _i4.Serializer.define<_i5.DeadlineExceededError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1472,17 +1472,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.DeadlineExceededError(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i5.FailedPreconditionException, Map<String, Object?>>(
+        _i5.FailedPreconditionException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1495,17 +1495,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.FailedPreconditionException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i5.InternalServerError, Map<String, Object?>>(
+        _i4.Serializer.define<_i5.InternalServerError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1518,17 +1518,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.InternalServerError(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i5.NotFoundException, Map<String, Object?>>(
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i5.NotFoundException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1541,17 +1541,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.NotFoundException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i5.OutOfRangeException, Map<String, Object?>>(
+        _i4.Serializer.define<_i5.OutOfRangeException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1564,17 +1564,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.OutOfRangeException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i5.PermissionDeniedException, Map<String, Object?>>(
+        _i5.PermissionDeniedException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1587,17 +1587,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.PermissionDeniedException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i5.ResourceExhaustedException, Map<String, Object?>>(
+        _i5.ResourceExhaustedException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1610,17 +1610,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.ResourceExhaustedException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i5.UnauthorizedException, Map<String, Object?>>(
+        _i4.Serializer.define<_i5.UnauthorizedException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1633,17 +1633,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.UnauthorizedException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i5.UnavailableError, Map<String, Object?>>(
+        .put(_i4.Serializer.define<_i5.UnavailableError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1656,17 +1656,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.UnavailableError(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i5.UnimplementedError, Map<String, Object?>>(
+        _i4.Serializer.define<_i5.UnimplementedError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1679,17 +1679,17 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.UnimplementedError(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i5.UnknownError, Map<String, Object?>>(
+        .put(_i4.Serializer.define<_i5.UnknownError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -1702,12 +1702,12 @@ final class AsyncNonAliasedNamedFieldsTarget
       },
       deserialize: ($serialized) {
         return _i5.UnknownError(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
@@ -1724,7 +1724,8 @@ final class AsyncNonAliasedNamedFieldsTarget
           r'details': details,
       },
       deserialize: ($serialized) {
-        return _i10.SerializationException(($serialized[r'message'] as String));
+        return _i10.SerializationException(
+            ($serialized[r'message'] as String?));
       },
     ));
     _i4.Serializers.instance.put(

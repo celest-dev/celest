@@ -154,7 +154,7 @@ base mixin CloudOperationCommand<R extends GeneratedMessage>
           // TODO(dnys1): Intercept Ctrl-C to cancel
           progress.cancel();
           throw CloudException.cancelled(
-            'Operation was canceled remotely',
+            message: 'Operation was canceled remotely',
             details: JsonValue(metadata.toProto3Json()!),
           );
         case OperationFailure(:final error):
@@ -213,7 +213,7 @@ final class CloudCliOperation<R extends GeneratedMessage> {
           return result;
         case OperationCancelled(:final metadata):
           throw CloudException.cancelled(
-            'Operation was canceled remotely',
+            message: 'Operation was canceled remotely',
             details: JsonValue(metadata.toProto3Json()!),
           );
         case OperationFailure(:final error):

@@ -433,14 +433,16 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
 
   @override
   void visitDatabaseSchema(
-      ast.DatabaseSchema schema, covariant String context) {
+    ast.DatabaseSchema schema,
+    covariant String context,
+  ) {
     // TODO: implement visitSchema
   }
 }
 
 extension on ast.ResolvedCloudFunction {
   OpenApiOperationType get operationType {
-    return switch (httpConfig.method) {
+    return switch (httpConfig.route.method) {
       'GET' => OpenApiOperationType.get,
       'POST' => OpenApiOperationType.post,
       'PUT' => OpenApiOperationType.put,

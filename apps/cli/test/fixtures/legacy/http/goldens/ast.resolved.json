@@ -9,10 +9,11 @@
           "functionId": "ok",
           "apiId": "http_status",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/http-status/ok"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -24,10 +25,11 @@
           "functionId": "created",
           "apiId": "http_status",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/http-status/created"
             },
+            "additionalRoutes": [],
             "status": 201,
             "statusMappings": {}
           },
@@ -39,10 +41,11 @@
           "functionId": "accepted",
           "apiId": "http_status",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/http-status/accepted"
             },
+            "additionalRoutes": [],
             "status": 202,
             "statusMappings": {}
           },
@@ -54,10 +57,11 @@
           "functionId": "badRequest",
           "apiId": "http_status",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/http-status/bad-request"
             },
+            "additionalRoutes": [],
             "status": 400,
             "statusMappings": {}
           },
@@ -69,10 +73,11 @@
           "functionId": "internalServerError",
           "apiId": "http_status",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/http-status/internal-server-error"
             },
+            "additionalRoutes": [],
             "status": 500,
             "statusMappings": {}
           },
@@ -89,10 +94,11 @@
           "functionId": "get",
           "apiId": "http_method",
           "httpConfig": {
-            "method": "GET",
             "route": {
+              "method": "GET",
               "path": "/http-method/get"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -104,10 +110,11 @@
           "functionId": "post",
           "apiId": "http_method",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/http-method/post"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -119,10 +126,11 @@
           "functionId": "put",
           "apiId": "http_method",
           "httpConfig": {
-            "method": "PUT",
             "route": {
+              "method": "PUT",
               "path": "/http-method/put"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -134,10 +142,11 @@
           "functionId": "delete",
           "apiId": "http_method",
           "httpConfig": {
-            "method": "DELETE",
             "route": {
+              "method": "DELETE",
               "path": "/http-method/delete"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -149,10 +158,11 @@
           "functionId": "patch",
           "apiId": "http_method",
           "httpConfig": {
-            "method": "PATCH",
             "route": {
+              "method": "PATCH",
               "path": "/http-method/patch"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -169,10 +179,11 @@
           "functionId": "query",
           "apiId": "http_query",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/http-query/query"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -189,10 +200,11 @@
           "functionId": "httpErrors",
           "apiId": "http_errors",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/http-errors/http-errors"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {
               "{\"symbol\":\"ForbiddenException\",\"url\":\"package:celest_backend/exceptions/http_errors.dart\",\"isNullable\":false}": 403,
@@ -215,10 +227,11 @@
           "functionId": "headers",
           "apiId": "http_header",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/http-header/headers"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -238,7 +251,7 @@
   "secrets": [],
   "databases": {},
   "sdkConfig": {
-    "celest": "1.0.0-dev.0",
+    "celest": "1.0.0",
     "dart": {
       "type": "dart",
       "version": "3.5.3",

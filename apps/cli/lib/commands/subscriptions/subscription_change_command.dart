@@ -8,6 +8,7 @@ import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cloud/celest_cloud.dart'
     show InstanceType, Subscription_State;
 import 'package:celest_cloud/src/cloud/subscriptions/subscriptions.dart';
+import 'package:celest_core/celest_core.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
@@ -64,7 +65,7 @@ final class SubscriptionChangeCommand extends CelestCommand with Authenticate {
       display: (instanceType) => instanceType.displayString,
     );
 
-    final subscribeCompletion = Completer<void>.sync();
+    final subscribeCompletion = Completer<void>();
     final server = await shelf_io.serve(
       (request) async {
         if (subscribeCompletion.isCompleted) {
@@ -143,12 +144,15 @@ final class SubscriptionChangeCommand extends CelestCommand with Authenticate {
         case Subscription_State.canceled:
         case Subscription_State.paused:
         case Subscription_State.suspended:
-          throw UnimplementedError();
+          throw UnimplementedError(null);
       }
       cliLogger.success(
         'Your subscription to Celest Cloud was successful! '
         'Welcome aboard! 🚀',
       );
+    } on AlreadyExistsException {
+      cliLogger.success('You are already subscribed to that plan 🚀');
+      return 0;
     } finally {
       await server.close(force: true);
     }

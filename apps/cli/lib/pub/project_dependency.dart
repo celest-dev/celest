@@ -43,15 +43,28 @@ final class ProjectDependency {
       'celest_core',
       'celest_cloud',
     ];
+
+    String servicePath(String serviceName) {
+      return p.url.relative(
+        p.join(localPath, 'services', serviceName).to(p.url),
+        from: projectRoot.to(p.url),
+      );
+    }
+
+    const services = ['celest_cloud_auth'];
+
     return {
       for (final packageName in packages)
         packageName: PathDependency(packagePath(packageName)),
+      for (final serviceName in services)
+        serviceName: PathDependency(servicePath(serviceName)),
     };
   }
 
   static final Map<String, ProjectDependency> all = {
     celest.name: celest,
     celestAst.name: celestAst,
+    celestCloudAuth.name: celestCloudAuth,
     celestCore.name: celestCore,
     firebaseAuth.name: firebaseAuth,
     driftHrana.name: driftHrana,
@@ -74,6 +87,14 @@ final class ProjectDependency {
 
   static final ProjectDependency celestAst = ProjectDependency._(
     'celest_ast',
+    DependencyType.dependency,
+    HostedDependency(
+      version: VersionConstraint.compatibleWith(Version.parse('0.1.0')),
+    ),
+  );
+
+  static final ProjectDependency celestCloudAuth = ProjectDependency._(
+    'celest_cloud_auth',
     DependencyType.dependency,
     HostedDependency(
       version: VersionConstraint.compatibleWith(Version.parse('0.1.0')),

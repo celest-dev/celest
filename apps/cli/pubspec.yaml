@@ -1,6 +1,6 @@
 name: celest_cli
 description: The command-line interface for Celest.
-version: 1.0.0-dev.0
+version: 1.0.0
 publish_to: none
 
 environment:
@@ -40,7 +40,7 @@ dependencies:
   dart_style: ^2.3.4
   dcli: ^6.0.5
   dcli_terminal: ^6.0.3
-  drift: ">=2.20.0 <2.21.0"
+  drift: ">=2.21.0 <2.22.0"
   email_validator: ^3.0.0
   file: ^7.0.0
   fixnum: ^1.1.0
@@ -112,7 +112,7 @@ dev_dependencies:
     path: ../../packages/celest_lints
   checks: ^0.3.0
   dart_jsonwebtoken: ^2.14.1
-  drift_dev: ">=2.20.0 <2.21.0"
+  drift_dev: ">=2.21.0 <2.22.0"
   gcloud: ^0.8.13
   googleapis: ^13.2.0
   googleapis_auth: ^1.4.1

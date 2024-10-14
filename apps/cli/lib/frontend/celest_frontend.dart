@@ -354,6 +354,7 @@ final class CelestFrontend {
             final localUri = Uri.http('localhost:${projectOutputs.port}');
             await _generateClientCode(
               project: project,
+              resolvedProject: resolvedProject,
               projectUris: (
                 localUri: await isolatedSecureStorage.setLocalUri(
                   project.name,
@@ -648,6 +649,7 @@ final class CelestFrontend {
             );
             await _generateClientCode(
               project: project,
+              resolvedProject: resolvedProject,
               projectUris: (
                 localUri: await isolatedSecureStorage.getLocalUri(project.name),
                 productionUri: await isolatedSecureStorage.setProductionUri(
@@ -962,15 +964,41 @@ final class CelestFrontend {
 
   Future<void> _generateClientCode({
     required ast.Project project,
+    required ast.ResolvedProject resolvedProject,
     required CelestProjectUris projectUris,
   }) =>
       performance.trace('CelestFrontend', 'generateClientCode', () async {
         logger.fine('Generating client code...');
         final generator = ClientCodeGenerator(
           project: project,
+          resolvedProject: resolvedProject,
           projectUris: projectUris,
         );
         await generator.generate().write();
+        if (celestProject.parentProject
+            case ParentProject(type: ast.SdkType.flutter, :final path)
+            when project.databases.isNotEmpty) {
+          final webDir = fileSystem.directory(path).childDirectory('web');
+          if (webDir.existsSync()) {
+            final sqliteWasm = webDir.childFile('sqlite3.wasm');
+            if (!sqliteWasm.existsSync()) {
+              final downloadedSqliteWasm =
+                  celestProject.config.configDir.childFile('sqlite3.wasm');
+              if (downloadedSqliteWasm.existsSync()) {
+                await downloadedSqliteWasm.copy(sqliteWasm.path);
+              } else {
+                cliLogger.warn(
+                  '''
+To use Celest Data in your Flutter Web project, follow the steps in the Drift
+documentation to add the SQLite3 WASM file to your project:
+
+https://drift.simonbinder.eu/web/
+''',
+                );
+              }
+            }
+          }
+        }
       });
 
   Future<void> close() =>

@@ -9,11 +9,11 @@
           "functionId": "throwsUserException",
           "parentId": "exceptions",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/exceptions/throws-user-exception"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -24,11 +24,11 @@
           "functionId": "callsThrowsUserException",
           "parentId": "exceptions",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/exceptions/calls-throws-user-exception"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -39,11 +39,11 @@
           "functionId": "throwsAppError",
           "parentId": "exceptions",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/exceptions/throws-app-error"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -54,11 +54,11 @@
           "functionId": "throwsAppException",
           "parentId": "exceptions",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/exceptions/throws-app-exception"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -69,11 +69,11 @@
           "functionId": "throwsNotYetImplementedError",
           "parentId": "exceptions",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/exceptions/throws-not-yet-implemented-error"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -84,11 +84,11 @@
           "functionId": "throwsValidateError",
           "parentId": "exceptions",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/exceptions/throws-validate-error"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -99,11 +99,11 @@
           "functionId": "throwsUserException_ShowInConsole",
           "parentId": "exceptions",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/exceptions/throws-user-exception-show-in-console"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -119,11 +119,11 @@
           "functionId": "availableStock",
           "parentId": "models",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/models/available-stock"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -134,11 +134,11 @@
           "functionId": "availableStocks",
           "parentId": "models",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/models/available-stocks"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -149,11 +149,11 @@
           "functionId": "cashBalance",
           "parentId": "models",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/models/cash-balance"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -164,11 +164,11 @@
           "functionId": "portfolio",
           "parentId": "models",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/models/portfolio"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -179,11 +179,11 @@
           "functionId": "stock",
           "parentId": "models",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/models/stock"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -194,11 +194,11 @@
           "functionId": "ui",
           "parentId": "models",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/models/ui"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -220,11 +220,7 @@
       "major": 1,
       "minor": 0,
       "patch": 0,
-      "preRelease": [
-        "dev",
-        0.0
-      ],
-      "canonicalizedVersion": "1.0.0-dev.0"
+      "canonicalizedVersion": "1.0.0"
     },
     "dart": {
       "type": "DART",

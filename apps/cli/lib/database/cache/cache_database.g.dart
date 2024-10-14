@@ -447,31 +447,51 @@ typedef $AnalyzerByteStoreUpdateCompanionBuilder = AnalyzerByteStoreCompanion
 });
 
 class $AnalyzerByteStoreFilterComposer
-    extends FilterComposer<_$CacheDatabase, AnalyzerByteStore> {
-  $AnalyzerByteStoreFilterComposer(super.$state);
-  ColumnFilters<String> get cacheKey => $state.composableBuilder(
-      column: $state.table.cacheKey,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$CacheDatabase, AnalyzerByteStore> {
+  $AnalyzerByteStoreFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get cacheKey => $composableBuilder(
+      column: $table.cacheKey, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<Uint8List> get content => $state.composableBuilder(
-      column: $state.table.content,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<Uint8List> get content => $composableBuilder(
+      column: $table.content, builder: (column) => ColumnFilters(column));
 }
 
 class $AnalyzerByteStoreOrderingComposer
-    extends OrderingComposer<_$CacheDatabase, AnalyzerByteStore> {
-  $AnalyzerByteStoreOrderingComposer(super.$state);
-  ColumnOrderings<String> get cacheKey => $state.composableBuilder(
-      column: $state.table.cacheKey,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$CacheDatabase, AnalyzerByteStore> {
+  $AnalyzerByteStoreOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get cacheKey => $composableBuilder(
+      column: $table.cacheKey, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<Uint8List> get content => $state.composableBuilder(
-      column: $state.table.content,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<Uint8List> get content => $composableBuilder(
+      column: $table.content, builder: (column) => ColumnOrderings(column));
+}
+
+class $AnalyzerByteStoreAnnotationComposer
+    extends Composer<_$CacheDatabase, AnalyzerByteStore> {
+  $AnalyzerByteStoreAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get cacheKey =>
+      $composableBuilder(column: $table.cacheKey, builder: (column) => column);
+
+  GeneratedColumn<Uint8List> get content =>
+      $composableBuilder(column: $table.content, builder: (column) => column);
 }
 
 class $AnalyzerByteStoreTableManager extends RootTableManager<
@@ -480,6 +500,7 @@ class $AnalyzerByteStoreTableManager extends RootTableManager<
     AnalyzerByteStoreData,
     $AnalyzerByteStoreFilterComposer,
     $AnalyzerByteStoreOrderingComposer,
+    $AnalyzerByteStoreAnnotationComposer,
     $AnalyzerByteStoreCreateCompanionBuilder,
     $AnalyzerByteStoreUpdateCompanionBuilder,
     (
@@ -492,10 +513,12 @@ class $AnalyzerByteStoreTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $AnalyzerByteStoreFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $AnalyzerByteStoreOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $AnalyzerByteStoreFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $AnalyzerByteStoreOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $AnalyzerByteStoreAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> cacheKey = const Value.absent(),
             Value<Uint8List?> content = const Value.absent(),
@@ -529,6 +552,7 @@ typedef $AnalyzerByteStoreProcessedTableManager = ProcessedTableManager<
     AnalyzerByteStoreData,
     $AnalyzerByteStoreFilterComposer,
     $AnalyzerByteStoreOrderingComposer,
+    $AnalyzerByteStoreAnnotationComposer,
     $AnalyzerByteStoreCreateCompanionBuilder,
     $AnalyzerByteStoreUpdateCompanionBuilder,
     (
@@ -551,41 +575,60 @@ typedef $VersionInfoUpdateCompanionBuilder = VersionInfoCompanion Function({
 });
 
 class $VersionInfoFilterComposer
-    extends FilterComposer<_$CacheDatabase, VersionInfo> {
-  $VersionInfoFilterComposer(super.$state);
-  ColumnFilters<String> get celest => $state.composableBuilder(
-      column: $state.table.celest,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$CacheDatabase, VersionInfo> {
+  $VersionInfoFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get celest => $composableBuilder(
+      column: $table.celest, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get dart => $state.composableBuilder(
-      column: $state.table.dart,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get dart => $composableBuilder(
+      column: $table.dart, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get flutter => $state.composableBuilder(
-      column: $state.table.flutter,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get flutter => $composableBuilder(
+      column: $table.flutter, builder: (column) => ColumnFilters(column));
 }
 
 class $VersionInfoOrderingComposer
-    extends OrderingComposer<_$CacheDatabase, VersionInfo> {
-  $VersionInfoOrderingComposer(super.$state);
-  ColumnOrderings<String> get celest => $state.composableBuilder(
-      column: $state.table.celest,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$CacheDatabase, VersionInfo> {
+  $VersionInfoOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get celest => $composableBuilder(
+      column: $table.celest, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get dart => $state.composableBuilder(
-      column: $state.table.dart,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get dart => $composableBuilder(
+      column: $table.dart, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get flutter => $state.composableBuilder(
-      column: $state.table.flutter,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get flutter => $composableBuilder(
+      column: $table.flutter, builder: (column) => ColumnOrderings(column));
+}
+
+class $VersionInfoAnnotationComposer
+    extends Composer<_$CacheDatabase, VersionInfo> {
+  $VersionInfoAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get celest =>
+      $composableBuilder(column: $table.celest, builder: (column) => column);
+
+  GeneratedColumn<String> get dart =>
+      $composableBuilder(column: $table.dart, builder: (column) => column);
+
+  GeneratedColumn<String> get flutter =>
+      $composableBuilder(column: $table.flutter, builder: (column) => column);
 }
 
 class $VersionInfoTableManager extends RootTableManager<
@@ -594,6 +637,7 @@ class $VersionInfoTableManager extends RootTableManager<
     VersionInfoData,
     $VersionInfoFilterComposer,
     $VersionInfoOrderingComposer,
+    $VersionInfoAnnotationComposer,
     $VersionInfoCreateCompanionBuilder,
     $VersionInfoUpdateCompanionBuilder,
     (
@@ -606,10 +650,12 @@ class $VersionInfoTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $VersionInfoFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $VersionInfoOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $VersionInfoFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $VersionInfoOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $VersionInfoAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> celest = const Value.absent(),
             Value<String> dart = const Value.absent(),
@@ -647,6 +693,7 @@ typedef $VersionInfoProcessedTableManager = ProcessedTableManager<
     VersionInfoData,
     $VersionInfoFilterComposer,
     $VersionInfoOrderingComposer,
+    $VersionInfoAnnotationComposer,
     $VersionInfoCreateCompanionBuilder,
     $VersionInfoUpdateCompanionBuilder,
     (

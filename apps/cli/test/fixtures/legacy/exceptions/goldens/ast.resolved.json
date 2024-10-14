@@ -9,10 +9,11 @@
           "functionId": "callsThrowsCommonException",
           "apiId": "external",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/external/calls-throws-common-exception"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -24,10 +25,11 @@
           "functionId": "callsThrowsCustomException",
           "apiId": "external",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/external/calls-throws-custom-exception"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -44,10 +46,11 @@
           "functionId": "callsThrowsCustomError",
           "apiId": "nonthrowing",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/nonthrowing/calls-throws-custom-error"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -59,10 +62,11 @@
           "functionId": "callsThrowsBaseError",
           "apiId": "nonthrowing",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/nonthrowing/calls-throws-base-error"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -74,10 +78,11 @@
           "functionId": "callsThrowsCustomException",
           "apiId": "nonthrowing",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/nonthrowing/calls-throws-custom-exception"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -89,10 +94,11 @@
           "functionId": "callsThrowsBaseException",
           "apiId": "nonthrowing",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/nonthrowing/calls-throws-base-exception"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -109,10 +115,11 @@
           "functionId": "throwsCustomError",
           "apiId": "throwing",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/throwing/throws-custom-error"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -124,10 +131,11 @@
           "functionId": "throwsBaseError",
           "apiId": "throwing",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/throwing/throws-base-error"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -139,10 +147,11 @@
           "functionId": "throwsCustomException",
           "apiId": "throwing",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/throwing/throws-custom-exception"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -154,10 +163,11 @@
           "functionId": "throwsBaseException",
           "apiId": "throwing",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/throwing/throws-base-exception"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -177,7 +187,7 @@
   "secrets": [],
   "databases": {},
   "sdkConfig": {
-    "celest": "1.0.0-dev.0",
+    "celest": "1.0.0",
     "dart": {
       "type": "dart",
       "version": "3.5.3",

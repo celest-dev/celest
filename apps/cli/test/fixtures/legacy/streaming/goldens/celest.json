@@ -9,11 +9,11 @@
           "functionId": "hello",
           "parentId": "server_side",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/server-side/hello"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -24,11 +24,11 @@
           "functionId": "stockTicker",
           "parentId": "server_side",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/server-side/stock-ticker"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -39,11 +39,11 @@
           "functionId": "jsonValues",
           "parentId": "server_side",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/server-side/json-values"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -65,11 +65,7 @@
       "major": 1,
       "minor": 0,
       "patch": 0,
-      "preRelease": [
-        "dev",
-        0.0
-      ],
-      "canonicalizedVersion": "1.0.0-dev.0"
+      "canonicalizedVersion": "1.0.0"
     },
     "dart": {
       "type": "DART",

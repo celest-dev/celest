@@ -7,6 +7,8 @@ abstract final class CloudPaths {
       Uri.parse('package:celest_backend/src/generated/config.celest.dart');
   static Uri get data =>
       Uri.parse('package:celest_backend/src/generated/data.celest.dart');
+  static Uri get auth =>
+      Uri.parse('package:celest_backend/src/generated/auth.celest.dart');
 }
 
 final class CloudClientTypes {
@@ -28,8 +30,8 @@ final class CloudClientTypes {
       CloudClientTypes._('CelestSecrets', CloudPaths.config);
   static CloudClientTypes get dataClass =>
       CloudClientTypes._('CelestData', CloudPaths.data);
-  static CloudClientTypes get databaseClass =>
-      CloudClientTypes._('CelestDatabase', CloudPaths.data);
+  static CloudClientTypes get authClass =>
+      CloudClientTypes._('CelestAuth', CloudPaths.auth);
 
   final String name;
   final Uri uri;

@@ -9,10 +9,11 @@
           "functionId": "sayHello",
           "apiId": "injected",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/injected/say-hello"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -27,10 +28,11 @@
           "functionId": "sayHelloPerson",
           "apiId": "injected",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/injected/say-hello-person"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -89,7 +91,7 @@
   ],
   "databases": {},
   "sdkConfig": {
-    "celest": "1.0.0-dev.0",
+    "celest": "1.0.0",
     "dart": {
       "type": "dart",
       "version": "3.5.3",

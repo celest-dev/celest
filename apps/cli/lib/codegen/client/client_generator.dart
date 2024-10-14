@@ -92,6 +92,7 @@ final class _ReferencedTypesCollector extends ast.AstVisitor<void> {
 final class ClientGenerator {
   ClientGenerator({
     required this.project,
+    required this.resolvedProject,
     required this.projectUris,
   }) {
     final referencedTypes = _ReferencedTypesCollector();
@@ -127,6 +128,7 @@ final class ClientGenerator {
   }
 
   final ast.Project project;
+  final ast.ResolvedProject resolvedProject;
   final CelestProjectUris projectUris;
   late final LibraryBuilder _library;
 
@@ -318,6 +320,7 @@ final class ClientGenerator {
     if (apis.isNotEmpty) {
       final functionsGenerator = ClientFunctionsGenerator(
         project: project,
+        resolvedProject: resolvedProject,
         apis: apis.toList(),
       );
       libraries[ClientPaths.functions] = functionsGenerator.generate();

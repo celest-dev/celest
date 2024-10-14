@@ -9,11 +9,11 @@
           "functionId": "create",
           "parentId": "tasks",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/tasks/create"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -58,11 +58,7 @@
       "major": 1,
       "minor": 0,
       "patch": 0,
-      "preRelease": [
-        "dev",
-        0.0
-      ],
-      "canonicalizedVersion": "1.0.0-dev.0"
+      "canonicalizedVersion": "1.0.0"
     },
     "dart": {
       "type": "DART",

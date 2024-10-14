@@ -1,8 +1,6 @@
-import 'package:celest_cli/auth/cli_auth.dart';
 import 'package:celest_cli/commands/cloud_command.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:celest_cloud/celest_cloud.dart';
-import 'package:celest_cloud/src/proto.dart' as pb;
 import 'package:crypto/crypto.dart';
 
 final class DeployProjectEnvironmentCommand
@@ -72,31 +70,31 @@ Future<void> main() async {
     }
     final bytes = await fileSystem.file('$tmpDir/main.aot.dill').readAsBytes();
     final etag = md5.convert(bytes).toString();
-    yield* cloud.projects.environments.deploy(
-      options.resourceId,
-      // TODO: Take in celest_ast type
-      assets: [
-        pb.ProjectAsset(
-          type: pb.ProjectAsset_Type.DART_KERNEL,
-          filename: 'main.aot.dill',
-          inline: bytes,
-          etag: etag,
-        ),
-      ],
-      resolvedProject: pb.ResolvedProject(
-        name: 'hello',
-        sdk: pb.SdkInfo(
-          type: pb.SdkType.DART,
-          version: pb.Version(
-            major: Sdk.current.version.major,
-            minor: Sdk.current.version.minor,
-            patch: Sdk.current.version.patch,
-            canonicalizedVersion: Sdk.current.version.canonicalizedVersion,
-          ),
-        ),
-      ),
-      requestId: options.requestId,
-      validateOnly: options.validateOnly,
-    );
+    // yield* cloud.projects.environments.deploy(
+    //   options.resourceId,
+    //   // TODO: Take in celest_ast type
+    //   assets: [
+    //     pb.ProjectAsset(
+    //       type: pb.ProjectAsset_Type.DART_KERNEL,
+    //       filename: 'main.aot.dill',
+    //       inline: bytes,
+    //       etag: etag,
+    //     ),
+    //   ],
+    //   resolvedProject: pb.ResolvedProject(
+    //     projectId: 'hello',
+    //     sdkConfig: pb.SdkConfiguration(
+    //       targetSdk: pb.SdkType.DART,
+    //       version: pb.Version(
+    //         major: Sdk.current.version.major,
+    //         minor: Sdk.current.version.minor,
+    //         patch: Sdk.current.version.patch,
+    //         canonicalizedVersion: Sdk.current.version.canonicalizedVersion,
+    //       ),
+    //     ),
+    //   ),
+    //   requestId: options.requestId,
+    //   validateOnly: options.validateOnly,
+    // );
   }
 }

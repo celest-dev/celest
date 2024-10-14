@@ -7,8 +7,8 @@ environment:
 dependencies:
   _common:
     path: ../_common
-  celest: ^1.0.0-0
-  celest_core: ^1.0.0-0
+  celest: ^1.0.0
+  celest_core: ^1.0.0
   fast_immutable_collections: ^10.1.1
   http: ^1.0.0
   meta: ^1.12.0
@@ -25,6 +25,8 @@ dependency_overrides:
     path: ../../../../../../celest/packages/celest_auth
   celest_cloud:
     path: ../../../../../../celest/packages/celest_cloud
+  celest_cloud_auth:
+    path: ../../../../../../celest/services/celest_cloud_auth
   celest_core:
     path: ../../../../../../celest/packages/celest_core
 

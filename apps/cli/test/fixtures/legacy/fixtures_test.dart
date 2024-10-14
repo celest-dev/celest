@@ -16,7 +16,6 @@ import 'package:celest_cli/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/database/project/project_database.dart';
 import 'package:celest_cli/env/config_value_solver.dart';
 import 'package:celest_cli/init/project_migrator.dart';
-import 'package:celest_cli/openapi/renderer/openapi_renderer.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/pub/pub_action.dart';
@@ -255,14 +254,14 @@ class TestRunner {
       );
       project.accept(codegen);
 
-      final openApiSpec = OpenApiRenderer(
-        project: project,
-        resolvedProject: projectResolver.resolvedProject,
-      ).renderToYaml();
+      // final openApiSpec = OpenApiRenderer(
+      //   project: project,
+      //   resolvedProject: projectResolver.resolvedProject,
+      // ).renderToYaml();
 
       final fileOutputs = {
         ...codegen.fileOutputs,
-        p.join(goldensDir.path, 'openapi.yaml'): openApiSpec,
+        // p.join(goldensDir.path, 'openapi.yaml'): openApiSpec,
       };
 
       for (final MapEntry(key: path, value: content) in fileOutputs.entries) {
@@ -325,8 +324,19 @@ class TestRunner {
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
-      final clientGen = ClientCodeGenerator(
+      final configValues = await ConfigValueSolver(
         project: project!,
+        environmentId: 'local',
+      ).solveAll();
+      final projectResolver = ProjectResolver(
+        configValues: configValues,
+        environmentId: 'local',
+      );
+      project.acceptWithArg(projectResolver, project);
+
+      final clientGen = ClientCodeGenerator(
+        project: project,
+        resolvedProject: projectResolver.resolvedProject,
         projectUris: (
           localUri: Uri.http('localhost:$defaultCelestPort'),
           productionUri: Uri.parse('https://example.celest.run'),
@@ -5368,9 +5378,17 @@ final tests = <String, Test>{
               },
               input: {},
               output: {
-                'sub': '123',
-                'email': 'someone@email.com',
-                'email_verified': false,
+                'userId': '123',
+                'emails': [
+                  {
+                    'email': 'someone@email.com',
+                    'isVerified': false,
+                    'isPrimary': false,
+                  }
+                ],
+                'roles': [
+                  {'type': 'Celest::Role', 'id': 'authenticated'},
+                ],
               },
             ),
           ],

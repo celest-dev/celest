@@ -9,11 +9,11 @@
           "functionId": "lerpColor",
           "parentId": "dart_ui",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/dart-ui/lerp-color"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -24,11 +24,11 @@
           "functionId": "addCountryCode",
           "parentId": "dart_ui",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/dart-ui/add-country-code"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -44,11 +44,11 @@
           "functionId": "paintWidget",
           "parentId": "flutter",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/flutter/paint-widget"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -59,11 +59,11 @@
           "functionId": "helloWorld",
           "parentId": "flutter",
           "httpConfig": {
-            "method": "GET",
+            "status": 200,
             "route": {
+              "method": "GET",
               "path": "/flutter/hello-world"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -85,11 +85,7 @@
       "major": 1,
       "minor": 0,
       "patch": 0,
-      "preRelease": [
-        "dev",
-        0.0
-      ],
-      "canonicalizedVersion": "1.0.0-dev.0"
+      "canonicalizedVersion": "1.0.0"
     },
     "dart": {
       "type": "DART",

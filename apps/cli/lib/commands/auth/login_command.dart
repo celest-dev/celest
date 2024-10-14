@@ -18,7 +18,9 @@ final class LoginCommand extends CelestCommand with Authenticate {
     logger.finest('Auth state: $authState');
     switch (authState) {
       case Authenticated(:final user):
-        cliLogger.success('You are already logged in as: ${user.email}');
+        cliLogger.success(
+          'You are already logged in as: ${user.primaryEmail?.email}',
+        );
       default:
         logger.finest('Unauthenticated user. Signing up...');
         final res = await signUp();

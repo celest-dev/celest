@@ -12,10 +12,12 @@ import 'package:collection/collection.dart';
 final class ClientCodeGenerator {
   ClientCodeGenerator({
     required this.project,
+    required this.resolvedProject,
     required this.projectUris,
   });
 
   final ast.Project project;
+  final ast.ResolvedProject resolvedProject;
   final CelestProjectUris projectUris;
 
   CodeOutputs generate() {
@@ -26,6 +28,7 @@ final class ClientCodeGenerator {
       () {
         final generator = ClientGenerator(
           project: project,
+          resolvedProject: resolvedProject,
           projectUris: projectUris,
         );
         return generator.generate();

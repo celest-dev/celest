@@ -9,10 +9,11 @@
           "functionId": "lerpColor",
           "apiId": "dart_ui",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/dart-ui/lerp-color"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -24,10 +25,11 @@
           "functionId": "addCountryCode",
           "apiId": "dart_ui",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/dart-ui/add-country-code"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -44,10 +46,11 @@
           "functionId": "paintWidget",
           "apiId": "flutter",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/flutter/paint-widget"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -59,10 +62,11 @@
           "functionId": "helloWorld",
           "apiId": "flutter",
           "httpConfig": {
-            "method": "GET",
             "route": {
+              "method": "GET",
               "path": "/flutter/hello-world"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -82,7 +86,7 @@
   "secrets": [],
   "databases": {},
   "sdkConfig": {
-    "celest": "1.0.0-dev.0",
+    "celest": "1.0.0",
     "dart": {
       "type": "dart",
       "version": "3.5.3",

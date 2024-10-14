@@ -9,10 +9,11 @@
           "functionId": "throwsUserException",
           "apiId": "exceptions",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/exceptions/throws-user-exception"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -24,10 +25,11 @@
           "functionId": "callsThrowsUserException",
           "apiId": "exceptions",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/exceptions/calls-throws-user-exception"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -39,10 +41,11 @@
           "functionId": "throwsAppError",
           "apiId": "exceptions",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/exceptions/throws-app-error"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -54,10 +57,11 @@
           "functionId": "throwsAppException",
           "apiId": "exceptions",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/exceptions/throws-app-exception"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -69,10 +73,11 @@
           "functionId": "throwsNotYetImplementedError",
           "apiId": "exceptions",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/exceptions/throws-not-yet-implemented-error"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -84,10 +89,11 @@
           "functionId": "throwsValidateError",
           "apiId": "exceptions",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/exceptions/throws-validate-error"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -99,10 +105,11 @@
           "functionId": "throwsUserException_ShowInConsole",
           "apiId": "exceptions",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/exceptions/throws-user-exception-show-in-console"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -119,10 +126,11 @@
           "functionId": "availableStock",
           "apiId": "models",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/models/available-stock"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -134,10 +142,11 @@
           "functionId": "availableStocks",
           "apiId": "models",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/models/available-stocks"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -149,10 +158,11 @@
           "functionId": "cashBalance",
           "apiId": "models",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/models/cash-balance"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -164,10 +174,11 @@
           "functionId": "portfolio",
           "apiId": "models",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/models/portfolio"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -179,10 +190,11 @@
           "functionId": "stock",
           "apiId": "models",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/models/stock"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -194,10 +206,11 @@
           "functionId": "ui",
           "apiId": "models",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/models/ui"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -217,7 +230,7 @@
   "secrets": [],
   "databases": {},
   "sdkConfig": {
-    "celest": "1.0.0-dev.0",
+    "celest": "1.0.0",
     "dart": {
       "type": "dart",
       "version": "3.5.3",

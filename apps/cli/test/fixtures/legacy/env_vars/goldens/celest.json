@@ -9,11 +9,11 @@
           "functionId": "sayHello",
           "parentId": "injected",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/injected/say-hello"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -28,11 +28,11 @@
           "functionId": "sayHelloPerson",
           "parentId": "injected",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/injected/say-hello-person"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -96,11 +96,7 @@
       "major": 1,
       "minor": 0,
       "patch": 0,
-      "preRelease": [
-        "dev",
-        0.0
-      ],
-      "canonicalizedVersion": "1.0.0-dev.0"
+      "canonicalizedVersion": "1.0.0"
     },
     "dart": {
       "type": "DART",

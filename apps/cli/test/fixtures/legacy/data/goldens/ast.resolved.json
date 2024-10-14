@@ -9,10 +9,11 @@
           "functionId": "create",
           "apiId": "tasks",
           "httpConfig": {
-            "method": "POST",
             "route": {
+              "method": "POST",
               "path": "/tasks/create"
             },
+            "additionalRoutes": [],
             "status": 200,
             "statusMappings": {}
           },
@@ -54,7 +55,7 @@
     }
   },
   "sdkConfig": {
-    "celest": "1.0.0-dev.0",
+    "celest": "1.0.0",
     "dart": {
       "type": "dart",
       "version": "3.5.3",

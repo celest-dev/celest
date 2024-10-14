@@ -740,21 +740,42 @@ typedef $EnvironmentsUpdateCompanionBuilder = EnvironmentsCompanion Function({
 });
 
 class $EnvironmentsFilterComposer
-    extends FilterComposer<_$ProjectDatabase, Environments> {
-  $EnvironmentsFilterComposer(super.$state);
-  ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$ProjectDatabase, Environments> {
+  $EnvironmentsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 }
 
 class $EnvironmentsOrderingComposer
-    extends OrderingComposer<_$ProjectDatabase, Environments> {
-  $EnvironmentsOrderingComposer(super.$state);
-  ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$ProjectDatabase, Environments> {
+  $EnvironmentsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+}
+
+class $EnvironmentsAnnotationComposer
+    extends Composer<_$ProjectDatabase, Environments> {
+  $EnvironmentsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
 }
 
 class $EnvironmentsTableManager extends RootTableManager<
@@ -763,6 +784,7 @@ class $EnvironmentsTableManager extends RootTableManager<
     Environment,
     $EnvironmentsFilterComposer,
     $EnvironmentsOrderingComposer,
+    $EnvironmentsAnnotationComposer,
     $EnvironmentsCreateCompanionBuilder,
     $EnvironmentsUpdateCompanionBuilder,
     (Environment, BaseReferences<_$ProjectDatabase, Environments, Environment>),
@@ -772,10 +794,12 @@ class $EnvironmentsTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $EnvironmentsFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $EnvironmentsOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $EnvironmentsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $EnvironmentsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $EnvironmentsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -805,6 +829,7 @@ typedef $EnvironmentsProcessedTableManager = ProcessedTableManager<
     Environment,
     $EnvironmentsFilterComposer,
     $EnvironmentsOrderingComposer,
+    $EnvironmentsAnnotationComposer,
     $EnvironmentsCreateCompanionBuilder,
     $EnvironmentsUpdateCompanionBuilder,
     (Environment, BaseReferences<_$ProjectDatabase, Environments, Environment>),
@@ -826,41 +851,61 @@ typedef $EnvironmentVariablesUpdateCompanionBuilder
 });
 
 class $EnvironmentVariablesFilterComposer
-    extends FilterComposer<_$ProjectDatabase, EnvironmentVariables> {
-  $EnvironmentVariablesFilterComposer(super.$state);
-  ColumnFilters<String> get environmentId => $state.composableBuilder(
-      column: $state.table.environmentId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$ProjectDatabase, EnvironmentVariables> {
+  $EnvironmentVariablesFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get environmentId => $composableBuilder(
+      column: $table.environmentId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get value => $state.composableBuilder(
-      column: $state.table.value,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get value => $composableBuilder(
+      column: $table.value, builder: (column) => ColumnFilters(column));
 }
 
 class $EnvironmentVariablesOrderingComposer
-    extends OrderingComposer<_$ProjectDatabase, EnvironmentVariables> {
-  $EnvironmentVariablesOrderingComposer(super.$state);
-  ColumnOrderings<String> get environmentId => $state.composableBuilder(
-      column: $state.table.environmentId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$ProjectDatabase, EnvironmentVariables> {
+  $EnvironmentVariablesOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get environmentId => $composableBuilder(
+      column: $table.environmentId,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get value => $state.composableBuilder(
-      column: $state.table.value,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get value => $composableBuilder(
+      column: $table.value, builder: (column) => ColumnOrderings(column));
+}
+
+class $EnvironmentVariablesAnnotationComposer
+    extends Composer<_$ProjectDatabase, EnvironmentVariables> {
+  $EnvironmentVariablesAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get environmentId => $composableBuilder(
+      column: $table.environmentId, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
 }
 
 class $EnvironmentVariablesTableManager extends RootTableManager<
@@ -869,6 +914,7 @@ class $EnvironmentVariablesTableManager extends RootTableManager<
     EnvironmentVariable,
     $EnvironmentVariablesFilterComposer,
     $EnvironmentVariablesOrderingComposer,
+    $EnvironmentVariablesAnnotationComposer,
     $EnvironmentVariablesCreateCompanionBuilder,
     $EnvironmentVariablesUpdateCompanionBuilder,
     (
@@ -883,10 +929,12 @@ class $EnvironmentVariablesTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $EnvironmentVariablesFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $EnvironmentVariablesOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $EnvironmentVariablesFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $EnvironmentVariablesOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $EnvironmentVariablesAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> environmentId = const Value.absent(),
             Value<String> name = const Value.absent(),
@@ -924,6 +972,7 @@ typedef $EnvironmentVariablesProcessedTableManager = ProcessedTableManager<
     EnvironmentVariable,
     $EnvironmentVariablesFilterComposer,
     $EnvironmentVariablesOrderingComposer,
+    $EnvironmentVariablesAnnotationComposer,
     $EnvironmentVariablesCreateCompanionBuilder,
     $EnvironmentVariablesUpdateCompanionBuilder,
     (
@@ -946,42 +995,59 @@ typedef $SecretsUpdateCompanionBuilder = SecretsCompanion Function({
   Value<int> rowid,
 });
 
-class $SecretsFilterComposer
-    extends FilterComposer<_$ProjectDatabase, Secrets> {
-  $SecretsFilterComposer(super.$state);
-  ColumnFilters<String> get environmentId => $state.composableBuilder(
-      column: $state.table.environmentId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+class $SecretsFilterComposer extends Composer<_$ProjectDatabase, Secrets> {
+  $SecretsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get environmentId => $composableBuilder(
+      column: $table.environmentId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get valueRef => $state.composableBuilder(
-      column: $state.table.valueRef,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get valueRef => $composableBuilder(
+      column: $table.valueRef, builder: (column) => ColumnFilters(column));
 }
 
-class $SecretsOrderingComposer
-    extends OrderingComposer<_$ProjectDatabase, Secrets> {
-  $SecretsOrderingComposer(super.$state);
-  ColumnOrderings<String> get environmentId => $state.composableBuilder(
-      column: $state.table.environmentId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+class $SecretsOrderingComposer extends Composer<_$ProjectDatabase, Secrets> {
+  $SecretsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get environmentId => $composableBuilder(
+      column: $table.environmentId,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get valueRef => $state.composableBuilder(
-      column: $state.table.valueRef,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get valueRef => $composableBuilder(
+      column: $table.valueRef, builder: (column) => ColumnOrderings(column));
+}
+
+class $SecretsAnnotationComposer extends Composer<_$ProjectDatabase, Secrets> {
+  $SecretsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get environmentId => $composableBuilder(
+      column: $table.environmentId, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get valueRef =>
+      $composableBuilder(column: $table.valueRef, builder: (column) => column);
 }
 
 class $SecretsTableManager extends RootTableManager<
@@ -990,6 +1056,7 @@ class $SecretsTableManager extends RootTableManager<
     Secret,
     $SecretsFilterComposer,
     $SecretsOrderingComposer,
+    $SecretsAnnotationComposer,
     $SecretsCreateCompanionBuilder,
     $SecretsUpdateCompanionBuilder,
     (Secret, BaseReferences<_$ProjectDatabase, Secrets, Secret>),
@@ -999,8 +1066,12 @@ class $SecretsTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer: $SecretsFilterComposer(ComposerState(db, table)),
-          orderingComposer: $SecretsOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $SecretsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $SecretsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $SecretsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> environmentId = const Value.absent(),
             Value<String> name = const Value.absent(),
@@ -1038,6 +1109,7 @@ typedef $SecretsProcessedTableManager = ProcessedTableManager<
     Secret,
     $SecretsFilterComposer,
     $SecretsOrderingComposer,
+    $SecretsAnnotationComposer,
     $SecretsCreateCompanionBuilder,
     $SecretsUpdateCompanionBuilder,
     (Secret, BaseReferences<_$ProjectDatabase, Secrets, Secret>),

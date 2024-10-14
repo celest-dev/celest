@@ -597,70 +597,80 @@ final class EntrypointGenerator {
       }
     }
 
-    final authMiddleware = <Expression>[];
-    final authMetadata = function.metadata.whereType<ApiAuth>();
-    final authRequired = authMetadata.whereType<ApiAuthenticated>().isNotEmpty;
+    Expression? authMiddleware;
+    final authMetadata = [
+      ...function.metadata.whereType<ApiAuth>(),
+      ...api.metadata.whereType<ApiAuth>(),
+    ];
+    // final authRequired = authMetadata.whereType<ApiAuthenticated>().isNotEmpty;
     if (authMetadata.isNotEmpty) {
+      if (project.auth?.providers.isNotEmpty ?? false) {
+        authMiddleware = DartTypes.celest.middleware.property('shelf').call([
+          refer(
+            'CelestCloudAuth',
+            'package:celest_cloud_auth/celest_cloud_auth.dart',
+          )
+              .property('of')
+              .call([
+                DartTypes.celest.globalContext,
+              ])
+              .property('middleware')
+              .property('call'),
+        ]);
+      }
       final externalAuthProviders = [
         ...?project.auth?.externalProviders,
       ];
       for (final externalAuthProvider in externalAuthProviders) {
         switch (externalAuthProvider) {
           case FirebaseExternalAuthProvider(:final projectId):
-            authMiddleware.add(
-              DartTypes.celest.firebaseAuthMiddleware.newInstance([], {
-                'projectId':
-                    DartTypes.celest.globalContext.property('expect').call([
-                  DartTypes.celest.environmentVariable.constInstance([
-                    literalString(
-                      projectId.name,
-                      raw: projectId.name.contains(r'$'),
-                    ),
-                  ]),
+            authMiddleware =
+                DartTypes.celest.firebaseAuthMiddleware.newInstance([], {
+              'projectId':
+                  DartTypes.celest.globalContext.property('expect').call([
+                DartTypes.celest.environmentVariable.constInstance([
+                  literalString(
+                    projectId.name,
+                    raw: projectId.name.contains(r'$'),
+                  ),
                 ]),
-                'required': literalBool(false),
-              }),
-            );
+              ]),
+              'required': literalBool(false),
+            });
           case SupabaseExternalAuthProvider(
               :final projectUrl,
               :final jwtSecret
             ):
-            authMiddleware.add(
-              DartTypes.celest.supabaseAuthMiddleware.newInstance([], {
-                'url': DartTypes.celest.globalContext.property('expect').call([
-                  DartTypes.celest.environmentVariable.constInstance([
-                    literalString(
-                      projectUrl.name,
-                      raw: projectUrl.name.contains(r'$'),
-                    ),
-                  ]),
+            authMiddleware =
+                DartTypes.celest.supabaseAuthMiddleware.newInstance([], {
+              'url': DartTypes.celest.globalContext.property('expect').call([
+                DartTypes.celest.environmentVariable.constInstance([
+                  literalString(
+                    projectUrl.name,
+                    raw: projectUrl.name.contains(r'$'),
+                  ),
                 ]),
-                if (jwtSecret != null)
-                  'jwtSecret': DartTypes.convert.utf8.property('encode').call([
-                    DartTypes.celest.globalContext.property('expect').call([
-                      DartTypes.celest.secret.constInstance([
-                        literalString(
-                          jwtSecret.name,
-                          raw: jwtSecret.name.contains(r'$'),
-                        ),
-                      ]),
+              ]),
+              if (jwtSecret != null)
+                'jwtSecret': DartTypes.convert.utf8.property('encode').call([
+                  DartTypes.celest.globalContext.property('expect').call([
+                    DartTypes.celest.secret.constInstance([
+                      literalString(
+                        jwtSecret.name,
+                        raw: jwtSecret.name.contains(r'$'),
+                      ),
                     ]),
                   ]),
-                'required': literalBool(false),
-              }),
-            );
+                ]),
+              'required': literalBool(false),
+            });
           default:
             continue;
         }
       }
     }
     final middlewares = [
-      if (authMiddleware.isNotEmpty)
-        DartTypes.celest.authMiddleware.newInstanceNamed('oneOf', [
-          literalList(authMiddleware),
-        ], {
-          'required': literalBool(authRequired),
-        }),
+      if (authMiddleware != null) authMiddleware,
     ];
 
     final target = Class(
@@ -701,7 +711,7 @@ final class EntrypointGenerator {
                 ..returns = DartTypes.core.string
                 ..type = MethodType.getter
                 ..lambda = true
-                ..body = literalString(httpConfig.method).code,
+                ..body = literalString(httpConfig.route.method).code,
             )
           else
             Method(

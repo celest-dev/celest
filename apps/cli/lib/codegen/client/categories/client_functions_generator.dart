@@ -19,6 +19,7 @@ import 'package:code_builder/code_builder.dart';
 
 final class ClientFunctionsGenerator {
   ClientFunctionsGenerator({
+    required this.resolvedProject,
     required this.project,
     required this.apis,
   }) {
@@ -29,6 +30,7 @@ final class ClientFunctionsGenerator {
       ..body.add(lazySpec(_client.build));
   }
 
+  final ast.ResolvedProject resolvedProject;
   final ast.Project project;
   final List<ast.Api> apis;
 
@@ -55,12 +57,15 @@ final class ClientFunctionsGenerator {
   void _sendHttp({
     required BlockBuilder b,
     required ast.CloudFunction function,
+    required ast.ResolvedCloudFunction resolvedFunction,
     required Expression uri,
     required Map<Expression, Expression> headers,
     required Expression? payload,
   }) {
     final httpClient = ClientTypes.topLevelClient.ref.property('httpClient');
-    final functionCall = httpClient.property('post').call([
+    final functionCall = httpClient
+        .property(resolvedFunction.httpConfig.route.method.toLowerCase())
+        .call([
       uri,
     ], {
       'headers': (headers.isEmpty ? literalConstMap : literalMap)({
@@ -160,7 +165,7 @@ if ($event is Map<String, Object?> && $event.containsKey('@error')) {
     );
   }
 
-  void _generateApi(ast.Api api) {
+  void _generateApi(ast.Api api, ast.ResolvedApi resolvedApi) {
     final apiType = ClientTypes.api(api);
     final apiClass = _beginClass(apiType.name)
       ..docs.addAll(api.docs)
@@ -178,6 +183,7 @@ if ($event is Map<String, Object?> && $event.containsKey('@error')) {
 
     final functions = api.functions.values.toList()..sort();
     for (final function in functions) {
+      final resolvedFunction = resolvedApi.functions[function.name]!;
       final clientParameters =
           function.parameters.where((p) => p.includeInClient);
       final bodyParameters = Set.of(clientParameters);
@@ -339,6 +345,7 @@ if ($event is Map<String, Object?> && $event.containsKey('@error')) {
                 _sendHttp(
                   b: b,
                   function: function,
+                  resolvedFunction: resolvedFunction,
                   uri: uri,
                   headers: headers,
                   payload: payload,
@@ -478,7 +485,7 @@ final (errorType, errorValue, stackTrace) = switch (details) {
 
   Library generate() {
     for (final api in apis) {
-      _generateApi(api);
+      _generateApi(api, resolvedProject.apis[api.name]!);
     }
     return _library.build();
   }

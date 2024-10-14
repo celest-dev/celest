@@ -9,15 +9,79 @@
           "functionId": "currentUser",
           "parentId": "auth",
           "httpConfig": {
-            "method": "GET",
+            "status": 200,
             "route": {
+              "method": "GET",
               "path": "/auth/current-user"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
             "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          },
+          "policySet": {
+            "policies": {
+              "auth/currentUser.authenticated_restrict": {
+                "effect": "EFFECT_FORBID",
+                "principal": {
+                  "all": {}
+                },
+                "action": {
+                  "equals": {
+                    "entity": {
+                      "type": "Celest::Action",
+                      "id": "invoke"
+                    }
+                  }
+                },
+                "resource": {
+                  "equals": {
+                    "entity": {
+                      "type": "Celest::Function",
+                      "id": "auth/currentUser"
+                    }
+                  }
+                },
+                "conditions": [
+                  {
+                    "kind": "CONDITION_KIND_UNLESS",
+                    "body": {
+                      "in": {
+                        "left": {
+                          "variable": {
+                            "variable": "VARIABLE_PRINCIPAL"
+                          }
+                        },
+                        "right": {
+                          "value": {
+                            "value": {
+                              "entity": {
+                                "uid": {
+                                  "type": "Celest::Role",
+                                  "id": "authenticated"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "templateLinks": [
+              {
+                "templateId": "cloud.functions.authenticated",
+                "newId": "auth/currentUser.authenticated",
+                "values": {
+                  "?resource": {
+                    "type": "Celest::Function",
+                    "id": "auth/currentUser"
+                  }
+                }
+              }
+            ]
           }
         }
       }
@@ -67,11 +131,7 @@
       "major": 1,
       "minor": 0,
       "patch": 0,
-      "preRelease": [
-        "dev",
-        0.0
-      ],
-      "canonicalizedVersion": "1.0.0-dev.0"
+      "canonicalizedVersion": "1.0.0"
     },
     "dart": {
       "type": "DART",

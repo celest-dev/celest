@@ -274,7 +274,7 @@ class CelestFunctionsAuth {
     function: 'currentUser',
   )
   Future<_$celest.User> currentUser() async {
-    final $response = await celest.httpClient.post(
+    final $response = await celest.httpClient.get(
       celest.baseUri.resolve('/auth/current-user'),
       headers: const {
         'Content-Type': 'application/json',

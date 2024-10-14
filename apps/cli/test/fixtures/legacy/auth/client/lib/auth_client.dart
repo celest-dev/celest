@@ -76,14 +76,13 @@ class Celest with _$celest.CelestBase {
   void init({
     CelestEnvironment environment = CelestEnvironment.local,
     _$celest.Serializers? serializers,
-    ExternalAuth? externalAuth,
   }) {
     if (_initialized && environment != _currentEnvironment) {
       _auth.signOut();
     }
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
-    scheduleMicrotask(() => _auth.init(externalAuth: externalAuth));
+    scheduleMicrotask(_auth.init);
     if (!_initialized) {
       initSerializers(serializers: serializers);
     }

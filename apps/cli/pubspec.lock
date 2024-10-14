@@ -69,10 +69,10 @@ packages:
     dependency: "direct main"
     description:
       name: args
-      sha256: "7cf60b9f0cc88203c5a190b4cd62a99feea42759a7fa695010eb5de1c0b2252a"
+      sha256: bf9f5caeea8d8fe6721a9c358dd8a5c1947b27f1cfaa18b39c301273594919e6
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.0"
+    version: "2.6.0"
   asn1lib:
     dependency: transitive
     description:
@@ -207,28 +207,28 @@ packages:
       path: "../../cedar/packages/cedar"
       relative: true
     source: path
-    version: "0.2.2"
+    version: "0.2.3"
   celest:
     dependency: "direct main"
     description:
       path: "../../celest/packages/celest"
       relative: true
     source: path
-    version: "1.0.0-dev.0"
+    version: "1.0.0"
   celest_ast:
     dependency: "direct main"
     description:
       path: "../../celest/packages/celest_ast"
       relative: true
     source: path
-    version: "0.1.4-wip"
+    version: "0.1.4"
   celest_auth:
     dependency: "direct main"
     description:
       path: "../../celest/packages/celest_auth"
       relative: true
     source: path
-    version: "1.0.0-dev.0"
+    version: "1.0.0"
   celest_cli_common:
     dependency: "direct main"
     description:
@@ -242,14 +242,14 @@ packages:
       path: "../../celest/packages/celest_cloud"
       relative: true
     source: path
-    version: "0.1.4-wip"
+    version: "0.1.3"
   celest_core:
     dependency: "direct main"
     description:
       path: "../../celest/packages/celest_core"
       relative: true
     source: path
-    version: "1.0.0-dev.0"
+    version: "1.0.0"
   celest_lints:
     dependency: "direct dev"
     description:
@@ -373,10 +373,10 @@ packages:
     dependency: "direct main"
     description:
       name: corks_cedar
-      sha256: "5e12dfe28934fe5a9b570adafa80831490ea5e24da79592932f2dac89e6aefb3"
+      sha256: "7e32abda7dbf548e5edbad526c5394473ac462b8a9b335911f541372563e6514"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.1"
+    version: "0.2.2"
   coverage:
     dependency: transitive
     description:
@@ -485,18 +485,26 @@ packages:
     dependency: "direct main"
     description:
       name: drift
-      sha256: d6ff1ec6a0f3fa097dda6b776cf601f1f3d88b53b287288e09c1306f394fb1b3
+      sha256: df027d168a2985a2e9da900adeba2ab0136f0d84436592cf3cd5135f82c8579c
       url: "https://pub.dev"
     source: hosted
-    version: "2.20.3"
+    version: "2.21.0"
   drift_dev:
     dependency: "direct dev"
     description:
       name: drift_dev
-      sha256: "3ee987578ca2281b5ff91eadd757cd6dd36001458d6e33784f990d67ff38f756"
+      sha256: "27bab15e7869b69259663590381180117873b9b273a1ea9ebb21bb73133d1233"
       url: "https://pub.dev"
     source: hosted
-    version: "2.20.3"
+    version: "2.21.0"
+  drift_hrana:
+    dependency: transitive
+    description:
+      name: drift_hrana
+      sha256: dbfaa94582703c22391f784c9c359472a8ae22145c9de5cfaa03d7bc6f1a471a
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   ed25519_edwards:
     dependency: transitive
     description:
@@ -657,6 +665,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.1"
+  hrana:
+    dependency: transitive
+    description:
+      name: hrana
+      sha256: "6057172dacc08ee4b701f5fbfc36306965fe59da9d85a8622a2faad98404c508"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   html:
     dependency: transitive
     description:
@@ -1236,10 +1252,10 @@ packages:
     dependency: transitive
     description:
       name: sqlparser
-      sha256: "852cf80f9e974ac8e1b613758a8aa640215f7701352b66a7f468e95711eb570b"
+      sha256: c5f63dff8677407ddcddfa4744c176ea6dc44286c47ba9e69e76d8071398034d
       url: "https://pub.dev"
     source: hosted
-    version: "0.38.1"
+    version: "0.39.1"
   stack_trace:
     dependency: "direct main"
     description:
@@ -1444,10 +1460,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "4d45dc9069dba4619dc0ebd93c7cec5e66d8482cb625a370ac806dcc8165f2ec"
+      sha256: e5c39a90447e7c81cfec14b041cdbd0d0916bd9ebbc7fe02ab69568be703b9bd
       url: "https://pub.dev"
     source: hosted
-    version: "5.5.5"
+    version: "5.6.0"
   win32_registry:
     dependency: transitive
     description:

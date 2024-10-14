@@ -16,7 +16,7 @@ Future<void> httpErrors(ExceptionType type) async {
 
     // Should return 412
     case ExceptionType.customBadRequest:
-      throw CustomBadRequestException('');
+      throw CustomBadRequestException(message: '');
 
     // Should return 401
     case ExceptionType.unauthorized:
@@ -24,7 +24,7 @@ Future<void> httpErrors(ExceptionType type) async {
 
     // Should return 403
     case ExceptionType.forbidden:
-      throw ForbiddenException('');
+      throw ForbiddenException(message: '');
 
     // Should return 404
     case ExceptionType.notFound:

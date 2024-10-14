@@ -2381,7 +2381,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
     ));
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i6.AbortedException, Map<String, Object?>>(
+        .put(_i4.Serializer.define<_i6.AbortedException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2394,17 +2394,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.AbortedException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
-    _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i6.AlreadyExistsException, Map<String, Object?>>(
+    _i4.Serializers.instance.put(_i4.Serializer.define<
+        _i6.AlreadyExistsException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2417,17 +2417,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.AlreadyExistsException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i6.BadRequestException, Map<String, Object?>>(
+        _i4.Serializer.define<_i6.BadRequestException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2440,17 +2440,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.BadRequestException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i6.CancelledException, Map<String, Object?>>(
+        _i4.Serializer.define<_i6.CancelledException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2463,12 +2463,12 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.CancelledException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
@@ -2489,7 +2489,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
     ));
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i6.DataLossError, Map<String, Object?>>(
+        .put(_i4.Serializer.define<_i6.DataLossError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2502,17 +2502,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.DataLossError(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i6.DeadlineExceededError, Map<String, Object?>>(
+        _i4.Serializer.define<_i6.DeadlineExceededError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2525,17 +2525,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.DeadlineExceededError(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i6.FailedPreconditionException, Map<String, Object?>>(
+        _i6.FailedPreconditionException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2548,17 +2548,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.FailedPreconditionException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i6.InternalServerError, Map<String, Object?>>(
+        _i4.Serializer.define<_i6.InternalServerError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2571,17 +2571,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.InternalServerError(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i6.NotFoundException, Map<String, Object?>>(
+    _i4.Serializers.instance.put(
+        _i4.Serializer.define<_i6.NotFoundException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2594,17 +2594,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.NotFoundException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i6.OutOfRangeException, Map<String, Object?>>(
+        _i4.Serializer.define<_i6.OutOfRangeException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2617,17 +2617,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.OutOfRangeException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i6.PermissionDeniedException, Map<String, Object?>>(
+        _i6.PermissionDeniedException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2640,17 +2640,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.PermissionDeniedException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i6.ResourceExhaustedException, Map<String, Object?>>(
+        _i6.ResourceExhaustedException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2663,17 +2663,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.ResourceExhaustedException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i6.UnauthorizedException, Map<String, Object?>>(
+        _i4.Serializer.define<_i6.UnauthorizedException, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2686,17 +2686,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.UnauthorizedException(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i6.UnavailableError, Map<String, Object?>>(
+        .put(_i4.Serializer.define<_i6.UnavailableError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2709,17 +2709,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.UnavailableError(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i6.UnimplementedError, Map<String, Object?>>(
+        _i4.Serializer.define<_i6.UnimplementedError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2732,17 +2732,17 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.UnimplementedError(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
     _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i6.UnknownError, Map<String, Object?>>(
+        .put(_i4.Serializer.define<_i6.UnknownError, Map<String, Object?>?>(
       serialize: ($value) => <String, Object?>{
         r'code': $value.code,
         r'message': $value.message,
@@ -2755,12 +2755,12 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i6.UnknownError(
-          ($serialized[r'message'] as String?),
-          code: ($serialized[r'code'] as num?)?.toInt(),
-          details: _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
-            $serialized[r'details'],
+          ($serialized?[r'message'] as String?),
+          _i4.Serializers.instance.deserialize<_i24.JsonValue?>(
+            $serialized?[r'details'],
             const _i4.TypeToken<_i24.JsonValue?>('JsonValue'),
           ),
+          ($serialized?[r'code'] as num?)?.toInt(),
         );
       },
     ));
@@ -2777,7 +2777,8 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           r'details': details,
       },
       deserialize: ($serialized) {
-        return _i21.SerializationException(($serialized[r'message'] as String));
+        return _i21.SerializationException(
+            ($serialized[r'message'] as String?));
       },
     ));
     _i4.Serializers.instance.put(

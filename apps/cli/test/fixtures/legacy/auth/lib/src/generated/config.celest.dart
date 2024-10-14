@@ -42,11 +42,4 @@ class CelestVariables {
   /// This is set by the deployment environment and is used to
   /// determine the current environment of the Celest service.
   String get currentEnvironment => context.expect(env.environment);
-
-  /// The value of the `FIREBASE_PROJECT_ID` environment variable.
-  String get firebaseProjectId =>
-      context.expect(const env('FIREBASE_PROJECT_ID'));
-
-  /// The value of the `SUPABASE_URL` environment variable.
-  String get supabaseUrl => context.expect(const env('SUPABASE_URL'));
 }

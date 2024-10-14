@@ -32,11 +32,15 @@ Future<String> loadSqlite3({
   version ??= defaultSqliteVersion;
   final config = await CelestConfig.load();
   final file = config.configDir.childFile(_libraryName);
-  if (!file.existsSync()) {
+  final wasmFile = config.configDir.childFile('sqlite3.wasm');
+  if (!file.existsSync() || !wasmFile.existsSync()) {
     final downloadProgress =
         cliLogger.progress('Downloading additional resources');
     try {
-      await _downloadSqlite3(version, file, logger: logger);
+      await Future.wait([
+        _downloadSqlite3(version, file, logger: logger),
+        _downloadSqliteWasm(file: wasmFile, logger: logger),
+      ]);
       downloadProgress.complete();
     } on Object {
       downloadProgress.fail();
@@ -48,6 +52,23 @@ Future<String> loadSqlite3({
   final sqlite3Path = file.absolute.path;
   DynamicLibrary.open(sqlite3Path);
   return sqlite3Path;
+}
+
+Future<String> _downloadSqliteWasm({
+  required File file,
+  required Logger logger,
+}) async {
+  final uri = Uri.parse(
+    'https://github.com/simolus3/sqlite3.dart/releases/download/sqlite3-2.4.6/sqlite3.wasm',
+  );
+  final download = await httpClient.send(http.Request('GET', uri));
+  if (download.statusCode != 200) {
+    throw Exception('Failed to download SQLite3');
+  }
+  final bytes = await collectBytes(download.stream);
+  await file.create(recursive: true);
+  await file.writeAsBytes(bytes, flush: true);
+  return file.absolute.path;
 }
 
 Future<void> _downloadSqlite3(

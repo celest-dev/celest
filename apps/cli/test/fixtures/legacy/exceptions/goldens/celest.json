@@ -9,11 +9,11 @@
           "functionId": "callsThrowsCommonException",
           "parentId": "external",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/external/calls-throws-common-exception"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -24,11 +24,11 @@
           "functionId": "callsThrowsCustomException",
           "parentId": "external",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/external/calls-throws-custom-exception"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -44,11 +44,11 @@
           "functionId": "callsThrowsCustomError",
           "parentId": "nonthrowing",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/nonthrowing/calls-throws-custom-error"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -59,11 +59,11 @@
           "functionId": "callsThrowsBaseError",
           "parentId": "nonthrowing",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/nonthrowing/calls-throws-base-error"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -74,11 +74,11 @@
           "functionId": "callsThrowsCustomException",
           "parentId": "nonthrowing",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/nonthrowing/calls-throws-custom-exception"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -89,11 +89,11 @@
           "functionId": "callsThrowsBaseException",
           "parentId": "nonthrowing",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/nonthrowing/calls-throws-base-exception"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -109,11 +109,11 @@
           "functionId": "throwsCustomError",
           "parentId": "throwing",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/throwing/throws-custom-error"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -124,11 +124,11 @@
           "functionId": "throwsBaseError",
           "parentId": "throwing",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/throwing/throws-base-error"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -139,11 +139,11 @@
           "functionId": "throwsCustomException",
           "parentId": "throwing",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/throwing/throws-custom-exception"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -154,11 +154,11 @@
           "functionId": "throwsBaseException",
           "parentId": "throwing",
           "httpConfig": {
-            "method": "POST",
+            "status": 200,
             "route": {
+              "method": "POST",
               "path": "/throwing/throws-base-exception"
             },
-            "status": 200,
             "statusMappings": {}
           },
           "streamConfig": {
@@ -180,11 +180,7 @@
       "major": 1,
       "minor": 0,
       "patch": 0,
-      "preRelease": [
-        "dev",
-        0.0
-      ],
-      "canonicalizedVersion": "1.0.0-dev.0"
+      "canonicalizedVersion": "1.0.0"
     },
     "dart": {
       "type": "DART",

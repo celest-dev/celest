@@ -890,7 +890,7 @@ class CelestFunctionsHttpMethod {
     function: 'get',
   )
   Future<void> get() async {
-    final $response = await celest.httpClient.post(
+    final $response = await celest.httpClient.get(
       celest.baseUri.resolve('/http-method/get'),
       headers: const {
         'Content-Type': 'application/json',
@@ -934,7 +934,7 @@ class CelestFunctionsHttpMethod {
     function: 'put',
   )
   Future<void> put() async {
-    final $response = await celest.httpClient.post(
+    final $response = await celest.httpClient.put(
       celest.baseUri.resolve('/http-method/put'),
       headers: const {
         'Content-Type': 'application/json',
@@ -956,7 +956,7 @@ class CelestFunctionsHttpMethod {
     function: 'delete',
   )
   Future<void> delete() async {
-    final $response = await celest.httpClient.post(
+    final $response = await celest.httpClient.delete(
       celest.baseUri.resolve('/http-method/delete'),
       headers: const {
         'Content-Type': 'application/json',
@@ -978,7 +978,7 @@ class CelestFunctionsHttpMethod {
     function: 'patch',
   )
   Future<void> patch() async {
-    final $response = await celest.httpClient.post(
+    final $response = await celest.httpClient.patch(
       celest.baseUri.resolve('/http-method/patch'),
       headers: const {
         'Content-Type': 'application/json',
