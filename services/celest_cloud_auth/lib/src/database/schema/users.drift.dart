@@ -6,6 +6,518 @@ import 'package:celest_cloud_auth/src/database/database_model.dart' as i3;
 import 'package:drift/internal/modular.dart' as i4;
 import 'dart:async' as i5;
 
+typedef $UsersCreateCompanionBuilder = i2.UsersCompanion Function({
+  required String userId,
+  i0.Value<String?> givenName,
+  i0.Value<String?> familyName,
+  i0.Value<String?> timeZone,
+  i0.Value<String?> languageCode,
+  i0.Value<DateTime> createTime,
+  i0.Value<DateTime?> updateTime,
+  i0.Value<int> rowid,
+});
+typedef $UsersUpdateCompanionBuilder = i2.UsersCompanion Function({
+  i0.Value<String> userId,
+  i0.Value<String?> givenName,
+  i0.Value<String?> familyName,
+  i0.Value<String?> timeZone,
+  i0.Value<String?> languageCode,
+  i0.Value<DateTime> createTime,
+  i0.Value<DateTime?> updateTime,
+  i0.Value<int> rowid,
+});
+
+class $UsersFilterComposer extends i0.Composer<i0.GeneratedDatabase, i2.Users> {
+  $UsersFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get givenName => $composableBuilder(
+      column: $table.givenName, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get familyName => $composableBuilder(
+      column: $table.familyName, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get timeZone => $composableBuilder(
+      column: $table.timeZone, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get languageCode => $composableBuilder(
+      column: $table.languageCode,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get createTime => $composableBuilder(
+      column: $table.createTime, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get updateTime => $composableBuilder(
+      column: $table.updateTime, builder: (column) => i0.ColumnFilters(column));
+}
+
+class $UsersOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.Users> {
+  $UsersOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get givenName => $composableBuilder(
+      column: $table.givenName,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get familyName => $composableBuilder(
+      column: $table.familyName,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get timeZone => $composableBuilder(
+      column: $table.timeZone, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get languageCode => $composableBuilder(
+      column: $table.languageCode,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get createTime => $composableBuilder(
+      column: $table.createTime,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get updateTime => $composableBuilder(
+      column: $table.updateTime,
+      builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $UsersAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.Users> {
+  $UsersAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get givenName =>
+      $composableBuilder(column: $table.givenName, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get familyName => $composableBuilder(
+      column: $table.familyName, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get timeZone =>
+      $composableBuilder(column: $table.timeZone, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get languageCode => $composableBuilder(
+      column: $table.languageCode, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get createTime => $composableBuilder(
+      column: $table.createTime, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get updateTime => $composableBuilder(
+      column: $table.updateTime, builder: (column) => column);
+}
+
+class $UsersTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i2.Users,
+    i1.User,
+    i2.$UsersFilterComposer,
+    i2.$UsersOrderingComposer,
+    i2.$UsersAnnotationComposer,
+    $UsersCreateCompanionBuilder,
+    $UsersUpdateCompanionBuilder,
+    (i1.User, i0.BaseReferences<i0.GeneratedDatabase, i2.Users, i1.User>),
+    i1.User,
+    i0.PrefetchHooks Function()> {
+  $UsersTableManager(i0.GeneratedDatabase db, i2.Users table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i2.$UsersFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i2.$UsersOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i2.$UsersAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> userId = const i0.Value.absent(),
+            i0.Value<String?> givenName = const i0.Value.absent(),
+            i0.Value<String?> familyName = const i0.Value.absent(),
+            i0.Value<String?> timeZone = const i0.Value.absent(),
+            i0.Value<String?> languageCode = const i0.Value.absent(),
+            i0.Value<DateTime> createTime = const i0.Value.absent(),
+            i0.Value<DateTime?> updateTime = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i2.UsersCompanion(
+            userId: userId,
+            givenName: givenName,
+            familyName: familyName,
+            timeZone: timeZone,
+            languageCode: languageCode,
+            createTime: createTime,
+            updateTime: updateTime,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String userId,
+            i0.Value<String?> givenName = const i0.Value.absent(),
+            i0.Value<String?> familyName = const i0.Value.absent(),
+            i0.Value<String?> timeZone = const i0.Value.absent(),
+            i0.Value<String?> languageCode = const i0.Value.absent(),
+            i0.Value<DateTime> createTime = const i0.Value.absent(),
+            i0.Value<DateTime?> updateTime = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i2.UsersCompanion.insert(
+            userId: userId,
+            givenName: givenName,
+            familyName: familyName,
+            timeZone: timeZone,
+            languageCode: languageCode,
+            createTime: createTime,
+            updateTime: updateTime,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $UsersProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i2.Users,
+    i1.User,
+    i2.$UsersFilterComposer,
+    i2.$UsersOrderingComposer,
+    i2.$UsersAnnotationComposer,
+    $UsersCreateCompanionBuilder,
+    $UsersUpdateCompanionBuilder,
+    (i1.User, i0.BaseReferences<i0.GeneratedDatabase, i2.Users, i1.User>),
+    i1.User,
+    i0.PrefetchHooks Function()>;
+typedef $UserEmailsCreateCompanionBuilder = i2.UserEmailsCompanion Function({
+  required String userId,
+  required String email,
+  i0.Value<bool> isVerified,
+  i0.Value<bool> isPrimary,
+});
+typedef $UserEmailsUpdateCompanionBuilder = i2.UserEmailsCompanion Function({
+  i0.Value<String> userId,
+  i0.Value<String> email,
+  i0.Value<bool> isVerified,
+  i0.Value<bool> isPrimary,
+});
+
+class $UserEmailsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.UserEmails> {
+  $UserEmailsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<bool> get isVerified => $composableBuilder(
+      column: $table.isVerified, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<bool> get isPrimary => $composableBuilder(
+      column: $table.isPrimary, builder: (column) => i0.ColumnFilters(column));
+}
+
+class $UserEmailsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.UserEmails> {
+  $UserEmailsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<bool> get isVerified => $composableBuilder(
+      column: $table.isVerified,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<bool> get isPrimary => $composableBuilder(
+      column: $table.isPrimary,
+      builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $UserEmailsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.UserEmails> {
+  $UserEmailsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  i0.GeneratedColumn<bool> get isVerified => $composableBuilder(
+      column: $table.isVerified, builder: (column) => column);
+
+  i0.GeneratedColumn<bool> get isPrimary =>
+      $composableBuilder(column: $table.isPrimary, builder: (column) => column);
+}
+
+class $UserEmailsTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i2.UserEmails,
+    i1.Email,
+    i2.$UserEmailsFilterComposer,
+    i2.$UserEmailsOrderingComposer,
+    i2.$UserEmailsAnnotationComposer,
+    $UserEmailsCreateCompanionBuilder,
+    $UserEmailsUpdateCompanionBuilder,
+    (
+      i1.Email,
+      i0.BaseReferences<i0.GeneratedDatabase, i2.UserEmails, i1.Email>
+    ),
+    i1.Email,
+    i0.PrefetchHooks Function()> {
+  $UserEmailsTableManager(i0.GeneratedDatabase db, i2.UserEmails table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i2.$UserEmailsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i2.$UserEmailsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i2.$UserEmailsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> userId = const i0.Value.absent(),
+            i0.Value<String> email = const i0.Value.absent(),
+            i0.Value<bool> isVerified = const i0.Value.absent(),
+            i0.Value<bool> isPrimary = const i0.Value.absent(),
+          }) =>
+              i2.UserEmailsCompanion(
+            userId: userId,
+            email: email,
+            isVerified: isVerified,
+            isPrimary: isPrimary,
+          ),
+          createCompanionCallback: ({
+            required String userId,
+            required String email,
+            i0.Value<bool> isVerified = const i0.Value.absent(),
+            i0.Value<bool> isPrimary = const i0.Value.absent(),
+          }) =>
+              i2.UserEmailsCompanion.insert(
+            userId: userId,
+            email: email,
+            isVerified: isVerified,
+            isPrimary: isPrimary,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $UserEmailsProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i2.UserEmails,
+    i1.Email,
+    i2.$UserEmailsFilterComposer,
+    i2.$UserEmailsOrderingComposer,
+    i2.$UserEmailsAnnotationComposer,
+    $UserEmailsCreateCompanionBuilder,
+    $UserEmailsUpdateCompanionBuilder,
+    (
+      i1.Email,
+      i0.BaseReferences<i0.GeneratedDatabase, i2.UserEmails, i1.Email>
+    ),
+    i1.Email,
+    i0.PrefetchHooks Function()>;
+typedef $UserPhoneNumbersCreateCompanionBuilder = i2.UserPhoneNumbersCompanion
+    Function({
+  required String userId,
+  required String phoneNumber,
+  i0.Value<bool> isVerified,
+  i0.Value<bool> isPrimary,
+});
+typedef $UserPhoneNumbersUpdateCompanionBuilder = i2.UserPhoneNumbersCompanion
+    Function({
+  i0.Value<String> userId,
+  i0.Value<String> phoneNumber,
+  i0.Value<bool> isVerified,
+  i0.Value<bool> isPrimary,
+});
+
+class $UserPhoneNumbersFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.UserPhoneNumbers> {
+  $UserPhoneNumbersFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get phoneNumber => $composableBuilder(
+      column: $table.phoneNumber,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<bool> get isVerified => $composableBuilder(
+      column: $table.isVerified, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<bool> get isPrimary => $composableBuilder(
+      column: $table.isPrimary, builder: (column) => i0.ColumnFilters(column));
+}
+
+class $UserPhoneNumbersOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.UserPhoneNumbers> {
+  $UserPhoneNumbersOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get phoneNumber => $composableBuilder(
+      column: $table.phoneNumber,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<bool> get isVerified => $composableBuilder(
+      column: $table.isVerified,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<bool> get isPrimary => $composableBuilder(
+      column: $table.isPrimary,
+      builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $UserPhoneNumbersAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.UserPhoneNumbers> {
+  $UserPhoneNumbersAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get phoneNumber => $composableBuilder(
+      column: $table.phoneNumber, builder: (column) => column);
+
+  i0.GeneratedColumn<bool> get isVerified => $composableBuilder(
+      column: $table.isVerified, builder: (column) => column);
+
+  i0.GeneratedColumn<bool> get isPrimary =>
+      $composableBuilder(column: $table.isPrimary, builder: (column) => column);
+}
+
+class $UserPhoneNumbersTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i2.UserPhoneNumbers,
+    i1.PhoneNumber,
+    i2.$UserPhoneNumbersFilterComposer,
+    i2.$UserPhoneNumbersOrderingComposer,
+    i2.$UserPhoneNumbersAnnotationComposer,
+    $UserPhoneNumbersCreateCompanionBuilder,
+    $UserPhoneNumbersUpdateCompanionBuilder,
+    (
+      i1.PhoneNumber,
+      i0
+      .BaseReferences<i0.GeneratedDatabase, i2.UserPhoneNumbers, i1.PhoneNumber>
+    ),
+    i1.PhoneNumber,
+    i0.PrefetchHooks Function()> {
+  $UserPhoneNumbersTableManager(
+      i0.GeneratedDatabase db, i2.UserPhoneNumbers table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i2.$UserPhoneNumbersFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i2.$UserPhoneNumbersOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i2.$UserPhoneNumbersAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> userId = const i0.Value.absent(),
+            i0.Value<String> phoneNumber = const i0.Value.absent(),
+            i0.Value<bool> isVerified = const i0.Value.absent(),
+            i0.Value<bool> isPrimary = const i0.Value.absent(),
+          }) =>
+              i2.UserPhoneNumbersCompanion(
+            userId: userId,
+            phoneNumber: phoneNumber,
+            isVerified: isVerified,
+            isPrimary: isPrimary,
+          ),
+          createCompanionCallback: ({
+            required String userId,
+            required String phoneNumber,
+            i0.Value<bool> isVerified = const i0.Value.absent(),
+            i0.Value<bool> isPrimary = const i0.Value.absent(),
+          }) =>
+              i2.UserPhoneNumbersCompanion.insert(
+            userId: userId,
+            phoneNumber: phoneNumber,
+            isVerified: isVerified,
+            isPrimary: isPrimary,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $UserPhoneNumbersProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i2.UserPhoneNumbers,
+    i1.PhoneNumber,
+    i2.$UserPhoneNumbersFilterComposer,
+    i2.$UserPhoneNumbersOrderingComposer,
+    i2.$UserPhoneNumbersAnnotationComposer,
+    $UserPhoneNumbersCreateCompanionBuilder,
+    $UserPhoneNumbersUpdateCompanionBuilder,
+    (
+      i1.PhoneNumber,
+      i0
+      .BaseReferences<i0.GeneratedDatabase, i2.UserPhoneNumbers, i1.PhoneNumber>
+    ),
+    i1.PhoneNumber,
+    i0.PrefetchHooks Function()>;
+
 class Users extends i0.Table with i0.TableInfo<Users, i1.User> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
@@ -217,182 +729,6 @@ class UsersCompanion extends i0.UpdateCompanion<i1.User> {
   }
 }
 
-typedef $UsersCreateCompanionBuilder = i2.UsersCompanion Function({
-  required String userId,
-  i0.Value<String?> givenName,
-  i0.Value<String?> familyName,
-  i0.Value<String?> timeZone,
-  i0.Value<String?> languageCode,
-  i0.Value<DateTime> createTime,
-  i0.Value<DateTime?> updateTime,
-  i0.Value<int> rowid,
-});
-typedef $UsersUpdateCompanionBuilder = i2.UsersCompanion Function({
-  i0.Value<String> userId,
-  i0.Value<String?> givenName,
-  i0.Value<String?> familyName,
-  i0.Value<String?> timeZone,
-  i0.Value<String?> languageCode,
-  i0.Value<DateTime> createTime,
-  i0.Value<DateTime?> updateTime,
-  i0.Value<int> rowid,
-});
-
-class $UsersFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i2.Users> {
-  $UsersFilterComposer(super.$state);
-  i0.ColumnFilters<String> get userId => $state.composableBuilder(
-      column: $state.table.userId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get givenName => $state.composableBuilder(
-      column: $state.table.givenName,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get familyName => $state.composableBuilder(
-      column: $state.table.familyName,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get timeZone => $state.composableBuilder(
-      column: $state.table.timeZone,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get languageCode => $state.composableBuilder(
-      column: $state.table.languageCode,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get createTime => $state.composableBuilder(
-      column: $state.table.createTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get updateTime => $state.composableBuilder(
-      column: $state.table.updateTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $UsersOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i2.Users> {
-  $UsersOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get userId => $state.composableBuilder(
-      column: $state.table.userId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get givenName => $state.composableBuilder(
-      column: $state.table.givenName,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get familyName => $state.composableBuilder(
-      column: $state.table.familyName,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get timeZone => $state.composableBuilder(
-      column: $state.table.timeZone,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get languageCode => $state.composableBuilder(
-      column: $state.table.languageCode,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get createTime => $state.composableBuilder(
-      column: $state.table.createTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get updateTime => $state.composableBuilder(
-      column: $state.table.updateTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $UsersTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i2.Users,
-    i1.User,
-    i2.$UsersFilterComposer,
-    i2.$UsersOrderingComposer,
-    $UsersCreateCompanionBuilder,
-    $UsersUpdateCompanionBuilder,
-    (i1.User, i0.BaseReferences<i0.GeneratedDatabase, i2.Users, i1.User>),
-    i1.User,
-    i0.PrefetchHooks Function()> {
-  $UsersTableManager(i0.GeneratedDatabase db, i2.Users table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i2.$UsersFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i2.$UsersOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> userId = const i0.Value.absent(),
-            i0.Value<String?> givenName = const i0.Value.absent(),
-            i0.Value<String?> familyName = const i0.Value.absent(),
-            i0.Value<String?> timeZone = const i0.Value.absent(),
-            i0.Value<String?> languageCode = const i0.Value.absent(),
-            i0.Value<DateTime> createTime = const i0.Value.absent(),
-            i0.Value<DateTime?> updateTime = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i2.UsersCompanion(
-            userId: userId,
-            givenName: givenName,
-            familyName: familyName,
-            timeZone: timeZone,
-            languageCode: languageCode,
-            createTime: createTime,
-            updateTime: updateTime,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String userId,
-            i0.Value<String?> givenName = const i0.Value.absent(),
-            i0.Value<String?> familyName = const i0.Value.absent(),
-            i0.Value<String?> timeZone = const i0.Value.absent(),
-            i0.Value<String?> languageCode = const i0.Value.absent(),
-            i0.Value<DateTime> createTime = const i0.Value.absent(),
-            i0.Value<DateTime?> updateTime = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i2.UsersCompanion.insert(
-            userId: userId,
-            givenName: givenName,
-            familyName: familyName,
-            timeZone: timeZone,
-            languageCode: languageCode,
-            createTime: createTime,
-            updateTime: updateTime,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $UsersProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i2.Users,
-    i1.User,
-    i2.$UsersFilterComposer,
-    i2.$UsersOrderingComposer,
-    $UsersCreateCompanionBuilder,
-    $UsersUpdateCompanionBuilder,
-    (i1.User, i0.BaseReferences<i0.GeneratedDatabase, i2.Users, i1.User>),
-    i1.User,
-    i0.PrefetchHooks Function()>;
 i0.Trigger get usersCreate => i0.Trigger(
     'CREATE TRIGGER IF NOT EXISTS users_create BEFORE INSERT ON users BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::User\', NEW.user_id);END',
     'users_create');
@@ -541,135 +877,6 @@ class UserEmailsCompanion extends i0.UpdateCompanion<i1.Email> {
   }
 }
 
-typedef $UserEmailsCreateCompanionBuilder = i2.UserEmailsCompanion Function({
-  required String userId,
-  required String email,
-  i0.Value<bool> isVerified,
-  i0.Value<bool> isPrimary,
-});
-typedef $UserEmailsUpdateCompanionBuilder = i2.UserEmailsCompanion Function({
-  i0.Value<String> userId,
-  i0.Value<String> email,
-  i0.Value<bool> isVerified,
-  i0.Value<bool> isPrimary,
-});
-
-class $UserEmailsFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i2.UserEmails> {
-  $UserEmailsFilterComposer(super.$state);
-  i0.ColumnFilters<String> get userId => $state.composableBuilder(
-      column: $state.table.userId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get email => $state.composableBuilder(
-      column: $state.table.email,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<bool> get isVerified => $state.composableBuilder(
-      column: $state.table.isVerified,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<bool> get isPrimary => $state.composableBuilder(
-      column: $state.table.isPrimary,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $UserEmailsOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i2.UserEmails> {
-  $UserEmailsOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get userId => $state.composableBuilder(
-      column: $state.table.userId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get email => $state.composableBuilder(
-      column: $state.table.email,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<bool> get isVerified => $state.composableBuilder(
-      column: $state.table.isVerified,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<bool> get isPrimary => $state.composableBuilder(
-      column: $state.table.isPrimary,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $UserEmailsTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i2.UserEmails,
-    i1.Email,
-    i2.$UserEmailsFilterComposer,
-    i2.$UserEmailsOrderingComposer,
-    $UserEmailsCreateCompanionBuilder,
-    $UserEmailsUpdateCompanionBuilder,
-    (
-      i1.Email,
-      i0.BaseReferences<i0.GeneratedDatabase, i2.UserEmails, i1.Email>
-    ),
-    i1.Email,
-    i0.PrefetchHooks Function()> {
-  $UserEmailsTableManager(i0.GeneratedDatabase db, i2.UserEmails table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i2.$UserEmailsFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i2.$UserEmailsOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> userId = const i0.Value.absent(),
-            i0.Value<String> email = const i0.Value.absent(),
-            i0.Value<bool> isVerified = const i0.Value.absent(),
-            i0.Value<bool> isPrimary = const i0.Value.absent(),
-          }) =>
-              i2.UserEmailsCompanion(
-            userId: userId,
-            email: email,
-            isVerified: isVerified,
-            isPrimary: isPrimary,
-          ),
-          createCompanionCallback: ({
-            required String userId,
-            required String email,
-            i0.Value<bool> isVerified = const i0.Value.absent(),
-            i0.Value<bool> isPrimary = const i0.Value.absent(),
-          }) =>
-              i2.UserEmailsCompanion.insert(
-            userId: userId,
-            email: email,
-            isVerified: isVerified,
-            isPrimary: isPrimary,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $UserEmailsProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i2.UserEmails,
-    i1.Email,
-    i2.$UserEmailsFilterComposer,
-    i2.$UserEmailsOrderingComposer,
-    $UserEmailsCreateCompanionBuilder,
-    $UserEmailsUpdateCompanionBuilder,
-    (
-      i1.Email,
-      i0.BaseReferences<i0.GeneratedDatabase, i2.UserEmails, i1.Email>
-    ),
-    i1.Email,
-    i0.PrefetchHooks Function()>;
-
 class UserPhoneNumbers extends i0.Table
     with i0.TableInfo<UserPhoneNumbers, i1.PhoneNumber> {
   @override
@@ -811,140 +1018,6 @@ class UserPhoneNumbersCompanion extends i0.UpdateCompanion<i1.PhoneNumber> {
         .toString();
   }
 }
-
-typedef $UserPhoneNumbersCreateCompanionBuilder = i2.UserPhoneNumbersCompanion
-    Function({
-  required String userId,
-  required String phoneNumber,
-  i0.Value<bool> isVerified,
-  i0.Value<bool> isPrimary,
-});
-typedef $UserPhoneNumbersUpdateCompanionBuilder = i2.UserPhoneNumbersCompanion
-    Function({
-  i0.Value<String> userId,
-  i0.Value<String> phoneNumber,
-  i0.Value<bool> isVerified,
-  i0.Value<bool> isPrimary,
-});
-
-class $UserPhoneNumbersFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i2.UserPhoneNumbers> {
-  $UserPhoneNumbersFilterComposer(super.$state);
-  i0.ColumnFilters<String> get userId => $state.composableBuilder(
-      column: $state.table.userId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get phoneNumber => $state.composableBuilder(
-      column: $state.table.phoneNumber,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<bool> get isVerified => $state.composableBuilder(
-      column: $state.table.isVerified,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<bool> get isPrimary => $state.composableBuilder(
-      column: $state.table.isPrimary,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $UserPhoneNumbersOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i2.UserPhoneNumbers> {
-  $UserPhoneNumbersOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get userId => $state.composableBuilder(
-      column: $state.table.userId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get phoneNumber => $state.composableBuilder(
-      column: $state.table.phoneNumber,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<bool> get isVerified => $state.composableBuilder(
-      column: $state.table.isVerified,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<bool> get isPrimary => $state.composableBuilder(
-      column: $state.table.isPrimary,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $UserPhoneNumbersTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i2.UserPhoneNumbers,
-    i1.PhoneNumber,
-    i2.$UserPhoneNumbersFilterComposer,
-    i2.$UserPhoneNumbersOrderingComposer,
-    $UserPhoneNumbersCreateCompanionBuilder,
-    $UserPhoneNumbersUpdateCompanionBuilder,
-    (
-      i1.PhoneNumber,
-      i0
-      .BaseReferences<i0.GeneratedDatabase, i2.UserPhoneNumbers, i1.PhoneNumber>
-    ),
-    i1.PhoneNumber,
-    i0.PrefetchHooks Function()> {
-  $UserPhoneNumbersTableManager(
-      i0.GeneratedDatabase db, i2.UserPhoneNumbers table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i2.$UserPhoneNumbersFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i2.$UserPhoneNumbersOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> userId = const i0.Value.absent(),
-            i0.Value<String> phoneNumber = const i0.Value.absent(),
-            i0.Value<bool> isVerified = const i0.Value.absent(),
-            i0.Value<bool> isPrimary = const i0.Value.absent(),
-          }) =>
-              i2.UserPhoneNumbersCompanion(
-            userId: userId,
-            phoneNumber: phoneNumber,
-            isVerified: isVerified,
-            isPrimary: isPrimary,
-          ),
-          createCompanionCallback: ({
-            required String userId,
-            required String phoneNumber,
-            i0.Value<bool> isVerified = const i0.Value.absent(),
-            i0.Value<bool> isPrimary = const i0.Value.absent(),
-          }) =>
-              i2.UserPhoneNumbersCompanion.insert(
-            userId: userId,
-            phoneNumber: phoneNumber,
-            isVerified: isVerified,
-            isPrimary: isPrimary,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $UserPhoneNumbersProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i2.UserPhoneNumbers,
-    i1.PhoneNumber,
-    i2.$UserPhoneNumbersFilterComposer,
-    i2.$UserPhoneNumbersOrderingComposer,
-    $UserPhoneNumbersCreateCompanionBuilder,
-    $UserPhoneNumbersUpdateCompanionBuilder,
-    (
-      i1.PhoneNumber,
-      i0
-      .BaseReferences<i0.GeneratedDatabase, i2.UserPhoneNumbers, i1.PhoneNumber>
-    ),
-    i1.PhoneNumber,
-    i0.PrefetchHooks Function()>;
 
 class UsersDrift extends i4.ModularAccessor {
   UsersDrift(i0.GeneratedDatabase db) : super(db);

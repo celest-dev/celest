@@ -4,6 +4,412 @@ import 'package:celest_cloud_auth/src/database/schema/invocations.drift.dart'
     as i1;
 import 'dart:typed_data' as i2;
 
+typedef $CelestInvocationsCreateCompanionBuilder = i1.CelestInvocationsCompanion
+    Function({
+  required String invocationId,
+  required String functionId,
+  i0.Value<DateTime> startTime,
+  i0.Value<DateTime?> endTime,
+  i0.Value<i2.Uint8List?> result,
+  i0.Value<i2.Uint8List?> error,
+  i0.Value<int> rowid,
+});
+typedef $CelestInvocationsUpdateCompanionBuilder = i1.CelestInvocationsCompanion
+    Function({
+  i0.Value<String> invocationId,
+  i0.Value<String> functionId,
+  i0.Value<DateTime> startTime,
+  i0.Value<DateTime?> endTime,
+  i0.Value<i2.Uint8List?> result,
+  i0.Value<i2.Uint8List?> error,
+  i0.Value<int> rowid,
+});
+
+class $CelestInvocationsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestInvocations> {
+  $CelestInvocationsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get invocationId => $composableBuilder(
+      column: $table.invocationId,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get functionId => $composableBuilder(
+      column: $table.functionId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get startTime => $composableBuilder(
+      column: $table.startTime, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get endTime => $composableBuilder(
+      column: $table.endTime, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<i2.Uint8List> get result => $composableBuilder(
+      column: $table.result, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<i2.Uint8List> get error => $composableBuilder(
+      column: $table.error, builder: (column) => i0.ColumnFilters(column));
+}
+
+class $CelestInvocationsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestInvocations> {
+  $CelestInvocationsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get invocationId => $composableBuilder(
+      column: $table.invocationId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get functionId => $composableBuilder(
+      column: $table.functionId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get startTime => $composableBuilder(
+      column: $table.startTime,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get endTime => $composableBuilder(
+      column: $table.endTime, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<i2.Uint8List> get result => $composableBuilder(
+      column: $table.result, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<i2.Uint8List> get error => $composableBuilder(
+      column: $table.error, builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CelestInvocationsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestInvocations> {
+  $CelestInvocationsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get invocationId => $composableBuilder(
+      column: $table.invocationId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get functionId => $composableBuilder(
+      column: $table.functionId, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get startTime =>
+      $composableBuilder(column: $table.startTime, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get endTime =>
+      $composableBuilder(column: $table.endTime, builder: (column) => column);
+
+  i0.GeneratedColumn<i2.Uint8List> get result =>
+      $composableBuilder(column: $table.result, builder: (column) => column);
+
+  i0.GeneratedColumn<i2.Uint8List> get error =>
+      $composableBuilder(column: $table.error, builder: (column) => column);
+}
+
+class $CelestInvocationsTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i1.CelestInvocations,
+    i1.CelestInvocation,
+    i1.$CelestInvocationsFilterComposer,
+    i1.$CelestInvocationsOrderingComposer,
+    i1.$CelestInvocationsAnnotationComposer,
+    $CelestInvocationsCreateCompanionBuilder,
+    $CelestInvocationsUpdateCompanionBuilder,
+    (
+      i1.CelestInvocation,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestInvocations,
+          i1.CelestInvocation>
+    ),
+    i1.CelestInvocation,
+    i0.PrefetchHooks Function()> {
+  $CelestInvocationsTableManager(
+      i0.GeneratedDatabase db, i1.CelestInvocations table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i1.$CelestInvocationsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$CelestInvocationsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$CelestInvocationsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> invocationId = const i0.Value.absent(),
+            i0.Value<String> functionId = const i0.Value.absent(),
+            i0.Value<DateTime> startTime = const i0.Value.absent(),
+            i0.Value<DateTime?> endTime = const i0.Value.absent(),
+            i0.Value<i2.Uint8List?> result = const i0.Value.absent(),
+            i0.Value<i2.Uint8List?> error = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CelestInvocationsCompanion(
+            invocationId: invocationId,
+            functionId: functionId,
+            startTime: startTime,
+            endTime: endTime,
+            result: result,
+            error: error,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String invocationId,
+            required String functionId,
+            i0.Value<DateTime> startTime = const i0.Value.absent(),
+            i0.Value<DateTime?> endTime = const i0.Value.absent(),
+            i0.Value<i2.Uint8List?> result = const i0.Value.absent(),
+            i0.Value<i2.Uint8List?> error = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CelestInvocationsCompanion.insert(
+            invocationId: invocationId,
+            functionId: functionId,
+            startTime: startTime,
+            endTime: endTime,
+            result: result,
+            error: error,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CelestInvocationsProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i1.CelestInvocations,
+    i1.CelestInvocation,
+    i1.$CelestInvocationsFilterComposer,
+    i1.$CelestInvocationsOrderingComposer,
+    i1.$CelestInvocationsAnnotationComposer,
+    $CelestInvocationsCreateCompanionBuilder,
+    $CelestInvocationsUpdateCompanionBuilder,
+    (
+      i1.CelestInvocation,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestInvocations,
+          i1.CelestInvocation>
+    ),
+    i1.CelestInvocation,
+    i0.PrefetchHooks Function()>;
+typedef $CelestInvocationLogsCreateCompanionBuilder
+    = i1.CelestInvocationLogsCompanion Function({
+  required int sequenceId,
+  required String invocationId,
+  i0.Value<DateTime> time,
+  required String severity,
+  required String message,
+  i0.Value<String?> error,
+  i0.Value<String?> stackTrace,
+  i0.Value<int> rowid,
+});
+typedef $CelestInvocationLogsUpdateCompanionBuilder
+    = i1.CelestInvocationLogsCompanion Function({
+  i0.Value<int> sequenceId,
+  i0.Value<String> invocationId,
+  i0.Value<DateTime> time,
+  i0.Value<String> severity,
+  i0.Value<String> message,
+  i0.Value<String?> error,
+  i0.Value<String?> stackTrace,
+  i0.Value<int> rowid,
+});
+
+class $CelestInvocationLogsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestInvocationLogs> {
+  $CelestInvocationLogsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<int> get sequenceId => $composableBuilder(
+      column: $table.sequenceId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get invocationId => $composableBuilder(
+      column: $table.invocationId,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get time => $composableBuilder(
+      column: $table.time, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get severity => $composableBuilder(
+      column: $table.severity, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get message => $composableBuilder(
+      column: $table.message, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get error => $composableBuilder(
+      column: $table.error, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get stackTrace => $composableBuilder(
+      column: $table.stackTrace, builder: (column) => i0.ColumnFilters(column));
+}
+
+class $CelestInvocationLogsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestInvocationLogs> {
+  $CelestInvocationLogsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<int> get sequenceId => $composableBuilder(
+      column: $table.sequenceId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get invocationId => $composableBuilder(
+      column: $table.invocationId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get time => $composableBuilder(
+      column: $table.time, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get severity => $composableBuilder(
+      column: $table.severity, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get message => $composableBuilder(
+      column: $table.message, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get error => $composableBuilder(
+      column: $table.error, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get stackTrace => $composableBuilder(
+      column: $table.stackTrace,
+      builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CelestInvocationLogsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestInvocationLogs> {
+  $CelestInvocationLogsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<int> get sequenceId => $composableBuilder(
+      column: $table.sequenceId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get invocationId => $composableBuilder(
+      column: $table.invocationId, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get time =>
+      $composableBuilder(column: $table.time, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get severity =>
+      $composableBuilder(column: $table.severity, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get message =>
+      $composableBuilder(column: $table.message, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get error =>
+      $composableBuilder(column: $table.error, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get stackTrace => $composableBuilder(
+      column: $table.stackTrace, builder: (column) => column);
+}
+
+class $CelestInvocationLogsTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i1.CelestInvocationLogs,
+    i1.CelestInvocationLog,
+    i1.$CelestInvocationLogsFilterComposer,
+    i1.$CelestInvocationLogsOrderingComposer,
+    i1.$CelestInvocationLogsAnnotationComposer,
+    $CelestInvocationLogsCreateCompanionBuilder,
+    $CelestInvocationLogsUpdateCompanionBuilder,
+    (
+      i1.CelestInvocationLog,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestInvocationLogs,
+          i1.CelestInvocationLog>
+    ),
+    i1.CelestInvocationLog,
+    i0.PrefetchHooks Function()> {
+  $CelestInvocationLogsTableManager(
+      i0.GeneratedDatabase db, i1.CelestInvocationLogs table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i1.$CelestInvocationLogsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$CelestInvocationLogsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () => i1
+              .$CelestInvocationLogsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<int> sequenceId = const i0.Value.absent(),
+            i0.Value<String> invocationId = const i0.Value.absent(),
+            i0.Value<DateTime> time = const i0.Value.absent(),
+            i0.Value<String> severity = const i0.Value.absent(),
+            i0.Value<String> message = const i0.Value.absent(),
+            i0.Value<String?> error = const i0.Value.absent(),
+            i0.Value<String?> stackTrace = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CelestInvocationLogsCompanion(
+            sequenceId: sequenceId,
+            invocationId: invocationId,
+            time: time,
+            severity: severity,
+            message: message,
+            error: error,
+            stackTrace: stackTrace,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required int sequenceId,
+            required String invocationId,
+            i0.Value<DateTime> time = const i0.Value.absent(),
+            required String severity,
+            required String message,
+            i0.Value<String?> error = const i0.Value.absent(),
+            i0.Value<String?> stackTrace = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CelestInvocationLogsCompanion.insert(
+            sequenceId: sequenceId,
+            invocationId: invocationId,
+            time: time,
+            severity: severity,
+            message: message,
+            error: error,
+            stackTrace: stackTrace,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CelestInvocationLogsProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i1.CelestInvocationLogs,
+    i1.CelestInvocationLog,
+    i1.$CelestInvocationLogsFilterComposer,
+    i1.$CelestInvocationLogsOrderingComposer,
+    i1.$CelestInvocationLogsAnnotationComposer,
+    $CelestInvocationLogsCreateCompanionBuilder,
+    $CelestInvocationLogsUpdateCompanionBuilder,
+    (
+      i1.CelestInvocationLog,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestInvocationLogs,
+          i1.CelestInvocationLog>
+    ),
+    i1.CelestInvocationLog,
+    i0.PrefetchHooks Function()>;
+
 class CelestInvocations extends i0.Table
     with i0.TableInfo<CelestInvocations, i1.CelestInvocation> {
   @override
@@ -320,177 +726,6 @@ class CelestInvocationsCompanion
   }
 }
 
-typedef $CelestInvocationsCreateCompanionBuilder = i1.CelestInvocationsCompanion
-    Function({
-  required String invocationId,
-  required String functionId,
-  i0.Value<DateTime> startTime,
-  i0.Value<DateTime?> endTime,
-  i0.Value<i2.Uint8List?> result,
-  i0.Value<i2.Uint8List?> error,
-  i0.Value<int> rowid,
-});
-typedef $CelestInvocationsUpdateCompanionBuilder = i1.CelestInvocationsCompanion
-    Function({
-  i0.Value<String> invocationId,
-  i0.Value<String> functionId,
-  i0.Value<DateTime> startTime,
-  i0.Value<DateTime?> endTime,
-  i0.Value<i2.Uint8List?> result,
-  i0.Value<i2.Uint8List?> error,
-  i0.Value<int> rowid,
-});
-
-class $CelestInvocationsFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i1.CelestInvocations> {
-  $CelestInvocationsFilterComposer(super.$state);
-  i0.ColumnFilters<String> get invocationId => $state.composableBuilder(
-      column: $state.table.invocationId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get functionId => $state.composableBuilder(
-      column: $state.table.functionId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get startTime => $state.composableBuilder(
-      column: $state.table.startTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get endTime => $state.composableBuilder(
-      column: $state.table.endTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<i2.Uint8List> get result => $state.composableBuilder(
-      column: $state.table.result,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<i2.Uint8List> get error => $state.composableBuilder(
-      column: $state.table.error,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $CelestInvocationsOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i1.CelestInvocations> {
-  $CelestInvocationsOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get invocationId => $state.composableBuilder(
-      column: $state.table.invocationId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get functionId => $state.composableBuilder(
-      column: $state.table.functionId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get startTime => $state.composableBuilder(
-      column: $state.table.startTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get endTime => $state.composableBuilder(
-      column: $state.table.endTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<i2.Uint8List> get result => $state.composableBuilder(
-      column: $state.table.result,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<i2.Uint8List> get error => $state.composableBuilder(
-      column: $state.table.error,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CelestInvocationsTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.CelestInvocations,
-    i1.CelestInvocation,
-    i1.$CelestInvocationsFilterComposer,
-    i1.$CelestInvocationsOrderingComposer,
-    $CelestInvocationsCreateCompanionBuilder,
-    $CelestInvocationsUpdateCompanionBuilder,
-    (
-      i1.CelestInvocation,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestInvocations,
-          i1.CelestInvocation>
-    ),
-    i1.CelestInvocation,
-    i0.PrefetchHooks Function()> {
-  $CelestInvocationsTableManager(
-      i0.GeneratedDatabase db, i1.CelestInvocations table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i1.$CelestInvocationsFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer: i1
-              .$CelestInvocationsOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> invocationId = const i0.Value.absent(),
-            i0.Value<String> functionId = const i0.Value.absent(),
-            i0.Value<DateTime> startTime = const i0.Value.absent(),
-            i0.Value<DateTime?> endTime = const i0.Value.absent(),
-            i0.Value<i2.Uint8List?> result = const i0.Value.absent(),
-            i0.Value<i2.Uint8List?> error = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CelestInvocationsCompanion(
-            invocationId: invocationId,
-            functionId: functionId,
-            startTime: startTime,
-            endTime: endTime,
-            result: result,
-            error: error,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String invocationId,
-            required String functionId,
-            i0.Value<DateTime> startTime = const i0.Value.absent(),
-            i0.Value<DateTime?> endTime = const i0.Value.absent(),
-            i0.Value<i2.Uint8List?> result = const i0.Value.absent(),
-            i0.Value<i2.Uint8List?> error = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CelestInvocationsCompanion.insert(
-            invocationId: invocationId,
-            functionId: functionId,
-            startTime: startTime,
-            endTime: endTime,
-            result: result,
-            error: error,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CelestInvocationsProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i1.CelestInvocations,
-    i1.CelestInvocation,
-    i1.$CelestInvocationsFilterComposer,
-    i1.$CelestInvocationsOrderingComposer,
-    $CelestInvocationsCreateCompanionBuilder,
-    $CelestInvocationsUpdateCompanionBuilder,
-    (
-      i1.CelestInvocation,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestInvocations,
-          i1.CelestInvocation>
-    ),
-    i1.CelestInvocation,
-    i0.PrefetchHooks Function()>;
 i0.Index get celestInvocationsFunctionIdx => i0.Index(
     'celest_invocations_function_idx',
     'CREATE INDEX IF NOT EXISTS celest_invocations_function_idx ON celest_invocations (function_id)');
@@ -842,193 +1077,6 @@ class CelestInvocationLogsCompanion
   }
 }
 
-typedef $CelestInvocationLogsCreateCompanionBuilder
-    = i1.CelestInvocationLogsCompanion Function({
-  required int sequenceId,
-  required String invocationId,
-  i0.Value<DateTime> time,
-  required String severity,
-  required String message,
-  i0.Value<String?> error,
-  i0.Value<String?> stackTrace,
-  i0.Value<int> rowid,
-});
-typedef $CelestInvocationLogsUpdateCompanionBuilder
-    = i1.CelestInvocationLogsCompanion Function({
-  i0.Value<int> sequenceId,
-  i0.Value<String> invocationId,
-  i0.Value<DateTime> time,
-  i0.Value<String> severity,
-  i0.Value<String> message,
-  i0.Value<String?> error,
-  i0.Value<String?> stackTrace,
-  i0.Value<int> rowid,
-});
-
-class $CelestInvocationLogsFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i1.CelestInvocationLogs> {
-  $CelestInvocationLogsFilterComposer(super.$state);
-  i0.ColumnFilters<int> get sequenceId => $state.composableBuilder(
-      column: $state.table.sequenceId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get invocationId => $state.composableBuilder(
-      column: $state.table.invocationId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get time => $state.composableBuilder(
-      column: $state.table.time,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get severity => $state.composableBuilder(
-      column: $state.table.severity,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get message => $state.composableBuilder(
-      column: $state.table.message,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get error => $state.composableBuilder(
-      column: $state.table.error,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get stackTrace => $state.composableBuilder(
-      column: $state.table.stackTrace,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $CelestInvocationLogsOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i1.CelestInvocationLogs> {
-  $CelestInvocationLogsOrderingComposer(super.$state);
-  i0.ColumnOrderings<int> get sequenceId => $state.composableBuilder(
-      column: $state.table.sequenceId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get invocationId => $state.composableBuilder(
-      column: $state.table.invocationId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get time => $state.composableBuilder(
-      column: $state.table.time,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get severity => $state.composableBuilder(
-      column: $state.table.severity,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get message => $state.composableBuilder(
-      column: $state.table.message,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get error => $state.composableBuilder(
-      column: $state.table.error,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get stackTrace => $state.composableBuilder(
-      column: $state.table.stackTrace,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CelestInvocationLogsTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.CelestInvocationLogs,
-    i1.CelestInvocationLog,
-    i1.$CelestInvocationLogsFilterComposer,
-    i1.$CelestInvocationLogsOrderingComposer,
-    $CelestInvocationLogsCreateCompanionBuilder,
-    $CelestInvocationLogsUpdateCompanionBuilder,
-    (
-      i1.CelestInvocationLog,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestInvocationLogs,
-          i1.CelestInvocationLog>
-    ),
-    i1.CelestInvocationLog,
-    i0.PrefetchHooks Function()> {
-  $CelestInvocationLogsTableManager(
-      i0.GeneratedDatabase db, i1.CelestInvocationLogs table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer: i1
-              .$CelestInvocationLogsFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer: i1.$CelestInvocationLogsOrderingComposer(
-              i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<int> sequenceId = const i0.Value.absent(),
-            i0.Value<String> invocationId = const i0.Value.absent(),
-            i0.Value<DateTime> time = const i0.Value.absent(),
-            i0.Value<String> severity = const i0.Value.absent(),
-            i0.Value<String> message = const i0.Value.absent(),
-            i0.Value<String?> error = const i0.Value.absent(),
-            i0.Value<String?> stackTrace = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CelestInvocationLogsCompanion(
-            sequenceId: sequenceId,
-            invocationId: invocationId,
-            time: time,
-            severity: severity,
-            message: message,
-            error: error,
-            stackTrace: stackTrace,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required int sequenceId,
-            required String invocationId,
-            i0.Value<DateTime> time = const i0.Value.absent(),
-            required String severity,
-            required String message,
-            i0.Value<String?> error = const i0.Value.absent(),
-            i0.Value<String?> stackTrace = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CelestInvocationLogsCompanion.insert(
-            sequenceId: sequenceId,
-            invocationId: invocationId,
-            time: time,
-            severity: severity,
-            message: message,
-            error: error,
-            stackTrace: stackTrace,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CelestInvocationLogsProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i1.CelestInvocationLogs,
-    i1.CelestInvocationLog,
-    i1.$CelestInvocationLogsFilterComposer,
-    i1.$CelestInvocationLogsOrderingComposer,
-    $CelestInvocationLogsCreateCompanionBuilder,
-    $CelestInvocationLogsUpdateCompanionBuilder,
-    (
-      i1.CelestInvocationLog,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestInvocationLogs,
-          i1.CelestInvocationLog>
-    ),
-    i1.CelestInvocationLog,
-    i0.PrefetchHooks Function()>;
 i0.Index get celestInvocationLogsInvocationIdx => i0.Index(
     'celest_invocation_logs_invocation_idx',
     'CREATE INDEX IF NOT EXISTS celest_invocation_logs_invocation_idx ON celest_invocation_logs (invocation_id)');
