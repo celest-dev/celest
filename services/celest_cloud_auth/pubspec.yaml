@@ -1,0 +1,41 @@
+name: celest_cloud_auth
+description: The Celest authentication and authorization service.
+version: 0.1.0
+
+environment:
+  sdk: ^3.4.0
+
+dependencies:
+  args: ^2.4.0
+  async: ^2.11.0
+  cedar: ^0.2.2
+  celest: ^1.0.0-0
+  celest_ast: ^0.1.0
+  celest_cloud: ^0.1.0
+  celest_core: ^1.0.0-0
+  clock: ^1.1.1
+  collection: ^1.18.0
+  convert: ^3.1.1
+  corks_cedar: ^0.2.1
+  crypto: ^3.0.5
+  drift: ^2.20.0
+  file: ^7.0.1
+  fixnum: ^1.1.0
+  http: ^1.0.0
+  logging: ^1.2.0
+  meta: ^1.15.0
+  mustache_template: ^2.0.0
+  path: ^1.9.0
+  petitparser: ^6.0.2
+  protobuf: ^3.1.0
+  pub_semver: ^2.1.4
+  shelf: ^1.4.0
+  shelf_router: ^1.1.0
+  sqlite3: ^2.4.6
+
+dev_dependencies:
+  build_runner: ^2.4.13
+  celest_lints: ^1.0.0
+  checks: ^0.3.0
+  drift_dev: ^2.20.3
+  test: ^1.24.0

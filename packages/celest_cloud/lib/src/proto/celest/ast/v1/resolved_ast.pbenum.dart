@@ -13,24 +13,33 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-/// The type of SDK.
-class SdkType extends $pb.ProtobufEnum {
-  static const SdkType SDK_TYPE_UNSPECIFIED =
-      SdkType._(0, _omitEnumNames ? '' : 'SDK_TYPE_UNSPECIFIED');
-  static const SdkType DART = SdkType._(1, _omitEnumNames ? '' : 'DART');
-  static const SdkType FLUTTER = SdkType._(2, _omitEnumNames ? '' : 'FLUTTER');
+/// The type of the stream configuration.
+class ResolvedStreamConfig_Type extends $pb.ProtobufEnum {
+  static const ResolvedStreamConfig_Type STREAM_CONFIG_TYPE_UNSPECIFIED =
+      ResolvedStreamConfig_Type._(
+          0, _omitEnumNames ? '' : 'STREAM_CONFIG_TYPE_UNSPECIFIED');
+  static const ResolvedStreamConfig_Type UNIDIRECTIONAL_CLIENT =
+      ResolvedStreamConfig_Type._(
+          1, _omitEnumNames ? '' : 'UNIDIRECTIONAL_CLIENT');
+  static const ResolvedStreamConfig_Type UNIDIRECTIONAL_SERVER =
+      ResolvedStreamConfig_Type._(
+          2, _omitEnumNames ? '' : 'UNIDIRECTIONAL_SERVER');
+  static const ResolvedStreamConfig_Type BIDIRECTIONAL =
+      ResolvedStreamConfig_Type._(3, _omitEnumNames ? '' : 'BIDIRECTIONAL');
 
-  static const $core.List<SdkType> values = <SdkType>[
-    SDK_TYPE_UNSPECIFIED,
-    DART,
-    FLUTTER,
+  static const $core.List<ResolvedStreamConfig_Type> values =
+      <ResolvedStreamConfig_Type>[
+    STREAM_CONFIG_TYPE_UNSPECIFIED,
+    UNIDIRECTIONAL_CLIENT,
+    UNIDIRECTIONAL_SERVER,
+    BIDIRECTIONAL,
   ];
 
-  static final $core.Map<$core.int, SdkType> _byValue =
+  static final $core.Map<$core.int, ResolvedStreamConfig_Type> _byValue =
       $pb.ProtobufEnum.initByValue(values);
-  static SdkType? valueOf($core.int value) => _byValue[value];
+  static ResolvedStreamConfig_Type? valueOf($core.int value) => _byValue[value];
 
-  const SdkType._($core.int v, $core.String n) : super(v, n);
+  const ResolvedStreamConfig_Type._($core.int v, $core.String n) : super(v, n);
 }
 
 /// The type of an auth provider.
@@ -90,6 +99,50 @@ class ResolvedExternalAuthProvider_Type extends $pb.ProtobufEnum {
       _byValue[value];
 
   const ResolvedExternalAuthProvider_Type._($core.int v, $core.String n)
+      : super(v, n);
+}
+
+/// The type of the database.
+class ResolvedDatabase_Type extends $pb.ProtobufEnum {
+  static const ResolvedDatabase_Type DATABASE_TYPE_UNSPECIFIED =
+      ResolvedDatabase_Type._(
+          0, _omitEnumNames ? '' : 'DATABASE_TYPE_UNSPECIFIED');
+  static const ResolvedDatabase_Type CELEST =
+      ResolvedDatabase_Type._(1, _omitEnumNames ? '' : 'CELEST');
+
+  static const $core.List<ResolvedDatabase_Type> values =
+      <ResolvedDatabase_Type>[
+    DATABASE_TYPE_UNSPECIFIED,
+    CELEST,
+  ];
+
+  static final $core.Map<$core.int, ResolvedDatabase_Type> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
+  static ResolvedDatabase_Type? valueOf($core.int value) => _byValue[value];
+
+  const ResolvedDatabase_Type._($core.int v, $core.String n) : super(v, n);
+}
+
+/// The type of the database schema.
+class ResolvedDatabaseSchema_Type extends $pb.ProtobufEnum {
+  static const ResolvedDatabaseSchema_Type DATABASE_SCHEMA_TYPE_UNSPECIFIED =
+      ResolvedDatabaseSchema_Type._(
+          0, _omitEnumNames ? '' : 'DATABASE_SCHEMA_TYPE_UNSPECIFIED');
+  static const ResolvedDatabaseSchema_Type DRIFT =
+      ResolvedDatabaseSchema_Type._(1, _omitEnumNames ? '' : 'DRIFT');
+
+  static const $core.List<ResolvedDatabaseSchema_Type> values =
+      <ResolvedDatabaseSchema_Type>[
+    DATABASE_SCHEMA_TYPE_UNSPECIFIED,
+    DRIFT,
+  ];
+
+  static final $core.Map<$core.int, ResolvedDatabaseSchema_Type> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
+  static ResolvedDatabaseSchema_Type? valueOf($core.int value) =>
+      _byValue[value];
+
+  const ResolvedDatabaseSchema_Type._($core.int v, $core.String n)
       : super(v, n);
 }
 

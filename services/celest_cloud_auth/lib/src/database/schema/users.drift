@@ -1,0 +1,176 @@
+import 'cedar.drift';
+
+import 'schema_imports.dart';
+
+-- Stores Celest Cloud users.
+CREATE TABLE IF NOT EXISTS users (
+    -- Immutable. The unique identifier for the user.
+    --
+    -- Maps to the `uid` field in the Protobuf.
+    --
+    -- Format: usr_<typeid>
+    user_id TEXT NOT NULL PRIMARY KEY,
+
+    -- The user's given name.
+    given_name TEXT,
+
+    -- The user's family name.
+    family_name TEXT,
+
+    -- The user's time zone.
+    --
+    -- Format: IANA time zone identifier
+    -- Example: `America/Los_Angeles`
+    time_zone TEXT,
+
+    -- The user's preferred language.
+    --
+    -- Format: BCP-47 language tag
+    -- Example: `en-US`
+    language_code TEXT,
+
+    -- The time the user was created.
+    create_time `const TimestampType()` NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+
+    -- The time the user was last updated.
+    update_time `const TimestampType()`
+) WITH User;
+
+----------------------------------------------
+-------------- Cedar Triggers ----------------
+----------------------------------------------
+
+-- This trigger is used to create the Cedar entity when a row is inserted.
+CREATE TRIGGER IF NOT EXISTS users_create
+BEFORE INSERT ON users
+BEGIN
+    INSERT INTO cedar_entities(entity_type, entity_id)
+    VALUES ('Celest::User', NEW.user_id);
+END;
+
+-- This trigger is used to delete the parent relationship when the parent_id is set to NULL.
+CREATE TRIGGER IF NOT EXISTS users_delete
+AFTER DELETE ON users
+BEGIN
+    DELETE FROM cedar_relationships
+    WHERE 
+        (entity_type = 'Celest::User' AND entity_id = OLD.user_id)
+    OR  (parent_type = 'Celest::User' AND parent_id = OLD.user_id);
+    DELETE FROM cedar_entities
+    WHERE
+        entity_id = OLD.user_id
+    AND entity_type = 'Celest::User';
+END;
+
+----------------------------------------------
+-------------- /Cedar Triggers ---------------
+----------------------------------------------
+
+-- Stores email addresses for Celest Cloud users.
+CREATE TABLE IF NOT EXISTS user_emails (
+    -- The user's unique identifier.
+    user_id TEXT NOT NULL,
+
+    -- The user's sanitized email address.
+    email TEXT NOT NULL,
+
+    -- The email address's verification status.
+    is_verified BOOLEAN NOT NULL DEFAULT FALSE,
+
+    -- The email address's primary status.
+    is_primary BOOLEAN NOT NULL DEFAULT FALSE,
+
+    CONSTRAINT user_emails_pk PRIMARY KEY (user_id, email),
+
+    CONSTRAINT user_emails_user_fk FOREIGN KEY (user_id) REFERENCES users(user_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED
+) WITHOUT ROWID WITH Email;
+
+-- Stores phone numbers for Celest Cloud users.
+CREATE TABLE IF NOT EXISTS user_phone_numbers (
+    -- The user's unique identifier.
+    user_id TEXT NOT NULL,
+
+    -- The user's sanitized phone number.
+    phone_number TEXT NOT NULL,
+
+    -- The phone number's verification status.
+    is_verified BOOLEAN NOT NULL DEFAULT FALSE,
+
+    -- The phone number's primary status.
+    is_primary BOOLEAN NOT NULL DEFAULT FALSE,
+
+    CONSTRAINT user_phone_numbers_pk PRIMARY KEY (user_id, phone_number),
+
+    CONSTRAINT user_phone_numbers_user_fk FOREIGN KEY (user_id) REFERENCES users(user_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED
+) WITHOUT ROWID WITH PhoneNumber;
+
+createUser:
+    INSERT INTO users (user_id, given_name, family_name, time_zone, language_code)
+    VALUES (:user_id, :given_name, :family_name, :time_zone, :language_code)
+    RETURNING *;
+
+getUser: 
+    SELECT * FROM users
+    WHERE user_id = :user_id;
+
+deleteUser:
+    DELETE FROM users
+    WHERE user_id = :user_id;
+
+upsertUserEmail(
+    :is_verified AS BOOLEAN OR NULL, 
+    :is_primary AS BOOLEAN OR NULL
+): 
+    INSERT INTO user_emails (user_id, email, is_verified, is_primary)
+    VALUES (:user_id, :email, :is_verified, :is_primary)
+    ON CONFLICT(user_id, email) DO UPDATE SET
+        is_verified = coalesce(excluded.is_verified, is_verified),
+        is_primary = coalesce(excluded.is_primary, is_primary)
+    RETURNING *;
+
+getUserEmails:
+    SELECT * FROM user_emails
+    WHERE user_id = :user_id;
+
+lookupUserByEmail:
+    SELECT users.**, user_emails.** FROM users
+    INNER JOIN user_emails ON users.user_id = user_emails.user_id
+    WHERE 
+        user_emails.email = :email
+    AND user_emails.is_verified
+    ORDER BY user_emails.is_primary DESC;
+
+deleteUserEmail:
+    DELETE FROM user_emails
+    WHERE user_id = :user_id AND email = :email;
+
+upsertUserPhoneNumber(
+    :is_verified AS BOOLEAN OR NULL, 
+    :is_primary AS BOOLEAN OR NULL
+):
+    INSERT INTO user_phone_numbers (user_id, phone_number, is_verified, is_primary)
+    VALUES (:user_id, :phone_number, :is_verified, :is_primary)
+    ON CONFLICT(user_id, phone_number) DO UPDATE SET
+        is_verified = coalesce(excluded.is_verified, is_verified),
+        is_primary = coalesce(excluded.is_primary, is_primary)
+    RETURNING *;
+
+getUserPhoneNumbers:
+    SELECT * FROM user_phone_numbers
+    WHERE user_id = :user_id;
+
+lookupUserByPhone:
+    SELECT users.**, user_phone_numbers.** FROM users
+    INNER JOIN user_phone_numbers ON users.user_id = user_phone_numbers.user_id
+    WHERE 
+        user_phone_numbers.phone_number = :phone_number
+    AND user_phone_numbers.is_verified
+    ORDER BY user_phone_numbers.is_primary DESC;
+
+deleteUserPhoneNumber:
+    DELETE FROM user_phone_numbers
+    WHERE user_id = :user_id AND phone_number = :phone_number;

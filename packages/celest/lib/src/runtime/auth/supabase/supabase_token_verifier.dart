@@ -70,7 +70,10 @@ final class SupabaseTokenVerifier {
     };
     return User(
       userId: claims['sub'] as String,
-      email: claims['email'] as String?,
+      emails: switch (claims['email'] as String?) {
+        final email? => [Email(email: email)],
+        _ => const [],
+      },
     );
   }
 
@@ -99,8 +102,9 @@ final class SupabaseTokenVerifier {
             (user['email_confirmed_at'] ?? user['confirmed_at']) != null;
         return User(
           userId: userId,
-          email: email,
-          emailVerified: emailVerified,
+          emails: email != null
+              ? [Email(email: email, isVerified: emailVerified)]
+              : const [],
         );
       }
       // Shouldn't ever happened for a well-formed response.

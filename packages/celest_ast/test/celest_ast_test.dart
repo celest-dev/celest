@@ -63,8 +63,8 @@ void main() {
                 type: StreamType.unidirectionalClient,
               ),
               httpConfig: ResolvedHttpConfig(
-                method: 'PATCH',
                 route: ResolvedHttpRoute(
+                  method: 'PATCH',
                   path: '/greeting/hello-world',
                 ),
                 status: 204,

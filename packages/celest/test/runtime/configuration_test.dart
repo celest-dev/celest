@@ -36,8 +36,8 @@ final testProject = ResolvedProject(
           secrets: ['HELLO_WORLD_SECRET'],
           streamConfig: null,
           httpConfig: ResolvedHttpConfig(
-            method: 'POST',
             route: ResolvedHttpRoute(
+              method: 'POST',
               path: '/greeting/hello-world',
             ),
             status: 200,

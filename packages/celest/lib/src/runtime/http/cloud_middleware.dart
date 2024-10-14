@@ -91,7 +91,7 @@ final class CloudExceptionMiddleware implements Middleware {
           },
           body: JsonUtf8.encode({
             '@status': {
-              'code': e.type,
+              'code': e.code,
               'message': e.message,
               'details': [
                 {
@@ -175,6 +175,7 @@ final class RootMiddleware implements Middleware {
     return (request) async {
       final completer = Completer<Response>.sync();
 
+      late Context requestContext;
       final requestZone = Zone.current.fork(
         specification: ZoneSpecification(
           handleUncaughtError: (self, parent, zone, error, stackTrace) {
@@ -200,7 +201,7 @@ final class RootMiddleware implements Middleware {
       );
       requestZone.runGuarded(
         () async {
-          Context.current
+          requestContext = Context.current
             ..put(ContextKey.currentRequest, request)
             ..put(ContextKey.currentTrace, request.trace);
           final response = await inner(request);
@@ -210,8 +211,63 @@ final class RootMiddleware implements Middleware {
         },
       );
 
-      return completer.future;
+      try {
+        final response = await completer.future;
+        await _postRequest(requestContext, response);
+        return response;
+      } on Object catch (error, stackTrace) {
+        await _postRequestError(requestContext, error, stackTrace);
+        rethrow;
+      }
     };
+  }
+
+  Future<void> _postRequest(Context context, Response response) async {
+    final callbacks = context.get(const PostRequestCallbacks());
+    if (callbacks case final callbacks? when callbacks.isNotEmpty) {
+      for (final callback in callbacks.reversed) {
+        try {
+          if (callback.onResponse(response) case final Future<void> future) {
+            await future;
+          }
+        } on Object catch (e, st) {
+          context.logger.shout(
+            'An error occurred while running a post-request callback',
+            e,
+            st,
+          );
+        }
+      }
+      callbacks.clear();
+    }
+  }
+
+  Future<void> _postRequestError(
+    Context context,
+    Object error,
+    StackTrace stackTrace,
+  ) async {
+    final callbacks = context.get(const PostRequestCallbacks());
+    if (callbacks case final callbacks? when callbacks.isNotEmpty) {
+      for (final callback in callbacks.reversed) {
+        final onError = callback.onError;
+        if (onError == null) {
+          continue;
+        }
+        try {
+          if (onError(error, stackTrace) case final Future<void> future) {
+            await future;
+          }
+        } on Object catch (e, st) {
+          context.logger.shout(
+            'An error occurred while running a post-request callback',
+            e,
+            st,
+          );
+        }
+      }
+      callbacks.clear();
+    }
   }
 }
 

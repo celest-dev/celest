@@ -183,9 +183,9 @@ abstract class ResolvedCloudFunction
     required String functionId,
     required String apiId,
     required ResolvedHttpConfig httpConfig,
-    required ResolvedStreamConfig? streamConfig,
-    required Iterable<String> variables,
-    required Iterable<String> secrets,
+    ResolvedStreamConfig? streamConfig,
+    Iterable<String> variables = const [],
+    Iterable<String> secrets = const [],
     cedar.PolicySet? policySet,
   }) {
     return _$ResolvedCloudFunction._(
@@ -267,15 +267,15 @@ abstract class ResolvedCloudFunction
 abstract class ResolvedHttpConfig
     implements Built<ResolvedHttpConfig, ResolvedHttpConfigBuilder> {
   factory ResolvedHttpConfig({
-    required String method,
+    int status = 200,
     required ResolvedHttpRoute route,
-    required int status,
-    required Map<TypeReference, int> statusMappings,
+    Iterable<ResolvedHttpRoute> additionalRoutes = const [],
+    Map<TypeReference, int> statusMappings = const {},
   }) {
     return _$ResolvedHttpConfig._(
-      method: method,
-      route: route,
       status: status,
+      route: route,
+      additionalRoutes: additionalRoutes.toBuiltList(),
       statusMappings: statusMappings.build(),
     );
   }
@@ -290,8 +290,8 @@ abstract class ResolvedHttpConfig
 
   factory ResolvedHttpConfig.fromProto(pb.ResolvedHttpConfig proto) {
     return ResolvedHttpConfig(
-      method: proto.method,
       route: ResolvedHttpRoute.fromProto(proto.route),
+      additionalRoutes: proto.additionalRoutes.map(ResolvedHttpRoute.fromProto),
       status: proto.status,
       statusMappings: {
         for (final entry in proto.statusMappings.entries)
@@ -304,13 +304,11 @@ abstract class ResolvedHttpConfig
 
   @BuiltValueHook(finalizeBuilder: true)
   static void _defaults(ResolvedHttpConfigBuilder b) {
-    b
-      ..method ??= 'POST'
-      ..status ??= 200;
+    b.status ??= 200;
   }
 
-  String get method;
   ResolvedHttpRoute get route;
+  BuiltList<ResolvedHttpRoute> get additionalRoutes;
   int get status;
   BuiltMap<TypeReference, int> get statusMappings;
 
@@ -324,8 +322,8 @@ abstract class ResolvedHttpConfig
 
   pb.ResolvedHttpConfig toProto() {
     return pb.ResolvedHttpConfig(
-      method: method,
       route: route.toProto(),
+      additionalRoutes: additionalRoutes.map((e) => e.toProto()),
       status: status,
       statusMappings: {
         for (final entry in statusMappings.entries)
@@ -405,9 +403,11 @@ abstract class ResolvedStreamConfig
 abstract class ResolvedHttpRoute
     implements Built<ResolvedHttpRoute, ResolvedHttpRouteBuilder> {
   factory ResolvedHttpRoute({
+    String method = 'POST',
     required String path,
   }) {
     return _$ResolvedHttpRoute._(
+      method: method,
       path: path,
     );
   }
@@ -422,12 +422,19 @@ abstract class ResolvedHttpRoute
 
   factory ResolvedHttpRoute.fromProto(pb.ResolvedHttpRoute proto) {
     return ResolvedHttpRoute(
+      method: proto.method,
       path: proto.path,
     );
   }
 
+  @BuiltValueHook(finalizeBuilder: true)
+  static void _defaults(ResolvedHttpRouteBuilder b) {
+    b.method ??= 'POST';
+  }
+
   ResolvedHttpRoute._();
 
+  String get method;
   String get path;
 
   Map<String, dynamic> toJson() {
@@ -437,6 +444,7 @@ abstract class ResolvedHttpRoute
 
   pb.ResolvedHttpRoute toProto() {
     return pb.ResolvedHttpRoute(
+      method: method,
       path: path,
     );
   }

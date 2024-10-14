@@ -13,45 +13,51 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../cedar/v3/policy.pb.dart' as $53;
+import '../../../cedar/v3/policy.pb.dart' as $52;
 import '../../../google/protobuf/struct.pb.dart' as $22;
 import 'features.pbenum.dart' as $54;
 import 'resolved_ast.pbenum.dart';
+import 'sdks.pb.dart' as $53;
+import 'sdks.pbenum.dart' as $53;
 
 export 'resolved_ast.pbenum.dart';
 
 /// The resolved AST of a Celest project.
 class ResolvedProject extends $pb.GeneratedMessage {
   factory ResolvedProject({
-    $core.String? name,
+    $core.String? projectId,
+    $core.String? environmentId,
     $core.Map<$core.String, ResolvedApi>? apis,
-    $core.Iterable<ResolvedEnvironmentVariable>? environmentVariables,
-    ResolvedAuth? auth,
-    SdkInfo? sdk,
-    $core.Iterable<$54.FeatureFlag>? featureFlags,
+    $core.Iterable<ResolvedVariable>? variables,
     $core.Iterable<ResolvedSecret>? secrets,
+    ResolvedAuth? auth,
+    $core.Map<$core.String, ResolvedDatabase>? databases,
+    SdkConfiguration? sdkConfig,
   }) {
     final $result = create();
-    if (name != null) {
-      $result.name = name;
+    if (projectId != null) {
+      $result.projectId = projectId;
+    }
+    if (environmentId != null) {
+      $result.environmentId = environmentId;
     }
     if (apis != null) {
       $result.apis.addAll(apis);
     }
-    if (environmentVariables != null) {
-      $result.environmentVariables.addAll(environmentVariables);
+    if (variables != null) {
+      $result.variables.addAll(variables);
+    }
+    if (secrets != null) {
+      $result.secrets.addAll(secrets);
     }
     if (auth != null) {
       $result.auth = auth;
     }
-    if (sdk != null) {
-      $result.sdk = sdk;
+    if (databases != null) {
+      $result.databases.addAll(databases);
     }
-    if (featureFlags != null) {
-      $result.featureFlags.addAll(featureFlags);
-    }
-    if (secrets != null) {
-      $result.secrets.addAll(secrets);
+    if (sdkConfig != null) {
+      $result.sdkConfig = sdkConfig;
     }
     return $result;
   }
@@ -67,28 +73,32 @@ class ResolvedProject extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ResolvedProject',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..m<$core.String, ResolvedApi>(2, _omitFieldNames ? '' : 'apis',
+    ..aOS(1, _omitFieldNames ? '' : 'projectId')
+    ..aOS(2, _omitFieldNames ? '' : 'environmentId')
+    ..m<$core.String, ResolvedApi>(3, _omitFieldNames ? '' : 'apis',
         entryClassName: 'ResolvedProject.ApisEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.OM,
         valueCreator: ResolvedApi.create,
         valueDefaultOrMaker: ResolvedApi.getDefault,
         packageName: const $pb.PackageName('celest.ast.v1'))
-    ..pc<ResolvedEnvironmentVariable>(
-        3, _omitFieldNames ? '' : 'environmentVariables', $pb.PbFieldType.PM,
-        subBuilder: ResolvedEnvironmentVariable.create)
-    ..aOM<ResolvedAuth>(4, _omitFieldNames ? '' : 'auth',
-        subBuilder: ResolvedAuth.create)
-    ..aOM<SdkInfo>(5, _omitFieldNames ? '' : 'sdk', subBuilder: SdkInfo.create)
-    ..pc<$54.FeatureFlag>(
-        6, _omitFieldNames ? '' : 'featureFlags', $pb.PbFieldType.KE,
-        valueOf: $54.FeatureFlag.valueOf,
-        enumValues: $54.FeatureFlag.values,
-        defaultEnumValue: $54.FeatureFlag.FEATURE_FLAG_UNSPECIFIED)
+    ..pc<ResolvedVariable>(
+        4, _omitFieldNames ? '' : 'variables', $pb.PbFieldType.PM,
+        subBuilder: ResolvedVariable.create)
     ..pc<ResolvedSecret>(
-        7, _omitFieldNames ? '' : 'secrets', $pb.PbFieldType.PM,
+        5, _omitFieldNames ? '' : 'secrets', $pb.PbFieldType.PM,
         subBuilder: ResolvedSecret.create)
+    ..aOM<ResolvedAuth>(6, _omitFieldNames ? '' : 'auth',
+        subBuilder: ResolvedAuth.create)
+    ..m<$core.String, ResolvedDatabase>(7, _omitFieldNames ? '' : 'databases',
+        entryClassName: 'ResolvedProject.DatabasesEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.OM,
+        valueCreator: ResolvedDatabase.create,
+        valueDefaultOrMaker: ResolvedDatabase.getDefault,
+        packageName: const $pb.PackageName('celest.ast.v1'))
+    ..aOM<SdkConfiguration>(99, _omitFieldNames ? '' : 'sdkConfig',
+        subBuilder: SdkConfiguration.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -114,65 +124,77 @@ class ResolvedProject extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<ResolvedProject>(create);
   static ResolvedProject? _defaultInstance;
 
-  /// The user-provided name of the project.
+  /// The user-provided identifier of the project.
   @$pb.TagNumber(1)
-  $core.String get name => $_getSZ(0);
+  $core.String get projectId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
+  set projectId($core.String v) {
     $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasName() => $_has(0);
+  $core.bool hasProjectId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearProjectId() => clearField(1);
+
+  /// The ID of the environment this projects resolves to.
+  @$pb.TagNumber(2)
+  $core.String get environmentId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set environmentId($core.String v) {
+    $_setString(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasEnvironmentId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearEnvironmentId() => clearField(2);
 
   /// The project's API endpoints, keyed by their `name`.
-  @$pb.TagNumber(2)
-  $core.Map<$core.String, ResolvedApi> get apis => $_getMap(1);
+  @$pb.TagNumber(3)
+  $core.Map<$core.String, ResolvedApi> get apis => $_getMap(2);
 
   /// The project's environment variables.
-  @$pb.TagNumber(3)
-  $core.List<ResolvedEnvironmentVariable> get environmentVariables =>
-      $_getList(2);
-
-  /// The project's auth configuration.
   @$pb.TagNumber(4)
-  ResolvedAuth get auth => $_getN(3);
-  @$pb.TagNumber(4)
-  set auth(ResolvedAuth v) {
-    setField(4, v);
-  }
-
-  @$pb.TagNumber(4)
-  $core.bool hasAuth() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearAuth() => clearField(4);
-  @$pb.TagNumber(4)
-  ResolvedAuth ensureAuth() => $_ensure(3);
-
-  /// The Dart or Flutter SDK used to deploy the project.
-  @$pb.TagNumber(5)
-  SdkInfo get sdk => $_getN(4);
-  @$pb.TagNumber(5)
-  set sdk(SdkInfo v) {
-    setField(5, v);
-  }
-
-  @$pb.TagNumber(5)
-  $core.bool hasSdk() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearSdk() => clearField(5);
-  @$pb.TagNumber(5)
-  SdkInfo ensureSdk() => $_ensure(4);
-
-  /// The feature flags enabled by the project.
-  @$pb.TagNumber(6)
-  $core.List<$54.FeatureFlag> get featureFlags => $_getList(5);
+  $core.List<ResolvedVariable> get variables => $_getList(3);
 
   /// The project's secrets.
+  @$pb.TagNumber(5)
+  $core.List<ResolvedSecret> get secrets => $_getList(4);
+
+  /// The project's auth configuration.
+  @$pb.TagNumber(6)
+  ResolvedAuth get auth => $_getN(5);
+  @$pb.TagNumber(6)
+  set auth(ResolvedAuth v) {
+    setField(6, v);
+  }
+
+  @$pb.TagNumber(6)
+  $core.bool hasAuth() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearAuth() => clearField(6);
+  @$pb.TagNumber(6)
+  ResolvedAuth ensureAuth() => $_ensure(5);
+
+  /// The project's databases.
   @$pb.TagNumber(7)
-  $core.List<ResolvedSecret> get secrets => $_getList(6);
+  $core.Map<$core.String, ResolvedDatabase> get databases => $_getMap(6);
+
+  /// Configuration of the Dart, Flutter, and Celest SDKs used to deploy the project.
+  @$pb.TagNumber(99)
+  SdkConfiguration get sdkConfig => $_getN(7);
+  @$pb.TagNumber(99)
+  set sdkConfig(SdkConfiguration v) {
+    setField(99, v);
+  }
+
+  @$pb.TagNumber(99)
+  $core.bool hasSdkConfig() => $_has(7);
+  @$pb.TagNumber(99)
+  void clearSdkConfig() => clearField(99);
+  @$pb.TagNumber(99)
+  SdkConfiguration ensureSdkConfig() => $_ensure(7);
 }
 
 /// The resolved AST of a Celest API.
@@ -180,7 +202,7 @@ class ResolvedApi extends $pb.GeneratedMessage {
   factory ResolvedApi({
     $core.String? apiId,
     $core.Map<$core.String, ResolvedFunction>? functions,
-    $53.PolicySet? policySet,
+    $52.PolicySet? policySet,
   }) {
     final $result = create();
     if (apiId != null) {
@@ -214,8 +236,8 @@ class ResolvedApi extends $pb.GeneratedMessage {
         valueCreator: ResolvedFunction.create,
         valueDefaultOrMaker: ResolvedFunction.getDefault,
         packageName: const $pb.PackageName('celest.ast.v1'))
-    ..aOM<$53.PolicySet>(3, _omitFieldNames ? '' : 'policySet',
-        subBuilder: $53.PolicySet.create)
+    ..aOM<$52.PolicySet>(3, _omitFieldNames ? '' : 'policySet',
+        subBuilder: $52.PolicySet.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -264,9 +286,9 @@ class ResolvedApi extends $pb.GeneratedMessage {
   ///
   ///  This policy set is applied to all functions within the API.
   @$pb.TagNumber(3)
-  $53.PolicySet get policySet => $_getN(2);
+  $52.PolicySet get policySet => $_getN(2);
   @$pb.TagNumber(3)
-  set policySet($53.PolicySet v) {
+  set policySet($52.PolicySet v) {
     setField(3, v);
   }
 
@@ -275,39 +297,35 @@ class ResolvedApi extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearPolicySet() => clearField(3);
   @$pb.TagNumber(3)
-  $53.PolicySet ensurePolicySet() => $_ensure(2);
+  $52.PolicySet ensurePolicySet() => $_ensure(2);
 }
 
 /// The resolved AST of a Celest function.
 class ResolvedFunction extends $pb.GeneratedMessage {
   factory ResolvedFunction({
     $core.String? functionId,
-    $core.String? apiId,
-    ResolvedHttpConfig? http,
-    $core.bool? clientStreaming,
-    $core.bool? serverStreaming,
-    $core.Iterable<$core.String>? environmentVariables,
+    $core.String? parentId,
+    ResolvedHttpConfig? httpConfig,
+    ResolvedStreamConfig? streamConfig,
+    $core.Iterable<$core.String>? variables,
     $core.Iterable<$core.String>? secrets,
-    $53.PolicySet? policySet,
+    $52.PolicySet? policySet,
   }) {
     final $result = create();
     if (functionId != null) {
       $result.functionId = functionId;
     }
-    if (apiId != null) {
-      $result.apiId = apiId;
+    if (parentId != null) {
+      $result.parentId = parentId;
     }
-    if (http != null) {
-      $result.http = http;
+    if (httpConfig != null) {
+      $result.httpConfig = httpConfig;
     }
-    if (clientStreaming != null) {
-      $result.clientStreaming = clientStreaming;
+    if (streamConfig != null) {
+      $result.streamConfig = streamConfig;
     }
-    if (serverStreaming != null) {
-      $result.serverStreaming = serverStreaming;
-    }
-    if (environmentVariables != null) {
-      $result.environmentVariables.addAll(environmentVariables);
+    if (variables != null) {
+      $result.variables.addAll(variables);
     }
     if (secrets != null) {
       $result.secrets.addAll(secrets);
@@ -330,15 +348,15 @@ class ResolvedFunction extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'functionId')
-    ..aOS(2, _omitFieldNames ? '' : 'apiId')
-    ..aOM<ResolvedHttpConfig>(3, _omitFieldNames ? '' : 'http',
+    ..aOS(2, _omitFieldNames ? '' : 'parentId')
+    ..aOM<ResolvedHttpConfig>(3, _omitFieldNames ? '' : 'httpConfig',
         subBuilder: ResolvedHttpConfig.create)
-    ..aOB(4, _omitFieldNames ? '' : 'clientStreaming')
-    ..aOB(5, _omitFieldNames ? '' : 'serverStreaming')
-    ..pPS(6, _omitFieldNames ? '' : 'environmentVariables')
-    ..pPS(7, _omitFieldNames ? '' : 'secrets')
-    ..aOM<$53.PolicySet>(8, _omitFieldNames ? '' : 'policySet',
-        subBuilder: $53.PolicySet.create)
+    ..aOM<ResolvedStreamConfig>(4, _omitFieldNames ? '' : 'streamConfig',
+        subBuilder: ResolvedStreamConfig.create)
+    ..pPS(5, _omitFieldNames ? '' : 'variables')
+    ..pPS(6, _omitFieldNames ? '' : 'secrets')
+    ..aOM<$52.PolicySet>(7, _omitFieldNames ? '' : 'policySet',
+        subBuilder: $52.PolicySet.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -382,102 +400,91 @@ class ResolvedFunction extends $pb.GeneratedMessage {
 
   /// The ID of the function's parent API.
   @$pb.TagNumber(2)
-  $core.String get apiId => $_getSZ(1);
+  $core.String get parentId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set apiId($core.String v) {
+  set parentId($core.String v) {
     $_setString(1, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasApiId() => $_has(1);
+  $core.bool hasParentId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearApiId() => clearField(2);
+  void clearParentId() => clearField(2);
 
   /// The resolved HTTP configuration of the function.
   @$pb.TagNumber(3)
-  ResolvedHttpConfig get http => $_getN(2);
+  ResolvedHttpConfig get httpConfig => $_getN(2);
   @$pb.TagNumber(3)
-  set http(ResolvedHttpConfig v) {
+  set httpConfig(ResolvedHttpConfig v) {
     setField(3, v);
   }
 
   @$pb.TagNumber(3)
-  $core.bool hasHttp() => $_has(2);
+  $core.bool hasHttpConfig() => $_has(2);
   @$pb.TagNumber(3)
-  void clearHttp() => clearField(3);
+  void clearHttpConfig() => clearField(3);
   @$pb.TagNumber(3)
-  ResolvedHttpConfig ensureHttp() => $_ensure(2);
+  ResolvedHttpConfig ensureHttpConfig() => $_ensure(2);
 
-  /// Whether the function is a client-streaming RPC.
+  /// The resolved stream configuration of the function.
   @$pb.TagNumber(4)
-  $core.bool get clientStreaming => $_getBF(3);
+  ResolvedStreamConfig get streamConfig => $_getN(3);
   @$pb.TagNumber(4)
-  set clientStreaming($core.bool v) {
-    $_setBool(3, v);
+  set streamConfig(ResolvedStreamConfig v) {
+    setField(4, v);
   }
 
   @$pb.TagNumber(4)
-  $core.bool hasClientStreaming() => $_has(3);
+  $core.bool hasStreamConfig() => $_has(3);
   @$pb.TagNumber(4)
-  void clearClientStreaming() => clearField(4);
+  void clearStreamConfig() => clearField(4);
+  @$pb.TagNumber(4)
+  ResolvedStreamConfig ensureStreamConfig() => $_ensure(3);
 
-  /// Whether the function is a server-streaming RPC.
+  /// The variables required by the function.
   @$pb.TagNumber(5)
-  $core.bool get serverStreaming => $_getBF(4);
-  @$pb.TagNumber(5)
-  set serverStreaming($core.bool v) {
-    $_setBool(4, v);
-  }
-
-  @$pb.TagNumber(5)
-  $core.bool hasServerStreaming() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearServerStreaming() => clearField(5);
-
-  /// The environment variables required by the function.
-  @$pb.TagNumber(6)
-  $core.List<$core.String> get environmentVariables => $_getList(5);
+  $core.List<$core.String> get variables => $_getList(4);
 
   /// The secrets required by the function.
-  @$pb.TagNumber(7)
-  $core.List<$core.String> get secrets => $_getList(6);
+  @$pb.TagNumber(6)
+  $core.List<$core.String> get secrets => $_getList(5);
 
   /// The policy set declared by the function.
-  @$pb.TagNumber(8)
-  $53.PolicySet get policySet => $_getN(7);
-  @$pb.TagNumber(8)
-  set policySet($53.PolicySet v) {
-    setField(8, v);
+  @$pb.TagNumber(7)
+  $52.PolicySet get policySet => $_getN(6);
+  @$pb.TagNumber(7)
+  set policySet($52.PolicySet v) {
+    setField(7, v);
   }
 
-  @$pb.TagNumber(8)
-  $core.bool hasPolicySet() => $_has(7);
-  @$pb.TagNumber(8)
-  void clearPolicySet() => clearField(8);
-  @$pb.TagNumber(8)
-  $53.PolicySet ensurePolicySet() => $_ensure(7);
+  @$pb.TagNumber(7)
+  $core.bool hasPolicySet() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearPolicySet() => clearField(7);
+  @$pb.TagNumber(7)
+  $52.PolicySet ensurePolicySet() => $_ensure(6);
 }
 
 /// The HTTP configuration of a [ResolvedFunction][].
 class ResolvedHttpConfig extends $pb.GeneratedMessage {
   factory ResolvedHttpConfig({
-    $core.String? method,
-    HttpPath? path,
-    $core.int? statusCode,
-    $core.Map<$core.String, $core.int>? errorStatus,
+    $core.int? status,
+    ResolvedHttpRoute? route,
+    $core.Iterable<ResolvedHttpRoute>? additionalRoutes,
+    $core.Map<$core.String, $core.int>? statusMappings,
   }) {
     final $result = create();
-    if (method != null) {
-      $result.method = method;
+    if (status != null) {
+      $result.status = status;
     }
-    if (path != null) {
-      $result.path = path;
+    if (route != null) {
+      $result.route = route;
     }
-    if (statusCode != null) {
-      $result.statusCode = statusCode;
+    if (additionalRoutes != null) {
+      $result.additionalRoutes.addAll(additionalRoutes);
     }
-    if (errorStatus != null) {
-      $result.errorStatus.addAll(errorStatus);
+    if (statusMappings != null) {
+      $result.statusMappings.addAll(statusMappings);
     }
     return $result;
   }
@@ -493,12 +500,14 @@ class ResolvedHttpConfig extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ResolvedHttpConfig',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'method')
-    ..aOM<HttpPath>(2, _omitFieldNames ? '' : 'path',
-        subBuilder: HttpPath.create)
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'statusCode', $pb.PbFieldType.O3)
-    ..m<$core.String, $core.int>(4, _omitFieldNames ? '' : 'errorStatus',
-        entryClassName: 'ResolvedHttpConfig.ErrorStatusEntry',
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'status', $pb.PbFieldType.O3)
+    ..aOM<ResolvedHttpRoute>(2, _omitFieldNames ? '' : 'route',
+        subBuilder: ResolvedHttpRoute.create)
+    ..pc<ResolvedHttpRoute>(
+        3, _omitFieldNames ? '' : 'additionalRoutes', $pb.PbFieldType.PM,
+        subBuilder: ResolvedHttpRoute.create)
+    ..m<$core.String, $core.int>(4, _omitFieldNames ? '' : 'statusMappings',
+        entryClassName: 'ResolvedHttpConfig.StatusMappingsEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.O3,
         packageName: const $pb.PackageName('celest.ast.v1'))
@@ -527,7 +536,106 @@ class ResolvedHttpConfig extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<ResolvedHttpConfig>(create);
   static ResolvedHttpConfig? _defaultInstance;
 
-  /// The HTTP method of the function.
+  /// The successful status code of the function.
+  @$pb.TagNumber(1)
+  $core.int get status => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set status($core.int v) {
+    $_setSignedInt32(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasStatus() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearStatus() => clearField(1);
+
+  /// The resolved route configuration of the function.
+  @$pb.TagNumber(2)
+  ResolvedHttpRoute get route => $_getN(1);
+  @$pb.TagNumber(2)
+  set route(ResolvedHttpRoute v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasRoute() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoute() => clearField(2);
+  @$pb.TagNumber(2)
+  ResolvedHttpRoute ensureRoute() => $_ensure(1);
+
+  /// Additional route configurations of the function.
+  @$pb.TagNumber(3)
+  $core.List<ResolvedHttpRoute> get additionalRoutes => $_getList(2);
+
+  ///  A mapping of Dart types to HTTP status codes.
+  ///
+  ///  Dart types are represented as URIs with a scheme, host and path identifying the location
+  ///  of the type's definition, and a fragment identifying the type itself.
+  ///
+  ///  For example:
+  ///
+  ///  - `dart:core#String`
+  ///  - `package:celest/functions/greeting.dart#GreetingError`
+  @$pb.TagNumber(4)
+  $core.Map<$core.String, $core.int> get statusMappings => $_getMap(3);
+}
+
+/// A route to an HTTP endpoint.
+class ResolvedHttpRoute extends $pb.GeneratedMessage {
+  factory ResolvedHttpRoute({
+    $core.String? method,
+    $core.String? path,
+  }) {
+    final $result = create();
+    if (method != null) {
+      $result.method = method;
+    }
+    if (path != null) {
+      $result.path = path;
+    }
+    return $result;
+  }
+  ResolvedHttpRoute._() : super();
+  factory ResolvedHttpRoute.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ResolvedHttpRoute.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ResolvedHttpRoute',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'method')
+    ..aOS(2, _omitFieldNames ? '' : 'path')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ResolvedHttpRoute clone() => ResolvedHttpRoute()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ResolvedHttpRoute copyWith(void Function(ResolvedHttpRoute) updates) =>
+      super.copyWith((message) => updates(message as ResolvedHttpRoute))
+          as ResolvedHttpRoute;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ResolvedHttpRoute create() => ResolvedHttpRoute._();
+  ResolvedHttpRoute createEmptyInstance() => create();
+  static $pb.PbList<ResolvedHttpRoute> createRepeated() =>
+      $pb.PbList<ResolvedHttpRoute>();
+  @$core.pragma('dart2js:noInline')
+  static ResolvedHttpRoute getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ResolvedHttpRoute>(create);
+  static ResolvedHttpRoute? _defaultInstance;
+
+  /// The HTTP method of the route.
   @$pb.TagNumber(1)
   $core.String get method => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -540,234 +648,92 @@ class ResolvedHttpConfig extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearMethod() => clearField(1);
 
-  /// The path of the function.
+  /// The path to the HTTP endpoint.
   @$pb.TagNumber(2)
-  HttpPath get path => $_getN(1);
+  $core.String get path => $_getSZ(1);
   @$pb.TagNumber(2)
-  set path(HttpPath v) {
-    setField(2, v);
+  set path($core.String v) {
+    $_setString(1, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasPath() => $_has(1);
   @$pb.TagNumber(2)
   void clearPath() => clearField(2);
-  @$pb.TagNumber(2)
-  HttpPath ensurePath() => $_ensure(1);
-
-  /// The successful status code of the function.
-  @$pb.TagNumber(3)
-  $core.int get statusCode => $_getIZ(2);
-  @$pb.TagNumber(3)
-  set statusCode($core.int v) {
-    $_setSignedInt32(2, v);
-  }
-
-  @$pb.TagNumber(3)
-  $core.bool hasStatusCode() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearStatusCode() => clearField(3);
-
-  ///  The error status mapping of the function.
-  ///
-  ///  The keys are the Dart types of the errors, and the values are the HTTP status codes.
-  ///  Dart types are represented as URLs, with a scheme, host and path identifying the location
-  ///  of the type's definition, and a fragment identifying the type itself.
-  ///
-  ///  For example:
-  ///
-  ///  - `dart:core#String`
-  ///  - `package:celest/functions/greeting.dart#GreetingError`
-  @$pb.TagNumber(4)
-  $core.Map<$core.String, $core.int> get errorStatus => $_getMap(3);
 }
 
-/// The path to an HTTP endpoint and its parameters.
-class HttpPath extends $pb.GeneratedMessage {
-  factory HttpPath({
-    $core.String? path,
-    $core.Map<$core.String, HttpParameter>? parameters,
+/// The stream configuration of a [ResolvedFunction][].
+class ResolvedStreamConfig extends $pb.GeneratedMessage {
+  factory ResolvedStreamConfig({
+    ResolvedStreamConfig_Type? type,
   }) {
     final $result = create();
-    if (path != null) {
-      $result.path = path;
-    }
-    if (parameters != null) {
-      $result.parameters.addAll(parameters);
-    }
-    return $result;
-  }
-  HttpPath._() : super();
-  factory HttpPath.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory HttpPath.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'HttpPath',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
-      createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'path')
-    ..m<$core.String, HttpParameter>(2, _omitFieldNames ? '' : 'parameters',
-        entryClassName: 'HttpPath.ParametersEntry',
-        keyFieldType: $pb.PbFieldType.OS,
-        valueFieldType: $pb.PbFieldType.OM,
-        valueCreator: HttpParameter.create,
-        valueDefaultOrMaker: HttpParameter.getDefault,
-        packageName: const $pb.PackageName('celest.ast.v1'))
-    ..hasRequiredFields = false;
-
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
-  HttpPath clone() => HttpPath()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  HttpPath copyWith(void Function(HttpPath) updates) =>
-      super.copyWith((message) => updates(message as HttpPath)) as HttpPath;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static HttpPath create() => HttpPath._();
-  HttpPath createEmptyInstance() => create();
-  static $pb.PbList<HttpPath> createRepeated() => $pb.PbList<HttpPath>();
-  @$core.pragma('dart2js:noInline')
-  static HttpPath getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HttpPath>(create);
-  static HttpPath? _defaultInstance;
-
-  /// The path of the HTTP endpoint.
-  @$pb.TagNumber(1)
-  $core.String get path => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set path($core.String v) {
-    $_setString(0, v);
-  }
-
-  @$pb.TagNumber(1)
-  $core.bool hasPath() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearPath() => clearField(1);
-
-  /// The parameters of the HTTP endpoint.
-  @$pb.TagNumber(2)
-  $core.Map<$core.String, HttpParameter> get parameters => $_getMap(1);
-}
-
-/// A parameter of an HTTP endpoint.
-class HttpParameter extends $pb.GeneratedMessage {
-  factory HttpParameter({
-    $core.String? name,
-    $core.String? type,
-    $core.bool? required,
-  }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
     if (type != null) {
       $result.type = type;
     }
-    if (required != null) {
-      $result.required = required;
-    }
     return $result;
   }
-  HttpParameter._() : super();
-  factory HttpParameter.fromBuffer($core.List<$core.int> i,
+  ResolvedStreamConfig._() : super();
+  factory ResolvedStreamConfig.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory HttpParameter.fromJson($core.String i,
+  factory ResolvedStreamConfig.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'HttpParameter',
+      _omitMessageNames ? '' : 'ResolvedStreamConfig',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..aOS(2, _omitFieldNames ? '' : 'type')
-    ..aOB(3, _omitFieldNames ? '' : 'required')
+    ..e<ResolvedStreamConfig_Type>(
+        1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
+        defaultOrMaker:
+            ResolvedStreamConfig_Type.STREAM_CONFIG_TYPE_UNSPECIFIED,
+        valueOf: ResolvedStreamConfig_Type.valueOf,
+        enumValues: ResolvedStreamConfig_Type.values)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  HttpParameter clone() => HttpParameter()..mergeFromMessage(this);
+  ResolvedStreamConfig clone() =>
+      ResolvedStreamConfig()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  HttpParameter copyWith(void Function(HttpParameter) updates) =>
-      super.copyWith((message) => updates(message as HttpParameter))
-          as HttpParameter;
+  ResolvedStreamConfig copyWith(void Function(ResolvedStreamConfig) updates) =>
+      super.copyWith((message) => updates(message as ResolvedStreamConfig))
+          as ResolvedStreamConfig;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static HttpParameter create() => HttpParameter._();
-  HttpParameter createEmptyInstance() => create();
-  static $pb.PbList<HttpParameter> createRepeated() =>
-      $pb.PbList<HttpParameter>();
+  static ResolvedStreamConfig create() => ResolvedStreamConfig._();
+  ResolvedStreamConfig createEmptyInstance() => create();
+  static $pb.PbList<ResolvedStreamConfig> createRepeated() =>
+      $pb.PbList<ResolvedStreamConfig>();
   @$core.pragma('dart2js:noInline')
-  static HttpParameter getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<HttpParameter>(create);
-  static HttpParameter? _defaultInstance;
+  static ResolvedStreamConfig getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ResolvedStreamConfig>(create);
+  static ResolvedStreamConfig? _defaultInstance;
 
-  /// The name of the parameter.
+  /// The type of the stream configuration.
   @$pb.TagNumber(1)
-  $core.String get name => $_getSZ(0);
+  ResolvedStreamConfig_Type get type => $_getN(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
+  set type(ResolvedStreamConfig_Type v) {
+    setField(1, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasName() => $_has(0);
+  $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
-
-  ///  The Dart type of the parameter.
-  ///
-  ///  Dart types are represented as URLs, with a scheme, host and path identifying the location
-  ///  of the type's definition, and a fragment identifying the type itself.
-  ///
-  ///  For example:
-  ///
-  ///  - `dart:core#String`
-  ///  - `package:celest/functions/greeting.dart#GreetingError`
-  @$pb.TagNumber(2)
-  $core.String get type => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set type($core.String v) {
-    $_setString(1, v);
-  }
-
-  @$pb.TagNumber(2)
-  $core.bool hasType() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearType() => clearField(2);
-
-  /// Whether the parameter is required.
-  @$pb.TagNumber(3)
-  $core.bool get required => $_getBF(2);
-  @$pb.TagNumber(3)
-  set required($core.bool v) {
-    $_setBool(2, v);
-  }
-
-  @$pb.TagNumber(3)
-  $core.bool hasRequired() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearRequired() => clearField(3);
+  void clearType() => clearField(1);
 }
 
 /// An environment variable and its value.
-class ResolvedEnvironmentVariable extends $pb.GeneratedMessage {
-  factory ResolvedEnvironmentVariable({
+class ResolvedVariable extends $pb.GeneratedMessage {
+  factory ResolvedVariable({
     $core.String? name,
     $core.String? value,
   }) {
@@ -780,16 +746,16 @@ class ResolvedEnvironmentVariable extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  ResolvedEnvironmentVariable._() : super();
-  factory ResolvedEnvironmentVariable.fromBuffer($core.List<$core.int> i,
+  ResolvedVariable._() : super();
+  factory ResolvedVariable.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory ResolvedEnvironmentVariable.fromJson($core.String i,
+  factory ResolvedVariable.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ResolvedEnvironmentVariable',
+      _omitMessageNames ? '' : 'ResolvedVariable',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
@@ -799,29 +765,25 @@ class ResolvedEnvironmentVariable extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ResolvedEnvironmentVariable clone() =>
-      ResolvedEnvironmentVariable()..mergeFromMessage(this);
+  ResolvedVariable clone() => ResolvedVariable()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ResolvedEnvironmentVariable copyWith(
-          void Function(ResolvedEnvironmentVariable) updates) =>
-      super.copyWith(
-              (message) => updates(message as ResolvedEnvironmentVariable))
-          as ResolvedEnvironmentVariable;
+  ResolvedVariable copyWith(void Function(ResolvedVariable) updates) =>
+      super.copyWith((message) => updates(message as ResolvedVariable))
+          as ResolvedVariable;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ResolvedEnvironmentVariable create() =>
-      ResolvedEnvironmentVariable._();
-  ResolvedEnvironmentVariable createEmptyInstance() => create();
-  static $pb.PbList<ResolvedEnvironmentVariable> createRepeated() =>
-      $pb.PbList<ResolvedEnvironmentVariable>();
+  static ResolvedVariable create() => ResolvedVariable._();
+  ResolvedVariable createEmptyInstance() => create();
+  static $pb.PbList<ResolvedVariable> createRepeated() =>
+      $pb.PbList<ResolvedVariable>();
   @$core.pragma('dart2js:noInline')
-  static ResolvedEnvironmentVariable getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<ResolvedEnvironmentVariable>(create);
-  static ResolvedEnvironmentVariable? _defaultInstance;
+  static ResolvedVariable getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ResolvedVariable>(create);
+  static ResolvedVariable? _defaultInstance;
 
   /// The name of the environment variable.
   @$pb.TagNumber(1)
@@ -1011,7 +973,7 @@ enum ResolvedAuthProvider_Config {
 /// A resolved auth provider configuration.
 class ResolvedAuthProvider extends $pb.GeneratedMessage {
   factory ResolvedAuthProvider({
-    $core.String? id,
+    $core.String? authProviderId,
     ResolvedAuthProvider_Type? type,
     ResolvedEmailOtpProviderConfig? emailOtp,
     ResolvedSmsOtpProviderConfig? smsOtp,
@@ -1020,8 +982,8 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
     ResolvedAppleOAuthProviderConfig? apple,
   }) {
     final $result = create();
-    if (id != null) {
-      $result.id = id;
+    if (authProviderId != null) {
+      $result.authProviderId = authProviderId;
     }
     if (type != null) {
       $result.type = type;
@@ -1065,7 +1027,7 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
     ..oo(0, [3, 4, 5, 6, 7])
-    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(1, _omitFieldNames ? '' : 'authProviderId')
     ..e<ResolvedAuthProvider_Type>(
         2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
         defaultOrMaker:
@@ -1114,16 +1076,16 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
 
   /// The ID of the auth provider.
   @$pb.TagNumber(1)
-  $core.String get id => $_getSZ(0);
+  $core.String get authProviderId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set id($core.String v) {
+  set authProviderId($core.String v) {
     $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
+  $core.bool hasAuthProviderId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => clearField(1);
+  void clearAuthProviderId() => clearField(1);
 
   /// The type of the auth provider.
   @$pb.TagNumber(2)
@@ -1627,14 +1589,14 @@ enum ResolvedExternalAuthProvider_Config { firebase, supabase, notSet }
 /// A resolved external auth provider configuration.
 class ResolvedExternalAuthProvider extends $pb.GeneratedMessage {
   factory ResolvedExternalAuthProvider({
-    $core.String? id,
+    $core.String? authProviderId,
     ResolvedExternalAuthProvider_Type? type,
     ResolvedFirebaseExternalAuthProviderConfig? firebase,
     ResolvedSupabaseExternalAuthProviderConfig? supabase,
   }) {
     final $result = create();
-    if (id != null) {
-      $result.id = id;
+    if (authProviderId != null) {
+      $result.authProviderId = authProviderId;
     }
     if (type != null) {
       $result.type = type;
@@ -1666,7 +1628,7 @@ class ResolvedExternalAuthProvider extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
     ..oo(0, [3, 4])
-    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(1, _omitFieldNames ? '' : 'authProviderId')
     ..e<ResolvedExternalAuthProvider_Type>(
         2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
         defaultOrMaker: ResolvedExternalAuthProvider_Type
@@ -1714,16 +1676,16 @@ class ResolvedExternalAuthProvider extends $pb.GeneratedMessage {
 
   /// The ID of the external auth provider.
   @$pb.TagNumber(1)
-  $core.String get id => $_getSZ(0);
+  $core.String get authProviderId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set id($core.String v) {
+  set authProviderId($core.String v) {
     $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
+  $core.bool hasAuthProviderId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => clearField(1);
+  void clearAuthProviderId() => clearField(1);
 
   /// The type of the external auth provider.
   @$pb.TagNumber(2)
@@ -1772,7 +1734,7 @@ class ResolvedExternalAuthProvider extends $pb.GeneratedMessage {
 /// The configuration of an external Firebase auth provider.
 class ResolvedFirebaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
   factory ResolvedFirebaseExternalAuthProviderConfig({
-    ResolvedEnvironmentVariable? projectId,
+    ResolvedVariable? projectId,
   }) {
     final $result = create();
     if (projectId != null) {
@@ -1793,8 +1755,8 @@ class ResolvedFirebaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ResolvedFirebaseExternalAuthProviderConfig',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
-    ..aOM<ResolvedEnvironmentVariable>(1, _omitFieldNames ? '' : 'projectId',
-        subBuilder: ResolvedEnvironmentVariable.create)
+    ..aOM<ResolvedVariable>(1, _omitFieldNames ? '' : 'projectId',
+        subBuilder: ResolvedVariable.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1828,9 +1790,9 @@ class ResolvedFirebaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
 
   /// The Firebase project ID.
   @$pb.TagNumber(1)
-  ResolvedEnvironmentVariable get projectId => $_getN(0);
+  ResolvedVariable get projectId => $_getN(0);
   @$pb.TagNumber(1)
-  set projectId(ResolvedEnvironmentVariable v) {
+  set projectId(ResolvedVariable v) {
     setField(1, v);
   }
 
@@ -1839,13 +1801,13 @@ class ResolvedFirebaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearProjectId() => clearField(1);
   @$pb.TagNumber(1)
-  ResolvedEnvironmentVariable ensureProjectId() => $_ensure(0);
+  ResolvedVariable ensureProjectId() => $_ensure(0);
 }
 
 /// The configuration of an external Supabase auth provider.
 class ResolvedSupabaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
   factory ResolvedSupabaseExternalAuthProviderConfig({
-    ResolvedEnvironmentVariable? projectUrl,
+    ResolvedVariable? projectUrl,
     ResolvedSecret? jwtSecret,
   }) {
     final $result = create();
@@ -1870,8 +1832,8 @@ class ResolvedSupabaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ResolvedSupabaseExternalAuthProviderConfig',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
-    ..aOM<ResolvedEnvironmentVariable>(1, _omitFieldNames ? '' : 'projectUrl',
-        subBuilder: ResolvedEnvironmentVariable.create)
+    ..aOM<ResolvedVariable>(1, _omitFieldNames ? '' : 'projectUrl',
+        subBuilder: ResolvedVariable.create)
     ..aOM<ResolvedSecret>(2, _omitFieldNames ? '' : 'jwtSecret',
         subBuilder: ResolvedSecret.create)
     ..hasRequiredFields = false;
@@ -1907,9 +1869,9 @@ class ResolvedSupabaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
 
   /// Required. The Supabase project URL.
   @$pb.TagNumber(1)
-  ResolvedEnvironmentVariable get projectUrl => $_getN(0);
+  ResolvedVariable get projectUrl => $_getN(0);
   @$pb.TagNumber(1)
-  set projectUrl(ResolvedEnvironmentVariable v) {
+  set projectUrl(ResolvedVariable v) {
     setField(1, v);
   }
 
@@ -1918,7 +1880,7 @@ class ResolvedSupabaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearProjectUrl() => clearField(1);
   @$pb.TagNumber(1)
-  ResolvedEnvironmentVariable ensureProjectUrl() => $_ensure(0);
+  ResolvedVariable ensureProjectUrl() => $_ensure(0);
 
   /// Optional. The Supabase JWT secret.
   @$pb.TagNumber(2)
@@ -1936,241 +1898,584 @@ class ResolvedSupabaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedSecret ensureJwtSecret() => $_ensure(1);
 }
 
-/// Information about the Dart or Flutter SDK used to deploy the project.
-class SdkInfo extends $pb.GeneratedMessage {
-  factory SdkInfo({
-    SdkType? type,
-    Version? version,
-    $core.Iterable<$core.String>? enabledExperiments,
+enum ResolvedDatabase_Config { celest, notSet }
+
+/// The resolved AST of a Celest database.
+class ResolvedDatabase extends $pb.GeneratedMessage {
+  factory ResolvedDatabase({
+    $core.String? databaseId,
+    ResolvedDatabase_Type? type,
+    ResolvedDatabaseSchema? schema,
+    ResolvedCelestDatabaseConfig? celest,
   }) {
     final $result = create();
+    if (databaseId != null) {
+      $result.databaseId = databaseId;
+    }
     if (type != null) {
       $result.type = type;
     }
-    if (version != null) {
-      $result.version = version;
+    if (schema != null) {
+      $result.schema = schema;
     }
-    if (enabledExperiments != null) {
-      $result.enabledExperiments.addAll(enabledExperiments);
+    if (celest != null) {
+      $result.celest = celest;
     }
     return $result;
   }
-  SdkInfo._() : super();
-  factory SdkInfo.fromBuffer($core.List<$core.int> i,
+  ResolvedDatabase._() : super();
+  factory ResolvedDatabase.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory SdkInfo.fromJson($core.String i,
+  factory ResolvedDatabase.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
+  static const $core.Map<$core.int, ResolvedDatabase_Config>
+      _ResolvedDatabase_ConfigByTag = {
+    4: ResolvedDatabase_Config.celest,
+    0: ResolvedDatabase_Config.notSet
+  };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'SdkInfo',
+      _omitMessageNames ? '' : 'ResolvedDatabase',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
-    ..e<SdkType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
-        defaultOrMaker: SdkType.SDK_TYPE_UNSPECIFIED,
-        valueOf: SdkType.valueOf,
-        enumValues: SdkType.values)
-    ..aOM<Version>(2, _omitFieldNames ? '' : 'version',
-        subBuilder: Version.create)
-    ..pPS(3, _omitFieldNames ? '' : 'enabledExperiments')
+    ..oo(0, [4])
+    ..aOS(1, _omitFieldNames ? '' : 'databaseId')
+    ..e<ResolvedDatabase_Type>(
+        2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
+        defaultOrMaker: ResolvedDatabase_Type.DATABASE_TYPE_UNSPECIFIED,
+        valueOf: ResolvedDatabase_Type.valueOf,
+        enumValues: ResolvedDatabase_Type.values)
+    ..aOM<ResolvedDatabaseSchema>(3, _omitFieldNames ? '' : 'schema',
+        subBuilder: ResolvedDatabaseSchema.create)
+    ..aOM<ResolvedCelestDatabaseConfig>(4, _omitFieldNames ? '' : 'celest',
+        subBuilder: ResolvedCelestDatabaseConfig.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  SdkInfo clone() => SdkInfo()..mergeFromMessage(this);
+  ResolvedDatabase clone() => ResolvedDatabase()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  SdkInfo copyWith(void Function(SdkInfo) updates) =>
-      super.copyWith((message) => updates(message as SdkInfo)) as SdkInfo;
+  ResolvedDatabase copyWith(void Function(ResolvedDatabase) updates) =>
+      super.copyWith((message) => updates(message as ResolvedDatabase))
+          as ResolvedDatabase;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static SdkInfo create() => SdkInfo._();
-  SdkInfo createEmptyInstance() => create();
-  static $pb.PbList<SdkInfo> createRepeated() => $pb.PbList<SdkInfo>();
+  static ResolvedDatabase create() => ResolvedDatabase._();
+  ResolvedDatabase createEmptyInstance() => create();
+  static $pb.PbList<ResolvedDatabase> createRepeated() =>
+      $pb.PbList<ResolvedDatabase>();
   @$core.pragma('dart2js:noInline')
-  static SdkInfo getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SdkInfo>(create);
-  static SdkInfo? _defaultInstance;
+  static ResolvedDatabase getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ResolvedDatabase>(create);
+  static ResolvedDatabase? _defaultInstance;
 
-  /// The type of the SDK.
+  ResolvedDatabase_Config whichConfig() =>
+      _ResolvedDatabase_ConfigByTag[$_whichOneof(0)]!;
+  void clearConfig() => clearField($_whichOneof(0));
+
+  /// The unique identifier of the database within a project.
   @$pb.TagNumber(1)
-  SdkType get type => $_getN(0);
+  $core.String get databaseId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set type(SdkType v) {
-    setField(1, v);
+  set databaseId($core.String v) {
+    $_setString(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasType() => $_has(0);
+  $core.bool hasDatabaseId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearType() => clearField(1);
+  void clearDatabaseId() => clearField(1);
 
-  /// The version of the SDK.
+  /// The type of the database.
   @$pb.TagNumber(2)
-  Version get version => $_getN(1);
+  ResolvedDatabase_Type get type => $_getN(1);
   @$pb.TagNumber(2)
-  set version(Version v) {
+  set type(ResolvedDatabase_Type v) {
     setField(2, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasVersion() => $_has(1);
+  $core.bool hasType() => $_has(1);
   @$pb.TagNumber(2)
-  void clearVersion() => clearField(2);
-  @$pb.TagNumber(2)
-  Version ensureVersion() => $_ensure(1);
+  void clearType() => clearField(2);
 
-  /// The Dart experiments enabled for the project.
+  /// The schema of the database.
   @$pb.TagNumber(3)
-  $core.List<$core.String> get enabledExperiments => $_getList(2);
+  ResolvedDatabaseSchema get schema => $_getN(2);
+  @$pb.TagNumber(3)
+  set schema(ResolvedDatabaseSchema v) {
+    setField(3, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasSchema() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSchema() => clearField(3);
+  @$pb.TagNumber(3)
+  ResolvedDatabaseSchema ensureSchema() => $_ensure(2);
+
+  /// The provider configuration of a Celest database.
+  @$pb.TagNumber(4)
+  ResolvedCelestDatabaseConfig get celest => $_getN(3);
+  @$pb.TagNumber(4)
+  set celest(ResolvedCelestDatabaseConfig v) {
+    setField(4, v);
+  }
+
+  @$pb.TagNumber(4)
+  $core.bool hasCelest() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearCelest() => clearField(4);
+  @$pb.TagNumber(4)
+  ResolvedCelestDatabaseConfig ensureCelest() => $_ensure(3);
 }
 
-/// A semantic version, broken down by its components.
-class Version extends $pb.GeneratedMessage {
-  factory Version({
-    $core.int? major,
-    $core.int? minor,
-    $core.int? patch,
-    $core.Iterable<$22.Value>? preRelease,
-    $core.Iterable<$22.Value>? build,
-    $core.String? canonicalizedVersion,
+/// The configuration of a Celest database.
+class ResolvedCelestDatabaseConfig extends $pb.GeneratedMessage {
+  factory ResolvedCelestDatabaseConfig({
+    ResolvedVariable? hostname,
+    ResolvedSecret? token,
   }) {
     final $result = create();
-    if (major != null) {
-      $result.major = major;
+    if (hostname != null) {
+      $result.hostname = hostname;
     }
-    if (minor != null) {
-      $result.minor = minor;
-    }
-    if (patch != null) {
-      $result.patch = patch;
-    }
-    if (preRelease != null) {
-      $result.preRelease.addAll(preRelease);
-    }
-    if (build != null) {
-      $result.build.addAll(build);
-    }
-    if (canonicalizedVersion != null) {
-      $result.canonicalizedVersion = canonicalizedVersion;
+    if (token != null) {
+      $result.token = token;
     }
     return $result;
   }
-  Version._() : super();
-  factory Version.fromBuffer($core.List<$core.int> i,
+  ResolvedCelestDatabaseConfig._() : super();
+  factory ResolvedCelestDatabaseConfig.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory Version.fromJson($core.String i,
+  factory ResolvedCelestDatabaseConfig.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Version',
+      _omitMessageNames ? '' : 'ResolvedCelestDatabaseConfig',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'major', $pb.PbFieldType.O3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'minor', $pb.PbFieldType.O3)
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'patch', $pb.PbFieldType.O3)
-    ..pc<$22.Value>(4, _omitFieldNames ? '' : 'preRelease', $pb.PbFieldType.PM,
-        subBuilder: $22.Value.create)
-    ..pc<$22.Value>(5, _omitFieldNames ? '' : 'build', $pb.PbFieldType.PM,
-        subBuilder: $22.Value.create)
-    ..aOS(6, _omitFieldNames ? '' : 'canonicalizedVersion')
+    ..aOM<ResolvedVariable>(1, _omitFieldNames ? '' : 'hostname',
+        subBuilder: ResolvedVariable.create)
+    ..aOM<ResolvedSecret>(2, _omitFieldNames ? '' : 'token',
+        subBuilder: ResolvedSecret.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  Version clone() => Version()..mergeFromMessage(this);
+  ResolvedCelestDatabaseConfig clone() =>
+      ResolvedCelestDatabaseConfig()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  Version copyWith(void Function(Version) updates) =>
-      super.copyWith((message) => updates(message as Version)) as Version;
+  ResolvedCelestDatabaseConfig copyWith(
+          void Function(ResolvedCelestDatabaseConfig) updates) =>
+      super.copyWith(
+              (message) => updates(message as ResolvedCelestDatabaseConfig))
+          as ResolvedCelestDatabaseConfig;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static Version create() => Version._();
-  Version createEmptyInstance() => create();
-  static $pb.PbList<Version> createRepeated() => $pb.PbList<Version>();
+  static ResolvedCelestDatabaseConfig create() =>
+      ResolvedCelestDatabaseConfig._();
+  ResolvedCelestDatabaseConfig createEmptyInstance() => create();
+  static $pb.PbList<ResolvedCelestDatabaseConfig> createRepeated() =>
+      $pb.PbList<ResolvedCelestDatabaseConfig>();
   @$core.pragma('dart2js:noInline')
-  static Version getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Version>(create);
-  static Version? _defaultInstance;
+  static ResolvedCelestDatabaseConfig getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ResolvedCelestDatabaseConfig>(create);
+  static ResolvedCelestDatabaseConfig? _defaultInstance;
 
-  /// The major version number: "1" in "1.2.3".
+  /// Required. The database hostname.
   @$pb.TagNumber(1)
-  $core.int get major => $_getIZ(0);
+  ResolvedVariable get hostname => $_getN(0);
   @$pb.TagNumber(1)
-  set major($core.int v) {
+  set hostname(ResolvedVariable v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasHostname() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHostname() => clearField(1);
+  @$pb.TagNumber(1)
+  ResolvedVariable ensureHostname() => $_ensure(0);
+
+  /// Required. The database token.
+  @$pb.TagNumber(2)
+  ResolvedSecret get token => $_getN(1);
+  @$pb.TagNumber(2)
+  set token(ResolvedSecret v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasToken() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearToken() => clearField(2);
+  @$pb.TagNumber(2)
+  ResolvedSecret ensureToken() => $_ensure(1);
+}
+
+enum ResolvedDatabaseSchema_Schema { drift, notSet }
+
+/// The resolved AST of a Celest database schema.
+class ResolvedDatabaseSchema extends $pb.GeneratedMessage {
+  factory ResolvedDatabaseSchema({
+    $core.String? databaseSchemaId,
+    ResolvedDatabaseSchema_Type? type,
+    ResolvedDriftDatabaseSchema? drift,
+  }) {
+    final $result = create();
+    if (databaseSchemaId != null) {
+      $result.databaseSchemaId = databaseSchemaId;
+    }
+    if (type != null) {
+      $result.type = type;
+    }
+    if (drift != null) {
+      $result.drift = drift;
+    }
+    return $result;
+  }
+  ResolvedDatabaseSchema._() : super();
+  factory ResolvedDatabaseSchema.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ResolvedDatabaseSchema.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, ResolvedDatabaseSchema_Schema>
+      _ResolvedDatabaseSchema_SchemaByTag = {
+    3: ResolvedDatabaseSchema_Schema.drift,
+    0: ResolvedDatabaseSchema_Schema.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ResolvedDatabaseSchema',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
+      createEmptyInstance: create)
+    ..oo(0, [3])
+    ..aOS(1, _omitFieldNames ? '' : 'databaseSchemaId')
+    ..e<ResolvedDatabaseSchema_Type>(
+        2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
+        defaultOrMaker:
+            ResolvedDatabaseSchema_Type.DATABASE_SCHEMA_TYPE_UNSPECIFIED,
+        valueOf: ResolvedDatabaseSchema_Type.valueOf,
+        enumValues: ResolvedDatabaseSchema_Type.values)
+    ..aOM<ResolvedDriftDatabaseSchema>(3, _omitFieldNames ? '' : 'drift',
+        subBuilder: ResolvedDriftDatabaseSchema.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ResolvedDatabaseSchema clone() =>
+      ResolvedDatabaseSchema()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ResolvedDatabaseSchema copyWith(
+          void Function(ResolvedDatabaseSchema) updates) =>
+      super.copyWith((message) => updates(message as ResolvedDatabaseSchema))
+          as ResolvedDatabaseSchema;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ResolvedDatabaseSchema create() => ResolvedDatabaseSchema._();
+  ResolvedDatabaseSchema createEmptyInstance() => create();
+  static $pb.PbList<ResolvedDatabaseSchema> createRepeated() =>
+      $pb.PbList<ResolvedDatabaseSchema>();
+  @$core.pragma('dart2js:noInline')
+  static ResolvedDatabaseSchema getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ResolvedDatabaseSchema>(create);
+  static ResolvedDatabaseSchema? _defaultInstance;
+
+  ResolvedDatabaseSchema_Schema whichSchema() =>
+      _ResolvedDatabaseSchema_SchemaByTag[$_whichOneof(0)]!;
+  void clearSchema() => clearField($_whichOneof(0));
+
+  /// The unique identifier of the database schema within a project.
+  @$pb.TagNumber(1)
+  $core.String get databaseSchemaId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set databaseSchemaId($core.String v) {
+    $_setString(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasDatabaseSchemaId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDatabaseSchemaId() => clearField(1);
+
+  /// The type of the database schema.
+  @$pb.TagNumber(2)
+  ResolvedDatabaseSchema_Type get type => $_getN(1);
+  @$pb.TagNumber(2)
+  set type(ResolvedDatabaseSchema_Type v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasType() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearType() => clearField(2);
+
+  /// The Drift database schema.
+  @$pb.TagNumber(3)
+  ResolvedDriftDatabaseSchema get drift => $_getN(2);
+  @$pb.TagNumber(3)
+  set drift(ResolvedDriftDatabaseSchema v) {
+    setField(3, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasDrift() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDrift() => clearField(3);
+  @$pb.TagNumber(3)
+  ResolvedDriftDatabaseSchema ensureDrift() => $_ensure(2);
+}
+
+/// The resolved AST of a Drift database schema.
+class ResolvedDriftDatabaseSchema extends $pb.GeneratedMessage {
+  factory ResolvedDriftDatabaseSchema({
+    $core.int? version,
+    $22.Struct? schemaJson,
+  }) {
+    final $result = create();
+    if (version != null) {
+      $result.version = version;
+    }
+    if (schemaJson != null) {
+      $result.schemaJson = schemaJson;
+    }
+    return $result;
+  }
+  ResolvedDriftDatabaseSchema._() : super();
+  factory ResolvedDriftDatabaseSchema.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ResolvedDriftDatabaseSchema.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ResolvedDriftDatabaseSchema',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
+      createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'version', $pb.PbFieldType.O3)
+    ..aOM<$22.Struct>(2, _omitFieldNames ? '' : 'schemaJson',
+        subBuilder: $22.Struct.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ResolvedDriftDatabaseSchema clone() =>
+      ResolvedDriftDatabaseSchema()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ResolvedDriftDatabaseSchema copyWith(
+          void Function(ResolvedDriftDatabaseSchema) updates) =>
+      super.copyWith(
+              (message) => updates(message as ResolvedDriftDatabaseSchema))
+          as ResolvedDriftDatabaseSchema;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ResolvedDriftDatabaseSchema create() =>
+      ResolvedDriftDatabaseSchema._();
+  ResolvedDriftDatabaseSchema createEmptyInstance() => create();
+  static $pb.PbList<ResolvedDriftDatabaseSchema> createRepeated() =>
+      $pb.PbList<ResolvedDriftDatabaseSchema>();
+  @$core.pragma('dart2js:noInline')
+  static ResolvedDriftDatabaseSchema getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ResolvedDriftDatabaseSchema>(create);
+  static ResolvedDriftDatabaseSchema? _defaultInstance;
+
+  /// Required. The Drift schema version.
+  @$pb.TagNumber(1)
+  $core.int get version => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set version($core.int v) {
     $_setSignedInt32(0, v);
   }
 
   @$pb.TagNumber(1)
-  $core.bool hasMajor() => $_has(0);
+  $core.bool hasVersion() => $_has(0);
   @$pb.TagNumber(1)
-  void clearMajor() => clearField(1);
+  void clearVersion() => clearField(1);
 
-  /// The minor version number: "2" in "1.2.3".
+  /// Required. The Drift schema JSON.
   @$pb.TagNumber(2)
-  $core.int get minor => $_getIZ(1);
+  $22.Struct get schemaJson => $_getN(1);
   @$pb.TagNumber(2)
-  set minor($core.int v) {
-    $_setSignedInt32(1, v);
+  set schemaJson($22.Struct v) {
+    setField(2, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasMinor() => $_has(1);
+  $core.bool hasSchemaJson() => $_has(1);
   @$pb.TagNumber(2)
-  void clearMinor() => clearField(2);
+  void clearSchemaJson() => clearField(2);
+  @$pb.TagNumber(2)
+  $22.Struct ensureSchemaJson() => $_ensure(1);
+}
 
-  /// The patch version number: "3" in "1.2.3".
+/// Configuration of the SDKs used to deploy the project.
+class SdkConfiguration extends $pb.GeneratedMessage {
+  factory SdkConfiguration({
+    $53.Version? celest,
+    $53.Sdk? dart,
+    $53.Sdk? flutter,
+    $53.SdkType? targetSdk,
+    $core.Iterable<$54.FeatureFlag>? featureFlags,
+  }) {
+    final $result = create();
+    if (celest != null) {
+      $result.celest = celest;
+    }
+    if (dart != null) {
+      $result.dart = dart;
+    }
+    if (flutter != null) {
+      $result.flutter = flutter;
+    }
+    if (targetSdk != null) {
+      $result.targetSdk = targetSdk;
+    }
+    if (featureFlags != null) {
+      $result.featureFlags.addAll(featureFlags);
+    }
+    return $result;
+  }
+  SdkConfiguration._() : super();
+  factory SdkConfiguration.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory SdkConfiguration.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SdkConfiguration',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
+      createEmptyInstance: create)
+    ..aOM<$53.Version>(1, _omitFieldNames ? '' : 'celest',
+        subBuilder: $53.Version.create)
+    ..aOM<$53.Sdk>(2, _omitFieldNames ? '' : 'dart', subBuilder: $53.Sdk.create)
+    ..aOM<$53.Sdk>(3, _omitFieldNames ? '' : 'flutter',
+        subBuilder: $53.Sdk.create)
+    ..e<$53.SdkType>(4, _omitFieldNames ? '' : 'targetSdk', $pb.PbFieldType.OE,
+        defaultOrMaker: $53.SdkType.SDK_TYPE_UNSPECIFIED,
+        valueOf: $53.SdkType.valueOf,
+        enumValues: $53.SdkType.values)
+    ..pc<$54.FeatureFlag>(
+        5, _omitFieldNames ? '' : 'featureFlags', $pb.PbFieldType.KE,
+        valueOf: $54.FeatureFlag.valueOf,
+        enumValues: $54.FeatureFlag.values,
+        defaultEnumValue: $54.FeatureFlag.FEATURE_FLAG_UNSPECIFIED)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  SdkConfiguration clone() => SdkConfiguration()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  SdkConfiguration copyWith(void Function(SdkConfiguration) updates) =>
+      super.copyWith((message) => updates(message as SdkConfiguration))
+          as SdkConfiguration;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SdkConfiguration create() => SdkConfiguration._();
+  SdkConfiguration createEmptyInstance() => create();
+  static $pb.PbList<SdkConfiguration> createRepeated() =>
+      $pb.PbList<SdkConfiguration>();
+  @$core.pragma('dart2js:noInline')
+  static SdkConfiguration getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SdkConfiguration>(create);
+  static SdkConfiguration? _defaultInstance;
+
+  /// The Celest version used to deploy the project.
+  @$pb.TagNumber(1)
+  $53.Version get celest => $_getN(0);
+  @$pb.TagNumber(1)
+  set celest($53.Version v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasCelest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCelest() => clearField(1);
+  @$pb.TagNumber(1)
+  $53.Version ensureCelest() => $_ensure(0);
+
+  /// The Dart SDK used to deploy the project.
+  @$pb.TagNumber(2)
+  $53.Sdk get dart => $_getN(1);
+  @$pb.TagNumber(2)
+  set dart($53.Sdk v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasDart() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearDart() => clearField(2);
+  @$pb.TagNumber(2)
+  $53.Sdk ensureDart() => $_ensure(1);
+
+  /// The Flutter SDK used to deploy the project, if any.
   @$pb.TagNumber(3)
-  $core.int get patch => $_getIZ(2);
+  $53.Sdk get flutter => $_getN(2);
   @$pb.TagNumber(3)
-  set patch($core.int v) {
-    $_setSignedInt32(2, v);
+  set flutter($53.Sdk v) {
+    setField(3, v);
   }
 
   @$pb.TagNumber(3)
-  $core.bool hasPatch() => $_has(2);
+  $core.bool hasFlutter() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPatch() => clearField(3);
+  void clearFlutter() => clearField(3);
+  @$pb.TagNumber(3)
+  $53.Sdk ensureFlutter() => $_ensure(2);
 
-  ///  The pre-release identifier: "foo" in "1.2.3-foo".
-  ///
-  ///  This is split into a list of components, each of which may be either a
-  ///  string or a non-negative integer. It may also be empty, indicating that
-  ///  this version has no pre-release identifier.
+  /// The target SDK for deployment.
   @$pb.TagNumber(4)
-  $core.List<$22.Value> get preRelease => $_getList(3);
-
-  ///  The build identifier: "foo" in "1.2.3+foo".
-  ///
-  ///  This is split into a list of components, each of which may be either a
-  ///  string or a non-negative integer. It may also be empty, indicating that
-  ///  this version has no build identifier.
-  @$pb.TagNumber(5)
-  $core.List<$22.Value> get build => $_getList(4);
-
-  /// The canonicalized version string.
-  @$pb.TagNumber(6)
-  $core.String get canonicalizedVersion => $_getSZ(5);
-  @$pb.TagNumber(6)
-  set canonicalizedVersion($core.String v) {
-    $_setString(5, v);
+  $53.SdkType get targetSdk => $_getN(3);
+  @$pb.TagNumber(4)
+  set targetSdk($53.SdkType v) {
+    setField(4, v);
   }
 
-  @$pb.TagNumber(6)
-  $core.bool hasCanonicalizedVersion() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearCanonicalizedVersion() => clearField(6);
+  @$pb.TagNumber(4)
+  $core.bool hasTargetSdk() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearTargetSdk() => clearField(4);
+
+  /// The feature flags enabled by the project.
+  @$pb.TagNumber(5)
+  $core.List<$54.FeatureFlag> get featureFlags => $_getList(4);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

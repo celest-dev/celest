@@ -1,0 +1,376 @@
+import 'cedar.drift';
+import 'users.drift';
+
+import 'schema_imports.dart';
+
+-- Stores crypto key metadata
+CREATE TABLE IF NOT EXISTS crypto_keys (
+    -- The unique identifier of the key.
+    crypto_key_id BLOB NOT NULL PRIMARY KEY,
+
+    -- The key's purpose.
+    key_purpose TEXT NOT NULL,
+
+    -- The key's algorithm.
+    key_algorithm TEXT NOT NULL,
+
+    -- The key material.
+    --
+    -- Either `key_material` or `external_crypto_key_id` must be set.
+    key_material BLOB,
+
+    -- The key's external ID, if managed outside of Celest.
+    --
+    -- Either `key_material` or `external_crypto_key_id` must be set.
+    external_crypto_key_id TEXT UNIQUE,
+
+    CHECK (key_material IS NOT NULL OR external_crypto_key_id IS NOT NULL)
+) WITH CryptoKey;
+
+CREATE INDEX IF NOT EXISTS crypto_keys_external_crypto_key_id_idx ON crypto_keys(external_crypto_key_id);
+
+-- Stores ongoing authentication sessions.
+CREATE TABLE IF NOT EXISTS sessions (
+    -- Explicit rowid for codegen.
+    rowid INTEGER PRIMARY KEY AUTOINCREMENT,
+    
+    -- The unique identifier of the session.
+    --
+    -- Format: sess_<typeid>
+    session_id TEXT NOT NULL UNIQUE,
+
+    -- The ID of the HMAC key for the session, which signs the continuation tokens
+    -- and mints HOTP codes.
+    --
+    -- RFC4226 recommends 160 bits of entropy for HMAC-SHA1.
+    crypto_key_id BLOB NOT NULL,
+
+    -- The ID of the user who started the session.
+    user_id TEXT,
+
+    -- Client information for the session.
+    client_info BLOB NOT NULL MAPPED BY `const SessionClientConverter()`,
+
+    -- The authentication factor used to start the session.
+    authentication_factor BLOB NOT NULL MAPPED BY `const AuthenticationFactorConverter()`,
+
+    -- The state of the session.
+    --
+    -- This is used to track the progress of the session.
+    state BLOB MAPPED BY `const SessionStateConverter()`,
+
+    -- The IP address of the client who started the session.
+    ip_address TEXT,
+
+    -- The ID of the external session, if any.
+    --
+    -- This field can be used to link the HOTP code to a corresponding session in
+    -- another system.
+    external_session_id TEXT,
+
+    create_time `const TimestampType()` NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+    update_time `const TimestampType()`,
+    expire_time `const TimestampType()` NOT NULL,
+    cancel_time `const TimestampType()`,
+
+    CONSTRAINT sessions_user_fk FOREIGN KEY (user_id) REFERENCES users(user_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED,
+
+    CONSTRAINT sessions_key_fk FOREIGN KEY (crypto_key_id) REFERENCES crypto_keys(crypto_key_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED
+) WITH Session;
+
+-- Index for the session's FK.
+CREATE INDEX IF NOT EXISTS sessions_user_idx ON sessions(user_id);
+CREATE INDEX IF NOT EXISTS sessions_crypto_key_idx ON sessions(crypto_key_id);
+CREATE INDEX IF NOT EXISTS sessions_external_session_id_idx ON sessions(external_session_id);
+
+-- Trigger to update the update_time when a session is updated.
+CREATE TRIGGER IF NOT EXISTS auth_sessions_update_time
+AFTER UPDATE ON sessions
+BEGIN
+    UPDATE sessions
+    SET update_time = unixepoch('now', 'subsec')
+    WHERE rowid = OLD.rowid;
+END;
+
+-- Stores HOTP parameters for ongoing authentication sessions.
+CREATE TABLE IF NOT EXISTS otp_codes (
+    -- The row ID which serves as the HOTP counter.
+    rowid INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    -- The ID of the session.
+    session_id TEXT NOT NULL UNIQUE,
+
+    -- The counter value for the HOTP code.
+    resend_attempt INTEGER NOT NULL DEFAULT 0,
+
+    -- The throttling parameter for bruteforce prevention.
+    verify_attempt INTEGER NOT NULL DEFAULT 0,
+
+    -- The time the HOTP code was last used.
+    update_time `const TimestampType()` NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+
+    CONSTRAINT otp_codes_session_fk FOREIGN KEY (session_id) REFERENCES sessions(session_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED
+);
+
+-- Index for the HOTP code's FK.
+CREATE INDEX IF NOT EXISTS otp_codes_session_idx ON otp_codes(session_id);
+
+-- Stores corks for Celest Cloud user sessions.
+CREATE TABLE IF NOT EXISTS corks (
+    -- The unique identifier for the cork and its root key.
+    cork_id BLOB NOT NULL PRIMARY KEY,
+
+    -- The ID of the HMAC key used to sign the cork.
+    --
+    -- This is typically derived from the organization's root key.
+    crypto_key_id BLOB NOT NULL,
+
+    -- The Cedar type of the bearer entity.
+    --
+    -- For example, `Celest::User` or `Celest::ServiceAccount`.
+    bearer_type TEXT,
+
+    -- The unique identifier of the bearer entity.
+    bearer_id TEXT,
+
+    -- The Cedar type of the audience entity.
+    --
+    -- For example, `Celest::Service` or `Celest::Api`.
+    audience_type TEXT,
+
+    -- The unique identifier of the audience entity.
+    audience_id TEXT,
+
+    -- The Cedar type of the issuer entity.
+    --
+    -- For example, `Celest::Organization` or `Celest::Service`.
+    issuer_type TEXT,
+
+    -- The unique identifier of the issuer entity.
+    issuer_id TEXT,
+
+    -- The time the cork was created.
+    create_time `const TimestampType()` NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+
+    -- The time the cork will expire.
+    expire_time `const TimestampType()`,
+
+    -- The time the cork was last used.
+    last_use_time `const TimestampType()`,
+
+    CONSTRAINT corks_crypto_key_fk FOREIGN KEY (crypto_key_id) REFERENCES crypto_keys(crypto_key_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED,
+
+    CONSTRAINT corks_bearer_fk FOREIGN KEY (bearer_type, bearer_id) REFERENCES cedar_entities(entity_type, entity_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED,
+
+    CONSTRAINT corks_audience_fk FOREIGN KEY (audience_type, audience_id) REFERENCES cedar_entities(entity_type, entity_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED,
+
+    CONSTRAINT corks_issuer_fk FOREIGN KEY (issuer_type, issuer_id) REFERENCES cedar_entities(entity_type, entity_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED
+);
+
+-- Index for the cork's FK.
+CREATE INDEX IF NOT EXISTS corks_crypto_key_idx ON corks(crypto_key_id);
+CREATE INDEX IF NOT EXISTS corks_bearer_idx ON corks(bearer_type, bearer_id);
+CREATE INDEX IF NOT EXISTS corks_audience_idx ON corks(audience_type, audience_id);
+CREATE INDEX IF NOT EXISTS corks_issuer_idx ON corks(issuer_type, issuer_id);
+
+-- Creates a new crypto key.
+createCryptoKey:
+    INSERT INTO crypto_keys(
+        crypto_key_id, 
+        key_purpose, 
+        key_algorithm, 
+        key_material, 
+        external_crypto_key_id
+    )
+    VALUES (
+        :crypto_key_id, 
+        :key_purpose, 
+        :key_algorithm, 
+        :key_material, 
+        :external_crypto_key_id
+    )
+    ON CONFLICT DO NOTHING
+    RETURNING *;
+
+-- Retrieves the crypto key for the given ID.
+getCryptoKey:
+    SELECT * FROM crypto_keys
+    WHERE crypto_key_id = :crypto_key_id;
+
+-- Retrieves the external crypto key for the given ID.
+getExternalCryptoKey:
+    SELECT * FROM crypto_keys
+    WHERE external_crypto_key_id = :external_crypto_key_id;
+
+-- Finds the crypto key for the given purpose.
+findCryptoKey:
+    SELECT * FROM crypto_keys
+    WHERE key_purpose = :key_purpose
+    AND key_algorithm = :key_algorithm;
+
+-- Deletes the crypto key for the given ID.
+deleteCryptoKey:
+    DELETE FROM crypto_keys
+    WHERE crypto_key_id = :crypto_key_id;
+
+-- Creates a new auth session.
+createSession:
+    INSERT INTO sessions(
+        session_id, 
+        crypto_key_id, 
+        user_id, 
+        client_info, 
+        authentication_factor, 
+        state, 
+        ip_address, 
+        expire_time, 
+        cancel_time, 
+        external_session_id
+    )
+    VALUES (
+        :session_id, 
+        :crypto_key_id, 
+        :user_id, 
+        :client_info, 
+        :authentication_factor, 
+        :state, 
+        :ip_address, 
+        :expire_time, 
+        :cancel_time, 
+        :external_session_id
+    )
+    RETURNING *;
+
+-- Retrieves the auth session for the given ID.
+getSession: 
+    SELECT * FROM sessions
+    WHERE 
+    (
+           sessions.session_id = :session_id
+        OR sessions.external_session_id = :session_id
+    )
+    AND sessions.expire_time > unixepoch('now', 'subsec')
+    AND sessions.cancel_time IS NULL;
+
+-- Updates the state of the auth session for the given ID.
+updateSession:
+    UPDATE sessions
+    SET state = :state
+    WHERE 
+        session_id = :session_id
+    OR  external_session_id = :session_id
+    RETURNING *;
+
+-- Deletes the auth session for the given ID.
+deleteSession:
+    DELETE FROM sessions
+    WHERE 
+        session_id = :session_id
+    OR  external_session_id = :session_id;
+
+-- Cancels the auth session for the given ID.
+cancelSession:
+    UPDATE sessions
+    SET cancel_time = unixepoch('now', 'subsec')
+    WHERE
+        session_id = :session_id
+    OR  external_session_id = :session_id;
+
+-- Creates a cork in the database.
+createCork:
+    INSERT INTO corks(
+        cork_id, 
+        crypto_key_id, 
+        bearer_type, 
+        bearer_id, 
+        audience_type, 
+        audience_id, 
+        issuer_type, 
+        issuer_id, 
+        expire_time
+    )
+    VALUES (
+        :cork_id, 
+        :crypto_key_id, 
+        :bearer_type, 
+        :bearer_id, 
+        :audience_type, 
+        :audience_id, 
+        :issuer_type, 
+        :issuer_id, 
+        :expire_time
+    );
+
+-- Retrieves the cork for the given ID.
+getCork:
+    SELECT * FROM corks
+    WHERE cork_id = :cork_id;
+
+-- Deletes the cork for the given ID.
+deleteCork:
+    DELETE FROM corks
+    WHERE cork_id = :cork_id;
+
+-- Revokes all corks under the given entity.
+deleteCorksForEntity(
+    :bearer_type AS TEXT OR NULL,
+    :bearer_id AS TEXT OR NULL,
+    :audience_type AS TEXT OR NULL,
+    :audience_id AS TEXT OR NULL,
+    :issuer_type AS TEXT OR NULL,
+    :issuer_id AS TEXT OR NULL
+):
+    DELETE FROM corks
+    WHERE
+        (:bearer_type IS NULL OR bearer_type = :bearer_type)
+    AND (:bearer_id IS NULL OR bearer_id = :bearer_id)
+    AND (:audience_type IS NULL OR audience_type = :audience_type)
+    AND (:audience_id IS NULL OR audience_id = :audience_id)
+    AND (:issuer_type IS NULL OR issuer_type = :issuer_type)
+    AND (:issuer_id IS NULL OR issuer_id = :issuer_id)
+    RETURNING cork_id;
+
+-- Creates a new HOTP code for the given session.
+upsertOtpCode(
+    :session_id,
+    :resend_attempt AS INTEGER OR NULL, 
+    :verify_attempt AS INTEGER OR NULL
+):
+    INSERT INTO otp_codes(session_id, resend_attempt, verify_attempt)
+    VALUES (:session_id, coalesce(:resend_attempt, 0), coalesce(:verify_attempt, 0))
+    ON CONFLICT(session_id) DO UPDATE
+    SET
+        resend_attempt = coalesce(:resend_attempt, resend_attempt), 
+        verify_attempt = coalesce(:verify_attempt, verify_attempt)
+    RETURNING *;
+
+-- Updates the HOTP code for the given session.
+updateOtpCode(
+    :resend_attempt AS INTEGER OR NULL, 
+    :verify_attempt AS INTEGER OR NULL
+):
+    UPDATE otp_codes
+    SET
+        resend_attempt = coalesce(:resend_attempt, resend_attempt), 
+        verify_attempt = coalesce(:verify_attempt, verify_attempt)
+    WHERE session_id = :session_id
+    RETURNING *;
+
+-- Retrieves the HOTP code for the given session.
+getOtpCode:
+    SELECT * FROM otp_codes
+    WHERE session_id = :session_id;

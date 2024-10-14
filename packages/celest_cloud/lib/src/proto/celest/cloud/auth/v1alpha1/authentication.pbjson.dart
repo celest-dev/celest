@@ -199,7 +199,7 @@ const StartSessionRequest$json = {
 
 /// Descriptor for `StartSessionRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List startSessionRequestDescriptor = $convert.base64Decode(
-    'ChNTdGFydFNlc3Npb25SZXF1ZXN0EqsBCgZwYXJlbnQYASABKAlCkgHgQQK6SIsBugGHAQoMdm'
+    'ChNTdGFydFNlc3Npb25SZXF1ZXN0EqsBCgZwYXJlbnQYASABKAlCkgHgQQG6SIsBugGHAQoMdm'
     'FsaWRfcGFyZW50Eh1wYXJlbnQgbXVzdCBiZSBhIHZhbGlkIHBhcmVudBpYdGhpcyA9PSAnJyB8'
     'fCB0aGlzLm1hdGNoZXMoJ15vcmdhbml6YXRpb25zL1teL10rJHxeb3JnYW5pemF0aW9ucy9bXi'
     '9dKy9wcm9qZWN0cy9bXi9dKyQnKVIGcGFyZW50ElcKCWVtYWlsX290cBgCIAEoCzI4LmNlbGVz'
@@ -743,7 +743,7 @@ const OpenIdUserinfo$json = {
       '1': 'updated_at',
       '3': 20,
       '4': 1,
-      '5': 3,
+      '5': 5,
       '9': 18,
       '10': 'updated_at',
       '17': true
@@ -787,7 +787,7 @@ final $typed_data.Uint8List openIdUserinfoDescriptor = $convert.base64Decode(
     'cGhvbmVfbnVtYmVyGBEgASgJSA9SDHBob25lX251bWJlcogBARI5ChVwaG9uZV9udW1iZXJfdm'
     'VyaWZpZWQYEiABKAhIEFIVcGhvbmVfbnVtYmVyX3ZlcmlmaWVkiAEBEjUKB2FkZHJlc3MYEyAB'
     'KAsyFi5nb29nbGUucHJvdG9idWYuVmFsdWVIEVIHYWRkcmVzc4gBARIjCgp1cGRhdGVkX2F0GB'
-    'QgASgDSBJSCnVwZGF0ZWRfYXSIAQFCBwoFX25hbWVCDQoLX2dpdmVuX25hbWVCDgoMX2ZhbWls'
+    'QgASgFSBJSCnVwZGF0ZWRfYXSIAQFCBwoFX25hbWVCDQoLX2dpdmVuX25hbWVCDgoMX2ZhbWls'
     'eV9uYW1lQg4KDF9taWRkbGVfbmFtZUILCglfbmlja25hbWVCFQoTX3ByZWZlcnJlZF91c2Vybm'
     'FtZUIKCghfcHJvZmlsZUIKCghfcGljdHVyZUIKCghfd2Vic2l0ZUIICgZfZW1haWxCEQoPX2Vt'
     'YWlsX3ZlcmlmaWVkQgkKB19nZW5kZXJCDAoKX2JpcnRoZGF0ZUILCglfem9uZWluZm9CCQoHX2'

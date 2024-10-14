@@ -1,0 +1,118 @@
+import 'dart:async';
+
+import 'package:cedar/cedar.dart';
+import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_core/celest_core.dart';
+import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
+
+extension type Authorizer._(AuthDatabase _db) implements Object {
+  Authorizer({required AuthDatabase db}) : this._(db);
+
+  static final Logger _logger = Logger('Celest.Authorizer');
+
+  Future<void> expectAuthorized({
+    Component? principal,
+    Component? resource,
+    EntityUid? action,
+    Map<String, Value>? context,
+    bool debug = false,
+  }) async {
+    final response = await authorize(
+      principal: principal,
+      resource: resource,
+      action: action,
+      context: context,
+      debug: debug,
+    );
+    response.expectAuthorized(
+      request: AuthorizationRequest(
+        principal: principal?.uid,
+        resource: resource?.uid,
+        action: action,
+        context: context,
+      ),
+    );
+  }
+
+  @useResult
+  Future<AuthorizationResponse> authorize({
+    Component? principal,
+    Component? resource,
+    EntityUid? action,
+    Map<String, Value>? context,
+    bool debug = false,
+  }) async {
+    final (policySet, closure) = await (
+      _db.effectivePolicySet,
+      _db.computeRequestClosure(
+        principal: principal,
+        resource: resource,
+      ),
+    ).wait;
+    final request = AuthorizationRequest(
+      principal: principal?.uid,
+      resource: resource?.uid,
+      action: action,
+      context: context,
+      entities: {
+        // The principal and resource may represent yet-tobe-created entities.
+        // Thus, they will not be present in the closure which is pulled from
+        // the database. We add them here to ensure they are included in the
+        // authorization decision.
+        if (principal case final Entity principal) principal.uid: principal,
+        if (resource case final Entity resource) resource.uid: resource,
+        ...closure,
+      },
+    );
+    final response = policySet.isAuthorized(request);
+    unawaited(_recordAuthorization(request, response));
+    return response;
+  }
+
+  Future<void> _recordAuthorization(
+    AuthorizationRequest request,
+    AuthorizationResponse response,
+  ) async {
+    try {
+      await _db.cedarDrift.recordAuthorization(
+        principalType: request.principal?.type,
+        principalId: request.principal?.id,
+        actionType: request.action?.type,
+        actionId: request.action?.id,
+        resourceType: request.resource?.type,
+        resourceId: request.resource?.id,
+        contextJson: request.context ?? const {},
+        decision: response.decision == Decision.allow,
+        reasonsJson: response.reasons,
+        errorsJson: response.errors,
+      );
+    } on Object catch (e, st) {
+      _logger.severe('Failed to record authorization', e, st);
+    }
+  }
+}
+
+extension on AuthorizationResponse {
+  void expectAuthorized({AuthorizationRequest? request}) {
+    if (decision != Decision.allow) {
+      if (request == null) {
+        throw PermissionDeniedException(
+          'Authorization denied',
+          JsonList(reasons),
+        );
+      }
+      const unknown = EntityUid.of('', '<unknown>');
+      final EntityUid(type: principalType, id: principalId) =
+          (request.principal ?? unknown).uid;
+      final EntityUid(type: resourceType, id: resourceId) =
+          (request.resource ?? unknown).uid;
+      final actionId = request.action?.id;
+      throw PermissionDeniedException(
+        '${principalType.split('::').last}::"$principalId" '
+        'is not authorized to perform Action::"$actionId" on '
+        '${resourceType.split('::').last}::"$resourceId"',
+      );
+    }
+  }
+}

@@ -342,12 +342,13 @@ class _$ResolvedHttpConfigSerializer
       Serializers serializers, ResolvedHttpConfig object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'method',
-      serializers.serialize(object.method,
-          specifiedType: const FullType(String)),
       'route',
       serializers.serialize(object.route,
           specifiedType: const FullType(ResolvedHttpRoute)),
+      'additionalRoutes',
+      serializers.serialize(object.additionalRoutes,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ResolvedHttpRoute)])),
       'status',
       serializers.serialize(object.status, specifiedType: const FullType(int)),
       'statusMappings',
@@ -371,14 +372,16 @@ class _$ResolvedHttpConfigSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'method':
-          result.method = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
         case 'route':
           result.route.replace(serializers.deserialize(value,
                   specifiedType: const FullType(ResolvedHttpRoute))!
               as ResolvedHttpRoute);
+          break;
+        case 'additionalRoutes':
+          result.additionalRoutes.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ResolvedHttpRoute)]))!
+              as BuiltList<Object?>);
           break;
         case 'status':
           result.status = serializers.deserialize(value,
@@ -458,6 +461,9 @@ class _$ResolvedHttpRouteSerializer
   Iterable<Object?> serialize(Serializers serializers, ResolvedHttpRoute object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
+      'method',
+      serializers.serialize(object.method,
+          specifiedType: const FullType(String)),
       'path',
       serializers.serialize(object.path, specifiedType: const FullType(String)),
     ];
@@ -477,6 +483,10 @@ class _$ResolvedHttpRouteSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
+        case 'method':
+          result.method = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
         case 'path':
           result.path = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
@@ -1835,9 +1845,9 @@ class ResolvedCloudFunctionBuilder
 
 class _$ResolvedHttpConfig extends ResolvedHttpConfig {
   @override
-  final String method;
-  @override
   final ResolvedHttpRoute route;
+  @override
+  final BuiltList<ResolvedHttpRoute> additionalRoutes;
   @override
   final int status;
   @override
@@ -1848,15 +1858,15 @@ class _$ResolvedHttpConfig extends ResolvedHttpConfig {
       (new ResolvedHttpConfigBuilder()..update(updates))._build();
 
   _$ResolvedHttpConfig._(
-      {required this.method,
-      required this.route,
+      {required this.route,
+      required this.additionalRoutes,
       required this.status,
       required this.statusMappings})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        method, r'ResolvedHttpConfig', 'method');
-    BuiltValueNullFieldError.checkNotNull(
         route, r'ResolvedHttpConfig', 'route');
+    BuiltValueNullFieldError.checkNotNull(
+        additionalRoutes, r'ResolvedHttpConfig', 'additionalRoutes');
     BuiltValueNullFieldError.checkNotNull(
         status, r'ResolvedHttpConfig', 'status');
     BuiltValueNullFieldError.checkNotNull(
@@ -1876,8 +1886,8 @@ class _$ResolvedHttpConfig extends ResolvedHttpConfig {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is ResolvedHttpConfig &&
-        method == other.method &&
         route == other.route &&
+        additionalRoutes == other.additionalRoutes &&
         status == other.status &&
         statusMappings == other.statusMappings;
   }
@@ -1885,8 +1895,8 @@ class _$ResolvedHttpConfig extends ResolvedHttpConfig {
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, method.hashCode);
     _$hash = $jc(_$hash, route.hashCode);
+    _$hash = $jc(_$hash, additionalRoutes.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, statusMappings.hashCode);
     _$hash = $jf(_$hash);
@@ -1896,8 +1906,8 @@ class _$ResolvedHttpConfig extends ResolvedHttpConfig {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'ResolvedHttpConfig')
-          ..add('method', method)
           ..add('route', route)
+          ..add('additionalRoutes', additionalRoutes)
           ..add('status', status)
           ..add('statusMappings', statusMappings))
         .toString();
@@ -1908,14 +1918,16 @@ class ResolvedHttpConfigBuilder
     implements Builder<ResolvedHttpConfig, ResolvedHttpConfigBuilder> {
   _$ResolvedHttpConfig? _$v;
 
-  String? _method;
-  String? get method => _$this._method;
-  set method(String? method) => _$this._method = method;
-
   ResolvedHttpRouteBuilder? _route;
   ResolvedHttpRouteBuilder get route =>
       _$this._route ??= new ResolvedHttpRouteBuilder();
   set route(ResolvedHttpRouteBuilder? route) => _$this._route = route;
+
+  ListBuilder<ResolvedHttpRoute>? _additionalRoutes;
+  ListBuilder<ResolvedHttpRoute> get additionalRoutes =>
+      _$this._additionalRoutes ??= new ListBuilder<ResolvedHttpRoute>();
+  set additionalRoutes(ListBuilder<ResolvedHttpRoute>? additionalRoutes) =>
+      _$this._additionalRoutes = additionalRoutes;
 
   int? _status;
   int? get status => _$this._status;
@@ -1932,8 +1944,8 @@ class ResolvedHttpConfigBuilder
   ResolvedHttpConfigBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _method = $v.method;
       _route = $v.route.toBuilder();
+      _additionalRoutes = $v.additionalRoutes.toBuilder();
       _status = $v.status;
       _statusMappings = $v.statusMappings.toBuilder();
       _$v = null;
@@ -1961,9 +1973,8 @@ class ResolvedHttpConfigBuilder
     try {
       _$result = _$v ??
           new _$ResolvedHttpConfig._(
-              method: BuiltValueNullFieldError.checkNotNull(
-                  method, r'ResolvedHttpConfig', 'method'),
               route: route.build(),
+              additionalRoutes: additionalRoutes.build(),
               status: BuiltValueNullFieldError.checkNotNull(
                   status, r'ResolvedHttpConfig', 'status'),
               statusMappings: statusMappings.build());
@@ -1972,6 +1983,8 @@ class ResolvedHttpConfigBuilder
       try {
         _$failedField = 'route';
         route.build();
+        _$failedField = 'additionalRoutes';
+        additionalRoutes.build();
 
         _$failedField = 'statusMappings';
         statusMappings.build();
@@ -2069,13 +2082,18 @@ class ResolvedStreamConfigBuilder
 
 class _$ResolvedHttpRoute extends ResolvedHttpRoute {
   @override
+  final String method;
+  @override
   final String path;
 
   factory _$ResolvedHttpRoute(
           [void Function(ResolvedHttpRouteBuilder)? updates]) =>
       (new ResolvedHttpRouteBuilder()..update(updates))._build();
 
-  _$ResolvedHttpRoute._({required this.path}) : super._() {
+  _$ResolvedHttpRoute._({required this.method, required this.path})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        method, r'ResolvedHttpRoute', 'method');
     BuiltValueNullFieldError.checkNotNull(path, r'ResolvedHttpRoute', 'path');
   }
 
@@ -2090,12 +2108,15 @@ class _$ResolvedHttpRoute extends ResolvedHttpRoute {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is ResolvedHttpRoute && path == other.path;
+    return other is ResolvedHttpRoute &&
+        method == other.method &&
+        path == other.path;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
+    _$hash = $jc(_$hash, method.hashCode);
     _$hash = $jc(_$hash, path.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -2104,6 +2125,7 @@ class _$ResolvedHttpRoute extends ResolvedHttpRoute {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'ResolvedHttpRoute')
+          ..add('method', method)
           ..add('path', path))
         .toString();
   }
@@ -2112,6 +2134,10 @@ class _$ResolvedHttpRoute extends ResolvedHttpRoute {
 class ResolvedHttpRouteBuilder
     implements Builder<ResolvedHttpRoute, ResolvedHttpRouteBuilder> {
   _$ResolvedHttpRoute? _$v;
+
+  String? _method;
+  String? get method => _$this._method;
+  set method(String? method) => _$this._method = method;
 
   String? _path;
   String? get path => _$this._path;
@@ -2122,6 +2148,7 @@ class ResolvedHttpRouteBuilder
   ResolvedHttpRouteBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _method = $v.method;
       _path = $v.path;
       _$v = null;
     }
@@ -2143,8 +2170,11 @@ class ResolvedHttpRouteBuilder
   ResolvedHttpRoute build() => _build();
 
   _$ResolvedHttpRoute _build() {
+    ResolvedHttpRoute._defaults(this);
     final _$result = _$v ??
         new _$ResolvedHttpRoute._(
+            method: BuiltValueNullFieldError.checkNotNull(
+                method, r'ResolvedHttpRoute', 'method'),
             path: BuiltValueNullFieldError.checkNotNull(
                 path, r'ResolvedHttpRoute', 'path'));
     replace(_$result);

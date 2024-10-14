@@ -81,14 +81,14 @@ message ResolvedFunction {
 
 // The HTTP configuration of a [ResolvedFunction][].
 message ResolvedHttpConfig {
-  // The HTTP method of the function.
-  string method = 1 [(google.api.field_behavior) = REQUIRED];
+  // The successful status code of the function.
+  int32 status = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The resolved route configuration of the function.
   ResolvedHttpRoute route = 2 [(google.api.field_behavior) = REQUIRED];
 
-  // The successful status code of the function.
-  int32 status = 3 [(google.api.field_behavior) = REQUIRED];
+  // Additional route configurations of the function.
+  repeated ResolvedHttpRoute additional_routes = 3 [(google.api.field_behavior) = OPTIONAL];
 
   // A mapping of Dart types to HTTP status codes.
   //
@@ -104,8 +104,11 @@ message ResolvedHttpConfig {
 
 // A route to an HTTP endpoint.
 message ResolvedHttpRoute {
-  // The path of the HTTP endpoint.
-  string path = 1 [(google.api.field_behavior) = REQUIRED];
+  // The HTTP method of the route.
+  string method = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The path to the HTTP endpoint.
+  string path = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // The stream configuration of a [ResolvedFunction][].

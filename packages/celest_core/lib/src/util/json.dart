@@ -9,7 +9,8 @@ extension JsonUtf8 on Object {
   static final encoder = JsonUtf8Encoder();
 
   /// A JSON decoder that decodes from UTF-8.
-  static final decoder = utf8.decoder.fuse(json.decoder);
+  static final decoder =
+      utf8.decoder.fuse(json.decoder).cast<Uint8List, Object?>();
 
   /// Encodes a JSON [object] to a UTF-8 buffer.
   static Uint8List encode(Object? object) {
@@ -18,7 +19,12 @@ extension JsonUtf8 on Object {
 
   /// Decodes a UTF-8 buffer to a JSON object.
   static Object? decode(List<int> bytes) {
-    return decoder.convert(bytes);
+    return decoder.convert(bytes as Uint8List);
+  }
+
+  /// Decodes a [Stream] of UTF-8 bytes to a JSON object.
+  static Future<Object?> decodeStream(Stream<List<int>> stream) async {
+    return stream.transform(decoder).first;
   }
 
   static Never _invalidJson(Object? json) {

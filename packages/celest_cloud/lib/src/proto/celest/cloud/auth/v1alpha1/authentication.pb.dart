@@ -11,7 +11,6 @@
 
 import 'dart:core' as $core;
 
-import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../../../../google/protobuf/empty.pb.dart' as $1;
@@ -89,7 +88,8 @@ class Session extends $pb.GeneratedMessage {
     ..aOM<AuthenticationStep>(6, _omitFieldNames ? '' : 'nextStep',
         subBuilder: AuthenticationStep.create)
     ..aOM<SessionClient>(7, _omitFieldNames ? '' : 'client',
-        subBuilder: SessionClient.create);
+        subBuilder: SessionClient.create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -497,7 +497,9 @@ class StartSessionRequest extends $pb.GeneratedMessage {
       _StartSessionRequest_FactorByTag[$_whichOneof(0)]!;
   void clearFactor() => clearField($_whichOneof(0));
 
-  ///  Required. The parent resource in which the authentication session will be created.
+  ///  Optional. The parent resource in which the authentication session will be created.
+  ///
+  ///  If not provided, the session will be created in the root service context.
   ///
   ///  Format: `organizations/{organization}` or `organizations/{organization}/projects/{project}`.
   @$pb.TagNumber(1)
@@ -614,7 +616,8 @@ class AuthenticationStep extends $pb.GeneratedMessage {
         subBuilder: AuthenticationFactor.create)
     ..aOM<AuthenticationPendingConfirmation>(
         7, _omitFieldNames ? '' : 'pendingConfirmation',
-        subBuilder: AuthenticationPendingConfirmation.create);
+        subBuilder: AuthenticationPendingConfirmation.create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1125,7 +1128,8 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
         4, _omitFieldNames ? '' : 'confirmation',
         subBuilder: AuthenticationPendingConfirmation.create)
     ..aOM<AuthenticationFactor>(5, _omitFieldNames ? '' : 'resend',
-        subBuilder: AuthenticationFactor.create);
+        subBuilder: AuthenticationFactor.create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1263,7 +1267,8 @@ class AuthenticationSuccess extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'identityToken')
     ..aOM<$5.User>(2, _omitFieldNames ? '' : 'user', subBuilder: $5.User.create)
-    ..aOB(3, _omitFieldNames ? '' : 'isNewUser');
+    ..aOB(3, _omitFieldNames ? '' : 'isNewUser')
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1376,7 +1381,8 @@ class AuthenticationPendingConfirmation extends $pb.GeneratedMessage {
     ..aOM<$5.User>(1, _omitFieldNames ? '' : 'linkExistingUser',
         subBuilder: $5.User.create)
     ..aOM<$5.User>(2, _omitFieldNames ? '' : 'registerUser',
-        subBuilder: $5.User.create);
+        subBuilder: $5.User.create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1674,7 +1680,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
     $core.String? phoneNumber,
     $core.bool? phoneNumberVerified,
     $22.Value? address,
-    $fixnum.Int64? updatedAt,
+    $core.int? updatedAt,
   }) {
     final $result = create();
     if (sub != null) {
@@ -1772,7 +1778,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
     ..aOB(18, _omitFieldNames ? '' : 'phone_number_verified')
     ..aOM<$22.Value>(19, _omitFieldNames ? '' : 'address',
         subBuilder: $22.Value.create)
-    ..aInt64(20, _omitFieldNames ? '' : 'updated_at')
+    ..a<$core.int>(20, _omitFieldNames ? '' : 'updated_at', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -2128,10 +2134,10 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   ///  in UTC until the date/time.
   ///  (-- api-linter: core::0140::prepositions=disabled --)
   @$pb.TagNumber(20)
-  $fixnum.Int64 get updatedAt => $_getI64(19);
+  $core.int get updatedAt => $_getIZ(19);
   @$pb.TagNumber(20)
-  set updatedAt($fixnum.Int64 v) {
-    $_setInt64(19, v);
+  set updatedAt($core.int v) {
+    $_setSignedInt32(19, v);
   }
 
   @$pb.TagNumber(20)

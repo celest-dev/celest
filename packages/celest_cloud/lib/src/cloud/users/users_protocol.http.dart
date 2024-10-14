@@ -18,7 +18,7 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
 
   @override
   Future<User> get(GetUserRequest request) async {
-    final path = '/v1alpha1/${request.name}';
+    final path = '/v1alpha1/auth/${request.name}';
     final url = _baseUri.replace(path: path);
     final req = http.Request('GET', url)
       ..headers['content-type'] = 'application/json'
@@ -40,7 +40,7 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
 
   @override
   Future<UserMembership> getMembership(GetUserMembershipRequest request) async {
-    final path = '/v1alpha1/${request.name}';
+    final path = '/v1alpha1/auth/${request.name}';
     final url = _baseUri.replace(path: path);
     final req = http.Request('GET', url)
       ..headers['content-type'] = 'application/json'
@@ -62,12 +62,8 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
 
   @override
   Future<ListUsersResponse> list(ListUsersRequest request) async {
-    final path = switch (request.parent) {
-      '' => '/v1alpha1/organizations/celest-dev/users',
-      final parent => '/v1alpha1/$parent/users',
-    };
     final url = _baseUri.replace(
-      path: path,
+      path: '/v1alpha1/auth/users',
       queryParameters: {
         if (request.hasPageSize()) 'pageSize': request.pageSize.toString(),
         if (request.hasPageToken()) 'pageToken': request.pageToken,
@@ -97,7 +93,7 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
   Future<ListUserMembershipsResponse> listMemberships(
     ListUserMembershipsRequest request,
   ) async {
-    final path = '/v1alpha1/${request.parent}/memberships';
+    final path = '/v1alpha1/auth/${request.parent}/memberships';
     final url = _baseUri.replace(
       path: path,
       queryParameters: {
@@ -126,7 +122,7 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
 
   @override
   Future<User> update(UpdateUserRequest request) async {
-    final path = '/v1alpha1/${request.user.name}';
+    final path = '/v1alpha1/auth/${request.user.name}';
     final url = _baseUri.replace(
       path: path,
       queryParameters: {
@@ -161,7 +157,7 @@ final class UsersProtocolHttp with BaseProtocol implements UsersProtocol {
 
   @override
   Future<Empty> delete(DeleteUserRequest request) async {
-    final path = '/v1alpha1/${request.name}';
+    final path = '/v1alpha1/auth/${request.name}';
     final url = _baseUri.replace(
       path: path,
       queryParameters: {

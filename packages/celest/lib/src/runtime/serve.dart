@@ -42,7 +42,10 @@ Future<CelestService> serve({
   required Map<String, CloudFunctionTarget> targets,
   ast.ResolvedProject? config,
   FutureOr<void> Function(Context context)? setup,
+  int? port,
 }) async {
+  Context.root = Context.of(Zone.current);
+
   await configure(
     config: config,
   );
@@ -50,6 +53,9 @@ Future<CelestService> serve({
   if (projectId != null) {
     Context.root.put(googleCloudProjectKey, projectId);
   }
+
+  final router = Router();
+  Context.root.put(ContextKey.router, router);
   if (setup != null) {
     try {
       await setup(Context.root);
@@ -58,16 +64,17 @@ Future<CelestService> serve({
       rethrow;
     }
   }
-  final router = Router()..get('/v1/healthz', (_) => Response.ok('OK'));
   for (final MapEntry(key: route, value: target) in targets.entries) {
-    target._apply(router, route);
+    target.apply(router, route);
   }
+  router.get('/v1/healthz', (_) => Response.ok('OK'));
+
   final pipeline = const Pipeline()
       .addMiddleware(const RootMiddleware().call)
       .addMiddleware(const CorsMiddleware().call)
       .addMiddleware(const CloudExceptionMiddleware().call)
       .addHandler(router.call);
-  final port = switch (Platform.environment['PORT']) {
+  port ??= switch (Platform.environment['PORT']) {
     final port? =>
       int.tryParse(port) ?? (throw StateError('Invalid PORT set: "$port"')),
     _ => defaultCelestPort,
@@ -76,10 +83,9 @@ Future<CelestService> serve({
     pipeline,
     InternetAddress.anyIPv4,
     port,
-    shared: true,
     poweredByHeader: 'Celest, the Flutter cloud platform',
   );
-  print('Serving on http://localhost:$port');
+  print('Serving on http://localhost:${server.port}');
   unawaited(
     StreamGroup.merge([
       ProcessSignal.sigint.watch(),

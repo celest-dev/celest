@@ -129,6 +129,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltList, const [const FullType(ResolvedExternalAuthProvider)]),
           () => new ListBuilder<ResolvedExternalAuthProvider>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ResolvedHttpRoute)]),
+          () => new ListBuilder<ResolvedHttpRoute>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(TypeReference), const FullType(int)]),
+          () => new MapBuilder<TypeReference, int>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
       ..addBuilderFactory(
@@ -194,10 +201,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType(ResolvedCloudFunction)
           ]),
           () => new MapBuilder<String, ResolvedCloudFunction>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap,
-              const [const FullType(TypeReference), const FullType(int)]),
-          () => new MapBuilder<TypeReference, int>())
       ..addBuilderFactory(
           const FullType(BuiltSet, const [const FullType(FeatureFlag)]),
           () => new SetBuilder<FeatureFlag>())

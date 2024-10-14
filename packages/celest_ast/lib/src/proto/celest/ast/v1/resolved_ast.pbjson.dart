@@ -238,7 +238,7 @@ final $typed_data.Uint8List resolvedFunctionDescriptor = $convert.base64Decode(
 const ResolvedHttpConfig$json = {
   '1': 'ResolvedHttpConfig',
   '2': [
-    {'1': 'method', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'method'},
+    {'1': 'status', '3': 1, '4': 1, '5': 5, '8': {}, '10': 'status'},
     {
       '1': 'route',
       '3': 2,
@@ -248,7 +248,15 @@ const ResolvedHttpConfig$json = {
       '8': {},
       '10': 'route'
     },
-    {'1': 'status', '3': 3, '4': 1, '5': 5, '8': {}, '10': 'status'},
+    {
+      '1': 'additional_routes',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedHttpRoute',
+      '8': {},
+      '10': 'additionalRoutes'
+    },
     {
       '1': 'status_mappings',
       '3': 4,
@@ -274,24 +282,27 @@ const ResolvedHttpConfig_StatusMappingsEntry$json = {
 
 /// Descriptor for `ResolvedHttpConfig`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List resolvedHttpConfigDescriptor = $convert.base64Decode(
-    'ChJSZXNvbHZlZEh0dHBDb25maWcSGwoGbWV0aG9kGAEgASgJQgPgQQJSBm1ldGhvZBI7CgVyb3'
+    'ChJSZXNvbHZlZEh0dHBDb25maWcSGwoGc3RhdHVzGAEgASgFQgPgQQJSBnN0YXR1cxI7CgVyb3'
     'V0ZRgCIAEoCzIgLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWRIdHRwUm91dGVCA+BBAlIFcm91dGUS'
-    'GwoGc3RhdHVzGAMgASgFQgPgQQJSBnN0YXR1cxJjCg9zdGF0dXNfbWFwcGluZ3MYBCADKAsyNS'
-    '5jZWxlc3QuYXN0LnYxLlJlc29sdmVkSHR0cENvbmZpZy5TdGF0dXNNYXBwaW5nc0VudHJ5QgPg'
-    'QQJSDnN0YXR1c01hcHBpbmdzGkEKE1N0YXR1c01hcHBpbmdzRW50cnkSEAoDa2V5GAEgASgJUg'
-    'NrZXkSFAoFdmFsdWUYAiABKAVSBXZhbHVlOgI4AQ==');
+    'UgoRYWRkaXRpb25hbF9yb3V0ZXMYAyADKAsyIC5jZWxlc3QuYXN0LnYxLlJlc29sdmVkSHR0cF'
+    'JvdXRlQgPgQQFSEGFkZGl0aW9uYWxSb3V0ZXMSYwoPc3RhdHVzX21hcHBpbmdzGAQgAygLMjUu'
+    'Y2VsZXN0LmFzdC52MS5SZXNvbHZlZEh0dHBDb25maWcuU3RhdHVzTWFwcGluZ3NFbnRyeUID4E'
+    'ECUg5zdGF0dXNNYXBwaW5ncxpBChNTdGF0dXNNYXBwaW5nc0VudHJ5EhAKA2tleRgBIAEoCVID'
+    'a2V5EhQKBXZhbHVlGAIgASgFUgV2YWx1ZToCOAE=');
 
 @$core.Deprecated('Use resolvedHttpRouteDescriptor instead')
 const ResolvedHttpRoute$json = {
   '1': 'ResolvedHttpRoute',
   '2': [
-    {'1': 'path', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'path'},
+    {'1': 'method', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'method'},
+    {'1': 'path', '3': 2, '4': 1, '5': 9, '8': {}, '10': 'path'},
   ],
 };
 
 /// Descriptor for `ResolvedHttpRoute`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List resolvedHttpRouteDescriptor = $convert.base64Decode(
-    'ChFSZXNvbHZlZEh0dHBSb3V0ZRIXCgRwYXRoGAEgASgJQgPgQQJSBHBhdGg=');
+    'ChFSZXNvbHZlZEh0dHBSb3V0ZRIbCgZtZXRob2QYASABKAlCA+BBAlIGbWV0aG9kEhcKBHBhdG'
+    'gYAiABKAlCA+BBAlIEcGF0aA==');
 
 @$core.Deprecated('Use resolvedStreamConfigDescriptor instead')
 const ResolvedStreamConfig$json = {

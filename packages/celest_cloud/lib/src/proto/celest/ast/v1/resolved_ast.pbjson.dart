@@ -13,29 +13,22 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use sdkTypeDescriptor instead')
-const SdkType$json = {
-  '1': 'SdkType',
-  '2': [
-    {'1': 'SDK_TYPE_UNSPECIFIED', '2': 0},
-    {'1': 'DART', '2': 1},
-    {'1': 'FLUTTER', '2': 2},
-  ],
-};
-
-/// Descriptor for `SdkType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List sdkTypeDescriptor = $convert.base64Decode(
-    'CgdTZGtUeXBlEhgKFFNES19UWVBFX1VOU1BFQ0lGSUVEEAASCAoEREFSVBABEgsKB0ZMVVRURV'
-    'IQAg==');
-
 @$core.Deprecated('Use resolvedProjectDescriptor instead')
 const ResolvedProject$json = {
   '1': 'ResolvedProject',
   '2': [
-    {'1': 'name', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'name'},
+    {'1': 'project_id', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'projectId'},
+    {
+      '1': 'environment_id',
+      '3': 2,
+      '4': 1,
+      '5': 9,
+      '8': {},
+      '10': 'environmentId'
+    },
     {
       '1': 'apis',
-      '3': 2,
+      '3': 3,
       '4': 3,
       '5': 11,
       '6': '.celest.ast.v1.ResolvedProject.ApisEntry',
@@ -43,17 +36,26 @@ const ResolvedProject$json = {
       '10': 'apis'
     },
     {
-      '1': 'environment_variables',
-      '3': 3,
+      '1': 'variables',
+      '3': 4,
       '4': 3,
       '5': 11,
-      '6': '.celest.ast.v1.ResolvedEnvironmentVariable',
+      '6': '.celest.ast.v1.ResolvedVariable',
       '8': {},
-      '10': 'environmentVariables'
+      '10': 'variables'
+    },
+    {
+      '1': 'secrets',
+      '3': 5,
+      '4': 3,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedSecret',
+      '8': {},
+      '10': 'secrets'
     },
     {
       '1': 'auth',
-      '3': 4,
+      '3': 6,
       '4': 1,
       '5': 11,
       '6': '.celest.ast.v1.ResolvedAuth',
@@ -61,34 +63,25 @@ const ResolvedProject$json = {
       '10': 'auth'
     },
     {
-      '1': 'sdk',
-      '3': 5,
-      '4': 1,
-      '5': 11,
-      '6': '.celest.ast.v1.SdkInfo',
-      '8': {},
-      '10': 'sdk'
-    },
-    {
-      '1': 'feature_flags',
-      '3': 6,
-      '4': 3,
-      '5': 14,
-      '6': '.celest.ast.v1.FeatureFlag',
-      '8': {},
-      '10': 'featureFlags'
-    },
-    {
-      '1': 'secrets',
+      '1': 'databases',
       '3': 7,
       '4': 3,
       '5': 11,
-      '6': '.celest.ast.v1.ResolvedSecret',
+      '6': '.celest.ast.v1.ResolvedProject.DatabasesEntry',
       '8': {},
-      '10': 'secrets'
+      '10': 'databases'
+    },
+    {
+      '1': 'sdk_config',
+      '3': 99,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.SdkConfiguration',
+      '8': {},
+      '10': 'sdkConfig'
     },
   ],
-  '3': [ResolvedProject_ApisEntry$json],
+  '3': [ResolvedProject_ApisEntry$json, ResolvedProject_DatabasesEntry$json],
 };
 
 @$core.Deprecated('Use resolvedProjectDescriptor instead')
@@ -108,18 +101,38 @@ const ResolvedProject_ApisEntry$json = {
   '7': {'7': true},
 };
 
+@$core.Deprecated('Use resolvedProjectDescriptor instead')
+const ResolvedProject_DatabasesEntry$json = {
+  '1': 'DatabasesEntry',
+  '2': [
+    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {
+      '1': 'value',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedDatabase',
+      '10': 'value'
+    },
+  ],
+  '7': {'7': true},
+};
+
 /// Descriptor for `ResolvedProject`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List resolvedProjectDescriptor = $convert.base64Decode(
-    'Cg9SZXNvbHZlZFByb2plY3QSFwoEbmFtZRgBIAEoCUID4EECUgRuYW1lEkEKBGFwaXMYAiADKA'
-    'syKC5jZWxlc3QuYXN0LnYxLlJlc29sdmVkUHJvamVjdC5BcGlzRW50cnlCA+BBAVIEYXBpcxJk'
-    'ChVlbnZpcm9ubWVudF92YXJpYWJsZXMYAyADKAsyKi5jZWxlc3QuYXN0LnYxLlJlc29sdmVkRW'
-    '52aXJvbm1lbnRWYXJpYWJsZUID4EEBUhRlbnZpcm9ubWVudFZhcmlhYmxlcxI0CgRhdXRoGAQg'
-    'ASgLMhsuY2VsZXN0LmFzdC52MS5SZXNvbHZlZEF1dGhCA+BBAVIEYXV0aBItCgNzZGsYBSABKA'
-    'syFi5jZWxlc3QuYXN0LnYxLlNka0luZm9CA+BBAlIDc2RrEkQKDWZlYXR1cmVfZmxhZ3MYBiAD'
-    'KA4yGi5jZWxlc3QuYXN0LnYxLkZlYXR1cmVGbGFnQgPgQQFSDGZlYXR1cmVGbGFncxI8CgdzZW'
-    'NyZXRzGAcgAygLMh0uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFNlY3JldEID4EEBUgdzZWNyZXRz'
-    'GlMKCUFwaXNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIwCgV2YWx1ZRgCIAEoCzIaLmNlbGVzdC'
-    '5hc3QudjEuUmVzb2x2ZWRBcGlSBXZhbHVlOgI4AQ==');
+    'Cg9SZXNvbHZlZFByb2plY3QSIgoKcHJvamVjdF9pZBgBIAEoCUID4EECUglwcm9qZWN0SWQSKg'
+    'oOZW52aXJvbm1lbnRfaWQYAiABKAlCA+BBAlINZW52aXJvbm1lbnRJZBJBCgRhcGlzGAMgAygL'
+    'MiguY2VsZXN0LmFzdC52MS5SZXNvbHZlZFByb2plY3QuQXBpc0VudHJ5QgPgQQFSBGFwaXMSQg'
+    'oJdmFyaWFibGVzGAQgAygLMh8uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFZhcmlhYmxlQgPgQQFS'
+    'CXZhcmlhYmxlcxI8CgdzZWNyZXRzGAUgAygLMh0uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFNlY3'
+    'JldEID4EEBUgdzZWNyZXRzEjQKBGF1dGgYBiABKAsyGy5jZWxlc3QuYXN0LnYxLlJlc29sdmVk'
+    'QXV0aEID4EEBUgRhdXRoElAKCWRhdGFiYXNlcxgHIAMoCzItLmNlbGVzdC5hc3QudjEuUmVzb2'
+    'x2ZWRQcm9qZWN0LkRhdGFiYXNlc0VudHJ5QgPgQQFSCWRhdGFiYXNlcxJDCgpzZGtfY29uZmln'
+    'GGMgASgLMh8uY2VsZXN0LmFzdC52MS5TZGtDb25maWd1cmF0aW9uQgPgQQJSCXNka0NvbmZpZx'
+    'pTCglBcGlzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSMAoFdmFsdWUYAiABKAsyGi5jZWxlc3Qu'
+    'YXN0LnYxLlJlc29sdmVkQXBpUgV2YWx1ZToCOAEaXQoORGF0YWJhc2VzRW50cnkSEAoDa2V5GA'
+    'EgASgJUgNrZXkSNQoFdmFsdWUYAiABKAsyHy5jZWxlc3QuYXN0LnYxLlJlc29sdmVkRGF0YWJh'
+    'c2VSBXZhbHVlOgI4AQ==');
 
 @$core.Deprecated('Use resolvedApiDescriptor instead')
 const ResolvedApi$json = {
@@ -178,44 +191,30 @@ const ResolvedFunction$json = {
   '1': 'ResolvedFunction',
   '2': [
     {'1': 'function_id', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'functionId'},
-    {'1': 'api_id', '3': 2, '4': 1, '5': 9, '8': {}, '10': 'apiId'},
+    {'1': 'parent_id', '3': 2, '4': 1, '5': 9, '8': {}, '10': 'parentId'},
     {
-      '1': 'http',
+      '1': 'http_config',
       '3': 3,
       '4': 1,
       '5': 11,
       '6': '.celest.ast.v1.ResolvedHttpConfig',
       '8': {},
-      '10': 'http'
+      '10': 'httpConfig'
     },
     {
-      '1': 'client_streaming',
+      '1': 'stream_config',
       '3': 4,
       '4': 1,
-      '5': 8,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedStreamConfig',
       '8': {},
-      '10': 'clientStreaming'
+      '10': 'streamConfig'
     },
-    {
-      '1': 'server_streaming',
-      '3': 5,
-      '4': 1,
-      '5': 8,
-      '8': {},
-      '10': 'serverStreaming'
-    },
-    {
-      '1': 'environment_variables',
-      '3': 6,
-      '4': 3,
-      '5': 9,
-      '8': {},
-      '10': 'environmentVariables'
-    },
-    {'1': 'secrets', '3': 7, '4': 3, '5': 9, '8': {}, '10': 'secrets'},
+    {'1': 'variables', '3': 5, '4': 3, '5': 9, '8': {}, '10': 'variables'},
+    {'1': 'secrets', '3': 6, '4': 3, '5': 9, '8': {}, '10': 'secrets'},
     {
       '1': 'policy_set',
-      '3': 8,
+      '3': 7,
       '4': 1,
       '5': 11,
       '6': '.cedar.v3.PolicySet',
@@ -228,44 +227,52 @@ const ResolvedFunction$json = {
 /// Descriptor for `ResolvedFunction`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List resolvedFunctionDescriptor = $convert.base64Decode(
     'ChBSZXNvbHZlZEZ1bmN0aW9uEiQKC2Z1bmN0aW9uX2lkGAEgASgJQgPgQQJSCmZ1bmN0aW9uSW'
-    'QSGgoGYXBpX2lkGAIgASgJQgPgQQJSBWFwaUlkEjoKBGh0dHAYAyABKAsyIS5jZWxlc3QuYXN0'
-    'LnYxLlJlc29sdmVkSHR0cENvbmZpZ0ID4EECUgRodHRwEi4KEGNsaWVudF9zdHJlYW1pbmcYBC'
-    'ABKAhCA+BBAVIPY2xpZW50U3RyZWFtaW5nEi4KEHNlcnZlcl9zdHJlYW1pbmcYBSABKAhCA+BB'
-    'AVIPc2VydmVyU3RyZWFtaW5nEjgKFWVudmlyb25tZW50X3ZhcmlhYmxlcxgGIAMoCUID4EEBUh'
-    'RlbnZpcm9ubWVudFZhcmlhYmxlcxIdCgdzZWNyZXRzGAcgAygJQgPgQQFSB3NlY3JldHMSNwoK'
-    'cG9saWN5X3NldBgIIAEoCzITLmNlZGFyLnYzLlBvbGljeVNldEID4EEBUglwb2xpY3lTZXQ=');
+    'QSIAoJcGFyZW50X2lkGAIgASgJQgPgQQJSCHBhcmVudElkEkcKC2h0dHBfY29uZmlnGAMgASgL'
+    'MiEuY2VsZXN0LmFzdC52MS5SZXNvbHZlZEh0dHBDb25maWdCA+BBAlIKaHR0cENvbmZpZxJNCg'
+    '1zdHJlYW1fY29uZmlnGAQgASgLMiMuY2VsZXN0LmFzdC52MS5SZXNvbHZlZFN0cmVhbUNvbmZp'
+    'Z0ID4EECUgxzdHJlYW1Db25maWcSIQoJdmFyaWFibGVzGAUgAygJQgPgQQFSCXZhcmlhYmxlcx'
+    'IdCgdzZWNyZXRzGAYgAygJQgPgQQFSB3NlY3JldHMSNwoKcG9saWN5X3NldBgHIAEoCzITLmNl'
+    'ZGFyLnYzLlBvbGljeVNldEID4EEBUglwb2xpY3lTZXQ=');
 
 @$core.Deprecated('Use resolvedHttpConfigDescriptor instead')
 const ResolvedHttpConfig$json = {
   '1': 'ResolvedHttpConfig',
   '2': [
-    {'1': 'method', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'method'},
+    {'1': 'status', '3': 1, '4': 1, '5': 5, '8': {}, '10': 'status'},
     {
-      '1': 'path',
+      '1': 'route',
       '3': 2,
       '4': 1,
       '5': 11,
-      '6': '.celest.ast.v1.HttpPath',
+      '6': '.celest.ast.v1.ResolvedHttpRoute',
       '8': {},
-      '10': 'path'
+      '10': 'route'
     },
-    {'1': 'status_code', '3': 3, '4': 1, '5': 5, '8': {}, '10': 'statusCode'},
     {
-      '1': 'error_status',
+      '1': 'additional_routes',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedHttpRoute',
+      '8': {},
+      '10': 'additionalRoutes'
+    },
+    {
+      '1': 'status_mappings',
       '3': 4,
       '4': 3,
       '5': 11,
-      '6': '.celest.ast.v1.ResolvedHttpConfig.ErrorStatusEntry',
+      '6': '.celest.ast.v1.ResolvedHttpConfig.StatusMappingsEntry',
       '8': {},
-      '10': 'errorStatus'
+      '10': 'statusMappings'
     },
   ],
-  '3': [ResolvedHttpConfig_ErrorStatusEntry$json],
+  '3': [ResolvedHttpConfig_StatusMappingsEntry$json],
 };
 
 @$core.Deprecated('Use resolvedHttpConfigDescriptor instead')
-const ResolvedHttpConfig_ErrorStatusEntry$json = {
-  '1': 'ErrorStatusEntry',
+const ResolvedHttpConfig_StatusMappingsEntry$json = {
+  '1': 'StatusMappingsEntry',
   '2': [
     {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
     {'1': 'value', '3': 2, '4': 1, '5': 5, '10': 'value'},
@@ -275,84 +282,76 @@ const ResolvedHttpConfig_ErrorStatusEntry$json = {
 
 /// Descriptor for `ResolvedHttpConfig`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List resolvedHttpConfigDescriptor = $convert.base64Decode(
-    'ChJSZXNvbHZlZEh0dHBDb25maWcSGwoGbWV0aG9kGAEgASgJQgPgQQJSBm1ldGhvZBIwCgRwYX'
-    'RoGAIgASgLMhcuY2VsZXN0LmFzdC52MS5IdHRwUGF0aEID4EECUgRwYXRoEiQKC3N0YXR1c19j'
-    'b2RlGAMgASgFQgPgQQJSCnN0YXR1c0NvZGUSWgoMZXJyb3Jfc3RhdHVzGAQgAygLMjIuY2VsZX'
-    'N0LmFzdC52MS5SZXNvbHZlZEh0dHBDb25maWcuRXJyb3JTdGF0dXNFbnRyeUID4EECUgtlcnJv'
-    'clN0YXR1cxo+ChBFcnJvclN0YXR1c0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGA'
-    'IgASgFUgV2YWx1ZToCOAE=');
+    'ChJSZXNvbHZlZEh0dHBDb25maWcSGwoGc3RhdHVzGAEgASgFQgPgQQJSBnN0YXR1cxI7CgVyb3'
+    'V0ZRgCIAEoCzIgLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWRIdHRwUm91dGVCA+BBAlIFcm91dGUS'
+    'UgoRYWRkaXRpb25hbF9yb3V0ZXMYAyADKAsyIC5jZWxlc3QuYXN0LnYxLlJlc29sdmVkSHR0cF'
+    'JvdXRlQgPgQQFSEGFkZGl0aW9uYWxSb3V0ZXMSYwoPc3RhdHVzX21hcHBpbmdzGAQgAygLMjUu'
+    'Y2VsZXN0LmFzdC52MS5SZXNvbHZlZEh0dHBDb25maWcuU3RhdHVzTWFwcGluZ3NFbnRyeUID4E'
+    'ECUg5zdGF0dXNNYXBwaW5ncxpBChNTdGF0dXNNYXBwaW5nc0VudHJ5EhAKA2tleRgBIAEoCVID'
+    'a2V5EhQKBXZhbHVlGAIgASgFUgV2YWx1ZToCOAE=');
 
-@$core.Deprecated('Use httpPathDescriptor instead')
-const HttpPath$json = {
-  '1': 'HttpPath',
+@$core.Deprecated('Use resolvedHttpRouteDescriptor instead')
+const ResolvedHttpRoute$json = {
+  '1': 'ResolvedHttpRoute',
   '2': [
-    {'1': 'path', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'path'},
-    {
-      '1': 'parameters',
-      '3': 2,
-      '4': 3,
-      '5': 11,
-      '6': '.celest.ast.v1.HttpPath.ParametersEntry',
-      '8': {},
-      '10': 'parameters'
-    },
+    {'1': 'method', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'method'},
+    {'1': 'path', '3': 2, '4': 1, '5': 9, '8': {}, '10': 'path'},
   ],
-  '3': [HttpPath_ParametersEntry$json],
 };
 
-@$core.Deprecated('Use httpPathDescriptor instead')
-const HttpPath_ParametersEntry$json = {
-  '1': 'ParametersEntry',
+/// Descriptor for `ResolvedHttpRoute`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedHttpRouteDescriptor = $convert.base64Decode(
+    'ChFSZXNvbHZlZEh0dHBSb3V0ZRIbCgZtZXRob2QYASABKAlCA+BBAlIGbWV0aG9kEhcKBHBhdG'
+    'gYAiABKAlCA+BBAlIEcGF0aA==');
+
+@$core.Deprecated('Use resolvedStreamConfigDescriptor instead')
+const ResolvedStreamConfig$json = {
+  '1': 'ResolvedStreamConfig',
   '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
     {
-      '1': 'value',
-      '3': 2,
+      '1': 'type',
+      '3': 1,
       '4': 1,
-      '5': 11,
-      '6': '.celest.ast.v1.HttpParameter',
-      '10': 'value'
+      '5': 14,
+      '6': '.celest.ast.v1.ResolvedStreamConfig.Type',
+      '8': {},
+      '10': 'type'
     },
   ],
-  '7': {'7': true},
+  '4': [ResolvedStreamConfig_Type$json],
 };
 
-/// Descriptor for `HttpPath`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List httpPathDescriptor = $convert.base64Decode(
-    'CghIdHRwUGF0aBIXCgRwYXRoGAEgASgJQgPgQQJSBHBhdGgSTAoKcGFyYW1ldGVycxgCIAMoCz'
-    'InLmNlbGVzdC5hc3QudjEuSHR0cFBhdGguUGFyYW1ldGVyc0VudHJ5QgPgQQFSCnBhcmFtZXRl'
-    'cnMaWwoPUGFyYW1ldGVyc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EjIKBXZhbHVlGAIgASgLMh'
-    'wuY2VsZXN0LmFzdC52MS5IdHRwUGFyYW1ldGVyUgV2YWx1ZToCOAE=');
-
-@$core.Deprecated('Use httpParameterDescriptor instead')
-const HttpParameter$json = {
-  '1': 'HttpParameter',
+@$core.Deprecated('Use resolvedStreamConfigDescriptor instead')
+const ResolvedStreamConfig_Type$json = {
+  '1': 'Type',
   '2': [
-    {'1': 'name', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'name'},
-    {'1': 'type', '3': 2, '4': 1, '5': 9, '8': {}, '10': 'type'},
-    {'1': 'required', '3': 3, '4': 1, '5': 8, '8': {}, '10': 'required'},
+    {'1': 'STREAM_CONFIG_TYPE_UNSPECIFIED', '2': 0},
+    {'1': 'UNIDIRECTIONAL_CLIENT', '2': 1},
+    {'1': 'UNIDIRECTIONAL_SERVER', '2': 2},
+    {'1': 'BIDIRECTIONAL', '2': 3},
   ],
 };
 
-/// Descriptor for `HttpParameter`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List httpParameterDescriptor = $convert.base64Decode(
-    'Cg1IdHRwUGFyYW1ldGVyEhcKBG5hbWUYASABKAlCA+BBAlIEbmFtZRIXCgR0eXBlGAIgASgJQg'
-    'PgQQJSBHR5cGUSHwoIcmVxdWlyZWQYAyABKAhCA+BBAlIIcmVxdWlyZWQ=');
+/// Descriptor for `ResolvedStreamConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedStreamConfigDescriptor = $convert.base64Decode(
+    'ChRSZXNvbHZlZFN0cmVhbUNvbmZpZxJBCgR0eXBlGAEgASgOMiguY2VsZXN0LmFzdC52MS5SZX'
+    'NvbHZlZFN0cmVhbUNvbmZpZy5UeXBlQgPgQQJSBHR5cGUicwoEVHlwZRIiCh5TVFJFQU1fQ09O'
+    'RklHX1RZUEVfVU5TUEVDSUZJRUQQABIZChVVTklESVJFQ1RJT05BTF9DTElFTlQQARIZChVVTk'
+    'lESVJFQ1RJT05BTF9TRVJWRVIQAhIRCg1CSURJUkVDVElPTkFMEAM=');
 
-@$core.Deprecated('Use resolvedEnvironmentVariableDescriptor instead')
-const ResolvedEnvironmentVariable$json = {
-  '1': 'ResolvedEnvironmentVariable',
+@$core.Deprecated('Use resolvedVariableDescriptor instead')
+const ResolvedVariable$json = {
+  '1': 'ResolvedVariable',
   '2': [
     {'1': 'name', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'name'},
     {'1': 'value', '3': 2, '4': 1, '5': 9, '8': {}, '10': 'value'},
   ],
 };
 
-/// Descriptor for `ResolvedEnvironmentVariable`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List resolvedEnvironmentVariableDescriptor =
-    $convert.base64Decode(
-        'ChtSZXNvbHZlZEVudmlyb25tZW50VmFyaWFibGUSFwoEbmFtZRgBIAEoCUID4EECUgRuYW1lEh'
-        'kKBXZhbHVlGAIgASgJQgPgQQJSBXZhbHVl');
+/// Descriptor for `ResolvedVariable`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedVariableDescriptor = $convert.base64Decode(
+    'ChBSZXNvbHZlZFZhcmlhYmxlEhcKBG5hbWUYASABKAlCA+BBAlIEbmFtZRIZCgV2YWx1ZRgCIA'
+    'EoCUID4EECUgV2YWx1ZQ==');
 
 @$core.Deprecated('Use resolvedSecretDescriptor instead')
 const ResolvedSecret$json = {
@@ -416,7 +415,14 @@ final $typed_data.Uint8List resolvedAuthDescriptor = $convert.base64Decode(
 const ResolvedAuthProvider$json = {
   '1': 'ResolvedAuthProvider',
   '2': [
-    {'1': 'id', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'id'},
+    {
+      '1': 'auth_provider_id',
+      '3': 1,
+      '4': 1,
+      '5': 9,
+      '8': {},
+      '10': 'authProviderId'
+    },
     {
       '1': 'type',
       '3': 2,
@@ -493,17 +499,18 @@ const ResolvedAuthProvider_Type$json = {
 
 /// Descriptor for `ResolvedAuthProvider`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List resolvedAuthProviderDescriptor = $convert.base64Decode(
-    'ChRSZXNvbHZlZEF1dGhQcm92aWRlchITCgJpZBgBIAEoCUID4EECUgJpZBJBCgR0eXBlGAIgAS'
-    'gOMiguY2VsZXN0LmFzdC52MS5SZXNvbHZlZEF1dGhQcm92aWRlci5UeXBlQgPgQQJSBHR5cGUS'
-    'TAoJZW1haWxfb3RwGAMgASgLMi0uY2VsZXN0LmFzdC52MS5SZXNvbHZlZEVtYWlsT3RwUHJvdm'
-    'lkZXJDb25maWdIAFIIZW1haWxPdHASRgoHc21zX290cBgEIAEoCzIrLmNlbGVzdC5hc3QudjEu'
-    'UmVzb2x2ZWRTbXNPdHBQcm92aWRlckNvbmZpZ0gAUgZzbXNPdHASSgoGZ29vZ2xlGAUgASgLMj'
-    'AuY2VsZXN0LmFzdC52MS5SZXNvbHZlZEdvb2dsZU9BdXRoUHJvdmlkZXJDb25maWdIAFIGZ29v'
-    'Z2xlEkoKBmdpdGh1YhgGIAEoCzIwLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWRHaXRIdWJPQXV0aF'
-    'Byb3ZpZGVyQ29uZmlnSABSBmdpdGh1YhJHCgVhcHBsZRgHIAEoCzIvLmNlbGVzdC5hc3QudjEu'
-    'UmVzb2x2ZWRBcHBsZU9BdXRoUHJvdmlkZXJDb25maWdIAFIFYXBwbGUiaQoEVHlwZRIiCh5BVV'
-    'RIX1BST1ZJREVSX1RZUEVfVU5TUEVDSUZJRUQQABINCglFTUFJTF9PVFAQARILCgdTTVNfT1RQ'
-    'EAISCgoGR09PR0xFEAMSCgoGR0lUSFVCEAQSCQoFQVBQTEUQBUIICgZjb25maWc=');
+    'ChRSZXNvbHZlZEF1dGhQcm92aWRlchItChBhdXRoX3Byb3ZpZGVyX2lkGAEgASgJQgPgQQJSDm'
+    'F1dGhQcm92aWRlcklkEkEKBHR5cGUYAiABKA4yKC5jZWxlc3QuYXN0LnYxLlJlc29sdmVkQXV0'
+    'aFByb3ZpZGVyLlR5cGVCA+BBAlIEdHlwZRJMCgllbWFpbF9vdHAYAyABKAsyLS5jZWxlc3QuYX'
+    'N0LnYxLlJlc29sdmVkRW1haWxPdHBQcm92aWRlckNvbmZpZ0gAUghlbWFpbE90cBJGCgdzbXNf'
+    'b3RwGAQgASgLMisuY2VsZXN0LmFzdC52MS5SZXNvbHZlZFNtc090cFByb3ZpZGVyQ29uZmlnSA'
+    'BSBnNtc090cBJKCgZnb29nbGUYBSABKAsyMC5jZWxlc3QuYXN0LnYxLlJlc29sdmVkR29vZ2xl'
+    'T0F1dGhQcm92aWRlckNvbmZpZ0gAUgZnb29nbGUSSgoGZ2l0aHViGAYgASgLMjAuY2VsZXN0Lm'
+    'FzdC52MS5SZXNvbHZlZEdpdEh1Yk9BdXRoUHJvdmlkZXJDb25maWdIAFIGZ2l0aHViEkcKBWFw'
+    'cGxlGAcgASgLMi8uY2VsZXN0LmFzdC52MS5SZXNvbHZlZEFwcGxlT0F1dGhQcm92aWRlckNvbm'
+    'ZpZ0gAUgVhcHBsZSJpCgRUeXBlEiIKHkFVVEhfUFJPVklERVJfVFlQRV9VTlNQRUNJRklFRBAA'
+    'Eg0KCUVNQUlMX09UUBABEgsKB1NNU19PVFAQAhIKCgZHT09HTEUQAxIKCgZHSVRIVUIQBBIJCg'
+    'VBUFBMRRAFQggKBmNvbmZpZw==');
 
 @$core.Deprecated('Use resolvedEmailOtpProviderConfigDescriptor instead')
 const ResolvedEmailOtpProviderConfig$json = {
@@ -645,7 +652,14 @@ final $typed_data.Uint8List resolvedAppleOAuthProviderConfigDescriptor = $conver
 const ResolvedExternalAuthProvider$json = {
   '1': 'ResolvedExternalAuthProvider',
   '2': [
-    {'1': 'id', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'id'},
+    {
+      '1': 'auth_provider_id',
+      '3': 1,
+      '4': 1,
+      '5': 9,
+      '8': {},
+      '10': 'authProviderId'
+    },
     {
       '1': 'type',
       '3': 2,
@@ -692,14 +706,14 @@ const ResolvedExternalAuthProvider_Type$json = {
 
 /// Descriptor for `ResolvedExternalAuthProvider`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List resolvedExternalAuthProviderDescriptor = $convert.base64Decode(
-    'ChxSZXNvbHZlZEV4dGVybmFsQXV0aFByb3ZpZGVyEhMKAmlkGAEgASgJQgPgQQJSAmlkEkkKBH'
-    'R5cGUYAiABKA4yMC5jZWxlc3QuYXN0LnYxLlJlc29sdmVkRXh0ZXJuYWxBdXRoUHJvdmlkZXIu'
-    'VHlwZUID4EECUgR0eXBlElcKCGZpcmViYXNlGAMgASgLMjkuY2VsZXN0LmFzdC52MS5SZXNvbH'
-    'ZlZEZpcmViYXNlRXh0ZXJuYWxBdXRoUHJvdmlkZXJDb25maWdIAFIIZmlyZWJhc2USVwoIc3Vw'
-    'YWJhc2UYBCABKAsyOS5jZWxlc3QuYXN0LnYxLlJlc29sdmVkU3VwYWJhc2VFeHRlcm5hbEF1dG'
-    'hQcm92aWRlckNvbmZpZ0gAUghzdXBhYmFzZSJPCgRUeXBlEisKJ0VYVEVSTkFMX0FVVEhfUFJP'
-    'VklERVJfVFlQRV9VTlNQRUNJRklFRBAAEgwKCEZJUkVCQVNFEAESDAoIU1VQQUJBU0UQAkIICg'
-    'Zjb25maWc=');
+    'ChxSZXNvbHZlZEV4dGVybmFsQXV0aFByb3ZpZGVyEi0KEGF1dGhfcHJvdmlkZXJfaWQYASABKA'
+    'lCA+BBAlIOYXV0aFByb3ZpZGVySWQSSQoEdHlwZRgCIAEoDjIwLmNlbGVzdC5hc3QudjEuUmVz'
+    'b2x2ZWRFeHRlcm5hbEF1dGhQcm92aWRlci5UeXBlQgPgQQJSBHR5cGUSVwoIZmlyZWJhc2UYAy'
+    'ABKAsyOS5jZWxlc3QuYXN0LnYxLlJlc29sdmVkRmlyZWJhc2VFeHRlcm5hbEF1dGhQcm92aWRl'
+    'ckNvbmZpZ0gAUghmaXJlYmFzZRJXCghzdXBhYmFzZRgEIAEoCzI5LmNlbGVzdC5hc3QudjEuUm'
+    'Vzb2x2ZWRTdXBhYmFzZUV4dGVybmFsQXV0aFByb3ZpZGVyQ29uZmlnSABSCHN1cGFiYXNlIk8K'
+    'BFR5cGUSKwonRVhURVJOQUxfQVVUSF9QUk9WSURFUl9UWVBFX1VOU1BFQ0lGSUVEEAASDAoIRk'
+    'lSRUJBU0UQARIMCghTVVBBQkFTRRACQggKBmNvbmZpZw==');
 
 @$core.Deprecated(
     'Use resolvedFirebaseExternalAuthProviderConfigDescriptor instead')
@@ -711,7 +725,7 @@ const ResolvedFirebaseExternalAuthProviderConfig$json = {
       '3': 1,
       '4': 1,
       '5': 11,
-      '6': '.celest.ast.v1.ResolvedEnvironmentVariable',
+      '6': '.celest.ast.v1.ResolvedVariable',
       '8': {},
       '10': 'projectId'
     },
@@ -722,9 +736,9 @@ const ResolvedFirebaseExternalAuthProviderConfig$json = {
 final $typed_data.Uint8List
     resolvedFirebaseExternalAuthProviderConfigDescriptor =
     $convert.base64Decode(
-        'CipSZXNvbHZlZEZpcmViYXNlRXh0ZXJuYWxBdXRoUHJvdmlkZXJDb25maWcSTgoKcHJvamVjdF'
-        '9pZBgBIAEoCzIqLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWRFbnZpcm9ubWVudFZhcmlhYmxlQgPg'
-        'QQJSCXByb2plY3RJZA==');
+        'CipSZXNvbHZlZEZpcmViYXNlRXh0ZXJuYWxBdXRoUHJvdmlkZXJDb25maWcSQwoKcHJvamVjdF'
+        '9pZBgBIAEoCzIfLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWRWYXJpYWJsZUID4EECUglwcm9qZWN0'
+        'SWQ=');
 
 @$core.Deprecated(
     'Use resolvedSupabaseExternalAuthProviderConfigDescriptor instead')
@@ -736,7 +750,7 @@ const ResolvedSupabaseExternalAuthProviderConfig$json = {
       '3': 1,
       '4': 1,
       '5': 11,
-      '6': '.celest.ast.v1.ResolvedEnvironmentVariable',
+      '6': '.celest.ast.v1.ResolvedVariable',
       '8': {},
       '10': 'projectUrl'
     },
@@ -756,91 +770,241 @@ const ResolvedSupabaseExternalAuthProviderConfig$json = {
 final $typed_data.Uint8List
     resolvedSupabaseExternalAuthProviderConfigDescriptor =
     $convert.base64Decode(
-        'CipSZXNvbHZlZFN1cGFiYXNlRXh0ZXJuYWxBdXRoUHJvdmlkZXJDb25maWcSUAoLcHJvamVjdF'
-        '91cmwYASABKAsyKi5jZWxlc3QuYXN0LnYxLlJlc29sdmVkRW52aXJvbm1lbnRWYXJpYWJsZUID'
-        '4EECUgpwcm9qZWN0VXJsEkEKCmp3dF9zZWNyZXQYAiABKAsyHS5jZWxlc3QuYXN0LnYxLlJlc2'
-        '9sdmVkU2VjcmV0QgPgQQFSCWp3dFNlY3JldA==');
+        'CipSZXNvbHZlZFN1cGFiYXNlRXh0ZXJuYWxBdXRoUHJvdmlkZXJDb25maWcSRQoLcHJvamVjdF'
+        '91cmwYASABKAsyHy5jZWxlc3QuYXN0LnYxLlJlc29sdmVkVmFyaWFibGVCA+BBAlIKcHJvamVj'
+        'dFVybBJBCgpqd3Rfc2VjcmV0GAIgASgLMh0uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFNlY3JldE'
+        'ID4EEBUglqd3RTZWNyZXQ=');
 
-@$core.Deprecated('Use sdkInfoDescriptor instead')
-const SdkInfo$json = {
-  '1': 'SdkInfo',
+@$core.Deprecated('Use resolvedDatabaseDescriptor instead')
+const ResolvedDatabase$json = {
+  '1': 'ResolvedDatabase',
   '2': [
+    {'1': 'database_id', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'databaseId'},
     {
       '1': 'type',
-      '3': 1,
+      '3': 2,
       '4': 1,
       '5': 14,
-      '6': '.celest.ast.v1.SdkType',
+      '6': '.celest.ast.v1.ResolvedDatabase.Type',
       '8': {},
       '10': 'type'
     },
     {
-      '1': 'version',
+      '1': 'schema',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedDatabaseSchema',
+      '8': {},
+      '10': 'schema'
+    },
+    {
+      '1': 'celest',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedCelestDatabaseConfig',
+      '9': 0,
+      '10': 'celest'
+    },
+  ],
+  '4': [ResolvedDatabase_Type$json],
+  '8': [
+    {'1': 'config'},
+  ],
+};
+
+@$core.Deprecated('Use resolvedDatabaseDescriptor instead')
+const ResolvedDatabase_Type$json = {
+  '1': 'Type',
+  '2': [
+    {'1': 'DATABASE_TYPE_UNSPECIFIED', '2': 0},
+    {'1': 'CELEST', '2': 1},
+  ],
+};
+
+/// Descriptor for `ResolvedDatabase`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedDatabaseDescriptor = $convert.base64Decode(
+    'ChBSZXNvbHZlZERhdGFiYXNlEiQKC2RhdGFiYXNlX2lkGAEgASgJQgPgQQJSCmRhdGFiYXNlSW'
+    'QSPQoEdHlwZRgCIAEoDjIkLmNlbGVzdC5hc3QudjEuUmVzb2x2ZWREYXRhYmFzZS5UeXBlQgPg'
+    'QQJSBHR5cGUSQgoGc2NoZW1hGAMgASgLMiUuY2VsZXN0LmFzdC52MS5SZXNvbHZlZERhdGFiYX'
+    'NlU2NoZW1hQgPgQQJSBnNjaGVtYRJFCgZjZWxlc3QYBCABKAsyKy5jZWxlc3QuYXN0LnYxLlJl'
+    'c29sdmVkQ2VsZXN0RGF0YWJhc2VDb25maWdIAFIGY2VsZXN0IjEKBFR5cGUSHQoZREFUQUJBU0'
+    'VfVFlQRV9VTlNQRUNJRklFRBAAEgoKBkNFTEVTVBABQggKBmNvbmZpZw==');
+
+@$core.Deprecated('Use resolvedCelestDatabaseConfigDescriptor instead')
+const ResolvedCelestDatabaseConfig$json = {
+  '1': 'ResolvedCelestDatabaseConfig',
+  '2': [
+    {
+      '1': 'hostname',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedVariable',
+      '8': {},
+      '10': 'hostname'
+    },
+    {
+      '1': 'token',
       '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedSecret',
+      '8': {},
+      '10': 'token'
+    },
+  ],
+};
+
+/// Descriptor for `ResolvedCelestDatabaseConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedCelestDatabaseConfigDescriptor =
+    $convert.base64Decode(
+        'ChxSZXNvbHZlZENlbGVzdERhdGFiYXNlQ29uZmlnEkAKCGhvc3RuYW1lGAEgASgLMh8uY2VsZX'
+        'N0LmFzdC52MS5SZXNvbHZlZFZhcmlhYmxlQgPgQQJSCGhvc3RuYW1lEjgKBXRva2VuGAIgASgL'
+        'Mh0uY2VsZXN0LmFzdC52MS5SZXNvbHZlZFNlY3JldEID4EECUgV0b2tlbg==');
+
+@$core.Deprecated('Use resolvedDatabaseSchemaDescriptor instead')
+const ResolvedDatabaseSchema$json = {
+  '1': 'ResolvedDatabaseSchema',
+  '2': [
+    {
+      '1': 'database_schema_id',
+      '3': 1,
+      '4': 1,
+      '5': 9,
+      '8': {},
+      '10': 'databaseSchemaId'
+    },
+    {
+      '1': 'type',
+      '3': 2,
+      '4': 1,
+      '5': 14,
+      '6': '.celest.ast.v1.ResolvedDatabaseSchema.Type',
+      '8': {},
+      '10': 'type'
+    },
+    {
+      '1': 'drift',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.ResolvedDriftDatabaseSchema',
+      '9': 0,
+      '10': 'drift'
+    },
+  ],
+  '4': [ResolvedDatabaseSchema_Type$json],
+  '8': [
+    {'1': 'schema'},
+  ],
+};
+
+@$core.Deprecated('Use resolvedDatabaseSchemaDescriptor instead')
+const ResolvedDatabaseSchema_Type$json = {
+  '1': 'Type',
+  '2': [
+    {'1': 'DATABASE_SCHEMA_TYPE_UNSPECIFIED', '2': 0},
+    {'1': 'DRIFT', '2': 1},
+  ],
+};
+
+/// Descriptor for `ResolvedDatabaseSchema`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedDatabaseSchemaDescriptor = $convert.base64Decode(
+    'ChZSZXNvbHZlZERhdGFiYXNlU2NoZW1hEjEKEmRhdGFiYXNlX3NjaGVtYV9pZBgBIAEoCUID4E'
+    'ECUhBkYXRhYmFzZVNjaGVtYUlkEkMKBHR5cGUYAiABKA4yKi5jZWxlc3QuYXN0LnYxLlJlc29s'
+    'dmVkRGF0YWJhc2VTY2hlbWEuVHlwZUID4EECUgR0eXBlEkIKBWRyaWZ0GAMgASgLMiouY2VsZX'
+    'N0LmFzdC52MS5SZXNvbHZlZERyaWZ0RGF0YWJhc2VTY2hlbWFIAFIFZHJpZnQiNwoEVHlwZRIk'
+    'CiBEQVRBQkFTRV9TQ0hFTUFfVFlQRV9VTlNQRUNJRklFRBAAEgkKBURSSUZUEAFCCAoGc2NoZW'
+    '1h');
+
+@$core.Deprecated('Use resolvedDriftDatabaseSchemaDescriptor instead')
+const ResolvedDriftDatabaseSchema$json = {
+  '1': 'ResolvedDriftDatabaseSchema',
+  '2': [
+    {'1': 'version', '3': 1, '4': 1, '5': 5, '8': {}, '10': 'version'},
+    {
+      '1': 'schema_json',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.Struct',
+      '8': {},
+      '10': 'schemaJson'
+    },
+  ],
+};
+
+/// Descriptor for `ResolvedDriftDatabaseSchema`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resolvedDriftDatabaseSchemaDescriptor =
+    $convert.base64Decode(
+        'ChtSZXNvbHZlZERyaWZ0RGF0YWJhc2VTY2hlbWESHQoHdmVyc2lvbhgBIAEoBUID4EECUgd2ZX'
+        'JzaW9uEj0KC3NjaGVtYV9qc29uGAIgASgLMhcuZ29vZ2xlLnByb3RvYnVmLlN0cnVjdEID4EEC'
+        'UgpzY2hlbWFKc29u');
+
+@$core.Deprecated('Use sdkConfigurationDescriptor instead')
+const SdkConfiguration$json = {
+  '1': 'SdkConfiguration',
+  '2': [
+    {
+      '1': 'celest',
+      '3': 1,
       '4': 1,
       '5': 11,
       '6': '.celest.ast.v1.Version',
       '8': {},
-      '10': 'version'
+      '10': 'celest'
     },
     {
-      '1': 'enabled_experiments',
-      '3': 3,
-      '4': 3,
-      '5': 9,
-      '8': {},
-      '10': 'enabledExperiments'
-    },
-  ],
-};
-
-/// Descriptor for `SdkInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sdkInfoDescriptor = $convert.base64Decode(
-    'CgdTZGtJbmZvEi8KBHR5cGUYASABKA4yFi5jZWxlc3QuYXN0LnYxLlNka1R5cGVCA+BBAlIEdH'
-    'lwZRI1Cgd2ZXJzaW9uGAIgASgLMhYuY2VsZXN0LmFzdC52MS5WZXJzaW9uQgPgQQJSB3ZlcnNp'
-    'b24SNAoTZW5hYmxlZF9leHBlcmltZW50cxgDIAMoCUID4EEBUhJlbmFibGVkRXhwZXJpbWVudH'
-    'M=');
-
-@$core.Deprecated('Use versionDescriptor instead')
-const Version$json = {
-  '1': 'Version',
-  '2': [
-    {'1': 'major', '3': 1, '4': 1, '5': 5, '8': {}, '10': 'major'},
-    {'1': 'minor', '3': 2, '4': 1, '5': 5, '8': {}, '10': 'minor'},
-    {'1': 'patch', '3': 3, '4': 1, '5': 5, '8': {}, '10': 'patch'},
-    {
-      '1': 'pre_release',
-      '3': 4,
-      '4': 3,
+      '1': 'dart',
+      '3': 2,
+      '4': 1,
       '5': 11,
-      '6': '.google.protobuf.Value',
+      '6': '.celest.ast.v1.Sdk',
       '8': {},
-      '10': 'preRelease'
+      '10': 'dart'
     },
     {
-      '1': 'build',
+      '1': 'flutter',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.celest.ast.v1.Sdk',
+      '8': {},
+      '9': 0,
+      '10': 'flutter',
+      '17': true
+    },
+    {
+      '1': 'target_sdk',
+      '3': 4,
+      '4': 1,
+      '5': 14,
+      '6': '.celest.ast.v1.SdkType',
+      '8': {},
+      '10': 'targetSdk'
+    },
+    {
+      '1': 'feature_flags',
       '3': 5,
       '4': 3,
-      '5': 11,
-      '6': '.google.protobuf.Value',
+      '5': 14,
+      '6': '.celest.ast.v1.FeatureFlag',
       '8': {},
-      '10': 'build'
+      '10': 'featureFlags'
     },
-    {
-      '1': 'canonicalized_version',
-      '3': 6,
-      '4': 1,
-      '5': 9,
-      '8': {},
-      '10': 'canonicalizedVersion'
-    },
+  ],
+  '8': [
+    {'1': '_flutter'},
   ],
 };
 
-/// Descriptor for `Version`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List versionDescriptor = $convert.base64Decode(
-    'CgdWZXJzaW9uEhkKBW1ham9yGAEgASgFQgPgQQJSBW1ham9yEhkKBW1pbm9yGAIgASgFQgPgQQ'
-    'JSBW1pbm9yEhkKBXBhdGNoGAMgASgFQgPgQQJSBXBhdGNoEjwKC3ByZV9yZWxlYXNlGAQgAygL'
-    'MhYuZ29vZ2xlLnByb3RvYnVmLlZhbHVlQgPgQQFSCnByZVJlbGVhc2USMQoFYnVpbGQYBSADKA'
-    'syFi5nb29nbGUucHJvdG9idWYuVmFsdWVCA+BBAVIFYnVpbGQSOAoVY2Fub25pY2FsaXplZF92'
-    'ZXJzaW9uGAYgASgJQgPgQQFSFGNhbm9uaWNhbGl6ZWRWZXJzaW9u');
+/// Descriptor for `SdkConfiguration`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sdkConfigurationDescriptor = $convert.base64Decode(
+    'ChBTZGtDb25maWd1cmF0aW9uEjMKBmNlbGVzdBgBIAEoCzIWLmNlbGVzdC5hc3QudjEuVmVyc2'
+    'lvbkID4EECUgZjZWxlc3QSKwoEZGFydBgCIAEoCzISLmNlbGVzdC5hc3QudjEuU2RrQgPgQQJS'
+    'BGRhcnQSNgoHZmx1dHRlchgDIAEoCzISLmNlbGVzdC5hc3QudjEuU2RrQgPgQQFIAFIHZmx1dH'
+    'RlcogBARI6Cgp0YXJnZXRfc2RrGAQgASgOMhYuY2VsZXN0LmFzdC52MS5TZGtUeXBlQgPgQQJS'
+    'CXRhcmdldFNkaxJECg1mZWF0dXJlX2ZsYWdzGAUgAygOMhouY2VsZXN0LmFzdC52MS5GZWF0dX'
+    'JlRmxhZ0ID4EEBUgxmZWF0dXJlRmxhZ3NCCgoIX2ZsdXR0ZXI=');

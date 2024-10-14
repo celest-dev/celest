@@ -95,26 +95,22 @@ const User$json = {
       '17': true
     },
     {
-      '1': 'email',
+      '1': 'emails',
       '3': 10,
-      '4': 1,
+      '4': 3,
       '5': 11,
       '6': '.celest.cloud.auth.v1alpha1.Email',
       '8': {},
-      '9': 4,
-      '10': 'email',
-      '17': true
+      '10': 'emails'
     },
     {
-      '1': 'phone_number',
+      '1': 'phone_numbers',
       '3': 11,
-      '4': 1,
+      '4': 3,
       '5': 11,
       '6': '.celest.cloud.auth.v1alpha1.PhoneNumber',
       '8': {},
-      '9': 5,
-      '10': 'phoneNumber',
-      '17': true
+      '10': 'phoneNumbers'
     },
     {
       '1': 'external_identities',
@@ -125,16 +121,6 @@ const User$json = {
       '8': {},
       '10': 'externalIdentities'
     },
-    {
-      '1': 'company',
-      '3': 13,
-      '4': 1,
-      '5': 9,
-      '8': {},
-      '9': 6,
-      '10': 'company',
-      '17': true
-    },
   ],
   '7': {},
   '8': [
@@ -142,9 +128,6 @@ const User$json = {
     {'1': '_family_name'},
     {'1': '_time_zone'},
     {'1': '_language_code'},
-    {'1': '_email'},
-    {'1': '_phone_number'},
-    {'1': '_company'},
   ],
 };
 
@@ -157,57 +140,48 @@ final $typed_data.Uint8List userDescriptor = $convert.base64Decode(
     'dWYuVGltZXN0YW1wQgPgQQNSCnVwZGF0ZVRpbWUSJwoKZ2l2ZW5fbmFtZRgGIAEoCUID4EEBSA'
     'BSCWdpdmVuTmFtZYgBARIpCgtmYW1pbHlfbmFtZRgHIAEoCUID4EEBSAFSCmZhbWlseU5hbWWI'
     'AQESJQoJdGltZV96b25lGAggASgJQgPgQQFIAlIIdGltZVpvbmWIAQESLQoNbGFuZ3VhZ2VfY2'
-    '9kZRgJIAEoCUID4EEBSANSDGxhbmd1YWdlQ29kZYgBARJBCgVlbWFpbBgKIAEoCzIhLmNlbGVz'
-    'dC5jbG91ZC5hdXRoLnYxYWxwaGExLkVtYWlsQgPgQQFIBFIFZW1haWyIAQESVAoMcGhvbmVfbn'
-    'VtYmVyGAsgASgLMicuY2VsZXN0LmNsb3VkLmF1dGgudjFhbHBoYTEuUGhvbmVOdW1iZXJCA+BB'
-    'AUgFUgtwaG9uZU51bWJlcogBARJiChNleHRlcm5hbF9pZGVudGl0aWVzGAwgAygLMiwuY2VsZX'
-    'N0LmNsb3VkLmF1dGgudjFhbHBoYTEuRXh0ZXJuYWxJZGVudGl0eUID4EEDUhJleHRlcm5hbElk'
-    'ZW50aXRpZXMSIgoHY29tcGFueRgNIAEoCUID4EEBSAZSB2NvbXBhbnmIAQE6NepBMgoVY2xvdW'
-    'QuY2VsZXN0LmRldi9Vc2VyEgx1c2Vycy97dXNlcn0qBXVzZXJzMgR1c2VyQg0KC19naXZlbl9u'
-    'YW1lQg4KDF9mYW1pbHlfbmFtZUIMCgpfdGltZV96b25lQhAKDl9sYW5ndWFnZV9jb2RlQggKBl'
-    '9lbWFpbEIPCg1fcGhvbmVfbnVtYmVyQgoKCF9jb21wYW55');
+    '9kZRgJIAEoCUID4EEBSANSDGxhbmd1YWdlQ29kZYgBARI+CgZlbWFpbHMYCiADKAsyIS5jZWxl'
+    'c3QuY2xvdWQuYXV0aC52MWFscGhhMS5FbWFpbEID4EEBUgZlbWFpbHMSUQoNcGhvbmVfbnVtYm'
+    'VycxgLIAMoCzInLmNlbGVzdC5jbG91ZC5hdXRoLnYxYWxwaGExLlBob25lTnVtYmVyQgPgQQFS'
+    'DHBob25lTnVtYmVycxJiChNleHRlcm5hbF9pZGVudGl0aWVzGAwgAygLMiwuY2VsZXN0LmNsb3'
+    'VkLmF1dGgudjFhbHBoYTEuRXh0ZXJuYWxJZGVudGl0eUID4EEDUhJleHRlcm5hbElkZW50aXRp'
+    'ZXM6NepBMgoVY2xvdWQuY2VsZXN0LmRldi9Vc2VyEgx1c2Vycy97dXNlcn0qBXVzZXJzMgR1c2'
+    'VyQg0KC19naXZlbl9uYW1lQg4KDF9mYW1pbHlfbmFtZUIMCgpfdGltZV96b25lQhAKDl9sYW5n'
+    'dWFnZV9jb2Rl');
 
 @$core.Deprecated('Use emailDescriptor instead')
 const Email$json = {
   '1': 'Email',
   '2': [
     {'1': 'email', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'email'},
-    {'1': 'verified', '3': 2, '4': 1, '5': 8, '8': {}, '10': 'verified'},
-    {'1': 'primary', '3': 3, '4': 1, '5': 8, '8': {}, '10': 'primary'},
+    {'1': 'is_verified', '3': 2, '4': 1, '5': 8, '8': {}, '10': 'isVerified'},
+    {'1': 'is_primary', '3': 3, '4': 1, '5': 8, '8': {}, '10': 'isPrimary'},
   ],
 };
 
 /// Descriptor for `Email`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List emailDescriptor = $convert.base64Decode(
     'CgVFbWFpbBJZCgVlbWFpbBgBIAEoCUJD4EECukg9ugE6Cgt2YWxpZF9lbWFpbBIbZW1haWwgbX'
-    'VzdCBiZSBhIHZhbGlkIGVtYWlsGg50aGlzLmlzRW1haWwoKVIFZW1haWwSHwoIdmVyaWZpZWQY'
-    'AiABKAhCA+BBA1IIdmVyaWZpZWQSHQoHcHJpbWFyeRgDIAEoCEID4EEDUgdwcmltYXJ5');
+    'VzdCBiZSBhIHZhbGlkIGVtYWlsGg50aGlzLmlzRW1haWwoKVIFZW1haWwSJAoLaXNfdmVyaWZp'
+    'ZWQYAiABKAhCA+BBA1IKaXNWZXJpZmllZBIiCgppc19wcmltYXJ5GAMgASgIQgPgQQNSCWlzUH'
+    'JpbWFyeQ==');
 
 @$core.Deprecated('Use phoneNumberDescriptor instead')
 const PhoneNumber$json = {
   '1': 'PhoneNumber',
   '2': [
-    {
-      '1': 'phone_number',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.i18n.phonenumbers.PhoneNumber',
-      '8': {},
-      '10': 'phoneNumber'
-    },
-    {'1': 'verified', '3': 2, '4': 1, '5': 8, '8': {}, '10': 'verified'},
-    {'1': 'primary', '3': 3, '4': 1, '5': 8, '8': {}, '10': 'primary'},
+    {'1': 'phone_number', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'phoneNumber'},
+    {'1': 'is_verified', '3': 2, '4': 1, '5': 8, '8': {}, '10': 'isVerified'},
+    {'1': 'is_primary', '3': 3, '4': 1, '5': 8, '8': {}, '10': 'isPrimary'},
   ],
 };
 
 /// Descriptor for `PhoneNumber`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List phoneNumberDescriptor = $convert.base64Decode(
-    'CgtQaG9uZU51bWJlchKqAQoMcGhvbmVfbnVtYmVyGAEgASgLMh4uaTE4bi5waG9uZW51bWJlcn'
-    'MuUGhvbmVOdW1iZXJCZ+BBArpIYboBXgoSdmFsaWRfcGhvbmVfbnVtYmVyEihwaG9uZV9udW1i'
-    'ZXIgbXVzdCBpbmNsdWRlIGEgY291bnRyeSBjb2RlGh50aGlzLnJhd19pbnB1dC5zdGFydHNXaX'
-    'RoKCcrJylSC3Bob25lTnVtYmVyEh8KCHZlcmlmaWVkGAIgASgIQgPgQQNSCHZlcmlmaWVkEh0K'
-    'B3ByaW1hcnkYAyABKAhCA+BBA1IHcHJpbWFyeQ==');
+    'CgtQaG9uZU51bWJlchKAAQoMcGhvbmVfbnVtYmVyGAEgASgJQl3gQQK6SFe6AVQKEnZhbGlkX3'
+    'Bob25lX251bWJlchIocGhvbmVfbnVtYmVyIG11c3QgaW5jbHVkZSBhIGNvdW50cnkgY29kZRoU'
+    'dGhpcy5zdGFydHNXaXRoKCcrJylSC3Bob25lTnVtYmVyEiQKC2lzX3ZlcmlmaWVkGAIgASgIQg'
+    'PgQQNSCmlzVmVyaWZpZWQSIgoKaXNfcHJpbWFyeRgDIAEoCEID4EEDUglpc1ByaW1hcnk=');
 
 @$core.Deprecated('Use externalIdentityDescriptor instead')
 const ExternalIdentity$json = {
@@ -293,13 +267,13 @@ const ListUsersRequest$json = {
 
 /// Descriptor for `ListUsersRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listUsersRequestDescriptor = $convert.base64Decode(
-    'ChBMaXN0VXNlcnNSZXF1ZXN0ErUBCgZwYXJlbnQYASABKAlCnAHgQQL6QRcSFWNsb3VkLmNlbG'
-    'VzdC5kZXYvVXNlcrpIfLoBeQoMdmFsaWRfcGFyZW50Eh1wYXJlbnQgbXVzdCBiZSBhIHZhbGlk'
+    'ChBMaXN0VXNlcnNSZXF1ZXN0ErgBCgZwYXJlbnQYASABKAlCnwHgQQL6QRcSFWNsb3VkLmNlbG'
+    'VzdC5kZXYvVXNlcrpIf7oBeQoMdmFsaWRfcGFyZW50Eh1wYXJlbnQgbXVzdCBiZSBhIHZhbGlk'
     'IHBhcmVudBpKdGhpcy5tYXRjaGVzKCdeb3JnYW5pemF0aW9ucy9bXi9dKyR8Xm9yZ2FuaXphdG'
-    'lvbnMvW14vXSsvcHJvamVjdHMvW14vXSskJylSBnBhcmVudBInCglwYWdlX3NpemUYAiABKAVC'
-    'CuBBAbpIBBoCKABSCHBhZ2VTaXplEiIKCnBhZ2VfdG9rZW4YAyABKAlCA+BBAVIJcGFnZVRva2'
-    'VuEhsKBmZpbHRlchgEIAEoCUID4EEBUgZmaWx0ZXISHgoIb3JkZXJfYnkYBSABKAlCA+BBAVIH'
-    'b3JkZXJCeQ==');
+    'lvbnMvW14vXSsvcHJvamVjdHMvW14vXSskJynQAQFSBnBhcmVudBInCglwYWdlX3NpemUYAiAB'
+    'KAVCCuBBAbpIBBoCKABSCHBhZ2VTaXplEiIKCnBhZ2VfdG9rZW4YAyABKAlCA+BBAVIJcGFnZV'
+    'Rva2VuEhsKBmZpbHRlchgEIAEoCUID4EEBUgZmaWx0ZXISHgoIb3JkZXJfYnkYBSABKAlCA+BB'
+    'AVIHb3JkZXJCeQ==');
 
 @$core.Deprecated('Use listUsersResponseDescriptor instead')
 const ListUsersResponse$json = {
@@ -362,12 +336,11 @@ final $typed_data.Uint8List updateUserRequestDescriptor = $convert.base64Decode(
     'ChFVcGRhdGVVc2VyUmVxdWVzdBI5CgR1c2VyGAEgASgLMiAuY2VsZXN0LmNsb3VkLmF1dGgudj'
     'FhbHBoYTEuVXNlckID4EECUgR1c2VyEkAKC3VwZGF0ZV9tYXNrGAIgASgLMhouZ29vZ2xlLnBy'
     'b3RvYnVmLkZpZWxkTWFza0ID4EEBUgp1cGRhdGVNYXNrEigKDXZhbGlkYXRlX29ubHkYAyABKA'
-    'hCA+BBAVIMdmFsaWRhdGVPbmx5OpQCukiQAhqNAgoQdmFsaWRfZmllbGRfbWFzaxJwdXBkYXRl'
-    'X21hc2sgbWF5IG9ubHkgaW5jbHVkZTogJ2dpdmVuX25hbWUnLCAnZmFtaWx5X25hbWUnLCAnZW'
-    '1haWwnLCAncGhvbmVfbnVtYmVyJywgJ3RpbWVfem9uZScsICdsYW5ndWFnZV9jb2RlJxqGAXRo'
-    'aXMudXBkYXRlX21hc2sucGF0aHMuYWxsKHBhdGgsIHBhdGggaW4gWyduYW1lJywgJ2dpdmVuX2'
-    '5hbWUnLCAnZmFtaWx5X25hbWUnLCAnZW1haWwnLCAncGhvbmVfbnVtYmVyJywgJ3RpbWVfem9u'
-    'ZScsICdsYW5ndWFnZV9jb2RlJ10p');
+    'hCA+BBAVIMdmFsaWRhdGVPbmx5OuEBukjdARraAQoQdmFsaWRfZmllbGRfbWFzaxJXdXBkYXRl'
+    'X21hc2sgbWF5IG9ubHkgaW5jbHVkZTogJ2dpdmVuX25hbWUnLCAnZmFtaWx5X25hbWUnLCAndG'
+    'ltZV96b25lJywgJ2xhbmd1YWdlX2NvZGUnGm10aGlzLnVwZGF0ZV9tYXNrLnBhdGhzLmFsbChw'
+    'YXRoLCBwYXRoIGluIFsnbmFtZScsICdnaXZlbl9uYW1lJywgJ2ZhbWlseV9uYW1lJywgJ3RpbW'
+    'Vfem9uZScsICdsYW5ndWFnZV9jb2RlJ10p');
 
 @$core.Deprecated('Use deleteUserRequestDescriptor instead')
 const DeleteUserRequest$json = {

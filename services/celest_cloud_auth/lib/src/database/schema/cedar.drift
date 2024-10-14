@@ -1,0 +1,630 @@
+import 'schema_imports.dart';
+
+-- The Cedar database schema is a simple graph database that stores entities and relationships between them.
+--
+-- The schema consists of three tables:
+-- 1. cedar_types: Stores the fully qualified name (FQN) of the Cedar type.
+-- 2. cedar_entities: Stores the unique identifier of entities. This table is updated as entities are created throughout the system.
+-- 3. cedar_relationships: Stores the relationships between entities. This table is updated as relationships change throughout the system.
+--
+-- The schema is designed to be simple and flexible, allowing for the creation of new Cedar types and relationships as needed.
+-- To avoid duplication and improve speed, we store precisely the data needed for Cedar to make authorization decisions in the format it needs.
+
+-- Stores the fully qualified name (FQN) of known Cedar types.
+--
+-- Only types in this table may be used in ReBAC policies.
+CREATE TABLE IF NOT EXISTS cedar_types (
+    -- The fully qualified Cedar type, e.g. Celest::Organization
+    fqn TEXT NOT NULL PRIMARY KEY
+);
+
+-- Stores the unique identifier of entities.
+--
+-- Entity IDs are duplicated into this table to avoid JOINs when querying relationships and allow
+-- for efficient querying of relationships.
+CREATE TABLE IF NOT EXISTS cedar_entities (
+    -- A reference to the Cedar type of the entity.
+    entity_type TEXT NOT NULL REFERENCES cedar_types(fqn),
+
+    -- The unique identifier of the entity.
+    entity_id TEXT NOT NULL,
+
+    -- The attributes of the entity.
+    --
+    -- These should only be static attributes that are needed for authorization decisions.
+    attribute_json TEXT NOT NULL DEFAULT '{}'
+        MAPPED BY `const CedarAttributesConverter()`,
+
+    -- A JSON representation of the entity.
+    entity_json TEXT NOT NULL GENERATED ALWAYS AS (json_object('type', entity_type, 'id', entity_id)) VIRTUAL
+        MAPPED BY `const CedarEntityUidConverter()`,
+
+    CONSTRAINT cedar_entities_pk PRIMARY KEY (entity_type, entity_id) ON CONFLICT IGNORE
+) WITHOUT ROWID;
+
+-- Stores the relationships between entities.
+--
+-- Relationships are stored as a directed graph, where the child entity is related to the parent entity.
+-- For Cedar ReBAC policies, the parent information is all that's needed to make authorization decisions.
+CREATE TABLE IF NOT EXISTS cedar_relationships (
+    -- The entity (child) of the relationship.
+    entity_type TEXT NOT NULL, entity_id TEXT NOT NULL,
+    entity_json TEXT NOT NULL GENERATED ALWAYS AS (json_object('type', entity_type, 'id', entity_id)) VIRTUAL
+        MAPPED BY `const CedarEntityUidConverter()`,
+
+    -- The parent (ancestor) of the relationship.
+    parent_type TEXT NOT NULL, parent_id TEXT NOT NULL,
+    parent_json TEXT NOT NULL GENERATED ALWAYS AS (json_object('type', parent_type, 'id', parent_id)) VIRTUAL
+        MAPPED BY `const CedarEntityUidConverter()`,
+
+    CONSTRAINT cedar_relationships_pk
+    PRIMARY KEY (entity_type, entity_id, parent_type, parent_id) ON CONFLICT IGNORE,
+    
+    CONSTRAINT cedar_relationships_fk_entity
+    FOREIGN KEY (entity_type, entity_id) REFERENCES cedar_entities(entity_type, entity_id),
+    
+    CONSTRAINT cedar_relationships_fk_parent
+    FOREIGN KEY (parent_type, parent_id) REFERENCES cedar_entities(entity_type, entity_id)
+) WITHOUT ROWID;
+
+-- Indexes for the cedar_relationships foreign keys.
+CREATE INDEX IF NOT EXISTS cedar_relationships_fk_entity_idx ON cedar_relationships(entity_type, entity_id);
+CREATE INDEX IF NOT EXISTS cedar_relationships_fk_parent_idx ON cedar_relationships(parent_type, parent_id);
+
+-- Stores static Cedar policies used globally in evaluations.
+CREATE TABLE IF NOT EXISTS cedar_policies (
+    -- Immutable. The unique identifier for the policy.
+    --
+    -- Maps to the `uid` field in the Protobuf.
+    --
+    -- Format: pol_<typeid>
+    id TEXT NOT NULL PRIMARY KEY,
+
+    -- The primary alias for the policy, mapping to the `@id` annotation.
+    --
+    -- While Cedar does not require policies to have IDs, we enforce their usage to improve 
+    -- auditability and debuggability.
+    policy_id TEXT NOT NULL UNIQUE,
+
+    -- The policy in JSON format.
+    --
+    -- Type: JSON[package:cedar/cedar.dart#Policy]
+    policy TEXT NOT NULL
+        MAPPED BY `const CedarPolicyConverter()`,
+
+    -- The policy's enforcement level.
+    --
+    -- Dry-run policies are captured in the audit log but do not affect presentation of the 
+    -- authorization decision.
+    --
+    -- Type: integer (enforced=1, dry-run=0)
+    enforcement_level INTEGER NOT NULL DEFAULT 1,
+
+    CHECK (enforcement_level IN (0, 1))
+);
+
+-- Stores Cedar policy templates which may be attached to entities for evaluation.
+CREATE TABLE IF NOT EXISTS cedar_policy_templates (
+    -- Immutable. The unique identifier for the template.
+    --
+    -- Maps to the `uid` field in the Protobuf.
+    --
+    -- Format: polt_<typeid>
+    id TEXT NOT NULL PRIMARY KEY,
+
+    -- The primary alias for the template, mapping to the `@id` annotation.
+    --
+    -- While Cedar does not require templates to have IDs, we enforce their usage to improve 
+    -- auditability and debuggability.
+    template_id TEXT NOT NULL UNIQUE,
+
+    -- The template in JSON format.
+    --
+    -- Type: JSON[package:cedar/cedar.dart#Policy]
+    template TEXT NOT NULL
+        MAPPED BY `const CedarPolicyConverter()`,
+
+    CHECK (template IS NOT NULL OR template IS NOT NULL)
+);
+
+-- Stores linked Cedar policy templates.
+CREATE TABLE IF NOT EXISTS cedar_policy_template_links (
+    -- Immutable. The unique identifier for the policy.
+    --
+    -- Maps to the `uid` field in the Protobuf.
+    --
+    -- Format: polk_<typeid>
+    id TEXT NOT NULL PRIMARY KEY,
+
+    -- The primary alias of the policy created by this link.
+    policy_id TEXT NOT NULL UNIQUE,
+
+    -- The policy template ID.
+    template_id TEXT NOT NULL,
+
+    -- The linked principal slot of the template.
+    principal_type TEXT, principal_id TEXT,
+
+    -- The linked resource slot of the template.
+    resource_type TEXT, resource_id TEXT,
+
+    -- The policy's enforcement level.
+    --
+    -- Dry-run policies are captured in the audit log but do not affect presentation of the 
+    -- authorization decision.
+    --
+    -- Type: integer (enforced=1, dry-run=0)
+    enforcement_level INTEGER NOT NULL DEFAULT 1,
+
+    CHECK (
+        principal_type IS NOT NULL AND principal_id IS NOT NULL 
+        OR resource_type IS NOT NULL AND resource_id IS NOT NULL
+    ),
+    CHECK (enforcement_level IN (0, 1)),
+    
+    CONSTRAINT cedar_policy_template_links_fk_template_id
+    FOREIGN KEY (template_id) REFERENCES cedar_policy_templates(template_id) ON UPDATE CASCADE ON DELETE CASCADE,
+
+    CONSTRAINT cedar_policy_template_links_fk_principal
+    FOREIGN KEY (principal_type, principal_id) REFERENCES cedar_entities(entity_type, entity_id) ON DELETE CASCADE,
+
+    CONSTRAINT cedar_policy_template_links_fk_resource
+    FOREIGN KEY (resource_type, resource_id) REFERENCES cedar_entities(entity_type, entity_id) ON DELETE CASCADE
+);
+
+-- Indexes for the `cedar.policy_template_links` foreign keys.
+CREATE INDEX IF NOT EXISTS cedar_policy_template_links_fk_template_id_idx ON cedar_policy_template_links(template_id);
+CREATE INDEX IF NOT EXISTS cedar_policy_template_links_fk_principal_idx ON cedar_policy_template_links(principal_type, principal_id);
+CREATE INDEX IF NOT EXISTS cedar_policy_template_links_fk_resource_idx ON cedar_policy_template_links(resource_type, resource_id);
+
+-- The audit log for Cedar authorization requests.
+--
+-- This is an append-only table that stores the history of all authorization requests.
+-- Currently, the hub is responsible for writing to this table. In the future, Cedar will 
+-- be able to write to this table directly.
+--
+-- Foreign keys are not used in this table to prevent conflicts and ensure the table remains
+-- append-only.
+CREATE TABLE IF NOT EXISTS cedar_authorization_logs(
+    -- The unique identifier of the audit log entry.
+    rowid INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    -- The time the audit log entry was created.
+    --
+    -- Type: unixepoch.subsec
+    create_time DATETIME NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+
+    -- The log's expiration time if a TTL has been set.
+    --
+    -- Type: unixepoch | null
+    expire_time DATETIME,
+
+    -- The requesting principal's entity type.
+    --
+    -- Type: string
+    principal_type TEXT,
+
+    -- The requesting principal's entity ID.
+    --
+    -- Type: string
+    principal_id TEXT,
+
+    -- The requested action's entity type.
+    --
+    -- Type: string
+    action_type TEXT,
+
+    -- The requested action's entity ID.
+    --
+    -- Type: string
+    action_id TEXT,
+
+    -- The requested resource's entity type.
+    --
+    -- Type: string
+    resource_type TEXT,
+
+    -- The requested resource's entity ID.
+    --
+    -- Type: string
+    resource_id TEXT,
+
+    -- The context of the request
+    --
+    -- Type: JSON
+    -- JSON: `{ [key: string]: string }`
+    context_json TEXT NOT NULL DEFAULT '{}'
+        MAPPED BY `const CedarAttributesConverter()`,
+
+    -- The authorization decision.
+    --
+    -- Type: bool (true=allow, false=deny)
+    decision BOOLEAN NOT NULL,
+
+    -- The reasons for the authorization decision.
+    --
+    -- Type: JSON
+    -- JSON: []string
+    reasons_json TEXT NOT NULL DEFAULT '[]'
+        MAPPED BY `const CedarAuthorizationReasonsConverter()`,
+
+    -- The errors encountered during the authorization decision.
+    --
+    -- Type: JSON
+    -- JSON:
+    -- ```json
+    -- [
+    --   {
+    --     "policy": "policy_id",
+    --     "message": "string"
+    --   }
+    -- ]
+    -- ```
+    errors_json TEXT NOT NULL DEFAULT '[]'
+        MAPPED BY `const CedarAuthorizationErrorsConverter()`
+);
+
+-- name: GetEntityClosure :one
+-- Retrives the transitive closure of an entity and its parents.
+getEntityClosure: WITH RECURSIVE
+    parents AS (
+        -- Start by selecting the entity and all its direct parents.
+        SELECT
+            e.entity_type,
+            e.entity_id,
+            e.parent_type,
+            e.parent_id,
+            e.parent_json
+        FROM
+            cedar_relationships e
+        WHERE 
+            e.entity_type = :type
+        AND e.entity_id   = :id
+
+        UNION ALL
+        
+        -- Recursively select the parents of the parents.
+        SELECT 
+            p.entity_type, 
+            p.entity_id,
+            p.parent_type,
+            p.parent_id,
+            p.parent_json
+        FROM 
+            cedar_relationships p
+        INNER JOIN 
+            parents a 
+        ON  p.entity_id   = a.parent_id 
+        AND p.entity_type = a.parent_type
+    ),
+    -- Select all entities that are in the closure. This is necessary to ensure that all 
+    -- entities, even those without parents, are included in the final result.
+    entities AS (
+        SELECT * FROM cedar_entities
+        WHERE 
+            (entity_type, entity_id) IN (SELECT entity_type, entity_id FROM parents)
+        OR  (entity_type, entity_id) IN (SELECT parent_type, parent_id FROM parents)
+        OR  (entity_type, entity_id) = (:type, :id)
+    )
+-- Cedar expects the Entities to be a slice of entity objects, each taking the form:
+-- 
+-- ```json
+-- {
+--   "uid": {
+--     "type": "string",
+--     "id": "string"
+--   },
+--   "attrs": object,
+--   "parents": [
+--     {
+--       "type": "string",
+--       "id": "string"
+--     }
+--   ]
+-- }
+-- ```
+SELECT
+    json_group_array(
+        json_object(
+            'uid', entity_json,
+            'attrs', json(attribute_json),
+            'parents', (
+                SELECT json_group_array(
+                    -- json() is used to remove the outer quotes from the json string.
+                    -- Not sure why this is necessary here but not with entity_json.
+                    json(parent_json)
+                ) 
+                FROM parents p 
+                WHERE 
+                    p.entity_type = e.entity_type 
+                AND p.entity_id   = e.entity_id
+            )
+        )
+    ) MAPPED BY `const CedarEntityClosureConverter()`
+FROM entities e;
+
+-- name: DebugDumpCedar :many
+-- FOR DEBUGGING ONLY. Returns all entities and relationships in the cedar database.
+debugDumpCedar: SELECT 
+    e.entity_type,
+    e.entity_id,
+    coalesce(r.parent_type, ''),
+    coalesce(r.parent_id, '')
+FROM
+    cedar_entities e
+LEFT JOIN
+    cedar_relationships r 
+    ON  e.entity_type = r.entity_type 
+    AND e.entity_id   = r.entity_id;
+
+-- name: CreatePolicy :exec
+-- Creates a policy in the cedar database.
+createPolicy: INSERT INTO cedar_policies(id, policy_id, policy, enforcement_level)
+VALUES (:id, :policy_id, :policy, :enforcement_level)
+ON CONFLICT(policy_id) DO UPDATE SET
+    policy = excluded.policy,
+    enforcement_level = excluded.enforcement_level;
+
+upsertPolicy: INSERT INTO cedar_policies(
+    id,
+    policy_id,
+    policy,
+    enforcement_level
+)
+VALUES (
+    :id,
+    :policy_id,
+    :policy,
+    :enforcement_level
+)
+ON CONFLICT(policy_id) DO UPDATE SET
+    policy = excluded.policy,
+    enforcement_level = excluded.enforcement_level;
+
+-- name: CreatePolicyTemplate :exec
+-- Creates a policy template in the cedar database.
+createPolicyTemplate: INSERT INTO cedar_policy_templates(id, template_id, template)
+VALUES (:id, :template_id, :template)
+ON CONFLICT(template_id) DO UPDATE SET
+    template = excluded.template;
+
+upsertPolicyTemplate: INSERT INTO cedar_policy_templates(
+    id,
+    template_id,
+    template
+)
+VALUES (
+    :id,
+    :template_id,
+    :template
+)
+ON CONFLICT(template_id) DO UPDATE SET
+    template = excluded.template;
+
+-- Upserts a policy template link in the cedar database.
+upsertPolicyTemplateLink: INSERT INTO cedar_policy_template_links(
+    id,
+    policy_id,
+    template_id,
+    principal_type,
+    principal_id,
+    resource_type,
+    resource_id,
+    enforcement_level
+)
+VALUES (
+    :id,
+    :policy_id, 
+    :template_id, 
+    :principal_type,
+    :principal_id,
+    :resource_type,
+    :resource_id,
+    :enforcement_level
+)
+ON CONFLICT(policy_id) DO UPDATE SET
+    principal_type = excluded.principal_type,
+    principal_id = excluded.principal_id,
+    resource_type = excluded.resource_type,
+    resource_id = excluded.resource_id,
+    enforcement_level = excluded.enforcement_level;
+
+-- name: LinkPolicyTemplate :exec
+-- Creates a policy by linking a template.
+linkPolicyTemplate: INSERT INTO cedar_policy_template_links(
+    id,
+    policy_id,
+    template_id,
+    principal_type,
+    principal_id,
+    resource_type,
+    resource_id,
+    enforcement_level
+)
+VALUES (
+    :id,
+    :policy_id, 
+    :template_id, 
+    :principal_type,
+    :principal_id,
+    :resource_type,
+    :resource_id,
+    :enforcement_level
+);
+
+-- name: ListPolicies :many
+-- Lists all policies and linked templates in the cedar database.
+listEffectivePolicies: WITH template_links AS (
+    SELECT 
+        l.id,
+        l.policy_id,
+        t.template,
+        l.principal_type,
+        l.principal_id,
+        l.resource_type,
+        l.resource_id,
+        l.enforcement_level
+    FROM cedar_policy_templates t
+    INNER JOIN cedar_policy_template_links l 
+    ON l.template_id = t.id
+)
+SELECT
+    id,
+    template_id AS policy_id,
+    template AS policy,
+    NULL AS principal_type,
+    NULL AS principal_id,
+    NULL AS resource_type,
+    NULL AS resource_id,
+    NULL AS enforcement_level
+FROM 
+    cedar_policy_templates
+UNION ALL
+SELECT
+    id,
+    policy_id,
+    template AS policy,
+    principal_type,
+    principal_id,
+    resource_type,
+    resource_id,
+    enforcement_level
+FROM 
+    template_links
+UNION ALL
+SELECT
+    id,
+    policy_id,
+    policy,
+    NULL AS principal_type,
+    NULL AS principal_id,
+    NULL AS resource_type,
+    NULL AS resource_id,
+    enforcement_level
+FROM 
+    cedar_policies;
+
+-- name: UpdatePolicy :exec
+-- Updates a policy in the cedar database.
+updatePolicy(:policy AS TEXT OR NULL, :enforcement_level AS INT OR NULL): UPDATE cedar_policies
+SET policy = coalesce(:policy, policy),
+    enforcement_level = coalesce(:enforcement_level, enforcement_level)
+WHERE id = :policy_id OR policy_id = :policy_id;
+
+-- name: UpdatePolicyTemplate :exec
+-- Updates a policy template in the cedar database.
+updatePolicyTemplate(:template AS TEXT OR NULL): UPDATE cedar_policy_templates
+SET template = coalesce(:template, template)
+WHERE id = :template_id OR template_id = :template_id;
+
+-- name: UpdatePolicyTemplateLink :exec
+-- Updates a policy template link in the cedar database.
+updatePolicyTemplateLink(:enforcement_level AS INT OR NULL): UPDATE cedar_policy_template_links
+SET enforcement_level = coalesce(:enforcement_level, enforcement_level)
+WHERE id = :policy_id OR policy_id = :policy_id;
+
+-- name: DeletePolicy :one
+-- Deletes a policy from the cedar database.
+deletePolicy: DELETE FROM cedar_policies
+WHERE id = :policy_id OR policy_id = :policy_id
+RETURNING *;
+
+-- name: DeletePolicyTemplate :one
+-- Deletes a policy template from the cedar database.
+deletePolicyTemplate: DELETE FROM cedar_policy_templates
+WHERE id = :template_id OR template_id = :template_id
+RETURNING *;
+
+-- name: DeletePolicyTemplateLink :one
+-- Deletes a policy template link from the cedar database.
+deletePolicyTemplateLink: DELETE FROM cedar_policy_template_links
+WHERE id = :policy_id OR policy_id = :policy_id
+RETURNING *;
+
+-- name: RecordAuthorization :exec
+-- Records an authorization decision in the cedar database.
+recordAuthorization: INSERT INTO cedar_authorization_logs(
+    principal_type,
+    principal_id,
+    action_type,
+    action_id,
+    resource_type,
+    resource_id,
+    context_json,
+    decision,
+    reasons_json,
+    errors_json
+)
+VALUES (
+    :principal_type,
+    :principal_id,
+    :action_type,
+    :action_id,
+    :resource_type,
+    :resource_id,
+    :context_json,
+    :decision,
+    :reasons_json,
+    :errors_json
+);
+
+-- name: CreateCedarRelationship :exec
+-- Creates a relationship in the cedar database.
+createRelationship: INSERT INTO cedar_relationships(
+    entity_type,
+    entity_id,
+    parent_type,
+    parent_id
+)
+VALUES (
+    :entity_type,
+    :entity_id,
+    :parent_type,
+    :parent_id
+)
+ON CONFLICT(entity_type, entity_id, parent_type, parent_id) DO NOTHING;
+
+-- name: CreateCedarEntity :one
+-- Creates an entity in the cedar database.
+createEntity: INSERT INTO cedar_entities(
+    entity_type,
+    entity_id,
+    attribute_json
+)
+VALUES (
+    :entity_type,
+    :entity_id,
+    :attribute_json
+)
+ON CONFLICT(entity_type, entity_id) DO UPDATE
+SET attribute_json = excluded.attribute_json
+RETURNING *;
+
+createType:
+    INSERT INTO cedar_types(fqn)
+    VALUES (:fqn)
+    ON CONFLICT(fqn) DO NOTHING;
+
+-- name: GetCedarEntity :one
+-- Retrieves an entity from the cedar database.
+getEntity: SELECT *
+FROM
+    cedar_entities
+WHERE
+    entity_type = :entity_type
+AND entity_id   = :entity_id;
+
+-- name: GetCedarRelationships :one
+-- Retrieves all relationships for an entity from the cedar database.
+getRelationship: SELECT * 
+FROM
+    cedar_relationships
+WHERE
+    entity_type = :entity_type 
+AND entity_id   = :entity_id;
+
+-- name: UpdateCedarEntity :exec
+-- Updates an entity in the cedar database.
+updateEntity(:attribute_json AS TEXT OR NULL): UPDATE cedar_entities
+SET attribute_json = coalesce(:attribute_json, attribute_json)
+WHERE entity_type = :entity_type AND entity_id = :entity_id;
