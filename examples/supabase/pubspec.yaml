@@ -1,0 +1,32 @@
+name: supabase_test
+description: An example of how to use Supabase as an authentication provider for Celest.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  supabase_client:
+    path: celest/client/
+  supabase_flutter: ^2.8.0
+
+dependency_overrides:
+  celest:
+    path: ../../packages/celest
+  celest_auth:
+    path: ../../packages/celest_auth
+  celest_cloud:
+    path: ../../packages/celest_cloud
+  celest_core:
+    path: ../../packages/celest_core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
