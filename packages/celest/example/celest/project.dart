@@ -1,1 +1,0 @@
-/Users/dillonnys/celest/cloud/celest/packages/celest/example/celest/lib/src/project.dart

@@ -1,4 +1,74 @@
-## 1.0.0-dev.0
+## 1.0.0
+
+The first release of Celest V1! This release includes:
+
+- **Celest Data**
+
+    Celest Data is a brand new database offering from Celest built off of SQLite and [Drift](https://pub.dev/packages/drift).
+
+    To get started with Celest Data, add a new `Database` component to your Celest project and point it at your Drift schema.
+
+    ```dart
+    import 'package:celest/celest.dart';
+    import 'package:celest_backend/src/database/task_database.dart';
+
+    const project = Project(name: 'tasks');
+
+    const tasksDatabase = Database(
+      schema: Schema.drift(TaskDatabase),
+    );
+    ```
+
+    When you run Celest locally, Celest Data will use SQLite to store your data. And when you deploy your Celest project, Celest Data 
+    will automatically switch to using Celest Data backed by [Turso](https://turso.tech/).
+
+- **Celest Cloud Auth**
+
+    [Celest Cloud Auth](https://pub.dev/packages/celest_cloud_auth) is an open-source backend service for authenticating users and authorizing access to resources. It is built on the [Cedar](https://www.cedarpolicy.com/en) policy engine and Celest Data.
+
+    Now, when adding [Auth]() to your Celest project, Celest will automatically generate the necessary code to integrate Celest Cloud 
+    Auth into your project so you can start authenticating users and controlling the resources they can access.
+
+    ```dart
+    import 'package:celest/celest.dart';
+
+    const project = Project(name: 'my-project');
+
+    const auth = Auth(
+      providers: [
+          AuthProvider.email(),
+      ],
+    );
+    ```
+
+- **Self-Hosting**
+
+    Celest now supports self-hosting your Celest project. You can run your Celest project on your own server or cloud provider. 
+    This allows you to have full control over your backend and data.
+
+    The new `celest build` command will automatically generate a `Dockerfile` which you can deploy to any server of your choice.
+
+- **Improved Developer Experience**
+
+    We have made several improvements to the developer experience, including better error messages, improved documentation, and a 
+    new Dart analyzer plugin which helps you more seamlessly navigate your code. Now, when using the `Go To Definition` feature in
+    your IDE, you will be taken directly from your frontend to your backend code.
+
+    <br />
+
+    ![Go To Definition](https://github.com/celest-dev/celest/blob/master/assets/analyzer-plugin.gif)
+
+    <br />
+
+- **...and much more on the Roadmap!**
+
+    We are excited to continue building out the Celest platform and have many more features planned for the future. Our initial release
+    of Celest V1 provides the foundation for many new features to come include server-side rendering of Flutter app, better integration
+    of your Data models and Auth policies, Web Hosting, Storage, and much more!
+    
+    Stay tuned for more updates by following us on [X](https://x.com/Celest_Dev) and joining our [Discord](https://celest.dev/discord).
+
+Flutter is the future! 🚀
 
 ## 0.4.2
 

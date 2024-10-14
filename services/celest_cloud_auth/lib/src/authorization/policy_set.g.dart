@@ -4,7 +4,7 @@ library;
 import 'package:cedar/cedar.dart';
 
 /// The core policy set.
-/// 
+///
 /// Included policies:
 /// - policies.cedar
 final corePolicySet = PolicySet.parse(corePolicySetCedar);

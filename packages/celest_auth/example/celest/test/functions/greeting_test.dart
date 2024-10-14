@@ -1,7 +1,6 @@
 import 'package:celest/celest.dart';
+import 'package:celest_backend/src/functions/greeting.dart';
 import 'package:test/test.dart';
-
-import '../../functions/greeting.dart';
 
 void main() {
   group('greeting', () {

@@ -24,7 +24,7 @@ void main(List<String> args) async {
 
   // Configure a pipeline that logs requests.
   final handler =
-      Pipeline().addMiddleware(logRequests()).addHandler(_router.call);
+      const Pipeline().addMiddleware(logRequests()).addHandler(_router.call);
 
   // For running in containers, we respect the PORT environment variable.
   final port = int.parse(Platform.environment['PORT'] ?? '8080');

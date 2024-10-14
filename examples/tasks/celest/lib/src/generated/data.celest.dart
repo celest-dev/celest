@@ -6,11 +6,8 @@ library;
 
 import 'package:celest/celest.dart';
 import 'package:celest/src/core/context.dart';
+import 'package:celest/src/runtime/data/connect.dart';
 import 'package:celest_backend/src/database/task_database.dart';
-import 'package:drift/native.dart';
-import 'package:drift/src/runtime/api/runtime_api.dart';
-import 'package:drift/src/runtime/executor/executor.dart';
-import 'package:drift_hrana/drift_hrana.dart';
 
 /// The data services for the Celest backend.
 ///
@@ -23,7 +20,7 @@ class CelestData {
   static Future<void> init(Context context) async {
     context.put(
       _tasksDatabaseKey,
-      await _connect(
+      await connect(
         context,
         name: 'TaskDatabase',
         factory: TaskDatabase.new,
@@ -39,41 +36,4 @@ class CelestData {
   /// The context key for the [tasksDatabase] instance.
   static ContextKey<TaskDatabase> get _tasksDatabaseKey =>
       const ContextKey('TaskDatabase');
-}
-
-/// Checks the connection to the database by running a simple query.
-Future<Database> _checkConnection<Database extends GeneratedDatabase>(
-    Database db) async {
-  await db.transaction(() async {
-    await db.customSelect('SELECT 1').get();
-  });
-  return db;
-}
-
-/// Constructs a new [Database] and connects to it using the provided
-/// [hostnameVariable] and [tokenSecret] configuration values.
-Future<Database> _connect<Database extends GeneratedDatabase>(
-  Context context, {
-  required String name,
-  required Database Function(QueryExecutor) factory,
-  required env hostnameVariable,
-  required secret tokenSecret,
-}) async {
-  if (context.environment == Environment.local) {
-    return _checkConnection(factory(NativeDatabase.memory()));
-  }
-  final host = context.get(hostnameVariable);
-  final token = context.get(tokenSecret);
-  if (host == null || token == null) {
-    throw StateError(
-      'Missing database hostname or token for $name. '
-      'Please set the `$hostnameVariable` and `$tokenSecret` values '
-      'in the environment or Celest configuration file.',
-    );
-  }
-  final connector = HranaDatabase(
-    Uri(scheme: 'libsql', host: host),
-    jwtToken: token,
-  );
-  return _checkConnection(factory(connector));
 }

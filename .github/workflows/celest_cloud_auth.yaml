@@ -1,0 +1,51 @@
+name: celest_cloud_auth
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/celest_cloud_auth.yaml"
+      - "services/celest_cloud_auth/**"
+
+# Prevent duplicate runs due to Graphite
+# https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
+  cancel-in-progress: true
+
+jobs:
+  analyze_and_format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # 4.1.7
+      - name: Setup Flutter
+        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
+        with:
+          cache: true
+      - name: Setup Melos
+        run: dart pub global activate melos
+      - name: Get Packages
+        run: melos bootstrap
+      - name: Analyze
+        working-directory: services/celest_cloud_auth
+        run: dart analyze
+      - name: Format
+        working-directory: services/celest_cloud_auth
+        run: dart format --set-exit-if-changed .
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # 4.1.7
+      - name: Setup Flutter
+        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
+        with:
+          cache: true
+      - name: Setup Melos
+        run: dart pub global activate melos
+      - name: Get Packages
+        run: melos bootstrap
+      - name: Test
+        working-directory: services/celest_cloud_auth
+        run: dart test

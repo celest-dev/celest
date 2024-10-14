@@ -113,7 +113,7 @@ extension on Traceparent {
 extension on Frame {
 // https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogEntrySourceLocation
   Map<String, Object?> get sourceLocation => {
-        // TODO: Will need to fix `package:` URIs to file paths when possible
+        // TODO(dnys1): Will need to fix `package:` URIs to file paths when possible
         // GoogleCloudPlatform/functions-framework-dart#40
         'file': library,
         if (line != null) 'line': line.toString(),

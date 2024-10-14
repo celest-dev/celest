@@ -1,6 +1,6 @@
 name: celest_cloud
 description: API contracts and Dart clients for the Celest Cloud platform.
-version: 0.1.4-wip
+version: 0.1.4
 repository: https://github.com/celest-dev/celest
 
 environment:
@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   async: ^2.11.0
-  celest_core: ^0.5.0-dev.1
+  celest_core: ^1.0.0
   code_builder: ^4.10.0
   collection: ^1.18.0
   fixnum: ^1.1.0
