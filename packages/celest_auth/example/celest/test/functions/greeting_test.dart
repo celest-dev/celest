@@ -10,22 +10,25 @@ void main() {
         await sayHello(
           user: User(
             userId: '123',
-            email: 'test@celest.dev',
-            emailVerified: true,
-            displayName: 'Celest',
+            emails: [
+              Email(
+                email: 'test@celest.dev',
+                isPrimary: true,
+                isVerified: true,
+              ),
+            ],
+            givenName: 'Celest',
           ),
         ),
         'Hello, Celest!',
       );
     });
-    test('sayHello (email not verified)', () async {
+    test('sayHello (no email)', () async {
       expect(
         sayHello(
           user: User(
             userId: '123',
-            email: 'test@celest.dev',
-            emailVerified: false,
-            displayName: 'Celest',
+            givenName: 'Celest',
           ),
         ),
         throwsA(isA<UnauthorizedException>()),

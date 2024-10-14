@@ -15,25 +15,19 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   final _emailController = TextEditingController();
-  final _phoneNumberController = TextEditingController();
   final _otpController = TextEditingController();
   Future<Object>? _request;
 
   Future<void> signUp() async {
     try {
-      await switch ((_emailController.text, _phoneNumberController.text)) {
-        (final email, _) when email.isNotEmpty =>
-          celest.auth.email.authenticate(
-            email: _emailController.text,
-          ),
-        (_, final phoneNumber) when phoneNumber.isNotEmpty =>
-          celest.auth.sms.authenticate(
-            phoneNumber: _phoneNumberController.text,
-          ),
-        _ => throw Exception('Email or phone number required'),
-      };
+      if (_emailController.text.isNotEmpty) {
+        await celest.auth.email.authenticate(
+          email: _emailController.text,
+        );
+      } else {
+        throw Exception('Email is required');
+      }
       _emailController.clear();
-      _phoneNumberController.clear();
     } on Exception catch (e, st) {
       debugPrint('Error: $e');
       debugPrint('Stacktrace: $st');
@@ -58,7 +52,10 @@ class _MainAppState extends State<MainApp> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     if (state case Authenticated(:final user))
-                      Text('Currently signed in: ${user.email}')
+                      Text(
+                        'Currently signed in: id=${user.id}, '
+                        'email=${user.primaryEmail?.email}',
+                      )
                     else
                       const Text('Currently signed out'),
                     const SizedBox(height: 16),
@@ -121,18 +118,6 @@ class _MainAppState extends State<MainApp> {
                               AutofillHints.email,
                             ],
                             keyboardType: TextInputType.emailAddress,
-                          ),
-                          const SizedBox(height: 16),
-                          TextField(
-                            key: const ValueKey('phoneNumber'),
-                            controller: _phoneNumberController,
-                            decoration: const InputDecoration(
-                              labelText: 'Phone Number',
-                            ),
-                            autofillHints: const [
-                              AutofillHints.telephoneNumber,
-                            ],
-                            keyboardType: TextInputType.phone,
                           ),
                           const SizedBox(height: 16),
                           TextButton(
