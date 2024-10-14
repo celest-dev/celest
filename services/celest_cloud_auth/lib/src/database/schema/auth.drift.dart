@@ -11,6 +11,934 @@ import 'package:celest_cloud_auth/src/database/schema/converters/auth_converters
 import 'package:drift/internal/modular.dart' as i7;
 import 'dart:async' as i8;
 
+typedef $CryptoKeysCreateCompanionBuilder = i3.CryptoKeysCompanion Function({
+  required i2.Uint8List cryptoKeyId,
+  required String keyPurpose,
+  required String keyAlgorithm,
+  i0.Value<i2.Uint8List?> keyMaterial,
+  i0.Value<String?> externalCryptoKeyId,
+  i0.Value<int> rowid,
+});
+typedef $CryptoKeysUpdateCompanionBuilder = i3.CryptoKeysCompanion Function({
+  i0.Value<i2.Uint8List> cryptoKeyId,
+  i0.Value<String> keyPurpose,
+  i0.Value<String> keyAlgorithm,
+  i0.Value<i2.Uint8List?> keyMaterial,
+  i0.Value<String?> externalCryptoKeyId,
+  i0.Value<int> rowid,
+});
+
+class $CryptoKeysFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CryptoKeys> {
+  $CryptoKeysFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<i2.Uint8List> get cryptoKeyId => $composableBuilder(
+      column: $table.cryptoKeyId,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get keyPurpose => $composableBuilder(
+      column: $table.keyPurpose, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get keyAlgorithm => $composableBuilder(
+      column: $table.keyAlgorithm,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<i2.Uint8List> get keyMaterial => $composableBuilder(
+      column: $table.keyMaterial,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get externalCryptoKeyId => $composableBuilder(
+      column: $table.externalCryptoKeyId,
+      builder: (column) => i0.ColumnFilters(column));
+}
+
+class $CryptoKeysOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CryptoKeys> {
+  $CryptoKeysOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<i2.Uint8List> get cryptoKeyId => $composableBuilder(
+      column: $table.cryptoKeyId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get keyPurpose => $composableBuilder(
+      column: $table.keyPurpose,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get keyAlgorithm => $composableBuilder(
+      column: $table.keyAlgorithm,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<i2.Uint8List> get keyMaterial => $composableBuilder(
+      column: $table.keyMaterial,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get externalCryptoKeyId => $composableBuilder(
+      column: $table.externalCryptoKeyId,
+      builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CryptoKeysAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CryptoKeys> {
+  $CryptoKeysAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<i2.Uint8List> get cryptoKeyId => $composableBuilder(
+      column: $table.cryptoKeyId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get keyPurpose => $composableBuilder(
+      column: $table.keyPurpose, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get keyAlgorithm => $composableBuilder(
+      column: $table.keyAlgorithm, builder: (column) => column);
+
+  i0.GeneratedColumn<i2.Uint8List> get keyMaterial => $composableBuilder(
+      column: $table.keyMaterial, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get externalCryptoKeyId => $composableBuilder(
+      column: $table.externalCryptoKeyId, builder: (column) => column);
+}
+
+class $CryptoKeysTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i3.CryptoKeys,
+    i1.CryptoKey,
+    i3.$CryptoKeysFilterComposer,
+    i3.$CryptoKeysOrderingComposer,
+    i3.$CryptoKeysAnnotationComposer,
+    $CryptoKeysCreateCompanionBuilder,
+    $CryptoKeysUpdateCompanionBuilder,
+    (
+      i1.CryptoKey,
+      i0.BaseReferences<i0.GeneratedDatabase, i3.CryptoKeys, i1.CryptoKey>
+    ),
+    i1.CryptoKey,
+    i0.PrefetchHooks Function()> {
+  $CryptoKeysTableManager(i0.GeneratedDatabase db, i3.CryptoKeys table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i3.$CryptoKeysFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i3.$CryptoKeysOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i3.$CryptoKeysAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<i2.Uint8List> cryptoKeyId = const i0.Value.absent(),
+            i0.Value<String> keyPurpose = const i0.Value.absent(),
+            i0.Value<String> keyAlgorithm = const i0.Value.absent(),
+            i0.Value<i2.Uint8List?> keyMaterial = const i0.Value.absent(),
+            i0.Value<String?> externalCryptoKeyId = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i3.CryptoKeysCompanion(
+            cryptoKeyId: cryptoKeyId,
+            keyPurpose: keyPurpose,
+            keyAlgorithm: keyAlgorithm,
+            keyMaterial: keyMaterial,
+            externalCryptoKeyId: externalCryptoKeyId,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required i2.Uint8List cryptoKeyId,
+            required String keyPurpose,
+            required String keyAlgorithm,
+            i0.Value<i2.Uint8List?> keyMaterial = const i0.Value.absent(),
+            i0.Value<String?> externalCryptoKeyId = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i3.CryptoKeysCompanion.insert(
+            cryptoKeyId: cryptoKeyId,
+            keyPurpose: keyPurpose,
+            keyAlgorithm: keyAlgorithm,
+            keyMaterial: keyMaterial,
+            externalCryptoKeyId: externalCryptoKeyId,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CryptoKeysProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i3.CryptoKeys,
+    i1.CryptoKey,
+    i3.$CryptoKeysFilterComposer,
+    i3.$CryptoKeysOrderingComposer,
+    i3.$CryptoKeysAnnotationComposer,
+    $CryptoKeysCreateCompanionBuilder,
+    $CryptoKeysUpdateCompanionBuilder,
+    (
+      i1.CryptoKey,
+      i0.BaseReferences<i0.GeneratedDatabase, i3.CryptoKeys, i1.CryptoKey>
+    ),
+    i1.CryptoKey,
+    i0.PrefetchHooks Function()>;
+typedef $SessionsCreateCompanionBuilder = i3.SessionsCompanion Function({
+  i0.Value<int> rowid,
+  required String sessionId,
+  required i2.Uint8List cryptoKeyId,
+  i0.Value<String?> userId,
+  required i4.SessionClient clientInfo,
+  required i4.AuthenticationFactor authenticationFactor,
+  i0.Value<i4.SessionState?> state,
+  i0.Value<String?> ipAddress,
+  i0.Value<String?> externalSessionId,
+  i0.Value<DateTime> createTime,
+  i0.Value<DateTime?> updateTime,
+  required DateTime expireTime,
+  i0.Value<DateTime?> cancelTime,
+});
+typedef $SessionsUpdateCompanionBuilder = i3.SessionsCompanion Function({
+  i0.Value<int> rowid,
+  i0.Value<String> sessionId,
+  i0.Value<i2.Uint8List> cryptoKeyId,
+  i0.Value<String?> userId,
+  i0.Value<i4.SessionClient> clientInfo,
+  i0.Value<i4.AuthenticationFactor> authenticationFactor,
+  i0.Value<i4.SessionState?> state,
+  i0.Value<String?> ipAddress,
+  i0.Value<String?> externalSessionId,
+  i0.Value<DateTime> createTime,
+  i0.Value<DateTime?> updateTime,
+  i0.Value<DateTime> expireTime,
+  i0.Value<DateTime?> cancelTime,
+});
+
+class $SessionsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.Sessions> {
+  $SessionsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<int> get rowid => $composableBuilder(
+      column: $table.rowid, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get sessionId => $composableBuilder(
+      column: $table.sessionId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<i2.Uint8List> get cryptoKeyId => $composableBuilder(
+      column: $table.cryptoKeyId,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<i4.SessionClient, i4.SessionClient,
+          i2.Uint8List>
+      get clientInfo => $composableBuilder(
+          column: $table.clientInfo,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<i4.AuthenticationFactor,
+          i4.AuthenticationFactor, i2.Uint8List>
+      get authenticationFactor => $composableBuilder(
+          column: $table.authenticationFactor,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<i4.SessionState?, i4.SessionState,
+          i2.Uint8List>
+      get state => $composableBuilder(
+          column: $table.state,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+
+  i0.ColumnFilters<String> get ipAddress => $composableBuilder(
+      column: $table.ipAddress, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get externalSessionId => $composableBuilder(
+      column: $table.externalSessionId,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get createTime => $composableBuilder(
+      column: $table.createTime, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get updateTime => $composableBuilder(
+      column: $table.updateTime, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get expireTime => $composableBuilder(
+      column: $table.expireTime, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get cancelTime => $composableBuilder(
+      column: $table.cancelTime, builder: (column) => i0.ColumnFilters(column));
+}
+
+class $SessionsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.Sessions> {
+  $SessionsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<int> get rowid => $composableBuilder(
+      column: $table.rowid, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get sessionId => $composableBuilder(
+      column: $table.sessionId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<i2.Uint8List> get cryptoKeyId => $composableBuilder(
+      column: $table.cryptoKeyId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<i2.Uint8List> get clientInfo => $composableBuilder(
+      column: $table.clientInfo,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<i2.Uint8List> get authenticationFactor =>
+      $composableBuilder(
+          column: $table.authenticationFactor,
+          builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<i2.Uint8List> get state => $composableBuilder(
+      column: $table.state, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get ipAddress => $composableBuilder(
+      column: $table.ipAddress,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get externalSessionId => $composableBuilder(
+      column: $table.externalSessionId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get createTime => $composableBuilder(
+      column: $table.createTime,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get updateTime => $composableBuilder(
+      column: $table.updateTime,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get expireTime => $composableBuilder(
+      column: $table.expireTime,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get cancelTime => $composableBuilder(
+      column: $table.cancelTime,
+      builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $SessionsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.Sessions> {
+  $SessionsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<int> get rowid =>
+      $composableBuilder(column: $table.rowid, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get sessionId =>
+      $composableBuilder(column: $table.sessionId, builder: (column) => column);
+
+  i0.GeneratedColumn<i2.Uint8List> get cryptoKeyId => $composableBuilder(
+      column: $table.cryptoKeyId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<i4.SessionClient, i2.Uint8List>
+      get clientInfo => $composableBuilder(
+          column: $table.clientInfo, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<i4.AuthenticationFactor, i2.Uint8List>
+      get authenticationFactor => $composableBuilder(
+          column: $table.authenticationFactor, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<i4.SessionState?, i2.Uint8List>
+      get state =>
+          $composableBuilder(column: $table.state, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get ipAddress =>
+      $composableBuilder(column: $table.ipAddress, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get externalSessionId => $composableBuilder(
+      column: $table.externalSessionId, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get createTime => $composableBuilder(
+      column: $table.createTime, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get updateTime => $composableBuilder(
+      column: $table.updateTime, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get expireTime => $composableBuilder(
+      column: $table.expireTime, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get cancelTime => $composableBuilder(
+      column: $table.cancelTime, builder: (column) => column);
+}
+
+class $SessionsTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i3.Sessions,
+    i4.Session,
+    i3.$SessionsFilterComposer,
+    i3.$SessionsOrderingComposer,
+    i3.$SessionsAnnotationComposer,
+    $SessionsCreateCompanionBuilder,
+    $SessionsUpdateCompanionBuilder,
+    (
+      i4.Session,
+      i0.BaseReferences<i0.GeneratedDatabase, i3.Sessions, i4.Session>
+    ),
+    i4.Session,
+    i0.PrefetchHooks Function()> {
+  $SessionsTableManager(i0.GeneratedDatabase db, i3.Sessions table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i3.$SessionsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i3.$SessionsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i3.$SessionsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<int> rowid = const i0.Value.absent(),
+            i0.Value<String> sessionId = const i0.Value.absent(),
+            i0.Value<i2.Uint8List> cryptoKeyId = const i0.Value.absent(),
+            i0.Value<String?> userId = const i0.Value.absent(),
+            i0.Value<i4.SessionClient> clientInfo = const i0.Value.absent(),
+            i0.Value<i4.AuthenticationFactor> authenticationFactor =
+                const i0.Value.absent(),
+            i0.Value<i4.SessionState?> state = const i0.Value.absent(),
+            i0.Value<String?> ipAddress = const i0.Value.absent(),
+            i0.Value<String?> externalSessionId = const i0.Value.absent(),
+            i0.Value<DateTime> createTime = const i0.Value.absent(),
+            i0.Value<DateTime?> updateTime = const i0.Value.absent(),
+            i0.Value<DateTime> expireTime = const i0.Value.absent(),
+            i0.Value<DateTime?> cancelTime = const i0.Value.absent(),
+          }) =>
+              i3.SessionsCompanion(
+            rowid: rowid,
+            sessionId: sessionId,
+            cryptoKeyId: cryptoKeyId,
+            userId: userId,
+            clientInfo: clientInfo,
+            authenticationFactor: authenticationFactor,
+            state: state,
+            ipAddress: ipAddress,
+            externalSessionId: externalSessionId,
+            createTime: createTime,
+            updateTime: updateTime,
+            expireTime: expireTime,
+            cancelTime: cancelTime,
+          ),
+          createCompanionCallback: ({
+            i0.Value<int> rowid = const i0.Value.absent(),
+            required String sessionId,
+            required i2.Uint8List cryptoKeyId,
+            i0.Value<String?> userId = const i0.Value.absent(),
+            required i4.SessionClient clientInfo,
+            required i4.AuthenticationFactor authenticationFactor,
+            i0.Value<i4.SessionState?> state = const i0.Value.absent(),
+            i0.Value<String?> ipAddress = const i0.Value.absent(),
+            i0.Value<String?> externalSessionId = const i0.Value.absent(),
+            i0.Value<DateTime> createTime = const i0.Value.absent(),
+            i0.Value<DateTime?> updateTime = const i0.Value.absent(),
+            required DateTime expireTime,
+            i0.Value<DateTime?> cancelTime = const i0.Value.absent(),
+          }) =>
+              i3.SessionsCompanion.insert(
+            rowid: rowid,
+            sessionId: sessionId,
+            cryptoKeyId: cryptoKeyId,
+            userId: userId,
+            clientInfo: clientInfo,
+            authenticationFactor: authenticationFactor,
+            state: state,
+            ipAddress: ipAddress,
+            externalSessionId: externalSessionId,
+            createTime: createTime,
+            updateTime: updateTime,
+            expireTime: expireTime,
+            cancelTime: cancelTime,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $SessionsProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i3.Sessions,
+    i4.Session,
+    i3.$SessionsFilterComposer,
+    i3.$SessionsOrderingComposer,
+    i3.$SessionsAnnotationComposer,
+    $SessionsCreateCompanionBuilder,
+    $SessionsUpdateCompanionBuilder,
+    (
+      i4.Session,
+      i0.BaseReferences<i0.GeneratedDatabase, i3.Sessions, i4.Session>
+    ),
+    i4.Session,
+    i0.PrefetchHooks Function()>;
+typedef $OtpCodesCreateCompanionBuilder = i3.OtpCodesCompanion Function({
+  i0.Value<int> rowid,
+  required String sessionId,
+  i0.Value<int> resendAttempt,
+  i0.Value<int> verifyAttempt,
+  i0.Value<DateTime> updateTime,
+});
+typedef $OtpCodesUpdateCompanionBuilder = i3.OtpCodesCompanion Function({
+  i0.Value<int> rowid,
+  i0.Value<String> sessionId,
+  i0.Value<int> resendAttempt,
+  i0.Value<int> verifyAttempt,
+  i0.Value<DateTime> updateTime,
+});
+
+class $OtpCodesFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.OtpCodes> {
+  $OtpCodesFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<int> get rowid => $composableBuilder(
+      column: $table.rowid, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get sessionId => $composableBuilder(
+      column: $table.sessionId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<int> get resendAttempt => $composableBuilder(
+      column: $table.resendAttempt,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<int> get verifyAttempt => $composableBuilder(
+      column: $table.verifyAttempt,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get updateTime => $composableBuilder(
+      column: $table.updateTime, builder: (column) => i0.ColumnFilters(column));
+}
+
+class $OtpCodesOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.OtpCodes> {
+  $OtpCodesOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<int> get rowid => $composableBuilder(
+      column: $table.rowid, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get sessionId => $composableBuilder(
+      column: $table.sessionId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<int> get resendAttempt => $composableBuilder(
+      column: $table.resendAttempt,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<int> get verifyAttempt => $composableBuilder(
+      column: $table.verifyAttempt,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get updateTime => $composableBuilder(
+      column: $table.updateTime,
+      builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $OtpCodesAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.OtpCodes> {
+  $OtpCodesAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<int> get rowid =>
+      $composableBuilder(column: $table.rowid, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get sessionId =>
+      $composableBuilder(column: $table.sessionId, builder: (column) => column);
+
+  i0.GeneratedColumn<int> get resendAttempt => $composableBuilder(
+      column: $table.resendAttempt, builder: (column) => column);
+
+  i0.GeneratedColumn<int> get verifyAttempt => $composableBuilder(
+      column: $table.verifyAttempt, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get updateTime => $composableBuilder(
+      column: $table.updateTime, builder: (column) => column);
+}
+
+class $OtpCodesTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i3.OtpCodes,
+    i3.OtpCode,
+    i3.$OtpCodesFilterComposer,
+    i3.$OtpCodesOrderingComposer,
+    i3.$OtpCodesAnnotationComposer,
+    $OtpCodesCreateCompanionBuilder,
+    $OtpCodesUpdateCompanionBuilder,
+    (
+      i3.OtpCode,
+      i0.BaseReferences<i0.GeneratedDatabase, i3.OtpCodes, i3.OtpCode>
+    ),
+    i3.OtpCode,
+    i0.PrefetchHooks Function()> {
+  $OtpCodesTableManager(i0.GeneratedDatabase db, i3.OtpCodes table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i3.$OtpCodesFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i3.$OtpCodesOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i3.$OtpCodesAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<int> rowid = const i0.Value.absent(),
+            i0.Value<String> sessionId = const i0.Value.absent(),
+            i0.Value<int> resendAttempt = const i0.Value.absent(),
+            i0.Value<int> verifyAttempt = const i0.Value.absent(),
+            i0.Value<DateTime> updateTime = const i0.Value.absent(),
+          }) =>
+              i3.OtpCodesCompanion(
+            rowid: rowid,
+            sessionId: sessionId,
+            resendAttempt: resendAttempt,
+            verifyAttempt: verifyAttempt,
+            updateTime: updateTime,
+          ),
+          createCompanionCallback: ({
+            i0.Value<int> rowid = const i0.Value.absent(),
+            required String sessionId,
+            i0.Value<int> resendAttempt = const i0.Value.absent(),
+            i0.Value<int> verifyAttempt = const i0.Value.absent(),
+            i0.Value<DateTime> updateTime = const i0.Value.absent(),
+          }) =>
+              i3.OtpCodesCompanion.insert(
+            rowid: rowid,
+            sessionId: sessionId,
+            resendAttempt: resendAttempt,
+            verifyAttempt: verifyAttempt,
+            updateTime: updateTime,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $OtpCodesProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i3.OtpCodes,
+    i3.OtpCode,
+    i3.$OtpCodesFilterComposer,
+    i3.$OtpCodesOrderingComposer,
+    i3.$OtpCodesAnnotationComposer,
+    $OtpCodesCreateCompanionBuilder,
+    $OtpCodesUpdateCompanionBuilder,
+    (
+      i3.OtpCode,
+      i0.BaseReferences<i0.GeneratedDatabase, i3.OtpCodes, i3.OtpCode>
+    ),
+    i3.OtpCode,
+    i0.PrefetchHooks Function()>;
+typedef $CorksCreateCompanionBuilder = i3.CorksCompanion Function({
+  required i2.Uint8List corkId,
+  required i2.Uint8List cryptoKeyId,
+  i0.Value<String?> bearerType,
+  i0.Value<String?> bearerId,
+  i0.Value<String?> audienceType,
+  i0.Value<String?> audienceId,
+  i0.Value<String?> issuerType,
+  i0.Value<String?> issuerId,
+  i0.Value<DateTime> createTime,
+  i0.Value<DateTime?> expireTime,
+  i0.Value<DateTime?> lastUseTime,
+  i0.Value<int> rowid,
+});
+typedef $CorksUpdateCompanionBuilder = i3.CorksCompanion Function({
+  i0.Value<i2.Uint8List> corkId,
+  i0.Value<i2.Uint8List> cryptoKeyId,
+  i0.Value<String?> bearerType,
+  i0.Value<String?> bearerId,
+  i0.Value<String?> audienceType,
+  i0.Value<String?> audienceId,
+  i0.Value<String?> issuerType,
+  i0.Value<String?> issuerId,
+  i0.Value<DateTime> createTime,
+  i0.Value<DateTime?> expireTime,
+  i0.Value<DateTime?> lastUseTime,
+  i0.Value<int> rowid,
+});
+
+class $CorksFilterComposer extends i0.Composer<i0.GeneratedDatabase, i3.Corks> {
+  $CorksFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<i2.Uint8List> get corkId => $composableBuilder(
+      column: $table.corkId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<i2.Uint8List> get cryptoKeyId => $composableBuilder(
+      column: $table.cryptoKeyId,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get bearerType => $composableBuilder(
+      column: $table.bearerType, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get bearerId => $composableBuilder(
+      column: $table.bearerId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get audienceType => $composableBuilder(
+      column: $table.audienceType,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get audienceId => $composableBuilder(
+      column: $table.audienceId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get issuerType => $composableBuilder(
+      column: $table.issuerType, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get issuerId => $composableBuilder(
+      column: $table.issuerId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get createTime => $composableBuilder(
+      column: $table.createTime, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get expireTime => $composableBuilder(
+      column: $table.expireTime, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get lastUseTime => $composableBuilder(
+      column: $table.lastUseTime,
+      builder: (column) => i0.ColumnFilters(column));
+}
+
+class $CorksOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.Corks> {
+  $CorksOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<i2.Uint8List> get corkId => $composableBuilder(
+      column: $table.corkId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<i2.Uint8List> get cryptoKeyId => $composableBuilder(
+      column: $table.cryptoKeyId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get bearerType => $composableBuilder(
+      column: $table.bearerType,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get bearerId => $composableBuilder(
+      column: $table.bearerId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get audienceType => $composableBuilder(
+      column: $table.audienceType,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get audienceId => $composableBuilder(
+      column: $table.audienceId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get issuerType => $composableBuilder(
+      column: $table.issuerType,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get issuerId => $composableBuilder(
+      column: $table.issuerId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get createTime => $composableBuilder(
+      column: $table.createTime,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get expireTime => $composableBuilder(
+      column: $table.expireTime,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get lastUseTime => $composableBuilder(
+      column: $table.lastUseTime,
+      builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CorksAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.Corks> {
+  $CorksAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<i2.Uint8List> get corkId =>
+      $composableBuilder(column: $table.corkId, builder: (column) => column);
+
+  i0.GeneratedColumn<i2.Uint8List> get cryptoKeyId => $composableBuilder(
+      column: $table.cryptoKeyId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get bearerType => $composableBuilder(
+      column: $table.bearerType, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get bearerId =>
+      $composableBuilder(column: $table.bearerId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get audienceType => $composableBuilder(
+      column: $table.audienceType, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get audienceId => $composableBuilder(
+      column: $table.audienceId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get issuerType => $composableBuilder(
+      column: $table.issuerType, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get issuerId =>
+      $composableBuilder(column: $table.issuerId, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get createTime => $composableBuilder(
+      column: $table.createTime, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get expireTime => $composableBuilder(
+      column: $table.expireTime, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get lastUseTime => $composableBuilder(
+      column: $table.lastUseTime, builder: (column) => column);
+}
+
+class $CorksTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i3.Corks,
+    i3.Cork,
+    i3.$CorksFilterComposer,
+    i3.$CorksOrderingComposer,
+    i3.$CorksAnnotationComposer,
+    $CorksCreateCompanionBuilder,
+    $CorksUpdateCompanionBuilder,
+    (i3.Cork, i0.BaseReferences<i0.GeneratedDatabase, i3.Corks, i3.Cork>),
+    i3.Cork,
+    i0.PrefetchHooks Function()> {
+  $CorksTableManager(i0.GeneratedDatabase db, i3.Corks table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i3.$CorksFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i3.$CorksOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i3.$CorksAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<i2.Uint8List> corkId = const i0.Value.absent(),
+            i0.Value<i2.Uint8List> cryptoKeyId = const i0.Value.absent(),
+            i0.Value<String?> bearerType = const i0.Value.absent(),
+            i0.Value<String?> bearerId = const i0.Value.absent(),
+            i0.Value<String?> audienceType = const i0.Value.absent(),
+            i0.Value<String?> audienceId = const i0.Value.absent(),
+            i0.Value<String?> issuerType = const i0.Value.absent(),
+            i0.Value<String?> issuerId = const i0.Value.absent(),
+            i0.Value<DateTime> createTime = const i0.Value.absent(),
+            i0.Value<DateTime?> expireTime = const i0.Value.absent(),
+            i0.Value<DateTime?> lastUseTime = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i3.CorksCompanion(
+            corkId: corkId,
+            cryptoKeyId: cryptoKeyId,
+            bearerType: bearerType,
+            bearerId: bearerId,
+            audienceType: audienceType,
+            audienceId: audienceId,
+            issuerType: issuerType,
+            issuerId: issuerId,
+            createTime: createTime,
+            expireTime: expireTime,
+            lastUseTime: lastUseTime,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required i2.Uint8List corkId,
+            required i2.Uint8List cryptoKeyId,
+            i0.Value<String?> bearerType = const i0.Value.absent(),
+            i0.Value<String?> bearerId = const i0.Value.absent(),
+            i0.Value<String?> audienceType = const i0.Value.absent(),
+            i0.Value<String?> audienceId = const i0.Value.absent(),
+            i0.Value<String?> issuerType = const i0.Value.absent(),
+            i0.Value<String?> issuerId = const i0.Value.absent(),
+            i0.Value<DateTime> createTime = const i0.Value.absent(),
+            i0.Value<DateTime?> expireTime = const i0.Value.absent(),
+            i0.Value<DateTime?> lastUseTime = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i3.CorksCompanion.insert(
+            corkId: corkId,
+            cryptoKeyId: cryptoKeyId,
+            bearerType: bearerType,
+            bearerId: bearerId,
+            audienceType: audienceType,
+            audienceId: audienceId,
+            issuerType: issuerType,
+            issuerId: issuerId,
+            createTime: createTime,
+            expireTime: expireTime,
+            lastUseTime: lastUseTime,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CorksProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i3.Corks,
+    i3.Cork,
+    i3.$CorksFilterComposer,
+    i3.$CorksOrderingComposer,
+    i3.$CorksAnnotationComposer,
+    $CorksCreateCompanionBuilder,
+    $CorksUpdateCompanionBuilder,
+    (i3.Cork, i0.BaseReferences<i0.GeneratedDatabase, i3.Corks, i3.Cork>),
+    i3.Cork,
+    i0.PrefetchHooks Function()>;
+
 class CryptoKeys extends i0.Table with i0.TableInfo<CryptoKeys, i1.CryptoKey> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
@@ -182,157 +1110,6 @@ class CryptoKeysCompanion extends i0.UpdateCompanion<i1.CryptoKey> {
   }
 }
 
-typedef $CryptoKeysCreateCompanionBuilder = i3.CryptoKeysCompanion Function({
-  required i2.Uint8List cryptoKeyId,
-  required String keyPurpose,
-  required String keyAlgorithm,
-  i0.Value<i2.Uint8List?> keyMaterial,
-  i0.Value<String?> externalCryptoKeyId,
-  i0.Value<int> rowid,
-});
-typedef $CryptoKeysUpdateCompanionBuilder = i3.CryptoKeysCompanion Function({
-  i0.Value<i2.Uint8List> cryptoKeyId,
-  i0.Value<String> keyPurpose,
-  i0.Value<String> keyAlgorithm,
-  i0.Value<i2.Uint8List?> keyMaterial,
-  i0.Value<String?> externalCryptoKeyId,
-  i0.Value<int> rowid,
-});
-
-class $CryptoKeysFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i3.CryptoKeys> {
-  $CryptoKeysFilterComposer(super.$state);
-  i0.ColumnFilters<i2.Uint8List> get cryptoKeyId => $state.composableBuilder(
-      column: $state.table.cryptoKeyId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get keyPurpose => $state.composableBuilder(
-      column: $state.table.keyPurpose,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get keyAlgorithm => $state.composableBuilder(
-      column: $state.table.keyAlgorithm,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<i2.Uint8List> get keyMaterial => $state.composableBuilder(
-      column: $state.table.keyMaterial,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get externalCryptoKeyId => $state.composableBuilder(
-      column: $state.table.externalCryptoKeyId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $CryptoKeysOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i3.CryptoKeys> {
-  $CryptoKeysOrderingComposer(super.$state);
-  i0.ColumnOrderings<i2.Uint8List> get cryptoKeyId => $state.composableBuilder(
-      column: $state.table.cryptoKeyId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get keyPurpose => $state.composableBuilder(
-      column: $state.table.keyPurpose,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get keyAlgorithm => $state.composableBuilder(
-      column: $state.table.keyAlgorithm,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<i2.Uint8List> get keyMaterial => $state.composableBuilder(
-      column: $state.table.keyMaterial,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get externalCryptoKeyId =>
-      $state.composableBuilder(
-          column: $state.table.externalCryptoKeyId,
-          builder: (column, joinBuilders) =>
-              i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CryptoKeysTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i3.CryptoKeys,
-    i1.CryptoKey,
-    i3.$CryptoKeysFilterComposer,
-    i3.$CryptoKeysOrderingComposer,
-    $CryptoKeysCreateCompanionBuilder,
-    $CryptoKeysUpdateCompanionBuilder,
-    (
-      i1.CryptoKey,
-      i0.BaseReferences<i0.GeneratedDatabase, i3.CryptoKeys, i1.CryptoKey>
-    ),
-    i1.CryptoKey,
-    i0.PrefetchHooks Function()> {
-  $CryptoKeysTableManager(i0.GeneratedDatabase db, i3.CryptoKeys table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i3.$CryptoKeysFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i3.$CryptoKeysOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<i2.Uint8List> cryptoKeyId = const i0.Value.absent(),
-            i0.Value<String> keyPurpose = const i0.Value.absent(),
-            i0.Value<String> keyAlgorithm = const i0.Value.absent(),
-            i0.Value<i2.Uint8List?> keyMaterial = const i0.Value.absent(),
-            i0.Value<String?> externalCryptoKeyId = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i3.CryptoKeysCompanion(
-            cryptoKeyId: cryptoKeyId,
-            keyPurpose: keyPurpose,
-            keyAlgorithm: keyAlgorithm,
-            keyMaterial: keyMaterial,
-            externalCryptoKeyId: externalCryptoKeyId,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required i2.Uint8List cryptoKeyId,
-            required String keyPurpose,
-            required String keyAlgorithm,
-            i0.Value<i2.Uint8List?> keyMaterial = const i0.Value.absent(),
-            i0.Value<String?> externalCryptoKeyId = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i3.CryptoKeysCompanion.insert(
-            cryptoKeyId: cryptoKeyId,
-            keyPurpose: keyPurpose,
-            keyAlgorithm: keyAlgorithm,
-            keyMaterial: keyMaterial,
-            externalCryptoKeyId: externalCryptoKeyId,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CryptoKeysProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i3.CryptoKeys,
-    i1.CryptoKey,
-    i3.$CryptoKeysFilterComposer,
-    i3.$CryptoKeysOrderingComposer,
-    $CryptoKeysCreateCompanionBuilder,
-    $CryptoKeysUpdateCompanionBuilder,
-    (
-      i1.CryptoKey,
-      i0.BaseReferences<i0.GeneratedDatabase, i3.CryptoKeys, i1.CryptoKey>
-    ),
-    i1.CryptoKey,
-    i0.PrefetchHooks Function()>;
 i0.Index get cryptoKeysExternalCryptoKeyIdIdx => i0.Index(
     'crypto_keys_external_crypto_key_id_idx',
     'CREATE INDEX IF NOT EXISTS crypto_keys_external_crypto_key_id_idx ON crypto_keys (external_crypto_key_id)');
@@ -678,289 +1455,6 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
   }
 }
 
-typedef $SessionsCreateCompanionBuilder = i3.SessionsCompanion Function({
-  i0.Value<int> rowid,
-  required String sessionId,
-  required i2.Uint8List cryptoKeyId,
-  i0.Value<String?> userId,
-  required i4.SessionClient clientInfo,
-  required i4.AuthenticationFactor authenticationFactor,
-  i0.Value<i4.SessionState?> state,
-  i0.Value<String?> ipAddress,
-  i0.Value<String?> externalSessionId,
-  i0.Value<DateTime> createTime,
-  i0.Value<DateTime?> updateTime,
-  required DateTime expireTime,
-  i0.Value<DateTime?> cancelTime,
-});
-typedef $SessionsUpdateCompanionBuilder = i3.SessionsCompanion Function({
-  i0.Value<int> rowid,
-  i0.Value<String> sessionId,
-  i0.Value<i2.Uint8List> cryptoKeyId,
-  i0.Value<String?> userId,
-  i0.Value<i4.SessionClient> clientInfo,
-  i0.Value<i4.AuthenticationFactor> authenticationFactor,
-  i0.Value<i4.SessionState?> state,
-  i0.Value<String?> ipAddress,
-  i0.Value<String?> externalSessionId,
-  i0.Value<DateTime> createTime,
-  i0.Value<DateTime?> updateTime,
-  i0.Value<DateTime> expireTime,
-  i0.Value<DateTime?> cancelTime,
-});
-
-class $SessionsFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i3.Sessions> {
-  $SessionsFilterComposer(super.$state);
-  i0.ColumnFilters<int> get rowid => $state.composableBuilder(
-      column: $state.table.rowid,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get sessionId => $state.composableBuilder(
-      column: $state.table.sessionId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<i2.Uint8List> get cryptoKeyId => $state.composableBuilder(
-      column: $state.table.cryptoKeyId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get userId => $state.composableBuilder(
-      column: $state.table.userId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<i4.SessionClient, i4.SessionClient,
-          i2.Uint8List>
-      get clientInfo => $state.composableBuilder(
-          column: $state.table.clientInfo,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<i4.AuthenticationFactor,
-          i4.AuthenticationFactor, i2.Uint8List>
-      get authenticationFactor => $state.composableBuilder(
-          column: $state.table.authenticationFactor,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<i4.SessionState?, i4.SessionState,
-          i2.Uint8List>
-      get state => $state.composableBuilder(
-          column: $state.table.state,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get ipAddress => $state.composableBuilder(
-      column: $state.table.ipAddress,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get externalSessionId => $state.composableBuilder(
-      column: $state.table.externalSessionId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get createTime => $state.composableBuilder(
-      column: $state.table.createTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get updateTime => $state.composableBuilder(
-      column: $state.table.updateTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get expireTime => $state.composableBuilder(
-      column: $state.table.expireTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get cancelTime => $state.composableBuilder(
-      column: $state.table.cancelTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $SessionsOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i3.Sessions> {
-  $SessionsOrderingComposer(super.$state);
-  i0.ColumnOrderings<int> get rowid => $state.composableBuilder(
-      column: $state.table.rowid,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get sessionId => $state.composableBuilder(
-      column: $state.table.sessionId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<i2.Uint8List> get cryptoKeyId => $state.composableBuilder(
-      column: $state.table.cryptoKeyId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get userId => $state.composableBuilder(
-      column: $state.table.userId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<i2.Uint8List> get clientInfo => $state.composableBuilder(
-      column: $state.table.clientInfo,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<i2.Uint8List> get authenticationFactor =>
-      $state.composableBuilder(
-          column: $state.table.authenticationFactor,
-          builder: (column, joinBuilders) =>
-              i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<i2.Uint8List> get state => $state.composableBuilder(
-      column: $state.table.state,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get ipAddress => $state.composableBuilder(
-      column: $state.table.ipAddress,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get externalSessionId => $state.composableBuilder(
-      column: $state.table.externalSessionId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get createTime => $state.composableBuilder(
-      column: $state.table.createTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get updateTime => $state.composableBuilder(
-      column: $state.table.updateTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get expireTime => $state.composableBuilder(
-      column: $state.table.expireTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get cancelTime => $state.composableBuilder(
-      column: $state.table.cancelTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $SessionsTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i3.Sessions,
-    i4.Session,
-    i3.$SessionsFilterComposer,
-    i3.$SessionsOrderingComposer,
-    $SessionsCreateCompanionBuilder,
-    $SessionsUpdateCompanionBuilder,
-    (
-      i4.Session,
-      i0.BaseReferences<i0.GeneratedDatabase, i3.Sessions, i4.Session>
-    ),
-    i4.Session,
-    i0.PrefetchHooks Function()> {
-  $SessionsTableManager(i0.GeneratedDatabase db, i3.Sessions table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i3.$SessionsFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i3.$SessionsOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<int> rowid = const i0.Value.absent(),
-            i0.Value<String> sessionId = const i0.Value.absent(),
-            i0.Value<i2.Uint8List> cryptoKeyId = const i0.Value.absent(),
-            i0.Value<String?> userId = const i0.Value.absent(),
-            i0.Value<i4.SessionClient> clientInfo = const i0.Value.absent(),
-            i0.Value<i4.AuthenticationFactor> authenticationFactor =
-                const i0.Value.absent(),
-            i0.Value<i4.SessionState?> state = const i0.Value.absent(),
-            i0.Value<String?> ipAddress = const i0.Value.absent(),
-            i0.Value<String?> externalSessionId = const i0.Value.absent(),
-            i0.Value<DateTime> createTime = const i0.Value.absent(),
-            i0.Value<DateTime?> updateTime = const i0.Value.absent(),
-            i0.Value<DateTime> expireTime = const i0.Value.absent(),
-            i0.Value<DateTime?> cancelTime = const i0.Value.absent(),
-          }) =>
-              i3.SessionsCompanion(
-            rowid: rowid,
-            sessionId: sessionId,
-            cryptoKeyId: cryptoKeyId,
-            userId: userId,
-            clientInfo: clientInfo,
-            authenticationFactor: authenticationFactor,
-            state: state,
-            ipAddress: ipAddress,
-            externalSessionId: externalSessionId,
-            createTime: createTime,
-            updateTime: updateTime,
-            expireTime: expireTime,
-            cancelTime: cancelTime,
-          ),
-          createCompanionCallback: ({
-            i0.Value<int> rowid = const i0.Value.absent(),
-            required String sessionId,
-            required i2.Uint8List cryptoKeyId,
-            i0.Value<String?> userId = const i0.Value.absent(),
-            required i4.SessionClient clientInfo,
-            required i4.AuthenticationFactor authenticationFactor,
-            i0.Value<i4.SessionState?> state = const i0.Value.absent(),
-            i0.Value<String?> ipAddress = const i0.Value.absent(),
-            i0.Value<String?> externalSessionId = const i0.Value.absent(),
-            i0.Value<DateTime> createTime = const i0.Value.absent(),
-            i0.Value<DateTime?> updateTime = const i0.Value.absent(),
-            required DateTime expireTime,
-            i0.Value<DateTime?> cancelTime = const i0.Value.absent(),
-          }) =>
-              i3.SessionsCompanion.insert(
-            rowid: rowid,
-            sessionId: sessionId,
-            cryptoKeyId: cryptoKeyId,
-            userId: userId,
-            clientInfo: clientInfo,
-            authenticationFactor: authenticationFactor,
-            state: state,
-            ipAddress: ipAddress,
-            externalSessionId: externalSessionId,
-            createTime: createTime,
-            updateTime: updateTime,
-            expireTime: expireTime,
-            cancelTime: cancelTime,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $SessionsProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i3.Sessions,
-    i4.Session,
-    i3.$SessionsFilterComposer,
-    i3.$SessionsOrderingComposer,
-    $SessionsCreateCompanionBuilder,
-    $SessionsUpdateCompanionBuilder,
-    (
-      i4.Session,
-      i0.BaseReferences<i0.GeneratedDatabase, i3.Sessions, i4.Session>
-    ),
-    i4.Session,
-    i0.PrefetchHooks Function()>;
 i0.Index get sessionsUserIdx => i0.Index('sessions_user_idx',
     'CREATE INDEX IF NOT EXISTS sessions_user_idx ON sessions (user_id)');
 i0.Index get sessionsCryptoKeyIdx => i0.Index('sessions_crypto_key_idx',
@@ -1244,150 +1738,6 @@ class OtpCodesCompanion extends i0.UpdateCompanion<i3.OtpCode> {
   }
 }
 
-typedef $OtpCodesCreateCompanionBuilder = i3.OtpCodesCompanion Function({
-  i0.Value<int> rowid,
-  required String sessionId,
-  i0.Value<int> resendAttempt,
-  i0.Value<int> verifyAttempt,
-  i0.Value<DateTime> updateTime,
-});
-typedef $OtpCodesUpdateCompanionBuilder = i3.OtpCodesCompanion Function({
-  i0.Value<int> rowid,
-  i0.Value<String> sessionId,
-  i0.Value<int> resendAttempt,
-  i0.Value<int> verifyAttempt,
-  i0.Value<DateTime> updateTime,
-});
-
-class $OtpCodesFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i3.OtpCodes> {
-  $OtpCodesFilterComposer(super.$state);
-  i0.ColumnFilters<int> get rowid => $state.composableBuilder(
-      column: $state.table.rowid,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get sessionId => $state.composableBuilder(
-      column: $state.table.sessionId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<int> get resendAttempt => $state.composableBuilder(
-      column: $state.table.resendAttempt,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<int> get verifyAttempt => $state.composableBuilder(
-      column: $state.table.verifyAttempt,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get updateTime => $state.composableBuilder(
-      column: $state.table.updateTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $OtpCodesOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i3.OtpCodes> {
-  $OtpCodesOrderingComposer(super.$state);
-  i0.ColumnOrderings<int> get rowid => $state.composableBuilder(
-      column: $state.table.rowid,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get sessionId => $state.composableBuilder(
-      column: $state.table.sessionId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<int> get resendAttempt => $state.composableBuilder(
-      column: $state.table.resendAttempt,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<int> get verifyAttempt => $state.composableBuilder(
-      column: $state.table.verifyAttempt,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get updateTime => $state.composableBuilder(
-      column: $state.table.updateTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $OtpCodesTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i3.OtpCodes,
-    i3.OtpCode,
-    i3.$OtpCodesFilterComposer,
-    i3.$OtpCodesOrderingComposer,
-    $OtpCodesCreateCompanionBuilder,
-    $OtpCodesUpdateCompanionBuilder,
-    (
-      i3.OtpCode,
-      i0.BaseReferences<i0.GeneratedDatabase, i3.OtpCodes, i3.OtpCode>
-    ),
-    i3.OtpCode,
-    i0.PrefetchHooks Function()> {
-  $OtpCodesTableManager(i0.GeneratedDatabase db, i3.OtpCodes table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i3.$OtpCodesFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i3.$OtpCodesOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<int> rowid = const i0.Value.absent(),
-            i0.Value<String> sessionId = const i0.Value.absent(),
-            i0.Value<int> resendAttempt = const i0.Value.absent(),
-            i0.Value<int> verifyAttempt = const i0.Value.absent(),
-            i0.Value<DateTime> updateTime = const i0.Value.absent(),
-          }) =>
-              i3.OtpCodesCompanion(
-            rowid: rowid,
-            sessionId: sessionId,
-            resendAttempt: resendAttempt,
-            verifyAttempt: verifyAttempt,
-            updateTime: updateTime,
-          ),
-          createCompanionCallback: ({
-            i0.Value<int> rowid = const i0.Value.absent(),
-            required String sessionId,
-            i0.Value<int> resendAttempt = const i0.Value.absent(),
-            i0.Value<int> verifyAttempt = const i0.Value.absent(),
-            i0.Value<DateTime> updateTime = const i0.Value.absent(),
-          }) =>
-              i3.OtpCodesCompanion.insert(
-            rowid: rowid,
-            sessionId: sessionId,
-            resendAttempt: resendAttempt,
-            verifyAttempt: verifyAttempt,
-            updateTime: updateTime,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $OtpCodesProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i3.OtpCodes,
-    i3.OtpCode,
-    i3.$OtpCodesFilterComposer,
-    i3.$OtpCodesOrderingComposer,
-    $OtpCodesCreateCompanionBuilder,
-    $OtpCodesUpdateCompanionBuilder,
-    (
-      i3.OtpCode,
-      i0.BaseReferences<i0.GeneratedDatabase, i3.OtpCodes, i3.OtpCode>
-    ),
-    i3.OtpCode,
-    i0.PrefetchHooks Function()>;
 i0.Index get otpCodesSessionIdx => i0.Index('otp_codes_session_idx',
     'CREATE INDEX IF NOT EXISTS otp_codes_session_idx ON otp_codes (session_id)');
 
@@ -1910,246 +2260,6 @@ class CorksCompanion extends i0.UpdateCompanion<i3.Cork> {
   }
 }
 
-typedef $CorksCreateCompanionBuilder = i3.CorksCompanion Function({
-  required i2.Uint8List corkId,
-  required i2.Uint8List cryptoKeyId,
-  i0.Value<String?> bearerType,
-  i0.Value<String?> bearerId,
-  i0.Value<String?> audienceType,
-  i0.Value<String?> audienceId,
-  i0.Value<String?> issuerType,
-  i0.Value<String?> issuerId,
-  i0.Value<DateTime> createTime,
-  i0.Value<DateTime?> expireTime,
-  i0.Value<DateTime?> lastUseTime,
-  i0.Value<int> rowid,
-});
-typedef $CorksUpdateCompanionBuilder = i3.CorksCompanion Function({
-  i0.Value<i2.Uint8List> corkId,
-  i0.Value<i2.Uint8List> cryptoKeyId,
-  i0.Value<String?> bearerType,
-  i0.Value<String?> bearerId,
-  i0.Value<String?> audienceType,
-  i0.Value<String?> audienceId,
-  i0.Value<String?> issuerType,
-  i0.Value<String?> issuerId,
-  i0.Value<DateTime> createTime,
-  i0.Value<DateTime?> expireTime,
-  i0.Value<DateTime?> lastUseTime,
-  i0.Value<int> rowid,
-});
-
-class $CorksFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i3.Corks> {
-  $CorksFilterComposer(super.$state);
-  i0.ColumnFilters<i2.Uint8List> get corkId => $state.composableBuilder(
-      column: $state.table.corkId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<i2.Uint8List> get cryptoKeyId => $state.composableBuilder(
-      column: $state.table.cryptoKeyId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get bearerType => $state.composableBuilder(
-      column: $state.table.bearerType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get bearerId => $state.composableBuilder(
-      column: $state.table.bearerId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get audienceType => $state.composableBuilder(
-      column: $state.table.audienceType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get audienceId => $state.composableBuilder(
-      column: $state.table.audienceId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get issuerType => $state.composableBuilder(
-      column: $state.table.issuerType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get issuerId => $state.composableBuilder(
-      column: $state.table.issuerId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get createTime => $state.composableBuilder(
-      column: $state.table.createTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get expireTime => $state.composableBuilder(
-      column: $state.table.expireTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get lastUseTime => $state.composableBuilder(
-      column: $state.table.lastUseTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $CorksOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i3.Corks> {
-  $CorksOrderingComposer(super.$state);
-  i0.ColumnOrderings<i2.Uint8List> get corkId => $state.composableBuilder(
-      column: $state.table.corkId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<i2.Uint8List> get cryptoKeyId => $state.composableBuilder(
-      column: $state.table.cryptoKeyId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get bearerType => $state.composableBuilder(
-      column: $state.table.bearerType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get bearerId => $state.composableBuilder(
-      column: $state.table.bearerId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get audienceType => $state.composableBuilder(
-      column: $state.table.audienceType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get audienceId => $state.composableBuilder(
-      column: $state.table.audienceId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get issuerType => $state.composableBuilder(
-      column: $state.table.issuerType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get issuerId => $state.composableBuilder(
-      column: $state.table.issuerId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get createTime => $state.composableBuilder(
-      column: $state.table.createTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get expireTime => $state.composableBuilder(
-      column: $state.table.expireTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get lastUseTime => $state.composableBuilder(
-      column: $state.table.lastUseTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CorksTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i3.Corks,
-    i3.Cork,
-    i3.$CorksFilterComposer,
-    i3.$CorksOrderingComposer,
-    $CorksCreateCompanionBuilder,
-    $CorksUpdateCompanionBuilder,
-    (i3.Cork, i0.BaseReferences<i0.GeneratedDatabase, i3.Corks, i3.Cork>),
-    i3.Cork,
-    i0.PrefetchHooks Function()> {
-  $CorksTableManager(i0.GeneratedDatabase db, i3.Corks table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i3.$CorksFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i3.$CorksOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<i2.Uint8List> corkId = const i0.Value.absent(),
-            i0.Value<i2.Uint8List> cryptoKeyId = const i0.Value.absent(),
-            i0.Value<String?> bearerType = const i0.Value.absent(),
-            i0.Value<String?> bearerId = const i0.Value.absent(),
-            i0.Value<String?> audienceType = const i0.Value.absent(),
-            i0.Value<String?> audienceId = const i0.Value.absent(),
-            i0.Value<String?> issuerType = const i0.Value.absent(),
-            i0.Value<String?> issuerId = const i0.Value.absent(),
-            i0.Value<DateTime> createTime = const i0.Value.absent(),
-            i0.Value<DateTime?> expireTime = const i0.Value.absent(),
-            i0.Value<DateTime?> lastUseTime = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i3.CorksCompanion(
-            corkId: corkId,
-            cryptoKeyId: cryptoKeyId,
-            bearerType: bearerType,
-            bearerId: bearerId,
-            audienceType: audienceType,
-            audienceId: audienceId,
-            issuerType: issuerType,
-            issuerId: issuerId,
-            createTime: createTime,
-            expireTime: expireTime,
-            lastUseTime: lastUseTime,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required i2.Uint8List corkId,
-            required i2.Uint8List cryptoKeyId,
-            i0.Value<String?> bearerType = const i0.Value.absent(),
-            i0.Value<String?> bearerId = const i0.Value.absent(),
-            i0.Value<String?> audienceType = const i0.Value.absent(),
-            i0.Value<String?> audienceId = const i0.Value.absent(),
-            i0.Value<String?> issuerType = const i0.Value.absent(),
-            i0.Value<String?> issuerId = const i0.Value.absent(),
-            i0.Value<DateTime> createTime = const i0.Value.absent(),
-            i0.Value<DateTime?> expireTime = const i0.Value.absent(),
-            i0.Value<DateTime?> lastUseTime = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i3.CorksCompanion.insert(
-            corkId: corkId,
-            cryptoKeyId: cryptoKeyId,
-            bearerType: bearerType,
-            bearerId: bearerId,
-            audienceType: audienceType,
-            audienceId: audienceId,
-            issuerType: issuerType,
-            issuerId: issuerId,
-            createTime: createTime,
-            expireTime: expireTime,
-            lastUseTime: lastUseTime,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CorksProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i3.Corks,
-    i3.Cork,
-    i3.$CorksFilterComposer,
-    i3.$CorksOrderingComposer,
-    $CorksCreateCompanionBuilder,
-    $CorksUpdateCompanionBuilder,
-    (i3.Cork, i0.BaseReferences<i0.GeneratedDatabase, i3.Corks, i3.Cork>),
-    i3.Cork,
-    i0.PrefetchHooks Function()>;
 i0.Index get corksCryptoKeyIdx => i0.Index('corks_crypto_key_idx',
     'CREATE INDEX IF NOT EXISTS corks_crypto_key_idx ON corks (crypto_key_id)');
 i0.Index get corksBearerIdx => i0.Index('corks_bearer_idx',

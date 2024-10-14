@@ -9,6 +9,503 @@ import 'package:celest_cloud_auth/src/database/schema/converters/ast_converters.
 import 'package:drift/internal/modular.dart' as i5;
 import 'dart:async' as i6;
 
+typedef $CelestProjectsCreateCompanionBuilder = i1.CelestProjectsCompanion
+    Function({
+  required String projectId,
+  required String version,
+  required i2.ResolvedProject resolvedAst,
+  required String etag,
+  i0.Value<int> rowid,
+});
+typedef $CelestProjectsUpdateCompanionBuilder = i1.CelestProjectsCompanion
+    Function({
+  i0.Value<String> projectId,
+  i0.Value<String> version,
+  i0.Value<i2.ResolvedProject> resolvedAst,
+  i0.Value<String> etag,
+  i0.Value<int> rowid,
+});
+
+class $CelestProjectsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestProjects> {
+  $CelestProjectsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get projectId => $composableBuilder(
+      column: $table.projectId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get version => $composableBuilder(
+      column: $table.version, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<i2.ResolvedProject, i2.ResolvedProject,
+          i3.Uint8List>
+      get resolvedAst => $composableBuilder(
+          column: $table.resolvedAst,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+
+  i0.ColumnFilters<String> get etag => $composableBuilder(
+      column: $table.etag, builder: (column) => i0.ColumnFilters(column));
+}
+
+class $CelestProjectsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestProjects> {
+  $CelestProjectsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get projectId => $composableBuilder(
+      column: $table.projectId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get version => $composableBuilder(
+      column: $table.version, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<i3.Uint8List> get resolvedAst => $composableBuilder(
+      column: $table.resolvedAst,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get etag => $composableBuilder(
+      column: $table.etag, builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CelestProjectsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestProjects> {
+  $CelestProjectsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get projectId =>
+      $composableBuilder(column: $table.projectId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get version =>
+      $composableBuilder(column: $table.version, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<i2.ResolvedProject, i3.Uint8List>
+      get resolvedAst => $composableBuilder(
+          column: $table.resolvedAst, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get etag =>
+      $composableBuilder(column: $table.etag, builder: (column) => column);
+}
+
+class $CelestProjectsTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i1.CelestProjects,
+    i1.CelestProject,
+    i1.$CelestProjectsFilterComposer,
+    i1.$CelestProjectsOrderingComposer,
+    i1.$CelestProjectsAnnotationComposer,
+    $CelestProjectsCreateCompanionBuilder,
+    $CelestProjectsUpdateCompanionBuilder,
+    (
+      i1.CelestProject,
+      i0
+      .BaseReferences<i0.GeneratedDatabase, i1.CelestProjects, i1.CelestProject>
+    ),
+    i1.CelestProject,
+    i0.PrefetchHooks Function()> {
+  $CelestProjectsTableManager(i0.GeneratedDatabase db, i1.CelestProjects table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i1.$CelestProjectsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$CelestProjectsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$CelestProjectsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> projectId = const i0.Value.absent(),
+            i0.Value<String> version = const i0.Value.absent(),
+            i0.Value<i2.ResolvedProject> resolvedAst = const i0.Value.absent(),
+            i0.Value<String> etag = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CelestProjectsCompanion(
+            projectId: projectId,
+            version: version,
+            resolvedAst: resolvedAst,
+            etag: etag,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String projectId,
+            required String version,
+            required i2.ResolvedProject resolvedAst,
+            required String etag,
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CelestProjectsCompanion.insert(
+            projectId: projectId,
+            version: version,
+            resolvedAst: resolvedAst,
+            etag: etag,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CelestProjectsProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i1.CelestProjects,
+    i1.CelestProject,
+    i1.$CelestProjectsFilterComposer,
+    i1.$CelestProjectsOrderingComposer,
+    i1.$CelestProjectsAnnotationComposer,
+    $CelestProjectsCreateCompanionBuilder,
+    $CelestProjectsUpdateCompanionBuilder,
+    (
+      i1.CelestProject,
+      i0
+      .BaseReferences<i0.GeneratedDatabase, i1.CelestProjects, i1.CelestProject>
+    ),
+    i1.CelestProject,
+    i0.PrefetchHooks Function()>;
+typedef $CelestApisCreateCompanionBuilder = i1.CelestApisCompanion Function({
+  required String apiId,
+  required String projectId,
+  required i2.ResolvedApi resolvedAst,
+  required String etag,
+  i0.Value<int> rowid,
+});
+typedef $CelestApisUpdateCompanionBuilder = i1.CelestApisCompanion Function({
+  i0.Value<String> apiId,
+  i0.Value<String> projectId,
+  i0.Value<i2.ResolvedApi> resolvedAst,
+  i0.Value<String> etag,
+  i0.Value<int> rowid,
+});
+
+class $CelestApisFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestApis> {
+  $CelestApisFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get apiId => $composableBuilder(
+      column: $table.apiId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get projectId => $composableBuilder(
+      column: $table.projectId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<i2.ResolvedApi, i2.ResolvedApi,
+          i3.Uint8List>
+      get resolvedAst => $composableBuilder(
+          column: $table.resolvedAst,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+
+  i0.ColumnFilters<String> get etag => $composableBuilder(
+      column: $table.etag, builder: (column) => i0.ColumnFilters(column));
+}
+
+class $CelestApisOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestApis> {
+  $CelestApisOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get apiId => $composableBuilder(
+      column: $table.apiId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get projectId => $composableBuilder(
+      column: $table.projectId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<i3.Uint8List> get resolvedAst => $composableBuilder(
+      column: $table.resolvedAst,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get etag => $composableBuilder(
+      column: $table.etag, builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CelestApisAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestApis> {
+  $CelestApisAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get apiId =>
+      $composableBuilder(column: $table.apiId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get projectId =>
+      $composableBuilder(column: $table.projectId, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<i2.ResolvedApi, i3.Uint8List>
+      get resolvedAst => $composableBuilder(
+          column: $table.resolvedAst, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get etag =>
+      $composableBuilder(column: $table.etag, builder: (column) => column);
+}
+
+class $CelestApisTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i1.CelestApis,
+    i1.CelestApi,
+    i1.$CelestApisFilterComposer,
+    i1.$CelestApisOrderingComposer,
+    i1.$CelestApisAnnotationComposer,
+    $CelestApisCreateCompanionBuilder,
+    $CelestApisUpdateCompanionBuilder,
+    (
+      i1.CelestApi,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestApis, i1.CelestApi>
+    ),
+    i1.CelestApi,
+    i0.PrefetchHooks Function()> {
+  $CelestApisTableManager(i0.GeneratedDatabase db, i1.CelestApis table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i1.$CelestApisFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$CelestApisOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$CelestApisAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> apiId = const i0.Value.absent(),
+            i0.Value<String> projectId = const i0.Value.absent(),
+            i0.Value<i2.ResolvedApi> resolvedAst = const i0.Value.absent(),
+            i0.Value<String> etag = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CelestApisCompanion(
+            apiId: apiId,
+            projectId: projectId,
+            resolvedAst: resolvedAst,
+            etag: etag,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String apiId,
+            required String projectId,
+            required i2.ResolvedApi resolvedAst,
+            required String etag,
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CelestApisCompanion.insert(
+            apiId: apiId,
+            projectId: projectId,
+            resolvedAst: resolvedAst,
+            etag: etag,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CelestApisProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i1.CelestApis,
+    i1.CelestApi,
+    i1.$CelestApisFilterComposer,
+    i1.$CelestApisOrderingComposer,
+    i1.$CelestApisAnnotationComposer,
+    $CelestApisCreateCompanionBuilder,
+    $CelestApisUpdateCompanionBuilder,
+    (
+      i1.CelestApi,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestApis, i1.CelestApi>
+    ),
+    i1.CelestApi,
+    i0.PrefetchHooks Function()>;
+typedef $CelestFunctionsCreateCompanionBuilder = i1.CelestFunctionsCompanion
+    Function({
+  required String functionId,
+  required String apiId,
+  required i2.ResolvedCloudFunction resolvedAst,
+  required String etag,
+  i0.Value<int> rowid,
+});
+typedef $CelestFunctionsUpdateCompanionBuilder = i1.CelestFunctionsCompanion
+    Function({
+  i0.Value<String> functionId,
+  i0.Value<String> apiId,
+  i0.Value<i2.ResolvedCloudFunction> resolvedAst,
+  i0.Value<String> etag,
+  i0.Value<int> rowid,
+});
+
+class $CelestFunctionsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestFunctions> {
+  $CelestFunctionsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get functionId => $composableBuilder(
+      column: $table.functionId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get apiId => $composableBuilder(
+      column: $table.apiId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<i2.ResolvedCloudFunction,
+          i2.ResolvedCloudFunction, i3.Uint8List>
+      get resolvedAst => $composableBuilder(
+          column: $table.resolvedAst,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+
+  i0.ColumnFilters<String> get etag => $composableBuilder(
+      column: $table.etag, builder: (column) => i0.ColumnFilters(column));
+}
+
+class $CelestFunctionsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestFunctions> {
+  $CelestFunctionsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get functionId => $composableBuilder(
+      column: $table.functionId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get apiId => $composableBuilder(
+      column: $table.apiId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<i3.Uint8List> get resolvedAst => $composableBuilder(
+      column: $table.resolvedAst,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get etag => $composableBuilder(
+      column: $table.etag, builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CelestFunctionsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CelestFunctions> {
+  $CelestFunctionsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get functionId => $composableBuilder(
+      column: $table.functionId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get apiId =>
+      $composableBuilder(column: $table.apiId, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<i2.ResolvedCloudFunction, i3.Uint8List>
+      get resolvedAst => $composableBuilder(
+          column: $table.resolvedAst, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get etag =>
+      $composableBuilder(column: $table.etag, builder: (column) => column);
+}
+
+class $CelestFunctionsTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i1.CelestFunctions,
+    i1.CelestFunction,
+    i1.$CelestFunctionsFilterComposer,
+    i1.$CelestFunctionsOrderingComposer,
+    i1.$CelestFunctionsAnnotationComposer,
+    $CelestFunctionsCreateCompanionBuilder,
+    $CelestFunctionsUpdateCompanionBuilder,
+    (
+      i1.CelestFunction,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestFunctions,
+          i1.CelestFunction>
+    ),
+    i1.CelestFunction,
+    i0.PrefetchHooks Function()> {
+  $CelestFunctionsTableManager(
+      i0.GeneratedDatabase db, i1.CelestFunctions table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i1.$CelestFunctionsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$CelestFunctionsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$CelestFunctionsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> functionId = const i0.Value.absent(),
+            i0.Value<String> apiId = const i0.Value.absent(),
+            i0.Value<i2.ResolvedCloudFunction> resolvedAst =
+                const i0.Value.absent(),
+            i0.Value<String> etag = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CelestFunctionsCompanion(
+            functionId: functionId,
+            apiId: apiId,
+            resolvedAst: resolvedAst,
+            etag: etag,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String functionId,
+            required String apiId,
+            required i2.ResolvedCloudFunction resolvedAst,
+            required String etag,
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CelestFunctionsCompanion.insert(
+            functionId: functionId,
+            apiId: apiId,
+            resolvedAst: resolvedAst,
+            etag: etag,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CelestFunctionsProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i1.CelestFunctions,
+    i1.CelestFunction,
+    i1.$CelestFunctionsFilterComposer,
+    i1.$CelestFunctionsOrderingComposer,
+    i1.$CelestFunctionsAnnotationComposer,
+    $CelestFunctionsCreateCompanionBuilder,
+    $CelestFunctionsUpdateCompanionBuilder,
+    (
+      i1.CelestFunction,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestFunctions,
+          i1.CelestFunction>
+    ),
+    i1.CelestFunction,
+    i0.PrefetchHooks Function()>;
+
 class CelestProjects extends i0.Table
     with i0.TableInfo<CelestProjects, i1.CelestProject> {
   @override
@@ -264,148 +761,6 @@ class CelestProjectsCompanion extends i0.UpdateCompanion<i1.CelestProject> {
   }
 }
 
-typedef $CelestProjectsCreateCompanionBuilder = i1.CelestProjectsCompanion
-    Function({
-  required String projectId,
-  required String version,
-  required i2.ResolvedProject resolvedAst,
-  required String etag,
-  i0.Value<int> rowid,
-});
-typedef $CelestProjectsUpdateCompanionBuilder = i1.CelestProjectsCompanion
-    Function({
-  i0.Value<String> projectId,
-  i0.Value<String> version,
-  i0.Value<i2.ResolvedProject> resolvedAst,
-  i0.Value<String> etag,
-  i0.Value<int> rowid,
-});
-
-class $CelestProjectsFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i1.CelestProjects> {
-  $CelestProjectsFilterComposer(super.$state);
-  i0.ColumnFilters<String> get projectId => $state.composableBuilder(
-      column: $state.table.projectId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get version => $state.composableBuilder(
-      column: $state.table.version,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<i2.ResolvedProject, i2.ResolvedProject,
-          i3.Uint8List>
-      get resolvedAst => $state.composableBuilder(
-          column: $state.table.resolvedAst,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get etag => $state.composableBuilder(
-      column: $state.table.etag,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $CelestProjectsOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i1.CelestProjects> {
-  $CelestProjectsOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get projectId => $state.composableBuilder(
-      column: $state.table.projectId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get version => $state.composableBuilder(
-      column: $state.table.version,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<i3.Uint8List> get resolvedAst => $state.composableBuilder(
-      column: $state.table.resolvedAst,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get etag => $state.composableBuilder(
-      column: $state.table.etag,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CelestProjectsTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.CelestProjects,
-    i1.CelestProject,
-    i1.$CelestProjectsFilterComposer,
-    i1.$CelestProjectsOrderingComposer,
-    $CelestProjectsCreateCompanionBuilder,
-    $CelestProjectsUpdateCompanionBuilder,
-    (
-      i1.CelestProject,
-      i0
-      .BaseReferences<i0.GeneratedDatabase, i1.CelestProjects, i1.CelestProject>
-    ),
-    i1.CelestProject,
-    i0.PrefetchHooks Function()> {
-  $CelestProjectsTableManager(i0.GeneratedDatabase db, i1.CelestProjects table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i1.$CelestProjectsFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i1.$CelestProjectsOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> projectId = const i0.Value.absent(),
-            i0.Value<String> version = const i0.Value.absent(),
-            i0.Value<i2.ResolvedProject> resolvedAst = const i0.Value.absent(),
-            i0.Value<String> etag = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CelestProjectsCompanion(
-            projectId: projectId,
-            version: version,
-            resolvedAst: resolvedAst,
-            etag: etag,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String projectId,
-            required String version,
-            required i2.ResolvedProject resolvedAst,
-            required String etag,
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CelestProjectsCompanion.insert(
-            projectId: projectId,
-            version: version,
-            resolvedAst: resolvedAst,
-            etag: etag,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CelestProjectsProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i1.CelestProjects,
-    i1.CelestProject,
-    i1.$CelestProjectsFilterComposer,
-    i1.$CelestProjectsOrderingComposer,
-    $CelestProjectsCreateCompanionBuilder,
-    $CelestProjectsUpdateCompanionBuilder,
-    (
-      i1.CelestProject,
-      i0
-      .BaseReferences<i0.GeneratedDatabase, i1.CelestProjects, i1.CelestProject>
-    ),
-    i1.CelestProject,
-    i0.PrefetchHooks Function()>;
-
 class CelestApis extends i0.Table with i0.TableInfo<CelestApis, i1.CelestApi> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
@@ -660,143 +1015,6 @@ class CelestApisCompanion extends i0.UpdateCompanion<i1.CelestApi> {
   }
 }
 
-typedef $CelestApisCreateCompanionBuilder = i1.CelestApisCompanion Function({
-  required String apiId,
-  required String projectId,
-  required i2.ResolvedApi resolvedAst,
-  required String etag,
-  i0.Value<int> rowid,
-});
-typedef $CelestApisUpdateCompanionBuilder = i1.CelestApisCompanion Function({
-  i0.Value<String> apiId,
-  i0.Value<String> projectId,
-  i0.Value<i2.ResolvedApi> resolvedAst,
-  i0.Value<String> etag,
-  i0.Value<int> rowid,
-});
-
-class $CelestApisFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i1.CelestApis> {
-  $CelestApisFilterComposer(super.$state);
-  i0.ColumnFilters<String> get apiId => $state.composableBuilder(
-      column: $state.table.apiId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get projectId => $state.composableBuilder(
-      column: $state.table.projectId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<i2.ResolvedApi, i2.ResolvedApi,
-          i3.Uint8List>
-      get resolvedAst => $state.composableBuilder(
-          column: $state.table.resolvedAst,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get etag => $state.composableBuilder(
-      column: $state.table.etag,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $CelestApisOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i1.CelestApis> {
-  $CelestApisOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get apiId => $state.composableBuilder(
-      column: $state.table.apiId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get projectId => $state.composableBuilder(
-      column: $state.table.projectId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<i3.Uint8List> get resolvedAst => $state.composableBuilder(
-      column: $state.table.resolvedAst,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get etag => $state.composableBuilder(
-      column: $state.table.etag,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CelestApisTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.CelestApis,
-    i1.CelestApi,
-    i1.$CelestApisFilterComposer,
-    i1.$CelestApisOrderingComposer,
-    $CelestApisCreateCompanionBuilder,
-    $CelestApisUpdateCompanionBuilder,
-    (
-      i1.CelestApi,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestApis, i1.CelestApi>
-    ),
-    i1.CelestApi,
-    i0.PrefetchHooks Function()> {
-  $CelestApisTableManager(i0.GeneratedDatabase db, i1.CelestApis table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i1.$CelestApisFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i1.$CelestApisOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> apiId = const i0.Value.absent(),
-            i0.Value<String> projectId = const i0.Value.absent(),
-            i0.Value<i2.ResolvedApi> resolvedAst = const i0.Value.absent(),
-            i0.Value<String> etag = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CelestApisCompanion(
-            apiId: apiId,
-            projectId: projectId,
-            resolvedAst: resolvedAst,
-            etag: etag,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String apiId,
-            required String projectId,
-            required i2.ResolvedApi resolvedAst,
-            required String etag,
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CelestApisCompanion.insert(
-            apiId: apiId,
-            projectId: projectId,
-            resolvedAst: resolvedAst,
-            etag: etag,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CelestApisProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i1.CelestApis,
-    i1.CelestApi,
-    i1.$CelestApisFilterComposer,
-    i1.$CelestApisOrderingComposer,
-    $CelestApisCreateCompanionBuilder,
-    $CelestApisUpdateCompanionBuilder,
-    (
-      i1.CelestApi,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestApis, i1.CelestApi>
-    ),
-    i1.CelestApi,
-    i0.PrefetchHooks Function()>;
 i0.Index get celestApisProjectIdx => i0.Index('celest_apis_project_idx',
     'CREATE INDEX IF NOT EXISTS celest_apis_project_idx ON celest_apis (project_id)');
 i0.Trigger get celestApisTriggerCreate => i0.Trigger(
@@ -1066,149 +1284,6 @@ class CelestFunctionsCompanion extends i0.UpdateCompanion<i1.CelestFunction> {
   }
 }
 
-typedef $CelestFunctionsCreateCompanionBuilder = i1.CelestFunctionsCompanion
-    Function({
-  required String functionId,
-  required String apiId,
-  required i2.ResolvedCloudFunction resolvedAst,
-  required String etag,
-  i0.Value<int> rowid,
-});
-typedef $CelestFunctionsUpdateCompanionBuilder = i1.CelestFunctionsCompanion
-    Function({
-  i0.Value<String> functionId,
-  i0.Value<String> apiId,
-  i0.Value<i2.ResolvedCloudFunction> resolvedAst,
-  i0.Value<String> etag,
-  i0.Value<int> rowid,
-});
-
-class $CelestFunctionsFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i1.CelestFunctions> {
-  $CelestFunctionsFilterComposer(super.$state);
-  i0.ColumnFilters<String> get functionId => $state.composableBuilder(
-      column: $state.table.functionId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get apiId => $state.composableBuilder(
-      column: $state.table.apiId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<i2.ResolvedCloudFunction,
-          i2.ResolvedCloudFunction, i3.Uint8List>
-      get resolvedAst => $state.composableBuilder(
-          column: $state.table.resolvedAst,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get etag => $state.composableBuilder(
-      column: $state.table.etag,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $CelestFunctionsOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i1.CelestFunctions> {
-  $CelestFunctionsOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get functionId => $state.composableBuilder(
-      column: $state.table.functionId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get apiId => $state.composableBuilder(
-      column: $state.table.apiId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<i3.Uint8List> get resolvedAst => $state.composableBuilder(
-      column: $state.table.resolvedAst,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get etag => $state.composableBuilder(
-      column: $state.table.etag,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CelestFunctionsTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.CelestFunctions,
-    i1.CelestFunction,
-    i1.$CelestFunctionsFilterComposer,
-    i1.$CelestFunctionsOrderingComposer,
-    $CelestFunctionsCreateCompanionBuilder,
-    $CelestFunctionsUpdateCompanionBuilder,
-    (
-      i1.CelestFunction,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestFunctions,
-          i1.CelestFunction>
-    ),
-    i1.CelestFunction,
-    i0.PrefetchHooks Function()> {
-  $CelestFunctionsTableManager(
-      i0.GeneratedDatabase db, i1.CelestFunctions table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i1.$CelestFunctionsFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i1.$CelestFunctionsOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> functionId = const i0.Value.absent(),
-            i0.Value<String> apiId = const i0.Value.absent(),
-            i0.Value<i2.ResolvedCloudFunction> resolvedAst =
-                const i0.Value.absent(),
-            i0.Value<String> etag = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CelestFunctionsCompanion(
-            functionId: functionId,
-            apiId: apiId,
-            resolvedAst: resolvedAst,
-            etag: etag,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String functionId,
-            required String apiId,
-            required i2.ResolvedCloudFunction resolvedAst,
-            required String etag,
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CelestFunctionsCompanion.insert(
-            functionId: functionId,
-            apiId: apiId,
-            resolvedAst: resolvedAst,
-            etag: etag,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CelestFunctionsProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i1.CelestFunctions,
-    i1.CelestFunction,
-    i1.$CelestFunctionsFilterComposer,
-    i1.$CelestFunctionsOrderingComposer,
-    $CelestFunctionsCreateCompanionBuilder,
-    $CelestFunctionsUpdateCompanionBuilder,
-    (
-      i1.CelestFunction,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestFunctions,
-          i1.CelestFunction>
-    ),
-    i1.CelestFunction,
-    i0.PrefetchHooks Function()>;
 i0.Index get celestFunctionsApiIdx => i0.Index('celest_functions_api_idx',
     'CREATE INDEX IF NOT EXISTS celest_functions_api_idx ON celest_functions (api_id)');
 i0.Trigger get celestFunctionsTriggerCreate => i0.Trigger(

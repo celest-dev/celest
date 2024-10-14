@@ -4,10 +4,1429 @@ import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i1;
 import 'package:cedar/src/model/value.dart' as i2;
 import 'package:celest_cloud_auth/src/database/schema/converters/cedar_converters.dart'
     as i3;
-import 'package:drift/internal/modular.dart' as i4;
-import 'package:cedar/src/model/policy.dart' as i5;
-import 'package:cedar/src/authorization/authorization_response.dart' as i6;
+import 'package:cedar/src/model/policy.dart' as i4;
+import 'package:cedar/src/authorization/authorization_response.dart' as i5;
+import 'package:drift/internal/modular.dart' as i6;
 import 'dart:async' as i7;
+
+typedef $CedarTypesCreateCompanionBuilder = i1.CedarTypesCompanion Function({
+  required String fqn,
+  i0.Value<int> rowid,
+});
+typedef $CedarTypesUpdateCompanionBuilder = i1.CedarTypesCompanion Function({
+  i0.Value<String> fqn,
+  i0.Value<int> rowid,
+});
+
+class $CedarTypesFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarTypes> {
+  $CedarTypesFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get fqn => $composableBuilder(
+      column: $table.fqn, builder: (column) => i0.ColumnFilters(column));
+
+  i0.Expression<bool> cedarEntitiesRefs(
+      i0.Expression<bool> Function(i1.$CedarEntitiesFilterComposer f) f) {
+    final i1.$CedarEntitiesFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.fqn,
+        referencedTable: i6.ReadDatabaseContainer($db)
+            .resultSet<i1.CedarEntities>('cedar_entities'),
+        getReferencedColumn: (t) => t.entityType,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            i1.$CedarEntitiesFilterComposer(
+              $db: $db,
+              $table: i6.ReadDatabaseContainer($db)
+                  .resultSet<i1.CedarEntities>('cedar_entities'),
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $CedarTypesOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarTypes> {
+  $CedarTypesOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get fqn => $composableBuilder(
+      column: $table.fqn, builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CedarTypesAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarTypes> {
+  $CedarTypesAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get fqn =>
+      $composableBuilder(column: $table.fqn, builder: (column) => column);
+
+  i0.Expression<T> cedarEntitiesRefs<T extends Object>(
+      i0.Expression<T> Function(i1.$CedarEntitiesAnnotationComposer a) f) {
+    final i1.$CedarEntitiesAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.fqn,
+        referencedTable: i6.ReadDatabaseContainer($db)
+            .resultSet<i1.CedarEntities>('cedar_entities'),
+        getReferencedColumn: (t) => t.entityType,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            i1.$CedarEntitiesAnnotationComposer(
+              $db: $db,
+              $table: i6.ReadDatabaseContainer($db)
+                  .resultSet<i1.CedarEntities>('cedar_entities'),
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $CedarTypesTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarTypes,
+    i1.CedarType,
+    i1.$CedarTypesFilterComposer,
+    i1.$CedarTypesOrderingComposer,
+    i1.$CedarTypesAnnotationComposer,
+    $CedarTypesCreateCompanionBuilder,
+    $CedarTypesUpdateCompanionBuilder,
+    (
+      i1.CedarType,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarTypes, i1.CedarType>
+    ),
+    i1.CedarType,
+    i0.PrefetchHooks Function({bool cedarEntitiesRefs})> {
+  $CedarTypesTableManager(i0.GeneratedDatabase db, i1.CedarTypes table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i1.$CedarTypesFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$CedarTypesOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$CedarTypesAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> fqn = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CedarTypesCompanion(
+            fqn: fqn,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String fqn,
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CedarTypesCompanion.insert(
+            fqn: fqn,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CedarTypesProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarTypes,
+    i1.CedarType,
+    i1.$CedarTypesFilterComposer,
+    i1.$CedarTypesOrderingComposer,
+    i1.$CedarTypesAnnotationComposer,
+    $CedarTypesCreateCompanionBuilder,
+    $CedarTypesUpdateCompanionBuilder,
+    (
+      i1.CedarType,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarTypes, i1.CedarType>
+    ),
+    i1.CedarType,
+    i0.PrefetchHooks Function({bool cedarEntitiesRefs})>;
+typedef $CedarEntitiesCreateCompanionBuilder = i1.CedarEntitiesCompanion
+    Function({
+  required String entityType,
+  required String entityId,
+  i0.Value<Map<String, i2.Value>> attributeJson,
+});
+typedef $CedarEntitiesUpdateCompanionBuilder = i1.CedarEntitiesCompanion
+    Function({
+  i0.Value<String> entityType,
+  i0.Value<String> entityId,
+  i0.Value<Map<String, i2.Value>> attributeJson,
+});
+
+class $CedarEntitiesFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarEntities> {
+  $CedarEntitiesFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get entityId => $composableBuilder(
+      column: $table.entityId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<Map<String, i2.Value>,
+          Map<String, i2.Value>, String>
+      get attributeJson => $composableBuilder(
+          column: $table.attributeJson,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<i2.EntityUid, i2.EntityUid, String>
+      get entityJson => $composableBuilder(
+          column: $table.entityJson,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+
+  i1.$CedarTypesFilterComposer get entityType {
+    final i1.$CedarTypesFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.entityType,
+        referencedTable: i6.ReadDatabaseContainer($db)
+            .resultSet<i1.CedarTypes>('cedar_types'),
+        getReferencedColumn: (t) => t.fqn,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            i1.$CedarTypesFilterComposer(
+              $db: $db,
+              $table: i6.ReadDatabaseContainer($db)
+                  .resultSet<i1.CedarTypes>('cedar_types'),
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $CedarEntitiesOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarEntities> {
+  $CedarEntitiesOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get entityId => $composableBuilder(
+      column: $table.entityId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get attributeJson => $composableBuilder(
+      column: $table.attributeJson,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get entityJson => $composableBuilder(
+      column: $table.entityJson,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i1.$CedarTypesOrderingComposer get entityType {
+    final i1.$CedarTypesOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.entityType,
+        referencedTable: i6.ReadDatabaseContainer($db)
+            .resultSet<i1.CedarTypes>('cedar_types'),
+        getReferencedColumn: (t) => t.fqn,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            i1.$CedarTypesOrderingComposer(
+              $db: $db,
+              $table: i6.ReadDatabaseContainer($db)
+                  .resultSet<i1.CedarTypes>('cedar_types'),
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $CedarEntitiesAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarEntities> {
+  $CedarEntitiesAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get entityId =>
+      $composableBuilder(column: $table.entityId, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<Map<String, i2.Value>, String>
+      get attributeJson => $composableBuilder(
+          column: $table.attributeJson, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<i2.EntityUid, String> get entityJson =>
+      $composableBuilder(
+          column: $table.entityJson, builder: (column) => column);
+
+  i1.$CedarTypesAnnotationComposer get entityType {
+    final i1.$CedarTypesAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.entityType,
+        referencedTable: i6.ReadDatabaseContainer($db)
+            .resultSet<i1.CedarTypes>('cedar_types'),
+        getReferencedColumn: (t) => t.fqn,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            i1.$CedarTypesAnnotationComposer(
+              $db: $db,
+              $table: i6.ReadDatabaseContainer($db)
+                  .resultSet<i1.CedarTypes>('cedar_types'),
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $CedarEntitiesTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarEntities,
+    i1.CedarEntity,
+    i1.$CedarEntitiesFilterComposer,
+    i1.$CedarEntitiesOrderingComposer,
+    i1.$CedarEntitiesAnnotationComposer,
+    $CedarEntitiesCreateCompanionBuilder,
+    $CedarEntitiesUpdateCompanionBuilder,
+    (
+      i1.CedarEntity,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarEntities, i1.CedarEntity>
+    ),
+    i1.CedarEntity,
+    i0.PrefetchHooks Function({bool entityType})> {
+  $CedarEntitiesTableManager(i0.GeneratedDatabase db, i1.CedarEntities table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i1.$CedarEntitiesFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$CedarEntitiesOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$CedarEntitiesAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> entityType = const i0.Value.absent(),
+            i0.Value<String> entityId = const i0.Value.absent(),
+            i0.Value<Map<String, i2.Value>> attributeJson =
+                const i0.Value.absent(),
+          }) =>
+              i1.CedarEntitiesCompanion(
+            entityType: entityType,
+            entityId: entityId,
+            attributeJson: attributeJson,
+          ),
+          createCompanionCallback: ({
+            required String entityType,
+            required String entityId,
+            i0.Value<Map<String, i2.Value>> attributeJson =
+                const i0.Value.absent(),
+          }) =>
+              i1.CedarEntitiesCompanion.insert(
+            entityType: entityType,
+            entityId: entityId,
+            attributeJson: attributeJson,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CedarEntitiesProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarEntities,
+    i1.CedarEntity,
+    i1.$CedarEntitiesFilterComposer,
+    i1.$CedarEntitiesOrderingComposer,
+    i1.$CedarEntitiesAnnotationComposer,
+    $CedarEntitiesCreateCompanionBuilder,
+    $CedarEntitiesUpdateCompanionBuilder,
+    (
+      i1.CedarEntity,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarEntities, i1.CedarEntity>
+    ),
+    i1.CedarEntity,
+    i0.PrefetchHooks Function({bool entityType})>;
+typedef $CedarRelationshipsCreateCompanionBuilder
+    = i1.CedarRelationshipsCompanion Function({
+  required String entityType,
+  required String entityId,
+  required String parentType,
+  required String parentId,
+});
+typedef $CedarRelationshipsUpdateCompanionBuilder
+    = i1.CedarRelationshipsCompanion Function({
+  i0.Value<String> entityType,
+  i0.Value<String> entityId,
+  i0.Value<String> parentType,
+  i0.Value<String> parentId,
+});
+
+class $CedarRelationshipsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarRelationships> {
+  $CedarRelationshipsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get entityType => $composableBuilder(
+      column: $table.entityType, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get entityId => $composableBuilder(
+      column: $table.entityId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<i2.EntityUid, i2.EntityUid, String>
+      get entityJson => $composableBuilder(
+          column: $table.entityJson,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+
+  i0.ColumnFilters<String> get parentType => $composableBuilder(
+      column: $table.parentType, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get parentId => $composableBuilder(
+      column: $table.parentId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<i2.EntityUid, i2.EntityUid, String>
+      get parentJson => $composableBuilder(
+          column: $table.parentJson,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+}
+
+class $CedarRelationshipsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarRelationships> {
+  $CedarRelationshipsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get entityType => $composableBuilder(
+      column: $table.entityType,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get entityId => $composableBuilder(
+      column: $table.entityId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get entityJson => $composableBuilder(
+      column: $table.entityJson,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get parentType => $composableBuilder(
+      column: $table.parentType,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get parentId => $composableBuilder(
+      column: $table.parentId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get parentJson => $composableBuilder(
+      column: $table.parentJson,
+      builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CedarRelationshipsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarRelationships> {
+  $CedarRelationshipsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get entityType => $composableBuilder(
+      column: $table.entityType, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get entityId =>
+      $composableBuilder(column: $table.entityId, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<i2.EntityUid, String> get entityJson =>
+      $composableBuilder(
+          column: $table.entityJson, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get parentType => $composableBuilder(
+      column: $table.parentType, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get parentId =>
+      $composableBuilder(column: $table.parentId, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<i2.EntityUid, String> get parentJson =>
+      $composableBuilder(
+          column: $table.parentJson, builder: (column) => column);
+}
+
+class $CedarRelationshipsTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarRelationships,
+    i1.CedarRelationship,
+    i1.$CedarRelationshipsFilterComposer,
+    i1.$CedarRelationshipsOrderingComposer,
+    i1.$CedarRelationshipsAnnotationComposer,
+    $CedarRelationshipsCreateCompanionBuilder,
+    $CedarRelationshipsUpdateCompanionBuilder,
+    (
+      i1.CedarRelationship,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarRelationships,
+          i1.CedarRelationship>
+    ),
+    i1.CedarRelationship,
+    i0.PrefetchHooks Function()> {
+  $CedarRelationshipsTableManager(
+      i0.GeneratedDatabase db, i1.CedarRelationships table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i1.$CedarRelationshipsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$CedarRelationshipsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$CedarRelationshipsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> entityType = const i0.Value.absent(),
+            i0.Value<String> entityId = const i0.Value.absent(),
+            i0.Value<String> parentType = const i0.Value.absent(),
+            i0.Value<String> parentId = const i0.Value.absent(),
+          }) =>
+              i1.CedarRelationshipsCompanion(
+            entityType: entityType,
+            entityId: entityId,
+            parentType: parentType,
+            parentId: parentId,
+          ),
+          createCompanionCallback: ({
+            required String entityType,
+            required String entityId,
+            required String parentType,
+            required String parentId,
+          }) =>
+              i1.CedarRelationshipsCompanion.insert(
+            entityType: entityType,
+            entityId: entityId,
+            parentType: parentType,
+            parentId: parentId,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CedarRelationshipsProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarRelationships,
+    i1.CedarRelationship,
+    i1.$CedarRelationshipsFilterComposer,
+    i1.$CedarRelationshipsOrderingComposer,
+    i1.$CedarRelationshipsAnnotationComposer,
+    $CedarRelationshipsCreateCompanionBuilder,
+    $CedarRelationshipsUpdateCompanionBuilder,
+    (
+      i1.CedarRelationship,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarRelationships,
+          i1.CedarRelationship>
+    ),
+    i1.CedarRelationship,
+    i0.PrefetchHooks Function()>;
+typedef $CedarPoliciesCreateCompanionBuilder = i1.CedarPoliciesCompanion
+    Function({
+  required String id,
+  required String policyId,
+  required i4.Policy policy,
+  i0.Value<int> enforcementLevel,
+  i0.Value<int> rowid,
+});
+typedef $CedarPoliciesUpdateCompanionBuilder = i1.CedarPoliciesCompanion
+    Function({
+  i0.Value<String> id,
+  i0.Value<String> policyId,
+  i0.Value<i4.Policy> policy,
+  i0.Value<int> enforcementLevel,
+  i0.Value<int> rowid,
+});
+
+class $CedarPoliciesFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarPolicies> {
+  $CedarPoliciesFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get policyId => $composableBuilder(
+      column: $table.policyId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<i4.Policy, i4.Policy, String> get policy =>
+      $composableBuilder(
+          column: $table.policy,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+
+  i0.ColumnFilters<int> get enforcementLevel => $composableBuilder(
+      column: $table.enforcementLevel,
+      builder: (column) => i0.ColumnFilters(column));
+}
+
+class $CedarPoliciesOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarPolicies> {
+  $CedarPoliciesOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get policyId => $composableBuilder(
+      column: $table.policyId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get policy => $composableBuilder(
+      column: $table.policy, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<int> get enforcementLevel => $composableBuilder(
+      column: $table.enforcementLevel,
+      builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CedarPoliciesAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarPolicies> {
+  $CedarPoliciesAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get policyId =>
+      $composableBuilder(column: $table.policyId, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<i4.Policy, String> get policy =>
+      $composableBuilder(column: $table.policy, builder: (column) => column);
+
+  i0.GeneratedColumn<int> get enforcementLevel => $composableBuilder(
+      column: $table.enforcementLevel, builder: (column) => column);
+}
+
+class $CedarPoliciesTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarPolicies,
+    i1.CedarPolicy,
+    i1.$CedarPoliciesFilterComposer,
+    i1.$CedarPoliciesOrderingComposer,
+    i1.$CedarPoliciesAnnotationComposer,
+    $CedarPoliciesCreateCompanionBuilder,
+    $CedarPoliciesUpdateCompanionBuilder,
+    (
+      i1.CedarPolicy,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarPolicies, i1.CedarPolicy>
+    ),
+    i1.CedarPolicy,
+    i0.PrefetchHooks Function()> {
+  $CedarPoliciesTableManager(i0.GeneratedDatabase db, i1.CedarPolicies table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i1.$CedarPoliciesFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$CedarPoliciesOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$CedarPoliciesAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> id = const i0.Value.absent(),
+            i0.Value<String> policyId = const i0.Value.absent(),
+            i0.Value<i4.Policy> policy = const i0.Value.absent(),
+            i0.Value<int> enforcementLevel = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CedarPoliciesCompanion(
+            id: id,
+            policyId: policyId,
+            policy: policy,
+            enforcementLevel: enforcementLevel,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String policyId,
+            required i4.Policy policy,
+            i0.Value<int> enforcementLevel = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CedarPoliciesCompanion.insert(
+            id: id,
+            policyId: policyId,
+            policy: policy,
+            enforcementLevel: enforcementLevel,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CedarPoliciesProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarPolicies,
+    i1.CedarPolicy,
+    i1.$CedarPoliciesFilterComposer,
+    i1.$CedarPoliciesOrderingComposer,
+    i1.$CedarPoliciesAnnotationComposer,
+    $CedarPoliciesCreateCompanionBuilder,
+    $CedarPoliciesUpdateCompanionBuilder,
+    (
+      i1.CedarPolicy,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarPolicies, i1.CedarPolicy>
+    ),
+    i1.CedarPolicy,
+    i0.PrefetchHooks Function()>;
+typedef $CedarPolicyTemplatesCreateCompanionBuilder
+    = i1.CedarPolicyTemplatesCompanion Function({
+  required String id,
+  required String templateId,
+  required i4.Policy template,
+  i0.Value<int> rowid,
+});
+typedef $CedarPolicyTemplatesUpdateCompanionBuilder
+    = i1.CedarPolicyTemplatesCompanion Function({
+  i0.Value<String> id,
+  i0.Value<String> templateId,
+  i0.Value<i4.Policy> template,
+  i0.Value<int> rowid,
+});
+
+class $CedarPolicyTemplatesFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarPolicyTemplates> {
+  $CedarPolicyTemplatesFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get templateId => $composableBuilder(
+      column: $table.templateId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<i4.Policy, i4.Policy, String>
+      get template => $composableBuilder(
+          column: $table.template,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+}
+
+class $CedarPolicyTemplatesOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarPolicyTemplates> {
+  $CedarPolicyTemplatesOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get templateId => $composableBuilder(
+      column: $table.templateId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get template => $composableBuilder(
+      column: $table.template, builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CedarPolicyTemplatesAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarPolicyTemplates> {
+  $CedarPolicyTemplatesAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get templateId => $composableBuilder(
+      column: $table.templateId, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<i4.Policy, String> get template =>
+      $composableBuilder(column: $table.template, builder: (column) => column);
+}
+
+class $CedarPolicyTemplatesTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarPolicyTemplates,
+    i1.CedarPolicyTemplate,
+    i1.$CedarPolicyTemplatesFilterComposer,
+    i1.$CedarPolicyTemplatesOrderingComposer,
+    i1.$CedarPolicyTemplatesAnnotationComposer,
+    $CedarPolicyTemplatesCreateCompanionBuilder,
+    $CedarPolicyTemplatesUpdateCompanionBuilder,
+    (
+      i1.CedarPolicyTemplate,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarPolicyTemplates,
+          i1.CedarPolicyTemplate>
+    ),
+    i1.CedarPolicyTemplate,
+    i0.PrefetchHooks Function()> {
+  $CedarPolicyTemplatesTableManager(
+      i0.GeneratedDatabase db, i1.CedarPolicyTemplates table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i1.$CedarPolicyTemplatesFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$CedarPolicyTemplatesOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () => i1
+              .$CedarPolicyTemplatesAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> id = const i0.Value.absent(),
+            i0.Value<String> templateId = const i0.Value.absent(),
+            i0.Value<i4.Policy> template = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CedarPolicyTemplatesCompanion(
+            id: id,
+            templateId: templateId,
+            template: template,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String templateId,
+            required i4.Policy template,
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CedarPolicyTemplatesCompanion.insert(
+            id: id,
+            templateId: templateId,
+            template: template,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CedarPolicyTemplatesProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarPolicyTemplates,
+    i1.CedarPolicyTemplate,
+    i1.$CedarPolicyTemplatesFilterComposer,
+    i1.$CedarPolicyTemplatesOrderingComposer,
+    i1.$CedarPolicyTemplatesAnnotationComposer,
+    $CedarPolicyTemplatesCreateCompanionBuilder,
+    $CedarPolicyTemplatesUpdateCompanionBuilder,
+    (
+      i1.CedarPolicyTemplate,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarPolicyTemplates,
+          i1.CedarPolicyTemplate>
+    ),
+    i1.CedarPolicyTemplate,
+    i0.PrefetchHooks Function()>;
+typedef $CedarPolicyTemplateLinksCreateCompanionBuilder
+    = i1.CedarPolicyTemplateLinksCompanion Function({
+  required String id,
+  required String policyId,
+  required String templateId,
+  i0.Value<String?> principalType,
+  i0.Value<String?> principalId,
+  i0.Value<String?> resourceType,
+  i0.Value<String?> resourceId,
+  i0.Value<int> enforcementLevel,
+  i0.Value<int> rowid,
+});
+typedef $CedarPolicyTemplateLinksUpdateCompanionBuilder
+    = i1.CedarPolicyTemplateLinksCompanion Function({
+  i0.Value<String> id,
+  i0.Value<String> policyId,
+  i0.Value<String> templateId,
+  i0.Value<String?> principalType,
+  i0.Value<String?> principalId,
+  i0.Value<String?> resourceType,
+  i0.Value<String?> resourceId,
+  i0.Value<int> enforcementLevel,
+  i0.Value<int> rowid,
+});
+
+class $CedarPolicyTemplateLinksFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarPolicyTemplateLinks> {
+  $CedarPolicyTemplateLinksFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get policyId => $composableBuilder(
+      column: $table.policyId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get templateId => $composableBuilder(
+      column: $table.templateId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get principalType => $composableBuilder(
+      column: $table.principalType,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get principalId => $composableBuilder(
+      column: $table.principalId,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get resourceType => $composableBuilder(
+      column: $table.resourceType,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get resourceId => $composableBuilder(
+      column: $table.resourceId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<int> get enforcementLevel => $composableBuilder(
+      column: $table.enforcementLevel,
+      builder: (column) => i0.ColumnFilters(column));
+}
+
+class $CedarPolicyTemplateLinksOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarPolicyTemplateLinks> {
+  $CedarPolicyTemplateLinksOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get policyId => $composableBuilder(
+      column: $table.policyId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get templateId => $composableBuilder(
+      column: $table.templateId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get principalType => $composableBuilder(
+      column: $table.principalType,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get principalId => $composableBuilder(
+      column: $table.principalId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get resourceType => $composableBuilder(
+      column: $table.resourceType,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get resourceId => $composableBuilder(
+      column: $table.resourceId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<int> get enforcementLevel => $composableBuilder(
+      column: $table.enforcementLevel,
+      builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CedarPolicyTemplateLinksAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarPolicyTemplateLinks> {
+  $CedarPolicyTemplateLinksAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get policyId =>
+      $composableBuilder(column: $table.policyId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get templateId => $composableBuilder(
+      column: $table.templateId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get principalType => $composableBuilder(
+      column: $table.principalType, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get principalId => $composableBuilder(
+      column: $table.principalId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get resourceType => $composableBuilder(
+      column: $table.resourceType, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get resourceId => $composableBuilder(
+      column: $table.resourceId, builder: (column) => column);
+
+  i0.GeneratedColumn<int> get enforcementLevel => $composableBuilder(
+      column: $table.enforcementLevel, builder: (column) => column);
+}
+
+class $CedarPolicyTemplateLinksTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarPolicyTemplateLinks,
+    i1.CedarPolicyTemplateLink,
+    i1.$CedarPolicyTemplateLinksFilterComposer,
+    i1.$CedarPolicyTemplateLinksOrderingComposer,
+    i1.$CedarPolicyTemplateLinksAnnotationComposer,
+    $CedarPolicyTemplateLinksCreateCompanionBuilder,
+    $CedarPolicyTemplateLinksUpdateCompanionBuilder,
+    (
+      i1.CedarPolicyTemplateLink,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarPolicyTemplateLinks,
+          i1.CedarPolicyTemplateLink>
+    ),
+    i1.CedarPolicyTemplateLink,
+    i0.PrefetchHooks Function()> {
+  $CedarPolicyTemplateLinksTableManager(
+      i0.GeneratedDatabase db, i1.CedarPolicyTemplateLinks table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () => i1
+              .$CedarPolicyTemplateLinksFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$CedarPolicyTemplateLinksOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$CedarPolicyTemplateLinksAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<String> id = const i0.Value.absent(),
+            i0.Value<String> policyId = const i0.Value.absent(),
+            i0.Value<String> templateId = const i0.Value.absent(),
+            i0.Value<String?> principalType = const i0.Value.absent(),
+            i0.Value<String?> principalId = const i0.Value.absent(),
+            i0.Value<String?> resourceType = const i0.Value.absent(),
+            i0.Value<String?> resourceId = const i0.Value.absent(),
+            i0.Value<int> enforcementLevel = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CedarPolicyTemplateLinksCompanion(
+            id: id,
+            policyId: policyId,
+            templateId: templateId,
+            principalType: principalType,
+            principalId: principalId,
+            resourceType: resourceType,
+            resourceId: resourceId,
+            enforcementLevel: enforcementLevel,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String policyId,
+            required String templateId,
+            i0.Value<String?> principalType = const i0.Value.absent(),
+            i0.Value<String?> principalId = const i0.Value.absent(),
+            i0.Value<String?> resourceType = const i0.Value.absent(),
+            i0.Value<String?> resourceId = const i0.Value.absent(),
+            i0.Value<int> enforcementLevel = const i0.Value.absent(),
+            i0.Value<int> rowid = const i0.Value.absent(),
+          }) =>
+              i1.CedarPolicyTemplateLinksCompanion.insert(
+            id: id,
+            policyId: policyId,
+            templateId: templateId,
+            principalType: principalType,
+            principalId: principalId,
+            resourceType: resourceType,
+            resourceId: resourceId,
+            enforcementLevel: enforcementLevel,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CedarPolicyTemplateLinksProcessedTableManager
+    = i0.ProcessedTableManager<
+        i0.GeneratedDatabase,
+        i1.CedarPolicyTemplateLinks,
+        i1.CedarPolicyTemplateLink,
+        i1.$CedarPolicyTemplateLinksFilterComposer,
+        i1.$CedarPolicyTemplateLinksOrderingComposer,
+        i1.$CedarPolicyTemplateLinksAnnotationComposer,
+        $CedarPolicyTemplateLinksCreateCompanionBuilder,
+        $CedarPolicyTemplateLinksUpdateCompanionBuilder,
+        (
+          i1.CedarPolicyTemplateLink,
+          i0.BaseReferences<i0.GeneratedDatabase, i1.CedarPolicyTemplateLinks,
+              i1.CedarPolicyTemplateLink>
+        ),
+        i1.CedarPolicyTemplateLink,
+        i0.PrefetchHooks Function()>;
+typedef $CedarAuthorizationLogsCreateCompanionBuilder
+    = i1.CedarAuthorizationLogsCompanion Function({
+  i0.Value<int> rowid,
+  i0.Value<DateTime> createTime,
+  i0.Value<DateTime?> expireTime,
+  i0.Value<String?> principalType,
+  i0.Value<String?> principalId,
+  i0.Value<String?> actionType,
+  i0.Value<String?> actionId,
+  i0.Value<String?> resourceType,
+  i0.Value<String?> resourceId,
+  i0.Value<Map<String, i2.Value>> contextJson,
+  required bool decision,
+  i0.Value<List<String>> reasonsJson,
+  i0.Value<i5.AuthorizationErrors> errorsJson,
+});
+typedef $CedarAuthorizationLogsUpdateCompanionBuilder
+    = i1.CedarAuthorizationLogsCompanion Function({
+  i0.Value<int> rowid,
+  i0.Value<DateTime> createTime,
+  i0.Value<DateTime?> expireTime,
+  i0.Value<String?> principalType,
+  i0.Value<String?> principalId,
+  i0.Value<String?> actionType,
+  i0.Value<String?> actionId,
+  i0.Value<String?> resourceType,
+  i0.Value<String?> resourceId,
+  i0.Value<Map<String, i2.Value>> contextJson,
+  i0.Value<bool> decision,
+  i0.Value<List<String>> reasonsJson,
+  i0.Value<i5.AuthorizationErrors> errorsJson,
+});
+
+class $CedarAuthorizationLogsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarAuthorizationLogs> {
+  $CedarAuthorizationLogsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<int> get rowid => $composableBuilder(
+      column: $table.rowid, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get createTime => $composableBuilder(
+      column: $table.createTime, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<DateTime> get expireTime => $composableBuilder(
+      column: $table.expireTime, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get principalType => $composableBuilder(
+      column: $table.principalType,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get principalId => $composableBuilder(
+      column: $table.principalId,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get actionType => $composableBuilder(
+      column: $table.actionType, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get actionId => $composableBuilder(
+      column: $table.actionId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get resourceType => $composableBuilder(
+      column: $table.resourceType,
+      builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnFilters<String> get resourceId => $composableBuilder(
+      column: $table.resourceId, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<Map<String, i2.Value>,
+          Map<String, i2.Value>, String>
+      get contextJson => $composableBuilder(
+          column: $table.contextJson,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+
+  i0.ColumnFilters<bool> get decision => $composableBuilder(
+      column: $table.decision, builder: (column) => i0.ColumnFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<List<String>, List<String>, String>
+      get reasonsJson => $composableBuilder(
+          column: $table.reasonsJson,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+
+  i0.ColumnWithTypeConverterFilters<i5.AuthorizationErrors,
+          i5.AuthorizationErrors, String>
+      get errorsJson => $composableBuilder(
+          column: $table.errorsJson,
+          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+}
+
+class $CedarAuthorizationLogsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarAuthorizationLogs> {
+  $CedarAuthorizationLogsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<int> get rowid => $composableBuilder(
+      column: $table.rowid, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get createTime => $composableBuilder(
+      column: $table.createTime,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<DateTime> get expireTime => $composableBuilder(
+      column: $table.expireTime,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get principalType => $composableBuilder(
+      column: $table.principalType,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get principalId => $composableBuilder(
+      column: $table.principalId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get actionType => $composableBuilder(
+      column: $table.actionType,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get actionId => $composableBuilder(
+      column: $table.actionId, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get resourceType => $composableBuilder(
+      column: $table.resourceType,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get resourceId => $composableBuilder(
+      column: $table.resourceId,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get contextJson => $composableBuilder(
+      column: $table.contextJson,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<bool> get decision => $composableBuilder(
+      column: $table.decision, builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get reasonsJson => $composableBuilder(
+      column: $table.reasonsJson,
+      builder: (column) => i0.ColumnOrderings(column));
+
+  i0.ColumnOrderings<String> get errorsJson => $composableBuilder(
+      column: $table.errorsJson,
+      builder: (column) => i0.ColumnOrderings(column));
+}
+
+class $CedarAuthorizationLogsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CedarAuthorizationLogs> {
+  $CedarAuthorizationLogsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<int> get rowid =>
+      $composableBuilder(column: $table.rowid, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get createTime => $composableBuilder(
+      column: $table.createTime, builder: (column) => column);
+
+  i0.GeneratedColumn<DateTime> get expireTime => $composableBuilder(
+      column: $table.expireTime, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get principalType => $composableBuilder(
+      column: $table.principalType, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get principalId => $composableBuilder(
+      column: $table.principalId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get actionType => $composableBuilder(
+      column: $table.actionType, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get actionId =>
+      $composableBuilder(column: $table.actionId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get resourceType => $composableBuilder(
+      column: $table.resourceType, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get resourceId => $composableBuilder(
+      column: $table.resourceId, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<Map<String, i2.Value>, String>
+      get contextJson => $composableBuilder(
+          column: $table.contextJson, builder: (column) => column);
+
+  i0.GeneratedColumn<bool> get decision =>
+      $composableBuilder(column: $table.decision, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<List<String>, String> get reasonsJson =>
+      $composableBuilder(
+          column: $table.reasonsJson, builder: (column) => column);
+
+  i0.GeneratedColumnWithTypeConverter<i5.AuthorizationErrors, String>
+      get errorsJson => $composableBuilder(
+          column: $table.errorsJson, builder: (column) => column);
+}
+
+class $CedarAuthorizationLogsTableManager extends i0.RootTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarAuthorizationLogs,
+    i1.CedarAuthorizationLog,
+    i1.$CedarAuthorizationLogsFilterComposer,
+    i1.$CedarAuthorizationLogsOrderingComposer,
+    i1.$CedarAuthorizationLogsAnnotationComposer,
+    $CedarAuthorizationLogsCreateCompanionBuilder,
+    $CedarAuthorizationLogsUpdateCompanionBuilder,
+    (
+      i1.CedarAuthorizationLog,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarAuthorizationLogs,
+          i1.CedarAuthorizationLog>
+    ),
+    i1.CedarAuthorizationLog,
+    i0.PrefetchHooks Function()> {
+  $CedarAuthorizationLogsTableManager(
+      i0.GeneratedDatabase db, i1.CedarAuthorizationLogs table)
+      : super(i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              i1.$CedarAuthorizationLogsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () => i1
+              .$CedarAuthorizationLogsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$CedarAuthorizationLogsAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            i0.Value<int> rowid = const i0.Value.absent(),
+            i0.Value<DateTime> createTime = const i0.Value.absent(),
+            i0.Value<DateTime?> expireTime = const i0.Value.absent(),
+            i0.Value<String?> principalType = const i0.Value.absent(),
+            i0.Value<String?> principalId = const i0.Value.absent(),
+            i0.Value<String?> actionType = const i0.Value.absent(),
+            i0.Value<String?> actionId = const i0.Value.absent(),
+            i0.Value<String?> resourceType = const i0.Value.absent(),
+            i0.Value<String?> resourceId = const i0.Value.absent(),
+            i0.Value<Map<String, i2.Value>> contextJson =
+                const i0.Value.absent(),
+            i0.Value<bool> decision = const i0.Value.absent(),
+            i0.Value<List<String>> reasonsJson = const i0.Value.absent(),
+            i0.Value<i5.AuthorizationErrors> errorsJson =
+                const i0.Value.absent(),
+          }) =>
+              i1.CedarAuthorizationLogsCompanion(
+            rowid: rowid,
+            createTime: createTime,
+            expireTime: expireTime,
+            principalType: principalType,
+            principalId: principalId,
+            actionType: actionType,
+            actionId: actionId,
+            resourceType: resourceType,
+            resourceId: resourceId,
+            contextJson: contextJson,
+            decision: decision,
+            reasonsJson: reasonsJson,
+            errorsJson: errorsJson,
+          ),
+          createCompanionCallback: ({
+            i0.Value<int> rowid = const i0.Value.absent(),
+            i0.Value<DateTime> createTime = const i0.Value.absent(),
+            i0.Value<DateTime?> expireTime = const i0.Value.absent(),
+            i0.Value<String?> principalType = const i0.Value.absent(),
+            i0.Value<String?> principalId = const i0.Value.absent(),
+            i0.Value<String?> actionType = const i0.Value.absent(),
+            i0.Value<String?> actionId = const i0.Value.absent(),
+            i0.Value<String?> resourceType = const i0.Value.absent(),
+            i0.Value<String?> resourceId = const i0.Value.absent(),
+            i0.Value<Map<String, i2.Value>> contextJson =
+                const i0.Value.absent(),
+            required bool decision,
+            i0.Value<List<String>> reasonsJson = const i0.Value.absent(),
+            i0.Value<i5.AuthorizationErrors> errorsJson =
+                const i0.Value.absent(),
+          }) =>
+              i1.CedarAuthorizationLogsCompanion.insert(
+            rowid: rowid,
+            createTime: createTime,
+            expireTime: expireTime,
+            principalType: principalType,
+            principalId: principalId,
+            actionType: actionType,
+            actionId: actionId,
+            resourceType: resourceType,
+            resourceId: resourceId,
+            contextJson: contextJson,
+            decision: decision,
+            reasonsJson: reasonsJson,
+            errorsJson: errorsJson,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $CedarAuthorizationLogsProcessedTableManager = i0.ProcessedTableManager<
+    i0.GeneratedDatabase,
+    i1.CedarAuthorizationLogs,
+    i1.CedarAuthorizationLog,
+    i1.$CedarAuthorizationLogsFilterComposer,
+    i1.$CedarAuthorizationLogsOrderingComposer,
+    i1.$CedarAuthorizationLogsAnnotationComposer,
+    $CedarAuthorizationLogsCreateCompanionBuilder,
+    $CedarAuthorizationLogsUpdateCompanionBuilder,
+    (
+      i1.CedarAuthorizationLog,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarAuthorizationLogs,
+          i1.CedarAuthorizationLog>
+    ),
+    i1.CedarAuthorizationLog,
+    i0.PrefetchHooks Function()>;
 
 class CedarTypes extends i0.Table with i0.TableInfo<CedarTypes, i1.CedarType> {
   @override
@@ -147,93 +1566,6 @@ class CedarTypesCompanion extends i0.UpdateCompanion<i1.CedarType> {
         .toString();
   }
 }
-
-typedef $CedarTypesCreateCompanionBuilder = i1.CedarTypesCompanion Function({
-  required String fqn,
-  i0.Value<int> rowid,
-});
-typedef $CedarTypesUpdateCompanionBuilder = i1.CedarTypesCompanion Function({
-  i0.Value<String> fqn,
-  i0.Value<int> rowid,
-});
-
-class $CedarTypesFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i1.CedarTypes> {
-  $CedarTypesFilterComposer(super.$state);
-  i0.ColumnFilters<String> get fqn => $state.composableBuilder(
-      column: $state.table.fqn,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $CedarTypesOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i1.CedarTypes> {
-  $CedarTypesOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get fqn => $state.composableBuilder(
-      column: $state.table.fqn,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CedarTypesTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarTypes,
-    i1.CedarType,
-    i1.$CedarTypesFilterComposer,
-    i1.$CedarTypesOrderingComposer,
-    $CedarTypesCreateCompanionBuilder,
-    $CedarTypesUpdateCompanionBuilder,
-    (
-      i1.CedarType,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarTypes, i1.CedarType>
-    ),
-    i1.CedarType,
-    i0.PrefetchHooks Function()> {
-  $CedarTypesTableManager(i0.GeneratedDatabase db, i1.CedarTypes table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i1.$CedarTypesFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i1.$CedarTypesOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> fqn = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CedarTypesCompanion(
-            fqn: fqn,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String fqn,
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CedarTypesCompanion.insert(
-            fqn: fqn,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CedarTypesProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarTypes,
-    i1.CedarType,
-    i1.$CedarTypesFilterComposer,
-    i1.$CedarTypesOrderingComposer,
-    $CedarTypesCreateCompanionBuilder,
-    $CedarTypesUpdateCompanionBuilder,
-    (
-      i1.CedarType,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarTypes, i1.CedarType>
-    ),
-    i1.CedarType,
-    i0.PrefetchHooks Function()>;
 
 class CedarEntities extends i0.Table
     with i0.TableInfo<CedarEntities, i1.CedarEntity> {
@@ -471,162 +1803,6 @@ class CedarEntitiesCompanion extends i0.UpdateCompanion<i1.CedarEntity> {
         .toString();
   }
 }
-
-typedef $CedarEntitiesCreateCompanionBuilder = i1.CedarEntitiesCompanion
-    Function({
-  required String entityType,
-  required String entityId,
-  i0.Value<Map<String, i2.Value>> attributeJson,
-});
-typedef $CedarEntitiesUpdateCompanionBuilder = i1.CedarEntitiesCompanion
-    Function({
-  i0.Value<String> entityType,
-  i0.Value<String> entityId,
-  i0.Value<Map<String, i2.Value>> attributeJson,
-});
-
-class $CedarEntitiesFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i1.CedarEntities> {
-  $CedarEntitiesFilterComposer(super.$state);
-  i0.ColumnFilters<String> get entityId => $state.composableBuilder(
-      column: $state.table.entityId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<Map<String, i2.Value>,
-          Map<String, i2.Value>, String>
-      get attributeJson => $state.composableBuilder(
-          column: $state.table.attributeJson,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<i2.EntityUid, i2.EntityUid, String>
-      get entityJson => $state.composableBuilder(
-          column: $state.table.entityJson,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  i1.$CedarTypesFilterComposer get entityType {
-    final i1.$CedarTypesFilterComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.entityType,
-        referencedTable: i4.ReadDatabaseContainer($state.db)
-            .resultSet<i1.CedarTypes>('cedar_types'),
-        getReferencedColumn: (t) => t.fqn,
-        builder: (joinBuilder, parentComposers) => i1.$CedarTypesFilterComposer(
-            i0.ComposerState(
-                $state.db,
-                i4.ReadDatabaseContainer($state.db)
-                    .resultSet<i1.CedarTypes>('cedar_types'),
-                joinBuilder,
-                parentComposers)));
-    return composer;
-  }
-}
-
-class $CedarEntitiesOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i1.CedarEntities> {
-  $CedarEntitiesOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get entityId => $state.composableBuilder(
-      column: $state.table.entityId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get attributeJson => $state.composableBuilder(
-      column: $state.table.attributeJson,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get entityJson => $state.composableBuilder(
-      column: $state.table.entityJson,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i1.$CedarTypesOrderingComposer get entityType {
-    final i1.$CedarTypesOrderingComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.entityType,
-        referencedTable: i4.ReadDatabaseContainer($state.db)
-            .resultSet<i1.CedarTypes>('cedar_types'),
-        getReferencedColumn: (t) => t.fqn,
-        builder: (joinBuilder, parentComposers) =>
-            i1.$CedarTypesOrderingComposer(i0.ComposerState(
-                $state.db,
-                i4.ReadDatabaseContainer($state.db)
-                    .resultSet<i1.CedarTypes>('cedar_types'),
-                joinBuilder,
-                parentComposers)));
-    return composer;
-  }
-}
-
-class $CedarEntitiesTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarEntities,
-    i1.CedarEntity,
-    i1.$CedarEntitiesFilterComposer,
-    i1.$CedarEntitiesOrderingComposer,
-    $CedarEntitiesCreateCompanionBuilder,
-    $CedarEntitiesUpdateCompanionBuilder,
-    (
-      i1.CedarEntity,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarEntities, i1.CedarEntity>
-    ),
-    i1.CedarEntity,
-    i0.PrefetchHooks Function({bool entityType})> {
-  $CedarEntitiesTableManager(i0.GeneratedDatabase db, i1.CedarEntities table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i1.$CedarEntitiesFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i1.$CedarEntitiesOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> entityType = const i0.Value.absent(),
-            i0.Value<String> entityId = const i0.Value.absent(),
-            i0.Value<Map<String, i2.Value>> attributeJson =
-                const i0.Value.absent(),
-          }) =>
-              i1.CedarEntitiesCompanion(
-            entityType: entityType,
-            entityId: entityId,
-            attributeJson: attributeJson,
-          ),
-          createCompanionCallback: ({
-            required String entityType,
-            required String entityId,
-            i0.Value<Map<String, i2.Value>> attributeJson =
-                const i0.Value.absent(),
-          }) =>
-              i1.CedarEntitiesCompanion.insert(
-            entityType: entityType,
-            entityId: entityId,
-            attributeJson: attributeJson,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CedarEntitiesProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarEntities,
-    i1.CedarEntity,
-    i1.$CedarEntitiesFilterComposer,
-    i1.$CedarEntitiesOrderingComposer,
-    $CedarEntitiesCreateCompanionBuilder,
-    $CedarEntitiesUpdateCompanionBuilder,
-    (
-      i1.CedarEntity,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarEntities, i1.CedarEntity>
-    ),
-    i1.CedarEntity,
-    i0.PrefetchHooks Function({bool entityType})>;
 
 class CedarRelationships extends i0.Table
     with i0.TableInfo<CedarRelationships, i1.CedarRelationship> {
@@ -905,163 +2081,6 @@ class CedarRelationshipsCompanion
   }
 }
 
-typedef $CedarRelationshipsCreateCompanionBuilder
-    = i1.CedarRelationshipsCompanion Function({
-  required String entityType,
-  required String entityId,
-  required String parentType,
-  required String parentId,
-});
-typedef $CedarRelationshipsUpdateCompanionBuilder
-    = i1.CedarRelationshipsCompanion Function({
-  i0.Value<String> entityType,
-  i0.Value<String> entityId,
-  i0.Value<String> parentType,
-  i0.Value<String> parentId,
-});
-
-class $CedarRelationshipsFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i1.CedarRelationships> {
-  $CedarRelationshipsFilterComposer(super.$state);
-  i0.ColumnFilters<String> get entityType => $state.composableBuilder(
-      column: $state.table.entityType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get entityId => $state.composableBuilder(
-      column: $state.table.entityId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<i2.EntityUid, i2.EntityUid, String>
-      get entityJson => $state.composableBuilder(
-          column: $state.table.entityJson,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get parentType => $state.composableBuilder(
-      column: $state.table.parentType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get parentId => $state.composableBuilder(
-      column: $state.table.parentId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<i2.EntityUid, i2.EntityUid, String>
-      get parentJson => $state.composableBuilder(
-          column: $state.table.parentJson,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-}
-
-class $CedarRelationshipsOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i1.CedarRelationships> {
-  $CedarRelationshipsOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get entityType => $state.composableBuilder(
-      column: $state.table.entityType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get entityId => $state.composableBuilder(
-      column: $state.table.entityId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get entityJson => $state.composableBuilder(
-      column: $state.table.entityJson,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get parentType => $state.composableBuilder(
-      column: $state.table.parentType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get parentId => $state.composableBuilder(
-      column: $state.table.parentId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get parentJson => $state.composableBuilder(
-      column: $state.table.parentJson,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CedarRelationshipsTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarRelationships,
-    i1.CedarRelationship,
-    i1.$CedarRelationshipsFilterComposer,
-    i1.$CedarRelationshipsOrderingComposer,
-    $CedarRelationshipsCreateCompanionBuilder,
-    $CedarRelationshipsUpdateCompanionBuilder,
-    (
-      i1.CedarRelationship,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarRelationships,
-          i1.CedarRelationship>
-    ),
-    i1.CedarRelationship,
-    i0.PrefetchHooks Function()> {
-  $CedarRelationshipsTableManager(
-      i0.GeneratedDatabase db, i1.CedarRelationships table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i1.$CedarRelationshipsFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer: i1
-              .$CedarRelationshipsOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> entityType = const i0.Value.absent(),
-            i0.Value<String> entityId = const i0.Value.absent(),
-            i0.Value<String> parentType = const i0.Value.absent(),
-            i0.Value<String> parentId = const i0.Value.absent(),
-          }) =>
-              i1.CedarRelationshipsCompanion(
-            entityType: entityType,
-            entityId: entityId,
-            parentType: parentType,
-            parentId: parentId,
-          ),
-          createCompanionCallback: ({
-            required String entityType,
-            required String entityId,
-            required String parentType,
-            required String parentId,
-          }) =>
-              i1.CedarRelationshipsCompanion.insert(
-            entityType: entityType,
-            entityId: entityId,
-            parentType: parentType,
-            parentId: parentId,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CedarRelationshipsProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarRelationships,
-    i1.CedarRelationship,
-    i1.$CedarRelationshipsFilterComposer,
-    i1.$CedarRelationshipsOrderingComposer,
-    $CedarRelationshipsCreateCompanionBuilder,
-    $CedarRelationshipsUpdateCompanionBuilder,
-    (
-      i1.CedarRelationship,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarRelationships,
-          i1.CedarRelationship>
-    ),
-    i1.CedarRelationship,
-    i0.PrefetchHooks Function()>;
 i0.Index get cedarRelationshipsFkEntityIdx => i0.Index(
     'cedar_relationships_fk_entity_idx',
     'CREATE INDEX IF NOT EXISTS cedar_relationships_fk_entity_idx ON cedar_relationships (entity_type, entity_id)');
@@ -1085,12 +2104,12 @@ class CedarPolicies extends i0.Table
       type: i0.DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL UNIQUE');
-  late final i0.GeneratedColumnWithTypeConverter<i5.Policy, String> policy =
+  late final i0.GeneratedColumnWithTypeConverter<i4.Policy, String> policy =
       i0.GeneratedColumn<String>('policy', aliasedName, false,
               type: i0.DriftSqlType.string,
               requiredDuringInsert: true,
               $customConstraints: 'NOT NULL')
-          .withConverter<i5.Policy>(i1.CedarPolicies.$converterpolicy);
+          .withConverter<i4.Policy>(i1.CedarPolicies.$converterpolicy);
   late final i0.GeneratedColumn<int> enforcementLevel = i0.GeneratedColumn<int>(
       'enforcement_level', aliasedName, false,
       type: i0.DriftSqlType.int,
@@ -1128,7 +2147,7 @@ class CedarPolicies extends i0.Table
     return CedarPolicies(attachedDatabase, alias);
   }
 
-  static i0.TypeConverter<i5.Policy, String> $converterpolicy =
+  static i0.TypeConverter<i4.Policy, String> $converterpolicy =
       const i3.CedarPolicyConverter();
   @override
   List<String> get customConstraints =>
@@ -1155,7 +2174,7 @@ class CedarPolicy extends i0.DataClass
   /// Type: JSON[package:cedar/cedar.dart#Policy]
   ///
   /// The policy in JSON format.
-  final i5.Policy policy;
+  final i4.Policy policy;
 
   /// Type: integer (enforced=1, dry-run=0)
   ///
@@ -1188,7 +2207,7 @@ class CedarPolicy extends i0.DataClass
     return CedarPolicy(
       id: serializer.fromJson<String>(json['id']),
       policyId: serializer.fromJson<String>(json['policy_id']),
-      policy: serializer.fromJson<i5.Policy>(json['policy']),
+      policy: serializer.fromJson<i4.Policy>(json['policy']),
       enforcementLevel: serializer.fromJson<int>(json['enforcement_level']),
     );
   }
@@ -1198,7 +2217,7 @@ class CedarPolicy extends i0.DataClass
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
       'policy_id': serializer.toJson<String>(policyId),
-      'policy': serializer.toJson<i5.Policy>(policy),
+      'policy': serializer.toJson<i4.Policy>(policy),
       'enforcement_level': serializer.toJson<int>(enforcementLevel),
     };
   }
@@ -1206,7 +2225,7 @@ class CedarPolicy extends i0.DataClass
   i1.CedarPolicy copyWith(
           {String? id,
           String? policyId,
-          i5.Policy? policy,
+          i4.Policy? policy,
           int? enforcementLevel}) =>
       i1.CedarPolicy(
         id: id ?? this.id,
@@ -1251,7 +2270,7 @@ class CedarPolicy extends i0.DataClass
 class CedarPoliciesCompanion extends i0.UpdateCompanion<i1.CedarPolicy> {
   final i0.Value<String> id;
   final i0.Value<String> policyId;
-  final i0.Value<i5.Policy> policy;
+  final i0.Value<i4.Policy> policy;
   final i0.Value<int> enforcementLevel;
   final i0.Value<int> rowid;
   const CedarPoliciesCompanion({
@@ -1264,7 +2283,7 @@ class CedarPoliciesCompanion extends i0.UpdateCompanion<i1.CedarPolicy> {
   CedarPoliciesCompanion.insert({
     required String id,
     required String policyId,
-    required i5.Policy policy,
+    required i4.Policy policy,
     this.enforcementLevel = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   })  : id = i0.Value(id),
@@ -1289,7 +2308,7 @@ class CedarPoliciesCompanion extends i0.UpdateCompanion<i1.CedarPolicy> {
   i1.CedarPoliciesCompanion copyWith(
       {i0.Value<String>? id,
       i0.Value<String>? policyId,
-      i0.Value<i5.Policy>? policy,
+      i0.Value<i4.Policy>? policy,
       i0.Value<int>? enforcementLevel,
       i0.Value<int>? rowid}) {
     return i1.CedarPoliciesCompanion(
@@ -1336,145 +2355,6 @@ class CedarPoliciesCompanion extends i0.UpdateCompanion<i1.CedarPolicy> {
   }
 }
 
-typedef $CedarPoliciesCreateCompanionBuilder = i1.CedarPoliciesCompanion
-    Function({
-  required String id,
-  required String policyId,
-  required i5.Policy policy,
-  i0.Value<int> enforcementLevel,
-  i0.Value<int> rowid,
-});
-typedef $CedarPoliciesUpdateCompanionBuilder = i1.CedarPoliciesCompanion
-    Function({
-  i0.Value<String> id,
-  i0.Value<String> policyId,
-  i0.Value<i5.Policy> policy,
-  i0.Value<int> enforcementLevel,
-  i0.Value<int> rowid,
-});
-
-class $CedarPoliciesFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i1.CedarPolicies> {
-  $CedarPoliciesFilterComposer(super.$state);
-  i0.ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get policyId => $state.composableBuilder(
-      column: $state.table.policyId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<i5.Policy, i5.Policy, String> get policy =>
-      $state.composableBuilder(
-          column: $state.table.policy,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<int> get enforcementLevel => $state.composableBuilder(
-      column: $state.table.enforcementLevel,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $CedarPoliciesOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i1.CedarPolicies> {
-  $CedarPoliciesOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get policyId => $state.composableBuilder(
-      column: $state.table.policyId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get policy => $state.composableBuilder(
-      column: $state.table.policy,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<int> get enforcementLevel => $state.composableBuilder(
-      column: $state.table.enforcementLevel,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CedarPoliciesTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarPolicies,
-    i1.CedarPolicy,
-    i1.$CedarPoliciesFilterComposer,
-    i1.$CedarPoliciesOrderingComposer,
-    $CedarPoliciesCreateCompanionBuilder,
-    $CedarPoliciesUpdateCompanionBuilder,
-    (
-      i1.CedarPolicy,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarPolicies, i1.CedarPolicy>
-    ),
-    i1.CedarPolicy,
-    i0.PrefetchHooks Function()> {
-  $CedarPoliciesTableManager(i0.GeneratedDatabase db, i1.CedarPolicies table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              i1.$CedarPoliciesFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer:
-              i1.$CedarPoliciesOrderingComposer(i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> id = const i0.Value.absent(),
-            i0.Value<String> policyId = const i0.Value.absent(),
-            i0.Value<i5.Policy> policy = const i0.Value.absent(),
-            i0.Value<int> enforcementLevel = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CedarPoliciesCompanion(
-            id: id,
-            policyId: policyId,
-            policy: policy,
-            enforcementLevel: enforcementLevel,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String policyId,
-            required i5.Policy policy,
-            i0.Value<int> enforcementLevel = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CedarPoliciesCompanion.insert(
-            id: id,
-            policyId: policyId,
-            policy: policy,
-            enforcementLevel: enforcementLevel,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CedarPoliciesProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarPolicies,
-    i1.CedarPolicy,
-    i1.$CedarPoliciesFilterComposer,
-    i1.$CedarPoliciesOrderingComposer,
-    $CedarPoliciesCreateCompanionBuilder,
-    $CedarPoliciesUpdateCompanionBuilder,
-    (
-      i1.CedarPolicy,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarPolicies, i1.CedarPolicy>
-    ),
-    i1.CedarPolicy,
-    i0.PrefetchHooks Function()>;
-
 class CedarPolicyTemplates extends i0.Table
     with i0.TableInfo<CedarPolicyTemplates, i1.CedarPolicyTemplate> {
   @override
@@ -1491,12 +2371,12 @@ class CedarPolicyTemplates extends i0.Table
       type: i0.DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL UNIQUE');
-  late final i0.GeneratedColumnWithTypeConverter<i5.Policy, String> template =
+  late final i0.GeneratedColumnWithTypeConverter<i4.Policy, String> template =
       i0.GeneratedColumn<String>('template', aliasedName, false,
               type: i0.DriftSqlType.string,
               requiredDuringInsert: true,
               $customConstraints: 'NOT NULL')
-          .withConverter<i5.Policy>(i1.CedarPolicyTemplates.$convertertemplate);
+          .withConverter<i4.Policy>(i1.CedarPolicyTemplates.$convertertemplate);
   @override
   List<i0.GeneratedColumn> get $columns => [id, templateId, template];
   @override
@@ -1525,7 +2405,7 @@ class CedarPolicyTemplates extends i0.Table
     return CedarPolicyTemplates(attachedDatabase, alias);
   }
 
-  static i0.TypeConverter<i5.Policy, String> $convertertemplate =
+  static i0.TypeConverter<i4.Policy, String> $convertertemplate =
       const i3.CedarPolicyConverter();
   @override
   List<String> get customConstraints =>
@@ -1552,7 +2432,7 @@ class CedarPolicyTemplate extends i0.DataClass
   /// Type: JSON[package:cedar/cedar.dart#Policy]
   ///
   /// The template in JSON format.
-  final i5.Policy template;
+  final i4.Policy template;
   const CedarPolicyTemplate(
       {required this.id, required this.templateId, required this.template});
   @override
@@ -1573,7 +2453,7 @@ class CedarPolicyTemplate extends i0.DataClass
     return CedarPolicyTemplate(
       id: serializer.fromJson<String>(json['id']),
       templateId: serializer.fromJson<String>(json['template_id']),
-      template: serializer.fromJson<i5.Policy>(json['template']),
+      template: serializer.fromJson<i4.Policy>(json['template']),
     );
   }
   @override
@@ -1582,12 +2462,12 @@ class CedarPolicyTemplate extends i0.DataClass
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
       'template_id': serializer.toJson<String>(templateId),
-      'template': serializer.toJson<i5.Policy>(template),
+      'template': serializer.toJson<i4.Policy>(template),
     };
   }
 
   i1.CedarPolicyTemplate copyWith(
-          {String? id, String? templateId, i5.Policy? template}) =>
+          {String? id, String? templateId, i4.Policy? template}) =>
       i1.CedarPolicyTemplate(
         id: id ?? this.id,
         templateId: templateId ?? this.templateId,
@@ -1627,7 +2507,7 @@ class CedarPolicyTemplatesCompanion
     extends i0.UpdateCompanion<i1.CedarPolicyTemplate> {
   final i0.Value<String> id;
   final i0.Value<String> templateId;
-  final i0.Value<i5.Policy> template;
+  final i0.Value<i4.Policy> template;
   final i0.Value<int> rowid;
   const CedarPolicyTemplatesCompanion({
     this.id = const i0.Value.absent(),
@@ -1638,7 +2518,7 @@ class CedarPolicyTemplatesCompanion
   CedarPolicyTemplatesCompanion.insert({
     required String id,
     required String templateId,
-    required i5.Policy template,
+    required i4.Policy template,
     this.rowid = const i0.Value.absent(),
   })  : id = i0.Value(id),
         templateId = i0.Value(templateId),
@@ -1660,7 +2540,7 @@ class CedarPolicyTemplatesCompanion
   i1.CedarPolicyTemplatesCompanion copyWith(
       {i0.Value<String>? id,
       i0.Value<String>? templateId,
-      i0.Value<i5.Policy>? template,
+      i0.Value<i4.Policy>? template,
       i0.Value<int>? rowid}) {
     return i1.CedarPolicyTemplatesCompanion(
       id: id ?? this.id,
@@ -1700,132 +2580,6 @@ class CedarPolicyTemplatesCompanion
         .toString();
   }
 }
-
-typedef $CedarPolicyTemplatesCreateCompanionBuilder
-    = i1.CedarPolicyTemplatesCompanion Function({
-  required String id,
-  required String templateId,
-  required i5.Policy template,
-  i0.Value<int> rowid,
-});
-typedef $CedarPolicyTemplatesUpdateCompanionBuilder
-    = i1.CedarPolicyTemplatesCompanion Function({
-  i0.Value<String> id,
-  i0.Value<String> templateId,
-  i0.Value<i5.Policy> template,
-  i0.Value<int> rowid,
-});
-
-class $CedarPolicyTemplatesFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i1.CedarPolicyTemplates> {
-  $CedarPolicyTemplatesFilterComposer(super.$state);
-  i0.ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get templateId => $state.composableBuilder(
-      column: $state.table.templateId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<i5.Policy, i5.Policy, String>
-      get template => $state.composableBuilder(
-          column: $state.table.template,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-}
-
-class $CedarPolicyTemplatesOrderingComposer
-    extends i0.OrderingComposer<i0.GeneratedDatabase, i1.CedarPolicyTemplates> {
-  $CedarPolicyTemplatesOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get templateId => $state.composableBuilder(
-      column: $state.table.templateId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get template => $state.composableBuilder(
-      column: $state.table.template,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CedarPolicyTemplatesTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarPolicyTemplates,
-    i1.CedarPolicyTemplate,
-    i1.$CedarPolicyTemplatesFilterComposer,
-    i1.$CedarPolicyTemplatesOrderingComposer,
-    $CedarPolicyTemplatesCreateCompanionBuilder,
-    $CedarPolicyTemplatesUpdateCompanionBuilder,
-    (
-      i1.CedarPolicyTemplate,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarPolicyTemplates,
-          i1.CedarPolicyTemplate>
-    ),
-    i1.CedarPolicyTemplate,
-    i0.PrefetchHooks Function()> {
-  $CedarPolicyTemplatesTableManager(
-      i0.GeneratedDatabase db, i1.CedarPolicyTemplates table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer: i1
-              .$CedarPolicyTemplatesFilterComposer(i0.ComposerState(db, table)),
-          orderingComposer: i1.$CedarPolicyTemplatesOrderingComposer(
-              i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> id = const i0.Value.absent(),
-            i0.Value<String> templateId = const i0.Value.absent(),
-            i0.Value<i5.Policy> template = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CedarPolicyTemplatesCompanion(
-            id: id,
-            templateId: templateId,
-            template: template,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String templateId,
-            required i5.Policy template,
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CedarPolicyTemplatesCompanion.insert(
-            id: id,
-            templateId: templateId,
-            template: template,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CedarPolicyTemplatesProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarPolicyTemplates,
-    i1.CedarPolicyTemplate,
-    i1.$CedarPolicyTemplatesFilterComposer,
-    i1.$CedarPolicyTemplatesOrderingComposer,
-    $CedarPolicyTemplatesCreateCompanionBuilder,
-    $CedarPolicyTemplatesUpdateCompanionBuilder,
-    (
-      i1.CedarPolicyTemplate,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarPolicyTemplates,
-          i1.CedarPolicyTemplate>
-    ),
-    i1.CedarPolicyTemplate,
-    i0.PrefetchHooks Function()>;
 
 class CedarPolicyTemplateLinks extends i0.Table
     with i0.TableInfo<CedarPolicyTemplateLinks, i1.CedarPolicyTemplateLink> {
@@ -2231,210 +2985,6 @@ class CedarPolicyTemplateLinksCompanion
   }
 }
 
-typedef $CedarPolicyTemplateLinksCreateCompanionBuilder
-    = i1.CedarPolicyTemplateLinksCompanion Function({
-  required String id,
-  required String policyId,
-  required String templateId,
-  i0.Value<String?> principalType,
-  i0.Value<String?> principalId,
-  i0.Value<String?> resourceType,
-  i0.Value<String?> resourceId,
-  i0.Value<int> enforcementLevel,
-  i0.Value<int> rowid,
-});
-typedef $CedarPolicyTemplateLinksUpdateCompanionBuilder
-    = i1.CedarPolicyTemplateLinksCompanion Function({
-  i0.Value<String> id,
-  i0.Value<String> policyId,
-  i0.Value<String> templateId,
-  i0.Value<String?> principalType,
-  i0.Value<String?> principalId,
-  i0.Value<String?> resourceType,
-  i0.Value<String?> resourceId,
-  i0.Value<int> enforcementLevel,
-  i0.Value<int> rowid,
-});
-
-class $CedarPolicyTemplateLinksFilterComposer extends i0
-    .FilterComposer<i0.GeneratedDatabase, i1.CedarPolicyTemplateLinks> {
-  $CedarPolicyTemplateLinksFilterComposer(super.$state);
-  i0.ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get policyId => $state.composableBuilder(
-      column: $state.table.policyId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get templateId => $state.composableBuilder(
-      column: $state.table.templateId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get principalType => $state.composableBuilder(
-      column: $state.table.principalType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get principalId => $state.composableBuilder(
-      column: $state.table.principalId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get resourceType => $state.composableBuilder(
-      column: $state.table.resourceType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get resourceId => $state.composableBuilder(
-      column: $state.table.resourceId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<int> get enforcementLevel => $state.composableBuilder(
-      column: $state.table.enforcementLevel,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $CedarPolicyTemplateLinksOrderingComposer extends i0
-    .OrderingComposer<i0.GeneratedDatabase, i1.CedarPolicyTemplateLinks> {
-  $CedarPolicyTemplateLinksOrderingComposer(super.$state);
-  i0.ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get policyId => $state.composableBuilder(
-      column: $state.table.policyId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get templateId => $state.composableBuilder(
-      column: $state.table.templateId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get principalType => $state.composableBuilder(
-      column: $state.table.principalType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get principalId => $state.composableBuilder(
-      column: $state.table.principalId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get resourceType => $state.composableBuilder(
-      column: $state.table.resourceType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get resourceId => $state.composableBuilder(
-      column: $state.table.resourceId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<int> get enforcementLevel => $state.composableBuilder(
-      column: $state.table.enforcementLevel,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CedarPolicyTemplateLinksTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarPolicyTemplateLinks,
-    i1.CedarPolicyTemplateLink,
-    i1.$CedarPolicyTemplateLinksFilterComposer,
-    i1.$CedarPolicyTemplateLinksOrderingComposer,
-    $CedarPolicyTemplateLinksCreateCompanionBuilder,
-    $CedarPolicyTemplateLinksUpdateCompanionBuilder,
-    (
-      i1.CedarPolicyTemplateLink,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarPolicyTemplateLinks,
-          i1.CedarPolicyTemplateLink>
-    ),
-    i1.CedarPolicyTemplateLink,
-    i0.PrefetchHooks Function()> {
-  $CedarPolicyTemplateLinksTableManager(
-      i0.GeneratedDatabase db, i1.CedarPolicyTemplateLinks table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer: i1.$CedarPolicyTemplateLinksFilterComposer(
-              i0.ComposerState(db, table)),
-          orderingComposer: i1.$CedarPolicyTemplateLinksOrderingComposer(
-              i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<String> id = const i0.Value.absent(),
-            i0.Value<String> policyId = const i0.Value.absent(),
-            i0.Value<String> templateId = const i0.Value.absent(),
-            i0.Value<String?> principalType = const i0.Value.absent(),
-            i0.Value<String?> principalId = const i0.Value.absent(),
-            i0.Value<String?> resourceType = const i0.Value.absent(),
-            i0.Value<String?> resourceId = const i0.Value.absent(),
-            i0.Value<int> enforcementLevel = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CedarPolicyTemplateLinksCompanion(
-            id: id,
-            policyId: policyId,
-            templateId: templateId,
-            principalType: principalType,
-            principalId: principalId,
-            resourceType: resourceType,
-            resourceId: resourceId,
-            enforcementLevel: enforcementLevel,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String policyId,
-            required String templateId,
-            i0.Value<String?> principalType = const i0.Value.absent(),
-            i0.Value<String?> principalId = const i0.Value.absent(),
-            i0.Value<String?> resourceType = const i0.Value.absent(),
-            i0.Value<String?> resourceId = const i0.Value.absent(),
-            i0.Value<int> enforcementLevel = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.CedarPolicyTemplateLinksCompanion.insert(
-            id: id,
-            policyId: policyId,
-            templateId: templateId,
-            principalType: principalType,
-            principalId: principalId,
-            resourceType: resourceType,
-            resourceId: resourceId,
-            enforcementLevel: enforcementLevel,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CedarPolicyTemplateLinksProcessedTableManager
-    = i0.ProcessedTableManager<
-        i0.GeneratedDatabase,
-        i1.CedarPolicyTemplateLinks,
-        i1.CedarPolicyTemplateLink,
-        i1.$CedarPolicyTemplateLinksFilterComposer,
-        i1.$CedarPolicyTemplateLinksOrderingComposer,
-        $CedarPolicyTemplateLinksCreateCompanionBuilder,
-        $CedarPolicyTemplateLinksUpdateCompanionBuilder,
-        (
-          i1.CedarPolicyTemplateLink,
-          i0.BaseReferences<i0.GeneratedDatabase, i1.CedarPolicyTemplateLinks,
-              i1.CedarPolicyTemplateLink>
-        ),
-        i1.CedarPolicyTemplateLink,
-        i0.PrefetchHooks Function()>;
 i0.Index get cedarPolicyTemplateLinksFkTemplateIdIdx => i0.Index(
     'cedar_policy_template_links_fk_template_id_idx',
     'CREATE INDEX IF NOT EXISTS cedar_policy_template_links_fk_template_id_idx ON cedar_policy_template_links (template_id)');
@@ -2524,13 +3074,13 @@ class CedarAuthorizationLogs extends i0.Table
               defaultValue: const i0.CustomExpression('\'[]\''))
           .withConverter<List<String>>(
               i1.CedarAuthorizationLogs.$converterreasonsJson);
-  late final i0.GeneratedColumnWithTypeConverter<i6.AuthorizationErrors, String>
+  late final i0.GeneratedColumnWithTypeConverter<i5.AuthorizationErrors, String>
       errorsJson = i0.GeneratedColumn<String>('errors_json', aliasedName, false,
               type: i0.DriftSqlType.string,
               requiredDuringInsert: false,
               $customConstraints: 'NOT NULL DEFAULT \'[]\'',
               defaultValue: const i0.CustomExpression('\'[]\''))
-          .withConverter<i6.AuthorizationErrors>(
+          .withConverter<i5.AuthorizationErrors>(
               i1.CedarAuthorizationLogs.$convertererrorsJson);
   @override
   List<i0.GeneratedColumn> get $columns => [
@@ -2601,7 +3151,7 @@ class CedarAuthorizationLogs extends i0.Table
       const i3.CedarAttributesConverter();
   static i0.TypeConverter<List<String>, String> $converterreasonsJson =
       const i3.CedarAuthorizationReasonsConverter();
-  static i0.TypeConverter<i6.AuthorizationErrors, String> $convertererrorsJson =
+  static i0.TypeConverter<i5.AuthorizationErrors, String> $convertererrorsJson =
       const i3.CedarAuthorizationErrorsConverter();
   @override
   bool get dontWriteConstraints => true;
@@ -2680,7 +3230,7 @@ class CedarAuthorizationLog extends i0.DataClass
   /// Type: JSON
   ///
   /// The errors encountered during the authorization decision.
-  final i6.AuthorizationErrors errorsJson;
+  final i5.AuthorizationErrors errorsJson;
   const CedarAuthorizationLog(
       {required this.rowid,
       required this.createTime,
@@ -2755,7 +3305,7 @@ class CedarAuthorizationLog extends i0.DataClass
       decision: serializer.fromJson<bool>(json['decision']),
       reasonsJson: serializer.fromJson<List<String>>(json['reasons_json']),
       errorsJson:
-          serializer.fromJson<i6.AuthorizationErrors>(json['errors_json']),
+          serializer.fromJson<i5.AuthorizationErrors>(json['errors_json']),
     );
   }
   @override
@@ -2774,7 +3324,7 @@ class CedarAuthorizationLog extends i0.DataClass
       'context_json': serializer.toJson<Map<String, i2.Value>>(contextJson),
       'decision': serializer.toJson<bool>(decision),
       'reasons_json': serializer.toJson<List<String>>(reasonsJson),
-      'errors_json': serializer.toJson<i6.AuthorizationErrors>(errorsJson),
+      'errors_json': serializer.toJson<i5.AuthorizationErrors>(errorsJson),
     };
   }
 
@@ -2791,7 +3341,7 @@ class CedarAuthorizationLog extends i0.DataClass
           Map<String, i2.Value>? contextJson,
           bool? decision,
           List<String>? reasonsJson,
-          i6.AuthorizationErrors? errorsJson}) =>
+          i5.AuthorizationErrors? errorsJson}) =>
       i1.CedarAuthorizationLog(
         rowid: rowid ?? this.rowid,
         createTime: createTime ?? this.createTime,
@@ -2908,7 +3458,7 @@ class CedarAuthorizationLogsCompanion
   final i0.Value<Map<String, i2.Value>> contextJson;
   final i0.Value<bool> decision;
   final i0.Value<List<String>> reasonsJson;
-  final i0.Value<i6.AuthorizationErrors> errorsJson;
+  final i0.Value<i5.AuthorizationErrors> errorsJson;
   const CedarAuthorizationLogsCompanion({
     this.rowid = const i0.Value.absent(),
     this.createTime = const i0.Value.absent(),
@@ -2984,7 +3534,7 @@ class CedarAuthorizationLogsCompanion
       i0.Value<Map<String, i2.Value>>? contextJson,
       i0.Value<bool>? decision,
       i0.Value<List<String>>? reasonsJson,
-      i0.Value<i6.AuthorizationErrors>? errorsJson}) {
+      i0.Value<i5.AuthorizationErrors>? errorsJson}) {
     return i1.CedarAuthorizationLogsCompanion(
       rowid: rowid ?? this.rowid,
       createTime: createTime ?? this.createTime,
@@ -3074,297 +3624,7 @@ class CedarAuthorizationLogsCompanion
   }
 }
 
-typedef $CedarAuthorizationLogsCreateCompanionBuilder
-    = i1.CedarAuthorizationLogsCompanion Function({
-  i0.Value<int> rowid,
-  i0.Value<DateTime> createTime,
-  i0.Value<DateTime?> expireTime,
-  i0.Value<String?> principalType,
-  i0.Value<String?> principalId,
-  i0.Value<String?> actionType,
-  i0.Value<String?> actionId,
-  i0.Value<String?> resourceType,
-  i0.Value<String?> resourceId,
-  i0.Value<Map<String, i2.Value>> contextJson,
-  required bool decision,
-  i0.Value<List<String>> reasonsJson,
-  i0.Value<i6.AuthorizationErrors> errorsJson,
-});
-typedef $CedarAuthorizationLogsUpdateCompanionBuilder
-    = i1.CedarAuthorizationLogsCompanion Function({
-  i0.Value<int> rowid,
-  i0.Value<DateTime> createTime,
-  i0.Value<DateTime?> expireTime,
-  i0.Value<String?> principalType,
-  i0.Value<String?> principalId,
-  i0.Value<String?> actionType,
-  i0.Value<String?> actionId,
-  i0.Value<String?> resourceType,
-  i0.Value<String?> resourceId,
-  i0.Value<Map<String, i2.Value>> contextJson,
-  i0.Value<bool> decision,
-  i0.Value<List<String>> reasonsJson,
-  i0.Value<i6.AuthorizationErrors> errorsJson,
-});
-
-class $CedarAuthorizationLogsFilterComposer
-    extends i0.FilterComposer<i0.GeneratedDatabase, i1.CedarAuthorizationLogs> {
-  $CedarAuthorizationLogsFilterComposer(super.$state);
-  i0.ColumnFilters<int> get rowid => $state.composableBuilder(
-      column: $state.table.rowid,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get createTime => $state.composableBuilder(
-      column: $state.table.createTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<DateTime> get expireTime => $state.composableBuilder(
-      column: $state.table.expireTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get principalType => $state.composableBuilder(
-      column: $state.table.principalType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get principalId => $state.composableBuilder(
-      column: $state.table.principalId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get actionType => $state.composableBuilder(
-      column: $state.table.actionType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get actionId => $state.composableBuilder(
-      column: $state.table.actionId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get resourceType => $state.composableBuilder(
-      column: $state.table.resourceType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<String> get resourceId => $state.composableBuilder(
-      column: $state.table.resourceId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<Map<String, i2.Value>,
-          Map<String, i2.Value>, String>
-      get contextJson => $state.composableBuilder(
-          column: $state.table.contextJson,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  i0.ColumnFilters<bool> get decision => $state.composableBuilder(
-      column: $state.table.decision,
-      builder: (column, joinBuilders) =>
-          i0.ColumnFilters(column, joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<List<String>, List<String>, String>
-      get reasonsJson => $state.composableBuilder(
-          column: $state.table.reasonsJson,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  i0.ColumnWithTypeConverterFilters<i6.AuthorizationErrors,
-          i6.AuthorizationErrors, String>
-      get errorsJson => $state.composableBuilder(
-          column: $state.table.errorsJson,
-          builder: (column, joinBuilders) => i0.ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-}
-
-class $CedarAuthorizationLogsOrderingComposer extends i0
-    .OrderingComposer<i0.GeneratedDatabase, i1.CedarAuthorizationLogs> {
-  $CedarAuthorizationLogsOrderingComposer(super.$state);
-  i0.ColumnOrderings<int> get rowid => $state.composableBuilder(
-      column: $state.table.rowid,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get createTime => $state.composableBuilder(
-      column: $state.table.createTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<DateTime> get expireTime => $state.composableBuilder(
-      column: $state.table.expireTime,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get principalType => $state.composableBuilder(
-      column: $state.table.principalType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get principalId => $state.composableBuilder(
-      column: $state.table.principalId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get actionType => $state.composableBuilder(
-      column: $state.table.actionType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get actionId => $state.composableBuilder(
-      column: $state.table.actionId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get resourceType => $state.composableBuilder(
-      column: $state.table.resourceType,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get resourceId => $state.composableBuilder(
-      column: $state.table.resourceId,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get contextJson => $state.composableBuilder(
-      column: $state.table.contextJson,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<bool> get decision => $state.composableBuilder(
-      column: $state.table.decision,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get reasonsJson => $state.composableBuilder(
-      column: $state.table.reasonsJson,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  i0.ColumnOrderings<String> get errorsJson => $state.composableBuilder(
-      column: $state.table.errorsJson,
-      builder: (column, joinBuilders) =>
-          i0.ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-class $CedarAuthorizationLogsTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarAuthorizationLogs,
-    i1.CedarAuthorizationLog,
-    i1.$CedarAuthorizationLogsFilterComposer,
-    i1.$CedarAuthorizationLogsOrderingComposer,
-    $CedarAuthorizationLogsCreateCompanionBuilder,
-    $CedarAuthorizationLogsUpdateCompanionBuilder,
-    (
-      i1.CedarAuthorizationLog,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarAuthorizationLogs,
-          i1.CedarAuthorizationLog>
-    ),
-    i1.CedarAuthorizationLog,
-    i0.PrefetchHooks Function()> {
-  $CedarAuthorizationLogsTableManager(
-      i0.GeneratedDatabase db, i1.CedarAuthorizationLogs table)
-      : super(i0.TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer: i1.$CedarAuthorizationLogsFilterComposer(
-              i0.ComposerState(db, table)),
-          orderingComposer: i1.$CedarAuthorizationLogsOrderingComposer(
-              i0.ComposerState(db, table)),
-          updateCompanionCallback: ({
-            i0.Value<int> rowid = const i0.Value.absent(),
-            i0.Value<DateTime> createTime = const i0.Value.absent(),
-            i0.Value<DateTime?> expireTime = const i0.Value.absent(),
-            i0.Value<String?> principalType = const i0.Value.absent(),
-            i0.Value<String?> principalId = const i0.Value.absent(),
-            i0.Value<String?> actionType = const i0.Value.absent(),
-            i0.Value<String?> actionId = const i0.Value.absent(),
-            i0.Value<String?> resourceType = const i0.Value.absent(),
-            i0.Value<String?> resourceId = const i0.Value.absent(),
-            i0.Value<Map<String, i2.Value>> contextJson =
-                const i0.Value.absent(),
-            i0.Value<bool> decision = const i0.Value.absent(),
-            i0.Value<List<String>> reasonsJson = const i0.Value.absent(),
-            i0.Value<i6.AuthorizationErrors> errorsJson =
-                const i0.Value.absent(),
-          }) =>
-              i1.CedarAuthorizationLogsCompanion(
-            rowid: rowid,
-            createTime: createTime,
-            expireTime: expireTime,
-            principalType: principalType,
-            principalId: principalId,
-            actionType: actionType,
-            actionId: actionId,
-            resourceType: resourceType,
-            resourceId: resourceId,
-            contextJson: contextJson,
-            decision: decision,
-            reasonsJson: reasonsJson,
-            errorsJson: errorsJson,
-          ),
-          createCompanionCallback: ({
-            i0.Value<int> rowid = const i0.Value.absent(),
-            i0.Value<DateTime> createTime = const i0.Value.absent(),
-            i0.Value<DateTime?> expireTime = const i0.Value.absent(),
-            i0.Value<String?> principalType = const i0.Value.absent(),
-            i0.Value<String?> principalId = const i0.Value.absent(),
-            i0.Value<String?> actionType = const i0.Value.absent(),
-            i0.Value<String?> actionId = const i0.Value.absent(),
-            i0.Value<String?> resourceType = const i0.Value.absent(),
-            i0.Value<String?> resourceId = const i0.Value.absent(),
-            i0.Value<Map<String, i2.Value>> contextJson =
-                const i0.Value.absent(),
-            required bool decision,
-            i0.Value<List<String>> reasonsJson = const i0.Value.absent(),
-            i0.Value<i6.AuthorizationErrors> errorsJson =
-                const i0.Value.absent(),
-          }) =>
-              i1.CedarAuthorizationLogsCompanion.insert(
-            rowid: rowid,
-            createTime: createTime,
-            expireTime: expireTime,
-            principalType: principalType,
-            principalId: principalId,
-            actionType: actionType,
-            actionId: actionId,
-            resourceType: resourceType,
-            resourceId: resourceId,
-            contextJson: contextJson,
-            decision: decision,
-            reasonsJson: reasonsJson,
-            errorsJson: errorsJson,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $CedarAuthorizationLogsProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i1.CedarAuthorizationLogs,
-    i1.CedarAuthorizationLog,
-    i1.$CedarAuthorizationLogsFilterComposer,
-    i1.$CedarAuthorizationLogsOrderingComposer,
-    $CedarAuthorizationLogsCreateCompanionBuilder,
-    $CedarAuthorizationLogsUpdateCompanionBuilder,
-    (
-      i1.CedarAuthorizationLog,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarAuthorizationLogs,
-          i1.CedarAuthorizationLog>
-    ),
-    i1.CedarAuthorizationLog,
-    i0.PrefetchHooks Function()>;
-
-class CedarDrift extends i4.ModularAccessor {
+class CedarDrift extends i6.ModularAccessor {
   CedarDrift(i0.GeneratedDatabase db) : super(db);
   i0.Selectable<List<i2.Entity>> getEntityClosure(
       {required String type, required String id}) {
@@ -3399,7 +3659,7 @@ class CedarDrift extends i4.ModularAccessor {
   Future<int> createPolicy(
       {required String id,
       required String policyId,
-      required i5.Policy policy,
+      required i4.Policy policy,
       required int enforcementLevel}) {
     return customInsert(
       'INSERT INTO cedar_policies (id, policy_id, policy, enforcement_level) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (policy_id) DO UPDATE SET policy = excluded.policy, enforcement_level = excluded.enforcement_level',
@@ -3416,7 +3676,7 @@ class CedarDrift extends i4.ModularAccessor {
   Future<int> upsertPolicy(
       {required String id,
       required String policyId,
-      required i5.Policy policy,
+      required i4.Policy policy,
       required int enforcementLevel}) {
     return customInsert(
       'INSERT INTO cedar_policies (id, policy_id, policy, enforcement_level) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (policy_id) DO UPDATE SET policy = excluded.policy, enforcement_level = excluded.enforcement_level',
@@ -3433,7 +3693,7 @@ class CedarDrift extends i4.ModularAccessor {
   Future<int> createPolicyTemplate(
       {required String id,
       required String templateId,
-      required i5.Policy template}) {
+      required i4.Policy template}) {
     return customInsert(
       'INSERT INTO cedar_policy_templates (id, template_id, template) VALUES (?1, ?2, ?3) ON CONFLICT (template_id) DO UPDATE SET template = excluded.template',
       variables: [
@@ -3449,7 +3709,7 @@ class CedarDrift extends i4.ModularAccessor {
   Future<int> upsertPolicyTemplate(
       {required String id,
       required String templateId,
-      required i5.Policy template}) {
+      required i4.Policy template}) {
     return customInsert(
       'INSERT INTO cedar_policy_templates (id, template_id, template) VALUES (?1, ?2, ?3) ON CONFLICT (template_id) DO UPDATE SET template = excluded.template',
       variables: [
@@ -3613,7 +3873,7 @@ class CedarDrift extends i4.ModularAccessor {
       required Map<String, i2.Value> contextJson,
       required bool decision,
       required List<String> reasonsJson,
-      required i6.AuthorizationErrors errorsJson}) {
+      required i5.AuthorizationErrors errorsJson}) {
     return customInsert(
       'INSERT INTO cedar_authorization_logs (principal_type, principal_id, action_type, action_id, resource_type, resource_id, context_json, decision, reasons_json, errors_json) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)',
       variables: [
@@ -3720,25 +3980,25 @@ class CedarDrift extends i4.ModularAccessor {
   }
 
   i1.CedarRelationships get cedarRelationships =>
-      i4.ReadDatabaseContainer(attachedDatabase)
+      i6.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i1.CedarRelationships>('cedar_relationships');
   i1.CedarEntities get cedarEntities =>
-      i4.ReadDatabaseContainer(attachedDatabase)
+      i6.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i1.CedarEntities>('cedar_entities');
   i1.CedarPolicies get cedarPolicies =>
-      i4.ReadDatabaseContainer(attachedDatabase)
+      i6.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i1.CedarPolicies>('cedar_policies');
   i1.CedarPolicyTemplates get cedarPolicyTemplates =>
-      i4.ReadDatabaseContainer(attachedDatabase)
+      i6.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i1.CedarPolicyTemplates>('cedar_policy_templates');
   i1.CedarPolicyTemplateLinks get cedarPolicyTemplateLinks =>
-      i4.ReadDatabaseContainer(attachedDatabase)
+      i6.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i1.CedarPolicyTemplateLinks>(
               'cedar_policy_template_links');
   i1.CedarAuthorizationLogs get cedarAuthorizationLogs =>
-      i4.ReadDatabaseContainer(attachedDatabase)
+      i6.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i1.CedarAuthorizationLogs>('cedar_authorization_logs');
-  i1.CedarTypes get cedarTypes => i4.ReadDatabaseContainer(attachedDatabase)
+  i1.CedarTypes get cedarTypes => i6.ReadDatabaseContainer(attachedDatabase)
       .resultSet<i1.CedarTypes>('cedar_types');
 }
 
@@ -3758,7 +4018,7 @@ class DebugDumpCedarResult {
 class ListEffectivePoliciesResult {
   final String id;
   final String policyId;
-  final i5.Policy policy;
+  final i4.Policy policy;
   final String? principalType;
   final String? principalId;
   final String? resourceType;

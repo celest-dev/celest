@@ -19,7 +19,7 @@ dependencies:
   collection: ^1.18.0
   convert: ^3.1.1
   crypto_keys: ^0.3.0
-  drift: ^2.20.0
+  drift: '>=2.21.0 <2.22.0'
   drift_hrana: ^1.0.2
   file: ^7.0.1
   fixnum: ^1.1.0
