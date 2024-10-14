@@ -1,10 +1,7 @@
-# 0.1.4-wip
-
-- chore: Update protos
-
 # 0.1.3
 
-- feat: Add SMS OTP flow
+- chore: Update protos
+- chore: Use HTTP exclusively for Authentication and User APIs
 
 # 0.1.2
 
