@@ -53,11 +53,12 @@ class FrontendServerClient {
   /// The [outputDillPath] determines where the primary output should be, and
   /// some targets may output additional files based on that file name (by
   /// adding file extensions for instance).
-  static Future<FrontendServerClient> start(
-    String entrypoint,
-    String outputDillPath,
-    String platformKernel, {
+  static Future<FrontendServerClient> start({
+    required String entrypoint,
+    required String outputDillPath,
+    required String platformKernel,
     required String workingDirectory,
+    String? incrementalOutputDill,
     List<String>? enabledExperiments,
     List<String> fileSystemRoots = const [], // For `fileSystemScheme` uris,
     String fileSystemScheme =
@@ -85,6 +86,10 @@ class FrontendServerClient {
         fileSystemScheme,
         '--output-dill',
         outputDillPath,
+        if (incrementalOutputDill != null) ...[
+          '--output-incremental-dill',
+          incrementalOutputDill,
+        ],
         '--packages=$packagesJson',
         '--incremental',
         if (verbose) '--verbose',

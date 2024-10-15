@@ -7,7 +7,6 @@ import 'package:celest_cli/compiler/frontend_server_client.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:celest_cli/src/utils/path.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:collection/collection.dart';
@@ -77,7 +76,31 @@ final class LocalApiRunner {
     //
     // Incremental compilations do not the need the platform since it will be
     // loaded into memory already.
-    final outputDill = p.setExtension(path, '.dill');
+    var outputDill = p.setExtension(path, '.dill');
+
+    var outputDillFile = fileSystem.file(outputDill);
+    var index = 0;
+    while (outputDillFile.existsSync()) {
+      try {
+        await outputDillFile.delete();
+      } on Object {
+        // Windows gets fussy about deleting files sometimes.
+        // Just use a different name.
+        outputDill = p.setExtension('$path.${index++}', '.dill');
+        outputDillFile = fileSystem.file(outputDill);
+      }
+    }
+
+    // Copy SQLite3 to the output directory on Windows.
+    if (platform.isWindows) {
+      final sqlite3Out =
+          fileSystem.directory(p.dirname(path)).childFile('sqlite3.dll');
+      if (!sqlite3Out.existsSync()) {
+        final cachedSqlite3 =
+            celestProject.config.configDir.childFile('sqlite3.dll');
+        await cachedSqlite3.copy(sqlite3Out.path);
+      }
+    }
 
     // NOTE: FE server requires file: URIs for *some* paths on Windows.
     final genKernelRes = await processManager.start(
@@ -97,11 +120,7 @@ final class LocalApiRunner {
         '--filesystem-scheme=celest',
         '--output-dill',
         outputDill, // Must be path
-        Uri(
-          scheme: 'celest',
-          path:
-              '/${p.relative(path, from: projectPaths.projectRoot).to(p.url)}',
-        ).toString(),
+        _projectFsUri(path).toString(),
       ],
       workingDirectory: projectPaths.outputsDir,
     );
@@ -119,13 +138,18 @@ final class LocalApiRunner {
       throw CompilationException('Error generating initial kernel file');
     }
 
+    // This is so confusing but it seems to work.
+    //
+    // To enable incremental compilation, we need to pass the output dill file
+    // as the incremental output dill file. If we set it the other way around
+    // Windows will complain about the file being in use.
+    final incrementalOutputDill =
+        p.setExtension(outputDill, '.incremental.dill'); // Must be path
     final client = await FrontendServerClient.start(
-      Uri(
-        scheme: 'celest',
-        path: '/${p.relative(path, from: projectPaths.projectRoot).to(p.url)}',
-      ).toString(), // entrypoint, must be URI
-      outputDill, // outputDillPath, must be path
-      Uri.file(platformDill).toString(), // platformKernel, must be URI
+      entrypoint: _projectFsUri(path).toString(), // must be URI
+      outputDillPath: incrementalOutputDill, // must be path
+      platformKernel: Uri.file(platformDill).toString(), // must be URI
+      incrementalOutputDill: outputDill,
       fileSystemRoots: [projectPaths.projectRoot],
       fileSystemScheme: 'celest',
       workingDirectory: projectPaths.projectRoot,
@@ -151,7 +175,10 @@ final class LocalApiRunner {
     //
     // When we check the port below, it's valid because the VM service is not
     // started yet, but later the API fails because it picked the same port.
-    final vmServicePort = await const RandomPortFinder().findOpenPort(port);
+    final vmServicePort = await const RandomPortFinder()
+        // If we've specified a port, though, that must be reserved for us to
+        // use, so start the search from the next port.
+        .findOpenPort(port == null ? null : port + 1);
     final command = switch (resolvedProject.sdkConfig.targetSdk) {
       SdkType.dart => <String>[
           Sdk.current.dart,
@@ -215,6 +242,13 @@ final class LocalApiRunner {
       vmServiceTimeout: vmServiceTimeout,
     );
     return runner;
+  }
+
+  /// The virtual FS URI for the project [path].
+  static Uri _projectFsUri(String path) {
+    final relativePath = p.relative(path, from: projectPaths.projectRoot);
+    final rootPrefix = platform.isWindows ? r'\' : '/';
+    return Uri(scheme: 'celest', path: '$rootPrefix$relativePath');
   }
 
   static final _vmServicePattern =
@@ -433,11 +467,7 @@ final class LocalApiRunner {
     final result = await _client.compile([
       for (final path in pathsToInvalidate)
         if (p.isWithin(projectPaths.projectRoot, path))
-          Uri(
-            scheme: 'celest',
-            path:
-                '/${p.relative(path, from: projectPaths.projectRoot).to(p.url)}',
-          )
+          _projectFsUri(path)
         else
           p.toUri(path),
     ]);

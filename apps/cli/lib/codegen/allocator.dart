@@ -1,5 +1,6 @@
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/path.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
@@ -78,7 +79,8 @@ final class CelestAllocator implements Allocator {
       uri = fileUri;
     }
     switch (uri) {
-      case Uri(scheme: '' || 'file', :final path):
+      case Uri(scheme: '' || 'file'):
+        final path = uri.toFilePath();
         final absolutePath =
             _fileContext.isRelative(path) ? _fileContext.absolute(path) : path;
         if (p.equals(absolutePath, forFile)) {
@@ -99,7 +101,9 @@ final class CelestAllocator implements Allocator {
           // We need to use relative paths because the path will be made
           // absolute by the frontend server, but needs paths that translate
           // to the virtual filesystem root.
-          url = p.relative(absolutePath, from: p.dirname(forFile));
+          final urlStylePath = absolutePath.to(p.url);
+          final urlStyleRoot = p.dirname(forFile).to(p.url);
+          url = p.url.relative(urlStylePath, from: urlStyleRoot);
           uri = Uri.file(url);
           break;
         }
