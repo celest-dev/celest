@@ -15,12 +15,10 @@ extension type const RouteMap(Map<EntityUid, Route> _routes)
   }) {
     final collector = _RouteCollector();
     project.accept(collector);
-    final routeMap = RouteMap({
+    return RouteMap({
       ...collector._routes,
       ...additionalRoutes,
     });
-    print(routeMap);
-    return routeMap;
   }
 }
 

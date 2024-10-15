@@ -226,12 +226,12 @@ class AuthDatabase extends $AuthDatabase {
         });
       }
     });
-    // _logger.finest(() {
-    // });
-    final policyIds = policySet.policies.entries
-        .map((pol) => pol.value.id ?? pol.key)
-        .sorted();
-    print('Effective policies: $policyIds');
+    _logger.finest(() {
+      final policyIds = policySet.policies.entries
+          .map((pol) => pol.value.id ?? pol.key)
+          .sorted();
+      return 'Effective policies: $policyIds';
+    });
     return policySet;
   }
 

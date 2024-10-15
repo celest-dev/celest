@@ -14,7 +14,7 @@ And to stay up-to-date on the future of Celest, including full server-side rende
 To get started with Celest, you'll need to configure your development environment so that you have Flutter and the Celest CLI installed on your machine.
 
 1. Install [Flutter](https://docs.flutter.dev/get-started/install) from the official website
-3. [Download](https://celest.dev/download) and install the Celest CLI
+2. [Download](https://celest.dev/download) and install the Celest CLI
 
 ### Creating a project
 
