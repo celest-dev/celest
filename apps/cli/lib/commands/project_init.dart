@@ -75,13 +75,12 @@ base mixin Configure on CelestCommand {
       );
 
   String newProjectName({
-    ParentProject? parentProject,
+    String? defaultName,
   }) {
-    var baseName = parentProject?.name;
-    if (baseName != null && baseName.startsWith('celest')) {
-      baseName = null;
+    if (defaultName != null && defaultName.startsWith('celest')) {
+      defaultName = null;
     }
-    final defaultName = baseName ?? 'hello';
+    defaultName ??= 'my_project';
     String? projectName;
     while (projectName == null) {
       final input = dcli
@@ -132,6 +131,8 @@ base mixin Configure on CelestCommand {
   /// Returns true if the project needs to be migrated.
   Stream<ConfigureState> _configure() async* {
     var currentDir = fileSystem.currentDirectory;
+    final currentDirIsEmpty = await currentDir.list().isEmpty;
+
     var pubspecFile = currentDir.childFile('pubspec.yaml');
     if (this case (StartCommand() || InitCommand())) {
       // Do not search recursively for the pubspec file. Just search the current
@@ -191,6 +192,13 @@ base mixin Configure on CelestCommand {
     String projectRoot;
     String? projectName;
     if (isExistingProject) {
+      if (this is InitCommand) {
+        cliLogger.success(
+          'A Celest project already exists in the current directory. '
+          'Run `celest start` to start the project.',
+        );
+        await Future(() => exit(0));
+      }
       projectRoot = celestDir!.path;
     } else {
       switch (this) {
@@ -201,7 +209,7 @@ base mixin Configure on CelestCommand {
             defaultValue: true,
           );
           if (!createNew) {
-            cliLogger.detail('Skipping project creation.');
+            cliLogger.info('Skipping project creation.');
             await Future(() => exit(0));
           }
         case InitCommand():
@@ -210,15 +218,20 @@ base mixin Configure on CelestCommand {
           _throwNoProject();
       }
 
-      projectName = newProjectName(parentProject: parentProject);
+      var defaultProjectName = parentProject?.name;
+      if (currentDirIsEmpty) {
+        defaultProjectName ??= p.basename(currentDir.path);
+      }
+      projectName = newProjectName(defaultName: defaultProjectName);
 
       // Choose where to store the project based on the current directory.
       projectRoot = switch (celestDir) {
         final celestDir? => celestDir.path,
 
-        // We should create a new folder for the project which is unattached
-        // to any parent project, named after the project.
-        null => await run(() async {
+        // If the current directory is not empty, ee should create a new folder
+        // for the project which is unattached to any parent project, named
+        // after the project.
+        null when !currentDirIsEmpty => await run(() async {
             final projectRoot = p.join(currentDir.path, projectName);
             final projectDir = fileSystem.directory(projectRoot);
             if (projectDir.existsSync() && !await projectDir.list().isEmpty) {
@@ -230,6 +243,9 @@ base mixin Configure on CelestCommand {
             }
             return projectRoot;
           }),
+
+        // Otherwise, we're in an empty directory, and can use it as the root.
+        null => currentDir.path,
       };
     }
 

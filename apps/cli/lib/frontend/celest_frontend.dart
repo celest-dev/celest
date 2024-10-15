@@ -271,16 +271,14 @@ final class CelestFrontend {
 
   Future<int> run({
     required bool migrateProject,
-    required Progress currentProgress,
+    required Progress? currentProgress,
   }) async {
     try {
       while (!stopped) {
-        if (_didFirstCompile) {
-          currentProgress = cliLogger.progress('Reloading Celest');
-        }
+        currentProgress ??= cliLogger.progress('Reloading Celest');
 
         void fail(List<CelestAnalysisError> errors) {
-          currentProgress.fail(
+          currentProgress?.fail(
             'Project has errors. Please fix them and save the '
             'corresponding files.',
           );
@@ -290,7 +288,6 @@ final class CelestFrontend {
         final analysisResult = await _analyzeProject(
           migrateProject: migrateProject,
         );
-        _didFirstCompile = true;
         migrateProject = false;
 
         _logWarnings(analysisResult.warnings);
@@ -365,20 +362,23 @@ final class CelestFrontend {
               ),
             );
 
-            if (!_didFirstCompile) {
-              _didFirstCompile = true;
-            }
-
             // Only clear changed paths once a full restart has been completed
             // which included those changes. Replacing the changed paths before
             // this happens could mean a loop where the changes are dropped
             // because the project had errors.
             _changedPaths = null;
 
-            currentProgress.complete(
-              'Celest is running and watching for updates',
-            );
-            cliLogger.detail('Local API running at: $localUri');
+            if (!_didFirstCompile) {
+              _didFirstCompile = true;
+              currentProgress.complete(
+                'Celest is running and watching for updates',
+              );
+              cliLogger.detail('Local API running at: $localUri');
+            } else {
+              currentProgress.complete('Reloaded project');
+            }
+
+            currentProgress = null;
         }
 
         await _nextChangeSet();
@@ -387,7 +387,7 @@ final class CelestFrontend {
     } on CancellationException {
       return 0;
     } finally {
-      currentProgress.cancel();
+      currentProgress?.cancel();
       await close();
     }
   }
@@ -714,7 +714,10 @@ final class CelestFrontend {
         if (stopped) {
           throw const CancellationException('Celest was stopped');
         }
-        await outputs.write();
+        await (
+          outputs.write(),
+          celestProject.invalidate(outputs.keys),
+        ).wait;
         if (stopped) {
           throw const CancellationException('Celest was stopped');
         }

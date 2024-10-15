@@ -75,9 +75,27 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
     await configure();
     await _precacheInBackground();
 
+    final projectRoot = projectPaths.projectRoot;
+
+    var command = 'celest start';
+    // `celest start` can be run from either the project root, the attached
+    // Flutter app's root if there is one, or any subdirectory therof.
+    //
+    // If we're in none of those, then add a `cd` command to the start messsage.
+    final currentDir = fileSystem.currentDirectory.path;
+    final appRoot = celestProject.parentProject?.path ?? projectRoot;
+    if (!p.equals(appRoot, currentDir) && !p.isWithin(appRoot, currentDir)) {
+      final relativePath = p.relative(appRoot, from: currentDir);
+      command = 'cd $relativePath && $command';
+    }
+    stdout.writeln();
     cliLogger.success(
-      'Run `celest start` to start a local development server 🚀',
+      '🚀 To start a local development server, run:',
     );
+    stdout
+      ..writeln()
+      ..writeln('      $command')
+      ..writeln();
 
     return 0;
   }
