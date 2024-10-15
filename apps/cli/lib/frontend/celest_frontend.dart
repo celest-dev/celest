@@ -282,6 +282,7 @@ final class CelestFrontend {
             'Project has errors. Please fix them and save the '
             'corresponding files.',
           );
+          currentProgress = null;
           _logErrors(errors);
         }
 
@@ -370,12 +371,12 @@ final class CelestFrontend {
 
             if (!_didFirstCompile) {
               _didFirstCompile = true;
-              currentProgress.complete(
+              currentProgress!.complete(
                 'Celest is running and watching for updates',
               );
               cliLogger.detail('Local API running at: $localUri');
             } else {
-              currentProgress.complete('Reloaded project');
+              currentProgress!.complete('Reloaded project');
             }
 
             currentProgress = null;
