@@ -8,7 +8,6 @@ import 'package:async/async.dart';
 import 'package:celest/celest.dart';
 import 'package:celest/src/core/context.dart';
 import 'package:celest/src/runtime/configuration.dart';
-import 'package:celest/src/runtime/gcp/gcp.dart';
 import 'package:celest/src/runtime/http/cloud_middleware.dart';
 import 'package:celest/src/runtime/http/middleware.dart';
 import 'package:celest/src/runtime/json_utils.dart';
@@ -46,13 +45,7 @@ Future<CelestService> serve({
 }) async {
   Context.root = Context.of(Zone.current);
 
-  await configure(
-    config: config,
-  );
-  final projectId = await googleCloudProject();
-  if (projectId != null) {
-    Context.root.put(googleCloudProjectKey, projectId);
-  }
+  await configure(config: config);
 
   final router = Router();
   Context.root.put(ContextKey.router, router);

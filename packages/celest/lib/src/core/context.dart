@@ -3,7 +3,6 @@ import 'dart:io' show HandshakeException, HttpClient, SocketException;
 
 import 'package:celest/src/config/config_values.dart';
 import 'package:celest/src/core/environment.dart';
-import 'package:celest/src/runtime/gcp/gcp.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_core/_internal.dart';
 // ignore: implementation_imports
@@ -111,7 +110,13 @@ final class Context {
       get(ContextKey.fileSystem) ?? const LocalFileSystem();
 
   /// Whether Celest is running in the cloud.
-  bool get isRunningInCloud => root.get(googleCloudProjectKey) != null;
+  bool get isRunningInCloud => get(env.googleProjectId) != null;
+
+  /// The Google project ID for the current context.
+  ///
+  /// This will be set when running in Celest Cloud and will be `null` otherwise
+  /// unless explicitly set in the environment.
+  String? get googleProjectId => get(env.googleProjectId);
 
   /// The shelf [shelf.Request] object which triggered the current function invocation.
   shelf.Request get currentRequest => expect(ContextKey.currentRequest);

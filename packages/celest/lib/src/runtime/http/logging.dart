@@ -7,7 +7,6 @@ import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:celest/src/core/context.dart';
-import 'package:celest/src/runtime/gcp/gcp.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:cloud_http/cloud_http.dart';
 import 'package:logging/logging.dart';
@@ -91,8 +90,10 @@ extension on LogRecord {
       'message': message.toString().trim(),
       'severity': severity,
       'timestamp': time.toIso8601String(),
-      if (trace != null) ...{
-        'logging.googleapis.com/trace': trace.cloudTraceId,
+      if ((trace, Context.root.googleProjectId)
+          case (final trace?, final googleProjectId?)) ...{
+        'logging.googleapis.com/trace':
+            'projects/$googleProjectId/traces/${trace.parentId}',
         'logging.googleapis.com/spanId': trace.parentId,
         'logging.googleapis.com/trace_sampled': trace.traceFlagSampled != 0,
       },
@@ -100,13 +101,6 @@ extension on LogRecord {
         'logging.googleapis.com/sourceLocation': stackFrame.sourceLocation,
     };
     return jsonEncode(logContent);
-  }
-}
-
-extension on Traceparent {
-  String get cloudTraceId {
-    final projectId = Context.root.expect(googleCloudProjectKey);
-    return 'projects/$projectId/traces/$parentId';
   }
 }
 

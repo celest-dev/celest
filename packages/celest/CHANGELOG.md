@@ -1,3 +1,7 @@
+## 1.0.1-wip
+
+- chore: Remove assumptions about where the project is deployed
+
 ## 1.0.0
 
 The first release of Celest V1! This release includes:
