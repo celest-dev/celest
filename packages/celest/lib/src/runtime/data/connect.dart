@@ -5,14 +5,15 @@ import 'package:celest/src/runtime/data/connect.io.dart'
     if (dart.library.js_interop) 'package:celest/src/runtime/data/connect.web.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_hrana/drift_hrana.dart';
+import 'package:logging/logging.dart';
+
+final Logger _logger = Logger('Celest.Data');
 
 /// Checks the connection to the database by running a simple query.
 Future<Database> _checkConnection<Database extends GeneratedDatabase>(
   Database db,
 ) async {
-  await db.transaction(() async {
-    await db.customSelect('SELECT 1').get();
-  });
+  await db.customSelect('SELECT 1').get();
   return db;
 }
 
@@ -31,16 +32,21 @@ Future<Database> connect<Database extends GeneratedDatabase>(
   }
   final host = context.get(hostnameVariable);
   final token = context.get(tokenSecret);
-  if (host == null || token == null) {
+  if (host == null) {
     throw StateError(
-      'Missing database hostname or token for $name. '
-      'Please set the `$hostnameVariable` and `$tokenSecret` values '
-      'in the environment or Celest configuration file.',
+      'Missing database hostname $name. '
+      'Set the `$hostnameVariable` value in the environment or Celest '
+      'configuration file to connect.',
     );
   }
-  final connector = HranaDatabase(
-    Uri(scheme: 'libsql', host: host),
-    jwtToken: token,
-  );
+  final hostUri = Uri.tryParse(host) ?? Uri(scheme: 'libsql', host: host);
+  if (token == null) {
+    _logger.fine(
+      'Missing database token for $name. Expecting a secret named '
+      '`$tokenSecret` in the environment or Celest configuration file.',
+    );
+    _logger.fine('Connecting to $hostUri without a token.');
+  }
+  final connector = HranaDatabase(hostUri, jwtToken: token);
   return _checkConnection(factory(connector));
 }
