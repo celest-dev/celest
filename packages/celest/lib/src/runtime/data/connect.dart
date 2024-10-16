@@ -25,9 +25,10 @@ Future<Database> connect<Database extends GeneratedDatabase>(
   required Database Function(QueryExecutor) factory,
   required env hostnameVariable,
   required secret tokenSecret,
+  String? path,
 }) async {
   if (context.environment == Environment.local) {
-    final executor = await inMemoryExecutor();
+    final executor = await localExecutor(name: name, path: path);
     return _checkConnection(factory(executor));
   }
   final host = context.get(hostnameVariable);

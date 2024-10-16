@@ -8,3 +8,12 @@ Future<QueryExecutor> inMemoryExecutor() async {
   sqlite3.registerVirtualFileSystem(InMemoryFileSystem(), makeDefault: true);
   return WasmDatabase.inMemory(sqlite3);
 }
+
+/// A [QueryExecutor] with local persistence.
+Future<QueryExecutor> localExecutor({
+  required String name,
+  String? path,
+}) async {
+  // TODO(dnys1): We don't have a use case for this yet.
+  return inMemoryExecutor();
+}
