@@ -25,6 +25,10 @@ jobs:
           cache: true
       - name: Setup Melos
         run: dart pub global activate melos
+      - name: Setup Turso
+        run: curl -sSfL https://get.tur.so/install.sh | bash
+        env:
+          TURSO_INSTALL_SKIP_SIGNUP: true
       - name: Get Packages
         run: melos bootstrap
       - name: Analyze

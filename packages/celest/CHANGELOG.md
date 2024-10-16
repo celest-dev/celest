@@ -2,6 +2,7 @@
 
 - chore: Remove assumptions about where the project is deployed
 - chore: Allow connecting to locally running libSQL servers
+- fix: Persist database in local environment
 
 ## 1.0.0
 
