@@ -21,7 +21,7 @@ RUN [ "/usr/lib/dart/bin/utils/gen_snapshot", "--snapshot_kind=app-aot-elf", "--
 FROM celestdev/dart-runtime:{{version}}
 
 WORKDIR /app
-COPY config.json .
+COPY celest.json .
 COPY --from=build /app/main.aot .
 
 ENV PORT=8080
@@ -39,7 +39,7 @@ RUN [ "/usr/lib/dart/bin/utils/gen_snapshot", "--snapshot_kind=app-aot-elf", "--
 FROM celestdev/flutter-runtime:{{version}}
 
 WORKDIR /app
-COPY config.json .
+COPY celest.json .
 COPY --from=build /app/main.aot .
 
 ENV PORT=8080
