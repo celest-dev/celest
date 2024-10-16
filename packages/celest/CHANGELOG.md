@@ -1,4 +1,4 @@
-## 1.0.1-wip
+## 1.0.1
 
 - chore: Remove assumptions about where the project is deployed
 - chore: Allow connecting to locally running libSQL servers
