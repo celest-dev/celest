@@ -66,6 +66,12 @@ final class env extends ConfigurationValue {
   /// For example, `production`.
   static const env environment = env('CELEST_ENVIRONMENT');
 
+  /// The GCP project ID, when running in Celest Cloud.
+  ///
+  /// This is only set when running in Celest Cloud but may be specified
+  /// manually to enable integration with Google Cloud services.
+  static const env googleProjectId = env('CELEST_GOOGLE_CLOUD_PROJECT');
+
   @override
   String toString() => 'env($name)';
 
