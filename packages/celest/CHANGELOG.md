@@ -1,6 +1,7 @@
 ## 1.0.1+1
 
 - fix: Fix expectation of trace context when running in cloud
+- chore: Relax `meta` constraint in the analyzer plugin
 
 ## 1.0.1
 
