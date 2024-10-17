@@ -76,11 +76,13 @@ final class ProjectEnvironmentRepository {
   Future<ProjectEnvironmentConfigData> putConfig({
     required String environmentId,
     required String baseUri,
+    required String databaseId,
     required String host,
     required String token,
   }) async {
     final env = await _db.getProjectEnvironment(id: environmentId).getSingle();
-    final tokenRef = 'projects/${env.projectId}/environments/$environmentId';
+    final tokenRef =
+        'projects/${env.projectId}/environments/$environmentId/databases/$databaseId/token';
     await isolatedSecureStorage.write(tokenRef, token);
     final result = await _db.upsertProjectEnvironmentConfig(
       environmentId: environmentId,

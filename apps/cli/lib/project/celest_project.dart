@@ -155,7 +155,7 @@ final class CelestProject {
     }
     final pubspec = Pubspec.parse(
       await fileSystem.file(projectPaths.pubspecYaml).readAsString(),
-      sourceUrl: Uri.file(projectPaths.pubspecYaml),
+      sourceUrl: p.toUri(projectPaths.pubspecYaml),
     );
     return switch (pubspec.dependencies.containsKey('flutter')) {
       true => ast.SdkType.flutter,

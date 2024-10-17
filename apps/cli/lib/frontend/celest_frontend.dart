@@ -6,10 +6,11 @@ import 'dart:math';
 import 'package:async/async.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_ast/celest_ast.dart';
+import 'package:celest_ast/src/proto/celest/ast/v1/resolved_ast.pb.dart'
+    as astpb;
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
-import 'package:celest_cli/ast/deployed_ast.dart';
 import 'package:celest_cli/ast/project_diff.dart';
 import 'package:celest_cli/codegen/api/dockerfile_generator.dart';
 import 'package:celest_cli/codegen/client_code_generator.dart';
@@ -322,9 +323,9 @@ final class CelestFrontend {
               project: project,
               resolvedProject: resolvedProject,
             );
-            final LocalDeployedProject projectOutputs;
+            final Uri localUri;
             try {
-              projectOutputs = await _startLocalApi(
+              localUri = await _startLocalApi(
                 [
                   ...generatedOutputs,
                   if (_changedPaths != null)
@@ -349,7 +350,6 @@ final class CelestFrontend {
               break;
             }
 
-            final localUri = Uri.http('localhost:${projectOutputs.port}');
             await _generateClientCode(
               project: project,
               resolvedProject: resolvedProject,
@@ -643,7 +643,7 @@ final class CelestFrontend {
               }
               iteration++;
             });
-            final projectOutputs = await _deployProject(
+            final (deployedProject, baseUri) = await _deployProject(
               projectId: projectId,
               environmentId: environment.id,
               resolvedProject: resolvedProject,
@@ -655,7 +655,7 @@ final class CelestFrontend {
                 localUri: await isolatedSecureStorage.getLocalUri(project.name),
                 productionUri: await isolatedSecureStorage.setProductionUri(
                   project.name,
-                  projectOutputs.baseUri,
+                  baseUri,
                 ),
               ),
             );
@@ -663,7 +663,7 @@ final class CelestFrontend {
             timer.cancel();
             currentProgress!.complete();
             cliLogger.success('💙 Your Celest project has been deployed!');
-            cliLogger.info(projectOutputs.baseUri.toString());
+            cliLogger.info(baseUri.toString());
             return 0;
         }
       }
@@ -779,7 +779,7 @@ final class CelestFrontend {
         );
   }
 
-  Future<LocalDeployedProject> _startLocalApi(
+  Future<Uri> _startLocalApi(
     List<String> invalidatedPaths, {
     required String environmentId,
     required ResolvedProject resolvedProject,
@@ -825,10 +825,7 @@ final class CelestFrontend {
     if (stopped) {
       throw const CancellationException('Celest was stopped');
     }
-    return LocalDeployedProject.from(
-      projectAst: resolvedProject,
-      port: _localApiRunner!.port,
-    );
+    return Uri.parse('http://localhost:${_localApiRunner!.port}');
   }
 
   Future<String?> _loadProjectId() async {
@@ -851,7 +848,6 @@ final class CelestFrontend {
     if (environment != null) {
       return environment;
     }
-    final progress = cliLogger.progress('Creating production environment');
     final operation = cloud.projects.environments.create(
       projectEnvironmentId: 'production',
       parent: 'projects/$projectId',
@@ -875,11 +871,10 @@ final class CelestFrontend {
     final dbEnvironment = await projectEnvironments.put(
       cloudEnvironment.toDb(),
     );
-    progress.complete();
     return dbEnvironment;
   }
 
-  Future<RemoteDeployedProject> _deployProject({
+  Future<(ast.ResolvedProject, Uri)> _deployProject({
     required String projectId,
     required String environmentId,
     required ast.ResolvedProject resolvedProject,
@@ -928,15 +923,23 @@ final class CelestFrontend {
             resource: pb.DeployProjectEnvironmentResponse(),
           );
           logger.fine('Deployed project: $deployment');
-          await projectEnvironments.putConfig(
-            environmentId: environmentId,
-            baseUri: deployment.uri,
-            host: deployment.database.host,
-            token: deployment.database.token,
-          );
-          return RemoteDeployedProject.from(
-            projectAst: resolvedProject,
-            baseUri: Uri.parse(deployment.uri),
+          if (deployment.project.databases.isNotEmpty) {
+            final database = deployment.project.databases.entries.first;
+            await projectEnvironments.putConfig(
+              environmentId: environmentId,
+              databaseId: database.key,
+              baseUri: deployment.uri,
+              host: database.value.celest.hostname.value,
+              token: database.value.celest.token.value,
+            );
+          }
+          return (
+            ast.ResolvedProject.fromProto(
+              astpb.ResolvedProject.fromBuffer(
+                deployment.project.writeToBuffer(),
+              ),
+            ),
+            Uri.parse(deployment.uri),
           );
         } on Exception catch (e, st) {
           if (e case CancellationException() || CliException()) {
