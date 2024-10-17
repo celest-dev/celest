@@ -1,3 +1,7 @@
+# 0.1.4
+
+- feat: Finalize project environment API
+
 # 0.1.3
 
 - chore: Update protos
