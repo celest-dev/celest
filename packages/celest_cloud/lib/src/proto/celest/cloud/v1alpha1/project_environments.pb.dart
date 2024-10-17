@@ -1326,14 +1326,14 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
 class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
   factory DeployProjectEnvironmentResponse({
     $core.String? uri,
-    ProjectEnvironmentDatabase? database,
+    $56.ResolvedProject? project,
   }) {
     final $result = create();
     if (uri != null) {
       $result.uri = uri;
     }
-    if (database != null) {
-      $result.database = database;
+    if (project != null) {
+      $result.project = project;
     }
     return $result;
   }
@@ -1351,8 +1351,8 @@ class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'uri')
-    ..aOM<ProjectEnvironmentDatabase>(2, _omitFieldNames ? '' : 'database',
-        subBuilder: ProjectEnvironmentDatabase.create)
+    ..aOM<$56.ResolvedProject>(2, _omitFieldNames ? '' : 'project',
+        subBuilder: $56.ResolvedProject.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1396,105 +1396,20 @@ class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearUri() => clearField(1);
 
-  /// The database of the deployed environment.
+  /// The resolved project of the deployed environment, with any missing values filled in.
   @$pb.TagNumber(2)
-  ProjectEnvironmentDatabase get database => $_getN(1);
+  $56.ResolvedProject get project => $_getN(1);
   @$pb.TagNumber(2)
-  set database(ProjectEnvironmentDatabase v) {
+  set project($56.ResolvedProject v) {
     setField(2, v);
   }
 
   @$pb.TagNumber(2)
-  $core.bool hasDatabase() => $_has(1);
+  $core.bool hasProject() => $_has(1);
   @$pb.TagNumber(2)
-  void clearDatabase() => clearField(2);
+  void clearProject() => clearField(2);
   @$pb.TagNumber(2)
-  ProjectEnvironmentDatabase ensureDatabase() => $_ensure(1);
-}
-
-/// A project environment database.
-class ProjectEnvironmentDatabase extends $pb.GeneratedMessage {
-  factory ProjectEnvironmentDatabase({
-    $core.String? host,
-    $core.String? token,
-  }) {
-    final $result = create();
-    if (host != null) {
-      $result.host = host;
-    }
-    if (token != null) {
-      $result.token = token;
-    }
-    return $result;
-  }
-  ProjectEnvironmentDatabase._() : super();
-  factory ProjectEnvironmentDatabase.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ProjectEnvironmentDatabase.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ProjectEnvironmentDatabase',
-      package: const $pb.PackageName(
-          _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
-      createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'host')
-    ..aOS(2, _omitFieldNames ? '' : 'token')
-    ..hasRequiredFields = false;
-
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
-  ProjectEnvironmentDatabase clone() =>
-      ProjectEnvironmentDatabase()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  ProjectEnvironmentDatabase copyWith(
-          void Function(ProjectEnvironmentDatabase) updates) =>
-      super.copyWith(
-              (message) => updates(message as ProjectEnvironmentDatabase))
-          as ProjectEnvironmentDatabase;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static ProjectEnvironmentDatabase create() => ProjectEnvironmentDatabase._();
-  ProjectEnvironmentDatabase createEmptyInstance() => create();
-  static $pb.PbList<ProjectEnvironmentDatabase> createRepeated() =>
-      $pb.PbList<ProjectEnvironmentDatabase>();
-  @$core.pragma('dart2js:noInline')
-  static ProjectEnvironmentDatabase getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<ProjectEnvironmentDatabase>(create);
-  static ProjectEnvironmentDatabase? _defaultInstance;
-
-  /// The hostname of the database.
-  @$pb.TagNumber(1)
-  $core.String get host => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set host($core.String v) {
-    $_setString(0, v);
-  }
-
-  @$pb.TagNumber(1)
-  $core.bool hasHost() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearHost() => clearField(1);
-
-  /// The token of the database.
-  @$pb.TagNumber(2)
-  $core.String get token => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set token($core.String v) {
-    $_setString(1, v);
-  }
-
-  @$pb.TagNumber(2)
-  $core.bool hasToken() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearToken() => clearField(2);
+  $56.ResolvedProject ensureProject() => $_ensure(1);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

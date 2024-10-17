@@ -413,14 +413,15 @@ final $typed_data.Uint8List deployProjectEnvironmentRequestDescriptor = $convert
 const DeployProjectEnvironmentResponse$json = {
   '1': 'DeployProjectEnvironmentResponse',
   '2': [
-    {'1': 'uri', '3': 1, '4': 1, '5': 9, '10': 'uri'},
+    {'1': 'uri', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'uri'},
     {
-      '1': 'database',
+      '1': 'project',
       '3': 2,
       '4': 1,
       '5': 11,
-      '6': '.celest.cloud.v1alpha1.ProjectEnvironmentDatabase',
-      '10': 'database'
+      '6': '.celest.ast.v1.ResolvedProject',
+      '8': {},
+      '10': 'project'
     },
   ],
 };
@@ -428,21 +429,6 @@ const DeployProjectEnvironmentResponse$json = {
 /// Descriptor for `DeployProjectEnvironmentResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deployProjectEnvironmentResponseDescriptor =
     $convert.base64Decode(
-        'CiBEZXBsb3lQcm9qZWN0RW52aXJvbm1lbnRSZXNwb25zZRIQCgN1cmkYASABKAlSA3VyaRJNCg'
-        'hkYXRhYmFzZRgCIAEoCzIxLmNlbGVzdC5jbG91ZC52MWFscGhhMS5Qcm9qZWN0RW52aXJvbm1l'
-        'bnREYXRhYmFzZVIIZGF0YWJhc2U=');
-
-@$core.Deprecated('Use projectEnvironmentDatabaseDescriptor instead')
-const ProjectEnvironmentDatabase$json = {
-  '1': 'ProjectEnvironmentDatabase',
-  '2': [
-    {'1': 'host', '3': 1, '4': 1, '5': 9, '10': 'host'},
-    {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
-  ],
-};
-
-/// Descriptor for `ProjectEnvironmentDatabase`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List projectEnvironmentDatabaseDescriptor =
-    $convert.base64Decode(
-        'ChpQcm9qZWN0RW52aXJvbm1lbnREYXRhYmFzZRISCgRob3N0GAEgASgJUgRob3N0EhQKBXRva2'
-        'VuGAIgASgJUgV0b2tlbg==');
+        'CiBEZXBsb3lQcm9qZWN0RW52aXJvbm1lbnRSZXNwb25zZRIVCgN1cmkYASABKAlCA+BBAlIDdX'
+        'JpEj0KB3Byb2plY3QYAiABKAsyHi5jZWxlc3QuYXN0LnYxLlJlc29sdmVkUHJvamVjdEID4EEC'
+        'Ugdwcm9qZWN0');
