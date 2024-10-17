@@ -35,7 +35,6 @@ WORKDIR /app
 COPY celest.aot.dill main.aot.dill
 
 RUN [ "/usr/lib/dart/bin/utils/gen_snapshot", "--snapshot_kind=app-aot-elf", "--elf=/app/main.aot", "/app/main.aot.dill" ]
-RUN [ "/usr/lib/dart/bin/utils/gen_snapshot", "--snapshot_kind=app-aot-assembly", "--assembly=main.S", "/app/main.aot" ]
 
 FROM celestdev/flutter-runtime:{{version}}
 
