@@ -1,3 +1,7 @@
+## 1.0.1+1
+
+- fix: Fix expectation of trace context when running in cloud
+
 ## 1.0.1
 
 - chore: Remove assumptions about where the project is deployed

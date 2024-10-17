@@ -122,7 +122,7 @@ final class Context {
   shelf.Request get currentRequest => expect(ContextKey.currentRequest);
 
   /// The [Traceparent] for the current request.
-  Traceparent get currentTrace => expect(ContextKey.currentTrace);
+  Traceparent? get currentTrace => get(ContextKey.currentTrace);
 
   /// The Celest [Environment] of the running service.
   Environment get environment => expect(env.environment) as Environment;
