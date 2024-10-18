@@ -214,7 +214,7 @@ packages:
       path: "../../celest/packages/celest"
       relative: true
     source: path
-    version: "1.0.1"
+    version: "1.0.1+1"
   celest_ast:
     dependency: "direct main"
     description:
@@ -242,7 +242,7 @@ packages:
       path: "../../celest/packages/celest_cloud"
       relative: true
     source: path
-    version: "0.1.3"
+    version: "0.1.4"
   celest_core:
     dependency: "direct main"
     description:

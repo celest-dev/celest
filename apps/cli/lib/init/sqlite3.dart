@@ -9,6 +9,7 @@ import 'package:file/file.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:pub_semver/pub_semver.dart';
+import 'package:sqlite3/open.dart';
 
 extension type SqliteVersion(Version _version) {
   String get semVer => _version.toString();
@@ -50,7 +51,7 @@ Future<String> loadSqlite3({
     logger.finest('Using cached sqlite3 library');
   }
   final sqlite3Path = file.absolute.path;
-  DynamicLibrary.open(sqlite3Path);
+  open.overrideForAll(() => DynamicLibrary.open(sqlite3Path));
   return sqlite3Path;
 }
 
