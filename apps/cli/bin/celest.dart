@@ -9,6 +9,7 @@ import 'package:celest_cli/commands/experiments/experiments_command.dart';
 import 'package:celest_cli/commands/init_command.dart';
 import 'package:celest_cli/commands/organizations/organizations_command.dart';
 import 'package:celest_cli/commands/precache_command.dart';
+import 'package:celest_cli/commands/project_environments/project_environments_command.dart';
 import 'package:celest_cli/commands/projects/projects_command.dart';
 import 'package:celest_cli/commands/start_command.dart';
 import 'package:celest_cli/commands/subscriptions/subscribe_command.dart';
@@ -64,7 +65,8 @@ void main(List<String> args) async {
   // Cloud API commands
   cli
     ..addCommand(OrganizationsCommand())
-    ..addCommand(ProjectsCommand());
+    ..addCommand(ProjectsCommand())
+    ..addCommand(ProjectEnvironmentsCommand());
 
   // Experiment commands (used for testing various CLI flows)
   // Hidden and not exposed to users.

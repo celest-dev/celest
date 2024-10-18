@@ -74,7 +74,7 @@ final class CelestUpgrader {
       // progress timer.
       // Skip on Linux installer since we shell out to dpkg which conflicts
       // with our CLI spinner.
-      if (platform.operatingSystem case 'windows' || 'linux') {
+      if (platform.isWindows) {
         _progress = cliLogger.progress('Updating Celest');
       } else if (platform.isMacOS) {
         cliLogger.info(

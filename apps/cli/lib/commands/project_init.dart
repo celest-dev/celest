@@ -5,7 +5,6 @@ import 'package:celest_cli/commands/init_command.dart';
 import 'package:celest_cli/commands/project_migrate.dart';
 import 'package:celest_cli/commands/start_command.dart';
 import 'package:celest_cli/init/project_generator.dart';
-import 'package:celest_cli/init/sqlite3.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
@@ -248,8 +247,6 @@ base mixin Configure on CelestCommand {
         null => currentDir.path,
       };
     }
-
-    await loadSqlite3(logger: logger);
 
     yield const Initializing();
     await init(
