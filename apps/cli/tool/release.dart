@@ -739,6 +739,16 @@ final class WindowsBundler implements Bundler {
           // Use the first number in the pre-release as the build number
           // e.g. `1.2.0-dev.1` -> `1.2.0.1`
           '${Version(major, minor, patch)}.${preRelease.whereType<int>().firstOrNull ?? 0}',
+        Version(
+          :final major,
+          :final minor,
+          :final patch,
+          :final build,
+        )
+            when build.isNotEmpty =>
+          // Use the first number in the build tag as the build number
+          // e.g. `1.2.0+1` -> `1.2.0.1`
+          '${Version(major, minor, patch)}.${build.first}',
         _ => '$version.0',
       },
     });
