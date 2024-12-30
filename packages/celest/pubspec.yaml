@@ -19,7 +19,7 @@ dependencies:
   collection: ^1.18.0
   convert: ^3.1.1
   crypto_keys: ^0.3.0
-  drift: '>=2.21.0 <2.22.0'
+  drift: ^2.21.0
   drift_hrana: ^1.0.2
   file: ^7.0.1
   fixnum: ^1.1.0
@@ -44,7 +44,7 @@ dev_dependencies:
   build_runner: ^2.4.13
   celest_lints:
     path: ../celest_lints
-  drift_dev: '>=2.21.0 <2.22.0'
+  drift_dev: ^2.21.0
   process: ^5.0.2
   pub_semver: ^2.1.4
   stream_transform: ^2.1.0
