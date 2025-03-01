@@ -14,9 +14,7 @@ void main() {
         'hello',
         description: 'Test description',
         publishTo: 'none',
-        environment: {
-          'sdk': VersionConstraint.parse('^3.2.0'),
-        },
+        environment: {'sdk': VersionConstraint.parse('^3.2.0')},
         dependencies: {
           'celest': HostedDependency(version: VersionConstraint.parse('0.1.0')),
         },

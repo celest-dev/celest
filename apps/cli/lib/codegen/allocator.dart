@@ -14,7 +14,7 @@ enum PrefixingStrategy {
   /// Useful for generating part of libraries.
   ///
   /// In this mode, all imports must be manually managed.
-  noImports;
+  noImports,
 }
 
 enum PathStrategy {
@@ -27,7 +27,7 @@ enum PathStrategy {
   ///
   /// Used for non-client-facing codegen where the aesthetics do not matter and pretty,
   /// relative paths may fail.
-  robust;
+  robust,
 }
 
 final class CelestAllocator implements Allocator {
@@ -37,14 +37,11 @@ final class CelestAllocator implements Allocator {
     required this.pathStrategy,
     @visibleForTesting String? packageName,
     @visibleForTesting String? clientPackageName,
-  })  : packageName = packageName ?? celestProject.pubspec.name,
-        clientPackageName =
-            clientPackageName ?? celestProject.clientPubspec.name;
+  }) : packageName = packageName ?? celestProject.pubspec.name,
+       clientPackageName =
+           clientPackageName ?? celestProject.clientPubspec.name;
 
-  static const _doNotPrefix = [
-    'dart:core',
-    'package:meta/meta.dart',
-  ];
+  static const _doNotPrefix = ['dart:core', 'package:meta/meta.dart'];
   static final Logger _logger = Logger('CelestAllocator');
 
   final String forFile;
@@ -114,7 +111,7 @@ final class CelestAllocator implements Allocator {
 
       case Uri(
             scheme: 'package',
-            pathSegments: [final package, ...final segments]
+            pathSegments: [final package, ...final segments],
           )
           when package == packageName || package == clientPackageName:
         final importFilepath = p.joinAll([
@@ -140,10 +137,7 @@ final class CelestAllocator implements Allocator {
       case PrefixingStrategy.indexed:
         return '${importMap.putIfAbsent(url, _nextKey)}.$symbol';
       case PrefixingStrategy.pretty:
-        final import = importMap.putIfAbsent(
-          url,
-          () => prefixForUrl(uri),
-        );
+        final import = importMap.putIfAbsent(url, () => prefixForUrl(uri));
         return switch (import) {
           final import? => '$import.$symbol',
           null => symbol,
@@ -183,7 +177,6 @@ final class CelestAllocator implements Allocator {
   String _nextKey() => '_i${_keys++}';
 
   @override
-  Iterable<Directive> get imports => importMap.keys.map(
-        (u) => Directive.import(u, as: importMap[u]),
-      );
+  Iterable<Directive> get imports =>
+      importMap.keys.map((u) => Directive.import(u, as: importMap[u]));
 }

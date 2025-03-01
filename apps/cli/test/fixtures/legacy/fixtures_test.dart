@@ -83,9 +83,7 @@ void main() {
       parentProject:
           useCelestLayout ? ParentProject.loadSync(testDir.path) : null,
       clientDir: projectDir.childDirectory('client'),
-      goldensDir: fileSystem.directory(
-        p.join(projectDir.path, 'goldens'),
-      ),
+      goldensDir: fileSystem.directory(p.join(projectDir.path, 'goldens')),
       includeApis: includeApis,
     );
     testRunners.add(testRunner);
@@ -170,10 +168,7 @@ class TestRunner {
           projectName: celestProject.projectName,
           parentProject: parentProject,
         );
-        await (
-          _warmUp(projectRoot),
-          migrator.migrate(),
-        ).wait;
+        await (_warmUp(projectRoot), migrator.migrate()).wait;
       });
 
       tearDownAll(() async {
@@ -200,11 +195,11 @@ class TestRunner {
     // Analyzer needs a bit longer.
     // TODO(dnys1): Benchmark + improve performance of analysis.
     test('analyzer', timeout: const Timeout.factor(3), () async {
-      final CelestAnalysisResult(:project, :errors, :warnings) =
-          await analyzer.analyzeProject(
-        migrateProject: false,
-        updateResources: updateGoldens,
-      );
+      final CelestAnalysisResult(:project, :errors, :warnings) = await analyzer
+          .analyzeProject(
+            migrateProject: false,
+            updateResources: updateGoldens,
+          );
       expect(errors, isEmpty);
       expect(warnings, isEmpty);
       expect(project, isNotNull);
@@ -229,19 +224,20 @@ class TestRunner {
 
   void testCodegen() {
     test('codegen', () async {
-      final CelestAnalysisResult(:project, :errors, :warnings) =
-          await analyzer.analyzeProject(
-        migrateProject: false,
-        updateResources: updateGoldens,
-      );
+      final CelestAnalysisResult(:project, :errors, :warnings) = await analyzer
+          .analyzeProject(
+            migrateProject: false,
+            updateResources: updateGoldens,
+          );
       expect(errors, isEmpty);
       expect(warnings, isEmpty);
       expect(project, isNotNull);
 
-      final configValues = await ConfigValueSolver(
-        project: project!,
-        environmentId: 'local',
-      ).solveAll();
+      final configValues =
+          await ConfigValueSolver(
+            project: project!,
+            environmentId: 'local',
+          ).solveAll();
       final projectResolver = ProjectResolver(
         configValues: configValues,
         environmentId: 'local',
@@ -279,19 +275,20 @@ class TestRunner {
 
   void testResolve() {
     test('resolve', () async {
-      final CelestAnalysisResult(:project, :errors, :warnings) =
-          await analyzer.analyzeProject(
-        migrateProject: false,
-        updateResources: updateGoldens,
-      );
+      final CelestAnalysisResult(:project, :errors, :warnings) = await analyzer
+          .analyzeProject(
+            migrateProject: false,
+            updateResources: updateGoldens,
+          );
       expect(errors, isEmpty);
       expect(warnings, isEmpty);
       expect(project, isNotNull);
 
-      final configValues = await ConfigValueSolver(
-        project: project!,
-        environmentId: 'local',
-      ).solveAll();
+      final configValues =
+          await ConfigValueSolver(
+            project: project!,
+            environmentId: 'local',
+          ).solveAll();
       final projectResolver = ProjectResolver(
         configValues: configValues,
         environmentId: 'local',
@@ -316,18 +313,19 @@ class TestRunner {
 
   void testClient() {
     test('client', () async {
-      final CelestAnalysisResult(:project, :errors) =
-          await analyzer.analyzeProject(
-        migrateProject: false,
-        updateResources: updateGoldens,
-      );
+      final CelestAnalysisResult(:project, :errors) = await analyzer
+          .analyzeProject(
+            migrateProject: false,
+            updateResources: updateGoldens,
+          );
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
-      final configValues = await ConfigValueSolver(
-        project: project!,
-        environmentId: 'local',
-      ).solveAll();
+      final configValues =
+          await ConfigValueSolver(
+            project: project!,
+            environmentId: 'local',
+          ).solveAll();
       final projectResolver = ProjectResolver(
         configValues: configValues,
         environmentId: 'local',
@@ -394,18 +392,19 @@ class TestRunner {
 
       setUpAll(() async {
         final entrypoint = projectPaths.localApiEntrypoint;
-        final CelestAnalysisResult(:project, :errors) =
-            await analyzer.analyzeProject(
-          migrateProject: false,
-          updateResources: updateGoldens,
-        );
+        final CelestAnalysisResult(:project, :errors) = await analyzer
+            .analyzeProject(
+              migrateProject: false,
+              updateResources: updateGoldens,
+            );
         expect(errors, isEmpty);
         expect(project, isNotNull);
 
-        final configValues = await ConfigValueSolver(
-          project: project!,
-          environmentId: 'local',
-        ).solveAll();
+        final configValues =
+            await ConfigValueSolver(
+              project: project!,
+              environmentId: 'local',
+            ).solveAll();
         final projectResolver = ProjectResolver(
           configValues: configValues,
           environmentId: 'local',
@@ -423,10 +422,7 @@ class TestRunner {
         );
         apiUri = Uri.parse('http://localhost:${apiRunner.port}');
 
-        await expectLater(
-          client.get(apiUri),
-          completes,
-        );
+        await expectLater(client.get(apiUri), completes);
       });
 
       setUp(logs.clear);
@@ -465,17 +461,20 @@ class TestRunner {
     group(functionName, () {
       for (final testCase in httpTests) {
         test(testCase.name, () async {
-          final request = Request(
-            testCase.method,
-            apiUri()
-                .resolve('/${apiName.paramCase}/${functionName.paramCase}')
-                .replace(queryParameters: testCase.queryParameters),
-          )
-            ..headers.addAll({
-              'Content-Type': 'application/json',
-              ...testCase.headers,
-            })
-            ..body = jsonEncode(testCase.input);
+          final request =
+              Request(
+                  testCase.method,
+                  apiUri()
+                      .resolve(
+                        '/${apiName.paramCase}/${functionName.paramCase}',
+                      )
+                      .replace(queryParameters: testCase.queryParameters),
+                )
+                ..headers.addAll({
+                  'Content-Type': 'application/json',
+                  ...testCase.headers,
+                })
+                ..body = jsonEncode(testCase.input);
           if (testCase.setup case final setup?) {
             await setup(request);
           }
@@ -657,36 +656,13 @@ const complexStruct = <String, dynamic>{
   'aListOfUint8List': ['SGVsbG8sIFdvcmxkIQ==', 'SGVsbG8sIFdvcmxkIQ=='],
   'aListOfSimpleStruct': [simpleStruct, simpleStruct],
   'aListOfSimpleClass': [simpleStruct, simpleStruct],
-  'aMapOfString': {
-    'hello': 'world',
-  },
-  'aMapOfInt': {
-    'one': 1,
-    'two': 2,
-    'three': 3,
-  },
-  'aMapOfDouble': {
-    'one': 1.0,
-    'two': 2.0,
-    'three': 3.0,
-  },
-  'aMapOfBool': {
-    'true': true,
-    'false': false,
-  },
-  'aMapOfEnum': {
-    'a': 'a',
-    'b': 'b',
-    'c': 'c',
-  },
-  'aMapOfNull': {
-    'null': null,
-  },
-  'aMapOfBigInt': {
-    'one': '1',
-    'two': '2',
-    'three': '3',
-  },
+  'aMapOfString': {'hello': 'world'},
+  'aMapOfInt': {'one': 1, 'two': 2, 'three': 3},
+  'aMapOfDouble': {'one': 1.0, 'two': 2.0, 'three': 3.0},
+  'aMapOfBool': {'true': true, 'false': false},
+  'aMapOfEnum': {'a': 'a', 'b': 'b', 'c': 'c'},
+  'aMapOfNull': {'null': null},
+  'aMapOfBigInt': {'one': '1', 'two': '2', 'three': '3'},
   'aMapOfDateTime': {
     'one': '2021-01-01T00:00:00.000Z',
     'two': '2021-01-02T00:00:00.000Z',
@@ -718,11 +694,7 @@ const complexStruct = <String, dynamic>{
       'microseconds': 6,
     },
   },
-  'aMapOfRegExp': {
-    'one': '.*',
-    'two': '.*',
-    'three': '.*',
-  },
+  'aMapOfRegExp': {'one': '.*', 'two': '.*', 'three': '.*'},
   'aMapOfStackTrace': {
     'one': '''
 #0      main (file:///Users/test/projects/hello/lib/src/main.dart:10:3)
@@ -799,65 +771,45 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'simpleMap',
               input: {
-                'map': {
-                  'hello': 'world',
-                },
+                'map': {'hello': 'world'},
               },
-              output: {
-                'hello': 'world',
-              },
+              output: {'hello': 'world'},
             ),
           ],
           'dynamicMap': [
             FunctionTestSuccess(
               name: 'dynamicMap',
               input: {
-                'map': {
-                  'hello': 'world',
-                },
+                'map': {'hello': 'world'},
               },
-              output: {
-                'hello': 'world',
-              },
+              output: {'hello': 'world'},
             ),
           ],
           'objectMap': [
             FunctionTestSuccess(
               name: 'objectMap',
               input: {
-                'map': {
-                  'hello': 'world',
-                },
+                'map': {'hello': 'world'},
               },
-              output: {
-                'hello': 'world',
-              },
+              output: {'hello': 'world'},
             ),
           ],
           'objectNullableMap': [
             FunctionTestSuccess(
               name: 'objectNullableMap',
               input: {
-                'map': {
-                  'hello': 'world',
-                },
+                'map': {'hello': 'world'},
               },
-              output: {
-                'hello': 'world',
-              },
+              output: {'hello': 'world'},
             ),
           ],
           'complexMap': [
             FunctionTestSuccess(
               name: 'complexMap',
               input: {
-                'map': {
-                  'hello': simpleStruct,
-                },
+                'map': {'hello': simpleStruct},
               },
-              output: {
-                'hello': simpleStruct,
-              },
+              output: {'hello': simpleStruct},
             ),
           ],
         },
@@ -867,135 +819,105 @@ final tests = <String, Test>{
           'string': [
             FunctionTestSuccess(
               name: 'stringString',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'hello',
             ),
           ],
           'asyncOrString': [
             FunctionTestSuccess(
               name: 'asyncOrString',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'hello',
             ),
           ],
           'asyncString': [
             FunctionTestSuccess(
               name: 'asyncString',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'hello',
             ),
           ],
           'stringImpl': [
             FunctionTestSuccess(
               name: 'stringImpl',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'hello',
             ),
           ],
           'stringToFromJson': [
             FunctionTestSuccess(
               name: 'stringToFromJson',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'olleh',
             ),
           ],
           'stringToJson': [
             FunctionTestSuccess(
               name: 'stringToJson',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'olleh',
             ),
           ],
           'stringToJsonImpl': [
             FunctionTestSuccess(
               name: 'stringToJsonImpl',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'olleh',
             ),
           ],
           'stringFromJson': [
             FunctionTestSuccess(
               name: 'stringFromJson',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'olleh',
             ),
           ],
           'stringFromJsonImpl': [
             FunctionTestSuccess(
               name: 'stringFromJsonImpl',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'olleh',
             ),
           ],
           'stringFromJsonStatic': [
             FunctionTestSuccess(
               name: 'stringFromJsonStatic',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'olleh',
             ),
           ],
           'stringPrivateField': [
             FunctionTestSuccess(
               name: 'stringPrivateField',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'hello',
             ),
           ],
           'stringPrivateFieldImpl': [
             FunctionTestSuccess(
               name: 'stringPrivateFieldImpl',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'hello',
             ),
           ],
           'stringPrivateCtor': [
             FunctionTestSuccess(
               name: 'stringPrivateCtor',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'hello',
             ),
           ],
           'stringPrivateCtorImpl': [
             FunctionTestSuccess(
               name: 'stringPrivateCtorImpl',
-              input: {
-                's': 'hello',
-              },
+              input: {'s': 'hello'},
               output: 'hello',
             ),
           ],
           'value': [
             FunctionTestSuccess(
               name: 'value',
-              input: {
-                'v': 'hello',
-              },
+              input: {'v': 'hello'},
               output: 'hello',
             ),
           ],
@@ -1003,34 +925,24 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'valueX',
               input: {
-                'v': {
-                  'value': 'hello',
-                },
+                'v': {'value': 'hello'},
               },
-              output: {
-                'value': 'hello',
-              },
+              output: {'value': 'hello'},
             ),
           ],
           'valueXImpl': [
             FunctionTestSuccess(
               name: 'valueXImpl',
               input: {
-                'v': {
-                  'value': 'hello',
-                },
+                'v': {'value': 'hello'},
               },
-              output: {
-                'value': 'hello',
-              },
+              output: {'value': 'hello'},
             ),
           ],
           'valueXToFromJson': [
             FunctionTestSuccess(
               name: 'valueXImpl',
-              input: {
-                'v': 'hello',
-              },
+              input: {'v': 'hello'},
               output: 'helloFromJsonToJson',
             ),
           ],
@@ -1038,21 +950,15 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'valueXToJson',
               input: {
-                'v': {
-                  'value': 'hello',
-                },
+                'v': {'value': 'hello'},
               },
-              output: {
-                'value': 'helloToJson',
-              },
+              output: {'value': 'helloToJson'},
             ),
           ],
           'valueXToJsonImpl': [
             FunctionTestSuccess(
               name: 'valueXToJson',
-              input: {
-                'v': 'hello',
-              },
+              input: {'v': 'hello'},
               output: 'helloToJson',
             ),
           ],
@@ -1060,21 +966,15 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'valueXFromJson',
               input: {
-                'v': {
-                  'value': 'hello',
-                },
+                'v': {'value': 'hello'},
               },
-              output: {
-                'value': 'helloFromJson',
-              },
+              output: {'value': 'helloFromJson'},
             ),
           ],
           'valueXFromJsonImpl': [
             FunctionTestSuccess(
               name: 'valueXFromJsonImpl',
-              input: {
-                'v': 'hello',
-              },
+              input: {'v': 'hello'},
               output: 'helloFromJson',
             ),
           ],
@@ -1082,42 +982,30 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'valueXFromJsonStatic',
               input: {
-                'v': {
-                  'value': 'hello',
-                },
+                'v': {'value': 'hello'},
               },
-              output: {
-                'value': 'helloFromJson',
-              },
+              output: {'value': 'helloFromJson'},
             ),
           ],
           'jsonValue': [
             FunctionTestSuccess(
               name: 'string',
-              input: {
-                'value': 'hello',
-              },
+              input: {'value': 'hello'},
               output: 'hello',
             ),
             FunctionTestSuccess(
               name: 'int',
-              input: {
-                'value': 123,
-              },
+              input: {'value': 123},
               output: 123,
             ),
             FunctionTestSuccess(
               name: 'double',
-              input: {
-                'value': 123.456,
-              },
+              input: {'value': 123.456},
               output: 123.456,
             ),
             FunctionTestSuccess(
               name: 'bool',
-              input: {
-                'value': true,
-              },
+              input: {'value': true},
               output: true,
             ),
             FunctionTestSuccess(
@@ -1179,52 +1067,40 @@ final tests = <String, Test>{
           'jsonString': [
             FunctionTestSuccess(
               name: 'jsonString',
-              input: {
-                'value': 'hello',
-              },
+              input: {'value': 'hello'},
               output: 'hello',
             ),
           ],
           'jsonNum': [
             FunctionTestSuccess(
               name: 'int',
-              input: {
-                'value': 123,
-              },
+              input: {'value': 123},
               output: 123,
             ),
             FunctionTestSuccess(
               name: 'double',
-              input: {
-                'value': 123.456,
-              },
+              input: {'value': 123.456},
               output: 123.456,
             ),
           ],
           'jsonInt': [
             FunctionTestSuccess(
               name: 'jsonInt',
-              input: {
-                'value': 123,
-              },
+              input: {'value': 123},
               output: 123,
             ),
           ],
           'jsonDouble': [
             FunctionTestSuccess(
               name: 'jsonDouble',
-              input: {
-                'value': 123.456,
-              },
+              input: {'value': 123.456},
               output: 123.456,
             ),
           ],
           'jsonBool': [
             FunctionTestSuccess(
               name: 'jsonBool',
-              input: {
-                'value': true,
-              },
+              input: {'value': true},
               output: true,
             ),
           ],
@@ -1265,95 +1141,71 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'complex',
               input: {
-                'value': {
-                  'a': complexStruct,
-                  'b': complexStruct,
-                },
+                'value': {'a': complexStruct, 'b': complexStruct},
               },
-              output: {
-                'a': complexStruct,
-                'b': complexStruct,
-              },
+              output: {'a': complexStruct, 'b': complexStruct},
             ),
           ],
           'color': [
             FunctionTestSuccess(
               name: 'color',
-              input: {
-                'color': 'r',
-              },
+              input: {'color': 'r'},
               output: 'r',
             ),
           ],
           'colorX': [
             FunctionTestSuccess(
               name: 'colorX',
-              input: {
-                'color': 'red',
-              },
+              input: {'color': 'red'},
               output: 'red',
             ),
           ],
           'colorXImpl': [
             FunctionTestSuccess(
               name: 'colorX',
-              input: {
-                'color': 'red',
-              },
+              input: {'color': 'red'},
               output: 'red',
             ),
           ],
           'colorXToFromJson': [
             FunctionTestSuccess(
               name: 'colorXToFromJson',
-              input: {
-                'color': 'RED',
-              },
+              input: {'color': 'RED'},
               output: 'RED',
             ),
           ],
           'colorXToJson': [
             FunctionTestSuccess(
               name: 'colorXToJson',
-              input: {
-                'color': 'red',
-              },
+              input: {'color': 'red'},
               output: 'RED',
             ),
           ],
           'colorXToJsonImpl': [
             FunctionTestSuccess(
               name: 'colorXToJson',
-              input: {
-                'color': 'red',
-              },
+              input: {'color': 'red'},
               output: 'RED',
             ),
           ],
           'colorXFromJson': [
             FunctionTestSuccess(
               name: 'colorXFromJson',
-              input: {
-                'color': 'RED',
-              },
+              input: {'color': 'RED'},
               output: 'red',
             ),
           ],
           'colorXFromJsonImpl': [
             FunctionTestSuccess(
               name: 'colorXFromJsonImpl',
-              input: {
-                'color': 'RED',
-              },
+              input: {'color': 'RED'},
               output: 'r',
             ),
           ],
           'colorXFromJsonStatic': [
             FunctionTestSuccess(
               name: 'colorXFromJsonStatic',
-              input: {
-                'color': 'RED',
-              },
+              input: {'color': 'RED'},
               output: 'red',
             ),
           ],
@@ -1374,11 +1226,7 @@ final tests = <String, Test>{
               input: complexStruct,
               output: null,
             ),
-            FunctionTestSuccess(
-              name: 'all null',
-              input: {},
-              output: null,
-            ),
+            FunctionTestSuccess(name: 'all null', input: {}, output: null),
           ],
           'complex': [
             FunctionTestSuccess(
@@ -1392,34 +1240,16 @@ final tests = <String, Test>{
                 'aNullableComplexStruct': complexStruct,
                 'aNullableSimpleClass': simpleStruct,
                 'aNullableComplexClass': complexStruct,
-                'anIterableOfSimpleStruct': [
-                  simpleStruct,
-                  simpleStruct,
-                ],
-                'anIterableOfComplexStruct': [
-                  complexStruct,
-                  complexStruct,
-                ],
-                'anIterableOfSimpleClass': [
-                  simpleStruct,
-                  simpleStruct,
-                ],
-                'anIterableOfComplexClass': [
-                  complexStruct,
-                  complexStruct,
-                ],
-                'aNullableIterableOfSimpleStruct': [
-                  simpleStruct,
-                  simpleStruct,
-                ],
+                'anIterableOfSimpleStruct': [simpleStruct, simpleStruct],
+                'anIterableOfComplexStruct': [complexStruct, complexStruct],
+                'anIterableOfSimpleClass': [simpleStruct, simpleStruct],
+                'anIterableOfComplexClass': [complexStruct, complexStruct],
+                'aNullableIterableOfSimpleStruct': [simpleStruct, simpleStruct],
                 'aNullableIterableOfComplexStruct': [
                   complexStruct,
                   complexStruct,
                 ],
-                'aNullableIterableOfSimpleClass': [
-                  simpleStruct,
-                  simpleStruct,
-                ],
+                'aNullableIterableOfSimpleClass': [simpleStruct, simpleStruct],
                 'aNullableIterableOfComplexClass': [
                   complexStruct,
                   complexStruct,
@@ -1444,38 +1274,14 @@ final tests = <String, Test>{
                   null,
                   complexStruct,
                 ],
-                'aListOfSimpleStruct': [
-                  simpleStruct,
-                  simpleStruct,
-                ],
-                'aListOfComplexStruct': [
-                  complexStruct,
-                  complexStruct,
-                ],
-                'aListOfSimpleClass': [
-                  simpleStruct,
-                  simpleStruct,
-                ],
-                'aListOfComplexClass': [
-                  complexStruct,
-                  complexStruct,
-                ],
-                'aNullableListOfSimpleStruct': [
-                  simpleStruct,
-                  simpleStruct,
-                ],
-                'aNullableListOfComplexStruct': [
-                  complexStruct,
-                  complexStruct,
-                ],
-                'aNullableListOfSimpleClass': [
-                  simpleStruct,
-                  simpleStruct,
-                ],
-                'aNullableListOfComplexClass': [
-                  complexStruct,
-                  complexStruct,
-                ],
+                'aListOfSimpleStruct': [simpleStruct, simpleStruct],
+                'aListOfComplexStruct': [complexStruct, complexStruct],
+                'aListOfSimpleClass': [simpleStruct, simpleStruct],
+                'aListOfComplexClass': [complexStruct, complexStruct],
+                'aNullableListOfSimpleStruct': [simpleStruct, simpleStruct],
+                'aNullableListOfComplexStruct': [complexStruct, complexStruct],
+                'aNullableListOfSimpleClass': [simpleStruct, simpleStruct],
+                'aNullableListOfComplexClass': [complexStruct, complexStruct],
                 'aListOfNullableSimpleStruct': [
                   simpleStruct,
                   null,
@@ -1590,22 +1396,10 @@ final tests = <String, Test>{
                 'aNullableComplexStruct': null,
                 'aNullableSimpleClass': null,
                 'aNullableComplexClass': null,
-                'anIterableOfSimpleStruct': [
-                  simpleStruct,
-                  simpleStruct,
-                ],
-                'anIterableOfComplexStruct': [
-                  complexStruct,
-                  complexStruct,
-                ],
-                'anIterableOfSimpleClass': [
-                  simpleStruct,
-                  simpleStruct,
-                ],
-                'anIterableOfComplexClass': [
-                  complexStruct,
-                  complexStruct,
-                ],
+                'anIterableOfSimpleStruct': [simpleStruct, simpleStruct],
+                'anIterableOfComplexStruct': [complexStruct, complexStruct],
+                'anIterableOfSimpleClass': [simpleStruct, simpleStruct],
+                'anIterableOfComplexClass': [complexStruct, complexStruct],
                 'aNullableIterableOfSimpleStruct': null,
                 'aNullableIterableOfComplexStruct': null,
                 'aNullableIterableOfSimpleClass': null,
@@ -1630,22 +1424,10 @@ final tests = <String, Test>{
                   null,
                   complexStruct,
                 ],
-                'aListOfSimpleStruct': [
-                  simpleStruct,
-                  simpleStruct,
-                ],
-                'aListOfComplexStruct': [
-                  complexStruct,
-                  complexStruct,
-                ],
-                'aListOfSimpleClass': [
-                  simpleStruct,
-                  simpleStruct,
-                ],
-                'aListOfComplexClass': [
-                  complexStruct,
-                  complexStruct,
-                ],
+                'aListOfSimpleStruct': [simpleStruct, simpleStruct],
+                'aListOfComplexStruct': [complexStruct, complexStruct],
+                'aListOfSimpleClass': [simpleStruct, simpleStruct],
+                'aListOfComplexClass': [complexStruct, complexStruct],
                 'aNullableListOfSimpleStruct': null,
                 'aNullableListOfComplexStruct': null,
                 'aNullableListOfSimpleClass': null,
@@ -1799,14 +1581,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'api.v1.OverriddenException',
-                      'value': {
-                        'message': 'message',
-                      },
+                      'value': {'message': 'message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -1824,14 +1601,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'api.v1.OverriddenException',
-                      'value': {
-                        'message': 'message',
-                      },
+                      'value': {'message': 'message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -1849,14 +1621,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'api.v1.OverriddenException',
-                      'value': {
-                        'message': 'message',
-                      },
+                      'value': {'message': 'message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -1874,14 +1641,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'api.v1.OverriddenException',
-                      'value': {
-                        'message': 'message',
-                      },
+                      'value': {'message': 'message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -1891,148 +1653,82 @@ final tests = <String, Test>{
       ),
       'classes': ApiTest(
         functionTests: {
-          'empty': [
-            FunctionTestSuccess(
-              name: 'empty',
-              input: {},
-              output: {},
-            ),
-          ],
+          'empty': [FunctionTestSuccess(name: 'empty', input: {}, output: {})],
           'asyncEmpty': [
-            FunctionTestSuccess(
-              name: 'asyncEmpty',
-              input: {},
-              output: {},
-            ),
+            FunctionTestSuccess(name: 'asyncEmpty', input: {}, output: {}),
           ],
           'fields': [
             FunctionTestSuccess(
               name: 'fields',
               input: {
-                'value': {
-                  'superField': 'superField',
-                  'field': 'field',
-                },
+                'value': {'superField': 'superField', 'field': 'field'},
               },
-              output: {
-                'superField': 'superField',
-                'field': 'field',
-              },
+              output: {'superField': 'superField', 'field': 'field'},
             ),
           ],
           'asyncFields': [
             FunctionTestSuccess(
               name: 'asyncFields',
               input: {
-                'value': {
-                  'superField': 'superField',
-                  'field': 'field',
-                },
+                'value': {'superField': 'superField', 'field': 'field'},
               },
-              output: {
-                'superField': 'superField',
-                'field': 'field',
-              },
+              output: {'superField': 'superField', 'field': 'field'},
             ),
           ],
           'nullableFields': [
-            FunctionTestSuccess(
-              name: 'null',
-              input: {},
-              output: null,
-            ),
+            FunctionTestSuccess(name: 'null', input: {}, output: null),
             FunctionTestSuccess(
               name: 'present',
               input: {
-                'value': {
-                  'superField': 'superField',
-                  'field': 'field',
-                },
+                'value': {'superField': 'superField', 'field': 'field'},
               },
-              output: {
-                'superField': 'superField',
-                'field': 'field',
-              },
+              output: {'superField': 'superField', 'field': 'field'},
             ),
           ],
           'asyncNullableFields': [
-            FunctionTestSuccess(
-              name: 'null',
-              input: {},
-              output: null,
-            ),
+            FunctionTestSuccess(name: 'null', input: {}, output: null),
             FunctionTestSuccess(
               name: 'present',
               input: {
-                'value': {
-                  'superField': 'superField',
-                  'field': 'field',
-                },
+                'value': {'superField': 'superField', 'field': 'field'},
               },
-              output: {
-                'superField': 'superField',
-                'field': 'field',
-              },
+              output: {'superField': 'superField', 'field': 'field'},
             ),
           ],
           'namedFields': [
             FunctionTestSuccess(
               name: 'namedFields',
               input: {
-                'value': {
-                  'superField': 'superField',
-                  'field': 'field',
-                },
+                'value': {'superField': 'superField', 'field': 'field'},
               },
-              output: {
-                'superField': 'superField',
-                'field': 'field',
-              },
+              output: {'superField': 'superField', 'field': 'field'},
             ),
           ],
           'asyncNamedFields': [
             FunctionTestSuccess(
               name: 'asyncNamedFields',
               input: {
-                'value': {
-                  'superField': 'superField',
-                  'field': 'field',
-                },
+                'value': {'superField': 'superField', 'field': 'field'},
               },
-              output: {
-                'superField': 'superField',
-                'field': 'field',
-              },
+              output: {'superField': 'superField', 'field': 'field'},
             ),
           ],
           'mixedFields': [
             FunctionTestSuccess(
               name: 'mixedFields',
               input: {
-                'value': {
-                  'superField': 'superField',
-                  'field': 'field',
-                },
+                'value': {'superField': 'superField', 'field': 'field'},
               },
-              output: {
-                'superField': 'superField',
-                'field': 'field',
-              },
+              output: {'superField': 'superField', 'field': 'field'},
             ),
           ],
           'asyncMixedFields': [
             FunctionTestSuccess(
               name: 'asyncMixedFields',
               input: {
-                'value': {
-                  'superField': 'superField',
-                  'field': 'field',
-                },
+                'value': {'superField': 'superField', 'field': 'field'},
               },
-              output: {
-                'superField': 'superField',
-                'field': 'field',
-              },
+              output: {'superField': 'superField', 'field': 'field'},
             ),
           ],
           'defaultValues': [
@@ -2054,9 +1750,7 @@ final tests = <String, Test>{
             ),
             FunctionTestSuccess(
               name: 'all defaults',
-              input: {
-                'value': {},
-              },
+              input: {'value': {}},
               output: {
                 'field': 'default',
                 'nullableFieldWithDefault': 'default',
@@ -2083,9 +1777,7 @@ final tests = <String, Test>{
             ),
             FunctionTestSuccess(
               name: 'all defaults',
-              input: {
-                'value': {},
-              },
+              input: {'value': {}},
               output: {
                 'field': 'default',
                 'nullableFieldWithDefault': 'default',
@@ -2098,10 +1790,7 @@ final tests = <String, Test>{
               name: 'present',
               input: {
                 'value': {
-                  'fields': {
-                    'superField': 'superField',
-                    'field': 'field',
-                  },
+                  'fields': {'superField': 'superField', 'field': 'field'},
                   'nullableFields': {
                     'superField': 'superField',
                     'field': 'field',
@@ -2109,10 +1798,7 @@ final tests = <String, Test>{
                 },
               },
               output: {
-                'fields': {
-                  'superField': 'superField',
-                  'field': 'field',
-                },
+                'fields': {'superField': 'superField', 'field': 'field'},
                 'nullableFields': {
                   'superField': 'superField',
                   'field': 'field',
@@ -2123,17 +1809,11 @@ final tests = <String, Test>{
               name: 'null',
               input: {
                 'value': {
-                  'fields': {
-                    'superField': 'superField',
-                    'field': 'field',
-                  },
+                  'fields': {'superField': 'superField', 'field': 'field'},
                 },
               },
               output: {
-                'fields': {
-                  'superField': 'superField',
-                  'field': 'field',
-                },
+                'fields': {'superField': 'superField', 'field': 'field'},
               },
             ),
           ],
@@ -2142,10 +1822,7 @@ final tests = <String, Test>{
               name: 'present',
               input: {
                 'value': {
-                  'fields': {
-                    'superField': 'superField',
-                    'field': 'field',
-                  },
+                  'fields': {'superField': 'superField', 'field': 'field'},
                   'nullableFields': {
                     'superField': 'superField',
                     'field': 'field',
@@ -2153,10 +1830,7 @@ final tests = <String, Test>{
                 },
               },
               output: {
-                'fields': {
-                  'superField': 'superField',
-                  'field': 'field',
-                },
+                'fields': {'superField': 'superField', 'field': 'field'},
                 'nullableFields': {
                   'superField': 'superField',
                   'field': 'field',
@@ -2167,17 +1841,11 @@ final tests = <String, Test>{
               name: 'null',
               input: {
                 'value': {
-                  'fields': {
-                    'superField': 'superField',
-                    'field': 'field',
-                  },
+                  'fields': {'superField': 'superField', 'field': 'field'},
                 },
               },
               output: {
-                'fields': {
-                  'superField': 'superField',
-                  'field': 'field',
-                },
+                'fields': {'superField': 'superField', 'field': 'field'},
               },
             ),
           ],
@@ -2185,190 +1853,132 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'onlyFromJson',
               input: {
-                'value': {
-                  'field': 'field',
-                },
+                'value': {'field': 'field'},
               },
-              output: {
-                'field': 'field',
-              },
+              output: {'field': 'field'},
             ),
           ],
           'asyncOnlyFromJson': [
             FunctionTestSuccess(
               name: 'asyncOnlyFromJson',
               input: {
-                'value': {
-                  'field': 'field',
-                },
+                'value': {'field': 'field'},
               },
-              output: {
-                'field': 'field',
-              },
+              output: {'field': 'field'},
             ),
           ],
           'onlyToJson': [
             FunctionTestSuccess(
               name: 'onlyToJson',
               input: {
-                'value': {
-                  'field': 'field',
-                },
+                'value': {'field': 'field'},
               },
-              output: {
-                'field': 'field',
-              },
+              output: {'field': 'field'},
             ),
           ],
           'asyncOnlyToJson': [
             FunctionTestSuccess(
               name: 'asyncOnlyToJson',
               input: {
-                'value': {
-                  'field': 'field',
-                },
+                'value': {'field': 'field'},
               },
-              output: {
-                'field': 'field',
-              },
+              output: {'field': 'field'},
             ),
           ],
           'onlyToJsonWithDefaults': [
             FunctionTestSuccess(
               name: 'present',
               input: {
-                'value': {
-                  'field': 'field',
-                },
+                'value': {'field': 'field'},
               },
-              output: {
-                'field': 'field',
-              },
+              output: {'field': 'field'},
             ),
             FunctionTestSuccess(
               name: 'null',
               input: {},
-              output: {
-                'field': 'default',
-              },
+              output: {'field': 'default'},
             ),
           ],
           'asyncOnlyToJsonWithDefaults': [
             FunctionTestSuccess(
               name: 'present',
               input: {
-                'value': {
-                  'field': 'field',
-                },
+                'value': {'field': 'field'},
               },
-              output: {
-                'field': 'field',
-              },
+              output: {'field': 'field'},
             ),
             FunctionTestSuccess(
               name: 'null',
               input: {},
-              output: {
-                'field': 'default',
-              },
+              output: {'field': 'default'},
             ),
           ],
           'fromAndToJson': [
             FunctionTestSuccess(
               name: 'fromAndToJson',
               input: {
-                'value': {
-                  'field': 'field',
-                },
+                'value': {'field': 'field'},
               },
-              output: {
-                'field': 'field',
-              },
+              output: {'field': 'field'},
             ),
           ],
           'asyncFromAndToJson': [
             FunctionTestSuccess(
               name: 'asyncFromAndToJson',
               input: {
-                'value': {
-                  'field': 'field',
-                },
+                'value': {'field': 'field'},
               },
-              output: {
-                'field': 'field',
-              },
+              output: {'field': 'field'},
             ),
           ],
           'nonMapToJson': [
             FunctionTestSuccess(
               name: 'nonMapToJson',
-              input: {
-                'value': 'field',
-              },
+              input: {'value': 'field'},
               output: 'field',
             ),
           ],
           'asyncNonMapToJson': [
             FunctionTestSuccess(
               name: 'asyncNonMapToJson',
-              input: {
-                'value': 'field',
-              },
+              input: {'value': 'field'},
               output: 'field',
             ),
           ],
           'nonMapToJsonWithDefaults': [
             FunctionTestSuccess(
               name: 'present',
-              input: {
-                'value': 'field',
-              },
+              input: {'value': 'field'},
               output: 'field',
             ),
-            FunctionTestSuccess(
-              name: 'null',
-              input: {},
-              output: 'default',
-            ),
+            FunctionTestSuccess(name: 'null', input: {}, output: 'default'),
           ],
           'asyncNonMapToJsonWithDefaults': [
             FunctionTestSuccess(
               name: 'present',
-              input: {
-                'value': 'field',
-              },
+              input: {'value': 'field'},
               output: 'field',
             ),
-            FunctionTestSuccess(
-              name: 'null',
-              input: {},
-              output: 'default',
-            ),
+            FunctionTestSuccess(name: 'null', input: {}, output: 'default'),
           ],
           'nonMapFromAndToJson': [
             FunctionTestSuccess(
               name: 'nonMapFromAndToJson',
-              input: {
-                'value': 'field',
-              },
+              input: {'value': 'field'},
               output: 'field',
             ),
           ],
           'asyncNonMapFromAndToJson': [
             FunctionTestSuccess(
               name: 'asyncNonMapFromAndToJson',
-              input: {
-                'value': 'field',
-              },
+              input: {'value': 'field'},
               output: 'field',
             ),
           ],
           'fromJsonStatic': [
             FunctionTestSuccess(
               name: 'fromJsonStatic',
-              input: {
-                'value': 'field',
-              },
+              input: {'value': 'field'},
               output: 'field',
             ),
           ],
@@ -2380,60 +1990,36 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'nonAliasedNamedFields',
               input: {
-                'value': {
-                  'field': 'field',
-                  'anotherField': 'anotherField',
-                },
+                'value': {'field': 'field', 'anotherField': 'anotherField'},
               },
-              output: {
-                'field': 'field',
-                'anotherField': 'anotherField',
-              },
+              output: {'field': 'field', 'anotherField': 'anotherField'},
             ),
           ],
           'asyncNonAliasedNamedFields': [
             FunctionTestSuccess(
               name: 'asyncNonAliasedNamedFields',
               input: {
-                'value': {
-                  'field': 'field',
-                  'anotherField': 'anotherField',
-                },
+                'value': {'field': 'field', 'anotherField': 'anotherField'},
               },
-              output: {
-                'field': 'field',
-                'anotherField': 'anotherField',
-              },
+              output: {'field': 'field', 'anotherField': 'anotherField'},
             ),
           ],
           'aliasedNamedFields': [
             FunctionTestSuccess(
               name: 'aliasedNamedFields',
               input: {
-                'value': {
-                  'field': 'field',
-                  'anotherField': 'anotherField',
-                },
+                'value': {'field': 'field', 'anotherField': 'anotherField'},
               },
-              output: {
-                'field': 'field',
-                'anotherField': 'anotherField',
-              },
+              output: {'field': 'field', 'anotherField': 'anotherField'},
             ),
           ],
           'asyncAliasedNamedFields': [
             FunctionTestSuccess(
               name: 'asyncAliasedNamedFields',
               input: {
-                'value': {
-                  'field': 'field',
-                  'anotherField': 'anotherField',
-                },
+                'value': {'field': 'field', 'anotherField': 'anotherField'},
               },
-              output: {
-                'field': 'field',
-                'anotherField': 'anotherField',
-              },
+              output: {'field': 'field', 'anotherField': 'anotherField'},
             ),
           ],
           'namedFields': [
@@ -2444,20 +2030,14 @@ final tests = <String, Test>{
                   'field': 'field',
                   'anotherField': 'anotherField',
                 },
-                'aliased': {
-                  'field': 'field',
-                  'anotherField': 'anotherField',
-                },
+                'aliased': {'field': 'field', 'anotherField': 'anotherField'},
               },
               output: {
                 'nonAliased': {
                   'field': 'field',
                   'anotherField': 'anotherField',
                 },
-                'aliased': {
-                  'field': 'field',
-                  'anotherField': 'anotherField',
-                },
+                'aliased': {'field': 'field', 'anotherField': 'anotherField'},
               },
             ),
           ],
@@ -2469,20 +2049,14 @@ final tests = <String, Test>{
                   'field': 'field',
                   'anotherField': 'anotherField',
                 },
-                'aliased': {
-                  'field': 'field',
-                  'anotherField': 'anotherField',
-                },
+                'aliased': {'field': 'field', 'anotherField': 'anotherField'},
               },
               output: {
                 'nonAliased': {
                   'field': 'field',
                   'anotherField': 'anotherField',
                 },
-                'aliased': {
-                  'field': 'field',
-                  'anotherField': 'anotherField',
-                },
+                'aliased': {'field': 'field', 'anotherField': 'anotherField'},
               },
             ),
           ],
@@ -2525,17 +2099,11 @@ final tests = <String, Test>{
             ),
           ],
           'nullableNested': [
-            FunctionTestSuccess(
-              name: 'null',
-              input: {},
-              output: null,
-            ),
+            FunctionTestSuccess(name: 'null', input: {}, output: null),
             FunctionTestSuccess(
               name: 'no value',
               input: {
-                'value': {
-                  'namedFields': null,
-                },
+                'value': {'namedFields': null},
               },
               output: {},
             ),
@@ -2558,17 +2126,11 @@ final tests = <String, Test>{
             ),
           ],
           'asyncNullableNested': [
-            FunctionTestSuccess(
-              name: 'null',
-              input: {},
-              output: null,
-            ),
+            FunctionTestSuccess(name: 'null', input: {}, output: null),
             FunctionTestSuccess(
               name: 'no value',
               input: {
-                'value': {
-                  'namedFields': null,
-                },
+                'value': {'namedFields': null},
               },
               output: {},
             ),
@@ -2597,18 +2159,14 @@ final tests = <String, Test>{
           'genericWrappers': [
             FunctionTestSuccess(
               name: 'genericWrappers',
-              input: {
-                'value': genericWrappers,
-              },
+              input: {'value': genericWrappers},
               output: genericWrappers,
             ),
           ],
           'genericWrappersAsync': [
             FunctionTestSuccess(
               name: 'genericWrappers',
-              input: {
-                'value': genericWrappers,
-              },
+              input: {'value': genericWrappers},
               output: genericWrappers,
             ),
           ],
@@ -2627,22 +2185,14 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'deserializes std exception',
               statusCode: 400,
-              input: {
-                'type': 'Exception',
-              },
+              input: {'type': 'Exception'},
               output: {
                 '@status': {
                   'code': 400,
                   'message': null,
                   'details': [
-                    {
-                      '@type': 'dart.core.Exception',
-                      'value': anything,
-                    },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.Exception', 'value': anything},
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -2650,9 +2200,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'deserializes format exception',
               statusCode: 400,
-              input: {
-                'type': 'FormatException',
-              },
+              input: {'type': 'FormatException'},
               output: {
                 '@status': {
                   'code': 400,
@@ -2660,15 +2208,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'dart.core.FormatException',
-                      'value': {
-                        'message': 'Bad format',
-                        'source': null,
-                      },
+                      'value': {'message': 'Bad format', 'source': null},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -2678,22 +2220,14 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'deserializes std error',
               statusCode: 500,
-              input: {
-                'type': 'Error',
-              },
+              input: {'type': 'Error'},
               output: {
                 '@status': {
                   'code': 500,
                   'message': null,
                   'details': [
-                    {
-                      '@type': 'dart.core.Error',
-                      'value': anything,
-                    },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.Error', 'value': anything},
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -2701,9 +2235,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'deserializes argument error',
               statusCode: 500,
-              input: {
-                'type': 'ArgumentError',
-              },
+              input: {'type': 'ArgumentError'},
               output: {
                 '@status': {
                   'code': 500,
@@ -2718,10 +2250,7 @@ final tests = <String, Test>{
                         'invalidValue': null,
                       },
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -2742,15 +2271,10 @@ final tests = <String, Test>{
                       '@type': 'api.v1.CustomException',
                       'value': {
                         'message': 'This is a custom exception',
-                        'additionalInfo': {
-                          'hello': 'world',
-                        },
+                        'additionalInfo': {'hello': 'world'},
                       },
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -2775,10 +2299,7 @@ final tests = <String, Test>{
                         'another': 'value',
                       },
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -2799,15 +2320,10 @@ final tests = <String, Test>{
                       '@type': 'api.v1.CustomError',
                       'value': {
                         'message': 'This is a custom error',
-                        'additionalInfo': {
-                          'hello': 'world',
-                        },
+                        'additionalInfo': {'hello': 'world'},
                       },
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -2832,10 +2348,7 @@ final tests = <String, Test>{
                         'another': 'value',
                       },
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -2856,16 +2369,11 @@ final tests = <String, Test>{
                       '@type': 'api.v1.CustomErrorWithStackTrace',
                       'value': {
                         'message': 'This is a custom error',
-                        'additionalInfo': {
-                          'hello': 'world',
-                        },
+                        'additionalInfo': {'hello': 'world'},
                         'stackTrace': '',
                       },
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -2880,29 +2388,13 @@ final tests = <String, Test>{
               name: 'all shapes',
               input: {
                 'shapes': [
-                  {
-                    r'$type': 'Circle',
-                    'radius': 5,
-                  },
-                  {
-                    r'$type': 'Rectangle',
-                    'width': 5,
-                    'height': 5,
-                  },
+                  {r'$type': 'Circle', 'radius': 5},
+                  {r'$type': 'Rectangle', 'width': 5, 'height': 5},
                 ],
               },
               output: [
-                {
-                  r'$type': 'Circle',
-                  'radius': 5,
-                  'area': pi * 5 * 5,
-                },
-                {
-                  r'$type': 'Rectangle',
-                  'width': 5,
-                  'height': 5,
-                  'area': 25.0,
-                },
+                {r'$type': 'Circle', 'radius': 5, 'area': pi * 5 * 5},
+                {r'$type': 'Rectangle', 'width': 5, 'height': 5, 'area': 25.0},
               ],
             ),
           ],
@@ -2910,21 +2402,14 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'circle',
               input: {
-                'shape': {
-                  r'$type': 'Circle',
-                  'radius': 5,
-                },
+                'shape': {r'$type': 'Circle', 'radius': 5},
               },
               output: pi * 5 * 5,
             ),
             FunctionTestSuccess(
               name: 'rectangle',
               input: {
-                'shape': {
-                  r'$type': 'Rectangle',
-                  'width': 5,
-                  'height': 5,
-                },
+                'shape': {r'$type': 'Rectangle', 'width': 5, 'height': 5},
               },
               output: 25,
             ),
@@ -2933,30 +2418,18 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'rectangle',
               input: {
-                'rectangle': {
-                  'width': 5,
-                  'height': 5,
-                },
+                'rectangle': {'width': 5, 'height': 5},
               },
-              output: {
-                'width': 5.0,
-                'height': 5.0,
-                'area': 25.0,
-              },
+              output: {'width': 5.0, 'height': 5.0, 'area': 25.0},
             ),
           ],
           'circle': [
             FunctionTestSuccess(
               name: 'circle',
               input: {
-                'circle': {
-                  'radius': 5,
-                },
+                'circle': {'radius': 5},
               },
-              output: {
-                'radius': 5.0,
-                'area': pi * 5 * 5,
-              },
+              output: {'radius': 5.0, 'area': pi * 5 * 5},
             ),
           ],
           'sealedClassWithInheritedCustomJson': [
@@ -2966,32 +2439,22 @@ final tests = <String, Test>{
                 'shapes': [
                   {
                     r'$type': 'CircleWithInheritedCustomJson',
-                    'size': {
-                      'radius': 5,
-                    },
+                    'size': {'radius': 5},
                   },
                   {
                     r'$type': 'RectangleWithInheritedCustomJson',
-                    'size': {
-                      'width': 5,
-                      'height': 5,
-                    },
+                    'size': {'width': 5, 'height': 5},
                   },
                 ],
               },
               output: [
                 {
                   r'$type': 'CircleWithInheritedCustomJson',
-                  'size': {
-                    'radius': 5,
-                  },
+                  'size': {'radius': 5},
                 },
                 {
                   r'$type': 'RectangleWithInheritedCustomJson',
-                  'size': {
-                    'width': 5,
-                    'height': 5,
-                  },
+                  'size': {'width': 5, 'height': 5},
                 },
               ],
             ),
@@ -3003,32 +2466,22 @@ final tests = <String, Test>{
                 'shapes': [
                   {
                     r'$type': 'CircleWithCustomJson',
-                    'size': {
-                      'radius': 5,
-                    },
+                    'size': {'radius': 5},
                   },
                   {
                     r'$type': 'RectangleWithCustomJson',
-                    'size': {
-                      'width': 5,
-                      'height': 5,
-                    },
+                    'size': {'width': 5, 'height': 5},
                   },
                 ],
               },
               output: [
                 {
                   r'$type': 'CircleWithCustomJson',
-                  'size': {
-                    'radius': 5,
-                  },
+                  'size': {'radius': 5},
                 },
                 {
                   r'$type': 'RectangleWithCustomJson',
-                  'size': {
-                    'width': 5,
-                    'height': 5,
-                  },
+                  'size': {'width': 5, 'height': 5},
                 },
               ],
             ),
@@ -3040,61 +2493,41 @@ final tests = <String, Test>{
                 // discriminator is not needed since it should be routed directly
                 // to the circle's fromJson ctor.
                 'circle': {
-                  'size': {
-                    'radius': 5,
-                  },
+                  'size': {'radius': 5},
                 },
                 // discriminator is not needed since it should be routed directly
                 // to the rectangle's fromJson ctor.
                 'rectangle': {
-                  'size': {
-                    'width': 5,
-                    'height': 5,
-                  },
+                  'size': {'width': 5, 'height': 5},
                 },
                 // discriminator is needed when static type is the base class.
                 'other': [
                   {
                     r'$type': 'CircleWithOverriddenCustomJson',
-                    'size': {
-                      'radius': 5,
-                    },
+                    'size': {'radius': 5},
                   },
                   {
                     r'$type': 'RectangleWithOverriddenCustomJson',
-                    'size': {
-                      'width': 5,
-                      'height': 5,
-                    },
+                    'size': {'width': 5, 'height': 5},
                   },
                 ],
               },
               output: [
                 {
                   r'$type': 'CircleWithOverriddenCustomJson',
-                  'size': {
-                    'radius': 5,
-                  },
+                  'size': {'radius': 5},
                 },
                 {
                   r'$type': 'RectangleWithOverriddenCustomJson',
-                  'size': {
-                    'width': 5,
-                    'height': 5,
-                  },
+                  'size': {'width': 5, 'height': 5},
                 },
                 {
                   r'$type': 'CircleWithOverriddenCustomJson',
-                  'size': {
-                    'radius': 5,
-                  },
+                  'size': {'radius': 5},
                 },
                 {
                   r'$type': 'RectangleWithOverriddenCustomJson',
-                  'size': {
-                    'width': 5,
-                    'height': 5,
-                  },
+                  'size': {'width': 5, 'height': 5},
                 },
               ],
             ),
@@ -3104,18 +2537,12 @@ final tests = <String, Test>{
               name: '',
               input: {
                 'rectangle': {
-                  'size': {
-                    'width': 5,
-                    'height': 5,
-                  },
+                  'size': {'width': 5, 'height': 5},
                 },
               },
               output: {
                 r'$type': 'RectangleWithOverriddenCustomJson',
-                'size': {
-                  'width': 5,
-                  'height': 5,
-                },
+                'size': {'width': 5, 'height': 5},
               },
             ),
           ],
@@ -3125,15 +2552,11 @@ final tests = <String, Test>{
               input: {
                 'circle': {
                   r'$type': 'CircleWithOverriddenCustomJson',
-                  'size': {
-                    'radius': 5,
-                  },
+                  'size': {'radius': 5},
                 },
               },
               output: {
-                'size': {
-                  'radius': 5,
-                },
+                'size': {'radius': 5},
               },
             ),
           ],
@@ -3142,15 +2565,8 @@ final tests = <String, Test>{
               name: 'all shapes',
               input: {
                 'shapes': [
-                  {
-                    r'$type': 'Circle',
-                    'radius': 5.0,
-                  },
-                  {
-                    r'$type': 'Rectangle',
-                    'width': 5.0,
-                    'height': 5.0,
-                  },
+                  {r'$type': 'Circle', 'radius': 5.0},
+                  {r'$type': 'Rectangle', 'width': 5.0, 'height': 5.0},
                 ],
               },
               output: [
@@ -3171,14 +2587,11 @@ final tests = <String, Test>{
                     'area': 25.0,
                   },
                 },
-                {
-                  r'$type': 'ErrResult',
-                  'error': 'Bad shape: (Circle: 5.0)',
-                },
+                {r'$type': 'ErrResult', 'error': 'Bad shape: (Circle: 5.0)'},
                 {
                   r'$type': 'ErrResult',
                   'error': 'Bad shape: (Rectangle: 5.0 x 5.0)',
-                }
+                },
               ],
             ),
           ],
@@ -3187,15 +2600,8 @@ final tests = <String, Test>{
               name: 'all shapes',
               input: {
                 'shapes': [
-                  {
-                    r'$type': 'Circle',
-                    'radius': 5.0,
-                  },
-                  {
-                    r'$type': 'Rectangle',
-                    'width': 5.0,
-                    'height': 5.0,
-                  },
+                  {r'$type': 'Circle', 'radius': 5.0},
+                  {r'$type': 'Rectangle', 'width': 5.0, 'height': 5.0},
                 ],
               },
               output: [
@@ -3213,7 +2619,7 @@ final tests = <String, Test>{
                     'height': 5.0,
                     'area': 25.0,
                   },
-                }
+                },
               ],
             ),
           ],
@@ -3222,24 +2628,13 @@ final tests = <String, Test>{
               name: 'all shapes',
               input: {
                 'shapes': [
-                  {
-                    r'$type': 'Circle',
-                    'radius': 5.0,
-                  },
-                  {
-                    r'$type': 'Rectangle',
-                    'width': 5.0,
-                    'height': 5.0,
-                  },
+                  {r'$type': 'Circle', 'radius': 5.0},
+                  {r'$type': 'Rectangle', 'width': 5.0, 'height': 5.0},
                 ],
               },
               output: [
-                {
-                  'error': 'Bad shape: (Circle: 5.0)',
-                },
-                {
-                  'error': 'Bad shape: (Rectangle: 5.0 x 5.0)',
-                }
+                {'error': 'Bad shape: (Circle: 5.0)'},
+                {'error': 'Bad shape: (Rectangle: 5.0 x 5.0)'},
               ],
             ),
           ],
@@ -3248,15 +2643,8 @@ final tests = <String, Test>{
               name: 'all shapes',
               input: {
                 'shapes': [
-                  {
-                    r'$type': 'Circle',
-                    'radius': 5.0,
-                  },
-                  {
-                    r'$type': 'Rectangle',
-                    'width': 5.0,
-                    'height': 5.0,
-                  },
+                  {r'$type': 'Circle', 'radius': 5.0},
+                  {r'$type': 'Rectangle', 'width': 5.0, 'height': 5.0},
                 ],
               },
               output: [
@@ -3277,14 +2665,11 @@ final tests = <String, Test>{
                     'area': 25.0,
                   },
                 },
-                {
-                  r'$type': 'ErrResult',
-                  'error': 'Bad shape: (Circle: 5.0)',
-                },
+                {r'$type': 'ErrResult', 'error': 'Bad shape: (Circle: 5.0)'},
                 {
                   r'$type': 'ErrResult',
                   'error': 'Bad shape: (Rectangle: 5.0 x 5.0)',
-                }
+                },
               ],
             ),
           ],
@@ -3293,15 +2678,8 @@ final tests = <String, Test>{
               name: 'all shapes',
               input: {
                 'shapes': [
-                  {
-                    r'$type': 'Circle',
-                    'radius': 5.0,
-                  },
-                  {
-                    r'$type': 'Rectangle',
-                    'width': 5.0,
-                    'height': 5.0,
-                  },
+                  {r'$type': 'Circle', 'radius': 5.0},
+                  {r'$type': 'Rectangle', 'width': 5.0, 'height': 5.0},
                 ],
               },
               output: [
@@ -3321,7 +2699,7 @@ final tests = <String, Test>{
                     'height': 5.0,
                     'area': 25.0,
                   },
-                }
+                },
               ],
             ),
           ],
@@ -3330,26 +2708,16 @@ final tests = <String, Test>{
               name: 'all shapes',
               input: {
                 'shapes': [
-                  {
-                    r'$type': 'Circle',
-                    'radius': 5.0,
-                  },
-                  {
-                    r'$type': 'Rectangle',
-                    'width': 5.0,
-                    'height': 5.0,
-                  },
+                  {r'$type': 'Circle', 'radius': 5.0},
+                  {r'$type': 'Rectangle', 'width': 5.0, 'height': 5.0},
                 ],
               },
               output: [
-                {
-                  r'$type': 'ErrResult',
-                  'error': 'Bad shape: (Circle: 5.0)',
-                },
+                {r'$type': 'ErrResult', 'error': 'Bad shape: (Circle: 5.0)'},
                 {
                   r'$type': 'ErrResult',
                   'error': 'Bad shape: (Rectangle: 5.0 x 5.0)',
-                }
+                },
               ],
             ),
           ],
@@ -3357,10 +2725,7 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'circle',
               input: {
-                'shape': {
-                  r'$type': 'Circle',
-                  'radius': 5.0,
-                },
+                'shape': {r'$type': 'Circle', 'radius': 5.0},
               },
               output: {
                 'data': {
@@ -3373,11 +2738,7 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'rectangle',
               input: {
-                'shape': {
-                  r'$type': 'Rectangle',
-                  'width': 5.0,
-                  'height': 5.0,
-                },
+                'shape': {r'$type': 'Rectangle', 'width': 5.0, 'height': 5.0},
               },
               output: {
                 'data': {
@@ -3395,10 +2756,7 @@ final tests = <String, Test>{
               input: {
                 'result': {
                   r'$type': 'OkResult',
-                  'data': {
-                    r'$type': 'Circle',
-                    'radius': 5.0,
-                  },
+                  'data': {r'$type': 'Circle', 'radius': 5.0},
                 },
               },
               output: {
@@ -3418,24 +2776,16 @@ final tests = <String, Test>{
               name: 'with type',
               input: {
                 r'$T': 'Circle',
-                'data': {
-                  'radius': 5.0,
-                },
+                'data': {'radius': 5.0},
               },
               output: {
-                'data': {
-                  'radius': 5.0,
-                  'area': pi * 5.0 * 5.0,
-                },
+                'data': {'radius': 5.0, 'area': pi * 5.0 * 5.0},
               },
             ),
             FunctionTestSuccess(
               name: 'without type',
               input: {
-                'data': {
-                  r'$type': 'Circle',
-                  'radius': 5.0,
-                },
+                'data': {r'$type': 'Circle', 'radius': 5.0},
               },
               output: {
                 'data': {
@@ -3452,23 +2802,15 @@ final tests = <String, Test>{
               input: {
                 r'$T': 'Circle',
                 r'$E': 'BadShapeException',
-                'data': {
-                  'radius': 5.0,
-                },
+                'data': {'radius': 5.0},
                 'error': {
-                  'shape': {
-                    r'$type': 'Circle',
-                    'radius': 5.0,
-                  },
+                  'shape': {r'$type': 'Circle', 'radius': 5.0},
                 },
               },
               output: [
                 {
                   r'$type': 'OkResult',
-                  'data': {
-                    'radius': 5.0,
-                    'area': pi * 5.0 * 5.0,
-                  },
+                  'data': {'radius': 5.0, 'area': pi * 5.0 * 5.0},
                 },
                 {
                   r'$type': 'ErrResult',
@@ -3485,16 +2827,10 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'without types',
               input: {
-                'data': {
-                  r'$type': 'Circle',
-                  'radius': 5.0,
-                },
+                'data': {r'$type': 'Circle', 'radius': 5.0},
                 'error': {
                   r'$type': 'BadShapeException',
-                  'shape': {
-                    r'$type': 'Circle',
-                    'radius': 5.0,
-                  },
+                  'shape': {r'$type': 'Circle', 'radius': 5.0},
                 },
               },
               output: [
@@ -3545,7 +2881,7 @@ final tests = <String, Test>{
                         r'$type': 'Child',
                         'name': 'childB',
                         'children': <Object?>[],
-                      }
+                      },
                     ],
                   },
                   {
@@ -3561,9 +2897,9 @@ final tests = <String, Test>{
                         r'$type': 'Child',
                         'name': 'childD',
                         'children': <Object?>[],
-                      }
+                      },
                     ],
-                  }
+                  },
                 ],
               },
             ),
@@ -3580,30 +2916,18 @@ final tests = <String, Test>{
                       r'$type': 'Parent',
                       'name': 'parentA',
                       'children': [
-                        {
-                          r'$type': 'Child',
-                          'name': 'childA',
-                        },
-                        {
-                          r'$type': 'Child',
-                          'name': 'childB',
-                        }
+                        {r'$type': 'Child', 'name': 'childA'},
+                        {r'$type': 'Child', 'name': 'childB'},
                       ],
                     },
                     {
                       r'$type': 'Parent',
                       'name': 'parentB',
                       'children': [
-                        {
-                          r'$type': 'Child',
-                          'name': 'childC',
-                        },
-                        {
-                          r'$type': 'Child',
-                          'name': 'childD',
-                        }
+                        {r'$type': 'Child', 'name': 'childC'},
+                        {r'$type': 'Child', 'name': 'childD'},
                       ],
-                    }
+                    },
                   ],
                 },
               },
@@ -3627,39 +2951,21 @@ final tests = <String, Test>{
                   r'$type': 'Parent',
                   'name': 'parentA',
                   'children': [
-                    {
-                      r'$type': 'Child',
-                      'name': 'childA',
-                    },
-                    {
-                      r'$type': 'Child',
-                      'name': 'childB',
-                    }
+                    {r'$type': 'Child', 'name': 'childA'},
+                    {r'$type': 'Child', 'name': 'childB'},
                   ],
                 },
                 'tree2': {
                   'name': 'parentB',
                   'children': [
-                    {
-                      r'$type': 'Child',
-                      'name': 'childC',
-                    },
-                    {
-                      r'$type': 'Child',
-                      'name': 'childD',
-                    }
+                    {r'$type': 'Child', 'name': 'childC'},
+                    {r'$type': 'Child', 'name': 'childD'},
                   ],
                 },
                 'additionalChildren': [
                   null,
-                  {
-                    r'$type': 'Child',
-                    'name': 'childE',
-                  },
-                  {
-                    r'$type': 'Child',
-                    'name': 'childF',
-                  }
+                  {r'$type': 'Child', 'name': 'childE'},
+                  {r'$type': 'Child', 'name': 'childF'},
                 ],
               },
               output: {
@@ -3679,7 +2985,7 @@ final tests = <String, Test>{
                         r'$type': 'Child',
                         'name': 'childB',
                         'children': <Object?>[],
-                      }
+                      },
                     ],
                   },
                   {
@@ -3695,7 +3001,7 @@ final tests = <String, Test>{
                         r'$type': 'Child',
                         'name': 'childD',
                         'children': <Object?>[],
-                      }
+                      },
                     ],
                   },
                   {
@@ -3707,7 +3013,7 @@ final tests = <String, Test>{
                     r'$type': 'Child',
                     'name': 'childF',
                     'children': <Object?>[],
-                  }
+                  },
                 ],
               },
             ),
@@ -3717,40 +3023,28 @@ final tests = <String, Test>{
               name: '',
               input: {
                 'selfReferencing': {
-                  'value': {
-                    'list': <Map<String, Object?>>[],
-                  },
+                  'value': {'list': <Map<String, Object?>>[]},
                   'wrapper': {
                     'value': {
-                      'value': {
-                        'list': <Map<String, Object?>>[],
-                      },
+                      'value': {'list': <Map<String, Object?>>[]},
                       'list': <Map<String, Object?>>[],
                     },
                   },
                   'list': [
-                    {
-                      'list': <Map<String, Object?>>[],
-                    },
+                    {'list': <Map<String, Object?>>[]},
                   ],
                 },
               },
               output: {
-                'value': {
-                  'list': <Map<String, Object?>>[],
-                },
+                'value': {'list': <Map<String, Object?>>[]},
                 'wrapper': {
                   'value': {
-                    'value': {
-                      'list': <Map<String, Object?>>[],
-                    },
+                    'value': {'list': <Map<String, Object?>>[]},
                     'list': <Map<String, Object?>>[],
                   },
                 },
                 'list': [
-                  {
-                    'list': <Map<String, Object?>>[],
-                  },
+                  {'list': <Map<String, Object?>>[]},
                 ],
               },
             ),
@@ -3804,43 +3098,33 @@ final tests = <String, Test>{
           'portfolio': [
             FunctionTestSuccess(
               name: 'portfolio',
-              input: {
-                'portfolio': {},
-              },
+              input: {'portfolio': {}},
               output: {},
             ),
           ],
           'json': [
             FunctionTestSuccess(
               name: 'json',
-              input: {
-                'json': complexStruct,
-              },
+              input: {'json': complexStruct},
               output: complexStruct,
             ),
           ],
           'nullableJson': [
             FunctionTestSuccess(
               name: 'non-null',
-              input: {
-                'json': complexStruct,
-              },
+              input: {'json': complexStruct},
               output: complexStruct,
             ),
             FunctionTestSuccess(
               name: 'null',
-              input: {
-                'json': null,
-              },
+              input: {'json': null},
               output: null,
             ),
           ],
           'mixedJson': [
             FunctionTestSuccess(
               name: 'mixedJson',
-              input: {
-                'json': complexStruct,
-              },
+              input: {'json': complexStruct},
               output: complexStruct,
             ),
           ],
@@ -3872,18 +3156,14 @@ final tests = <String, Test>{
             EventTestSuccess(
               name: 'streamHello',
               input: {},
-              events: [
-                'Hello, anonymous!',
-              ],
+              events: ['Hello, anonymous!'],
             ),
           ],
           'streamHelloPublic': [
             EventTestSuccess(
               name: 'streamHelloPublic',
               input: {},
-              events: [
-                'Hello, anonymous!',
-              ],
+              events: ['Hello, anonymous!'],
             ),
           ],
         },
@@ -3903,9 +3183,7 @@ final tests = <String, Test>{
             EventTestSuccess(
               name: 'streamHello',
               input: {},
-              events: [
-                'Hello, anonymous!',
-              ],
+              events: ['Hello, anonymous!'],
             ),
           ],
         },
@@ -3982,14 +3260,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'exceptions.v1.BaseError',
-                      'value': {
-                        'fault': 'base: message',
-                      },
+                      'value': {'fault': 'base: message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4007,14 +3280,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'exceptions.v1.CustomError',
-                      'value': {
-                        'fault': 'base: custom: message',
-                      },
+                      'value': {'fault': 'base: custom: message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4032,14 +3300,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'exceptions.v1.BaseException',
-                      'value': {
-                        'fault': 'base: message',
-                      },
+                      'value': {'fault': 'base: message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4057,14 +3320,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'exceptions.v1.CustomException',
-                      'value': {
-                        'fault': 'base: custom: message',
-                      },
+                      'value': {'fault': 'base: custom: message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4086,14 +3344,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'exceptions.v1.BaseError',
-                      'value': {
-                        'fault': 'base: message',
-                      },
+                      'value': {'fault': 'base: message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4111,14 +3364,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'exceptions.v1.CustomError',
-                      'value': {
-                        'fault': 'base: custom: message',
-                      },
+                      'value': {'fault': 'base: custom: message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4136,14 +3384,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'exceptions.v1.BaseException',
-                      'value': {
-                        'fault': 'base: message',
-                      },
+                      'value': {'fault': 'base: message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4161,14 +3404,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'exceptions.v1.CustomException',
-                      'value': {
-                        'fault': 'base: custom: message',
-                      },
+                      'value': {'fault': 'base: custom: message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4190,14 +3428,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': '_common.CommonException',
-                      'value': {
-                        'message': 'message',
-                      },
+                      'value': {'message': 'message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4215,14 +3448,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': '_common.CustomException',
-                      'value': {
-                        'message': 'message',
-                      },
+                      'value': {'message': 'message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4240,12 +3468,8 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'lerpColor',
               input: {
-                'a': {
-                  'value': 0xFF000000,
-                },
-                'b': {
-                  'value': 0xFFFFFFFF,
-                },
+                'a': {'value': 0xFF000000},
+                'b': {'value': 0xFFFFFFFF},
                 't': 0.5,
               },
               output: {
@@ -4262,15 +3486,10 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'addCountryCode',
               input: {
-                'locale': {
-                  'languageCode': 'en',
-                },
+                'locale': {'languageCode': 'en'},
                 'countryCode': 'US',
               },
-              output: {
-                'languageCode': 'en',
-                'countryCode': 'US',
-              },
+              output: {'languageCode': 'en', 'countryCode': 'US'},
             ),
           ],
         },
@@ -4304,9 +3523,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'badRequest',
               statusCode: 400,
-              input: {
-                'type': 'badRequest',
-              },
+              input: {'type': 'badRequest'},
               output: {
                 '@status': {
                   'code': 400,
@@ -4314,15 +3531,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'celest.core.v1.BadRequestException',
-                      'value': {
-                        'code': 400,
-                        'message': '',
-                      },
+                      'value': {'code': 400, 'message': ''},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4330,9 +3541,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'customBadRequest',
               statusCode: 412,
-              input: {
-                'type': 'customBadRequest',
-              },
+              input: {'type': 'customBadRequest'},
               output: {
                 '@status': {
                   'code': 412,
@@ -4340,15 +3549,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'api.v1.CustomBadRequestException',
-                      'value': {
-                        'code': 400,
-                        'message': '',
-                      },
+                      'value': {'code': 400, 'message': ''},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4356,9 +3559,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'unauthorized',
               statusCode: 401,
-              input: {
-                'type': 'unauthorized',
-              },
+              input: {'type': 'unauthorized'},
               output: {
                 '@status': {
                   'code': 401,
@@ -4366,15 +3567,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'celest.core.v1.UnauthorizedException',
-                      'value': {
-                        'code': 401,
-                        'message': '',
-                      },
+                      'value': {'code': 401, 'message': ''},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4382,9 +3577,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'forbidden',
               statusCode: 403,
-              input: {
-                'type': 'forbidden',
-              },
+              input: {'type': 'forbidden'},
               output: {
                 '@status': {
                   'code': 403,
@@ -4392,15 +3585,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'api.v1.ForbiddenException',
-                      'value': {
-                        'code': 400,
-                        'message': '',
-                      },
+                      'value': {'code': 400, 'message': ''},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4408,9 +3595,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'notFound',
               statusCode: 404,
-              input: {
-                'type': 'notFound',
-              },
+              input: {'type': 'notFound'},
               output: {
                 '@status': {
                   'code': 404,
@@ -4420,10 +3605,7 @@ final tests = <String, Test>{
                       '@type': 'api.v1.NotFoundException',
                       'value': <String, Object?>{},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4431,9 +3613,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'anotherNotFound',
               statusCode: 404,
-              input: {
-                'type': 'anotherNotFound',
-              },
+              input: {'type': 'anotherNotFound'},
               output: {
                 '@status': {
                   'code': 404,
@@ -4443,10 +3623,7 @@ final tests = <String, Test>{
                       '@type': 'api.v1.AnotherNotFoundException',
                       'value': <String, Object?>{},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4454,9 +3631,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'internalServerError',
               statusCode: 404,
-              input: {
-                'type': 'internalServerError',
-              },
+              input: {'type': 'internalServerError'},
               output: {
                 '@status': {
                   'code': 404,
@@ -4464,15 +3639,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'celest.core.v1.InternalServerError',
-                      'value': {
-                        'code': 500,
-                        'message': '',
-                      },
+                      'value': {'code': 500, 'message': ''},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4480,9 +3649,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'badGateway',
               statusCode: 404,
-              input: {
-                'type': 'badGateway',
-              },
+              input: {'type': 'badGateway'},
               output: {
                 '@status': {
                   'code': 404,
@@ -4490,15 +3657,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'api.v1.BadGatewayError',
-                      'value': {
-                        'code': 500,
-                        'message': '',
-                      },
+                      'value': {'code': 500, 'message': ''},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4796,14 +3957,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': '_common.UserException',
-                      'value': {
-                        'msg': 'message',
-                      },
+                      'value': {'msg': 'message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4811,9 +3967,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'with cause (string)',
               statusCode: 400,
-              input: {
-                'cause': 'Bad thing happened',
-              },
+              input: {'cause': 'Bad thing happened'},
               output: {
                 '@status': {
                   'code': 400,
@@ -4826,10 +3980,7 @@ final tests = <String, Test>{
                         'cause': 'Bad thing happened',
                       },
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4838,9 +3989,7 @@ final tests = <String, Test>{
               name: 'with cause (map)',
               statusCode: 400,
               input: {
-                'cause': {
-                  'reason': 'Bad thing happened',
-                },
+                'cause': {'reason': 'Bad thing happened'},
               },
               output: {
                 '@status': {
@@ -4855,10 +4004,7 @@ final tests = <String, Test>{
                             '{reason: Bad thing happened}', // cause.toString()
                       },
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4876,14 +4022,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': '_common.UserException',
-                      'value': {
-                        'msg': 'message',
-                      },
+                      'value': {'msg': 'message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4891,9 +4032,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'with cause (string)',
               statusCode: 400,
-              input: {
-                'cause': 'Bad thing happened',
-              },
+              input: {'cause': 'Bad thing happened'},
               output: {
                 '@status': {
                   'code': 400,
@@ -4906,10 +4045,7 @@ final tests = <String, Test>{
                         'cause': 'Bad thing happened',
                       },
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4918,9 +4054,7 @@ final tests = <String, Test>{
               name: 'with cause (map)',
               statusCode: 400,
               input: {
-                'cause': {
-                  'reason': 'Bad thing happened',
-                },
+                'cause': {'reason': 'Bad thing happened'},
               },
               output: {
                 '@status': {
@@ -4935,10 +4069,7 @@ final tests = <String, Test>{
                             '{reason: Bad thing happened}', // cause.toString()
                       },
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4956,15 +4087,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'marcelo.v1.AppError',
-                      'value': {
-                        'msg': 'message',
-                        'error': null,
-                      },
+                      'value': {'msg': 'message', 'error': null},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -4972,10 +4097,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'with params',
               statusCode: 500,
-              input: {
-                'message': 'test',
-                'error': 123,
-              },
+              input: {'message': 'test', 'error': 123},
               output: {
                 '@status': {
                   'code': 500,
@@ -4983,15 +4105,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'marcelo.v1.AppError',
-                      'value': {
-                        'msg': 'test',
-                        'error': 123,
-                      },
+                      'value': {'msg': 'test', 'error': 123},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -5009,15 +4125,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'marcelo.v1.AppException',
-                      'value': {
-                        'msg': 'message',
-                        'error': 'error',
-                      },
+                      'value': {'msg': 'message', 'error': 'error'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -5035,14 +4145,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'marcelo.v1.NotYetImplementedError',
-                      'value': {
-                        'msg': 'message',
-                      },
+                      'value': {'msg': 'message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -5060,14 +4165,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': '_common.ValidateError',
-                      'value': {
-                        'msg': 'message',
-                      },
+                      'value': {'msg': 'message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -5085,14 +4185,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'marcelo.v1.UserException_ShowInConsole',
-                      'value': {
-                        'msg': 'message',
-                      },
+                      'value': {'msg': 'message'},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -5100,10 +4195,7 @@ final tests = <String, Test>{
             FunctionTestError(
               name: 'with params',
               statusCode: 400,
-              input: {
-                'message': 'test',
-                'cause': 123,
-              },
+              input: {'message': 'test', 'cause': 123},
               output: {
                 '@status': {
                   'code': 400,
@@ -5111,15 +4203,9 @@ final tests = <String, Test>{
                   'details': [
                     {
                       '@type': 'marcelo.v1.UserException_ShowInConsole',
-                      'value': {
-                        'msg': 'test',
-                        'cause': 123,
-                      },
+                      'value': {'msg': 'test', 'cause': 123},
                     },
-                    {
-                      '@type': 'dart.core.StackTrace',
-                      'value': anything,
-                    },
+                    {'@type': 'dart.core.StackTrace', 'value': anything},
                   ],
                 },
               },
@@ -5153,16 +4239,8 @@ final tests = <String, Test>{
               input: {
                 'availableStocks': {
                   'list': [
-                    {
-                      'ticker': 'ABC',
-                      'name': 'Acme',
-                      'currentPrice': 123.45,
-                    },
-                    {
-                      'ticker': 'ABC',
-                      'name': 'Acme',
-                      'currentPrice': 123.45,
-                    }
+                    {'ticker': 'ABC', 'name': 'Acme', 'currentPrice': 123.45},
+                    {'ticker': 'ABC', 'name': 'Acme', 'currentPrice': 123.45},
                   ],
                 },
               },
@@ -5179,7 +4257,7 @@ final tests = <String, Test>{
                     'name': 'Acme',
                     'currentPrice': 123.45,
                     'currentPriceStr': r'US$ 123.45',
-                  }
+                  },
                 ],
               },
             ),
@@ -5188,13 +4266,9 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'cashBalance',
               input: {
-                'cashBalance': {
-                  'amount': 123.45,
-                },
+                'cashBalance': {'amount': 123.45},
               },
-              output: {
-                'amount': 123.45,
-              },
+              output: {'amount': 123.45},
             ),
           ],
           'portfolio': [
@@ -5212,11 +4286,9 @@ final tests = <String, Test>{
                       'ticker': 'ABC',
                       'howManyShares': 1000,
                       'averagePrice': 123.45,
-                    }
+                    },
                   ],
-                  'cashBalance': {
-                    'amount': 123.45,
-                  },
+                  'cashBalance': {'amount': 123.45},
                 },
               },
               output: {
@@ -5236,9 +4308,7 @@ final tests = <String, Test>{
                     'averagePriceStr': r'US$ 123.45',
                   },
                 ],
-                'cashBalance': {
-                  'amount': 123.45,
-                },
+                'cashBalance': {'amount': 123.45},
                 'isEmpty': false,
                 'totalCostBasis': 247023.45,
               },
@@ -5267,15 +4337,9 @@ final tests = <String, Test>{
             FunctionTestSuccess(
               name: 'ui',
               input: {
-                'ui': {
-                  'isDarkMode': true,
-                  'screenChoice': 'signup',
-                },
+                'ui': {'isDarkMode': true, 'screenChoice': 'signup'},
               },
-              output: {
-                'isDarkMode': true,
-                'screenChoice': 'signup',
-              },
+              output: {'isDarkMode': true, 'screenChoice': 'signup'},
             ),
           ],
         },
@@ -5292,11 +4356,7 @@ final tests = <String, Test>{
               input: {
                 'names': ['Amy', 'Bob', 'Charlie'],
               },
-              events: [
-                'Hello, Amy!',
-                'Hello, Bob!',
-                'Hello, Charlie!',
-              ],
+              events: ['Hello, Amy!', 'Hello, Bob!', 'Hello, Charlie!'],
             ),
           ],
           'stockTicker': [
@@ -5355,7 +4415,8 @@ final tests = <String, Test>{
                 final jwt = JWT(
                   {
                     'aud': 'authenticated',
-                    'exp': DateTime.now()
+                    'exp':
+                        DateTime.now()
                             .add(const Duration(days: 1))
                             .millisecondsSinceEpoch ~/
                         1000,
@@ -5365,10 +4426,7 @@ final tests = <String, Test>{
                     'user_metadata': null,
                     'role': 'authenticated',
                   },
-                  header: {
-                    'alg': 'HS256',
-                    'typ': 'JWT',
-                  },
+                  header: {'alg': 'HS256', 'typ': 'JWT'},
                 );
                 final jwk = SecretKey(
                   'super-secret-jwt-token-with-at-least-32-characters-long',
@@ -5384,7 +4442,7 @@ final tests = <String, Test>{
                     'email': 'someone@email.com',
                     'isVerified': false,
                     'isPrimary': false,
-                  }
+                  },
                 ],
                 'roles': [
                   {'type': 'Celest::Role', 'id': 'authenticated'},
@@ -5414,15 +4472,8 @@ const genericWrappers = {
     [simpleStruct, simpleStruct],
     [simpleStruct, simpleStruct],
   ],
-  'mapOfString': {
-    'one': 'one',
-    'two': 'two',
-    'three': 'three',
-  },
-  'mapOfUri': {
-    'one': 'https://google.com',
-    'two': 'https://example.com',
-  },
+  'mapOfString': {'one': 'one', 'two': 'two', 'three': 'three'},
+  'mapOfUri': {'one': 'https://google.com', 'two': 'https://example.com'},
   'mapOfSimpleClass': {
     'one': simpleStruct,
     'two': simpleStruct,
@@ -5441,37 +4492,15 @@ const genericWrappers = {
     'two': [simpleStruct, simpleStruct],
   },
   'mapOfMapOfString': {
-    'a': {
-      'a': 'a',
-      'b': 'b',
-      'c': 'c',
-    },
-    'b': {
-      'a': 'a',
-      'b': 'b',
-      'c': 'c',
-    },
+    'a': {'a': 'a', 'b': 'b', 'c': 'c'},
+    'b': {'a': 'a', 'b': 'b', 'c': 'c'},
   },
   'mapOfMapOfUri': {
-    'one': {
-      'one': 'https://google.com',
-      'two': 'https://example.com',
-    },
-    'two': {
-      'one': 'https://dart.dev',
-      'two': 'https://pub.dev',
-    },
+    'one': {'one': 'https://google.com', 'two': 'https://example.com'},
+    'two': {'one': 'https://dart.dev', 'two': 'https://pub.dev'},
   },
   'mapOfMapOfSimpleClass': {
-    'one': {
-      'one': simpleStruct,
-      'two': simpleStruct,
-      'three': simpleStruct,
-    },
-    'two': {
-      'one': simpleStruct,
-      'two': simpleStruct,
-      'three': simpleStruct,
-    },
+    'one': {'one': simpleStruct, 'two': simpleStruct, 'three': simpleStruct},
+    'two': {'one': simpleStruct, 'two': simpleStruct, 'three': simpleStruct},
   },
 };

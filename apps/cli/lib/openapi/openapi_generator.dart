@@ -29,9 +29,7 @@ import 'package:lib_openapi/openapi_v3.dart' as v3;
 import 'package:logging/logging.dart';
 
 final class OpenApiGenerator {
-  OpenApiGenerator({
-    required this.context,
-  });
+  OpenApiGenerator({required this.context});
 
   factory OpenApiGenerator.fromJsonOrYaml(
     String jsonOrYaml, {
@@ -41,10 +39,7 @@ final class OpenApiGenerator {
     return OpenApiGenerator.fromProto(document, apiName: apiName);
   }
 
-  factory OpenApiGenerator.fromProto(
-    v3.Document document, {
-    String? apiName,
-  }) {
+  factory OpenApiGenerator.fromProto(v3.Document document, {String? apiName}) {
     final resolver = OpenApiSchemaTransformer(
       document: document,
       typeSystem: OpenApiTypeSystem(),
@@ -54,9 +49,7 @@ final class OpenApiGenerator {
       apiName: apiName,
       document: resolved,
     );
-    return OpenApiGenerator(
-      context: context,
-    );
+    return OpenApiGenerator(context: context);
   }
 
   static final Logger logger = Logger('OpenApiGenerator');
@@ -64,9 +57,10 @@ final class OpenApiGenerator {
   final OpenApiGeneratorContext context;
 
   Map<String, Library> generate() {
-    final service = OpenApiSchemaLinker(
-      context: context as StripeOpenApiGeneratorContext,
-    ).link();
+    final service =
+        OpenApiSchemaLinker(
+          context: context as StripeOpenApiGeneratorContext,
+        ).link();
     context.finish();
     final clientGenerator = OpenApiClientGenerator(
       context: context,
@@ -119,10 +113,8 @@ final class OpenApiGenerator {
 }
 
 class OpenApiGeneratorContext {
-  OpenApiGeneratorContext({
-    String? apiName,
-    required this.document,
-  }) : _apiName = apiName;
+  OpenApiGeneratorContext({String? apiName, required this.document})
+    : _apiName = apiName;
 
   static final Logger logger = Logger('OpenApiGeneratorContext');
 
@@ -132,8 +124,9 @@ class OpenApiGeneratorContext {
   final OpenApiTypeSystem typeSystem = OpenApiTypeSystem();
   final OpenApiJsonGenerator jsonGenerator = OpenApiJsonGenerator();
 
-  late final OpenApiTypeSchemaResolver typeResolver =
-      OpenApiTypeSchemaResolver(context: this);
+  late final OpenApiTypeSchemaResolver typeResolver = OpenApiTypeSchemaResolver(
+    context: this,
+  );
 
   late final String apiName = run(() {
     if (_apiName != null) {
@@ -167,136 +160,137 @@ class OpenApiGeneratorContext {
     String? mimeType,
     bool? structuralEnum,
   }) {
-    return registerSpec(
-      name,
-      url,
-      () {
-        final className = reserveName(name, type.schema);
-        _codableTypes.add(className);
-        typeSchemaRefs[type.schema] = OpenApiTypeReference(
-          typeReference: refer(name, 'models.dart').toTypeReference,
-          schema: type.schema,
-          isNullable: false,
-        );
-        return switch (type) {
-          OpenApiPrimitiveType(:final typeReference) => ExtensionType(
-              (t) => t
-                // ..name = typeReference.symbol == name ? '$name\$' : name
-                ..name = className
-                ..constant = true
-                ..constructors.addAll([
-                  Constructor(
-                    (c) => c
-                      ..constant = true
-                      ..name = 'fromJson'
-                      ..requiredParameters.add(
-                        Parameter(
-                          (p) => p
-                            ..type = DartTypes.core.object.nullable
-                            ..name = 'json',
-                        ),
-                      )
-                      ..initializers.add(
-                        refer('_')
-                            .assign(refer('json').asA(typeReference))
-                            .code,
+    return registerSpec(name, url, () {
+      final className = reserveName(name, type.schema);
+      _codableTypes.add(className);
+      typeSchemaRefs[type.schema] = OpenApiTypeReference(
+        typeReference: refer(name, 'models.dart').toTypeReference,
+        schema: type.schema,
+        isNullable: false,
+      );
+      return switch (type) {
+            OpenApiPrimitiveType(:final typeReference) => ExtensionType(
+              (t) =>
+                  t
+                    // ..name = typeReference.symbol == name ? '$name\$' : name
+                    ..name = className
+                    ..constant = true
+                    ..constructors.addAll([
+                      Constructor(
+                        (c) =>
+                            c
+                              ..constant = true
+                              ..name = 'fromJson'
+                              ..requiredParameters.add(
+                                Parameter(
+                                  (p) =>
+                                      p
+                                        ..type = DartTypes.core.object.nullable
+                                        ..name = 'json',
+                                ),
+                              )
+                              ..initializers.add(
+                                refer(
+                                  '_',
+                                ).assign(refer('json').asA(typeReference)).code,
+                              ),
                       ),
-                  ),
-                ])
-                ..representationDeclaration = RepresentationDeclaration(
-                  (r) => r
-                    ..name = '_'
-                    ..declaredRepresentationType = typeReference,
-                )
-                ..implements.add(typeReference)
-                // ..fields.add(extensionTypeSelfField(name))
-                ..methods.addAll([
-                  Method(
-                    (m) => m
-                      ..name = 'toJson'
-                      ..returns = typeReference
-                      ..lambda = true
-                      ..body = refer('_').code,
-                  ),
-                  Method((m) {
-                    m
-                      ..static = true
-                      ..name = 'encode'
-                      ..types.add(refer('V'))
-                      ..returns = refer('V')
-                      ..requiredParameters.addAll([
-                        Parameter(
-                          (p) => p
-                            ..type = refer(name)
-                            ..name = 'instance',
-                        ),
-                        Parameter(
-                          (p) => p
-                            ..type = DartTypes.libcoder.encoder(refer('V'))
-                            ..name = 'encoder',
-                        ),
-                      ])
-                      ..lambda = false
-                      ..body = Block((b) {
-                        b.addExpression(
-                          declareFinal('container').assign(
-                            refer('encoder')
-                                .property('singleValueContainer')
-                                .call([]),
-                          ),
-                        );
-                        b.addExpression(
-                          openApiEncoder.encode(
-                            type: type,
-                            ref: refer('instance'),
-                            container: refer('container'),
-                            key: null,
-                          ),
-                        );
-                        b.addExpression(
-                          refer('container').property('value').returned,
-                        );
-                      });
-                  }),
-                  encodeWithMethod,
-                ]),
+                    ])
+                    ..representationDeclaration = RepresentationDeclaration(
+                      (r) =>
+                          r
+                            ..name = '_'
+                            ..declaredRepresentationType = typeReference,
+                    )
+                    ..implements.add(typeReference)
+                    // ..fields.add(extensionTypeSelfField(name))
+                    ..methods.addAll([
+                      Method(
+                        (m) =>
+                            m
+                              ..name = 'toJson'
+                              ..returns = typeReference
+                              ..lambda = true
+                              ..body = refer('_').code,
+                      ),
+                      Method((m) {
+                        m
+                          ..static = true
+                          ..name = 'encode'
+                          ..types.add(refer('V'))
+                          ..returns = refer('V')
+                          ..requiredParameters.addAll([
+                            Parameter(
+                              (p) =>
+                                  p
+                                    ..type = refer(name)
+                                    ..name = 'instance',
+                            ),
+                            Parameter(
+                              (p) =>
+                                  p
+                                    ..type = DartTypes.libcoder.encoder(
+                                      refer('V'),
+                                    )
+                                    ..name = 'encoder',
+                            ),
+                          ])
+                          ..lambda = false
+                          ..body = Block((b) {
+                            b.addExpression(
+                              declareFinal('container').assign(
+                                refer(
+                                  'encoder',
+                                ).property('singleValueContainer').call([]),
+                              ),
+                            );
+                            b.addExpression(
+                              openApiEncoder.encode(
+                                type: type,
+                                ref: refer('instance'),
+                                container: refer('container'),
+                                key: null,
+                              ),
+                            );
+                            b.addExpression(
+                              refer('container').property('value').returned,
+                            );
+                          });
+                      }),
+                      encodeWithMethod,
+                    ]),
             ),
-          OpenApiIterableInterface() => OpenApiArrayGenerator(
-              name: className,
-              type: type,
-            ).generate(),
-          OpenApiEnumType() => OpenApiEnumGenerator(
-              name: className,
-              structuralEnum: false, // structuralEnum!,
-              type: type,
-            ).generate(),
-          OpenApiStructType() => OpenApiStructGenerator(
-              name: className,
-              type: type,
-              mimeType: mimeType,
-            ).generate(),
-          OpenApiSealedType() => OpenApiUnionGenerator(
-              name: className,
-              context: this,
-              type: type,
-            ).generate(),
-          OpenApiRecordType() => OpenApiRecordGenerator(
-              name: className,
-              type: type,
-            ).generate(),
-          _ => unreachable('$type'),
-        } as Spec;
-      },
-    );
+            OpenApiIterableInterface() =>
+              OpenApiArrayGenerator(name: className, type: type).generate(),
+            OpenApiEnumType() =>
+              OpenApiEnumGenerator(
+                name: className,
+                structuralEnum: false, // structuralEnum!,
+                type: type,
+              ).generate(),
+            OpenApiStructType() =>
+              OpenApiStructGenerator(
+                name: className,
+                type: type,
+                mimeType: mimeType,
+              ).generate(),
+            OpenApiSealedType() =>
+              OpenApiUnionGenerator(
+                name: className,
+                context: this,
+                type: type,
+              ).generate(),
+            OpenApiRecordType() =>
+              OpenApiRecordGenerator(name: className, type: type).generate(),
+            _ => unreachable('$type'),
+          }
+          as Spec;
+    });
   }
 
   String? urlOf(String dartName) => null;
 
-  Spec registerSpec(
-    String name,
-    String url,
-    Spec Function() builder,
-  ) {
+  Spec registerSpec(String name, String url, Spec Function() builder) {
     schemasByUrl.add(url, name);
     return schemaSpecs.update(
       name,
@@ -313,12 +307,13 @@ class OpenApiGeneratorContext {
       }
       schemaSpecs[name] = spec.rebuild((class_) {
         // TODO: Better way to do this? Should work across libraries.
-        final allImplements = HashSet<Reference>(
-          equals: (a, b) => a.symbol == b.symbol,
-          hashCode: (ref) => ref.symbol.hashCode,
-        )
-          ..addAll(toImplement)
-          ..addAll(spec.implements);
+        final allImplements =
+            HashSet<Reference>(
+                equals: (a, b) => a.symbol == b.symbol,
+                hashCode: (ref) => ref.symbol.hashCode,
+              )
+              ..addAll(toImplement)
+              ..addAll(spec.implements);
         class_.implements
           ..clear()
           ..addAll(
@@ -336,69 +331,79 @@ class OpenApiGeneratorContext {
           ..name = name
           ..modifier = ClassModifier.final$
           ..constructors.addAll([
-            Constructor(
-              (ctor) {
-                ctor.constant = true;
-                if (identical(baseType, OpenApiEmptyType.instance)) {
-                  ctor.name = '_';
-                }
-                if (!identical(baseType, OpenApiEmptyType.instance)) {
-                  ctor.requiredParameters.add(
-                    Parameter(
-                      (b) => b
-                        ..name = 'value'
-                        ..toThis = true,
-                    ),
-                  );
-                }
-              },
-            ),
+            Constructor((ctor) {
+              ctor.constant = true;
+              if (identical(baseType, OpenApiEmptyType.instance)) {
+                ctor.name = '_';
+              }
+              if (!identical(baseType, OpenApiEmptyType.instance)) {
+                ctor.requiredParameters.add(
+                  Parameter(
+                    (b) =>
+                        b
+                          ..name = 'value'
+                          ..toThis = true,
+                  ),
+                );
+              }
+            }),
             if (!identical(baseType, OpenApiEmptyType.instance))
               Constructor(
-                (ctor) => ctor
-                  ..factory = true
-                  ..name = 'fromJson'
-                  ..requiredParameters.add(
-                    Parameter(
-                      (p) => p
-                        ..name = 'json'
-                        ..type = DartTypes.core.object.nullable,
-                    ),
-                  )
-                  ..lambda = true
-                  ..body = refer(name).newInstance([
-                    OpenApiJsonGenerator()
-                        .fromJson(baseType.primitiveType!, refer('json')),
-                  ]).code,
+                (ctor) =>
+                    ctor
+                      ..factory = true
+                      ..name = 'fromJson'
+                      ..requiredParameters.add(
+                        Parameter(
+                          (p) =>
+                              p
+                                ..name = 'json'
+                                ..type = DartTypes.core.object.nullable,
+                        ),
+                      )
+                      ..lambda = true
+                      ..body =
+                          refer(name).newInstance([
+                            OpenApiJsonGenerator().fromJson(
+                              baseType.primitiveType!,
+                              refer('json'),
+                            ),
+                          ]).code,
               ),
           ])
           ..fields.addAll([
             if (!identical(baseType, OpenApiEmptyType.instance))
               Field(
-                (f) => f
-                  ..modifier = FieldModifier.final$
-                  ..type = baseType.typeReference
-                  ..name = 'value',
+                (f) =>
+                    f
+                      ..modifier = FieldModifier.final$
+                      ..type = baseType.typeReference
+                      ..name = 'value',
               ),
           ])
           ..methods.addAll([
             if (!identical(baseType, OpenApiEmptyType.instance)) ...[
               Method(
-                (m) => m
-                  ..name = 'toJson'
-                  ..returns = baseType.primitiveType!.typeReference.nonNullable
-                  ..lambda = true
-                  ..body = OpenApiJsonGenerator()
-                      .toJson(baseType.primitiveType!, refer('value'))
-                      .code,
+                (m) =>
+                    m
+                      ..name = 'toJson'
+                      ..returns =
+                          baseType.primitiveType!.typeReference.nonNullable
+                      ..lambda = true
+                      ..body =
+                          OpenApiJsonGenerator()
+                              .toJson(baseType.primitiveType!, refer('value'))
+                              .code,
               ),
               Method(
-                (m) => m
-                  ..name = 'toString'
-                  ..annotations.add(DartTypes.core.override)
-                  ..returns = DartTypes.core.string
-                  ..lambda = true
-                  ..body = refer('value').property('toString').call([]).code,
+                (m) =>
+                    m
+                      ..name = 'toString'
+                      ..annotations.add(DartTypes.core.override)
+                      ..returns = DartTypes.core.string
+                      ..lambda = true
+                      ..body =
+                          refer('value').property('toString').call([]).code,
               ),
             ],
           ]);
@@ -486,11 +491,11 @@ class OpenApiGeneratorContext {
           'Could not reserve "$name". Name already reserved by another type.',
           additionalContext: {
             'existing': //
-                // existing,
-                LineSplitter.split(existing.toString()).take(10).join('\n'),
+            // existing,
+            LineSplitter.split(existing.toString()).take(10).join('\n'),
             'reservedBy': //
-                // reservedBy,
-                LineSplitter.split(reservedBy.toString()).take(10).join('\n'),
+            // reservedBy,
+            LineSplitter.split(reservedBy.toString()).take(10).join('\n'),
             'reservedNames': reservedNames.keys.join(', '),
           },
         );
@@ -510,10 +515,7 @@ class OpenApiGeneratorContext {
     return reserveName(name, reservedBy);
   }
 
-  Never fail(
-    String message, {
-    Object? additionalContext,
-  }) {
+  Never fail(String message, {Object? additionalContext}) {
     final sb = StringBuffer(message);
     if (additionalContext != null) {
       sb

@@ -21,9 +21,7 @@ import 'package:collection/collection.dart';
 class OpenApiTypeSchemaResolver
     implements
         OpenApiTypeSchemaVisitor<OpenApiType, OpenApiTypeResolutionScope> {
-  OpenApiTypeSchemaResolver({
-    required this.context,
-  });
+  OpenApiTypeSchemaResolver({required this.context});
 
   final OpenApiGeneratorContext context;
 
@@ -33,20 +31,19 @@ class OpenApiTypeSchemaResolver
   ) {
     return switch (schemaOrRef) {
       OpenApiTypeSchema(:final name?) => schemaOrRef.accept(
-          this,
-          OpenApiTypeResolutionScope(
-            nameResolver: () => [
-              context.dartNames[name] ??
-                  context.fail(
-                    'Name not registered: "$name"',
-                    additionalContext: {
-                      'dartNames': context.dartNames,
-                    },
-                  ),
-            ],
-            url: context.dartRefs[name]!.url!,
-          ),
+        this,
+        OpenApiTypeResolutionScope(
+          nameResolver:
+              () => [
+                context.dartNames[name] ??
+                    context.fail(
+                      'Name not registered: "$name"',
+                      additionalContext: {'dartNames': context.dartNames},
+                    ),
+              ],
+          url: context.dartRefs[name]!.url!,
         ),
+      ),
       OpenApiTypeSchema() => schemaOrRef.accept(this, scope),
     };
   }
@@ -59,10 +56,10 @@ class OpenApiTypeSchemaResolver
     final name = scope!.typeName(context, schema);
     final isNullable = scope.isNullable ?? schema.isNullableOrFalse;
     return OpenApiTypeReference(
-      typeReference: (context.dartRefs[name] ?? refer(name))
-          .toTypeReference
-          .withNullability(isNullable)
-          .toTypeReference,
+      typeReference:
+          (context.dartRefs[name] ?? refer(name)).toTypeReference
+              .withNullability(isNullable)
+              .toTypeReference,
       // TODO: Needed for typedefs
       // primitiveType: switch (_reservedNames[name]) {
       //   OpenApiTypeSchema(primitiveType: != null) && final schema =>
@@ -84,9 +81,12 @@ class OpenApiTypeSchemaResolver
     return OpenApiAnyType(
       schema: schema,
       isNullable: isNullable,
-      typeReference: needsWrapper
-          ? context.anyType.withNullability(isNullable).toTypeReference
-          : DartTypes.core.object.withNullability(isNullable).toTypeReference,
+      typeReference:
+          needsWrapper
+              ? context.anyType.withNullability(isNullable).toTypeReference
+              : DartTypes.core.object
+                  .withNullability(isNullable)
+                  .toTypeReference,
     );
   }
 
@@ -98,33 +98,40 @@ class OpenApiTypeSchemaResolver
     final itemType = resolveRef(
       schema.itemType,
       scope!.subscope(
-        nameResolver: () =>
-            scope.nameResolver().map((parent) => '${parent}Item'),
+        nameResolver:
+            () => scope.nameResolver().map((parent) => '${parent}Item'),
       ),
     );
 
     final name = scope.typeName(context, schema);
     final needsWrapper = scope.needsWrapper;
     final isNullable = scope.isNullable ?? schema.isNullableOrFalse;
-    final type = schema.uniqueItems
-        ? OpenApiSetType(
-            schema: schema,
-            typeReference: needsWrapper
-                ? refer(name, scope.url).toTypeReference
-                : DartTypes.core.set(itemType.typeReference).toTypeReference,
-            itemType: itemType,
-            isNullable: isNullable,
-            defaultValue: schema.defaultValue?.value,
-          )
-        : OpenApiListType(
-            schema: schema,
-            typeReference: needsWrapper
-                ? refer(name, scope.url).toTypeReference
-                : DartTypes.core.list(itemType.typeReference).toTypeReference,
-            itemType: itemType,
-            isNullable: isNullable,
-            defaultValue: schema.defaultValue?.value,
-          );
+    final type =
+        schema.uniqueItems
+            ? OpenApiSetType(
+              schema: schema,
+              typeReference:
+                  needsWrapper
+                      ? refer(name, scope.url).toTypeReference
+                      : DartTypes.core
+                          .set(itemType.typeReference)
+                          .toTypeReference,
+              itemType: itemType,
+              isNullable: isNullable,
+              defaultValue: schema.defaultValue?.value,
+            )
+            : OpenApiListType(
+              schema: schema,
+              typeReference:
+                  needsWrapper
+                      ? refer(name, scope.url).toTypeReference
+                      : DartTypes.core
+                          .list(itemType.typeReference)
+                          .toTypeReference,
+              itemType: itemType,
+              isNullable: isNullable,
+              defaultValue: schema.defaultValue?.value,
+            );
     if (needsWrapper) {
       context.generateSpec(name, schema.name, type, url: scope.url);
     }
@@ -140,9 +147,10 @@ class OpenApiTypeSchemaResolver
     final needsWrapper = scope?.needsWrapper ?? false;
     return OpenApiBooleanType(
       schema: schema,
-      typeReference: needsWrapper
-          ? context.boolType.withNullability(isNullable).toTypeReference
-          : DartTypes.core.bool.toTypeReference,
+      typeReference:
+          needsWrapper
+              ? context.boolType.withNullability(isNullable).toTypeReference
+              : DartTypes.core.bool.toTypeReference,
       isNullable: isNullable,
       defaultValue: schema.defaultValue?.value,
     );
@@ -166,9 +174,9 @@ class OpenApiTypeSchemaResolver
         scope!.subscope(
           nameResolver: () sync* {
             if (type.title case final title?) {
-              yield* scope
-                  .nameResolver()
-                  .map((parent) => '$parent${title.pascalCase}');
+              yield* scope.nameResolver().map(
+                (parent) => '$parent${title.pascalCase}',
+              );
             } else {
               yield* scope.nameResolver();
             }
@@ -182,13 +190,15 @@ class OpenApiTypeSchemaResolver
         ),
       );
     }
-    final baseName = scope!.subscope(
-      nameResolver: () sync* {
-        yield* scope.nameResolver();
-        final branches = b.branches.build().map((it) => it.name).toList();
-        yield branches.join('Or');
-      },
-    ).typeName(context, schema);
+    final baseName = scope!
+        .subscope(
+          nameResolver: () sync* {
+            yield* scope.nameResolver();
+            final branches = b.branches.build().map((it) => it.name).toList();
+            yield branches.join('Or');
+          },
+        )
+        .typeName(context, schema);
     b.schema = schema;
     b.typeReference
       ..symbol = baseName
@@ -201,33 +211,36 @@ class OpenApiTypeSchemaResolver
       b.discriminator = FieldDiscriminator(
         wireName: discriminator.propertyName,
         dartName: sanitizeVariableName(discriminator.propertyName.camelCase),
-        mapping: mapping.map((value, ref) {
-          final schemaName = ref.split('/').last;
-          final typeSchema = context.document.components.schemas[schemaName];
-          if (typeSchema.extensions['x-resourceId'] case final resourceId?) {
-            value = resourceId.asString;
-          } else if (typeSchema is OpenApiStructTypeSchema) {
-            final discriminatorField =
-                typeSchema.fields[discriminator.propertyName];
-            if (discriminatorField?.schema
-                case OpenApiSingleValueTypeSchema(
-                  value: final discriminatorValue
-                )) {
-              value = discriminatorValue.asString;
-            }
-          }
-          return MapEntry(
-            value,
-            OpenApiTypeReference(
-              typeReference: context.dartRefs[schemaName]!.toTypeReference,
-              schema: OpenApiTypeSchemaReference(
-                name: schemaName,
-                ref: ref,
-              ),
-              isNullable: false,
-            ),
-          );
-        }).toMap(),
+        mapping:
+            mapping.map((value, ref) {
+              final schemaName = ref.split('/').last;
+              final typeSchema =
+                  context.document.components.schemas[schemaName];
+              if (typeSchema.extensions['x-resourceId']
+                  case final resourceId?) {
+                value = resourceId.asString;
+              } else if (typeSchema is OpenApiStructTypeSchema) {
+                final discriminatorField =
+                    typeSchema.fields[discriminator.propertyName];
+                if (discriminatorField?.schema
+                    case OpenApiSingleValueTypeSchema(
+                      value: final discriminatorValue,
+                    )) {
+                  value = discriminatorValue.asString;
+                }
+              }
+              return MapEntry(
+                value,
+                OpenApiTypeReference(
+                  typeReference: context.dartRefs[schemaName]!.toTypeReference,
+                  schema: OpenApiTypeSchemaReference(
+                    name: schemaName,
+                    ref: ref,
+                  ),
+                  isNullable: false,
+                ),
+              );
+            }).toMap(),
       );
     } else {
       b.discriminator = TypeDiscriminator(mapping: {});
@@ -246,9 +259,10 @@ class OpenApiTypeSchemaResolver
     final needsWrapper = scope?.needsWrapper ?? false;
     return OpenApiEmptyType(
       schema: schema,
-      typeReference: needsWrapper
-          ? context.emptyType
-          : DartTypes.core.void$.toTypeReference,
+      typeReference:
+          needsWrapper
+              ? context.emptyType
+              : DartTypes.core.void$.toTypeReference,
     );
   }
 
@@ -290,9 +304,10 @@ class OpenApiTypeSchemaResolver
     final needsWrapper = scope?.needsWrapper ?? false;
     final baseType = OpenApiIntegerType(
       schema: schema,
-      typeReference: needsWrapper
-          ? context.intType.withNullability(isNullable).toTypeReference
-          : DartTypes.core.int.withNullability(isNullable).toTypeReference,
+      typeReference:
+          needsWrapper
+              ? context.intType.withNullability(isNullable).toTypeReference
+              : DartTypes.core.int.withNullability(isNullable).toTypeReference,
       isNullable: isNullable,
       defaultValue: schema.defaultValue?.value,
     );
@@ -300,9 +315,10 @@ class OpenApiTypeSchemaResolver
       case OpenApiIntegerFormat.unixTime:
         assert(!needsWrapper); // TODO: needsWrapper
         return OpenApiDateType(
-          typeReference: DartTypes.core.dateTime
-              .withNullability(isNullable)
-              .toTypeReference,
+          typeReference:
+              DartTypes.core.dateTime
+                  .withNullability(isNullable)
+                  .toTypeReference,
           schema: schema,
           primitiveType: baseType.primitiveType,
           isNullable: isNullable,
@@ -331,9 +347,12 @@ class OpenApiTypeSchemaResolver
     return OpenApiNumberType(
       schema: schema,
       isNullable: isNullable,
-      typeReference: needsWrapper
-          ? context.doubleType.withNullability(isNullable).toTypeReference
-          : DartTypes.core.double.withNullability(isNullable).toTypeReference,
+      typeReference:
+          needsWrapper
+              ? context.doubleType.withNullability(isNullable).toTypeReference
+              : DartTypes.core.double
+                  .withNullability(isNullable)
+                  .toTypeReference,
       defaultValue: schema.defaultValue?.value,
     );
   }
@@ -349,17 +368,18 @@ class OpenApiTypeSchemaResolver
     final valueType = resolveRef(
       schema.valueType,
       scope.subscope(
-        nameResolver: () =>
-            scope.nameResolver().map((parent) => '${parent}Value'),
+        nameResolver:
+            () => scope.nameResolver().map((parent) => '${parent}Value'),
       ),
     );
     final type = OpenApiRecordType(
       schema: schema,
-      typeReference: needsWrapper
-          ? refer(name, scope.url).toTypeReference
-          : DartTypes.core
-              .map(DartTypes.core.string, valueType.typeReference)
-              .toTypeReference,
+      typeReference:
+          needsWrapper
+              ? refer(name, scope.url).toTypeReference
+              : DartTypes.core
+                  .map(DartTypes.core.string, valueType.typeReference)
+                  .toTypeReference,
       valueType: valueType,
       isNullable: isNullable,
       defaultValue: schema.defaultValue?.value,
@@ -393,38 +413,40 @@ class OpenApiTypeSchemaResolver
     final needsWrapper = scope?.needsWrapper ?? false;
     final baseType = OpenApiStringType(
       schema: schema,
-      typeReference: needsWrapper
-          ? context.stringType.withNullability(isNullable).toTypeReference
-          : DartTypes.core.string.withNullability(isNullable).toTypeReference,
+      typeReference:
+          needsWrapper
+              ? context.stringType.withNullability(isNullable).toTypeReference
+              : DartTypes.core.string
+                  .withNullability(isNullable)
+                  .toTypeReference,
       isNullable: isNullable,
       defaultValue: schema.defaultValue?.value,
     );
     return switch (schema.format) {
       OpenApiStringFormat.date ||
       OpenApiStringFormat.dateTime ||
-      OpenApiStringFormat.time =>
-        OpenApiDateType(
-          schema: schema,
-          typeReference: DartTypes.core.dateTime
-              .withNullability(isNullable)
-              .toTypeReference,
-          primitiveType: baseType.primitiveType,
-          isNullable: isNullable,
-          defaultValue: schema.defaultValue?.value,
-        ),
+      OpenApiStringFormat.time => OpenApiDateType(
+        schema: schema,
+        typeReference:
+            DartTypes.core.dateTime.withNullability(isNullable).toTypeReference,
+        primitiveType: baseType.primitiveType,
+        isNullable: isNullable,
+        defaultValue: schema.defaultValue?.value,
+      ),
       OpenApiStringFormat.binary => OpenApiBinaryType(
-          schema: schema,
-          primitiveType: baseType,
-          typeReference: scope!.isFile
-              ? DartTypes.crossFile.xFile
-                  .withNullability(isNullable)
-                  .toTypeReference
-              : DartTypes.typedData.uint8List
-                  .withNullability(isNullable)
-                  .toTypeReference,
-          isNullable: isNullable,
-          defaultValue: schema.defaultValue?.value,
-        ),
+        schema: schema,
+        primitiveType: baseType,
+        typeReference:
+            scope!.isFile
+                ? DartTypes.crossFile.xFile
+                    .withNullability(isNullable)
+                    .toTypeReference
+                : DartTypes.typedData.uint8List
+                    .withNullability(isNullable)
+                    .toTypeReference,
+        isNullable: isNullable,
+        defaultValue: schema.defaultValue?.value,
+      ),
       OpenApiStringFormat.duration => TODO(),
       OpenApiStringFormat.regex => TODO(),
       _ => baseType,
@@ -440,14 +462,16 @@ class OpenApiTypeSchemaResolver
     if (context.typeSchemaRefs[schema] case final ref? when !scope!.global) {
       return ref.withNullability(isNullable);
     }
-    final name = scope!.subscope(
-      nameResolver: () sync* {
-        yield* scope.nameResolver();
-        if (schema.title case final title?) {
-          yield title.pascalCase;
-        }
-      },
-    ).typeName(context, schema);
+    final name = scope!
+        .subscope(
+          nameResolver: () sync* {
+            yield* scope.nameResolver();
+            if (schema.title case final title?) {
+              yield title.pascalCase;
+            }
+          },
+        )
+        .typeName(context, schema);
     final url = context.urlOf(name) ?? scope.url;
     final type = OpenApiStructType(
       schema: schema,
@@ -483,16 +507,18 @@ class OpenApiTypeSchemaResolver
               type: fieldType.withNullability(
                 !schema.required.contains(fieldName) || fieldType.isNullable,
               )..rebuild(
-                  (t) => t.docs = docsFromParts(
-                    field.schema.title,
-                    field.schema.description,
-                  ),
-                ),
+                (t) =>
+                    t.docs = docsFromParts(
+                      field.schema.title,
+                      field.schema.description,
+                    ),
+              ),
             ),
           );
         }),
-        if (schema.extensions['x-stripeEvent']?.value
-            case {'type': final String eventType})
+        if (schema.extensions['x-stripeEvent']?.value case {
+          'type': final String eventType,
+        })
           'type': OpenApiField(
             name: 'type',
             dartName: 'type',
@@ -531,12 +557,7 @@ class OpenApiTypeSchemaResolver
     final isNullable = scope?.isNullable ?? schema.isNullableOrFalse;
     // Solves X1 | X2 | ... | Xn
     final resolved = schema.types
-        .map(
-          (schema) => resolveRef(
-            schema,
-            scope,
-          ),
-        )
+        .map((schema) => resolveRef(schema, scope))
         .fold<OpenApiType>(
           context.typeSystem.bottomType,
           (sum, type) =>
@@ -580,11 +601,12 @@ class OpenApiTypeSchemaResolver
     context.registerSpec(
       idClassName,
       'models.dart',
-      () => OpenApiIdGenerator(
-        className: idClassName,
-        typeName: typeName,
-        idIsNullable: idIsNullable,
-      ).generate(),
+      () =>
+          OpenApiIdGenerator(
+            className: idClassName,
+            typeName: typeName,
+            idIsNullable: idIsNullable,
+          ).generate(),
     );
 
     final typeOrIdClassName = '${typeName}OrId';
@@ -594,12 +616,13 @@ class OpenApiTypeSchemaResolver
     context.registerSpec(
       typeOrIdClassName,
       'models.dart',
-      () => OpenApiStructOrIdGenerator(
-        className: typeOrIdClassName,
-        typeName: typeName,
-        idOnlyName: idClassName,
-        idIsNullable: idIsNullable,
-      ).generate(),
+      () =>
+          OpenApiStructOrIdGenerator(
+            className: typeOrIdClassName,
+            typeName: typeName,
+            idOnlyName: idClassName,
+            idIsNullable: idIsNullable,
+          ).generate(),
     );
     final wrapperRef = refer(typeOrIdClassName, 'models.dart');
     context.implement(idClassName, wrapperRef);
@@ -634,9 +657,10 @@ class OpenApiTypeSchemaResolver
     );
     if (emptySv != null) {
       schema = schema.rebuild(
-        (schema) => schema
-          ..types.remove(emptySv)
-          ..defaultValue = JsonObject(''),
+        (schema) =>
+            schema
+              ..types.remove(emptySv)
+              ..defaultValue = JsonObject(''),
       );
       return schema.accept(this, scope).withNullability(true);
     }
@@ -646,9 +670,10 @@ class OpenApiTypeSchemaResolver
       case [final singleType]:
         return singleType
             .rebuild(
-              (t) => t
-                ..description = schema.description
-                ..defaultValue = schema.defaultValue,
+              (t) =>
+                  t
+                    ..description = schema.description
+                    ..defaultValue = schema.defaultValue,
             )
             .withNullability(isNullable)
             .accept(this, scope);
@@ -656,8 +681,9 @@ class OpenApiTypeSchemaResolver
       // 3. A sealed type or ID.
       case [...final typeReferences, final OpenApiStringTypeSchema idSchema] ||
               [final OpenApiStringTypeSchema idSchema, ...final typeReferences]
-          when typeReferences
-                  .every((type) => type is OpenApiTypeSchemaReference) &&
+          when typeReferences.every(
+                (type) => type is OpenApiTypeSchemaReference,
+              ) &&
               schema.extensions.containsKey('x-expansionResources'):
         switch (typeReferences.cast<OpenApiTypeSchemaReference>()) {
           case [final typeReference]:
@@ -680,34 +706,34 @@ class OpenApiTypeSchemaResolver
 
       // 4. A union over two primitive types, one being an enum.
       case [
-              final OpenApiEnumTypeSchema enumSchema,
-              OpenApiTypeSchema(primitiveType: != null) &&
-                  final primitiveSchema,
-            ] ||
-            [
-              OpenApiTypeSchema(primitiveType: != null) &&
-                  final primitiveSchema,
-              final OpenApiEnumTypeSchema enumSchema,
-            ]:
+            final OpenApiEnumTypeSchema enumSchema,
+            OpenApiTypeSchema(primitiveType: != null) && final primitiveSchema,
+          ] ||
+          [
+            OpenApiTypeSchema(primitiveType: != null) && final primitiveSchema,
+            final OpenApiEnumTypeSchema enumSchema,
+          ]:
         final primitiveType = primitiveSchema.accept(this);
         final wrapperName = scope!.typeName(context, schema);
         context.registerSpec(
           wrapperName,
           'models.dart',
-          () => OpenApiEnumOrPrimitiveGenerator(
-            name: wrapperName,
-            enumValues: enumSchema.values.map((it) => it.value).toList(),
-            primitiveType: primitiveType as OpenApiPrimitiveType,
-          ).generate(),
+          () =>
+              OpenApiEnumOrPrimitiveGenerator(
+                name: wrapperName,
+                enumValues: enumSchema.values.map((it) => it.value).toList(),
+                primitiveType: primitiveType as OpenApiPrimitiveType,
+              ).generate(),
         );
         return OpenApiTypeReference(
           typeReference: refer(wrapperName, 'models.dart').toTypeReference,
           schema: schema,
           primitiveType: OpenApiAnyType(
             schema: schema,
-            typeReference: DartTypes.core.object
-                .withNullability(isNullable)
-                .toTypeReference,
+            typeReference:
+                DartTypes.core.object
+                    .withNullability(isNullable)
+                    .toTypeReference,
             isNullable: isNullable,
           ),
           isNullable: isNullable,
@@ -715,34 +741,34 @@ class OpenApiTypeSchemaResolver
 
       // Same as above but a single-valued "enum".
       case [
-              final OpenApiSingleValueTypeSchema singleValueSchema,
-              OpenApiTypeSchema(primitiveType: != null) &&
-                  final primitiveSchema,
-            ] ||
-            [
-              OpenApiTypeSchema(primitiveType: != null) &&
-                  final primitiveSchema,
-              final OpenApiSingleValueTypeSchema singleValueSchema,
-            ]:
+            final OpenApiSingleValueTypeSchema singleValueSchema,
+            OpenApiTypeSchema(primitiveType: != null) && final primitiveSchema,
+          ] ||
+          [
+            OpenApiTypeSchema(primitiveType: != null) && final primitiveSchema,
+            final OpenApiSingleValueTypeSchema singleValueSchema,
+          ]:
         final primitiveType = primitiveSchema.accept(this);
         final wrapperName = scope!.typeName(context, schema);
         context.registerSpec(
           wrapperName,
           'models.dart',
-          () => OpenApiEnumOrPrimitiveGenerator(
-            name: wrapperName,
-            enumValues: [singleValueSchema.value.value],
-            primitiveType: primitiveType as OpenApiPrimitiveType,
-          ).generate(),
+          () =>
+              OpenApiEnumOrPrimitiveGenerator(
+                name: wrapperName,
+                enumValues: [singleValueSchema.value.value],
+                primitiveType: primitiveType as OpenApiPrimitiveType,
+              ).generate(),
         );
         return OpenApiTypeReference(
           typeReference: refer(wrapperName, 'models.dart').toTypeReference,
           schema: schema,
           primitiveType: OpenApiAnyType(
             schema: schema,
-            typeReference: DartTypes.core.object
-                .withNullability(isNullable)
-                .toTypeReference,
+            typeReference:
+                DartTypes.core.object
+                    .withNullability(isNullable)
+                    .toTypeReference,
             isNullable: isNullable,
           ),
           isNullable: isNullable,

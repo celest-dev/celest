@@ -4,13 +4,12 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'available_stock.dart';
 
 class AvailableStocks {
-  static const AvailableStocks EMPTY = AvailableStocks._(IListConst([]));
-
-  final IList<AvailableStock> list;
-
   AvailableStocks(Iterable<AvailableStock> list) : list = IList(list);
 
   const AvailableStocks._(this.list);
+  static const AvailableStocks EMPTY = AvailableStocks._(IListConst([]));
+
+  final IList<AvailableStock> list;
 
   AvailableStock? findBySymbolOrNull(String ticker) {
     return list.firstWhereOrNull((s) => s.ticker == ticker);
@@ -29,10 +28,15 @@ class AvailableStocks {
   /// Updates the available stock with the new available stock.
   /// If the stock is not found, it is added to the list.
   AvailableStocks withAvailableStock(AvailableStock newAvailableStock) {
-    bool isPresent = list.any((s) => s.ticker == newAvailableStock.ticker);
+    final isPresent = list.any((s) => s.ticker == newAvailableStock.ticker);
 
-    IList<AvailableStock> newList = isPresent
-        ? list.map((s) => s.ticker == newAvailableStock.ticker ? newAvailableStock : s).toIList()
+    final newList = isPresent
+        ? list
+            .map(
+              (s) =>
+                  s.ticker == newAvailableStock.ticker ? newAvailableStock : s,
+            )
+            .toIList()
         : list.add(newAvailableStock);
 
     return AvailableStocks(newList);
@@ -41,8 +45,11 @@ class AvailableStocks {
   /// Updates the available stock with the new available stock.
   /// If the stock is not found, it is NOT added to the list.
   AvailableStocks withUpdatedAvailableStock(AvailableStock newAvailableStock) {
-    final newList =
-        list.map((s) => s.ticker == newAvailableStock.ticker ? newAvailableStock : s).toIList();
+    final newList = list
+        .map(
+          (s) => s.ticker == newAvailableStock.ticker ? newAvailableStock : s,
+        )
+        .toIList();
 
     return AvailableStocks(newList);
   }
@@ -55,7 +62,9 @@ class AvailableStocks {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AvailableStocks && runtimeType == other.runtimeType && list == other.list;
+      other is AvailableStocks &&
+          runtimeType == other.runtimeType &&
+          list == other.list;
 
   @override
   int get hashCode => list.hashCode;

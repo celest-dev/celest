@@ -68,25 +68,21 @@ extension AuthConfigurationValues on Auth {
           case SmsAuthProvider():
             break;
           case GitHubAuthProvider(:final clientId, :final clientSecret):
-            b.addValues(
-              GitHubAuthProvider.$type,
-              [clientId, clientSecret],
-            );
+            b.addValues(GitHubAuthProvider.$type, [clientId, clientSecret]);
           case GoogleAuthProvider(:final clientId, :final clientSecret):
-            b.addValues(
-              GoogleAuthProvider.$type,
-              [clientId, clientSecret],
-            );
+            b.addValues(GoogleAuthProvider.$type, [clientId, clientSecret]);
           case AppleAuthProvider(
-              :final clientId,
-              :final teamId,
-              :final keyId,
-              :final privateKey
-            ):
-            b.addValues(
-              AppleAuthProvider.$type,
-              [clientId, teamId, keyId, privateKey],
-            );
+            :final clientId,
+            :final teamId,
+            :final keyId,
+            :final privateKey,
+          ):
+            b.addValues(AppleAuthProvider.$type, [
+              clientId,
+              teamId,
+              keyId,
+              privateKey,
+            ]);
         }
       }
       for (final externalAuthProvider in externalProviders) {

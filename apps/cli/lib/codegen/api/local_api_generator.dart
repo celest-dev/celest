@@ -10,16 +10,16 @@ class LocalApiGenerator {
   LocalApiGenerator({
     required this.project,
     required Map<String, Reference> targets,
-  }) :
-        // Provides consistent ordering which helps with codegen diffing.
-        // TODO(dnys1): Order by API then definition order.
-        targets = SplayTreeMap.of(targets);
+  }) : // Provides consistent ordering which helps with codegen diffing.
+       // TODO(dnys1): Order by API then definition order.
+       targets = SplayTreeMap.of(targets);
 
   final Project project;
   final SplayTreeMap<String, Reference> targets;
 
   Method get _mainMethod => Method(
-        (m) => m
+    (m) =>
+        m
           ..name = 'main'
           ..returns = DartTypes.core.future(DartTypes.core.void$)
           ..modifier = MethodModifier.async
@@ -29,53 +29,54 @@ class LocalApiGenerator {
 return start();
 ''',
 
-// TODO(dnys1): No longer possible with stateful isolates (WS/SSE).
-//                   '''
-// await Future.wait(eagerError: true, [
-//   for (var i = 0; i < ${alloc(DartTypes.io.platform)}.numberOfProcessors; i++)
-//     ${alloc(DartTypes.isolate.isolate)}.run(start),
-// ]);
-// ''',
+              // TODO(dnys1): No longer possible with stateful isolates (WS/SSE).
+              //                   '''
+              // await Future.wait(eagerError: true, [
+              //   for (var i = 0; i < ${alloc(DartTypes.io.platform)}.numberOfProcessors; i++)
+              //     ${alloc(DartTypes.isolate.isolate)}.run(start),
+              // ]);
+              // ''',
               SdkType.flutter => '''
 return start();
 ''',
-// TODO(dnys1): Not sure if this is possible...
-//               '''
-// final rootIsolateToken = ${alloc(DartTypes.flutter.servicesBiding)}.rootIsolateToken!;
-// await Future.wait(eagerError: true, [
-//   for (var i = 0; i < ${alloc(DartTypes.io.platform)}.numberOfProcessors; i++)
-//     ${alloc(DartTypes.isolate.isolate)}.run(() => start(rootIsolateToken)),
-// ]);
-// '''
+              // TODO(dnys1): Not sure if this is possible...
+              //               '''
+              // final rootIsolateToken = ${alloc(DartTypes.flutter.servicesBiding)}.rootIsolateToken!;
+              // await Future.wait(eagerError: true, [
+              //   for (var i = 0; i < ${alloc(DartTypes.io.platform)}.numberOfProcessors; i++)
+              //     ${alloc(DartTypes.isolate.isolate)}.run(() => start(rootIsolateToken)),
+              // ]);
+              // '''
               final unknown => unreachable('Unknown project type: $unknown'),
             },
           ),
-      );
+  );
 
   Method get _setupCallback {
     return Method((m) {
       m
         ..requiredParameters.add(
           Parameter(
-            (p) => p
-              ..name = 'context'
-              ..type = DartTypes.celest.context,
+            (p) =>
+                p
+                  ..name = 'context'
+                  ..type = DartTypes.celest.context,
           ),
         )
         ..modifier = MethodModifier.async
         ..body = Block((b) {
           if (project.databases.isNotEmpty) {
             b.addExpression(
-              CloudClientTypes.dataClass.ref
-                  .property('init')
-                  .call([refer('context')]).awaited,
+              CloudClientTypes.dataClass.ref.property('init').call([
+                refer('context'),
+              ]).awaited,
             );
           }
           if (project.auth?.providers.isNotEmpty ?? false) {
             b.addExpression(
-              CloudClientTypes.authClass.ref
-                  .property('init')
-                  .call([refer('context')]).awaited,
+              CloudClientTypes.authClass.ref.property('init').call([
+                refer('context'),
+              ]).awaited,
             );
           }
         });
@@ -83,7 +84,8 @@ return start();
   }
 
   Method get _startMethod => Method(
-        (m) => m
+    (m) =>
+        m
           ..name = 'start'
           ..returns = DartTypes.core.future(DartTypes.core.void$)
           ..modifier = MethodModifier.async
@@ -117,7 +119,7 @@ return start();
               }).awaited,
             );
           }),
-      );
+  );
 
   List<Method> get body => [_mainMethod, _startMethod];
 

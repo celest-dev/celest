@@ -25,8 +25,7 @@ final class HotReloadAddAuthTest extends E2ETest with TestDartProject {
     await celest.flush();
 
     log('Adding auth');
-    await celestDir.childFile('auth.dart').writeAsString(
-      '''
+    await celestDir.childFile('auth.dart').writeAsString('''
 import 'package:celest/celest.dart';
 
 const auth = Auth(
@@ -34,8 +33,7 @@ const auth = Auth(
     AuthProvider.email(),
   ],
 );
-''',
-    );
+''');
 
     await celest
         .hotReload()

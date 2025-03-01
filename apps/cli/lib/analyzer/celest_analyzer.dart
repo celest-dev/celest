@@ -58,9 +58,7 @@ final class CelestAnalyzer
       dependencies = ProjectDependency.backendDependencies.keys;
       final pubspec = Pubspec(
         'warmup_celest_cache',
-        environment: {
-          'sdk': PubEnvironment.dartSdkConstraint,
-        },
+        environment: {'sdk': PubEnvironment.dartSdkConstraint},
         dependencies: ProjectDependency.backendDependencies.toPub(),
       );
       await [
@@ -197,27 +195,27 @@ const project = Project(name: 'cache_warmup');
       celestConfigValues,
       jsonAnnotation,
     ) = await (
-      context.currentSession.getLibraryByUri('dart:core'),
-      context.currentSession.getLibraryByUri('dart:typed_data'),
+          context.currentSession.getLibraryByUri('dart:core'),
+          context.currentSession.getLibraryByUri('dart:typed_data'),
 
-      // Resolve the specific URIs instead of resolving the whole package
-      // (which takes much much longer).
-      context.currentSession.getLibraryByUri(
-        'package:celest_core/src/exception/cloud_exception.dart',
-      ),
-      context.currentSession.getLibraryByUri(
-        'package:celest_core/src/auth/user.dart',
-      ),
-      context.currentSession.getLibraryByUri(
-        'package:celest/src/config/config_values.dart',
-      ),
+          // Resolve the specific URIs instead of resolving the whole package
+          // (which takes much much longer).
+          context.currentSession.getLibraryByUri(
+            'package:celest_core/src/exception/cloud_exception.dart',
+          ),
+          context.currentSession.getLibraryByUri(
+            'package:celest_core/src/auth/user.dart',
+          ),
+          context.currentSession.getLibraryByUri(
+            'package:celest/src/config/config_values.dart',
+          ),
 
-      // `package:json_annotation/json_annotation.dart` is used in the
-      // generated code when serializing/deserializing models.
-      context.currentSession.getLibraryByUri(
-        'package:json_annotation/src/json_key.dart',
-      ),
-    ).wait;
+          // `package:json_annotation/json_annotation.dart` is used in the
+          // generated code when serializing/deserializing models.
+          context.currentSession.getLibraryByUri(
+            'package:json_annotation/src/json_key.dart',
+          ),
+        ).wait;
     if (celestCoreExceptions is! LibraryElementResult ||
         celestCoreUser is! LibraryElementResult) {
       await dumpPackageConfig();
@@ -255,10 +253,12 @@ const project = Project(name: 'cache_warmup');
         coreUriType: dartCore.getClassType('Uri'),
         coreUriDataType: dartCore.getClassType('UriData'),
         typedDataUint8ListType: dartTypedData.getClassType('Uint8List'),
-        badRequestExceptionType:
-            celestCoreExceptions.getClassType('BadRequestException'),
-        internalServerErrorType:
-            celestCoreExceptions.getClassType('InternalServerError'),
+        badRequestExceptionType: celestCoreExceptions.getClassType(
+          'BadRequestException',
+        ),
+        internalServerErrorType: celestCoreExceptions.getClassType(
+          'InternalServerError',
+        ),
         userType: celestCoreUser.getClassType('User'),
         cloudExceptionType: celestCoreExceptions.getClassType('CloudException'),
         celestEnvType: envElement.thisType,
@@ -310,9 +310,7 @@ const project = Project(name: 'cache_warmup');
     }
 
     _project = project.toBuilder();
-    _widgetCollector = _ScopedWidgetCollector(
-      errorReporter: reportError,
-    );
+    _widgetCollector = _ScopedWidgetCollector(errorReporter: reportError);
     final variables = await performance.trace(
       'CelestAnalyzer',
       'resolveEnvVariables',
@@ -386,16 +384,18 @@ const project = Project(name: 'cache_warmup');
       return null;
     }
     _logger.finer('Found project file at $projectFilePath');
-    final projectLibrary =
-        context.currentSession.getParsedLibrary(projectFilePath);
+    final projectLibrary = context.currentSession.getParsedLibrary(
+      projectFilePath,
+    );
     if (projectLibrary is! ParsedLibraryResult) {
       reportError('Failed to parse project.dart file');
       return null;
     }
-    final projectErrors = projectLibrary.units
-        .expand((unit) => unit.errors)
-        .where((error) => error.severity == Severity.error)
-        .toList();
+    final projectErrors =
+        projectLibrary.units
+            .expand((unit) => unit.errors)
+            .where((error) => error.severity == Severity.error)
+            .toList();
     if (projectErrors.isNotEmpty) {
       for (final projectError in projectErrors) {
         _logger.finest(
@@ -439,12 +439,13 @@ const project = Project(name: 'cache_warmup');
       return;
     }
 
-    final apiFiles = await apiDir
-        .list(followLinks: true)
-        .whereType<File>()
-        .map((file) => file.path)
-        .where((path) => path.endsWith('.dart'))
-        .toList();
+    final apiFiles =
+        await apiDir
+            .list(followLinks: true)
+            .whereType<File>()
+            .map((file) => file.path)
+            .where((path) => path.endsWith('.dart'))
+            .toList();
     final apiDeclarations = _widgetCollector.collect(
       apiFiles,
       scope: 'API',
@@ -466,10 +467,11 @@ const project = Project(name: 'cache_warmup');
       }
 
       final apiLibraryResult = await resolveLibrary(apiPath);
-      final apiErrors = apiLibraryResult.units
-          .expand((unit) => unit.errors)
-          .where((error) => error.severity == Severity.error)
-          .toList();
+      final apiErrors =
+          apiLibraryResult.units
+              .expand((unit) => unit.errors)
+              .where((error) => error.severity == Severity.error)
+              .toList();
       if (apiErrors.isNotEmpty) {
         for (final apiError in apiErrors) {
           reportError(
@@ -493,9 +495,7 @@ const project = Project(name: 'cache_warmup');
       if (baseApi == null) {
         return;
       }
-      _project.apis.update(
-        (apis) => apis[apiName] = baseApi,
-      );
+      _project.apis.update((apis) => apis[apiName] = baseApi);
     }
   }
 
@@ -509,11 +509,12 @@ const project = Project(name: 'cache_warmup');
           .where((it) => fileSystem.file(it).existsSync())
           .map(resolveLibrary),
     );
-    final authErrors = authLibraries
-        .expand((library) => library.units)
-        .expand((unit) => unit.errors)
-        .where((error) => error.severity == Severity.error)
-        .toList();
+    final authErrors =
+        authLibraries
+            .expand((library) => library.units)
+            .expand((unit) => unit.errors)
+            .where((error) => error.severity == Severity.error)
+            .toList();
     if (authErrors.isNotEmpty) {
       for (final authError in authErrors) {
         reportError(
@@ -529,8 +530,10 @@ const project = Project(name: 'cache_warmup');
 
     for (final library in authLibraries) {
       final auth = await resolver.resolveAuth(
-        authFilepath: context.currentSession.uriConverter
-            .uriToPath(library.element.source.uri)!,
+        authFilepath:
+            context.currentSession.uriConverter.uriToPath(
+              library.element.source.uri,
+            )!,
         authLibrary: library,
       );
       if (auth != null) {
@@ -599,9 +602,7 @@ const project = Project(name: 'cache_warmup');
 }
 
 final class _ScopedWidgetCollector {
-  _ScopedWidgetCollector({
-    required this.errorReporter,
-  });
+  _ScopedWidgetCollector({required this.errorReporter});
 
   final AnalysisErrorReporter errorReporter;
 

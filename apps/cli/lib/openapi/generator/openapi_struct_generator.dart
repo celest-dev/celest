@@ -45,11 +45,14 @@ final class OpenApiStructGenerator {
   final String name;
   final OpenApiStructType type;
   final String? mimeType;
-  late final ClassBuilder _class = ClassBuilder()
-    ..modifier = ClassModifier.final$
-    ..name = name
-    ..docs.addAll([if (type.docs case final docs? when docs.isNotEmpty) docs])
-    ..implements.addAll(type.implements);
+  late final ClassBuilder _class =
+      ClassBuilder()
+        ..modifier = ClassModifier.final$
+        ..name = name
+        ..docs.addAll([
+          if (type.docs case final docs? when docs.isNotEmpty) docs,
+        ])
+        ..implements.addAll(type.implements);
 
   bool get includeFormData {
     final mimeType = this.mimeType;
@@ -65,20 +68,22 @@ final class OpenApiStructGenerator {
     if (type.superType is! OpenApiAnyType) {
       _class.extend = type.superType.typeReference.nonNullable;
     }
-    final ctor = ConstructorBuilder()
-      ..constant = true
-      ..docs.addAll([
-        if (type.docs case final docs? when docs.isNotEmpty) docs,
-      ]);
+    final ctor =
+        ConstructorBuilder()
+          ..constant = true
+          ..docs.addAll([
+            if (type.docs case final docs? when docs.isNotEmpty) docs,
+          ]);
     for (final OpenApiField(:dartName, type: fieldType) in type.fields.values) {
       if (fieldType is! OpenApiSingleValueType) {
         ctor.optionalParameters.add(
           Parameter(
-            (b) => b
-              ..name = dartName
-              ..named = true
-              ..toThis = true
-              ..required = !fieldType.isNullable,
+            (b) =>
+                b
+                  ..name = dartName
+                  ..named = true
+                  ..toThis = true
+                  ..required = !fieldType.isNullable,
           ),
         );
       }
@@ -119,34 +124,28 @@ final class OpenApiStructGenerator {
         ..name = 'fromJson'
         ..requiredParameters.add(
           Parameter(
-            (p) => p
-              ..name = 'json'
-              ..type = DartTypes.core.object.nullable,
+            (p) =>
+                p
+                  ..name = 'json'
+                  ..type = DartTypes.core.object.nullable,
           ),
         )
         ..lambda = false
         ..body = Block((b) {
           final fields = <String, Expression>{};
           final map = declareFinal('map').assign(
-            refer('json')
-                .asA(DartTypes.core.map())
-                .property('cast')
-                .call([], {}, [
-              DartTypes.core.string,
-              DartTypes.core.object.nullable,
-            ]),
+            refer('json').asA(DartTypes.core.map()).property('cast').call(
+              [],
+              {},
+              [DartTypes.core.string, DartTypes.core.object.nullable],
+            ),
           );
           b.addExpression(map);
           for (final field in type.deserializableFields) {
             final ref = refer('map').index(literalString(field.name));
-            fields[field.dartName] = jsonGenerator.fromJson(
-              field.type,
-              ref,
-            );
+            fields[field.dartName] = jsonGenerator.fromJson(field.type, ref);
           }
-          b.addExpression(
-            type.typeReference.newInstance([], fields).returned,
-          );
+          b.addExpression(type.typeReference.newInstance([], fields).returned);
         });
     });
   }
@@ -165,9 +164,7 @@ final class OpenApiStructGenerator {
               DartTypes.core.stringBuffer
                   .newInstance([])
                   .cascade('writeln')
-                  .call([
-                    literalString('$name(', raw: name.contains(r'$')),
-                  ]),
+                  .call([literalString('$name(', raw: name.contains(r'$'))]),
             ),
           );
           for (final field in type.fields.values) {
@@ -176,9 +173,7 @@ final class OpenApiStructGenerator {
                 .cascade('writeln')
                 .call([])
                 .cascade('write')
-                .call([
-                  literalString('  ${field.name}: '),
-                ])
+                .call([literalString('  ${field.name}: ')])
                 .cascade('write')
                 .call([fieldRef])
                 .cascade('write')
@@ -191,9 +186,7 @@ final class OpenApiStructGenerator {
             );
           }
           b.addExpression(buf.property('write').call([literalString(')')]));
-          b.addExpression(
-            buf.property('toString').call([]).returned,
-          );
+          b.addExpression(buf.property('toString').call([]).returned);
         });
     });
   }
@@ -245,9 +238,9 @@ final class OpenApiStructGenerator {
           );
           b.statements.add(
             encodeField.wrapWithBlockIf(
-              refer('instance')
-                  .property(field.dartName)
-                  .notEqualTo(literalNull),
+              refer(
+                'instance',
+              ).property(field.dartName).notEqualTo(literalNull),
               field.type.isNullable,
             ),
           );
@@ -266,31 +259,29 @@ Method encodeMethod(String name, Code body) {
       ..returns = refer('V')
       ..requiredParameters.addAll([
         Parameter(
-          (p) => p
-            ..type = refer(name)
-            ..name = 'instance',
+          (p) =>
+              p
+                ..type = refer(name)
+                ..name = 'instance',
         ),
         Parameter(
-          (p) => p
-            ..type = DartTypes.libcoder.encoder(refer('V'))
-            ..name = 'encoder',
+          (p) =>
+              p
+                ..type = DartTypes.libcoder.encoder(refer('V'))
+                ..name = 'encoder',
         ),
       ])
       ..lambda = false
       ..body = Block((b) {
         b.addExpression(
           declareFinal('container').assign(
-            refer('encoder').property('container').call(
-              [],
-              {},
-              [DartTypes.core.string],
-            ),
+            refer(
+              'encoder',
+            ).property('container').call([], {}, [DartTypes.core.string]),
           ),
         );
         b.statements.add(body);
-        b.addExpression(
-          refer('container').property('value').returned,
-        );
+        b.addExpression(refer('container').property('value').returned);
       });
   });
 }
@@ -332,9 +323,10 @@ Method get encodeWithMethod {
       ..returns = refer('V')
       ..requiredParameters.addAll([
         Parameter(
-          (p) => p
-            ..type = DartTypes.libcoder.encoder(refer('V'))
-            ..name = 'encoder',
+          (p) =>
+              p
+                ..type = DartTypes.libcoder.encoder(refer('V'))
+                ..name = 'encoder',
         ),
       ])
       ..body = refer('encode').call([refer('this'), refer('encoder')]).code;

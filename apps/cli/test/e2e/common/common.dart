@@ -12,10 +12,7 @@ import 'command.dart';
 export 'command.dart';
 
 /// The default environment to use when running CLI processes.
-final defaultCliEnvironment = {
-  ...platform.environment,
-  'NO_COLOR': 'true',
-};
+final defaultCliEnvironment = {...platform.environment, 'NO_COLOR': 'true'};
 
 abstract base class TestTarget with TestHelpers {
   @override
@@ -118,33 +115,19 @@ mixin TestHelpers {
     List<String> args = const [],
     String? workingDirectory,
     Map<String, String>? environment,
-  }) =>
-      runCommand(
-        [
-          ...target.executable,
-          command,
-          '--json',
-          ...args,
-        ],
-        workingDirectory: workingDirectory,
-        environment: {
-          if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
-          ...defaultCliEnvironment,
-          ...target.environment,
-          ...?environment,
-        },
-      );
+  }) => runCommand(
+    [...target.executable, command, '--json', ...args],
+    workingDirectory: workingDirectory,
+    environment: {
+      if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
+      ...defaultCliEnvironment,
+      ...target.environment,
+      ...?environment,
+    },
+  );
 
-  Command celestCommand(
-    String command, [
-    List<String> args = const [],
-  ]) =>
-      Command([
-        ...target.executable,
-        command,
-        '--json',
-        ...args,
-      ]).environment({
+  Command celestCommand(String command, [List<String> args = const []]) =>
+      Command([...target.executable, command, '--json', ...args]).environment({
         if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
         ...defaultCliEnvironment,
         ...target.environment,

@@ -10,16 +10,17 @@ import 'models.dart';
 extension type StripeApiServers(Uri _) implements Uri {
   static final StripeApiServers defaultServer = server0;
 
-  static final StripeApiServers server0 =
-      StripeApiServers(Uri.parse(r'https://api.stripe.com/'));
+  static final StripeApiServers server0 = StripeApiServers(
+    Uri.parse(r'https://api.stripe.com/'),
+  );
 }
 
 class StripeApiClientV1Account {
   StripeApiClientV1Account({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -32,12 +33,10 @@ class StripeApiClientV1Account {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/account')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/account',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -59,8 +58,8 @@ class StripeApiClientV1AccountLinks {
   StripeApiClientV1AccountLinks({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -70,10 +69,7 @@ class StripeApiClientV1AccountLinks {
   /// Creates an AccountLink object that includes a single-use Stripe URL that the platform can redirect their user to in order to take them through the Connect Onboarding flow.
   Future<AccountLink> create({required PostAccountLinksBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/account_links');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -96,8 +92,8 @@ class StripeApiClientV1AccountSessions {
   StripeApiClientV1AccountSessions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -107,10 +103,7 @@ class StripeApiClientV1AccountSessions {
   /// Creates a AccountSession object that includes a single-use token that the platform can use on their front-end to grant client-side API access.
   Future<AccountSession> create({required PostAccountSessionsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/account_sessions');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -133,8 +126,8 @@ class StripeApiClientV1AccountsAccountCapabilities {
   StripeApiClientV1AccountsAccountCapabilities({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -150,12 +143,10 @@ class StripeApiClientV1AccountsAccountCapabilities {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/accounts/$account/capabilities')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/accounts/$account/capabilities',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -182,13 +173,10 @@ class StripeApiClientV1AccountsAccountCapabilities {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/accounts/$account/capabilities/$capability')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/accounts/$account/capabilities/$capability',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -211,12 +199,10 @@ class StripeApiClientV1AccountsAccountCapabilities {
     required String capability,
     PostAccountsAccountCapabilitiesCapabilityBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/accounts/$account/capabilities/$capability');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/accounts/$account/capabilities/$capability',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -241,8 +227,8 @@ class StripeApiClientV1AccountsAccountExternalAccounts {
   StripeApiClientV1AccountsAccountExternalAccounts({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -274,12 +260,10 @@ class StripeApiClientV1AccountsAccountExternalAccounts {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/accounts/$account/external_accounts')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/accounts/$account/external_accounts',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -302,10 +286,7 @@ class StripeApiClientV1AccountsAccountExternalAccounts {
     required PostAccountsAccountExternalAccountsBody body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/accounts/$account/external_accounts');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -333,13 +314,10 @@ class StripeApiClientV1AccountsAccountExternalAccounts {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/accounts/$account/external_accounts/$id')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/accounts/$account/external_accounts/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -364,12 +342,10 @@ class StripeApiClientV1AccountsAccountExternalAccounts {
     required String id,
     PostAccountsAccountExternalAccountsIdBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/accounts/$account/external_accounts/$id');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/accounts/$account/external_accounts/$id',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -394,12 +370,10 @@ class StripeApiClientV1AccountsAccountExternalAccounts {
     required String account,
     required String id,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/accounts/$account/external_accounts/$id');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/accounts/$account/external_accounts/$id',
     );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -421,8 +395,8 @@ class StripeApiClientV1AccountsAccountLoginLinks {
   StripeApiClientV1AccountsAccountLoginLinks({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -437,10 +411,7 @@ class StripeApiClientV1AccountsAccountLoginLinks {
     PostAccountsAccountLoginLinksBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/accounts/$account/login_links');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -465,8 +436,8 @@ class StripeApiClientV1AccountsAccountPersons {
   StripeApiClientV1AccountsAccountPersons({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -498,12 +469,10 @@ class StripeApiClientV1AccountsAccountPersons {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/accounts/$account/persons')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/accounts/$account/persons',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -526,10 +495,7 @@ class StripeApiClientV1AccountsAccountPersons {
     PostAccountsAccountPersonsBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/accounts/$account/persons');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -559,12 +525,10 @@ class StripeApiClientV1AccountsAccountPersons {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/accounts/$account/persons/$person')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/accounts/$account/persons/$person',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -588,10 +552,7 @@ class StripeApiClientV1AccountsAccountPersons {
     PostAccountsAccountPersonsPersonBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/accounts/$account/persons/$person');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -617,10 +578,7 @@ class StripeApiClientV1AccountsAccountPersons {
     required String person,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/accounts/$account/persons/$person');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -642,8 +600,8 @@ class StripeApiClientV1AccountsAccountReject {
   StripeApiClientV1AccountsAccountReject({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -658,10 +616,7 @@ class StripeApiClientV1AccountsAccountReject {
     required PostAccountsAccountRejectBody body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/accounts/$account/reject');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -684,8 +639,8 @@ class StripeApiClientV1AccountsAccount {
   StripeApiClientV1AccountsAccount({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -727,8 +682,8 @@ class StripeApiClientV1Accounts {
   StripeApiClientV1Accounts({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -759,12 +714,10 @@ class StripeApiClientV1Accounts {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/accounts')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/accounts',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -786,10 +739,7 @@ class StripeApiClientV1Accounts {
   /// If you’ve already collected information for your connected accounts, you [can prefill that information](/docs/connect/best-practices#onboarding) when creating the account. Connect Onboarding won’t ask for the prefilled information during account onboarding. You can prefill any information on the account.
   Future<Account> create({PostAccountsBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/accounts');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -818,12 +768,10 @@ class StripeApiClientV1Accounts {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/accounts/$account')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/accounts/$account',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -850,10 +798,7 @@ class StripeApiClientV1Accounts {
     PostAccountsAccountBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/accounts/$account');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -880,10 +825,7 @@ class StripeApiClientV1Accounts {
   /// If you want to delete your own account, use the [account information tab in your account settings](https://dashboard.stripe.com/settings/account) instead.
   Future<DeletedAccount> delete({required String account}) async {
     final $uri = Uri.parse('$_baseUri/v1/accounts/$account');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -911,8 +853,8 @@ class StripeApiClientV1ApplePayDomains {
   StripeApiClientV1ApplePayDomains({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -943,12 +885,10 @@ class StripeApiClientV1ApplePayDomains {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/apple_pay/domains')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/apple_pay/domains',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -968,10 +908,7 @@ class StripeApiClientV1ApplePayDomains {
   /// Create an apple pay domain.
   Future<ApplePayDomain> create({required PostApplePayDomainsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/apple_pay/domains');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -998,12 +935,10 @@ class StripeApiClientV1ApplePayDomains {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/apple_pay/domains/$domain')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/apple_pay/domains/$domain',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -1023,10 +958,7 @@ class StripeApiClientV1ApplePayDomains {
   /// Delete an apple pay domain.
   Future<DeletedApplePayDomain> delete({required String domain}) async {
     final $uri = Uri.parse('$_baseUri/v1/apple_pay/domains/$domain');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -1048,8 +980,8 @@ class StripeApiClientV1ApplePay {
   StripeApiClientV1ApplePay({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1067,8 +999,8 @@ class StripeApiClientV1ApplicationFeesFeeRefunds {
   StripeApiClientV1ApplicationFeesFeeRefunds({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1085,12 +1017,10 @@ class StripeApiClientV1ApplicationFeesFeeRefunds {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/application_fees/$fee/refunds/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/application_fees/$fee/refunds/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -1116,10 +1046,7 @@ class StripeApiClientV1ApplicationFeesFeeRefunds {
     PostApplicationFeesFeeRefundsIdBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/application_fees/$fee/refunds/$id');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -1144,8 +1071,8 @@ class StripeApiClientV1ApplicationFeesFee {
   StripeApiClientV1ApplicationFeesFee({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1163,8 +1090,8 @@ class StripeApiClientV1ApplicationFeesIdRefunds {
   StripeApiClientV1ApplicationFeesIdRefunds({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1192,12 +1119,10 @@ class StripeApiClientV1ApplicationFeesIdRefunds {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/application_fees/$id/refunds')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/application_fees/$id/refunds',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -1224,10 +1149,7 @@ class StripeApiClientV1ApplicationFeesIdRefunds {
     PostApplicationFeesIdRefundsBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/application_fees/$id/refunds');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -1252,8 +1174,8 @@ class StripeApiClientV1ApplicationFeesId {
   StripeApiClientV1ApplicationFeesId({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1271,8 +1193,8 @@ class StripeApiClientV1ApplicationFees {
   StripeApiClientV1ApplicationFees({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1307,12 +1229,10 @@ class StripeApiClientV1ApplicationFees {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/application_fees')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/application_fees',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -1338,12 +1258,10 @@ class StripeApiClientV1ApplicationFees {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/application_fees/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/application_fees/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -1377,8 +1295,8 @@ class StripeApiClientV1AppsSecretsDelete {
   StripeApiClientV1AppsSecretsDelete({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1386,13 +1304,11 @@ class StripeApiClientV1AppsSecretsDelete {
   final Uri _baseUri;
 
   /// Deletes a secret from the secret store by name and scope.
-  Future<AppsSecret> delete_where(
-      {required PostAppsSecretsDeleteBody body}) async {
+  Future<AppsSecret> delete_where({
+    required PostAppsSecretsDeleteBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/apps/secrets/delete');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -1415,8 +1331,8 @@ class StripeApiClientV1AppsSecretsFind {
   StripeApiClientV1AppsSecretsFind({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1435,12 +1351,10 @@ class StripeApiClientV1AppsSecretsFind {
     }
     $queryParameters['name'] = name;
     $queryParameters['scope'] = scope.toString();
-    final $uri = Uri.parse('$_baseUri/v1/apps/secrets/find')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/apps/secrets/find',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -1462,8 +1376,8 @@ class StripeApiClientV1AppsSecrets {
   StripeApiClientV1AppsSecrets({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1492,12 +1406,10 @@ class StripeApiClientV1AppsSecrets {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/apps/secrets')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/apps/secrets',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -1517,10 +1429,7 @@ class StripeApiClientV1AppsSecrets {
   /// Create or replace a secret in the secret store.
   Future<AppsSecret> create({required PostAppsSecretsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/apps/secrets');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -1545,35 +1454,33 @@ class StripeApiClientV1AppsSecrets {
       );
 
   StripeApiClientV1AppsSecretsFind get find => StripeApiClientV1AppsSecretsFind(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 }
 
 class StripeApiClientV1Apps {
   StripeApiClientV1Apps({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
   /// The base URI for the API
   final Uri _baseUri;
 
-  StripeApiClientV1AppsSecrets get secrets => StripeApiClientV1AppsSecrets(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1AppsSecrets get secrets =>
+      StripeApiClientV1AppsSecrets(baseUri: _baseUri, httpClient: _httpClient);
 }
 
 class StripeApiClientV1Balance {
   StripeApiClientV1Balance({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1586,12 +1493,10 @@ class StripeApiClientV1Balance {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/balance')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/balance',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -1613,8 +1518,8 @@ class StripeApiClientV1BalanceTransactions {
   StripeApiClientV1BalanceTransactions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1663,12 +1568,10 @@ class StripeApiClientV1BalanceTransactions {
     if (type != null) {
       $queryParameters['type'] = type;
     }
-    final $uri = Uri.parse('$_baseUri/v1/balance_transactions')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/balance_transactions',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -1696,12 +1599,10 @@ class StripeApiClientV1BalanceTransactions {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/balance_transactions/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/balance_transactions/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -1723,8 +1624,8 @@ class StripeApiClientV1BillingMeterEventAdjustments {
   StripeApiClientV1BillingMeterEventAdjustments({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1732,13 +1633,11 @@ class StripeApiClientV1BillingMeterEventAdjustments {
   final Uri _baseUri;
 
   /// Creates a billing meter event adjustment
-  Future<BillingMeterEventAdjustment> create(
-      {required PostBillingMeterEventAdjustmentsBody body}) async {
+  Future<BillingMeterEventAdjustment> create({
+    required PostBillingMeterEventAdjustmentsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/billing/meter_event_adjustments');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -1761,8 +1660,8 @@ class StripeApiClientV1BillingMeterEvents {
   StripeApiClientV1BillingMeterEvents({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1770,13 +1669,11 @@ class StripeApiClientV1BillingMeterEvents {
   final Uri _baseUri;
 
   /// Creates a billing meter event
-  Future<BillingMeterEvent> create(
-      {required PostBillingMeterEventsBody body}) async {
+  Future<BillingMeterEvent> create({
+    required PostBillingMeterEventsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/billing/meter_events');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -1799,8 +1696,8 @@ class StripeApiClientV1BillingMetersIdDeactivate {
   StripeApiClientV1BillingMetersIdDeactivate({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1813,10 +1710,7 @@ class StripeApiClientV1BillingMetersIdDeactivate {
     PostBillingMetersIdDeactivateBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/billing/meters/$id/deactivate');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -1841,8 +1735,8 @@ class StripeApiClientV1BillingMetersIdEventSummaries {
   StripeApiClientV1BillingMetersIdEventSummaries({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1881,12 +1775,10 @@ class StripeApiClientV1BillingMetersIdEventSummaries {
     if (valueGroupingWindow != null) {
       $queryParameters['value_grouping_window'] = r'hour';
     }
-    final $uri = Uri.parse('$_baseUri/v1/billing/meters/$id/event_summaries')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/billing/meters/$id/event_summaries',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -1908,8 +1800,8 @@ class StripeApiClientV1BillingMetersIdReactivate {
   StripeApiClientV1BillingMetersIdReactivate({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1922,10 +1814,7 @@ class StripeApiClientV1BillingMetersIdReactivate {
     PostBillingMetersIdReactivateBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/billing/meters/$id/reactivate');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -1950,8 +1839,8 @@ class StripeApiClientV1BillingMetersId {
   StripeApiClientV1BillingMetersId({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -1981,8 +1870,8 @@ class StripeApiClientV1BillingMeters {
   StripeApiClientV1BillingMeters({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2013,12 +1902,10 @@ class StripeApiClientV1BillingMeters {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/billing/meters')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/billing/meters',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -2038,10 +1925,7 @@ class StripeApiClientV1BillingMeters {
   /// Creates a billing meter
   Future<BillingMeter> create({required PostBillingMetersBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/billing/meters');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -2068,12 +1952,10 @@ class StripeApiClientV1BillingMeters {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/billing/meters/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/billing/meters/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -2096,10 +1978,7 @@ class StripeApiClientV1BillingMeters {
     PostBillingMetersIdBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/billing/meters/$id');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -2120,17 +1999,17 @@ class StripeApiClientV1BillingMeters {
   }
 
   StripeApiClientV1BillingMetersId get id => StripeApiClientV1BillingMetersId(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 }
 
 class StripeApiClientV1Billing {
   StripeApiClientV1Billing({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2150,17 +2029,17 @@ class StripeApiClientV1Billing {
       );
 
   StripeApiClientV1BillingMeters get meters => StripeApiClientV1BillingMeters(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 }
 
 class StripeApiClientV1BillingPortalConfigurations {
   StripeApiClientV1BillingPortalConfigurations({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2195,12 +2074,10 @@ class StripeApiClientV1BillingPortalConfigurations {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/billing_portal/configurations')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/billing_portal/configurations',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -2218,13 +2095,11 @@ class StripeApiClientV1BillingPortalConfigurations {
   }
 
   /// Creates a configuration that describes the functionality and behavior of a PortalSession
-  Future<BillingPortalConfiguration> create(
-      {required PostBillingPortalConfigurationsBody body}) async {
+  Future<BillingPortalConfiguration> create({
+    required PostBillingPortalConfigurationsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/billing_portal/configurations');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -2251,13 +2126,10 @@ class StripeApiClientV1BillingPortalConfigurations {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/billing_portal/configurations/$configuration')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/billing_portal/configurations/$configuration',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -2279,12 +2151,10 @@ class StripeApiClientV1BillingPortalConfigurations {
     required String configuration,
     PostBillingPortalConfigurationsConfigurationBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/billing_portal/configurations/$configuration');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/billing_portal/configurations/$configuration',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -2309,8 +2179,8 @@ class StripeApiClientV1BillingPortalSessions {
   StripeApiClientV1BillingPortalSessions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2318,13 +2188,11 @@ class StripeApiClientV1BillingPortalSessions {
   final Uri _baseUri;
 
   /// Creates a session of the customer portal.
-  Future<BillingPortalSession> create(
-      {required PostBillingPortalSessionsBody body}) async {
+  Future<BillingPortalSession> create({
+    required PostBillingPortalSessionsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/billing_portal/sessions');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -2347,8 +2215,8 @@ class StripeApiClientV1BillingPortal {
   StripeApiClientV1BillingPortal({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2372,8 +2240,8 @@ class StripeApiClientV1ChargesSearch {
   StripeApiClientV1ChargesSearch({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2398,12 +2266,10 @@ class StripeApiClientV1ChargesSearch {
       $queryParameters['page'] = page;
     }
     $queryParameters['query'] = query;
-    final $uri = Uri.parse('$_baseUri/v1/charges/search')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/charges/search',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -2425,8 +2291,8 @@ class StripeApiClientV1ChargesChargeCapture {
   StripeApiClientV1ChargesChargeCapture({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2443,10 +2309,7 @@ class StripeApiClientV1ChargesChargeCapture {
     PostChargesChargeCaptureBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/charges/$charge/capture');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -2471,8 +2334,8 @@ class StripeApiClientV1ChargesChargeRefunds {
   StripeApiClientV1ChargesChargeRefunds({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2500,12 +2363,10 @@ class StripeApiClientV1ChargesChargeRefunds {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/charges/$charge/refunds')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/charges/$charge/refunds',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -2532,12 +2393,10 @@ class StripeApiClientV1ChargesChargeRefunds {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/charges/$charge/refunds/$refund')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/charges/$charge/refunds/$refund',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -2559,8 +2418,8 @@ class StripeApiClientV1ChargesCharge {
   StripeApiClientV1ChargesCharge({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2584,8 +2443,8 @@ class StripeApiClientV1Charges {
   StripeApiClientV1Charges({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2628,12 +2487,10 @@ class StripeApiClientV1Charges {
     if (transferGroup != null) {
       $queryParameters['transfer_group'] = transferGroup;
     }
-    final $uri = Uri.parse('$_baseUri/v1/charges')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/charges',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -2653,10 +2510,7 @@ class StripeApiClientV1Charges {
   /// This method is no longer recommended—use the [Payment Intents API](/docs/api/payment_intents) to initiate a new payment instead. Confirmation of the PaymentIntent creates the `Charge` object used to request payment.
   Future<Charge> create({PostChargesBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/charges');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -2685,12 +2539,10 @@ class StripeApiClientV1Charges {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/charges/$charge')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/charges/$charge',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -2713,10 +2565,7 @@ class StripeApiClientV1Charges {
     PostChargesChargeBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/charges/$charge');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -2737,22 +2586,22 @@ class StripeApiClientV1Charges {
   }
 
   StripeApiClientV1ChargesSearch get search => StripeApiClientV1ChargesSearch(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 
   StripeApiClientV1ChargesCharge get charge => StripeApiClientV1ChargesCharge(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 }
 
 class StripeApiClientV1CheckoutSessionsSessionExpire {
   StripeApiClientV1CheckoutSessionsSessionExpire({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2767,10 +2616,7 @@ class StripeApiClientV1CheckoutSessionsSessionExpire {
     PostCheckoutSessionsSessionExpireBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/checkout/sessions/$session/expire');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -2795,8 +2641,8 @@ class StripeApiClientV1CheckoutSessionsSessionLineItems {
   StripeApiClientV1CheckoutSessionsSessionLineItems({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2824,12 +2670,10 @@ class StripeApiClientV1CheckoutSessionsSessionLineItems {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/checkout/sessions/$session/line_items')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/checkout/sessions/$session/line_items',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -2851,8 +2695,8 @@ class StripeApiClientV1CheckoutSessionsSession {
   StripeApiClientV1CheckoutSessionsSession({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2876,8 +2720,8 @@ class StripeApiClientV1CheckoutSessions {
   StripeApiClientV1CheckoutSessions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -2932,12 +2776,10 @@ class StripeApiClientV1CheckoutSessions {
     if (subscription != null) {
       $queryParameters['subscription'] = subscription;
     }
-    final $uri = Uri.parse('$_baseUri/v1/checkout/sessions')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/checkout/sessions',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -2957,10 +2799,7 @@ class StripeApiClientV1CheckoutSessions {
   /// Creates a Session object.
   Future<CheckoutSession> create({PostCheckoutSessionsBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/checkout/sessions');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -2989,12 +2828,10 @@ class StripeApiClientV1CheckoutSessions {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/checkout/sessions/$session')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/checkout/sessions/$session',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3022,8 +2859,8 @@ class StripeApiClientV1Checkout {
   StripeApiClientV1Checkout({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3041,8 +2878,8 @@ class StripeApiClientV1ClimateOrdersOrderCancel {
   StripeApiClientV1ClimateOrdersOrderCancel({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3055,10 +2892,7 @@ class StripeApiClientV1ClimateOrdersOrderCancel {
     PostClimateOrdersOrderCancelBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/climate/orders/$order/cancel');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -3083,8 +2917,8 @@ class StripeApiClientV1ClimateOrdersOrder {
   StripeApiClientV1ClimateOrdersOrder({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3102,8 +2936,8 @@ class StripeApiClientV1ClimateOrders {
   StripeApiClientV1ClimateOrders({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3130,12 +2964,10 @@ class StripeApiClientV1ClimateOrders {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/climate/orders')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/climate/orders',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3155,10 +2987,7 @@ class StripeApiClientV1ClimateOrders {
   /// Creates a Climate order object for a given Climate product. The order will be processed immediately after creation and payment will be deducted your Stripe balance.
   Future<ClimateOrder> create({required PostClimateOrdersBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/climate/orders');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -3185,12 +3014,10 @@ class StripeApiClientV1ClimateOrders {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/climate/orders/$order')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/climate/orders/$order',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3213,10 +3040,7 @@ class StripeApiClientV1ClimateOrders {
     PostClimateOrdersOrderBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/climate/orders/$order');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -3247,8 +3071,8 @@ class StripeApiClientV1ClimateProducts {
   StripeApiClientV1ClimateProducts({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3275,12 +3099,10 @@ class StripeApiClientV1ClimateProducts {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/climate/products')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/climate/products',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3306,12 +3128,10 @@ class StripeApiClientV1ClimateProducts {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/climate/products/$product')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/climate/products/$product',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3333,8 +3153,8 @@ class StripeApiClientV1ClimateSuppliers {
   StripeApiClientV1ClimateSuppliers({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3361,12 +3181,10 @@ class StripeApiClientV1ClimateSuppliers {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/climate/suppliers')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/climate/suppliers',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3392,12 +3210,10 @@ class StripeApiClientV1ClimateSuppliers {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/climate/suppliers/$supplier')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/climate/suppliers/$supplier',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3419,8 +3235,8 @@ class StripeApiClientV1Climate {
   StripeApiClientV1Climate({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3428,9 +3244,9 @@ class StripeApiClientV1Climate {
   final Uri _baseUri;
 
   StripeApiClientV1ClimateOrders get orders => StripeApiClientV1ClimateOrders(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 
   StripeApiClientV1ClimateProducts get products =>
       StripeApiClientV1ClimateProducts(
@@ -3449,8 +3265,8 @@ class StripeApiClientV1ConfirmationTokens {
   StripeApiClientV1ConfirmationTokens({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3466,13 +3282,10 @@ class StripeApiClientV1ConfirmationTokens {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/confirmation_tokens/$confirmationToken')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/confirmation_tokens/$confirmationToken',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3494,8 +3307,8 @@ class StripeApiClientV1CountrySpecs {
   StripeApiClientV1CountrySpecs({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3522,12 +3335,10 @@ class StripeApiClientV1CountrySpecs {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/country_specs')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/country_specs',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3553,12 +3364,10 @@ class StripeApiClientV1CountrySpecs {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/country_specs/$country')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/country_specs/$country',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3580,8 +3389,8 @@ class StripeApiClientV1Coupons {
   StripeApiClientV1Coupons({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3612,12 +3421,10 @@ class StripeApiClientV1Coupons {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/coupons')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/coupons',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3639,10 +3446,7 @@ class StripeApiClientV1Coupons {
   /// A coupon has either a `percent_off` or an `amount_off` and `currency`. If you set an `amount_off`, that amount will be subtracted from any invoice’s subtotal. For example, an invoice with a subtotal of 100 will have a final total of 0 if a coupon with an `amount_off` of 200 is applied to it and an invoice with a subtotal of 300 will have a final total of 100 if a coupon with an `amount_off` of 200 is applied to it.
   Future<Coupon> create({PostCouponsBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/coupons');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -3671,12 +3475,10 @@ class StripeApiClientV1Coupons {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/coupons/$coupon')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/coupons/$coupon',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3699,10 +3501,7 @@ class StripeApiClientV1Coupons {
     PostCouponsCouponBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/coupons/$coupon');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -3725,10 +3524,7 @@ class StripeApiClientV1Coupons {
   /// You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can’t redeem the coupon. You can also delete coupons via the API.
   Future<DeletedCoupon> delete({required String coupon}) async {
     final $uri = Uri.parse('$_baseUri/v1/coupons/$coupon');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3750,8 +3546,8 @@ class StripeApiClientV1CreditNotesPreviewLines {
   StripeApiClientV1CreditNotesPreviewLines({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3825,12 +3621,10 @@ class StripeApiClientV1CreditNotesPreviewLines {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/credit_notes/preview/lines')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/credit_notes/preview/lines',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3852,8 +3646,8 @@ class StripeApiClientV1CreditNotesPreview {
   StripeApiClientV1CreditNotesPreview({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3915,12 +3709,10 @@ class StripeApiClientV1CreditNotesPreview {
     if (shippingCost != null) {
       $queryParameters['shipping_cost'] = shippingCost.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/credit_notes/preview')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/credit_notes/preview',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -3948,8 +3740,8 @@ class StripeApiClientV1CreditNotesCreditNoteLines {
   StripeApiClientV1CreditNotesCreditNoteLines({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -3977,12 +3769,10 @@ class StripeApiClientV1CreditNotesCreditNoteLines {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/credit_notes/$creditNote/lines')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/credit_notes/$creditNote/lines',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4004,8 +3794,8 @@ class StripeApiClientV1CreditNotesCreditNote {
   StripeApiClientV1CreditNotesCreditNote({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4023,8 +3813,8 @@ class StripeApiClientV1CreditNotesIdVoid {
   StripeApiClientV1CreditNotesIdVoid({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4037,10 +3827,7 @@ class StripeApiClientV1CreditNotesIdVoid {
     PostCreditNotesIdVoidBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/credit_notes/$id/void');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -4065,8 +3852,8 @@ class StripeApiClientV1CreditNotesId {
   StripeApiClientV1CreditNotesId({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4084,8 +3871,8 @@ class StripeApiClientV1CreditNotes {
   StripeApiClientV1CreditNotes({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4124,12 +3911,10 @@ class StripeApiClientV1CreditNotes {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/credit_notes')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/credit_notes',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4157,10 +3942,7 @@ class StripeApiClientV1CreditNotes {
   /// You may issue multiple credit notes for an invoice. Each credit note will increment the invoice’s `pre\_payment\_credit\_notes\_amount` or `post\_payment\_credit\_notes\_amount` depending on its `status` at the time of credit note creation.
   Future<CreditNote> create({required PostCreditNotesBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/credit_notes');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -4187,12 +3969,10 @@ class StripeApiClientV1CreditNotes {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/credit_notes/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/credit_notes/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4215,10 +3995,7 @@ class StripeApiClientV1CreditNotes {
     PostCreditNotesIdBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/credit_notes/$id');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -4251,17 +4028,17 @@ class StripeApiClientV1CreditNotes {
       );
 
   StripeApiClientV1CreditNotesId get id => StripeApiClientV1CreditNotesId(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 }
 
 class StripeApiClientV1CustomerSessions {
   StripeApiClientV1CustomerSessions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4269,13 +4046,11 @@ class StripeApiClientV1CustomerSessions {
   final Uri _baseUri;
 
   /// Creates a customer session object that includes a single-use client secret that you can use on your front-end to grant client-side API access for certain customer resources.
-  Future<CustomerSession> create(
-      {required PostCustomerSessionsBody body}) async {
+  Future<CustomerSession> create({
+    required PostCustomerSessionsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/customer_sessions');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -4298,8 +4073,8 @@ class StripeApiClientV1CustomersSearch {
   StripeApiClientV1CustomersSearch({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4324,12 +4099,10 @@ class StripeApiClientV1CustomersSearch {
       $queryParameters['page'] = page;
     }
     $queryParameters['query'] = query;
-    final $uri = Uri.parse('$_baseUri/v1/customers/search')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/search',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4351,8 +4124,8 @@ class StripeApiClientV1CustomersCustomerBalanceTransactions {
   StripeApiClientV1CustomersCustomerBalanceTransactions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4380,13 +4153,10 @@ class StripeApiClientV1CustomersCustomerBalanceTransactions {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/customers/$customer/balance_transactions')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/$customer/balance_transactions',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4408,12 +4178,10 @@ class StripeApiClientV1CustomersCustomerBalanceTransactions {
     required String customer,
     required PostCustomersCustomerBalanceTransactionsBody body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/customers/$customer/balance_transactions');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/$customer/balance_transactions',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -4442,12 +4210,9 @@ class StripeApiClientV1CustomersCustomerBalanceTransactions {
       $queryParameters['expand'] = expand;
     }
     final $uri = Uri.parse(
-            '$_baseUri/v1/customers/$customer/balance_transactions/$transaction')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+      '$_baseUri/v1/customers/$customer/balance_transactions/$transaction',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4471,11 +4236,9 @@ class StripeApiClientV1CustomersCustomerBalanceTransactions {
     PostCustomersCustomerBalanceTransactionsTransactionBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/customers/$customer/balance_transactions/$transaction');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/customers/$customer/balance_transactions/$transaction',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -4500,8 +4263,8 @@ class StripeApiClientV1CustomersCustomerCashBalance {
   StripeApiClientV1CustomersCustomerCashBalance({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4517,12 +4280,10 @@ class StripeApiClientV1CustomersCustomerCashBalance {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/customers/$customer/cash_balance')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/$customer/cash_balance',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4545,10 +4306,7 @@ class StripeApiClientV1CustomersCustomerCashBalance {
     PostCustomersCustomerCashBalanceBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/customers/$customer/cash_balance');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -4573,8 +4331,8 @@ class StripeApiClientV1CustomersCustomerCashBalanceTransactions {
   StripeApiClientV1CustomersCustomerCashBalanceTransactions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4602,13 +4360,10 @@ class StripeApiClientV1CustomersCustomerCashBalanceTransactions {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/customers/$customer/cash_balance_transactions')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/$customer/cash_balance_transactions',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4617,7 +4372,8 @@ class StripeApiClientV1CustomersCustomerCashBalanceTransactions {
       case 200:
         final $json = _$convert.jsonDecode($body);
         return GetCustomersCustomerCashBalanceTransactionsResponse.fromJson(
-            $json);
+          $json,
+        );
 
       /// Error response.
       case _:
@@ -4637,12 +4393,9 @@ class StripeApiClientV1CustomersCustomerCashBalanceTransactions {
       $queryParameters['expand'] = expand;
     }
     final $uri = Uri.parse(
-            '$_baseUri/v1/customers/$customer/cash_balance_transactions/$transaction')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+      '$_baseUri/v1/customers/$customer/cash_balance_transactions/$transaction',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4664,8 +4417,8 @@ class StripeApiClientV1CustomersCustomerDiscount {
   StripeApiClientV1CustomersCustomerDiscount({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4675,10 +4428,7 @@ class StripeApiClientV1CustomersCustomerDiscount {
   /// Removes the currently applied discount on a customer.
   Future<DeletedDiscount> delete_discount({required String customer}) async {
     final $uri = Uri.parse('$_baseUri/v1/customers/$customer/discount');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4700,8 +4450,8 @@ class StripeApiClientV1CustomersCustomerFundingInstructions {
   StripeApiClientV1CustomersCustomerFundingInstructions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4713,12 +4463,10 @@ class StripeApiClientV1CustomersCustomerFundingInstructions {
     required String customer,
     required PostCustomersCustomerFundingInstructionsBody body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/customers/$customer/funding_instructions');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/$customer/funding_instructions',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -4741,8 +4489,8 @@ class StripeApiClientV1CustomersCustomerPaymentMethods {
   StripeApiClientV1CustomersCustomerPaymentMethods({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4774,12 +4522,10 @@ class StripeApiClientV1CustomersCustomerPaymentMethods {
     if (type != null) {
       $queryParameters['type'] = type.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/customers/$customer/payment_methods')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/$customer/payment_methods',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4807,12 +4553,9 @@ class StripeApiClientV1CustomersCustomerPaymentMethods {
       $queryParameters['expand'] = expand;
     }
     final $uri = Uri.parse(
-            '$_baseUri/v1/customers/$customer/payment_methods/$paymentMethod')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+      '$_baseUri/v1/customers/$customer/payment_methods/$paymentMethod',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4834,8 +4577,8 @@ class StripeApiClientV1CustomersCustomerSourcesIdVerify {
   StripeApiClientV1CustomersCustomerSourcesIdVerify({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4848,12 +4591,10 @@ class StripeApiClientV1CustomersCustomerSourcesIdVerify {
     required String id,
     PostCustomersCustomerSourcesIdVerifyBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/customers/$customer/sources/$id/verify');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/$customer/sources/$id/verify',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -4878,8 +4619,8 @@ class StripeApiClientV1CustomersCustomerSourcesId {
   StripeApiClientV1CustomersCustomerSourcesId({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4897,8 +4638,8 @@ class StripeApiClientV1CustomersCustomerSources {
   StripeApiClientV1CustomersCustomerSources({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -4930,12 +4671,10 @@ class StripeApiClientV1CustomersCustomerSources {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/customers/$customer/sources')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/$customer/sources',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -4960,10 +4699,7 @@ class StripeApiClientV1CustomersCustomerSources {
     required PostCustomersCustomerSourcesBody body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/customers/$customer/sources');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -4991,12 +4727,10 @@ class StripeApiClientV1CustomersCustomerSources {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/customers/$customer/sources/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/$customer/sources/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5020,10 +4754,7 @@ class StripeApiClientV1CustomersCustomerSources {
     PostCustomersCustomerSourcesIdBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/customers/$customer/sources/$id');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -5050,10 +4781,7 @@ class StripeApiClientV1CustomersCustomerSources {
     DeleteCustomersCustomerSourcesIdBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/customers/$customer/sources/$id');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -5084,8 +4812,8 @@ class StripeApiClientV1CustomersCustomerTaxIds {
   StripeApiClientV1CustomersCustomerTaxIds({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -5113,12 +4841,10 @@ class StripeApiClientV1CustomersCustomerTaxIds {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/customers/$customer/tax_ids')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/$customer/tax_ids',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5141,10 +4867,7 @@ class StripeApiClientV1CustomersCustomerTaxIds {
     required PostCustomersCustomerTaxIdsBody body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/customers/$customer/tax_ids');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -5172,12 +4895,10 @@ class StripeApiClientV1CustomersCustomerTaxIds {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/customers/$customer/tax_ids/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/$customer/tax_ids/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5200,10 +4921,7 @@ class StripeApiClientV1CustomersCustomerTaxIds {
     required String id,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/customers/$customer/tax_ids/$id');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5225,8 +4943,8 @@ class StripeApiClientV1CustomersCustomer {
   StripeApiClientV1CustomersCustomer({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -5234,11 +4952,11 @@ class StripeApiClientV1CustomersCustomer {
   final Uri _baseUri;
 
   StripeApiClientV1CustomersCustomerBalanceTransactions
-      get balanceTransactions =>
-          StripeApiClientV1CustomersCustomerBalanceTransactions(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get balanceTransactions =>
+      StripeApiClientV1CustomersCustomerBalanceTransactions(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1CustomersCustomerCashBalance get cashBalance =>
       StripeApiClientV1CustomersCustomerCashBalance(
@@ -5247,11 +4965,11 @@ class StripeApiClientV1CustomersCustomer {
       );
 
   StripeApiClientV1CustomersCustomerCashBalanceTransactions
-      get cashBalanceTransactions =>
-          StripeApiClientV1CustomersCustomerCashBalanceTransactions(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get cashBalanceTransactions =>
+      StripeApiClientV1CustomersCustomerCashBalanceTransactions(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1CustomersCustomerDiscount get discount =>
       StripeApiClientV1CustomersCustomerDiscount(
@@ -5260,11 +4978,11 @@ class StripeApiClientV1CustomersCustomer {
       );
 
   StripeApiClientV1CustomersCustomerFundingInstructions
-      get fundingInstructions =>
-          StripeApiClientV1CustomersCustomerFundingInstructions(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get fundingInstructions =>
+      StripeApiClientV1CustomersCustomerFundingInstructions(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1CustomersCustomerPaymentMethods get paymentMethods =>
       StripeApiClientV1CustomersCustomerPaymentMethods(
@@ -5289,8 +5007,8 @@ class StripeApiClientV1Customers {
   StripeApiClientV1Customers({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -5329,12 +5047,10 @@ class StripeApiClientV1Customers {
     if (testClock != null) {
       $queryParameters['test_clock'] = testClock;
     }
-    final $uri = Uri.parse('$_baseUri/v1/customers')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5354,10 +5070,7 @@ class StripeApiClientV1Customers {
   /// Creates a new customer object.
   Future<Customer> create({PostCustomersBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/customers');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -5386,12 +5099,10 @@ class StripeApiClientV1Customers {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/customers/$customer')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/customers/$customer',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5416,10 +5127,7 @@ class StripeApiClientV1Customers {
     PostCustomersCustomerBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/customers/$customer');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -5442,10 +5150,7 @@ class StripeApiClientV1Customers {
   /// Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
   Future<DeletedCustomer> delete({required String customer}) async {
     final $uri = Uri.parse('$_baseUri/v1/customers/$customer');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5479,8 +5184,8 @@ class StripeApiClientV1DisputesDisputeClose {
   StripeApiClientV1DisputesDisputeClose({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -5495,10 +5200,7 @@ class StripeApiClientV1DisputesDisputeClose {
     PostDisputesDisputeCloseBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/disputes/$dispute/close');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -5523,8 +5225,8 @@ class StripeApiClientV1DisputesDispute {
   StripeApiClientV1DisputesDispute({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -5542,8 +5244,8 @@ class StripeApiClientV1Disputes {
   StripeApiClientV1Disputes({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -5582,12 +5284,10 @@ class StripeApiClientV1Disputes {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/disputes')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/disputes',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5613,12 +5313,10 @@ class StripeApiClientV1Disputes {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/disputes/$dispute')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/disputes/$dispute',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5643,10 +5341,7 @@ class StripeApiClientV1Disputes {
     PostDisputesDisputeBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/disputes/$dispute');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -5677,8 +5372,8 @@ class StripeApiClientV1EphemeralKeys {
   StripeApiClientV1EphemeralKeys({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -5688,10 +5383,7 @@ class StripeApiClientV1EphemeralKeys {
   /// Creates a short-lived API key for a given resource.
   Future<EphemeralKey> create({PostEphemeralKeysBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/ephemeral_keys');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -5717,10 +5409,7 @@ class StripeApiClientV1EphemeralKeys {
     DeleteEphemeralKeysKeyBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/ephemeral_keys/$key');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -5745,8 +5434,8 @@ class StripeApiClientV1Events {
   StripeApiClientV1Events({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -5789,12 +5478,10 @@ class StripeApiClientV1Events {
     if (types != null) {
       $queryParameters['types'] = types;
     }
-    final $uri = Uri.parse('$_baseUri/v1/events')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/events',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5812,20 +5499,15 @@ class StripeApiClientV1Events {
   }
 
   /// Retrieves the details of an event. Supply the unique identifier of the event, which you might have received in a webhook.
-  Future<Event> retrieve({
-    required String id,
-    List<String>? expand,
-  }) async {
+  Future<Event> retrieve({required String id, List<String>? expand}) async {
     final $queryParameters = <String, Object>{};
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/events/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/events/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5847,8 +5529,8 @@ class StripeApiClientV1ExchangeRates {
   StripeApiClientV1ExchangeRates({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -5875,12 +5557,10 @@ class StripeApiClientV1ExchangeRates {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/exchange_rates')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/exchange_rates',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5906,12 +5586,10 @@ class StripeApiClientV1ExchangeRates {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/exchange_rates/$rateId')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/exchange_rates/$rateId',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5933,8 +5611,8 @@ class StripeApiClientV1FileLinks {
   StripeApiClientV1FileLinks({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -5973,12 +5651,10 @@ class StripeApiClientV1FileLinks {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/file_links')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/file_links',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -5998,10 +5674,7 @@ class StripeApiClientV1FileLinks {
   /// Creates a new file link object.
   Future<FileLink> create({required PostFileLinksBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/file_links');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -6028,12 +5701,10 @@ class StripeApiClientV1FileLinks {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/file_links/$link')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/file_links/$link',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -6056,10 +5727,7 @@ class StripeApiClientV1FileLinks {
     PostFileLinksLinkBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/file_links/$link');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -6084,8 +5752,8 @@ class StripeApiClientV1Files {
   StripeApiClientV1Files({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6120,12 +5788,10 @@ class StripeApiClientV1Files {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/files')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/files',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -6147,10 +5813,7 @@ class StripeApiClientV1Files {
   /// All of Stripe’s officially supported Client libraries support sending `multipart/form-data`.
   Future<File> create({required PostFilesBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/files');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -6169,20 +5832,15 @@ class StripeApiClientV1Files {
   }
 
   /// Retrieves the details of an existing file object. After you supply a unique file ID, Stripe returns the corresponding file object. Learn how to [access file contents](/docs/file-upload#download-file-contents).
-  Future<File> retrieve({
-    required String file,
-    List<String>? expand,
-  }) async {
+  Future<File> retrieve({required String file, List<String>? expand}) async {
     final $queryParameters = <String, Object>{};
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/files/$file')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/files/$file',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -6204,8 +5862,8 @@ class StripeApiClientV1FinancialConnectionsAccountsAccountDisconnect {
   StripeApiClientV1FinancialConnectionsAccountsAccountDisconnect({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6218,11 +5876,9 @@ class StripeApiClientV1FinancialConnectionsAccountsAccountDisconnect {
     PostFinancialConnectionsAccountsAccountDisconnectBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/financial_connections/accounts/$account/disconnect');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/financial_connections/accounts/$account/disconnect',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -6247,8 +5903,8 @@ class StripeApiClientV1FinancialConnectionsAccountsAccountOwners {
   StripeApiClientV1FinancialConnectionsAccountsAccountOwners({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6278,13 +5934,10 @@ class StripeApiClientV1FinancialConnectionsAccountsAccountOwners {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/financial_connections/accounts/$account/owners')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/financial_connections/accounts/$account/owners',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -6293,7 +5946,8 @@ class StripeApiClientV1FinancialConnectionsAccountsAccountOwners {
       case 200:
         final $json = _$convert.jsonDecode($body);
         return GetFinancialConnectionsAccountsAccountOwnersResponse.fromJson(
-            $json);
+          $json,
+        );
 
       /// Error response.
       case _:
@@ -6307,8 +5961,8 @@ class StripeApiClientV1FinancialConnectionsAccountsAccountRefresh {
   StripeApiClientV1FinancialConnectionsAccountsAccountRefresh({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6321,11 +5975,9 @@ class StripeApiClientV1FinancialConnectionsAccountsAccountRefresh {
     required PostFinancialConnectionsAccountsAccountRefreshBody body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/financial_connections/accounts/$account/refresh');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/financial_connections/accounts/$account/refresh',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -6348,8 +6000,8 @@ class StripeApiClientV1FinancialConnectionsAccountsAccountSubscribe {
   StripeApiClientV1FinancialConnectionsAccountsAccountSubscribe({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6362,11 +6014,9 @@ class StripeApiClientV1FinancialConnectionsAccountsAccountSubscribe {
     required PostFinancialConnectionsAccountsAccountSubscribeBody body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/financial_connections/accounts/$account/subscribe');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/financial_connections/accounts/$account/subscribe',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -6389,8 +6039,8 @@ class StripeApiClientV1FinancialConnectionsAccountsAccountUnsubscribe {
   StripeApiClientV1FinancialConnectionsAccountsAccountUnsubscribe({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6403,11 +6053,9 @@ class StripeApiClientV1FinancialConnectionsAccountsAccountUnsubscribe {
     required PostFinancialConnectionsAccountsAccountUnsubscribeBody body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/financial_connections/accounts/$account/unsubscribe');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/financial_connections/accounts/$account/unsubscribe',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -6430,8 +6078,8 @@ class StripeApiClientV1FinancialConnectionsAccountsAccount {
   StripeApiClientV1FinancialConnectionsAccountsAccount({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6439,11 +6087,11 @@ class StripeApiClientV1FinancialConnectionsAccountsAccount {
   final Uri _baseUri;
 
   StripeApiClientV1FinancialConnectionsAccountsAccountDisconnect
-      get disconnect =>
-          StripeApiClientV1FinancialConnectionsAccountsAccountDisconnect(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get disconnect =>
+      StripeApiClientV1FinancialConnectionsAccountsAccountDisconnect(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1FinancialConnectionsAccountsAccountOwners get owners =>
       StripeApiClientV1FinancialConnectionsAccountsAccountOwners(
@@ -6464,19 +6112,19 @@ class StripeApiClientV1FinancialConnectionsAccountsAccount {
       );
 
   StripeApiClientV1FinancialConnectionsAccountsAccountUnsubscribe
-      get unsubscribe =>
-          StripeApiClientV1FinancialConnectionsAccountsAccountUnsubscribe(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get unsubscribe =>
+      StripeApiClientV1FinancialConnectionsAccountsAccountUnsubscribe(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1FinancialConnectionsAccounts {
   StripeApiClientV1FinancialConnectionsAccounts({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6511,12 +6159,10 @@ class StripeApiClientV1FinancialConnectionsAccounts {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/financial_connections/accounts')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/financial_connections/accounts',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -6542,13 +6188,10 @@ class StripeApiClientV1FinancialConnectionsAccounts {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/financial_connections/accounts/$account')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/financial_connections/accounts/$account',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -6576,8 +6219,8 @@ class StripeApiClientV1FinancialConnectionsSessions {
   StripeApiClientV1FinancialConnectionsSessions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6585,13 +6228,11 @@ class StripeApiClientV1FinancialConnectionsSessions {
   final Uri _baseUri;
 
   /// To launch the Financial Connections authorization flow, create a `Session`. The session’s `client_secret` can be used to launch the flow using Stripe.js.
-  Future<FinancialConnectionsSession> create(
-      {required PostFinancialConnectionsSessionsBody body}) async {
+  Future<FinancialConnectionsSession> create({
+    required PostFinancialConnectionsSessionsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/financial_connections/sessions');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -6618,13 +6259,10 @@ class StripeApiClientV1FinancialConnectionsSessions {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/financial_connections/sessions/$session')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/financial_connections/sessions/$session',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -6646,8 +6284,8 @@ class StripeApiClientV1FinancialConnectionsTransactions {
   StripeApiClientV1FinancialConnectionsTransactions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6684,12 +6322,10 @@ class StripeApiClientV1FinancialConnectionsTransactions {
     if (transactionRefresh != null) {
       $queryParameters['transaction_refresh'] = transactionRefresh.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/financial_connections/transactions')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/financial_connections/transactions',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -6716,12 +6352,9 @@ class StripeApiClientV1FinancialConnectionsTransactions {
       $queryParameters['expand'] = expand;
     }
     final $uri = Uri.parse(
-            '$_baseUri/v1/financial_connections/transactions/$transaction')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+      '$_baseUri/v1/financial_connections/transactions/$transaction',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -6743,8 +6376,8 @@ class StripeApiClientV1FinancialConnections {
   StripeApiClientV1FinancialConnections({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6774,8 +6407,8 @@ class StripeApiClientV1ForwardingRequests {
   StripeApiClientV1ForwardingRequests({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6806,12 +6439,10 @@ class StripeApiClientV1ForwardingRequests {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/forwarding/requests')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/forwarding/requests',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -6829,13 +6460,11 @@ class StripeApiClientV1ForwardingRequests {
   }
 
   /// Creates a ForwardingRequest object.
-  Future<ForwardingRequest> create(
-      {required PostForwardingRequestsBody body}) async {
+  Future<ForwardingRequest> create({
+    required PostForwardingRequestsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/forwarding/requests');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -6862,12 +6491,10 @@ class StripeApiClientV1ForwardingRequests {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/forwarding/requests/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/forwarding/requests/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -6889,8 +6516,8 @@ class StripeApiClientV1Forwarding {
   StripeApiClientV1Forwarding({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6908,8 +6535,8 @@ class StripeApiClientV1IdentityVerificationReports {
   StripeApiClientV1IdentityVerificationReports({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -6952,12 +6579,10 @@ class StripeApiClientV1IdentityVerificationReports {
     if (verificationSession != null) {
       $queryParameters['verification_session'] = verificationSession;
     }
-    final $uri = Uri.parse('$_baseUri/v1/identity/verification_reports')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/identity/verification_reports',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -6983,12 +6608,10 @@ class StripeApiClientV1IdentityVerificationReports {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/identity/verification_reports/$report')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/identity/verification_reports/$report',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -7010,8 +6633,8 @@ class StripeApiClientV1IdentityVerificationSessionsSessionCancel {
   StripeApiClientV1IdentityVerificationSessionsSessionCancel({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -7026,11 +6649,9 @@ class StripeApiClientV1IdentityVerificationSessionsSessionCancel {
     PostIdentityVerificationSessionsSessionCancelBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/identity/verification_sessions/$session/cancel');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/identity/verification_sessions/$session/cancel',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -7055,8 +6676,8 @@ class StripeApiClientV1IdentityVerificationSessionsSessionRedact {
   StripeApiClientV1IdentityVerificationSessionsSessionRedact({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -7077,11 +6698,9 @@ class StripeApiClientV1IdentityVerificationSessionsSessionRedact {
     PostIdentityVerificationSessionsSessionRedactBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/identity/verification_sessions/$session/redact');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/identity/verification_sessions/$session/redact',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -7106,8 +6725,8 @@ class StripeApiClientV1IdentityVerificationSessionsSession {
   StripeApiClientV1IdentityVerificationSessionsSession({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -7131,8 +6750,8 @@ class StripeApiClientV1IdentityVerificationSessions {
   StripeApiClientV1IdentityVerificationSessions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -7171,12 +6790,10 @@ class StripeApiClientV1IdentityVerificationSessions {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/identity/verification_sessions')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/identity/verification_sessions',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -7200,13 +6817,11 @@ class StripeApiClientV1IdentityVerificationSessions {
   /// If your API key is in test mode, verification checks won’t actually process, though everything else will occur as if in live mode.
   ///
   /// Related guide: [Verify your users’ identity documents](/docs/identity/verify-identity-documents)
-  Future<IdentityVerificationSession> create(
-      {required PostIdentityVerificationSessionsBody body}) async {
+  Future<IdentityVerificationSession> create({
+    required PostIdentityVerificationSessionsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/identity/verification_sessions');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -7235,13 +6850,10 @@ class StripeApiClientV1IdentityVerificationSessions {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/identity/verification_sessions/$session')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/identity/verification_sessions/$session',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -7265,12 +6877,10 @@ class StripeApiClientV1IdentityVerificationSessions {
     required String session,
     PostIdentityVerificationSessionsSessionBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/identity/verification_sessions/$session');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/identity/verification_sessions/$session',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -7301,8 +6911,8 @@ class StripeApiClientV1Identity {
   StripeApiClientV1Identity({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -7326,8 +6936,8 @@ class StripeApiClientV1Invoiceitems {
   StripeApiClientV1Invoiceitems({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -7370,12 +6980,10 @@ class StripeApiClientV1Invoiceitems {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/invoiceitems')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/invoiceitems',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -7395,10 +7003,7 @@ class StripeApiClientV1Invoiceitems {
   /// Creates an item to be added to a draft invoice (up to 250 items per invoice). If no invoice is specified, the item will be on the next invoice created for the customer specified.
   Future<Invoiceitem> create({required PostInvoiceitemsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/invoiceitems');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -7425,12 +7030,10 @@ class StripeApiClientV1Invoiceitems {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/invoiceitems/$invoiceitem')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/invoiceitems/$invoiceitem',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -7453,10 +7056,7 @@ class StripeApiClientV1Invoiceitems {
     PostInvoiceitemsInvoiceitemBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/invoiceitems/$invoiceitem');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -7479,10 +7079,7 @@ class StripeApiClientV1Invoiceitems {
   /// Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they’re not attached to invoices, or if it’s attached to a draft invoice.
   Future<DeletedInvoiceitem> delete({required String invoiceitem}) async {
     final $uri = Uri.parse('$_baseUri/v1/invoiceitems/$invoiceitem');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -7504,8 +7101,8 @@ class StripeApiClientV1InvoicesSearch {
   StripeApiClientV1InvoicesSearch({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -7530,12 +7127,10 @@ class StripeApiClientV1InvoicesSearch {
       $queryParameters['page'] = page;
     }
     $queryParameters['query'] = query;
-    final $uri = Uri.parse('$_baseUri/v1/invoices/search')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/invoices/search',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -7557,8 +7152,8 @@ class StripeApiClientV1InvoicesUpcomingLines {
   StripeApiClientV1InvoicesUpcomingLines({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -7583,14 +7178,14 @@ class StripeApiClientV1InvoicesUpcomingLines {
     String? startingAfter,
     String? subscription,
     SubscriptionBillingCycleAnchor_subscriptionBillingCycleAnchor?
-        subscriptionBillingCycleAnchor,
+    subscriptionBillingCycleAnchor,
     DateTime? subscriptionCancelAt,
     bool? subscriptionCancelAtPeriodEnd,
     bool? subscriptionCancelNow,
     List<String>? subscriptionDefaultTaxRates,
     List<SubscriptionItems_subscriptionItemsItem>? subscriptionItems,
     SubscriptionProrationBehavior_subscriptionProrationBehavior?
-        subscriptionProrationBehavior,
+    subscriptionProrationBehavior,
     DateTime? subscriptionProrationDate,
     String? subscriptionResumeAt,
     DateTime? subscriptionStartDate,
@@ -7681,12 +7276,10 @@ class StripeApiClientV1InvoicesUpcomingLines {
       $queryParameters['subscription_trial_from_plan'] =
           subscriptionTrialFromPlan.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/invoices/upcoming/lines')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/invoices/upcoming/lines',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -7708,8 +7301,8 @@ class StripeApiClientV1InvoicesUpcoming {
   StripeApiClientV1InvoicesUpcoming({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -7735,14 +7328,14 @@ class StripeApiClientV1InvoicesUpcoming {
     String? schedule,
     String? subscription,
     SubscriptionBillingCycleAnchor_subscriptionBillingCycleAnchor?
-        subscriptionBillingCycleAnchor,
+    subscriptionBillingCycleAnchor,
     DateTime? subscriptionCancelAt,
     bool? subscriptionCancelAtPeriodEnd,
     bool? subscriptionCancelNow,
     List<String>? subscriptionDefaultTaxRates,
     List<SubscriptionItems_subscriptionItemsItem>? subscriptionItems,
     SubscriptionProrationBehavior_subscriptionProrationBehavior?
-        subscriptionProrationBehavior,
+    subscriptionProrationBehavior,
     DateTime? subscriptionProrationDate,
     String? subscriptionResumeAt,
     DateTime? subscriptionStartDate,
@@ -7824,12 +7417,10 @@ class StripeApiClientV1InvoicesUpcoming {
       $queryParameters['subscription_trial_from_plan'] =
           subscriptionTrialFromPlan.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/invoices/upcoming')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/invoices/upcoming',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -7857,8 +7448,8 @@ class StripeApiClientV1InvoicesInvoiceFinalize {
   StripeApiClientV1InvoicesInvoiceFinalize({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -7871,10 +7462,7 @@ class StripeApiClientV1InvoicesInvoiceFinalize {
     PostInvoicesInvoiceFinalizeBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/invoices/$invoice/finalize');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -7899,8 +7487,8 @@ class StripeApiClientV1InvoicesInvoiceLines {
   StripeApiClientV1InvoicesInvoiceLines({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -7928,12 +7516,10 @@ class StripeApiClientV1InvoicesInvoiceLines {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/invoices/$invoice/lines')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/invoices/$invoice/lines',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -7957,10 +7543,7 @@ class StripeApiClientV1InvoicesInvoiceLines {
     PostInvoicesInvoiceLinesLineItemIdBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/invoices/$invoice/lines/$lineItemId');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -7985,8 +7568,8 @@ class StripeApiClientV1InvoicesInvoiceMarkUncollectible {
   StripeApiClientV1InvoicesInvoiceMarkUncollectible({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -7999,10 +7582,7 @@ class StripeApiClientV1InvoicesInvoiceMarkUncollectible {
     PostInvoicesInvoiceMarkUncollectibleBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/invoices/$invoice/mark_uncollectible');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -8027,8 +7607,8 @@ class StripeApiClientV1InvoicesInvoicePay {
   StripeApiClientV1InvoicesInvoicePay({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -8041,10 +7621,7 @@ class StripeApiClientV1InvoicesInvoicePay {
     PostInvoicesInvoicePayBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/invoices/$invoice/pay');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -8069,8 +7646,8 @@ class StripeApiClientV1InvoicesInvoiceSend {
   StripeApiClientV1InvoicesInvoiceSend({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -8085,10 +7662,7 @@ class StripeApiClientV1InvoicesInvoiceSend {
     PostInvoicesInvoiceSendBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/invoices/$invoice/send');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -8113,8 +7687,8 @@ class StripeApiClientV1InvoicesInvoiceVoid {
   StripeApiClientV1InvoicesInvoiceVoid({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -8129,10 +7703,7 @@ class StripeApiClientV1InvoicesInvoiceVoid {
     PostInvoicesInvoiceVoidBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/invoices/$invoice/void');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -8157,8 +7728,8 @@ class StripeApiClientV1InvoicesInvoice {
   StripeApiClientV1InvoicesInvoice({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -8206,8 +7777,8 @@ class StripeApiClientV1Invoices {
   StripeApiClientV1Invoices({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -8258,12 +7829,10 @@ class StripeApiClientV1Invoices {
     if (subscription != null) {
       $queryParameters['subscription'] = subscription;
     }
-    final $uri = Uri.parse('$_baseUri/v1/invoices')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/invoices',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -8283,10 +7852,7 @@ class StripeApiClientV1Invoices {
   /// This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you [finalize](#finalize_invoice) the invoice, which allows you to [pay](#pay_invoice) or [send](#send_invoice) the invoice to your customers.
   Future<Invoice> create({PostInvoicesBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/invoices');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -8315,12 +7881,10 @@ class StripeApiClientV1Invoices {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/invoices/$invoice')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/invoices/$invoice',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -8345,10 +7909,7 @@ class StripeApiClientV1Invoices {
     PostInvoicesInvoiceBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/invoices/$invoice');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -8371,10 +7932,7 @@ class StripeApiClientV1Invoices {
   /// Permanently deletes a one-off invoice draft. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized or if an invoice is for a subscription, it must be [voided](#void_invoice).
   Future<DeletedInvoice> delete({required String invoice}) async {
     final $uri = Uri.parse('$_baseUri/v1/invoices/$invoice');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -8392,9 +7950,9 @@ class StripeApiClientV1Invoices {
   }
 
   StripeApiClientV1InvoicesSearch get search => StripeApiClientV1InvoicesSearch(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 
   StripeApiClientV1InvoicesUpcoming get upcoming =>
       StripeApiClientV1InvoicesUpcoming(
@@ -8413,8 +7971,8 @@ class StripeApiClientV1IssuingAuthorizationsAuthorizationApprove {
   StripeApiClientV1IssuingAuthorizationsAuthorizationApprove({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -8427,12 +7985,10 @@ class StripeApiClientV1IssuingAuthorizationsAuthorizationApprove {
     required String authorization,
     PostIssuingAuthorizationsAuthorizationApproveBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/issuing/authorizations/$authorization/approve');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/authorizations/$authorization/approve',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -8457,8 +8013,8 @@ class StripeApiClientV1IssuingAuthorizationsAuthorizationDecline {
   StripeApiClientV1IssuingAuthorizationsAuthorizationDecline({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -8471,12 +8027,10 @@ class StripeApiClientV1IssuingAuthorizationsAuthorizationDecline {
     required String authorization,
     PostIssuingAuthorizationsAuthorizationDeclineBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/issuing/authorizations/$authorization/decline');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/authorizations/$authorization/decline',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -8501,8 +8055,8 @@ class StripeApiClientV1IssuingAuthorizationsAuthorization {
   StripeApiClientV1IssuingAuthorizationsAuthorization({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -8526,8 +8080,8 @@ class StripeApiClientV1IssuingAuthorizations {
   StripeApiClientV1IssuingAuthorizations({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -8570,12 +8124,10 @@ class StripeApiClientV1IssuingAuthorizations {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/authorizations')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/authorizations',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -8601,12 +8153,10 @@ class StripeApiClientV1IssuingAuthorizations {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/authorizations/$authorization')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/authorizations/$authorization',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -8628,12 +8178,10 @@ class StripeApiClientV1IssuingAuthorizations {
     required String authorization,
     PostIssuingAuthorizationsAuthorizationBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/issuing/authorizations/$authorization');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/authorizations/$authorization',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -8664,8 +8212,8 @@ class StripeApiClientV1IssuingCardholders {
   StripeApiClientV1IssuingCardholders({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -8712,12 +8260,10 @@ class StripeApiClientV1IssuingCardholders {
     if (type != null) {
       $queryParameters['type'] = type.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/cardholders')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/cardholders',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -8735,13 +8281,11 @@ class StripeApiClientV1IssuingCardholders {
   }
 
   /// Creates a new Issuing `Cardholder` object that can be issued cards.
-  Future<IssuingCardholder> create(
-      {required PostIssuingCardholdersBody body}) async {
+  Future<IssuingCardholder> create({
+    required PostIssuingCardholdersBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/issuing/cardholders');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -8768,12 +8312,10 @@ class StripeApiClientV1IssuingCardholders {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/cardholders/$cardholder')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/cardholders/$cardholder',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -8796,10 +8338,7 @@ class StripeApiClientV1IssuingCardholders {
     PostIssuingCardholdersCardholderBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/issuing/cardholders/$cardholder');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -8824,8 +8363,8 @@ class StripeApiClientV1IssuingCards {
   StripeApiClientV1IssuingCards({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -8884,12 +8423,10 @@ class StripeApiClientV1IssuingCards {
     if (type != null) {
       $queryParameters['type'] = type.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/cards')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/cards',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -8909,10 +8446,7 @@ class StripeApiClientV1IssuingCards {
   /// Creates an Issuing `Card` object.
   Future<IssuingCard> create({required PostIssuingCardsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/issuing/cards');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -8939,12 +8473,10 @@ class StripeApiClientV1IssuingCards {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/cards/$card')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/cards/$card',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -8967,10 +8499,7 @@ class StripeApiClientV1IssuingCards {
     PostIssuingCardsCardBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/issuing/cards/$card');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -8995,8 +8524,8 @@ class StripeApiClientV1IssuingDisputesDisputeSubmit {
   StripeApiClientV1IssuingDisputesDisputeSubmit({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9009,10 +8538,7 @@ class StripeApiClientV1IssuingDisputesDisputeSubmit {
     PostIssuingDisputesDisputeSubmitBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/issuing/disputes/$dispute/submit');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -9037,8 +8563,8 @@ class StripeApiClientV1IssuingDisputesDispute {
   StripeApiClientV1IssuingDisputesDispute({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9056,8 +8582,8 @@ class StripeApiClientV1IssuingDisputes {
   StripeApiClientV1IssuingDisputes({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9096,12 +8622,10 @@ class StripeApiClientV1IssuingDisputes {
     if (transaction != null) {
       $queryParameters['transaction'] = transaction;
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/disputes')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/disputes',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -9121,10 +8645,7 @@ class StripeApiClientV1IssuingDisputes {
   /// Creates an Issuing `Dispute` object. Individual pieces of evidence within the `evidence` object are optional at this point. Stripe only validates that required evidence is present during submission. Refer to [Dispute reasons and evidence](/docs/issuing/purchases/disputes#dispute-reasons-and-evidence) for more details about evidence requirements.
   Future<IssuingDispute> create({PostIssuingDisputesBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/issuing/disputes');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -9153,12 +8674,10 @@ class StripeApiClientV1IssuingDisputes {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/disputes/$dispute')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/disputes/$dispute',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -9181,10 +8700,7 @@ class StripeApiClientV1IssuingDisputes {
     PostIssuingDisputesDisputeBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/issuing/disputes/$dispute');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -9215,8 +8731,8 @@ class StripeApiClientV1IssuingPersonalizationDesigns {
   StripeApiClientV1IssuingPersonalizationDesigns({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9255,12 +8771,10 @@ class StripeApiClientV1IssuingPersonalizationDesigns {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/personalization_designs')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/personalization_designs',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -9278,13 +8792,11 @@ class StripeApiClientV1IssuingPersonalizationDesigns {
   }
 
   /// Creates a personalization design object.
-  Future<IssuingPersonalizationDesign> create(
-      {required PostIssuingPersonalizationDesignsBody body}) async {
+  Future<IssuingPersonalizationDesign> create({
+    required PostIssuingPersonalizationDesignsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/issuing/personalization_designs');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -9312,12 +8824,9 @@ class StripeApiClientV1IssuingPersonalizationDesigns {
       $queryParameters['expand'] = expand;
     }
     final $uri = Uri.parse(
-            '$_baseUri/v1/issuing/personalization_designs/$personalizationDesign')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+      '$_baseUri/v1/issuing/personalization_designs/$personalizationDesign',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -9340,11 +8849,9 @@ class StripeApiClientV1IssuingPersonalizationDesigns {
     PostIssuingPersonalizationDesignsPersonalizationDesignBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/issuing/personalization_designs/$personalizationDesign');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/issuing/personalization_designs/$personalizationDesign',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -9369,8 +8876,8 @@ class StripeApiClientV1IssuingPhysicalBundles {
   StripeApiClientV1IssuingPhysicalBundles({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9405,12 +8912,10 @@ class StripeApiClientV1IssuingPhysicalBundles {
     if (type != null) {
       $queryParameters['type'] = type.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/physical_bundles')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/physical_bundles',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -9436,13 +8941,10 @@ class StripeApiClientV1IssuingPhysicalBundles {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/issuing/physical_bundles/$physicalBundle')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/physical_bundles/$physicalBundle',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -9464,8 +8966,8 @@ class StripeApiClientV1IssuingTokens {
   StripeApiClientV1IssuingTokens({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9502,12 +9004,10 @@ class StripeApiClientV1IssuingTokens {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/tokens')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/tokens',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -9533,12 +9033,10 @@ class StripeApiClientV1IssuingTokens {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/tokens/$token')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/tokens/$token',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -9561,10 +9059,7 @@ class StripeApiClientV1IssuingTokens {
     required PostIssuingTokensTokenBody body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/issuing/tokens/$token');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -9587,8 +9082,8 @@ class StripeApiClientV1IssuingTransactions {
   StripeApiClientV1IssuingTransactions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9631,12 +9126,10 @@ class StripeApiClientV1IssuingTransactions {
     if (type != null) {
       $queryParameters['type'] = type.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/transactions')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/transactions',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -9662,12 +9155,10 @@ class StripeApiClientV1IssuingTransactions {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/issuing/transactions/$transaction')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/issuing/transactions/$transaction',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -9690,10 +9181,7 @@ class StripeApiClientV1IssuingTransactions {
     PostIssuingTransactionsTransactionBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/issuing/transactions/$transaction');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -9718,8 +9206,8 @@ class StripeApiClientV1Issuing {
   StripeApiClientV1Issuing({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9738,10 +9226,8 @@ class StripeApiClientV1Issuing {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1IssuingCards get cards => StripeApiClientV1IssuingCards(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1IssuingCards get cards =>
+      StripeApiClientV1IssuingCards(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1IssuingDisputes get disputes =>
       StripeApiClientV1IssuingDisputes(
@@ -9762,9 +9248,9 @@ class StripeApiClientV1Issuing {
       );
 
   StripeApiClientV1IssuingTokens get tokens => StripeApiClientV1IssuingTokens(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 
   StripeApiClientV1IssuingTransactions get transactions =>
       StripeApiClientV1IssuingTransactions(
@@ -9777,8 +9263,8 @@ class StripeApiClientV1Mandates {
   StripeApiClientV1Mandates({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9794,12 +9280,10 @@ class StripeApiClientV1Mandates {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/mandates/$mandate')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/mandates/$mandate',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -9821,8 +9305,8 @@ class StripeApiClientV1PaymentIntentsSearch {
   StripeApiClientV1PaymentIntentsSearch({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9847,12 +9331,10 @@ class StripeApiClientV1PaymentIntentsSearch {
       $queryParameters['page'] = page;
     }
     $queryParameters['query'] = query;
-    final $uri = Uri.parse('$_baseUri/v1/payment_intents/search')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_intents/search',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -9874,8 +9356,8 @@ class StripeApiClientV1PaymentIntentsIntentApplyCustomerBalance {
   StripeApiClientV1PaymentIntentsIntentApplyCustomerBalance({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9888,11 +9370,9 @@ class StripeApiClientV1PaymentIntentsIntentApplyCustomerBalance {
     PostPaymentIntentsIntentApplyCustomerBalanceBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/payment_intents/$intent/apply_customer_balance');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/payment_intents/$intent/apply_customer_balance',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -9917,8 +9397,8 @@ class StripeApiClientV1PaymentIntentsIntentCancel {
   StripeApiClientV1PaymentIntentsIntentCancel({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9935,10 +9415,7 @@ class StripeApiClientV1PaymentIntentsIntentCancel {
     PostPaymentIntentsIntentCancelBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/payment_intents/$intent/cancel');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -9963,8 +9440,8 @@ class StripeApiClientV1PaymentIntentsIntentCapture {
   StripeApiClientV1PaymentIntentsIntentCapture({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -9981,10 +9458,7 @@ class StripeApiClientV1PaymentIntentsIntentCapture {
     PostPaymentIntentsIntentCaptureBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/payment_intents/$intent/capture');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -10009,8 +9483,8 @@ class StripeApiClientV1PaymentIntentsIntentConfirm {
   StripeApiClientV1PaymentIntentsIntentConfirm({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10023,10 +9497,7 @@ class StripeApiClientV1PaymentIntentsIntentConfirm {
     PostPaymentIntentsIntentConfirmBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/payment_intents/$intent/confirm');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -10051,8 +9522,8 @@ class StripeApiClientV1PaymentIntentsIntentIncrementAuthorization {
   StripeApiClientV1PaymentIntentsIntentIncrementAuthorization({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10073,11 +9544,9 @@ class StripeApiClientV1PaymentIntentsIntentIncrementAuthorization {
     required PostPaymentIntentsIntentIncrementAuthorizationBody body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/payment_intents/$intent/increment_authorization');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/payment_intents/$intent/increment_authorization',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -10100,8 +9569,8 @@ class StripeApiClientV1PaymentIntentsIntentVerifyMicrodeposits {
   StripeApiClientV1PaymentIntentsIntentVerifyMicrodeposits({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10113,12 +9582,10 @@ class StripeApiClientV1PaymentIntentsIntentVerifyMicrodeposits {
     required String intent,
     PostPaymentIntentsIntentVerifyMicrodepositsBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/payment_intents/$intent/verify_microdeposits');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_intents/$intent/verify_microdeposits',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -10143,8 +9610,8 @@ class StripeApiClientV1PaymentIntentsIntent {
   StripeApiClientV1PaymentIntentsIntent({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10152,11 +9619,11 @@ class StripeApiClientV1PaymentIntentsIntent {
   final Uri _baseUri;
 
   StripeApiClientV1PaymentIntentsIntentApplyCustomerBalance
-      get applyCustomerBalance =>
-          StripeApiClientV1PaymentIntentsIntentApplyCustomerBalance(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get applyCustomerBalance =>
+      StripeApiClientV1PaymentIntentsIntentApplyCustomerBalance(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1PaymentIntentsIntentCancel get cancel =>
       StripeApiClientV1PaymentIntentsIntentCancel(
@@ -10177,26 +9644,26 @@ class StripeApiClientV1PaymentIntentsIntent {
       );
 
   StripeApiClientV1PaymentIntentsIntentIncrementAuthorization
-      get incrementAuthorization =>
-          StripeApiClientV1PaymentIntentsIntentIncrementAuthorization(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get incrementAuthorization =>
+      StripeApiClientV1PaymentIntentsIntentIncrementAuthorization(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1PaymentIntentsIntentVerifyMicrodeposits
-      get verifyMicrodeposits =>
-          StripeApiClientV1PaymentIntentsIntentVerifyMicrodeposits(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get verifyMicrodeposits =>
+      StripeApiClientV1PaymentIntentsIntentVerifyMicrodeposits(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1PaymentIntents {
   StripeApiClientV1PaymentIntents({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10231,12 +9698,10 @@ class StripeApiClientV1PaymentIntents {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/payment_intents')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_intents',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -10260,10 +9725,7 @@ class StripeApiClientV1PaymentIntents {
   /// When you use `confirm=true` during creation, it’s equivalent to creating and confirming the PaymentIntent in the same call. You can use any parameters available in the [confirm API](/docs/api/payment_intents/confirm) when you supply `confirm=true`.
   Future<PaymentIntent> create({required PostPaymentIntentsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/payment_intents');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -10298,12 +9760,10 @@ class StripeApiClientV1PaymentIntents {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/payment_intents/$intent')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_intents/$intent',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -10328,10 +9788,7 @@ class StripeApiClientV1PaymentIntents {
     PostPaymentIntentsIntentBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/payment_intents/$intent');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -10368,8 +9825,8 @@ class StripeApiClientV1PaymentLinksPaymentLinkLineItems {
   StripeApiClientV1PaymentLinksPaymentLinkLineItems({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10397,12 +9854,10 @@ class StripeApiClientV1PaymentLinksPaymentLinkLineItems {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/payment_links/$paymentLink/line_items')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_links/$paymentLink/line_items',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -10424,8 +9879,8 @@ class StripeApiClientV1PaymentLinksPaymentLink {
   StripeApiClientV1PaymentLinksPaymentLink({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10443,8 +9898,8 @@ class StripeApiClientV1PaymentLinks {
   StripeApiClientV1PaymentLinks({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10475,12 +9930,10 @@ class StripeApiClientV1PaymentLinks {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/payment_links')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_links',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -10500,10 +9953,7 @@ class StripeApiClientV1PaymentLinks {
   /// Creates a payment link.
   Future<PaymentLink> create({required PostPaymentLinksBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/payment_links');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -10530,12 +9980,10 @@ class StripeApiClientV1PaymentLinks {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/payment_links/$paymentLink')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_links/$paymentLink',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -10558,10 +10006,7 @@ class StripeApiClientV1PaymentLinks {
     PostPaymentLinksPaymentLinkBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/payment_links/$paymentLink');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -10592,8 +10037,8 @@ class StripeApiClientV1PaymentMethodConfigurations {
   StripeApiClientV1PaymentMethodConfigurations({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10610,12 +10055,10 @@ class StripeApiClientV1PaymentMethodConfigurations {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/payment_method_configurations')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_method_configurations',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -10633,13 +10076,11 @@ class StripeApiClientV1PaymentMethodConfigurations {
   }
 
   /// Creates a payment method configuration
-  Future<PaymentMethodConfiguration> create(
-      {PostPaymentMethodConfigurationsBody? body}) async {
+  Future<PaymentMethodConfiguration> create({
+    PostPaymentMethodConfigurationsBody? body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/payment_method_configurations');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -10668,13 +10109,10 @@ class StripeApiClientV1PaymentMethodConfigurations {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/payment_method_configurations/$configuration')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_method_configurations/$configuration',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -10696,12 +10134,10 @@ class StripeApiClientV1PaymentMethodConfigurations {
     required String configuration,
     PostPaymentMethodConfigurationsConfigurationBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/payment_method_configurations/$configuration');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_method_configurations/$configuration',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -10726,8 +10162,8 @@ class StripeApiClientV1PaymentMethodDomainsPaymentMethodDomainValidate {
   StripeApiClientV1PaymentMethodDomainsPaymentMethodDomainValidate({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10744,11 +10180,9 @@ class StripeApiClientV1PaymentMethodDomainsPaymentMethodDomainValidate {
     PostPaymentMethodDomainsPaymentMethodDomainValidateBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/payment_method_domains/$paymentMethodDomain/validate');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/payment_method_domains/$paymentMethodDomain/validate',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -10773,8 +10207,8 @@ class StripeApiClientV1PaymentMethodDomainsPaymentMethodDomain {
   StripeApiClientV1PaymentMethodDomainsPaymentMethodDomain({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10782,19 +10216,19 @@ class StripeApiClientV1PaymentMethodDomainsPaymentMethodDomain {
   final Uri _baseUri;
 
   StripeApiClientV1PaymentMethodDomainsPaymentMethodDomainValidate
-      get validate =>
-          StripeApiClientV1PaymentMethodDomainsPaymentMethodDomainValidate(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get validate =>
+      StripeApiClientV1PaymentMethodDomainsPaymentMethodDomainValidate(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1PaymentMethodDomains {
   StripeApiClientV1PaymentMethodDomains({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10829,12 +10263,10 @@ class StripeApiClientV1PaymentMethodDomains {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/payment_method_domains')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_method_domains',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -10852,13 +10284,11 @@ class StripeApiClientV1PaymentMethodDomains {
   }
 
   /// Creates a payment method domain.
-  Future<PaymentMethodDomain> create(
-      {required PostPaymentMethodDomainsBody body}) async {
+  Future<PaymentMethodDomain> create({
+    required PostPaymentMethodDomainsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/payment_method_domains');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -10885,13 +10315,10 @@ class StripeApiClientV1PaymentMethodDomains {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/payment_method_domains/$paymentMethodDomain')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_method_domains/$paymentMethodDomain',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -10913,12 +10340,10 @@ class StripeApiClientV1PaymentMethodDomains {
     required String paymentMethodDomain,
     PostPaymentMethodDomainsPaymentMethodDomainBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/payment_method_domains/$paymentMethodDomain');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_method_domains/$paymentMethodDomain',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -10939,19 +10364,19 @@ class StripeApiClientV1PaymentMethodDomains {
   }
 
   StripeApiClientV1PaymentMethodDomainsPaymentMethodDomain
-      get paymentMethodDomain =>
-          StripeApiClientV1PaymentMethodDomainsPaymentMethodDomain(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get paymentMethodDomain =>
+      StripeApiClientV1PaymentMethodDomainsPaymentMethodDomain(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1PaymentMethodsPaymentMethodAttach {
   StripeApiClientV1PaymentMethodsPaymentMethodAttach({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -10967,12 +10392,10 @@ class StripeApiClientV1PaymentMethodsPaymentMethodAttach {
     required String paymentMethod,
     required PostPaymentMethodsPaymentMethodAttachBody body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/payment_methods/$paymentMethod/attach');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_methods/$paymentMethod/attach',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -10995,8 +10418,8 @@ class StripeApiClientV1PaymentMethodsPaymentMethodDetach {
   StripeApiClientV1PaymentMethodsPaymentMethodDetach({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -11008,12 +10431,10 @@ class StripeApiClientV1PaymentMethodsPaymentMethodDetach {
     required String paymentMethod,
     PostPaymentMethodsPaymentMethodDetachBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/payment_methods/$paymentMethod/detach');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_methods/$paymentMethod/detach',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -11038,8 +10459,8 @@ class StripeApiClientV1PaymentMethodsPaymentMethod {
   StripeApiClientV1PaymentMethodsPaymentMethod({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -11063,8 +10484,8 @@ class StripeApiClientV1PaymentMethods {
   StripeApiClientV1PaymentMethods({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -11099,12 +10520,10 @@ class StripeApiClientV1PaymentMethods {
     if (type != null) {
       $queryParameters['type'] = type.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/payment_methods')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_methods',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -11126,10 +10545,7 @@ class StripeApiClientV1PaymentMethods {
   /// Instead of creating a PaymentMethod directly, we recommend using the [PaymentIntents](/docs/payments/accept-a-payment) API to accept a payment immediately or the [SetupIntent](/docs/payments/save-and-reuse) API to collect payment method details ahead of a future payment.
   Future<PaymentMethod> create({PostPaymentMethodsBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/payment_methods');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -11158,12 +10574,10 @@ class StripeApiClientV1PaymentMethods {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/payment_methods/$paymentMethod')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payment_methods/$paymentMethod',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -11186,10 +10600,7 @@ class StripeApiClientV1PaymentMethods {
     PostPaymentMethodsPaymentMethodBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/payment_methods/$paymentMethod');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -11220,8 +10631,8 @@ class StripeApiClientV1PayoutsPayoutCancel {
   StripeApiClientV1PayoutsPayoutCancel({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -11234,10 +10645,7 @@ class StripeApiClientV1PayoutsPayoutCancel {
     PostPayoutsPayoutCancelBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/payouts/$payout/cancel');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -11262,8 +10670,8 @@ class StripeApiClientV1PayoutsPayoutReverse {
   StripeApiClientV1PayoutsPayoutReverse({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -11278,10 +10686,7 @@ class StripeApiClientV1PayoutsPayoutReverse {
     PostPayoutsPayoutReverseBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/payouts/$payout/reverse');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -11306,8 +10711,8 @@ class StripeApiClientV1PayoutsPayout {
   StripeApiClientV1PayoutsPayout({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -11331,8 +10736,8 @@ class StripeApiClientV1Payouts {
   StripeApiClientV1Payouts({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -11375,12 +10780,10 @@ class StripeApiClientV1Payouts {
     if (status != null) {
       $queryParameters['status'] = status;
     }
-    final $uri = Uri.parse('$_baseUri/v1/payouts')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payouts',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -11404,10 +10807,7 @@ class StripeApiClientV1Payouts {
   /// If you create a manual payout on a Stripe account that uses multiple payment source types, you need to specify the source type balance that the payout draws from. The [balance object](#balance_object) details available and pending amounts by source type.
   Future<Payout> create({required PostPayoutsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/payouts');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -11434,12 +10834,10 @@ class StripeApiClientV1Payouts {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/payouts/$payout')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/payouts/$payout',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -11462,10 +10860,7 @@ class StripeApiClientV1Payouts {
     PostPayoutsPayoutBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/payouts/$payout');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -11486,17 +10881,17 @@ class StripeApiClientV1Payouts {
   }
 
   StripeApiClientV1PayoutsPayout get payout => StripeApiClientV1PayoutsPayout(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 }
 
 class StripeApiClientV1Plans {
   StripeApiClientV1Plans({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -11535,12 +10930,10 @@ class StripeApiClientV1Plans {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/plans')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/plans',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -11560,10 +10953,7 @@ class StripeApiClientV1Plans {
   /// You can now model subscriptions more flexibly using the [Prices API](#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
   Future<Plan> create({required PostPlansBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/plans');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -11582,20 +10972,15 @@ class StripeApiClientV1Plans {
   }
 
   /// Retrieves the plan with the given ID.
-  Future<Plan> retrieve({
-    required String plan,
-    List<String>? expand,
-  }) async {
+  Future<Plan> retrieve({required String plan, List<String>? expand}) async {
     final $queryParameters = <String, Object>{};
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/plans/$plan')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/plans/$plan',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -11613,15 +10998,9 @@ class StripeApiClientV1Plans {
   }
 
   /// Updates the specified plan by setting the values of the parameters passed. Any parameters not provided are left unchanged. By design, you cannot change a plan’s ID, amount, currency, or billing cycle.
-  Future<Plan> update({
-    required String plan,
-    PostPlansPlanBody? body,
-  }) async {
+  Future<Plan> update({required String plan, PostPlansPlanBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/plans/$plan');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -11644,10 +11023,7 @@ class StripeApiClientV1Plans {
   /// Deleting plans means new subscribers can’t be added. Existing subscribers aren’t affected.
   Future<DeletedPlan> delete({required String plan}) async {
     final $uri = Uri.parse('$_baseUri/v1/plans/$plan');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -11669,8 +11045,8 @@ class StripeApiClientV1PricesSearch {
   StripeApiClientV1PricesSearch({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -11695,12 +11071,10 @@ class StripeApiClientV1PricesSearch {
       $queryParameters['page'] = page;
     }
     $queryParameters['query'] = query;
-    final $uri = Uri.parse('$_baseUri/v1/prices/search')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/prices/search',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -11722,8 +11096,8 @@ class StripeApiClientV1Prices {
   StripeApiClientV1Prices({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -11778,12 +11152,10 @@ class StripeApiClientV1Prices {
     if (type != null) {
       $queryParameters['type'] = type.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/prices')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/prices',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -11803,10 +11175,7 @@ class StripeApiClientV1Prices {
   /// Creates a new price for an existing product. The price can be recurring or one-time.
   Future<Price> create({required PostPricesBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/prices');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -11825,20 +11194,15 @@ class StripeApiClientV1Prices {
   }
 
   /// Retrieves the price with the given ID.
-  Future<Price> retrieve({
-    required String price,
-    List<String>? expand,
-  }) async {
+  Future<Price> retrieve({required String price, List<String>? expand}) async {
     final $queryParameters = <String, Object>{};
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/prices/$price')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/prices/$price',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -11861,10 +11225,7 @@ class StripeApiClientV1Prices {
     PostPricesPriceBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/prices/$price');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -11884,18 +11245,16 @@ class StripeApiClientV1Prices {
     }
   }
 
-  StripeApiClientV1PricesSearch get search => StripeApiClientV1PricesSearch(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1PricesSearch get search =>
+      StripeApiClientV1PricesSearch(baseUri: _baseUri, httpClient: _httpClient);
 }
 
 class StripeApiClientV1ProductsSearch {
   StripeApiClientV1ProductsSearch({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -11920,12 +11279,10 @@ class StripeApiClientV1ProductsSearch {
       $queryParameters['page'] = page;
     }
     $queryParameters['query'] = query;
-    final $uri = Uri.parse('$_baseUri/v1/products/search')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/products/search',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -11947,8 +11304,8 @@ class StripeApiClientV1Products {
   StripeApiClientV1Products({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -11999,12 +11356,10 @@ class StripeApiClientV1Products {
     if (url != null) {
       $queryParameters['url'] = url;
     }
-    final $uri = Uri.parse('$_baseUri/v1/products')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/products',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12024,10 +11379,7 @@ class StripeApiClientV1Products {
   /// Creates a new product object.
   Future<Product> create({required PostProductsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/products');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -12046,20 +11398,15 @@ class StripeApiClientV1Products {
   }
 
   /// Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
-  Future<Product> retrieve({
-    required String id,
-    List<String>? expand,
-  }) async {
+  Future<Product> retrieve({required String id, List<String>? expand}) async {
     final $queryParameters = <String, Object>{};
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/products/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/products/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12077,15 +11424,9 @@ class StripeApiClientV1Products {
   }
 
   /// Updates the specific product by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-  Future<Product> update({
-    required String id,
-    PostProductsIdBody? body,
-  }) async {
+  Future<Product> update({required String id, PostProductsIdBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/products/$id');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -12108,10 +11449,7 @@ class StripeApiClientV1Products {
   /// Delete a product. Deleting a product is only possible if it has no prices associated with it. Additionally, deleting a product with `type=good` is only possible if it has no SKUs associated with it.
   Future<DeletedProduct> delete({required String id}) async {
     final $uri = Uri.parse('$_baseUri/v1/products/$id');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12129,17 +11467,17 @@ class StripeApiClientV1Products {
   }
 
   StripeApiClientV1ProductsSearch get search => StripeApiClientV1ProductsSearch(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 }
 
 class StripeApiClientV1PromotionCodes {
   StripeApiClientV1PromotionCodes({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -12186,12 +11524,10 @@ class StripeApiClientV1PromotionCodes {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/promotion_codes')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/promotion_codes',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12211,10 +11547,7 @@ class StripeApiClientV1PromotionCodes {
   /// A promotion code points to a coupon. You can optionally restrict the code to a specific customer, redemption limit, and expiration date.
   Future<PromotionCode> create({required PostPromotionCodesBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/promotion_codes');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -12241,12 +11574,10 @@ class StripeApiClientV1PromotionCodes {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/promotion_codes/$promotionCode')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/promotion_codes/$promotionCode',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12269,10 +11600,7 @@ class StripeApiClientV1PromotionCodes {
     PostPromotionCodesPromotionCodeBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/promotion_codes/$promotionCode');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -12297,8 +11625,8 @@ class StripeApiClientV1QuotesQuoteAccept {
   StripeApiClientV1QuotesQuoteAccept({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -12311,10 +11639,7 @@ class StripeApiClientV1QuotesQuoteAccept {
     PostQuotesQuoteAcceptBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/quotes/$quote/accept');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -12339,8 +11664,8 @@ class StripeApiClientV1QuotesQuoteCancel {
   StripeApiClientV1QuotesQuoteCancel({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -12353,10 +11678,7 @@ class StripeApiClientV1QuotesQuoteCancel {
     PostQuotesQuoteCancelBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/quotes/$quote/cancel');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -12381,8 +11703,8 @@ class StripeApiClientV1QuotesQuoteComputedUpfrontLineItems {
   StripeApiClientV1QuotesQuoteComputedUpfrontLineItems({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -12391,7 +11713,7 @@ class StripeApiClientV1QuotesQuoteComputedUpfrontLineItems {
 
   /// When retrieving a quote, there is an includable [**computed.upfront.line_items**](https://stripe.com/docs/api/quotes/object#quote_object-computed-upfront-line_items) property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of upfront line items.
   Future<GetQuotesQuoteComputedUpfrontLineItemsResponse>
-      list_computed_upfront_line_items({
+  list_computed_upfront_line_items({
     required String quote,
     String? endingBefore,
     List<String>? expand,
@@ -12411,13 +11733,10 @@ class StripeApiClientV1QuotesQuoteComputedUpfrontLineItems {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/quotes/$quote/computed_upfront_line_items')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/quotes/$quote/computed_upfront_line_items',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12439,8 +11758,8 @@ class StripeApiClientV1QuotesQuoteFinalize {
   StripeApiClientV1QuotesQuoteFinalize({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -12453,10 +11772,7 @@ class StripeApiClientV1QuotesQuoteFinalize {
     PostQuotesQuoteFinalizeBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/quotes/$quote/finalize');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -12481,8 +11797,8 @@ class StripeApiClientV1QuotesQuoteLineItems {
   StripeApiClientV1QuotesQuoteLineItems({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -12510,12 +11826,10 @@ class StripeApiClientV1QuotesQuoteLineItems {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/quotes/$quote/line_items')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/quotes/$quote/line_items',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12537,8 +11851,8 @@ class StripeApiClientV1QuotesQuotePdf {
   StripeApiClientV1QuotesQuotePdf({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -12546,20 +11860,15 @@ class StripeApiClientV1QuotesQuotePdf {
   final Uri _baseUri;
 
   /// Download the PDF for a finalized quote. Explanation for special handling can be found [here](https://docs.corp.stripe.com/quotes/overview#quote_pdf)
-  Future<String> pdf({
-    required String quote,
-    List<String>? expand,
-  }) async {
+  Future<String> pdf({required String quote, List<String>? expand}) async {
     final $queryParameters = <String, Object>{};
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/quotes/$quote/pdf')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/quotes/$quote/pdf',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12581,8 +11890,8 @@ class StripeApiClientV1QuotesQuote {
   StripeApiClientV1QuotesQuote({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -12602,11 +11911,11 @@ class StripeApiClientV1QuotesQuote {
       );
 
   StripeApiClientV1QuotesQuoteComputedUpfrontLineItems
-      get computedUpfrontLineItems =>
-          StripeApiClientV1QuotesQuoteComputedUpfrontLineItems(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get computedUpfrontLineItems =>
+      StripeApiClientV1QuotesQuoteComputedUpfrontLineItems(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1QuotesQuoteFinalize get finalize =>
       StripeApiClientV1QuotesQuoteFinalize(
@@ -12621,17 +11930,17 @@ class StripeApiClientV1QuotesQuote {
       );
 
   StripeApiClientV1QuotesQuotePdf get pdf => StripeApiClientV1QuotesQuotePdf(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 }
 
 class StripeApiClientV1Quotes {
   StripeApiClientV1Quotes({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -12670,12 +11979,10 @@ class StripeApiClientV1Quotes {
     if (testClock != null) {
       $queryParameters['test_clock'] = testClock;
     }
-    final $uri = Uri.parse('$_baseUri/v1/quotes')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/quotes',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12695,10 +12002,7 @@ class StripeApiClientV1Quotes {
   /// A quote models prices and services for a customer. Default options for `header`, `description`, `footer`, and `expires_at` can be set in the dashboard via the [quote template](https://dashboard.stripe.com/settings/billing/quote).
   Future<Quote> create({PostQuotesBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/quotes');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -12719,20 +12023,15 @@ class StripeApiClientV1Quotes {
   }
 
   /// Retrieves the quote with the given ID.
-  Future<Quote> retrieve({
-    required String quote,
-    List<String>? expand,
-  }) async {
+  Future<Quote> retrieve({required String quote, List<String>? expand}) async {
     final $queryParameters = <String, Object>{};
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/quotes/$quote')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/quotes/$quote',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12755,10 +12054,7 @@ class StripeApiClientV1Quotes {
     PostQuotesQuoteBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/quotes/$quote');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -12778,18 +12074,16 @@ class StripeApiClientV1Quotes {
     }
   }
 
-  StripeApiClientV1QuotesQuote get quote => StripeApiClientV1QuotesQuote(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1QuotesQuote get quote =>
+      StripeApiClientV1QuotesQuote(baseUri: _baseUri, httpClient: _httpClient);
 }
 
 class StripeApiClientV1RadarEarlyFraudWarnings {
   StripeApiClientV1RadarEarlyFraudWarnings({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -12828,12 +12122,10 @@ class StripeApiClientV1RadarEarlyFraudWarnings {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/radar/early_fraud_warnings')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/radar/early_fraud_warnings',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12861,13 +12153,10 @@ class StripeApiClientV1RadarEarlyFraudWarnings {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/radar/early_fraud_warnings/$earlyFraudWarning')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/radar/early_fraud_warnings/$earlyFraudWarning',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12889,8 +12178,8 @@ class StripeApiClientV1RadarValueListItems {
   StripeApiClientV1RadarValueListItems({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -12927,12 +12216,10 @@ class StripeApiClientV1RadarValueListItems {
       $queryParameters['value'] = value;
     }
     $queryParameters['value_list'] = valueList;
-    final $uri = Uri.parse('$_baseUri/v1/radar/value_list_items')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/radar/value_list_items',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -12950,13 +12237,11 @@ class StripeApiClientV1RadarValueListItems {
   }
 
   /// Creates a new `ValueListItem` object, which is added to the specified parent value list.
-  Future<RadarValueListItem> create(
-      {required PostRadarValueListItemsBody body}) async {
+  Future<RadarValueListItem> create({
+    required PostRadarValueListItemsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/radar/value_list_items');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -12983,12 +12268,10 @@ class StripeApiClientV1RadarValueListItems {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/radar/value_list_items/$item')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/radar/value_list_items/$item',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13008,10 +12291,7 @@ class StripeApiClientV1RadarValueListItems {
   /// Deletes a `ValueListItem` object, removing it from its parent value list.
   Future<DeletedRadarValueListItem> delete({required String item}) async {
     final $uri = Uri.parse('$_baseUri/v1/radar/value_list_items/$item');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13033,8 +12313,8 @@ class StripeApiClientV1RadarValueLists {
   StripeApiClientV1RadarValueLists({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13073,12 +12353,10 @@ class StripeApiClientV1RadarValueLists {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/radar/value_lists')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/radar/value_lists',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13098,10 +12376,7 @@ class StripeApiClientV1RadarValueLists {
   /// Creates a new `ValueList` object, which can then be referenced in rules.
   Future<RadarValueList> create({required PostRadarValueListsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/radar/value_lists');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -13128,12 +12403,10 @@ class StripeApiClientV1RadarValueLists {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/radar/value_lists/$valueList')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/radar/value_lists/$valueList',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13156,10 +12429,7 @@ class StripeApiClientV1RadarValueLists {
     PostRadarValueListsValueListBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/radar/value_lists/$valueList');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -13182,10 +12452,7 @@ class StripeApiClientV1RadarValueLists {
   /// Deletes a `ValueList` object, also deleting any items contained within the value list. To be deleted, a value list must not be referenced in any rules.
   Future<DeletedRadarValueList> delete({required String valueList}) async {
     final $uri = Uri.parse('$_baseUri/v1/radar/value_lists/$valueList');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13207,8 +12474,8 @@ class StripeApiClientV1Radar {
   StripeApiClientV1Radar({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13238,8 +12505,8 @@ class StripeApiClientV1RefundsRefundCancel {
   StripeApiClientV1RefundsRefundCancel({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13254,10 +12521,7 @@ class StripeApiClientV1RefundsRefundCancel {
     PostRefundsRefundCancelBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/refunds/$refund/cancel');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -13282,8 +12546,8 @@ class StripeApiClientV1RefundsRefund {
   StripeApiClientV1RefundsRefund({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13301,8 +12565,8 @@ class StripeApiClientV1Refunds {
   StripeApiClientV1Refunds({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13341,12 +12605,10 @@ class StripeApiClientV1Refunds {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/refunds')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/refunds',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13372,10 +12634,7 @@ class StripeApiClientV1Refunds {
   /// Once entirely refunded, a charge can’t be refunded again. This method will raise an error when called on an already-refunded charge, or when trying to refund more money than is left on a charge.
   Future<Refund> create({PostRefundsBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/refunds');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -13404,12 +12663,10 @@ class StripeApiClientV1Refunds {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/refunds/$refund')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/refunds/$refund',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13434,10 +12691,7 @@ class StripeApiClientV1Refunds {
     PostRefundsRefundBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/refunds/$refund');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -13458,17 +12712,17 @@ class StripeApiClientV1Refunds {
   }
 
   StripeApiClientV1RefundsRefund get refund => StripeApiClientV1RefundsRefund(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 }
 
 class StripeApiClientV1ReportingReportRuns {
   StripeApiClientV1ReportingReportRuns({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13499,12 +12753,10 @@ class StripeApiClientV1ReportingReportRuns {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/reporting/report_runs')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/reporting/report_runs',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13522,13 +12774,11 @@ class StripeApiClientV1ReportingReportRuns {
   }
 
   /// Creates a new object and begin running the report. (Certain report types require a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
-  Future<ReportingReportRun> create(
-      {required PostReportingReportRunsBody body}) async {
+  Future<ReportingReportRun> create({
+    required PostReportingReportRunsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/reporting/report_runs');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -13555,12 +12805,10 @@ class StripeApiClientV1ReportingReportRuns {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/reporting/report_runs/$reportRun')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/reporting/report_runs/$reportRun',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13582,8 +12830,8 @@ class StripeApiClientV1ReportingReportTypes {
   StripeApiClientV1ReportingReportTypes({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13596,12 +12844,10 @@ class StripeApiClientV1ReportingReportTypes {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/reporting/report_types')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/reporting/report_types',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13627,12 +12873,10 @@ class StripeApiClientV1ReportingReportTypes {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/reporting/report_types/$reportType')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/reporting/report_types/$reportType',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13654,8 +12898,8 @@ class StripeApiClientV1Reporting {
   StripeApiClientV1Reporting({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13679,8 +12923,8 @@ class StripeApiClientV1ReviewsReviewApprove {
   StripeApiClientV1ReviewsReviewApprove({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13693,10 +12937,7 @@ class StripeApiClientV1ReviewsReviewApprove {
     PostReviewsReviewApproveBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/reviews/$review/approve');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -13721,8 +12962,8 @@ class StripeApiClientV1ReviewsReview {
   StripeApiClientV1ReviewsReview({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13740,8 +12981,8 @@ class StripeApiClientV1Reviews {
   StripeApiClientV1Reviews({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13772,12 +13013,10 @@ class StripeApiClientV1Reviews {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/reviews')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/reviews',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13803,12 +13042,10 @@ class StripeApiClientV1Reviews {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/reviews/$review')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/reviews/$review',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13826,17 +13063,17 @@ class StripeApiClientV1Reviews {
   }
 
   StripeApiClientV1ReviewsReview get review => StripeApiClientV1ReviewsReview(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 }
 
 class StripeApiClientV1SetupAttempts {
   StripeApiClientV1SetupAttempts({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13869,12 +13106,10 @@ class StripeApiClientV1SetupAttempts {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/setup_attempts')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/setup_attempts',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -13896,8 +13131,8 @@ class StripeApiClientV1SetupIntentsIntentCancel {
   StripeApiClientV1SetupIntentsIntentCancel({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13912,10 +13147,7 @@ class StripeApiClientV1SetupIntentsIntentCancel {
     PostSetupIntentsIntentCancelBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/setup_intents/$intent/cancel');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -13940,8 +13172,8 @@ class StripeApiClientV1SetupIntentsIntentConfirm {
   StripeApiClientV1SetupIntentsIntentConfirm({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13958,10 +13190,7 @@ class StripeApiClientV1SetupIntentsIntentConfirm {
     PostSetupIntentsIntentConfirmBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/setup_intents/$intent/confirm');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -13986,8 +13215,8 @@ class StripeApiClientV1SetupIntentsIntentVerifyMicrodeposits {
   StripeApiClientV1SetupIntentsIntentVerifyMicrodeposits({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -13999,12 +13228,10 @@ class StripeApiClientV1SetupIntentsIntentVerifyMicrodeposits {
     required String intent,
     PostSetupIntentsIntentVerifyMicrodepositsBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/setup_intents/$intent/verify_microdeposits');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/setup_intents/$intent/verify_microdeposits',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -14029,8 +13256,8 @@ class StripeApiClientV1SetupIntentsIntent {
   StripeApiClientV1SetupIntentsIntent({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14050,19 +13277,19 @@ class StripeApiClientV1SetupIntentsIntent {
       );
 
   StripeApiClientV1SetupIntentsIntentVerifyMicrodeposits
-      get verifyMicrodeposits =>
-          StripeApiClientV1SetupIntentsIntentVerifyMicrodeposits(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get verifyMicrodeposits =>
+      StripeApiClientV1SetupIntentsIntentVerifyMicrodeposits(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1SetupIntents {
   StripeApiClientV1SetupIntents({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14105,12 +13332,10 @@ class StripeApiClientV1SetupIntents {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/setup_intents')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/setup_intents',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -14132,10 +13357,7 @@ class StripeApiClientV1SetupIntents {
   /// After you create the SetupIntent, attach a payment method and [confirm](/docs/api/setup_intents/confirm) it to collect any required permissions to charge the payment method later.
   Future<SetupIntent> create({PostSetupIntentsBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/setup_intents');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -14172,12 +13394,10 @@ class StripeApiClientV1SetupIntents {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/setup_intents/$intent')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/setup_intents/$intent',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -14200,10 +13420,7 @@ class StripeApiClientV1SetupIntents {
     PostSetupIntentsIntentBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/setup_intents/$intent');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -14234,8 +13451,8 @@ class StripeApiClientV1ShippingRates {
   StripeApiClientV1ShippingRates({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14274,12 +13491,10 @@ class StripeApiClientV1ShippingRates {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/shipping_rates')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/shipping_rates',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -14299,10 +13514,7 @@ class StripeApiClientV1ShippingRates {
   /// Creates a new shipping rate object.
   Future<ShippingRate> create({required PostShippingRatesBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/shipping_rates');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -14329,12 +13541,10 @@ class StripeApiClientV1ShippingRates {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/shipping_rates/$shippingRateToken')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/shipping_rates/$shippingRateToken',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -14357,10 +13567,7 @@ class StripeApiClientV1ShippingRates {
     PostShippingRatesShippingRateTokenBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/shipping_rates/$shippingRateToken');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -14385,8 +13592,8 @@ class StripeApiClientV1SigmaScheduledQueryRuns {
   StripeApiClientV1SigmaScheduledQueryRuns({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14413,12 +13620,10 @@ class StripeApiClientV1SigmaScheduledQueryRuns {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/sigma/scheduled_query_runs')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/sigma/scheduled_query_runs',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -14444,13 +13649,10 @@ class StripeApiClientV1SigmaScheduledQueryRuns {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/sigma/scheduled_query_runs/$scheduledQueryRun')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/sigma/scheduled_query_runs/$scheduledQueryRun',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -14472,8 +13674,8 @@ class StripeApiClientV1Sigma {
   StripeApiClientV1Sigma({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14491,8 +13693,8 @@ class StripeApiClientV1SourcesSourceSourceTransactions {
   StripeApiClientV1SourcesSourceSourceTransactions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14520,12 +13722,10 @@ class StripeApiClientV1SourcesSourceSourceTransactions {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/sources/$source/source_transactions')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/sources/$source/source_transactions',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -14547,8 +13747,8 @@ class StripeApiClientV1SourcesSourceVerify {
   StripeApiClientV1SourcesSourceVerify({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14561,10 +13761,7 @@ class StripeApiClientV1SourcesSourceVerify {
     required PostSourcesSourceVerifyBody body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/sources/$source/verify');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -14587,8 +13784,8 @@ class StripeApiClientV1SourcesSource {
   StripeApiClientV1SourcesSource({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14612,8 +13809,8 @@ class StripeApiClientV1Sources {
   StripeApiClientV1Sources({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14623,10 +13820,7 @@ class StripeApiClientV1Sources {
   /// Creates a new source object.
   Future<Source> create({PostSourcesBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/sources');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -14659,12 +13853,10 @@ class StripeApiClientV1Sources {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/sources/$source')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/sources/$source',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -14689,10 +13881,7 @@ class StripeApiClientV1Sources {
     PostSourcesSourceBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/sources/$source');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -14713,17 +13902,17 @@ class StripeApiClientV1Sources {
   }
 
   StripeApiClientV1SourcesSource get source => StripeApiClientV1SourcesSource(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+    baseUri: _baseUri,
+    httpClient: _httpClient,
+  );
 }
 
 class StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecordSummaries {
   StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecordSummaries({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14734,7 +13923,7 @@ class StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecordSummaries {
   ///
   /// The list is sorted in reverse-chronological order (newest first). The first list item represents the most current usage period that hasn’t ended yet. Since new usage records can still be added, the returned summary information for the subscription item’s ID should be seen as unstable until the subscription billing period ends.
   Future<GetSubscriptionItemsSubscriptionItemUsageRecordSummariesResponse>
-      list({
+  list({
     required String subscriptionItem,
     String? endingBefore,
     List<String>? expand,
@@ -14755,12 +13944,9 @@ class StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecordSummaries {
       $queryParameters['starting_after'] = startingAfter;
     }
     final $uri = Uri.parse(
-            '$_baseUri/v1/subscription_items/$subscriptionItem/usage_record_summaries')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+      '$_baseUri/v1/subscription_items/$subscriptionItem/usage_record_summaries',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -14768,8 +13954,9 @@ class StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecordSummaries {
       /// Successful response.
       case 200:
         final $json = _$convert.jsonDecode($body);
-        return GetSubscriptionItemsSubscriptionItemUsageRecordSummariesResponse
-            .fromJson($json);
+        return GetSubscriptionItemsSubscriptionItemUsageRecordSummariesResponse.fromJson(
+          $json,
+        );
 
       /// Error response.
       case _:
@@ -14783,8 +13970,8 @@ class StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecords {
   StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecords({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14803,11 +13990,9 @@ class StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecords {
     required PostSubscriptionItemsSubscriptionItemUsageRecordsBody body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/subscription_items/$subscriptionItem/usage_records');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/subscription_items/$subscriptionItem/usage_records',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -14830,8 +14015,8 @@ class StripeApiClientV1SubscriptionItemsSubscriptionItem {
   StripeApiClientV1SubscriptionItemsSubscriptionItem({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14839,26 +14024,26 @@ class StripeApiClientV1SubscriptionItemsSubscriptionItem {
   final Uri _baseUri;
 
   StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecordSummaries
-      get usageRecordSummaries =>
-          StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecordSummaries(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get usageRecordSummaries =>
+      StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecordSummaries(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecords
-      get usageRecords =>
-          StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecords(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get usageRecords =>
+      StripeApiClientV1SubscriptionItemsSubscriptionItemUsageRecords(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1SubscriptionItems {
   StripeApiClientV1SubscriptionItems({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -14887,12 +14072,10 @@ class StripeApiClientV1SubscriptionItems {
       $queryParameters['starting_after'] = startingAfter;
     }
     $queryParameters['subscription'] = subscription;
-    final $uri = Uri.parse('$_baseUri/v1/subscription_items')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/subscription_items',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -14910,13 +14093,11 @@ class StripeApiClientV1SubscriptionItems {
   }
 
   /// Adds a new item to an existing subscription. No existing items will be changed or replaced.
-  Future<SubscriptionItem> create(
-      {required PostSubscriptionItemsBody body}) async {
+  Future<SubscriptionItem> create({
+    required PostSubscriptionItemsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/subscription_items');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -14943,12 +14124,10 @@ class StripeApiClientV1SubscriptionItems {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/subscription_items/$item')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/subscription_items/$item',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -14971,10 +14150,7 @@ class StripeApiClientV1SubscriptionItems {
     PostSubscriptionItemsItemBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/subscription_items/$item');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -15000,10 +14176,7 @@ class StripeApiClientV1SubscriptionItems {
     DeleteSubscriptionItemsItemBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/subscription_items/$item');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -15034,8 +14207,8 @@ class StripeApiClientV1SubscriptionSchedulesScheduleCancel {
   StripeApiClientV1SubscriptionSchedulesScheduleCancel({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15047,12 +14220,10 @@ class StripeApiClientV1SubscriptionSchedulesScheduleCancel {
     required String schedule,
     PostSubscriptionSchedulesScheduleCancelBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/subscription_schedules/$schedule/cancel');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/subscription_schedules/$schedule/cancel',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -15077,8 +14248,8 @@ class StripeApiClientV1SubscriptionSchedulesScheduleRelease {
   StripeApiClientV1SubscriptionSchedulesScheduleRelease({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15090,12 +14261,10 @@ class StripeApiClientV1SubscriptionSchedulesScheduleRelease {
     required String schedule,
     PostSubscriptionSchedulesScheduleReleaseBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/subscription_schedules/$schedule/release');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/subscription_schedules/$schedule/release',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -15120,8 +14289,8 @@ class StripeApiClientV1SubscriptionSchedulesSchedule {
   StripeApiClientV1SubscriptionSchedulesSchedule({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15145,8 +14314,8 @@ class StripeApiClientV1SubscriptionSchedules {
   StripeApiClientV1SubscriptionSchedules({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15197,12 +14366,10 @@ class StripeApiClientV1SubscriptionSchedules {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/subscription_schedules')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/subscription_schedules',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -15220,13 +14387,11 @@ class StripeApiClientV1SubscriptionSchedules {
   }
 
   /// Creates a new subscription schedule object. Each customer can have up to 500 active or scheduled subscriptions.
-  Future<SubscriptionSchedule> create(
-      {PostSubscriptionSchedulesBody? body}) async {
+  Future<SubscriptionSchedule> create({
+    PostSubscriptionSchedulesBody? body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/subscription_schedules');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -15255,12 +14420,10 @@ class StripeApiClientV1SubscriptionSchedules {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/subscription_schedules/$schedule')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/subscription_schedules/$schedule',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -15283,10 +14446,7 @@ class StripeApiClientV1SubscriptionSchedules {
     PostSubscriptionSchedulesScheduleBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/subscription_schedules/$schedule');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -15317,8 +14477,8 @@ class StripeApiClientV1SubscriptionsSearch {
   StripeApiClientV1SubscriptionsSearch({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15343,12 +14503,10 @@ class StripeApiClientV1SubscriptionsSearch {
       $queryParameters['page'] = page;
     }
     $queryParameters['query'] = query;
-    final $uri = Uri.parse('$_baseUri/v1/subscriptions/search')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/subscriptions/search',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -15370,8 +14528,8 @@ class StripeApiClientV1SubscriptionsSubscriptionExposedIdDiscount {
   StripeApiClientV1SubscriptionsSubscriptionExposedIdDiscount({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15379,14 +14537,13 @@ class StripeApiClientV1SubscriptionsSubscriptionExposedIdDiscount {
   final Uri _baseUri;
 
   /// Removes the currently applied discount on a subscription.
-  Future<DeletedDiscount> delete_discount(
-      {required String subscriptionExposedId}) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/subscriptions/$subscriptionExposedId/discount');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
+  Future<DeletedDiscount> delete_discount({
+    required String subscriptionExposedId,
+  }) async {
+    final $uri = Uri.parse(
+      '$_baseUri/v1/subscriptions/$subscriptionExposedId/discount',
     );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -15408,8 +14565,8 @@ class StripeApiClientV1SubscriptionsSubscriptionExposedId {
   StripeApiClientV1SubscriptionsSubscriptionExposedId({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15427,8 +14584,8 @@ class StripeApiClientV1SubscriptionsSubscriptionResume {
   StripeApiClientV1SubscriptionsSubscriptionResume({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15441,10 +14598,7 @@ class StripeApiClientV1SubscriptionsSubscriptionResume {
     PostSubscriptionsSubscriptionResumeBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/subscriptions/$subscription/resume');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -15469,8 +14623,8 @@ class StripeApiClientV1SubscriptionsSubscription {
   StripeApiClientV1SubscriptionsSubscription({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15488,8 +14642,8 @@ class StripeApiClientV1Subscriptions {
   StripeApiClientV1Subscriptions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15556,12 +14710,10 @@ class StripeApiClientV1Subscriptions {
     if (testClock != null) {
       $queryParameters['test_clock'] = testClock;
     }
-    final $uri = Uri.parse('$_baseUri/v1/subscriptions')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/subscriptions',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -15585,10 +14737,7 @@ class StripeApiClientV1Subscriptions {
   /// To start subscriptions where the first invoice always begins in a `draft` status, use [subscription schedules](/docs/billing/subscriptions/subscription-schedules#managing) instead. Schedules provide the flexibility to model more complex billing configurations that change over time.
   Future<Subscription> create({required PostSubscriptionsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/subscriptions');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -15615,12 +14764,10 @@ class StripeApiClientV1Subscriptions {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/subscriptions/$subscriptionExposedId')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/subscriptions/$subscriptionExposedId',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -15659,10 +14806,7 @@ class StripeApiClientV1Subscriptions {
     PostSubscriptionsSubscriptionExposedIdBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/subscriptions/$subscriptionExposedId');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -15692,10 +14836,7 @@ class StripeApiClientV1Subscriptions {
     DeleteSubscriptionsSubscriptionExposedIdBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/subscriptions/$subscriptionExposedId');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -15722,11 +14863,11 @@ class StripeApiClientV1Subscriptions {
       );
 
   StripeApiClientV1SubscriptionsSubscriptionExposedId
-      get subscriptionExposedId =>
-          StripeApiClientV1SubscriptionsSubscriptionExposedId(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get subscriptionExposedId =>
+      StripeApiClientV1SubscriptionsSubscriptionExposedId(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1SubscriptionsSubscription get subscription =>
       StripeApiClientV1SubscriptionsSubscription(
@@ -15739,8 +14880,8 @@ class StripeApiClientV1TaxCalculationsCalculationLineItems {
   StripeApiClientV1TaxCalculationsCalculationLineItems({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15768,13 +14909,10 @@ class StripeApiClientV1TaxCalculationsCalculationLineItems {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/tax/calculations/$calculation/line_items')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax/calculations/$calculation/line_items',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -15796,8 +14934,8 @@ class StripeApiClientV1TaxCalculationsCalculation {
   StripeApiClientV1TaxCalculationsCalculation({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15815,8 +14953,8 @@ class StripeApiClientV1TaxCalculations {
   StripeApiClientV1TaxCalculations({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15826,10 +14964,7 @@ class StripeApiClientV1TaxCalculations {
   /// Calculates tax based on input and returns a Tax `Calculation` object.
   Future<TaxCalculation> create({required PostTaxCalculationsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/tax/calculations');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -15858,8 +14993,8 @@ class StripeApiClientV1TaxRegistrations {
   StripeApiClientV1TaxRegistrations({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -15890,12 +15025,10 @@ class StripeApiClientV1TaxRegistrations {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/tax/registrations')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax/registrations',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -15913,13 +15046,11 @@ class StripeApiClientV1TaxRegistrations {
   }
 
   /// Creates a new Tax `Registration` object.
-  Future<TaxRegistration> create(
-      {required PostTaxRegistrationsBody body}) async {
+  Future<TaxRegistration> create({
+    required PostTaxRegistrationsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/tax/registrations');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -15946,12 +15077,10 @@ class StripeApiClientV1TaxRegistrations {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/tax/registrations/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax/registrations/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -15976,10 +15105,7 @@ class StripeApiClientV1TaxRegistrations {
     PostTaxRegistrationsIdBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/tax/registrations/$id');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -16004,8 +15130,8 @@ class StripeApiClientV1TaxSettings {
   StripeApiClientV1TaxSettings({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16018,12 +15144,10 @@ class StripeApiClientV1TaxSettings {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/tax/settings')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax/settings',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16043,10 +15167,7 @@ class StripeApiClientV1TaxSettings {
   /// Updates Tax `Settings` parameters used in tax calculations. All parameters are editable but none can be removed once set.
   Future<TaxSettings> update({PostTaxSettingsBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/tax/settings');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -16071,8 +15192,8 @@ class StripeApiClientV1TaxTransactionsCreateFromCalculation {
   StripeApiClientV1TaxTransactionsCreateFromCalculation({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16080,14 +15201,13 @@ class StripeApiClientV1TaxTransactionsCreateFromCalculation {
   final Uri _baseUri;
 
   /// Creates a Tax `Transaction` from a calculation.
-  Future<TaxTransaction> create_from_calculation(
-      {required PostTaxTransactionsCreateFromCalculationBody body}) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/tax/transactions/create_from_calculation');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+  Future<TaxTransaction> create_from_calculation({
+    required PostTaxTransactionsCreateFromCalculationBody body,
+  }) async {
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax/transactions/create_from_calculation',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -16110,8 +15230,8 @@ class StripeApiClientV1TaxTransactionsCreateReversal {
   StripeApiClientV1TaxTransactionsCreateReversal({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16119,13 +15239,11 @@ class StripeApiClientV1TaxTransactionsCreateReversal {
   final Uri _baseUri;
 
   /// Partially or fully reverses a previously created `Transaction`.
-  Future<TaxTransaction> create_reversal(
-      {required PostTaxTransactionsCreateReversalBody body}) async {
+  Future<TaxTransaction> create_reversal({
+    required PostTaxTransactionsCreateReversalBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/tax/transactions/create_reversal');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -16148,8 +15266,8 @@ class StripeApiClientV1TaxTransactionsTransactionLineItems {
   StripeApiClientV1TaxTransactionsTransactionLineItems({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16177,13 +15295,10 @@ class StripeApiClientV1TaxTransactionsTransactionLineItems {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/tax/transactions/$transaction/line_items')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax/transactions/$transaction/line_items',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16205,8 +15320,8 @@ class StripeApiClientV1TaxTransactionsTransaction {
   StripeApiClientV1TaxTransactionsTransaction({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16224,8 +15339,8 @@ class StripeApiClientV1TaxTransactions {
   StripeApiClientV1TaxTransactions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16241,12 +15356,10 @@ class StripeApiClientV1TaxTransactions {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/tax/transactions/$transaction')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax/transactions/$transaction',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16264,11 +15377,11 @@ class StripeApiClientV1TaxTransactions {
   }
 
   StripeApiClientV1TaxTransactionsCreateFromCalculation
-      get createFromCalculation =>
-          StripeApiClientV1TaxTransactionsCreateFromCalculation(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get createFromCalculation =>
+      StripeApiClientV1TaxTransactionsCreateFromCalculation(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TaxTransactionsCreateReversal get createReversal =>
       StripeApiClientV1TaxTransactionsCreateReversal(
@@ -16287,8 +15400,8 @@ class StripeApiClientV1Tax {
   StripeApiClientV1Tax({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16307,10 +15420,8 @@ class StripeApiClientV1Tax {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1TaxSettings get settings => StripeApiClientV1TaxSettings(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1TaxSettings get settings =>
+      StripeApiClientV1TaxSettings(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1TaxTransactions get transactions =>
       StripeApiClientV1TaxTransactions(
@@ -16323,8 +15434,8 @@ class StripeApiClientV1TaxCodes {
   StripeApiClientV1TaxCodes({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16351,12 +15462,10 @@ class StripeApiClientV1TaxCodes {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/tax_codes')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax_codes',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16374,20 +15483,15 @@ class StripeApiClientV1TaxCodes {
   }
 
   /// Retrieves the details of an existing tax code. Supply the unique tax code ID and Stripe will return the corresponding tax code information.
-  Future<TaxCode> retrieve({
-    required String id,
-    List<String>? expand,
-  }) async {
+  Future<TaxCode> retrieve({required String id, List<String>? expand}) async {
     final $queryParameters = <String, Object>{};
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/tax_codes/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax_codes/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16409,8 +15513,8 @@ class StripeApiClientV1TaxIds {
   StripeApiClientV1TaxIds({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16441,12 +15545,10 @@ class StripeApiClientV1TaxIds {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/tax_ids')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax_ids',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16466,10 +15568,7 @@ class StripeApiClientV1TaxIds {
   /// Creates a new account or customer `tax_id` object.
   Future<TaxId> create({required PostTaxIdsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/tax_ids');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -16488,20 +15587,15 @@ class StripeApiClientV1TaxIds {
   }
 
   /// Retrieves an account or customer `tax_id` object.
-  Future<TaxId> retrieve({
-    required String id,
-    List<String>? expand,
-  }) async {
+  Future<TaxId> retrieve({required String id, List<String>? expand}) async {
     final $queryParameters = <String, Object>{};
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/tax_ids/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax_ids/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16521,10 +15615,7 @@ class StripeApiClientV1TaxIds {
   /// Deletes an existing account or customer `tax_id` object.
   Future<DeletedTaxId> delete({required String id}) async {
     final $uri = Uri.parse('$_baseUri/v1/tax_ids/$id');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16546,8 +15637,8 @@ class StripeApiClientV1TaxRates {
   StripeApiClientV1TaxRates({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16586,12 +15677,10 @@ class StripeApiClientV1TaxRates {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/tax_rates')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax_rates',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16611,10 +15700,7 @@ class StripeApiClientV1TaxRates {
   /// Creates a new tax rate.
   Future<TaxRate> create({required PostTaxRatesBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/tax_rates');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -16641,12 +15727,10 @@ class StripeApiClientV1TaxRates {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/tax_rates/$taxRate')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tax_rates/$taxRate',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16669,10 +15753,7 @@ class StripeApiClientV1TaxRates {
     PostTaxRatesTaxRateBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/tax_rates/$taxRate');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -16697,8 +15778,8 @@ class StripeApiClientV1TerminalConfigurations {
   StripeApiClientV1TerminalConfigurations({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16729,12 +15810,10 @@ class StripeApiClientV1TerminalConfigurations {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/terminal/configurations')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/terminal/configurations',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16752,13 +15831,11 @@ class StripeApiClientV1TerminalConfigurations {
   }
 
   /// Creates a new `Configuration` object.
-  Future<TerminalConfiguration> create(
-      {PostTerminalConfigurationsBody? body}) async {
+  Future<TerminalConfiguration> create({
+    PostTerminalConfigurationsBody? body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/terminal/configurations');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -16787,13 +15864,10 @@ class StripeApiClientV1TerminalConfigurations {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/terminal/configurations/$configuration')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/terminal/configurations/$configuration',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16815,12 +15889,10 @@ class StripeApiClientV1TerminalConfigurations {
     required String configuration,
     PostTerminalConfigurationsConfigurationBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/terminal/configurations/$configuration');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/terminal/configurations/$configuration',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -16841,14 +15913,13 @@ class StripeApiClientV1TerminalConfigurations {
   }
 
   /// Deletes a `Configuration` object.
-  Future<DeletedTerminalConfiguration> delete(
-      {required String configuration}) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/terminal/configurations/$configuration');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
+  Future<DeletedTerminalConfiguration> delete({
+    required String configuration,
+  }) async {
+    final $uri = Uri.parse(
+      '$_baseUri/v1/terminal/configurations/$configuration',
     );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16870,8 +15941,8 @@ class StripeApiClientV1TerminalConnectionTokens {
   StripeApiClientV1TerminalConnectionTokens({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16879,13 +15950,11 @@ class StripeApiClientV1TerminalConnectionTokens {
   final Uri _baseUri;
 
   /// To connect to a reader the Stripe Terminal SDK needs to retrieve a short-lived connection token from Stripe, proxied through your server. On your backend, add an endpoint that creates and returns a connection token.
-  Future<TerminalConnectionToken> create(
-      {PostTerminalConnectionTokensBody? body}) async {
+  Future<TerminalConnectionToken> create({
+    PostTerminalConnectionTokensBody? body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/terminal/connection_tokens');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -16910,8 +15979,8 @@ class StripeApiClientV1TerminalLocations {
   StripeApiClientV1TerminalLocations({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -16938,12 +16007,10 @@ class StripeApiClientV1TerminalLocations {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/terminal/locations')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/terminal/locations',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -16961,13 +16028,11 @@ class StripeApiClientV1TerminalLocations {
   }
 
   /// Creates a new `Location` object. For further details, including which address fields are required in each country, see the [Manage locations](/docs/terminal/fleet/locations) guide.
-  Future<TerminalLocation> create(
-      {required PostTerminalLocationsBody body}) async {
+  Future<TerminalLocation> create({
+    required PostTerminalLocationsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/terminal/locations');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -16994,12 +16059,10 @@ class StripeApiClientV1TerminalLocations {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/terminal/locations/$location')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/terminal/locations/$location',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -17022,10 +16085,7 @@ class StripeApiClientV1TerminalLocations {
     PostTerminalLocationsLocationBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/terminal/locations/$location');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -17048,10 +16108,7 @@ class StripeApiClientV1TerminalLocations {
   /// Deletes a `Location` object.
   Future<DeletedTerminalLocation> delete({required String location}) async {
     final $uri = Uri.parse('$_baseUri/v1/terminal/locations/$location');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -17073,8 +16130,8 @@ class StripeApiClientV1TerminalReadersReaderCancelAction {
   StripeApiClientV1TerminalReadersReaderCancelAction({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17086,12 +16143,10 @@ class StripeApiClientV1TerminalReadersReaderCancelAction {
     required String reader,
     PostTerminalReadersReaderCancelActionBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/terminal/readers/$reader/cancel_action');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/terminal/readers/$reader/cancel_action',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -17116,8 +16171,8 @@ class StripeApiClientV1TerminalReadersReaderProcessPaymentIntent {
   StripeApiClientV1TerminalReadersReaderProcessPaymentIntent({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17130,11 +16185,9 @@ class StripeApiClientV1TerminalReadersReaderProcessPaymentIntent {
     required PostTerminalReadersReaderProcessPaymentIntentBody body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/terminal/readers/$reader/process_payment_intent');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/terminal/readers/$reader/process_payment_intent',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -17157,8 +16210,8 @@ class StripeApiClientV1TerminalReadersReaderProcessSetupIntent {
   StripeApiClientV1TerminalReadersReaderProcessSetupIntent({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17170,12 +16223,10 @@ class StripeApiClientV1TerminalReadersReaderProcessSetupIntent {
     required String reader,
     required PostTerminalReadersReaderProcessSetupIntentBody body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/terminal/readers/$reader/process_setup_intent');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/terminal/readers/$reader/process_setup_intent',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -17198,8 +16249,8 @@ class StripeApiClientV1TerminalReadersReaderRefundPayment {
   StripeApiClientV1TerminalReadersReaderRefundPayment({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17211,12 +16262,10 @@ class StripeApiClientV1TerminalReadersReaderRefundPayment {
     required String reader,
     PostTerminalReadersReaderRefundPaymentBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/terminal/readers/$reader/refund_payment');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/terminal/readers/$reader/refund_payment',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -17241,8 +16290,8 @@ class StripeApiClientV1TerminalReadersReaderSetReaderDisplay {
   StripeApiClientV1TerminalReadersReaderSetReaderDisplay({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17254,12 +16303,10 @@ class StripeApiClientV1TerminalReadersReaderSetReaderDisplay {
     required String reader,
     required PostTerminalReadersReaderSetReaderDisplayBody body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/terminal/readers/$reader/set_reader_display');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/terminal/readers/$reader/set_reader_display',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -17282,8 +16329,8 @@ class StripeApiClientV1TerminalReadersReader {
   StripeApiClientV1TerminalReadersReader({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17297,18 +16344,18 @@ class StripeApiClientV1TerminalReadersReader {
       );
 
   StripeApiClientV1TerminalReadersReaderProcessPaymentIntent
-      get processPaymentIntent =>
-          StripeApiClientV1TerminalReadersReaderProcessPaymentIntent(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get processPaymentIntent =>
+      StripeApiClientV1TerminalReadersReaderProcessPaymentIntent(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TerminalReadersReaderProcessSetupIntent
-      get processSetupIntent =>
-          StripeApiClientV1TerminalReadersReaderProcessSetupIntent(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get processSetupIntent =>
+      StripeApiClientV1TerminalReadersReaderProcessSetupIntent(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TerminalReadersReaderRefundPayment get refundPayment =>
       StripeApiClientV1TerminalReadersReaderRefundPayment(
@@ -17327,8 +16374,8 @@ class StripeApiClientV1TerminalReaders {
   StripeApiClientV1TerminalReaders({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17371,12 +16418,10 @@ class StripeApiClientV1TerminalReaders {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/terminal/readers')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/terminal/readers',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -17396,10 +16441,7 @@ class StripeApiClientV1TerminalReaders {
   /// Creates a new `Reader` object.
   Future<TerminalReader> create({required PostTerminalReadersBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/terminal/readers');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -17426,12 +16468,10 @@ class StripeApiClientV1TerminalReaders {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/terminal/readers/$reader')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/terminal/readers/$reader',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -17454,10 +16494,7 @@ class StripeApiClientV1TerminalReaders {
     PostTerminalReadersReaderBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/terminal/readers/$reader');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -17480,10 +16517,7 @@ class StripeApiClientV1TerminalReaders {
   /// Deletes a `Reader` object.
   Future<DeletedTerminalReader> delete({required String reader}) async {
     final $uri = Uri.parse('$_baseUri/v1/terminal/readers/$reader');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -17511,8 +16545,8 @@ class StripeApiClientV1Terminal {
   StripeApiClientV1Terminal({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17548,8 +16582,8 @@ class StripeApiClientV1TestHelpersConfirmationTokens {
   StripeApiClientV1TestHelpersConfirmationTokens({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17557,13 +16591,11 @@ class StripeApiClientV1TestHelpersConfirmationTokens {
   final Uri _baseUri;
 
   /// Creates a test mode Confirmation Token server side for your integration tests.
-  Future<ConfirmationToken> create(
-      {PostTestHelpersConfirmationTokensBody? body}) async {
+  Future<ConfirmationToken> create({
+    PostTestHelpersConfirmationTokensBody? body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/test_helpers/confirmation_tokens');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -17588,8 +16620,8 @@ class StripeApiClientV1TestHelpersCustomersCustomerFundCashBalance {
   StripeApiClientV1TestHelpersCustomersCustomerFundCashBalance({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17602,11 +16634,9 @@ class StripeApiClientV1TestHelpersCustomersCustomerFundCashBalance {
     required PostTestHelpersCustomersCustomerFundCashBalanceBody body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/customers/$customer/fund_cash_balance');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/customers/$customer/fund_cash_balance',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -17629,8 +16659,8 @@ class StripeApiClientV1TestHelpersCustomersCustomer {
   StripeApiClientV1TestHelpersCustomersCustomer({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17638,19 +16668,19 @@ class StripeApiClientV1TestHelpersCustomersCustomer {
   final Uri _baseUri;
 
   StripeApiClientV1TestHelpersCustomersCustomerFundCashBalance
-      get fundCashBalance =>
-          StripeApiClientV1TestHelpersCustomersCustomerFundCashBalance(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get fundCashBalance =>
+      StripeApiClientV1TestHelpersCustomersCustomerFundCashBalance(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1TestHelpersCustomers {
   StripeApiClientV1TestHelpersCustomers({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17668,8 +16698,8 @@ class StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationCapture {
   StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationCapture({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17682,11 +16712,9 @@ class StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationCapture {
     PostTestHelpersIssuingAuthorizationsAuthorizationCaptureBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/authorizations/$authorization/capture');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/authorizations/$authorization/capture',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -17711,8 +16739,8 @@ class StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationExpire {
   StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationExpire({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17725,11 +16753,9 @@ class StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationExpire {
     PostTestHelpersIssuingAuthorizationsAuthorizationExpireBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/authorizations/$authorization/expire');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/authorizations/$authorization/expire',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -17754,8 +16780,8 @@ class StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationIncrement {
   StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationIncrement({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17766,14 +16792,12 @@ class StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationIncrement {
   Future<IssuingAuthorization> increment({
     required String authorization,
     required PostTestHelpersIssuingAuthorizationsAuthorizationIncrementBody
-        body,
+    body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/authorizations/$authorization/increment');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/authorizations/$authorization/increment',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -17796,8 +16820,8 @@ class StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationReverse {
   StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationReverse({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17810,11 +16834,9 @@ class StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationReverse {
     PostTestHelpersIssuingAuthorizationsAuthorizationReverseBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/authorizations/$authorization/reverse');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/authorizations/$authorization/reverse',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -17839,8 +16861,8 @@ class StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorization {
   StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorization({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17848,40 +16870,40 @@ class StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorization {
   final Uri _baseUri;
 
   StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationCapture
-      get capture =>
-          StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationCapture(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get capture =>
+      StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationCapture(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationExpire
-      get expire =>
-          StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationExpire(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get expire =>
+      StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationExpire(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationIncrement
-      get increment =>
-          StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationIncrement(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get increment =>
+      StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationIncrement(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationReverse
-      get reverse =>
-          StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationReverse(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get reverse =>
+      StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorizationReverse(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1TestHelpersIssuingAuthorizations {
   StripeApiClientV1TestHelpersIssuingAuthorizations({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17889,13 +16911,11 @@ class StripeApiClientV1TestHelpersIssuingAuthorizations {
   final Uri _baseUri;
 
   /// Create a test-mode authorization.
-  Future<IssuingAuthorization> create(
-      {required PostTestHelpersIssuingAuthorizationsBody body}) async {
+  Future<IssuingAuthorization> create({
+    required PostTestHelpersIssuingAuthorizationsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/test_helpers/issuing/authorizations');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -17914,19 +16934,19 @@ class StripeApiClientV1TestHelpersIssuingAuthorizations {
   }
 
   StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorization
-      get authorization =>
-          StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorization(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get authorization =>
+      StripeApiClientV1TestHelpersIssuingAuthorizationsAuthorization(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1TestHelpersIssuingCardsCardShippingDeliver {
   StripeApiClientV1TestHelpersIssuingCardsCardShippingDeliver({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17939,11 +16959,9 @@ class StripeApiClientV1TestHelpersIssuingCardsCardShippingDeliver {
     PostTestHelpersIssuingCardsCardShippingDeliverBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/cards/$card/shipping/deliver');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/cards/$card/shipping/deliver',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -17968,8 +16986,8 @@ class StripeApiClientV1TestHelpersIssuingCardsCardShippingFail {
   StripeApiClientV1TestHelpersIssuingCardsCardShippingFail({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -17982,11 +17000,9 @@ class StripeApiClientV1TestHelpersIssuingCardsCardShippingFail {
     PostTestHelpersIssuingCardsCardShippingFailBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/cards/$card/shipping/fail');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/cards/$card/shipping/fail',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -18011,8 +17027,8 @@ class StripeApiClientV1TestHelpersIssuingCardsCardShippingReturn {
   StripeApiClientV1TestHelpersIssuingCardsCardShippingReturn({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18025,11 +17041,9 @@ class StripeApiClientV1TestHelpersIssuingCardsCardShippingReturn {
     PostTestHelpersIssuingCardsCardShippingReturnBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/cards/$card/shipping/return');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/cards/$card/shipping/return',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -18054,8 +17068,8 @@ class StripeApiClientV1TestHelpersIssuingCardsCardShippingShip {
   StripeApiClientV1TestHelpersIssuingCardsCardShippingShip({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18068,11 +17082,9 @@ class StripeApiClientV1TestHelpersIssuingCardsCardShippingShip {
     PostTestHelpersIssuingCardsCardShippingShipBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/cards/$card/shipping/ship');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/cards/$card/shipping/ship',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -18097,8 +17109,8 @@ class StripeApiClientV1TestHelpersIssuingCardsCardShipping {
   StripeApiClientV1TestHelpersIssuingCardsCardShipping({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18134,8 +17146,8 @@ class StripeApiClientV1TestHelpersIssuingCardsCard {
   StripeApiClientV1TestHelpersIssuingCardsCard({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18153,8 +17165,8 @@ class StripeApiClientV1TestHelpersIssuingCards {
   StripeApiClientV1TestHelpersIssuingCards({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18172,8 +17184,8 @@ class StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDe
   StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesignActivate({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18184,14 +17196,12 @@ class StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDe
   Future<IssuingPersonalizationDesign> activate({
     required String personalizationDesign,
     PostTestHelpersIssuingPersonalizationDesignsPersonalizationDesignActivateBody?
-        body,
+    body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/personalization_designs/$personalizationDesign/activate');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/personalization_designs/$personalizationDesign/activate',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -18216,8 +17226,8 @@ class StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDe
   StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesignDeactivate({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18228,14 +17238,12 @@ class StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDe
   Future<IssuingPersonalizationDesign> deactivate({
     required String personalizationDesign,
     PostTestHelpersIssuingPersonalizationDesignsPersonalizationDesignDeactivateBody?
-        body,
+    body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/personalization_designs/$personalizationDesign/deactivate');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/personalization_designs/$personalizationDesign/deactivate',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -18260,8 +17268,8 @@ class StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDe
   StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesignReject({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18272,14 +17280,12 @@ class StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDe
   Future<IssuingPersonalizationDesign> reject({
     required String personalizationDesign,
     required PostTestHelpersIssuingPersonalizationDesignsPersonalizationDesignRejectBody
-        body,
+    body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/personalization_designs/$personalizationDesign/reject');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/personalization_designs/$personalizationDesign/reject',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -18302,8 +17308,8 @@ class StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDe
   StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesign({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18311,33 +17317,33 @@ class StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDe
   final Uri _baseUri;
 
   StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesignActivate
-      get activate =>
-          StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesignActivate(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get activate =>
+      StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesignActivate(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesignDeactivate
-      get deactivate =>
-          StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesignDeactivate(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get deactivate =>
+      StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesignDeactivate(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesignReject
-      get reject =>
-          StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesignReject(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get reject =>
+      StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesignReject(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1TestHelpersIssuingPersonalizationDesigns {
   StripeApiClientV1TestHelpersIssuingPersonalizationDesigns({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18345,19 +17351,19 @@ class StripeApiClientV1TestHelpersIssuingPersonalizationDesigns {
   final Uri _baseUri;
 
   StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesign
-      get personalizationDesign =>
-          StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesign(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get personalizationDesign =>
+      StripeApiClientV1TestHelpersIssuingPersonalizationDesignsPersonalizationDesign(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1TestHelpersIssuingTransactionsCreateForceCapture {
   StripeApiClientV1TestHelpersIssuingTransactionsCreateForceCapture({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18365,15 +17371,13 @@ class StripeApiClientV1TestHelpersIssuingTransactionsCreateForceCapture {
   final Uri _baseUri;
 
   /// Allows the user to capture an arbitrary amount, also known as a forced capture.
-  Future<IssuingTransaction> create_force_capture(
-      {required PostTestHelpersIssuingTransactionsCreateForceCaptureBody
-          body}) async {
+  Future<IssuingTransaction> create_force_capture({
+    required PostTestHelpersIssuingTransactionsCreateForceCaptureBody body,
+  }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/transactions/create_force_capture');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/transactions/create_force_capture',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -18396,8 +17400,8 @@ class StripeApiClientV1TestHelpersIssuingTransactionsCreateUnlinkedRefund {
   StripeApiClientV1TestHelpersIssuingTransactionsCreateUnlinkedRefund({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18405,15 +17409,13 @@ class StripeApiClientV1TestHelpersIssuingTransactionsCreateUnlinkedRefund {
   final Uri _baseUri;
 
   /// Allows the user to refund an arbitrary amount, also known as a unlinked refund.
-  Future<IssuingTransaction> create_unlinked_refund(
-      {required PostTestHelpersIssuingTransactionsCreateUnlinkedRefundBody
-          body}) async {
+  Future<IssuingTransaction> create_unlinked_refund({
+    required PostTestHelpersIssuingTransactionsCreateUnlinkedRefundBody body,
+  }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/transactions/create_unlinked_refund');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/transactions/create_unlinked_refund',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -18436,8 +17438,8 @@ class StripeApiClientV1TestHelpersIssuingTransactionsTransactionRefund {
   StripeApiClientV1TestHelpersIssuingTransactionsTransactionRefund({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18450,11 +17452,9 @@ class StripeApiClientV1TestHelpersIssuingTransactionsTransactionRefund {
     PostTestHelpersIssuingTransactionsTransactionRefundBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/issuing/transactions/$transaction/refund');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/issuing/transactions/$transaction/refund',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -18479,8 +17479,8 @@ class StripeApiClientV1TestHelpersIssuingTransactionsTransaction {
   StripeApiClientV1TestHelpersIssuingTransactionsTransaction({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18498,8 +17498,8 @@ class StripeApiClientV1TestHelpersIssuingTransactions {
   StripeApiClientV1TestHelpersIssuingTransactions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18507,18 +17507,18 @@ class StripeApiClientV1TestHelpersIssuingTransactions {
   final Uri _baseUri;
 
   StripeApiClientV1TestHelpersIssuingTransactionsCreateForceCapture
-      get createForceCapture =>
-          StripeApiClientV1TestHelpersIssuingTransactionsCreateForceCapture(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get createForceCapture =>
+      StripeApiClientV1TestHelpersIssuingTransactionsCreateForceCapture(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TestHelpersIssuingTransactionsCreateUnlinkedRefund
-      get createUnlinkedRefund =>
-          StripeApiClientV1TestHelpersIssuingTransactionsCreateUnlinkedRefund(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get createUnlinkedRefund =>
+      StripeApiClientV1TestHelpersIssuingTransactionsCreateUnlinkedRefund(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TestHelpersIssuingTransactionsTransaction get transaction =>
       StripeApiClientV1TestHelpersIssuingTransactionsTransaction(
@@ -18531,8 +17531,8 @@ class StripeApiClientV1TestHelpersIssuing {
   StripeApiClientV1TestHelpersIssuing({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18552,11 +17552,11 @@ class StripeApiClientV1TestHelpersIssuing {
       );
 
   StripeApiClientV1TestHelpersIssuingPersonalizationDesigns
-      get personalizationDesigns =>
-          StripeApiClientV1TestHelpersIssuingPersonalizationDesigns(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get personalizationDesigns =>
+      StripeApiClientV1TestHelpersIssuingPersonalizationDesigns(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TestHelpersIssuingTransactions get transactions =>
       StripeApiClientV1TestHelpersIssuingTransactions(
@@ -18569,8 +17569,8 @@ class StripeApiClientV1TestHelpersRefundsRefundExpire {
   StripeApiClientV1TestHelpersRefundsRefundExpire({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18583,10 +17583,7 @@ class StripeApiClientV1TestHelpersRefundsRefundExpire {
     PostTestHelpersRefundsRefundExpireBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/test_helpers/refunds/$refund/expire');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -18611,8 +17608,8 @@ class StripeApiClientV1TestHelpersRefundsRefund {
   StripeApiClientV1TestHelpersRefundsRefund({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18630,8 +17627,8 @@ class StripeApiClientV1TestHelpersRefunds {
   StripeApiClientV1TestHelpersRefunds({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18649,8 +17646,8 @@ class StripeApiClientV1TestHelpersTerminalReadersReaderPresentPaymentMethod {
   StripeApiClientV1TestHelpersTerminalReadersReaderPresentPaymentMethod({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18663,11 +17660,9 @@ class StripeApiClientV1TestHelpersTerminalReadersReaderPresentPaymentMethod {
     PostTestHelpersTerminalReadersReaderPresentPaymentMethodBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/terminal/readers/$reader/present_payment_method');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/terminal/readers/$reader/present_payment_method',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -18692,8 +17687,8 @@ class StripeApiClientV1TestHelpersTerminalReadersReader {
   StripeApiClientV1TestHelpersTerminalReadersReader({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18701,19 +17696,19 @@ class StripeApiClientV1TestHelpersTerminalReadersReader {
   final Uri _baseUri;
 
   StripeApiClientV1TestHelpersTerminalReadersReaderPresentPaymentMethod
-      get presentPaymentMethod =>
-          StripeApiClientV1TestHelpersTerminalReadersReaderPresentPaymentMethod(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get presentPaymentMethod =>
+      StripeApiClientV1TestHelpersTerminalReadersReaderPresentPaymentMethod(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1TestHelpersTerminalReaders {
   StripeApiClientV1TestHelpersTerminalReaders({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18731,8 +17726,8 @@ class StripeApiClientV1TestHelpersTerminal {
   StripeApiClientV1TestHelpersTerminal({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18750,8 +17745,8 @@ class StripeApiClientV1TestHelpersTestClocksTestClockAdvance {
   StripeApiClientV1TestHelpersTestClocksTestClockAdvance({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18763,12 +17758,10 @@ class StripeApiClientV1TestHelpersTestClocksTestClockAdvance {
     required String testClock,
     required PostTestHelpersTestClocksTestClockAdvanceBody body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/test_helpers/test_clocks/$testClock/advance');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/test_helpers/test_clocks/$testClock/advance',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -18791,8 +17784,8 @@ class StripeApiClientV1TestHelpersTestClocksTestClock {
   StripeApiClientV1TestHelpersTestClocksTestClock({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18810,8 +17803,8 @@ class StripeApiClientV1TestHelpersTestClocks {
   StripeApiClientV1TestHelpersTestClocks({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18838,12 +17831,10 @@ class StripeApiClientV1TestHelpersTestClocks {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/test_helpers/test_clocks')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/test_helpers/test_clocks',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -18861,13 +17852,11 @@ class StripeApiClientV1TestHelpersTestClocks {
   }
 
   /// Creates a new test clock that can be attached to new customers and quotes.
-  Future<TestHelpersTestClock> create(
-      {required PostTestHelpersTestClocksBody body}) async {
+  Future<TestHelpersTestClock> create({
+    required PostTestHelpersTestClocksBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/test_helpers/test_clocks');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -18894,12 +17883,10 @@ class StripeApiClientV1TestHelpersTestClocks {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/test_helpers/test_clocks/$testClock')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/test_helpers/test_clocks/$testClock',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -18917,13 +17904,11 @@ class StripeApiClientV1TestHelpersTestClocks {
   }
 
   /// Deletes a test clock.
-  Future<DeletedTestHelpersTestClock> delete(
-      {required String testClock}) async {
+  Future<DeletedTestHelpersTestClock> delete({
+    required String testClock,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/test_helpers/test_clocks/$testClock');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -18951,8 +17936,8 @@ class StripeApiClientV1TestHelpersTreasuryInboundTransfersIdFail {
   StripeApiClientV1TestHelpersTreasuryInboundTransfersIdFail({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -18965,11 +17950,9 @@ class StripeApiClientV1TestHelpersTreasuryInboundTransfersIdFail {
     PostTestHelpersTreasuryInboundTransfersIdFailBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/treasury/inbound_transfers/$id/fail');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/treasury/inbound_transfers/$id/fail',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -18994,8 +17977,8 @@ class StripeApiClientV1TestHelpersTreasuryInboundTransfersIdReturn {
   StripeApiClientV1TestHelpersTreasuryInboundTransfersIdReturn({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19008,11 +17991,9 @@ class StripeApiClientV1TestHelpersTreasuryInboundTransfersIdReturn {
     PostTestHelpersTreasuryInboundTransfersIdReturnBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/treasury/inbound_transfers/$id/return');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/treasury/inbound_transfers/$id/return',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -19037,8 +18018,8 @@ class StripeApiClientV1TestHelpersTreasuryInboundTransfersIdSucceed {
   StripeApiClientV1TestHelpersTreasuryInboundTransfersIdSucceed({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19051,11 +18032,9 @@ class StripeApiClientV1TestHelpersTreasuryInboundTransfersIdSucceed {
     PostTestHelpersTreasuryInboundTransfersIdSucceedBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/treasury/inbound_transfers/$id/succeed');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/treasury/inbound_transfers/$id/succeed',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -19080,8 +18059,8 @@ class StripeApiClientV1TestHelpersTreasuryInboundTransfersId {
   StripeApiClientV1TestHelpersTreasuryInboundTransfersId({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19111,8 +18090,8 @@ class StripeApiClientV1TestHelpersTreasuryInboundTransfers {
   StripeApiClientV1TestHelpersTreasuryInboundTransfers({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19130,8 +18109,8 @@ class StripeApiClientV1TestHelpersTreasuryOutboundPaymentsIdFail {
   StripeApiClientV1TestHelpersTreasuryOutboundPaymentsIdFail({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19144,11 +18123,9 @@ class StripeApiClientV1TestHelpersTreasuryOutboundPaymentsIdFail {
     PostTestHelpersTreasuryOutboundPaymentsIdFailBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/treasury/outbound_payments/$id/fail');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/treasury/outbound_payments/$id/fail',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -19173,8 +18150,8 @@ class StripeApiClientV1TestHelpersTreasuryOutboundPaymentsIdPost {
   StripeApiClientV1TestHelpersTreasuryOutboundPaymentsIdPost({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19187,11 +18164,9 @@ class StripeApiClientV1TestHelpersTreasuryOutboundPaymentsIdPost {
     PostTestHelpersTreasuryOutboundPaymentsIdPostBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/treasury/outbound_payments/$id/post');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/treasury/outbound_payments/$id/post',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -19216,8 +18191,8 @@ class StripeApiClientV1TestHelpersTreasuryOutboundPaymentsIdReturn {
   StripeApiClientV1TestHelpersTreasuryOutboundPaymentsIdReturn({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19230,11 +18205,9 @@ class StripeApiClientV1TestHelpersTreasuryOutboundPaymentsIdReturn {
     PostTestHelpersTreasuryOutboundPaymentsIdReturnBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/treasury/outbound_payments/$id/return');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/treasury/outbound_payments/$id/return',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -19259,8 +18232,8 @@ class StripeApiClientV1TestHelpersTreasuryOutboundPaymentsId {
   StripeApiClientV1TestHelpersTreasuryOutboundPaymentsId({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19290,8 +18263,8 @@ class StripeApiClientV1TestHelpersTreasuryOutboundPayments {
   StripeApiClientV1TestHelpersTreasuryOutboundPayments({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19309,8 +18282,8 @@ class StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferFail 
   StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferFail({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19323,11 +18296,9 @@ class StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferFail 
     PostTestHelpersTreasuryOutboundTransfersOutboundTransferFailBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/treasury/outbound_transfers/$outboundTransfer/fail');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/treasury/outbound_transfers/$outboundTransfer/fail',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -19352,8 +18323,8 @@ class StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferPost 
   StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferPost({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19366,11 +18337,9 @@ class StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferPost 
     PostTestHelpersTreasuryOutboundTransfersOutboundTransferPostBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/treasury/outbound_transfers/$outboundTransfer/post');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/treasury/outbound_transfers/$outboundTransfer/post',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -19395,8 +18364,8 @@ class StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferRetur
   StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferReturn({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19409,11 +18378,9 @@ class StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferRetur
     PostTestHelpersTreasuryOutboundTransfersOutboundTransferReturnBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/test_helpers/treasury/outbound_transfers/$outboundTransfer/return');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/test_helpers/treasury/outbound_transfers/$outboundTransfer/return',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -19438,8 +18405,8 @@ class StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransfer {
   StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransfer({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19447,33 +18414,33 @@ class StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransfer {
   final Uri _baseUri;
 
   StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferFail
-      get fail =>
-          StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferFail(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get fail =>
+      StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferFail(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferPost
-      get post =>
-          StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferPost(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get post =>
+      StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferPost(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 
   StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferReturn
-      get return_ =>
-          StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferReturn(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get return_ =>
+      StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransferReturn(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1TestHelpersTreasuryOutboundTransfers {
   StripeApiClientV1TestHelpersTreasuryOutboundTransfers({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19481,19 +18448,19 @@ class StripeApiClientV1TestHelpersTreasuryOutboundTransfers {
   final Uri _baseUri;
 
   StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransfer
-      get outboundTransfer =>
-          StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransfer(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get outboundTransfer =>
+      StripeApiClientV1TestHelpersTreasuryOutboundTransfersOutboundTransfer(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1TestHelpersTreasuryReceivedCredits {
   StripeApiClientV1TestHelpersTreasuryReceivedCredits({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19501,14 +18468,13 @@ class StripeApiClientV1TestHelpersTreasuryReceivedCredits {
   final Uri _baseUri;
 
   /// Use this endpoint to simulate a test mode ReceivedCredit initiated by a third party. In live mode, you can’t directly create ReceivedCredits initiated by third parties.
-  Future<TreasuryReceivedCredit> create(
-      {required PostTestHelpersTreasuryReceivedCreditsBody body}) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/test_helpers/treasury/received_credits');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+  Future<TreasuryReceivedCredit> create({
+    required PostTestHelpersTreasuryReceivedCreditsBody body,
+  }) async {
+    final $uri = Uri.parse(
+      '$_baseUri/v1/test_helpers/treasury/received_credits',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -19531,8 +18497,8 @@ class StripeApiClientV1TestHelpersTreasuryReceivedDebits {
   StripeApiClientV1TestHelpersTreasuryReceivedDebits({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19540,14 +18506,13 @@ class StripeApiClientV1TestHelpersTreasuryReceivedDebits {
   final Uri _baseUri;
 
   /// Use this endpoint to simulate a test mode ReceivedDebit initiated by a third party. In live mode, you can’t directly create ReceivedDebits initiated by third parties.
-  Future<TreasuryReceivedDebit> create(
-      {required PostTestHelpersTreasuryReceivedDebitsBody body}) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/test_helpers/treasury/received_debits');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+  Future<TreasuryReceivedDebit> create({
+    required PostTestHelpersTreasuryReceivedDebitsBody body,
+  }) async {
+    final $uri = Uri.parse(
+      '$_baseUri/v1/test_helpers/treasury/received_debits',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -19570,8 +18535,8 @@ class StripeApiClientV1TestHelpersTreasury {
   StripeApiClientV1TestHelpersTreasury({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19613,8 +18578,8 @@ class StripeApiClientV1TestHelpers {
   StripeApiClientV1TestHelpers({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19668,8 +18633,8 @@ class StripeApiClientV1Tokens {
   StripeApiClientV1Tokens({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19679,10 +18644,7 @@ class StripeApiClientV1Tokens {
   /// Creates a single-use token that represents a bank account’s details. You can use this token with any API method in place of a bank account dictionary. You can only use this token once. To do so, attach it to a [Custom account](#accounts).
   Future<Token> create({PostTokensBody? body}) async {
     final $uri = Uri.parse('$_baseUri/v1/tokens');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -19703,20 +18665,15 @@ class StripeApiClientV1Tokens {
   }
 
   /// Retrieves the token with the given ID.
-  Future<Token> retrieve({
-    required String token,
-    List<String>? expand,
-  }) async {
+  Future<Token> retrieve({required String token, List<String>? expand}) async {
     final $queryParameters = <String, Object>{};
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/tokens/$token')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/tokens/$token',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -19738,8 +18695,8 @@ class StripeApiClientV1TopupsTopupCancel {
   StripeApiClientV1TopupsTopupCancel({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19752,10 +18709,7 @@ class StripeApiClientV1TopupsTopupCancel {
     PostTopupsTopupCancelBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/topups/$topup/cancel');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -19780,8 +18734,8 @@ class StripeApiClientV1TopupsTopup {
   StripeApiClientV1TopupsTopup({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19799,8 +18753,8 @@ class StripeApiClientV1Topups {
   StripeApiClientV1Topups({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19839,12 +18793,10 @@ class StripeApiClientV1Topups {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/topups')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/topups',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -19864,10 +18816,7 @@ class StripeApiClientV1Topups {
   /// Top up the balance of an account
   Future<Topup> create({required PostTopupsBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/topups');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -19886,20 +18835,15 @@ class StripeApiClientV1Topups {
   }
 
   /// Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
-  Future<Topup> retrieve({
-    required String topup,
-    List<String>? expand,
-  }) async {
+  Future<Topup> retrieve({required String topup, List<String>? expand}) async {
     final $queryParameters = <String, Object>{};
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/topups/$topup')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/topups/$topup',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -19922,10 +18866,7 @@ class StripeApiClientV1Topups {
     PostTopupsTopupBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/topups/$topup');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -19945,18 +18886,16 @@ class StripeApiClientV1Topups {
     }
   }
 
-  StripeApiClientV1TopupsTopup get topup => StripeApiClientV1TopupsTopup(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1TopupsTopup get topup =>
+      StripeApiClientV1TopupsTopup(baseUri: _baseUri, httpClient: _httpClient);
 }
 
 class StripeApiClientV1TransfersIdReversals {
   StripeApiClientV1TransfersIdReversals({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -19984,12 +18923,10 @@ class StripeApiClientV1TransfersIdReversals {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/transfers/$id/reversals')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/transfers/$id/reversals',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20016,10 +18953,7 @@ class StripeApiClientV1TransfersIdReversals {
     PostTransfersIdReversalsBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/transfers/$id/reversals');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -20044,8 +18978,8 @@ class StripeApiClientV1TransfersId {
   StripeApiClientV1TransfersId({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -20063,8 +18997,8 @@ class StripeApiClientV1TransfersTransferReversals {
   StripeApiClientV1TransfersTransferReversals({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -20081,12 +19015,10 @@ class StripeApiClientV1TransfersTransferReversals {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/transfers/$transfer/reversals/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/transfers/$transfer/reversals/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20112,10 +19044,7 @@ class StripeApiClientV1TransfersTransferReversals {
     PostTransfersTransferReversalsIdBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/transfers/$transfer/reversals/$id');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -20140,8 +19069,8 @@ class StripeApiClientV1TransfersTransfer {
   StripeApiClientV1TransfersTransfer({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -20159,8 +19088,8 @@ class StripeApiClientV1Transfers {
   StripeApiClientV1Transfers({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -20199,12 +19128,10 @@ class StripeApiClientV1Transfers {
     if (transferGroup != null) {
       $queryParameters['transfer_group'] = transferGroup;
     }
-    final $uri = Uri.parse('$_baseUri/v1/transfers')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/transfers',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20224,10 +19151,7 @@ class StripeApiClientV1Transfers {
   /// To send funds from your Stripe account to a connected account, you create a new transfer object. Your [Stripe balance](#balance) must be able to cover the transfer amount, or you’ll receive an “Insufficient Funds” error.
   Future<Transfer> create({required PostTransfersBody body}) async {
     final $uri = Uri.parse('$_baseUri/v1/transfers');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -20254,12 +19178,10 @@ class StripeApiClientV1Transfers {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/transfers/$transfer')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/transfers/$transfer',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20284,10 +19206,7 @@ class StripeApiClientV1Transfers {
     PostTransfersTransferBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/transfers/$transfer');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -20307,10 +19226,8 @@ class StripeApiClientV1Transfers {
     }
   }
 
-  StripeApiClientV1TransfersId get id => StripeApiClientV1TransfersId(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1TransfersId get id =>
+      StripeApiClientV1TransfersId(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1TransfersTransfer get transfer =>
       StripeApiClientV1TransfersTransfer(
@@ -20323,8 +19240,8 @@ class StripeApiClientV1TreasuryCreditReversals {
   StripeApiClientV1TreasuryCreditReversals({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -20361,12 +19278,10 @@ class StripeApiClientV1TreasuryCreditReversals {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/credit_reversals')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/credit_reversals',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20384,13 +19299,11 @@ class StripeApiClientV1TreasuryCreditReversals {
   }
 
   /// Reverses a ReceivedCredit and creates a CreditReversal object.
-  Future<TreasuryCreditReversal> create(
-      {required PostTreasuryCreditReversalsBody body}) async {
+  Future<TreasuryCreditReversal> create({
+    required PostTreasuryCreditReversalsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/treasury/credit_reversals');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -20417,13 +19330,10 @@ class StripeApiClientV1TreasuryCreditReversals {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/treasury/credit_reversals/$creditReversal')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/credit_reversals/$creditReversal',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20445,8 +19355,8 @@ class StripeApiClientV1TreasuryDebitReversals {
   StripeApiClientV1TreasuryDebitReversals({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -20487,12 +19397,10 @@ class StripeApiClientV1TreasuryDebitReversals {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/debit_reversals')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/debit_reversals',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20510,13 +19418,11 @@ class StripeApiClientV1TreasuryDebitReversals {
   }
 
   /// Reverses a ReceivedDebit and creates a DebitReversal object.
-  Future<TreasuryDebitReversal> create(
-      {required PostTreasuryDebitReversalsBody body}) async {
+  Future<TreasuryDebitReversal> create({
+    required PostTreasuryDebitReversalsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/treasury/debit_reversals');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -20543,13 +19449,10 @@ class StripeApiClientV1TreasuryDebitReversals {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/treasury/debit_reversals/$debitReversal')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/debit_reversals/$debitReversal',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20571,8 +19474,8 @@ class StripeApiClientV1TreasuryFinancialAccountsFinancialAccountFeatures {
   StripeApiClientV1TreasuryFinancialAccountsFinancialAccountFeatures({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -20589,12 +19492,9 @@ class StripeApiClientV1TreasuryFinancialAccountsFinancialAccountFeatures {
       $queryParameters['expand'] = expand;
     }
     final $uri = Uri.parse(
-            '$_baseUri/v1/treasury/financial_accounts/$financialAccount/features')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+      '$_baseUri/v1/treasury/financial_accounts/$financialAccount/features',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20617,11 +19517,9 @@ class StripeApiClientV1TreasuryFinancialAccountsFinancialAccountFeatures {
     PostTreasuryFinancialAccountsFinancialAccountFeaturesBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/treasury/financial_accounts/$financialAccount/features');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/treasury/financial_accounts/$financialAccount/features',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -20646,8 +19544,8 @@ class StripeApiClientV1TreasuryFinancialAccountsFinancialAccount {
   StripeApiClientV1TreasuryFinancialAccountsFinancialAccount({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -20655,19 +19553,19 @@ class StripeApiClientV1TreasuryFinancialAccountsFinancialAccount {
   final Uri _baseUri;
 
   StripeApiClientV1TreasuryFinancialAccountsFinancialAccountFeatures
-      get features =>
-          StripeApiClientV1TreasuryFinancialAccountsFinancialAccountFeatures(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get features =>
+      StripeApiClientV1TreasuryFinancialAccountsFinancialAccountFeatures(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1TreasuryFinancialAccounts {
   StripeApiClientV1TreasuryFinancialAccounts({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -20698,12 +19596,10 @@ class StripeApiClientV1TreasuryFinancialAccounts {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/financial_accounts')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/financial_accounts',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20721,13 +19617,11 @@ class StripeApiClientV1TreasuryFinancialAccounts {
   }
 
   /// Creates a new FinancialAccount. For now, each connected account can only have one FinancialAccount.
-  Future<TreasuryFinancialAccount> create(
-      {required PostTreasuryFinancialAccountsBody body}) async {
+  Future<TreasuryFinancialAccount> create({
+    required PostTreasuryFinancialAccountsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/treasury/financial_accounts');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -20754,13 +19648,10 @@ class StripeApiClientV1TreasuryFinancialAccounts {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/treasury/financial_accounts/$financialAccount')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/financial_accounts/$financialAccount',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20782,12 +19673,10 @@ class StripeApiClientV1TreasuryFinancialAccounts {
     required String financialAccount,
     PostTreasuryFinancialAccountsFinancialAccountBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/treasury/financial_accounts/$financialAccount');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/financial_accounts/$financialAccount',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -20808,19 +19697,19 @@ class StripeApiClientV1TreasuryFinancialAccounts {
   }
 
   StripeApiClientV1TreasuryFinancialAccountsFinancialAccount
-      get financialAccount =>
-          StripeApiClientV1TreasuryFinancialAccountsFinancialAccount(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get financialAccount =>
+      StripeApiClientV1TreasuryFinancialAccountsFinancialAccount(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1TreasuryInboundTransfersInboundTransferCancel {
   StripeApiClientV1TreasuryInboundTransfersInboundTransferCancel({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -20833,11 +19722,9 @@ class StripeApiClientV1TreasuryInboundTransfersInboundTransferCancel {
     PostTreasuryInboundTransfersInboundTransferCancelBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/treasury/inbound_transfers/$inboundTransfer/cancel');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/treasury/inbound_transfers/$inboundTransfer/cancel',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -20862,8 +19749,8 @@ class StripeApiClientV1TreasuryInboundTransfersInboundTransfer {
   StripeApiClientV1TreasuryInboundTransfersInboundTransfer({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -20881,8 +19768,8 @@ class StripeApiClientV1TreasuryInboundTransfers {
   StripeApiClientV1TreasuryInboundTransfers({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -20915,12 +19802,10 @@ class StripeApiClientV1TreasuryInboundTransfers {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/inbound_transfers')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/inbound_transfers',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20938,13 +19823,11 @@ class StripeApiClientV1TreasuryInboundTransfers {
   }
 
   /// Creates an InboundTransfer.
-  Future<TreasuryInboundTransfer> create(
-      {required PostTreasuryInboundTransfersBody body}) async {
+  Future<TreasuryInboundTransfer> create({
+    required PostTreasuryInboundTransfersBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/treasury/inbound_transfers');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -20971,12 +19854,10 @@ class StripeApiClientV1TreasuryInboundTransfers {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/inbound_transfers/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/inbound_transfers/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -20994,19 +19875,19 @@ class StripeApiClientV1TreasuryInboundTransfers {
   }
 
   StripeApiClientV1TreasuryInboundTransfersInboundTransfer
-      get inboundTransfer =>
-          StripeApiClientV1TreasuryInboundTransfersInboundTransfer(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get inboundTransfer =>
+      StripeApiClientV1TreasuryInboundTransfersInboundTransfer(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1TreasuryOutboundPaymentsIdCancel {
   StripeApiClientV1TreasuryOutboundPaymentsIdCancel({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -21018,12 +19899,10 @@ class StripeApiClientV1TreasuryOutboundPaymentsIdCancel {
     required String id,
     PostTreasuryOutboundPaymentsIdCancelBody? body,
   }) async {
-    final $uri =
-        Uri.parse('$_baseUri/v1/treasury/outbound_payments/$id/cancel');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/outbound_payments/$id/cancel',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -21048,8 +19927,8 @@ class StripeApiClientV1TreasuryOutboundPaymentsId {
   StripeApiClientV1TreasuryOutboundPaymentsId({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -21067,8 +19946,8 @@ class StripeApiClientV1TreasuryOutboundPayments {
   StripeApiClientV1TreasuryOutboundPayments({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -21109,12 +19988,10 @@ class StripeApiClientV1TreasuryOutboundPayments {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/outbound_payments')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/outbound_payments',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21132,13 +20009,11 @@ class StripeApiClientV1TreasuryOutboundPayments {
   }
 
   /// Creates an OutboundPayment.
-  Future<TreasuryOutboundPayment> create(
-      {required PostTreasuryOutboundPaymentsBody body}) async {
+  Future<TreasuryOutboundPayment> create({
+    required PostTreasuryOutboundPaymentsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/treasury/outbound_payments');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -21165,12 +20040,10 @@ class StripeApiClientV1TreasuryOutboundPayments {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/outbound_payments/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/outbound_payments/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21198,8 +20071,8 @@ class StripeApiClientV1TreasuryOutboundTransfersOutboundTransferCancel {
   StripeApiClientV1TreasuryOutboundTransfersOutboundTransferCancel({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -21212,11 +20085,9 @@ class StripeApiClientV1TreasuryOutboundTransfersOutboundTransferCancel {
     PostTreasuryOutboundTransfersOutboundTransferCancelBody? body,
   }) async {
     final $uri = Uri.parse(
-        '$_baseUri/v1/treasury/outbound_transfers/$outboundTransfer/cancel');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
+      '$_baseUri/v1/treasury/outbound_transfers/$outboundTransfer/cancel',
     );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -21241,8 +20112,8 @@ class StripeApiClientV1TreasuryOutboundTransfersOutboundTransfer {
   StripeApiClientV1TreasuryOutboundTransfersOutboundTransfer({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -21260,8 +20131,8 @@ class StripeApiClientV1TreasuryOutboundTransfers {
   StripeApiClientV1TreasuryOutboundTransfers({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -21294,12 +20165,10 @@ class StripeApiClientV1TreasuryOutboundTransfers {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/outbound_transfers')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/outbound_transfers',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21317,13 +20186,11 @@ class StripeApiClientV1TreasuryOutboundTransfers {
   }
 
   /// Creates an OutboundTransfer.
-  Future<TreasuryOutboundTransfer> create(
-      {required PostTreasuryOutboundTransfersBody body}) async {
+  Future<TreasuryOutboundTransfer> create({
+    required PostTreasuryOutboundTransfersBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/treasury/outbound_transfers');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -21350,13 +20217,10 @@ class StripeApiClientV1TreasuryOutboundTransfers {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri =
-        Uri.parse('$_baseUri/v1/treasury/outbound_transfers/$outboundTransfer')
-            .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/outbound_transfers/$outboundTransfer',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21374,19 +20238,19 @@ class StripeApiClientV1TreasuryOutboundTransfers {
   }
 
   StripeApiClientV1TreasuryOutboundTransfersOutboundTransfer
-      get outboundTransfer =>
-          StripeApiClientV1TreasuryOutboundTransfersOutboundTransfer(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
+  get outboundTransfer =>
+      StripeApiClientV1TreasuryOutboundTransfersOutboundTransfer(
+        baseUri: _baseUri,
+        httpClient: _httpClient,
+      );
 }
 
 class StripeApiClientV1TreasuryReceivedCredits {
   StripeApiClientV1TreasuryReceivedCredits({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -21423,12 +20287,10 @@ class StripeApiClientV1TreasuryReceivedCredits {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/received_credits')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/received_credits',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21454,12 +20316,10 @@ class StripeApiClientV1TreasuryReceivedCredits {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/received_credits/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/received_credits/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21481,8 +20341,8 @@ class StripeApiClientV1TreasuryReceivedDebits {
   StripeApiClientV1TreasuryReceivedDebits({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -21515,12 +20375,10 @@ class StripeApiClientV1TreasuryReceivedDebits {
     if (status != null) {
       $queryParameters['status'] = status.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/received_debits')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/received_debits',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21546,12 +20404,10 @@ class StripeApiClientV1TreasuryReceivedDebits {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/received_debits/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/received_debits/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21573,8 +20429,8 @@ class StripeApiClientV1TreasuryTransactionEntries {
   StripeApiClientV1TreasuryTransactionEntries({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -21619,12 +20475,10 @@ class StripeApiClientV1TreasuryTransactionEntries {
     if (transaction != null) {
       $queryParameters['transaction'] = transaction;
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/transaction_entries')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/transaction_entries',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21650,12 +20504,10 @@ class StripeApiClientV1TreasuryTransactionEntries {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/transaction_entries/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/transaction_entries/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21677,8 +20529,8 @@ class StripeApiClientV1TreasuryTransactions {
   StripeApiClientV1TreasuryTransactions({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -21723,12 +20575,10 @@ class StripeApiClientV1TreasuryTransactions {
     if (statusTransitions != null) {
       $queryParameters['status_transitions'] = statusTransitions.toString();
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/transactions')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/transactions',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21754,12 +20604,10 @@ class StripeApiClientV1TreasuryTransactions {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/treasury/transactions/$id')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/treasury/transactions/$id',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21781,8 +20629,8 @@ class StripeApiClientV1Treasury {
   StripeApiClientV1Treasury({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -21854,8 +20702,8 @@ class StripeApiClientV1WebhookEndpoints {
   StripeApiClientV1WebhookEndpoints({
     required _$http.Client httpClient,
     required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  }) : _httpClient = httpClient,
+       _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
@@ -21882,12 +20730,10 @@ class StripeApiClientV1WebhookEndpoints {
     if (startingAfter != null) {
       $queryParameters['starting_after'] = startingAfter;
     }
-    final $uri = Uri.parse('$_baseUri/v1/webhook_endpoints')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/webhook_endpoints',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21905,13 +20751,11 @@ class StripeApiClientV1WebhookEndpoints {
   }
 
   /// A webhook endpoint must have a `url` and a list of `enabled_events`. You may optionally specify the Boolean `connect` parameter. If set to true, then a Connect webhook endpoint that notifies the specified `url` about events from all connected accounts is created; otherwise an account webhook endpoint that notifies the specified `url` only about events from your account is created. You can also create webhook endpoints in the [webhooks settings](https://dashboard.stripe.com/account/webhooks) section of the Dashboard.
-  Future<WebhookEndpoint> create(
-      {required PostWebhookEndpointsBody body}) async {
+  Future<WebhookEndpoint> create({
+    required PostWebhookEndpointsBody body,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/webhook_endpoints');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     $request.body = _$convert.jsonEncode(body);
     final $response = await _httpClient.send($request);
@@ -21938,12 +20782,10 @@ class StripeApiClientV1WebhookEndpoints {
     if (expand != null) {
       $queryParameters['expand'] = expand;
     }
-    final $uri = Uri.parse('$_baseUri/v1/webhook_endpoints/$webhookEndpoint')
-        .replace(queryParameters: $queryParameters);
-    final $request = _$http.Request(
-      'GET',
-      $uri,
-    );
+    final $uri = Uri.parse(
+      '$_baseUri/v1/webhook_endpoints/$webhookEndpoint',
+    ).replace(queryParameters: $queryParameters);
+    final $request = _$http.Request('GET', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -21966,10 +20808,7 @@ class StripeApiClientV1WebhookEndpoints {
     PostWebhookEndpointsWebhookEndpointBody? body,
   }) async {
     final $uri = Uri.parse('$_baseUri/v1/webhook_endpoints/$webhookEndpoint');
-    final $request = _$http.Request(
-      'POST',
-      $uri,
-    );
+    final $request = _$http.Request('POST', $uri);
     $request.headers['accept'] = 'application/json';
     if (body != null) {
       $request.body = _$convert.jsonEncode(body);
@@ -21990,13 +20829,11 @@ class StripeApiClientV1WebhookEndpoints {
   }
 
   /// You can also delete webhook endpoints via the [webhook endpoint management](https://dashboard.stripe.com/account/webhooks) page of the Stripe dashboard.
-  Future<DeletedWebhookEndpoint> delete(
-      {required String webhookEndpoint}) async {
+  Future<DeletedWebhookEndpoint> delete({
+    required String webhookEndpoint,
+  }) async {
     final $uri = Uri.parse('$_baseUri/v1/webhook_endpoints/$webhookEndpoint');
-    final $request = _$http.Request(
-      'DELETE',
-      $uri,
-    );
+    final $request = _$http.Request('DELETE', $uri);
     $request.headers['accept'] = 'application/json';
     final $response = await _httpClient.send($request);
     final $body = await $response.stream.bytesToString();
@@ -22015,27 +20852,20 @@ class StripeApiClientV1WebhookEndpoints {
 }
 
 class StripeApiClientV1 {
-  StripeApiClientV1({
-    required _$http.Client httpClient,
-    required Uri baseUri,
-  })  : _httpClient = httpClient,
-        _baseUri = baseUri;
+  StripeApiClientV1({required _$http.Client httpClient, required Uri baseUri})
+    : _httpClient = httpClient,
+      _baseUri = baseUri;
 
   final _$http.Client _httpClient;
 
   /// The base URI for the API
   final Uri _baseUri;
 
-  StripeApiClientV1Account get account => StripeApiClientV1Account(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Account get account =>
+      StripeApiClientV1Account(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1AccountLinks get accountLinks =>
-      StripeApiClientV1AccountLinks(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+      StripeApiClientV1AccountLinks(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1AccountSessions get accountSessions =>
       StripeApiClientV1AccountSessions(
@@ -22043,15 +20873,11 @@ class StripeApiClientV1 {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1Accounts get accounts => StripeApiClientV1Accounts(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Accounts get accounts =>
+      StripeApiClientV1Accounts(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1ApplePay get applePay => StripeApiClientV1ApplePay(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1ApplePay get applePay =>
+      StripeApiClientV1ApplePay(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1ApplicationFees get applicationFees =>
       StripeApiClientV1ApplicationFees(
@@ -22059,15 +20885,11 @@ class StripeApiClientV1 {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1Apps get apps => StripeApiClientV1Apps(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Apps get apps =>
+      StripeApiClientV1Apps(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Balance get balance => StripeApiClientV1Balance(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Balance get balance =>
+      StripeApiClientV1Balance(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1BalanceTransactions get balanceTransactions =>
       StripeApiClientV1BalanceTransactions(
@@ -22075,10 +20897,8 @@ class StripeApiClientV1 {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1Billing get billing => StripeApiClientV1Billing(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Billing get billing =>
+      StripeApiClientV1Billing(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1BillingPortal get billingPortal =>
       StripeApiClientV1BillingPortal(
@@ -22086,20 +20906,14 @@ class StripeApiClientV1 {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1Charges get charges => StripeApiClientV1Charges(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Charges get charges =>
+      StripeApiClientV1Charges(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Checkout get checkout => StripeApiClientV1Checkout(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Checkout get checkout =>
+      StripeApiClientV1Checkout(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Climate get climate => StripeApiClientV1Climate(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Climate get climate =>
+      StripeApiClientV1Climate(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1ConfirmationTokens get confirmationTokens =>
       StripeApiClientV1ConfirmationTokens(
@@ -22108,20 +20922,13 @@ class StripeApiClientV1 {
       );
 
   StripeApiClientV1CountrySpecs get countrySpecs =>
-      StripeApiClientV1CountrySpecs(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+      StripeApiClientV1CountrySpecs(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Coupons get coupons => StripeApiClientV1Coupons(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Coupons get coupons =>
+      StripeApiClientV1Coupons(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1CreditNotes get creditNotes => StripeApiClientV1CreditNotes(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1CreditNotes get creditNotes =>
+      StripeApiClientV1CreditNotes(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1CustomerSessions get customerSessions =>
       StripeApiClientV1CustomerSessions(
@@ -22129,15 +20936,11 @@ class StripeApiClientV1 {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1Customers get customers => StripeApiClientV1Customers(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Customers get customers =>
+      StripeApiClientV1Customers(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Disputes get disputes => StripeApiClientV1Disputes(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Disputes get disputes =>
+      StripeApiClientV1Disputes(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1EphemeralKeys get ephemeralKeys =>
       StripeApiClientV1EphemeralKeys(
@@ -22145,10 +20948,8 @@ class StripeApiClientV1 {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1Events get events => StripeApiClientV1Events(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Events get events =>
+      StripeApiClientV1Events(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1ExchangeRates get exchangeRates =>
       StripeApiClientV1ExchangeRates(
@@ -22156,15 +20957,11 @@ class StripeApiClientV1 {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1FileLinks get fileLinks => StripeApiClientV1FileLinks(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1FileLinks get fileLinks =>
+      StripeApiClientV1FileLinks(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Files get files => StripeApiClientV1Files(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Files get files =>
+      StripeApiClientV1Files(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1FinancialConnections get financialConnections =>
       StripeApiClientV1FinancialConnections(
@@ -22172,36 +20969,23 @@ class StripeApiClientV1 {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1Forwarding get forwarding => StripeApiClientV1Forwarding(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Forwarding get forwarding =>
+      StripeApiClientV1Forwarding(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Identity get identity => StripeApiClientV1Identity(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Identity get identity =>
+      StripeApiClientV1Identity(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1Invoiceitems get invoiceitems =>
-      StripeApiClientV1Invoiceitems(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+      StripeApiClientV1Invoiceitems(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Invoices get invoices => StripeApiClientV1Invoices(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Invoices get invoices =>
+      StripeApiClientV1Invoices(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Issuing get issuing => StripeApiClientV1Issuing(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Issuing get issuing =>
+      StripeApiClientV1Issuing(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Mandates get mandates => StripeApiClientV1Mandates(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Mandates get mandates =>
+      StripeApiClientV1Mandates(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1PaymentIntents get paymentIntents =>
       StripeApiClientV1PaymentIntents(
@@ -22210,17 +20994,14 @@ class StripeApiClientV1 {
       );
 
   StripeApiClientV1PaymentLinks get paymentLinks =>
-      StripeApiClientV1PaymentLinks(
+      StripeApiClientV1PaymentLinks(baseUri: _baseUri, httpClient: _httpClient);
+
+  StripeApiClientV1PaymentMethodConfigurations
+  get paymentMethodConfigurations =>
+      StripeApiClientV1PaymentMethodConfigurations(
         baseUri: _baseUri,
         httpClient: _httpClient,
       );
-
-  StripeApiClientV1PaymentMethodConfigurations
-      get paymentMethodConfigurations =>
-          StripeApiClientV1PaymentMethodConfigurations(
-            baseUri: _baseUri,
-            httpClient: _httpClient,
-          );
 
   StripeApiClientV1PaymentMethodDomains get paymentMethodDomains =>
       StripeApiClientV1PaymentMethodDomains(
@@ -22234,25 +21015,17 @@ class StripeApiClientV1 {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1Payouts get payouts => StripeApiClientV1Payouts(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Payouts get payouts =>
+      StripeApiClientV1Payouts(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Plans get plans => StripeApiClientV1Plans(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Plans get plans =>
+      StripeApiClientV1Plans(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Prices get prices => StripeApiClientV1Prices(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Prices get prices =>
+      StripeApiClientV1Prices(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Products get products => StripeApiClientV1Products(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Products get products =>
+      StripeApiClientV1Products(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1PromotionCodes get promotionCodes =>
       StripeApiClientV1PromotionCodes(
@@ -22260,30 +21033,20 @@ class StripeApiClientV1 {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1Quotes get quotes => StripeApiClientV1Quotes(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Quotes get quotes =>
+      StripeApiClientV1Quotes(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Radar get radar => StripeApiClientV1Radar(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Radar get radar =>
+      StripeApiClientV1Radar(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Refunds get refunds => StripeApiClientV1Refunds(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Refunds get refunds =>
+      StripeApiClientV1Refunds(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Reporting get reporting => StripeApiClientV1Reporting(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Reporting get reporting =>
+      StripeApiClientV1Reporting(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Reviews get reviews => StripeApiClientV1Reviews(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Reviews get reviews =>
+      StripeApiClientV1Reviews(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1SetupAttempts get setupAttempts =>
       StripeApiClientV1SetupAttempts(
@@ -22292,10 +21055,7 @@ class StripeApiClientV1 {
       );
 
   StripeApiClientV1SetupIntents get setupIntents =>
-      StripeApiClientV1SetupIntents(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+      StripeApiClientV1SetupIntents(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1ShippingRates get shippingRates =>
       StripeApiClientV1ShippingRates(
@@ -22303,15 +21063,11 @@ class StripeApiClientV1 {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1Sigma get sigma => StripeApiClientV1Sigma(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Sigma get sigma =>
+      StripeApiClientV1Sigma(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Sources get sources => StripeApiClientV1Sources(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Sources get sources =>
+      StripeApiClientV1Sources(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1SubscriptionItems get subscriptionItems =>
       StripeApiClientV1SubscriptionItems(
@@ -22331,55 +21087,35 @@ class StripeApiClientV1 {
         httpClient: _httpClient,
       );
 
-  StripeApiClientV1Tax get tax => StripeApiClientV1Tax(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Tax get tax =>
+      StripeApiClientV1Tax(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1TaxCodes get taxCodes => StripeApiClientV1TaxCodes(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1TaxCodes get taxCodes =>
+      StripeApiClientV1TaxCodes(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1TaxIds get taxIds => StripeApiClientV1TaxIds(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1TaxIds get taxIds =>
+      StripeApiClientV1TaxIds(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1TaxRates get taxRates => StripeApiClientV1TaxRates(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1TaxRates get taxRates =>
+      StripeApiClientV1TaxRates(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Terminal get terminal => StripeApiClientV1Terminal(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Terminal get terminal =>
+      StripeApiClientV1Terminal(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1TestHelpers get testHelpers => StripeApiClientV1TestHelpers(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1TestHelpers get testHelpers =>
+      StripeApiClientV1TestHelpers(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Tokens get tokens => StripeApiClientV1Tokens(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Tokens get tokens =>
+      StripeApiClientV1Tokens(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Topups get topups => StripeApiClientV1Topups(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Topups get topups =>
+      StripeApiClientV1Topups(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Transfers get transfers => StripeApiClientV1Transfers(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Transfers get transfers =>
+      StripeApiClientV1Transfers(baseUri: _baseUri, httpClient: _httpClient);
 
-  StripeApiClientV1Treasury get treasury => StripeApiClientV1Treasury(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1Treasury get treasury =>
+      StripeApiClientV1Treasury(baseUri: _baseUri, httpClient: _httpClient);
 
   StripeApiClientV1WebhookEndpoints get webhookEndpoints =>
       StripeApiClientV1WebhookEndpoints(
@@ -22389,19 +21125,15 @@ class StripeApiClientV1 {
 }
 
 final class StripeApiClient {
-  StripeApiClient({
-    _$http.Client? httpClient,
-    Uri? baseUri,
-  })  : _httpClient = httpClient ?? _$http.Client(),
-        _baseUri = baseUri ?? StripeApiServers.defaultServer;
+  StripeApiClient({_$http.Client? httpClient, Uri? baseUri})
+    : _httpClient = httpClient ?? _$http.Client(),
+      _baseUri = baseUri ?? StripeApiServers.defaultServer;
 
   final _$http.Client _httpClient;
 
   /// The base URI for the API
   final Uri _baseUri;
 
-  StripeApiClientV1 get v1 => StripeApiClientV1(
-        baseUri: _baseUri,
-        httpClient: _httpClient,
-      );
+  StripeApiClientV1 get v1 =>
+      StripeApiClientV1(baseUri: _baseUri, httpClient: _httpClient);
 }

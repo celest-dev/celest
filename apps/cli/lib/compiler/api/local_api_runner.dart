@@ -25,8 +25,8 @@ final class LocalApiRunner {
     required this.port,
     required FrontendServerClient client,
     required Process localApiProcess,
-  })  : _client = client,
-        _localApiProcess = localApiProcess;
+  }) : _client = client,
+       _localApiProcess = localApiProcess;
 
   final bool verbose;
   final String path;
@@ -57,18 +57,19 @@ final class LocalApiRunner {
     // hub and is never exposed to the user.
     @visibleForTesting PortFinder portFinder = const RandomPortFinder(),
   }) async {
-    final (target, platformDill, sdkRoot) =
-        switch (resolvedProject.sdkConfig.targetSdk) {
+    final (target, platformDill, sdkRoot) = switch (resolvedProject
+        .sdkConfig
+        .targetSdk) {
       SdkType.flutter => (
-          'flutter',
-          Sdk.current.flutterPlatformDill!,
-          Sdk.current.flutterPatchedSdk!
-        ),
+        'flutter',
+        Sdk.current.flutterPlatformDill!,
+        Sdk.current.flutterPatchedSdk!,
+      ),
       SdkType.dart => (
-          'vm',
-          Sdk.current.vmPlatformDill,
-          p.join(Sdk.current.sdkPath, 'lib', '_internal'),
-        ),
+        'vm',
+        Sdk.current.vmPlatformDill,
+        p.join(Sdk.current.sdkPath, 'lib', '_internal'),
+      ),
       final unknown => unreachable('Unknown SDK type: $unknown'),
     };
 
@@ -93,37 +94,36 @@ final class LocalApiRunner {
 
     // Copy SQLite3 to the output directory on Windows.
     if (platform.isWindows) {
-      final sqlite3Out =
-          fileSystem.directory(p.dirname(path)).childFile('sqlite3.dll');
+      final sqlite3Out = fileSystem
+          .directory(p.dirname(path))
+          .childFile('sqlite3.dll');
       if (!sqlite3Out.existsSync()) {
-        final cachedSqlite3 =
-            celestProject.config.configDir.childFile('sqlite3.dll');
+        final cachedSqlite3 = celestProject.config.configDir.childFile(
+          'sqlite3.dll',
+        );
         await cachedSqlite3.copy(sqlite3Out.path);
       }
     }
 
     // NOTE: FE server requires file: URIs for *some* paths on Windows.
-    final genKernelRes = await processManager.start(
-      <String>[
-        Sdk.current.dartAotRuntime,
-        Sdk.current.frontendServerAotSnapshot,
-        '--sdk-root',
-        sdkRoot, // Must be path
-        '--platform',
-        Uri.file(platformDill).toString(), // Must be URI
-        '--link-platform',
-        '--target',
-        target,
-        '--packages',
-        Uri.file(projectPaths.packagesConfig).toString(),
-        '--filesystem-root=${projectPaths.projectRoot}',
-        '--filesystem-scheme=celest',
-        '--output-dill',
-        outputDill, // Must be path
-        _projectFsUri(path).toString(),
-      ],
-      workingDirectory: projectPaths.outputsDir,
-    );
+    final genKernelRes = await processManager.start(<String>[
+      Sdk.current.dartAotRuntime,
+      Sdk.current.frontendServerAotSnapshot,
+      '--sdk-root',
+      sdkRoot, // Must be path
+      '--platform',
+      Uri.file(platformDill).toString(), // Must be URI
+      '--link-platform',
+      '--target',
+      target,
+      '--packages',
+      Uri.file(projectPaths.packagesConfig).toString(),
+      '--filesystem-root=${projectPaths.projectRoot}',
+      '--filesystem-scheme=celest',
+      '--output-dill',
+      outputDill, // Must be path
+      _projectFsUri(path).toString(),
+    ], workingDirectory: projectPaths.outputsDir);
     final genKernelLogs = StringBuffer();
     genKernelRes.captureStdout(
       sink: genKernelLogs.writeln,
@@ -143,8 +143,10 @@ final class LocalApiRunner {
     // To enable incremental compilation, we need to pass the output dill file
     // as the incremental output dill file. If we set it the other way around
     // Windows will complain about the file being in use.
-    final incrementalOutputDill =
-        p.setExtension(outputDill, '.incremental.dill'); // Must be path
+    final incrementalOutputDill = p.setExtension(
+      outputDill,
+      '.incremental.dill',
+    ); // Must be path
     final client = await FrontendServerClient.start(
       entrypoint: _projectFsUri(path).toString(), // must be URI
       outputDillPath: incrementalOutputDill, // must be path
@@ -166,8 +168,9 @@ final class LocalApiRunner {
     );
     _logger.fine('Compiling local API...');
 
-    final flutterCacheDir =
-        await fileSystem.systemTempDirectory.createTemp('celest_');
+    final flutterCacheDir = await fileSystem.systemTempDirectory.createTemp(
+      'celest_',
+    );
 
     // Give the VM service a deterministic port, since allowing it to find one
     // can lead to a race condition with our random port finder picking the same
@@ -176,36 +179,36 @@ final class LocalApiRunner {
     // When we check the port below, it's valid because the VM service is not
     // started yet, but later the API fails because it picked the same port.
     final vmServicePort = await const RandomPortFinder()
-        // If we've specified a port, though, that must be reserved for us to
-        // use, so start the search from the next port.
-        .findOpenPort(port == null ? null : port + 1);
+    // If we've specified a port, though, that must be reserved for us to
+    // use, so start the search from the next port.
+    .findOpenPort(port == null ? null : port + 1);
     final command = switch (resolvedProject.sdkConfig.targetSdk) {
       SdkType.dart => <String>[
-          Sdk.current.dart,
-          'run',
-          '--enable-vm-service=$vmServicePort', // Start VM service
-          '--no-dds', // We want to talk directly to VM service.
-          '--enable-asserts',
-          '--packages',
-          projectPaths.packagesConfig,
-          outputDill,
-        ],
+        Sdk.current.dart,
+        'run',
+        '--enable-vm-service=$vmServicePort', // Start VM service
+        '--no-dds', // We want to talk directly to VM service.
+        '--enable-asserts',
+        '--packages',
+        projectPaths.packagesConfig,
+        outputDill,
+      ],
       SdkType.flutter => <String>[
-          Sdk.current.flutterTester,
-          '--non-interactive',
-          '--vm-service-port=$vmServicePort',
-          '--run-forever',
-          '--icu-data-file-path='
-              '${p.join(Sdk.current.flutterOsArtifacts, 'icudtl.dat')}',
-          '--packages=${projectPaths.packagesConfig}',
-          '--log-tag=_CELEST',
-          if (verbose) '--verbose-logging',
-          '--enable-platform-isolates',
-          '--force-multithreading',
-          '--cache-dir-path=${flutterCacheDir.absolute.path}',
-          // '--enable-impeller',
-          outputDill,
-        ],
+        Sdk.current.flutterTester,
+        '--non-interactive',
+        '--vm-service-port=$vmServicePort',
+        '--run-forever',
+        '--icu-data-file-path='
+            '${p.join(Sdk.current.flutterOsArtifacts, 'icudtl.dat')}',
+        '--packages=${projectPaths.packagesConfig}',
+        '--log-tag=_CELEST',
+        if (verbose) '--verbose-logging',
+        '--enable-platform-isolates',
+        '--force-multithreading',
+        '--cache-dir-path=${flutterCacheDir.absolute.path}',
+        // '--enable-impeller',
+        outputDill,
+      ],
       final unknown => unreachable('Unknown SDK type: $unknown'),
     };
 
@@ -251,11 +254,13 @@ final class LocalApiRunner {
     return Uri(scheme: 'celest', path: '$rootPrefix$relativePath');
   }
 
-  static final _vmServicePattern =
-      RegExp(r'The Dart VM service is listening on ([^\s]+)');
+  static final _vmServicePattern = RegExp(
+    r'The Dart VM service is listening on ([^\s]+)',
+  );
 
-  static final _warnOnNoDebuggerPattern =
-      RegExp(r'Connect to the Dart VM service at ([^\s]+) to debug.');
+  static final _warnOnNoDebuggerPattern = RegExp(
+    r'Connect to the Dart VM service at ([^\s]+) to debug.',
+  );
 
   /// Waits for the main Isolate to be available, resume it, then return its ID.
   static Future<String> _waitForIsolatesAndResume(VmService vmService) async {
@@ -277,8 +282,9 @@ final class LocalApiRunner {
       'VM started in ${stopwatch.elapsedMilliseconds}ms. '
       'Isolates: $isolates',
     );
-    var isolateRef = isolates
-        .firstWhereOrNull((isolate) => isolate.isSystemIsolate ?? false);
+    var isolateRef = isolates.firstWhereOrNull(
+      (isolate) => isolate.isSystemIsolate ?? false,
+    );
     isolateRef ??= isolates.firstOrNull;
     if (isolateRef == null) {
       throw StateError('Could not determine main isolate ID.');
@@ -336,9 +342,7 @@ final class LocalApiRunner {
       final observatoryUri =
           '${rawObservatoryUrl.replaceFirst('http', 'ws')}ws';
       _logger.finer('Connecting to local API at: $observatoryUri');
-      vmServiceCompleter.complete(
-        _vmServiceConnectUri(observatoryUri),
-      );
+      vmServiceCompleter.complete(_vmServiceConnectUri(observatoryUri));
     }
 
     final serverStartedCompleter = Completer<void>();
@@ -346,50 +350,46 @@ final class LocalApiRunner {
         .transform(utf8.decoder)
         .transform(const LineSplitter())
         .listen((line) {
-      _logger.finest('[stdout] $line');
-      if (!vmServiceCompleter.isCompleted) {
-        final vmServiceInfo = _vmServicePattern.firstMatch(line)?.group(1);
-        if (vmServiceInfo != null) {
-          return completeVmService(vmServiceInfo);
-        }
-      }
-      if (line.startsWith('The Dart') ||
-          line.startsWith('vm-service') ||
-          line.contains('_CELEST')) {
-        // Ignore
-      } else if (line.startsWith('Serving on')) {
-        if (!serverStartedCompleter.isCompleted) {
-          serverStartedCompleter.complete();
-        }
-      } else if (line.startsWith('/')) {
-        analytics.capture(
-          'local_api_call',
-          properties: {
-            'route': line,
-          },
-        );
-      } else {
-        stdoutPipe!.writeln(line);
-      }
-    });
+          _logger.finest('[stdout] $line');
+          if (!vmServiceCompleter.isCompleted) {
+            final vmServiceInfo = _vmServicePattern.firstMatch(line)?.group(1);
+            if (vmServiceInfo != null) {
+              return completeVmService(vmServiceInfo);
+            }
+          }
+          if (line.startsWith('The Dart') ||
+              line.startsWith('vm-service') ||
+              line.contains('_CELEST')) {
+            // Ignore
+          } else if (line.startsWith('Serving on')) {
+            if (!serverStartedCompleter.isCompleted) {
+              serverStartedCompleter.complete();
+            }
+          } else if (line.startsWith('/')) {
+            analytics.capture('local_api_call', properties: {'route': line});
+          } else {
+            stdoutPipe!.writeln(line);
+          }
+        });
     _stderrSub = _localApiProcess.stderr
         .transform(utf8.decoder)
         .transform(const LineSplitter())
         .listen((line) {
-      _logger.finest('[stderr] $line');
-      if (!vmServiceCompleter.isCompleted) {
-        final vmServiceInfo =
-            _warnOnNoDebuggerPattern.firstMatch(line)?.group(1);
-        if (vmServiceInfo != null) {
-          return completeVmService(vmServiceInfo);
-        }
-      }
-      if (line.startsWith('vm-service')) {
-        // Ignore
-      } else {
-        stderrPipe!.writeln(line);
-      }
-    });
+          _logger.finest('[stderr] $line');
+          if (!vmServiceCompleter.isCompleted) {
+            final vmServiceInfo = _warnOnNoDebuggerPattern
+                .firstMatch(line)
+                ?.group(1);
+            if (vmServiceInfo != null) {
+              return completeVmService(vmServiceInfo);
+            }
+          }
+          if (line.startsWith('vm-service')) {
+            // Ignore
+          } else {
+            stderrPipe!.writeln(line);
+          }
+        });
 
     try {
       vmServiceTimeout ??= const Duration(seconds: 10);
@@ -418,7 +418,8 @@ final class LocalApiRunner {
         final loggerName =
             record.loggerName?.valueAsString ?? defaultLoggerName;
         final logger = Logger(loggerName);
-        final level = record.level?.let(
+        final level =
+            record.level?.let(
               (level) => Level.LEVELS.firstWhere((l) => l.value == level),
             ) ??
             Level.FINE;
@@ -473,10 +474,7 @@ final class LocalApiRunner {
     ]);
     final dillOutput = _client.expectOutput(result);
     _logger.fine('Hot reloading local API with entrypoint: $dillOutput');
-    await _vmService!.reloadSources(
-      _vmIsolateId,
-      rootLibUri: dillOutput,
-    );
+    await _vmService!.reloadSources(_vmIsolateId, rootLibUri: dillOutput);
   }
 
   // Copied from `package:flutter_tools/src/run_hot.dart`
@@ -489,23 +487,27 @@ final class LocalApiRunner {
       _logger.finest('Killing isolates: ${isolateIds.join(', ')}');
       for (final isolateId in isolateIds) {
         isolateOperations.add(
-          _vmService!.kill(isolateId).then(
-            (Success success) => _logger.finest('Killed isolate $isolateId'),
-            onError: (Object error, StackTrace st) {
-              if (error is SentinelException ||
-                  (error is RPCError &&
-                      error.code == RPCErrorKind.kIsolateMustBeRunnable.code)) {
-                // Do nothing on a SentinelException since it means the isolate
-                // has already been killed.
-                // Error code 105 indicates the isolate is not yet runnable, and might
-                // be triggered if the tool is attempting to kill the asset parsing
-                // isolate before it has finished starting up.
-                return null;
-              }
-              _logger.finer('Error killing isolate $isolateId', error, st);
-              return Future<Never>.error(error, st);
-            },
-          ),
+          _vmService!
+              .kill(isolateId)
+              .then(
+                (Success success) =>
+                    _logger.finest('Killed isolate $isolateId'),
+                onError: (Object error, StackTrace st) {
+                  if (error is SentinelException ||
+                      (error is RPCError &&
+                          error.code ==
+                              RPCErrorKind.kIsolateMustBeRunnable.code)) {
+                    // Do nothing on a SentinelException since it means the isolate
+                    // has already been killed.
+                    // Error code 105 indicates the isolate is not yet runnable, and might
+                    // be triggered if the tool is attempting to kill the asset parsing
+                    // isolate before it has finished starting up.
+                    return null;
+                  }
+                  _logger.finer('Error killing isolate $isolateId', error, st);
+                  return Future<Never>.error(error, st);
+                },
+              ),
         );
       }
       await Future.wait(isolateOperations);
@@ -526,10 +528,12 @@ final class LocalApiRunner {
     await Future.wait([
       _stdoutSub.cancel().then((_) => _logger.finest('Stdout closed')),
       _stderrSub.cancel().then((_) => _logger.finest('Stderr closed')),
-      _localApiProcess.exitCode
-          .then((exitCode) => _logger.finest('Exit code: $exitCode')),
-      Future.value(_vmService?.onDone)
-          .then((_) => _logger.finest('VM service done')),
+      _localApiProcess.exitCode.then(
+        (exitCode) => _logger.finest('Exit code: $exitCode'),
+      ),
+      Future.value(
+        _vmService?.onDone,
+      ).then((_) => _logger.finest('VM service done')),
     ]);
     _logger.finer('Shut down local API.');
   }
@@ -569,10 +573,11 @@ extension on FrontendServerClient {
 
 extension on CompileResult {
   String get debugResult {
-    final buffer = StringBuffer()
-      ..writeln('dillOutput: $dillOutput')
-      ..writeln('Error count: $errorCount')
-      ..writeln('Compiler output:');
+    final buffer =
+        StringBuffer()
+          ..writeln('dillOutput: $dillOutput')
+          ..writeln('Error count: $errorCount')
+          ..writeln('Compiler output:');
     for (final line in compilerOutputLines) {
       buffer.writeln('  $line');
     }

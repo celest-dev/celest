@@ -7,9 +7,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:path/path.dart' as p;
 
 Future<void> main() async {
-  final benchmarks = [
-    LargeProjectBenchmark(),
-  ];
+  final benchmarks = [LargeProjectBenchmark()];
 
   for (final benchmark in benchmarks) {
     print('Running benchmark: ${benchmark.name}');
@@ -33,13 +31,8 @@ final class LargeProjectBenchmark extends AsyncBenchmarkBase {
       'legacy',
       'api',
     );
-    await init(
-      projectRoot: projectRoot,
-    );
-    await runPub(
-      action: PubAction.get,
-      workingDirectory: projectRoot,
-    );
+    await init(projectRoot: projectRoot);
+    await runPub(action: PubAction.get, workingDirectory: projectRoot);
   }
 
   @override

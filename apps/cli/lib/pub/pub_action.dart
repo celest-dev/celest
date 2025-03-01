@@ -14,12 +14,12 @@ enum PubAction {
   ///
   /// From: https://github.com/dart-lang/pub/blob/f8b23495666acb275016850f6fd4206a38ad0eb5/test/test_pub.dart#L96
   RegExp get matcher => switch (this) {
-        get => RegExp(r'Got dependencies!|Changed \d+ dependenc(y|ies)!'),
-        upgrade => RegExp(r'''
+    get => RegExp(r'Got dependencies!|Changed \d+ dependenc(y|ies)!'),
+    upgrade => RegExp(r'''
 (No dependencies changed\.|Changed \d+ dependenc(y|ies)!)($|
 \d+ packages? (has|have) newer versions incompatible with dependency constraints.
 Try `dart pub outdated` for more information.$)'''),
-      };
+  };
 }
 
 final Logger _logger = Logger('pub');
@@ -46,9 +46,10 @@ Future<void> runPub({
   required PubAction action,
   required String workingDirectory,
 }) async {
-  exe ??= kDebugMode
-      ? platform.resolvedExecutable
-      : (await celestProject.determineProjectType()).name;
+  exe ??=
+      kDebugMode
+          ? platform.resolvedExecutable
+          : (await celestProject.determineProjectType()).name;
 
   final command = <String>[exe, 'pub', action.name];
   final logger = Logger(command.join(' '));
@@ -88,9 +89,7 @@ Future<void> runPub({
         CliException(
           'Failed to run `pub ${action.name}`. Please run `$exe pub ${action.name}` '
           'manually in $workingDirectory and try again.',
-          additionalContext: {
-            'error': line,
-          },
+          additionalContext: {'error': line},
         ),
       );
     }

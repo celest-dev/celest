@@ -41,76 +41,83 @@ final class OpenApiEnumOrPrimitiveGenerator {
   }
 
   Spec generate() {
-    return ExtensionType(
-      (b) {
-        b
-          ..name = name
-          ..constant = true
-          ..primaryConstructorName = '_';
+    return ExtensionType((b) {
+      b
+        ..name = name
+        ..constant = true
+        ..primaryConstructorName = '_';
 
-        final repType = DartTypes.core.object;
-        b
-          ..representationDeclaration = RepresentationDeclaration(
-            (d) => d
-              ..name = '_value'
-              ..declaredRepresentationType = repType,
-          )
-          ..implements.add(repType)
-          ..constructors.addAll([
-            Constructor(
-              (c) => c
-                ..constant = true
-                ..requiredParameters.add(
-                  Parameter(
-                    (p) => p
-                      ..toThis = true
-                      ..name = '_value'
-                      ..type = primitiveType.primitiveType.typeReference,
+      final repType = DartTypes.core.object;
+      b
+        ..representationDeclaration = RepresentationDeclaration(
+          (d) =>
+              d
+                ..name = '_value'
+                ..declaredRepresentationType = repType,
+        )
+        ..implements.add(repType)
+        ..constructors.addAll([
+          Constructor(
+            (c) =>
+                c
+                  ..constant = true
+                  ..requiredParameters.add(
+                    Parameter(
+                      (p) =>
+                          p
+                            ..toThis = true
+                            ..name = '_value'
+                            ..type = primitiveType.primitiveType.typeReference,
+                    ),
                   ),
-                ),
-            ),
-            Constructor(
-              (c) => c
-                ..name = 'fromJson'
-                ..requiredParameters.add(
-                  Parameter(
-                    (p) => p
-                      ..type = DartTypes.core.object.nullable
-                      ..name = 'json',
+          ),
+          Constructor(
+            (c) =>
+                c
+                  ..name = 'fromJson'
+                  ..requiredParameters.add(
+                    Parameter(
+                      (p) =>
+                          p
+                            ..type = DartTypes.core.object.nullable
+                            ..name = 'json',
+                    ),
+                  )
+                  ..initializers.add(
+                    refer('_value').assign(refer('json').nullChecked).code,
                   ),
-                )
-                ..initializers.add(
-                  refer('_value').assign(refer('json').nullChecked).code,
-                ),
+          ),
+        ])
+        ..fields.addAll([
+          // extensionTypeSelfField(name),
+          for (final enumValue in enumValues)
+            Field(
+              (f) =>
+                  f
+                    ..static = true
+                    ..modifier = FieldModifier.constant
+                    ..docs.add('/// `$enumValue`')
+                    ..type = refer(name)
+                    ..name = _reserveName(enumValue.toString().camelCase)
+                    ..assignment =
+                        refer(
+                          name,
+                        ).constInstanceNamed('_', [literal(enumValue)]).code,
             ),
-          ])
-          ..fields.addAll([
-            // extensionTypeSelfField(name),
-            for (final enumValue in enumValues)
-              Field(
-                (f) => f
-                  ..static = true
-                  ..modifier = FieldModifier.constant
-                  ..docs.add('/// `$enumValue`')
-                  ..type = refer(name)
-                  ..name = _reserveName(enumValue.toString().camelCase)
-                  ..assignment = refer(name)
-                      .constInstanceNamed('_', [literal(enumValue)]).code,
-              ),
-          ])
-          ..methods.addAll([
-            Method(
-              (m) => m
-                ..name = 'toJson'
-                ..returns = repType
-                ..lambda = true
-                ..body = refer('_value').code,
-            ),
-            _encodeMethod,
-            encodeWithMethod,
-          ]);
-      },
-    );
+        ])
+        ..methods.addAll([
+          Method(
+            (m) =>
+                m
+                  ..name = 'toJson'
+                  ..returns = repType
+                  ..lambda = true
+                  ..body = refer('_value').code,
+          ),
+          _encodeMethod,
+          encodeWithMethod,
+        ]);
+    });
   }
 
   Method get _encodeMethod {
@@ -122,22 +129,25 @@ final class OpenApiEnumOrPrimitiveGenerator {
         ..returns = refer('V')
         ..requiredParameters.addAll([
           Parameter(
-            (p) => p
-              ..type = refer(name)
-              ..name = 'instance',
+            (p) =>
+                p
+                  ..type = refer(name)
+                  ..name = 'instance',
           ),
           Parameter(
-            (p) => p
-              ..type = DartTypes.libcoder.encoder(refer('V'))
-              ..name = 'encoder',
+            (p) =>
+                p
+                  ..type = DartTypes.libcoder.encoder(refer('V'))
+                  ..name = 'encoder',
           ),
         ])
         ..lambda = false
-        ..body = refer('encoder')
-            .property('encodePrimitive')
-            .call([refer('instance')])
-            .returned
-            .statement;
+        ..body =
+            refer('encoder')
+                .property('encodePrimitive')
+                .call([refer('instance')])
+                .returned
+                .statement;
     });
   }
 }

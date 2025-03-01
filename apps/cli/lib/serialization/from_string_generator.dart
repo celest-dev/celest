@@ -5,10 +5,7 @@ import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
-Expression _fromString(
-  Reference type,
-  Expression ref,
-) {
+Expression _fromString(Reference type, Expression ref) {
   final dartType = typeHelper.fromReference(type);
   if (dartType.isDartCoreBool) {
     return DartTypes.core.bool.property('parse').call([ref]);
@@ -49,10 +46,7 @@ Expression fromString(
   return fromString;
 }
 
-Expression _toString(
-  Reference type,
-  Expression ref,
-) {
+Expression _toString(Reference type, Expression ref) {
   final dartType = typeHelper.fromReference(type);
   if (dartType.isDartCoreList) {
     if ((dartType as InterfaceType).typeArguments.first.isDartCoreString) {
@@ -62,17 +56,15 @@ Expression _toString(
         .property('map')
         .call([
           Method(
-            (m) => m
-              ..requiredParameters.add(
-                Parameter(
-                  (p) => p..name = 'el',
-                ),
-              )
-              ..body = _toString(
-                type.toTypeReference.types.single,
-                refer('el'),
-              ).code
-              ..lambda = true,
+            (m) =>
+                m
+                  ..requiredParameters.add(Parameter((p) => p..name = 'el'))
+                  ..body =
+                      _toString(
+                        type.toTypeReference.types.single,
+                        refer('el'),
+                      ).code
+                  ..lambda = true,
           ).closure,
         ])
         .property('toList')
@@ -87,9 +79,6 @@ Expression _toString(
   return ref.property('toString').call([]);
 }
 
-Expression generateToString(
-  Reference type,
-  Expression ref,
-) {
+Expression generateToString(Reference type, Expression ref) {
   return _toString(type, ref);
 }

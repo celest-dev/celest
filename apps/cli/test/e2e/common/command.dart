@@ -28,10 +28,7 @@ final class Command {
       command.first,
       command.skip(1).toList(),
       workingDirectory: _workingDirectory,
-      environment: {
-        ...platform.environment,
-        ..._environment,
-      },
+      environment: {...platform.environment, ..._environment},
       runInShell: platform.isWindows,
       stdoutEncoding: utf8,
       stderrEncoding: utf8,
@@ -45,10 +42,7 @@ final class Command {
   }
 
   InteractiveCommand start() {
-    final environment = {
-      ...platform.environment,
-      ..._environment,
-    };
+    final environment = {...platform.environment, ..._environment};
     if (_usePublishedRuntime) {
       environment.remove('CELEST_LOCAL_PATH');
     }
@@ -99,14 +93,14 @@ final class Command {
 
 extension FlatMap<T> on Stream<T> {
   Stream<S> flatMap<S>(S? Function(T) mapper) => transform(
-        StreamTransformer.fromHandlers(
-          handleData: (value, sink) {
-            if (mapper(value) case final value?) {
-              sink.add(value);
-            }
-          },
-        ),
-      );
+    StreamTransformer.fromHandlers(
+      handleData: (value, sink) {
+        if (mapper(value) case final value?) {
+          sink.add(value);
+        }
+      },
+    ),
+  );
 }
 
 final _logger = Logger('InteractiveCommand');
@@ -121,20 +115,18 @@ extension<T> on Future<T> {
     final fut = Chain.capture(() => this, errorZone: false)
         .then((_) => _logger.fine('$methodName completed'))
         .onError<Object>(
-          (e, st) => _fail(
-            methodName,
-            e,
-            Chain([Trace.from(st), Trace.current()]),
-          ),
+          (e, st) =>
+              _fail(methodName, e, Chain([Trace.from(st), Trace.current()])),
         );
     if (timeout != null) {
       return fut.timeout(
         timeout,
-        onTimeout: () => _fail(
-          '$methodName Timed out',
-          TimeoutException(null, timeout),
-          Chain.current(),
-        ),
+        onTimeout:
+            () => _fail(
+              '$methodName Timed out',
+              TimeoutException(null, timeout),
+              Chain.current(),
+            ),
       );
     }
     return fut;
@@ -143,29 +135,31 @@ extension<T> on Future<T> {
 
 extension on Subject<Future<LogMessage>> {
   Future<void> contains(String text) => this.completes(
-        (it) => it.has((log) => log.message, 'message').contains(text),
-      );
+    (it) => it.has((log) => log.message, 'message').contains(text),
+  );
 }
 
 final class InteractiveCommand {
   InteractiveCommand._(Future<Process> process) {
-    process = process.then((process) {
-      _process = process;
-      process.stderr
-          .transform(utf8.decoder)
-          .transform(const LineSplitter())
-          .forEach(_error);
-      process.exitCode.then((exitCode) {
-        if (_pendingTasks != null) {
-          _fail(
-            'start',
-            'Command exited with code $exitCode while tasks were pending',
-            StackTrace.current,
-          );
-        }
-      });
-      return process;
-    }).onError<Object>((e, st) => _fail('start', e, st));
+    process = process
+        .then((process) {
+          _process = process;
+          process.stderr
+              .transform(utf8.decoder)
+              .transform(const LineSplitter())
+              .forEach(_error);
+          process.exitCode.then((exitCode) {
+            if (_pendingTasks != null) {
+              _fail(
+                'start',
+                'Command exited with code $exitCode while tasks were pending',
+                StackTrace.current,
+              );
+            }
+          });
+          return process;
+        })
+        .onError<Object>((e, st) => _fail('start', e, st));
     _logs = StreamQueue(
       Stream.fromFuture(process).asyncExpand(
         (process) => process.stdout
@@ -221,10 +215,7 @@ final class InteractiveCommand {
   static const _defaultTimeout = Duration(minutes: 3);
 
   InteractiveCommand writeLine(String line) {
-    return _addTask(
-      'writeLine($line)',
-      () => _process.stdin.writeln(line),
-    );
+    return _addTask('writeLine($line)', () => _process.stdin.writeln(line));
   }
 
   InteractiveCommand expectNext(
@@ -242,21 +233,14 @@ final class InteractiveCommand {
     String text, {
     Duration timeout = _defaultTimeout,
   }) {
-    skipWhere(
-      'not contains($text)',
-      (line) {
-        _logger.fine('Testing "$line" does not contain "$text"');
-        return !line.contains(text);
-      },
-      timeout: timeout,
-    );
+    skipWhere('not contains($text)', (line) {
+      _logger.fine('Testing "$line" does not contain "$text"');
+      return !line.contains(text);
+    }, timeout: timeout);
     return expectNext(text, timeout: timeout);
   }
 
-  InteractiveCommand skip({
-    int lines = 1,
-    Duration timeout = _defaultTimeout,
-  }) {
+  InteractiveCommand skip({int lines = 1, Duration timeout = _defaultTimeout}) {
     return _addTask('skip', timeout: timeout, () => _logs.take(lines));
   }
 

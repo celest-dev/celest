@@ -47,9 +47,7 @@ final class CreateProjectIsolatedTest extends E2ETest {
           .expectNext('Celest is running');
       await celest.run();
 
-      check(
-        emptyDir.childFile('pubspec.yaml').existsSync(),
-      ).isTrue();
+      check(emptyDir.childFile('pubspec.yaml').existsSync()).isTrue();
     }
   }
 }

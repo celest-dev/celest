@@ -131,29 +131,28 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
     final namedParameters = invocation.namedArguments.map((name, value) {
       return MapEntry(name, value.toCodeBuilder ?? literalNull);
     });
-    final positionalParameters = invocation.positionalArguments
-        .map((el) => el.toCodeBuilder ?? literalNull);
+    final positionalParameters = invocation.positionalArguments.map(
+      (el) => el.toCodeBuilder ?? literalNull,
+    );
     if (constructorEl.name.isNotEmpty) {
-      return typeHelper.toReference(expressionType).constInstanceNamed(
+      return typeHelper
+          .toReference(expressionType)
+          .constInstanceNamed(
             constructorEl.name,
             positionalParameters,
             namedParameters,
           );
     }
-    return typeHelper.toReference(expressionType).constInstance(
-          positionalParameters,
-          namedParameters,
-        );
+    return typeHelper
+        .toReference(expressionType)
+        .constInstance(positionalParameters, namedParameters);
   }
 
   @override
   Expression visitIntValue(int value) => literalNum(value);
 
   @override
-  Expression visitListValue(
-    List<DartObjectImpl> value,
-    DartType staticType,
-  ) =>
+  Expression visitListValue(List<DartObjectImpl> value, DartType staticType) =>
       literalConstList(
         value.map((el) => el.toCodeBuilder ?? literalNull).toList(),
       );
@@ -162,11 +161,10 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
   Expression visitMapValue(
     Map<DartObjectImpl, DartObjectImpl> mapValue,
     DartType staticType,
-  ) =>
-      literalConstMap({
-        for (final MapEntry(:key, :value) in mapValue.entries)
-          key.toCodeBuilder: value.toCodeBuilder ?? literalNull,
-      });
+  ) => literalConstMap({
+    for (final MapEntry(:key, :value) in mapValue.entries)
+      key.toCodeBuilder: value.toCodeBuilder ?? literalNull,
+  });
 
   @override
   Expression? visitNullValue() => null;
@@ -198,13 +196,13 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
   Expression visitVariableReference(VariableElement variable) {
     return switch (variable) {
       TopLevelVariableElement() => refer(
-          variable.name,
-          variable.library.source.uri.toString(),
-        ),
+        variable.name,
+        variable.library.source.uri.toString(),
+      ),
       FieldElement(:final enclosingElement) => refer(
-          enclosingElement.displayName,
-          enclosingElement.library!.source.uri.toString(),
-        ).property(variable.name),
+        enclosingElement.displayName,
+        enclosingElement.library!.source.uri.toString(),
+      ).property(variable.name),
       _ => unreachable('Invalid variable element: $variable'),
     };
   }
@@ -234,16 +232,18 @@ final class _ConstToDartValue extends DartObjectVisitor<ast.DartValue> {
     final namedParameters = invocation.namedArguments.map((name, value) {
       return MapEntry(name, value.accept(this));
     });
-    final positionalParameterNames = constructorEl.parameters
-        .where((it) => it.isPositional)
-        .map((it) => it.name)
-        .toList();
+    final positionalParameterNames =
+        constructorEl.parameters
+            .where((it) => it.isPositional)
+            .map((it) => it.name)
+            .toList();
     final positionalParameterValues =
         invocation.positionalArguments.map((el) => el.accept(this)).toList();
     final className = constructorEl.enclosingElement.displayName;
-    final classRef = typeHelper
-        .toReference(constructorEl.enclosingElement.thisType)
-        .toTypeReference;
+    final classRef =
+        typeHelper
+            .toReference(constructorEl.enclosingElement.thisType)
+            .toTypeReference;
     assert(() {
       if (positionalParameterNames.length < positionalParameterValues.length) {
         final constructorName = switch (constructorEl.name) {
@@ -295,9 +295,7 @@ final class _ConstToDartValue extends DartObjectVisitor<ast.DartValue> {
     DartType staticType,
   ) {
     return ast.DartMap(
-      value.map(
-        (key, value) => MapEntry(key.accept(this), value.accept(this)),
-      ),
+      value.map((key, value) => MapEntry(key.accept(this), value.accept(this))),
       staticType: typeHelper.toReference(staticType).toTypeReference,
     );
   }
@@ -334,9 +332,7 @@ final class _ConstToDartValue extends DartObjectVisitor<ast.DartValue> {
 
   @override
   ast.DartValue visitTypeValue(DartType value) {
-    return ast.DartTypeLiteral(
-      typeHelper.toReference(value).toTypeReference,
-    );
+    return ast.DartTypeLiteral(typeHelper.toReference(value).toTypeReference);
   }
 
   @override

@@ -83,20 +83,14 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     AnalysisErrorSeverity? severity,
     SourceSpan? location,
   }) {
-    _errorReporter.reportError(
-      error,
-      severity: severity,
-      location: location,
-    );
+    _errorReporter.reportError(error, severity: severity, location: location);
   }
 
   Future<Set<InterfaceElement>> _collectCustomTypes(CustomType type) async {
     final files = <File>[];
     final dir = fileSystem.directory(type.dir);
     if (dir.existsSync()) {
-      files.addAll(
-        await dir.list(recursive: true).whereType<File>().toList(),
-      );
+      files.addAll(await dir.list(recursive: true).whereType<File>().toList());
     }
     final legacyBarrelFile = fileSystem.file(type.legacyPath);
     if (legacyBarrelFile.existsSync()) {
@@ -123,11 +117,13 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     this.customExceptionTypes = customExceptionTypes;
     typeHelper.overrides.clear();
     for (final element in customExceptionTypes.followedBy(customModelTypes)) {
-      final overrideAnnotation = element.metadata
-          .firstWhereOrNull((annotation) => annotation.isOverride);
+      final overrideAnnotation = element.metadata.firstWhereOrNull(
+        (annotation) => annotation.isOverride,
+      );
       final isOverride = overrideAnnotation != null;
-      final customOverrideAnnotation = element.metadata
-          .firstWhereOrNull((annotation) => annotation.isCustomOverride);
+      final customOverrideAnnotation = element.metadata.firstWhereOrNull(
+        (annotation) => annotation.isCustomOverride,
+      );
       final isCustomOverride = customOverrideAnnotation != null;
       if (!isOverride && !isCustomOverride) {
         continue;
@@ -139,7 +135,8 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         );
         continue;
       }
-      final elementUri = context.currentSession.uriConverter.uriToPath(
+      final elementUri =
+          context.currentSession.uriConverter.uriToPath(
             element.librarySource.uri,
           ) ??
           p.fromUri(element.librarySource.uri);
@@ -152,11 +149,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           'Proposing edit: ${location.text} -> $editText (${location.sourceUrl})',
         );
         overlay.add(
-          SourceEdit(
-            location.start.offset,
-            location.length,
-            editText,
-          ),
+          SourceEdit(location.start.offset, location.length, editText),
         );
       }
       final typeErasure = element.typeErasure;
@@ -182,8 +175,8 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         );
         continue;
       }
-      final overridesCustomType = switch (
-          context.currentSession.uriConverter.uriToPath(erasureSource)) {
+      final overridesCustomType = switch (context.currentSession.uriConverter
+          .uriToPath(erasureSource)) {
         final path? => p.isWithin(projectPaths.projectRoot, path),
         _ => false,
       };
@@ -239,36 +232,36 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     FileSpan? projectDefineLocation;
 
     for (final declaration in declarations) {
-      if (declaration
-          case VariableDeclaration(
-            name: Token(lexeme: final name),
-            initializer: MethodInvocation(
-              methodName: SimpleIdentifier(name: 'Project'),
-              :final argumentList,
-            )
-          )) {
+      if (declaration case VariableDeclaration(
+        name: Token(lexeme: final name),
+        initializer: MethodInvocation(
+          methodName: SimpleIdentifier(name: 'Project'),
+          :final argumentList,
+        ),
+      )) {
         for (final argument in argumentList.arguments) {
           switch (argument) {
             case NamedExpression(
-                name: Label(label: SimpleIdentifier(name: 'name')),
-                expression: SimpleStringLiteral(:final value),
-              ):
+              name: Label(label: SimpleIdentifier(name: 'name')),
+              expression: SimpleStringLiteral(:final value),
+            ):
               projectName = value;
               variableName = name;
-              projectDefineLocation =
-                  declaration.sourceLocation(projectFileSource);
+              projectDefineLocation = declaration.sourceLocation(
+                projectFileSource,
+              );
             case NamedExpression(
-                name: Label(label: SimpleIdentifier(name: 'displayName')),
-                expression: SimpleStringLiteral(:final value),
-              ):
+              name: Label(label: SimpleIdentifier(name: 'displayName')),
+              expression: SimpleStringLiteral(:final value),
+            ):
               projectDisplayName = value;
             case NamedExpression(
-                name: Label(label: SimpleIdentifier(name: 'region')),
-                expression: PrefixedIdentifier(
-                  prefix: SimpleIdentifier(name: 'Region'),
-                  identifier: SimpleIdentifier(name: final region),
-                ),
-              ):
+              name: Label(label: SimpleIdentifier(name: 'region')),
+              expression: PrefixedIdentifier(
+                prefix: SimpleIdentifier(name: 'Region'),
+                identifier: SimpleIdentifier(name: final region),
+              ),
+            ):
               projectRegion = ast.Region.valueOf(region);
             default:
               performance.captureError(
@@ -288,8 +281,9 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     }
 
     // Validate `project` variable
-    _logger
-        .finer('Resolved project definition location: $projectDefineLocation');
+    _logger.finer(
+      'Resolved project definition location: $projectDefineLocation',
+    );
     if (projectName.isEmpty) {
       reportError(
         'The project name cannot be empty.',
@@ -318,11 +312,11 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         ),
         flutter: switch (Sdk.current.flutterVersion) {
           final flutterVersion? => ast.Sdk(
-              type: ast.SdkType.flutter,
-              version: flutterVersion,
-              enabledExperiments:
-                  celestProject.analysisOptions.enabledExperiments,
-            ),
+            type: ast.SdkType.flutter,
+            version: flutterVersion,
+            enabledExperiments:
+                celestProject.analysisOptions.enabledExperiments,
+          ),
           _ => null,
         },
         targetSdk: await celestProject.determineProjectType(),
@@ -352,103 +346,104 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     var isCloud = false;
     final metadata =
         element.metadata.expand<ast.ApiMetadata>((annotation) sync* {
-      final location = annotation.sourceLocation(element.source!);
-      final value = annotation.computeConstantValue();
-      final type = value?.type;
-      if (value == null || type == null) {
-        // TODO(dnys1): Add separate `hints` parameter to `reportError`
-        /// for suggestions on how to resolve the error/links to docs.
-        reportError(
-          'Could not resolve annotation: $annotation.\n'
-          'value=$value, type=$type',
-          location: location,
-        );
-        return;
-      }
-
-      void assertSingleAuth() {
-        if (hasAuthMetadata) {
-          reportError(
-            'Only one `@authenticated` or `@public` annotation '
-            'may be specified on the same function or API library.',
-            location: location,
-          );
-        }
-        hasAuthMetadata = true;
-      }
-
-      switch (type) {
-        case _ when type.isCloud:
-          isCloud = true;
-          return;
-        case _ when type.isApiAuthenticated:
-          if (!hasAuth) {
+          final location = annotation.sourceLocation(element.source!);
+          final value = annotation.computeConstantValue();
+          final type = value?.type;
+          if (value == null || type == null) {
+            // TODO(dnys1): Add separate `hints` parameter to `reportError`
+            /// for suggestions on how to resolve the error/links to docs.
             reportError(
-              'The `@authenticated` annotation may only be used in '
-              'projects with authentication enabled.',
+              'Could not resolve annotation: $annotation.\n'
+              'value=$value, type=$type',
               location: location,
             );
+            return;
           }
-          assertSingleAuth();
-          yield ast.ApiAuthenticated(location: location);
-        case _ when type.isApiPublic:
-          assertSingleAuth();
-          yield ast.ApiPublic(location: location);
-        case _ when type.isHttpConfig:
-          final method = value.getField('method')?.toStringValue();
-          final statusCode = value.getField('statusCode')?.toIntValue();
-          if (method == null || statusCode == null) {
-            unreachable('http=$value');
-          }
-          switch (statusCode) {
-            case >= 200 && < 300 || >= 400 && < 600:
-              break;
-            default:
+
+          void assertSingleAuth() {
+            if (hasAuthMetadata) {
               reportError(
-                'Invalid HTTP status code. Status codes must be in the range 200-299 or '
-                '400-599. Redirection and other codes are not supported at '
-                'this time.',
+                'Only one `@authenticated` or `@public` annotation '
+                'may be specified on the same function or API library.',
                 location: location,
               );
+            }
+            hasAuthMetadata = true;
+          }
+
+          switch (type) {
+            case _ when type.isCloud:
+              isCloud = true;
+              return;
+            case _ when type.isApiAuthenticated:
+              if (!hasAuth) {
+                reportError(
+                  'The `@authenticated` annotation may only be used in '
+                  'projects with authentication enabled.',
+                  location: location,
+                );
+              }
+              assertSingleAuth();
+              yield ast.ApiAuthenticated(location: location);
+            case _ when type.isApiPublic:
+              assertSingleAuth();
+              yield ast.ApiPublic(location: location);
+            case _ when type.isHttpConfig:
+              final method = value.getField('method')?.toStringValue();
+              final statusCode = value.getField('statusCode')?.toIntValue();
+              if (method == null || statusCode == null) {
+                unreachable('http=$value');
+              }
+              switch (statusCode) {
+                case >= 200 && < 300 || >= 400 && < 600:
+                  break;
+                default:
+                  reportError(
+                    'Invalid HTTP status code. Status codes must be in the range 200-299 or '
+                    '400-599. Redirection and other codes are not supported at '
+                    'this time.',
+                    location: location,
+                  );
+                  return;
+              }
+              yield ast.ApiHttpConfig(
+                method: method,
+                statusCode: statusCode,
+                location: location,
+              );
+            case _ when type.isHttpError:
+              final errorTypes =
+                  [
+                    value.getField('type')?.toTypeValue(),
+                    value.getField('type1')?.toTypeValue(),
+                    value.getField('type2')?.toTypeValue(),
+                    value.getField('type3')?.toTypeValue(),
+                    value.getField('type4')?.toTypeValue(),
+                    value.getField('type5')?.toTypeValue(),
+                    value.getField('type6')?.toTypeValue(),
+                    value.getField('type7')?.toTypeValue(),
+                  ].nonNulls.toList();
+              final statusCode = value.getField('statusCode')?.toIntValue();
+              if (errorTypes.isEmpty || statusCode == null) {
+                unreachable('httpError=$value');
+              }
+              for (final errorType in errorTypes) {
+                yield ast.ApiHttpError(
+                  type: typeHelper.toReference(errorType).toTypeReference,
+                  statusCode: statusCode,
+                  location: location,
+                );
+              }
+            case _ when type.isMiddleware:
+              // return ast.ApiMiddleware(
+              //   type: typeHelper.toReference(type),
+              //   location: location,
+              // );
+              unreachable();
+            default:
               return;
           }
-          yield ast.ApiHttpConfig(
-            method: method,
-            statusCode: statusCode,
-            location: location,
-          );
-        case _ when type.isHttpError:
-          final errorTypes = [
-            value.getField('type')?.toTypeValue(),
-            value.getField('type1')?.toTypeValue(),
-            value.getField('type2')?.toTypeValue(),
-            value.getField('type3')?.toTypeValue(),
-            value.getField('type4')?.toTypeValue(),
-            value.getField('type5')?.toTypeValue(),
-            value.getField('type6')?.toTypeValue(),
-            value.getField('type7')?.toTypeValue(),
-          ].nonNulls.toList();
-          final statusCode = value.getField('statusCode')?.toIntValue();
-          if (errorTypes.isEmpty || statusCode == null) {
-            unreachable('httpError=$value');
-          }
-          for (final errorType in errorTypes) {
-            yield ast.ApiHttpError(
-              type: typeHelper.toReference(errorType).toTypeReference,
-              statusCode: statusCode,
-              location: location,
-            );
-          }
-        case _ when type.isMiddleware:
-          // return ast.ApiMiddleware(
-          //   type: typeHelper.toReference(type),
-          //   location: location,
-          // );
-          unreachable();
-        default:
-          return;
-      }
-    }).toList();
+        }).toList();
 
     return (metadata, isCloud);
   }
@@ -543,12 +538,12 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         if (migrateProject) {
           switch ((annotation.element, annotation.library)) {
             case (
-                PropertyAccessorElement(
-                  enclosingElement: ClassElement(name: 'Env'),
-                  :final name,
-                ),
-                final library?
-              ):
+              PropertyAccessorElement(
+                enclosingElement: ClassElement(name: 'Env'),
+                :final name,
+              ),
+              final library?,
+            ):
               final libraryPath = p.fromUri(library.source.uri);
               assert(p.isWithin(projectPaths.projectRoot, libraryPath));
               final overlay = pendingEdits[libraryPath] ??= {};
@@ -559,11 +554,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
               );
               overlay.add(
                 // @Env.<name> -> @env.<name>
-                SourceEdit(
-                  location.start.offset,
-                  location.length,
-                  editText,
-                ),
+                SourceEdit(location.start.offset, location.length, editText),
               );
           }
         }
@@ -575,9 +566,10 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           );
           return null;
         }
-        final name = (value.getField('name') ??
-                value.getField('(super)')?.getField('name'))
-            ?.toStringValue();
+        final name =
+            (value.getField('name') ??
+                    value.getField('(super)')?.getField('name'))
+                ?.toStringValue();
         if (name == null) {
           reportError(
             'The `name` field is required for environment variables',
@@ -587,7 +579,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         }
         final reservedCelestVariableOutsideCelest =
             name.toUpperCase().startsWith('CELEST_') &&
-                !(annotation.element?.library?.isCelestSdk ?? false);
+            !(annotation.element?.library?.isCelestSdk ?? false);
         if (reservedEnvVars.contains(name) ||
             reservedCelestVariableOutsideCelest) {
           reportError(
@@ -603,10 +595,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           );
           return null;
         }
-        return ast.NodeReference(
-          type: ast.NodeType.variable,
-          name: name,
-        );
+        return ast.NodeReference(type: ast.NodeType.variable, name: name);
       case DartType(isSecret: true):
         if (!validEnvTypes.isExactlyType(parameter.type)) {
           reportError(
@@ -616,9 +605,10 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           );
           return null;
         }
-        final name = (value.getField('name') ??
-                value.getField('(super)')?.getField('name'))
-            ?.toStringValue();
+        final name =
+            (value.getField('name') ??
+                    value.getField('(super)')?.getField('name'))
+                ?.toStringValue();
         if (name == null) {
           reportError(
             'The `name` field is required for secrets',
@@ -628,7 +618,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         }
         final reservedCelestVariableOutsideCelest =
             name.toUpperCase().startsWith('CELEST_') &&
-                !(annotation.element?.library?.isCelestSdk ?? false);
+            !(annotation.element?.library?.isCelestSdk ?? false);
         if (reservedEnvVars.contains(name) ||
             reservedCelestVariableOutsideCelest) {
           reportError(
@@ -638,19 +628,14 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           return null;
         }
         if (secrets.none((secret) => secret.name == name)) {
-          reportError(
-            'The secret `$name` does not exist',
-            location: location,
-          );
+          reportError('The secret `$name` does not exist', location: location);
           return null;
         }
-        return ast.NodeReference(
-          type: ast.NodeType.secret,
-          name: name,
-        );
+        return ast.NodeReference(type: ast.NodeType.secret, name: name);
       case DartType(isUserContext: true):
-        if (!TypeChecker.fromStatic(typeHelper.coreTypes.userType)
-            .isExactlyType(parameter.type)) {
+        if (!TypeChecker.fromStatic(
+          typeHelper.coreTypes.userType,
+        ).isExactlyType(parameter.type)) {
           reportError(
             'The type of a user context parameter must be `User`',
             location: parameter.sourceLocation,
@@ -669,11 +654,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
                 '(${location.sourceUrl})',
               );
               overlay.add(
-                SourceEdit(
-                  location.start.offset,
-                  location.length,
-                  editText,
-                ),
+                SourceEdit(location.start.offset, location.length, editText),
               );
           }
         }
@@ -703,8 +684,9 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         name ??= parameter.name;
 
         final validHeaderType = switch (parameter.type) {
-          final InterfaceType type =>
-            _validHeaderQueryTypes.isExactlyType(type),
+          final InterfaceType type => _validHeaderQueryTypes.isExactlyType(
+            type,
+          ),
           _ => false,
         };
         if (!validHeaderType) {
@@ -753,10 +735,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           return null;
         }
 
-        return ast.NodeReference(
-          type: ast.NodeType.httpHeader,
-          name: name,
-        );
+        return ast.NodeReference(type: ast.NodeType.httpHeader, name: name);
       case DartType(isHttpQuery: true):
         var name = value.getField('name')?.toStringValue();
         name ??= parameter.name;
@@ -764,8 +743,9 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
         final validQueryType = switch (parameter.type) {
           InterfaceType(isDartCoreList: true, typeArguments: [final type]) =>
             _validHeaderQueryTypes.isExactlyType(type),
-          final InterfaceType type =>
-            _validHeaderQueryTypes.isExactlyType(type),
+          final InterfaceType type => _validHeaderQueryTypes.isExactlyType(
+            type,
+          ),
           _ => false,
         };
         if (!validQueryType) {
@@ -777,10 +757,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           return null;
         }
 
-        return ast.NodeReference(
-          type: ast.NodeType.httpQuery,
-          name: name,
-        );
+        return ast.NodeReference(type: ast.NodeType.httpQuery, name: name);
       // TODO
       // case DartType(isHttpLabel: true):
     }
@@ -811,15 +788,17 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     final (libraryMetdata, _) = _collectApiMetadata(library, hasAuth: hasAuth);
     final apiExceptionTypes = await collectExceptionTypes(library);
     final functions = Map.fromEntries(
-      (await library.topLevelElements
-              .whereType<FunctionElement>()
-              .asyncMap((func) async {
+      (await library.topLevelElements.whereType<FunctionElement>().asyncMap((
+        func,
+      ) async {
         if (func.isPrivate) {
           return null;
         }
 
-        final (functionMetadata, isCloud) =
-            _collectApiMetadata(func, hasAuth: hasAuth);
+        final (functionMetadata, isCloud) = _collectApiMetadata(
+          func,
+          hasAuth: hasAuth,
+        );
 
         if (!isCloud) {
           if (!migrateProject) {
@@ -828,32 +807,28 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           _warnForNoCloud();
           final overlay = pendingEdits[p.fromUri(library.source.uri)] ??= {};
 
-          final declaration = apiLibrary.getElementDeclaration(func)!.node
-              as FunctionDeclaration;
+          final declaration =
+              apiLibrary.getElementDeclaration(func)!.node
+                  as FunctionDeclaration;
           // Put the `@cloud` before the first annotation, or directly
           // before the return type if there is no metadata.
-          final offset = declaration.metadata.firstOrNull?.offset ??
+          final offset =
+              declaration.metadata.firstOrNull?.offset ??
               declaration.returnType!.offset;
           const editText = '@cloud\n';
           _logger.finest(
             'Proposing edit: $editText for ${func.name} '
             '($apiFilepath)',
           );
-          overlay.add(
-            SourceEdit(
-              offset,
-              0,
-              editText,
-            ),
-          );
+          overlay.add(SourceEdit(offset, 0, editText));
         }
 
         final returnType = func.returnType;
         final (flattenedReturnType, streaming) = switch (returnType) {
           final InterfaceType type when type.isDartAsyncStream => (
-              type.typeArguments.first.flattened,
-              true
-            ),
+            type.typeArguments.first.flattened,
+            true,
+          ),
           _ => (returnType.flattened, false),
         };
         final streamType =
@@ -943,14 +918,16 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
                 secrets: secrets,
                 streamType: streamType,
               ),
-              annotations: param.metadata
-                  .map((annotation) => annotation.toDartValue)
-                  .nonNulls
-                  .toList(),
-              annotationExpressions: param.metadata
-                  .map((annotation) => annotation.toCodeBuilder)
-                  .nonNulls
-                  .toList(),
+              annotations:
+                  param.metadata
+                      .map((annotation) => annotation.toDartValue)
+                      .nonNulls
+                      .toList(),
+              annotationExpressions:
+                  param.metadata
+                      .map((annotation) => annotation.toCodeBuilder)
+                      .nonNulls
+                      .toList(),
               defaultTo: param.defaultToValue,
               defaultToExpression: param.defaultToExpression,
             );
@@ -990,8 +967,9 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
                 reportError(
                   'The type of a parameter must be serializable as JSON. $reason',
                   location: switch (reason.location) {
-                    final reasonLoc? =>
-                      parameter.location.safeExpand(reasonLoc),
+                    final reasonLoc? => parameter.location.safeExpand(
+                      reasonLoc,
+                    ),
                     _ => parameter.location,
                   },
                 );
@@ -1004,14 +982,16 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           streamType: streamType,
           location: func.sourceLocation!,
           metadata: functionMetadata,
-          annotations: func.metadata
-              .map((annotation) => annotation.toDartValue)
-              .nonNulls
-              .toList(),
-          annotationExpressions: func.metadata
-              .map((annotation) => annotation.toCodeBuilder)
-              .nonNulls
-              .toList(),
+          annotations:
+              func.metadata
+                  .map((annotation) => annotation.toDartValue)
+                  .nonNulls
+                  .toList(),
+          annotationExpressions:
+              func.metadata
+                  .map((annotation) => annotation.toCodeBuilder)
+                  .nonNulls
+                  .toList(),
           docs: func.docLines,
         );
 
@@ -1053,8 +1033,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           }
         }
         return MapEntry(function.name, function);
-      }))
-          .nonNulls,
+      })).nonNulls,
     );
     return ast.Api(
       name: apiName,
@@ -1074,22 +1053,21 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     required String authFilepath,
     required ResolvedLibraryResult authLibrary,
   }) async {
-    final (topLevelConstants, hasErrors) =
-        authLibrary.element.topLevelConstants(errorReporter: _errorReporter);
+    final (topLevelConstants, hasErrors) = authLibrary.element
+        .topLevelConstants(errorReporter: _errorReporter);
     if (hasErrors) {
       return null;
     }
-    final authDefinition =
-        topLevelConstants.firstWhereOrNull((el) => el.element.type.isAuth);
+    final authDefinition = topLevelConstants.firstWhereOrNull(
+      (el) => el.element.type.isAuth,
+    );
     if (authDefinition == null) {
       _logger.finest('No `Auth` definition found in $authFilepath');
       return null;
     }
 
-    final (
-      element: authDefinitionElement,
-      value: authDefinitionValue,
-    ) = authDefinition;
+    final (element: authDefinitionElement, value: authDefinitionValue) =
+        authDefinition;
 
     // Validate `auth` variable.
     final authDefinitionLocation = authDefinitionElement.sourceLocation;
@@ -1141,9 +1119,10 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
             );
           }
           final projectIdEnvName = projectIdValue.configValueName;
-          externalProvider = ast.FirebaseExternalAuthProviderBuilder()
-            ..projectId.name = projectIdEnvName
-            ..projectId.location = authDefinitionLocation;
+          externalProvider =
+              ast.FirebaseExternalAuthProviderBuilder()
+                ..projectId.name = projectIdEnvName
+                ..projectId.location = authDefinitionLocation;
 
         case InterfaceType(isExternalAuthProviderSupabase: true):
           final urlValue = authProvider.getField('url');
@@ -1216,17 +1195,16 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
     if (hasErrors) {
       return null;
     }
-    final databaseDefinition =
-        topLevelConstants.firstWhereOrNull((el) => el.element.type.isDatabase);
+    final databaseDefinition = topLevelConstants.firstWhereOrNull(
+      (el) => el.element.type.isDatabase,
+    );
     if (databaseDefinition == null) {
       _logger.finest('No `Database` definition found in $databaseFilepath');
       return null;
     }
 
-    final (
-      element: databaseDefinitionElement,
-      value: databaseDefinitionValue,
-    ) = databaseDefinition;
+    final (element: databaseDefinitionElement, value: databaseDefinitionValue) =
+        databaseDefinition;
 
     // Validate `database` variable.
     final databaseDefinitionLocation =

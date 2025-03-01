@@ -46,12 +46,7 @@ List<DartType> topologicallySortTypes(Iterable<DartType> types) {
 
 const _equality = DartTypeEquality(ignoreNullability: true);
 
-enum _Relation {
-  equal,
-  subtype,
-  supertype,
-  unrelated;
-}
+enum _Relation { equal, subtype, supertype, unrelated }
 
 extension on DartType {
   _Relation relationTo(DartType other) {

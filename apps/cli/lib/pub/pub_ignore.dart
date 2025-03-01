@@ -94,10 +94,10 @@ final class Ignore {
     bool ignoreCase = false,
     void Function(String pattern, FormatException exception)? onInvalidPattern,
   }) : _rules = _parseIgnorePatterns(
-          patterns,
-          ignoreCase,
-          onInvalidPattern: onInvalidPattern,
-        ).toList(growable: false);
+         patterns,
+         ignoreCase,
+         onInvalidPattern: onInvalidPattern,
+       ).toList(growable: false);
   final List<_IgnoreRule> _rules;
 
   /// Returns `true` if [path] is ignored by the patterns used to create this
@@ -155,10 +155,11 @@ final class Ignore {
         return [path.substring(startOfNext, nextSlash)];
       },
       ignoreForDir: (dir) => dir == '.' || dir.isEmpty ? this : null,
-      isDir: (candidate) =>
-          candidate == '.' ||
-          candidate.isEmpty ||
-          path.length > candidate.length && path[candidate.length] == '/',
+      isDir:
+          (candidate) =>
+              candidate == '.' ||
+              candidate.isEmpty ||
+              path.length > candidate.length && path[candidate.length] == '/',
     ).isEmpty;
   }
 
@@ -259,8 +260,9 @@ final class Ignore {
       final ignore = ignoreForDir(
         partial == '/' ? '.' : partial.substring(1, partial.length - 1),
       );
-      ignoreStack
-          .add(ignore == null ? null : _IgnorePrefixPair(ignore, partial));
+      ignoreStack.add(
+        ignore == null ? null : _IgnorePrefixPair(ignore, partial),
+      );
     }
     // Do a depth first tree-search starting at [beneath].
     // toVisit is a stack containing all items that are waiting to be processed.
@@ -291,9 +293,9 @@ final class Ignore {
           ignore == null
               ? null
               : _IgnorePrefixPair(
-                  ignore,
-                  current == '/' ? current : '$current/',
-                ),
+                ignore,
+                current == '/' ? current : '$current/',
+              ),
         );
         // Put all entities in current on the stack to be processed.
         toVisit.add(listDir(normalizedCurrent).map((x) => '/$x').toList());
@@ -313,9 +315,7 @@ class _IgnoreParseResult {
 
   _IgnoreParseResult.invalid(this.pattern, this.exception) : rule = null;
 
-  _IgnoreParseResult.empty(this.pattern)
-      : rule = null,
-        exception = null;
+  _IgnoreParseResult.empty(this.pattern) : rule = null, exception = null;
   // The parsed pattern.
   final String pattern;
 
@@ -539,11 +539,7 @@ _IgnoreParseResult _parseIgnorePattern(String pattern, bool ignoreCase) {
   try {
     return _IgnoreParseResult(
       pattern,
-      _IgnoreRule(
-        RegExp(expr, caseSensitive: !ignoreCase),
-        negative,
-        pattern,
-      ),
+      _IgnoreRule(RegExp(expr, caseSensitive: !ignoreCase), negative, pattern),
     );
   } on FormatException catch (e) {
     throw AssertionError(

@@ -45,9 +45,7 @@ import 'package:yaml/yaml.dart';
 /// - Instantiating type schemas to their usage site
 /// - Removing OpenAPI abstractions and consolidating into concrete properties
 final class OpenApiSchemaLinker {
-  OpenApiSchemaLinker({
-    required this.context,
-  });
+  OpenApiSchemaLinker({required this.context});
 
   final StripeOpenApiGeneratorContext context;
 
@@ -68,10 +66,10 @@ final class OpenApiSchemaLinker {
       ({String className, String? inPackage})? stripeResource;
       switch (schema.value.extensions.toMap()) {
         case {
-            'x-stripeResource': JsonObject(
-              value: final Map<Object?, Object?> resourceJson
-            )
-          }:
+          'x-stripeResource': JsonObject(
+            value: final Map<Object?, Object?> resourceJson,
+          ),
+        }:
           switch (resourceJson) {
             case {'class_name': final String className}:
               stripeResource = (
@@ -80,8 +78,8 @@ final class OpenApiSchemaLinker {
               );
           }
         case {
-            'x-stripeEvent': JsonObject(value: {'type': final String eventType})
-          }:
+          'x-stripeEvent': JsonObject(value: {'type': final String eventType}),
+        }:
           // There are many conflicting names if we use the event type directly.
           //
           // For example, there's an `issuing_authorization_request` component
@@ -97,8 +95,9 @@ final class OpenApiSchemaLinker {
       context.dartNames[schema.key] = context.reserveName(name, schema.value);
       context.dartRefs[schema.key] ??= refer(name, 'models.dart');
 
-      if (schema.value.extensions['x-stripeOperations']
-          case JsonObject(value: final List<Object?> operations)) {
+      if (schema.value.extensions['x-stripeOperations'] case JsonObject(
+        value: final List<Object?> operations,
+      )) {
         final stripeResourceId =
             schema.value.extensions['x-resourceId']?.value as String?;
         for (final operation in operations) {
@@ -164,13 +163,9 @@ final class OpenApiSchemaLinker {
         context.stripeResources[resourceId] = type.typeReference;
       }
       _service.models[name] = ServiceModel(
-        spec: context.schemaSpecs[name] ??
-            context.generateSpec(
-              name,
-              schema.key,
-              type,
-              url: url,
-            ),
+        spec:
+            context.schemaSpecs[name] ??
+            context.generateSpec(name, schema.key, type, url: url),
         type: type,
       );
     }
@@ -184,8 +179,11 @@ final class OpenApiSchemaLinker {
             in context.stripeEventTypes.entries)
           OpenApiSealedBranch(
             name: dartName,
-            type: context.typeSchemaRefs[
-                context.document.components.schemas[schemaName]!]!,
+            type:
+                context.typeSchemaRefs[context
+                    .document
+                    .components
+                    .schemas[schemaName]!]!,
           ),
       ],
       discriminator: FieldDiscriminator(
@@ -194,17 +192,21 @@ final class OpenApiSchemaLinker {
         mapping: {
           for (final MapEntry(key: schemaName, value: _)
               in context.stripeEventTypes.entries)
-            schemaName: context.typeSchemaRefs[
-                context.document.components.schemas[schemaName]!]!,
+            schemaName:
+                context.typeSchemaRefs[context
+                    .document
+                    .components
+                    .schemas[schemaName]!]!,
         },
       ),
       isNullable: false,
     );
-    final stripeEventUnion = OpenApiUnionGenerator(
-      name: 'StripeEvent',
-      context: context,
-      type: stripeEventSchema,
-    ).generate();
+    final stripeEventUnion =
+        OpenApiUnionGenerator(
+          name: 'StripeEvent',
+          context: context,
+          type: stripeEventSchema,
+        ).generate();
     context.schemaSpecs['StripeEvent'] = stripeEventUnion;
     context.schemasByUrl.add('events.dart', 'StripeEvent');
 
@@ -272,8 +274,9 @@ final class OpenApiSchemaLinker {
         for (final (dartName, variable) in variables) {
           b.variables.variables[dartName] = ServiceHostVariable.build((v) {
             if (variable.enumValues case final enumValues?) {
-              v.extensionTypeName =
-                  context.reserveName('${context.apiName}_Var_$dartName');
+              v.extensionTypeName = context.reserveName(
+                '${context.apiName}_Var_$dartName',
+              );
               for (final value in enumValues) {
                 v.enumValues[value.camelCase] = value;
               }
@@ -299,8 +302,8 @@ final class OpenApiSchemaLinker {
       currentComplexity = complexity;
     }
 
-    for (final MapEntry(key: serverName, value: serverUri)
-        in serverUris.entries.skip(1)) {
+    for (final MapEntry(key: serverName, value: serverUri) in serverUris.entries
+        .skip(1)) {
       final serverScheme = serverUri.scheme;
       final serverComplexity = serverUri.complexity;
       if (currentScheme != serverScheme) {
@@ -375,9 +378,10 @@ final class OpenApiSchemaLinker {
         final parameterType = context.typeResolver.resolveRef(
           parameter.schema ?? parameter.content!.$2.schema,
           OpenApiTypeResolutionScope(
-            nameResolver: () => [
-              '${pathRoute.lastOrNull?.pascalCase ?? ''}${variableName.pascalCase}',
-            ],
+            nameResolver:
+                () => [
+                  '${pathRoute.lastOrNull?.pascalCase ?? ''}${variableName.pascalCase}',
+                ],
             isNullable: !parameter.required,
             url: 'models.dart',
           ),
@@ -398,13 +402,14 @@ final class OpenApiSchemaLinker {
             parameter.name: parameter,
         };
 
-        final methodName = operation.operationId?.camelCase ??
+        final methodName =
+            operation.operationId?.camelCase ??
             '${operation.type.name}_${operation.path}'.camelCase;
         path.methods[methodName] = ServiceMethod.build((method) {
           method
             ..methodName =
                 context.stripeOperationNames[(pathItem.path, operation.type)] ??
-                    methodName
+                methodName
             ..methodType = operation.type
             ..deprecated = operation.deprecated
             ..summary = operation.summary
@@ -417,9 +422,10 @@ final class OpenApiSchemaLinker {
                 .resolveRef(
                   parameter.schema ?? parameter.content!.$2.schema,
                   OpenApiTypeResolutionScope(
-                    nameResolver: () => [
-                      '${pathRoute.lastOrNull?.pascalCase ?? ''}${variableName.pascalCase}',
-                    ],
+                    nameResolver:
+                        () => [
+                          '${pathRoute.lastOrNull?.pascalCase ?? ''}${variableName.pascalCase}',
+                        ],
                     isNullable: !parameter.required,
                     url: 'models.dart',
                   ),
@@ -441,24 +447,28 @@ final class OpenApiSchemaLinker {
                     variableName: variableName,
                   ),
                 );
-                operationPath =
-                    operationPath.replaceAll(template, '\$$variableName');
+                operationPath = operationPath.replaceAll(
+                  template,
+                  '\$$variableName',
+                );
               case OpenApiParameterLocation.query:
                 method.queryParameters.add(
                   HeaderOrQueryParameter.build(
-                    (b) => b
-                      ..rawName = parameterName
-                      ..variableName = variableName
-                      ..type = parameterType,
+                    (b) =>
+                        b
+                          ..rawName = parameterName
+                          ..variableName = variableName
+                          ..type = parameterType,
                   ),
                 );
               case OpenApiParameterLocation.header:
                 method.headers.add(
                   HeaderOrQueryParameter.build(
-                    (b) => b
-                      ..rawName = parameterName
-                      ..variableName = variableName
-                      ..type = parameterType,
+                    (b) =>
+                        b
+                          ..rawName = parameterName
+                          ..variableName = variableName
+                          ..type = parameterType,
                   ),
                 );
               case OpenApiParameterLocation.cookie:
@@ -483,10 +493,11 @@ final class OpenApiSchemaLinker {
                   '${requestBody.content.keys.join(', ')}',
                 );
               }
-              final stripeOperationName = context.stripeOperationResourceName[(
-                operation.path,
-                operation.type
-              )];
+              final stripeOperationName =
+                  context.stripeOperationResourceName[(
+                    operation.path,
+                    operation.type,
+                  )];
               final bodyType = context.typeResolver
                   .resolveRef(
                     bodyMediaType.schema,
@@ -495,13 +506,15 @@ final class OpenApiSchemaLinker {
                       nameResolver: () sync* {
                         final stripeOperationType =
                             context.stripeOperationNames[(
-                                  pathItem.path,
-                                  operation.type
-                                )] ??
-                                '';
+                              pathItem.path,
+                              operation.type,
+                            )] ??
+                            '';
 
-                        if (stripeOperationName
-                            case (:final className, :final inPackage)) {
+                        if (stripeOperationName case (
+                          :final className,
+                          :final inPackage,
+                        )) {
                           // e.g. FileCreateOptions for (className=File, operationType=create)
                           yield '${(inPackage ?? '').pascalCase}${className.pascalCase}${stripeOperationType.pascalCase}Options';
                         }
@@ -514,12 +527,13 @@ final class OpenApiSchemaLinker {
                   )
                   .withNullability(!requestBody.required)
                   .rebuild((t) {
-                if (requestBody.description case final description?) {
-                  t.docs ??= formatDocs(description);
-                }
-              });
-              method.requestBody[bodyMediaType.contentType.mimeType] =
-                  ServiceMethodRequest(
+                    if (requestBody.description case final description?) {
+                      t.docs ??= formatDocs(description);
+                    }
+                  });
+              method.requestBody[bodyMediaType
+                  .contentType
+                  .mimeType] = ServiceMethodRequest(
                 contentType: bodyMediaType.contentType,
                 type: bodyType is OpenApiEmptyType ? null : bodyType,
                 encoding: bodyMediaType.encoding.toMap(),
@@ -537,23 +551,23 @@ final class OpenApiSchemaLinker {
             [] => const [<OpenApiResponse>[], <OpenApiResponse>[]],
             [
               OpenApiResponse(statusCode: null || (>= 200 && <= 300)) &&
-                  final singleResponse
+                  final singleResponse,
             ] =>
               [
                 [singleResponse],
                 const <OpenApiResponse>[],
               ],
             _ => [
-                allResponses.where((it) {
-                  final statusCode = it.statusCode;
-                  return statusCode != null &&
-                      (statusCode >= 200 && statusCode <= 300);
-                }).toList(),
-                allResponses.where((it) {
-                  final statusCode = it.statusCode;
-                  return statusCode == null || statusCode >= 300;
-                }).toList(),
-              ],
+              allResponses.where((it) {
+                final statusCode = it.statusCode;
+                return statusCode != null &&
+                    (statusCode >= 200 && statusCode <= 300);
+              }).toList(),
+              allResponses.where((it) {
+                final statusCode = it.statusCode;
+                return statusCode == null || statusCode >= 300;
+              }).toList(),
+            ],
           };
 
           assert(
@@ -605,16 +619,17 @@ final class OpenApiSchemaLinker {
                 responseInterfaceName,
                 'models.dart',
                 () => Class(
-                  (c) => c
-                    ..sealed = true
-                    ..name = responseInterfaceName
-                    ..docs.addAll([
-                      '/// Response type for [$className.$methodName].',
-                      '///',
-                      '/// This is a marker interface implemented by all response types:',
-                      for (final responseType in allResponseTypes)
-                        '/// - [${responseType.typeReference.symbol}]',
-                    ]),
+                  (c) =>
+                      c
+                        ..sealed = true
+                        ..name = responseInterfaceName
+                        ..docs.addAll([
+                          '/// Response type for [$className.$methodName].',
+                          '///',
+                          '/// This is a marker interface implemented by all response types:',
+                          for (final responseType in allResponseTypes)
+                            '/// - [${responseType.typeReference.symbol}]',
+                        ]),
                 ),
               );
 
@@ -679,9 +694,10 @@ final class OpenApiSchemaLinker {
         isError: isError,
         type: OpenApiEmptyType(
           schema: OpenApiEmptyTypeSchema.instance,
-          typeReference: needsWrapper
-              ? context.emptyType
-              : DartTypes.core.void$.toTypeReference,
+          typeReference:
+              needsWrapper
+                  ? context.emptyType
+                  : DartTypes.core.void$.toTypeReference,
         ),
       );
     }
@@ -690,7 +706,8 @@ final class OpenApiSchemaLinker {
     //   (el) => el.contentType.subtype == '*' || el.contentType.subtype == 'json',
     //   orElse: () => response.content.values.first,
     // );
-    final responseMediaType = response.content.values.singleOrNull ??
+    final responseMediaType =
+        response.content.values.singleOrNull ??
         (throw ArgumentError(
           'Multiple response media types: ${response.content}',
         ));

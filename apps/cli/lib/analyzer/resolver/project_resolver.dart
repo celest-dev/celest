@@ -13,9 +13,7 @@ abstract interface class CelestErrorReporter {
 }
 
 abstract base class CelestProjectResolver with CelestAnalysisHelpers {
-  CelestProjectResolver({
-    required this.migrateProject,
-  });
+  CelestProjectResolver({required this.migrateProject});
 
   final bool migrateProject;
 

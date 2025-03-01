@@ -3,10 +3,6 @@ import 'package:meta/meta.dart';
 
 @immutable
 class AvailableStock {
-  final String ticker;
-  final String name;
-  final double currentPrice;
-
   AvailableStock(
     this.ticker, {
     required this.name,
@@ -15,6 +11,9 @@ class AvailableStock {
 
   AvailableStock.from(({String ticker, String name, double price}) stock)
       : this(stock.ticker, name: stock.name, currentPrice: stock.price);
+  final String ticker;
+  final String name;
+  final double currentPrice;
 
   String get currentPriceStr => 'US\$ ${currentPrice.toStringAsFixed(2)}';
 

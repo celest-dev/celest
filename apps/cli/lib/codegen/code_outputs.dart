@@ -9,10 +9,7 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
 final class CodeOutputs extends DelegatingMap<String, String> {
-  const CodeOutputs(
-    super.base, {
-    required this.codegenDependencies,
-  });
+  const CodeOutputs(super.base, {required this.codegenDependencies});
 
   /// Dependencies added as part of the code generation process.
   ///
@@ -43,8 +40,9 @@ final class CodeOutputs extends DelegatingMap<String, String> {
           .directory(codegenDependencies.rootDir)
           .childFile('pubspec.yaml');
       final currentDependencies = Set.of(pubspec.dependencies.keys);
-      final missingDependencies =
-          codegenDependencies.difference(currentDependencies);
+      final missingDependencies = codegenDependencies.difference(
+        currentDependencies,
+      );
       if (missingDependencies.isNotEmpty) {
         _logger.fine(
           'Adding dependencies to ${pubspecFile.path}: '
@@ -53,20 +51,21 @@ final class CodeOutputs extends DelegatingMap<String, String> {
         pubspec = pubspec.addDeps(
           dependencies: {
             for (final dependency in codegenDependencies)
-              dependency: ProjectDependency.all[dependency]?.pubDependency ??
+              dependency:
+                  ProjectDependency.all[dependency]?.pubDependency ??
                   HostedDependency(version: VersionConstraint.any),
           },
         );
         if (pubspecFile.existsSync()) {
           outputFutures.add(
-            pubspecFile
-                .writeAsString(pubspec.toYaml(source: pubspecYaml))
-                .then((_) {
-              return runPub(
-                action: PubAction.get,
-                workingDirectory: pubspecFile.parent.path,
-              );
-            }),
+            pubspecFile.writeAsString(pubspec.toYaml(source: pubspecYaml)).then(
+              (_) {
+                return runPub(
+                  action: PubAction.get,
+                  workingDirectory: pubspecFile.parent.path,
+                );
+              },
+            ),
           );
         } else {
           _logger.fine(

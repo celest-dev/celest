@@ -16,15 +16,12 @@ final class ProjectDiff extends AstVisitorWithArg<void, ProjectDiffContext> {
       visitApi(api, (parent: project, old: oldProject.apis[api.name]));
     }
     for (final env in project.variables) {
-      visitVariable(
-        env,
-        (
-          parent: project,
-          old: oldProject.variables.firstWhereOrNull(
-            (oldEnv) => oldEnv.name == env.name,
-          )
+      visitVariable(env, (
+        parent: project,
+        old: oldProject.variables.firstWhereOrNull(
+          (oldEnv) => oldEnv.name == env.name,
         ),
-      );
+      ));
     }
   }
 
@@ -35,24 +32,18 @@ final class ProjectDiff extends AstVisitorWithArg<void, ProjectDiffContext> {
       requiresRestart = true;
     }
     for (final metadata in api.metadata) {
-      visitNode(
-        metadata,
-        (
-          parent: api,
-          old: old?.metadata.firstWhereOrNull(
-            (oldMetadata) => oldMetadata == metadata,
-          )
+      visitNode(metadata, (
+        parent: api,
+        old: old?.metadata.firstWhereOrNull(
+          (oldMetadata) => oldMetadata == metadata,
         ),
-      );
+      ));
     }
     for (final function in api.functions.values) {
-      visitFunction(
-        function,
-        (
-          parent: api,
-          old: old?.functions[function.name],
-        ),
-      );
+      visitFunction(function, (
+        parent: api,
+        old: old?.functions[function.name],
+      ));
     }
   }
 
@@ -78,10 +69,7 @@ final class ProjectDiff extends AstVisitorWithArg<void, ProjectDiffContext> {
   ) {}
 
   @override
-  void visitVariable(
-    Variable variable,
-    ProjectDiffContext context,
-  ) {
+  void visitVariable(Variable variable, ProjectDiffContext context) {
     final (parent: _, :old as Variable?) = context;
     if (old == null) {
       requiresRestart = true;
@@ -108,26 +96,20 @@ final class ProjectDiff extends AstVisitorWithArg<void, ProjectDiffContext> {
       return;
     }
     for (final parameter in function.parameters) {
-      visitNode(
-        parameter,
-        (
-          parent: function,
-          old: oldFunction.parameters.firstWhereOrNull(
-            (oldParameter) => oldParameter.name == parameter.name,
-          )
+      visitNode(parameter, (
+        parent: function,
+        old: oldFunction.parameters.firstWhereOrNull(
+          (oldParameter) => oldParameter.name == parameter.name,
         ),
-      );
+      ));
     }
     for (final metadata in function.metadata) {
-      visitNode(
-        metadata,
-        (
-          parent: function,
-          old: oldFunction.metadata.firstWhereOrNull(
-            (oldMetadata) => oldMetadata == metadata,
-          )
+      visitNode(metadata, (
+        parent: function,
+        old: oldFunction.metadata.firstWhereOrNull(
+          (oldMetadata) => oldMetadata == metadata,
         ),
-      );
+      ));
     }
   }
 
@@ -166,7 +148,9 @@ final class ProjectDiff extends AstVisitorWithArg<void, ProjectDiffContext> {
 
   @override
   void visitDatabaseSchema(
-      DatabaseSchema schema, covariant ProjectDiffContext context) {
+    DatabaseSchema schema,
+    covariant ProjectDiffContext context,
+  ) {
     // TODO: implement visitSchema
   }
 }

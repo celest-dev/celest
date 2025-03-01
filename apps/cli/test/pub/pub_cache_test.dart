@@ -12,9 +12,10 @@ void main() {
     });
 
     test('hydrates packages', () async {
-      final packages = PubCache.packagesToFix.entries
-          .map((e) => '${e.key}:${e.value}')
-          .toList();
+      final packages =
+          PubCache.packagesToFix.entries
+              .map((e) => '${e.key}:${e.value}')
+              .toList();
       final results = await pubCache.hydrate();
       for (final (index, (exitCode, output)) in results.indexed) {
         if (exitCode != 0) {

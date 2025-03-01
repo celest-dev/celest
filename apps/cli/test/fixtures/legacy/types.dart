@@ -17,10 +17,7 @@ class Test {
 }
 
 class ApiTest {
-  const ApiTest({
-    this.functionTests = const {},
-    this.eventTests = const {},
-  });
+  const ApiTest({this.functionTests = const {}, this.eventTests = const {}});
 
   final Map<String, List<HttpTest>> functionTests;
   final Map<String, List<EventTest>> eventTests;
@@ -115,9 +112,9 @@ class EventTestSuccess extends EventTest {
     super.logs,
     super.setup,
   }) : output = emitsInOrder([
-          for (final event in events ?? const []) jsonEncode(event),
-          emitsDone,
-        ]);
+         for (final event in events ?? const []) jsonEncode(event),
+         emitsDone,
+       ]);
 
   final Object? output;
 }

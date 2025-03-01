@@ -18,22 +18,18 @@ enum CustomType {
   exception;
 
   String get legacyPath => switch (this) {
-        model => projectPaths.modelsDart,
-        exception => projectPaths.exceptionsDart,
-      };
+    model => projectPaths.modelsDart,
+    exception => projectPaths.exceptionsDart,
+  };
 
   String get dir => switch (this) {
-        model => projectPaths.modelsDir,
-        exception => projectPaths.exceptionsDir,
-      };
+    model => projectPaths.modelsDir,
+    exception => projectPaths.exceptionsDir,
+  };
 }
 
 final class SourceEdit {
-  const SourceEdit(
-    this.offset,
-    this.length,
-    this.replacement,
-  );
+  const SourceEdit(this.offset, this.length, this.replacement);
 
   final int offset;
   final int length;
@@ -191,7 +187,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     }
     final interfaceType = interfaceElement.thisType;
     final interfaceUri = interfaceElement.library.source.uri;
-    final isExceptionType = identical(
+    final isExceptionType =
+        identical(
           interfaceElement,
           typeHelper.coreTypes.coreExceptionType.element,
         ) ||
@@ -199,7 +196,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
           interfaceType.extensionTypeErasure,
           typeHelper.coreTypes.coreExceptionType,
         );
-    final isErrorType = identical(
+    final isErrorType =
+        identical(
           interfaceElement,
           typeHelper.coreTypes.coreErrorType.element,
         ) ||
@@ -213,12 +211,14 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     }
     // Only types defined within the celest/ project folder need to be in
     // lib/ since all others can be imported on the client side.
-    final (mustBeExportedFromExceptionsDart, exportedFromExceptionsDart) =
-        switch (context.currentSession.uriConverter.uriToPath(interfaceUri)) {
+    final (
+      mustBeExportedFromExceptionsDart,
+      exportedFromExceptionsDart,
+    ) = switch (context.currentSession.uriConverter.uriToPath(interfaceUri)) {
       final path? => (
-          p.isWithin(projectPaths.projectRoot, path),
-          p.isWithin(projectPaths.projectLib, path),
-        ),
+        p.isWithin(projectPaths.projectRoot, path),
+        p.isWithin(projectPaths.projectLib, path),
+      ),
       _ => (false, false),
     };
     if (!exportedFromExceptionsDart && mustBeExportedFromExceptionsDart) {
@@ -231,8 +231,9 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       return null;
     }
     final isInstantiable = switch (interfaceElement) {
-      final ClassElement classElement => classElement.isConstructable ||
-          classElement.constructors.any((ctor) => ctor.isFactory),
+      final ClassElement classElement =>
+        classElement.isConstructable ||
+            classElement.constructors.any((ctor) => ctor.isFactory),
       ExtensionTypeElement() || EnumElement() => true,
       _ => false,
     };
@@ -284,12 +285,13 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     required CustomType type,
   }) {
     final (isCustomType, isDefinedInLib) = switch (context
-        .currentSession.uriConverter
+        .currentSession
+        .uriConverter
         .uriToPath(modelType.library.source.uri)) {
       final path? => (
-          p.isWithin(projectPaths.projectRoot, path),
-          p.isWithin(projectPaths.projectLib, path),
-        ),
+        p.isWithin(projectPaths.projectRoot, path),
+        p.isWithin(projectPaths.projectLib, path),
+      ),
       _ => (false, false),
     };
     if (isCustomType && !isDefinedInLib) {
@@ -324,9 +326,10 @@ extension TopLevelConstants on LibraryElement {
       }
       switch (topLevelVariable.computeConstantValue()) {
         case final DartObject constantValue:
-          topLevelConstants.add(
-            (element: topLevelVariable, value: constantValue),
-          );
+          topLevelConstants.add((
+            element: topLevelVariable,
+            value: constantValue,
+          ));
         default:
           errorReporter.reportError(
             'Top-level constant could not be evaluated',
@@ -353,10 +356,8 @@ extension TopLevelConstants on LibraryElement {
   }
 }
 
-typedef TopLevelConstant = ({
-  TopLevelVariableElement element,
-  DartObject value,
-});
+typedef TopLevelConstant =
+    ({TopLevelVariableElement element, DartObject value});
 
 extension GetClassType on LibraryElementResult {
   ClassElement getClassElement(String name) =>

@@ -23,9 +23,7 @@ environment:
 '''),
     ]);
     await dartProject.create(tempDir.path);
-    final projectDir = fileSystem.directory(
-      p.join(tempDir.path, projectName),
-    );
+    final projectDir = fileSystem.directory(p.join(tempDir.path, projectName));
     await check(
       Process.run(
         'dart',

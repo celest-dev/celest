@@ -35,8 +35,9 @@ Future<String> loadSqlite3({
   final file = config.configDir.childFile(_libraryName);
   final wasmFile = config.configDir.childFile('sqlite3.wasm');
   if (!file.existsSync() || !wasmFile.existsSync()) {
-    final downloadProgress =
-        cliLogger.progress('Downloading additional resources');
+    final downloadProgress = cliLogger.progress(
+      'Downloading additional resources',
+    );
     try {
       await Future.wait([
         _downloadSqlite3(version, file, logger: logger),

@@ -37,10 +37,7 @@ import 'package:yaml/yaml.dart';
 /// Instead of doing these inline at the codegen site, we run the resolver
 /// as a first-pass step to prepare the schema for codegen.
 final class OpenApiSchemaTransformer {
-  OpenApiSchemaTransformer({
-    required this.document,
-    required this.typeSystem,
-  });
+  OpenApiSchemaTransformer({required this.document, required this.typeSystem});
 
   final v3.Document document;
   final OpenApiTypeSystem typeSystem;
@@ -128,17 +125,16 @@ final class OpenApiSchemaTransformer {
         in document.components.parameters.additionalProperties) {
       final parameterName = parameter.name;
       final parameterValue = parameter.value;
-      _builder.components.parameters[parameterName] =
-          _transformParameter(_resolveParameter(parameterValue));
+      _builder.components.parameters[parameterName] = _transformParameter(
+        _resolveParameter(parameterValue),
+      );
     }
     for (final requestBody
         in document.components.requestBodies.additionalProperties) {
       final requestBodyName = requestBody.name;
       final requestBodyValue = requestBody.value;
       _builder.components.requestBodies[requestBodyName] =
-          _transformRequestBody(
-        _resolveRequestBody(requestBodyValue),
-      );
+          _transformRequestBody(_resolveRequestBody(requestBodyValue));
     }
     for (final response in document.components.responses.additionalProperties) {
       final responseName = response.name;
@@ -151,8 +147,9 @@ final class OpenApiSchemaTransformer {
     for (final header in document.components.headers.additionalProperties) {
       final headerName = header.name;
       final headerValue = header.value;
-      _builder.components.headers[headerName] =
-          _transformHeader(_resolveHeader(headerValue));
+      _builder.components.headers[headerName] = _transformHeader(
+        _resolveHeader(headerValue),
+      );
     }
   }
 
@@ -179,10 +176,7 @@ final class OpenApiSchemaTransformer {
     });
   }
 
-  OpenApiPathItem _transformPathItem(
-    v3.PathItem pathItem,
-    String pathName,
-  ) {
+  OpenApiPathItem _transformPathItem(v3.PathItem pathItem, String pathName) {
     return OpenApiPathItem.build((b) {
       b.path = pathName;
       if (pathItem.hasSummary()) {
@@ -298,10 +292,7 @@ final class OpenApiSchemaTransformer {
         }
         final content = contents.first;
         final key = MediaType.parse(content.name);
-        final value = _transformMediaType(
-          content.value,
-          key,
-        );
+        final value = _transformMediaType(content.value, key);
         b.content = (key, value);
       }
     });
@@ -344,9 +335,7 @@ final class OpenApiSchemaTransformer {
       if (operation.hasResponses()) {
         if (operation.responses.hasDefault_1()) {
           final response = _resolveResponse(operation.responses.default_1);
-          b.defaultResponse.replace(
-            _transformResponse(response, null),
-          );
+          b.defaultResponse.replace(_transformResponse(response, null));
         }
         for (final responseOrRef in operation.responses.responseOrReference) {
           final statusCode = int.parse(responseOrRef.name);
@@ -364,9 +353,7 @@ final class OpenApiSchemaTransformer {
     });
   }
 
-  OpenApiRequestBody _transformRequestBody(
-    v3.RequestBody requestBody,
-  ) {
+  OpenApiRequestBody _transformRequestBody(v3.RequestBody requestBody) {
     return OpenApiRequestBody.build((b) {
       b.required = requestBody.required;
       if (requestBody.hasDescription()) {
@@ -374,10 +361,7 @@ final class OpenApiSchemaTransformer {
       }
       for (final content in requestBody.content.additionalProperties) {
         final key = MediaType.parse(content.name);
-        final value = _transformMediaType(
-          content.value,
-          key,
-        );
+        final value = _transformMediaType(content.value, key);
         b.content[key] = value;
       }
     });
@@ -389,9 +373,7 @@ final class OpenApiSchemaTransformer {
   ) {
     return OpenApiMediaType.build((b) {
       b.contentType = contentType;
-      b.schema = _transformSchemaOrRef(
-        mediaType.schema,
-      );
+      b.schema = _transformSchemaOrRef(mediaType.schema);
       if (mediaType.hasEncoding()) {
         for (final encodings in mediaType.encoding.additionalProperties) {
           final propertyName = encodings.name;
@@ -472,10 +454,7 @@ final class OpenApiSchemaTransformer {
       if (response.hasContent()) {
         for (final content in response.content.additionalProperties) {
           final key = MediaType.parse(content.name);
-          final value = _transformMediaType(
-            content.value,
-            key,
-          );
+          final value = _transformMediaType(content.value, key);
           b.content[key] = value;
         }
       }
@@ -527,10 +506,7 @@ final class OpenApiSchemaTransformer {
         ..writeOnly = writeOnly
         ..extensions.replace(extensions);
 
-      final required = {
-        ...b.required.build(),
-        ...schema.required,
-      };
+      final required = {...b.required.build(), ...schema.required};
       b.required
         ..clear()
         ..addAll(required);
@@ -545,10 +521,7 @@ final class OpenApiSchemaTransformer {
       final ref = schemaOrRef.reference.ref;
       assert(ref.startsWith('#/components/schemas/'));
       final name = ref.split('/').last;
-      return OpenApiTypeSchemaReference(
-        name: name,
-        ref: ref,
-      );
+      return OpenApiTypeSchemaReference(name: name, ref: ref);
     }
     final schema = schemaOrRef.schema;
     return _transformSchema(schema);
@@ -556,26 +529,28 @@ final class OpenApiSchemaTransformer {
 
   /// Merges `allOf` shapes into a single shape with merged properties.
   v3.Schema _mergeAllOf(v3.Schema schema) {
-    final schemas = schema.allOf.map((schemaOrRef) {
-      if (schemaOrRef.hasSchema()) {
-        return schemaOrRef.schema;
-      }
-      final ref = schemaOrRef.reference.ref;
-      assert(ref.startsWith('#/components/schemas/'));
-      final name = ref.split('/').last;
-      return document.components.schemas.additionalProperties
-          .firstWhere((el) => el.name == name)
-          .value
-          .schema;
-    }).toList();
+    final schemas =
+        schema.allOf.map((schemaOrRef) {
+          if (schemaOrRef.hasSchema()) {
+            return schemaOrRef.schema;
+          }
+          final ref = schemaOrRef.reference.ref;
+          assert(ref.startsWith('#/components/schemas/'));
+          final name = ref.split('/').last;
+          return document.components.schemas.additionalProperties
+              .firstWhere((el) => el.name == name)
+              .value
+              .schema;
+        }).toList();
 
     if (schemas.length == 1) {
       return schemas.first;
     }
 
-    final merged = v3.Schema()
-      ..mergeFromMessage(schema)
-      ..allOf.clear();
+    final merged =
+        v3.Schema()
+          ..mergeFromMessage(schema)
+          ..allOf.clear();
 
     if (schemas.any((schema) => schema.hasType() && schema.type != 'object')) {
       throw StateError('Schema without object type: $schemas');
@@ -606,8 +581,8 @@ final class OpenApiSchemaTransformer {
           discriminator?.propertyName == null ||
               discriminator?.propertyName == propertyName,
         );
-        discriminator ??= OpenApiDiscriminatorBuilder()
-          ..propertyName = propertyName;
+        discriminator ??=
+            OpenApiDiscriminatorBuilder()..propertyName = propertyName;
         for (final mapping
             in branch.discriminator.mapping.additionalProperties) {
           discriminator.mapping[mapping.name] = mapping.value;
@@ -617,10 +592,8 @@ final class OpenApiSchemaTransformer {
 
     merged.properties = v3.Properties(
       additionalProperties: properties.entries.map(
-        (entry) => v3.NamedSchemaOrReference(
-          name: entry.key,
-          value: entry.value,
-        ),
+        (entry) =>
+            v3.NamedSchemaOrReference(name: entry.key, value: entry.value),
       ),
     );
     merged.required
@@ -660,16 +633,17 @@ final class OpenApiSchemaTransformer {
       isNullable = schema.nullable;
     }
 
-    final discriminator = schema.hasDiscriminator()
-        ? OpenApiDiscriminator(
-            propertyName: schema.discriminator.propertyName,
-            mapping: {
-              for (final mapping
-                  in schema.discriminator.mapping.additionalProperties)
-                mapping.name: mapping.value,
-            },
-          )
-        : null;
+    final discriminator =
+        schema.hasDiscriminator()
+            ? OpenApiDiscriminator(
+              propertyName: schema.discriminator.propertyName,
+              mapping: {
+                for (final mapping
+                    in schema.discriminator.mapping.additionalProperties)
+                  mapping.name: mapping.value,
+              },
+            )
+            : null;
 
     if (schema.allOf.isNotEmpty) {
       if (schema.allOf.length == 1) {
@@ -685,8 +659,9 @@ final class OpenApiSchemaTransformer {
         final typeSchema = _transformTypeSchema(
           _resolveSchema(schema.anyOf.single),
         );
-        return typeSchema
-            .withNullability(isNullable ?? typeSchema.isNullableOrFalse);
+        return typeSchema.withNullability(
+          isNullable ?? typeSchema.isNullableOrFalse,
+        );
       }
       final types = schema.anyOf.map(_transformSchemaOrRef).toList();
       if (discriminator == null) {
@@ -709,8 +684,9 @@ final class OpenApiSchemaTransformer {
         final typeSchema = _transformTypeSchema(
           _resolveSchema(schema.oneOf.single),
         );
-        return typeSchema
-            .withNullability(isNullable ?? typeSchema.isNullableOrFalse);
+        return typeSchema.withNullability(
+          isNullable ?? typeSchema.isNullableOrFalse,
+        );
       }
       final types = schema.oneOf.map(_transformSchemaOrRef).toList();
       return OpenApiDisjointUnionTypeSchema(
@@ -740,65 +716,63 @@ final class OpenApiSchemaTransformer {
     final format = schema.hasFormat() ? schema.format : null;
     final baseType = switch (type) {
       'array' => OpenApiArrayTypeSchema(
-          name: name,
-          itemType: _transformSchemaOrRef(
-            schema.items.schemaOrReference.single,
-          ),
-          uniqueItems: schema.uniqueItems,
-          isNullable: isNullable,
-        ),
+        name: name,
+        itemType: _transformSchemaOrRef(schema.items.schemaOrReference.single),
+        uniqueItems: schema.uniqueItems,
+        isNullable: isNullable,
+      ),
       'boolean' => OpenApiBooleanTypeSchema(isNullable: isNullable),
       'integer' || 'int' || 'long' => OpenApiIntegerTypeSchema(
-          format: format,
-          isNullable: isNullable,
-        ),
+        format: format,
+        isNullable: isNullable,
+      ),
       'number' => OpenApiNumberTypeSchema(
-          format: format,
-          isNullable: isNullable,
-        ),
+        format: format,
+        isNullable: isNullable,
+      ),
       'object' => run(() {
-          final properties = schema.properties.additionalProperties;
-          if (properties.isNotEmpty) {
-            return OpenApiStructTypeSchema(
-              name: name,
-              required: schema.required,
-              fields: {
-                for (final properties in schema.properties.additionalProperties)
-                  properties.name: OpenApiFieldSchema(
-                    name: properties.name,
-                    schema: _transformSchemaOrRef(properties.value),
-                  ),
-              },
-              isNullable: isNullable,
-            );
-          }
-          if (!schema.hasAdditionalProperties()) {
-            return OpenApiAnyTypeSchema(isNullable: isNullable ?? false);
-          }
-          final additionalProperties = schema.additionalProperties;
-          if (additionalProperties.hasBoolean()) {
-            return additionalProperties.boolean
-                ? OpenApiRecordTypeSchema(
-                    name: name,
-                    valueType: OpenApiAnyTypeSchema(isNullable: true),
-                    isNullable: isNullable,
-                  )
-                : OpenApiEmptyTypeSchema.instance;
-          }
-          assert(additionalProperties.hasSchemaOrReference());
-          final additionalPropertiesType = _transformSchemaOrRef(
-            additionalProperties.schemaOrReference,
-          );
-          return OpenApiRecordTypeSchema(
+        final properties = schema.properties.additionalProperties;
+        if (properties.isNotEmpty) {
+          return OpenApiStructTypeSchema(
             name: name,
-            valueType: additionalPropertiesType,
+            required: schema.required,
+            fields: {
+              for (final properties in schema.properties.additionalProperties)
+                properties.name: OpenApiFieldSchema(
+                  name: properties.name,
+                  schema: _transformSchemaOrRef(properties.value),
+                ),
+            },
             isNullable: isNullable,
           );
-        }),
-      'string' => OpenApiStringTypeSchema(
-          format: format,
+        }
+        if (!schema.hasAdditionalProperties()) {
+          return OpenApiAnyTypeSchema(isNullable: isNullable ?? false);
+        }
+        final additionalProperties = schema.additionalProperties;
+        if (additionalProperties.hasBoolean()) {
+          return additionalProperties.boolean
+              ? OpenApiRecordTypeSchema(
+                name: name,
+                valueType: OpenApiAnyTypeSchema(isNullable: true),
+                isNullable: isNullable,
+              )
+              : OpenApiEmptyTypeSchema.instance;
+        }
+        assert(additionalProperties.hasSchemaOrReference());
+        final additionalPropertiesType = _transformSchemaOrRef(
+          additionalProperties.schemaOrReference,
+        );
+        return OpenApiRecordTypeSchema(
+          name: name,
+          valueType: additionalPropertiesType,
           isNullable: isNullable,
-        ),
+        );
+      }),
+      'string' => OpenApiStringTypeSchema(
+        format: format,
+        isNullable: isNullable,
+      ),
       'null' => OpenApiNullTypeSchema.instance,
       // TODO
       'file' => OpenApiAnyTypeSchema(isNullable: true),
@@ -808,22 +782,22 @@ final class OpenApiSchemaTransformer {
     return switch (schema.enum_24) {
       [] => baseType,
       [final singleValue] => OpenApiSingleValueTypeSchema(
-          baseType: baseType.withNullability(false),
-          value: run(() {
-            assert(singleValue.hasYaml());
-            return JsonObject(loadYamlNode(singleValue.yaml).value);
-          }),
-          isNullable: false,
-        ),
+        baseType: baseType.withNullability(false),
+        value: run(() {
+          assert(singleValue.hasYaml());
+          return JsonObject(loadYamlNode(singleValue.yaml).value);
+        }),
+        isNullable: false,
+      ),
       final values => OpenApiEnumTypeSchema(
-          name: name,
-          baseType: baseType,
-          values: values.map((value) {
-            assert(value.hasYaml(), '$value');
-            return JsonObject(loadYamlNode(value.yaml).value);
-          }),
-          isNullable: isNullable,
-        ),
+        name: name,
+        baseType: baseType,
+        values: values.map((value) {
+          assert(value.hasYaml(), '$value');
+          return JsonObject(loadYamlNode(value.yaml).value);
+        }),
+        isNullable: isNullable,
+      ),
     };
   }
 

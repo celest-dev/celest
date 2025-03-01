@@ -25,11 +25,9 @@ OpenApiDocument loadOpenApiDocument(
 }
 
 final class OpenApiV3Loader {
-  OpenApiV3Loader({
-    required this.version,
-    required this.rootNode,
-  })  : _document = OpenApiDocumentBuilder()..version = version, // TODO: Source
-        _components = OpenApiComponentsBuilder();
+  OpenApiV3Loader({required this.version, required this.rootNode})
+    : _document = OpenApiDocumentBuilder()..version = version, // TODO: Source
+      _components = OpenApiComponentsBuilder();
 
   static final _extensionPattern = RegExp('^x-');
   static final _pathPattern = RegExp(r'^/');
@@ -128,10 +126,7 @@ final class OpenApiV3Loader {
       throw Exception('OpenAPI document is missing required key "paths"');
     }
 
-    pathsNode.checkAllowedFields([
-      _pathPattern,
-      _extensionPattern,
-    ]);
+    pathsNode.checkAllowedFields([_pathPattern, _extensionPattern]);
 
     for (final entry in pathsNode.nodes.entries) {
       final pathNode = entry.value.getAs<YamlMap>();
@@ -356,11 +351,12 @@ final class OpenApiV3Loader {
         _extensionPattern,
       ]);
 
-      final operation = OpenApiOperationBuilder()
-        ..deprecated = operationNode.nodes['deprecated']?.value as bool?
-        ..description = operationNode.nodes['description']?.value as String?
-        ..operationId = operationNode.nodes['operationId']?.value as String
-        ..summary = operationNode.nodes['summary']?.value as String?;
+      final operation =
+          OpenApiOperationBuilder()
+            ..deprecated = operationNode.nodes['deprecated']?.value as bool?
+            ..description = operationNode.nodes['description']?.value as String?
+            ..operationId = operationNode.nodes['operationId']?.value as String
+            ..summary = operationNode.nodes['summary']?.value as String?;
 
       final requestBodyNode =
           operationNode.nodes['requestBody'].getAs<YamlMap>();
@@ -494,10 +490,7 @@ final class OpenApiV3Loader {
 
     final contentNode = responseNode.nodes['content'].getAs<YamlMap>();
     if (contentNode != null) {
-      contentNode.checkAllowedFields([
-        _mediaTypePattern,
-        _extensionPattern,
-      ]);
+      contentNode.checkAllowedFields([_mediaTypePattern, _extensionPattern]);
 
       for (final entry in contentNode.nodes.entries) {
         final mediaTypeNode = entry.value.getAs<YamlMap>();
@@ -573,10 +566,7 @@ final class OpenApiV3Loader {
     final contentNode = parameterNode.nodes['content'].getAs<YamlMap>();
     if (contentNode != null) {
       contentNode.checkRequiredFields([_mediaTypePattern]);
-      contentNode.checkAllowedFields([
-        _mediaTypePattern,
-        _extensionPattern,
-      ]);
+      contentNode.checkAllowedFields([_mediaTypePattern, _extensionPattern]);
 
       if (contentNode.nodes.length > 1) {
         throw Exception('OpenAPI header has multiple content types');
@@ -624,10 +614,7 @@ final class OpenApiV3Loader {
 
     final contentNode = requestBodyNode.nodes['content'].getAs<YamlMap>();
     if (contentNode != null) {
-      contentNode.checkAllowedFields([
-        _mediaTypePattern,
-        _extensionPattern,
-      ]);
+      contentNode.checkAllowedFields([_mediaTypePattern, _extensionPattern]);
 
       for (final entry in contentNode.nodes.entries) {
         final mediaTypeNode = entry.value.getAs<YamlMap>();
@@ -679,10 +666,7 @@ final class OpenApiV3Loader {
     final contentNode = headerNode.nodes['content'].getAs<YamlMap>();
     if (contentNode != null) {
       contentNode.checkRequiredFields([_mediaTypePattern]);
-      contentNode.checkAllowedFields([
-        _mediaTypePattern,
-        _extensionPattern,
-      ]);
+      contentNode.checkAllowedFields([_mediaTypePattern, _extensionPattern]);
 
       if (contentNode.nodes.length > 1) {
         throw Exception('OpenAPI header has multiple content types');
@@ -722,10 +706,7 @@ final class OpenApiV3Loader {
 
     final encodingNode = mediaTypeNode.nodes['encoding'].getAs<YamlMap>();
     if (encodingNode != null) {
-      encodingNode.checkAllowedFields([
-        _mediaTypePattern,
-        _extensionPattern,
-      ]);
+      encodingNode.checkAllowedFields([_mediaTypePattern, _extensionPattern]);
 
       for (final entry in encodingNode.nodes.entries) {
         final encoding = OpenApiEncodingBuilder();
@@ -742,8 +723,9 @@ final class OpenApiV3Loader {
 
         encoding.allowReserved =
             encodingNode.nodes['allowReserved']?.value as bool?;
-        final contentType = encodingNode.nodes['contentType']?.value
-            as String?; // TODO: fallback
+        final contentType =
+            encodingNode.nodes['contentType']?.value
+                as String?; // TODO: fallback
         encoding.contentType = MediaType.parse(contentType!);
         encoding.explode =
             encodingNode.nodes['explode']?.value as bool? ?? false;

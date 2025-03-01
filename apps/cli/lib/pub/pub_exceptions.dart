@@ -46,7 +46,7 @@ class FileException implements ApplicationException {
 /// A class for exceptions that wrap other exceptions.
 class WrappedException extends ApplicationException {
   WrappedException(super.message, this.innerError, [StackTrace? innerTrace])
-      : innerChain = innerTrace == null ? null : Chain.forTrace(innerTrace);
+    : innerChain = innerTrace == null ? null : Chain.forTrace(innerTrace);
 
   /// The underlying exception that [this] is wrapping, if any.
   final Object? innerError;
@@ -61,7 +61,7 @@ class WrappedException extends ApplicationException {
 /// [log.exception].
 class SilentException extends WrappedException {
   SilentException(Object? innerError, [StackTrace? innerTrace])
-      : super(innerError.toString(), innerError, innerTrace);
+    : super(innerError.toString(), innerError, innerTrace);
 }
 
 /// A class for errors in a command's input data.

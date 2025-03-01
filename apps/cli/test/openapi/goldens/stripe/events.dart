@@ -12,7 +12,8 @@ final class AccountApplicationAuthorizedEvent implements StripeEvent {
   factory AccountApplicationAuthorizedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return AccountApplicationAuthorizedEvent(
-        object: Application.fromJson(map['object']));
+      object: Application.fromJson(map['object']),
+    );
   }
 
   final Application object;
@@ -28,7 +29,8 @@ final class AccountApplicationDeauthorizedEvent implements StripeEvent {
   factory AccountApplicationDeauthorizedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return AccountApplicationDeauthorizedEvent(
-        object: Application.fromJson(map['object']));
+      object: Application.fromJson(map['object']),
+    );
   }
 
   final Application object;
@@ -45,13 +47,17 @@ sealed class AccountExternalAccountCreatedEvent_object {
     final factory = $mapping[type];
     if (factory == null) {
       throw ArgumentError(
-          'Unknown type of AccountExternalAccountCreatedEvent_object: "$type"');
+        'Unknown type of AccountExternalAccountCreatedEvent_object: "$type"',
+      );
     }
     return factory(map);
   }
 
-  static const Map<String,
-      AccountExternalAccountCreatedEvent_object Function(Object?)> $mapping = {
+  static const Map<
+    String,
+    AccountExternalAccountCreatedEvent_object Function(Object?)
+  >
+  $mapping = {
     'bank_account': BankAccount.fromJson,
     'card': Card.fromJson,
     'source': Source.fromJson,
@@ -69,8 +75,8 @@ final class AccountExternalAccountCreatedEvent implements StripeEvent {
   factory AccountExternalAccountCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return AccountExternalAccountCreatedEvent(
-        object:
-            AccountExternalAccountCreatedEvent_object.fromJson(map['object']));
+      object: AccountExternalAccountCreatedEvent_object.fromJson(map['object']),
+    );
   }
 
   final AccountExternalAccountCreatedEvent_object object;
@@ -87,13 +93,17 @@ sealed class AccountExternalAccountDeletedEvent_object {
     final factory = $mapping[type];
     if (factory == null) {
       throw ArgumentError(
-          'Unknown type of AccountExternalAccountDeletedEvent_object: "$type"');
+        'Unknown type of AccountExternalAccountDeletedEvent_object: "$type"',
+      );
     }
     return factory(map);
   }
 
-  static const Map<String,
-      AccountExternalAccountDeletedEvent_object Function(Object?)> $mapping = {
+  static const Map<
+    String,
+    AccountExternalAccountDeletedEvent_object Function(Object?)
+  >
+  $mapping = {
     'bank_account': BankAccount.fromJson,
     'card': Card.fromJson,
     'source': Source.fromJson,
@@ -111,8 +121,8 @@ final class AccountExternalAccountDeletedEvent implements StripeEvent {
   factory AccountExternalAccountDeletedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return AccountExternalAccountDeletedEvent(
-        object:
-            AccountExternalAccountDeletedEvent_object.fromJson(map['object']));
+      object: AccountExternalAccountDeletedEvent_object.fromJson(map['object']),
+    );
   }
 
   final AccountExternalAccountDeletedEvent_object object;
@@ -129,13 +139,17 @@ sealed class AccountExternalAccountUpdatedEvent_object {
     final factory = $mapping[type];
     if (factory == null) {
       throw ArgumentError(
-          'Unknown type of AccountExternalAccountUpdatedEvent_object: "$type"');
+        'Unknown type of AccountExternalAccountUpdatedEvent_object: "$type"',
+      );
     }
     return factory(map);
   }
 
-  static const Map<String,
-      AccountExternalAccountUpdatedEvent_object Function(Object?)> $mapping = {
+  static const Map<
+    String,
+    AccountExternalAccountUpdatedEvent_object Function(Object?)
+  >
+  $mapping = {
     'bank_account': BankAccount.fromJson,
     'card': Card.fromJson,
     'source': Source.fromJson,
@@ -153,8 +167,8 @@ final class AccountExternalAccountUpdatedEvent implements StripeEvent {
   factory AccountExternalAccountUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return AccountExternalAccountUpdatedEvent(
-        object:
-            AccountExternalAccountUpdatedEvent_object.fromJson(map['object']));
+      object: AccountExternalAccountUpdatedEvent_object.fromJson(map['object']),
+    );
   }
 
   final AccountExternalAccountUpdatedEvent_object object;
@@ -185,7 +199,8 @@ final class ApplicationFeeCreatedEvent implements StripeEvent {
   factory ApplicationFeeCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ApplicationFeeCreatedEvent(
-        object: ApplicationFee.fromJson(map['object']));
+      object: ApplicationFee.fromJson(map['object']),
+    );
   }
 
   final ApplicationFee object;
@@ -201,7 +216,8 @@ final class ApplicationFeeRefundUpdatedEvent implements StripeEvent {
   factory ApplicationFeeRefundUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ApplicationFeeRefundUpdatedEvent(
-        object: FeeRefund.fromJson(map['object']));
+      object: FeeRefund.fromJson(map['object']),
+    );
   }
 
   final FeeRefund object;
@@ -217,7 +233,8 @@ final class ApplicationFeeRefundedEvent implements StripeEvent {
   factory ApplicationFeeRefundedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ApplicationFeeRefundedEvent(
-        object: ApplicationFee.fromJson(map['object']));
+      object: ApplicationFee.fromJson(map['object']),
+    );
   }
 
   final ApplicationFee object;
@@ -248,7 +265,8 @@ final class BillingPortalConfigurationCreatedEvent implements StripeEvent {
   factory BillingPortalConfigurationCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return BillingPortalConfigurationCreatedEvent(
-        object: BillingPortalConfiguration.fromJson(map['object']));
+      object: BillingPortalConfiguration.fromJson(map['object']),
+    );
   }
 
   final BillingPortalConfiguration object;
@@ -264,7 +282,8 @@ final class BillingPortalConfigurationUpdatedEvent implements StripeEvent {
   factory BillingPortalConfigurationUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return BillingPortalConfigurationUpdatedEvent(
-        object: BillingPortalConfiguration.fromJson(map['object']));
+      object: BillingPortalConfiguration.fromJson(map['object']),
+    );
   }
 
   final BillingPortalConfiguration object;
@@ -280,7 +299,8 @@ final class BillingPortalSessionCreatedEvent implements StripeEvent {
   factory BillingPortalSessionCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return BillingPortalSessionCreatedEvent(
-        object: BillingPortalSession.fromJson(map['object']));
+      object: BillingPortalSession.fromJson(map['object']),
+    );
   }
 
   final BillingPortalSession object;
@@ -311,7 +331,8 @@ final class CashBalanceFundsAvailableEvent implements StripeEvent {
   factory CashBalanceFundsAvailableEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CashBalanceFundsAvailableEvent(
-        object: CashBalance.fromJson(map['object']));
+      object: CashBalance.fromJson(map['object']),
+    );
   }
 
   final CashBalance object;
@@ -372,7 +393,8 @@ final class ChargeDisputeFundsReinstatedEvent implements StripeEvent {
   factory ChargeDisputeFundsReinstatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ChargeDisputeFundsReinstatedEvent(
-        object: Dispute.fromJson(map['object']));
+      object: Dispute.fromJson(map['object']),
+    );
   }
 
   final Dispute object;
@@ -388,7 +410,8 @@ final class ChargeDisputeFundsWithdrawnEvent implements StripeEvent {
   factory ChargeDisputeFundsWithdrawnEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ChargeDisputeFundsWithdrawnEvent(
-        object: Dispute.fromJson(map['object']));
+      object: Dispute.fromJson(map['object']),
+    );
   }
 
   final Dispute object;
@@ -524,7 +547,8 @@ final class CheckoutSessionAsyncPaymentFailedEvent implements StripeEvent {
   factory CheckoutSessionAsyncPaymentFailedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CheckoutSessionAsyncPaymentFailedEvent(
-        object: CheckoutSession.fromJson(map['object']));
+      object: CheckoutSession.fromJson(map['object']),
+    );
   }
 
   final CheckoutSession object;
@@ -540,7 +564,8 @@ final class CheckoutSessionAsyncPaymentSucceededEvent implements StripeEvent {
   factory CheckoutSessionAsyncPaymentSucceededEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CheckoutSessionAsyncPaymentSucceededEvent(
-        object: CheckoutSession.fromJson(map['object']));
+      object: CheckoutSession.fromJson(map['object']),
+    );
   }
 
   final CheckoutSession object;
@@ -556,7 +581,8 @@ final class CheckoutSessionCompletedEvent implements StripeEvent {
   factory CheckoutSessionCompletedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CheckoutSessionCompletedEvent(
-        object: CheckoutSession.fromJson(map['object']));
+      object: CheckoutSession.fromJson(map['object']),
+    );
   }
 
   final CheckoutSession object;
@@ -572,7 +598,8 @@ final class CheckoutSessionExpiredEvent implements StripeEvent {
   factory CheckoutSessionExpiredEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CheckoutSessionExpiredEvent(
-        object: CheckoutSession.fromJson(map['object']));
+      object: CheckoutSession.fromJson(map['object']),
+    );
   }
 
   final CheckoutSession object;
@@ -588,7 +615,8 @@ final class ClimateOrderCanceledEvent implements StripeEvent {
   factory ClimateOrderCanceledEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ClimateOrderCanceledEvent(
-        object: ClimateOrder.fromJson(map['object']));
+      object: ClimateOrder.fromJson(map['object']),
+    );
   }
 
   final ClimateOrder object;
@@ -604,7 +632,8 @@ final class ClimateOrderCreatedEvent implements StripeEvent {
   factory ClimateOrderCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ClimateOrderCreatedEvent(
-        object: ClimateOrder.fromJson(map['object']));
+      object: ClimateOrder.fromJson(map['object']),
+    );
   }
 
   final ClimateOrder object;
@@ -620,7 +649,8 @@ final class ClimateOrderDelayedEvent implements StripeEvent {
   factory ClimateOrderDelayedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ClimateOrderDelayedEvent(
-        object: ClimateOrder.fromJson(map['object']));
+      object: ClimateOrder.fromJson(map['object']),
+    );
   }
 
   final ClimateOrder object;
@@ -636,7 +666,8 @@ final class ClimateOrderDeliveredEvent implements StripeEvent {
   factory ClimateOrderDeliveredEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ClimateOrderDeliveredEvent(
-        object: ClimateOrder.fromJson(map['object']));
+      object: ClimateOrder.fromJson(map['object']),
+    );
   }
 
   final ClimateOrder object;
@@ -652,7 +683,8 @@ final class ClimateOrderProductSubstitutedEvent implements StripeEvent {
   factory ClimateOrderProductSubstitutedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ClimateOrderProductSubstitutedEvent(
-        object: ClimateOrder.fromJson(map['object']));
+      object: ClimateOrder.fromJson(map['object']),
+    );
   }
 
   final ClimateOrder object;
@@ -668,7 +700,8 @@ final class ClimateProductCreatedEvent implements StripeEvent {
   factory ClimateProductCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ClimateProductCreatedEvent(
-        object: ClimateProduct.fromJson(map['object']));
+      object: ClimateProduct.fromJson(map['object']),
+    );
   }
 
   final ClimateProduct object;
@@ -684,7 +717,8 @@ final class ClimateProductPricingUpdatedEvent implements StripeEvent {
   factory ClimateProductPricingUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ClimateProductPricingUpdatedEvent(
-        object: ClimateProduct.fromJson(map['object']));
+      object: ClimateProduct.fromJson(map['object']),
+    );
   }
 
   final ClimateProduct object;
@@ -820,7 +854,8 @@ final class CustomerDiscountCreatedEvent implements StripeEvent {
   factory CustomerDiscountCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerDiscountCreatedEvent(
-        object: Discount.fromJson(map['object']));
+      object: Discount.fromJson(map['object']),
+    );
   }
 
   final Discount object;
@@ -836,7 +871,8 @@ final class CustomerDiscountDeletedEvent implements StripeEvent {
   factory CustomerDiscountDeletedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerDiscountDeletedEvent(
-        object: Discount.fromJson(map['object']));
+      object: Discount.fromJson(map['object']),
+    );
   }
 
   final Discount object;
@@ -852,7 +888,8 @@ final class CustomerDiscountUpdatedEvent implements StripeEvent {
   factory CustomerDiscountUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerDiscountUpdatedEvent(
-        object: Discount.fromJson(map['object']));
+      object: Discount.fromJson(map['object']),
+    );
   }
 
   final Discount object;
@@ -869,13 +906,14 @@ sealed class CustomerSourceCreatedEvent_object {
     final factory = $mapping[type];
     if (factory == null) {
       throw ArgumentError(
-          'Unknown type of CustomerSourceCreatedEvent_object: "$type"');
+        'Unknown type of CustomerSourceCreatedEvent_object: "$type"',
+      );
     }
     return factory(map);
   }
 
   static const Map<String, CustomerSourceCreatedEvent_object Function(Object?)>
-      $mapping = {
+  $mapping = {
     'bank_account': BankAccount.fromJson,
     'card': Card.fromJson,
     'source': Source.fromJson,
@@ -893,7 +931,8 @@ final class CustomerSourceCreatedEvent implements StripeEvent {
   factory CustomerSourceCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerSourceCreatedEvent(
-        object: CustomerSourceCreatedEvent_object.fromJson(map['object']));
+      object: CustomerSourceCreatedEvent_object.fromJson(map['object']),
+    );
   }
 
   final CustomerSourceCreatedEvent_object object;
@@ -910,13 +949,14 @@ sealed class CustomerSourceDeletedEvent_object {
     final factory = $mapping[type];
     if (factory == null) {
       throw ArgumentError(
-          'Unknown type of CustomerSourceDeletedEvent_object: "$type"');
+        'Unknown type of CustomerSourceDeletedEvent_object: "$type"',
+      );
     }
     return factory(map);
   }
 
   static const Map<String, CustomerSourceDeletedEvent_object Function(Object?)>
-      $mapping = {
+  $mapping = {
     'bank_account': BankAccount.fromJson,
     'card': Card.fromJson,
     'source': Source.fromJson,
@@ -934,7 +974,8 @@ final class CustomerSourceDeletedEvent implements StripeEvent {
   factory CustomerSourceDeletedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerSourceDeletedEvent(
-        object: CustomerSourceDeletedEvent_object.fromJson(map['object']));
+      object: CustomerSourceDeletedEvent_object.fromJson(map['object']),
+    );
   }
 
   final CustomerSourceDeletedEvent_object object;
@@ -951,16 +992,14 @@ sealed class CustomerSourceExpiringEvent_object {
     final factory = $mapping[type];
     if (factory == null) {
       throw ArgumentError(
-          'Unknown type of CustomerSourceExpiringEvent_object: "$type"');
+        'Unknown type of CustomerSourceExpiringEvent_object: "$type"',
+      );
     }
     return factory(map);
   }
 
   static const Map<String, CustomerSourceExpiringEvent_object Function(Object?)>
-      $mapping = {
-    'card': Card.fromJson,
-    'source': Source.fromJson,
-  };
+  $mapping = {'card': Card.fromJson, 'source': Source.fromJson};
 
   String get object;
   Map<String, Object?> toJson();
@@ -974,7 +1013,8 @@ final class CustomerSourceExpiringEvent implements StripeEvent {
   factory CustomerSourceExpiringEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerSourceExpiringEvent(
-        object: CustomerSourceExpiringEvent_object.fromJson(map['object']));
+      object: CustomerSourceExpiringEvent_object.fromJson(map['object']),
+    );
   }
 
   final CustomerSourceExpiringEvent_object object;
@@ -991,13 +1031,14 @@ sealed class CustomerSourceUpdatedEvent_object {
     final factory = $mapping[type];
     if (factory == null) {
       throw ArgumentError(
-          'Unknown type of CustomerSourceUpdatedEvent_object: "$type"');
+        'Unknown type of CustomerSourceUpdatedEvent_object: "$type"',
+      );
     }
     return factory(map);
   }
 
   static const Map<String, CustomerSourceUpdatedEvent_object Function(Object?)>
-      $mapping = {
+  $mapping = {
     'bank_account': BankAccount.fromJson,
     'card': Card.fromJson,
     'source': Source.fromJson,
@@ -1015,7 +1056,8 @@ final class CustomerSourceUpdatedEvent implements StripeEvent {
   factory CustomerSourceUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerSourceUpdatedEvent(
-        object: CustomerSourceUpdatedEvent_object.fromJson(map['object']));
+      object: CustomerSourceUpdatedEvent_object.fromJson(map['object']),
+    );
   }
 
   final CustomerSourceUpdatedEvent_object object;
@@ -1031,7 +1073,8 @@ final class CustomerSubscriptionCreatedEvent implements StripeEvent {
   factory CustomerSubscriptionCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerSubscriptionCreatedEvent(
-        object: Subscription.fromJson(map['object']));
+      object: Subscription.fromJson(map['object']),
+    );
   }
 
   final Subscription object;
@@ -1047,7 +1090,8 @@ final class CustomerSubscriptionDeletedEvent implements StripeEvent {
   factory CustomerSubscriptionDeletedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerSubscriptionDeletedEvent(
-        object: Subscription.fromJson(map['object']));
+      object: Subscription.fromJson(map['object']),
+    );
   }
 
   final Subscription object;
@@ -1063,7 +1107,8 @@ final class CustomerSubscriptionPausedEvent implements StripeEvent {
   factory CustomerSubscriptionPausedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerSubscriptionPausedEvent(
-        object: Subscription.fromJson(map['object']));
+      object: Subscription.fromJson(map['object']),
+    );
   }
 
   final Subscription object;
@@ -1080,7 +1125,8 @@ final class CustomerSubscriptionPendingUpdateAppliedEvent
   factory CustomerSubscriptionPendingUpdateAppliedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerSubscriptionPendingUpdateAppliedEvent(
-        object: Subscription.fromJson(map['object']));
+      object: Subscription.fromJson(map['object']),
+    );
   }
 
   final Subscription object;
@@ -1097,7 +1143,8 @@ final class CustomerSubscriptionPendingUpdateExpiredEvent
   factory CustomerSubscriptionPendingUpdateExpiredEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerSubscriptionPendingUpdateExpiredEvent(
-        object: Subscription.fromJson(map['object']));
+      object: Subscription.fromJson(map['object']),
+    );
   }
 
   final Subscription object;
@@ -1113,7 +1160,8 @@ final class CustomerSubscriptionResumedEvent implements StripeEvent {
   factory CustomerSubscriptionResumedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerSubscriptionResumedEvent(
-        object: Subscription.fromJson(map['object']));
+      object: Subscription.fromJson(map['object']),
+    );
   }
 
   final Subscription object;
@@ -1129,7 +1177,8 @@ final class CustomerSubscriptionTrialWillEndEvent implements StripeEvent {
   factory CustomerSubscriptionTrialWillEndEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerSubscriptionTrialWillEndEvent(
-        object: Subscription.fromJson(map['object']));
+      object: Subscription.fromJson(map['object']),
+    );
   }
 
   final Subscription object;
@@ -1145,7 +1194,8 @@ final class CustomerSubscriptionUpdatedEvent implements StripeEvent {
   factory CustomerSubscriptionUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerSubscriptionUpdatedEvent(
-        object: Subscription.fromJson(map['object']));
+      object: Subscription.fromJson(map['object']),
+    );
   }
 
   final Subscription object;
@@ -1221,7 +1271,8 @@ final class CustomerCashBalanceTransactionCreatedEvent implements StripeEvent {
   factory CustomerCashBalanceTransactionCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return CustomerCashBalanceTransactionCreatedEvent(
-        object: CustomerCashBalanceTransaction.fromJson(map['object']));
+      object: CustomerCashBalanceTransaction.fromJson(map['object']),
+    );
   }
 
   final CustomerCashBalanceTransaction object;
@@ -1252,7 +1303,8 @@ final class FinancialConnectionsAccountCreatedEvent implements StripeEvent {
   factory FinancialConnectionsAccountCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return FinancialConnectionsAccountCreatedEvent(
-        object: FinancialConnectionsAccount.fromJson(map['object']));
+      object: FinancialConnectionsAccount.fromJson(map['object']),
+    );
   }
 
   final FinancialConnectionsAccount object;
@@ -1268,7 +1320,8 @@ final class FinancialConnectionsAccountDeactivatedEvent implements StripeEvent {
   factory FinancialConnectionsAccountDeactivatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return FinancialConnectionsAccountDeactivatedEvent(
-        object: FinancialConnectionsAccount.fromJson(map['object']));
+      object: FinancialConnectionsAccount.fromJson(map['object']),
+    );
   }
 
   final FinancialConnectionsAccount object;
@@ -1285,7 +1338,8 @@ final class FinancialConnectionsAccountDisconnectedEvent
   factory FinancialConnectionsAccountDisconnectedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return FinancialConnectionsAccountDisconnectedEvent(
-        object: FinancialConnectionsAccount.fromJson(map['object']));
+      object: FinancialConnectionsAccount.fromJson(map['object']),
+    );
   }
 
   final FinancialConnectionsAccount object;
@@ -1301,7 +1355,8 @@ final class FinancialConnectionsAccountReactivatedEvent implements StripeEvent {
   factory FinancialConnectionsAccountReactivatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return FinancialConnectionsAccountReactivatedEvent(
-        object: FinancialConnectionsAccount.fromJson(map['object']));
+      object: FinancialConnectionsAccount.fromJson(map['object']),
+    );
   }
 
   final FinancialConnectionsAccount object;
@@ -1313,14 +1368,17 @@ final class FinancialConnectionsAccountReactivatedEvent implements StripeEvent {
 final class FinancialConnectionsAccountRefreshedBalanceEvent
     implements StripeEvent {
   /// Occurs when an Account’s \`balance_refresh\` status transitions from \`pending\` to either \`succeeded\` or \`failed\`.
-  const FinancialConnectionsAccountRefreshedBalanceEvent(
-      {required this.object});
+  const FinancialConnectionsAccountRefreshedBalanceEvent({
+    required this.object,
+  });
 
   factory FinancialConnectionsAccountRefreshedBalanceEvent.fromJson(
-      Object? json) {
+    Object? json,
+  ) {
     final map = (json as Map<String, Object?>);
     return FinancialConnectionsAccountRefreshedBalanceEvent(
-        object: FinancialConnectionsAccount.fromJson(map['object']));
+      object: FinancialConnectionsAccount.fromJson(map['object']),
+    );
   }
 
   final FinancialConnectionsAccount object;
@@ -1332,14 +1390,17 @@ final class FinancialConnectionsAccountRefreshedBalanceEvent
 final class FinancialConnectionsAccountRefreshedOwnershipEvent
     implements StripeEvent {
   /// Occurs when an Account’s \`ownership_refresh\` status transitions from \`pending\` to either \`succeeded\` or \`failed\`.
-  const FinancialConnectionsAccountRefreshedOwnershipEvent(
-      {required this.object});
+  const FinancialConnectionsAccountRefreshedOwnershipEvent({
+    required this.object,
+  });
 
   factory FinancialConnectionsAccountRefreshedOwnershipEvent.fromJson(
-      Object? json) {
+    Object? json,
+  ) {
     final map = (json as Map<String, Object?>);
     return FinancialConnectionsAccountRefreshedOwnershipEvent(
-        object: FinancialConnectionsAccount.fromJson(map['object']));
+      object: FinancialConnectionsAccount.fromJson(map['object']),
+    );
   }
 
   final FinancialConnectionsAccount object;
@@ -1351,14 +1412,17 @@ final class FinancialConnectionsAccountRefreshedOwnershipEvent
 final class FinancialConnectionsAccountRefreshedTransactionsEvent
     implements StripeEvent {
   /// Occurs when an Account’s \`transaction_refresh\` status transitions from \`pending\` to either \`succeeded\` or \`failed\`.
-  const FinancialConnectionsAccountRefreshedTransactionsEvent(
-      {required this.object});
+  const FinancialConnectionsAccountRefreshedTransactionsEvent({
+    required this.object,
+  });
 
   factory FinancialConnectionsAccountRefreshedTransactionsEvent.fromJson(
-      Object? json) {
+    Object? json,
+  ) {
     final map = (json as Map<String, Object?>);
     return FinancialConnectionsAccountRefreshedTransactionsEvent(
-        object: FinancialConnectionsAccount.fromJson(map['object']));
+      object: FinancialConnectionsAccount.fromJson(map['object']),
+    );
   }
 
   final FinancialConnectionsAccount object;
@@ -1374,7 +1438,8 @@ final class IdentityVerificationSessionCanceledEvent implements StripeEvent {
   factory IdentityVerificationSessionCanceledEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IdentityVerificationSessionCanceledEvent(
-        object: IdentityVerificationSession.fromJson(map['object']));
+      object: IdentityVerificationSession.fromJson(map['object']),
+    );
   }
 
   final IdentityVerificationSession object;
@@ -1390,7 +1455,8 @@ final class IdentityVerificationSessionCreatedEvent implements StripeEvent {
   factory IdentityVerificationSessionCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IdentityVerificationSessionCreatedEvent(
-        object: IdentityVerificationSession.fromJson(map['object']));
+      object: IdentityVerificationSession.fromJson(map['object']),
+    );
   }
 
   final IdentityVerificationSession object;
@@ -1406,7 +1472,8 @@ final class IdentityVerificationSessionProcessingEvent implements StripeEvent {
   factory IdentityVerificationSessionProcessingEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IdentityVerificationSessionProcessingEvent(
-        object: IdentityVerificationSession.fromJson(map['object']));
+      object: IdentityVerificationSession.fromJson(map['object']),
+    );
   }
 
   final IdentityVerificationSession object;
@@ -1422,7 +1489,8 @@ final class IdentityVerificationSessionRedactedEvent implements StripeEvent {
   factory IdentityVerificationSessionRedactedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IdentityVerificationSessionRedactedEvent(
-        object: IdentityVerificationSession.fromJson(map['object']));
+      object: IdentityVerificationSession.fromJson(map['object']),
+    );
   }
 
   final IdentityVerificationSession object;
@@ -1439,7 +1507,8 @@ final class IdentityVerificationSessionRequiresInputEvent
   factory IdentityVerificationSessionRequiresInputEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IdentityVerificationSessionRequiresInputEvent(
-        object: IdentityVerificationSession.fromJson(map['object']));
+      object: IdentityVerificationSession.fromJson(map['object']),
+    );
   }
 
   final IdentityVerificationSession object;
@@ -1455,7 +1524,8 @@ final class IdentityVerificationSessionVerifiedEvent implements StripeEvent {
   factory IdentityVerificationSessionVerifiedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IdentityVerificationSessionVerifiedEvent(
-        object: IdentityVerificationSession.fromJson(map['object']));
+      object: IdentityVerificationSession.fromJson(map['object']),
+    );
   }
 
   final IdentityVerificationSession object;
@@ -1501,7 +1571,8 @@ final class InvoiceFinalizationFailedEvent implements StripeEvent {
   factory InvoiceFinalizationFailedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return InvoiceFinalizationFailedEvent(
-        object: Invoice.fromJson(map['object']));
+      object: Invoice.fromJson(map['object']),
+    );
   }
 
   final Invoice object;
@@ -1532,7 +1603,8 @@ final class InvoiceMarkedUncollectibleEvent implements StripeEvent {
   factory InvoiceMarkedUncollectibleEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return InvoiceMarkedUncollectibleEvent(
-        object: Invoice.fromJson(map['object']));
+      object: Invoice.fromJson(map['object']),
+    );
   }
 
   final Invoice object;
@@ -1563,7 +1635,8 @@ final class InvoicePaymentActionRequiredEvent implements StripeEvent {
   factory InvoicePaymentActionRequiredEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return InvoicePaymentActionRequiredEvent(
-        object: Invoice.fromJson(map['object']));
+      object: Invoice.fromJson(map['object']),
+    );
   }
 
   final Invoice object;
@@ -1594,7 +1667,8 @@ final class InvoicePaymentSucceededEvent implements StripeEvent {
   factory InvoicePaymentSucceededEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return InvoicePaymentSucceededEvent(
-        object: Invoice.fromJson(map['object']));
+      object: Invoice.fromJson(map['object']),
+    );
   }
 
   final Invoice object;
@@ -1700,7 +1774,8 @@ final class IssuingAuthorizationCreatedEvent implements StripeEvent {
   factory IssuingAuthorizationCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingAuthorizationCreatedEvent(
-        object: IssuingAuthorization.fromJson(map['object']));
+      object: IssuingAuthorization.fromJson(map['object']),
+    );
   }
 
   final IssuingAuthorization object;
@@ -1716,7 +1791,8 @@ final class IssuingAuthorizationRequestEvent implements StripeEvent {
   factory IssuingAuthorizationRequestEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingAuthorizationRequestEvent(
-        object: IssuingAuthorization.fromJson(map['object']));
+      object: IssuingAuthorization.fromJson(map['object']),
+    );
   }
 
   final IssuingAuthorization object;
@@ -1732,7 +1808,8 @@ final class IssuingAuthorizationUpdatedEvent implements StripeEvent {
   factory IssuingAuthorizationUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingAuthorizationUpdatedEvent(
-        object: IssuingAuthorization.fromJson(map['object']));
+      object: IssuingAuthorization.fromJson(map['object']),
+    );
   }
 
   final IssuingAuthorization object;
@@ -1778,7 +1855,8 @@ final class IssuingCardholderCreatedEvent implements StripeEvent {
   factory IssuingCardholderCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingCardholderCreatedEvent(
-        object: IssuingCardholder.fromJson(map['object']));
+      object: IssuingCardholder.fromJson(map['object']),
+    );
   }
 
   final IssuingCardholder object;
@@ -1794,7 +1872,8 @@ final class IssuingCardholderUpdatedEvent implements StripeEvent {
   factory IssuingCardholderUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingCardholderUpdatedEvent(
-        object: IssuingCardholder.fromJson(map['object']));
+      object: IssuingCardholder.fromJson(map['object']),
+    );
   }
 
   final IssuingCardholder object;
@@ -1810,7 +1889,8 @@ final class IssuingDisputeClosedEvent implements StripeEvent {
   factory IssuingDisputeClosedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingDisputeClosedEvent(
-        object: IssuingDispute.fromJson(map['object']));
+      object: IssuingDispute.fromJson(map['object']),
+    );
   }
 
   final IssuingDispute object;
@@ -1826,7 +1906,8 @@ final class IssuingDisputeCreatedEvent implements StripeEvent {
   factory IssuingDisputeCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingDisputeCreatedEvent(
-        object: IssuingDispute.fromJson(map['object']));
+      object: IssuingDispute.fromJson(map['object']),
+    );
   }
 
   final IssuingDispute object;
@@ -1842,7 +1923,8 @@ final class IssuingDisputeFundsReinstatedEvent implements StripeEvent {
   factory IssuingDisputeFundsReinstatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingDisputeFundsReinstatedEvent(
-        object: IssuingDispute.fromJson(map['object']));
+      object: IssuingDispute.fromJson(map['object']),
+    );
   }
 
   final IssuingDispute object;
@@ -1858,7 +1940,8 @@ final class IssuingDisputeSubmittedEvent implements StripeEvent {
   factory IssuingDisputeSubmittedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingDisputeSubmittedEvent(
-        object: IssuingDispute.fromJson(map['object']));
+      object: IssuingDispute.fromJson(map['object']),
+    );
   }
 
   final IssuingDispute object;
@@ -1874,7 +1957,8 @@ final class IssuingDisputeUpdatedEvent implements StripeEvent {
   factory IssuingDisputeUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingDisputeUpdatedEvent(
-        object: IssuingDispute.fromJson(map['object']));
+      object: IssuingDispute.fromJson(map['object']),
+    );
   }
 
   final IssuingDispute object;
@@ -1890,7 +1974,8 @@ final class IssuingTokenCreatedEvent implements StripeEvent {
   factory IssuingTokenCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingTokenCreatedEvent(
-        object: IssuingToken.fromJson(map['object']));
+      object: IssuingToken.fromJson(map['object']),
+    );
   }
 
   final IssuingToken object;
@@ -1906,7 +1991,8 @@ final class IssuingTokenUpdatedEvent implements StripeEvent {
   factory IssuingTokenUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingTokenUpdatedEvent(
-        object: IssuingToken.fromJson(map['object']));
+      object: IssuingToken.fromJson(map['object']),
+    );
   }
 
   final IssuingToken object;
@@ -1922,7 +2008,8 @@ final class IssuingTransactionCreatedEvent implements StripeEvent {
   factory IssuingTransactionCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingTransactionCreatedEvent(
-        object: IssuingTransaction.fromJson(map['object']));
+      object: IssuingTransaction.fromJson(map['object']),
+    );
   }
 
   final IssuingTransaction object;
@@ -1938,7 +2025,8 @@ final class IssuingTransactionUpdatedEvent implements StripeEvent {
   factory IssuingTransactionUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return IssuingTransactionUpdatedEvent(
-        object: IssuingTransaction.fromJson(map['object']));
+      object: IssuingTransaction.fromJson(map['object']),
+    );
   }
 
   final IssuingTransaction object;
@@ -1969,7 +2057,8 @@ final class PaymentIntentAmountCapturableUpdatedEvent implements StripeEvent {
   factory PaymentIntentAmountCapturableUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PaymentIntentAmountCapturableUpdatedEvent(
-        object: PaymentIntent.fromJson(map['object']));
+      object: PaymentIntent.fromJson(map['object']),
+    );
   }
 
   final PaymentIntent object;
@@ -1985,7 +2074,8 @@ final class PaymentIntentCanceledEvent implements StripeEvent {
   factory PaymentIntentCanceledEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PaymentIntentCanceledEvent(
-        object: PaymentIntent.fromJson(map['object']));
+      object: PaymentIntent.fromJson(map['object']),
+    );
   }
 
   final PaymentIntent object;
@@ -2001,7 +2091,8 @@ final class PaymentIntentCreatedEvent implements StripeEvent {
   factory PaymentIntentCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PaymentIntentCreatedEvent(
-        object: PaymentIntent.fromJson(map['object']));
+      object: PaymentIntent.fromJson(map['object']),
+    );
   }
 
   final PaymentIntent object;
@@ -2017,7 +2108,8 @@ final class PaymentIntentPartiallyFundedEvent implements StripeEvent {
   factory PaymentIntentPartiallyFundedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PaymentIntentPartiallyFundedEvent(
-        object: PaymentIntent.fromJson(map['object']));
+      object: PaymentIntent.fromJson(map['object']),
+    );
   }
 
   final PaymentIntent object;
@@ -2033,7 +2125,8 @@ final class PaymentIntentPaymentFailedEvent implements StripeEvent {
   factory PaymentIntentPaymentFailedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PaymentIntentPaymentFailedEvent(
-        object: PaymentIntent.fromJson(map['object']));
+      object: PaymentIntent.fromJson(map['object']),
+    );
   }
 
   final PaymentIntent object;
@@ -2049,7 +2142,8 @@ final class PaymentIntentProcessingEvent implements StripeEvent {
   factory PaymentIntentProcessingEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PaymentIntentProcessingEvent(
-        object: PaymentIntent.fromJson(map['object']));
+      object: PaymentIntent.fromJson(map['object']),
+    );
   }
 
   final PaymentIntent object;
@@ -2065,7 +2159,8 @@ final class PaymentIntentRequiresActionEvent implements StripeEvent {
   factory PaymentIntentRequiresActionEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PaymentIntentRequiresActionEvent(
-        object: PaymentIntent.fromJson(map['object']));
+      object: PaymentIntent.fromJson(map['object']),
+    );
   }
 
   final PaymentIntent object;
@@ -2081,7 +2176,8 @@ final class PaymentIntentSucceededEvent implements StripeEvent {
   factory PaymentIntentSucceededEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PaymentIntentSucceededEvent(
-        object: PaymentIntent.fromJson(map['object']));
+      object: PaymentIntent.fromJson(map['object']),
+    );
   }
 
   final PaymentIntent object;
@@ -2127,7 +2223,8 @@ final class PaymentMethodAttachedEvent implements StripeEvent {
   factory PaymentMethodAttachedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PaymentMethodAttachedEvent(
-        object: PaymentMethod.fromJson(map['object']));
+      object: PaymentMethod.fromJson(map['object']),
+    );
   }
 
   final PaymentMethod object;
@@ -2143,7 +2240,8 @@ final class PaymentMethodAutomaticallyUpdatedEvent implements StripeEvent {
   factory PaymentMethodAutomaticallyUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PaymentMethodAutomaticallyUpdatedEvent(
-        object: PaymentMethod.fromJson(map['object']));
+      object: PaymentMethod.fromJson(map['object']),
+    );
   }
 
   final PaymentMethod object;
@@ -2159,7 +2257,8 @@ final class PaymentMethodDetachedEvent implements StripeEvent {
   factory PaymentMethodDetachedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PaymentMethodDetachedEvent(
-        object: PaymentMethod.fromJson(map['object']));
+      object: PaymentMethod.fromJson(map['object']),
+    );
   }
 
   final PaymentMethod object;
@@ -2175,7 +2274,8 @@ final class PaymentMethodUpdatedEvent implements StripeEvent {
   factory PaymentMethodUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PaymentMethodUpdatedEvent(
-        object: PaymentMethod.fromJson(map['object']));
+      object: PaymentMethod.fromJson(map['object']),
+    );
   }
 
   final PaymentMethod object;
@@ -2251,7 +2351,8 @@ final class PayoutReconciliationCompletedEvent implements StripeEvent {
   factory PayoutReconciliationCompletedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PayoutReconciliationCompletedEvent(
-        object: Payout.fromJson(map['object']));
+      object: Payout.fromJson(map['object']),
+    );
   }
 
   final Payout object;
@@ -2462,7 +2563,8 @@ final class PromotionCodeCreatedEvent implements StripeEvent {
   factory PromotionCodeCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PromotionCodeCreatedEvent(
-        object: PromotionCode.fromJson(map['object']));
+      object: PromotionCode.fromJson(map['object']),
+    );
   }
 
   final PromotionCode object;
@@ -2478,7 +2580,8 @@ final class PromotionCodeUpdatedEvent implements StripeEvent {
   factory PromotionCodeUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return PromotionCodeUpdatedEvent(
-        object: PromotionCode.fromJson(map['object']));
+      object: PromotionCode.fromJson(map['object']),
+    );
   }
 
   final PromotionCode object;
@@ -2554,7 +2657,8 @@ final class RadarEarlyFraudWarningCreatedEvent implements StripeEvent {
   factory RadarEarlyFraudWarningCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return RadarEarlyFraudWarningCreatedEvent(
-        object: RadarEarlyFraudWarning.fromJson(map['object']));
+      object: RadarEarlyFraudWarning.fromJson(map['object']),
+    );
   }
 
   final RadarEarlyFraudWarning object;
@@ -2570,7 +2674,8 @@ final class RadarEarlyFraudWarningUpdatedEvent implements StripeEvent {
   factory RadarEarlyFraudWarningUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return RadarEarlyFraudWarningUpdatedEvent(
-        object: RadarEarlyFraudWarning.fromJson(map['object']));
+      object: RadarEarlyFraudWarning.fromJson(map['object']),
+    );
   }
 
   final RadarEarlyFraudWarning object;
@@ -2616,7 +2721,8 @@ final class ReportingReportRunFailedEvent implements StripeEvent {
   factory ReportingReportRunFailedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ReportingReportRunFailedEvent(
-        object: ReportingReportRun.fromJson(map['object']));
+      object: ReportingReportRun.fromJson(map['object']),
+    );
   }
 
   final ReportingReportRun object;
@@ -2632,7 +2738,8 @@ final class ReportingReportRunSucceededEvent implements StripeEvent {
   factory ReportingReportRunSucceededEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ReportingReportRunSucceededEvent(
-        object: ReportingReportRun.fromJson(map['object']));
+      object: ReportingReportRun.fromJson(map['object']),
+    );
   }
 
   final ReportingReportRun object;
@@ -2648,7 +2755,8 @@ final class ReportingReportTypeUpdatedEvent implements StripeEvent {
   factory ReportingReportTypeUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return ReportingReportTypeUpdatedEvent(
-        object: ReportingReportType.fromJson(map['object']));
+      object: ReportingReportType.fromJson(map['object']),
+    );
   }
 
   final ReportingReportType object;
@@ -2694,7 +2802,8 @@ final class SetupIntentCanceledEvent implements StripeEvent {
   factory SetupIntentCanceledEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SetupIntentCanceledEvent(
-        object: SetupIntent.fromJson(map['object']));
+      object: SetupIntent.fromJson(map['object']),
+    );
   }
 
   final SetupIntent object;
@@ -2725,7 +2834,8 @@ final class SetupIntentRequiresActionEvent implements StripeEvent {
   factory SetupIntentRequiresActionEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SetupIntentRequiresActionEvent(
-        object: SetupIntent.fromJson(map['object']));
+      object: SetupIntent.fromJson(map['object']),
+    );
   }
 
   final SetupIntent object;
@@ -2741,7 +2851,8 @@ final class SetupIntentSetupFailedEvent implements StripeEvent {
   factory SetupIntentSetupFailedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SetupIntentSetupFailedEvent(
-        object: SetupIntent.fromJson(map['object']));
+      object: SetupIntent.fromJson(map['object']),
+    );
   }
 
   final SetupIntent object;
@@ -2757,7 +2868,8 @@ final class SetupIntentSucceededEvent implements StripeEvent {
   factory SetupIntentSucceededEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SetupIntentSucceededEvent(
-        object: SetupIntent.fromJson(map['object']));
+      object: SetupIntent.fromJson(map['object']),
+    );
   }
 
   final SetupIntent object;
@@ -2773,7 +2885,8 @@ final class SigmaScheduledQueryRunCreatedEvent implements StripeEvent {
   factory SigmaScheduledQueryRunCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SigmaScheduledQueryRunCreatedEvent(
-        object: ScheduledQueryRun.fromJson(map['object']));
+      object: ScheduledQueryRun.fromJson(map['object']),
+    );
   }
 
   final ScheduledQueryRun object;
@@ -2834,7 +2947,8 @@ final class SourceMandateNotificationEvent implements StripeEvent {
   factory SourceMandateNotificationEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SourceMandateNotificationEvent(
-        object: SourceMandateNotification.fromJson(map['object']));
+      object: SourceMandateNotification.fromJson(map['object']),
+    );
   }
 
   final SourceMandateNotification object;
@@ -2850,7 +2964,8 @@ final class SourceRefundAttributesRequiredEvent implements StripeEvent {
   factory SourceRefundAttributesRequiredEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SourceRefundAttributesRequiredEvent(
-        object: Source.fromJson(map['object']));
+      object: Source.fromJson(map['object']),
+    );
   }
 
   final Source object;
@@ -2866,7 +2981,8 @@ final class SourceTransactionCreatedEvent implements StripeEvent {
   factory SourceTransactionCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SourceTransactionCreatedEvent(
-        object: SourceTransaction.fromJson(map['object']));
+      object: SourceTransaction.fromJson(map['object']),
+    );
   }
 
   final SourceTransaction object;
@@ -2882,7 +2998,8 @@ final class SourceTransactionUpdatedEvent implements StripeEvent {
   factory SourceTransactionUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SourceTransactionUpdatedEvent(
-        object: SourceTransaction.fromJson(map['object']));
+      object: SourceTransaction.fromJson(map['object']),
+    );
   }
 
   final SourceTransaction object;
@@ -2898,7 +3015,8 @@ final class SubscriptionScheduleAbortedEvent implements StripeEvent {
   factory SubscriptionScheduleAbortedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SubscriptionScheduleAbortedEvent(
-        object: SubscriptionSchedule.fromJson(map['object']));
+      object: SubscriptionSchedule.fromJson(map['object']),
+    );
   }
 
   final SubscriptionSchedule object;
@@ -2914,7 +3032,8 @@ final class SubscriptionScheduleCanceledEvent implements StripeEvent {
   factory SubscriptionScheduleCanceledEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SubscriptionScheduleCanceledEvent(
-        object: SubscriptionSchedule.fromJson(map['object']));
+      object: SubscriptionSchedule.fromJson(map['object']),
+    );
   }
 
   final SubscriptionSchedule object;
@@ -2930,7 +3049,8 @@ final class SubscriptionScheduleCompletedEvent implements StripeEvent {
   factory SubscriptionScheduleCompletedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SubscriptionScheduleCompletedEvent(
-        object: SubscriptionSchedule.fromJson(map['object']));
+      object: SubscriptionSchedule.fromJson(map['object']),
+    );
   }
 
   final SubscriptionSchedule object;
@@ -2946,7 +3066,8 @@ final class SubscriptionScheduleCreatedEvent implements StripeEvent {
   factory SubscriptionScheduleCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SubscriptionScheduleCreatedEvent(
-        object: SubscriptionSchedule.fromJson(map['object']));
+      object: SubscriptionSchedule.fromJson(map['object']),
+    );
   }
 
   final SubscriptionSchedule object;
@@ -2962,7 +3083,8 @@ final class SubscriptionScheduleExpiringEvent implements StripeEvent {
   factory SubscriptionScheduleExpiringEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SubscriptionScheduleExpiringEvent(
-        object: SubscriptionSchedule.fromJson(map['object']));
+      object: SubscriptionSchedule.fromJson(map['object']),
+    );
   }
 
   final SubscriptionSchedule object;
@@ -2978,7 +3100,8 @@ final class SubscriptionScheduleReleasedEvent implements StripeEvent {
   factory SubscriptionScheduleReleasedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SubscriptionScheduleReleasedEvent(
-        object: SubscriptionSchedule.fromJson(map['object']));
+      object: SubscriptionSchedule.fromJson(map['object']),
+    );
   }
 
   final SubscriptionSchedule object;
@@ -2994,7 +3117,8 @@ final class SubscriptionScheduleUpdatedEvent implements StripeEvent {
   factory SubscriptionScheduleUpdatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return SubscriptionScheduleUpdatedEvent(
-        object: SubscriptionSchedule.fromJson(map['object']));
+      object: SubscriptionSchedule.fromJson(map['object']),
+    );
   }
 
   final SubscriptionSchedule object;
@@ -3055,7 +3179,8 @@ final class TerminalReaderActionFailedEvent implements StripeEvent {
   factory TerminalReaderActionFailedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TerminalReaderActionFailedEvent(
-        object: TerminalReader.fromJson(map['object']));
+      object: TerminalReader.fromJson(map['object']),
+    );
   }
 
   final TerminalReader object;
@@ -3071,7 +3196,8 @@ final class TerminalReaderActionSucceededEvent implements StripeEvent {
   factory TerminalReaderActionSucceededEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TerminalReaderActionSucceededEvent(
-        object: TerminalReader.fromJson(map['object']));
+      object: TerminalReader.fromJson(map['object']),
+    );
   }
 
   final TerminalReader object;
@@ -3087,7 +3213,8 @@ final class TestHelpersTestClockAdvancingEvent implements StripeEvent {
   factory TestHelpersTestClockAdvancingEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TestHelpersTestClockAdvancingEvent(
-        object: TestHelpersTestClock.fromJson(map['object']));
+      object: TestHelpersTestClock.fromJson(map['object']),
+    );
   }
 
   final TestHelpersTestClock object;
@@ -3103,7 +3230,8 @@ final class TestHelpersTestClockCreatedEvent implements StripeEvent {
   factory TestHelpersTestClockCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TestHelpersTestClockCreatedEvent(
-        object: TestHelpersTestClock.fromJson(map['object']));
+      object: TestHelpersTestClock.fromJson(map['object']),
+    );
   }
 
   final TestHelpersTestClock object;
@@ -3119,7 +3247,8 @@ final class TestHelpersTestClockDeletedEvent implements StripeEvent {
   factory TestHelpersTestClockDeletedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TestHelpersTestClockDeletedEvent(
-        object: TestHelpersTestClock.fromJson(map['object']));
+      object: TestHelpersTestClock.fromJson(map['object']),
+    );
   }
 
   final TestHelpersTestClock object;
@@ -3135,7 +3264,8 @@ final class TestHelpersTestClockInternalFailureEvent implements StripeEvent {
   factory TestHelpersTestClockInternalFailureEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TestHelpersTestClockInternalFailureEvent(
-        object: TestHelpersTestClock.fromJson(map['object']));
+      object: TestHelpersTestClock.fromJson(map['object']),
+    );
   }
 
   final TestHelpersTestClock object;
@@ -3151,7 +3281,8 @@ final class TestHelpersTestClockReadyEvent implements StripeEvent {
   factory TestHelpersTestClockReadyEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TestHelpersTestClockReadyEvent(
-        object: TestHelpersTestClock.fromJson(map['object']));
+      object: TestHelpersTestClock.fromJson(map['object']),
+    );
   }
 
   final TestHelpersTestClock object;
@@ -3287,7 +3418,8 @@ final class TreasuryCreditReversalCreatedEvent implements StripeEvent {
   factory TreasuryCreditReversalCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryCreditReversalCreatedEvent(
-        object: TreasuryCreditReversal.fromJson(map['object']));
+      object: TreasuryCreditReversal.fromJson(map['object']),
+    );
   }
 
   final TreasuryCreditReversal object;
@@ -3303,7 +3435,8 @@ final class TreasuryCreditReversalPostedEvent implements StripeEvent {
   factory TreasuryCreditReversalPostedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryCreditReversalPostedEvent(
-        object: TreasuryCreditReversal.fromJson(map['object']));
+      object: TreasuryCreditReversal.fromJson(map['object']),
+    );
   }
 
   final TreasuryCreditReversal object;
@@ -3319,7 +3452,8 @@ final class TreasuryDebitReversalCompletedEvent implements StripeEvent {
   factory TreasuryDebitReversalCompletedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryDebitReversalCompletedEvent(
-        object: TreasuryDebitReversal.fromJson(map['object']));
+      object: TreasuryDebitReversal.fromJson(map['object']),
+    );
   }
 
   final TreasuryDebitReversal object;
@@ -3335,7 +3469,8 @@ final class TreasuryDebitReversalCreatedEvent implements StripeEvent {
   factory TreasuryDebitReversalCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryDebitReversalCreatedEvent(
-        object: TreasuryDebitReversal.fromJson(map['object']));
+      object: TreasuryDebitReversal.fromJson(map['object']),
+    );
   }
 
   final TreasuryDebitReversal object;
@@ -3350,10 +3485,12 @@ final class TreasuryDebitReversalInitialCreditGrantedEvent
   const TreasuryDebitReversalInitialCreditGrantedEvent({required this.object});
 
   factory TreasuryDebitReversalInitialCreditGrantedEvent.fromJson(
-      Object? json) {
+    Object? json,
+  ) {
     final map = (json as Map<String, Object?>);
     return TreasuryDebitReversalInitialCreditGrantedEvent(
-        object: TreasuryDebitReversal.fromJson(map['object']));
+      object: TreasuryDebitReversal.fromJson(map['object']),
+    );
   }
 
   final TreasuryDebitReversal object;
@@ -3369,7 +3506,8 @@ final class TreasuryFinancialAccountClosedEvent implements StripeEvent {
   factory TreasuryFinancialAccountClosedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryFinancialAccountClosedEvent(
-        object: TreasuryFinancialAccount.fromJson(map['object']));
+      object: TreasuryFinancialAccount.fromJson(map['object']),
+    );
   }
 
   final TreasuryFinancialAccount object;
@@ -3385,7 +3523,8 @@ final class TreasuryFinancialAccountCreatedEvent implements StripeEvent {
   factory TreasuryFinancialAccountCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryFinancialAccountCreatedEvent(
-        object: TreasuryFinancialAccount.fromJson(map['object']));
+      object: TreasuryFinancialAccount.fromJson(map['object']),
+    );
   }
 
   final TreasuryFinancialAccount object;
@@ -3397,14 +3536,17 @@ final class TreasuryFinancialAccountCreatedEvent implements StripeEvent {
 final class TreasuryFinancialAccountFeaturesStatusUpdatedEvent
     implements StripeEvent {
   /// Occurs whenever the statuses of any features within an existing FinancialAccount are updated.
-  const TreasuryFinancialAccountFeaturesStatusUpdatedEvent(
-      {required this.object});
+  const TreasuryFinancialAccountFeaturesStatusUpdatedEvent({
+    required this.object,
+  });
 
   factory TreasuryFinancialAccountFeaturesStatusUpdatedEvent.fromJson(
-      Object? json) {
+    Object? json,
+  ) {
     final map = (json as Map<String, Object?>);
     return TreasuryFinancialAccountFeaturesStatusUpdatedEvent(
-        object: TreasuryFinancialAccount.fromJson(map['object']));
+      object: TreasuryFinancialAccount.fromJson(map['object']),
+    );
   }
 
   final TreasuryFinancialAccount object;
@@ -3420,7 +3562,8 @@ final class TreasuryInboundTransferCanceledEvent implements StripeEvent {
   factory TreasuryInboundTransferCanceledEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryInboundTransferCanceledEvent(
-        object: TreasuryInboundTransfer.fromJson(map['object']));
+      object: TreasuryInboundTransfer.fromJson(map['object']),
+    );
   }
 
   final TreasuryInboundTransfer object;
@@ -3436,7 +3579,8 @@ final class TreasuryInboundTransferCreatedEvent implements StripeEvent {
   factory TreasuryInboundTransferCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryInboundTransferCreatedEvent(
-        object: TreasuryInboundTransfer.fromJson(map['object']));
+      object: TreasuryInboundTransfer.fromJson(map['object']),
+    );
   }
 
   final TreasuryInboundTransfer object;
@@ -3452,7 +3596,8 @@ final class TreasuryInboundTransferFailedEvent implements StripeEvent {
   factory TreasuryInboundTransferFailedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryInboundTransferFailedEvent(
-        object: TreasuryInboundTransfer.fromJson(map['object']));
+      object: TreasuryInboundTransfer.fromJson(map['object']),
+    );
   }
 
   final TreasuryInboundTransfer object;
@@ -3468,7 +3613,8 @@ final class TreasuryInboundTransferSucceededEvent implements StripeEvent {
   factory TreasuryInboundTransferSucceededEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryInboundTransferSucceededEvent(
-        object: TreasuryInboundTransfer.fromJson(map['object']));
+      object: TreasuryInboundTransfer.fromJson(map['object']),
+    );
   }
 
   final TreasuryInboundTransfer object;
@@ -3484,7 +3630,8 @@ final class TreasuryOutboundPaymentCanceledEvent implements StripeEvent {
   factory TreasuryOutboundPaymentCanceledEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryOutboundPaymentCanceledEvent(
-        object: TreasuryOutboundPayment.fromJson(map['object']));
+      object: TreasuryOutboundPayment.fromJson(map['object']),
+    );
   }
 
   final TreasuryOutboundPayment object;
@@ -3500,7 +3647,8 @@ final class TreasuryOutboundPaymentCreatedEvent implements StripeEvent {
   factory TreasuryOutboundPaymentCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryOutboundPaymentCreatedEvent(
-        object: TreasuryOutboundPayment.fromJson(map['object']));
+      object: TreasuryOutboundPayment.fromJson(map['object']),
+    );
   }
 
   final TreasuryOutboundPayment object;
@@ -3512,14 +3660,17 @@ final class TreasuryOutboundPaymentCreatedEvent implements StripeEvent {
 final class TreasuryOutboundPaymentExpectedArrivalDateUpdatedEvent
     implements StripeEvent {
   /// Occurs whenever the arrival date on an OutboundPayment updates.
-  const TreasuryOutboundPaymentExpectedArrivalDateUpdatedEvent(
-      {required this.object});
+  const TreasuryOutboundPaymentExpectedArrivalDateUpdatedEvent({
+    required this.object,
+  });
 
   factory TreasuryOutboundPaymentExpectedArrivalDateUpdatedEvent.fromJson(
-      Object? json) {
+    Object? json,
+  ) {
     final map = (json as Map<String, Object?>);
     return TreasuryOutboundPaymentExpectedArrivalDateUpdatedEvent(
-        object: TreasuryOutboundPayment.fromJson(map['object']));
+      object: TreasuryOutboundPayment.fromJson(map['object']),
+    );
   }
 
   final TreasuryOutboundPayment object;
@@ -3535,7 +3686,8 @@ final class TreasuryOutboundPaymentFailedEvent implements StripeEvent {
   factory TreasuryOutboundPaymentFailedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryOutboundPaymentFailedEvent(
-        object: TreasuryOutboundPayment.fromJson(map['object']));
+      object: TreasuryOutboundPayment.fromJson(map['object']),
+    );
   }
 
   final TreasuryOutboundPayment object;
@@ -3551,7 +3703,8 @@ final class TreasuryOutboundPaymentPostedEvent implements StripeEvent {
   factory TreasuryOutboundPaymentPostedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryOutboundPaymentPostedEvent(
-        object: TreasuryOutboundPayment.fromJson(map['object']));
+      object: TreasuryOutboundPayment.fromJson(map['object']),
+    );
   }
 
   final TreasuryOutboundPayment object;
@@ -3567,7 +3720,8 @@ final class TreasuryOutboundPaymentReturnedEvent implements StripeEvent {
   factory TreasuryOutboundPaymentReturnedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryOutboundPaymentReturnedEvent(
-        object: TreasuryOutboundPayment.fromJson(map['object']));
+      object: TreasuryOutboundPayment.fromJson(map['object']),
+    );
   }
 
   final TreasuryOutboundPayment object;
@@ -3583,7 +3737,8 @@ final class TreasuryOutboundTransferCanceledEvent implements StripeEvent {
   factory TreasuryOutboundTransferCanceledEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryOutboundTransferCanceledEvent(
-        object: TreasuryOutboundTransfer.fromJson(map['object']));
+      object: TreasuryOutboundTransfer.fromJson(map['object']),
+    );
   }
 
   final TreasuryOutboundTransfer object;
@@ -3599,7 +3754,8 @@ final class TreasuryOutboundTransferCreatedEvent implements StripeEvent {
   factory TreasuryOutboundTransferCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryOutboundTransferCreatedEvent(
-        object: TreasuryOutboundTransfer.fromJson(map['object']));
+      object: TreasuryOutboundTransfer.fromJson(map['object']),
+    );
   }
 
   final TreasuryOutboundTransfer object;
@@ -3611,14 +3767,17 @@ final class TreasuryOutboundTransferCreatedEvent implements StripeEvent {
 final class TreasuryOutboundTransferExpectedArrivalDateUpdatedEvent
     implements StripeEvent {
   /// Occurs whenever the arrival date on an OutboundTransfer updates.
-  const TreasuryOutboundTransferExpectedArrivalDateUpdatedEvent(
-      {required this.object});
+  const TreasuryOutboundTransferExpectedArrivalDateUpdatedEvent({
+    required this.object,
+  });
 
   factory TreasuryOutboundTransferExpectedArrivalDateUpdatedEvent.fromJson(
-      Object? json) {
+    Object? json,
+  ) {
     final map = (json as Map<String, Object?>);
     return TreasuryOutboundTransferExpectedArrivalDateUpdatedEvent(
-        object: TreasuryOutboundTransfer.fromJson(map['object']));
+      object: TreasuryOutboundTransfer.fromJson(map['object']),
+    );
   }
 
   final TreasuryOutboundTransfer object;
@@ -3634,7 +3793,8 @@ final class TreasuryOutboundTransferFailedEvent implements StripeEvent {
   factory TreasuryOutboundTransferFailedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryOutboundTransferFailedEvent(
-        object: TreasuryOutboundTransfer.fromJson(map['object']));
+      object: TreasuryOutboundTransfer.fromJson(map['object']),
+    );
   }
 
   final TreasuryOutboundTransfer object;
@@ -3650,7 +3810,8 @@ final class TreasuryOutboundTransferPostedEvent implements StripeEvent {
   factory TreasuryOutboundTransferPostedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryOutboundTransferPostedEvent(
-        object: TreasuryOutboundTransfer.fromJson(map['object']));
+      object: TreasuryOutboundTransfer.fromJson(map['object']),
+    );
   }
 
   final TreasuryOutboundTransfer object;
@@ -3666,7 +3827,8 @@ final class TreasuryOutboundTransferReturnedEvent implements StripeEvent {
   factory TreasuryOutboundTransferReturnedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryOutboundTransferReturnedEvent(
-        object: TreasuryOutboundTransfer.fromJson(map['object']));
+      object: TreasuryOutboundTransfer.fromJson(map['object']),
+    );
   }
 
   final TreasuryOutboundTransfer object;
@@ -3682,7 +3844,8 @@ final class TreasuryReceivedCreditCreatedEvent implements StripeEvent {
   factory TreasuryReceivedCreditCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryReceivedCreditCreatedEvent(
-        object: TreasuryReceivedCredit.fromJson(map['object']));
+      object: TreasuryReceivedCredit.fromJson(map['object']),
+    );
   }
 
   final TreasuryReceivedCredit object;
@@ -3698,7 +3861,8 @@ final class TreasuryReceivedCreditFailedEvent implements StripeEvent {
   factory TreasuryReceivedCreditFailedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryReceivedCreditFailedEvent(
-        object: TreasuryReceivedCredit.fromJson(map['object']));
+      object: TreasuryReceivedCredit.fromJson(map['object']),
+    );
   }
 
   final TreasuryReceivedCredit object;
@@ -3714,7 +3878,8 @@ final class TreasuryReceivedCreditSucceededEvent implements StripeEvent {
   factory TreasuryReceivedCreditSucceededEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryReceivedCreditSucceededEvent(
-        object: TreasuryReceivedCredit.fromJson(map['object']));
+      object: TreasuryReceivedCredit.fromJson(map['object']),
+    );
   }
 
   final TreasuryReceivedCredit object;
@@ -3730,7 +3895,8 @@ final class TreasuryReceivedDebitCreatedEvent implements StripeEvent {
   factory TreasuryReceivedDebitCreatedEvent.fromJson(Object? json) {
     final map = (json as Map<String, Object?>);
     return TreasuryReceivedDebitCreatedEvent(
-        object: TreasuryReceivedDebit.fromJson(map['object']));
+      object: TreasuryReceivedDebit.fromJson(map['object']),
+    );
   }
 
   final TreasuryReceivedDebit object;

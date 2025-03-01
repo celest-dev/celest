@@ -99,31 +99,33 @@ final class PubCache {
     final results = <(int, String)>[];
     for (final package in packagesToFix.entries) {
       // Run serially to avoid flutter lock
-      final result = await processManager.start([
-        Sdk.current.sdkType.name,
-        'pub',
-        'cache',
-        'add',
-        package.key,
-        '--version',
-        package.value,
-        '--all',
-      ]).then((process) async {
-        final combinedOutput = StringBuffer();
-        process.captureStdout(
-          sink: (line) {
-            _logger.finest(line);
-            combinedOutput.writeln(line);
-          },
-        );
-        process.captureStderr(
-          sink: (line) {
-            _logger.finest(line);
-            combinedOutput.writeln(line);
-          },
-        );
-        return (await process.exitCode, combinedOutput.toString());
-      });
+      final result = await processManager
+          .start([
+            Sdk.current.sdkType.name,
+            'pub',
+            'cache',
+            'add',
+            package.key,
+            '--version',
+            package.value,
+            '--all',
+          ])
+          .then((process) async {
+            final combinedOutput = StringBuffer();
+            process.captureStdout(
+              sink: (line) {
+                _logger.finest(line);
+                combinedOutput.writeln(line);
+              },
+            );
+            process.captureStderr(
+              sink: (line) {
+                _logger.finest(line);
+                combinedOutput.writeln(line);
+              },
+            );
+            return (await process.exitCode, combinedOutput.toString());
+          });
       results.add(result);
     }
     return results;
@@ -132,9 +134,7 @@ final class PubCache {
   /// Fixes the pubspec for each package in [packagesToFix].
   ///
   /// Returns the number of packages fixed.
-  Future<int> fix({
-    @visibleForTesting bool throwOnError = false,
-  }) async {
+  Future<int> fix({@visibleForTesting bool throwOnError = false}) async {
     final cachePath = _cachePath ??= findCachePath();
     if (cachePath == null) {
       if (throwOnError) {
@@ -152,14 +152,16 @@ final class PubCache {
       _logger.finest('No pub cache found at $cachePath. Skipping fix.');
       return 0;
     }
-    final hostedPubDevDir =
-        cacheDir.childDirectory('hosted').childDirectory('pub.dev');
+    final hostedPubDevDir = cacheDir
+        .childDirectory('hosted')
+        .childDirectory('pub.dev');
     if (!hostedPubDevDir.existsSync()) {
       if (throwOnError) {
         throw Exception('No pub cache found at ${hostedPubDevDir.path}.');
       }
       _logger.finest(
-        'No pub cache found at ${hostedPubDevDir.path}. ' 'Skipping fix.',
+        'No pub cache found at ${hostedPubDevDir.path}. '
+        'Skipping fix.',
       );
       return 0;
     }
@@ -188,13 +190,11 @@ final class PubCache {
       final pubspec = Pubspec.parse(pubspecYaml);
       if (!packagesToFix.containsKey(pubspec.name)) {
         if (throwOnError) {
-          throw Exception(
-            'Pubspec for ${pubspec.name} does not need fixing.',
-          );
+          throw Exception('Pubspec for ${pubspec.name} does not need fixing.');
         }
         continue;
       }
-      final needsEnvFix = pubspec.environment?.containsKey('flutter') ?? false;
+      final needsEnvFix = pubspec.environment.containsKey('flutter');
       final needsDepsFix = pubspec.dependencies.containsKey('flutter');
       if (!needsEnvFix && !needsDepsFix) {
         continue;
@@ -215,11 +215,6 @@ final class PubCache {
 
   @visibleForTesting
   Future<ProcessResult> repair() async {
-    return processManager.run([
-      Sdk.current.dart,
-      'pub',
-      'cache',
-      'repair',
-    ]);
+    return processManager.run([Sdk.current.dart, 'pub', 'cache', 'repair']);
   }
 }

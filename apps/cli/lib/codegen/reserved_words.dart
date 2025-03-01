@@ -101,19 +101,9 @@ const hardReservedWords = {
   'serializers',
 };
 
-const enumReservedWords = [
-  'name',
-  'value',
-  'index',
-  'values',
-];
+const enumReservedWords = ['name', 'value', 'index', 'values'];
 
-const unionReservedWords = [
-  'name',
-  'value',
-  'sdkUnknown',
-  'unknown',
-];
+const unionReservedWords = ['name', 'value', 'sdkUnknown', 'unknown'];
 
 // Reserved due to `built_value`
 const structReservedWords = [

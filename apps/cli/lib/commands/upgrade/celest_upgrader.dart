@@ -13,9 +13,7 @@ import 'package:mason_logger/mason_logger.dart' as mason_logger;
 enum ReleaseType { zip, installer }
 
 final class CelestUpgrader {
-  CelestUpgrader({
-    required this.cliLogger,
-  });
+  CelestUpgrader({required this.cliLogger});
 
   static final _logger = Logger('CelestUpgrader');
 
@@ -28,11 +26,14 @@ final class CelestUpgrader {
       case 'windows' || 'macos':
         return ReleaseType.installer;
       case 'linux':
-        final isDpkg = processManager.runSync(
-              <String>['dpkg', '-S', platform.resolvedExecutable],
-              stdoutEncoding: utf8,
-              stderrEncoding: utf8,
-            ).exitCode ==
+        final isDpkg =
+            processManager
+                .runSync(
+                  <String>['dpkg', '-S', platform.resolvedExecutable],
+                  stdoutEncoding: utf8,
+                  stderrEncoding: utf8,
+                )
+                .exitCode ==
             0;
         return isDpkg ? ReleaseType.installer : ReleaseType.zip;
       default:
@@ -106,10 +107,7 @@ final class CelestUpgrader {
       throw CliException(
         'Failed to upgrade Celest. Please install the latest version from '
         'https://celest.dev/download.',
-        additionalContext: {
-          'error': e.toString(),
-          'stackTrace': st.toString(),
-        },
+        additionalContext: {'error': e.toString(), 'stackTrace': st.toString()},
       );
     } finally {
       _progress = null;
@@ -160,10 +158,11 @@ final class CelestUpgrader {
         if (exists) {
           // Need to rm (unlink) before replacing
           // https://stackoverflow.com/questions/1712033/replacing-a-running-executable-in-linux
-          final rmOutput = await processManager.start(
-            <String>['sudo', 'rm', file.path],
-            mode: ProcessStartMode.inheritStdio,
-          );
+          final rmOutput = await processManager.start(<String>[
+            'sudo',
+            'rm',
+            file.path,
+          ], mode: ProcessStartMode.inheritStdio);
           if (await rmOutput.exitCode case final exitCode && != 0) {
             throw ProcessException(
               'rm',
@@ -185,10 +184,12 @@ final class CelestUpgrader {
       ]) {
         if (!await file.exists()) continue;
         _logger.finest('Making ${file.path} executable');
-        final chmodOutput = await processManager.start(
-          <String>['sudo', 'chmod', '+x', file.path],
-          mode: ProcessStartMode.inheritStdio,
-        );
+        final chmodOutput = await processManager.start(<String>[
+          'sudo',
+          'chmod',
+          '+x',
+          file.path,
+        ], mode: ProcessStartMode.inheritStdio);
         if (await chmodOutput.exitCode case final exitCode && != 0) {
           throw ProcessException(
             'chmod',
@@ -207,17 +208,12 @@ final class CelestUpgrader {
     if (p.extension(installer.path) != '.deb') {
       throw StateError('Expected zip file but got: $installer');
     }
-    final sudoOutput = await processManager.start(
-      <String>['sudo', '-v'],
-      mode: ProcessStartMode.inheritStdio,
-    );
+    final sudoOutput = await processManager.start(<String>[
+      'sudo',
+      '-v',
+    ], mode: ProcessStartMode.inheritStdio);
     if (await sudoOutput.exitCode case final exitCode && != 0) {
-      throw ProcessException(
-        'sudo',
-        ['-v'],
-        'Failed to check sudo',
-        exitCode,
-      );
+      throw ProcessException('sudo', ['-v'], 'Failed to check sudo', exitCode);
     }
     final updateOutput = await processManager.run(
       <String>['sudo', 'apt-get', 'update'],
@@ -267,12 +263,7 @@ final class CelestUpgrader {
 
   Future<void> _installMacOS(String installerFile) async {
     final volumeInfo = await processManager.run(
-      <String>[
-        'installer',
-        '-pkg',
-        installerFile,
-        '-volinfo',
-      ],
+      <String>['installer', '-pkg', installerFile, '-volinfo'],
       stdoutEncoding: utf8,
       stderrEncoding: utf8,
     );

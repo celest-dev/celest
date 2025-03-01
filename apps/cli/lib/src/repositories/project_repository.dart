@@ -19,9 +19,7 @@ final class ProjectRepository {
       return result.single;
     }
     try {
-      final cloudPrj = await _cloud.projects.get(
-        'projects/$projectIdOrAlias',
-      );
+      final cloudPrj = await _cloud.projects.get('projects/$projectIdOrAlias');
       if (cloudPrj != null) {
         return await put(cloudPrj.toDb());
       }

@@ -9,12 +9,13 @@ import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 import 'package:stream_channel/isolate_channel.dart';
 
-typedef _EnvRequest = ({
-  int id,
-  String? name,
-  String? value,
-  List<(ast.Variable, String)>? variables,
-});
+typedef _EnvRequest =
+    ({
+      int id,
+      String? name,
+      String? value,
+      List<(ast.Variable, String)>? variables,
+    });
 
 typedef EnvironmentID = String;
 
@@ -68,10 +69,8 @@ final class OverlayEnvManager implements EnvLoader {
 
   @override
   Future<Map<String, String>> readAll() async {
-    final (base, overlay) = await (
-      _base.readAll(),
-      Future.value(_overlay?.readAll()),
-    ).wait;
+    final (base, overlay) =
+        await (_base.readAll(), Future.value(_overlay?.readAll())).wait;
     return {...base, ...overlay};
   }
 }
@@ -120,11 +119,10 @@ final class SingleEnvManager implements EnvLoader {
   Future<void> _spawn() async {
     final port = ReceivePort();
     _channel = IsolateChannel<_EnvRequest>.connectReceive(port);
-    _isolate = await Isolate.spawn(
-      _handleRequests,
-      (port.sendPort, envFile),
-      debugName: 'IsolatedEnvManager',
-    );
+    _isolate = await Isolate.spawn(_handleRequests, (
+      port.sendPort,
+      envFile,
+    ), debugName: 'IsolatedEnvManager');
   }
 
   static Future<void> _handleRequests(
@@ -135,14 +133,12 @@ final class SingleEnvManager implements EnvLoader {
     final manager = _IsolatedEnvManager(envFile);
     await for (final (:id, :name, variables: _, value: _) in channel.stream) {
       final variables = manager.reload();
-      channel.sink.add(
-        (
-          id: id,
-          name: name,
-          value: name == null ? null : manager.get(name),
-          variables: variables,
-        ),
-      );
+      channel.sink.add((
+        id: id,
+        name: name,
+        value: name == null ? null : manager.get(name),
+        variables: variables,
+      ));
     }
   }
 
@@ -156,9 +152,7 @@ final class SingleEnvManager implements EnvLoader {
     return _cache[key] = resp.value;
   }
 
-  Future<_EnvRequest> _send({
-    String? key,
-  }) async {
+  Future<_EnvRequest> _send({String? key}) async {
     if (_closed) {
       throw StateError('EnvManager is closed');
     }
@@ -186,9 +180,7 @@ final class SingleEnvManager implements EnvLoader {
     final variables = await this.variables;
     final values = await Future.wait([
       for (final envVar in variables)
-        valueFor(envVar.name).then(
-          (value) => MapEntry(envVar.name, value!),
-        ),
+        valueFor(envVar.name).then((value) => MapEntry(envVar.name, value!)),
     ]);
     return Map.fromEntries(values);
   }
@@ -233,18 +225,19 @@ final class _IsolatedEnvManager {
   final _changes = <String, String>{};
 
   Map<String, String> get env => _env;
-  List<(ast.Variable, String)> get variables => _env.entries
-      .map(
-        (entry) => (
-          ast.Variable(
-            entry.key,
-            dartName: null,
-            location: _spans[entry.key]!,
-          ),
-          entry.value
-        ),
-      )
-      .toList();
+  List<(ast.Variable, String)> get variables =>
+      _env.entries
+          .map(
+            (entry) => (
+              ast.Variable(
+                entry.key,
+                dartName: null,
+                location: _spans[entry.key]!,
+              ),
+              entry.value,
+            ),
+          )
+          .toList();
 
   List<(ast.Variable, String)> reload() {
     final (env, spans) = _load();

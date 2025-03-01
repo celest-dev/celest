@@ -14,22 +14,22 @@ extension on Api {
 
 extension on AstNode {
   EntityUid get uid => switch (this) {
-        final CloudFunction function => function.uid,
-        final Api api => api.uid,
-        _ => unreachable(),
-      };
+    final CloudFunction function => function.uid,
+    final Api api => api.uid,
+    _ => unreachable(),
+  };
   ResourceConstraint get resource => switch (this) {
-        final Api api => ResourceIn(api.uid),
-        final CloudFunction function => ResourceEquals(function.uid),
-        _ => unreachable(),
-      };
+    final Api api => ResourceIn(api.uid),
+    final CloudFunction function => ResourceEquals(function.uid),
+    _ => unreachable(),
+  };
 }
 
 extension on ApiAuth {
   String get tag => switch (this) {
-        ApiPublic() => 'public',
-        ApiAuthenticated() => 'authenticated',
-      };
+    ApiPublic() => 'public',
+    ApiAuthenticated() => 'authenticated',
+  };
 
   String get templateId => 'cloud.functions.$tag';
 
@@ -38,9 +38,7 @@ extension on ApiAuth {
     final templateLink = TemplateLink(
       templateId: templateId,
       newId: policyId,
-      values: {
-        SlotId.resource: node.uid,
-      },
+      values: {SlotId.resource: node.uid},
     );
     builder.templateLinks.add(templateLink);
     if (this is ApiAuthenticated) {
@@ -49,9 +47,7 @@ extension on ApiAuth {
       builder.policies['${policyId}_restrict'] = Policy(
         effect: Effect.forbid,
         principal: const PrincipalAll(),
-        action: const ActionEquals(
-          EntityUid.of('Celest::Action', 'invoke'),
-        ),
+        action: const ActionEquals(EntityUid.of('Celest::Action', 'invoke')),
         resource: node.resource,
         conditions: [
           Condition(
@@ -74,21 +70,16 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
     required Map<String, String> configValues,
     required String environmentId,
     this.driftSchemas = const {},
-  }) : configValues = {
-          ...configValues,
-          'CELEST_ENVIRONMENT': environmentId,
-        };
+  }) : configValues = {...configValues, 'CELEST_ENVIRONMENT': environmentId};
 
   final _resolvedProject = ResolvedProjectBuilder();
   late final ResolvedProject resolvedProject = run(() {
-    final celestConfigValues =
-        configValues.keys.toSet().difference(_seenConfigValues);
+    final celestConfigValues = configValues.keys.toSet().difference(
+      _seenConfigValues,
+    );
     for (final name in celestConfigValues) {
       _resolvedProject.variables.add(
-        ResolvedVariable(
-          name: name,
-          value: configValues[name]!,
-        ),
+        ResolvedVariable(name: name, value: configValues[name]!),
       );
     }
     return _resolvedProject.build();
@@ -117,8 +108,10 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
       _resolvedProject.auth.replace(visitAuth(auth, project));
     }
     for (final database in project.databases.values) {
-      _resolvedProject.databases[database.name] =
-          visitDatabase(database, project);
+      _resolvedProject.databases[database.name] = visitDatabase(
+        database,
+        project,
+      );
     }
     return resolvedProject;
   }
@@ -154,44 +147,41 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
 
   @override
   ResolvedCloudFunction visitFunction(CloudFunction function, Api context) {
-    return ResolvedCloudFunction.build(
-      (resolvedFunction) {
-        resolvedFunction
-          ..functionId = function.name
-          ..apiId = function.apiName
-          ..httpConfig.route.path = function.route
-          ..streamConfig.type = function.streamType;
+    return ResolvedCloudFunction.build((resolvedFunction) {
+      resolvedFunction
+        ..functionId = function.name
+        ..apiId = function.apiName
+        ..httpConfig.route.path = function.route
+        ..streamConfig.type = function.streamType;
 
-        final funcHttpMetadata = [
-          ...context.metadata.whereType<ApiHttpMetadata>(),
-          ...function.metadata.whereType<ApiHttpMetadata>(),
-        ];
-        for (final metadata in funcHttpMetadata) {
-          switch (metadata) {
-            case ApiHttpConfig(:final method, :final statusCode):
-              resolvedFunction.httpConfig
-                ..status = statusCode
-                ..route.method = method;
-            case ApiHttpError(:final type, :final statusCode):
-              resolvedFunction.httpConfig.statusMappings[type] = statusCode;
-          }
+      final funcHttpMetadata = [
+        ...context.metadata.whereType<ApiHttpMetadata>(),
+        ...function.metadata.whereType<ApiHttpMetadata>(),
+      ];
+      for (final metadata in funcHttpMetadata) {
+        switch (metadata) {
+          case ApiHttpConfig(:final method, :final statusCode):
+            resolvedFunction.httpConfig
+              ..status = statusCode
+              ..route.method = method;
+          case ApiHttpError(:final type, :final statusCode):
+            resolvedFunction.httpConfig.statusMappings[type] = statusCode;
         }
-        final functionAuth =
-            function.metadata.whereType<ApiAuth>().singleOrNull;
-        if (functionAuth != null) {
-          functionAuth.appendPolicies(function, resolvedFunction.policySet);
-        }
+      }
+      final functionAuth = function.metadata.whereType<ApiAuth>().singleOrNull;
+      if (functionAuth != null) {
+        functionAuth.appendPolicies(function, resolvedFunction.policySet);
+      }
 
-        for (final parameter in function.parameters) {
-          switch (parameter.references) {
-            case NodeReference(type: NodeType.variable, :final name):
-              resolvedFunction.variables.add(name);
-            case NodeReference(type: NodeType.secret, :final name):
-              resolvedFunction.secrets.add(name);
-          }
+      for (final parameter in function.parameters) {
+        switch (parameter.references) {
+          case NodeReference(type: NodeType.variable, :final name):
+            resolvedFunction.variables.add(name);
+          case NodeReference(type: NodeType.secret, :final name):
+            resolvedFunction.secrets.add(name);
         }
-      },
-    );
+      }
+    });
   }
 
   @override
@@ -203,10 +193,7 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
   }
 
   @override
-  ResolvedVariable visitVariable(
-    Variable variable,
-    AstNode context,
-  ) {
+  ResolvedVariable visitVariable(Variable variable, AstNode context) {
     final name = variable.name;
     _seenConfigValues.add(name);
     final value = configValues[name];
@@ -214,10 +201,7 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
       // Should have been caught before this.
       unreachable('Missing value for environment variable: $name');
     }
-    return ResolvedVariable(
-      name: name,
-      value: value,
-    );
+    return ResolvedVariable(name: name, value: value);
   }
 
   @override
@@ -229,10 +213,7 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
       // Should have been caught before this.
       unreachable('Missing value for secret: $name');
     }
-    return ResolvedSecret(
-      name: name,
-      value: value,
-    );
+    return ResolvedSecret(name: name, value: value);
   }
 
   @override
@@ -257,32 +238,32 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
       case SmsAuthProvider(:final name):
         return ResolvedSmsAuthProvider(authProviderId: name);
       case GoogleAuthProvider(
-          :final name,
-          :final clientId,
-          :final clientSecret
-        ):
+        :final name,
+        :final clientId,
+        :final clientSecret,
+      ):
         return ResolvedGoogleAuthProvider(
           authProviderId: name,
           clientId: visitSecret(clientId, context),
           clientSecret: visitSecret(clientSecret, context),
         );
       case GitHubAuthProvider(
-          :final name,
-          :final clientId,
-          :final clientSecret
-        ):
+        :final name,
+        :final clientId,
+        :final clientSecret,
+      ):
         return ResolvedGitHubAuthProvider(
           authProviderId: name,
           clientId: visitSecret(clientId, context),
           clientSecret: visitSecret(clientSecret, context),
         );
       case AppleAuthProvider(
-          :final name,
-          :final clientId,
-          :final teamId,
-          :final keyId,
-          :final privateKey
-        ):
+        :final name,
+        :final clientId,
+        :final teamId,
+        :final keyId,
+        :final privateKey,
+      ):
         return ResolvedAppleAuthProvider(
           authProviderId: name,
           clientId: visitSecret(clientId, context),
@@ -299,10 +280,7 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
     covariant AstNode context,
   ) {
     return switch (provider) {
-      FirebaseExternalAuthProvider(
-        :final name,
-        :final projectId,
-      ) =>
+      FirebaseExternalAuthProvider(:final name, :final projectId) =>
         ResolvedFirebaseExternalAuthProvider(
           authProviderId: name,
           projectId: visitVariable(projectId, context),
@@ -343,10 +321,10 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
       b.schema = switch (database.schema) {
         // TODO(dnys1): Use drift_dev to resolve the schema.
         DriftDatabaseSchema() => ResolvedDriftDatabaseSchema(
-            databaseSchemaId: database.name,
-            version: 1,
-            schemaJson: {},
-          ),
+          databaseSchemaId: database.name,
+          version: 1,
+          schemaJson: {},
+        ),
       };
     });
   }

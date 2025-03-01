@@ -80,10 +80,10 @@ class PackageId {
 
   /// Creates an ID for the given root package.
   static PackageId root(Package package) => PackageId(
-        package.name,
-        package.version,
-        ResolvedRootDescription(RootDescription(package)),
-      );
+    package.name,
+    package.version,
+    ResolvedRootDescription(RootDescription(package)),
+  );
 
   @override
   int get hashCode => Object.hash(name, version, description);
@@ -214,8 +214,8 @@ class PackageDetail {
     this.showVersion,
     bool? showSource,
     bool? showDescription,
-  })  : showSource = showDescription ?? showSource,
-        showDescription = showDescription ?? false;
+  }) : showSource = showDescription ?? showSource,
+       showDescription = showDescription ?? false;
 
   /// The default [PackageDetail] configuration.
   static const defaults = PackageDetail();
@@ -241,10 +241,10 @@ class PackageDetail {
   /// Returns a [PackageDetail] with the maximum amount of detail between [this]
   /// and [other].
   PackageDetail max(PackageDetail other) => PackageDetail(
-        showVersion: showVersion! || other.showVersion!,
-        showSource: showSource! || other.showSource!,
-        showDescription: showDescription || other.showDescription,
-      );
+    showVersion: showVersion! || other.showVersion!,
+    showSource: showSource! || other.showSource!,
+    showDescription: showDescription || other.showDescription,
+  );
 }
 
 /// A named, versioned, unit of code and resource reuse.
@@ -263,17 +263,11 @@ class Package {
     bool withPubspecOverrides = false,
   }) {
     final url = p.join(dir, 'pubspec.yaml');
-    final pubspec = Pubspec.parse(
-      readTextFile(url),
-      sourceUrl: p.toUri(url),
-    );
+    final pubspec = Pubspec.parse(readTextFile(url), sourceUrl: p.toUri(url));
     return Package._(dir, pubspec);
   }
 
-  Package._(
-    this._dir,
-    this.pubspec,
-  );
+  Package._(this._dir, this.pubspec);
 
   /// Constructs a package with the given pubspec.
   ///
@@ -338,8 +332,10 @@ class Package {
     String? part7,
   ]) {
     if (isInMemory) {
-      throw StateError("Package $name is in-memory and doesn't have paths "
-          'on disk.');
+      throw StateError(
+        "Package $name is in-memory and doesn't have paths "
+        'on disk.',
+      );
     }
     return p.join(dir, part1, part2, part3, part4, part5, part6, part7);
   }
@@ -348,8 +344,10 @@ class Package {
   /// [path] or [listFiles]), returns it relative to the package root.
   String relative(String path) {
     if (isInMemory) {
-      throw StateError("Package $name is in-memory and doesn't have paths "
-          'on disk.');
+      throw StateError(
+        "Package $name is in-memory and doesn't have paths "
+        'on disk.',
+      );
     }
     return p.relative(path, from: dir);
   }
@@ -387,13 +385,14 @@ class Package {
 
     final packageDir = dir;
     final root = packageDir;
-    beneath = p
-        .toUri(
-          p.normalize(
-            p.relative(p.join(packageDir, beneath ?? '.'), from: root),
-          ),
-        )
-        .path;
+    beneath =
+        p
+            .toUri(
+              p.normalize(
+                p.relative(p.join(packageDir, beneath ?? '.'), from: root),
+              ),
+            )
+            .path;
     if (beneath == './') beneath = '.';
     String resolve(String path) {
       if (platform.isWindows) {
@@ -433,9 +432,10 @@ class Package {
       ignoreForDir: (dir) {
         final pubIgnore = resolve('$dir/.pubignore');
         final gitIgnore = resolve('$dir/.gitignore');
-        final ignoreFile = fileExists(pubIgnore)
-            ? pubIgnore
-            : (fileExists(gitIgnore) ? gitIgnore : null);
+        final ignoreFile =
+            fileExists(pubIgnore)
+                ? pubIgnore
+                : (fileExists(gitIgnore) ? gitIgnore : null);
 
         final rules = [
           if (dir == beneath) ..._basicIgnoreRules,
@@ -444,44 +444,44 @@ class Package {
         return rules.isEmpty
             ? null
             : Ignore(
-                rules,
-                onInvalidPattern: (pattern, exception) {},
-                // Ignore case on macOS and Windows, because `git clone` and
-                // `git init` will set `core.ignoreCase = true` in the local
-                // local `.git/config` file for the repository.
-                //
-                // So on Windows and macOS most users will have case-insensitive
-                // behavior with `.gitignore`, hence, it seems reasonable to do
-                // the same when we interpret `.gitignore` and `.pubignore`.
-                //
-                // There are cases where a user may have case-sensitive behavior
-                // with `.gitignore` on Windows and macOS:
-                //
-                //  (A) The user has manually overwritten the repository
-                //      configuration setting `core.ignoreCase = false`.
-                //
-                //  (B) The git-clone or git-init command that create the
-                //      repository did not deem `core.ignoreCase = true` to be
-                //      appropriate. Documentation for [git-config]][1] implies
-                //      this might depend on whether or not the filesystem is
-                //      case sensitive:
-                //      > If true, this option enables various workarounds to
-                //      > enable Git to work better on filesystems that are not
-                //      > case sensitive, like FAT.
-                //      > ...
-                //      > The default is false, except git-clone[1] or
-                //      > git-init[1] will probe and set core.ignoreCase true
-                //      > if appropriate when the repository is created.
-                //
-                // In either case, it seems likely that users on Windows and
-                // macOS will prefer case-insensitive matching. We specifically
-                // know that some tooling will generate `.PDB` files instead of
-                // `.pdb`, see: [#3003][2]
-                //
-                // [1]: https://git-scm.com/docs/git-config/2.14.6#Documentation/git-config.txt-coreignoreCase
-                // [2]: https://github.com/dart-lang/pub/issues/3003
-                ignoreCase: platform.isMacOS || platform.isWindows,
-              );
+              rules,
+              onInvalidPattern: (pattern, exception) {},
+              // Ignore case on macOS and Windows, because `git clone` and
+              // `git init` will set `core.ignoreCase = true` in the local
+              // local `.git/config` file for the repository.
+              //
+              // So on Windows and macOS most users will have case-insensitive
+              // behavior with `.gitignore`, hence, it seems reasonable to do
+              // the same when we interpret `.gitignore` and `.pubignore`.
+              //
+              // There are cases where a user may have case-sensitive behavior
+              // with `.gitignore` on Windows and macOS:
+              //
+              //  (A) The user has manually overwritten the repository
+              //      configuration setting `core.ignoreCase = false`.
+              //
+              //  (B) The git-clone or git-init command that create the
+              //      repository did not deem `core.ignoreCase = true` to be
+              //      appropriate. Documentation for [git-config]][1] implies
+              //      this might depend on whether or not the filesystem is
+              //      case sensitive:
+              //      > If true, this option enables various workarounds to
+              //      > enable Git to work better on filesystems that are not
+              //      > case sensitive, like FAT.
+              //      > ...
+              //      > The default is false, except git-clone[1] or
+              //      > git-init[1] will probe and set core.ignoreCase true
+              //      > if appropriate when the repository is created.
+              //
+              // In either case, it seems likely that users on Windows and
+              // macOS will prefer case-insensitive matching. We specifically
+              // know that some tooling will generate `.PDB` files instead of
+              // `.pdb`, see: [#3003][2]
+              //
+              // [1]: https://git-scm.com/docs/git-config/2.14.6#Documentation/git-config.txt-coreignoreCase
+              // [2]: https://github.com/dart-lang/pub/issues/3003
+              ignoreCase: platform.isMacOS || platform.isWindows,
+            );
       },
       isDir: (dir) => dirExists(resolve(dir)),
     ).map(resolve).toList();

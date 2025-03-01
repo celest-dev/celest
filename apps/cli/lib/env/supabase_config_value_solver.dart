@@ -54,8 +54,9 @@ final class SupabaseConfigValueSolver extends PromptConfigValueSolver {
     }
     // The path used by Supabase CLI to store the linked project ref.
     // https://github.com/supabase/cli/blob/333a2ca5522e493cd35a853f258e9fd9b5098558/internal/utils/misc.go#L133
-    final projectRefFile =
-        supabaseDir.childDirectory('.temp').childFile('project-ref');
+    final projectRefFile = supabaseDir
+        .childDirectory('.temp')
+        .childFile('project-ref');
     if (!projectRefFile.existsSync()) {
       _logger.finest('Supabase project ref not found in $supabaseDir');
       return null;
@@ -78,16 +79,11 @@ final class SupabaseConfigValueSolver extends PromptConfigValueSolver {
       final configTomlString = await configTomlFile.readAsString();
       final configToml = TomlDocument.parse(configTomlString);
       return switch (configToml.toMap()) {
-        {
-          'api': {
-            'external_url': final String externalUrl,
-          }
-        } =>
-          externalUrl,
+        {'api': {'external_url': final String externalUrl}} => externalUrl,
         _ => run(() {
-            _logger.fine('Supabase config.toml does not specify external_url');
-            return null;
-          }),
+          _logger.fine('Supabase config.toml does not specify external_url');
+          return null;
+        }),
       };
     } on Object catch (e, st) {
       _logger.fine('Failed to parse Supabase config.toml', e, st);
@@ -117,10 +113,12 @@ final class SupabaseConfigValueSolver extends PromptConfigValueSolver {
         :exitCode,
         :stdout as String,
         :stderr as String,
-      ) = await processManager.run(
-        [supabaseCli, 'status', '--output', 'json'],
-        workingDirectory: supabaseDir.parent.path,
-      );
+      ) = await processManager.run([
+        supabaseCli,
+        'status',
+        '--output',
+        'json',
+      ], workingDirectory: supabaseDir.parent.path);
       if (exitCode != 0) {
         _logger.fine(
           'Supabase CLI failed with code $exitCode',
@@ -165,10 +163,7 @@ final class SupabaseConfigValueSolver extends PromptConfigValueSolver {
     final projectRef = await findLinkedProjectRef();
     if (projectRef != null) {
       _logger.fine('Found Supabase project ref: $projectRef');
-      return storeVariable(
-        configVar.name,
-        'https://$projectRef.supabase.co',
-      );
+      return storeVariable(configVar.name, 'https://$projectRef.supabase.co');
     }
 
     // If we're not in the local environment, we need to find the project ref
@@ -177,10 +172,7 @@ final class SupabaseConfigValueSolver extends PromptConfigValueSolver {
 }
 
 final class SupabaseServerStatus {
-  const SupabaseServerStatus({
-    required this.apiUrl,
-    required this.jwtSecret,
-  });
+  const SupabaseServerStatus({required this.apiUrl, required this.jwtSecret});
 
   final String apiUrl;
 

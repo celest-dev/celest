@@ -7,19 +7,12 @@ import 'package:logging/logging.dart';
 import 'package:native_storage/native_storage.dart';
 
 final class CelestConfig {
-  CelestConfig._(
-    this.configDir, {
-    required this.settings,
-  });
+  CelestConfig._(this.configDir, {required this.settings});
 
   static final Logger logger = Logger('CelestConfig');
 
-  static Future<CelestConfig> load({
-    Directory? configHome,
-  }) async {
-    configHome ??= fileSystem.directory(
-      applicationConfigHome('Celest'),
-    );
+  static Future<CelestConfig> load({Directory? configHome}) async {
+    configHome ??= fileSystem.directory(applicationConfigHome('Celest'));
     logger.finest('Loading configuration from $configHome');
     if (!await configHome.exists()) {
       await configHome.create(recursive: true);
@@ -42,10 +35,7 @@ final class CelestConfig {
     } else {
       logger.finest('Configuration already migrated to local storage');
     }
-    return CelestConfig._(
-      configHome,
-      settings: settings,
-    );
+    return CelestConfig._(configHome, settings: settings);
   }
 
   final Directory configDir;

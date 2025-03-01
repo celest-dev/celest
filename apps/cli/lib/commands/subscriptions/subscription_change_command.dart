@@ -14,16 +14,16 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 
 extension InstanceTypeDisplay on InstanceType {
   String get displayString => switch (this) {
-        InstanceType.INSTANCE_TYPE_UNSPECIFIED => 'Free',
-        InstanceType.MICRO => 'Micro (2 CPU/1GB RAM)',
-        InstanceType.SMALL => 'Small (2 CPU/2GB RAM)',
-        InstanceType.MEDIUM => 'Medium (2 CPU/4GB RAM)',
-        InstanceType.LARGE => 'Large (2 CPU/8GB RAM)',
-        InstanceType.QUAD => 'Quad (4 CPU/16GB RAM)',
-        InstanceType.OCTA => 'Octo (8 CPU/32GB RAM)',
-        InstanceType.HEXA => 'Hexa (16 CPU/64GB RAM)',
-        final unhandled => unreachable('Unhandled instance type: $unhandled'),
-      };
+    InstanceType.INSTANCE_TYPE_UNSPECIFIED => 'Free',
+    InstanceType.MICRO => 'Micro (2 CPU/1GB RAM)',
+    InstanceType.SMALL => 'Small (2 CPU/2GB RAM)',
+    InstanceType.MEDIUM => 'Medium (2 CPU/4GB RAM)',
+    InstanceType.LARGE => 'Large (2 CPU/8GB RAM)',
+    InstanceType.QUAD => 'Quad (4 CPU/16GB RAM)',
+    InstanceType.OCTA => 'Octo (8 CPU/32GB RAM)',
+    InstanceType.HEXA => 'Hexa (16 CPU/64GB RAM)',
+    final unhandled => unreachable('Unhandled instance type: $unhandled'),
+  };
 }
 
 final class SubscriptionChangeCommand extends CelestCommand with Authenticate {
@@ -99,14 +99,11 @@ final class SubscriptionChangeCommand extends CelestCommand with Authenticate {
         plan: switch (instanceType) {
           InstanceType.INSTANCE_TYPE_UNSPECIFIED =>
             const CommunitySubscriptionPlan(),
-          final instanceType =>
-            BuilderSubscriptionPlan(instanceType: instanceType),
+          final instanceType => BuilderSubscriptionPlan(
+            instanceType: instanceType,
+          ),
         },
-        redirectUri: Uri(
-          scheme: 'http',
-          host: 'localhost',
-          port: server.port,
-        ),
+        redirectUri: Uri(scheme: 'http', host: 'localhost', port: server.port),
       );
       switch (response.subscription.whichState()) {
         case Subscription_State.active:

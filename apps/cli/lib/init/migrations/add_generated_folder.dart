@@ -15,8 +15,9 @@ final class GeneratedFolder extends ProjectMigration {
 
   @override
   Future<ProjectMigrationResult> create() async {
-    final generatedDir =
-        fileSystem.directory(projectRoot).childDirectory('generated');
+    final generatedDir = fileSystem
+        .directory(projectRoot)
+        .childDirectory('generated');
     await _createIfNotExists(
       generatedDir.childFile('README.md'),
       generated_README,

@@ -30,8 +30,9 @@ final Directory buildDir = fileSystem.directory(
 );
 
 /// The directory to use for temporary (non-bundled) files.
-final Directory tempDir =
-    fileSystem.systemTempDirectory.createTempSync('celest_build_');
+final Directory tempDir = fileSystem.systemTempDirectory.createTempSync(
+  'celest_build_',
+);
 
 /// The HTTP client to use for downloading files.
 final http.Client httpClient = http.Client();
@@ -58,14 +59,16 @@ final String outputFilepath = p.canonicalize(
 final String? accessToken = platform.environment['GCP_ACCESS_TOKEN'];
 
 /// The current SHA of the branch being built.
-final String? currentSha = platform.environment.containsKey('CI')
-    ? (processManager.runSync(
-        // <String>['git', 'log', '-1', '--format=format:%H'], ?
-        <String>['git', 'rev-parse', 'HEAD'],
-        stdoutEncoding: utf8,
-      ).stdout as String)
-        .trim()
-    : null;
+final String? currentSha =
+    platform.environment.containsKey('CI')
+        ? (processManager.runSync(
+                  // <String>['git', 'log', '-1', '--format=format:%H'], ?
+                  <String>['git', 'rev-parse', 'HEAD'],
+                  stdoutEncoding: utf8,
+                ).stdout
+                as String)
+            .trim()
+        : null;
 
 /// Whether we're running in CI.
 final isCI = platform.environment['CI'] == 'true';
@@ -75,9 +78,10 @@ final isCI = platform.environment['CI'] == 'true';
 /// This script is used by the GitHub workflow `apps_cli_release.yaml` to create
 /// a zip of the CLI and its dependencies for the current platform.
 Future<void> main(List<String> args) async {
-  final argParser = ArgParser()
-    ..addFlag('build', negatable: false)
-    ..addFlag('release', negatable: false);
+  final argParser =
+      ArgParser()
+        ..addFlag('build', negatable: false)
+        ..addFlag('release', negatable: false);
   final argResult = argParser.parse(args);
 
   var needsBuild = argResult['build'] as bool?;
@@ -96,7 +100,9 @@ Future<void> main(List<String> args) async {
   if (needsBuild) {
     await _build();
     if (platform.environment['GITHUB_OUTPUT'] case final ciOutput?) {
-      fileSystem.file(ciOutput).writeAsStringSync(
+      fileSystem
+          .file(ciOutput)
+          .writeAsStringSync(
             'installer=$outputFilepath',
             mode: FileMode.append,
           );
@@ -111,18 +117,14 @@ Future<void> _build() async {
   print('Bundling CLI version $version for $osArch...');
 
   await buildDir.create(recursive: true);
-  await _runProcess(
-    'dart',
-    [
-      if (currentSha case final currentSha?) '--define=gitSha=$currentSha',
-      '--define=version=$version',
-      'compile',
-      'exe',
-      '--output=$buildPath/celest.exe',
-      'bin/celest.dart',
-    ],
-    workingDirectory: platform.script.resolve('..').toFilePath(),
-  );
+  await _runProcess('dart', [
+    if (currentSha case final currentSha?) '--define=gitSha=$currentSha',
+    '--define=version=$version',
+    'compile',
+    'exe',
+    '--output=$buildPath/celest.exe',
+    'bin/celest.dart',
+  ], workingDirectory: platform.script.resolve('..').toFilePath());
   if (!buildDir.existsSync()) {
     throw StateError('Build directory does not exist');
   }
@@ -205,18 +207,15 @@ Future<void> _release() async {
       (
         localPath: outputFilepath,
         storagePath:
-            '$osArch/latest/${p.basename(outputFilepath).replaceFirst(version, 'latest')}'
+            '$osArch/latest/${p.basename(outputFilepath).replaceFirst(version, 'latest')}',
       ),
     if (platform.isLinux) ...[
-      (
-        localPath: debFilepath,
-        storagePath: '$osArch/$version/$withoutExt.deb',
-      ),
+      (localPath: debFilepath, storagePath: '$osArch/$version/$withoutExt.deb'),
       if (setLatest)
         (
           localPath: debFilepath,
           storagePath:
-              '$osArch/latest/${withoutExt.replaceFirst(version, 'latest')}.deb'
+              '$osArch/latest/${withoutExt.replaceFirst(version, 'latest')}.deb',
         ),
     ],
     if (platform.isWindows) ...[
@@ -238,16 +237,16 @@ Future<void> _release() async {
       metadata: objectMetadata,
       contentType: switch (platform.operatingSystem) {
         'windows' => switch (p.extension(storagePath)) {
-            '.appx' => 'application/appx',
-            '.dll' => 'application/octet-stream',
-            _ => unreachable(),
-          },
+          '.appx' => 'application/appx',
+          '.dll' => 'application/octet-stream',
+          _ => unreachable(),
+        },
         'macos' => 'application/octet-stream',
         'linux' => switch (p.extension(storagePath)) {
-            '.deb' => 'application/vnd.debian.binary-package',
-            '.zip' => 'application/zip',
-            _ => unreachable(),
-          },
+          '.deb' => 'application/vnd.debian.binary-package',
+          '.zip' => 'application/zip',
+          _ => unreachable(),
+        },
         _ => unreachable(),
       },
     );
@@ -280,10 +279,7 @@ Future<void> _release() async {
   final updatedReleasesInfo = CelestReleasesInfo(
     latest: setLatest ? latestRelease : currentReleasesInfo!.latest,
     latestDev: latestDev,
-    releases: {
-      ...?currentReleasesInfo?.releases,
-      version: latestRelease,
-    },
+    releases: {...?currentReleasesInfo?.releases, version: latestRelease},
   );
   final updatedReleasesInfoJson = updatedReleasesInfo.toJson();
   print('Updated releases info: ${prettyPrintJson(updatedReleasesInfoJson)}');
@@ -384,15 +380,15 @@ final class MacOSBundler implements Bundler {
 
     // Updates the LC_RPATH of `celest` to match .app directory structure.
     // https://developer.apple.com/documentation/xcode/embedding-nonstandard-code-structures-in-a-bundle#Adopt-rpath-relative-references
-    await _runProcess(
-      'install_name_tool',
-      ['-add_rpath', '@executable_path/../Frameworks', exe],
-    );
+    await _runProcess('install_name_tool', [
+      '-add_rpath',
+      '@executable_path/../Frameworks',
+      exe,
+    ]);
 
-    for (final dylib in buildDir
-        .listSync()
-        .whereType<File>()
-        .where((f) => p.extension(f.path) == '.dylib')) {
+    for (final dylib in buildDir.listSync().whereType<File>().where(
+      (f) => p.extension(f.path) == '.dylib',
+    )) {
       final dylibFilename = p.basename(dylib.path);
       // Even though rpath is Frameworks/ in the binary, the runtime searches
       // at Frameworks/celest/<dylib>.
@@ -429,9 +425,7 @@ final class MacOSBundler implements Bundler {
           .childDirectory('macos')
           .childFile('entitlements.xml')
           .readAsStringSync(),
-    ).renderString({
-      'teamId': appleTeamId,
-    });
+    ).renderString({'teamId': appleTeamId});
     print('Rendered entitlements.xml:\n\n$entitlementsPlist\n');
     fileSystem.file(entitlementsPlistPath)
       ..createSync()
@@ -442,10 +436,7 @@ final class MacOSBundler implements Bundler {
           .childDirectory('macos')
           .childFile('Info.plist')
           .readAsStringSync(),
-    ).renderString({
-      'version': version,
-      'teamId': appleTeamId,
-    });
+    ).renderString({'version': version, 'teamId': appleTeamId});
     print('Rendered Info.plist:\n\n$infoPlist\n');
     appDir.childDirectory('Contents').childFile('Info.plist')
       ..createSync()
@@ -454,9 +445,7 @@ final class MacOSBundler implements Bundler {
     toolDir
         .childDirectory('macos')
         .childFile('embedded.provisionprofile')
-        .copySync(
-          p.join(appDir.path, 'Contents', 'embedded.provisionprofile'),
-        );
+        .copySync(p.join(appDir.path, 'Contents', 'embedded.provisionprofile'));
 
     // Sign executable last (working upwards). This was historically done
     // with `--deep` but Apple has since deprecated this option.
@@ -472,38 +461,28 @@ final class MacOSBundler implements Bundler {
     /// profile is embedded in the app directory.
     for (final pathToSign in toSign) {
       print('Codesigning $pathToSign...');
-      await _runProcess(
-        'codesign',
-        [
-          '--sign',
-          developerApplicationIdentity,
-          if (keychainName case final keychain?) ...[
-            '--keychain',
-            keychain,
-          ],
-          if (p.extension(pathToSign) != '.dylib') ...[
-            '--generate-entitlement-der',
-            '--entitlements',
-            entitlementsPlistPath,
-            '--identifier',
-            'dev.celest.cli',
-            '--options=runtime',
-          ],
-          '--force',
-          '--timestamp',
-          '--file-list',
-          '-',
-          '--verbose',
-          pathToSign,
+      await _runProcess('codesign', [
+        '--sign',
+        developerApplicationIdentity,
+        if (keychainName case final keychain?) ...['--keychain', keychain],
+        if (p.extension(pathToSign) != '.dylib') ...[
+          '--generate-entitlement-der',
+          '--entitlements',
+          entitlementsPlistPath,
+          '--identifier',
+          'dev.celest.cli',
+          '--options=runtime',
         ],
-      );
+        '--force',
+        '--timestamp',
+        '--file-list',
+        '-',
+        '--verbose',
+        pathToSign,
+      ]);
 
       Future<void> dumpCodesignResults() async {
-        await _runProcess('codesign', [
-          '--display',
-          '--verbose=4',
-          pathToSign,
-        ]);
+        await _runProcess('codesign', ['--display', '--verbose=4', pathToSign]);
         print('Entitlement results:');
         await _runProcess('codesign', [
           '--display',
@@ -535,118 +514,98 @@ final class MacOSBundler implements Bundler {
     // Create a temp, unsigned PKG installer using pkgbuild
     final tmpPkgPath = p.join(tempDir.path, p.basename(outputFilepath));
     print('Creating component package...');
-    await _runProcess(
-      'pkgbuild',
-      [
-        '--root',
-        appDir.path,
-        '--identifier',
-        'dev.celest.cli',
-        '--version',
-        version,
-        // https://www.pathname.com/fhs/pub/fhs-2.3.html#OPTADDONAPPLICATIONSOFTWAREPACKAGES
-        // TODO(dnys1): /usr/local/lib + /usr/local/bin?
-        '--install-location',
-        '/opt/celest/celest.app',
-        '--scripts',
-        scriptsPath,
-        // Dart minimum OS version is 12.0
-        // https://dart.dev/get-dart#macos
-        '--min-os-version',
-        '12.0',
-        tmpPkgPath,
-      ],
-    );
+    await _runProcess('pkgbuild', [
+      '--root',
+      appDir.path,
+      '--identifier',
+      'dev.celest.cli',
+      '--version',
+      version,
+      // https://www.pathname.com/fhs/pub/fhs-2.3.html#OPTADDONAPPLICATIONSOFTWAREPACKAGES
+      // TODO(dnys1): /usr/local/lib + /usr/local/bin?
+      '--install-location',
+      '/opt/celest/celest.app',
+      '--scripts',
+      scriptsPath,
+      // Dart minimum OS version is 12.0
+      // https://dart.dev/get-dart#macos
+      '--min-os-version',
+      '12.0',
+      tmpPkgPath,
+    ]);
 
     // Create distribution XML file
     // See: https://developer.apple.com/library/archive/documentation/DeveloperTools/Reference/DistributionDefinitionRef/Chapters/Distribution_XML_Ref.html
     // TODO(dnys1): enable_currentUserHome="true"? https://developer.apple.com/library/archive/documentation/DeveloperTools/Reference/DistributionDefinitionRef/Chapters/Distribution_XML_Ref.html#//apple_ref/doc/uid/TP40005370-CH100-SW35
-    final distributionTmpl = toolDir
-        .childDirectory('macos')
-        .childFile('distribution.xml')
-        .readAsStringSync();
+    final distributionTmpl =
+        toolDir
+            .childDirectory('macos')
+            .childFile('distribution.xml')
+            .readAsStringSync();
     final distributionFile = tempDir.childFile('distribution.xml');
     final distributionXml = Template(distributionTmpl).renderString({
       'filename': p.basename(tmpPkgPath),
       'hostArchitectures': osArch == Abi.macosArm64 ? 'arm64' : 'x86_64',
     });
     print('Writing distribution.xml contents:\n\n$distributionXml\n');
-    await distributionFile.writeAsString(
-      distributionXml,
-      flush: true,
-    );
+    await distributionFile.writeAsString(distributionXml, flush: true);
 
     // Create a product archive using productbuild
     print('Creating signed product archive...');
-    await _runProcess(
-      'productbuild',
-      [
-        '--distribution',
-        distributionFile.path,
-        '--package-path',
-        tempDir.path,
-        '--resources',
-        p.join(toolDir.path, 'macos', 'resources'),
-        '--sign',
-        developerInstallerIdentity,
-        if (keychainName case final keychain?) ...[
-          '--keychain',
-          keychain,
-        ],
-        '--timestamp',
-        outputFilepath,
-      ],
-    );
+    await _runProcess('productbuild', [
+      '--distribution',
+      distributionFile.path,
+      '--package-path',
+      tempDir.path,
+      '--resources',
+      p.join(toolDir.path, 'macos', 'resources'),
+      '--sign',
+      developerInstallerIdentity,
+      if (keychainName case final keychain?) ...['--keychain', keychain],
+      '--timestamp',
+      outputFilepath,
+    ]);
 
     // Notarize the installer package
     print('Notarizing package...');
     Future<void> onNotarizationFailed(String logs) async {
       print('Notarization failed. Detailed logs:');
-      final uuid =
-          RegExp(r'Submission with ID ([\w\d-]+)').firstMatch(logs)?.group(1);
+      final uuid = RegExp(
+        r'Submission with ID ([\w\d-]+)',
+      ).firstMatch(logs)?.group(1);
       if (uuid == null) {
         print('ERR: Could not find UUID in logs');
         return;
       }
-      await _runProcess(
-        'xcrun',
-        [
-          'notarytool',
-          'log',
-          '--apple-id',
-          appleId,
-          '--password',
-          appleIdPass,
-          '--team-id',
-          appleTeamId,
-          uuid,
-        ],
-      );
-    }
-
-    final notaryLogs = await _runProcess(
-      'xcrun',
-      [
+      await _runProcess('xcrun', [
         'notarytool',
-        'submit',
+        'log',
         '--apple-id',
         appleId,
         '--password',
         appleIdPass,
         '--team-id',
         appleTeamId,
-        '--wait',
-        '--verbose',
-        outputFilepath,
-      ],
-      onError: onNotarizationFailed,
-    );
-    final status = LineSplitter.split(notaryLogs)
-        .map(RegExp(r'status: (\w+)').firstMatch)
-        .nonNulls
-        .toList()
-        .last
-        .group(1);
+        uuid,
+      ]);
+    }
+
+    final notaryLogs = await _runProcess('xcrun', [
+      'notarytool',
+      'submit',
+      '--apple-id',
+      appleId,
+      '--password',
+      appleIdPass,
+      '--team-id',
+      appleTeamId,
+      '--wait',
+      '--verbose',
+      outputFilepath,
+    ], onError: onNotarizationFailed);
+    final status = LineSplitter.split(
+      notaryLogs,
+    ).map(RegExp(r'status: (\w+)').firstMatch).nonNulls.toList().last.group(1);
     if (status != 'Accepted') {
       await onNotarizationFailed(notaryLogs);
       throw StateError('Notarization failed: $status');
@@ -654,28 +613,18 @@ final class MacOSBundler implements Bundler {
 
     // Staple the notarization ticket to the installer package
     print('Stapling notarization ticket...');
-    await _runProcess(
-      'xcrun',
-      [
-        'stapler',
-        'staple',
-        outputFilepath,
-      ],
-    );
+    await _runProcess('xcrun', ['stapler', 'staple', outputFilepath]);
 
     // Verify the notarization ticket
     print('Verifying notarization ticket...');
-    await _runProcess(
-      'xcrun',
-      [
-        'spctl',
-        '--assess',
-        '--type',
-        'install',
-        '-vv',
-        outputFilepath,
-      ],
-    );
+    await _runProcess('xcrun', [
+      'spctl',
+      '--assess',
+      '--type',
+      'install',
+      '-vv',
+      outputFilepath,
+    ]);
 
     print('Packaging and notarization complete.');
   }
@@ -684,13 +633,14 @@ final class MacOSBundler implements Bundler {
 final class WindowsBundler implements Bundler {
   static final String _windowsSdkBinDir = () {
     const binDir = r'C:\Program Files (x86)\Windows Kits\10\bin';
-    final allSdks = fileSystem
-        .directory(binDir)
-        .listSync()
-        .whereType<Directory>()
-        .map((e) => p.basename(e.path))
-        .where((path) => path.startsWith('10.'))
-        .toList();
+    final allSdks =
+        fileSystem
+            .directory(binDir)
+            .listSync()
+            .whereType<Directory>()
+            .map((e) => p.basename(e.path))
+            .where((path) => path.startsWith('10.'))
+            .toList();
     allSdks.sort();
     final latestSdk = allSdks.last;
     return switch (Abi.current()) {
@@ -734,17 +684,12 @@ final class WindowsBundler implements Bundler {
           :final major,
           :final minor,
           :final patch,
-          :final preRelease
+          :final preRelease,
         ) =>
           // Use the first number in the pre-release as the build number
           // e.g. `1.2.0-dev.1` -> `1.2.0.1`
           '${Version(major, minor, patch)}.${preRelease.whereType<int>().firstOrNull ?? 0}',
-        Version(
-          :final major,
-          :final minor,
-          :final patch,
-          :final build,
-        )
+        Version(:final major, :final minor, :final patch, :final build)
             when build.isNotEmpty =>
           // Use the first number in the build tag as the build number
           // e.g. `1.2.0+1` -> `1.2.0.1`
@@ -781,45 +726,34 @@ final class WindowsBundler implements Bundler {
     // - https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast#shell-light-theme-and-unplated-resources
 
     print('Creating PRI...');
-    await _runProcess(
-      p.join(_windowsSdkBinDir, 'makepri.exe'),
-      [
-        'createconfig',
-        '/cf',
-        'priconfig.xml',
-        '/dq',
-        'en-US',
-      ],
-      workingDirectory: buildDir.path,
-    );
-    await _runProcess(
-      p.join(_windowsSdkBinDir, 'makepri.exe'),
-      [
-        'new',
-        '/pr',
-        '.',
-        '/cf',
-        'priconfig.xml',
-        '/v',
-      ],
-      workingDirectory: buildDir.path,
-    );
+    await _runProcess(p.join(_windowsSdkBinDir, 'makepri.exe'), [
+      'createconfig',
+      '/cf',
+      'priconfig.xml',
+      '/dq',
+      'en-US',
+    ], workingDirectory: buildDir.path);
+    await _runProcess(p.join(_windowsSdkBinDir, 'makepri.exe'), [
+      'new',
+      '/pr',
+      '.',
+      '/cf',
+      'priconfig.xml',
+      '/v',
+    ], workingDirectory: buildDir.path);
 
     // Output to temporary APPX since jsign gets confused when the filename
     // contains the version (periods).
     final tempOutputFilepath = p.join(tempDir.path, 'celest.appx');
 
-    await _runProcess(
-      p.join(_windowsSdkBinDir, 'makeappx.exe'),
-      [
-        'pack',
-        '/d',
-        buildDir.path,
-        '/p',
-        tempOutputFilepath,
-        '/v',
-      ],
-    );
+    await _runProcess(p.join(_windowsSdkBinDir, 'makeappx.exe'), [
+      'pack',
+      '/d',
+      buildDir.path,
+      '/p',
+      tempOutputFilepath,
+      '/v',
+    ]);
 
     return tempOutputFilepath;
   }
@@ -900,15 +834,12 @@ final class WindowsBundler implements Bundler {
     }
 
     print('Verifying EV code signature...');
-    await _runProcess(
-      p.join(_windowsSdkBinDir, 'signtool.exe'),
-      [
-        'verify',
-        '/pa',
-        '/v',
-        appxPackage,
-      ],
-    );
+    await _runProcess(p.join(_windowsSdkBinDir, 'signtool.exe'), [
+      'verify',
+      '/pa',
+      '/v',
+      appxPackage,
+    ]);
 
     // Copy the temp appx package to its final output path.
     await fileSystem.file(appxPackage).copy(outputFilepath);
@@ -963,8 +894,9 @@ final class LinuxBundler implements Bundler {
         in toolDebianDir.childDirectory('DEBIAN').listSync().cast<File>()) {
       if (p.basename(controlFile.path) == 'control') {
         final outputControlFile = debControlDir.childFile('control');
-        final outputControl =
-            Template(controlFile.readAsStringSync()).renderString({
+        final outputControl = Template(
+          controlFile.readAsStringSync(),
+        ).renderString({
           'arch': switch (osArch) {
             Abi.linuxArm64 => 'arm64',
             Abi.linuxX64 => 'amd64',
@@ -990,11 +922,11 @@ final class LinuxBundler implements Bundler {
     // Print directory structure
     _printFs(debDir);
 
-    await _runProcess(
-      'dpkg-deb',
-      ['--build', debDir.path, p.setExtension(outputFilepath, '.deb')],
-      workingDirectory: tempDir.path,
-    );
+    await _runProcess('dpkg-deb', [
+      '--build',
+      debDir.path,
+      p.setExtension(outputFilepath, '.deb'),
+    ], workingDirectory: tempDir.path);
   }
 }
 
@@ -1005,27 +937,25 @@ Future<String> _runProcess(
   Future<void> Function(String logs)? onError,
 }) async {
   print('Running process "$executable ${args.join(' ')}"...');
-  final proc = await processManager.start(
-    <String>[executable, ...args],
-    workingDirectory: workingDirectory,
-  );
+  final proc = await processManager.start(<String>[
+    executable,
+    ...args,
+  ], workingDirectory: workingDirectory);
 
   // For logging
   executable = executable == 'xcrun' ? args.first : executable;
   args = executable == 'xcrun' ? args.skip(1).toList() : args;
 
   final logsBuf = StringBuffer();
-  proc.stdout
-      .transform(utf8.decoder)
-      .transform(const LineSplitter())
-      .listen((event) {
+  proc.stdout.transform(utf8.decoder).transform(const LineSplitter()).listen((
+    event,
+  ) {
     logsBuf.writeln(event);
     stdout.writeln('$executable: $event');
   });
-  proc.stderr
-      .transform(utf8.decoder)
-      .transform(const LineSplitter())
-      .listen((event) {
+  proc.stderr.transform(utf8.decoder).transform(const LineSplitter()).listen((
+    event,
+  ) {
     stderr.writeln('$executable: $event');
   });
   final exitCode = await proc.exitCode;
@@ -1042,11 +972,8 @@ Future<void> _createZip({
   required String outputPath,
 }) async {
   final zipStream = OutputFileStream(outputPath);
-  final archive = ZipEncoder()
-    ..startEncode(
-      zipStream,
-      level: Deflate.BEST_COMPRESSION,
-    );
+  final archive =
+      ZipEncoder()..startEncode(zipStream, level: Deflate.BEST_COMPRESSION);
   for (final file in fromDir.listSync(recursive: false).whereType<File>()) {
     final relativePath = p.relative(file.path, from: fromDir.parent.path);
     final archiveFile = ArchiveFile(

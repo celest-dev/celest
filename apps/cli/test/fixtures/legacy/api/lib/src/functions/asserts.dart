@@ -1,4 +1,5 @@
 import 'package:celest/celest.dart';
+
 /// Tests that asserts are enabled when running the local API.
 @cloud
 bool assertsEnabled() {

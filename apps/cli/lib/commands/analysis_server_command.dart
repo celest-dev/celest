@@ -59,10 +59,10 @@ final class _StdIoPluginChannel implements PluginCommunicationChannel {
         .transform(utf8.decoder)
         .transform(const LineSplitter())
         .map((requestJson) {
-      return Request.fromJson(
-        jsonDecode(requestJson) as Map<String, dynamic>,
-      );
-    });
+          return Request.fromJson(
+            jsonDecode(requestJson) as Map<String, dynamic>,
+          );
+        });
     _requestSubscription = requestStream.listen(
       onRequest,
       onError: onError,

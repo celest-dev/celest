@@ -54,10 +54,10 @@ final class OrganizationRepository {
 
 extension CloudOrganizationToDB on cloud.Organization {
   Organization toDb() => Organization(
-        id: name.split('/').last,
-        organizationId: organizationId,
-        displayName: displayName,
-        primaryRegion: primaryRegion.name,
-        etag: etag,
-      );
+    id: name.split('/').last,
+    organizationId: organizationId,
+    displayName: displayName,
+    primaryRegion: primaryRegion.name,
+    etag: etag,
+  );
 }

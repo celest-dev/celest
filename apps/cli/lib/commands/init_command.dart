@@ -57,13 +57,7 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
       );
     } on Object catch (e, st) {
       logger.fine('Failed to precache assets', e, st);
-      performance.captureError(
-        e,
-        stackTrace: st,
-        extra: {
-          'command': command,
-        },
-      );
+      performance.captureError(e, stackTrace: st, extra: {'command': command});
     }
   }
 
@@ -89,9 +83,7 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
       command = 'cd $relativePath && $command';
     }
     stdout.writeln();
-    cliLogger.success(
-      '🚀 To start a local development server, run:',
-    );
+    cliLogger.success('🚀 To start a local development server, run:');
     stdout
       ..writeln()
       ..writeln('      $command')

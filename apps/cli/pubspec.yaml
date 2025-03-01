@@ -4,7 +4,7 @@ version: 1.0.6+2
 publish_to: none
 
 environment:
-  sdk: ^3.4.0
+  sdk: ^3.7.0
 
 dependencies:
   # TODO: Cannot use latest because type system uses `identical` in subtype checks instead of `==`
@@ -81,10 +81,11 @@ dependencies:
   stream_channel: ^2.1.2
   stream_transform: ^2.1.0
   toml: ^0.16.0
-  vm_service: ^14.0.0
+  vm_service: ^15.0.0
   watcher: ^1.1.0
   yaml: ^3.1.2
-  yaml_edit: ^2.1.1
+  # TODO: 2.2.2 breaks sorting of edits
+  yaml_edit: 2.2.1
 
 dependency_overrides:
   cedar:
@@ -111,7 +112,7 @@ dev_dependencies:
   celest_lints:
     path: ../../packages/celest_lints
   checks: ^0.3.0
-  dart_jsonwebtoken: ^2.14.1
+  dart_jsonwebtoken: ^3.1.1
   drift_dev: ">=2.21.0 <2.22.0"
   gcloud: ^0.8.13
   googleapis: ^13.2.0

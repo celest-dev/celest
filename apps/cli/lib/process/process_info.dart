@@ -51,11 +51,7 @@ final class Processes {
           .toList(),
     );
     final processesRes = await processManager.run(
-      [
-        if (platform.environment.containsKey('CI')) 'sudo',
-        'ps',
-        '-ef',
-      ],
+      [if (platform.environment.containsKey('CI')) 'sudo', 'ps', '-ef'],
       stdoutEncoding: utf8,
       stderrEncoding: utf8,
     );
@@ -65,12 +61,13 @@ final class Processes {
       );
       return Processes._empty();
     }
-    final processes = LineSplitter.split(processesRes.stdout as String)
-        .skip(1)
-        .map((line) => line.trim())
-        .where((line) => line.isNotEmpty)
-        .map((line) => ProcessInfo.parseUnix(line, portInfo))
-        .toList();
+    final processes =
+        LineSplitter.split(processesRes.stdout as String)
+            .skip(1)
+            .map((line) => line.trim())
+            .where((line) => line.isNotEmpty)
+            .map((line) => ProcessInfo.parseUnix(line, portInfo))
+            .toList();
     return Processes._(processes);
   }
 
@@ -101,13 +98,14 @@ final class Processes {
       );
       return Processes._empty();
     }
-    final processes = LineSplitter.split(processesRes.stdout as String)
-        .skip(1)
-        .map((line) => line.trim())
-        .where((line) => line.isNotEmpty)
-        .map((line) => ProcessInfo.parseWindows(line, portInfo))
-        .nonNulls
-        .toList();
+    final processes =
+        LineSplitter.split(processesRes.stdout as String)
+            .skip(1)
+            .map((line) => line.trim())
+            .where((line) => line.isNotEmpty)
+            .map((line) => ProcessInfo.parseWindows(line, portInfo))
+            .nonNulls
+            .toList();
     return Processes._(processes);
   }
 
@@ -197,10 +195,7 @@ final class ProcessInfo {
 }
 
 final class _PortInfo {
-  const _PortInfo({
-    required this.pid,
-    required this.port,
-  });
+  const _PortInfo({required this.pid, required this.port});
 
   final int pid;
   final int port;
@@ -238,10 +233,7 @@ final class _PortInfo {
       _ => -1,
     };
 
-    return _PortInfo(
-      pid: pid,
-      port: port,
-    );
+    return _PortInfo(pid: pid, port: port);
   }
 
   static _PortInfo? parseWindows(String line) {

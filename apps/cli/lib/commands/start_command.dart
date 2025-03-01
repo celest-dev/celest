@@ -32,7 +32,7 @@ final class StartCommand extends CelestCommand
     // Start the Celest Frontend Loop
     return CelestFrontend().run(
       migrateProject: needsMigration,
-      currentProgress: currentProgress!,
+      currentProgress: currentProgress,
     );
   }
 }

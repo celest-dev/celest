@@ -31,8 +31,9 @@ void main() {
             .childFile('package_config.json');
 
         setUp(() {
-          tempDir =
-              fileSystem.systemTempDirectory.createTempSync('celest_cli_test');
+          tempDir = fileSystem.systemTempDirectory.createTempSync(
+            'celest_cli_test',
+          );
         });
 
         tearDown(() {
@@ -52,11 +53,7 @@ dependencies:
   path: any
 ''');
           await expectLater(
-            runPub(
-              exe: exe,
-              action: action,
-              workingDirectory: tempDir.path,
-            ),
+            runPub(exe: exe, action: action, workingDirectory: tempDir.path),
             completes,
           );
           expect(packageConfig().existsSync(), true);
@@ -74,11 +71,7 @@ dependencies:
   celest: 0.0.1
 ''');
           await expectLater(
-            runPub(
-              exe: exe,
-              action: action,
-              workingDirectory: tempDir.path,
-            ),
+            runPub(exe: exe, action: action, workingDirectory: tempDir.path),
             throwsA(
               isA<CliException>().having(
                 (e) => e.toString(),
@@ -105,11 +98,7 @@ dependencies:
     sdk: flutter
 ''');
           await expectLater(
-            runPub(
-              exe: exe,
-              action: action,
-              workingDirectory: tempDir.path,
-            ),
+            runPub(exe: exe, action: action, workingDirectory: tempDir.path),
             completes,
           );
           expect(packageConfig().existsSync(), true);
@@ -127,11 +116,7 @@ dependencies:
   path: any
 ''');
           await expectLater(
-            runPub(
-              exe: exe,
-              action: action,
-              workingDirectory: tempDir.path,
-            ),
+            runPub(exe: exe, action: action, workingDirectory: tempDir.path),
             completes,
           );
           expect(packageConfig().existsSync(), true);

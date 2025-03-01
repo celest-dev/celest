@@ -11,11 +11,6 @@ import 'stock.dart';
 
 @immutable
 class Portfolio {
-  static const Portfolio EMPTY = Portfolio._();
-
-  final IList<Stock> stocks;
-  final CashBalance cashBalance;
-
   Portfolio({
     Iterable<Stock>? stocks,
     this.cashBalance = CashBalance.ZERO,
@@ -24,6 +19,20 @@ class Portfolio {
   const Portfolio._()
       : stocks = const IListConst([]),
         cashBalance = CashBalance.ZERO;
+
+  factory Portfolio.fromJson(Json? json) {
+    if (json == null) {
+      return Portfolio.EMPTY;
+    } else {
+      final stocks = json.asIListOf('stocks', Stock.fromJson);
+      final cashBalance = json.asCashBalance('cashBalance') ?? CashBalance.ZERO;
+      return Portfolio(stocks: stocks, cashBalance: cashBalance);
+    }
+  }
+  static const Portfolio EMPTY = Portfolio._();
+
+  final IList<Stock> stocks;
+  final CashBalance cashBalance;
 
   Portfolio copyWith({
     Iterable<Stock>? stocks,
@@ -48,7 +57,7 @@ class Portfolio {
   }
 
   Portfolio withoutStock(String ticker) {
-    return withStock(ticker, 0, 0.0);
+    return withStock(ticker, 0, 0);
   }
 
   Portfolio withoutStocks() {
@@ -105,13 +114,15 @@ class Portfolio {
 
       if (stock.howManyShares < howMany) {
         throw UserException(
-            'Cannot sell $howMany shares of stock you do not own');
+          'Cannot sell $howMany shares of stock you do not own',
+        );
       } else {
         final newShares = stock.howManyShares - howMany;
         final newAveragePrice = round(
-            ((stock.howManyShares * stock.averagePrice) -
-                    (howMany * availableStock.currentPrice)) /
-                newShares);
+          ((stock.howManyShares * stock.averagePrice) -
+                  (howMany * availableStock.currentPrice)) /
+              newShares,
+        );
 
         var newStocks = [...stocks];
         newStocks[pos] = Stock(
@@ -127,7 +138,8 @@ class Portfolio {
         }
 
         final newCashBalance = CashBalance(
-            cashBalance.amount + availableStock.currentPrice * howMany);
+          cashBalance.amount + availableStock.currentPrice * howMany,
+        );
         return copyWith(stocks: newStocks, cashBalance: newCashBalance);
       }
     }
@@ -138,7 +150,7 @@ class Portfolio {
   }
 
   double get totalCostBasis {
-    return stocks.fold(0.0, (sum, stock) => sum + stock.costBasis) +
+    return stocks.fold<double>(0, (sum, stock) => sum + stock.costBasis) +
         cashBalance.amount;
   }
 
@@ -149,17 +161,6 @@ class Portfolio {
         'stocks': stocks.map((stock) => stock.toJson()).toList(),
         'cashBalance': cashBalance.toJson(),
       };
-
-  factory Portfolio.fromJson(Json? json) {
-    if (json == null)
-      return Portfolio.EMPTY;
-    else {
-      IList<Stock> stocks = json.asIListOf('stocks', Stock.fromJson);
-      CashBalance cashBalance =
-          json.asCashBalance('cashBalance') ?? CashBalance.ZERO;
-      return Portfolio(stocks: stocks, cashBalance: cashBalance);
-    }
-  }
 
   @override
   bool operator ==(Object other) =>

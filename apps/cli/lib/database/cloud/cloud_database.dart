@@ -11,15 +11,8 @@ part 'cloud_database.g.dart';
 
 @DriftDatabase(include: {'cloud.drift'})
 final class CloudDatabase extends _$CloudDatabase {
-  CloudDatabase(
-    CelestConfig config, {
-    required bool verbose,
-  }) : super(
-          _openConnection(
-            config,
-            verbose: verbose,
-          ),
-        );
+  CloudDatabase(CelestConfig config, {required bool verbose})
+    : super(_openConnection(config, verbose: verbose));
 
   @override
   int get schemaVersion => 1;
@@ -29,22 +22,25 @@ final class CloudDatabase extends _$CloudDatabase {
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
-      beforeOpen: (details) => _lock.withResource(() async {
-        await customStatement('PRAGMA foreign_keys = ON');
-        await customStatement('PRAGMA journal_mode = WAL');
-        await customStatement('PRAGMA busy_timeout = 5000');
-        await customStatement('PRAGMA synchronous = NORMAL');
-        await customStatement('PRAGMA mmap_size = 30000000000');
-        await customStatement('PRAGMA cache_size = 1000000000');
-        await customStatement('PRAGMA page_size = 32768');
-        await customStatement('PRAGMA temp_store = memory');
-      }),
-      onCreate: (m) => _lock.withResource(() async {
-        await m.createAll();
-      }),
-      onUpgrade: (m, from, to) => _lock.withResource(() async {
-        await stepByStep()(m, from, to);
-      }),
+      beforeOpen:
+          (details) => _lock.withResource(() async {
+            await customStatement('PRAGMA foreign_keys = ON');
+            await customStatement('PRAGMA journal_mode = WAL');
+            await customStatement('PRAGMA busy_timeout = 5000');
+            await customStatement('PRAGMA synchronous = NORMAL');
+            await customStatement('PRAGMA mmap_size = 30000000000');
+            await customStatement('PRAGMA cache_size = 1000000000');
+            await customStatement('PRAGMA page_size = 32768');
+            await customStatement('PRAGMA temp_store = memory');
+          }),
+      onCreate:
+          (m) => _lock.withResource(() async {
+            await m.createAll();
+          }),
+      onUpgrade:
+          (m, from, to) => _lock.withResource(() async {
+            await stepByStep()(m, from, to);
+          }),
     );
   }
 
@@ -57,10 +53,7 @@ final class CloudDatabase extends _$CloudDatabase {
   }
 }
 
-QueryExecutor _openConnection(
-  CelestConfig config, {
-  required bool verbose,
-}) {
+QueryExecutor _openConnection(CelestConfig config, {required bool verbose}) {
   return LazyDatabase(() async {
     if (fileSystem is MemoryFileSystem) {
       return NativeDatabase.memory(

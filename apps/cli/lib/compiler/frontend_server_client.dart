@@ -73,43 +73,33 @@ class FrontendServerClient {
     String? nativeAssets,
     List<String> additionalArgs = const [],
   }) async {
-    final feServer = await processManager.start(
-      <String>[
-        Sdk.current.dartAotRuntime,
-        frontendServerPath,
-        '--sdk-root',
-        sdkRoot,
-        '--platform=$platformKernel',
-        '--target=$target',
-        for (final root in fileSystemRoots) '--filesystem-root=$root',
-        '--filesystem-scheme',
-        fileSystemScheme,
-        '--output-dill',
-        outputDillPath,
-        if (incrementalOutputDill != null) ...[
-          '--output-incremental-dill',
-          incrementalOutputDill,
-        ],
-        '--packages=$packagesJson',
-        '--incremental',
-        if (verbose) '--verbose',
-        if (!printIncrementalDependencies)
-          '--no-print-incremental-dependencies',
-        if (enabledExperiments != null)
-          for (final experiment in enabledExperiments)
-            '--enable-experiment=$experiment',
-        for (final source in additionalSources) ...[
-          '--source',
-          source,
-        ],
-        if (nativeAssets != null) ...[
-          '--native-assets',
-          nativeAssets,
-        ],
-        ...additionalArgs,
+    final feServer = await processManager.start(<String>[
+      Sdk.current.dartAotRuntime,
+      frontendServerPath,
+      '--sdk-root',
+      sdkRoot,
+      '--platform=$platformKernel',
+      '--target=$target',
+      for (final root in fileSystemRoots) '--filesystem-root=$root',
+      '--filesystem-scheme',
+      fileSystemScheme,
+      '--output-dill',
+      outputDillPath,
+      if (incrementalOutputDill != null) ...[
+        '--output-incremental-dill',
+        incrementalOutputDill,
       ],
-      workingDirectory: workingDirectory,
-    );
+      '--packages=$packagesJson',
+      '--incremental',
+      if (verbose) '--verbose',
+      if (!printIncrementalDependencies) '--no-print-incremental-dependencies',
+      if (enabledExperiments != null)
+        for (final experiment in enabledExperiments)
+          '--enable-experiment=$experiment',
+      for (final source in additionalSources) ...['--source', source],
+      if (nativeAssets != null) ...['--native-assets', nativeAssets],
+      ...additionalArgs,
+    ], workingDirectory: workingDirectory);
     final feServerStdoutLines = StreamQueue(
       feServer.stdout.transform(utf8.decoder).transform(const LineSplitter()),
     );
@@ -141,16 +131,20 @@ class FrontendServerClient {
         action = 'recompile';
       case _ClientState.waitingForAcceptOrReject:
         throw StateError(
-            'Previous `CompileResult` must be accepted or rejected by '
-            'calling `accept` or `reject`.');
+          'Previous `CompileResult` must be accepted or rejected by '
+          'calling `accept` or `reject`.',
+        );
       case _ClientState.compiling:
         throw StateError(
-            'App is already being compiled, you must wait for that to '
-            'complete and `accept` or `reject` the result before compiling '
-            'again.');
+          'App is already being compiled, you must wait for that to '
+          'complete and `accept` or `reject` the result before compiling '
+          'again.',
+        );
       case _ClientState.rejecting:
-        throw StateError('Still waiting for previous `reject` call to finish. '
-            'You must await that before compiling again.');
+        throw StateError(
+          'Still waiting for previous `reject` call to finish. '
+          'You must await that before compiling again.',
+        );
     }
     _state = _ClientState.compiling;
 
@@ -159,8 +153,9 @@ class FrontendServerClient {
       if (action == 'recompile') {
         if (invalidatedUris == null || invalidatedUris.isEmpty) {
           throw StateError(
-              'Subsequent compile invocations must provide a non-empty list '
-              'of invalidated uris.');
+            'Subsequent compile invocations must provide a non-empty list '
+            'of invalidated uris.',
+          );
         }
         final boundaryKey = Uuid.v7();
         command.writeln(' $boundaryKey');
@@ -238,8 +233,7 @@ class FrontendServerClient {
     required String klass,
     required String libraryUri,
     required List<String> typeDefinitions,
-  }) =>
-      throw UnimplementedError();
+  }) => throw UnimplementedError();
 
   Future<CompileResult> compileExpressionToJs({
     required String expression,
@@ -249,8 +243,7 @@ class FrontendServerClient {
     required String libraryUri,
     required int line,
     required String moduleName,
-  }) =>
-      throw UnimplementedError();
+  }) => throw UnimplementedError();
 
   /// Should be invoked when results of compilation are accepted by the client.
   ///
@@ -288,8 +281,9 @@ class FrontendServerClient {
         case _RejectState.started:
           if (!line.startsWith('result')) {
             throw StateError(
-                'Expected a line like `result <boundary-key>` after a `reject` '
-                'command, but got:\n$line');
+              'Expected a line like `result <boundary-key>` after a `reject` '
+              'command, but got:\n$line',
+            );
           }
           boundaryKey = line.split(' ').last;
           rejectState = _RejectState.waitingForKey;
@@ -313,8 +307,9 @@ class FrontendServerClient {
   void reset() {
     if (_state == _ClientState.compiling) {
       throw StateError(
-          'Called `reset` during an active compile, you must wait for that to '
-          'complete first.');
+        'Called `reset` during an active compile, you must wait for that to '
+        'complete first.',
+      );
     }
     _sendCommand('reset');
     _state = _ClientState.waitingForRecompile;
@@ -419,16 +414,7 @@ enum _ClientState {
 }
 
 /// Frontend server interaction states for a `compile` call.
-enum _CompileState {
-  started,
-  waitingForKey,
-  gettingSourceDiffs,
-  done,
-}
+enum _CompileState { started, waitingForKey, gettingSourceDiffs, done }
 
 /// Frontend server interaction states for a `reject` call.
-enum _RejectState {
-  started,
-  waitingForKey,
-  done,
-}
+enum _RejectState { started, waitingForKey, done }

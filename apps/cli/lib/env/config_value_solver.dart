@@ -13,24 +13,19 @@ enum ConfigValueType {
   secret;
 
   String get displayName => switch (this) {
-        environmentVariable => 'environment variable',
-        secret => 'secret',
-      };
+    environmentVariable => 'environment variable',
+    secret => 'secret',
+  };
 }
 
 final class ConfigValueSolver {
-  const ConfigValueSolver({
-    required this.project,
-    required this.environmentId,
-  });
+  const ConfigValueSolver({required this.project, required this.environmentId});
 
   final ast.Project project;
   final String environmentId;
 
   Map<String, String> get defaultValues {
-    return {
-      'CELEST_ENVIRONMENT': environmentId,
-    };
+    return {'CELEST_ENVIRONMENT': environmentId};
   }
 
   Future<Map<String, String>> solveAll() async {
@@ -38,11 +33,13 @@ final class ConfigValueSolver {
       project.variables.retrieveValues(environmentId: environmentId),
       project.secrets.retrieveValues(environmentId: environmentId),
     ]);
-    final envManager =
-        await celestProject.envManager.environment(environmentId);
-    final allConfigValues = ConfigVarSet()
-      ..addAll(project.variables)
-      ..addAll(project.secrets);
+    final envManager = await celestProject.envManager.environment(
+      environmentId,
+    );
+    final allConfigValues =
+        ConfigVarSet()
+          ..addAll(project.variables)
+          ..addAll(project.secrets);
     final allConfigEntries = {
       ...envValues,
       ...secretValues,
@@ -60,8 +57,10 @@ final class ConfigValueSolver {
     // resolution logic.
     final authVariables = project.auth?.variables;
     final authSecrets = project.auth?.secrets;
-    final authConfigValues = BuiltListMultimap<ast.AuthProviderType,
-        ast.ConfigurationVariable>.build((b) {
+    final authConfigValues = BuiltListMultimap<
+      ast.AuthProviderType,
+      ast.ConfigurationVariable
+    >.build((b) {
       authVariables?.forEach(b.add);
       authSecrets?.forEach(b.add);
     });
@@ -123,36 +122,34 @@ abstract base class BaseConfigValueSolver {
 
   Future<String> storeVariable(String name, String value) async {
     final projectDb = _projectDb ?? celestProject.projectDb;
-    await projectDb.withEnvironment(
-      environmentId: environmentId,
-      (environment) async {
-        await projectDb.upsertEnvironmentVariable(
-          environmentId: environment.id,
-          name: name,
-          value: value,
-        );
-      },
-    );
+    await projectDb.withEnvironment(environmentId: environmentId, (
+      environment,
+    ) async {
+      await projectDb.upsertEnvironmentVariable(
+        environmentId: environment.id,
+        name: name,
+        value: value,
+      );
+    });
     return value;
   }
 
   Future<String> storeSecret(String name, String value) async {
     final projectDb = _projectDb ?? celestProject.projectDb;
-    await projectDb.withEnvironment(
-      environmentId: environmentId,
-      (environment) async {
-        final (scope, key) = (
-          'projects/$projectName/environments/${environment.id}',
-          name,
-        );
-        secureStorage.scoped(scope).write(key, value);
-        await projectDb.upsertSecret(
-          environmentId: environment.id,
-          name: name,
-          valueRef: '$scope/$key',
-        );
-      },
-    );
+    await projectDb.withEnvironment(environmentId: environmentId, (
+      environment,
+    ) async {
+      final (scope, key) = (
+        'projects/$projectName/environments/${environment.id}',
+        name,
+      );
+      secureStorage.scoped(scope).write(key, value);
+      await projectDb.upsertSecret(
+        environmentId: environment.id,
+        name: name,
+        valueRef: '$scope/$key',
+      );
+    });
     return value;
   }
 }

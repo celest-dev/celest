@@ -32,8 +32,9 @@ final class ResidentCompiler {
             return MapEntry(key, value);
           }),
         );
-        logger
-            .finest('Connecting to resident compiler server at $address:$port');
+        logger.finest(
+          'Connecting to resident compiler server at $address:$port',
+        );
         socket = await Socket.connect(address, int.parse(port));
         logger.finer('Resident compiler server already running.');
         return ResidentCompiler._(infoFile);
@@ -49,14 +50,12 @@ final class ResidentCompiler {
       }
     }
     logger.fine('Starting resident compiler server...');
-    final frontendServerProcess = await processManager.start(
-      [
-        Sdk.current.dart,
-        'compilation-server',
-        'start',
-        '--resident-compiler-info-file=${infoFile.path}',
-      ],
-    );
+    final frontendServerProcess = await processManager.start([
+      Sdk.current.dart,
+      'compilation-server',
+      'start',
+      '--resident-compiler-info-file=${infoFile.path}',
+    ]);
     frontendServerProcess.captureStdout(
       sink: logger.finest,
       prefix: '[stdout] ',

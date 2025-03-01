@@ -55,9 +55,7 @@ final class UpgradeCommand extends CelestCommand {
         CliException(
           'Failed to upgrade Celest. Please visit https://celest.dev/download '
           'to upgrade manually.',
-          additionalContext: {
-            'error': '$e',
-          },
+          additionalContext: {'error': '$e'},
         ),
         st,
       );

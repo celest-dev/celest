@@ -22,20 +22,10 @@ final class StripeOperation {
   final String? idField;
 }
 
-enum StripeOperationType {
-  retrieve,
-  list,
-  create,
-  update,
-  delete,
-  custom,
-}
+enum StripeOperationType { retrieve, list, create, update, delete, custom }
 
 final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
-  StripeOpenApiGeneratorContext({
-    required super.document,
-    super.apiName,
-  }) {
+  StripeOpenApiGeneratorContext({required super.document, super.apiName}) {
     // Ensure generated.
     stripeResource;
     stripeEvent;
@@ -44,8 +34,11 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
   /// A map from path -> contextual operation name.
   final stripeOperationNames = <(String, OpenApiOperationType), String>{};
 
-  final stripeOperationResourceName = <(String, OpenApiOperationType),
-      ({String className, String? inPackage})>{};
+  final stripeOperationResourceName =
+      <
+        (String, OpenApiOperationType),
+        ({String className, String? inPackage})
+      >{};
 
   /// Dart names of Stripe event types, wire name -> dart name.
   final stripeEventTypes = <String, String>{};
@@ -56,11 +49,10 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
   @override
   Iterable<TypeReference> structImplements(OpenApiStructTypeSchema schema) {
     return {
-      if (schema.extensions['x-stripeResource']?.value
-          case {'polymorphic_groups': final List<Object?> polymorphicGroups})
-        ...polymorphicGroups.map(
-          (group) => dartRefs[group]!.toTypeReference,
-        ),
+      if (schema.extensions['x-stripeResource']?.value case {
+        'polymorphic_groups': final List<Object?> polymorphicGroups,
+      })
+        ...polymorphicGroups.map((group) => dartRefs[group]!.toTypeReference),
       if (schema.extensions['x-stripeEvent'] != null) stripeEvent,
       if (schema.extensions['x-resourceId']?.value is String) stripeResource,
     };
@@ -75,27 +67,27 @@ final class StripeOpenApiGeneratorContext extends OpenApiGeneratorContext {
       'StripeResource',
       'models.dart',
       () => Class(
-        (c) => c
-          ..abstract = true
-          ..modifier = ClassModifier.interface
-          ..name = 'StripeResource'
-          ..methods.addAll([
-            Method((b) {
-              b
-                ..name = 'object'
-                ..type = MethodType.getter
-                ..returns = DartTypes.core.string
-                ..docs.addAll([
-                  '/// The resource\'s type.',
-                ]);
-            }),
-            Method(
-              (m) => m
-                ..returns = DartTypes.core.object.nullable
-                ..name = 'toJson',
-            ),
-            encodeWithMethod.rebuild((m) => m.body = null),
-          ]),
+        (c) =>
+            c
+              ..abstract = true
+              ..modifier = ClassModifier.interface
+              ..name = 'StripeResource'
+              ..methods.addAll([
+                Method((b) {
+                  b
+                    ..name = 'object'
+                    ..type = MethodType.getter
+                    ..returns = DartTypes.core.string
+                    ..docs.addAll(['/// The resource\'s type.']);
+                }),
+                Method(
+                  (m) =>
+                      m
+                        ..returns = DartTypes.core.object.nullable
+                        ..name = 'toJson',
+                ),
+                encodeWithMethod.rebuild((m) => m.body = null),
+              ]),
       ),
     );
     return refer(reserveName('StripeResource'), 'models.dart').toTypeReference;

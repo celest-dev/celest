@@ -12,10 +12,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class CloudCodeGenerator extends AstVisitor<void> {
-  CloudCodeGenerator({
-    required this.project,
-    required this.resolvedProject,
-  });
+  CloudCodeGenerator({required this.project, required this.resolvedProject});
 
   final Project project;
   final ResolvedProject resolvedProject;
@@ -31,10 +28,7 @@ final class CloudCodeGenerator extends AstVisitor<void> {
 
   CodeOutputs generate() {
     visitProject(project);
-    return CodeOutputs(
-      fileOutputs,
-      codegenDependencies: _codegenDependencies,
-    );
+    return CodeOutputs(fileOutputs, codegenDependencies: _codegenDependencies);
   }
 
   @override
@@ -57,10 +51,8 @@ final class CloudCodeGenerator extends AstVisitor<void> {
 
     if (project.apis.isNotEmpty) {
       final localApiFile = projectPaths.localApiEntrypoint;
-      final localApi = LocalApiGenerator(
-        targets: _targets,
-        project: project,
-      ).generate();
+      final localApi =
+          LocalApiGenerator(targets: _targets, project: project).generate();
       fileOutputs[localApiFile] = CodeGenerator.emit(
         localApi,
         forFile: localApiFile,
@@ -77,13 +69,18 @@ final class CloudCodeGenerator extends AstVisitor<void> {
         project: project,
         api: api,
         function: function,
-        httpConfig: resolvedProject
-            .apis[api.name]!.functions[function.name]!.httpConfig,
+        httpConfig:
+            resolvedProject
+                .apis[api.name]!
+                .functions[function.name]!
+                .httpConfig,
         outputDir: outputDir,
       );
       final entrypoint = generator.generate();
-      final entrypointFile =
-          projectPaths.functionEntrypoint(api.name, function.name);
+      final entrypointFile = projectPaths.functionEntrypoint(
+        api.name,
+        function.name,
+      );
       fileOutputs[entrypointFile] = CodeGenerator.emit(
         entrypoint,
         forFile: entrypointFile,

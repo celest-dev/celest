@@ -11,9 +11,9 @@ void main() {
 
     test('migrates to local storage', () async {
       ctx.fileSystem = MemoryFileSystem.test();
-      final configHome = ctx.fileSystem.systemTempDirectory
-          .childDirectory('config')
-        ..createSync(recursive: true);
+      final configHome = ctx.fileSystem.systemTempDirectory.childDirectory(
+        'config',
+      )..createSync(recursive: true);
 
       final configJson = configHome.childFile('config.json');
       configJson.writeAsStringSync('{"organization_id": "org-id"}');
@@ -22,10 +22,7 @@ void main() {
         configHome: configHome.path,
       );
 
-      expect(
-        await celestProject.config.settings.getOrganizationId(),
-        'org-id',
-      );
+      expect(await celestProject.config.settings.getOrganizationId(), 'org-id');
       expect(await configJson.exists(), isFalse);
     });
   });

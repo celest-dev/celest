@@ -17,12 +17,11 @@ final class OpenApiIdGenerator {
 
   late final wireType = DartTypes.core.string.withNullability(idIsNullable);
 
-  late final ClassBuilder _class = ClassBuilder()
-    ..modifier = ClassModifier.final$
-    ..name = className
-    ..docs.addAll([
-      '/// A [$typeName] ID.',
-    ]);
+  late final ClassBuilder _class =
+      ClassBuilder()
+        ..modifier = ClassModifier.final$
+        ..name = className
+        ..docs.addAll(['/// A [$typeName] ID.']);
 
   Class generate() {
     _class
@@ -32,28 +31,25 @@ final class OpenApiIdGenerator {
             ..name = 'id'
             ..modifier = FieldModifier.final$
             ..type = wireType
-            ..docs.addAll([
-              '/// The ID of the [$typeName].',
-            ]);
+            ..docs.addAll(['/// The ID of the [$typeName].']);
         }),
       )
       ..constructors.addAll([
         _fromJsonMethod,
-        Constructor(
-          (ctor) {
-            ctor
-              ..constant = true
-              ..optionalParameters.add(
-                Parameter(
-                  (p) => p
-                    ..name = 'id'
-                    ..named = true
-                    ..required = true
-                    ..toThis = true,
-                ),
-              );
-          },
-        ),
+        Constructor((ctor) {
+          ctor
+            ..constant = true
+            ..optionalParameters.add(
+              Parameter(
+                (p) =>
+                    p
+                      ..name = 'id'
+                      ..named = true
+                      ..required = true
+                      ..toThis = true,
+              ),
+            );
+        }),
       ])
       ..methods.addAll([_toJsonMethod, _encodeMethod, encodeWithMethod]);
     // ..fields.addAll([selfField(className)]);
@@ -67,25 +63,28 @@ final class OpenApiIdGenerator {
         ..name = 'fromJson'
         ..requiredParameters.add(
           Parameter(
-            (p) => p
-              ..name = 'json'
-              ..type = DartTypes.core.object.nullable,
+            (p) =>
+                p
+                  ..name = 'json'
+                  ..type = DartTypes.core.object.nullable,
           ),
         )
         ..lambda = true
-        ..body = refer(className).newInstance([], {
-          'id': refer('json').asA(wireType),
-        }).code;
+        ..body =
+            refer(
+              className,
+            ).newInstance([], {'id': refer('json').asA(wireType)}).code;
     });
   }
 
   Method get _toJsonMethod {
     return Method(
-      (m) => m
-        ..returns = wireType
-        ..name = 'toJson'
-        ..lambda = true
-        ..body = refer('id').code,
+      (m) =>
+          m
+            ..returns = wireType
+            ..name = 'toJson'
+            ..lambda = true
+            ..body = refer('id').code,
     );
   }
 
@@ -98,14 +97,16 @@ final class OpenApiIdGenerator {
         ..returns = refer('V')
         ..requiredParameters.addAll([
           Parameter(
-            (p) => p
-              ..type = refer(className)
-              ..name = 'instance',
+            (p) =>
+                p
+                  ..type = refer(className)
+                  ..name = 'instance',
           ),
           Parameter(
-            (p) => p
-              ..type = DartTypes.libcoder.encoder(refer('V'))
-              ..name = 'encoder',
+            (p) =>
+                p
+                  ..type = DartTypes.libcoder.encoder(refer('V'))
+                  ..name = 'encoder',
           ),
         ])
         ..lambda = false
@@ -118,11 +119,13 @@ final class OpenApiIdGenerator {
           final id = refer('instance').property('id');
           if (idIsNullable) {
             b.addExpression(
-              id.equalTo(literalNull).conditional(
+              id
+                  .equalTo(literalNull)
+                  .conditional(
                     refer('container').property('encodeNull').call([]),
-                    refer('container')
-                        .property('encodeString')
-                        .call([id.nullChecked]),
+                    refer(
+                      'container',
+                    ).property('encodeString').call([id.nullChecked]),
                   ),
             );
           } else {
@@ -130,9 +133,7 @@ final class OpenApiIdGenerator {
               refer('container').property('encodeString').call([id]),
             );
           }
-          b.addExpression(
-            refer('container').property('value').returned,
-          );
+          b.addExpression(refer('container').property('value').returned);
         });
     });
   }
@@ -157,12 +158,11 @@ final class OpenApiStructOrIdGenerator {
 
   late final idType = DartTypes.core.string.withNullability(idIsNullable);
 
-  late final ClassBuilder _class = ClassBuilder()
-    ..sealed = true
-    ..name = className
-    ..docs.addAll([
-      '/// A [$typeName] or its ID.',
-    ]);
+  late final ClassBuilder _class =
+      ClassBuilder()
+        ..sealed = true
+        ..name = className
+        ..docs.addAll(['/// A [$typeName] or its ID.']);
 
   Class generate() {
     _class
@@ -172,9 +172,7 @@ final class OpenApiStructOrIdGenerator {
             ..name = 'id'
             ..type = MethodType.getter
             ..returns = idType
-            ..docs.addAll([
-              '/// The ID of the [$typeName].',
-            ]);
+            ..docs.addAll(['/// The ID of the [$typeName].']);
         }),
       )
       ..constructors.addAll([_fromJsonMethod])
@@ -190,27 +188,23 @@ final class OpenApiStructOrIdGenerator {
         ..name = 'fromJson'
         ..requiredParameters.add(
           Parameter(
-            (p) => p
-              ..name = 'json'
-              ..type = DartTypes.core.object.nullable,
+            (p) =>
+                p
+                  ..name = 'json'
+                  ..type = DartTypes.core.object.nullable,
           ),
         )
         ..lambda = false
         ..body = Block((b) {
-          final idOnly = refer(idOnlyName)
-              .newInstance([], {
-                'id': refer('json'),
-              })
-              .returned
-              .statement;
-          b.statements.add(
-            idOnly.wrapWithBlockIf(
-              refer('json').isA(idType),
-            ),
-          );
+          final idOnly =
+              refer(
+                idOnlyName,
+              ).newInstance([], {'id': refer('json')}).returned.statement;
+          b.statements.add(idOnly.wrapWithBlockIf(refer('json').isA(idType)));
           b.addExpression(
-            refer(typeName)
-                .newInstanceNamed('fromJson', [refer('json')]).returned,
+            refer(
+              typeName,
+            ).newInstanceNamed('fromJson', [refer('json')]).returned,
           );
         });
     });
@@ -232,9 +226,10 @@ final class OpenApiStructOrIdGenerator {
         ..returns = refer('V')
         ..requiredParameters.addAll([
           Parameter(
-            (p) => p
-              ..type = DartTypes.libcoder.encoder(refer('V'))
-              ..name = 'encoder',
+            (p) =>
+                p
+                  ..type = DartTypes.libcoder.encoder(refer('V'))
+                  ..name = 'encoder',
           ),
         ]);
     });
@@ -249,22 +244,25 @@ final class OpenApiStructOrIdGenerator {
         ..returns = refer('V')
         ..requiredParameters.addAll([
           Parameter(
-            (p) => p
-              ..type = refer(className)
-              ..name = 'instance',
+            (p) =>
+                p
+                  ..type = refer(className)
+                  ..name = 'instance',
           ),
           Parameter(
-            (p) => p
-              ..type = DartTypes.libcoder.encoder(refer('V'))
-              ..name = 'encoder',
+            (p) =>
+                p
+                  ..type = DartTypes.libcoder.encoder(refer('V'))
+                  ..name = 'encoder',
           ),
         ])
         ..lambda = false
-        ..body = refer('instance')
-            .property('encodeWith')
-            .call([refer('encoder')])
-            .returned
-            .statement;
+        ..body =
+            refer('instance')
+                .property('encodeWith')
+                .call([refer('encoder')])
+                .returned
+                .statement;
     });
   }
 }

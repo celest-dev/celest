@@ -7,15 +7,14 @@ enum ScreenChoice {
 }
 
 class Ui {
-  final bool isDarkMode;
-  final ScreenChoice screenChoice;
-
-  static const DEFAULT = Ui(isDarkMode: false);
-
   const Ui({
     required this.isDarkMode,
     this.screenChoice = ScreenChoice.portfolioAndCashBalance,
   });
+  final bool isDarkMode;
+  final ScreenChoice screenChoice;
+
+  static const DEFAULT = Ui(isDarkMode: false);
 
   Ui toggleLightAndDarkMode() => copy(isDarkMode: !isDarkMode);
 
@@ -39,10 +38,10 @@ class Ui {
 
   /// Don't include [screenChoice].
   static Ui fromJson(Json? json) {
-    if (json == null)
+    if (json == null) {
       return Ui.DEFAULT;
-    else {
-      bool isDarkMode = json.asBool('isDarkMode') ?? false;
+    } else {
+      final isDarkMode = json.asBool('isDarkMode') ?? false;
       return Ui(isDarkMode: isDarkMode);
     }
   }

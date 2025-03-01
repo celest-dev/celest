@@ -13,9 +13,10 @@ final class HelloProjectTest extends E2ETest {
 
   @override
   Future<void> run() async {
-    final helloExample = Directory.current.uri
-        .resolve('../../celest/packages/celest/example')
-        .toFilePath();
+    final helloExample =
+        Directory.current.uri
+            .resolve('../../celest/packages/celest/example')
+            .toFilePath();
     await celestCommand('start')
         .workingDirectory(helloExample)
         .start()
@@ -23,9 +24,11 @@ final class HelloProjectTest extends E2ETest {
         .expectNext('Celest is running')
         .run();
     print('Resetting git repo');
-    await runCommand(
-      ['git', 'reset', '--hard', 'HEAD'],
-      workingDirectory: helloExample,
-    );
+    await runCommand([
+      'git',
+      'reset',
+      '--hard',
+      'HEAD',
+    ], workingDirectory: helloExample);
   }
 }

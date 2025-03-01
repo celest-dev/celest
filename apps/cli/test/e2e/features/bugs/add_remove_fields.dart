@@ -30,17 +30,19 @@ final class AddRemoveFieldsTest extends E2ETest with TestDartProject {
         .expectLater('Starting Celest')
         .expectNext('Celest is running')
         .flush();
-    final functionFile = await celestDir
-        .childDirectory('functions')
-        .childFile('location.dart')
-        .create();
+    final functionFile =
+        await celestDir
+            .childDirectory('functions')
+            .childFile('location.dart')
+            .create();
     final modelsDir = projectDir
         .childDirectory('celest')
         .childDirectory('lib')
         .childDirectory('models');
 
-    final locationFile =
-        await modelsDir.childFile('location.dart').create(recursive: true);
+    final locationFile = await modelsDir
+        .childFile('location.dart')
+        .create(recursive: true);
 
     // Create location function
     log('Creating location function');

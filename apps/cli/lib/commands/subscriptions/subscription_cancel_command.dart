@@ -23,22 +23,23 @@ final class SubscriptionCancelCommand extends CelestCommand with Authenticate {
     final feedback = cliLogger.chooseOne(
       "What's your main reason for canceling?",
       choices: CancelSubscriptionDetails_Feedback.values,
-      display: (choice) => switch (choice) {
-        CancelSubscriptionDetails_Feedback.CUSTOMER_SERVICE =>
-          'Lack of support',
-        CancelSubscriptionDetails_Feedback.LOW_QUALITY => 'Quality issues',
-        CancelSubscriptionDetails_Feedback.MISSING_FEATURES =>
-          'Missing features',
-        CancelSubscriptionDetails_Feedback.SWITCHED_SERVICE =>
-          'Switched to another service',
-        CancelSubscriptionDetails_Feedback.TOO_COMPLEX => 'Too complex',
-        CancelSubscriptionDetails_Feedback.TOO_EXPENSIVE => 'Too expensive',
-        CancelSubscriptionDetails_Feedback.UNUSED => 'Not using it',
-        CancelSubscriptionDetails_Feedback.OTHER => 'Other',
-        CancelSubscriptionDetails_Feedback.FEEDBACK_UNSPECIFIED =>
-          'Prefer not to say',
-        final unhandled => unreachable('Unhandled choice: $unhandled'),
-      },
+      display:
+          (choice) => switch (choice) {
+            CancelSubscriptionDetails_Feedback.CUSTOMER_SERVICE =>
+              'Lack of support',
+            CancelSubscriptionDetails_Feedback.LOW_QUALITY => 'Quality issues',
+            CancelSubscriptionDetails_Feedback.MISSING_FEATURES =>
+              'Missing features',
+            CancelSubscriptionDetails_Feedback.SWITCHED_SERVICE =>
+              'Switched to another service',
+            CancelSubscriptionDetails_Feedback.TOO_COMPLEX => 'Too complex',
+            CancelSubscriptionDetails_Feedback.TOO_EXPENSIVE => 'Too expensive',
+            CancelSubscriptionDetails_Feedback.UNUSED => 'Not using it',
+            CancelSubscriptionDetails_Feedback.OTHER => 'Other',
+            CancelSubscriptionDetails_Feedback.FEEDBACK_UNSPECIFIED =>
+              'Prefer not to say',
+            final unhandled => unreachable('Unhandled choice: $unhandled'),
+          },
     );
 
     String? comment;

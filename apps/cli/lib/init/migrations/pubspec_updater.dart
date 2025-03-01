@@ -28,6 +28,7 @@ final class PubspecUpdater extends ProjectMigration {
 
   // TODO(dnys1): Update project names when we can update all Dart code which
   /// currently references `celest_backend`.
+  // ignore: unused_element
   Future<void> _updateProjectName({
     required Pubspec pubspec,
     required String pubspecYaml,
@@ -49,10 +50,7 @@ final class PubspecUpdater extends ProjectMigration {
       final appEditor = YamlEditor(await appRootPubspec.readAsString());
       appEditor
         ..remove(['dependencies', oldPubspecName])
-        ..update(
-          ['dependencies', pubspecName],
-          {'path': 'celest/'},
-        );
+        ..update(['dependencies', pubspecName], {'path': 'celest/'});
     }
   }
 
@@ -62,7 +60,7 @@ final class PubspecUpdater extends ProjectMigration {
     required String pubspecYaml,
     required File pubspecFile,
   }) async {
-    final currentSdkVersion = pubspec.environment?['sdk'];
+    final currentSdkVersion = pubspec.environment['sdk'];
     final requiredSdkVersion = PubEnvironment.dartSdkConstraint;
     if (ProjectDependency.backendDependencies.upToDate(pubspec) &&
         currentSdkVersion == requiredSdkVersion) {
@@ -71,17 +69,15 @@ final class PubspecUpdater extends ProjectMigration {
     }
     final fromVersion = switch (pubspec.dependencies['celest']) {
       final HostedDependency hosted => switch (hosted.version) {
-          final Version version => version,
-          final VersionRange range => range.min,
-          _ => Version.none,
-        },
+        final Version version => version,
+        final VersionRange range => range.min,
+        _ => Version.none,
+      },
       _ => Version.none,
     };
     _logger.fine('Updating project dependencies to latest versions...');
     pubspec = pubspec.copyWith(
-      environment: {
-        'sdk': PubEnvironment.dartSdkConstraint,
-      },
+      environment: {'sdk': PubEnvironment.dartSdkConstraint},
       dependencies: {
         ...pubspec.dependencies,
         ...ProjectDependency.backendDependencies.toPub(),
@@ -108,7 +104,7 @@ final class PubspecUpdater extends ProjectMigration {
     required String pubspecYaml,
     required File pubspecFile,
   }) async {
-    final currentSdkVersion = pubspec.environment?['sdk'];
+    final currentSdkVersion = pubspec.environment['sdk'];
     final requiredSdkVersion = PubEnvironment.dartSdkConstraint;
     if (ProjectDependency.clientDependencies.upToDate(pubspec) &&
         currentSdkVersion == requiredSdkVersion) {
@@ -117,9 +113,7 @@ final class PubspecUpdater extends ProjectMigration {
     }
     _logger.fine('Updating client dependencies to latest versions...');
     pubspec = pubspec.copyWith(
-      environment: {
-        'sdk': PubEnvironment.dartSdkConstraint,
-      },
+      environment: {'sdk': PubEnvironment.dartSdkConstraint},
       dependencies: {
         ...pubspec.dependencies,
         ...ProjectDependency.clientDependencies.toPub(),
@@ -193,10 +187,7 @@ final class PubspecUpdater extends ProjectMigration {
           fromVersion != null && fromVersion < Version(1, 0, 0).firstPreRelease;
       if (needsAnalyzerMigration) {
         operations.add(
-          runPub(
-            action: PubAction.get,
-            workingDirectory: projectRoot,
-          ),
+          runPub(action: PubAction.get, workingDirectory: projectRoot),
         );
       }
       _logger.fine('Backend pubspec updated');
@@ -217,10 +208,7 @@ final class PubspecUpdater extends ProjectMigration {
       needsAnalyzerMigration |= clientNeedsMigration;
       if (clientNeedsMigration) {
         operations.add(
-          runPub(
-            action: PubAction.get,
-            workingDirectory: clientRoot.path,
-          ),
+          runPub(action: PubAction.get, workingDirectory: clientRoot.path),
         );
       }
       _logger.fine('Client pubspec updated');

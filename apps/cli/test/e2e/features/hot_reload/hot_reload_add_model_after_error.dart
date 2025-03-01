@@ -28,16 +28,14 @@ final class HotReloadNonExistentModel extends E2ETest with TestDartProject {
 
     log('Creating API with non-existent model');
     final api = celestDir.childDirectory('functions').childFile('test.dart');
-    await api.writeAsString(
-      '''
+    await api.writeAsString('''
 import 'package:celest/celest.dart';
 
 @cloud
 Future<Model> createModel() async {
   return Model();
 }
-''',
-    );
+''');
 
     await celest.hotReload().expectLater('Project has errors').flush();
 
@@ -47,15 +45,12 @@ Future<Model> createModel() async {
         .childDirectory('models')
         .childFile('model.dart');
     await model.create(recursive: true);
-    await model.writeAsString(
-      '''
+    await model.writeAsString('''
 import 'package:celest/celest.dart';
 
 class Model {}
-''',
-    );
-    await api.writeAsString(
-      '''
+''');
+    await api.writeAsString('''
 import 'package:celest/celest.dart';
 import 'package:celest_backend/models/model.dart';
 
@@ -63,8 +58,7 @@ import 'package:celest_backend/models/model.dart';
 Future<Model> createModel() async {
   return Model();
 }
-''',
-    );
+''');
 
     await celest
         .hotReload()

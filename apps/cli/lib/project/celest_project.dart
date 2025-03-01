@@ -76,9 +76,9 @@ final class CelestProject {
     required this.cacheDb,
     required ByteStore byteStore,
     ProjectDatabase? projectDb,
-  })  : _analysisOptions = analysisOptions,
-        _byteStore = byteStore,
-        _projectDb = projectDb;
+  }) : _analysisOptions = analysisOptions,
+       _byteStore = byteStore,
+       _projectDb = projectDb;
 
   static final _logger = Logger('CelestProject');
 
@@ -103,9 +103,7 @@ final class CelestProject {
       config as CelestConfig,
       analysisOptions as AnalysisOptions,
     ] = await Future.wait([
-      CelestConfig.load(
-        configHome: configHome?.let(fileSystem.directory),
-      ),
+      CelestConfig.load(configHome: configHome?.let(fileSystem.directory)),
       AnalysisOptions.load(projectPaths.analysisOptionsYaml),
     ]);
     _logger
@@ -171,8 +169,8 @@ final class CelestProject {
   /// The [AnalysisContext] for the current project.
   late final DriverBasedAnalysisContext analysisContext =
       _analysisContextCollection.contextFor(
-    p.join(projectPaths.projectRoot, 'project.dart'),
-  );
+        p.join(projectPaths.projectRoot, 'project.dart'),
+      );
 
   /// The [CelestConfig] for the current project.
   final CelestConfig config;
@@ -181,13 +179,11 @@ final class CelestProject {
   final CacheDatabase cacheDb;
 
   /// The [CloudDatabase] for the current project.
-  late final CloudDatabase cloudDb = CloudDatabase(
-    config,
-    verbose: verbose,
-  );
+  late final CloudDatabase cloudDb = CloudDatabase(config, verbose: verbose);
 
   /// The [ProjectDatabase] for the current project.
-  ProjectDatabase get projectDb => _projectDb ??= ProjectDatabase(
+  ProjectDatabase get projectDb =>
+      _projectDb ??= ProjectDatabase(
         projectRoot: projectPaths.projectRoot,
         verbose: verbose,
       );
@@ -241,12 +237,11 @@ final class CelestProject {
     if (projectDart == null) {
       // Shouldn't ever happen since we shouldn't be requesting this before
       // the project is generated.
-      throw StateError(
-        'No project.dart file found in the project root.',
-      );
+      throw StateError('No project.dart file found in the project root.');
     }
-    final projectLibrary =
-        analysisContext.currentSession.getParsedLibrary(projectDart.path);
+    final projectLibrary = analysisContext.currentSession.getParsedLibrary(
+      projectDart.path,
+    );
     switch (projectLibrary) {
       case ParsedLibraryResult(:final units):
         final declarations = units
@@ -254,17 +249,15 @@ final class CelestProject {
             .whereType<TopLevelVariableDeclaration>()
             .expand((declaration) => declaration.variables.variables);
         for (final declaration in declarations) {
-          if (declaration.initializer
-              case MethodInvocation(
-                methodName: SimpleIdentifier(name: 'Project'),
-                :final argumentList,
-              )) {
+          if (declaration.initializer case MethodInvocation(
+            methodName: SimpleIdentifier(name: 'Project'),
+            :final argumentList,
+          )) {
             for (final argument in argumentList.arguments) {
-              if (argument
-                  case NamedExpression(
-                    name: Label(label: SimpleIdentifier(name: 'name')),
-                    expression: SimpleStringLiteral(value: final projectName),
-                  )) {
+              if (argument case NamedExpression(
+                name: Label(label: SimpleIdentifier(name: 'name')),
+                expression: SimpleStringLiteral(value: final projectName),
+              )) {
                 return projectName;
               }
             }
@@ -285,16 +278,13 @@ final class CelestProject {
   }
 }
 
-typedef CelestProjectUris = ({
-  Uri localUri,
-  Uri? productionUri,
-});
+typedef CelestProjectUris = ({Uri localUri, Uri? productionUri});
 
 extension CelestProjectUriStorage on IsolatedNativeStorage {
   Future<Uri?> getUri(String key) async => switch (await read(key)) {
-        final uri? => Uri.parse(uri),
-        _ => null,
-      };
+    final uri? => Uri.parse(uri),
+    _ => null,
+  };
 
   Future<Uri?> getProductionUri(String projectName) =>
       getUri('$projectName.productionUri');

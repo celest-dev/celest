@@ -20,10 +20,7 @@ extension type const OpenApiContentType(String _) implements String {
 }
 
 final class OpenApiClientGenerator {
-  OpenApiClientGenerator({
-    required this.context,
-    required this.service,
-  });
+  OpenApiClientGenerator({required this.context, required this.service});
 
   final OpenApiGeneratorContext context;
 
@@ -41,30 +38,32 @@ final class OpenApiClientGenerator {
 
   late final String clientClassName = service.clientClassName;
   late final Reference clientClassType = refer(clientClassName);
-  late final ClassBuilder _client = ClassBuilder()
-    ..name = clientClassName
-    ..modifier = ClassModifier.final$
-    ..fields.addAll([
-      if (context.document.info.apiVersion case final apiVersion?)
-        Field(
-          (f) => f
-            ..static = true
-            ..modifier = FieldModifier.constant
-            ..name = 'version'
-            ..type = DartTypes.core.string
-            ..assignment = literalString(apiVersion).code,
-        ),
-    ]);
+  late final ClassBuilder _client =
+      ClassBuilder()
+        ..name = clientClassName
+        ..modifier = ClassModifier.final$
+        ..fields.addAll([
+          if (context.document.info.apiVersion case final apiVersion?)
+            Field(
+              (f) =>
+                  f
+                    ..static = true
+                    ..modifier = FieldModifier.constant
+                    ..name = 'version'
+                    ..type = DartTypes.core.string
+                    ..assignment = literalString(apiVersion).code,
+            ),
+        ]);
 
   final _libraries = MapBuilder<String, LibraryBuilder>();
 
   LibraryBuilder _library(String path) => _libraries.putIfAbsent(
-        path,
-        LibraryBuilder.new,
-        // Need extension methods in scope
-        // TODO: adding this dups if already imported
-        // ..directives.add(Directive.import('package:codable/codable.dart')),
-      );
+    path,
+    LibraryBuilder.new,
+    // Need extension methods in scope
+    // TODO: adding this dups if already imported
+    // ..directives.add(Directive.import('package:codable/codable.dart')),
+  );
 
   Map<String, Library> generate() {
     _generateClientClass();
@@ -79,44 +78,51 @@ final class OpenApiClientGenerator {
 
     _client.constructors.add(
       Constructor(
-        (c) => c
-          ..optionalParameters.addAll([
-            Parameter(
-              (p) => p
-                ..type = DartTypes.core.string
-                ..name = 'apiKey'
-                ..named = true
-                ..required = true,
-            ),
-            Parameter(
-              (p) => p
-                ..required = false
-                ..named = true
-                ..type = DartTypes.http.client.nullable
-                ..name = 'httpClient',
-            ),
-            baseUriParam,
-          ])
-          ..initializers.addAll([
-            refer('_httpClient')
-                .assign(
-                  refer('StripeHttpClient', 'src/http/stripe_http_client.dart')
-                      .newInstance([], {
-                    'apiKey': refer('apiKey'),
-                    'baseClient': refer('httpClient'),
-                    if (context.document.info.apiVersion != null)
-                      'version': refer('version'),
-                  }),
-                )
-                .code,
-            refer('_baseUri')
-                .assign(
-                  serverInfoDefault == null
-                      ? refer(baseUriParam.name)
-                      : refer(baseUriParam.name).ifNullThen(serverInfoDefault),
-                )
-                .code,
-          ]),
+        (c) =>
+            c
+              ..optionalParameters.addAll([
+                Parameter(
+                  (p) =>
+                      p
+                        ..type = DartTypes.core.string
+                        ..name = 'apiKey'
+                        ..named = true
+                        ..required = true,
+                ),
+                Parameter(
+                  (p) =>
+                      p
+                        ..required = false
+                        ..named = true
+                        ..type = DartTypes.http.client.nullable
+                        ..name = 'httpClient',
+                ),
+                baseUriParam,
+              ])
+              ..initializers.addAll([
+                refer('_httpClient')
+                    .assign(
+                      refer(
+                        'StripeHttpClient',
+                        'src/http/stripe_http_client.dart',
+                      ).newInstance([], {
+                        'apiKey': refer('apiKey'),
+                        'baseClient': refer('httpClient'),
+                        if (context.document.info.apiVersion != null)
+                          'version': refer('version'),
+                      }),
+                    )
+                    .code,
+                refer('_baseUri')
+                    .assign(
+                      serverInfoDefault == null
+                          ? refer(baseUriParam.name)
+                          : refer(
+                            baseUriParam.name,
+                          ).ifNullThen(serverInfoDefault),
+                    )
+                    .code,
+              ]),
       ),
     );
 
@@ -128,67 +134,73 @@ final class OpenApiClientGenerator {
     final servers = service.info.hosts;
     if (servers.isEmpty) {
       final parameter = Parameter(
-        (p) => p
-          ..required = true
-          ..named = true
-          ..type = DartTypes.core.uri
-          ..name = 'baseUri',
+        (p) =>
+            p
+              ..required = true
+              ..named = true
+              ..type = DartTypes.core.uri
+              ..name = 'baseUri',
       );
       return (parameter, null);
     }
     if (servers.values.toList() case [Uri(isAbsolute: true) && final single]) {
       final parameter = Parameter(
-        (p) => p
-          ..required = false
-          ..named = true
-          ..type = DartTypes.core.uri.nullable
-          ..name = 'baseUri',
+        (p) =>
+            p
+              ..required = false
+              ..named = true
+              ..type = DartTypes.core.uri.nullable
+              ..name = 'baseUri',
       );
       return (
         parameter,
-        DartTypes.core.uri
-            .property('parse')
-            .call([literalString(single.toString())])
+        DartTypes.core.uri.property('parse').call([
+          literalString(single.toString()),
+        ]),
       );
     }
     final serverInfoClassName = service.info.extensionTypeName;
     final serverInfoType = refer(serverInfoClassName);
-    final serverInfo = ExtensionTypeBuilder()
-      ..name = serverInfoClassName
-      ..representationDeclaration = RepresentationDeclaration(
-        (r) => r
-          ..name = '_'
-          ..declaredRepresentationType = DartTypes.core.uri,
-      )
-      ..implements.add(DartTypes.core.uri);
+    final serverInfo =
+        ExtensionTypeBuilder()
+          ..name = serverInfoClassName
+          ..representationDeclaration = RepresentationDeclaration(
+            (r) =>
+                r
+                  ..name = '_'
+                  ..declaredRepresentationType = DartTypes.core.uri,
+          )
+          ..implements.add(DartTypes.core.uri);
     for (final host in servers.values) {
       if (!host.hasVariables) {
         serverInfo.fields.add(
           Field(
-            (b) => b
-              ..static = true
-              ..modifier = FieldModifier.final$
-              ..type = serverInfoType
-              ..name = host.name
-              ..docs.addAll([
-                if (host.description case final description?)
-                  formatDocs(description),
-              ])
-              ..assignment = serverInfoType.newInstance([
-                DartTypes.core.uri.newInstanceNamed(
-                  'parse',
-                  [literalString(host.mappedUrl, raw: true)],
-                ),
-              ]).code,
+            (b) =>
+                b
+                  ..static = true
+                  ..modifier = FieldModifier.final$
+                  ..type = serverInfoType
+                  ..name = host.name
+                  ..docs.addAll([
+                    if (host.description case final description?)
+                      formatDocs(description),
+                  ])
+                  ..assignment =
+                      serverInfoType.newInstance([
+                        DartTypes.core.uri.newInstanceNamed('parse', [
+                          literalString(host.mappedUrl, raw: true),
+                        ]),
+                      ]).code,
           ),
         );
         continue;
       }
       final vars = _ServerInfoVariableGenerator(
         className: host.variables!.className,
-        variables: host.variables!.variables.entries
-            .map((el) => (el.key, el.value))
-            .toList(),
+        variables:
+            host.variables!.variables.entries
+                .map((el) => (el.key, el.value))
+                .toList(),
       );
       _library('client.dart').body.add(vars.spec);
       serverInfo.methods.add(
@@ -199,41 +211,45 @@ final class OpenApiClientGenerator {
             ..name = host.name
             ..requiredParameters.add(
               Parameter(
-                (p) => p
-                  ..name = 'vars'
-                  ..type = vars.type,
+                (p) =>
+                    p
+                      ..name = 'vars'
+                      ..type = vars.type,
               ),
             )
-            ..body = serverInfoType.newInstance([
-              DartTypes.core.uri.newInstanceNamed(
-                'parse',
-                [literalString(host.mappedUrl)],
-              ),
-            ]).code;
+            ..body =
+                serverInfoType.newInstance([
+                  DartTypes.core.uri.newInstanceNamed('parse', [
+                    literalString(host.mappedUrl),
+                  ]),
+                ]).code;
         }),
       );
     }
     serverInfo.fields.insert(
       0,
       Field(
-        (b) => b
-          ..static = true
-          ..modifier = FieldModifier.final$
-          ..type = serverInfoType
-          ..name = 'defaultServer'
-          ..assignment = defaultServer.hasVariables
-              ? refer(defaultServer.name).call([]).code
-              : refer(defaultServer.name).code,
+        (b) =>
+            b
+              ..static = true
+              ..modifier = FieldModifier.final$
+              ..type = serverInfoType
+              ..name = 'defaultServer'
+              ..assignment =
+                  defaultServer.hasVariables
+                      ? refer(defaultServer.name).call([]).code
+                      : refer(defaultServer.name).code,
       ),
     );
 
     _library('client.dart').body.add(serverInfo.build());
     final parameter = Parameter(
-      (p) => p
-        ..required = false
-        ..named = true
-        ..name = 'baseUri'
-        ..type = DartTypes.core.uri.nullable,
+      (p) =>
+          p
+            ..required = false
+            ..named = true
+            ..name = 'baseUri'
+            ..type = DartTypes.core.uri.nullable,
     );
     return (parameter, serverInfoType.property('defaultServer'));
   }
@@ -242,23 +258,26 @@ final class OpenApiClientGenerator {
     final isRootPath = path.className == null;
     final class_ =
         isRootPath ? _client : (ClassBuilder()..name = path.className);
-    final ctor = class_.constructors.isEmpty
-        ? ConstructorBuilder()
-        : class_.constructors.first.toBuilder();
+    final ctor =
+        class_.constructors.isEmpty
+            ? ConstructorBuilder()
+            : class_.constructors.first.toBuilder();
 
     class_.fields.addAll([
       Field(
-        (b) => b
-          ..modifier = FieldModifier.final$
-          ..type = DartTypes.http.client
-          ..name = '_httpClient',
+        (b) =>
+            b
+              ..modifier = FieldModifier.final$
+              ..type = DartTypes.http.client
+              ..name = '_httpClient',
       ),
       Field(
-        (b) => b
-          ..modifier = FieldModifier.final$
-          ..type = DartTypes.core.uri
-          ..name = '_baseUri'
-          ..docs.add(formatDocs('The base URI for the API')),
+        (b) =>
+            b
+              ..modifier = FieldModifier.final$
+              ..type = DartTypes.core.uri
+              ..name = '_baseUri'
+              ..docs.add(formatDocs('The base URI for the API')),
       ),
     ]);
 
@@ -266,18 +285,20 @@ final class OpenApiClientGenerator {
       ctor
         ..optionalParameters.addAll([
           Parameter(
-            (p) => p
-              ..required = true
-              ..named = true
-              ..type = DartTypes.http.client
-              ..name = 'httpClient',
+            (p) =>
+                p
+                  ..required = true
+                  ..named = true
+                  ..type = DartTypes.http.client
+                  ..name = 'httpClient',
           ),
           Parameter(
-            (p) => p
-              ..required = true
-              ..named = true
-              ..type = DartTypes.core.uri
-              ..name = 'baseUri',
+            (p) =>
+                p
+                  ..required = true
+                  ..named = true
+                  ..type = DartTypes.core.uri
+                  ..name = 'baseUri',
           ),
         ])
         ..initializers.addAll([
@@ -289,10 +310,11 @@ final class OpenApiClientGenerator {
     for (final parameter in path.pathParameters.values) {
       class_.fields.add(
         Field(
-          (b) => b
-            ..modifier = FieldModifier.final$
-            ..type = parameter.type.typeReference
-            ..name = parameter.variableName,
+          (b) =>
+              b
+                ..modifier = FieldModifier.final$
+                ..type = parameter.type.typeReference
+                ..name = parameter.variableName,
           // ..docs.addAll([
           //   if (parameter.description case final description?)
           //     formatDocs(description),
@@ -301,11 +323,12 @@ final class OpenApiClientGenerator {
       );
       ctor.optionalParameters.add(
         Parameter(
-          (p) => p
-            ..named = true
-            ..toThis = true
-            ..required = !parameter.type.isNullable
-            ..name = parameter.variableName,
+          (p) =>
+              p
+                ..named = true
+                ..toThis = true
+                ..required = !parameter.type.isNullable
+                ..name = parameter.variableName,
         ),
       );
     }
@@ -315,10 +338,7 @@ final class OpenApiClientGenerator {
 
     for (final method in path.methods.values) {
       class_.methods.add(
-        _generateMethod(
-          path.className ?? clientClassName,
-          method,
-        ),
+        _generateMethod(path.className ?? clientClassName, method),
       );
     }
 
@@ -344,12 +364,13 @@ final class OpenApiClientGenerator {
           // }
           m.name = subpath.variableName;
           m.lambda = true;
-          m.body = refer(subpath.className!).newInstance([], {
-            'baseUri': refer('_baseUri'),
-            'httpClient': refer('_httpClient'),
-            for (final parameter in subpath.pathParameters.values)
-              parameter.variableName: refer(parameter.variableName),
-          }).code;
+          m.body =
+              refer(subpath.className!).newInstance([], {
+                'baseUri': refer('_baseUri'),
+                'httpClient': refer('_httpClient'),
+                for (final parameter in subpath.pathParameters.values)
+                  parameter.variableName: refer(parameter.variableName),
+              }).code;
         }),
       );
     }
@@ -360,43 +381,42 @@ final class OpenApiClientGenerator {
   /// Genereates a method for the given operation (path/verb combination).
   ///
   /// https://spec.openapis.org/oas/v3.1.0#operation-object
-  Method _generateMethod(
-    String className,
-    ServiceMethod operation,
-  ) {
-    final m = MethodBuilder()
-      ..name = operation.methodName
-      ..annotations.addAll([
-        if (operation.deprecated) refer('deprecated'),
-      ])
-      ..modifier = MethodModifier.async
-      ..docs.addAll([
-        if (docsFromParts(operation.summary, operation.description)
-            case final docs?)
-          docs,
-        // if (operation.hasExternalDocs() && operation.externalDocs.hasUrl())
-        //   '/// ${operation.externalDocs.hasDescription() ? operation.externalDocs.description : 'See'}: '
-        //       '${operation.externalDocs.url}',
-      ])
-      ..optionalParameters.addAll([
-        for (final parameter in operation.pathParameters)
-          Parameter(
-            (p) => p
-              ..named = true
-              ..type = parameter.type.typeReference
-              ..required = !parameter.type.isNullable
-              ..name = parameter.variableName,
-          ),
-        for (final parameter
-            in operation.queryParameters.followedBy(operation.headers))
-          Parameter(
-            (p) => p
-              ..named = true
-              ..type = parameter.type.typeReference
-              ..required = !parameter.type.isNullable
-              ..name = parameter.variableName,
-          ),
-      ]);
+  Method _generateMethod(String className, ServiceMethod operation) {
+    final m =
+        MethodBuilder()
+          ..name = operation.methodName
+          ..annotations.addAll([if (operation.deprecated) refer('deprecated')])
+          ..modifier = MethodModifier.async
+          ..docs.addAll([
+            if (docsFromParts(operation.summary, operation.description)
+                case final docs?)
+              docs,
+            // if (operation.hasExternalDocs() && operation.externalDocs.hasUrl())
+            //   '/// ${operation.externalDocs.hasDescription() ? operation.externalDocs.description : 'See'}: '
+            //       '${operation.externalDocs.url}',
+          ])
+          ..optionalParameters.addAll([
+            for (final parameter in operation.pathParameters)
+              Parameter(
+                (p) =>
+                    p
+                      ..named = true
+                      ..type = parameter.type.typeReference
+                      ..required = !parameter.type.isNullable
+                      ..name = parameter.variableName,
+              ),
+            for (final parameter in operation.queryParameters.followedBy(
+              operation.headers,
+            ))
+              Parameter(
+                (p) =>
+                    p
+                      ..named = true
+                      ..type = parameter.type.typeReference
+                      ..required = !parameter.type.isNullable
+                      ..name = parameter.variableName,
+              ),
+          ]);
 
     final body = BlockBuilder();
 
@@ -404,10 +424,9 @@ final class OpenApiClientGenerator {
     final uri = refer(r'$uri');
     {
       final resolvedUrl = interpolatedUri(operation.mappedPath);
-      var resolvedUri = DartTypes.core.uri.newInstanceNamed(
-        'parse',
-        [resolvedUrl],
-      );
+      var resolvedUri = DartTypes.core.uri.newInstanceNamed('parse', [
+        resolvedUrl,
+      ]);
       if (operation.queryParameters.isNotEmpty) {
         final queryMap = refer(r'$queryParameters');
         body.addExpression(
@@ -419,10 +438,9 @@ final class OpenApiClientGenerator {
           final defaultValue = queryParameter.type.defaultValue;
           final variable = refer(queryParameter.variableName);
           if (defaultValue == null) {
-            final addParam =
-                queryMap.index(literalString(queryParameter.rawName)).assign(
-                      queryParameter.type.stringifiedValue(variable, false),
-                    );
+            final addParam = queryMap
+                .index(literalString(queryParameter.rawName))
+                .assign(queryParameter.type.stringifiedValue(variable, false));
             body.statements.add(
               addParam.wrapWithBlockIf(
                 refer(queryParameter.variableName).notEqualTo(literalNull),
@@ -430,19 +448,19 @@ final class OpenApiClientGenerator {
               ),
             );
           } else {
-            final addParam =
-                queryMap.index(literalString(queryParameter.rawName)).assign(
-                      queryParameter.type
-                          .stringifiedValue(variable, true)
-                          .ifNullThen(literal(defaultValue)),
-                    );
+            final addParam = queryMap
+                .index(literalString(queryParameter.rawName))
+                .assign(
+                  queryParameter.type
+                      .stringifiedValue(variable, true)
+                      .ifNullThen(literal(defaultValue)),
+                );
             body.addExpression(addParam);
           }
         }
-        resolvedUri = resolvedUri.property('replace').call(
-          [],
-          {'queryParameters': queryMap},
-        );
+        resolvedUri = resolvedUri.property('replace').call([], {
+          'queryParameters': queryMap,
+        });
       }
       body.addExpression(declareFinal(r'$uri').assign(resolvedUri));
     }
@@ -453,24 +471,25 @@ final class OpenApiClientGenerator {
     final requestContentType = requestBody?.contentType.mimeType;
     final requestImpl = switch (requestContentType) {
       'multipart/form-data' => DartTypes.http.multipartRequest.newInstance([
-          literalString(operation.methodType.name.toUpperCase()),
-          uri,
-        ]),
+        literalString(operation.methodType.name.toUpperCase()),
+        uri,
+      ]),
       _ => DartTypes.http.request.newInstance([
-          literalString(operation.methodType.name.toUpperCase()),
-          uri,
-        ]),
+        literalString(operation.methodType.name.toUpperCase()),
+        uri,
+      ]),
     };
     body.addExpression(declareFinal(r'$request').assign(requestImpl));
 
     if (requestBody case ServiceMethodRequest(type: final bodyType?)) {
       m.optionalParameters.add(
         Parameter(
-          (p) => p
-            ..type = bodyType.typeReference
-            ..required = !bodyType.isNullable
-            ..named = true
-            ..name = 'options',
+          (p) =>
+              p
+                ..type = bodyType.typeReference
+                ..required = !bodyType.isNullable
+                ..named = true
+                ..name = 'options',
         ),
       );
       switch (requestBody.contentType.mimeType) {
@@ -479,7 +498,10 @@ final class OpenApiClientGenerator {
             refer('options').property('toJson').call([]),
           ]);
           body.statements.add(
-            request.property('body').assign(encoded).wrapWithBlockIf(
+            request
+                .property('body')
+                .assign(encoded)
+                .wrapWithBlockIf(
                   refer('options').notEqualTo(literalNull),
                   bodyType.isNullable,
                 ),
@@ -490,7 +512,10 @@ final class OpenApiClientGenerator {
             DartTypes.libcoder.coder$.property('formData').property('encoder'),
           ]);
           body.statements.add(
-            request.property('body').assign(encoded).wrapWithBlockIf(
+            request
+                .property('body')
+                .assign(encoded)
+                .wrapWithBlockIf(
                   refer('options').notEqualTo(literalNull),
                   bodyType.isNullable,
                 ),
@@ -512,22 +537,25 @@ final class OpenApiClientGenerator {
             for (final field in files) {
               final fieldRef = refer('options').property(field.dartName);
               final addFile = request.property('files').property('add').call([
-                DartTypes.http.multipartFile.newInstance([
-                  literalString(field.name),
-                  fieldRef.property('openRead').call([]),
-                  fieldRef.property('length').call([]).awaited,
-                ], {
-                  'filename': fieldRef.property('name'),
-                  'contentType': fieldRef
-                      .property('mimeType')
-                      .equalTo(literalNull)
-                      .conditional(
-                        literalNull,
-                        DartTypes.httpParser.mediaType.property('parse').call([
-                          fieldRef.property('mimeType').nullChecked,
-                        ]),
-                      ),
-                }),
+                DartTypes.http.multipartFile.newInstance(
+                  [
+                    literalString(field.name),
+                    fieldRef.property('openRead').call([]),
+                    fieldRef.property('length').call([]).awaited,
+                  ],
+                  {
+                    'filename': fieldRef.property('name'),
+                    'contentType': fieldRef
+                        .property('mimeType')
+                        .equalTo(literalNull)
+                        .conditional(
+                          literalNull,
+                          DartTypes.httpParser.mediaType.property('parse').call(
+                            [fieldRef.property('mimeType').nullChecked],
+                          ),
+                        ),
+                  },
+                ),
               ]);
               body.statements.add(
                 addFile.wrapWithBlockIf(
@@ -611,19 +639,18 @@ final class OpenApiClientGenerator {
 
     // Send the HTTP request.
     {
-      final responseCode =
-          refer('_httpClient').property('send').call([request]);
+      final responseCode = refer(
+        '_httpClient',
+      ).property('send').call([request]);
       body.addExpression(
         declareFinal(r'$response').assign(responseCode.awaited),
       );
       {
-        final bodyBytes = refer(r'$response')
-            .property('stream')
-            .property('toBytes')
-            .call([]).awaited;
-        body.addExpression(
-          declareFinal(r'$body').assign(bodyBytes),
-        );
+        final bodyBytes =
+            refer(
+              r'$response',
+            ).property('stream').property('toBytes').call([]).awaited;
+        body.addExpression(declareFinal(r'$body').assign(bodyBytes));
       }
     }
 
@@ -641,18 +668,10 @@ final class OpenApiClientGenerator {
       for (final MapEntry(key: statusCode, value: response)
           in operation.responseCases.entries)
         run(() {
-          return _generateResponseCase(
-            statusCode,
-            operation,
-            response,
-          );
+          return _generateResponseCase(statusCode, operation, response);
         }),
       if (operation.defaultResponse case final defaultResponse?)
-        _generateResponseCase(
-          null,
-          operation,
-          defaultResponse,
-        )
+        _generateResponseCase(null, operation, defaultResponse)
       else ...const [
         Code('default:'),
         Code("throw Exception('Unexpected response');"),
@@ -713,21 +732,15 @@ final class OpenApiClientGenerator {
     }
 
     // Attach description to the case statement, if available.
-    caseBuilder.statements.add(
-      Code(formatDocs(response.description)),
-    );
+    caseBuilder.statements.add(Code(formatDocs(response.description)));
 
     {
       final statusCodeDart = statusCode != null ? '$statusCode' : '_';
       if (statusCode == null && operation.responseCases.isEmpty) {
-        caseBuilder.statements.addAll([
-          const Code('default:'),
-        ]);
+        caseBuilder.statements.addAll([const Code('default:')]);
         decodeResponse(response.type);
       } else {
-        caseBuilder.statements.addAll([
-          Code('case $statusCodeDart:'),
-        ]);
+        caseBuilder.statements.addAll([Code('case $statusCodeDart:')]);
         decodeResponse(response.type);
       }
       // if (contentTypes.isEmpty) {
@@ -758,43 +771,38 @@ final class OpenApiClientGenerator {
   }
 }
 
-typedef MappedUri = ({
-  String path,
-  List<HeaderOrQueryParameter> queryParameters,
-  List<HeaderOrQueryParameter> headers,
-});
+typedef MappedUri =
+    ({
+      String path,
+      List<HeaderOrQueryParameter> queryParameters,
+      List<HeaderOrQueryParameter> headers,
+    });
 
 extension on OpenApiType {
   Expression stringifiedValue(
     Expression variable,
     bool isNullable,
-  ) =>
-      switch (this) {
-        OpenApiSingleValueType(:final value) => switch (value) {
-            final String value => literalString(value, raw: true),
-            final List<Object?> values => literalList(values.cast<String>()),
-            _ => literal(value).nullableProperty('toList', isNullable).call([]),
-          },
-        OpenApiDateType(:final primitiveType) => switch (primitiveType) {
-            OpenApiIntegerType() => variable
-                .nullableProperty('millisecondsSinceEpoch', isNullable)
-                .property('toString')
-                .call([]),
-            OpenApiStringType() => variable,
-            _ => unreachable('Unexpected date type: $primitiveType'),
-          },
-        OpenApiStringType() ||
-        OpenApiEnumType() ||
-        OpenApiListType() =>
-          variable,
-        _ => variable.nullableProperty('toString', isNullable).call([]),
-      };
+  ) => switch (this) {
+    OpenApiSingleValueType(:final value) => switch (value) {
+      final String value => literalString(value, raw: true),
+      final List<Object?> values => literalList(values.cast<String>()),
+      _ => literal(value).nullableProperty('toList', isNullable).call([]),
+    },
+    OpenApiDateType(:final primitiveType) => switch (primitiveType) {
+      OpenApiIntegerType() => variable
+          .nullableProperty('millisecondsSinceEpoch', isNullable)
+          .property('toString')
+          .call([]),
+      OpenApiStringType() => variable,
+      _ => unreachable('Unexpected date type: $primitiveType'),
+    },
+    OpenApiStringType() || OpenApiEnumType() || OpenApiListType() => variable,
+    _ => variable.nullableProperty('toString', isNullable).call([]),
+  };
 }
 
-typedef ServerVariable = ({
-  (int, int) replacement,
-  OpenApiServerVariable variable,
-});
+typedef ServerVariable =
+    ({(int, int) replacement, OpenApiServerVariable variable});
 
 final class _ServerInfoVariableGenerator {
   _ServerInfoVariableGenerator({
@@ -826,19 +834,15 @@ final class _ServerInfoVariableGenerator {
         }),
       );
       if (variable.enumValues?.values case final enumValues?) {
-        final assertExp = enumValues.fold<Expression?>(
-          null,
-          (exp, v) {
-            final next = refer(dartName).equalTo(literalString(v));
-            return exp?.or(next) ?? next;
-          },
-        )!;
+        final assertExp =
+            enumValues.fold<Expression?>(null, (exp, v) {
+              final next = refer(dartName).equalTo(literalString(v));
+              return exp?.or(next) ?? next;
+            })!;
         constructor.initializers.add(
           refer('assert').call([
             assertExp,
-            literalString(
-              '$dartName must be one of: ${enumValues.join(', ')}',
-            ),
+            literalString('$dartName must be one of: ${enumValues.join(', ')}'),
           ]).code,
         );
       }

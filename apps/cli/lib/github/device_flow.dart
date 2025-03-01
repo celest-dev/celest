@@ -44,10 +44,7 @@ abstract final class DeviceFlowClient {
 
 @_serializable
 final class DeviceFlowStart {
-  const DeviceFlowStart({
-    required this.clientId,
-    this.scope,
-  });
+  const DeviceFlowStart({required this.clientId, this.scope});
 
   factory DeviceFlowStart.fromJson(Map<String, dynamic> json) =>
       _$DeviceFlowStartFromJson(json);
@@ -86,10 +83,7 @@ final class DeviceFlow {
       final pollResult = await httpClient.post(
         url,
         body: jsonEncode(
-          DeviceFlowPoll(
-            clientId: _clientId,
-            deviceCode: deviceCode,
-          ).toJson(),
+          DeviceFlowPoll(clientId: _clientId, deviceCode: deviceCode).toJson(),
         ),
         headers: {
           'Accept': 'application/json',
@@ -130,10 +124,7 @@ final class DeviceFlow {
 
 @_serializable
 final class DeviceFlowPoll {
-  const DeviceFlowPoll({
-    required this.clientId,
-    required this.deviceCode,
-  });
+  const DeviceFlowPoll({required this.clientId, required this.deviceCode});
 
   factory DeviceFlowPoll.fromJson(Map<String, dynamic> json) =>
       _$DeviceFlowPollFromJson(json);

@@ -45,171 +45,33 @@ typedef VoidCallback = void Function();
 /// [onCancel].
 ///
 class UserException implements Exception {
-  /// Some message shown to the user.
-  final String? msg;
-
-  /// The cause of the user-exception. Usually another error.
-  final Object? cause;
-
-  /// The error may have some code. This may be used for error message
-  /// translations, and also to simplify receiving errors from web-services,
-  /// cloud-functions etc.
-  final ExceptionCode? code;
-
-  /// Callback to be called after the user views the error and taps OK.
-  final VoidCallback? _onOk;
-
-  /// Callback to be called after the user views the error and taps CANCEL.
-  final VoidCallback? _onCancel;
-
-  const UserException(this.msg,
-      {this.cause, this.code, VoidCallback? onOk, VoidCallback? onCancel})
-      : _onOk = onOk,
+  const UserException(
+    this.msg, {
+    this.cause,
+    this.code,
+    VoidCallback? onOk,
+    VoidCallback? onCancel,
+  })  : _onOk = onOk,
         _onCancel = onCancel;
 
   /// Adding `.debug` to the constructor will print the exception to the console.
   /// Use this for debugging purposes only.
   /// This constructor is marked as deprecated so that you don't forget to remove it.
   @deprecated
-  UserException.debug(this.msg,
-      {this.cause, this.code, VoidCallback? onOk, VoidCallback? onCancel})
-      : _onOk = onOk,
+  UserException.debug(
+    this.msg, {
+    this.cause,
+    this.code,
+    VoidCallback? onOk,
+    VoidCallback? onCancel,
+  })  : _onOk = onOk,
         _onCancel = onCancel {
-    print("================================================================\n"
+    print('================================================================\n'
         "UserException${code == null ? "" : " (code: $code)"}:\n"
-        "Msg = $msg,\n"
+        'Msg = $msg,\n'
         "${cause == null ? "" : "Cause = $cause,\n"}"
-        "================================================================");
+        '================================================================');
   }
-
-  /// "OK" callback. If the exception has a cause, will return a merged callback.
-  VoidCallback? get onOk {
-    VoidCallback? onOkCause =
-        (cause is UserException) ? (cause as UserException).onOk : null;
-
-    if (onOkCause == null)
-      return _onOk;
-    else if (_onOk == null)
-      return onOkCause;
-    else
-      return () {
-        _onOk();
-        onOkCause();
-      };
-  }
-
-  /// "Cancel" callback. If the exception has a cause, will return a merged callback.
-  VoidCallback? get onCancel {
-    VoidCallback? onCancelCause =
-        (cause is UserException) ? (cause as UserException).onCancel : null;
-
-    if (onCancelCause == null)
-      return _onCancel;
-    else if (_onCancel == null)
-      return onCancelCause;
-    else
-      return () {
-        _onCancel();
-        onCancelCause();
-      };
-  }
-
-  /// Returns the first cause which, recursively, is NOT a UserException.
-  /// If not found, returns null.
-  Object? hardCause() {
-    if (cause is UserException)
-      return (cause as UserException).hardCause();
-    else
-      return cause;
-  }
-
-  /// Returns a deep copy of this exception, but stopping at, and not
-  /// including, the first [cause] which is not a UserException.
-  UserException withoutHardCause() => UserException(
-        msg,
-        cause: (cause is UserException)
-            ? //
-            (cause as UserException).withoutHardCause()
-            : null,
-        code: code,
-        onOk: _onOk,
-        onCancel: _onCancel,
-      );
-
-  String dialogTitle([Locale? locale]) => //
-      (cause is UserException || cause is String)
-          ? //
-          _codeAsTextOrMsg(locale)
-          : "";
-
-  String dialogContent([Locale? locale]) {
-    if (cause is UserException)
-      return (cause as UserException)._dialogTitleAndContent(locale);
-    else if (cause is String)
-      return cause as String;
-    else
-      return _codeAsTextOrMsg(locale);
-  }
-
-  String _dialogTitleAndContent([Locale? locale]) => (cause is UserException)
-      ? joinExceptionMainAndCause(
-          locale,
-          _codeAsTextOrMsg(locale),
-          (cause as UserException)._codeAsTextOrMsg(locale),
-        )
-      : _codeAsTextOrMsg(locale);
-
-  /// Return the string that join the main message and the reason message.
-  /// You can change this variable to inject another way to join them.
-  static var joinExceptionMainAndCause = (
-    Locale? locale,
-    String? mainMsg,
-    String? causeMsg,
-  ) =>
-      "$mainMsg\n\n${_getReasonFromLocale(locale) ?? "Reason"}: $causeMsg";
-
-  static String? _getReasonFromLocale(Locale? locale) {
-    if (locale == null)
-      return null;
-    else {
-      var reason = _reason[locale.toString()];
-      reason ??= _reason[locale.languageCode];
-      return reason;
-    }
-  }
-
-  static const Map<String, String> _reason = {
-    "en": "Reason", // English
-    "es": "Razón", // Spanish
-    "fr": "Raison", // French
-    "de": "Grund", // German
-    "zh": "原因", // Chinese
-    "jp": "理由", // Japanese
-    "pt": "Motivo", // Portuguese
-    "it": "Motivo", // Italian
-    "pl": "Powód", // Polish
-    "ko": "이유", // Korean
-    "ms": "Sebab", // Malay
-    "ru": "Причина", // Russian
-    "uk": "Причина", // Ukrainian
-    "ar": "السبب", // Arabic
-    "he": "סיבה", // Hebrew
-  };
-
-  /// If there is a [code], and this [code] has a non-empty text returned by
-  /// [ExceptionCode.asText] in the given [Locale], return this text.
-  /// Otherwise, if the [msg] is a non-empty text, return this [msg].
-  /// Otherwise, if there is a [code], return the [code] itself.
-  /// Otherwise, return an empty text.
-  String _codeAsTextOrMsg(Locale? locale) {
-    String? codeAsText = code?.asText(locale);
-    if (codeAsText != null && codeAsText.isNotEmpty) return codeAsText;
-    if (msg != null && msg!.isNotEmpty) return msg!;
-    return code?.toString() ?? "";
-  }
-
-  @override
-  String toString() => _dialogTitleAndContent();
 
   /// Creates a [UserException] from a JSON object.
   ///
@@ -238,6 +100,153 @@ class UserException implements Exception {
       },
     );
   }
+
+  /// Some message shown to the user.
+  final String? msg;
+
+  /// The cause of the user-exception. Usually another error.
+  final Object? cause;
+
+  /// The error may have some code. This may be used for error message
+  /// translations, and also to simplify receiving errors from web-services,
+  /// cloud-functions etc.
+  final ExceptionCode? code;
+
+  /// Callback to be called after the user views the error and taps OK.
+  final VoidCallback? _onOk;
+
+  /// Callback to be called after the user views the error and taps CANCEL.
+  final VoidCallback? _onCancel;
+
+  /// "OK" callback. If the exception has a cause, will return a merged callback.
+  VoidCallback? get onOk {
+    final onOkCause =
+        (cause is UserException) ? (cause as UserException).onOk : null;
+
+    if (onOkCause == null) {
+      return _onOk;
+    } else if (_onOk == null)
+      return onOkCause;
+    else
+      return () {
+        _onOk();
+        onOkCause();
+      };
+  }
+
+  /// "Cancel" callback. If the exception has a cause, will return a merged callback.
+  VoidCallback? get onCancel {
+    final onCancelCause =
+        (cause is UserException) ? (cause as UserException).onCancel : null;
+
+    if (onCancelCause == null) {
+      return _onCancel;
+    } else if (_onCancel == null)
+      return onCancelCause;
+    else
+      return () {
+        _onCancel();
+        onCancelCause();
+      };
+  }
+
+  /// Returns the first cause which, recursively, is NOT a UserException.
+  /// If not found, returns null.
+  Object? hardCause() {
+    if (cause is UserException) {
+      return (cause as UserException).hardCause();
+    } else {
+      return cause;
+    }
+  }
+
+  /// Returns a deep copy of this exception, but stopping at, and not
+  /// including, the first [cause] which is not a UserException.
+  UserException withoutHardCause() => UserException(
+        msg,
+        cause: (cause is UserException)
+            ? //
+            (cause as UserException).withoutHardCause()
+            : null,
+        code: code,
+        onOk: _onOk,
+        onCancel: _onCancel,
+      );
+
+  String dialogTitle([Locale? locale]) => //
+      (cause is UserException || cause is String)
+          ? //
+          _codeAsTextOrMsg(locale)
+          : '';
+
+  String dialogContent([Locale? locale]) {
+    if (cause is UserException) {
+      return (cause as UserException)._dialogTitleAndContent(locale);
+    } else if (cause is String)
+      return cause as String;
+    else
+      return _codeAsTextOrMsg(locale);
+  }
+
+  String _dialogTitleAndContent([Locale? locale]) => (cause is UserException)
+      ? joinExceptionMainAndCause(
+          locale,
+          _codeAsTextOrMsg(locale),
+          (cause as UserException)._codeAsTextOrMsg(locale),
+        )
+      : _codeAsTextOrMsg(locale);
+
+  /// Return the string that join the main message and the reason message.
+  /// You can change this variable to inject another way to join them.
+  static var joinExceptionMainAndCause = (
+    Locale? locale,
+    String? mainMsg,
+    String? causeMsg,
+  ) =>
+      "$mainMsg\n\n${_getReasonFromLocale(locale) ?? "Reason"}: $causeMsg";
+
+  static String? _getReasonFromLocale(Locale? locale) {
+    if (locale == null) {
+      return null;
+    } else {
+      var reason = _reason[locale.toString()];
+      reason ??= _reason[locale.languageCode];
+      return reason;
+    }
+  }
+
+  static const Map<String, String> _reason = {
+    'en': 'Reason', // English
+    'es': 'Razón', // Spanish
+    'fr': 'Raison', // French
+    'de': 'Grund', // German
+    'zh': '原因', // Chinese
+    'jp': '理由', // Japanese
+    'pt': 'Motivo', // Portuguese
+    'it': 'Motivo', // Italian
+    'pl': 'Powód', // Polish
+    'ko': '이유', // Korean
+    'ms': 'Sebab', // Malay
+    'ru': 'Причина', // Russian
+    'uk': 'Причина', // Ukrainian
+    'ar': 'السبب', // Arabic
+    'he': 'סיבה', // Hebrew
+  };
+
+  /// If there is a [code], and this [code] has a non-empty text returned by
+  /// [ExceptionCode.asText] in the given [Locale], return this text.
+  /// Otherwise, if the [msg] is a non-empty text, return this [msg].
+  /// Otherwise, if there is a [code], return the [code] itself.
+  /// Otherwise, return an empty text.
+  String _codeAsTextOrMsg(Locale? locale) {
+    final codeAsText = code?.asText(locale);
+    if (codeAsText != null && codeAsText.isNotEmpty) return codeAsText;
+    if (msg != null && msg!.isNotEmpty) return msg!;
+    return code?.toString() ?? '';
+  }
+
+  @override
+  String toString() => _dialogTitleAndContent();
 
   /// Creates a JSON object from a [UserException].
   ///
@@ -290,28 +299,23 @@ abstract class ExceptionCode {
 
 /// Used for Bugs.
 class AppError extends AssertionError {
-  //
-  final Object? error;
-
   AppError([
     Object? msg,
     this.error,
   ]) : super(msg?.toString());
+  //
+  final Object? error;
 
   @override
   String toString() {
-    String errorStr = "";
+    var errorStr = '';
 
     if (error is Error) {
-      Error errorObj = error as Error;
-      errorStr = '\n\n\n\n' +
-          errorObj.toString() +
-          '\n\n\n\n' +
-          errorObj.stackTrace.toString() +
-          '\n\n\n\n';
-    } else if (error != null) errorStr = " Error: " + error.toString();
+      final errorObj = error as Error;
+      errorStr = '\n\n\n\n$errorObj\n\n\n\n${errorObj.stackTrace}\n\n\n\n';
+    } else if (error != null) errorStr = ' Error: $error';
 
-    return "Assertion failed with message:\n>>> ${message.toString() + errorStr} <<<";
+    return 'Assertion failed with message:\n>>> ${message.toString() + errorStr} <<<';
   }
 
   @override
@@ -327,11 +331,10 @@ class AppError extends AssertionError {
 
 /// Used when something failed but its is NOT an error, and can be recovered from.
 class AppException implements Exception {
+  AppException([this.msg, this.error]);
   //
   final Object? error;
   final Object? msg;
-
-  AppException([this.msg, this.error]);
 
   @override
   String toString() => msg.toString();
@@ -339,15 +342,14 @@ class AppException implements Exception {
 
 /// Used when something will be implemented in the future.
 class NotYetImplementedError extends AssertionError {
-  final String msg;
-
   NotYetImplementedError([dynamic msg])
       : msg = (msg == null)
             ? StackTrace.current.toString()
-            : "$msg\n\n${StackTrace.current}";
+            : '$msg\n\n${StackTrace.current}';
+  final String msg;
 
   @override
-  String toString() => "NOT YET IMPLEMENTED!\n $msg";
+  String toString() => 'NOT YET IMPLEMENTED!\n $msg';
 
   @override
   bool operator ==(Object other) =>
@@ -376,11 +378,10 @@ class InterruptControlFlowException {
 
 /// This should be used when validating input.
 class ValidateError extends TypeError {
-  String msg;
-
   ValidateError(this.msg);
 
   ValidateError.semCrashlytics(this.msg);
+  String msg;
 
   @override
   String toString() => 'ValidateError: $msg';

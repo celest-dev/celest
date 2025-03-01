@@ -34,7 +34,7 @@ Future<CelestProject> newProject({
   String? exceptions,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
-  Map<String, Object /* String | Map<String, Object?>*/ > lib = const {},
+  Map<String, Object /* String | Map<String, Object?>*/> lib = const {},
   String? parentDirectory,
 }) async {
   projectDart ??= _simpleProjectDart(name);
@@ -118,9 +118,10 @@ $authDart
               'functions': {
                 for (final MapEntry(key: fileName, value: contents)
                     in apis.entries)
-                  fileName: contents.startsWith('@')
-                      ? contents
-                      : '''
+                  fileName:
+                      contents.startsWith('@')
+                          ? contents
+                          : '''
 import 'package:celest/celest.dart';
 import 'package:$name/exceptions.dart';
 import 'package:$name/models.dart';
@@ -167,12 +168,10 @@ Iterable<d.Descriptor> _nestedDescriptor(
   for (final MapEntry(key: name, value: contents) in descriptors.entries) {
     yield switch (contents) {
       String() => d.file(name, contents),
-      Map() => d.dir(
-          name,
-          _nestedDescriptor(contents.cast()),
-        ),
-      final badContents =>
-        unreachable('Bad contents: ${badContents.runtimeType}'),
+      Map() => d.dir(name, _nestedDescriptor(contents.cast())),
+      final badContents => unreachable(
+        'Bad contents: ${badContents.runtimeType}',
+      ),
     };
   }
 }
@@ -190,7 +189,7 @@ void testNoErrors({
   Map<String, String> config = const {},
   Map<String, Object> lib = const {},
   void Function(Project)? expectProject,
-  List<Object /* String | Matcher */ > warnings = const [],
+  List<Object /* String | Matcher */> warnings = const [],
 }) {
   testErrors(
     name: name,
@@ -222,8 +221,8 @@ void testErrors({
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
   Map<String, Object> lib = const {},
-  required List<Object /* String | Matcher */ > errors,
-  List<Object /* String | Matcher */ > warnings = const [],
+  required List<Object /* String | Matcher */> errors,
+  List<Object /* String | Matcher */> warnings = const [],
   void Function(Project)? expectProject,
 }) {
   test(name, skip: skip, () async {
@@ -243,7 +242,7 @@ void testErrors({
     final CelestAnalysisResult(
       :project,
       errors: actualErrors,
-      warnings: actualWarnings
+      warnings: actualWarnings,
     ) = await analyzer.analyzeProject();
     for (final error in actualErrors) {
       print(error);
@@ -357,9 +356,7 @@ NotSerializable test() => NotSerializable();
       testErrors(
         name: 'no_project',
         projectDart: '',
-        errors: [
-          'No `Project` type found',
-        ],
+        errors: ['No `Project` type found'],
       );
 
       testErrors(
@@ -369,9 +366,7 @@ import 'package:celest/celest.dart';
 
 const project = Project(name: '');
 ''',
-        errors: [
-          'The project name cannot be empty.',
-        ],
+        errors: ['The project name cannot be empty.'],
       );
     });
 
@@ -398,9 +393,7 @@ import 'package:celest/celest.dart';
 String sayHello() => 'Hello, World!';
 ''',
         },
-        errors: [
-          'API files must be named as follows: <api_name>.dart',
-        ],
+        errors: ['API files must be named as follows: <api_name>.dart'],
       );
 
       testErrors(
@@ -413,9 +406,7 @@ import 'package:celest/celest.dart';
 String sayHello() => 'Hello, World!';
 ''',
         },
-        errors: [
-          'API names may not start with an underscore',
-        ],
+        errors: ['API names may not start with an underscore'],
       );
 
       testErrors(
@@ -1074,9 +1065,7 @@ class ValidJsonable {
   final ValidJsonable value;
 }
 ''',
-        errors: [
-          'Classes are not allowed to have fields of their own type',
-        ],
+        errors: ['Classes are not allowed to have fields of their own type'],
       );
 
       testNoErrors(
@@ -1123,9 +1112,7 @@ class NotJsonable {
   final Enum value;
 }
 ''',
-        errors: [
-          'Untyped enums are not supported',
-        ],
+        errors: ['Untyped enums are not supported'],
       );
 
       testErrors(
@@ -1193,9 +1180,7 @@ import 'package:celest/celest.dart';
 String sayHello(String $param) => 'Hello, World!';
 ''',
         },
-        errors: [
-          'Parameter names may not start with a dollar sign',
-        ],
+        errors: ['Parameter names may not start with a dollar sign'],
       );
 
       testErrors(
@@ -1215,9 +1200,7 @@ class _Private {
 
 typedef Private = _Private;
 ''',
-        errors: [
-          'Private types are not supported',
-        ],
+        errors: ['Private types are not supported'],
       );
 
       testErrors(
@@ -1332,9 +1315,7 @@ const auth = Auth(
   providers: [AuthProvider.email()],
 );
 ''',
-        errors: [
-          "The name 'sayHello' is already defined",
-        ],
+        errors: ["The name 'sayHello' is already defined"],
       );
 
       // Valid types but invalid to target with `@httpHeader`
@@ -1751,9 +1732,7 @@ import 'package:celest/http.dart';
 String sayHello() => 'Hello, World!';
 ''',
         },
-        errors: [
-          'Invalid HTTP status code',
-        ],
+        errors: ['Invalid HTTP status code'],
       );
 
       testNoErrors(
@@ -1778,9 +1757,13 @@ class ItemNotFoundException implements Exception {}
           final function = project.apis.values.single.functions.values.single;
 
           hasErrorType(String type, int statusCode) =>
-              (Subject<ApiMetadata> it) => it.isA<ApiHttpError>()
-                ..has((it) => it.type.symbol, 'symbol').equals(type)
-                ..has((it) => it.statusCode, 'statusCode').equals(statusCode);
+              (Subject<ApiMetadata> it) =>
+                  it.isA<ApiHttpError>()
+                    ..has((it) => it.type.symbol, 'symbol').equals(type)
+                    ..has(
+                      (it) => it.statusCode,
+                      'statusCode',
+                    ).equals(statusCode);
 
           check(function.metadata).containsInOrder([
             hasErrorType('UnauthorizedException', HttpStatus.unauthorized),
@@ -1818,10 +1801,13 @@ String sayHello({
         expectProject: (project) {
           final parameters =
               project.apis.values.single.functions.values.single.parameters;
-          hasHeader(String name) => (Subject<CloudFunctionParameter> it) =>
-              it.has((it) => it.references, 'references').isA<NodeReference>()
-                ..has((it) => it.type, 'type').equals(NodeType.httpHeader)
-                ..has((it) => it.name, 'name').equals(name);
+          hasHeader(String name) =>
+              (Subject<CloudFunctionParameter> it) =>
+                  it
+                      .has((it) => it.references, 'references')
+                      .isA<NodeReference>()
+                    ..has((it) => it.type, 'type').equals(NodeType.httpHeader)
+                    ..has((it) => it.name, 'name').equals(name);
           check(parameters).containsInOrder([
             hasHeader('header'),
             hasHeader('x-custom-string'),
@@ -1886,10 +1872,13 @@ String sayHello({
         expectProject: (project) {
           final parameters =
               project.apis.values.single.functions.values.single.parameters;
-          hasQuery(String name) => (Subject<CloudFunctionParameter> it) =>
-              it.has((it) => it.references, 'references').isA<NodeReference>()
-                ..has((it) => it.type, 'type').equals(NodeType.httpQuery)
-                ..has((it) => it.name, 'name').equals(name);
+          hasQuery(String name) =>
+              (Subject<CloudFunctionParameter> it) =>
+                  it
+                      .has((it) => it.references, 'references')
+                      .isA<NodeReference>()
+                    ..has((it) => it.type, 'type').equals(NodeType.httpQuery)
+                    ..has((it) => it.name, 'name').equals(name);
           check(parameters).containsInOrder([
             hasQuery('query'),
             hasQuery('x-custom-string'),
@@ -1986,9 +1975,7 @@ Future<Stream<String>> greetings(List<String> names) async {
 }
 ''',
         },
-        errors: [
-          'Stream types are not supported',
-        ],
+        errors: ['Stream types are not supported'],
       );
 
       testErrors(
@@ -2088,9 +2075,7 @@ Future<List<String>> greetings(Stream<String> names) async {
 }
 ''',
         },
-        errors: [
-          'Stream types are not supported',
-        ],
+        errors: ['Stream types are not supported'],
       );
     });
 
@@ -2264,31 +2249,21 @@ void sayHelloNamed({
           );
           expect(
             project
-                .apis['greeting']!.functions['sayHelloPositional']!.parameters
+                .apis['greeting']!
+                .functions['sayHelloPositional']!
+                .parameters
                 .map((param) => param.references),
             unorderedEquals([
-              NodeReference(
-                name: 'MY_NAME',
-                type: NodeType.variable,
-              ),
-              NodeReference(
-                name: 'MY_AGE',
-                type: NodeType.variable,
-              ),
+              NodeReference(name: 'MY_NAME', type: NodeType.variable),
+              NodeReference(name: 'MY_AGE', type: NodeType.variable),
             ]),
           );
           expect(
             project.apis['greeting']!.functions['sayHelloNamed']!.parameters
                 .map((param) => param.references),
             unorderedEquals([
-              NodeReference(
-                name: 'MY_NAME',
-                type: NodeType.variable,
-              ),
-              NodeReference(
-                name: 'MY_AGE',
-                type: NodeType.variable,
-              ),
+              NodeReference(name: 'MY_NAME', type: NodeType.variable),
+              NodeReference(name: 'MY_AGE', type: NodeType.variable),
             ]),
           );
         },
@@ -2329,9 +2304,7 @@ import 'package:celest/celest.dart';
 void sayHello(@env('PORT') int port) => 'Hello, $port';
 ''',
         },
-        errors: [
-          'The environment variable name `PORT` is reserved by Celest',
-        ],
+        errors: ['The environment variable name `PORT` is reserved by Celest'],
       );
 
       testErrors(
@@ -2353,9 +2326,7 @@ void sayHello(
 ) => 'Hello, $port';
 ''',
         },
-        errors: [
-          'Only one annotation may be specified on a parameter',
-        ],
+        errors: ['Only one annotation may be specified on a parameter'],
       );
     });
 
@@ -2384,9 +2355,9 @@ const auth = Auth(
               .isNotNull()
               .has((it) => it.providers.map((it) => it.type), 'providers')
               .unorderedEquals([
-            EmailAuthProvider.$type,
-            SmsAuthProvider.$type,
-          ]);
+                EmailAuthProvider.$type,
+                SmsAuthProvider.$type,
+              ]);
         },
       );
 
@@ -2415,9 +2386,7 @@ const auth = Auth(
   providers: [],
 );
 ''',
-        errors: [
-          'At least one Auth provider must be specified',
-        ],
+        errors: ['At least one Auth provider must be specified'],
       );
 
       testErrors(
@@ -2456,10 +2425,9 @@ const auth = Auth(
             ).single.equals(FirebaseExternalAuthProvider.$type);
 
           // The default env variable is created.
-          check(project.variables)
-              .single
-              .has((it) => it.name, 'name')
-              .equals('FIREBASE_PROJECT_ID');
+          check(
+            project.variables,
+          ).single.has((it) => it.name, 'name').equals('FIREBASE_PROJECT_ID');
         },
       );
 
@@ -2484,10 +2452,9 @@ const auth = Auth(
             ).single.equals(FirebaseExternalAuthProvider.$type);
 
           // The custom env variable is used.
-          check(project.variables)
-              .single
-              .has((it) => it.name, 'name')
-              .equals('PROJECT_ID');
+          check(
+            project.variables,
+          ).single.has((it) => it.name, 'name').equals('PROJECT_ID');
         },
       );
     });

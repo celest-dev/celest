@@ -24,10 +24,11 @@ final class ClientFunctionsGenerator {
     required this.apis,
   }) {
     apis.sort((a, b) => a.name.compareTo(b.name));
-    _library = LibraryBuilder()
-      ..name = ''
-      ..comments.addAll(kClientHeader)
-      ..body.add(lazySpec(_client.build));
+    _library =
+        LibraryBuilder()
+          ..name = ''
+          ..comments.addAll(kClientHeader)
+          ..body.add(lazySpec(_client.build));
   }
 
   final ast.ResolvedProject resolvedProject;
@@ -63,23 +64,26 @@ final class ClientFunctionsGenerator {
     required Expression? payload,
   }) {
     final httpClient = ClientTypes.topLevelClient.ref.property('httpClient');
-    final functionCall = httpClient
-        .property(resolvedFunction.httpConfig.route.method.toLowerCase())
-        .call([
-      uri,
-    ], {
-      'headers': (headers.isEmpty ? literalConstMap : literalMap)({
-        'Content-Type': literalString('application/json'),
-        'Accept': literalString('application/json'),
-        ...headers,
-      }),
-      if (payload != null)
-        'body': DartTypes.celest.jsonUtf8.property('encode').call([payload]),
-    }).awaited;
+    final functionCall =
+        httpClient
+            .property(resolvedFunction.httpConfig.route.method.toLowerCase())
+            .call(
+              [uri],
+              {
+                'headers': (headers.isEmpty ? literalConstMap : literalMap)({
+                  'Content-Type': literalString('application/json'),
+                  'Accept': literalString('application/json'),
+                  ...headers,
+                }),
+                if (payload != null)
+                  'body': DartTypes.celest.jsonUtf8.property('encode').call([
+                    payload,
+                  ]),
+              },
+            )
+            .awaited;
 
-    b.addExpression(
-      declareFinal(r'$response').assign(functionCall),
-    );
+    b.addExpression(declareFinal(r'$response').assign(functionCall));
     b.addExpression(
       declareFinal(r'$body').assign(
         DartTypes.celest.jsonUtf8.property('decode').call([
@@ -108,9 +112,9 @@ final class ClientFunctionsGenerator {
     b.statements
       ..add(
         handleError.wrapWithBlockIf(
-          refer(r'$response')
-              .property('statusCode')
-              .notEqualTo(literalNum(200)),
+          refer(
+            r'$response',
+          ).property('statusCode').notEqualTo(literalNum(200)),
         ),
       )
       ..add(returnedBody);
@@ -124,15 +128,13 @@ final class ClientFunctionsGenerator {
   }) {
     final eventClient = ClientTypes.topLevelClient.ref.property('eventClient');
     b.addExpression(
-      declareFinal(r'$channel').assign(
-        eventClient.property('connect').call([uri]),
-      ),
+      declareFinal(
+        r'$channel',
+      ).assign(eventClient.property('connect').call([uri])),
     );
     final channel = refer(r'$channel');
     if (payload != null) {
-      b.addExpression(
-        channel.property('sink').property('add').call([payload]),
-      );
+      b.addExpression(channel.property('sink').property('add').call([payload]));
     }
 
     final returnedBody =
@@ -149,17 +151,16 @@ final class ClientFunctionsGenerator {
     b.addExpression(
       channel.property('stream').property('map').call([
         Method(
-          (m) => m
-            ..requiredParameters.add(
-              Parameter((p) => p.name = r'$event'),
-            )
-            ..body = Block.of([
-              const Code(r'''
+          (m) =>
+              m
+                ..requiredParameters.add(Parameter((p) => p.name = r'$event'))
+                ..body = Block.of([
+                  const Code(r'''
 if ($event is Map<String, Object?> && $event.containsKey('@error')) {
   _throwError(body: $event);
 }'''),
-              returnedBody,
-            ]),
+                  returnedBody,
+                ]),
         ).closure,
       ]).returned,
     );
@@ -167,25 +168,28 @@ if ($event is Map<String, Object?> && $event.containsKey('@error')) {
 
   void _generateApi(ast.Api api, ast.ResolvedApi resolvedApi) {
     final apiType = ClientTypes.api(api);
-    final apiClass = _beginClass(apiType.name)
-      ..docs.addAll(api.docs)
-      ..methods.add(_throwError(api));
+    final apiClass =
+        _beginClass(apiType.name)
+          ..docs.addAll(api.docs)
+          ..methods.add(_throwError(api));
 
     _client.fields.add(
       Field(
-        (f) => f
-          ..docs.addAll(api.docs)
-          ..modifier = FieldModifier.final$
-          ..name = api.name.camelCase
-          ..assignment = apiType.ref.newInstance([]).code,
+        (f) =>
+            f
+              ..docs.addAll(api.docs)
+              ..modifier = FieldModifier.final$
+              ..name = api.name.camelCase
+              ..assignment = apiType.ref.newInstance([]).code,
       ),
     );
 
     final functions = api.functions.values.toList()..sort();
     for (final function in functions) {
       final resolvedFunction = resolvedApi.functions[function.name]!;
-      final clientParameters =
-          function.parameters.where((p) => p.includeInClient);
+      final clientParameters = function.parameters.where(
+        (p) => p.includeInClient,
+      );
       final bodyParameters = Set.of(clientParameters);
       final headerParameters = <String, ast.CloudFunctionParameter>{};
       final queryParameters = <String, ast.CloudFunctionParameter>{};
@@ -202,168 +206,176 @@ if ($event is Map<String, Object?> && $event.containsKey('@error')) {
         }
       }
       final functionCall = Method(
-        (m) => m
-          ..name = function.name.camelCase
-          ..returns = switch (function.streamType) {
-            null => DartTypes.core.future(
-                function.flattenedReturnType.noBound,
-              ),
-            _ => DartTypes.core.stream(
-                function.flattenedReturnType.noBound,
-              ),
-          }
-          ..types.addAll(function.typeParameters)
-          ..modifier = switch (function.streamType) {
-            null => MethodModifier.async,
-            _ => null,
-          }
-          ..docs.addAll(function.docs)
-          ..annotations.addAll(
-            function.annotationExpressions
-                .map((annotation) => annotation.stripConst),
-          )
-          ..annotations.add(
-            DartTypes.celest.cloudFunction.newInstance([], {
-              'api': literalString(api.name),
-              'function': literalString(function.name),
-            }),
-          )
-          ..requiredParameters.addAll(
-            clientParameters.where((p) => p.required && !p.named).map(
-                  (param) => Parameter(
-                    (p) => p
-                      ..name = param.name
-                      ..type = param.type.noBound
-                      ..defaultTo = param.defaultToExpression?.code
-                      ..annotations.addAll(
-                        param.annotationExpressions
-                            .map((annotation) => annotation.stripConst),
-                      ),
-                  ),
+        (m) =>
+            m
+              ..name = function.name.camelCase
+              ..returns = switch (function.streamType) {
+                null => DartTypes.core.future(
+                  function.flattenedReturnType.noBound,
                 ),
-          )
-          ..optionalParameters.addAll(
-            clientParameters.where((p) => !p.required || p.named).map(
-                  (param) => Parameter(
-                    (p) => p
-                      ..name = param.name
-                      ..type = param.type.noBound
-                      ..named = param.named
-                      ..required = param.required
-                      ..defaultTo = param.defaultToExpression?.code
-                      ..annotations.addAll(
-                        param.annotationExpressions
-                            .map((annotation) => annotation.stripConst),
-                      ),
-                  ),
+                _ => DartTypes.core.stream(
+                  function.flattenedReturnType.noBound,
                 ),
-          )
-          ..body = Block((b) {
-            final typeMaps = <Reference, String>{};
-            for (final typeParameter in function.typeParameters) {
-              final typeParameterType = typeHelper.fromReference(typeParameter)
-                  as dart_ast.TypeParameterType;
-              final typeParameterBound =
-                  typeParameterType.bound.element as dart_ast.InterfaceElement;
-              final typeMap = <Expression, Expression>{};
-              final bound = typeHelper.toReference(typeParameterType.bound);
-              typeMap[bound] = literalString(bound.symbol!, raw: true);
-              for (final subtype in typeHelper.subtypes[typeParameterBound]!) {
-                final subtypeReference = typeHelper.toReference(subtype);
-                typeMap[subtypeReference] =
-                    literalString(subtypeReference.symbol!, raw: true);
               }
-              final typeMapName = '\$${typeParameter.symbol!}';
-              b.addExpression(
-                declareConst(typeMapName).assign(literalConstMap(typeMap)),
-              );
-              typeMaps[typeParameter] = typeMapName;
-            }
+              ..types.addAll(function.typeParameters)
+              ..modifier = switch (function.streamType) {
+                null => MethodModifier.async,
+                _ => null,
+              }
+              ..docs.addAll(function.docs)
+              ..annotations.addAll(
+                function.annotationExpressions.map(
+                  (annotation) => annotation.stripConst,
+                ),
+              )
+              ..annotations.add(
+                DartTypes.celest.cloudFunction.newInstance([], {
+                  'api': literalString(api.name),
+                  'function': literalString(function.name),
+                }),
+              )
+              ..requiredParameters.addAll(
+                clientParameters
+                    .where((p) => p.required && !p.named)
+                    .map(
+                      (param) => Parameter(
+                        (p) =>
+                            p
+                              ..name = param.name
+                              ..type = param.type.noBound
+                              ..defaultTo = param.defaultToExpression?.code
+                              ..annotations.addAll(
+                                param.annotationExpressions.map(
+                                  (annotation) => annotation.stripConst,
+                                ),
+                              ),
+                      ),
+                    ),
+              )
+              ..optionalParameters.addAll(
+                clientParameters
+                    .where((p) => !p.required || p.named)
+                    .map(
+                      (param) => Parameter(
+                        (p) =>
+                            p
+                              ..name = param.name
+                              ..type = param.type.noBound
+                              ..named = param.named
+                              ..required = param.required
+                              ..defaultTo = param.defaultToExpression?.code
+                              ..annotations.addAll(
+                                param.annotationExpressions.map(
+                                  (annotation) => annotation.stripConst,
+                                ),
+                              ),
+                      ),
+                    ),
+              )
+              ..body = Block((b) {
+                final typeMaps = <Reference, String>{};
+                for (final typeParameter in function.typeParameters) {
+                  final typeParameterType =
+                      typeHelper.fromReference(typeParameter)
+                          as dart_ast.TypeParameterType;
+                  final typeParameterBound =
+                      typeParameterType.bound.element
+                          as dart_ast.InterfaceElement;
+                  final typeMap = <Expression, Expression>{};
+                  final bound = typeHelper.toReference(typeParameterType.bound);
+                  typeMap[bound] = literalString(bound.symbol!, raw: true);
+                  for (final subtype
+                      in typeHelper.subtypes[typeParameterBound]!) {
+                    final subtypeReference = typeHelper.toReference(subtype);
+                    typeMap[subtypeReference] = literalString(
+                      subtypeReference.symbol!,
+                      raw: true,
+                    );
+                  }
+                  final typeMapName = '\$${typeParameter.symbol!}';
+                  b.addExpression(
+                    declareConst(typeMapName).assign(literalConstMap(typeMap)),
+                  );
+                  typeMaps[typeParameter] = typeMapName;
+                }
 
-            final headers = headerParameters.map((name, parameter) {
-              return MapEntry(
-                CodeExpression(
-                  Block.of([
-                    if (parameter.type.isNullableOrFalse)
-                      Code('if ($name != null) '),
-                    literalString(name, raw: true).code,
-                  ]),
-                ),
-                generateToString(
-                  parameter.type,
-                  refer(parameter.name),
-                ),
-              );
-            });
-            final query = literalMap(
-              queryParameters.map((name, parameter) {
-                return MapEntry(
-                  CodeExpression(
-                    Block.of([
-                      if (parameter.type.isNullableOrFalse)
-                        Code('if ($name != null) '),
-                      literalString(name, raw: true).code,
-                    ]),
-                  ),
-                  generateToString(
-                    parameter.type,
-                    refer(parameter.name),
-                  ),
+                final headers = headerParameters.map((name, parameter) {
+                  return MapEntry(
+                    CodeExpression(
+                      Block.of([
+                        if (parameter.type.isNullableOrFalse)
+                          Code('if ($name != null) '),
+                        literalString(name, raw: true).code,
+                      ]),
+                    ),
+                    generateToString(parameter.type, refer(parameter.name)),
+                  );
+                });
+                final query = literalMap(
+                  queryParameters.map((name, parameter) {
+                    return MapEntry(
+                      CodeExpression(
+                        Block.of([
+                          if (parameter.type.isNullableOrFalse)
+                            Code('if ($name != null) '),
+                          literalString(name, raw: true).code,
+                        ]),
+                      ),
+                      generateToString(parameter.type, refer(parameter.name)),
+                    );
+                  }),
                 );
+
+                final baseUri = ClientTypes.topLevelClient.ref.property(
+                  'baseUri',
+                );
+                var uri = baseUri.property('resolve').call([
+                  literalString(function.route),
+                ]);
+                if (queryParameters.isNotEmpty) {
+                  uri = uri.property('replace').call([], {
+                    'queryParameters': query,
+                  });
+                }
+
+                Expression? payload;
+                if (bodyParameters.isNotEmpty ||
+                    function.typeParameters.isNotEmpty) {
+                  payload = literalMap({
+                    for (final typeParameter in function.typeParameters)
+                      literalString(typeMaps[typeParameter]!, raw: true):
+                          refer(
+                            typeMaps[typeParameter]!,
+                          ).index(refer(typeParameter.symbol!)).nullChecked,
+                    for (final parameter in bodyParameters)
+                      literalString(parameter.name, raw: true): jsonGenerator
+                          .toJson(parameter.type, refer(parameter.name)),
+                  });
+                }
+                switch (function.streamType) {
+                  case null:
+                    _sendHttp(
+                      b: b,
+                      function: function,
+                      resolvedFunction: resolvedFunction,
+                      uri: uri,
+                      headers: headers,
+                      payload: payload,
+                    );
+                  default:
+                    assert(
+                      headers.isEmpty,
+                      'Headers are not supported for streams. Should be caught in '
+                      'resolver.',
+                    );
+                    _streamEvents(
+                      b: b,
+                      function: function,
+                      uri: uri,
+                      payload: payload,
+                    );
+                }
               }),
-            );
-
-            final baseUri = ClientTypes.topLevelClient.ref.property('baseUri');
-            var uri = baseUri.property('resolve').call([
-              literalString(function.route),
-            ]);
-            if (queryParameters.isNotEmpty) {
-              uri = uri.property('replace').call([], {
-                'queryParameters': query,
-              });
-            }
-
-            Expression? payload;
-            if (bodyParameters.isNotEmpty ||
-                function.typeParameters.isNotEmpty) {
-              payload = literalMap({
-                for (final typeParameter in function.typeParameters)
-                  literalString(typeMaps[typeParameter]!, raw: true):
-                      refer(typeMaps[typeParameter]!)
-                          .index(refer(typeParameter.symbol!))
-                          .nullChecked,
-                for (final parameter in bodyParameters)
-                  literalString(parameter.name, raw: true):
-                      jsonGenerator.toJson(
-                    parameter.type,
-                    refer(parameter.name),
-                  ),
-              });
-            }
-            switch (function.streamType) {
-              case null:
-                _sendHttp(
-                  b: b,
-                  function: function,
-                  resolvedFunction: resolvedFunction,
-                  uri: uri,
-                  headers: headers,
-                  payload: payload,
-                );
-              default:
-                assert(
-                  headers.isEmpty,
-                  'Headers are not supported for streams. Should be caught in '
-                  'resolver.',
-                );
-                _streamEvents(
-                  b: b,
-                  function: function,
-                  uri: uri,
-                  payload: payload,
-                );
-            }
-          }),
       );
       apiClass.methods.add(functionCall);
       final allTypes = Set.of(
@@ -376,44 +388,45 @@ if ($event is Map<String, Object?> && $event.containsKey('@error')) {
       for (final type in allTypes) {
         final dartType = typeHelper.fromReference(type);
         customSerializers.addAll(typeHelper.customSerializers(dartType));
-        if ((dartType, type)
-            case (
-              final dart_ast.RecordType dartType,
-              final RecordType recordType
-            )) {
+        if ((dartType, type) case (
+          final dart_ast.RecordType dartType,
+          final RecordType recordType,
+        )) {
           anonymousRecordTypes[dartType.symbol] =
-              // Typedefs should always point to the non-nullable
-              // version since the type is only used to invoke the
-              // serializer and the serializer handles null values.
-              recordType.rebuild((r) => r.isNullable = false);
+          // Typedefs should always point to the non-nullable
+          // version since the type is only used to invoke the
+          // serializer and the serializer handles null values.
+          recordType.rebuild((r) => r.isNullable = false);
         }
       }
     }
   }
 
   Method _throwError(ast.Api api) => Method((m) {
-        m
-          ..name = '_throwError'
-          ..returns = DartTypes.core.never
-          ..optionalParameters.addAll([
-            Parameter(
-              (p) => p
+    m
+      ..name = '_throwError'
+      ..returns = DartTypes.core.never
+      ..optionalParameters.addAll([
+        Parameter(
+          (p) =>
+              p
                 ..name = 'code'
                 ..named = true
                 ..type = DartTypes.core.int.nullable,
-            ),
-            Parameter(
-              (p) => p
+        ),
+        Parameter(
+          (p) =>
+              p
                 ..name = 'body'
                 ..named = true
                 ..required = true
                 ..type = typeHelper.toReference(jsonMapType),
-            ),
-          ])
-          ..body = Block((b) {
-            b.statements.add(
-              Code.scope(
-                (alloc) => '''
+        ),
+      ])
+      ..body = Block((b) {
+        b.statements.add(
+          Code.scope(
+            (alloc) => '''
 final status = body['@status'] as Map<String, Object?>?;
 final message = status?['message'] as String?;
 final details = status?['details'] as ${alloc(DartTypes.celest.jsonList)}?;
@@ -439,49 +452,44 @@ final (errorType, errorValue, stackTrace) = switch (details) {
     ),
 };
 ''',
-              ),
-            );
-            b.statements.add(const Code('switch (errorType) {'));
-            for (final exceptionType in api.exceptionTypes) {
-              final dartExceptionType = typeHelper.fromReference(exceptionType);
-              final deserializedException = jsonGenerator.fromJson(
-                exceptionType,
-                refer('errorValue'),
-                inNullableContext: true,
-              );
-              final exceptionUri = dartExceptionType.externalUri(project.name)!;
-              b.statements.addAll([
-                const Code('case '),
-                literalString(exceptionUri, raw: exceptionUri.contains(r'$'))
-                    .code,
-                const Code(': '),
-                DartTypes.core.error.property('throwWithStackTrace').call([
-                  deserializedException,
-                  refer('stackTrace'),
-                ]).statement,
-              ]);
-            }
-            b.statements.addAll([
-              const Code('default: '),
-              DartTypes.core.error.property('throwWithStackTrace').call([
-                DartTypes.celest.cloudException.newInstanceNamed(
-                  'http',
-                  [],
-                  {
-                    'code': refer('code'),
-                    'message': refer('message'),
-                    'details': refer('details')
-                        .ifNullThen(refer('body'))
-                        .parenthesized
-                        .asA(DartTypes.celest.jsonValue),
-                  },
-                ),
-                DartTypes.core.stackTrace.property('empty'),
-              ]).statement,
-              const Code('}'),
-            ]);
-          });
+          ),
+        );
+        b.statements.add(const Code('switch (errorType) {'));
+        for (final exceptionType in api.exceptionTypes) {
+          final dartExceptionType = typeHelper.fromReference(exceptionType);
+          final deserializedException = jsonGenerator.fromJson(
+            exceptionType,
+            refer('errorValue'),
+            inNullableContext: true,
+          );
+          final exceptionUri = dartExceptionType.externalUri(project.name)!;
+          b.statements.addAll([
+            const Code('case '),
+            literalString(exceptionUri, raw: exceptionUri.contains(r'$')).code,
+            const Code(': '),
+            DartTypes.core.error.property('throwWithStackTrace').call([
+              deserializedException,
+              refer('stackTrace'),
+            ]).statement,
+          ]);
+        }
+        b.statements.addAll([
+          const Code('default: '),
+          DartTypes.core.error.property('throwWithStackTrace').call([
+            DartTypes.celest.cloudException.newInstanceNamed('http', [], {
+              'code': refer('code'),
+              'message': refer('message'),
+              'details': refer('details')
+                  .ifNullThen(refer('body'))
+                  .parenthesized
+                  .asA(DartTypes.celest.jsonValue),
+            }),
+            DartTypes.core.stackTrace.property('empty'),
+          ]).statement,
+          const Code('}'),
+        ]);
       });
+  });
 
   Library generate() {
     for (final api in apis) {

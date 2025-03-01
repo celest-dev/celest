@@ -59,8 +59,11 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater =
-          PubspecUpdater(projectPaths.projectRoot, null, _projectName);
+      final updater = PubspecUpdater(
+        projectPaths.projectRoot,
+        null,
+        _projectName,
+      );
       await updater.create();
 
       final updatedPubspec =
@@ -69,25 +72,23 @@ void main() {
     });
 
     test('out-of-date sdk', () async {
-      final pubspecYaml = _pubspecYaml(
-        sdk: VersionConstraint.parse('^3.2.0'),
-      );
+      final pubspecYaml = _pubspecYaml(sdk: VersionConstraint.parse('^3.2.0'));
       await newProject(
         name: _projectName,
         pubspecYaml: pubspecYaml,
         parentDirectory: tempDir.path,
       );
 
-      final updater =
-          PubspecUpdater(projectPaths.projectRoot, null, _projectName);
+      final updater = PubspecUpdater(
+        projectPaths.projectRoot,
+        null,
+        _projectName,
+      );
       await updater.create();
 
       final updatedPubspec =
           await fileSystem.file(projectPaths.pubspecYaml).readAsString();
-      expect(
-        updatedPubspec,
-        equalsIgnoringWhitespace(_pubspecYaml()),
-      );
+      expect(updatedPubspec, equalsIgnoringWhitespace(_pubspecYaml()));
     });
 
     test('out-of-date celest+celest_core', () async {
@@ -101,8 +102,11 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater =
-          PubspecUpdater(projectPaths.projectRoot, null, _projectName);
+      final updater = PubspecUpdater(
+        projectPaths.projectRoot,
+        null,
+        _projectName,
+      );
       await updater.create();
 
       final updatedPubspec =
@@ -124,8 +128,11 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater =
-          PubspecUpdater(projectPaths.projectRoot, null, _projectName);
+      final updater = PubspecUpdater(
+        projectPaths.projectRoot,
+        null,
+        _projectName,
+      );
       await updater.create();
 
       final updatedPubspec =
@@ -147,8 +154,11 @@ void main() {
         parentDirectory: tempDir.path,
       );
 
-      final updater =
-          PubspecUpdater(projectPaths.projectRoot, null, _projectName);
+      final updater = PubspecUpdater(
+        projectPaths.projectRoot,
+        null,
+        _projectName,
+      );
       await updater.create();
 
       final updatedPubspec =

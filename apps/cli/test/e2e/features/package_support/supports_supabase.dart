@@ -22,12 +22,7 @@ final class SupportsSupabase extends E2ETest with TestDartProject {
 
     // Add dependency on supabase
     await runCommand(
-      [
-        'dart',
-        'pub',
-        'add',
-        'supabase',
-      ],
+      ['dart', 'pub', 'add', 'supabase'],
       runInShell: true,
       workingDirectory: celestDir.path,
     );

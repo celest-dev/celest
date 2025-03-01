@@ -29,130 +29,139 @@ final class OpenApiUnionGenerator {
         ..constructors.addAll([
           Constructor((c) => c..constant = true),
           Constructor(
-            (c) => c
-              ..factory = true
-              ..name = 'fromJson'
-              ..requiredParameters.add(
-                Parameter(
-                  (p) => p
-                    ..name = 'json'
-                    ..type = DartTypes.core.object.nullable,
-                ),
-              )
-              ..body = Block((b) {
-                final map = declareFinal('map').assign(
-                  refer('json')
-                      .asA(DartTypes.core.map())
-                      .property('cast')
-                      .call([], {}, [
-                    DartTypes.core.string,
-                    DartTypes.core.object.nullable,
-                  ]),
-                );
-                b.addExpression(map);
-                switch (type.discriminator) {
-                  case FieldDiscriminator(:final wireName):
-                    b.addExpression(
-                      declareFinal('type').assign(
-                        refer('map')
-                            .index(literalString(wireName))
-                            .asA(DartTypes.core.string),
+            (c) =>
+                c
+                  ..factory = true
+                  ..name = 'fromJson'
+                  ..requiredParameters.add(
+                    Parameter(
+                      (p) =>
+                          p
+                            ..name = 'json'
+                            ..type = DartTypes.core.object.nullable,
+                    ),
+                  )
+                  ..body = Block((b) {
+                    final map = declareFinal('map').assign(
+                      refer(
+                        'json',
+                      ).asA(DartTypes.core.map()).property('cast').call(
+                        [],
+                        {},
+                        [DartTypes.core.string, DartTypes.core.object.nullable],
                       ),
                     );
-                    b.addExpression(
-                      declareFinal('factory')
-                          .assign(refer(r'$mapping').index(refer('type'))),
-                    );
-                    b.statements.add(
-                      DartTypes.core.argumentError
-                          .newInstance([
-                            CodeExpression(
-                              Code('\'Unknown type of $name: "\$type"\''),
-                            ),
-                          ])
-                          .thrown
-                          .wrapWithBlockIf(
-                            refer('factory').equalTo(literalNull),
+                    b.addExpression(map);
+                    switch (type.discriminator) {
+                      case FieldDiscriminator(:final wireName):
+                        b.addExpression(
+                          declareFinal('type').assign(
+                            refer('map')
+                                .index(literalString(wireName))
+                                .asA(DartTypes.core.string),
                           ),
-                    );
-                    b.addExpression(
-                      refer('factory').call([refer('map')]).returned,
-                    );
-                  case TypeDiscriminator():
-                    // b.statements.add(
-                    //   refer('json')
-                    //       .property(type.discriminator.propertyName.camelCase)
-                    //       .switch_(
-                    //     type.branches.map((branch) {
-                    //       final branchType = branch.type.typeReference;
-                    //       return Code(
-                    //         'case ${literal(branch.name)}: return ${branchType.symbol}.fromJson(json);',
-                    //       );
-                    //     }),
-                    //     defaultCase: const Code(
-                    //       'throw UnsupportedError(\'Unknown discriminator\');',
-                    //     ),
-                    //   ),
-                    // );
-                    b.addExpression(
-                      DartTypes.core.unimplementedError.newInstance([]).thrown,
-                    );
-                }
-              }),
+                        );
+                        b.addExpression(
+                          declareFinal(
+                            'factory',
+                          ).assign(refer(r'$mapping').index(refer('type'))),
+                        );
+                        b.statements.add(
+                          DartTypes.core.argumentError
+                              .newInstance([
+                                CodeExpression(
+                                  Code('\'Unknown type of $name: "\$type"\''),
+                                ),
+                              ])
+                              .thrown
+                              .wrapWithBlockIf(
+                                refer('factory').equalTo(literalNull),
+                              ),
+                        );
+                        b.addExpression(
+                          refer('factory').call([refer('map')]).returned,
+                        );
+                      case TypeDiscriminator():
+                        // b.statements.add(
+                        //   refer('json')
+                        //       .property(type.discriminator.propertyName.camelCase)
+                        //       .switch_(
+                        //     type.branches.map((branch) {
+                        //       final branchType = branch.type.typeReference;
+                        //       return Code(
+                        //         'case ${literal(branch.name)}: return ${branchType.symbol}.fromJson(json);',
+                        //       );
+                        //     }),
+                        //     defaultCase: const Code(
+                        //       'throw UnsupportedError(\'Unknown discriminator\');',
+                        //     ),
+                        //   ),
+                        // );
+                        b.addExpression(
+                          DartTypes.core.unimplementedError
+                              .newInstance([])
+                              .thrown,
+                        );
+                    }
+                  }),
           ),
         ])
         ..methods.addAll([
           if (type.discriminator case FieldDiscriminator(:final dartName))
             Method(
-              (m) => m
-                ..type = MethodType.getter
-                ..returns = DartTypes.core.string
-                ..name = dartName,
+              (m) =>
+                  m
+                    ..type = MethodType.getter
+                    ..returns = DartTypes.core.string
+                    ..name = dartName,
             ),
           Method(
-            (m) => m
-              ..name = 'toJson'
-              ..returns = DartTypes.core.map(
-                DartTypes.core.string,
-                DartTypes.core.object.nullable,
-              ),
+            (m) =>
+                m
+                  ..name = 'toJson'
+                  ..returns = DartTypes.core.map(
+                    DartTypes.core.string,
+                    DartTypes.core.object.nullable,
+                  ),
           ),
           _encodeMethod,
           _encodeWithMethod,
         ]);
       if (type.discriminator case FieldDiscriminator(:final mapping)) {
         final mappingField = Field(
-          (f) => f
-            ..static = true
-            ..modifier = FieldModifier.constant
-            ..name = r'$mapping'
-            ..type = DartTypes.core.map(
-              DartTypes.core.string,
-              FunctionType(
-                (f) => f
-                  ..returnType = refer(name)
-                  ..requiredParameters.add(
-                    DartTypes.core.object.nullable,
+          (f) =>
+              f
+                ..static = true
+                ..modifier = FieldModifier.constant
+                ..name = r'$mapping'
+                ..type = DartTypes.core.map(
+                  DartTypes.core.string,
+                  FunctionType(
+                    (f) =>
+                        f
+                          ..returnType = refer(name)
+                          ..requiredParameters.add(
+                            DartTypes.core.object.nullable,
+                          ),
                   ),
-              ),
-            )
-            ..assignment = literalConstMap(
-              mapping
-                  .map(
-                    (value, subtype) => MapEntry(
-                      literalString(value),
-                      subtype.typeReference.nonNullable.property('fromJson'),
-                    ),
-                  )
-                  .toMap(),
-            ).code,
+                )
+                ..assignment =
+                    literalConstMap(
+                      mapping
+                          .map(
+                            (value, subtype) => MapEntry(
+                              literalString(value),
+                              subtype.typeReference.nonNullable.property(
+                                'fromJson',
+                              ),
+                            ),
+                          )
+                          .toMap(),
+                    ).code,
         );
         c.fields.add(mappingField);
         mapping.forEach((_, subtype) {
-          context.implement(
-            subtype.typeReference.symbol,
-            refer(name),
-          );
+          context.implement(subtype.typeReference.symbol, refer(name));
         });
       }
       // c.fields.add(selfField(name));
@@ -168,9 +177,10 @@ final class OpenApiUnionGenerator {
         ..returns = refer('V')
         ..requiredParameters.addAll([
           Parameter(
-            (p) => p
-              ..type = DartTypes.libcoder.encoder(refer('V'))
-              ..name = 'encoder',
+            (p) =>
+                p
+                  ..type = DartTypes.libcoder.encoder(refer('V'))
+                  ..name = 'encoder',
           ),
         ]);
     });
@@ -185,22 +195,25 @@ final class OpenApiUnionGenerator {
         ..returns = refer('V')
         ..requiredParameters.addAll([
           Parameter(
-            (p) => p
-              ..type = refer(name)
-              ..name = 'instance',
+            (p) =>
+                p
+                  ..type = refer(name)
+                  ..name = 'instance',
           ),
           Parameter(
-            (p) => p
-              ..type = DartTypes.libcoder.encoder(refer('V'))
-              ..name = 'encoder',
+            (p) =>
+                p
+                  ..type = DartTypes.libcoder.encoder(refer('V'))
+                  ..name = 'encoder',
           ),
         ])
         ..lambda = false
-        ..body = refer('instance')
-            .property('encodeWith')
-            .call([refer('encoder')])
-            .returned
-            .statement;
+        ..body =
+            refer('instance')
+                .property('encodeWith')
+                .call([refer('encoder')])
+                .returned
+                .statement;
     });
   }
 }

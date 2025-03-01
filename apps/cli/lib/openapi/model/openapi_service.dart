@@ -10,9 +10,8 @@ part 'openapi_service.g.dart';
 
 abstract class OpenApiService
     implements Built<OpenApiService, OpenApiServiceBuilder> {
-  factory OpenApiService.build([
-    void Function(OpenApiServiceBuilder) updates,
-  ]) = _$OpenApiService;
+  factory OpenApiService.build([void Function(OpenApiServiceBuilder) updates]) =
+      _$OpenApiService;
 
   OpenApiService._();
 
@@ -51,14 +50,8 @@ abstract class OpenApiService
 
 abstract class ServiceModel
     implements Built<ServiceModel, ServiceModelBuilder> {
-  factory ServiceModel({
-    required Spec spec,
-    required OpenApiType type,
-  }) {
-    return _$ServiceModel._(
-      spec: spec,
-      type: type,
-    );
+  factory ServiceModel({required Spec spec, required OpenApiType type}) {
+    return _$ServiceModel._(spec: spec, type: type);
   }
 
   factory ServiceModel.build([void Function(ServiceModelBuilder) updates]) =
@@ -109,9 +102,8 @@ abstract class ServiceModelElement
 }
 
 abstract class ServiceInfo implements Built<ServiceInfo, ServiceInfoBuilder> {
-  factory ServiceInfo.build([
-    void Function(ServiceInfoBuilder) updates,
-  ]) = _$ServiceInfo;
+  factory ServiceInfo.build([void Function(ServiceInfoBuilder) updates]) =
+      _$ServiceInfo;
 
   ServiceInfo._();
 

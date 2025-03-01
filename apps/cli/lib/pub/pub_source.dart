@@ -11,15 +11,12 @@ import 'package:meta/meta.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 /// The available sources.
-final _sources = Map<String, Source>.fromIterable(
-  [
-    HostedSource.instance,
-    GitSource.instance,
-    PathSource.instance,
-    SdkSource.instance,
-  ],
-  key: (source) => (source as Source).name,
-);
+final _sources = Map<String, Source>.fromIterable([
+  HostedSource.instance,
+  GitSource.instance,
+  PathSource.instance,
+  SdkSource.instance,
+], key: (source) => (source as Source).name);
 
 final defaultSource = HostedSource.instance;
 
@@ -228,8 +225,10 @@ class GitSource extends Source {
     if (description is String) {
       url = description;
     } else if (description is! Map) {
-      throw const FormatException('The description must be a Git URL or a map '
-          "with a 'url' key.");
+      throw const FormatException(
+        'The description must be a Git URL or a map '
+        "with a 'url' key.",
+      );
     } else {
       final descriptionUrl = description['url'];
       if (descriptionUrl is! String) {
@@ -242,16 +241,18 @@ class GitSource extends Source {
       final descriptionRef = description['ref'];
       if (descriptionRef is! String?) {
         throw const FormatException(
-            "The 'ref' field of the description must be a "
-            'string.');
+          "The 'ref' field of the description must be a "
+          'string.',
+        );
       }
       ref = descriptionRef;
 
       final descriptionPath = description['path'];
       if (descriptionPath is! String?) {
         throw const FormatException(
-            "The 'path' field of the description must be a "
-            'string.');
+          "The 'path' field of the description must be a "
+          'string.',
+        );
       }
       path = descriptionPath;
     }
@@ -275,27 +276,34 @@ class GitSource extends Source {
     String? containingDir,
   }) {
     if (description is! Map) {
-      throw const FormatException("The description must be a map with a 'url' "
-          'key.');
+      throw const FormatException(
+        "The description must be a map with a 'url' "
+        'key.',
+      );
     }
 
     final ref = description['ref'];
     if (ref is! String?) {
       throw const FormatException(
-          "The 'ref' field of the description must be a "
-          'string.');
+        "The 'ref' field of the description must be a "
+        'string.',
+      );
     }
 
     final resolvedRef = description['resolved-ref'];
     if (resolvedRef is! String) {
-      throw const FormatException("The 'resolved-ref' field of the description "
-          'must be a string.');
+      throw const FormatException(
+        "The 'resolved-ref' field of the description "
+        'must be a string.',
+      );
     }
 
     final url = description['url'];
     if (url is! String) {
-      throw const FormatException("The 'url' field of the description "
-          'must be a string.');
+      throw const FormatException(
+        "The 'url' field of the description "
+        'must be a string.',
+      );
     }
     return PackageId(
       name,
@@ -304,9 +312,7 @@ class GitSource extends Source {
         GitDescription(
           url: url,
           ref: ref,
-          path: _validatedPath(
-            description['path'],
-          ),
+          path: _validatedPath(description['path']),
           containingDir: containingDir,
         ),
         resolvedRef,
@@ -327,8 +333,10 @@ class GitSource extends Source {
         // system aren't allowed. This can happen if a hosted or git dependency
         // has a git dependency.
         if (containingDir == null) {
-          throw FormatException('"$url" is a relative path, but this '
-              'isn\'t a local pubspec.');
+          throw FormatException(
+            '"$url" is a relative path, but this '
+            'isn\'t a local pubspec.',
+          );
         }
         // A relative path is stored internally as absolute resolved relative to
         // [containingPath].
@@ -357,8 +365,9 @@ class GitSource extends Source {
     path ??= '.';
     if (path is! String) {
       throw const FormatException(
-          "The 'path' field of the description must be a "
-          'string.');
+        "The 'path' field of the description must be a "
+        'string.',
+      );
     }
 
     // Use Dart's URL parser to validate the URL.
@@ -374,8 +383,9 @@ class GitSource extends Source {
     }
     if (!p.url.isWithin('.', path) && !p.url.equals('.', path)) {
       throw const FormatException(
-          "The 'path' field of the description must not reach outside the "
-          'repository.');
+        "The 'path' field of the description must not reach outside the "
+        'repository.',
+      );
     }
     return p.url.normalize(parsed.toString());
   }
@@ -387,8 +397,8 @@ class GitDescription extends Description {
     required this.relative,
     required String? ref,
     required String? path,
-  })  : ref = ref ?? 'HEAD',
-        path = path ?? '.';
+  }) : ref = ref ?? 'HEAD',
+       path = path ?? '.';
 
   factory GitDescription({
     required String url,
@@ -428,7 +438,8 @@ class GitDescription extends Description {
 
   @override
   String format() {
-    var result = '${prettyUri(url)} at '
+    var result =
+        '${prettyUri(url)} at '
         '$ref';
     if (path != '.') result += ' in $path';
     return result;
@@ -439,12 +450,13 @@ class GitDescription extends Description {
     required String? containingDir,
     required LanguageVersion languageVersion,
   }) {
-    final relativeUrl = containingDir != null && relative
-        ? p.url.relative(
-            url,
-            from: p.toUri(p.normalize(p.absolute(containingDir))).toString(),
-          )
-        : url;
+    final relativeUrl =
+        containingDir != null && relative
+            ? p.url.relative(
+              url,
+              from: p.toUri(p.normalize(p.absolute(containingDir))).toString(),
+            )
+            : url;
     if (ref == 'HEAD' && path == '.') return relativeUrl;
     return {
       'url': relativeUrl,
@@ -464,12 +476,8 @@ class GitDescription extends Description {
         other.path == path;
   }
 
-  GitDescription withRef(String newRef) => GitDescription._(
-        url: url,
-        relative: relative,
-        ref: newRef,
-        path: path,
-      );
+  GitDescription withRef(String newRef) =>
+      GitDescription._(url: url, relative: relative, ref: newRef, path: path);
 
   @override
   int get hashCode => Object.hash(url, ref, path);
@@ -496,7 +504,8 @@ class ResolvedGitDescription extends ResolvedDescription {
 
   @override
   String format() {
-    var result = '${GitDescription.prettyUri(description.url)} at '
+    var result =
+        '${GitDescription.prettyUri(description.url)} at '
         '${resolvedRef.substring(0, 6)}';
     if (description.path != '.') result += ' in ${description.path}';
     return result;
@@ -504,12 +513,13 @@ class ResolvedGitDescription extends ResolvedDescription {
 
   @override
   Object? serializeForLockfile({required String? containingDir}) {
-    final url = description.relative && containingDir != null
-        ? p.url.relative(
-            description.url,
-            from: Uri.file(p.absolute(containingDir)).toString(),
-          )
-        : description.url;
+    final url =
+        description.relative && containingDir != null
+            ? p.url.relative(
+              description.url,
+              from: Uri.file(p.absolute(containingDir)).toString(),
+            )
+            : description.url;
     return {
       'url': url,
       'ref': description.ref,
@@ -561,11 +571,7 @@ Uri validateAndNormalizeHostedUrl(String hostedUrl) {
   try {
     u = Uri.parse(hostedUrl);
   } on FormatException catch (e) {
-    throw FormatException(
-      'invalid url: ${e.message}',
-      e.source,
-      e.offset,
-    );
+    throw FormatException('invalid url: ${e.message}', e.source, e.offset);
   }
   if (!u.hasScheme || (u.scheme != 'http' && u.scheme != 'https')) {
     throw FormatException('url scheme must be https:// or http://', hostedUrl);
@@ -841,8 +847,10 @@ class HostedSource extends Source {
     if (canUseShorthandSyntax) name ??= packageName;
 
     if (name is! String) {
-      throw FormatException("The 'name' key must have a string value without "
-          'a minimum Dart SDK constraint of ${LanguageVersion.firstVersionWithShorterHostedSyntax}.0 or higher.');
+      throw FormatException(
+        "The 'name' key must have a string value without "
+        'a minimum Dart SDK constraint of ${LanguageVersion.firstVersionWithShorterHostedSyntax}.0 or higher.',
+      );
     }
 
     final u = description['url'];
@@ -854,8 +862,9 @@ class HostedSource extends Source {
     return HostedDescription(name, url as String);
   }
 
-  static final RegExp _looksLikePackageName =
-      RegExp(r'^[a-zA-Z_]+[a-zA-Z0-9_]*$');
+  static final RegExp _looksLikePackageName = RegExp(
+    r'^[a-zA-Z_]+[a-zA-Z0-9_]*$',
+  );
 }
 
 /// The [PackageName.description] for a [HostedSource], storing the package name
@@ -1008,8 +1017,8 @@ class PathSource extends Source {
   //   }
   //   return PackageRef(name, {'path': path, 'relative': p.isRelative(path)});
   // }
-//{name: myapp, dev_dependencies: {foo: 1.2.2}, dependency_overrides: {foo: {path: ../foo}}, environment: {sdk: >=0.1.2 <1.0.0}}
-//{name: myapp, dev_dependencies: {foo: ^1.2.2}, dependency_overrides: {foo: {path: ../foo}}, environment: {sdk: >=0.1.2 <1.0.0}}
+  //{name: myapp, dev_dependencies: {foo: 1.2.2}, dependency_overrides: {foo: {path: ../foo}}, environment: {sdk: >=0.1.2 <1.0.0}}
+  //{name: myapp, dev_dependencies: {foo: ^1.2.2}, dependency_overrides: {foo: {path: ../foo}}, environment: {sdk: >=0.1.2 <1.0.0}}
   /// Returns an ID for a path package with the given [name] and [version] at
   /// [path].
   ///
@@ -1053,13 +1062,13 @@ class PathSource extends Source {
       // system aren't allowed. This can happen if a hosted or git dependency
       // has a path dependency.
       if (containingDir == null) {
-        throw FormatException('"$description" is a relative path, but this '
-            'isn\'t a local pubspec.');
+        throw FormatException(
+          '"$description" is a relative path, but this '
+          'isn\'t a local pubspec.',
+        );
       }
 
-      dir = p.normalize(
-        p.absolute(p.join(containingDir, description)),
-      );
+      dir = p.normalize(p.absolute(p.join(containingDir, description)));
     }
     return PackageRef(name, PathDescription(dir, isRelative));
   }
@@ -1076,13 +1085,17 @@ class PathSource extends Source {
     }
     var path = description['path'];
     if (path is! String) {
-      throw const FormatException("The 'path' field of the description must "
-          'be a string.');
+      throw const FormatException(
+        "The 'path' field of the description must "
+        'be a string.',
+      );
     }
     final relative = description['relative'];
     if (relative is! bool) {
-      throw const FormatException("The 'relative' field of the description "
-          'must be a boolean.');
+      throw const FormatException(
+        "The 'relative' field of the description "
+        'must be a boolean.',
+      );
     }
 
     // Resolve the path relative to the containing file path.
@@ -1090,13 +1103,13 @@ class PathSource extends Source {
       // Relative paths coming from lockfiles that are not on the local file
       // system aren't allowed.
       if (containingDir == null) {
-        throw FormatException('"$description" is a relative path, but this '
-            'isn\'t a local pubspec.');
+        throw FormatException(
+          '"$description" is a relative path, but this '
+          'isn\'t a local pubspec.',
+        );
       }
 
-      path = p.normalize(
-        p.absolute(p.join(containingDir, path)),
-      );
+      path = p.normalize(p.absolute(p.join(containingDir, path)));
     }
 
     return PackageId(
@@ -1130,8 +1143,8 @@ class PathDescription extends Description {
   }) {
     return relative
         ? PathSource.relativePathWithPosixSeparators(
-            p.relative(path, from: containingDir),
-          )
+          p.relative(path, from: containingDir),
+        )
         : path;
   }
 
@@ -1359,8 +1372,7 @@ class UnknownSource extends Source {
     Object? description, {
     String? containingDir,
     LanguageVersion? languageVersion,
-  }) =>
-      PackageRef(name, UnknownDescription(description, this));
+  }) => PackageRef(name, UnknownDescription(description, this));
 
   @override
   PackageId parseId(
@@ -1368,12 +1380,11 @@ class UnknownSource extends Source {
     Version version,
     Object? description, {
     String? containingDir,
-  }) =>
-      PackageId(
-        name,
-        version,
-        ResolvedUnknownDescription(UnknownDescription(description, this)),
-      );
+  }) => PackageId(
+    name,
+    version,
+    ResolvedUnknownDescription(UnknownDescription(description, this)),
+  );
 }
 
 class UnknownDescription extends Description {

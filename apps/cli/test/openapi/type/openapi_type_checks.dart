@@ -26,11 +26,7 @@ extension OpenApiTypeCheck<T extends OpenApiType> on Subject<T> {
 
   Subject<OpenApiIntegerType> isIntType() {
     return context
-        .nest(
-          () => const ['is int type'],
-          Extracted.value,
-          atSameLevel: true,
-        )
+        .nest(() => const ['is int type'], Extracted.value, atSameLevel: true)
         .isA<OpenApiIntegerType>();
   }
 
@@ -46,21 +42,13 @@ extension OpenApiTypeCheck<T extends OpenApiType> on Subject<T> {
 
   Subject<OpenApiNumberType> isNumType() {
     return context
-        .nest(
-          () => const ['is num type'],
-          Extracted.value,
-          atSameLevel: true,
-        )
+        .nest(() => const ['is num type'], Extracted.value, atSameLevel: true)
         .isA<OpenApiNumberType>();
   }
 
   Subject<OpenApiBooleanType> isBoolType() {
     return context
-        .nest(
-          () => const ['is bool type'],
-          Extracted.value,
-          atSameLevel: true,
-        )
+        .nest(() => const ['is bool type'], Extracted.value, atSameLevel: true)
         .isA<OpenApiBooleanType>();
   }
 
@@ -76,27 +64,22 @@ extension OpenApiTypeCheck<T extends OpenApiType> on Subject<T> {
 
   Subject<OpenApiAnyType> isObjectType() {
     return context
-        .nest(
-          () => const ['is any type'],
-          Extracted.value,
-          atSameLevel: true,
-        )
+        .nest(() => const ['is any type'], Extracted.value, atSameLevel: true)
         .isA<OpenApiAnyType>();
   }
 
   Subject<OpenApiIterableType> isIterableType({
     void Function(Subject<OpenApiType>)? withItemType,
   }) {
-    final iterable = context
-        .nest(
-          () => const ['is any type'],
-          Extracted.value,
-          atSameLevel: true,
-        )
-        .isA<OpenApiIterableType>();
-    withItemType?.call(
-      iterable.has((it) => it.itemType, 'itemType'),
-    );
+    final iterable =
+        context
+            .nest(
+              () => const ['is any type'],
+              Extracted.value,
+              atSameLevel: true,
+            )
+            .isA<OpenApiIterableType>();
+    withItemType?.call(iterable.has((it) => it.itemType, 'itemType'));
     return iterable;
   }
 }

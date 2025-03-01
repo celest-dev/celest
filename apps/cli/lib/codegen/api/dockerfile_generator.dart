@@ -4,9 +4,7 @@ import 'package:celest_cli/src/utils/error.dart';
 
 /// Generates a `Dockerfile` for the user's project so they can self-host it.
 final class DockerfileGenerator {
-  DockerfileGenerator({
-    required this.project,
-  });
+  DockerfileGenerator({required this.project});
 
   final ast.Project project;
 
@@ -49,13 +47,13 @@ EXPOSE 8080
   String generate() {
     return switch (project.sdkConfig.targetSdk) {
       SdkType.flutter => _flutterTemplate.replaceAll(
-          '{{version}}',
-          project.sdkConfig.flutter!.version.canonicalizedVersion,
-        ),
+        '{{version}}',
+        project.sdkConfig.flutter!.version.canonicalizedVersion,
+      ),
       SdkType.dart => _dartTemplate.replaceAll(
-          '{{version}}',
-          project.sdkConfig.dart.version.canonicalizedVersion,
-        ),
+        '{{version}}',
+        project.sdkConfig.dart.version.canonicalizedVersion,
+      ),
       final unknown => unreachable('Unknown SDK: $unknown'),
     };
   }

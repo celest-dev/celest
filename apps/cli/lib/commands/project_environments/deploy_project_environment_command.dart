@@ -21,10 +21,10 @@ final class DeployProjectEnvironmentCommand
 
   @override
   CloudVerbs get verbs => const (
-        run: 'deploy',
-        running: 'Deploying',
-        completed: 'deployed',
-      );
+    run: 'deploy',
+    running: 'Deploying',
+    completed: 'deployed',
+  );
 
   @override
   CloudOperation<DeployProjectEnvironmentResponse> callService() async* {
@@ -64,9 +64,7 @@ Future<void> main() async {
       '$tmpDir/hello_world.dart',
     ]);
     if (res.exitCode != 0) {
-      throw CliException(
-        'Failed to compile hello_world.dart:\n${res.stderr}',
-      );
+      throw CliException('Failed to compile hello_world.dart:\n${res.stderr}');
     }
     final bytes = await fileSystem.file('$tmpDir/main.aot.dill').readAsBytes();
     final etag = md5.convert(bytes).toString();

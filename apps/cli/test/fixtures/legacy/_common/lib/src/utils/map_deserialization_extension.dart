@@ -17,7 +17,7 @@ extension MapDeserializeExtension on Json {
   ///
   List<T> asList<T>(String key) {
     //
-    List<dynamic>? value = this[key] as List<dynamic>?;
+    var value = this[key] as List<dynamic>?;
     value ??= <T>[];
 
     // Note: toList is not necessary, but I want to fail right away in case any
@@ -37,11 +37,11 @@ extension MapDeserializeExtension on Json {
   IList<T> asIList<T>(String key) => asList<T>(key).lockUnsafe;
 
   /// The source in [key] must be a List<Json>. It will be converted to IList of [T] by [fromJson].
-  IList<T> asIListOf<T>(String key, T fromJson(Json json)) =>
+  IList<T> asIListOf<T>(String key, T Function(Json json) fromJson) =>
       asListOfJson(key).map(fromJson).toIList();
 
   /// The source in [key] must be a List<Json>. It will be converted to List of [T] by [fromJson].
-  List<T> asListOf<T>(String key, T fromJson(Json json)) =>
+  List<T> asListOf<T>(String key, T Function(Json json) fromJson) =>
       asListOfJson(key).map(fromJson).toList();
 
   /// If possible, prefer using [asIListOf] or [asListOf].
@@ -52,7 +52,7 @@ extension MapDeserializeExtension on Json {
   String asStringOrEmpty(String key) => this[key] as String? ?? '';
 
   int? asInt(String key) {
-    dynamic value = this[key];
+    final dynamic value = this[key];
     if (value == null) return null;
     if (value is int) return value;
     if (value is String) return _toIntNullable(value);
@@ -60,7 +60,7 @@ extension MapDeserializeExtension on Json {
   }
 
   double? asDouble(String key) {
-    dynamic value = this[key];
+    final dynamic value = this[key];
     if (value == null) return null;
     if (value is double) return value;
     if (value is String) return _toDoubleNullable(value);
@@ -69,7 +69,7 @@ extension MapDeserializeExtension on Json {
 
   bool? asBool(String key) {
     //
-    dynamic value = this[key];
+    final dynamic value = this[key];
 
     if (value == null) return null;
 
@@ -84,11 +84,11 @@ extension MapDeserializeExtension on Json {
 
   Json asMap(String key) {
     //
-    var result = this[key];
+    final result = this[key];
 
-    if (result == null)
+    if (result == null) {
       return const {};
-    else if (result is Json)
+    } else if (result is Json)
       return result;
     else if (result is Map)
       return result.cast<String, dynamic>();
@@ -97,12 +97,12 @@ extension MapDeserializeExtension on Json {
   }
 
   IMap<String, V> asIMap<V>(String key) {
-    var map = asMap(key);
+    final map = asMap(key);
     return map.cast<String, V>().lock;
   }
 
   CashBalance? asCashBalance(String key) {
-    var value = this[key] as Map<String, Object?>?;
+    final value = this[key] as Map<String, Object?>?;
     return (value == null) ? null : CashBalance.fromJson(value);
   }
 }
@@ -111,8 +111,8 @@ int? _toIntNullable(String? intString) {
   if (intString == null) return null;
   try {
     // if receive a decimal, then remove decimal so int parse doesn't fail
-    List<String> valueParts = intString.split('.');
-    String intNumberPart = valueParts.first;
+    final valueParts = intString.split('.');
+    final intNumberPart = valueParts.first;
 
     return int.parse(intNumberPart);
   } catch (error) {
@@ -121,8 +121,9 @@ int? _toIntNullable(String? intString) {
 }
 
 double? _toDoubleNullable(String? doubleString) {
-  if (doubleString == null)
+  if (doubleString == null) {
     return null;
-  else
+  } else {
     return double.tryParse(doubleString);
+  }
 }

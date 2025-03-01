@@ -26,18 +26,16 @@ final class OpenApiJsonGenerator {
       case OpenApiSingleValueType(:final value):
         return literal(value);
       case OpenApiPrimitiveType(
-              typeReference: TypeReference(url: == 'dart:core'),
-            ) ||
-            OpenApiEnumType(
-              typeReference: TypeReference(url: == 'dart:core'),
-            ):
+            typeReference: TypeReference(url: == 'dart:core'),
+          ) ||
+          OpenApiEnumType(typeReference: TypeReference(url: == 'dart:core')):
         return ref;
       case OpenApiBinaryType(): // XFile
         return ref.property('path');
       case OpenApiIterableInterface(
-          typeReference: TypeReference(url: == 'dart:core'),
-          :final itemType,
-        ):
+        typeReference: TypeReference(url: == 'dart:core'),
+        :final itemType,
+      ):
         final element = refer('el');
         final serializedElement = toJson(itemType, element);
         if (element == serializedElement) {
@@ -47,14 +45,11 @@ final class OpenApiJsonGenerator {
             .nullableProperty('map', type.isNullable)
             .call([
               Method(
-                (m) => m
-                  ..requiredParameters.add(
-                    Parameter(
-                      (p) => p..name = 'el',
-                    ),
-                  )
-                  ..body = serializedElement.code
-                  ..lambda = true,
+                (m) =>
+                    m
+                      ..requiredParameters.add(Parameter((p) => p..name = 'el'))
+                      ..body = serializedElement.code
+                      ..lambda = true,
               ).closure,
             ])
             .property('toList')
@@ -67,22 +62,16 @@ final class OpenApiJsonGenerator {
         }
         return ref.nullableProperty('map', type.isNullable).call([
           Method(
-            (m) => m
-              ..requiredParameters.add(
-                Parameter(
-                  (p) => p..name = 'key',
-                ),
-              )
-              ..requiredParameters.add(
-                Parameter(
-                  (p) => p..name = 'value',
-                ),
-              )
-              ..body = DartTypes.core.mapEntry.newInstance([
-                refer('key'),
-                serializedValue,
-              ]).code
-              ..lambda = true,
+            (m) =>
+                m
+                  ..requiredParameters.add(Parameter((p) => p..name = 'key'))
+                  ..requiredParameters.add(Parameter((p) => p..name = 'value'))
+                  ..body =
+                      DartTypes.core.mapEntry.newInstance([
+                        refer('key'),
+                        serializedValue,
+                      ]).code
+                  ..lambda = true,
           ).closure,
         ]);
       // case OpenApiTypeReference(:final primitiveType?):
@@ -103,10 +92,7 @@ final class OpenApiJsonGenerator {
     Expression ref, {
     Expression? defaultValue,
   }) {
-    var fromJson = _fromJson(
-      type.withNullability(false),
-      ref,
-    );
+    var fromJson = _fromJson(type.withNullability(false), ref);
     if (type.isNullable) {
       fromJson = ref.equalTo(literalNull).conditional(literalNull, fromJson);
       if (defaultValue != null) {
@@ -131,30 +117,30 @@ final class OpenApiJsonGenerator {
             unreachable('Unexpected datetime time: $primitiveType');
         }
       case OpenApiIntegerType(
-          typeReference: TypeReference(url: == 'dart:core')
-        ):
+        typeReference: TypeReference(url: == 'dart:core'),
+      ):
         return ref
             .asA(DartTypes.core.num.withNullability(type.isNullable))
             .nullableProperty('toInt', type.isNullable)
             .call([]);
       case OpenApiNumberInterface(
-          typeReference: TypeReference(url: == 'dart:core')
-        ):
+        typeReference: TypeReference(url: == 'dart:core'),
+      ):
         return ref
             .asA(DartTypes.core.num.withNullability(type.isNullable))
             .nullableProperty('toDouble', type.isNullable)
             .call([]);
       case OpenApiPrimitiveType(
-          typeReference:
-              TypeReference(url: == 'dart:core') && final typeReference
-        ):
+        typeReference: TypeReference(url: == 'dart:core') &&
+            final typeReference,
+      ):
         return ref.asA(typeReference);
       case OpenApiBinaryType(:final typeReference): // XFile
         return typeReference.newInstance([ref.asA(DartTypes.core.string)]);
       case OpenApiIterableInterface(
-          typeReference: TypeReference(url: == 'dart:core'),
-          :final itemType
-        ):
+        typeReference: TypeReference(url: == 'dart:core'),
+        :final itemType,
+      ):
         ref = ref.asA(
           DartTypes.core
               .list(DartTypes.core.object.nullable)
@@ -167,14 +153,11 @@ final class OpenApiJsonGenerator {
         }
         final mapped = ref.nullableProperty('map', type.isNullable).call([
           Method(
-            (m) => m
-              ..requiredParameters.add(
-                Parameter(
-                  (p) => p..name = 'el',
-                ),
-              )
-              ..body = serializedElement.code
-              ..lambda = true,
+            (m) =>
+                m
+                  ..requiredParameters.add(Parameter((p) => p..name = 'el'))
+                  ..body = serializedElement.code
+                  ..lambda = true,
           ).closure,
         ]);
         return switch (type) {
@@ -184,14 +167,12 @@ final class OpenApiJsonGenerator {
         };
       case OpenApiRecordType(:final valueType):
         ref = ref
-            .asA(
-              DartTypes.core.map().withNullability(type.isNullable),
-            )
+            .asA(DartTypes.core.map().withNullability(type.isNullable))
             .nullableProperty('cast', type.isNullable)
             .call([], {}, [
-          DartTypes.core.string,
-          DartTypes.core.object.nullable,
-        ]);
+              DartTypes.core.string,
+              DartTypes.core.object.nullable,
+            ]);
         final value = refer('value');
         final serializedValue = fromJson(valueType, value);
         if (value == serializedValue) {
@@ -199,22 +180,16 @@ final class OpenApiJsonGenerator {
         }
         return ref.nullableProperty('map', type.isNullable).call([
           Method(
-            (m) => m
-              ..requiredParameters.add(
-                Parameter(
-                  (p) => p..name = 'key',
-                ),
-              )
-              ..requiredParameters.add(
-                Parameter(
-                  (p) => p..name = 'value',
-                ),
-              )
-              ..body = DartTypes.core.mapEntry.newInstance([
-                refer('key'),
-                serializedValue,
-              ]).code
-              ..lambda = true,
+            (m) =>
+                m
+                  ..requiredParameters.add(Parameter((p) => p..name = 'key'))
+                  ..requiredParameters.add(Parameter((p) => p..name = 'value'))
+                  ..body =
+                      DartTypes.core.mapEntry.newInstance([
+                        refer('key'),
+                        serializedValue,
+                      ]).code
+                  ..lambda = true,
           ).closure,
         ]);
       // case OpenApiTypeReference(:final primitiveType?):

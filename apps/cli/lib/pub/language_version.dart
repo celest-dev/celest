@@ -21,15 +21,9 @@ class LanguageVersion implements Comparable<LanguageVersion> {
   factory LanguageVersion.parse(String languageVersion) {
     final m = _languageVersionPattern.firstMatch(languageVersion);
     if (m == null) {
-      throw FormatException(
-        'Invalid language version string',
-        languageVersion,
-      );
+      throw FormatException('Invalid language version string', languageVersion);
     }
-    return LanguageVersion(
-      int.parse(m.group(1)!),
-      int.parse(m.group(2)!),
-    );
+    return LanguageVersion(int.parse(m.group(1)!), int.parse(m.group(2)!));
   }
 
   /// The language version implied by a Dart SDK constraint in `pubspec.yaml`.
@@ -62,8 +56,7 @@ class LanguageVersion implements Comparable<LanguageVersion> {
   /// The language version implied by a Dart sdk version.
   factory LanguageVersion.fromLanguageVersionToken(
     LanguageVersionToken version,
-  ) =>
-      LanguageVersion(version.major, version.minor);
+  ) => LanguageVersion(version.major, version.minor);
   final int major;
   final int minor;
 

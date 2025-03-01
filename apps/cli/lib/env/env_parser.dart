@@ -4,28 +4,21 @@
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:source_span/source_span.dart';
 
-typedef EnvValue = ({
-  String key,
-  String value,
-  int start,
-  int end,
-});
+typedef EnvValue = ({String key, String value, int start, int end});
 
 /// Creates key-value pairs from strings formatted as environment
 /// variable definitions.
 final class EnvParser {
-  EnvParser({
-    required this.source,
-    required this.sourceUri,
-  });
+  EnvParser({required this.source, required this.sourceUri});
 
   static const String _singleQuot = "'";
   static final RegExp _leadingExport = RegExp(r'''^ *export ?''');
   static final RegExp _comment = RegExp(r'''#[^'"]*$''');
   static final RegExp _commentWithQuotes = RegExp(r'''#.*$''');
   static final RegExp _surroundQuotes = RegExp(r'''^(["'])(.*?[^\\])\1''');
-  static final RegExp _bashVar =
-      RegExp(r'''(\\)?(\$)(?:{)?([a-zA-Z_][\w]*)+(?:})?''');
+  static final RegExp _bashVar = RegExp(
+    r'''(\\)?(\$)(?:{)?([a-zA-Z_][\w]*)+(?:})?''',
+  );
 
   final String source;
   final Uri sourceUri;
@@ -54,23 +47,13 @@ final class EnvParser {
       );
       final kv = parseOne(line);
       if (kv case (:final key, :final value, :final start, :final end)) {
-        final span = _sourceFile.span(
-          _offset + start,
-          _offset + end,
-        );
-        env.update(
-          key,
-          (_) {
-            errors.add(
-              CelestAnalysisError(
-                message: 'Duplicate key: $key',
-                location: span,
-              ),
-            );
-            return value;
-          },
-          ifAbsent: () => value,
-        );
+        final span = _sourceFile.span(_offset + start, _offset + end);
+        env.update(key, (_) {
+          errors.add(
+            CelestAnalysisError(message: 'Duplicate key: $key', location: span),
+          );
+          return value;
+        }, ifAbsent: () => value);
         spans.putIfAbsent(key, () => span);
       }
     }
@@ -100,12 +83,7 @@ final class EnvParser {
     final start = line.indexOf(k);
     final end = start + line.length;
 
-    return (
-      key: k,
-      value: v,
-      start: start,
-      end: end,
-    );
+    return (key: k, value: v, start: start, end: end);
   }
 
   /// Substitutes $bash_vars in [val] with values from [env].
@@ -121,20 +99,19 @@ final class EnvParser {
 
   /// If [val] is wrapped in single or double quotes, returns the quote character.
   /// Otherwise, returns the empty string.
-  static String surroundingQuote(String val) => _surroundQuotes.hasMatch(val)
-      ? _surroundQuotes.firstMatch(val)!.group(1)!
-      : '';
+  static String surroundingQuote(String val) =>
+      _surroundQuotes.hasMatch(val)
+          ? _surroundQuotes.firstMatch(val)!.group(1)!
+          : '';
 
   /// Removes quotes (single or double) surrounding a value.
-  static String unquote(String val) => _surroundQuotes.hasMatch(val)
-      ? _surroundQuotes.firstMatch(val)!.group(2)!
-      : strip(val, includeQuotes: true).trim();
+  static String unquote(String val) =>
+      _surroundQuotes.hasMatch(val)
+          ? _surroundQuotes.firstMatch(val)!.group(2)!
+          : strip(val, includeQuotes: true).trim();
 
   /// Strips comments (trailing or whole-line).
-  static String strip(
-    String line, {
-    bool includeQuotes = false,
-  }) =>
+  static String strip(String line, {bool includeQuotes = false}) =>
       line.replaceAll(includeQuotes ? _commentWithQuotes : _comment, '').trim();
 
   /// Omits 'export' keyword.

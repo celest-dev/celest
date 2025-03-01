@@ -67,9 +67,9 @@ final class AnalysisFailureResult implements CelestAnalysisResult {
     this.warnings = const [],
     this.infos = const [],
   }) : assert(
-          errors.isNotEmpty,
-          'Errors must not be empty for a failure result.',
-        );
+         errors.isNotEmpty,
+         'Errors must not be empty for a failure result.',
+       );
 
   @override
   ast.Project? get project => null;

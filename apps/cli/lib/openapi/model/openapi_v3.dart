@@ -38,9 +38,8 @@ abstract class OpenApiDocument
     );
   }
 
-  factory OpenApiDocument.build(
-    void Function(OpenApiDocumentBuilder) updates,
-  ) = _$OpenApiDocument;
+  factory OpenApiDocument.build(void Function(OpenApiDocumentBuilder) updates) =
+      _$OpenApiDocument;
 
   OpenApiDocument._();
 
@@ -109,9 +108,8 @@ abstract class OpenApiInfo implements Built<OpenApiInfo, OpenApiInfoBuilder> {
     );
   }
 
-  factory OpenApiInfo.build(
-    void Function(OpenApiInfoBuilder) updates,
-  ) = _$OpenApiInfo;
+  factory OpenApiInfo.build(void Function(OpenApiInfoBuilder) updates) =
+      _$OpenApiInfo;
 
   OpenApiInfo._();
 
@@ -137,9 +135,8 @@ abstract class OpenApiServer
     );
   }
 
-  factory OpenApiServer.build(
-    void Function(OpenApiServerBuilder) updates,
-  ) = _$OpenApiServer;
+  factory OpenApiServer.build(void Function(OpenApiServerBuilder) updates) =
+      _$OpenApiServer;
 
   OpenApiServer._();
 
@@ -264,9 +261,8 @@ abstract class OpenApiPathItem
     );
   }
 
-  factory OpenApiPathItem.build(
-    void Function(OpenApiPathItemBuilder) updates,
-  ) = _$OpenApiPathItem;
+  factory OpenApiPathItem.build(void Function(OpenApiPathItemBuilder) updates) =
+      _$OpenApiPathItem;
 
   OpenApiPathItem._();
 
@@ -843,9 +839,8 @@ abstract class OpenApiEncoding
     );
   }
 
-  factory OpenApiEncoding.build(
-    void Function(OpenApiEncodingBuilder) updates,
-  ) = _$OpenApiEncoding;
+  factory OpenApiEncoding.build(void Function(OpenApiEncodingBuilder) updates) =
+      _$OpenApiEncoding;
 
   OpenApiEncoding._();
 
@@ -922,9 +917,8 @@ abstract class OpenApiResponse
     );
   }
 
-  factory OpenApiResponse.build(
-    void Function(OpenApiResponseBuilder) updates,
-  ) = _$OpenApiResponse;
+  factory OpenApiResponse.build(void Function(OpenApiResponseBuilder) updates) =
+      _$OpenApiResponse;
 
   OpenApiResponse._();
 
@@ -1000,9 +994,8 @@ abstract class OpenApiHeader
     );
   }
 
-  factory OpenApiHeader.build(
-    void Function(OpenApiHeaderBuilder) updates,
-  ) = _$OpenApiHeader;
+  factory OpenApiHeader.build(void Function(OpenApiHeaderBuilder) updates) =
+      _$OpenApiHeader;
 
   OpenApiHeader._();
 
@@ -1202,9 +1195,8 @@ abstract class OpenApiSchema
     );
   }
 
-  factory OpenApiSchema.build(
-    void Function(OpenApiSchemaBuilder) updates,
-  ) = _$OpenApiSchema;
+  factory OpenApiSchema.build(void Function(OpenApiSchemaBuilder) updates) =
+      _$OpenApiSchema;
 
   OpenApiSchema._();
 

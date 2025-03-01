@@ -38,9 +38,9 @@ final class SubscribeCommand extends CelestCommand with Authenticate {
     );
     switch (currentSubscription?.whichState()) {
       case null ||
-            Subscription_State.notSet ||
-            Subscription_State.canceled ||
-            Subscription_State.paused:
+          Subscription_State.notSet ||
+          Subscription_State.canceled ||
+          Subscription_State.paused:
         break;
       case Subscription_State.active:
         cliLogger.success('You are already subscribed to Celest Cloud 🚀');
@@ -68,7 +68,8 @@ final class SubscribeCommand extends CelestCommand with Authenticate {
           if (instanceType != InstanceType.INSTANCE_TYPE_UNSPECIFIED)
             instanceType,
       ],
-      defaultValue: currentSubscription?.builder.instanceType ??
+      defaultValue:
+          currentSubscription?.builder.instanceType ??
           InstanceType.INSTANCE_TYPE_UNSPECIFIED,
       display: (instanceType) => instanceType.displayString,
     );
@@ -117,14 +118,11 @@ final class SubscribeCommand extends CelestCommand with Authenticate {
         plan: switch (instanceType) {
           InstanceType.INSTANCE_TYPE_UNSPECIFIED =>
             const CommunitySubscriptionPlan(),
-          final instanceType =>
-            BuilderSubscriptionPlan(instanceType: instanceType),
+          final instanceType => BuilderSubscriptionPlan(
+            instanceType: instanceType,
+          ),
         },
-        redirectUri: Uri(
-          scheme: 'http',
-          host: 'localhost',
-          port: server.port,
-        ),
+        redirectUri: Uri(scheme: 'http', host: 'localhost', port: server.port),
       );
       switch (response.subscription.whichState()) {
         case Subscription_State.active:

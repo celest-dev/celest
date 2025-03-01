@@ -15,14 +15,13 @@ base mixin TestFlutterProject on E2ETest {
   @mustCallSuper
   Future<void> setUp() async {
     await super.setUp();
-    projectDir = fileSystem.directory(
-      p.join(tempDir.path, projectName),
-    );
+    projectDir = fileSystem.directory(p.join(tempDir.path, projectName));
     await projectDir.create(recursive: true);
-    await runCommand(
-      ['flutter', 'create', '.'],
-      workingDirectory: projectDir.path,
-    );
+    await runCommand([
+      'flutter',
+      'create',
+      '.',
+    ], workingDirectory: projectDir.path);
     print('Running test in ${projectDir.path}');
   }
 }
@@ -35,14 +34,14 @@ base mixin TestDartProject on E2ETest {
   @mustCallSuper
   Future<void> setUp() async {
     await super.setUp();
-    projectDir = fileSystem.directory(
-      p.join(tempDir.path, projectName),
-    );
+    projectDir = fileSystem.directory(p.join(tempDir.path, projectName));
     await projectDir.create(recursive: true);
-    await runCommand(
-      ['dart', 'create', '--force', '.'],
-      workingDirectory: projectDir.path,
-    );
+    await runCommand([
+      'dart',
+      'create',
+      '--force',
+      '.',
+    ], workingDirectory: projectDir.path);
     print('Running test in ${projectDir.path}');
   }
 }

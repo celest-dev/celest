@@ -54,9 +54,7 @@ class CelestUninstaller {
         'Failed to uninstall Celest from pub global.',
         '${result.stdout}\n${result.stderr}',
       );
-      throw const CliException(
-        'Failed to uninstall Celest from pub global.',
-      );
+      throw const CliException('Failed to uninstall Celest from pub global.');
     }
   }
 
@@ -79,10 +77,12 @@ class CelestUninstaller {
         if (package != 'celest') {
           throw StateError('Unexpected package: $package');
         }
-        final uninstallOutput = await processManager.start(
-          <String>['sudo', 'dpkg', '--purge', package],
-          mode: ProcessStartMode.inheritStdio,
-        );
+        final uninstallOutput = await processManager.start(<String>[
+          'sudo',
+          'dpkg',
+          '--purge',
+          package,
+        ], mode: ProcessStartMode.inheritStdio);
         if (await uninstallOutput.exitCode != 0) {
           throw const CliException(
             'Celest was partially uninstalled. Please use dpkg to clean up '

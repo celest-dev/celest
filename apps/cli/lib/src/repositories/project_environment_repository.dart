@@ -52,18 +52,16 @@ final class ProjectEnvironmentRepository {
     String environmentIdOrAlias, {
     required String projectId,
   }) async {
-    final env = await get(
-      environmentIdOrAlias,
-      projectId: projectId,
-    );
+    final env = await get(environmentIdOrAlias, projectId: projectId);
     if (env == null) {
       throw ArgumentError(
         'Project environment not found: $environmentIdOrAlias',
       );
     }
-    final db = await _db
-        .getProjectEnvironmentConfig(environmentId: env.id)
-        .getSingle();
+    final db =
+        await _db
+            .getProjectEnvironmentConfig(environmentId: env.id)
+            .getSingle();
     return ProjectEnvironmentConfigData(
       environmentId: env.id,
       baseUri: db.baseUri,

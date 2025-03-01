@@ -4,9 +4,7 @@ import 'package:logging/logging.dart';
 import 'package:yaml/yaml.dart';
 
 final class AnalysisOptions {
-  const AnalysisOptions._({
-    this.enabledExperiments = const [],
-  });
+  const AnalysisOptions._({this.enabledExperiments = const []});
 
   final List<String> enabledExperiments;
 
@@ -14,11 +12,10 @@ final class AnalysisOptions {
   static final _logger = Logger('AnalysisOptions');
 
   static Future<AnalysisOptions> load(String path) async {
-    path = p.isAbsolute(path)
-        ? path
-        : p.canonicalize(
-            p.join(projectPaths.projectRoot, path),
-          );
+    path =
+        p.isAbsolute(path)
+            ? path
+            : p.canonicalize(p.join(projectPaths.projectRoot, path));
     final analysisOptionsFile = fileSystem.file(path);
     if (!await analysisOptionsFile.exists()) {
       _logger.finest('No analysis options file detected at $path');
@@ -47,7 +44,6 @@ final class AnalysisOptions {
   }
 
   @override
-  String toString() => prettyPrintJson({
-        'enabledExperiments': enabledExperiments,
-      });
+  String toString() =>
+      prettyPrintJson({'enabledExperiments': enabledExperiments});
 }

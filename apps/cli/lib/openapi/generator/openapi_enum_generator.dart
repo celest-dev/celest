@@ -49,93 +49,100 @@ final class OpenApiEnumGenerator {
         b.name = name;
         b.constructors.add(
           Constructor(
-            (c) => c
-              ..constant = true
-              ..requiredParameters.add(
-                Parameter(
-                  (p) => p
-                    ..name = 'name'
-                    ..type = DartTypes.core.string,
-                ),
-              ),
+            (c) =>
+                c
+                  ..constant = true
+                  ..requiredParameters.add(
+                    Parameter(
+                      (p) =>
+                          p
+                            ..name = 'name'
+                            ..type = DartTypes.core.string,
+                    ),
+                  ),
           ),
         );
         b.fields.add(
           Field(
-            (f) => f
-              ..modifier = FieldModifier.final$
-              ..type = DartTypes.core.string
-              ..name = 'name',
+            (f) =>
+                f
+                  ..modifier = FieldModifier.final$
+                  ..type = DartTypes.core.string
+                  ..name = 'name',
           ),
         );
         b.values.addAll(
           type.values.map(
             (value) => EnumValue(
-              (v) => v
-                ..name = _reserveName((value as String).camelCase)
-                ..arguments.add(literalString(value, raw: true))
-                ..docs.add('/// `$v`'),
+              (v) =>
+                  v
+                    ..name = _reserveName((value as String).camelCase)
+                    ..arguments.add(literalString(value, raw: true))
+                    ..docs.add('/// `$v`'),
             ),
           ),
         );
       });
     }
-    return ExtensionType(
-      (b) {
-        b.name = name;
-        b.constant = true;
+    return ExtensionType((b) {
+      b.name = name;
+      b.constant = true;
 
-        final repType = type.baseType.typeReference.nonNullable;
-        b.constructors.add(
-          Constructor(
-            (c) => c
-              ..name = 'fromJson'
-              ..requiredParameters.add(
-                Parameter(
-                  (p) => p
-                    ..type = DartTypes.core.object.nullable
-                    ..name = 'json',
+      final repType = type.baseType.typeReference.nonNullable;
+      b.constructors.add(
+        Constructor(
+          (c) =>
+              c
+                ..name = 'fromJson'
+                ..requiredParameters.add(
+                  Parameter(
+                    (p) =>
+                        p
+                          ..type = DartTypes.core.object.nullable
+                          ..name = 'json',
+                  ),
+                )
+                ..initializers.add(
+                  refer('_').assign(refer('json').asA(repType)).code,
                 ),
-              )
-              ..initializers.add(
-                refer('_').assign(refer('json').asA(repType)).code,
-              ),
-          ),
-        );
+        ),
+      );
 
-        b.methods.addAll([
-          Method(
-            (m) => m
-              ..name = 'toJson'
-              ..returns = repType
-              ..lambda = true
-              ..body = refer('_').code,
+      b.methods.addAll([
+        Method(
+          (m) =>
+              m
+                ..name = 'toJson'
+                ..returns = repType
+                ..lambda = true
+                ..body = refer('_').code,
+        ),
+        _encodeMethod,
+        encodeWithMethod,
+      ]);
+      b.representationDeclaration = RepresentationDeclaration(
+        (d) =>
+            d
+              ..name = '_'
+              ..declaredRepresentationType = repType,
+      );
+      b.implements.add(repType);
+      // b.fields.add(extensionTypeSelfField(name));
+      for (final value in type.values) {
+        b.fields.add(
+          Field(
+            (f) =>
+                f
+                  ..static = true
+                  ..modifier = FieldModifier.constant
+                  ..docs.add('/// `$value`')
+                  ..type = refer(name)
+                  ..name = _reserveName(value.toString().camelCase)
+                  ..assignment = refer(name).call([literal(value)]).code,
           ),
-          _encodeMethod,
-          encodeWithMethod,
-        ]);
-        b.representationDeclaration = RepresentationDeclaration(
-          (d) => d
-            ..name = '_'
-            ..declaredRepresentationType = repType,
         );
-        b.implements.add(repType);
-        // b.fields.add(extensionTypeSelfField(name));
-        for (final value in type.values) {
-          b.fields.add(
-            Field(
-              (f) => f
-                ..static = true
-                ..modifier = FieldModifier.constant
-                ..docs.add('/// `$value`')
-                ..type = refer(name)
-                ..name = _reserveName(value.toString().camelCase)
-                ..assignment = refer(name).call([literal(value)]).code,
-            ),
-          );
-        }
-      },
-    );
+      }
+    });
   }
 
   Method get _encodeMethod {
@@ -147,22 +154,25 @@ final class OpenApiEnumGenerator {
         ..returns = refer('V')
         ..requiredParameters.addAll([
           Parameter(
-            (p) => p
-              ..type = refer(name)
-              ..name = 'instance',
+            (p) =>
+                p
+                  ..type = refer(name)
+                  ..name = 'instance',
           ),
           Parameter(
-            (p) => p
-              ..type = DartTypes.libcoder.encoder(refer('V'))
-              ..name = 'encoder',
+            (p) =>
+                p
+                  ..type = DartTypes.libcoder.encoder(refer('V'))
+                  ..name = 'encoder',
           ),
         ])
         ..lambda = false
-        ..body = refer('encoder')
-            .property('encodeString')
-            .call([refer('instance')])
-            .returned
-            .statement;
+        ..body =
+            refer('encoder')
+                .property('encodeString')
+                .call([refer('instance')])
+                .returned
+                .statement;
     });
   }
 }

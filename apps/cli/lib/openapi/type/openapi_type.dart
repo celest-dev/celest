@@ -90,12 +90,8 @@ abstract class TypeDiscriminator
     implements
         Built<TypeDiscriminator, TypeDiscriminatorBuilder>,
         Discriminator {
-  factory TypeDiscriminator({
-    required Map<Expression, OpenApiType> mapping,
-  }) {
-    return _$TypeDiscriminator._(
-      mapping: mapping.build(),
-    );
+  factory TypeDiscriminator({required Map<Expression, OpenApiType> mapping}) {
+    return _$TypeDiscriminator._(mapping: mapping.build());
   }
 
   factory TypeDiscriminator.build([
@@ -182,8 +178,9 @@ extension OpenApiInterfaceTypeHelpers on OpenApiInterfaceType {
     var superType = this.superType;
     while (superType != null) {
       allSuperTypes.add(superType);
-      if (superType
-          case OpenApiInterfaceType(superType: final superSuperType)) {
+      if (superType case OpenApiInterfaceType(
+        superType: final superSuperType,
+      )) {
         superType = superSuperType;
       }
     }
@@ -228,13 +225,13 @@ abstract class OpenApiIterableType
 
   @override
   OpenApiType get primitiveType => rebuild(
-        (t) => t.typeReference.replace(
-          DartTypes.core
-              .iterable(itemType.typeReference)
-              .withNullability(isNullable)
-              .toTypeReference,
-        ),
-      );
+    (t) => t.typeReference.replace(
+      DartTypes.core
+          .iterable(itemType.typeReference)
+          .withNullability(isNullable)
+          .toTypeReference,
+    ),
+  );
 
   @override
   OpenApiInterfaceType? get superType => null;
@@ -286,13 +283,13 @@ abstract class OpenApiListType
 
   @override
   OpenApiType get primitiveType => rebuild(
-        (t) => t.typeReference.replace(
-          DartTypes.core
-              .list(itemType.typeReference)
-              .withNullability(isNullable)
-              .toTypeReference,
-        ),
-      );
+    (t) => t.typeReference.replace(
+      DartTypes.core
+          .list(itemType.typeReference)
+          .withNullability(isNullable)
+          .toTypeReference,
+    ),
+  );
 
   @override
   OpenApiListType withNullability(bool isNullable) {
@@ -342,13 +339,13 @@ abstract class OpenApiSetType
 
   @override
   OpenApiType get primitiveType => rebuild(
-        (t) => t.typeReference.replace(
-          DartTypes.core
-              .set(itemType.typeReference)
-              .withNullability(isNullable)
-              .toTypeReference,
-        ),
-      );
+    (t) => t.typeReference.replace(
+      DartTypes.core
+          .set(itemType.typeReference)
+          .withNullability(isNullable)
+          .toTypeReference,
+    ),
+  );
 
   @override
   OpenApiSetType withNullability(bool isNullable) {
@@ -393,10 +390,10 @@ abstract class OpenApiBooleanType
 
   @override
   OpenApiPrimitiveType get primitiveType => rebuild(
-        (t) => t.typeReference.replace(
-          DartTypes.core.bool.withNullability(isNullable).toTypeReference,
-        ),
-      );
+    (t) => t.typeReference.replace(
+      DartTypes.core.bool.withNullability(isNullable).toTypeReference,
+    ),
+  );
 
   @override
   OpenApiInterfaceType get superType => _anyType;
@@ -444,10 +441,10 @@ abstract class OpenApiNumberType
 
   @override
   OpenApiPrimitiveType get primitiveType => rebuild(
-        (t) => t.typeReference.replace(
-          DartTypes.core.double.withNullability(isNullable).toTypeReference,
-        ),
-      );
+    (t) => t.typeReference.replace(
+      DartTypes.core.double.withNullability(isNullable).toTypeReference,
+    ),
+  );
 
   @override
   OpenApiNumberType withNullability(bool isNullable) {
@@ -470,8 +467,9 @@ extension type const OpenApiIntegerFormat(String _) implements String {
 
   // TODO
   static const OpenApiIntegerFormat long = OpenApiIntegerFormat('long');
-  static const OpenApiIntegerFormat unixTime =
-      OpenApiIntegerFormat('unix-time');
+  static const OpenApiIntegerFormat unixTime = OpenApiIntegerFormat(
+    'unix-time',
+  );
 }
 
 abstract class OpenApiIntegerType
@@ -501,10 +499,10 @@ abstract class OpenApiIntegerType
 
   @override
   OpenApiPrimitiveType get primitiveType => rebuild(
-        (t) => t.typeReference.replace(
-          DartTypes.core.int.withNullability(isNullable).toTypeReference,
-        ),
-      );
+    (t) => t.typeReference.replace(
+      DartTypes.core.int.withNullability(isNullable).toTypeReference,
+    ),
+  );
 
   @override
   OpenApiIntegerType withNullability(bool isNullable) {
@@ -558,10 +556,10 @@ abstract class OpenApiDoubleType
 
   @override
   OpenApiPrimitiveType get primitiveType => rebuild(
-        (t) => t.typeReference.replace(
-          DartTypes.core.double.withNullability(isNullable).toTypeReference,
-        ),
-      );
+    (t) => t.typeReference.replace(
+      DartTypes.core.double.withNullability(isNullable).toTypeReference,
+    ),
+  );
 
   @override
   OpenApiDoubleType withNullability(bool isNullable) {
@@ -608,8 +606,9 @@ extension type const OpenApiStringFormat(String _) implements String {
   static const OpenApiStringFormat hostname = OpenApiStringFormat('hostname');
 
   /// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-7.3.3
-  static const OpenApiStringFormat idnHostname =
-      OpenApiStringFormat('idn-hostname');
+  static const OpenApiStringFormat idnHostname = OpenApiStringFormat(
+    'idn-hostname',
+  );
 
   /// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-7.3.4
   static const OpenApiStringFormat ipv4 = OpenApiStringFormat('ipv4');
@@ -621,37 +620,43 @@ extension type const OpenApiStringFormat(String _) implements String {
   static const OpenApiStringFormat uri = OpenApiStringFormat('uri');
 
   /// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-7.3.5
-  static const OpenApiStringFormat uriReference =
-      OpenApiStringFormat('uri-reference');
+  static const OpenApiStringFormat uriReference = OpenApiStringFormat(
+    'uri-reference',
+  );
 
   /// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-7.3.5
   static const OpenApiStringFormat iri = OpenApiStringFormat('iri');
 
   /// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-7.3.5
-  static const OpenApiStringFormat iriReference =
-      OpenApiStringFormat('iri-reference');
+  static const OpenApiStringFormat iriReference = OpenApiStringFormat(
+    'iri-reference',
+  );
 
   /// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-7.3.5
   static const OpenApiStringFormat uuid = OpenApiStringFormat('uuid');
 
   /// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-7.3.6
-  static const OpenApiStringFormat uriTemplate =
-      OpenApiStringFormat('uri-template');
+  static const OpenApiStringFormat uriTemplate = OpenApiStringFormat(
+    'uri-template',
+  );
 
   /// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-7.3.8
   static const OpenApiStringFormat regex = OpenApiStringFormat('regex');
 
   /// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-7.3.7
-  static const OpenApiStringFormat jsonPointer =
-      OpenApiStringFormat('json-pointer');
+  static const OpenApiStringFormat jsonPointer = OpenApiStringFormat(
+    'json-pointer',
+  );
 
   /// https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-validation-00#section-7.3.7
-  static const OpenApiStringFormat relativeJsonPointer =
-      OpenApiStringFormat('relative-json-pointer');
+  static const OpenApiStringFormat relativeJsonPointer = OpenApiStringFormat(
+    'relative-json-pointer',
+  );
 
   static const OpenApiStringFormat number = OpenApiStringFormat('number');
-  static const OpenApiStringFormat eventStream =
-      OpenApiStringFormat('event-stream');
+  static const OpenApiStringFormat eventStream = OpenApiStringFormat(
+    'event-stream',
+  );
   static const OpenApiStringFormat special = OpenApiStringFormat('special');
 
   // Stripe uses this
@@ -686,10 +691,10 @@ abstract class OpenApiStringType
 
   @override
   OpenApiPrimitiveType get primitiveType => rebuild(
-        (t) => t.typeReference.replace(
-          DartTypes.core.string.withNullability(isNullable).toTypeReference,
-        ),
-      );
+    (t) => t.typeReference.replace(
+      DartTypes.core.string.withNullability(isNullable).toTypeReference,
+    ),
+  );
 
   @override
   OpenApiInterfaceType get superType => _anyType;
@@ -781,13 +786,13 @@ abstract class OpenApiRecordType
 
   @override
   OpenApiType get primitiveType => rebuild(
-        (t) => t.typeReference.replace(
-          DartTypes.core
-              .map(DartTypes.core.string, valueType.typeReference)
-              .withNullability(isNullable)
-              .toTypeReference,
-        ),
-      );
+    (t) => t.typeReference.replace(
+      DartTypes.core
+          .map(DartTypes.core.string, valueType.typeReference)
+          .withNullability(isNullable)
+          .toTypeReference,
+    ),
+  );
 
   @override
   OpenApiRecordType withNullability(bool isNullable) {
@@ -812,16 +817,11 @@ abstract class OpenApiField
     required OpenApiType type,
     Object? defaultValue,
   }) {
-    return _$OpenApiField._(
-      name: name,
-      dartName: dartName,
-      type: type,
-    );
+    return _$OpenApiField._(name: name, dartName: dartName, type: type);
   }
 
-  factory OpenApiField.build([
-    void Function(OpenApiFieldBuilder b) updates,
-  ]) = _$OpenApiField;
+  factory OpenApiField.build([void Function(OpenApiFieldBuilder b) updates]) =
+      _$OpenApiField;
 
   OpenApiField._();
 
@@ -927,10 +927,7 @@ abstract class OpenApiSealedBranch
     required String name,
     required OpenApiType type,
   }) {
-    return _$OpenApiSealedBranch._(
-      name: name,
-      type: type,
-    );
+    return _$OpenApiSealedBranch._(name: name, type: type);
   }
 
   factory OpenApiSealedBranch.build([
@@ -1173,10 +1170,10 @@ abstract class OpenApiAnyType
 
   @override
   OpenApiPrimitiveType get primitiveType => rebuild(
-        (t) => t.typeReference.replace(
-          DartTypes.core.object.withNullability(isNullable).toTypeReference,
-        ),
-      );
+    (t) => t.typeReference.replace(
+      DartTypes.core.object.withNullability(isNullable).toTypeReference,
+    ),
+  );
 
   @override
   OpenApiInterfaceType? get superType =>

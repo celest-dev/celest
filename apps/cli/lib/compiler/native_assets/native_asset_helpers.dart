@@ -24,9 +24,7 @@ Future<File> generateNativeAssetsYaml({
     linkModePreference: LinkModePreferenceImpl.dynamic,
     buildMode: BuildModeImpl.release,
     includeParentEnvironment: true,
-    supportedAssetTypes: [
-      NativeCodeAsset.type,
-    ],
+    supportedAssetTypes: [NativeCodeAsset.type],
     linkingEnabled: false,
   );
   if (!buildResult.success) {
@@ -55,15 +53,12 @@ Future<File> generateNativeAssetsYaml({
           'asset $asset',
         );
     }
-    return KernelAsset(
-      id: asset.id,
-      target: target,
-      path: kernelAssetPath,
-    );
+    return KernelAsset(id: asset.id, target: target, path: kernelAssetPath);
   }
 
-  outputDir ??=
-      await fileSystem.systemTempDirectory.createTemp('native_assets_');
+  outputDir ??= await fileSystem.systemTempDirectory.createTemp(
+    'native_assets_',
+  );
 
   final assetTargetLocations = {
     for (final asset in nativeAssets) asset: targetLocation(asset),
@@ -71,7 +66,9 @@ Future<File> generateNativeAssetsYaml({
   final copiedFiles = await Future.wait([
     for (final assetMapping in assetTargetLocations.entries)
       if (assetMapping.value.path is KernelAssetRelativePath)
-        fileSystem.file(assetMapping.key.file).copy(
+        fileSystem
+            .file(assetMapping.key.file)
+            .copy(
               outputDir.uri
                   .resolveUri(
                     (assetMapping.value.path as KernelAssetRelativePath).uri,

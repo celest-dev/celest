@@ -18,10 +18,7 @@ import 'targets/installed_target.dart';
 import 'targets/local_target.dart';
 
 void main() {
-  final targets = <TestTarget>[
-    LocalTarget(),
-    InstalledTarget(),
-  ];
+  final targets = <TestTarget>[LocalTarget(), InstalledTarget()];
 
   final tests = <E2ETest Function(TestTarget)>[
     // Example projects

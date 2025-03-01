@@ -16,11 +16,7 @@ base mixin Authenticate on CelestCommand {
       required: true,
       validator: const AskEmailValidator(),
     );
-    analytics.identifyUser(
-      set: {
-        'email': email,
-      },
-    );
+    analytics.identifyUser(set: {'email': email});
     analytics.capture('sign_up_started');
     try {
       final flow = await auth.email.authenticate(email: email);
@@ -37,18 +33,11 @@ base mixin Authenticate on CelestCommand {
 
       analytics.capture(
         'sign_up_succeeded',
-        properties: {
-          'user_id': user.userId,
-        },
+        properties: {'user_id': user.userId},
       );
       return 0;
     } on Object catch (e) {
-      analytics.capture(
-        'sign_up_failed',
-        properties: {
-          'error': e.toString(),
-        },
-      );
+      analytics.capture('sign_up_failed', properties: {'error': e.toString()});
       rethrow;
     }
   }

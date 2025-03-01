@@ -26,10 +26,7 @@ final class OpenApiTypeResolutionScope {
 
   bool get isFile => mimeType != null && mimeType!.startsWith('multipart');
 
-  String typeName(
-    OpenApiGeneratorContext context,
-    OpenApiTypeSchema schema,
-  ) {
+  String typeName(OpenApiGeneratorContext context, OpenApiTypeSchema schema) {
     if (schema.ref != null) {
       return context.dartNames[schema.name]!;
     }
@@ -63,14 +60,13 @@ final class OpenApiTypeResolutionScope {
     OpenApiNameResolver? nameResolver,
     String? sealedParent,
     bool? isNullable,
-  }) =>
-      OpenApiTypeResolutionScope(
-        nameContext: nameContext,
-        nameResolver: nameResolver ?? this.nameResolver,
-        url: url,
-        sealedParent: sealedParent,
-        mimeType: mimeType,
-        needsWrapper: false, // Only top-level types need wrappers.
-        isNullable: isNullable,
-      );
+  }) => OpenApiTypeResolutionScope(
+    nameContext: nameContext,
+    nameResolver: nameResolver ?? this.nameResolver,
+    url: url,
+    sealedParent: sealedParent,
+    mimeType: mimeType,
+    needsWrapper: false, // Only top-level types need wrappers.
+    isNullable: isNullable,
+  );
 }

@@ -28,11 +28,9 @@ Future<List<FirebaseProject>> _resolveProjectTest({
         .writeAsStringSync(jsonEncode(firebaseJson));
   }
   if (projectAliases != null) {
-    appDir.childFile('.firebaserc').writeAsStringSync(
-          jsonEncode({
-            'projects': projectAliases,
-          }),
-        );
+    appDir
+        .childFile('.firebaserc')
+        .writeAsStringSync(jsonEncode({'projects': projectAliases}));
   }
   if (globalProjectPointer != null) {
     final configPath = fileSystem.path.join(
@@ -45,9 +43,7 @@ Future<List<FirebaseProject>> _resolveProjectTest({
       ..parent.createSync(recursive: true)
       ..writeAsStringSync(
         jsonEncode({
-          'activeProjects': {
-            appDir.path: globalProjectPointer,
-          },
+          'activeProjects': {appDir.path: globalProjectPointer},
         }),
       );
   }
@@ -101,14 +97,10 @@ void main() {
             'flutter': {
               'platforms': {
                 'android': {
-                  'default': {
-                    'projectId': projectId,
-                  },
+                  'default': {'projectId': projectId},
                 },
                 'dart': {
-                  'lib/firebase_options.dart': {
-                    'projectId': projectId,
-                  },
+                  'lib/firebase_options.dart': {'projectId': projectId},
                 },
               },
             },
@@ -125,14 +117,10 @@ void main() {
             'flutter': {
               'platforms': {
                 'android': {
-                  'default': {
-                    'projectId': devProjectId,
-                  },
+                  'default': {'projectId': devProjectId},
                 },
                 'dart': {
-                  'lib/firebase_options_dev.dart': {
-                    'projectId': devProjectId,
-                  },
+                  'lib/firebase_options_dev.dart': {'projectId': devProjectId},
                   'lib/firebase_options_prod.dart': {
                     'projectId': prodProjectId,
                   },
@@ -142,20 +130,10 @@ void main() {
           },
         );
         check(projects).unorderedMatches([
-          (it) => it.equals(
-                (
-                  active: false,
-                  projectId: devProjectId,
-                  alias: null,
-                ),
-              ),
-          (it) => it.equals(
-                (
-                  active: false,
-                  projectId: prodProjectId,
-                  alias: null,
-                ),
-              ),
+          (it) =>
+              it.equals((active: false, projectId: devProjectId, alias: null)),
+          (it) =>
+              it.equals((active: false, projectId: prodProjectId, alias: null)),
         ]);
       });
     });
@@ -174,26 +152,16 @@ void main() {
         const prodProjectId = 'firebase-test-prod';
         final projects = await _resolveProjectTest(
           globalProjectPointer: devProjectId,
-          projectAliases: {
-            'dev': devProjectId,
-            'prod': prodProjectId,
-          },
+          projectAliases: {'dev': devProjectId, 'prod': prodProjectId},
         );
         check(projects).unorderedMatches([
-          (it) => it.equals(
-                (
-                  active: true,
-                  projectId: devProjectId,
-                  alias: 'dev',
-                ),
-              ),
-          (it) => it.equals(
-                (
-                  active: false,
-                  projectId: prodProjectId,
-                  alias: 'prod',
-                ),
-              ),
+          (it) =>
+              it.equals((active: true, projectId: devProjectId, alias: 'dev')),
+          (it) => it.equals((
+            active: false,
+            projectId: prodProjectId,
+            alias: 'prod',
+          )),
         ]);
       });
 
@@ -202,26 +170,16 @@ void main() {
         const prodProjectId = 'firebase-test-prod';
         final projects = await _resolveProjectTest(
           globalProjectPointer: 'prod',
-          projectAliases: {
-            'dev': devProjectId,
-            'prod': prodProjectId,
-          },
+          projectAliases: {'dev': devProjectId, 'prod': prodProjectId},
         );
         check(projects).unorderedMatches([
-          (it) => it.equals(
-                (
-                  active: false,
-                  projectId: devProjectId,
-                  alias: 'dev',
-                ),
-              ),
-          (it) => it.equals(
-                (
-                  active: true,
-                  projectId: prodProjectId,
-                  alias: 'prod',
-                ),
-              ),
+          (it) =>
+              it.equals((active: false, projectId: devProjectId, alias: 'dev')),
+          (it) => it.equals((
+            active: true,
+            projectId: prodProjectId,
+            alias: 'prod',
+          )),
         ]);
       });
     });
@@ -232,21 +190,13 @@ void main() {
       final projects = await _resolveProjectTest(
         environmentId: 'prod',
         globalProjectPointer: 'prod',
-        projectAliases: {
-          'dev': devProjectId,
-          'prod': prodProjectId,
-        },
+        projectAliases: {'dev': devProjectId, 'prod': prodProjectId},
       );
 
       // When there is an alias matching the environment ID, we always use that.
       check(projects).unorderedMatches([
-        (it) => it.equals(
-              (
-                active: true,
-                projectId: prodProjectId,
-                alias: 'prod',
-              ),
-            ),
+        (it) =>
+            it.equals((active: true, projectId: prodProjectId, alias: 'prod')),
       ]);
     });
   });

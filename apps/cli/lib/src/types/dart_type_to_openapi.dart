@@ -16,10 +16,7 @@ import 'package:lib_openapi/lib_openapi.dart';
 
 final class DartTypeToOpenApi
     implements TypeVisitor<OpenApiComponentOrRef<OpenApiSchema>> {
-  DartTypeToOpenApi({
-    required this.ref,
-    required this.components,
-  });
+  DartTypeToOpenApi({required this.ref, required this.components});
 
   final String ref;
   static final Set<DartType> _seen = HashSet(
@@ -68,9 +65,7 @@ final class DartTypeToOpenApi
       nullable: true,
       additionalProperties: OpenApiAdditionalProperties(allow: false),
     );
-    primitiveTypes[DartTypes.core.object] = OpenApiSchema(
-      type: null,
-    );
+    primitiveTypes[DartTypes.core.object] = OpenApiSchema(type: null);
 
     assert(() {
       final coreTypes = [
@@ -254,9 +249,7 @@ final class DartTypeToOpenApi
         component: OpenApiSchema(
           type: const ItemValue(JsonType.object),
           nullable: typeRef.isNullable,
-          additionalProperties: OpenApiAdditionalProperties(
-            schema: valueType,
-          ),
+          additionalProperties: OpenApiAdditionalProperties(schema: valueType),
         ),
       );
     }
@@ -360,19 +353,20 @@ final class DartTypeToOpenApi
     );
     return switch (typeName) {
       final typeName? => OpenApiComponentOrRef.reference(
-          ref: ref,
-          reference: components.schemas.putIfAbsent(typeName, () {
-            return schema.rebuild((component) {
-              return component.ref = '#/components/schemas/$typeName';
-            });
-          }).toReference(),
-        ),
+        ref: ref,
+        reference:
+            components.schemas.putIfAbsent(typeName, () {
+              return schema.rebuild((component) {
+                return component.ref = '#/components/schemas/$typeName';
+              });
+            }).toReference(),
+      ),
       _ => OpenApiComponentOrRef.component(
-          ref: ref,
-          component: schema.rebuild((component) {
-            return component.ref = ref;
-          }),
-        ),
+        ref: ref,
+        component: schema.rebuild((component) {
+          return component.ref = ref;
+        }),
+      ),
     };
   }
 
@@ -386,7 +380,8 @@ final class DartTypeToOpenApi
       ref: ref,
       component: OpenApiSchema(
         type: const ItemValue(JsonType.object),
-        nullable: typeHelper.toReference(type).isNullableOrFalse ||
+        nullable:
+            typeHelper.toReference(type).isNullableOrFalse ||
             typeHelper.toReference(type.bound).isNullableOrFalse,
         allOf: [
           bound,
@@ -396,9 +391,10 @@ final class DartTypeToOpenApi
                 r'$type': OpenApiComponentOrRef.component(
                   component: OpenApiSchema(
                     type: const ItemValue(JsonType.string),
-                    enumValues: subtypes.map((type) {
-                      return typeHelper.toReference(type).symbol;
-                    }).toList(),
+                    enumValues:
+                        subtypes.map((type) {
+                          return typeHelper.toReference(type).symbol;
+                        }).toList(),
                   ),
                 ),
               },
@@ -442,9 +438,7 @@ final class DartTypeToOpenApi
           allOf: [
             schemaOrRef,
             OpenApiComponentOrRef.component(
-              component: OpenApiSchema(
-                nullable: isNullable,
-              ),
+              component: OpenApiSchema(nullable: isNullable),
             ),
           ],
         ),
@@ -456,9 +450,6 @@ final class DartTypeToOpenApi
 
 extension OpenApiSchemaToReference on OpenApiSchema {
   OpenApiSchemaReference toReference() {
-    return OpenApiSchemaReference(
-      ref: ref!,
-      name: name!,
-    );
+    return OpenApiSchemaReference(ref: ref!, name: name!);
   }
 }

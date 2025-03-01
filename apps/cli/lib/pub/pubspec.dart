@@ -50,14 +50,8 @@ extension PubspecCopyWith on Pubspec {
     Map<String, Dependency>? dependencyOverrides,
   }) {
     return copyWith(
-      dependencies: {
-        ...this.dependencies,
-        ...?dependencies,
-      },
-      devDependencies: {
-        ...this.devDependencies,
-        ...?devDependencies,
-      },
+      dependencies: {...this.dependencies, ...?dependencies},
+      devDependencies: {...this.devDependencies, ...?devDependencies},
       dependencyOverrides: {
         ...this.dependencyOverrides,
         ...?dependencyOverrides,
@@ -94,10 +88,8 @@ dependencies:
         ..writeln('dependency_overrides:');
     }
     final editor = YamlEditor(source ?? yaml.toString());
-    if (environment case final environment?) {
-      for (final key in environment.keys.sorted()) {
-        editor.update(['environment', key], environment[key]!.toYaml());
-      }
+    for (final key in environment.keys.sorted()) {
+      editor.update(['environment', key], environment[key]!.toYaml());
     }
 
     void addConstraints(
@@ -107,13 +99,16 @@ dependencies:
       final dependencyMap = <String, YamlNode>{};
       for (final dependency in constraints.keys.sorted()) {
         var hasDependency = true;
-        final currentValue = editor.parseAt(
-          [type.key, dependency],
-          orElse: () {
-            hasDependency = false;
-            return YamlScalar.wrap(null);
-          },
-        ).value;
+        final currentValue =
+            editor
+                .parseAt(
+                  [type.key, dependency],
+                  orElse: () {
+                    hasDependency = false;
+                    return YamlScalar.wrap(null);
+                  },
+                )
+                .value;
 
         // Fixes an issue where if a dependency was specified with a null
         // constraint, e.g. `test:` instead of `test: ^1.0.0`, the edit
@@ -124,13 +119,9 @@ dependencies:
         dependencyMap[dependency] = constraints[dependency]!.toYaml();
       }
 
-      editor.update(
-        [type.key],
-        wrapAsYamlNode(
-          dependencyMap,
-          collectionStyle: CollectionStyle.BLOCK,
-        ),
-      );
+      editor.update([
+        type.key,
+      ], wrapAsYamlNode(dependencyMap, collectionStyle: CollectionStyle.BLOCK));
     }
 
     addConstraints(dependencies, DependencyType.dependency);

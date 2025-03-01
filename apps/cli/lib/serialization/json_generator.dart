@@ -8,10 +8,9 @@ import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
 final class JsonGenerator {
-  JsonGenerator({
-    Expression? serializers,
-  }) : _serializers =
-            serializers ?? DartTypes.celest.serializers.property('instance');
+  JsonGenerator({Expression? serializers})
+    : _serializers =
+          serializers ?? DartTypes.celest.serializers.property('instance');
 
   final Expression _serializers;
 
@@ -37,8 +36,10 @@ final class JsonGenerator {
     }
     if (dartType.isDartCoreIterable || dartType.isDartCoreList) {
       final element = refer('el');
-      final serializedElement =
-          toJson(type.toTypeReference.types.single, element);
+      final serializedElement = toJson(
+        type.toTypeReference.types.single,
+        element,
+      );
       if (element == serializedElement) {
         return ref;
       }
@@ -46,14 +47,11 @@ final class JsonGenerator {
           .nullableProperty('map', type.isNullableOrFalse)
           .call([
             Method(
-              (m) => m
-                ..requiredParameters.add(
-                  Parameter(
-                    (p) => p..name = 'el',
-                  ),
-                )
-                ..body = serializedElement.code
-                ..lambda = true,
+              (m) =>
+                  m
+                    ..requiredParameters.add(Parameter((p) => p..name = 'el'))
+                    ..body = serializedElement.code
+                    ..lambda = true,
             ).closure,
           ])
           .property('toList')
@@ -75,22 +73,16 @@ final class JsonGenerator {
       }
       return ref.nullableProperty('map', type.isNullableOrFalse).call([
         Method(
-          (m) => m
-            ..requiredParameters.add(
-              Parameter(
-                (p) => p..name = 'key',
-              ),
-            )
-            ..requiredParameters.add(
-              Parameter(
-                (p) => p..name = 'value',
-              ),
-            )
-            ..body = DartTypes.core.mapEntry.newInstance([
-              refer('key'),
-              serializedValue,
-            ]).code
-            ..lambda = true,
+          (m) =>
+              m
+                ..requiredParameters.add(Parameter((p) => p..name = 'key'))
+                ..requiredParameters.add(Parameter((p) => p..name = 'value'))
+                ..body =
+                    DartTypes.core.mapEntry.newInstance([
+                      refer('key'),
+                      serializedValue,
+                    ]).code
+                ..lambda = true,
         ).closure,
       ]);
     }
@@ -99,14 +91,13 @@ final class JsonGenerator {
       serializationVerdict is VerdictYes,
       'Should not have passed analyzer if no',
     );
-    return _serializers.property('serialize').call(
-      [
-        ref,
-        if (dartType.typeToken case final typeToken?) typeToken,
-      ],
-      {},
-      [type.noBound],
-    );
+    return _serializers
+        .property('serialize')
+        .call(
+          [ref, if (dartType.typeToken case final typeToken?) typeToken],
+          {},
+          [type.noBound],
+        );
   }
 
   Expression fromJson(
@@ -115,9 +106,7 @@ final class JsonGenerator {
     required bool inNullableContext,
     Expression? defaultValue,
   }) {
-    type = type.withNullability(
-      type.isNullableOrFalse || defaultValue != null,
-    );
+    type = type.withNullability(type.isNullableOrFalse || defaultValue != null);
     var fromJson = _fromJson(type, ref, inNullableContext: inNullableContext);
     if (defaultValue != null) {
       fromJson = fromJson.parenthesized.ifNullThen(defaultValue);
@@ -183,13 +172,10 @@ final class JsonGenerator {
           .nullableProperty('map', type.isNullableOrFalse)
           .call([
             Method(
-              (m) => m
-                ..requiredParameters.add(
-                  Parameter(
-                    (p) => p..name = 'el',
-                  ),
-                )
-                ..body = serializedElement.code,
+              (m) =>
+                  m
+                    ..requiredParameters.add(Parameter((p) => p..name = 'el'))
+                    ..body = serializedElement.code,
             ).closure,
           ])
           .property('toList')
@@ -203,10 +189,7 @@ final class JsonGenerator {
       }
       final cast = ref.asA(
         DartTypes.core
-            .map(
-              DartTypes.core.string,
-              DartTypes.core.object.nullable,
-            )
+            .map(DartTypes.core.string, DartTypes.core.object.nullable)
             .withNullability(type.isNullableOrFalse),
       );
       final value = refer('value');
@@ -224,21 +207,15 @@ final class JsonGenerator {
       }
       return cast.nullableProperty('map', type.isNullableOrFalse).call([
         Method(
-          (m) => m
-            ..requiredParameters.add(
-              Parameter(
-                (p) => p..name = 'key',
-              ),
-            )
-            ..requiredParameters.add(
-              Parameter(
-                (p) => p..name = 'value',
-              ),
-            )
-            ..body = DartTypes.core.mapEntry.newInstance([
-              refer('key'),
-              serializedValue,
-            ]).code,
+          (m) =>
+              m
+                ..requiredParameters.add(Parameter((p) => p..name = 'key'))
+                ..requiredParameters.add(Parameter((p) => p..name = 'value'))
+                ..body =
+                    DartTypes.core.mapEntry.newInstance([
+                      refer('key'),
+                      serializedValue,
+                    ]).code,
         ).closure,
       ]);
     }
@@ -247,13 +224,12 @@ final class JsonGenerator {
     //   serializationVerdict is VerdictYes,
     //   'Should not have passed analyzer if no: $serializationVerdict',
     // );
-    return _serializers.property('deserialize').call(
-      [
-        ref,
-        if (dartType.typeToken case final typeToken?) typeToken,
-      ],
-      {},
-      [type.noBound],
-    );
+    return _serializers
+        .property('deserialize')
+        .call(
+          [ref, if (dartType.typeToken case final typeToken?) typeToken],
+          {},
+          [type.noBound],
+        );
   }
 }

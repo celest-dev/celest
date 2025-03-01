@@ -12,23 +12,20 @@ abstract final class CodeGenerator {
     'invalid_use_of_internal_member',
   ];
   static final _header = 'ignore_for_file: ${_ignoredRules.join(', ')}';
-  static final _formatter = DartFormatter(
-    fixes: StyleFix.all,
-  );
+  static final _formatter = DartFormatter(fixes: StyleFix.all);
   static DartEmitter _emitter({
     required String forFile,
     PrefixingStrategy prefixingStrategy = PrefixingStrategy.indexed,
     required PathStrategy pathStrategy,
-  }) =>
-      DartEmitter(
-        allocator: CelestAllocator(
-          prefixingStrategy: prefixingStrategy,
-          pathStrategy: pathStrategy,
-          forFile: forFile,
-        ),
-        useNullSafetySyntax: true,
-        orderDirectives: true,
-      );
+  }) => DartEmitter(
+    allocator: CelestAllocator(
+      prefixingStrategy: prefixingStrategy,
+      pathStrategy: pathStrategy,
+      forFile: forFile,
+    ),
+    useNullSafetySyntax: true,
+    orderDirectives: true,
+  );
 
   static String rawEmit(
     Spec spec, {

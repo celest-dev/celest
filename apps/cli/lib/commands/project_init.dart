@@ -58,9 +58,7 @@ final class MigratedProject implements ConfigureState {
 }
 
 final class Initialized implements ConfigureState {
-  const Initialized({
-    required this.needsAnalyzerMigration,
-  });
+  const Initialized({required this.needsAnalyzerMigration});
 
   final bool needsAnalyzerMigration;
 }
@@ -68,23 +66,23 @@ final class Initialized implements ConfigureState {
 base mixin Configure on CelestCommand {
   abstract Progress? currentProgress;
 
-  static Never _throwNoProject() => throw const CliException(
+  static Never _throwNoProject() =>
+      throw const CliException(
         'No Celest project found in the current directory. '
         'To create a new project, run `celest init`.',
       );
 
-  String newProjectName({
-    String? defaultName,
-  }) {
+  String newProjectName({String? defaultName}) {
     if (defaultName != null && defaultName.startsWith('celest')) {
       defaultName = null;
     }
     defaultName ??= 'my_project';
     String? projectName;
     while (projectName == null) {
-      final input = dcli
-          .ask('Enter a name for your project', defaultValue: defaultName)
-          .trim();
+      final input =
+          dcli
+              .ask('Enter a name for your project', defaultValue: defaultName)
+              .trim();
       if (input.isEmpty) {
         cliLogger.err('Project name cannot be empty.');
         continue;
@@ -157,26 +155,26 @@ base mixin Configure on CelestCommand {
 
     final (celestDir, isExistingProject, parentProject) = switch ((
       projectFiles.any((f) => f.existsSync()),
-      pubspecFile.existsSync()
+      pubspecFile.existsSync(),
     )) {
       // We're inside the `celest` directory.
       (true, _) => (
-          currentDir,
-          true,
-          await ParentProject.load(currentDir.parent.path),
-        ),
+        currentDir,
+        true,
+        await ParentProject.load(currentDir.parent.path),
+      ),
 
       // We're inside a parent project.
       (false, true) => await run(() async {
-          final celestDir = fileSystem.directory(
-            p.join(currentDir.path, 'celest'),
-          );
-          return (
-            celestDir,
-            celestDir.existsSync(),
-            await ParentProject.load(currentDir.path),
-          );
-        }),
+        final celestDir = fileSystem.directory(
+          p.join(currentDir.path, 'celest'),
+        );
+        return (
+          celestDir,
+          celestDir.existsSync(),
+          await ParentProject.load(currentDir.path),
+        );
+      }),
 
       // We're inside a folder which is neither a Dart/Flutter app nor a
       // Celest project.
@@ -231,17 +229,17 @@ base mixin Configure on CelestCommand {
         // for the project which is unattached to any parent project, named
         // after the project.
         null when !currentDirIsEmpty => await run(() async {
-            final projectRoot = p.join(currentDir.path, projectName);
-            final projectDir = fileSystem.directory(projectRoot);
-            if (projectDir.existsSync() && !await projectDir.list().isEmpty) {
-              throw CliException(
-                'A directory named "$projectName" already exists. '
-                'Please choose a different name, or run this command from a '
-                'different directory.',
-              );
-            }
-            return projectRoot;
-          }),
+          final projectRoot = p.join(currentDir.path, projectName);
+          final projectDir = fileSystem.directory(projectRoot);
+          if (projectDir.existsSync() && !await projectDir.list().isEmpty) {
+            throw CliException(
+              'A directory named "$projectName" already exists. '
+              'Please choose a different name, or run this command from a '
+              'different directory.',
+            );
+          }
+          return projectRoot;
+        }),
 
         // Otherwise, we're in an empty directory, and can use it as the root.
         null => currentDir.path,
@@ -249,10 +247,7 @@ base mixin Configure on CelestCommand {
     }
 
     yield const Initializing();
-    await init(
-      projectRoot: projectRoot,
-      parentProject: parentProject,
-    );
+    await init(projectRoot: projectRoot, parentProject: parentProject);
 
     final postUpgrade = celestProject.cacheDb.needsProjectUpgrade;
     var needsAnalyzerMigration = false;
@@ -275,14 +270,11 @@ base mixin Configure on CelestCommand {
       );
       await (upgradePackages = _pubUpgrade());
       if (postUpgrade && parentProject != null) {
-        await processManager.run(
-          <String>[
-            Sdk.current.dart,
-            'fix',
-            '--apply',
-          ],
-          workingDirectory: parentProject.path,
-        );
+        await processManager.run(<String>[
+          Sdk.current.dart,
+          'fix',
+          '--apply',
+        ], workingDirectory: parentProject.path);
       }
       yield const MigratedProject();
     }
@@ -295,10 +287,7 @@ base mixin Configure on CelestCommand {
   // the dependencies in the lockfile are already up to date.
   Future<void> _pubUpgrade() async {
     final projectRoot = projectPaths.projectRoot;
-    await runPub(
-      action: PubAction.upgrade,
-      workingDirectory: projectRoot,
-    );
+    await runPub(action: PubAction.upgrade, workingDirectory: projectRoot);
     // Run serially to avoid `flutter pub` locks.
     if (celestProject.parentProject case final parentProject?) {
       await runPub(

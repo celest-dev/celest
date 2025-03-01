@@ -38,8 +38,10 @@ class ProjectMigrator {
       PubspecUpdater(projectRoot, parentProject, projectName),
       V1FolderStructure(projectRoot, projectName, parentProject),
       RemoveResourcesDartFile(projectRoot),
-      if (parentProject
-          case ParentProject(path: final appRoot, :final type)) ...[
+      if (parentProject case ParentProject(
+        path: final appRoot,
+        :final type,
+      )) ...[
         AddAnalyzerPlugin(projectRoot, appRoot),
         if (type == SdkType.flutter) MacOsEntitlements(projectRoot, appRoot),
       ],

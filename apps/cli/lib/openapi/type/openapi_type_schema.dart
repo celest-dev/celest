@@ -655,10 +655,7 @@ abstract class OpenApiFieldSchema
     required String name,
     required OpenApiTypeSchema schema,
   }) {
-    return _$OpenApiFieldSchema._(
-      name: name,
-      schema: schema,
-    );
+    return _$OpenApiFieldSchema._(name: name, schema: schema);
   }
 
   factory OpenApiFieldSchema.build([
@@ -787,8 +784,10 @@ abstract class OpenApiNullTypeSchema
 
 abstract class OpenApiSingleValueTypeSchema
     implements
-        Built<OpenApiSingleValueTypeSchema,
-            OpenApiSingleValueTypeSchemaBuilder>,
+        Built<
+          OpenApiSingleValueTypeSchema,
+          OpenApiSingleValueTypeSchemaBuilder
+        >,
         OpenApiTypeSchema {
   factory OpenApiSingleValueTypeSchema({
     String? ref,
@@ -973,8 +972,10 @@ abstract class OpenApiSumTypeSchema
 
 abstract class OpenApiDisjointUnionTypeSchema
     implements
-        Built<OpenApiDisjointUnionTypeSchema,
-            OpenApiDisjointUnionTypeSchemaBuilder>,
+        Built<
+          OpenApiDisjointUnionTypeSchema,
+          OpenApiDisjointUnionTypeSchemaBuilder
+        >,
         OpenApiTypeSchema {
   factory OpenApiDisjointUnionTypeSchema({
     String? name,

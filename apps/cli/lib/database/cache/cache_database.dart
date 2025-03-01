@@ -26,20 +26,16 @@ final class CacheDatabase extends _$CacheDatabase {
     required Completer<Database> rawDatabase,
     required bool verbose,
   }) : super(
-          _openConnection(
-            projectRoot,
-            verbose: verbose,
-            rawDatabase: rawDatabase,
-          ),
-        );
+         _openConnection(
+           projectRoot,
+           verbose: verbose,
+           rawDatabase: rawDatabase,
+         ),
+       );
 
   static Future<CacheDatabase> memory() async {
     final completer = Completer<Database>();
-    final db = CacheDatabase(
-      NativeDatabase.memory(
-        setup: _setup(completer),
-      ),
-    );
+    final db = CacheDatabase(NativeDatabase.memory(setup: _setup(completer)));
     await db.customSelect('SELECT 1').get();
     final rawDb = await completer.future;
     db.byteStore = CachingByteStore(rawDb);
@@ -57,12 +53,11 @@ final class CacheDatabase extends _$CacheDatabase {
       rawDatabase: rawCompleter,
     );
     final versionInfo = await database.getVersionInfo().getSingleOrNull();
-    if (versionInfo
-        case VersionInfoData(
-          :final dart,
-          :final flutter,
-          :final celest,
-        )) {
+    if (versionInfo case VersionInfoData(
+      :final dart,
+      :final flutter,
+      :final celest,
+    )) {
       final dartCacheVersion = semver.Version.parse(dart);
       final flutterCacheVersion = flutter?.let(semver.Version.parse);
       if (Sdk.current.version != dartCacheVersion ||
@@ -115,22 +110,25 @@ final class CacheDatabase extends _$CacheDatabase {
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
-      beforeOpen: (details) => _lock.withResource(() async {
-        await customStatement('PRAGMA foreign_keys = ON');
-        await customStatement('PRAGMA journal_mode = WAL');
-        await customStatement('PRAGMA busy_timeout = 5000');
-        await customStatement('PRAGMA synchronous = NORMAL');
-        await customStatement('PRAGMA mmap_size = 30000000000');
-        await customStatement('PRAGMA cache_size = 1000000000');
-        await customStatement('PRAGMA page_size = 32768');
-        await customStatement('PRAGMA temp_store = memory');
-      }),
-      onCreate: (m) => _lock.withResource(() async {
-        await m.createAll();
-      }),
-      onUpgrade: (m, from, to) => _lock.withResource(() async {
-        return stepByStep()(m, from, to);
-      }),
+      beforeOpen:
+          (details) => _lock.withResource(() async {
+            await customStatement('PRAGMA foreign_keys = ON');
+            await customStatement('PRAGMA journal_mode = WAL');
+            await customStatement('PRAGMA busy_timeout = 5000');
+            await customStatement('PRAGMA synchronous = NORMAL');
+            await customStatement('PRAGMA mmap_size = 30000000000');
+            await customStatement('PRAGMA cache_size = 1000000000');
+            await customStatement('PRAGMA page_size = 32768');
+            await customStatement('PRAGMA temp_store = memory');
+          }),
+      onCreate:
+          (m) => _lock.withResource(() async {
+            await m.createAll();
+          }),
+      onUpgrade:
+          (m, from, to) => _lock.withResource(() async {
+            return stepByStep()(m, from, to);
+          }),
     );
   }
 
@@ -160,19 +158,16 @@ final class CachingByteStore implements ByteStore {
       [] => null,
       [[final Uint8List content]] => content,
       _ => () {
-          _logger.finest('Unexpected result: $result');
-          return null;
-        }(),
+        _logger.finest('Unexpected result: $result');
+        return null;
+      }(),
     };
   }
 
   @override
   Uint8List putGet(String key, Uint8List bytes) {
     final result = _insertStmt.selectWith(
-      StatementParameters.named({
-        ':cache_key': key,
-        ':content': bytes,
-      }),
+      StatementParameters.named({':cache_key': key, ':content': bytes}),
     );
     return switch (result.rows) {
       [[final Uint8List content]] => content,

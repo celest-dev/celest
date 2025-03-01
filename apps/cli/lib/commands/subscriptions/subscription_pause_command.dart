@@ -55,8 +55,9 @@ final class SubscriptionPauseCommand extends CelestCommand with Authenticate {
     switch (response.subscription.whichState()) {
       case Subscription_State.paused:
         final message = switch (resumeTime) {
-          final resumeTime? => 'Your subscription has been paused until '
-              '${_prettyDateFormat.format(resumeTime)}.',
+          final resumeTime? =>
+            'Your subscription has been paused until '
+                '${_prettyDateFormat.format(resumeTime)}.',
           _ => 'Your subscription has been paused indefinitely.',
         };
         cliLogger.success(message);

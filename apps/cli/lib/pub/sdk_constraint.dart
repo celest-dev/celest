@@ -23,9 +23,10 @@ class SdkConstraint {
         constraint is VersionRange &&
         constraint.max == null &&
         defaultUpperBoundConstraint.allowsAny(constraint)) {
-      constraint = VersionConstraint.intersection(
-        [constraint, defaultUpperBoundConstraint],
-      );
+      constraint = VersionConstraint.intersection([
+        constraint,
+        defaultUpperBoundConstraint,
+      ]);
     }
     // If a package is null safe it should also be compatible with dart 3.
     // Therefore we rewrite a null-safety enabled constraint with the upper

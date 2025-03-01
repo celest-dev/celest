@@ -18,43 +18,39 @@ sealed class Verdict {
   List<VerdictReason> get reasons;
 
   Verdict operator &(Verdict other) => switch ((this, other)) {
-        (
-          VerdictYes(
-            primarySpec: final primarySpecThis,
-            additionalSpecs: final additionalSpecsThis
-          ),
-          VerdictYes(
-            primarySpec: final primarySpecOther,
-            additionalSpecs: final additionalSpecsOther
-          )
-        ) =>
-          Verdict.yes(
-            primarySpec: primarySpecThis,
-            additionalSpecs: {
-              if (primarySpecOther != null) primarySpecOther,
-              ...additionalSpecsThis,
-              ...additionalSpecsOther,
-            },
-          ),
-        (VerdictYes(), final VerdictNo no) ||
-        (final VerdictNo no, VerdictYes()) =>
-          no,
-        (
-          VerdictNo(reasons: final reasonsThis),
-          VerdictNo(reasons: final reasonsOther)
-        ) =>
-          VerdictNo([...reasonsThis, ...reasonsOther]),
-      };
+    (
+      VerdictYes(
+        primarySpec: final primarySpecThis,
+        additionalSpecs: final additionalSpecsThis,
+      ),
+      VerdictYes(
+        primarySpec: final primarySpecOther,
+        additionalSpecs: final additionalSpecsOther,
+      ),
+    ) =>
+      Verdict.yes(
+        primarySpec: primarySpecThis,
+        additionalSpecs: {
+          if (primarySpecOther != null) primarySpecOther,
+          ...additionalSpecsThis,
+          ...additionalSpecsOther,
+        },
+      ),
+    (VerdictYes(), final VerdictNo no) ||
+    (final VerdictNo no, VerdictYes()) => no,
+    (
+      VerdictNo(reasons: final reasonsThis),
+      VerdictNo(reasons: final reasonsOther),
+    ) =>
+      VerdictNo([...reasonsThis, ...reasonsOther]),
+  };
 
   Verdict withPrimarySpec(SerializationSpec spec);
   Verdict withAdditionalSpec(SerializationSpec spec);
 }
 
 final class VerdictYes extends Verdict {
-  const VerdictYes({
-    this.primarySpec,
-    this.additionalSpecs = const {},
-  });
+  const VerdictYes({this.primarySpec, this.additionalSpecs = const {}});
 
   @override
   bool get isSerializable => true;
@@ -63,19 +59,14 @@ final class VerdictYes extends Verdict {
   final Set<SerializationSpec> additionalSpecs;
 
   @override
-  Verdict withPrimarySpec(SerializationSpec spec) => Verdict.yes(
-        primarySpec: spec,
-        additionalSpecs: additionalSpecs,
-      );
+  Verdict withPrimarySpec(SerializationSpec spec) =>
+      Verdict.yes(primarySpec: spec, additionalSpecs: additionalSpecs);
 
   @override
   Verdict withAdditionalSpec(SerializationSpec spec) => Verdict.yes(
-        primarySpec: primarySpec,
-        additionalSpecs: {
-          ...additionalSpecs,
-          spec,
-        },
-      );
+    primarySpec: primarySpec,
+    additionalSpecs: {...additionalSpecs, spec},
+  );
 
   @override
   List<VerdictReason> get reasons => const [];
@@ -89,12 +80,12 @@ final class VerdictNo extends Verdict {
     FileSpan? location,
     bool isBecauseOfFlutter = false,
   }) : _reasons = [
-          VerdictReason(
-            reason,
-            location: location,
-            isBecauseOfFlutter: isBecauseOfFlutter,
-          ),
-        ];
+         VerdictReason(
+           reason,
+           location: location,
+           isBecauseOfFlutter: isBecauseOfFlutter,
+         ),
+       ];
 
   @override
   bool get isSerializable {

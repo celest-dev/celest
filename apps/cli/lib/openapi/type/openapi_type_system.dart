@@ -599,12 +599,16 @@ final class OpenApiTypeSystem {
     final T1_interface = T1 as OpenApiInterfaceType;
     final T2_interface = T2 as OpenApiInterfaceType;
 
-    for (var T1_super = T1_interface.superType;
-        T1_super != null;
-        T1_super = T1_super.superType) {
-      for (var T2_super = T2_interface.superType;
-          T2_super != null;
-          T2_super = T2_super.superType) {
+    for (
+      var T1_super = T1_interface.superType;
+      T1_super != null;
+      T1_super = T1_super.superType
+    ) {
+      for (
+        var T2_super = T2_interface.superType;
+        T2_super != null;
+        T2_super = T2_super.superType
+      ) {
         if (T1_super == T2_super) {
           return T1_super;
         }

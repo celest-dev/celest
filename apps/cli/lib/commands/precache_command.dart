@@ -31,23 +31,17 @@ final class PrecacheCommand extends CelestCommand {
     final projectRoot =
         argResults!.rest.firstOrNull ?? fileSystem.currentDirectory.path;
 
-    await init(
-      projectRoot: projectRoot,
-    );
+    await init(projectRoot: projectRoot);
 
     logger.fine('Precaching assets for project: $projectRoot');
     final operations = <Future<void>>[];
 
     operations.add(
-      performance.trace(
-        'CelestAnalyzer',
-        'warmUp',
-        () async {
-          logger.fine('Warming up Dart Analyzer');
-          await _warmUp();
-          logger.fine('Dart Analyzer warmed up');
-        },
-      ),
+      performance.trace('CelestAnalyzer', 'warmUp', () async {
+        logger.fine('Warming up Dart Analyzer');
+        await _warmUp();
+        logger.fine('Dart Analyzer warmed up');
+      }),
     );
 
     operations.add(
@@ -61,15 +55,11 @@ final class PrecacheCommand extends CelestCommand {
     );
 
     operations.add(
-      performance.trace(
-        'Celest',
-        'loadSqlite3',
-        () async {
-          logger.fine('Precaching sqlite3');
-          final path = await loadSqlite3(logger: logger);
-          logger.fine('Sqlite3 precached at: $path');
-        },
-      ),
+      performance.trace('Celest', 'loadSqlite3', () async {
+        logger.fine('Precaching sqlite3');
+        final path = await loadSqlite3(logger: logger);
+        logger.fine('Sqlite3 precached at: $path');
+      }),
     );
 
     try {

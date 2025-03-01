@@ -21,20 +21,15 @@ final class ClientCodeGenerator {
   final CelestProjectUris projectUris;
 
   CodeOutputs generate() {
-    final clientDeps = CodegenDependencies(
-      rootDir: projectPaths.clientRoot,
-    );
-    final outputs = runZoned(
-      () {
-        final generator = ClientGenerator(
-          project: project,
-          resolvedProject: resolvedProject,
-          projectUris: projectUris,
-        );
-        return generator.generate();
-      },
-      zoneValues: {CodegenDependencies: clientDeps},
-    );
+    final clientDeps = CodegenDependencies(rootDir: projectPaths.clientRoot);
+    final outputs = runZoned(() {
+      final generator = ClientGenerator(
+        project: project,
+        resolvedProject: resolvedProject,
+        projectUris: projectUris,
+      );
+      return generator.generate();
+    }, zoneValues: {CodegenDependencies: clientDeps});
     return CodeOutputs(
       outputs.map(
         (path, library) => MapEntry(
@@ -53,9 +48,7 @@ final class ClientCodeGenerator {
 }
 
 final class CodegenDependencies extends DelegatingSet<String> {
-  CodegenDependencies({
-    required this.rootDir,
-  }) : super({});
+  CodegenDependencies({required this.rootDir}) : super({});
 
   final String rootDir;
 

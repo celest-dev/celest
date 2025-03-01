@@ -13,18 +13,13 @@ import 'package:pub_semver/pub_semver.dart';
 
 /// Renders an OpenAPI V3 document for a Celest [project].
 class OpenApiRenderer {
-  OpenApiRenderer({
-    required this.project,
-    required this.resolvedProject,
-  });
+  OpenApiRenderer({required this.project, required this.resolvedProject});
 
   final ast.Project project;
   final ast.ResolvedProject resolvedProject;
 
   OpenApiDocument render() {
-    final renderer = _OpenApiRenderer(
-      resolved: resolvedProject,
-    );
+    final renderer = _OpenApiRenderer(resolved: resolvedProject);
     project.acceptWithArg(renderer, '#');
     return renderer._builder.build();
   }
@@ -36,15 +31,14 @@ class OpenApiRenderer {
 }
 
 final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
-  _OpenApiRenderer({
-    required this.resolved,
-  });
+  _OpenApiRenderer({required this.resolved});
 
   final ast.ResolvedProject resolved;
-  final _builder = OpenApiDocumentBuilder()
-    // 3.1 seems to have poor support in the ecosystem and 3.0.3 is the latest
-    // revision of the `3.0` spec.
-    ..version = Version.parse('3.0.3');
+  final _builder =
+      OpenApiDocumentBuilder()
+        // 3.1 seems to have poor support in the ecosystem and 3.0.3 is the latest
+        // revision of the `3.0` spec.
+        ..version = Version.parse('3.0.3');
 
   static final _applicationJson = MediaType.parse('application/json');
 
@@ -138,8 +132,9 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
     final operationId = '${function.apiName}.${function.name}';
     final operationType = resolvedFunction.operationType;
 
-    final clientParameters =
-        function.parameters.where((p) => p.includeInClient);
+    final clientParameters = function.parameters.where(
+      (p) => p.includeInClient,
+    );
     final bodyParameters = Set.of(clientParameters);
     final headerParameters = <String, ast.CloudFunctionParameter>{};
     final queryParameters = <String, ast.CloudFunctionParameter>{};
@@ -254,11 +249,7 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
       component: OpenApiResponse(
         statusCode: successStatusCode,
         description: 'Successful response',
-        content: {
-          _applicationJson: OpenApiMediaType(
-            schema: responseType,
-          ),
-        },
+        content: {_applicationJson: OpenApiMediaType(schema: responseType)},
       ),
     );
 
@@ -278,34 +269,35 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
       final responseType = switch (exceptionTypes) {
         [final singleType] => _exceptionType(singleType, responseRef),
         final types => OpenApiSchema(
+          ref: responseRef,
+          type: const ItemValue(JsonType.object),
+          nullable: false,
+          oneOf: [
+            for (final type in types)
+              OpenApiComponentOrRef.component(
+                component: _exceptionType(type, responseRef),
+              ),
+          ],
+          discriminator: OpenApiDiscriminator(
             ref: responseRef,
-            type: const ItemValue(JsonType.object),
-            nullable: false,
-            oneOf: [
-              for (final type in types)
-                OpenApiComponentOrRef.component(
-                  component: _exceptionType(type, responseRef),
-                ),
-            ],
-            discriminator: OpenApiDiscriminator(
-              ref: responseRef,
-              propertyName: 'code',
-              mapping: {
-                for (final type in types.map(
-                  (it) => it.externalUri(resolved.projectId)!,
-                ))
-                  type: '#/components/schemas/$type',
-              },
-            ),
+            propertyName: 'code',
+            mapping: {
+              for (final type in types.map(
+                (it) => it.externalUri(resolved.projectId)!,
+              ))
+                type: '#/components/schemas/$type',
+            },
           ),
+        ),
       };
       _builder.components.schemas.updateValue(
         responseTypeName,
         (_) => throw StateError('Duplicate schema: $responseTypeName'),
         ifAbsent: () => responseType,
       );
-      exceptionalResponses[StatusCode(statusCode)] =
-          OpenApiComponentOrRef.component(
+      exceptionalResponses[StatusCode(
+        statusCode,
+      )] = OpenApiComponentOrRef.component(
         ref: responseRef,
         component: OpenApiResponse(
           statusCode: StatusCode(statusCode),
@@ -418,10 +410,7 @@ final class _OpenApiRenderer extends ast.AstVisitorWithArg<void, String> {
   ) {}
 
   @override
-  void visitVariable(
-    ast.Variable variable,
-    covariant String context,
-  ) {}
+  void visitVariable(ast.Variable variable, covariant String context) {}
 
   @override
   void visitSecret(ast.Secret secret, covariant String context) {}

@@ -9,33 +9,38 @@ final class AddAnalyzerPlugin extends ProjectMigration {
   final String appRoot;
 
   @override
-  bool get needsMigration => !fileSystem
-      .directory(appRoot)
-      .childFile('analysis_options.yaml')
-      .readAsStringSync()
-      .contains('celest');
+  bool get needsMigration =>
+      !fileSystem
+          .directory(appRoot)
+          .childFile('analysis_options.yaml')
+          .readAsStringSync()
+          .contains('celest');
 
   @override
   String get name => 'core.project.add_analyzer_plugin';
 
   @override
   Future<ProjectMigrationResult> create() async {
-    final parentAnalysisOptionsFile =
-        fileSystem.directory(appRoot).childFile('analysis_options.yaml');
+    final parentAnalysisOptionsFile = fileSystem
+        .directory(appRoot)
+        .childFile('analysis_options.yaml');
     if (parentAnalysisOptionsFile.existsSync()) {
       final editor = YamlEditor(await parentAnalysisOptionsFile.readAsString());
 
       var hasAnalyzer = true;
-      final analyzer = editor.parseAt(
-        ['analyzer'],
-        orElse: () {
-          hasAnalyzer = false;
-          return YamlMap();
-        },
-      ) as YamlMap;
-      final existingPlugins = analyzer.containsKey('plugins')
-          ? analyzer.nodes['plugins'] as YamlList
-          : null;
+      final analyzer =
+          editor.parseAt(
+                ['analyzer'],
+                orElse: () {
+                  hasAnalyzer = false;
+                  return YamlMap();
+                },
+              )
+              as YamlMap;
+      final existingPlugins =
+          analyzer.containsKey('plugins')
+              ? analyzer.nodes['plugins'] as YamlList
+              : null;
       final hasPlugins = existingPlugins != null;
       if ((existingPlugins ?? []).contains('celest')) {
         return const ProjectMigrationSuccess();

@@ -18,16 +18,16 @@ final class CreateOrganizationCommand extends CloudCreateCommand<Organization> {
 
   @override
   // ignore: overridden_fields
-  late final ArgParser argParser = super.argParser
-    ..addOption(
-      'primary-region',
-      mandatory: true,
-      allowed: [
-        for (final region in Region.values)
-          if (region != Region.REGION_UNSPECIFIED) region.name,
-      ],
-      help: 'The primary region of the organization',
-    );
+  late final ArgParser argParser =
+      super.argParser..addOption(
+        'primary-region',
+        mandatory: true,
+        allowed: [
+          for (final region in Region.values)
+            if (region != Region.REGION_UNSPECIFIED) region.name,
+        ],
+        help: 'The primary region of the organization',
+      );
 
   @override
   Organization createEmptyResource() => Organization();

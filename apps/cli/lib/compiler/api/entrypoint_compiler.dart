@@ -12,24 +12,20 @@ import 'package:crypto/crypto.dart';
 import 'package:logging/logging.dart';
 
 final class EntrypointDefinition {
-  EntrypointDefinition({
-    required this.functionName,
-    required this.apiName,
-  });
+  EntrypointDefinition({required this.functionName, required this.apiName});
 
   final String functionName;
   final String apiName;
 
   String get name => '$apiName/$functionName';
-  late final String path =
-      projectPaths.functionEntrypoint(apiName, functionName);
+  late final String path = projectPaths.functionEntrypoint(
+    apiName,
+    functionName,
+  );
 
   @override
-  String toString() => prettyPrintJson({
-        'name': name,
-        'apiName': apiName,
-        'path': path,
-      });
+  String toString() =>
+      prettyPrintJson({'name': name, 'apiName': apiName, 'path': path});
 }
 
 final class EntrypointResult {
@@ -45,9 +41,9 @@ final class EntrypointResult {
 
   @override
   String toString() => prettyPrintJson({
-        'outputDillPath': outputDillPath,
-        'outputDillSha256': outputDillDigest.toString(),
-      });
+    'outputDillPath': outputDillPath,
+    'outputDillSha256': outputDillDigest.toString(),
+  });
 }
 
 final class EntrypointCompiler {
@@ -72,26 +68,29 @@ final class EntrypointCompiler {
         '$entrypointPath',
       );
     }
-    final pathWithoutDart =
-        entrypointPath.substring(0, entrypointPath.length - 5);
+    final pathWithoutDart = entrypointPath.substring(
+      0,
+      entrypointPath.length - 5,
+    );
     final packageConfig = await transformPackageConfig(
       packageConfigPath: projectPaths.packagesConfig,
       fromRoot: projectPaths.projectRoot,
       toRoot: projectPaths.outputsDir,
     );
     final outputPath = '$pathWithoutDart.dill';
-    final (target, platformDill, sdkRoot) =
-        switch (resolvedProject.sdkConfig.targetSdk) {
+    final (target, platformDill, sdkRoot) = switch (resolvedProject
+        .sdkConfig
+        .targetSdk) {
       SdkType.flutter => (
-          'flutter',
-          Sdk.current.flutterPlatformDill!,
-          Sdk.current.flutterPatchedSdk!
-        ),
+        'flutter',
+        Sdk.current.flutterPlatformDill!,
+        Sdk.current.flutterPatchedSdk!,
+      ),
       SdkType.dart => (
-          'vm',
-          Sdk.current.vmPlatformDill,
-          p.join(Sdk.current.sdkPath, 'lib', '_internal'),
-        ),
+        'vm',
+        Sdk.current.vmPlatformDill,
+        p.join(Sdk.current.sdkPath, 'lib', '_internal'),
+      ),
       final unknown => unreachable('Unknown SDK type: $unknown'),
     };
 
@@ -121,11 +120,8 @@ final class EntrypointCompiler {
       stdoutEncoding: utf8,
       stderrEncoding: utf8,
     );
-    final ProcessResult(
-      :exitCode,
-      :stdout as String,
-      :stderr as String,
-    ) = result;
+    final ProcessResult(:exitCode, :stdout as String, :stderr as String) =
+        result;
     logger.fine('Compilation finished with status $exitCode');
     if (exitCode != 0) {
       throw ProcessException(
@@ -138,9 +134,7 @@ final class EntrypointCompiler {
     logger.finer('Compilation succeeded');
 
     final outputDill = await fileSystem.file(outputPath).readAsBytes();
-    final outputDillDigest = await _computeMd5(
-      outputDill.asUnmodifiableView(),
-    );
+    final outputDillDigest = await _computeMd5(outputDill.asUnmodifiableView());
     return EntrypointResult(
       outputDillPath: outputPath,
       outputDill: outputDill,

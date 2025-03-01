@@ -1,18 +1,14 @@
 import 'package:celest_cli/src/context.dart';
 import 'package:source_span/source_span.dart';
 
-typedef AnalysisErrorReporter = void Function(
-  String message, {
-  AnalysisErrorSeverity? severity,
-  FileSpan? location,
-});
+typedef AnalysisErrorReporter =
+    void Function(
+      String message, {
+      AnalysisErrorSeverity? severity,
+      FileSpan? location,
+    });
 
-enum AnalysisErrorSeverity {
-  error,
-  warning,
-  info,
-  debug,
-}
+enum AnalysisErrorSeverity { error, warning, info, debug }
 
 final class CelestAnalysisError {
   const CelestAnalysisError({

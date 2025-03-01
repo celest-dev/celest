@@ -4,15 +4,22 @@ import 'package:meta/meta.dart';
 /// Stocks the user has.
 @immutable
 class Stock {
-  final String ticker;
-  final int howManyShares;
-  final double averagePrice;
-
-  Stock(
+  const Stock(
     this.ticker, {
     required this.howManyShares,
     required this.averagePrice,
   });
+
+  factory Stock.fromJson(Json json) {
+    return Stock(
+      json.asString('ticker')!,
+      howManyShares: json.asInt('howManyShares')!,
+      averagePrice: json.asDouble('averagePrice')!,
+    );
+  }
+  final String ticker;
+  final int howManyShares;
+  final double averagePrice;
 
   double get costBasis => howManyShares * averagePrice;
 
@@ -26,14 +33,6 @@ class Stock {
         'howManyShares': howManyShares,
         'averagePrice': averagePrice,
       };
-
-  factory Stock.fromJson(Json json) {
-    return Stock(
-      json.asString('ticker')!,
-      howManyShares: json.asInt('howManyShares')!,
-      averagePrice: json.asDouble('averagePrice')!,
-    );
-  }
 
   @override
   bool operator ==(Object other) =>

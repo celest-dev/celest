@@ -24,41 +24,31 @@ void main() {
     });
 
     setUp(() {
-      return initTests(
-        processManager: MockProcessManager(),
-      );
+      return initTests(processManager: MockProcessManager());
     });
 
     test('removes local storage', () async {
       ctx.fileSystem = MemoryFileSystem.test();
-      await init(
-        projectRoot: ctx.fileSystem.systemTempDirectory.path,
-      );
+      await init(projectRoot: ctx.fileSystem.systemTempDirectory.path);
 
       await celestProject.config.settings.setOrganizationId('org-id');
 
-      expect(
-        await celestProject.config.settings.getOrganizationId(),
-        'org-id',
-      );
+      expect(await celestProject.config.settings.getOrganizationId(), 'org-id');
 
       await const CelestUninstaller().uninstall();
 
-      expect(
-        await celestProject.config.settings.getOrganizationId(),
-        isNull,
-      );
+      expect(await celestProject.config.settings.getOrganizationId(), isNull);
     });
 
     group('uninstall AOT', () {
       test('windows', () async {
-        ctx.fileSystem = MemoryFileSystem.test(
-          style: FileSystemStyle.windows,
-        );
+        ctx.fileSystem = MemoryFileSystem.test(style: FileSystemStyle.windows);
 
         const appData = r'C:\Users\test\AppData\Local\Microsoft\WindowsApps';
-        final installFolder =
-            p.windows.join(appData, 'Celest.CLI_6580ymbmddxye');
+        final installFolder = p.windows.join(
+          appData,
+          'Celest.CLI_6580ymbmddxye',
+        );
         ctx.platform = FakePlatform(
           operatingSystem: 'windows',
           executable: p.windows.join(appData, 'celest.exe'),
@@ -67,13 +57,12 @@ void main() {
             windows: true,
           ),
           resolvedExecutable: p.windows.join(installFolder, 'celest.exe'),
-          environment: {
-            'APPDATA': ctx.fileSystem.systemTempDirectory.path,
-          },
+          environment: {'APPDATA': ctx.fileSystem.systemTempDirectory.path},
         );
 
-        final configDir =
-            ctx.fileSystem.systemTempDirectory.childDirectory('Celest');
+        final configDir = ctx.fileSystem.systemTempDirectory.childDirectory(
+          'Celest',
+        );
         configDir.createSync(recursive: true);
 
         ctx.fileSystem
@@ -86,9 +75,7 @@ void main() {
             .childDirectory('WindowsApps')
             .createSync(recursive: true);
 
-        await init(
-          projectRoot: ctx.fileSystem.systemTempDirectory.path,
-        );
+        await init(projectRoot: ctx.fileSystem.systemTempDirectory.path);
 
         expect(
           p.windows.equals(configDir.path, celestProject.config.configDir.path),
@@ -128,9 +115,7 @@ void main() {
       });
 
       test('macos', () async {
-        ctx.fileSystem = MemoryFileSystem.test(
-          style: FileSystemStyle.posix,
-        );
+        ctx.fileSystem = MemoryFileSystem.test(style: FileSystemStyle.posix);
         final configDir = ctx.fileSystem.systemTempDirectory
             .childDirectory('Library')
             .childDirectory('Application Support')
@@ -154,14 +139,10 @@ void main() {
             windows: false,
           ),
           resolvedExecutable: '/opt/celest/celest.app/Contents/MacOS/celest',
-          environment: {
-            'HOME': ctx.fileSystem.systemTempDirectory.path,
-          },
+          environment: {'HOME': ctx.fileSystem.systemTempDirectory.path},
         );
 
-        await init(
-          projectRoot: ctx.fileSystem.systemTempDirectory.path,
-        );
+        await init(projectRoot: ctx.fileSystem.systemTempDirectory.path);
 
         const uninstallScript =
             "[[ -d '/opt/celest' ]] && rm -r '/opt/celest'; "
@@ -203,9 +184,7 @@ void main() {
 
       group('linux', () {
         test('deb installation', () async {
-          ctx.fileSystem = MemoryFileSystem.test(
-            style: FileSystemStyle.posix,
-          );
+          ctx.fileSystem = MemoryFileSystem.test(style: FileSystemStyle.posix);
           final configDir = ctx.fileSystem.systemTempDirectory
               .childDirectory('.config')
               .childDirectory('Celest');
@@ -213,27 +192,16 @@ void main() {
           ctx.platform = FakePlatform(
             operatingSystem: 'linux',
             executable: 'celest',
-            script: Uri.file(
-              '/opt/celest/celest',
-              windows: false,
-            ),
+            script: Uri.file('/opt/celest/celest', windows: false),
             resolvedExecutable: '/opt/celest/celest',
-            environment: {
-              'HOME': ctx.fileSystem.systemTempDirectory.path,
-            },
+            environment: {'HOME': ctx.fileSystem.systemTempDirectory.path},
           );
 
-          await init(
-            projectRoot: ctx.fileSystem.systemTempDirectory.path,
-          );
+          await init(projectRoot: ctx.fileSystem.systemTempDirectory.path);
 
           when(
             () => ctx.processManager.run(
-              [
-                'dpkg',
-                '-S',
-                '/opt/celest/celest',
-              ],
+              ['dpkg', '-S', '/opt/celest/celest'],
               stdoutEncoding: any(named: 'stdoutEncoding'),
               stderrEncoding: any(named: 'stderrEncoding'),
             ),
@@ -243,19 +211,14 @@ void main() {
 
           final purgeProcess = MockProcess();
           when(
-            () => ctx.processManager.start(
-              [
-                'sudo',
-                'dpkg',
-                '--purge',
-                'celest',
-              ],
-              mode: any(named: 'mode'),
-            ),
+            () => ctx.processManager.start([
+              'sudo',
+              'dpkg',
+              '--purge',
+              'celest',
+            ], mode: any(named: 'mode')),
           ).thenAnswer((_) async => purgeProcess);
-          when(
-            () => purgeProcess.exitCode,
-          ).thenAnswer((_) async => 0);
+          when(() => purgeProcess.exitCode).thenAnswer((_) async => 0);
 
           expect(configDir.existsSync(), isTrue);
 
@@ -264,23 +227,18 @@ void main() {
           expect(configDir.existsSync(), isFalse);
 
           verify(
-            () => ctx.processManager.start(
-              [
-                'sudo',
-                'dpkg',
-                '--purge',
-                'celest',
-              ],
-              mode: any(named: 'mode'),
-            ),
+            () => ctx.processManager.start([
+              'sudo',
+              'dpkg',
+              '--purge',
+              'celest',
+            ], mode: any(named: 'mode')),
           ).called(1);
           verify(() => purgeProcess.exitCode).called(1);
         });
 
         test('zip installation', () async {
-          ctx.fileSystem = MemoryFileSystem.test(
-            style: FileSystemStyle.posix,
-          );
+          ctx.fileSystem = MemoryFileSystem.test(style: FileSystemStyle.posix);
           final configDir = ctx.fileSystem.systemTempDirectory
               .childDirectory('.config')
               .childDirectory('Celest');
@@ -288,27 +246,16 @@ void main() {
           ctx.platform = FakePlatform(
             operatingSystem: 'linux',
             executable: 'celest',
-            script: Uri.file(
-              '/opt/celest/celest',
-              windows: false,
-            ),
+            script: Uri.file('/opt/celest/celest', windows: false),
             resolvedExecutable: '/opt/celest/celest',
-            environment: {
-              'HOME': ctx.fileSystem.systemTempDirectory.path,
-            },
+            environment: {'HOME': ctx.fileSystem.systemTempDirectory.path},
           );
 
-          await init(
-            projectRoot: ctx.fileSystem.systemTempDirectory.path,
-          );
+          await init(projectRoot: ctx.fileSystem.systemTempDirectory.path);
 
           when(
             () => ctx.processManager.run(
-              [
-                'dpkg',
-                '-S',
-                '/opt/celest/celest',
-              ],
+              ['dpkg', '-S', '/opt/celest/celest'],
               stdoutEncoding: any(named: 'stdoutEncoding'),
               stderrEncoding: any(named: 'stderrEncoding'),
             ),
@@ -321,15 +268,12 @@ void main() {
           expect(configDir.existsSync(), isFalse);
 
           verifyNever(
-            () => ctx.processManager.start(
-              [
-                'sudo',
-                'dpkg',
-                '--purge',
-                'celest',
-              ],
-              mode: any(named: 'mode'),
-            ),
+            () => ctx.processManager.start([
+              'sudo',
+              'dpkg',
+              '--purge',
+              'celest',
+            ], mode: any(named: 'mode')),
           );
         });
       });

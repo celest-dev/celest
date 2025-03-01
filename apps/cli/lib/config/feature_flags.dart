@@ -5,15 +5,15 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 
 final class FeatureFlags {
-  FeatureFlags._({
-    required Version runtimeVersion,
-  }) : _runtimeVersion = runtimeVersion;
+  FeatureFlags._({required Version runtimeVersion})
+    : _runtimeVersion = runtimeVersion;
 
   static Future<FeatureFlags> load() async {
     final packageConfigFile = fileSystem.file(projectPaths.packagesConfig);
     final packageConfig = await loadPackageConfig(packageConfigFile);
-    final celestRuntime = packageConfig.packages
-        .firstWhere((package) => package.name == 'celest');
+    final celestRuntime = packageConfig.packages.firstWhere(
+      (package) => package.name == 'celest',
+    );
     final celestRuntimeRoot = celestRuntime.root;
     final celestRuntimePubspec = Pubspec.parse(
       await fileSystem
@@ -21,9 +21,7 @@ final class FeatureFlags {
           .readAsString(),
     );
     final runtimeVersion = celestRuntimePubspec.version!;
-    return FeatureFlags._(
-      runtimeVersion: runtimeVersion,
-    );
+    return FeatureFlags._(runtimeVersion: runtimeVersion);
   }
 
   final Version _runtimeVersion;
@@ -42,9 +40,7 @@ final class FeatureFlags {
     }
   }
 
-  List<FeatureFlag> get allFlags => [
-        streaming,
-      ];
+  List<FeatureFlag> get allFlags => [streaming];
 }
 
 final class FeatureFlag {
