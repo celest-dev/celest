@@ -17,7 +17,12 @@ Future<QueryExecutor> localExecutor({
   String? path,
 }) async {
   if (path == null) {
-    final packageConfig = await Isolate.packageConfig;
+    Uri? packageConfig;
+    try {
+      packageConfig = await Isolate.packageConfig;
+    } on Object {
+      // Not available in all environments.
+    }
     if (packageConfig == null) {
       _logger.warning(
         'Failed to determine package config path. '
