@@ -126,7 +126,9 @@ dependencies:
 
     addConstraints(dependencies, DependencyType.dependency);
     addConstraints(devDependencies, DependencyType.devDependency);
-    addConstraints(dependencyOverrides, DependencyType.dependencyOverride);
+    if (dependencyOverrides.isNotEmpty) {
+      addConstraints(dependencyOverrides, DependencyType.dependencyOverride);
+    }
 
     return editor.toString();
   }

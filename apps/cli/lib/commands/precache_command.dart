@@ -57,8 +57,7 @@ final class PrecacheCommand extends CelestCommand {
     operations.add(
       performance.trace('Celest', 'loadSqlite3', () async {
         logger.fine('Precaching sqlite3');
-        final path = await loadSqlite3(logger: logger);
-        logger.fine('Sqlite3 precached at: $path');
+        await loadSqlite3(logger: logger);
       }),
     );
 

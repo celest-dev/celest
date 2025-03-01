@@ -64,7 +64,7 @@ final class PubCache {
     if (cachePath == null) {
       return null;
     }
-    final packageDir = fileSystem
+    final packageDir = localFileSystem
         .directory(cachePath)
         .childDirectory('hosted')
         .childDirectory('pub.dev');
@@ -144,7 +144,7 @@ final class PubCache {
       return 0;
     }
     _logger.finest('Pub cache found at $cachePath');
-    final cacheDir = fileSystem.directory(cachePath);
+    final cacheDir = localFileSystem.directory(cachePath);
     if (!cacheDir.existsSync()) {
       if (throwOnError) {
         throw Exception('No pub cache found at $cachePath.');

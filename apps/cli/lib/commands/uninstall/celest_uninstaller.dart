@@ -27,11 +27,7 @@ class CelestUninstaller {
   }
 
   Future<void> removeConfig() async {
-    final configDir = fileSystem.directory(projectPaths.celestConfig);
-    logger.fine('Removing Celest config dir: $configDir');
-    if (await configDir.exists()) {
-      await configDir.delete(recursive: true);
-    }
+    await celestProject.config.delete();
     storage.clear();
     secureStorage.clear();
   }

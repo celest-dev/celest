@@ -7,7 +7,7 @@ import 'package:logging/logging.dart';
 import 'package:native_storage/native_storage.dart';
 
 final class CelestConfig {
-  CelestConfig._(this.configDir, {required this.settings});
+  CelestConfig._(this.configDir);
 
   static final Logger logger = Logger('CelestConfig');
 
@@ -18,16 +18,15 @@ final class CelestConfig {
       await configHome.create(recursive: true);
     }
 
-    final settings = CelestConfigValues(storage.isolated);
     // Migrate the old config JSON to local storage if it exists.
     final configJson = configHome.childFile('config.json');
-    if (await configJson.exists()) {
+    if (configJson.existsSync()) {
       logger.finest('Migrating configuration to local storage');
       final config =
           jsonDecode(await configJson.readAsString()) as Map<String, Object?>;
       await Future.wait(
         config.entries.map(
-          (entry) => settings.write(entry.key, entry.value.toString()),
+          (entry) => _settings.write(entry.key, entry.value.toString()),
         ),
       );
       await configJson.delete();
@@ -35,11 +34,21 @@ final class CelestConfig {
     } else {
       logger.finest('Configuration already migrated to local storage');
     }
-    return CelestConfig._(configHome, settings: settings);
+    return CelestConfig._(configHome);
   }
 
+  static CelestConfigValues get _settings =>
+      CelestConfigValues(storage.isolated);
   final Directory configDir;
-  final CelestConfigValues settings;
+  CelestConfigValues get settings => _settings;
+
+  Future<void> delete() async {
+    await _settings.clear();
+    if (await configDir.exists()) {
+      logger.fine('Removing Celest config dir: $configDir');
+      await configDir.delete(recursive: true);
+    }
+  }
 
   @override
   String toString() => 'CelestConfig: $configDir';

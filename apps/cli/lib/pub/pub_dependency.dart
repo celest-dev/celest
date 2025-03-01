@@ -53,7 +53,7 @@ extension VersionConstraintToYaml on VersionConstraint {
   YamlScalar toYaml() => YamlScalar.wrap(
     toString(),
     style: switch (this) {
-      CompatibleWithVersionRange() => ScalarStyle.PLAIN,
+      CompatibleWithVersionRange() || Version() => ScalarStyle.PLAIN,
       VersionRange() => ScalarStyle.SINGLE_QUOTED,
       _ => ScalarStyle.PLAIN,
     },

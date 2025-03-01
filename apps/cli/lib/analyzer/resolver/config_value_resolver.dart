@@ -93,7 +93,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
           (
             String dartName,
             Iterable<String> docs,
-            Future<(String, String?, FileSpan)?> resolution,
+            Future<(String, String?, FileSpan?)?> resolution,
           )
         >[];
     for (final variable in topLevelDefinitions) {
@@ -103,7 +103,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
         resolveVariable(
           variable: variable,
           value: variable.computeConstantValue(),
-          location: variable.sourceLocation!,
+          location: variable.sourceLocation,
         ),
       ));
     }
@@ -119,7 +119,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
           dartName: topLevelResolutions[index].$1,
           docs: topLevelResolutions[index].$2,
           value: value,
-          location: location,
+          location: location ?? SourceFile.fromString('').span(0),
         );
       }),
     );
@@ -128,7 +128,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
         references
             .map((ref) => ref.enclosingElement)
             .whereType<ParameterElement>();
-    final parameterResolutions = <Future<(String, String?, FileSpan)?>>[];
+    final parameterResolutions = <Future<(String, String?, FileSpan?)?>>[];
     for (final parameter in parameters) {
       for (final metadata in parameter.metadata) {
         _logger.finer(
@@ -136,7 +136,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
           'type=${metadata.element?.runtimeType}',
         );
         final element = metadata.element;
-        final location = parameter.sourceLocation!;
+        final location = parameter.sourceLocation;
         switch (element) {
           case ConstructorElement(:final enclosingElement)
               when enclosingElement == configValueElement:
@@ -166,7 +166,12 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
     variables.addAll(
       parameterVariables.nonNulls.map((it) {
         final (name, value, location) = it;
-        return factory(name, dartName: null, value: value, location: location);
+        return factory(
+          name,
+          dartName: null,
+          value: value,
+          location: location ?? SourceFile.fromString('').span(0),
+        );
       }),
     );
 
@@ -194,11 +199,11 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
     };
   }
 
-  Future<(String name, String? staticValue, FileSpan location)?>
+  Future<(String name, String? staticValue, FileSpan? location)?>
   resolveVariable({
     required Element variable,
     required DartObject? value,
-    required FileSpan location,
+    required FileSpan? location,
   }) async {
     String? name;
     String? staticValue;

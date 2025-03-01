@@ -5,6 +5,7 @@ import 'package:archive/archive_io.dart';
 import 'package:async/async.dart';
 import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:file/file.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
@@ -26,7 +27,7 @@ extension type SqliteVersion(Version _version) {
 
 final defaultSqliteVersion = SqliteVersion(Version(3, 46, 1));
 
-Future<String> loadSqlite3({
+Future<void> loadSqlite3({
   SqliteVersion? version,
   required Logger logger,
 }) async {
@@ -46,14 +47,18 @@ Future<String> loadSqlite3({
       downloadProgress.complete();
     } on Object {
       downloadProgress.fail();
-      rethrow;
+      if (kReleaseMode) {
+        rethrow;
+      } else {
+        return;
+      }
     }
   } else {
     logger.finest('Using cached sqlite3 library');
   }
   final sqlite3Path = file.absolute.path;
+  logger.fine('Sqlite3 precached at: $sqlite3Path');
   open.overrideForAll(() => DynamicLibrary.open(sqlite3Path));
-  return sqlite3Path;
 }
 
 Future<String> _downloadSqliteWasm({

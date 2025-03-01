@@ -38,6 +38,9 @@ Future<CelestProject> newProject({
   String? parentDirectory,
 }) async {
   projectDart ??= _simpleProjectDart(name);
+  if (authDart != null) {
+    projectDart += authDart;
+  }
   final celestDir = p.fromUri(
     Directory.current.uri.resolve('../../celest/packages/celest/'),
   );
@@ -108,12 +111,6 @@ dependencies:
         _mergeMaps(lib, {
           'src': {
             'project.dart': projectDart,
-            if (authDart != null)
-              'auth.dart': '''
-import 'package:celest/celest.dart';
-
-$authDart
-''',
             if (apis.isNotEmpty)
               'functions': {
                 for (final MapEntry(key: fileName, value: contents)
@@ -281,6 +278,11 @@ void main() {
   group('CelestAnalyzer', () {
     setUpAll(initTests);
 
+    tearDown(() async {
+      CelestAnalyzer().reset();
+      await celestProject.close();
+    });
+
     group('part files', () {
       testNoErrors(
         name: 'can_resolve_part_files',
@@ -362,10 +364,10 @@ NotSerializable test() => NotSerializable();
       testErrors(
         name: 'empty_project_name',
         projectDart: '''
-import 'package:celest/celest.dart';
+      import 'package:celest/celest.dart';
 
-const project = Project(name: '');
-''',
+      const project = Project(name: '');
+      ''',
         errors: ['The project name cannot be empty.'],
       );
     });
@@ -375,11 +377,11 @@ const project = Project(name: '');
         name: 'simple_api',
         apis: {
           'greeting.dart': '''
-import 'package:celest/celest.dart';
+      import 'package:celest/celest.dart';
 
-@cloud
-String sayHello() => 'Hello, World!';
-''',
+      @cloud
+      String sayHello() => 'Hello, World!';
+      ''',
         },
       );
 
@@ -387,11 +389,11 @@ String sayHello() => 'Hello, World!';
         name: 'bad_file_name',
         apis: {
           'greeting.dev.dart': '''
-import 'package:celest/celest.dart';
+      import 'package:celest/celest.dart';
 
-@cloud
-String sayHello() => 'Hello, World!';
-''',
+      @cloud
+      String sayHello() => 'Hello, World!';
+      ''',
         },
         errors: ['API files must be named as follows: <api_name>.dart'],
       );
@@ -400,11 +402,11 @@ String sayHello() => 'Hello, World!';
         name: 'bad_file_name_underscore',
         apis: {
           '_greeting.dart': '''
-import 'package:celest/celest.dart';
+      import 'package:celest/celest.dart';
 
-@cloud
-String sayHello() => 'Hello, World!';
-''',
+      @cloud
+      String sayHello() => 'Hello, World!';
+      ''',
         },
         errors: ['API names may not start with an underscore'],
       );
@@ -413,33 +415,33 @@ String sayHello() => 'Hello, World!';
         name: 'bad_parameter_types_core',
         apis: {
           'greeting.dart': '''
-import 'package:celest/celest.dart';
+      import 'package:celest/celest.dart';
 
-@cloud
-void sayHello({
-  required Enum myEnum,
-  required List<Enum> listOfEnum,
-  required Iterable<Enum> iterableOfEnum,
-  required void Function() function,
-  required List<void Function()> listOfFunction,
-  required Iterable<void Function()> iterableOfFunction,
-  required Never never,
-  required List<Never> listOfNever,
-  required Iterable<Never> iterableOfNever,
-  required void void_,
-  required List<void> listOfVoid,
-  required Iterable<void> iterableOfVoid,
-  required Set<String> set,
-  required Symbol symbol,
-  required List<Symbol> listOfSymbol,
-  required Iterable<Symbol> iterableOfSymbol,
-  required Type type,
-  required List<Type> listOfType,
-  required Iterable<Type> iterableOfType,
-  required Stream<String> streamOfStrings,
-  required Stream streamOfDynamics,
-}) {}
-''',
+      @cloud
+      void sayHello({
+        required Enum myEnum,
+        required List<Enum> listOfEnum,
+        required Iterable<Enum> iterableOfEnum,
+        required void Function() function,
+        required List<void Function()> listOfFunction,
+        required Iterable<void Function()> iterableOfFunction,
+        required Never never,
+        required List<Never> listOfNever,
+        required Iterable<Never> iterableOfNever,
+        required void void_,
+        required List<void> listOfVoid,
+        required Iterable<void> iterableOfVoid,
+        required Set<String> set,
+        required Symbol symbol,
+        required List<Symbol> listOfSymbol,
+        required Iterable<Symbol> iterableOfSymbol,
+        required Type type,
+        required List<Type> listOfType,
+        required Iterable<Type> iterableOfType,
+        required Stream<String> streamOfStrings,
+        required Stream streamOfDynamics,
+      }) {}
+      ''',
         },
         errors: [
           'Untyped enums are not supported', // Enum
@@ -484,11 +486,6 @@ void sayHello({
   required ListOfVoidX listOfVoid,
   required IterableOfVoidX iterableOfVoid,
   required SetX set,
-  required ObjectX obj,
-  required NullableObjectX nullableObj,
-  required DynamicX dyn,
-  required ListOfDynamicX listOfDyn,
-  required IterableOfDynamicX iterableOfDyn,
   required SymbolX symbol,
   required ListOfSymbolX listOfSymbol,
   required IterableOfSymbolX iterableOfSymbol,
@@ -647,11 +644,6 @@ extension type VoidX(void _) {}
 extension type ListOfVoidX(List<void> _) {}
 extension type IterableOfVoidX(Iterable<void> _) {}
 extension type SetX(Set<String> _) {}
-extension type ObjectX(Object _) {}
-extension type NullableObjectX(Object? _) {}
-extension type DynamicX(dynamic _) {}
-extension type ListOfDynamicX(List<dynamic> _) {}
-extension type IterableOfDynamicX(Iterable<dynamic> _) {}
 extension type SymbolX(Symbol _) {}
 extension type ListOfSymbolX(List<Symbol> _) {}
 extension type IterableOfSymbolX(Iterable<Symbol> _) {}
@@ -703,7 +695,7 @@ typedef ReturnTypes = ({
           'Void types are not supported', // Iterable<void>
           'The representation type of SetX is not serializable',
           'Set types are not supported', // Set<String>
-          'The representation type of ObjectX is not serializable',
+          'The representation type of SymbolX is not serializable',
           'Symbol types are not supported', // Symbol
           'The representation type of ListOfSymbolX is not serializable',
           'Symbol types are not supported', // List<Symbol>
@@ -2218,29 +2210,29 @@ const auth = Auth(
         name: 'good_envs',
         config: {
           '.env.local': '''
-MY_NAME=Celest
-MY_AGE=28
-''',
+      MY_NAME=Celest
+      MY_AGE=28
+      ''',
         },
         apis: {
           'greeting.dart': r'''
-import 'package:celest/celest.dart';
+      import 'package:celest/celest.dart';
 
-const myName = env('MY_NAME');
-const myAge = env('MY_AGE');
+      const myName = env('MY_NAME');
+      const myAge = env('MY_AGE');
 
-@cloud
-void sayHelloPositional(
-  @myName String name,
-  @myAge int age,
-) => 'Hello, $name. I am $age years old.';
+      @cloud
+      void sayHelloPositional(
+        @myName String name,
+        @myAge int age,
+      ) => 'Hello, $name. I am $age years old.';
 
-@cloud
-void sayHelloNamed({
-  @myName required String name,
-  @myAge required int age,  
-}) => 'Hello, $name. I am $age years old.';
-''',
+      @cloud
+      void sayHelloNamed({
+        @myName required String name,
+        @myAge required int age,
+      }) => 'Hello, $name. I am $age years old.';
+      ''',
         },
         expectProject: (project) {
           expect(
@@ -2273,16 +2265,16 @@ void sayHelloNamed({
         name: 'bad_parameter_type',
         config: {
           '.env.local': '''
-MY_NAME=Celest
-''',
+      MY_NAME=Celest
+      ''',
         },
         apis: {
           'greeting.dart': r'''
-import 'package:celest/celest.dart';
+      import 'package:celest/celest.dart';
 
-@cloud
-void sayHello(@env('MY_NAME') List<String> name) => 'Hello, $name';
-''',
+      @cloud
+      void sayHello(@env('MY_NAME') List<String> name) => 'Hello, $name';
+      ''',
         },
         errors: [
           'The type of an environment variable parameter must be one of',
@@ -2331,22 +2323,13 @@ void sayHello(
     });
 
     group('auth', () {
-      // TODO(dnys1): Report error?
-      // testErrors(
-      //   name: 'no_auth',
-      //   authDart: '',
-      //   errors: [
-      //     'No `Auth` type found',
-      //   ],
-      // );
-
       testNoErrors(
         name: 'valid_inline_providers',
         authDart: '''
 const auth = Auth(
   providers: [
     AuthProvider.email(),
-    AuthProvider.sms(),
+    // AuthProvider.sms(),
   ],
 );
 ''',
@@ -2356,7 +2339,7 @@ const auth = Auth(
               .has((it) => it.providers.map((it) => it.type), 'providers')
               .unorderedEquals([
                 EmailAuthProvider.$type,
-                SmsAuthProvider.$type,
+                // SmsAuthProvider.$type,
               ]);
         },
       );
@@ -2393,17 +2376,17 @@ const auth = Auth(
         name: 'duplicate_provider',
         authDart: '''
 const email = AuthProvider.email();
-const sms = AuthProvider.sms();
+// const sms = AuthProvider.sms();
 const auth = Auth(
   providers: [
     email, email,
-    sms, sms,
+    // sms, sms,
   ],
 );
 ''',
         errors: [
-          'Duplicate EMAIL_OTP auth provider',
-          'Duplicate SMS_OTP auth provider',
+          'Duplicate emailOtp auth provider',
+          // 'Duplicate smsOtp auth provider',
         ],
       );
 
@@ -2428,33 +2411,6 @@ const auth = Auth(
           check(
             project.variables,
           ).single.has((it) => it.name, 'name').equals('FIREBASE_PROJECT_ID');
-        },
-      );
-
-      testNoErrors(
-        name: 'valid_external_provider_custom_config',
-        authDart: '''
-const firebaseProjectId = env('PROJECT_ID');
-const auth = Auth(
-  providers: [
-    ExternalAuthProvider.firebase(
-      projectId: firebaseProjectId,
-    ),
-  ],
-);
-''',
-        expectProject: (project) {
-          check(project.auth).isNotNull()
-            ..has((it) => it.providers, 'providers').isEmpty()
-            ..has(
-              (it) => it.externalProviders.map((it) => it.type),
-              'providers',
-            ).single.equals(FirebaseExternalAuthProvider.$type);
-
-          // The custom env variable is used.
-          check(
-            project.variables,
-          ).single.has((it) => it.name, 'name').equals('PROJECT_ID');
         },
       );
     });

@@ -639,7 +639,7 @@ extension NodeSourceLocation on AstNode {
 extension ElementSourceLocation on Element {
   FileSpan? get sourceLocation {
     final source = this.source;
-    if (source == null) {
+    if (source == null || !source.exists()) {
       return null;
     }
     if (nameOffset < 0) {
