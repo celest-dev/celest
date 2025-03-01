@@ -445,10 +445,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
       ));
       _$celest.Serializers.instance.put(
           _$celest.Serializer.define<WebSocketException, Map<String, Object?>?>(
-        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          if ($value.httpStatusCode case final httpStatusCode?)
+            r'httpStatusCode': httpStatusCode,
+        },
         deserialize: ($serialized) {
           return WebSocketException(
-              (($serialized?[r'message'] as String?)) ?? '');
+            (($serialized?[r'message'] as String?)) ?? '',
+            ($serialized?[r'httpStatusCode'] as num?)?.toInt(),
+          );
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
@@ -461,6 +467,12 @@ void initSerializers({_$celest.Serializers? serializers}) {
       _$celest.Serializers.instance
           .put(_$celest.Serializer.define<Color, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{
+          r'a': $value.a,
+          r'r': $value.r,
+          r'g': $value.g,
+          r'b': $value.b,
+          r'colorSpace': _$celest.Serializers.instance
+              .serialize<ColorSpace>($value.colorSpace),
           r'value': $value.value,
           r'alpha': $value.alpha,
           r'opacity': $value.opacity,
@@ -470,6 +482,13 @@ void initSerializers({_$celest.Serializers? serializers}) {
         },
         deserialize: ($serialized) {
           return Color(($serialized[r'value'] as num).toInt());
+        },
+      ));
+      _$celest.Serializers.instance
+          .put(_$celest.Serializer.define<ColorSpace, String>(
+        serialize: ($value) => $value.name,
+        deserialize: ($serialized) {
+          return ColorSpace.values.byName($serialized);
         },
       ));
       _$celest.Serializers.instance

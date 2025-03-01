@@ -466,18 +466,6 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "BadConfigurationException",
-          "url": "package:google_cloud/src/bad_configuration_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "BadRequestException",
-          "url": "package:google_cloud/src/bad_request_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "ClientException",
           "url": "package:http/src/exception.dart",
           "isNullable": false
@@ -510,6 +498,12 @@
           "$": "TypeReference",
           "symbol": "VfsException",
           "url": "package:sqlite3/src/vfs.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PathException",
+          "url": "package:path/src/path_exception.dart",
           "isNullable": false
         },
         {
@@ -631,10 +625,10 @@
     }
   },
   "sdkConfig": {
-    "celest": "1.0.1",
+    "celest": "1.0.6+2",
     "dart": {
       "type": "dart",
-      "version": "3.5.3",
+      "version": "3.29.0",
       "enabledExperiments": []
     },
     "targetSdk": "dart",
@@ -643,7 +637,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.24.3",
+      "version": "3.29.0",
       "enabledExperiments": []
     }
   },

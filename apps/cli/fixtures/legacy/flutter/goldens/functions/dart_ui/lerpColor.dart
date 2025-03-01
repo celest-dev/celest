@@ -1983,10 +1983,16 @@ final class LerpColorTarget extends _i1.CloudFunctionHttpTarget {
     ));
     _i4.Serializers.instance.put(
         _i4.Serializer.define<_i10.WebSocketException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
+      serialize: ($value) => <String, Object?>{
+        r'message': $value.message,
+        if ($value.httpStatusCode case final httpStatusCode?)
+          r'httpStatusCode': httpStatusCode,
+      },
       deserialize: ($serialized) {
         return _i10.WebSocketException(
-            (($serialized?[r'message'] as String?)) ?? '');
+          (($serialized?[r'message'] as String?)) ?? '',
+          ($serialized?[r'httpStatusCode'] as num?)?.toInt(),
+        );
       },
     ));
     _i4.Serializers.instance.put(
@@ -1999,6 +2005,12 @@ final class LerpColorTarget extends _i1.CloudFunctionHttpTarget {
     _i4.Serializers.instance
         .put(_i4.Serializer.define<_i5.Color, Map<String, Object?>>(
       serialize: ($value) => <String, Object?>{
+        r'a': $value.a,
+        r'r': $value.r,
+        r'g': $value.g,
+        r'b': $value.b,
+        r'colorSpace': _i4.Serializers.instance
+            .serialize<_i5.ColorSpace>($value.colorSpace),
         r'value': $value.value,
         r'alpha': $value.alpha,
         r'opacity': $value.opacity,
@@ -2008,6 +2020,12 @@ final class LerpColorTarget extends _i1.CloudFunctionHttpTarget {
       },
       deserialize: ($serialized) {
         return _i5.Color(($serialized[r'value'] as num).toInt());
+      },
+    ));
+    _i4.Serializers.instance.put(_i4.Serializer.define<_i5.ColorSpace, String>(
+      serialize: ($value) => $value.name,
+      deserialize: ($serialized) {
+        return _i5.ColorSpace.values.byName($serialized);
       },
     ));
     _i4.Serializers.instance

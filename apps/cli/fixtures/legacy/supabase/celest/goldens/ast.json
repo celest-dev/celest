@@ -483,10 +483,10 @@
   ],
   "databases": {},
   "sdkConfig": {
-    "celest": "1.0.0",
+    "celest": "1.0.6+2",
     "dart": {
       "type": "dart",
-      "version": "3.5.3",
+      "version": "3.29.0",
       "enabledExperiments": []
     },
     "targetSdk": "dart",
@@ -495,7 +495,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.24.3",
+      "version": "3.29.0",
       "enabledExperiments": []
     }
   },

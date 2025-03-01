@@ -2010,10 +2010,16 @@ final class PaintWidgetTarget extends _i1.CloudFunctionHttpTarget {
     ));
     _i4.Serializers.instance.put(
         _i4.Serializer.define<_i10.WebSocketException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
+      serialize: ($value) => <String, Object?>{
+        r'message': $value.message,
+        if ($value.httpStatusCode case final httpStatusCode?)
+          r'httpStatusCode': httpStatusCode,
+      },
       deserialize: ($serialized) {
         return _i10.WebSocketException(
-            (($serialized?[r'message'] as String?)) ?? '');
+          (($serialized?[r'message'] as String?)) ?? '',
+          ($serialized?[r'httpStatusCode'] as num?)?.toInt(),
+        );
       },
     ));
     _i4.Serializers.instance.put(
