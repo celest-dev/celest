@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_visitor.dart';
+import 'package:analyzer/src/dart/element/element.dart';
 import 'package:analyzer/src/dart/element/type.dart';
 
 extension TypeImplAlias on TypeImpl {
@@ -39,7 +40,7 @@ final class _TypeImplAliasVisitor
     InstantiatedTypeAliasElement? alias,
   ) {
     return InterfaceTypeImpl(
-      element: type.element,
+      element: type.element3 as InterfaceElementImpl2,
       typeArguments: type.typeArguments,
       nullabilitySuffix: type.nullabilitySuffix,
       alias: alias,

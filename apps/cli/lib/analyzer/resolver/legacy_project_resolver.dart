@@ -486,7 +486,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
   // Actually, needed?
   // Do structured headers fit this criteria?
   // https://smithy.io/2.0/spec/http-bindings.html#httpheader-serialization-rules
-  static final _validHeaderQueryTypes = TypeChecker.any(
+  static TypeChecker get _validHeaderQueryTypes => TypeChecker.any(
     [
       typeHelper.coreTypes.boolType,
       typeHelper.coreTypes.numType,

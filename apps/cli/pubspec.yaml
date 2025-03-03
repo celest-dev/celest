@@ -7,8 +7,8 @@ environment:
   sdk: ^3.7.0
 
 dependencies:
-  analyzer: ^6.11.0
-  analyzer_plugin: ^0.11.3
+  analyzer: ^7.3.0
+  analyzer_plugin: ^0.13.0
   archive: ^3.4.9
   args: ^2.4.2
   async: ^2.11.0
@@ -35,10 +35,10 @@ dependencies:
   convert: ^3.1.1
   corks_cedar: ^0.2.1
   crypto: ^3.0.3
-  dart_style: ^2.3.4
+  dart_style: ^3.0.0
   dcli: ^6.0.5
   dcli_terminal: ^6.0.3
-  drift: ">=2.21.0 <2.22.0"
+  drift: '>=2.25.0 <2.26.0'
   email_validator: ^3.0.0
   file: ^7.0.0
   fixnum: ^1.1.0
@@ -86,6 +86,8 @@ dependencies:
   yaml_edit: 2.2.1
 
 dependency_overrides:
+  # TODO: Remove when built_value supports latest analyzer
+  analyzer: ^7.3.0
   cedar:
     path: ../../cedar/packages/cedar
   celest:
@@ -100,18 +102,20 @@ dependency_overrides:
     path: ../../celest/packages/celest_cloud
   celest_core:
     path: ../../celest/packages/celest_core
+  # TODO: Remove when built_value supports latest analyzer
+  source_gen: ^2.0.0
 
 dev_dependencies:
   benchmark_harness: ^2.2.2
   build: ^2.4.1
   build_runner: ^2.4.7
   build_test: ^2.2.1
-  built_value_generator: ^8.8.0
+  built_value_generator: ^8.9.4
   celest_lints:
     path: ../../packages/celest_lints
   checks: ^0.3.0
   dart_jsonwebtoken: ^3.1.1
-  drift_dev: ">=2.21.0 <2.22.0"
+  drift_dev: '>=2.25.0 <2.26.0'
   gcloud: ^0.8.13
   googleapis: ^13.2.0
   googleapis_auth: ^1.4.1

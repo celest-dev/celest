@@ -20,7 +20,7 @@ final builtInTypeChecker = TypeChecker.any([
 ]);
 
 /// Built-in types with their corresponding [Reference]s.
-final Map<DartType, Reference> builtInTypeToReference = {
+Map<DartType, Reference> get builtInTypeToReference => {
   typeHelper.coreTypes.coreBigIntType: DartTypes.core.bigInt,
   typeHelper.coreTypes.dateTimeType: DartTypes.core.dateTime,
   typeHelper.coreTypes.durationType: DartTypes.core.duration,
@@ -32,7 +32,7 @@ final Map<DartType, Reference> builtInTypeToReference = {
 };
 
 /// Built-in types with their corresponding [DartType]s.
-final Map<Reference, DartType> builtInReferenceToType = {
+Map<Reference, DartType> get builtInReferenceToType => {
   DartTypes.core.bigInt: typeHelper.coreTypes.coreBigIntType,
   DartTypes.core.dateTime: typeHelper.coreTypes.dateTimeType,
   DartTypes.core.duration: typeHelper.coreTypes.durationType,
@@ -44,7 +44,7 @@ final Map<Reference, DartType> builtInReferenceToType = {
 };
 
 /// The [DartType] of `Map<String, Object?>`.
-final jsonMapType = typeHelper.typeProvider.mapType(
+DartType get jsonMapType => typeHelper.typeProvider.mapType(
   typeHelper.typeProvider.stringType,
   typeHelper.typeProvider.objectQuestionType,
 );

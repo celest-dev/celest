@@ -575,7 +575,10 @@ extension InterfaceElementHelpers on InterfaceElement {
 
   /// Collects all subtypes of the given [type].
   Future<List<InterfaceType>> collectSubtypes() async {
-    final subtypes = await _driver.search.subTypes(this, _searchedFiles);
+    final subtypes = await _driver.search.subTypes(
+      thisType.element3,
+      _searchedFiles,
+    );
     return subtypes
         .where((res) {
           return switch (res.kind) {

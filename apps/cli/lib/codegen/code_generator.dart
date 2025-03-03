@@ -1,4 +1,5 @@
 import 'package:celest_cli/codegen/allocator.dart';
+import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 
@@ -12,7 +13,7 @@ abstract final class CodeGenerator {
     'invalid_use_of_internal_member',
   ];
   static final _header = 'ignore_for_file: ${_ignoredRules.join(', ')}';
-  static final _formatter = DartFormatter(fixes: StyleFix.all);
+  static final _formatter = DartFormatter(languageVersion: Sdk.current.version);
   static DartEmitter _emitter({
     required String forFile,
     PrefixingStrategy prefixingStrategy = PrefixingStrategy.indexed,

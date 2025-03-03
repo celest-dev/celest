@@ -136,6 +136,11 @@ final class CoreTypes implements TypeProvider {
   }
 
   @override
+  bool isNonSubtypableClass2(InterfaceElement2 element) {
+    return _typeProvider.isNonSubtypableClass2(element);
+  }
+
+  @override
   bool isObjectGetter(String id) {
     return _typeProvider.isObjectGetter(id);
   }

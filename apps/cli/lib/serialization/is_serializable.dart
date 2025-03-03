@@ -170,7 +170,6 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     }
     switch (wireType) {
       case DartType(isDartCoreObject: true) || DynamicType():
-      case _ when const DartTypeEquality().equals(wireType, requiredParam.type):
       case _
           when typeHelper.typeSystem.isAssignableTo(
             wireType,
@@ -1044,8 +1043,8 @@ extension on ClassElement {
         );
         if (member case final PropertyAccessorMember member
             when member.isGetter) {
-          assert(member.variable is FieldElement);
-          return MapEntry(e.name, member.variable as FieldElement);
+          assert(member.variable2 is FieldElement);
+          return MapEntry(e.name, member.variable2 as FieldElement);
         }
         return MapEntry(e.name, e);
       }),

@@ -105,11 +105,11 @@ class Organizations extends Table with TableInfo<Organizations, Organization> {
 }
 
 class Organization extends DataClass implements Insertable<Organization> {
-  /// Format: org_<typeid>
+  /// Immutable. The unique identifier for the organization.
   ///
   /// Maps to the `uid` field in the Protobuf.
   ///
-  /// Immutable. The unique identifier for the organization.
+  /// Format: org_<typeid>
   final String id;
 
   /// The primary alias for the organization.
@@ -442,11 +442,11 @@ class Projects extends Table with TableInfo<Projects, Project> {
 }
 
 class Project extends DataClass implements Insertable<Project> {
-  /// Format: prj_<typeid>
+  /// Immutable. The unique identifier for the project.
   ///
   /// Maps to the `uid` field in the Protobuf.
   ///
-  /// Immutable. The unique identifier for the project.
+  /// Format: prj_<typeid>
   final String id;
 
   /// The organizaton that the project belongs to.
@@ -789,11 +789,11 @@ class ProjectEnvironments extends Table
 
 class ProjectEnvironment extends DataClass
     implements Insertable<ProjectEnvironment> {
-  /// Format: env_<typeid>
+  /// Immutable. The unique identifier for the environment.
   ///
   /// Maps to the `uid` field in the Protobuf.
   ///
-  /// Immutable. The unique identifier for the environment.
+  /// Format: env_<typeid>
   final String id;
 
   /// The project that the environment belongs to.
