@@ -15,7 +15,7 @@ extension AnnotationHelper on ElementAnnotation {
   /// Whether the element targeted by this annotation is the `CloudFunction`
   /// class from `package:celest`.
   bool get isCloudFunction => switch (element) {
-        ConstructorElement(enclosingElement: final classElement) =>
+        ConstructorElement(enclosingElement3: final classElement) =>
           classElement.isPackageCelest && classElement.name == 'CloudFunction',
         _ => false,
       };
