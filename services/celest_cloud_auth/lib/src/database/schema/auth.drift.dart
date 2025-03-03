@@ -1,3 +1,4 @@
+// dart format width=80
 // ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
 import 'package:celest_cloud_auth/src/crypto/crypto_key_model.dart' as i1;
@@ -10,6 +11,8 @@ import 'package:celest_cloud_auth/src/database/schema/converters/auth_converters
     as i6;
 import 'package:drift/internal/modular.dart' as i7;
 import 'dart:async' as i8;
+import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i9;
+import 'package:celest_cloud_auth/src/database/schema/users.drift.dart' as i10;
 
 typedef $CryptoKeysCreateCompanionBuilder = i3.CryptoKeysCompanion Function({
   required i2.Uint8List cryptoKeyId,
@@ -1875,30 +1878,30 @@ class Cork extends i0.DataClass implements i0.Insertable<i3.Cork> {
   /// The unique identifier for the cork and its root key.
   final i2.Uint8List corkId;
 
-  /// This is typically derived from the organization's root key.
-  ///
   /// The ID of the HMAC key used to sign the cork.
+  ///
+  /// This is typically derived from the organization's root key.
   final i2.Uint8List cryptoKeyId;
 
-  /// For example, `Celest::User` or `Celest::ServiceAccount`.
-  ///
   /// The Cedar type of the bearer entity.
+  ///
+  /// For example, `Celest::User` or `Celest::ServiceAccount`.
   final String? bearerType;
 
   /// The unique identifier of the bearer entity.
   final String? bearerId;
 
-  /// For example, `Celest::Service` or `Celest::Api`.
-  ///
   /// The Cedar type of the audience entity.
+  ///
+  /// For example, `Celest::Service` or `Celest::Api`.
   final String? audienceType;
 
   /// The unique identifier of the audience entity.
   final String? audienceId;
 
-  /// For example, `Celest::Organization` or `Celest::Service`.
-  ///
   /// The Cedar type of the issuer entity.
+  ///
+  /// For example, `Celest::Organization` or `Celest::Service`.
   final String? issuerType;
 
   /// The unique identifier of the issuer entity.
@@ -2525,4 +2528,6 @@ class AuthDrift extends i7.ModularAccessor {
       i7.ReadDatabaseContainer(attachedDatabase).resultSet<i3.Corks>('corks');
   i3.OtpCodes get otpCodes => i7.ReadDatabaseContainer(attachedDatabase)
       .resultSet<i3.OtpCodes>('otp_codes');
+  i9.CedarDrift get cedarDrift => this.accessor(i9.CedarDrift.new);
+  i10.UsersDrift get usersDrift => this.accessor(i10.UsersDrift.new);
 }

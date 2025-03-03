@@ -1,3 +1,4 @@
+// dart format width=80
 // ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
 import 'package:celest_core/src/auth/user.dart' as i1;
@@ -5,6 +6,7 @@ import 'package:celest_cloud_auth/src/database/schema/users.drift.dart' as i2;
 import 'package:celest_cloud_auth/src/database/database_model.dart' as i3;
 import 'package:drift/internal/modular.dart' as i4;
 import 'dart:async' as i5;
+import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i6;
 
 typedef $UsersCreateCompanionBuilder = i2.UsersCompanion Function({
   required String userId,
@@ -1176,6 +1178,7 @@ class UsersDrift extends i4.ModularAccessor {
   i2.UserPhoneNumbers get userPhoneNumbers =>
       i4.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i2.UserPhoneNumbers>('user_phone_numbers');
+  i6.CedarDrift get cedarDrift => this.accessor(i6.CedarDrift.new);
 }
 
 class LookupUserByEmailResult {

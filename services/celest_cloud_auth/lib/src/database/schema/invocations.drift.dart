@@ -1,8 +1,12 @@
+// dart format width=80
 // ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
 import 'package:celest_cloud_auth/src/database/schema/invocations.drift.dart'
     as i1;
 import 'dart:typed_data' as i2;
+import 'package:drift/internal/modular.dart' as i3;
+import 'package:celest_cloud_auth/src/database/schema/projects.drift.dart'
+    as i4;
 
 typedef $CelestInvocationsCreateCompanionBuilder = i1.CelestInvocationsCompanion
     Function({
@@ -1080,3 +1084,8 @@ class CelestInvocationLogsCompanion
 i0.Index get celestInvocationLogsInvocationIdx => i0.Index(
     'celest_invocation_logs_invocation_idx',
     'CREATE INDEX IF NOT EXISTS celest_invocation_logs_invocation_idx ON celest_invocation_logs (invocation_id)');
+
+class InvocationsDrift extends i3.ModularAccessor {
+  InvocationsDrift(i0.GeneratedDatabase db) : super(db);
+  i4.ProjectsDrift get projectsDrift => this.accessor(i4.ProjectsDrift.new);
+}

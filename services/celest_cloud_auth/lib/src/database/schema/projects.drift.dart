@@ -1,3 +1,4 @@
+// dart format width=80
 // ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
 import 'package:celest_cloud_auth/src/database/schema/projects.drift.dart'
@@ -8,6 +9,7 @@ import 'package:celest_cloud_auth/src/database/schema/converters/ast_converters.
     as i4;
 import 'package:drift/internal/modular.dart' as i5;
 import 'dart:async' as i6;
+import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i7;
 
 typedef $CelestProjectsCreateCompanionBuilder = i1.CelestProjectsCompanion
     Function({
@@ -581,9 +583,9 @@ class CelestProject extends i0.DataClass
   /// The version of the project.
   final String version;
 
-  /// Format: Proto[celest.ast.v1.ResolvedProject]
-  ///
   /// The resolved AST.
+  ///
+  /// Format: Proto[celest.ast.v1.ResolvedProject]
   final i2.ResolvedProject resolvedAst;
 
   /// A hash of the project metadata.
@@ -836,9 +838,9 @@ class CelestApi extends i0.DataClass implements i0.Insertable<i1.CelestApi> {
   /// The project ID of the API.
   final String projectId;
 
-  /// Format: Proto[celest.ast.v1.ResolvedApi]
-  ///
   /// The resolved AST.
+  ///
+  /// Format: Proto[celest.ast.v1.ResolvedApi]
   final i2.ResolvedApi resolvedAst;
 
   /// A hash of the API metadata.
@@ -1103,9 +1105,9 @@ class CelestFunction extends i0.DataClass
   /// The API ID of the function.
   final String apiId;
 
-  /// Format: Proto[celest.ast.v1.ResolvedFunction]
-  ///
   /// The resolved function AST.
+  ///
+  /// Format: Proto[celest.ast.v1.ResolvedFunction]
   final i2.ResolvedCloudFunction resolvedAst;
 
   /// A hash of the function metadata.
@@ -1410,4 +1412,5 @@ class ProjectsDrift extends i5.ModularAccessor {
   i1.CelestFunctions get celestFunctions =>
       i5.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i1.CelestFunctions>('celest_functions');
+  i7.CedarDrift get cedarDrift => this.accessor(i7.CedarDrift.new);
 }

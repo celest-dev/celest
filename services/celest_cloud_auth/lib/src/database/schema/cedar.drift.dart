@@ -1,3 +1,4 @@
+// dart format width=80
 // ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
 import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i1;
@@ -17,6 +18,38 @@ typedef $CedarTypesUpdateCompanionBuilder = i1.CedarTypesCompanion Function({
   i0.Value<String> fqn,
   i0.Value<int> rowid,
 });
+
+final class $CedarTypesReferences extends i0
+    .BaseReferences<i0.GeneratedDatabase, i1.CedarTypes, i1.CedarType> {
+  $CedarTypesReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static i0.MultiTypedResultKey<i1.CedarEntities, List<i1.CedarEntity>>
+      _cedarEntitiesRefsTable(i0.GeneratedDatabase db) =>
+          i0.MultiTypedResultKey.fromTable(
+              i6.ReadDatabaseContainer(db)
+                  .resultSet<i1.CedarEntities>('cedar_entities'),
+              aliasName: i0.$_aliasNameGenerator(
+                  i6.ReadDatabaseContainer(db)
+                      .resultSet<i1.CedarTypes>('cedar_types')
+                      .fqn,
+                  i6.ReadDatabaseContainer(db)
+                      .resultSet<i1.CedarEntities>('cedar_entities')
+                      .entityType));
+
+  i1.$CedarEntitiesProcessedTableManager get cedarEntitiesRefs {
+    final manager = i1
+        .$CedarEntitiesTableManager(
+            $_db,
+            i6.ReadDatabaseContainer($_db)
+                .resultSet<i1.CedarEntities>('cedar_entities'))
+        .filter(
+            (f) => f.entityType.fqn.sqlEquals($_itemColumn<String>('fqn')!));
+
+    final cache = $_typedResult.readTableOrNull(_cedarEntitiesRefsTable($_db));
+    return i0.ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
 
 class $CedarTypesFilterComposer
     extends i0.Composer<i0.GeneratedDatabase, i1.CedarTypes> {
@@ -112,10 +145,7 @@ class $CedarTypesTableManager extends i0.RootTableManager<
     i1.$CedarTypesAnnotationComposer,
     $CedarTypesCreateCompanionBuilder,
     $CedarTypesUpdateCompanionBuilder,
-    (
-      i1.CedarType,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarTypes, i1.CedarType>
-    ),
+    (i1.CedarType, i1.$CedarTypesReferences),
     i1.CedarType,
     i0.PrefetchHooks Function({bool cedarEntitiesRefs})> {
   $CedarTypesTableManager(i0.GeneratedDatabase db, i1.CedarTypes table)
@@ -145,9 +175,37 @@ class $CedarTypesTableManager extends i0.RootTableManager<
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .map((e) =>
+                  (e.readTable(table), i1.$CedarTypesReferences(db, table, e)))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({cedarEntitiesRefs = false}) {
+            return i0.PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (cedarEntitiesRefs)
+                  i6.ReadDatabaseContainer(db)
+                      .resultSet<i1.CedarEntities>('cedar_entities')
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (cedarEntitiesRefs)
+                    await i0.$_getPrefetchedData<i1.CedarType, i1.CedarTypes,
+                            i1.CedarEntity>(
+                        currentTable: table,
+                        referencedTable: i1.$CedarTypesReferences
+                            ._cedarEntitiesRefsTable(db),
+                        managerFromTypedResult: (p0) => i1
+                            .$CedarTypesReferences(db, table, p0)
+                            .cedarEntitiesRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.entityType == item.fqn),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
         ));
 }
 
@@ -160,10 +218,7 @@ typedef $CedarTypesProcessedTableManager = i0.ProcessedTableManager<
     i1.$CedarTypesAnnotationComposer,
     $CedarTypesCreateCompanionBuilder,
     $CedarTypesUpdateCompanionBuilder,
-    (
-      i1.CedarType,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarTypes, i1.CedarType>
-    ),
+    (i1.CedarType, i1.$CedarTypesReferences),
     i1.CedarType,
     i0.PrefetchHooks Function({bool cedarEntitiesRefs})>;
 typedef $CedarEntitiesCreateCompanionBuilder = i1.CedarEntitiesCompanion
@@ -178,6 +233,37 @@ typedef $CedarEntitiesUpdateCompanionBuilder = i1.CedarEntitiesCompanion
   i0.Value<String> entityId,
   i0.Value<Map<String, i2.Value>> attributeJson,
 });
+
+final class $CedarEntitiesReferences extends i0
+    .BaseReferences<i0.GeneratedDatabase, i1.CedarEntities, i1.CedarEntity> {
+  $CedarEntitiesReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static i1.CedarTypes _entityTypeTable(i0.GeneratedDatabase db) =>
+      i6.ReadDatabaseContainer(db)
+          .resultSet<i1.CedarTypes>('cedar_types')
+          .createAlias(i0.$_aliasNameGenerator(
+              i6.ReadDatabaseContainer(db)
+                  .resultSet<i1.CedarEntities>('cedar_entities')
+                  .entityType,
+              i6.ReadDatabaseContainer(db)
+                  .resultSet<i1.CedarTypes>('cedar_types')
+                  .fqn));
+
+  i1.$CedarTypesProcessedTableManager get entityType {
+    final $_column = $_itemColumn<String>('entity_type')!;
+
+    final manager = i1
+        .$CedarTypesTableManager(
+            $_db,
+            i6.ReadDatabaseContainer($_db)
+                .resultSet<i1.CedarTypes>('cedar_types'))
+        .filter((f) => f.fqn.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_entityTypeTable($_db));
+    if (item == null) return manager;
+    return i0.ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
 
 class $CedarEntitiesFilterComposer
     extends i0.Composer<i0.GeneratedDatabase, i1.CedarEntities> {
@@ -320,10 +406,7 @@ class $CedarEntitiesTableManager extends i0.RootTableManager<
     i1.$CedarEntitiesAnnotationComposer,
     $CedarEntitiesCreateCompanionBuilder,
     $CedarEntitiesUpdateCompanionBuilder,
-    (
-      i1.CedarEntity,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarEntities, i1.CedarEntity>
-    ),
+    (i1.CedarEntity, i1.$CedarEntitiesReferences),
     i1.CedarEntity,
     i0.PrefetchHooks Function({bool entityType})> {
   $CedarEntitiesTableManager(i0.GeneratedDatabase db, i1.CedarEntities table)
@@ -359,9 +442,46 @@ class $CedarEntitiesTableManager extends i0.RootTableManager<
             attributeJson: attributeJson,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .map((e) => (
+                    e.readTable(table),
+                    i1.$CedarEntitiesReferences(db, table, e)
+                  ))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({entityType = false}) {
+            return i0.PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends i0.TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (entityType) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.entityType,
+                    referencedTable:
+                        i1.$CedarEntitiesReferences._entityTypeTable(db),
+                    referencedColumn:
+                        i1.$CedarEntitiesReferences._entityTypeTable(db).fqn,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ));
 }
 
@@ -374,10 +494,7 @@ typedef $CedarEntitiesProcessedTableManager = i0.ProcessedTableManager<
     i1.$CedarEntitiesAnnotationComposer,
     $CedarEntitiesCreateCompanionBuilder,
     $CedarEntitiesUpdateCompanionBuilder,
-    (
-      i1.CedarEntity,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CedarEntities, i1.CedarEntity>
-    ),
+    (i1.CedarEntity, i1.$CedarEntitiesReferences),
     i1.CedarEntity,
     i0.PrefetchHooks Function({bool entityType})>;
 typedef $CedarRelationshipsCreateCompanionBuilder
@@ -1658,9 +1775,9 @@ class CedarEntity extends i0.DataClass
   /// The unique identifier of the entity.
   final String entityId;
 
-  /// These should only be static attributes that are needed for authorization decisions.
-  ///
   /// The attributes of the entity.
+  ///
+  /// These should only be static attributes that are needed for authorization decisions.
   final Map<String, i2.Value> attributeJson;
 
   /// A JSON representation of the entity.
@@ -2158,30 +2275,30 @@ class CedarPolicies extends i0.Table
 
 class CedarPolicy extends i0.DataClass
     implements i0.Insertable<i1.CedarPolicy> {
-  /// Format: pol_<typeid>
+  /// Immutable. The unique identifier for the policy.
   ///
   /// Maps to the `uid` field in the Protobuf.
   ///
-  /// Immutable. The unique identifier for the policy.
+  /// Format: pol_<typeid>
   final String id;
 
-  /// auditability and debuggability.
-  /// While Cedar does not require policies to have IDs, we enforce their usage to improve
-  ///
   /// The primary alias for the policy, mapping to the `@id` annotation.
+  ///
+  /// While Cedar does not require policies to have IDs, we enforce their usage to improve
+  /// auditability and debuggability.
   final String policyId;
 
-  /// Type: JSON[package:cedar/cedar.dart#Policy]
-  ///
   /// The policy in JSON format.
+  ///
+  /// Type: JSON[package:cedar/cedar.dart#Policy]
   final i4.Policy policy;
 
-  /// Type: integer (enforced=1, dry-run=0)
-  ///
-  /// authorization decision.
-  /// Dry-run policies are captured in the audit log but do not affect presentation of the
-  ///
   /// The policy's enforcement level.
+  ///
+  /// Dry-run policies are captured in the audit log but do not affect presentation of the
+  /// authorization decision.
+  ///
+  /// Type: integer (enforced=1, dry-run=0)
   final int enforcementLevel;
   const CedarPolicy(
       {required this.id,
@@ -2416,22 +2533,22 @@ class CedarPolicyTemplates extends i0.Table
 
 class CedarPolicyTemplate extends i0.DataClass
     implements i0.Insertable<i1.CedarPolicyTemplate> {
-  /// Format: polt_<typeid>
+  /// Immutable. The unique identifier for the template.
   ///
   /// Maps to the `uid` field in the Protobuf.
   ///
-  /// Immutable. The unique identifier for the template.
+  /// Format: polt_<typeid>
   final String id;
 
-  /// auditability and debuggability.
-  /// While Cedar does not require templates to have IDs, we enforce their usage to improve
-  ///
   /// The primary alias for the template, mapping to the `@id` annotation.
+  ///
+  /// While Cedar does not require templates to have IDs, we enforce their usage to improve
+  /// auditability and debuggability.
   final String templateId;
 
-  /// Type: JSON[package:cedar/cedar.dart#Policy]
-  ///
   /// The template in JSON format.
+  ///
+  /// Type: JSON[package:cedar/cedar.dart#Policy]
   final i4.Policy template;
   const CedarPolicyTemplate(
       {required this.id, required this.templateId, required this.template});
@@ -2689,11 +2806,11 @@ class CedarPolicyTemplateLinks extends i0.Table
 
 class CedarPolicyTemplateLink extends i0.DataClass
     implements i0.Insertable<i1.CedarPolicyTemplateLink> {
-  /// Format: polk_<typeid>
+  /// Immutable. The unique identifier for the policy.
   ///
   /// Maps to the `uid` field in the Protobuf.
   ///
-  /// Immutable. The unique identifier for the policy.
+  /// Format: polk_<typeid>
   final String id;
 
   /// The primary alias of the policy created by this link.
@@ -2710,12 +2827,12 @@ class CedarPolicyTemplateLink extends i0.DataClass
   final String? resourceType;
   final String? resourceId;
 
-  /// Type: integer (enforced=1, dry-run=0)
-  ///
-  /// authorization decision.
-  /// Dry-run policies are captured in the audit log but do not affect presentation of the
-  ///
   /// The policy's enforcement level.
+  ///
+  /// Dry-run policies are captured in the audit log but do not affect presentation of the
+  /// authorization decision.
+  ///
+  /// Type: integer (enforced=1, dry-run=0)
   final int enforcementLevel;
   const CedarPolicyTemplateLink(
       {required this.id,
@@ -3161,75 +3278,75 @@ class CedarAuthorizationLog extends i0.DataClass
     implements i0.Insertable<i1.CedarAuthorizationLog> {
   final int rowid;
 
-  /// Type: unixepoch.subsec
-  ///
   /// The time the audit log entry was created.
+  ///
+  /// Type: unixepoch.subsec
   final DateTime createTime;
 
-  /// Type: unixepoch | null
-  ///
   /// The log's expiration time if a TTL has been set.
+  ///
+  /// Type: unixepoch | null
   final DateTime? expireTime;
 
-  /// Type: string
-  ///
   /// The requesting principal's entity type.
+  ///
+  /// Type: string
   final String? principalType;
 
-  /// Type: string
-  ///
   /// The requesting principal's entity ID.
+  ///
+  /// Type: string
   final String? principalId;
 
-  /// Type: string
-  ///
   /// The requested action's entity type.
+  ///
+  /// Type: string
   final String? actionType;
 
-  /// Type: string
-  ///
   /// The requested action's entity ID.
+  ///
+  /// Type: string
   final String? actionId;
 
-  /// Type: string
-  ///
   /// The requested resource's entity type.
+  ///
+  /// Type: string
   final String? resourceType;
 
-  /// Type: string
-  ///
   /// The requested resource's entity ID.
+  ///
+  /// Type: string
   final String? resourceId;
 
-  /// JSON: `{ [key: string]: string }`
-  /// Type: JSON
-  ///
   /// The context of the request
+  ///
+  /// Type: JSON
+  /// JSON: `{ [key: string]: string }`
   final Map<String, i2.Value> contextJson;
 
-  /// Type: bool (true=allow, false=deny)
-  ///
   /// The authorization decision.
+  ///
+  /// Type: bool (true=allow, false=deny)
   final bool decision;
 
-  /// JSON: []string
-  /// Type: JSON
-  ///
   /// The reasons for the authorization decision.
+  ///
+  /// Type: JSON
+  /// JSON: []string
   final List<String> reasonsJson;
 
-  /// ```
-  /// ]
-  ///   }
-  ///     "message": "string"
-  ///     "policy": "policy_id",
-  ///   {
-  /// [
-  /// ```json
-  /// JSON:
-  /// Type: JSON
-  ///
   /// The errors encountered during the authorization decision.
+  ///
+  /// Type: JSON
+  /// JSON:
+  /// ```json
+  /// [
+  ///   {
+  ///     "policy": "policy_id",
+  ///     "message": "string"
+  ///   }
+  /// ]
+  /// ```
   final i5.AuthorizationErrors errorsJson;
   const CedarAuthorizationLog(
       {required this.rowid,
