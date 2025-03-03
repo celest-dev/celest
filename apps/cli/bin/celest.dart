@@ -9,8 +9,9 @@ import 'package:celest_cli/commands/start_command.dart';
 import 'package:celest_cli/commands/uninstall_command.dart';
 import 'package:celest_cli/commands/upgrade_command.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
+import 'package:celest_cli/src/cli.dart';
+import 'package:celest_cli/src/performance/sentry_perf.dart';
 import 'package:celest_cli/src/version.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:sentry/sentry.dart';
 
 final _jsonUtf8 = JsonUtf8Encoder('  ');

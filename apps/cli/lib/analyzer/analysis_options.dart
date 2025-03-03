@@ -1,5 +1,5 @@
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/utils/json.dart';
 import 'package:logging/logging.dart';
 import 'package:yaml/yaml.dart';
 

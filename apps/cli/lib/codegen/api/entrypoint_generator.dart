@@ -13,9 +13,9 @@ import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/types/type_graph.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli/src/utils/run.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:collection/collection.dart';
 

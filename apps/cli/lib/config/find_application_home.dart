@@ -2,7 +2,6 @@
 // https://github.com/dart-lang/cli_util/blob/e5b38ac76887e6eefaf417f5222c317929eed278/lib/cli_util.dart#L41
 
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 
 /// Get the user-specific application configuration folder for the current
 /// platform.

@@ -1,4 +1,4 @@
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/context.dart';
 
 import '../../common/common.dart';
 import '../../common/test_projects.dart';

@@ -1,6 +1,10 @@
+import 'package:celest_cli/commands/celest_command.dart';
 import 'package:celest_cli/commands/upgrade/celest_upgrader.dart';
+import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/exceptions.dart';
+import 'package:celest_cli/src/logging/with_progress.dart';
+import 'package:celest_cli/src/releases/latest_release.dart';
 import 'package:celest_cli/src/version.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 final class UpgradeCommand extends CelestCommand {

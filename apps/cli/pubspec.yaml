@@ -9,7 +9,7 @@ environment:
 dependencies:
   analyzer: ^7.3.0
   analyzer_plugin: ^0.13.0
-  archive: ^3.4.9
+  archive: ^4.0.4
   args: ^2.4.2
   async: ^2.11.0
   built_collection: ^5.1.1
@@ -22,24 +22,24 @@ dependencies:
     path: ../../celest/packages/celest_ast
   celest_auth:
     path: ../../celest/packages/celest_auth
-  celest_cli_common:
-    path: ../../packages/celest_cli_common
   celest_cloud:
     path: ../../celest/packages/celest_cloud
   celest_core:
     path: ../../celest/packages/celest_core
   chunked_stream: ^1.4.2
   cli_script: ^1.0.0
+  cli_util: ^0.4.2
   code_builder: ^4.8.0
   collection: ^1.18.0
   convert: ^3.1.1
   corks_cedar: ^0.2.1
   crypto: ^3.0.3
   dart_style: ^3.0.0
-  dcli: ^6.0.5
-  dcli_terminal: ^6.0.3
+  dcli: ^7.0.1
+  dcli_terminal: ^7.0.1
   drift: '>=2.25.0 <2.26.0'
   email_validator: ^3.0.0
+  ffi: ^2.1.4
   file: ^7.0.0
   fixnum: ^1.1.0
   functions_framework: ^0.4.3+1
@@ -68,6 +68,7 @@ dependencies:
   pub_semver: ^2.1.4
   pubspec_parse: ^1.2.3
   sentry: ^8.5.0
+  sentry_logging: ^8.13.2
   shelf: ^1.4.1
   shelf_static: ^1.1.2
   shelf_web_socket: ^2.0.0
@@ -79,6 +80,7 @@ dependencies:
   toml: ^0.16.0
   vm_service: ^15.0.0
   watcher: ^1.1.0
+  win32: ^5.11.0
   yaml: ^3.1.2
   # TODO: 2.2.2 breaks sorting of edits
   yaml_edit: 2.2.1
@@ -94,8 +96,6 @@ dependency_overrides:
     path: ../../celest/packages/celest_ast
   celest_auth:
     path: ../../celest/packages/celest_auth
-  celest_cli_common:
-    path: ../../packages/celest_cli_common
   celest_cloud:
     path: ../../celest/packages/celest_cloud
   celest_core:

@@ -5,10 +5,10 @@ import 'dart:io' show ProcessException, stderr, stdout;
 import 'package:archive/archive_io.dart';
 import 'package:args/args.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/releases/celest_release_info.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/json.dart';
 import 'package:celest_cli/src/version.dart';
-import 'package:celest_cli_common/celest_cli_common.dart'
-    show CelestReleaseInfo, CelestReleasesInfo, prettyPrintJson;
 import 'package:chunked_stream/chunked_stream.dart';
 import 'package:file/file.dart';
 import 'package:gcloud/storage.dart';
@@ -973,15 +973,14 @@ Future<void> _createZip({
 }) async {
   final zipStream = OutputFileStream(outputPath);
   final archive =
-      ZipEncoder()..startEncode(zipStream, level: Deflate.BEST_COMPRESSION);
+      ZipEncoder()..startEncode(zipStream, level: DeflateLevel.bestCompression);
   for (final file in fromDir.listSync(recursive: false).whereType<File>()) {
     final relativePath = p.relative(file.path, from: fromDir.parent.path);
-    final archiveFile = ArchiveFile(
+    final archiveFile = ArchiveFile.stream(
       relativePath,
-      file.lengthSync(),
       InputFileStream(file.path),
     );
-    archive.addFile(archiveFile);
+    archive.add(archiveFile);
   }
   archive.endEncode();
   await zipStream.close();

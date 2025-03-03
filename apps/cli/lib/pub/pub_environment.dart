@@ -1,4 +1,4 @@
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/sdk/versions.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 abstract final class PubEnvironment {

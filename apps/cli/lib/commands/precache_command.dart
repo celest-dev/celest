@@ -1,10 +1,10 @@
 import 'dart:isolate';
 
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
+import 'package:celest_cli/commands/celest_command.dart';
 import 'package:celest_cli/init/sqlite3.dart';
 import 'package:celest_cli/pub/pub_cache.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 
 final class PrecacheCommand extends CelestCommand {
   @override

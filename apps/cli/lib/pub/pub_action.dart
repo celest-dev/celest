@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/exceptions.dart';
+import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:cli_script/cli_script.dart';
 import 'package:logging/logging.dart';

@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:logging/logging.dart';
 
 class CelestUninstaller {

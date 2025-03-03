@@ -6,8 +6,9 @@ import 'dart:typed_data';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/compiler/package_config_transform.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/utils/json.dart';
 import 'package:crypto/crypto.dart';
 import 'package:logging/logging.dart';
 

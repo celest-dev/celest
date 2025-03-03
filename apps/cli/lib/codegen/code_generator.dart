@@ -1,5 +1,5 @@
 import 'package:celest_cli/codegen/allocator.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 

@@ -2,7 +2,7 @@ import 'package:celest_cli/init/migrations/add_analyzer_plugin.dart';
 import 'package:celest_cli/init/migrations/macos_entitlements.dart';
 import 'package:celest_cli/init/project_migration.dart';
 import 'package:celest_cli/project/celest_project.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/sdk/dart_sdk.dart';
 
 /// Manages the generation of a new Celest project.
 class ProjectGenerator {

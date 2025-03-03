@@ -11,7 +11,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:async/async.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;

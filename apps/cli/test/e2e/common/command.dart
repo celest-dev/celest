@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:async/async.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/logging/log_message.dart';
 import 'package:checks/checks.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show red;

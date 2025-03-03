@@ -1,7 +1,8 @@
 // Coped from: https://github.com/dart-lang/sdk/blob/553df4be869f1175ee2c098584f58e0d860f42fa/pkg/dartdev/lib/src/commands/build.dart#L126
 library;
 
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 import 'package:native_assets_builder/native_assets_builder.dart';

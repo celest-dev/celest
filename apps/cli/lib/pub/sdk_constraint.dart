@@ -1,5 +1,5 @@
 import 'package:celest_cli/pub/language_version.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 /// There are special rules or interpreting SDK constraints, we take care to

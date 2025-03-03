@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/utils/recase.dart';
 import 'package:code_builder/code_builder.dart';
 
 const _header = [

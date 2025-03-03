@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:http/http.dart';
 import 'package:json_annotation/json_annotation.dart';
 

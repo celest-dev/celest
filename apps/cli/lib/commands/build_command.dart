@@ -1,7 +1,8 @@
+import 'package:celest_cli/commands/celest_command.dart';
 import 'package:celest_cli/commands/project_init.dart';
 import 'package:celest_cli/commands/project_migrate.dart';
 import 'package:celest_cli/frontend/celest_frontend.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:mason_logger/src/mason_logger.dart';
 
 final class BuildCommand extends CelestCommand with Configure, Migrate {

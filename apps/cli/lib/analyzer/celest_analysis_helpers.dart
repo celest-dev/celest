@@ -8,7 +8,7 @@ import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/utils/json.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';

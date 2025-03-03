@@ -2,8 +2,8 @@ import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/codegen/client_code_generator.dart';
 import 'package:celest_cli/codegen/cloud/cloud_client_types.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
+import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/reference.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:code_builder/code_builder.dart';
 
 const kClientHeader = [

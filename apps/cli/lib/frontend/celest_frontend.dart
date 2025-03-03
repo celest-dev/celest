@@ -22,7 +22,7 @@ import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/repositories/organization_repository.dart';
 import 'package:celest_cli/src/repositories/project_environment_repository.dart';
 import 'package:celest_cli/src/repositories/project_repository.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/utils/json.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:stream_transform/stream_transform.dart';

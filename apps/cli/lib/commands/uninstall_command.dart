@@ -1,6 +1,6 @@
+import 'package:celest_cli/commands/celest_command.dart';
 import 'package:celest_cli/commands/uninstall/celest_uninstaller.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 
 final class UninstallCommand extends CelestCommand {
   UninstallCommand();

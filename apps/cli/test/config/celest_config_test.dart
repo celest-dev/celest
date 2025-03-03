@@ -1,5 +1,5 @@
+import 'package:celest_cli/src/context.dart' as ctx;
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/src/context.dart' as ctx;
 import 'package:file/memory.dart';
 import 'package:test/test.dart';
 

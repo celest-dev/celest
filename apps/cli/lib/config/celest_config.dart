@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:celest_cli/config/find_application_home.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 import 'package:native_storage/native_storage.dart';

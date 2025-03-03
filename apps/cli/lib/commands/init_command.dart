@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:celest_cli/commands/celest_command.dart';
 import 'package:celest_cli/commands/project_init.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 final class InitCommand extends CelestCommand with Configure, ProjectCreator {

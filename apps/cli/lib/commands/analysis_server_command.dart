@@ -5,7 +5,7 @@ import 'dart:io' as io;
 import 'package:analyzer_plugin/channel/channel.dart';
 import 'package:analyzer_plugin/protocol/protocol.dart';
 import 'package:celest_cli/analyzer/plugin/celest_analyzer_plugin.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/commands/celest_command.dart';
 
 final class AnalysisServerCommand extends CelestCommand {
   AnalysisServerCommand();

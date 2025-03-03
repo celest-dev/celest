@@ -5,7 +5,7 @@ import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/pub/pubspec.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/utils/recase.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 import 'package:pub_semver/pub_semver.dart';
