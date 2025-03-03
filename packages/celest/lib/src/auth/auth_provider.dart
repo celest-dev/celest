@@ -56,7 +56,7 @@ final class _EmailAuthProvider extends AuthProvider {
 
 final class _FirebaseExternalAuthProvider extends ExternalAuthProvider {
   const _FirebaseExternalAuthProvider({
-    // ignore: unused_element
+    // ignore: unused_element_parameter
     this.projectId = const env('FIREBASE_PROJECT_ID'),
   });
 
@@ -65,7 +65,7 @@ final class _FirebaseExternalAuthProvider extends ExternalAuthProvider {
 
 final class _SupabaseExternalAuthProvider extends ExternalAuthProvider {
   const _SupabaseExternalAuthProvider({
-    // ignore: unused_element
+    // ignore: unused_element_parameter
     this.url = const env('SUPABASE_URL'),
     this.jwtSecret,
   });
