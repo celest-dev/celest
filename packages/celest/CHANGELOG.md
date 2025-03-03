@@ -1,3 +1,7 @@
+## 1.0.1+2
+
+- fix: Fallback to in-memory database
+
 ## 1.0.1+1
 
 - fix: Fix expectation of trace context when running in cloud
