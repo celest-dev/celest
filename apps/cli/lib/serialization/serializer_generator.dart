@@ -638,7 +638,7 @@ final class SerializerGenerator {
         var constructor = typeReference;
         var cast = false;
         if (_isOverridden) {
-          if (serializationSpec.wireConstructor!.enclosingElement !=
+          if (serializationSpec.wireConstructor!.enclosingElement3 !=
               type.element) {
             constructor = representationTypeRef;
             cast = true;

@@ -109,7 +109,6 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       case DisposedAnalysisContextResult():
       case InvalidPathResult():
       case NotElementOfThisSessionResult():
-      case NotLibraryButAugmentationResult():
       case NotPathOfUriResult():
       case InvalidResult():
       case _:

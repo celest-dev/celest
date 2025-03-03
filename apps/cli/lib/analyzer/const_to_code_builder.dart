@@ -199,7 +199,7 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
         variable.name,
         variable.library.source.uri.toString(),
       ),
-      FieldElement(:final enclosingElement) => refer(
+      FieldElement(enclosingElement3: final enclosingElement) => refer(
         enclosingElement.displayName,
         enclosingElement.library!.source.uri.toString(),
       ).property(variable.name),
@@ -239,10 +239,10 @@ final class _ConstToDartValue extends DartObjectVisitor<ast.DartValue> {
             .toList();
     final positionalParameterValues =
         invocation.positionalArguments.map((el) => el.accept(this)).toList();
-    final className = constructorEl.enclosingElement.displayName;
+    final className = constructorEl.enclosingElement3.displayName;
     final classRef =
         typeHelper
-            .toReference(constructorEl.enclosingElement.thisType)
+            .toReference(constructorEl.enclosingElement3.thisType)
             .toTypeReference;
     assert(() {
       if (positionalParameterNames.length < positionalParameterValues.length) {

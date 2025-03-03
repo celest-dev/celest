@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_provider.dart';
@@ -251,6 +252,57 @@ final class CoreTypes implements TypeProvider {
 
   @override
   VoidType get voidType => _typeProvider.voidType;
+
+  @override
+  ClassElement2 get boolElement2 => _typeProvider.boolElement2;
+
+  @override
+  ClassElement2 get doubleElement2 => _typeProvider.doubleElement2;
+
+  @override
+  ClassElement2? get enumElement2 => _typeProvider.enumElement2;
+
+  @override
+  ClassElement2 get futureElement2 => _typeProvider.futureElement2;
+
+  @override
+  ClassElement2 get futureOrElement2 => _typeProvider.futureOrElement2;
+
+  @override
+  ClassElement2 get intElement2 => _typeProvider.intElement2;
+
+  @override
+  ClassElement2 get iterableElement2 => _typeProvider.iterableElement2;
+
+  @override
+  ClassElement2 get listElement2 => _typeProvider.listElement2;
+
+  @override
+  ClassElement2 get mapElement2 => _typeProvider.mapElement2;
+
+  @override
+  ClassElement2 get nullElement2 => _typeProvider.nullElement2;
+
+  @override
+  ClassElement2 get numElement2 => _typeProvider.numElement2;
+
+  @override
+  ClassElement2 get objectElement2 => _typeProvider.objectElement2;
+
+  @override
+  ClassElement2 get recordElement2 => _typeProvider.recordElement2;
+
+  @override
+  ClassElement2 get setElement2 => _typeProvider.setElement2;
+
+  @override
+  ClassElement2 get streamElement2 => _typeProvider.streamElement2;
+
+  @override
+  ClassElement2 get stringElement2 => _typeProvider.stringElement2;
+
+  @override
+  ClassElement2 get symbolElement2 => _typeProvider.symbolElement2;
 }
 
 final class TypeHelper {
@@ -544,7 +596,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
 
   @override
   codegen.Reference visitInvalidType(InvalidType type) =>
-      codegen.refer(type.getDisplayString(withNullability: true));
+      codegen.refer(type.getDisplayString());
 
   @override
   codegen.Reference visitNeverType(NeverType type) => DartTypes.core.never;
@@ -585,7 +637,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
     return codegen.TypeReference(
       (t) =>
           t
-            ..symbol = type.getDisplayString(withNullability: true)
+            ..symbol = type.getDisplayString()
             ..bound =
                 type.bound is DynamicType
                     ? null

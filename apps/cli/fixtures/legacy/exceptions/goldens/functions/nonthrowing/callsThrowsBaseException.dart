@@ -1101,36 +1101,6 @@ final class CallsThrowsBaseExceptionTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i5.CloudException catch (e, st) {
-      const statusCode = 400;
-      _i6.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
-      final status = {
-        '@status': {
-          'code': statusCode,
-          'message': e.message,
-          'details': [
-            {
-              '@type': 'celest.core.v1.CloudException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i5.CloudException>(e),
-            },
-            if (_i6.context.environment != _i7.Environment.production)
-              {
-                '@type': 'dart.core.StackTrace',
-                'value': _i4.Serializers.instance.serialize<StackTrace>(st),
-              },
-          ],
-        }
-      };
-      return _i2.Response(
-        statusCode,
-        headers: const {'Content-Type': 'application/json'},
-        body: _i4.JsonUtf8.encode(status),
-      );
     } on Exception catch (e, st) {
       const statusCode = 400;
       _i6.context.logger.severe(
@@ -1545,22 +1515,6 @@ final class CallsThrowsBaseExceptionTarget extends _i1.CloudFunctionHttpTarget {
           ),
           ($serialized?[r'code'] as num?)?.toInt(),
         );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i5.CloudException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i5.CloudException.fromJson($serialized);
       },
     ));
     _i4.Serializers.instance

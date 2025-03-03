@@ -111,9 +111,6 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     DartType wireType,
   ) {
     if (fromJsonCtor is! ConstructorElement) {
-      // TODO(dnys1): Breaks with analyzer >=6.5.0 because type system uses
-      // `identical` in subtype checks instead of `==`
-      // https://github.com/dart-lang/sdk/commit/f82ab4c6eaf0ebb6f3e85de6ce323b04250be700
       if (!identical(fromJsonCtor.returnType, type)) {
         return Verdict.no(
           'The return type of ${type.element.name}\'s fromJson constructor '
@@ -141,7 +138,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             .toList();
     if (positionalParameters.isEmpty) {
       final functionSignature =
-          'factory ${type.element.name}.fromJson(${wireType.getDisplayString(withNullability: true)} json)';
+          'factory ${type.element.name}.fromJson(${wireType.getDisplayString()} json)';
       return Verdict.no(
         'The fromJson constructor of type ${type.element.name} must have '
         'one required, positional parameter whose type matches the return '
@@ -173,10 +170,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     }
     switch (wireType) {
       case DartType(isDartCoreObject: true) || DynamicType():
+      case _ when const DartTypeEquality().equals(wireType, requiredParam.type):
       case _
-          // TODO(dnys1): Breaks with analyzer >=6.5.0 because type system uses
-          // `identical` in subtype checks instead of `==`
-          // https://github.com/dart-lang/sdk/commit/f82ab4c6eaf0ebb6f3e85de6ce323b04250be700
           when typeHelper.typeSystem.isAssignableTo(
             wireType,
             requiredParam.type,
@@ -376,7 +371,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             fromJsonParameters: fromJsonCtor.parameterSpecs,
             fromJsonType: fromJsonCtor?.returnType as InterfaceType?,
             toJsonType:
-                (toJsonMethod?.enclosingElement as InterfaceElement?)?.thisType,
+                (toJsonMethod?.enclosingElement3 as InterfaceElement?)
+                    ?.thisType,
             representationType: SerializationSpec(
               type: erasureType,
               wireType: wireType,
@@ -451,7 +447,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       fromJsonParameters: fromJsonCtor.parameterSpecs,
       fromJsonType: fromJsonCtor?.returnType as InterfaceType?,
       toJsonType:
-          (toJsonMethod?.enclosingElement as InterfaceElement?)?.thisType,
+          (toJsonMethod?.enclosingElement3 as InterfaceElement?)?.thisType,
     );
     verdict = verdict.withPrimarySpec(spec);
 
@@ -512,7 +508,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
                   'All classes in a sealed class hierarchy must use '
                   'Map<String, Object?> as their wire type but '
                   '${subtypeSpec.type.element!.name!} uses '
-                  '${subtypeWireType.getDisplayString(withNullability: true)}',
+                  '${subtypeWireType.getDisplayString()}',
                 );
               }
               spec.subtypes.add(subtypeSpec..parent = spec);
@@ -645,28 +641,19 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       case InterfaceType(:final ClassElement element) when element.isSealed:
         analytics.capture(
           'type_parameter',
-          properties: {
-            'type': type.getDisplayString(withNullability: true),
-            'bound': 'sealed',
-          },
+          properties: {'type': type.getDisplayString(), 'bound': 'sealed'},
         );
         return typeHelper.isSerializable(type.bound);
       case DynamicType():
         analytics.capture(
           'type_parameter',
-          properties: {
-            'type': type.getDisplayString(withNullability: true),
-            'bound': 'unbounded',
-          },
+          properties: {'type': type.getDisplayString(), 'bound': 'unbounded'},
         );
         return const Verdict.yes();
       default:
         analytics.capture(
           'type_parameter',
-          properties: {
-            'type': type.getDisplayString(withNullability: true),
-            'bound': 'other',
-          },
+          properties: {'type': type.getDisplayString(), 'bound': 'other'},
         );
         return VerdictNo([
           VerdictReason(
@@ -726,16 +713,16 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
         redirectedConstructor: Element(
           // TODO(dnys1): This is missing some edge cases. For example, a class
           // could redirect to another redirecting constructor.
-          enclosingElement: final ClassElement redirectedClass,
+          enclosingElement3: final ClassElement redirectedClass,
         ),
       ) =>
         redirectedClass.sortedFields(redirectedClass.thisType),
       // Special case for Exception which is basically a redirecting constructor
       // but uses `=>` syntax.
       _ when element.name == 'Exception' && element.library.isDartCore =>
-        (element.library.getClass('_Exception') as ClassElement).let(
-          (impl) => impl.sortedFields(impl.thisType),
-        ),
+        element.library
+            .getClass('_Exception')!
+            .let((impl) => impl.sortedFields(impl.thisType)),
       _ => element.sortedFields(type),
     };
     var fieldsVerdict = const Verdict.yes();
@@ -1015,10 +1002,8 @@ extension on InterfaceType {
         analytics.capture(
           'extension_type',
           properties: {
-            'type': getDisplayString(withNullability: true),
-            'representationType': representationType.getDisplayString(
-              withNullability: false,
-            ),
+            'type': getDisplayString(),
+            'representationType': representationType.getDisplayString(),
             'hasToJson': members.toJsonMethod != null,
             'hasFromJson': members.fromJsonCtor != null,
           },
@@ -1077,13 +1062,13 @@ extension on ClassElement {
       typeHelper.coreTypes.coreErrorType,
     );
 
-    // ignore: deprecated_member_use
-    for (final v in inheritanceManager.getInheritedConcreteMap(type).values) {
+    for (final v
+        in inheritanceManager.getInheritedConcreteMap2(type.element).values) {
       assert(v is! FieldElement);
-      if (dartCoreObject.isExactly(v.enclosingElement)) {
+      if (dartCoreObject.isExactly(v.enclosingElement3)) {
         continue;
       }
-      if (coreErrorType.isExactly(v.enclosingElement)) {
+      if (coreErrorType.isExactly(v.enclosingElement3)) {
         continue;
       }
 
@@ -1092,8 +1077,8 @@ extension on ClassElement {
       }
 
       if (v is PropertyAccessorElement && v.isGetter) {
-        assert(v.variable is FieldElement);
-        final variable = v.variable as FieldElement;
+        assert(v.variable2 is FieldElement);
+        final variable = v.variable2 as FieldElement;
         assert(!inheritedFields.containsKey(variable.name));
         inheritedFields[variable.name] = variable;
       }
@@ -1187,22 +1172,22 @@ class _FieldSet implements Comparable<_FieldSet> {
 
   static int _sortByLocation(FieldElement a, FieldElement b) {
     final checkerA = TypeChecker.fromStatic(
-      (a.enclosingElement as InterfaceElement).thisType,
+      (a.enclosingElement3 as InterfaceElement).thisType,
     );
 
-    if (!checkerA.isExactly(b.enclosingElement)) {
+    if (!checkerA.isExactly(b.enclosingElement3)) {
       // in this case, you want to prioritize the enclosingElement that is more
       // "super".
 
-      if (checkerA.isAssignableFrom(b.enclosingElement)) {
+      if (checkerA.isAssignableFrom(b.enclosingElement3)) {
         return -1;
       }
 
       final checkerB = TypeChecker.fromStatic(
-        (b.enclosingElement as InterfaceElement).thisType,
+        (b.enclosingElement3 as InterfaceElement).thisType,
       );
 
-      if (checkerB.isAssignableFrom(a.enclosingElement)) {
+      if (checkerB.isAssignableFrom(a.enclosingElement3)) {
         return 1;
       }
     }
@@ -1240,7 +1225,9 @@ extension on ExecutableElement? {
     final specs = <ParameterSpec>[];
     final fields = switch (this) {
       ParameterElement(
-        enclosingElement: Element(:final ClassElement enclosingElement),
+        enclosingElement3: Element(
+          enclosingElement3: final ClassElement enclosingElement,
+        ),
       ) =>
         enclosingElement.sortedFields(enclosingElement.thisType),
       _ => const <FieldElement>[],
@@ -1249,7 +1236,9 @@ extension on ExecutableElement? {
       final fieldFormal = parameter.fieldFormal(fields);
       final (:ignoreFromJson, ignoreToJson: _) = switch (parameter) {
         ParameterElement(
-          enclosingElement: Element(:final ClassElement enclosingElement),
+          enclosingElement3: Element(
+            enclosingElement3: final ClassElement enclosingElement,
+          ),
         )
             when fieldFormal != null =>
           enclosingElement.thisType._ignoredByJsonKey(fieldFormal),

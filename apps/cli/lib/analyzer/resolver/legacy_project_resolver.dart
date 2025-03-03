@@ -6,8 +6,8 @@ import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/source/file_source.dart';
 import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
-import 'package:analyzer/src/source/source_resource.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
@@ -539,7 +539,7 @@ final class LegacyCelestProjectResolver extends CelestProjectResolver {
           switch ((annotation.element, annotation.library)) {
             case (
               PropertyAccessorElement(
-                enclosingElement: ClassElement(name: 'Env'),
+                enclosingElement3: ClassElement(name: 'Env'),
                 :final name,
               ),
               final library?,

@@ -259,9 +259,10 @@
             {
               "name": "website",
               "type": {
-                "$": "Reference",
+                "$": "TypeReference",
                 "symbol": "Uri",
-                "url": "dart:core"
+                "url": "dart:core",
+                "isNullable": false
               },
               "required": true,
               "named": true,
@@ -320,9 +321,10 @@
             {
               "name": "superSecret",
               "type": {
-                "$": "Reference",
+                "$": "TypeReference",
                 "symbol": "Uint8List",
-                "url": "dart:typed_data"
+                "url": "dart:typed_data",
+                "isNullable": false
               },
               "required": true,
               "named": true,
@@ -536,12 +538,6 @@
           "$": "TypeReference",
           "symbol": "TimeoutException",
           "url": "dart:async",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
         {

@@ -336,22 +336,6 @@ void initSerializers({_$celest.Serializers? serializers}) {
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
-          _$celest.CloudException, Map<String, Object?>>(
-        serialize: ($value) => <String, Object?>{
-          r'code': $value.code,
-          r'message': $value.message,
-          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-            $value.details,
-            const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-          )
-              case final details?)
-            r'details': details,
-        },
-        deserialize: ($serialized) {
-          return _$celest.CloudException.fromJson($serialized);
-        },
-      ));
-      _$celest.Serializers.instance.put(_$celest.Serializer.define<
           _$celest.DataLossError, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,

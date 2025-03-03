@@ -60,12 +60,6 @@ class CelestFunctionsHttpErrors {
     };
 
     switch (errorType) {
-      case 'celest.core.v1.CloudException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.CloudException>(errorValue),
-          stackTrace,
-        );
       case 'celest.core.v1.CancelledException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
@@ -366,12 +360,6 @@ class CelestFunctionsHttpHeader {
     };
 
     switch (errorType) {
-      case 'celest.core.v1.CloudException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.CloudException>(errorValue),
-          stackTrace,
-        );
       case 'celest.core.v1.CancelledException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
@@ -666,12 +654,6 @@ class CelestFunctionsHttpMethod {
     };
 
     switch (errorType) {
-      case 'celest.core.v1.CloudException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.CloudException>(errorValue),
-          stackTrace,
-        );
       case 'celest.core.v1.CancelledException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
@@ -1027,12 +1009,6 @@ class CelestFunctionsHttpQuery {
     };
 
     switch (errorType) {
-      case 'celest.core.v1.CloudException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.CloudException>(errorValue),
-          stackTrace,
-        );
       case 'celest.core.v1.CancelledException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
@@ -1365,12 +1341,6 @@ class CelestFunctionsHttpStatus {
     };
 
     switch (errorType) {
-      case 'celest.core.v1.CloudException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.CloudException>(errorValue),
-          stackTrace,
-        );
       case 'celest.core.v1.CancelledException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance

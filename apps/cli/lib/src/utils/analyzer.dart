@@ -6,12 +6,12 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/source/source.dart';
 import 'package:analyzer/src/dart/analysis/driver.dart';
 import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
 import 'package:analyzer/src/dart/analysis/search.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:analyzer/src/dart/element/type.dart';
-import 'package:analyzer/src/generated/source.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/analyzer/const_to_code_builder.dart';
 import 'package:celest_cli/serialization/common.dart';
@@ -56,7 +56,7 @@ extension ElementAnnotationHelper on ElementAnnotation {
 
   bool get isHttpError => switch (element) {
     ConstructorElement(
-      enclosingElement: ClassElement(:final name, :final library),
+      enclosingElement3: ClassElement(:final name, :final library),
     ) =>
       name == 'httpError' && library.isCelestSdk,
     _ => false,
@@ -810,9 +810,9 @@ extension AnnotationIsPrivate on ElementAnnotation {
   bool get isPrivate => switch (element) {
     null => false,
     final PropertyAccessorElement propertyAccessor =>
-      propertyAccessor.variable.isPrivate,
+      propertyAccessor.variable2!.isPrivate,
     final ConstructorElement constructor =>
-      constructor.enclosingElement.isPrivate,
+      constructor.enclosingElement3.isPrivate,
     _ => unreachable('Unexpected annotation element: ${element.runtimeType}'),
   };
 

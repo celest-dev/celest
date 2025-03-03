@@ -56,12 +56,6 @@ class CelestFunctionsGreeting {
               .deserialize<BadNameException>(errorValue),
           stackTrace,
         );
-      case 'celest.core.v1.CloudException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.CloudException>(errorValue),
-          stackTrace,
-        );
       case 'celest.core.v1.CancelledException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance

@@ -7,9 +7,7 @@ environment:
   sdk: ^3.7.0
 
 dependencies:
-  # TODO: Cannot use latest because type system uses `identical` in subtype checks instead of `==`
-  # https://github.com/dart-lang/sdk/commit/f82ab4c6eaf0ebb6f3e85de6ce323b04250be700
-  analyzer: <6.5.0
+  analyzer: ^6.11.0
   analyzer_plugin: ^0.11.3
   archive: ^3.4.9
   args: ^2.4.2

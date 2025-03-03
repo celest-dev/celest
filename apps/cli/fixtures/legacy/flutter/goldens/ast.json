@@ -475,12 +475,6 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -613,17 +607,19 @@
             "url": "dart:async",
             "types": [
               {
-                "$": "Reference",
+                "$": "TypeReference",
                 "symbol": "Uint8List",
-                "url": "dart:typed_data"
+                "url": "dart:typed_data",
+                "isNullable": false
               }
             ],
             "isNullable": false
           },
           "flattenedReturnType": {
-            "$": "Reference",
+            "$": "TypeReference",
             "symbol": "Uint8List",
-            "url": "dart:typed_data"
+            "url": "dart:typed_data",
+            "isNullable": false
           },
           "metadata": [],
           "annotations": [
@@ -967,12 +963,6 @@
           "$": "TypeReference",
           "symbol": "WebSocketException",
           "url": "dart:io",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "CloudException",
-          "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
         },
         {

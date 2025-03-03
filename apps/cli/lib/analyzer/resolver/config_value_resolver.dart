@@ -138,7 +138,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
         final element = metadata.element;
         final location = parameter.sourceLocation;
         switch (element) {
-          case ConstructorElement(:final enclosingElement)
+          case ConstructorElement(enclosingElement3: final enclosingElement)
               when enclosingElement == configValueElement:
             parameterResolutions.add(
               resolveVariable(

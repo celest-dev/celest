@@ -37,8 +37,8 @@ List<DartType> topologicallySortTypes(Iterable<DartType> types) {
     hashCode: _equality.hash,
     // Provide a stable iteration order to help with codegen consistency.
     secondarySort: (a, b) {
-      final aName = a.getDisplayString(withNullability: false);
-      final bName = b.getDisplayString(withNullability: false);
+      final aName = a.getDisplayString();
+      final bName = b.getDisplayString();
       return aName.compareTo(bName);
     },
   );

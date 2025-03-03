@@ -53,12 +53,6 @@ class CelestFunctionsAuthenticatedLib {
     };
 
     switch (errorType) {
-      case 'celest.core.v1.CloudException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.CloudException>(errorValue),
-          stackTrace,
-        );
       case 'celest.core.v1.CancelledException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
@@ -341,12 +335,6 @@ class CelestFunctionsLib {
     };
 
     switch (errorType) {
-      case 'celest.core.v1.CloudException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.CloudException>(errorValue),
-          stackTrace,
-        );
       case 'celest.core.v1.CancelledException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
@@ -703,12 +691,6 @@ class CelestFunctionsPublicLib {
     };
 
     switch (errorType) {
-      case 'celest.core.v1.CloudException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.CloudException>(errorValue),
-          stackTrace,
-        );
       case 'celest.core.v1.CancelledException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance

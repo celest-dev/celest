@@ -993,36 +993,6 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.CloudException catch (e, st) {
-      const statusCode = 400;
-      _i3.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
-      final status = {
-        '@status': {
-          'code': statusCode,
-          'message': e.message,
-          'details': [
-            {
-              '@type': 'celest.core.v1.CloudException',
-              'value':
-                  _i6.Serializers.instance.serialize<_i7.CloudException>(e),
-            },
-            if (_i3.context.environment != _i8.Environment.production)
-              {
-                '@type': 'dart.core.StackTrace',
-                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
-              },
-          ],
-        }
-      };
-      return _i4.Response(
-        statusCode,
-        headers: const {'Content-Type': 'application/json'},
-        body: _i6.JsonUtf8.encode(status),
-      );
     } on Exception catch (e, st) {
       const statusCode = 400;
       _i3.context.logger.severe(
@@ -1416,22 +1386,6 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
           ),
           ($serialized?[r'code'] as num?)?.toInt(),
         );
-      },
-    ));
-    _i6.Serializers.instance
-        .put(_i6.Serializer.define<_i7.CloudException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
-          $value.details,
-          const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.CloudException.fromJson($serialized);
       },
     ));
     _i6.Serializers.instance
