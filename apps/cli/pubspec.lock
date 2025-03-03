@@ -207,7 +207,7 @@ packages:
       path: "../../cedar/packages/cedar"
       relative: true
     source: path
-    version: "0.2.3"
+    version: "0.2.4-wip"
   celest:
     dependency: "direct main"
     description:
