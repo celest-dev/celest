@@ -16,10 +16,7 @@ extension type CelestAuth._(_$celest.AuthImpl _hub) implements _$celest.Auth {
   CelestAuth(
     _$celest.CelestBase celest, {
     required _$native_storage_native_storage.NativeStorage storage,
-  }) : _hub = _$celest.AuthImpl(
-          celest,
-          storage: storage,
-        );
+  }) : _hub = _$celest.AuthImpl(celest, storage: storage);
 }
 
 /// External authentication providers which can be used to sign in to Celest.
@@ -28,10 +25,8 @@ extension type CelestAuth._(_$celest.AuthImpl _hub) implements _$celest.Auth {
 /// the external auth providers.
 class ExternalAuth extends _$celest.TokenSource {
   /// {@macro celest_auth.token_source.of}
-  const ExternalAuth.of({
-    required super.provider,
-    required super.stream,
-  }) : super.of();
+  const ExternalAuth.of({required super.provider, required super.stream})
+    : super.of();
 
   /// Creates an instance of [ExternalAuth] for Firebase Auth.
   ///
@@ -48,7 +43,8 @@ class ExternalAuth extends _$celest.TokenSource {
   /// }
   /// ```
   factory ExternalAuth.firebase(
-      _$firebase_auth_firebase_auth.FirebaseAuth firebase) {
+    _$firebase_auth_firebase_auth.FirebaseAuth firebase,
+  ) {
     return ExternalAuth.of(
       provider: _$celest.AuthProviderType.firebase,
       stream: firebase.idTokenChanges().asyncMap((user) => user?.getIdToken()),

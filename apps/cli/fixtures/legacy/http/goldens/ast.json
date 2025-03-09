@@ -541,6 +541,12 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -1300,6 +1306,12 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -1822,10 +1834,9 @@
             {
               "name": "aDateTime",
               "type": {
-                "$": "TypeReference",
+                "$": "Reference",
                 "symbol": "DateTime",
-                "url": "dart:core",
-                "isNullable": false
+                "url": "dart:core"
               },
               "required": true,
               "named": false,
@@ -2551,10 +2562,9 @@
                 "url": "dart:core",
                 "types": [
                   {
-                    "$": "TypeReference",
+                    "$": "Reference",
                     "symbol": "DateTime",
-                    "url": "dart:core",
-                    "isNullable": false
+                    "url": "dart:core"
                   }
                 ],
                 "isNullable": false
@@ -2941,10 +2951,9 @@
                 "url": "dart:core",
                 "types": [
                   {
-                    "$": "TypeReference",
+                    "$": "Reference",
                     "symbol": "DateTime",
-                    "url": "dart:core",
-                    "isNullable": false
+                    "url": "dart:core"
                   }
                 ],
                 "isNullable": true
@@ -3058,6 +3067,12 @@
       },
       "docs": [],
       "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",
@@ -3667,6 +3682,12 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -4219,10 +4240,9 @@
             {
               "name": "aDateTime",
               "type": {
-                "$": "TypeReference",
+                "$": "Reference",
                 "symbol": "DateTime",
-                "url": "dart:core",
-                "isNullable": false
+                "url": "dart:core"
               },
               "required": true,
               "named": false,
@@ -4675,6 +4695,12 @@
       },
       "docs": [],
       "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",

@@ -2,7 +2,7 @@ targets:
   json:
     sources:
       exclude:
-        - "test/fixtures/**"
+        - "fixtures/**"
         - "lib/database/**"
     auto_apply_builders: false
     builders:

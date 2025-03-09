@@ -490,14 +490,14 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "ConnectionClosedException",
-          "url": "package:drift/src/remote/communication.dart",
+          "symbol": "VfsException",
+          "url": "package:sqlite3/src/vfs.dart",
           "isNullable": false
         },
         {
           "$": "TypeReference",
-          "symbol": "VfsException",
-          "url": "package:sqlite3/src/vfs.dart",
+          "symbol": "ConnectionClosedException",
+          "url": "package:drift/src/remote/communication.dart",
           "isNullable": false
         },
         {

@@ -247,6 +247,12 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -577,6 +583,12 @@
         "/// A library with methods that do not through but call methods that do throw."
       ],
       "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",
@@ -1039,6 +1051,12 @@
       },
       "docs": [],
       "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
         {
           "$": "TypeReference",
           "symbol": "CancelledException",

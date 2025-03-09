@@ -26,13 +26,7 @@ class CelestAuth {
       tokenSecret: const secret('CELEST_AUTH_DATABASE_TOKEN'),
     );
     final service = await CelestCloudAuth.create(database: database);
-    context.router.mount(
-      '/v1alpha1/auth/',
-      service.handler,
-    );
-    context.put(
-      CelestCloudAuth.contextKey,
-      service,
-    );
+    context.router.mount('/v1alpha1/auth/', service.handler);
+    context.put(CelestCloudAuth.contextKey, service);
   }
 }

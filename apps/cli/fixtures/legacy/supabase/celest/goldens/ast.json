@@ -206,6 +206,12 @@
       "exceptionTypes": [
         {
           "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CancelledException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
