@@ -14,18 +14,17 @@ dependencies:
   async: ^2.11.0
   built_collection: ^5.1.1
   built_value: ^8.6.3
-  cedar:
-    path: ../../cedar/packages/cedar
+  cedar: ^0.2.1
   celest:
-    path: ../../celest/packages/celest
+    path: ../../packages/celest
   celest_ast:
-    path: ../../celest/packages/celest_ast
+    path: ../../packages/celest_ast
   celest_auth:
-    path: ../../celest/packages/celest_auth
+    path: ../../packages/celest_auth
   celest_cloud:
-    path: ../../celest/packages/celest_cloud
+    path: ../../packages/celest_cloud
   celest_core:
-    path: ../../celest/packages/celest_core
+    path: ../../packages/celest_core
   chunked_stream: ^1.4.2
   cli_script: ^1.0.0
   cli_util: ^0.4.2
@@ -88,8 +87,6 @@ dependencies:
 dependency_overrides:
   # TODO: Remove when built_value supports latest analyzer
   analyzer: ^7.3.0
-  cedar:
-    path: ../../cedar/packages/cedar
   celest:
     path: ../../celest/packages/celest
   celest_ast:

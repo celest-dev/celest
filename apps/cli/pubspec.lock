@@ -172,42 +172,43 @@ packages:
   cedar:
     dependency: "direct main"
     description:
-      path: "../../cedar/packages/cedar"
-      relative: true
-    source: path
-    version: "0.2.4-wip"
+      name: cedar
+      sha256: "1ce1a9c06f10436739e1757e364ba016e4c13418761b83af76fa4ba784a028be"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.3"
   celest:
     dependency: "direct main"
     description:
-      path: "../../celest/packages/celest"
+      path: "../../packages/celest"
       relative: true
     source: path
     version: "1.0.1+2"
   celest_ast:
     dependency: "direct main"
     description:
-      path: "../../celest/packages/celest_ast"
+      path: "../../packages/celest_ast"
       relative: true
     source: path
     version: "0.1.4"
   celest_auth:
     dependency: "direct main"
     description:
-      path: "../../celest/packages/celest_auth"
+      path: "../../packages/celest_auth"
       relative: true
     source: path
     version: "1.0.0"
   celest_cloud:
     dependency: "direct main"
     description:
-      path: "../../celest/packages/celest_cloud"
+      path: "../../packages/celest_cloud"
       relative: true
     source: path
     version: "0.1.4"
   celest_core:
     dependency: "direct main"
     description:
-      path: "../../celest/packages/celest_core"
+      path: "../../packages/celest_core"
       relative: true
     source: path
     version: "1.0.0"
@@ -514,11 +515,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
-  flutter:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   flutter_lints:
     dependency: transitive
     description:
@@ -815,14 +811,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.12.17"
-  material_color_utilities:
-    dependency: transitive
-    description:
-      name: material_color_utilities
-      sha256: f7142bb1154231d7ea5f96bc7bde4bda2a0945d2806bb11670e30b850d56bdec
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.11.1"
   meta:
     dependency: "direct main"
     description:
@@ -1151,11 +1139,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.4"
-  sky_engine:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   source_gen:
     dependency: "direct overridden"
     description:
@@ -1372,14 +1355,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
-  vector_math:
-    dependency: transitive
-    description:
-      name: vector_math
-      sha256: "80b3257d1492ce4d091729e3a67a60407d227c27241d6927be0130c98e741803"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.4"
   vm_service:
     dependency: "direct main"
     description:
@@ -1590,4 +1565,3 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=3.7.0 <4.0.0"
-  flutter: ">=3.19.0"
