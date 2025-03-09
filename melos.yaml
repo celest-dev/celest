@@ -1,0 +1,31 @@
+name: celest_dev
+
+packages:
+  - examples/**
+  - packages/**
+  - services/**
+ignore:
+  - "examples/**/celest"
+  - "packages/**/example/celest"
+
+ide:
+  intellij:
+    enabled: false
+
+command:
+  bootstrap:
+    hooks:
+      # To avoid package name conflicts (all Celest backends are named the same currently),
+      # run the pub get step for the backend folders separate from the main bootstrap.
+      post: melos exec --dir-exists=celest -- dart pub get --directory=celest
+
+scripts:
+  lint:
+    description: Run the linter on all packages.
+    run: dart analyze --fatal-infos --fatal-warnings .
+  format:
+    description: Format all packages.
+    exec: dart format .
+  fix:
+    description: Fix linter errors in all packages.
+    exec: dart fix --apply

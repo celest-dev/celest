@@ -1,0 +1,10 @@
+version: v2
+inputs:
+  - directory: proto
+  - module: buf.build/celest-dev/cedar
+plugins:
+  - remote: buf.build/protocolbuffers/dart:v21.1.2
+    include_imports: true
+    include_wkt: true
+    out: lib/src/proto
+    opt: grpc

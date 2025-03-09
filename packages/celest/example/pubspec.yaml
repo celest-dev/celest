@@ -1,0 +1,32 @@
+name: example_app
+description: An example project showing how to use Celest in a Flutter application.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.5 <4.0.0'
+
+dependencies:
+  example_client:
+    path: celest/client/
+  flutter:
+    sdk: flutter
+  logging: ^1.2.0
+
+dependency_overrides:
+  celest:
+    path: ../
+  celest_auth:
+    path: ../../celest_auth
+  celest_cloud:
+    path: ../../celest_cloud
+  celest_core:
+    path: ../../celest_core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true

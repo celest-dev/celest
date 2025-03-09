@@ -1,0 +1,10 @@
+include: package:celest_lints/app.yaml
+
+analyzer:
+  errors:
+    # Print statements are trapped by parent zone and sent to logger.
+    avoid_print: ignore
+    implementation_imports: ignore
+  exclude:
+    - '**/*.g.dart'
+    - '**/*.drift.dart'

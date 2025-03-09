@@ -1,0 +1,33 @@
+name: gemini
+description: An example of how to use Gemini AI from Celest.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.3.0
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  gemini_example_client:
+    path: celest/client/
+  stream_transform: ^2.1.0
+
+dependency_overrides:
+  celest:
+    path: ../../packages/celest
+  celest_auth:
+    path: ../../packages/celest_auth
+  celest_cloud:
+    path: ../../packages/celest_cloud
+  celest_core:
+    path: ../../packages/celest_core
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,57 @@
+name: celest_core
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/celest_core.yaml"
+      - "packages/celest_core/**"
+
+# Prevent duplicate runs due to Graphite
+# https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
+  cancel-in-progress: true
+
+jobs:
+  analyze_and_format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@f2c4f6686ca8e8d6e6d0f28410eeef506ed66aff # 2.18.0
+        with:
+          cache: true
+      - name: Setup Melos
+        run: dart pub global activate melos
+      - name: Get Packages
+        run: melos bootstrap
+      - name: Analyze
+        working-directory: packages/celest_core
+        run: dart analyze
+      - name: Format
+        working-directory: packages/celest_core
+        run: dart format --set-exit-if-changed .
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@f2c4f6686ca8e8d6e6d0f28410eeef506ed66aff # 2.18.0
+        with:
+          cache: true
+      - name: Setup Melos
+        run: dart pub global activate melos
+      - name: Get Packages
+        run: melos bootstrap
+      - name: Test
+        working-directory: packages/celest_core
+        run: dart test
+      - name: Test (Chrome, dart2js)
+        working-directory: packages/celest_core
+        run: dart test -p chrome
+      - name: Test (Chrome, dart2wasm)
+        working-directory: packages/celest_core
+        run: dart test -p chrome -c dart2wasm

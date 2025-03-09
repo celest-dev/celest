@@ -1,0 +1,33 @@
+name: firebase_test
+description: An example of how to use Firebase as an authentication provider for Celest.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  firebase_auth: ^5.3.1
+  firebase_core: ^3.6.0
+  firebase_test_client:
+    path: celest/client/
+  flutter:
+    sdk: flutter
+
+dependency_overrides:
+  celest:
+    path: ../../packages/celest
+  celest_auth:
+    path: ../../packages/celest_auth
+  celest_cloud:
+    path: ../../packages/celest_cloud
+  celest_core:
+    path: ../../packages/celest_core
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,12 @@
+include: package:celest_lints/library.yaml
+
+analyzer:
+  exclude:
+    - lib/**/*.pb.dart
+    - lib/**/*.pbenum.dart
+    - lib/**/*.pbjson.dart
+    - lib/**/*.pbgrpc.dart
+    - lib/**/*.g.dart
+  errors:
+    implementation_imports: ignore
+    public_member_api_docs: ignore

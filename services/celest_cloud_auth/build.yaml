@@ -1,0 +1,34 @@
+targets:
+  drift:
+    auto_apply_builders: false
+    builders:
+      drift_dev:
+        enabled: false
+      
+      drift_dev:analyzer:
+        enabled: true
+        options: &options
+          named_parameters: true
+          store_date_time_values_as_text: false
+
+          sql:
+            dialect: sqlite
+            options:
+              version: "3.38"
+              modules:
+                - json1
+          
+          # Reduces generated code
+          skip_verification_code: true
+          data_class_to_companions: false
+
+      drift_dev:modular:
+        enabled: true
+        options: *options
+
+  $default:
+    dependencies:
+      - ":drift"
+    builders:
+      drift_dev:
+        enabled: false

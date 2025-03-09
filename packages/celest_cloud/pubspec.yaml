@@ -1,0 +1,32 @@
+name: celest_cloud
+description: API contracts and Dart clients for the Celest Cloud platform.
+version: 0.1.4
+repository: https://github.com/celest-dev/celest
+
+environment:
+  sdk: ^3.3.0
+
+dependencies:
+  async: ^2.11.0
+  celest_core: ^1.0.0
+  code_builder: ^4.10.0
+  collection: ^1.18.0
+  fixnum: ^1.1.0
+  grpc: ^4.0.0
+  http: ^1.0.0
+  json_annotation: ^4.8.0
+  logging: ^1.2.0
+  meta: ^1.10.0
+  os_detect: ^2.0.1
+  path: ^1.9.0
+  protobuf: ^3.0.0
+  pub_semver: ^2.0.0
+  source_span: ^1.10.0
+  stream_transform: ^2.1.0
+
+dev_dependencies:
+  build_runner: ^2.4.10
+  built_value_generator: ^8.9.0
+  celest_lints: ^1.0.0
+  json_serializable: ^6.7.1
+  test: ^1.25.5

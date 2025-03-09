@@ -1,0 +1,6 @@
+# Dart
+.dart_tool/
+pubspec.lock
+
+# Celest
+**/.env

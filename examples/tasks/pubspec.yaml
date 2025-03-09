@@ -1,0 +1,32 @@
+name: celest_tasks
+description: An example of how to use Celest Data to create a task tracker.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.3.0
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  tasks_client:
+    path: celest/client/
+
+dependency_overrides:
+  celest:
+    path: ../../packages/celest
+  celest_auth:
+    path: ../../packages/celest_auth
+  celest_cloud:
+    path: ../../packages/celest_cloud
+  celest_core:
+    path: ../../packages/celest_core
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

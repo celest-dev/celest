@@ -1,0 +1,6 @@
+rootProject.name = 'celest_core'
+dependencyResolutionManagement {
+   repositories {
+       google()
+   }
+}

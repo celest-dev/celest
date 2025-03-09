@@ -1,0 +1,101 @@
+// The namespace for all core types and entities.
+//
+// Entities in this namespace are intended to be managed exclusively by Celest.
+// Centralizing the lifecycle of these entities is the only means of ensuring
+// data consistency and integrity, which is crucial for authorization.
+//
+// Further namespaces can be defined for application components and these may
+// reference or link to entities in this namespace.
+namespace Celest {
+    // The service in which all entities are defined.
+    //
+    // A service defines the root of the entity hierarchy. Entities can be
+    // traced back to the service via the parent chain.
+    entity Service;
+
+    // A role which can be assigned to a user.
+    //
+    // Roles provide a means of grouping disparate permissions and principals
+    // in a loosely-coupled manner, giving flexibilty to how the remaining
+    // entities are defined and limiting the amount of data needed to perform
+    // an authorization request. 
+    entity Role in [Service, Role]; // A role can be a parent of another role.
+
+    // A user of the system.
+    //
+    // Users can belong to roles and have permissions granted to them via those 
+    // roles.
+    entity User in [Service, Role];
+
+    // A session in which a user is authenticated.
+    //
+    // Sessions are used to track the state of a user's authentication and
+    // authorization. They can be used to track the user's activity and
+    // provide a means of revoking access.
+    entity Session in [User];
+
+    // APIs in Celest are a collection of functions which participate in a
+    // parent-child relationship. The API is the parent and the functions are
+    // the children.
+    entity Api in [Service];
+
+    // Functions in Celest map directly to individual Dart functions defined 
+    // in your project.
+    entity Function in [Api];
+
+    // Actions
+    //
+    // Actions are the operations that can be performed on resources. By having
+    // a small, discrete set of which actions can be performed, we can ensure that
+    // authorization is consistent and predictable.
+    //
+    // We can build more complex permissions by grouping actions together into roles
+    // or one-off policies.
+
+    // The context in which an authorization request is made.
+    type AuthorizationContext = {
+        ip?: ipaddr,
+    };
+
+    // The generic act of creating a resource.
+    action create appliesTo {
+        principal: [Role, User],
+        resource: [Role, User],
+        context: AuthorizationContext,
+    };
+
+    // The generic act of reading a resource.
+    action get appliesTo {
+        principal: [Role, User],
+        resource: [Role, User],
+        context: AuthorizationContext,
+    };
+
+    // The generic act of listing resources within a collection.
+    action list appliesTo {
+        principal: [Role, User],
+        resource: [Role, User],
+        context: AuthorizationContext,
+    };
+
+    // The generic act of updating a resource.
+    action update appliesTo {
+        principal: [Role, User],
+        resource: [Role, User],
+        context: AuthorizationContext,
+    };
+
+    // The generic act of deleting a resource.
+    action delete appliesTo {
+        principal: [Role, User],
+        resource: [Role, User],
+        context: AuthorizationContext,
+    };
+
+    // The act taken when an entity invokes a cloud function.
+    action invoke appliesTo {
+        principal: [Role, User],
+        resource: [Function],
+        context: AuthorizationContext,
+    };
+}

@@ -1,0 +1,8 @@
+include: package:celest_lints/library.yaml
+
+analyzer:
+  errors:
+    avoid_unused_constructor_parameters: ignore
+    camel_case_types: ignore
+    implementation_imports: ignore
+    public_member_api_docs: ignore
