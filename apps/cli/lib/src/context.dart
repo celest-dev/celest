@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:analyzer/src/dart/analysis/byte_store.dart';
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
-import 'package:celest_cli/auth/cli_auth.dart';
 import 'package:celest_cli/database/cache/cache_database.dart';
 import 'package:celest_cli/database/project/project_database.dart';
 import 'package:celest_cli/project/celest_project.dart';
@@ -15,7 +14,6 @@ import 'package:celest_cli/src/performance/local_perf.dart';
 import 'package:celest_cli/src/process/logging_process_manager.dart';
 import 'package:celest_cli/src/storage/storage.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
-import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
@@ -80,17 +78,6 @@ set projectPaths(ProjectPaths? value) {
 InheritanceManager3 get inheritanceManager => InheritanceManager3();
 final TypeHelper typeHelper = TypeHelper();
 final JsonGenerator jsonGenerator = JsonGenerator();
-
-final Logger _cloudLogger = Logger('Celest.Cloud');
-final CelestCloud cloud = CelestCloud(
-  uri: baseUri,
-  authenticator: authenticator,
-  httpClient: httpClient,
-  logger: Logger.detached('')
-    ..onRecord.listen((record) {
-      _cloudLogger.finest(record.message, record.error, record.stackTrace);
-    }),
-);
 
 String? _celestLocalPath;
 
@@ -157,11 +144,6 @@ Level kCliLogLevel = Level.INFO;
 ///
 /// Set by [Cli.configure].
 late bool verbose;
-
-/// Global dev mode setting.
-///
-/// Set by [Cli.configure].
-late bool devMode;
 
 /// Whether Celest is being tested.
 ///

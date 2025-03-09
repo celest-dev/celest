@@ -12,10 +12,8 @@ import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_options.dart';
 import 'package:celest_cli/config/celest_config.dart';
 import 'package:celest_cli/database/cache/cache_database.dart';
-import 'package:celest_cli/database/cloud/cloud_database.dart';
 import 'package:celest_cli/database/project/project_database.dart';
 import 'package:celest_cli/env/env_manager.dart';
-import 'package:celest_cli/init/sqlite3.dart';
 import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/pub/cached_pubspec.dart';
 import 'package:celest_cli/src/context.dart';
@@ -111,7 +109,6 @@ final class CelestProject {
       ..finest('Loaded analysis options: $analysisOptions')
       ..finest('Loaded Celest config: $config');
     _logger.finest('Spawned env manager');
-    await loadSqlite3(logger: _logger);
     cacheDb ??= await CacheDatabase.open(projectRoot, verbose: verbose);
     byteStore ??= MemoryCachingByteStore(
       cacheDb.byteStore,
@@ -178,9 +175,6 @@ final class CelestProject {
 
   /// The [CacheDatabase] for the current project.
   final CacheDatabase cacheDb;
-
-  /// The [CloudDatabase] for the current project.
-  late final CloudDatabase cloudDb = CloudDatabase(config, verbose: verbose);
 
   /// The [ProjectDatabase] for the current project.
   ProjectDatabase get projectDb =>

@@ -22,7 +22,7 @@ import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli_common/celest_cli_common.dart';
+import 'package:celest_cli/src/utils/recase.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:file/file.dart';
 import 'package:http/http.dart';

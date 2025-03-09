@@ -61,7 +61,6 @@ final class Cli {
 
   static Future<void> configure({
     required bool verbose,
-    bool devMode = false,
     bool jsonOutput = false,
     String? sentryDsn,
     PostHogConfig? postHogConfig,
@@ -75,12 +74,8 @@ final class Cli {
     Logger.root.level = Level.ALL; // Filtered later, but needed for Sentry.
     ctx.kCliLogLevel = verbose ? Level.ALL : Level.INFO;
     ctx.verbose = verbose;
-    ctx.devMode = devMode;
     if (jsonOutput) {
       ctx.cliLogger = CliJsonLogger();
-    }
-    if (devMode) {
-      ctx.baseUri = Uri.https('cloud.celest-dev.dev');
     }
     ctx.processManager = processManager ?? const LoggingProcessManager();
     ctx.fileSystem = fileSystem ?? const LocalFileSystem();
@@ -159,27 +154,16 @@ final class Cli {
 
   Future<void> run(List<String> args) async {
     var verbose = ctx.platform.environment.containsKey('CELEST_VERBOSE');
-    var devMode = ctx.platform.environment.containsKey('CELEST_DEV_MODE');
     var jsonOutput = false;
-    if (!kReleaseMode) {
-      _runner.argParser
-        ..addFlag(
-          'verbose',
-          abbr: 'v',
-          help: 'Enable verbose logging',
-          negatable: false,
-          defaultsTo: false,
-          callback: (v) => verbose = v,
-        )
-        ..addFlag(
-          'dev-mode',
-          hide: true,
-          negatable: false,
-          defaultsTo: false,
-          callback: (d) => devMode = d,
-        );
-    }
     _runner.argParser
+      ..addFlag(
+        'verbose',
+        abbr: 'v',
+        help: 'Enable verbose logging',
+        negatable: false,
+        defaultsTo: false,
+        callback: (v) => verbose = v,
+      )
       ..addFlag(
         'json',
         negatable: false,
@@ -196,7 +180,6 @@ final class Cli {
 
     await configure(
       verbose: verbose,
-      devMode: devMode,
       jsonOutput: jsonOutput,
       sentryDsn: sentryConfig?.dsn,
       postHogConfig: postHogConfig,

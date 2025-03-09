@@ -19,9 +19,6 @@ import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
-import 'package:celest_cli/src/repositories/organization_repository.dart';
-import 'package:celest_cli/src/repositories/project_environment_repository.dart';
-import 'package:celest_cli/src/repositories/project_repository.dart';
 import 'package:celest_cli/src/utils/json.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
@@ -61,15 +58,6 @@ final class CelestFrontend {
   static CelestFrontend? instance;
   static final Logger logger = Logger('CelestFrontend');
   final CelestAnalyzer analyzer = CelestAnalyzer();
-
-  ProjectRepository get projects =>
-      ProjectRepository(celestProject.cloudDb, cloud);
-
-  ProjectEnvironmentRepository get projectEnvironments =>
-      ProjectEnvironmentRepository(celestProject.cloudDb, cloud);
-
-  OrganizationRepository get organizations =>
-      OrganizationRepository(celestProject.cloudDb, cloud);
 
   int _logErrors(List<CelestAnalysisError> errors) {
     for (final error in errors) {
