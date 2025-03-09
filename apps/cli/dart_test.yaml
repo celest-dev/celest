@@ -1,0 +1,11 @@
+tags:
+  e2e:
+    timeout: 15m
+  e2e-installed:
+    timeout: 5m
+  e2e-local:
+    timeout: 15m
+  openapi:
+    timeout: 5m
+  goldens:
+    timeout: 20m

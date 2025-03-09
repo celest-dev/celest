@@ -1,0 +1,27 @@
+-- Stores Dart analyzer caches.
+--
+-- With a persistent ByteStore, we can improve the performance of `celest start`
+-- by reusing the Dart analyzer cache between runs.
+CREATE TABLE IF NOT EXISTS analyzer_byte_store (
+  -- The entry's key in the cache.
+  cache_key TEXT NOT NULL PRIMARY KEY,
+
+  -- The content of the entry.
+  content BLOB
+);
+
+-- Stores verison information for the cache.
+CREATE TABLE IF NOT EXISTS version_info (
+  -- The version of the Celest CLI.
+  celest TEXT NOT NULL,
+
+  -- The version of the Dart SDK.
+  dart TEXT NOT NULL,
+
+  -- The version of the Flutter SDK.
+  flutter TEXT
+);
+
+getVersionInfo: SELECT * FROM version_info WHERE rowid = 1 LIMIT 1;
+setVersionInfo: INSERT INTO version_info (celest, dart, flutter) VALUES (:celest, :dart, :flutter);
+updateVersionInfo: UPDATE version_info SET celest = :celest, dart = :dart, flutter = :flutter WHERE rowid = 1;

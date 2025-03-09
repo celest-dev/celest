@@ -1,0 +1,270 @@
+{
+  "projectId": "api",
+  "environmentId": "local",
+  "apis": {
+    "http_status": {
+      "apiId": "http_status",
+      "functions": {
+        "ok": {
+          "functionId": "ok",
+          "apiId": "http_status",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/http-status/ok"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "created": {
+          "functionId": "created",
+          "apiId": "http_status",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/http-status/created"
+            },
+            "additionalRoutes": [],
+            "status": 201,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "accepted": {
+          "functionId": "accepted",
+          "apiId": "http_status",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/http-status/accepted"
+            },
+            "additionalRoutes": [],
+            "status": 202,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "badRequest": {
+          "functionId": "badRequest",
+          "apiId": "http_status",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/http-status/bad-request"
+            },
+            "additionalRoutes": [],
+            "status": 400,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "internalServerError": {
+          "functionId": "internalServerError",
+          "apiId": "http_status",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/http-status/internal-server-error"
+            },
+            "additionalRoutes": [],
+            "status": 500,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        }
+      }
+    },
+    "http_method": {
+      "apiId": "http_method",
+      "functions": {
+        "get": {
+          "functionId": "get",
+          "apiId": "http_method",
+          "httpConfig": {
+            "route": {
+              "method": "GET",
+              "path": "/http-method/get"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "post": {
+          "functionId": "post",
+          "apiId": "http_method",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/http-method/post"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "put": {
+          "functionId": "put",
+          "apiId": "http_method",
+          "httpConfig": {
+            "route": {
+              "method": "PUT",
+              "path": "/http-method/put"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "delete": {
+          "functionId": "delete",
+          "apiId": "http_method",
+          "httpConfig": {
+            "route": {
+              "method": "DELETE",
+              "path": "/http-method/delete"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "patch": {
+          "functionId": "patch",
+          "apiId": "http_method",
+          "httpConfig": {
+            "route": {
+              "method": "PATCH",
+              "path": "/http-method/patch"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        }
+      }
+    },
+    "http_query": {
+      "apiId": "http_query",
+      "functions": {
+        "query": {
+          "functionId": "query",
+          "apiId": "http_query",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/http-query/query"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        }
+      }
+    },
+    "http_errors": {
+      "apiId": "http_errors",
+      "functions": {
+        "httpErrors": {
+          "functionId": "httpErrors",
+          "apiId": "http_errors",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/http-errors/http-errors"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {
+              "{\"symbol\":\"ForbiddenException\",\"url\":\"package:celest_backend/exceptions/http_errors.dart\",\"isNullable\":false}": 403,
+              "{\"symbol\":\"CustomBadRequestException\",\"url\":\"package:celest_backend/exceptions/http_errors.dart\",\"isNullable\":false}": 412,
+              "{\"symbol\":\"UnauthorizedException\",\"url\":\"package:celest_core/src/exception/cloud_exception.dart\",\"isNullable\":false}": 401,
+              "{\"symbol\":\"NotFoundException\",\"url\":\"package:celest_backend/exceptions/http_errors.dart\",\"isNullable\":false}": 404,
+              "{\"symbol\":\"InternalServerError\",\"url\":\"package:celest_core/src/exception/cloud_exception.dart\",\"isNullable\":false}": 404
+            }
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        }
+      }
+    },
+    "http_header": {
+      "apiId": "http_header",
+      "functions": {
+        "headers": {
+          "functionId": "headers",
+          "apiId": "http_header",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/http-header/headers"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "secrets": [],
+  "databases": {},
+  "sdkConfig": {
+    "celest": "1.0.6+2",
+    "dart": {
+      "type": "dart",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    },
+    "targetSdk": "dart",
+    "featureFlags": [
+      "streaming"
+    ],
+    "flutter": {
+      "type": "flutter",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    }
+  }
+}

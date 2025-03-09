@@ -1,0 +1,90 @@
+{
+  "projectId": "streaming",
+  "environmentId": "local",
+  "apis": {
+    "server_side": {
+      "apiId": "server_side",
+      "functions": {
+        "hello": {
+          "functionId": "hello",
+          "apiId": "server_side",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/server-side/hello"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
+        },
+        "stockTicker": {
+          "functionId": "stockTicker",
+          "apiId": "server_side",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/server-side/stock-ticker"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
+        },
+        "jsonValues": {
+          "functionId": "jsonValues",
+          "apiId": "server_side",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/server-side/json-values"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "secrets": [],
+  "databases": {},
+  "sdkConfig": {
+    "celest": "1.0.6+2",
+    "dart": {
+      "type": "dart",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    },
+    "targetSdk": "dart",
+    "featureFlags": [
+      "streaming"
+    ],
+    "flutter": {
+      "type": "flutter",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    }
+  }
+}

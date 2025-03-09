@@ -1,0 +1,74 @@
+{
+  "projectId": "data",
+  "environmentId": "local",
+  "apis": {
+    "tasks": {
+      "apiId": "tasks",
+      "functions": {
+        "create": {
+          "functionId": "create",
+          "apiId": "tasks",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/tasks/create"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "secrets": [],
+  "databases": {
+    "TaskDatabase": {
+      "databaseId": "TaskDatabase",
+      "schema": {
+        "$": "ResolvedDriftDatabaseSchema",
+        "databaseSchemaId": "TaskDatabase",
+        "version": 1,
+        "schemaJson": {},
+        "type": "drift"
+      },
+      "config": {
+        "$": "ResolvedCelestDatabaseConfig",
+        "hostname": {
+          "name": "CELEST_DATABASE_HOST",
+          "value": ""
+        },
+        "token": {
+          "name": "CELEST_DATABASE_TOKEN",
+          "value": ""
+        }
+      }
+    }
+  },
+  "sdkConfig": {
+    "celest": "1.0.6+2",
+    "dart": {
+      "type": "dart",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    },
+    "targetSdk": "dart",
+    "featureFlags": [
+      "streaming"
+    ],
+    "flutter": {
+      "type": "flutter",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    }
+  }
+}

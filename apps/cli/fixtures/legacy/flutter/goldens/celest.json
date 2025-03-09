@@ -1,0 +1,116 @@
+{
+  "projectId": "flutter",
+  "environmentId": "local",
+  "apis": {
+    "dart_ui": {
+      "apiId": "dart_ui",
+      "functions": {
+        "lerpColor": {
+          "functionId": "lerpColor",
+          "parentId": "dart_ui",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/dart-ui/lerp-color"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "addCountryCode": {
+          "functionId": "addCountryCode",
+          "parentId": "dart_ui",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/dart-ui/add-country-code"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    },
+    "flutter": {
+      "apiId": "flutter",
+      "functions": {
+        "paintWidget": {
+          "functionId": "paintWidget",
+          "parentId": "flutter",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/flutter/paint-widget"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "helloWorld": {
+          "functionId": "helloWorld",
+          "parentId": "flutter",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "GET",
+              "path": "/flutter/hello-world"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "databases": {},
+  "sdkConfig": {
+    "celest": {
+      "major": 1,
+      "minor": 0,
+      "patch": 6,
+      "build": [
+        2.0
+      ],
+      "canonicalizedVersion": "1.0.6+2"
+    },
+    "dart": {
+      "type": "DART",
+      "version": {
+        "major": 3,
+        "minor": 29,
+        "patch": 0,
+        "canonicalizedVersion": "3.29.0"
+      }
+    },
+    "flutter": {
+      "type": "FLUTTER",
+      "version": {
+        "major": 3,
+        "minor": 29,
+        "patch": 0,
+        "canonicalizedVersion": "3.29.0"
+      }
+    },
+    "targetSdk": "FLUTTER",
+    "featureFlags": [
+      "STREAMING"
+    ]
+  }
+}

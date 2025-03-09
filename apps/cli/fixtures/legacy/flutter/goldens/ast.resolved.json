@@ -1,0 +1,105 @@
+{
+  "projectId": "flutter",
+  "environmentId": "local",
+  "apis": {
+    "dart_ui": {
+      "apiId": "dart_ui",
+      "functions": {
+        "lerpColor": {
+          "functionId": "lerpColor",
+          "apiId": "dart_ui",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/dart-ui/lerp-color"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "addCountryCode": {
+          "functionId": "addCountryCode",
+          "apiId": "dart_ui",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/dart-ui/add-country-code"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        }
+      }
+    },
+    "flutter": {
+      "apiId": "flutter",
+      "functions": {
+        "paintWidget": {
+          "functionId": "paintWidget",
+          "apiId": "flutter",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/flutter/paint-widget"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "helloWorld": {
+          "functionId": "helloWorld",
+          "apiId": "flutter",
+          "httpConfig": {
+            "route": {
+              "method": "GET",
+              "path": "/flutter/hello-world"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "secrets": [],
+  "databases": {},
+  "sdkConfig": {
+    "celest": "1.0.6+2",
+    "dart": {
+      "type": "dart",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    },
+    "targetSdk": "flutter",
+    "featureFlags": [
+      "streaming"
+    ],
+    "flutter": {
+      "type": "flutter",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    }
+  }
+}

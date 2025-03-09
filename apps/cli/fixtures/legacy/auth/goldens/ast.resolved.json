@@ -1,0 +1,431 @@
+{
+  "projectId": "auth",
+  "environmentId": "local",
+  "apis": {
+    "lib": {
+      "apiId": "lib",
+      "functions": {
+        "sayHelloAuthenticated": {
+          "functionId": "sayHelloAuthenticated",
+          "apiId": "lib",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/lib/say-hello-authenticated"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {},
+          "policySet": {
+            "policies": {
+              "lib/sayHelloAuthenticated.authenticated_restrict": {
+                "effect": "forbid",
+                "principal": {
+                  "op": "All"
+                },
+                "action": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::Action",
+                    "id": "invoke"
+                  }
+                },
+                "resource": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::Function",
+                    "id": "lib/sayHelloAuthenticated"
+                  }
+                },
+                "conditions": [
+                  {
+                    "kind": "unless",
+                    "body": {
+                      "in": {
+                        "left": {
+                          "Var": "principal"
+                        },
+                        "right": {
+                          "Value": {
+                            "__entity": {
+                              "type": "Celest::Role",
+                              "id": "authenticated"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "templates": {},
+            "templateLinks": [
+              {
+                "templateId": "cloud.functions.authenticated",
+                "newId": "lib/sayHelloAuthenticated.authenticated",
+                "values": {
+                  "?resource": "Celest::Function::\"lib/sayHelloAuthenticated\""
+                }
+              }
+            ]
+          }
+        },
+        "streamHelloAuthenticated": {
+          "functionId": "streamHelloAuthenticated",
+          "apiId": "lib",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/lib/stream-hello-authenticated"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          },
+          "policySet": {
+            "policies": {
+              "lib/streamHelloAuthenticated.authenticated_restrict": {
+                "effect": "forbid",
+                "principal": {
+                  "op": "All"
+                },
+                "action": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::Action",
+                    "id": "invoke"
+                  }
+                },
+                "resource": {
+                  "op": "==",
+                  "entity": {
+                    "type": "Celest::Function",
+                    "id": "lib/streamHelloAuthenticated"
+                  }
+                },
+                "conditions": [
+                  {
+                    "kind": "unless",
+                    "body": {
+                      "in": {
+                        "left": {
+                          "Var": "principal"
+                        },
+                        "right": {
+                          "Value": {
+                            "__entity": {
+                              "type": "Celest::Role",
+                              "id": "authenticated"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "templates": {},
+            "templateLinks": [
+              {
+                "templateId": "cloud.functions.authenticated",
+                "newId": "lib/streamHelloAuthenticated.authenticated",
+                "values": {
+                  "?resource": "Celest::Function::\"lib/streamHelloAuthenticated\""
+                }
+              }
+            ]
+          }
+        },
+        "sayHelloPublic": {
+          "functionId": "sayHelloPublic",
+          "apiId": "lib",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/lib/say-hello-public"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {},
+          "policySet": {
+            "policies": {},
+            "templates": {},
+            "templateLinks": [
+              {
+                "templateId": "cloud.functions.public",
+                "newId": "lib/sayHelloPublic.public",
+                "values": {
+                  "?resource": "Celest::Function::\"lib/sayHelloPublic\""
+                }
+              }
+            ]
+          }
+        },
+        "streamHelloPublic": {
+          "functionId": "streamHelloPublic",
+          "apiId": "lib",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/lib/stream-hello-public"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          },
+          "policySet": {
+            "policies": {},
+            "templates": {},
+            "templateLinks": [
+              {
+                "templateId": "cloud.functions.public",
+                "newId": "lib/streamHelloPublic.public",
+                "values": {
+                  "?resource": "Celest::Function::\"lib/streamHelloPublic\""
+                }
+              }
+            ]
+          }
+        },
+        "sayHello": {
+          "functionId": "sayHello",
+          "apiId": "lib",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/lib/say-hello"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "streamHello": {
+          "functionId": "streamHello",
+          "apiId": "lib",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/lib/stream-hello"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
+        }
+      }
+    },
+    "authenticated_lib": {
+      "apiId": "authenticated_lib",
+      "functions": {
+        "sayHello": {
+          "functionId": "sayHello",
+          "apiId": "authenticated_lib",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/authenticated-lib/say-hello"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "streamHello": {
+          "functionId": "streamHello",
+          "apiId": "authenticated_lib",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/authenticated-lib/stream-hello"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
+        }
+      },
+      "policySet": {
+        "policies": {
+          "authenticated_lib.authenticated_restrict": {
+            "effect": "forbid",
+            "principal": {
+              "op": "All"
+            },
+            "action": {
+              "op": "==",
+              "entity": {
+                "type": "Celest::Action",
+                "id": "invoke"
+              }
+            },
+            "resource": {
+              "op": "in",
+              "entity": {
+                "type": "Celest::Api",
+                "id": "authenticated_lib"
+              }
+            },
+            "conditions": [
+              {
+                "kind": "unless",
+                "body": {
+                  "in": {
+                    "left": {
+                      "Var": "principal"
+                    },
+                    "right": {
+                      "Value": {
+                        "__entity": {
+                          "type": "Celest::Role",
+                          "id": "authenticated"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "templates": {},
+        "templateLinks": [
+          {
+            "templateId": "cloud.functions.authenticated",
+            "newId": "authenticated_lib.authenticated",
+            "values": {
+              "?resource": "Celest::Api::\"authenticated_lib\""
+            }
+          }
+        ]
+      }
+    },
+    "public_lib": {
+      "apiId": "public_lib",
+      "functions": {
+        "sayHello": {
+          "functionId": "sayHello",
+          "apiId": "public_lib",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/public-lib/say-hello"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "streamHello": {
+          "functionId": "streamHello",
+          "apiId": "public_lib",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/public-lib/stream-hello"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {
+            "type": "unidirectionalServer"
+          }
+        }
+      },
+      "policySet": {
+        "policies": {},
+        "templates": {},
+        "templateLinks": [
+          {
+            "templateId": "cloud.functions.public",
+            "newId": "public_lib.public",
+            "values": {
+              "?resource": "Celest::Api::\"public_lib\""
+            }
+          }
+        ]
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "SUPABASE_URL",
+      "value": "https://vduqtbtlcxxozghvhdqu.supabase.co"
+    },
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "secrets": [],
+  "databases": {},
+  "sdkConfig": {
+    "celest": "1.0.6+2",
+    "dart": {
+      "type": "dart",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    },
+    "targetSdk": "flutter",
+    "featureFlags": [
+      "streaming"
+    ],
+    "flutter": {
+      "type": "flutter",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    }
+  },
+  "auth": {
+    "providers": [
+      {
+        "$": "ResolvedEmailAuthProvider",
+        "authProviderId": "emailOtp",
+        "type": "EMAIL_OTP"
+      }
+    ],
+    "externalProviders": []
+  }
+}

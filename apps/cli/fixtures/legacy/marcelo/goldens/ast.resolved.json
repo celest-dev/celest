@@ -1,0 +1,249 @@
+{
+  "projectId": "marcelo",
+  "environmentId": "local",
+  "apis": {
+    "exceptions": {
+      "apiId": "exceptions",
+      "functions": {
+        "throwsUserException": {
+          "functionId": "throwsUserException",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/exceptions/throws-user-exception"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "callsThrowsUserException": {
+          "functionId": "callsThrowsUserException",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/exceptions/calls-throws-user-exception"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "throwsAppError": {
+          "functionId": "throwsAppError",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/exceptions/throws-app-error"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "throwsAppException": {
+          "functionId": "throwsAppException",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/exceptions/throws-app-exception"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "throwsNotYetImplementedError": {
+          "functionId": "throwsNotYetImplementedError",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/exceptions/throws-not-yet-implemented-error"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "throwsValidateError": {
+          "functionId": "throwsValidateError",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/exceptions/throws-validate-error"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "throwsUserException_ShowInConsole": {
+          "functionId": "throwsUserException_ShowInConsole",
+          "apiId": "exceptions",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/exceptions/throws-user-exception-show-in-console"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        }
+      }
+    },
+    "models": {
+      "apiId": "models",
+      "functions": {
+        "availableStock": {
+          "functionId": "availableStock",
+          "apiId": "models",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/models/available-stock"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "availableStocks": {
+          "functionId": "availableStocks",
+          "apiId": "models",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/models/available-stocks"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "cashBalance": {
+          "functionId": "cashBalance",
+          "apiId": "models",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/models/cash-balance"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "portfolio": {
+          "functionId": "portfolio",
+          "apiId": "models",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/models/portfolio"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "stock": {
+          "functionId": "stock",
+          "apiId": "models",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/models/stock"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        },
+        "ui": {
+          "functionId": "ui",
+          "apiId": "models",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/models/ui"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "secrets": [],
+  "databases": {},
+  "sdkConfig": {
+    "celest": "1.0.6+2",
+    "dart": {
+      "type": "dart",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    },
+    "targetSdk": "dart",
+    "featureFlags": [
+      "streaming"
+    ],
+    "flutter": {
+      "type": "flutter",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    }
+  }
+}

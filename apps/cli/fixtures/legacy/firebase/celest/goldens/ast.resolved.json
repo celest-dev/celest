@@ -1,0 +1,70 @@
+{
+  "projectId": "firebase_test",
+  "environmentId": "local",
+  "apis": {
+    "greeting": {
+      "apiId": "greeting",
+      "functions": {
+        "sayHello": {
+          "functionId": "sayHello",
+          "apiId": "greeting",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/greeting/say-hello"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "FIREBASE_PROJECT_ID",
+      "value": "prj-d-firebase-test"
+    },
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "secrets": [],
+  "databases": {},
+  "sdkConfig": {
+    "celest": "1.0.6+2",
+    "dart": {
+      "type": "dart",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    },
+    "targetSdk": "dart",
+    "featureFlags": [
+      "streaming"
+    ],
+    "flutter": {
+      "type": "flutter",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    }
+  },
+  "auth": {
+    "providers": [],
+    "externalProviders": [
+      {
+        "$": "ResolvedFirebaseExternalAuthProvider",
+        "projectId": {
+          "name": "FIREBASE_PROJECT_ID",
+          "value": "prj-d-firebase-test"
+        },
+        "authProviderId": "firebase",
+        "type": "FIREBASE"
+      }
+    ]
+  }
+}

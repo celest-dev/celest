@@ -1,0 +1,23 @@
+name: firebase_test
+description: Testbed for Firebase integration with Celest
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  firebase_auth: ^5.3.1
+  firebase_core: ^3.6.0
+  firebase_test_client:
+    path: celest/client/
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,126 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import 'package:collection/collection.dart';
+
+/// Re-casing helpers for strings.
+extension StringRecase on String {
+  /// The capitalized version of `this`, with the first letter upper-cased and
+  /// all others lower-cased.
+  String get capitalized {
+    if (length < 2) return toUpperCase();
+    return this[0].toUpperCase() + substring(1).toLowerCase();
+  }
+
+  /// The `camelCase` version of `this`.
+  String get camelCase => groupIntoWords().camelCase;
+
+  /// The `param-case` version of `this`.
+  String get paramCase => groupIntoWords().paramCase;
+
+  /// The `PascalCase` version of `this`.
+  String get pascalCase => groupIntoWords().pascalCase;
+
+  /// The `snake_case` version of `this`.
+  String get snakeCase => groupIntoWords().snakeCase;
+
+  // "acm-success"-> "acm success"
+  static final _nonAlphaNumericChars = RegExp(r'[^A-Za-z0-9+]');
+
+  // TESTv4 -> "TEST v4"
+  static final _standaloneVLower = RegExp(r'([^a-z]{2,})v([0-9]+)');
+
+  // TestV4 -> "Test V4"
+  static final _standaloneVUpper = RegExp(r'([^A-Z]{2,})V([0-9]+)');
+
+  // "AcmSuccess" -> "Acm Success"
+  // Workaround for lack of support for lookbehinds in Safari:
+  // https://caniuse.com/js-regexp-lookbehind
+  static final _camelCasedWords = RegExp(r'(?=[a-z][A-Z]([a-zA-Z0-9]|$))');
+
+  // "ACMSuccess" -> "ACM Success"
+  static final _acronyms = RegExp(r'([A-Z]+)([A-Z][a-z])');
+
+  // "s3ec2" -> "s3 ec2"
+  static final _numInMiddleOrEnd = RegExp(r'([0-9])([a-zA-Z])');
+
+  /// Splits `this` into words along word boundaries.
+  WordGroup groupIntoWords() {
+    var result = this;
+
+    // all non-alphanumeric characters: "acm-success"-> "acm success"
+    result = result.replaceAll(_nonAlphaNumericChars, ' ');
+
+    // if a number has a standalone v in front of it, separate it out
+    result = result
+        // TESTv4 -> "TEST v4"
+        .replaceAllMapped(
+          _standaloneVLower,
+          (m) => '${m.group(1)} v${m.group(2)}',
+        )
+
+        // TestV4 -> "Test V4"
+        .replaceAllMapped(
+          _standaloneVUpper,
+          (m) => '${m.group(1)} V${m.group(2)}',
+        );
+
+    // add a space between camelCased words: "AcmSuccess" -> "Acm Success"
+    // Workaround for lack of support for lookbehinds in Safari:
+    // https://caniuse.com/js-regexp-lookbehind
+    var start = 0;
+    result = () sync* {
+      yield* _camelCasedWords.allMatches(result).map((match) {
+        final end = match.start + 1;
+        final substr = result.substring(start, end);
+        start = end;
+        return substr;
+      });
+      yield result.substring(start);
+    }()
+        .join(' ');
+
+    // add a space after acronyms: "ACMSuccess" -> "ACM Success"
+    result = result.replaceAllMapped(
+      _acronyms,
+      (m) => '${m.group(1)} ${m.group(2)}',
+    );
+
+    // add space after a number in the middle of a word: "s3ec2" -> "s3 ec2"
+    result = result.replaceAllMapped(
+      _numInMiddleOrEnd,
+      (m) => '${m.group(1)} ${m.group(2)}',
+    );
+
+    // remove extra spaces - multiple consecutive ones or those and the
+    // beginning/end of words
+    result = result.replaceAll(RegExp(r'\s+'), ' ').trim();
+
+    return WordGroup(result.split(' '));
+  }
+}
+
+extension type WordGroup(List<String> _group) implements List<String> {
+  /// Acronyms for which we should maintain casing.
+  static const List<String> _maintainCase = [];
+
+  /// The `camelCase` version of `this`.
+  String get camelCase => mapIndexed((index, word) {
+        if (index == 0) return word.toLowerCase();
+        return word.capitalized;
+      }).join();
+
+  /// The `param-case` version of `this`.
+  String get paramCase => map((word) => word.toLowerCase()).join('-');
+
+  /// The `PascalCase` version of `this`.
+  String get pascalCase => map((word) {
+        if (_maintainCase.contains(word)) {
+          return word;
+        }
+        return word.capitalized;
+      }).join();
+
+  /// The `snake_case` version of `this`.
+  String get snakeCase => map((word) => word.toLowerCase()).join('_');
+}

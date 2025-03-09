@@ -1,0 +1,458 @@
+{
+  "projectId": "auth",
+  "environmentId": "local",
+  "apis": {
+    "lib": {
+      "apiId": "lib",
+      "functions": {
+        "sayHelloAuthenticated": {
+          "functionId": "sayHelloAuthenticated",
+          "parentId": "lib",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/lib/say-hello-authenticated"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          },
+          "policySet": {
+            "policies": {
+              "lib/sayHelloAuthenticated.authenticated_restrict": {
+                "effect": "EFFECT_FORBID",
+                "principal": {
+                  "all": {}
+                },
+                "action": {
+                  "equals": {
+                    "entity": {
+                      "type": "Celest::Action",
+                      "id": "invoke"
+                    }
+                  }
+                },
+                "resource": {
+                  "equals": {
+                    "entity": {
+                      "type": "Celest::Function",
+                      "id": "lib/sayHelloAuthenticated"
+                    }
+                  }
+                },
+                "conditions": [
+                  {
+                    "kind": "CONDITION_KIND_UNLESS",
+                    "body": {
+                      "in": {
+                        "left": {
+                          "variable": {
+                            "variable": "VARIABLE_PRINCIPAL"
+                          }
+                        },
+                        "right": {
+                          "value": {
+                            "value": {
+                              "entity": {
+                                "uid": {
+                                  "type": "Celest::Role",
+                                  "id": "authenticated"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "templateLinks": [
+              {
+                "templateId": "cloud.functions.authenticated",
+                "newId": "lib/sayHelloAuthenticated.authenticated",
+                "values": {
+                  "?resource": {
+                    "type": "Celest::Function",
+                    "id": "lib/sayHelloAuthenticated"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "streamHelloAuthenticated": {
+          "functionId": "streamHelloAuthenticated",
+          "parentId": "lib",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/lib/stream-hello-authenticated"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          },
+          "policySet": {
+            "policies": {
+              "lib/streamHelloAuthenticated.authenticated_restrict": {
+                "effect": "EFFECT_FORBID",
+                "principal": {
+                  "all": {}
+                },
+                "action": {
+                  "equals": {
+                    "entity": {
+                      "type": "Celest::Action",
+                      "id": "invoke"
+                    }
+                  }
+                },
+                "resource": {
+                  "equals": {
+                    "entity": {
+                      "type": "Celest::Function",
+                      "id": "lib/streamHelloAuthenticated"
+                    }
+                  }
+                },
+                "conditions": [
+                  {
+                    "kind": "CONDITION_KIND_UNLESS",
+                    "body": {
+                      "in": {
+                        "left": {
+                          "variable": {
+                            "variable": "VARIABLE_PRINCIPAL"
+                          }
+                        },
+                        "right": {
+                          "value": {
+                            "value": {
+                              "entity": {
+                                "uid": {
+                                  "type": "Celest::Role",
+                                  "id": "authenticated"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "templateLinks": [
+              {
+                "templateId": "cloud.functions.authenticated",
+                "newId": "lib/streamHelloAuthenticated.authenticated",
+                "values": {
+                  "?resource": {
+                    "type": "Celest::Function",
+                    "id": "lib/streamHelloAuthenticated"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "sayHelloPublic": {
+          "functionId": "sayHelloPublic",
+          "parentId": "lib",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/lib/say-hello-public"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          },
+          "policySet": {
+            "templateLinks": [
+              {
+                "templateId": "cloud.functions.public",
+                "newId": "lib/sayHelloPublic.public",
+                "values": {
+                  "?resource": {
+                    "type": "Celest::Function",
+                    "id": "lib/sayHelloPublic"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "streamHelloPublic": {
+          "functionId": "streamHelloPublic",
+          "parentId": "lib",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/lib/stream-hello-public"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          },
+          "policySet": {
+            "templateLinks": [
+              {
+                "templateId": "cloud.functions.public",
+                "newId": "lib/streamHelloPublic.public",
+                "values": {
+                  "?resource": {
+                    "type": "Celest::Function",
+                    "id": "lib/streamHelloPublic"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "sayHello": {
+          "functionId": "sayHello",
+          "parentId": "lib",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/lib/say-hello"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "streamHello": {
+          "functionId": "streamHello",
+          "parentId": "lib",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/lib/stream-hello"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          }
+        }
+      }
+    },
+    "authenticated_lib": {
+      "apiId": "authenticated_lib",
+      "functions": {
+        "sayHello": {
+          "functionId": "sayHello",
+          "parentId": "authenticated_lib",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/authenticated-lib/say-hello"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "streamHello": {
+          "functionId": "streamHello",
+          "parentId": "authenticated_lib",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/authenticated-lib/stream-hello"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          }
+        }
+      },
+      "policySet": {
+        "policies": {
+          "authenticated_lib.authenticated_restrict": {
+            "effect": "EFFECT_FORBID",
+            "principal": {
+              "all": {}
+            },
+            "action": {
+              "equals": {
+                "entity": {
+                  "type": "Celest::Action",
+                  "id": "invoke"
+                }
+              }
+            },
+            "resource": {
+              "in": {
+                "entity": {
+                  "type": "Celest::Api",
+                  "id": "authenticated_lib"
+                }
+              }
+            },
+            "conditions": [
+              {
+                "kind": "CONDITION_KIND_UNLESS",
+                "body": {
+                  "in": {
+                    "left": {
+                      "variable": {
+                        "variable": "VARIABLE_PRINCIPAL"
+                      }
+                    },
+                    "right": {
+                      "value": {
+                        "value": {
+                          "entity": {
+                            "uid": {
+                              "type": "Celest::Role",
+                              "id": "authenticated"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "templateLinks": [
+          {
+            "templateId": "cloud.functions.authenticated",
+            "newId": "authenticated_lib.authenticated",
+            "values": {
+              "?resource": {
+                "type": "Celest::Api",
+                "id": "authenticated_lib"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "public_lib": {
+      "apiId": "public_lib",
+      "functions": {
+        "sayHello": {
+          "functionId": "sayHello",
+          "parentId": "public_lib",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/public-lib/say-hello"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          }
+        },
+        "streamHello": {
+          "functionId": "streamHello",
+          "parentId": "public_lib",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/public-lib/stream-hello"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "UNIDIRECTIONAL_SERVER"
+          }
+        }
+      },
+      "policySet": {
+        "templateLinks": [
+          {
+            "templateId": "cloud.functions.public",
+            "newId": "public_lib.public",
+            "values": {
+              "?resource": {
+                "type": "Celest::Api",
+                "id": "public_lib"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "SUPABASE_URL",
+      "value": "https://vduqtbtlcxxozghvhdqu.supabase.co"
+    },
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "auth": {
+    "providers": [
+      {
+        "authProviderId": "emailOtp",
+        "type": "EMAIL_OTP",
+        "emailOtp": {}
+      }
+    ]
+  },
+  "databases": {},
+  "sdkConfig": {
+    "celest": {
+      "major": 1,
+      "minor": 0,
+      "patch": 6,
+      "build": [
+        2.0
+      ],
+      "canonicalizedVersion": "1.0.6+2"
+    },
+    "dart": {
+      "type": "DART",
+      "version": {
+        "major": 3,
+        "minor": 29,
+        "patch": 0,
+        "canonicalizedVersion": "3.29.0"
+      }
+    },
+    "flutter": {
+      "type": "FLUTTER",
+      "version": {
+        "major": 3,
+        "minor": 29,
+        "patch": 0,
+        "canonicalizedVersion": "3.29.0"
+      }
+    },
+    "targetSdk": "FLUTTER",
+    "featureFlags": [
+      "STREAMING"
+    ]
+  }
+}

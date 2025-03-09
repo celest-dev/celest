@@ -1,0 +1,95 @@
+-- Stores local project information for a single Celest project.
+CREATE TABLE IF NOT EXISTS environments (
+  -- The unique alias for the environment.
+  id TEXT NOT NULL PRIMARY KEY
+);
+
+lookupEnvironment:
+SELECT * FROM environments 
+WHERE id = :id
+LIMIT 1;
+
+createEnvironment:
+INSERT INTO environments (id)
+VALUES (:id)
+RETURNING *;
+
+upsertEnvironment:
+INSERT INTO environments (id)
+VALUES (:id)
+ON CONFLICT (id) DO NOTHING
+RETURNING *;
+
+-- Stores environment variable values for a single environment.
+CREATE TABLE IF NOT EXISTS environment_variables (
+  -- The environment that the variable belongs to.
+  environment_id TEXT NOT NULL,
+
+  -- The name of the environment variable.
+  name TEXT NOT NULL,
+
+  -- The value of the environment variable.
+  value TEXT NOT NULL,
+
+  PRIMARY KEY (environment_id, name),
+
+  CONSTRAINT fk_environment_variables_environment_id
+    FOREIGN KEY (environment_id)
+    REFERENCES environments(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+upsertEnvironmentVariable:
+INSERT INTO environment_variables (environment_id, name, value)
+VALUES (:environment_id, :name, :value)
+ON CONFLICT (environment_id, name) DO UPDATE SET value = :value
+RETURNING *;
+
+getEnvironmentVariables:
+SELECT * FROM environment_variables
+WHERE 
+  environment_id = :environment_id AND
+  name IN :names;
+
+getEnvironmentVariable:
+SELECT value FROM environment_variables
+WHERE 
+  environment_id = :environment_id AND
+  name = :name;
+
+-- Stores secrets for a single environment.
+CREATE TABLE IF NOT EXISTS secrets (
+  -- The environment that the secret belongs to.
+  environment_id TEXT NOT NULL,
+
+  -- The name of the secret.
+  name TEXT NOT NULL,
+
+  -- A reference to the value of the secret which is stored in secure storage.
+  value_ref TEXT NOT NULL,
+
+  PRIMARY KEY (environment_id, name),
+
+  CONSTRAINT fk_secrets_environment_id
+    FOREIGN KEY (environment_id)
+    REFERENCES environments(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+upsertSecret:
+INSERT INTO secrets (environment_id, name, value_ref)
+VALUES (:environment_id, :name, :value_ref)
+ON CONFLICT (environment_id, name) DO UPDATE SET value_ref = :value_ref
+RETURNING *;
+
+getSecrets:
+SELECT * FROM secrets
+WHERE 
+  environment_id = :environment_id AND
+  name IN :names;
+
+getSecret:
+SELECT value_ref FROM secrets
+WHERE 
+  environment_id = :environment_id AND
+  name = :name;

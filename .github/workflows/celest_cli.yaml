@@ -1,0 +1,60 @@
+name: celest_cli
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/apps_cli.yaml"
+      - "apps/cli/**"
+      - "packages/**"
+      - "services/**"
+
+# Prevent duplicate runs due to Graphite
+# https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
+  cancel-in-progress: true
+
+env:
+  CELEST_LOCAL_PATH: ${{ github.workspace }}
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-14
+          # TODO: Need to fix tests on Windows
+          # - windows-latest
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # 4.1.7
+        with:
+          submodules: recursive
+      # Needed for flutter-version-file: https://github.com/subosito/flutter-action?tab=readme-ov-file#use-version-from-pubspecyaml
+      - name: Install yq
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          curl -sL "https://github.com/mikefarah/yq/releases/download/v4.43.1/yq_windows_amd64.exe" -o yq.exe
+          echo "$PWD" >> "$GITHUB_PATH"
+      - name: Setup Flutter
+        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
+        with:
+          cache: true
+          # Locks version to repo constraint (for golden test alignment)
+          flutter-version-file: pubspec.yaml
+      - name: Setup Libsecret
+        if: runner.os == 'Linux'
+        run: tool/setup-ci.sh
+      - name: Get Packages
+        working-directory: apps/cli
+        run: dart pub upgrade
+      - name: Test
+        working-directory: apps/cli
+        run: dart test -x e2e --fail-fast -j 1
+      # - name: Test (Fixtures)
+      #   working-directory: apps/cli
+      #   run: dart test fixtures/legacy/fixtures_test.dart --fail-fast -j 1

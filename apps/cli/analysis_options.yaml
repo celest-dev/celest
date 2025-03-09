@@ -1,0 +1,12 @@
+include: package:celest_lints/app.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+  errors:
+    implementation_imports: ignore
+    avoid_print: ignore
+    avoid_catches_without_on_clauses: ignore
+    camel_case_types: ignore
+    require_trailing_commas: ignore # TODO: Conflicts with 3.7 formatting
+    unused_element: info

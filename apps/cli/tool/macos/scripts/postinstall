@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Create symlinks
+CELEST_PATH=/opt/celest/celest.app/Contents/MacOS
+sudo cat <<EOF > /usr/local/bin/celest
+#!/bin/sh
+
+# Works around native-assets issues on macOS
+export LD_LIBRARY_PATH=$CELEST_PATH
+exec $CELEST_PATH/celest "\$@"
+EOF
+sudo chmod +x /usr/local/bin/celest

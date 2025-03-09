@@ -1,0 +1,659 @@
+{
+  "name": "data",
+  "environment": "local",
+  "reference": {
+    "$": "Reference",
+    "symbol": "project",
+    "url": "package:celest_backend/src/project.dart"
+  },
+  "apis": {
+    "tasks": {
+      "name": "tasks",
+      "metadata": [],
+      "functions": {
+        "create": {
+          "name": "create",
+          "apiName": "tasks",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "title",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": true,
+              "named": true,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 241,
+                  "uri": "package:celest_backend/src/functions/tasks.dart",
+                  "line": 7,
+                  "column": 18
+                },
+                "end": {
+                  "offset": 246,
+                  "uri": "package:celest_backend/src/functions/tasks.dart",
+                  "line": 7,
+                  "column": 23
+                },
+                "text": "title"
+              }
+            },
+            {
+              "name": "priority",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Priority",
+                "url": "package:celest_backend/src/database/task_database.dart",
+                "isNullable": false
+              },
+              "required": false,
+              "named": true,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 259,
+                  "uri": "package:celest_backend/src/functions/tasks.dart",
+                  "line": 8,
+                  "column": 11
+                },
+                "end": {
+                  "offset": 267,
+                  "uri": "package:celest_backend/src/functions/tasks.dart",
+                  "line": 8,
+                  "column": 19
+                },
+                "text": "priority"
+              },
+              "defaultTo": {
+                "$": "DartEnum",
+                "enumRef": {
+                  "symbol": "Priority",
+                  "url": "package:celest_backend/src/database/task_database.dart",
+                  "isNullable": false
+                },
+                "value": "high",
+                "staticType": {
+                  "symbol": "Priority",
+                  "url": "package:celest_backend/src/database/task_database.dart",
+                  "isNullable": false
+                }
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Future",
+            "url": "dart:async",
+            "types": [
+              {
+                "$": "TypeReference",
+                "symbol": "Task",
+                "url": "package:celest_backend/src/database/task_database.dart",
+                "isNullable": false
+              }
+            ],
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Task",
+            "url": "package:celest_backend/src/database/task_database.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [
+            "/// Creates a new [Task]."
+          ],
+          "location": {
+            "start": {
+              "offset": 214,
+              "uri": "package:celest_backend/src/functions/tasks.dart",
+              "line": 6,
+              "column": 13
+            },
+            "end": {
+              "offset": 220,
+              "uri": "package:celest_backend/src/functions/tasks.dart",
+              "line": 6,
+              "column": 19
+            },
+            "text": "create"
+          }
+        }
+      },
+      "docs": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CancelledException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnknownError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "NotFoundException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AlreadyExistsException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PermissionDeniedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ResourceExhaustedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FailedPreconditionException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AbortedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfRangeException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnavailableError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DataLossError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DeadlineExceededError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "Error",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AssertionError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TypeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ArgumentError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "RangeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IndexError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnsupportedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StateError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ConcurrentModificationError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfMemoryError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StackOverflowError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "Exception",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FormatException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IntegerDivisionByZeroException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AsyncError",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TimeoutException",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "JsonUnsupportedObjectError",
+          "url": "dart:convert",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DriftWrappedException",
+          "url": "package:drift/src/runtime/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CouldNotRollBackException",
+          "url": "package:drift/src/runtime/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OSError",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FileSystemException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PathAccessException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PathExistsException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PathNotFoundException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SignalException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ProcessException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TlsException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "HandshakeException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CertificateException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StdoutException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StdinException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "HttpException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "WebSocketException",
+          "url": "dart:io",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IsolateSpawnException",
+          "url": "dart:isolate",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ClientException",
+          "url": "package:http/src/exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "HijackException",
+          "url": "package:shelf/src/hijack_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SqliteException",
+          "url": "package:sqlite3/src/exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CancellationException",
+          "url": "package:drift/src/runtime/cancellation_zone.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "VfsException",
+          "url": "package:sqlite3/src/vfs.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ConnectionClosedException",
+          "url": "package:drift/src/remote/communication.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PathException",
+          "url": "package:path/src/path_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ConnectionClosed",
+          "url": "package:hrana/src/exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ServerException",
+          "url": "package:hrana/src/exception.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "package:celest_backend/src/functions/tasks.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "package:celest_backend/src/functions/tasks.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    }
+  },
+  "variables": [],
+  "secrets": [],
+  "databases": {
+    "TaskDatabase": {
+      "name": "TaskDatabase",
+      "dartName": "database",
+      "docs": [],
+      "schema": {
+        "$": "DriftDatabaseSchema",
+        "declaration": {
+          "symbol": "TaskDatabase",
+          "url": "package:celest_backend/src/database/task_database.dart",
+          "isNullable": false
+        },
+        "location": {
+          "start": {
+            "offset": 149,
+            "uri": "package:celest_backend/src/project.dart",
+            "line": 5,
+            "column": 6
+          },
+          "end": {
+            "offset": 157,
+            "uri": "package:celest_backend/src/project.dart",
+            "line": 5,
+            "column": 14
+          },
+          "text": "database"
+        }
+      },
+      "config": {
+        "$": "CelestDatabaseConfig",
+        "hostname": {
+          "location": {
+            "start": {
+              "offset": 149,
+              "uri": "package:celest_backend/src/project.dart",
+              "line": 5,
+              "column": 6
+            },
+            "end": {
+              "offset": 157,
+              "uri": "package:celest_backend/src/project.dart",
+              "line": 5,
+              "column": 14
+            },
+            "text": "database"
+          },
+          "name": "CELEST_DATABASE_HOST",
+          "docs": []
+        },
+        "token": {
+          "location": {
+            "start": {
+              "offset": 149,
+              "uri": "package:celest_backend/src/project.dart",
+              "line": 5,
+              "column": 6
+            },
+            "end": {
+              "offset": 157,
+              "uri": "package:celest_backend/src/project.dart",
+              "line": 5,
+              "column": 14
+            },
+            "text": "database"
+          },
+          "name": "CELEST_DATABASE_TOKEN",
+          "docs": []
+        }
+      },
+      "location": {
+        "start": {
+          "offset": 149,
+          "uri": "package:celest_backend/src/project.dart",
+          "line": 5,
+          "column": 6
+        },
+        "end": {
+          "offset": 157,
+          "uri": "package:celest_backend/src/project.dart",
+          "line": 5,
+          "column": 14
+        },
+        "text": "database"
+      }
+    }
+  },
+  "sdkConfig": {
+    "celest": "1.0.6+2",
+    "dart": {
+      "type": "dart",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    },
+    "targetSdk": "dart",
+    "featureFlags": [
+      "streaming"
+    ],
+    "flutter": {
+      "type": "flutter",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    }
+  },
+  "location": {
+    "start": {
+      "offset": 109,
+      "uri": "project.dart",
+      "line": 3,
+      "column": 6
+    },
+    "end": {
+      "offset": 140,
+      "uri": "project.dart",
+      "line": 3,
+      "column": 37
+    },
+    "text": "project = Project(name: 'data')"
+  }
+}

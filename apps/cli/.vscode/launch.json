@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "CLI / E2E (--update-goldens)",
+      "request": "launch",
+      "type": "dart",
+      "program": "fixtures/legacy/fixtures_test.dart",
+      "env": {
+        "UPDATE_GOLDENS": "true",
+        "INCLUDE_TESTS": "flutter"
+      },
+      "args": ["--timeout=none"]
+    },
+    {
+      "name": "CLI (test/analyzer)",
+      "request": "launch",
+      "type": "dart",
+      "program": "test/analyzer/celest_analyzer_test.dart",
+      "args": ["--timeout=none"]
+    }
+  ]
+}

@@ -1,0 +1,1651 @@
+{
+  "name": "marcelo",
+  "environment": "local",
+  "reference": {
+    "$": "Reference",
+    "symbol": "project",
+    "url": "package:celest_backend/src/project.dart"
+  },
+  "apis": {
+    "exceptions": {
+      "name": "exceptions",
+      "metadata": [],
+      "functions": {
+        "throwsUserException": {
+          "name": "throwsUserException",
+          "apiName": "exceptions",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "cause",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonValue",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 312,
+                  "uri": "package:celest_backend/src/functions/exceptions.dart",
+                  "line": 8,
+                  "column": 13
+                },
+                "end": {
+                  "offset": 317,
+                  "uri": "package:celest_backend/src/functions/exceptions.dart",
+                  "line": 8,
+                  "column": 18
+                },
+                "text": "cause"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
+              }
+            }
+          ],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 277,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 296,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 7,
+              "column": 24
+            },
+            "text": "throwsUserException"
+          }
+        },
+        "callsThrowsUserException": {
+          "name": "callsThrowsUserException",
+          "apiName": "exceptions",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "cause",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonValue",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 427,
+                  "uri": "package:celest_backend/src/functions/exceptions.dart",
+                  "line": 15,
+                  "column": 13
+                },
+                "end": {
+                  "offset": 432,
+                  "uri": "package:celest_backend/src/functions/exceptions.dart",
+                  "line": 15,
+                  "column": 18
+                },
+                "text": "cause"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
+              }
+            }
+          ],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 387,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 14,
+              "column": 5
+            },
+            "end": {
+              "offset": 411,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 14,
+              "column": 29
+            },
+            "text": "callsThrowsUserException"
+          }
+        },
+        "throwsAppError": {
+          "name": "throwsAppError",
+          "apiName": "exceptions",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": false,
+              "named": true,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 517,
+                  "uri": "package:celest_backend/src/functions/exceptions.dart",
+                  "line": 22,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 524,
+                  "uri": "package:celest_backend/src/functions/exceptions.dart",
+                  "line": 22,
+                  "column": 16
+                },
+                "text": "message"
+              },
+              "defaultTo": {
+                "$": "DartString",
+                "value": "message",
+                "staticType": {
+                  "symbol": "String",
+                  "url": "dart:core"
+                }
+              }
+            },
+            {
+              "name": "error",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonValue",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 551,
+                  "uri": "package:celest_backend/src/functions/exceptions.dart",
+                  "line": 23,
+                  "column": 13
+                },
+                "end": {
+                  "offset": 556,
+                  "uri": "package:celest_backend/src/functions/exceptions.dart",
+                  "line": 23,
+                  "column": 18
+                },
+                "text": "error"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
+              }
+            }
+          ],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 491,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 21,
+              "column": 5
+            },
+            "end": {
+              "offset": 505,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 21,
+              "column": 19
+            },
+            "text": "throwsAppError"
+          }
+        },
+        "throwsAppException": {
+          "name": "throwsAppException",
+          "apiName": "exceptions",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 612,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 29,
+              "column": 5
+            },
+            "end": {
+              "offset": 630,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 29,
+              "column": 23
+            },
+            "text": "throwsAppException"
+          }
+        },
+        "throwsNotYetImplementedError": {
+          "name": "throwsNotYetImplementedError",
+          "apiName": "exceptions",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 715,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 34,
+              "column": 5
+            },
+            "end": {
+              "offset": 743,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 34,
+              "column": 33
+            },
+            "text": "throwsNotYetImplementedError"
+          }
+        },
+        "throwsValidateError": {
+          "name": "throwsValidateError",
+          "apiName": "exceptions",
+          "typeParameters": [],
+          "parameters": [],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 806,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 39,
+              "column": 5
+            },
+            "end": {
+              "offset": 825,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 39,
+              "column": 24
+            },
+            "text": "throwsValidateError"
+          }
+        },
+        "throwsUserException_ShowInConsole": {
+          "name": "throwsUserException_ShowInConsole",
+          "apiName": "exceptions",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "String",
+                "url": "dart:core",
+                "isNullable": false
+              },
+              "required": false,
+              "named": true,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 924,
+                  "uri": "package:celest_backend/src/functions/exceptions.dart",
+                  "line": 45,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 931,
+                  "uri": "package:celest_backend/src/functions/exceptions.dart",
+                  "line": 45,
+                  "column": 16
+                },
+                "text": "message"
+              },
+              "defaultTo": {
+                "$": "DartString",
+                "value": "message",
+                "staticType": {
+                  "symbol": "String",
+                  "url": "dart:core"
+                }
+              }
+            },
+            {
+              "name": "cause",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "JsonValue",
+                "url": "package:celest_core/src/serialization/json_value.dart",
+                "isNullable": true
+              },
+              "required": false,
+              "named": true,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 958,
+                  "uri": "package:celest_backend/src/functions/exceptions.dart",
+                  "line": 46,
+                  "column": 13
+                },
+                "end": {
+                  "offset": 963,
+                  "uri": "package:celest_backend/src/functions/exceptions.dart",
+                  "line": 46,
+                  "column": 18
+                },
+                "text": "cause"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
+              }
+            }
+          ],
+          "returnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "flattenedReturnType": {
+            "$": "Reference",
+            "symbol": "void",
+            "url": "dart:core"
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 879,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 44,
+              "column": 5
+            },
+            "end": {
+              "offset": 912,
+              "uri": "package:celest_backend/src/functions/exceptions.dart",
+              "line": 44,
+              "column": 38
+            },
+            "text": "throwsUserException_ShowInConsole"
+          }
+        }
+      },
+      "docs": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "UserException",
+          "url": "package:_common/src/models/errors_and_exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AppError",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AppException",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "NotYetImplementedError",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ValidateError",
+          "url": "package:_common/src/models/errors_and_exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UserException_ShowInConsole",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "Error",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AssertionError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TypeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ArgumentError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "RangeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IndexError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnsupportedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StateError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ConcurrentModificationError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfMemoryError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StackOverflowError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "Exception",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FormatException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IntegerDivisionByZeroException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AsyncError",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TimeoutException",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "JsonUnsupportedObjectError",
+          "url": "dart:convert",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CancelledException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnknownError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "NotFoundException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AlreadyExistsException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PermissionDeniedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ResourceExhaustedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FailedPreconditionException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AbortedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfRangeException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnavailableError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DataLossError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DeadlineExceededError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "package:celest_backend/src/functions/exceptions.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "package:celest_backend/src/functions/exceptions.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    },
+    "models": {
+      "name": "models",
+      "metadata": [],
+      "functions": {
+        "availableStock": {
+          "name": "availableStock",
+          "apiName": "models",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "availableStock",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "AvailableStock",
+                "url": "package:_common/src/models/available_stock.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 129,
+                  "uri": "package:celest_backend/src/functions/models.dart",
+                  "line": 4,
+                  "column": 45
+                },
+                "end": {
+                  "offset": 143,
+                  "uri": "package:celest_backend/src/functions/models.dart",
+                  "line": 4,
+                  "column": 59
+                },
+                "text": "availableStock"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "AvailableStock",
+            "url": "package:_common/src/models/available_stock.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "AvailableStock",
+            "url": "package:_common/src/models/available_stock.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 99,
+              "uri": "package:celest_backend/src/functions/models.dart",
+              "line": 4,
+              "column": 15
+            },
+            "end": {
+              "offset": 113,
+              "uri": "package:celest_backend/src/functions/models.dart",
+              "line": 4,
+              "column": 29
+            },
+            "text": "availableStock"
+          }
+        },
+        "availableStocks": {
+          "name": "availableStocks",
+          "apiName": "models",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "availableStocks",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "AvailableStocks",
+                "url": "package:_common/src/models/available_stocks.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 219,
+                  "uri": "package:celest_backend/src/functions/models.dart",
+                  "line": 6,
+                  "column": 48
+                },
+                "end": {
+                  "offset": 234,
+                  "uri": "package:celest_backend/src/functions/models.dart",
+                  "line": 6,
+                  "column": 63
+                },
+                "text": "availableStocks"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "AvailableStocks",
+            "url": "package:_common/src/models/available_stocks.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "AvailableStocks",
+            "url": "package:_common/src/models/available_stocks.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 187,
+              "uri": "package:celest_backend/src/functions/models.dart",
+              "line": 6,
+              "column": 16
+            },
+            "end": {
+              "offset": 202,
+              "uri": "package:celest_backend/src/functions/models.dart",
+              "line": 6,
+              "column": 31
+            },
+            "text": "availableStocks"
+          }
+        },
+        "cashBalance": {
+          "name": "cashBalance",
+          "apiName": "models",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "cashBalance",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "CashBalance",
+                "url": "package:_common/src/models/cash_balance.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 303,
+                  "uri": "package:celest_backend/src/functions/models.dart",
+                  "line": 9,
+                  "column": 36
+                },
+                "end": {
+                  "offset": 314,
+                  "uri": "package:celest_backend/src/functions/models.dart",
+                  "line": 9,
+                  "column": 47
+                },
+                "text": "cashBalance"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "CashBalance",
+            "url": "package:_common/src/models/cash_balance.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "CashBalance",
+            "url": "package:_common/src/models/cash_balance.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 279,
+              "uri": "package:celest_backend/src/functions/models.dart",
+              "line": 9,
+              "column": 12
+            },
+            "end": {
+              "offset": 290,
+              "uri": "package:celest_backend/src/functions/models.dart",
+              "line": 9,
+              "column": 23
+            },
+            "text": "cashBalance"
+          }
+        },
+        "portfolio": {
+          "name": "portfolio",
+          "apiName": "models",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "portfolio",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Portfolio",
+                "url": "package:_common/src/models/portfolio.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 369,
+                  "uri": "package:celest_backend/src/functions/models.dart",
+                  "line": 11,
+                  "column": 30
+                },
+                "end": {
+                  "offset": 378,
+                  "uri": "package:celest_backend/src/functions/models.dart",
+                  "line": 11,
+                  "column": 39
+                },
+                "text": "portfolio"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Portfolio",
+            "url": "package:_common/src/models/portfolio.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Portfolio",
+            "url": "package:_common/src/models/portfolio.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 349,
+              "uri": "package:celest_backend/src/functions/models.dart",
+              "line": 11,
+              "column": 10
+            },
+            "end": {
+              "offset": 358,
+              "uri": "package:celest_backend/src/functions/models.dart",
+              "line": 11,
+              "column": 19
+            },
+            "text": "portfolio"
+          }
+        },
+        "stock": {
+          "name": "stock",
+          "apiName": "models",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "stock",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Stock",
+                "url": "package:_common/src/models/stock.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 419,
+                  "uri": "package:celest_backend/src/functions/models.dart",
+                  "line": 13,
+                  "column": 18
+                },
+                "end": {
+                  "offset": 424,
+                  "uri": "package:celest_backend/src/functions/models.dart",
+                  "line": 13,
+                  "column": 23
+                },
+                "text": "stock"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Stock",
+            "url": "package:_common/src/models/stock.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Stock",
+            "url": "package:_common/src/models/stock.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 407,
+              "uri": "package:celest_backend/src/functions/models.dart",
+              "line": 13,
+              "column": 6
+            },
+            "end": {
+              "offset": 412,
+              "uri": "package:celest_backend/src/functions/models.dart",
+              "line": 13,
+              "column": 11
+            },
+            "text": "stock"
+          }
+        },
+        "ui": {
+          "name": "ui",
+          "apiName": "models",
+          "typeParameters": [],
+          "parameters": [
+            {
+              "name": "ui",
+              "type": {
+                "$": "TypeReference",
+                "symbol": "Ui",
+                "url": "package:_common/src/models/ui.dart",
+                "isNullable": false
+              },
+              "required": true,
+              "named": false,
+              "annotations": [],
+              "location": {
+                "start": {
+                  "offset": 452,
+                  "uri": "package:celest_backend/src/functions/models.dart",
+                  "line": 15,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 454,
+                  "uri": "package:celest_backend/src/functions/models.dart",
+                  "line": 15,
+                  "column": 11
+                },
+                "text": "ui"
+              }
+            }
+          ],
+          "returnType": {
+            "$": "TypeReference",
+            "symbol": "Ui",
+            "url": "package:_common/src/models/ui.dart",
+            "isNullable": false
+          },
+          "flattenedReturnType": {
+            "$": "TypeReference",
+            "symbol": "Ui",
+            "url": "package:_common/src/models/ui.dart",
+            "isNullable": false
+          },
+          "metadata": [],
+          "annotations": [
+            {
+              "$": "DartInstance",
+              "classRef": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              },
+              "constructor": "",
+              "positionalArguments": {},
+              "namedArguments": {},
+              "staticType": {
+                "symbol": "_Cloud",
+                "url": "package:celest/src/core/annotations.dart",
+                "isNullable": false
+              }
+            }
+          ],
+          "docs": [],
+          "location": {
+            "start": {
+              "offset": 446,
+              "uri": "package:celest_backend/src/functions/models.dart",
+              "line": 15,
+              "column": 3
+            },
+            "end": {
+              "offset": 448,
+              "uri": "package:celest_backend/src/functions/models.dart",
+              "line": 15,
+              "column": 5
+            },
+            "text": "ui"
+          }
+        }
+      },
+      "docs": [],
+      "exceptionTypes": [
+        {
+          "$": "TypeReference",
+          "symbol": "UserException",
+          "url": "package:_common/src/models/errors_and_exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AppError",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AppException",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "NotYetImplementedError",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ValidateError",
+          "url": "package:_common/src/models/errors_and_exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UserException_ShowInConsole",
+          "url": "package:celest_backend/exceptions/overrides.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "Error",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AssertionError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TypeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ArgumentError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "RangeError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IndexError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnsupportedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StateError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ConcurrentModificationError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfMemoryError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StackOverflowError",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "Exception",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FormatException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "IntegerDivisionByZeroException",
+          "url": "dart:core",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AsyncError",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TimeoutException",
+          "url": "dart:async",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "JsonUnsupportedObjectError",
+          "url": "dart:convert",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CloudException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CancelledException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnknownError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BadRequestException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnauthorizedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "NotFoundException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AlreadyExistsException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "PermissionDeniedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ResourceExhaustedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "FailedPreconditionException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AbortedException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OutOfRangeException",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnimplementedError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InternalServerError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnavailableError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DataLossError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DeadlineExceededError",
+          "url": "package:celest_core/src/exception/cloud_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SerializationException",
+          "url": "package:celest_core/src/exception/serialization_exception.dart",
+          "isNullable": false
+        }
+      ],
+      "location": {
+        "start": {
+          "offset": 0,
+          "uri": "package:celest_backend/src/functions/models.dart",
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "offset": 0,
+          "uri": "package:celest_backend/src/functions/models.dart",
+          "line": 0,
+          "column": 0
+        },
+        "text": ""
+      }
+    }
+  },
+  "variables": [],
+  "secrets": [],
+  "databases": {},
+  "sdkConfig": {
+    "celest": "1.0.6+2",
+    "dart": {
+      "type": "dart",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    },
+    "targetSdk": "dart",
+    "featureFlags": [
+      "streaming"
+    ],
+    "flutter": {
+      "type": "flutter",
+      "version": "3.29.0",
+      "enabledExperiments": []
+    }
+  },
+  "location": {
+    "start": {
+      "offset": 44,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 6
+    },
+    "end": {
+      "offset": 78,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 40
+    },
+    "text": "project = Project(name: 'marcelo')"
+  }
+}
