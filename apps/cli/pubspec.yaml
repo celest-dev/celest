@@ -88,15 +88,15 @@ dependency_overrides:
   # TODO: Remove when built_value supports latest analyzer
   analyzer: ^7.3.0
   celest:
-    path: ../../celest/packages/celest
+    path: ../../packages/celest
   celest_ast:
-    path: ../../celest/packages/celest_ast
+    path: ../../packages/celest_ast
   celest_auth:
-    path: ../../celest/packages/celest_auth
+    path: ../../packages/celest_auth
   celest_cloud:
-    path: ../../celest/packages/celest_cloud
+    path: ../../packages/celest_cloud
   celest_core:
-    path: ../../celest/packages/celest_core
+    path: ../../packages/celest_core
   # TODO: Remove when built_value supports latest analyzer
   source_gen: ^2.0.0
 

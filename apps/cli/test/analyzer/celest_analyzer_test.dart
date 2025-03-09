@@ -42,10 +42,10 @@ Future<CelestProject> newProject({
     projectDart += authDart;
   }
   final celestDir = p.fromUri(
-    Directory.current.uri.resolve('../../celest/packages/celest/'),
+    Directory.current.uri.resolve('../../packages/celest/'),
   );
   final celestCoreDir = p.fromUri(
-    Directory.current.uri.resolve('../../celest/packages/celest_core/'),
+    Directory.current.uri.resolve('../../packages/celest_core/'),
   );
   final packageConfig = PackageConfig([
     Package(
