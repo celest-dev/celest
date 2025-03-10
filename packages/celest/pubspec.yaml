@@ -33,7 +33,7 @@ dependencies:
   platform: ^3.1.5
   shelf: ^1.4.1
   shelf_router: ^1.1.4
-  shelf_web_socket: ^2.0.0
+  shelf_web_socket: ">=2.0.0 <4.0.0"
   sqlite3: ^2.4.6
   stack_trace: ^1.11.1
   stream_channel: ^2.1.2
