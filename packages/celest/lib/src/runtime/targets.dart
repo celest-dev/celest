@@ -74,7 +74,7 @@ abstract base class CloudEventSourceTarget extends CloudFunctionTarget {
 
   late final Handler _sseHandler = sseHandler(_handleConnection);
   late final Handler _wsHandler = webSocketHandler(
-    (WebSocketChannel webSocket) {
+    (WebSocketChannel webSocket, String? subProtocol) {
       _handleConnection(
         webSocket.transform(
           StreamChannelTransformer(
