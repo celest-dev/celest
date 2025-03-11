@@ -2,7 +2,7 @@ name: celest_cli
 on:
   pull_request:
     paths:
-      - ".github/workflows/apps_cli.yaml"
+      - ".github/workflows/celest_cli.yaml"
       - "apps/cli/**"
       - "packages/**"
       - "services/**"
