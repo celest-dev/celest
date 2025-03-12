@@ -21,8 +21,7 @@ Future<void> initTests({
   }
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
   kCelestTest = true;
-  celestLocalPath =
-      io.Directory.current.uri.resolve('../../celest').toFilePath();
+  celestLocalPath = io.Directory.current.uri.resolve('../../').toFilePath();
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
     print('[${record.loggerName}] ${record.level.name}: ${record.message}');

@@ -10,7 +10,7 @@ publish_to: none
 # switching between versions, so they are instead centrally managed here.
 environment:
   sdk: 3.7.0
-  flutter: 3.29.0
+  flutter: 3.29.1
 
 dev_dependencies:
   melos: ^5.3.0

@@ -55,6 +55,6 @@ jobs:
       - name: Test
         working-directory: apps/cli
         run: dart test -x e2e --fail-fast -j 1
-      # - name: Test (Fixtures)
-      #   working-directory: apps/cli
-      #   run: dart test fixtures/legacy/fixtures_test.dart --fail-fast -j 1
+      - name: Test (Fixtures)
+        working-directory: apps/cli
+        run: dart test fixtures/fixtures_test.dart --fail-fast -j 1
