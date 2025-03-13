@@ -1,10 +1,12 @@
 name: celest_dev
 
 packages:
+  - apps/**
   - examples/**
   - packages/**
   - services/**
 ignore:
+  - "apps/cli/fixtures/**"
   - "examples/**/celest"
   - "packages/**/example/celest"
 

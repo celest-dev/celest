@@ -1,0 +1,45 @@
+{
+  "name": "simple",
+  "environment": "local",
+  "reference": {
+    "$": "Reference",
+    "symbol": "project",
+    "url": "package:celest_backend/src/project.dart"
+  },
+  "apis": {},
+  "variables": [],
+  "secrets": [],
+  "databases": {},
+  "sdkConfig": {
+    "celest": "1.0.6+2",
+    "dart": {
+      "type": "dart",
+      "version": "3.29.1",
+      "enabledExperiments": []
+    },
+    "targetSdk": "dart",
+    "featureFlags": [
+      "streaming"
+    ],
+    "flutter": {
+      "type": "flutter",
+      "version": "3.29.1",
+      "enabledExperiments": []
+    }
+  },
+  "location": {
+    "start": {
+      "offset": 44,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 6
+    },
+    "end": {
+      "offset": 77,
+      "uri": "project.dart",
+      "line": 2,
+      "column": 39
+    },
+    "text": "project = Project(name: 'simple')"
+  }
+}

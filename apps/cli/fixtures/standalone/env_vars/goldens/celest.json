@@ -1,0 +1,127 @@
+{
+  "projectId": "env_vars",
+  "environmentId": "local",
+  "apis": {
+    "injected": {
+      "apiId": "injected",
+      "functions": {
+        "sayHello": {
+          "functionId": "sayHello",
+          "parentId": "injected",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/injected/say-hello"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          },
+          "variables": [
+            "MY_NAME",
+            "MY_AGE"
+          ]
+        },
+        "sayHelloPerson": {
+          "functionId": "sayHelloPerson",
+          "parentId": "injected",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/injected/say-hello-person"
+            },
+            "statusMappings": {}
+          },
+          "streamConfig": {
+            "type": "STREAM_CONFIG_TYPE_UNSPECIFIED"
+          },
+          "variables": [
+            "MY_NAME",
+            "MY_AGE",
+            "MY_HEIGHT",
+            "MY_WEIGHT",
+            "MY_WEBSITE",
+            "IM_COOL",
+            "CELEST_ENVIRONMENT"
+          ],
+          "secrets": [
+            "SUPER_SECRET"
+          ]
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "MY_NAME",
+      "value": "Dillon"
+    },
+    {
+      "name": "MY_AGE",
+      "value": "28"
+    },
+    {
+      "name": "MY_HEIGHT",
+      "value": "5.83"
+    },
+    {
+      "name": "IM_COOL",
+      "value": "true"
+    },
+    {
+      "name": "MY_WEBSITE",
+      "value": "https://dillonnys.com"
+    },
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    },
+    {
+      "name": "MY_WEIGHT",
+      "value": "130"
+    }
+  ],
+  "secrets": [
+    {
+      "name": "SUPER_SECRET",
+      "value": "SGk="
+    }
+  ],
+  "databases": {},
+  "sdkConfig": {
+    "celest": {
+      "major": 1,
+      "minor": 0,
+      "patch": 6,
+      "build": [
+        2.0
+      ],
+      "canonicalizedVersion": "1.0.6+2"
+    },
+    "dart": {
+      "type": "DART",
+      "version": {
+        "major": 3,
+        "minor": 29,
+        "patch": 1,
+        "canonicalizedVersion": "3.29.1"
+      }
+    },
+    "flutter": {
+      "type": "FLUTTER",
+      "version": {
+        "major": 3,
+        "minor": 29,
+        "patch": 1,
+        "canonicalizedVersion": "3.29.1"
+      }
+    },
+    "targetSdk": "DART",
+    "featureFlags": [
+      "STREAMING"
+    ]
+  }
+}
