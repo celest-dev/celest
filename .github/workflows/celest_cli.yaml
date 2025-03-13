@@ -27,7 +27,7 @@ jobs:
           # TODO: Need to fix tests on Windows
           # - windows-latest
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Git Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
@@ -49,6 +49,10 @@ jobs:
       - name: Setup Libsecret
         if: runner.os == 'Linux'
         run: tool/setup-ci.sh
+      - name: Setup Melos
+        run: dart pub global activate melos
+      - name: Get Packages
+        run: melos bootstrap
       - name: Get Packages
         working-directory: apps/cli
         run: dart pub upgrade

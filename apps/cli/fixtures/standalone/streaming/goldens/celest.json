@@ -68,7 +68,7 @@
       "build": [
         2.0
       ],
-      "canonicalizedVersion": "1.0.6+2"
+      "canonicalizedVersion": "1.0.7"
     },
     "dart": {
       "type": "DART",

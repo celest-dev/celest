@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# Remove previous installation
-sudo rm -rf /opt/celest
-sudo rm -rf /usr/local/bin/celest

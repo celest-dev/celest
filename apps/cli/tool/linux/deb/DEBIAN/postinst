@@ -1,5 +1,0 @@
-#!/bin/sh
-
-chmod +x /opt/celest/launcher.sh
-chmod +x /opt/celest/celest
-ln -sf /opt/celest/launcher.sh /usr/local/bin/celest
