@@ -143,16 +143,12 @@ final class PubspecUpdater extends ProjectMigration {
     final projectPubspecName = '${projectName.snakeCase}_client';
     final pubspec = parentProject.pubspec;
     final missingClient = !pubspec.dependencies.containsKey(projectPubspecName);
-    final legacyBackend = pubspec.dependencies.containsKey('celest_backend');
-    final needsMigration = missingClient || legacyBackend;
+    final needsMigration = missingClient;
     if (!needsMigration) {
       return;
     }
     _logger.fine('Updating app pubspec...');
     final editor = YamlEditor(parentProject.pubspecYaml);
-    if (legacyBackend) {
-      editor.remove(['dependencies', 'celest_backend']);
-    }
     if (missingClient) {
       editor.update(
         ['dependencies', projectPubspecName],

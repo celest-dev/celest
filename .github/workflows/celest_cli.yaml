@@ -56,5 +56,6 @@ jobs:
         working-directory: apps/cli
         run: dart test -x e2e --fail-fast -j 1
       - name: Test (Fixtures)
+        if: runner.os == 'macOS' # TODO: Goldens differ on other OSes
         working-directory: apps/cli
         run: dart test fixtures/fixtures_test.dart --fail-fast -j 1
