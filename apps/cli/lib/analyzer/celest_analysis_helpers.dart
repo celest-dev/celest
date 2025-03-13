@@ -17,11 +17,6 @@ enum CustomType {
   model,
   exception;
 
-  String get legacyPath => switch (this) {
-    model => projectPaths.modelsDart,
-    exception => projectPaths.exceptionsDart,
-  };
-
   String get dir => switch (this) {
     model => projectPaths.modelsDir,
     exception => projectPaths.exceptionsDir,

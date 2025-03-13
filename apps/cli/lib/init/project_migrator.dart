@@ -2,7 +2,6 @@ import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/init/migrations/add_analyzer_plugin.dart';
 import 'package:celest_cli/init/migrations/macos_entitlements.dart';
 import 'package:celest_cli/init/migrations/pubspec_updater.dart';
-import 'package:celest_cli/init/migrations/v1_folder_structure.dart';
 import 'package:celest_cli/init/project_migration.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:logging/logging.dart';
@@ -36,8 +35,6 @@ class ProjectMigrator {
   Future<ProjectMigrationResult> migrate() async {
     final migrations = [
       PubspecUpdater(projectRoot, parentProject, projectName),
-      V1FolderStructure(projectRoot, projectName, parentProject),
-      RemoveResourcesDartFile(projectRoot),
       if (parentProject case ParentProject(
         path: final appRoot,
         :final type,

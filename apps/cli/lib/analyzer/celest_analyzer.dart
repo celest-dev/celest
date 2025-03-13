@@ -12,7 +12,6 @@ import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/analyzer/analysis_error.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analysis_helpers.dart';
-import 'package:celest_cli/analyzer/resolver/legacy_project_resolver.dart';
 import 'package:celest_cli/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/ast/ast.dart';
 import 'package:celest_cli/config/feature_flags.dart';
@@ -173,7 +172,7 @@ const project = Project(name: 'cache_warmup');
     _warnings.clear();
     _infos.clear();
     _debugs.clear();
-    _resolver ??= LegacyCelestProjectResolver(
+    _resolver ??= CelestProjectResolver(
       featureFlags: await FeatureFlags.load(),
       migrateProject: migrateProject,
       errorReporter: this,

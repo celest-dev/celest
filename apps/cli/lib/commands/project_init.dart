@@ -147,17 +147,13 @@ base mixin Configure on CelestCommand {
         pubspecFile = currentDir.childFile('pubspec.yaml');
       }
     }
-    final projectFiles = [
-      // Legacy
-      currentDir.childFile('project.dart'),
-      currentDir
-          .childDirectory('lib')
-          .childDirectory('src')
-          .childFile('project.dart'),
-    ];
+    final projectFile = currentDir
+        .childDirectory('lib')
+        .childDirectory('src')
+        .childFile('project.dart');
 
     final (celestDir, isExistingProject, parentProject) = switch ((
-      projectFiles.any((f) => f.existsSync()),
+      projectFile.existsSync(),
       pubspecFile.existsSync(),
     )) {
       // We're inside the `celest` directory.
@@ -228,7 +224,7 @@ base mixin Configure on CelestCommand {
       projectRoot = switch (celestDir) {
         final celestDir? => celestDir.path,
 
-        // If the current directory is not empty, ee should create a new folder
+        // If the current directory is not empty, we should create a new folder
         // for the project which is unattached to any parent project, named
         // after the project.
         null when !currentDirIsEmpty => await run(() async {

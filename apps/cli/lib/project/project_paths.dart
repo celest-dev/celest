@@ -35,15 +35,8 @@ final class ProjectPaths {
     'src',
     'project.dart',
   );
-  late final String projectDartLegacy = p.join(projectRoot, 'project.dart');
   late final String projectLib = p.join(projectRoot, 'lib');
   late final String localApiEntrypoint = p.join(outputsDir, 'api.local.dart');
-  late final String legacyClientOutputsDir = p.join(
-    projectRoot,
-    'lib',
-    'src',
-    'client',
-  );
   final String clientRoot;
   late final String clientPackageRoot = p.join(clientRoot, 'lib');
   late final String clientOutputsDir = p.join(clientRoot, 'lib', 'src');
@@ -63,18 +56,9 @@ final class ProjectPaths {
   late final String buildDir = p.join(projectRoot, 'build');
 
   late final String apisDir = p.join(projectRoot, 'lib', 'src', 'functions');
-  late final String legacyApisDir = p.join(projectRoot, 'functions');
   late final String configDir = p.join(projectRoot, 'config');
 
-  String get envFile {
-    final legacyEnvFile = fileSystem.file(
-      p.join(projectRoot, 'config', '.env'),
-    );
-    if (legacyEnvFile.existsSync()) {
-      return legacyEnvFile.path;
-    }
-    return p.join(projectRoot, '.env');
-  }
+  String get envFile => p.join(projectRoot, '.env');
 
   String envFileFor(String environment) =>
       p.join(p.dirname(envFile), '.env.$environment');
@@ -89,9 +73,8 @@ final class ProjectPaths {
   );
 
   late final String authDart = p.join(projectRoot, 'auth.dart');
-  late final String legacyAuthDart = p.join(projectRoot, 'auth', 'auth.dart');
 
-  String api(String apiName) => p.join(legacyApisDir, '$apiName.dart');
+  String api(String apiName) => p.join(apisDir, '$apiName.dart');
   String apiOutput(String apiName) => p.join(outputsDir, 'functions', apiName);
   String functionEntrypoint(String apiName, String functionName) =>
       p.join(apiOutput(apiName), '$functionName.dart');
