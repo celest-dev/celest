@@ -1,5 +1,5 @@
 /// The Flutter cloud platform.
-library celest;
+library;
 
 export 'package:celest_core/src/auth/user.dart';
 export 'package:celest_core/src/exception/celest_exception.dart';

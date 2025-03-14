@@ -40,10 +40,6 @@ jobs:
       - name: Setup Libsecret
         if: runner.os == 'Linux'
         run: tool/setup-ci.sh
-      - name: Setup Melos
-        run: dart pub global activate melos
-      - name: Get Packages
-        run: melos bootstrap
       - name: Get Packages
         working-directory: apps/cli
         run: dart pub upgrade

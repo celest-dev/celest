@@ -5,8 +5,9 @@ homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/packages/celest_auth
 
 environment:
-  sdk: ^3.3.0
-  flutter: ">=3.19.0"
+  sdk: ^3.5.0
+  flutter: ">=3.24.0"
+resolution: workspace
 
 dependencies:
   async: ^2.11.0

@@ -5,7 +5,8 @@ homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/services/celest_cloud_auth
 
 environment:
-  sdk: ^3.4.0
+  sdk: ^3.5.0
+resolution: workspace
 
 dependencies:
   args: ^2.4.0

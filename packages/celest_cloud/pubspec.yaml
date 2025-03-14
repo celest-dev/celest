@@ -4,7 +4,8 @@ version: 0.1.4
 repository: https://github.com/celest-dev/celest
 
 environment:
-  sdk: ^3.3.0
+  sdk: ^3.5.0
+resolution: workspace
 
 dependencies:
   async: ^2.11.0

@@ -23,14 +23,18 @@ jobs:
         with:
           channel: stable
           cache: true
-      - name: Setup Melos
-        run: dart pub global activate melos
       - name: Setup Turso
         run: curl -sSfL https://get.tur.so/install.sh | bash
         env:
           TURSO_INSTALL_SKIP_SIGNUP: true
       - name: Get Packages
-        run: melos bootstrap
+        working-directory: packages/celest
+        run: |
+          dart pub get
+          flutter pub get -C example
+          dart pub get -C example/celest
+          dart pub get -C example/celest/client
+          dart pub get -C tools/analyzer_plugin
       - name: Analyze
         working-directory: packages/celest
         run: dart analyze --fatal-infos --fatal-warnings

@@ -17,7 +17,12 @@ import '../common.dart';
 
 void main() {
   group('runPub', () {
-    setUpAll(initTests);
+    setUpAll(() async {
+      await initTests();
+      // Ensure flutter tool is built in CI
+      final res = await processManager.run(['flutter', '--help']);
+      expect(res.exitCode, 0);
+    });
 
     final matrix = [
       (PubAction.get, 'flutter'),

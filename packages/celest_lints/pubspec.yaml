@@ -6,6 +6,7 @@ repository: https://github.com/celest-dev/celest/tree/main/packages/celest_lints
 
 environment:
   sdk: ^3.7.0
+resolution: workspace
 
 dependencies:
   flutter_lints: ^5.0.0
