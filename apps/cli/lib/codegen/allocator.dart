@@ -1,3 +1,4 @@
+import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/path.dart';
@@ -37,9 +38,11 @@ final class CelestAllocator implements Allocator {
     required this.pathStrategy,
     @visibleForTesting String? packageName,
     @visibleForTesting String? clientPackageName,
+    @visibleForTesting ProjectPaths? projectPaths,
   }) : packageName = packageName ?? celestProject.pubspec.name,
        clientPackageName =
-           clientPackageName ?? celestProject.clientPubspec.name;
+           clientPackageName ?? celestProject.clientPubspec.name,
+       projectPaths = projectPaths ?? celestProject.projectPaths;
 
   static const _doNotPrefix = ['dart:core', 'package:meta/meta.dart'];
   static final Logger _logger = Logger('CelestAllocator');
@@ -50,6 +53,7 @@ final class CelestAllocator implements Allocator {
 
   final String packageName;
   final String clientPackageName;
+  final ProjectPaths projectPaths;
 
   late final _fileContext = path.Context(
     current: p.dirname(forFile),

@@ -121,6 +121,7 @@ final class CelestProject {
       parentProject: parentProject,
       cacheDb: cacheDb,
       byteStore: byteStore,
+      projectDb: projectDb,
     );
     return project;
   }

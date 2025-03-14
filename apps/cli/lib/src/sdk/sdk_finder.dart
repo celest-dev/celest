@@ -56,13 +56,17 @@ final class SdkNotFound extends SdkFinderResult<Never> {
   String toString() {
     final buffer = StringBuffer('Could not find SDK');
     if (candidates.isNotEmpty) {
-      buffer.writeln(' candidates:');
+      buffer
+        ..writeln()
+        ..writeln(' candidates:');
       for (final candidate in candidates) {
         buffer.writeln('  - $candidate');
       }
     }
     if (searchPath.isNotEmpty) {
-      buffer.writeln(' search path:');
+      buffer
+        ..writeln()
+        ..writeln(' search path:');
       for (final path in searchPath) {
         buffer.writeln('  - $path');
       }
@@ -118,7 +122,7 @@ final class DartSdkFinder implements SdkFinder<SdkType> {
           )!; // never null when `throwOnFailure: true`
     } on ProcessPackageExecutableNotFoundException catch (e) {
       _logger.finest('Could not find Flutter SDK in PATH.', e);
-      return SdkNotFound(searchPath: e.candidates);
+      return SdkNotFound(searchPath: e.searchPath, candidates: e.candidates);
     }
 
     final searchPath = <String>[];

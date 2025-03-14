@@ -1,0 +1,10 @@
+name: celest_tool
+publish_to: none
+
+environment:
+  sdk: ^3.3.0
+
+dependencies:
+  path: any
+  pubspec_parse: ^1.2.3
+  yaml_edit: any

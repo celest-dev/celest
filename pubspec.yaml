@@ -1,16 +1,8 @@
 name: celest_dev
 publish_to: none
 
-# The version locks for GitHub actions.
-#
-# Because many golden tests encode the precise Dart/Flutter SDKs used to generate
-# them, these values must be consistently used when running tests locally and in CI.
-#
-# However, setting these locks in the actual packages is too restrictive when
-# switching between versions, so they are instead centrally managed here.
 environment:
-  sdk: 3.7.0
-  flutter: 3.29.1
+  sdk: ^3.7.0
 
 dev_dependencies:
   melos: ^5.3.0

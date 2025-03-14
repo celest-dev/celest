@@ -186,7 +186,7 @@ FileSystem fileSystem = const LocalFileSystem();
 FileSystem get localFileSystem => const LocalFileSystem();
 
 /// Global path context.
-path.Context get p => fileSystem.path;
+path.Context get p => localFileSystem.path;
 
 /// Global platform.
 ///

@@ -4,6 +4,8 @@ import 'package:celest/http.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/analyzer/analysis_result.dart';
 import 'package:celest_cli/analyzer/celest_analyzer.dart';
+import 'package:celest_cli/database/cache/cache_database.dart';
+import 'package:celest_cli/database/project/project_database.dart';
 import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/pub/pub_cache.dart';
 import 'package:celest_cli/pub/pub_environment.dart';
@@ -133,7 +135,11 @@ $contents
   ]);
   await project.create(parentDirectory);
   final projectRoot = p.join(parentDirectory ?? d.sandbox, name);
-  await init(projectRoot: projectRoot);
+  await init(
+    projectRoot: projectRoot,
+    cacheDb: await CacheDatabase.memory(),
+    projectDb: ProjectDatabase.memory(),
+  );
   return celestProject;
 }
 
