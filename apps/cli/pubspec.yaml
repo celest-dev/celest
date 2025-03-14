@@ -1,7 +1,8 @@
 name: celest_cli
 description: The command-line interface for Celest.
-version: 1.0.6+2
-publish_to: none
+version: 1.0.7
+homepage: https://celest.dev
+repository: https://github.com/celest-dev/celest/tree/main/apps/cli
 
 environment:
   sdk: ^3.7.0
@@ -13,18 +14,12 @@ dependencies:
   args: ^2.4.2
   async: ^2.11.0
   built_collection: ^5.1.1
-  built_value: ^8.6.3
+  built_value: ^8.9.5
   cedar: ^0.2.1
-  celest:
-    path: ../../packages/celest
-  celest_ast:
-    path: ../../packages/celest_ast
-  celest_auth:
-    path: ../../packages/celest_auth
-  celest_cloud:
-    path: ../../packages/celest_cloud
-  celest_core:
-    path: ../../packages/celest_core
+  celest: ^1.0.0
+  celest_ast: ^0.1.4
+  celest_auth: ^1.0.0
+  celest_core: ^1.0.0
   chunked_stream: ^1.4.2
   cli_script: ^1.0.0
   cli_util: ^0.4.2
@@ -70,35 +65,21 @@ dependencies:
   sentry_logging: ^8.13.2
   shelf: ^1.4.1
   shelf_static: ^1.1.2
-  shelf_web_socket: ^2.0.0
+  shelf_web_socket: ">=2.0.0 <4.0.0"
   source_span: ^1.10.0
   sqlite3: ^2.4.6
   stack_trace: ^1.11.1
   stream_channel: ^2.1.2
   stream_transform: ^2.1.0
+  timing: ^1.0.2
   toml: ^0.16.0
+  uuid: ^4.5.1
   vm_service: ^15.0.0
   watcher: ^1.1.0
   win32: ^5.11.0
   yaml: ^3.1.2
   # TODO: 2.2.2 breaks sorting of edits
   yaml_edit: 2.2.1
-
-dependency_overrides:
-  # TODO: Remove when built_value supports latest analyzer
-  analyzer: ^7.3.0
-  celest:
-    path: ../../packages/celest
-  celest_ast:
-    path: ../../packages/celest_ast
-  celest_auth:
-    path: ../../packages/celest_auth
-  celest_cloud:
-    path: ../../packages/celest_cloud
-  celest_core:
-    path: ../../packages/celest_core
-  # TODO: Remove when built_value supports latest analyzer
-  source_gen: ^2.0.0
 
 dev_dependencies:
   benchmark_harness: ^2.2.2
