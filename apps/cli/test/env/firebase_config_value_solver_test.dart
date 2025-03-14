@@ -20,7 +20,12 @@ Future<List<FirebaseProject>> _resolveProjectTest({
   String? globalProjectPointer,
   Map<String, Object?>? firebaseJson,
 }) async {
-  fileSystem = MemoryFileSystem.test();
+  fileSystem = MemoryFileSystem.test(
+    style: switch (platform.operatingSystem) {
+      'windows' => FileSystemStyle.windows,
+      _ => FileSystemStyle.posix,
+    },
+  );
   final appDir = fileSystem.systemTempDirectory.createTempSync('app_');
   if (firebaseJson != null) {
     appDir
@@ -34,7 +39,7 @@ Future<List<FirebaseProject>> _resolveProjectTest({
   }
   if (globalProjectPointer != null) {
     final configPath = fileSystem.path.join(
-      platform.environment['HOME']!,
+      (platform.environment['HOME'] ?? platform.environment['USERPROFILE'])!,
       '.config',
       'configstore',
       'firebase-tools.json',

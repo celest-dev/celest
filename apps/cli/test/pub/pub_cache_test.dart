@@ -1,4 +1,5 @@
 import 'package:celest_cli/pub/pub_cache.dart';
+import 'package:celest_cli/src/context.dart';
 import 'package:test/test.dart';
 
 import '../common.dart';
@@ -24,11 +25,20 @@ void main() {
       }
     });
 
-    test('fixes cache', timeout: Timeout.none, () async {
-      final result = await pubCache.repair();
-      expect(result.exitCode, 0, reason: '${result.stdout}\n${result.stderr}');
-      final numFixed = await pubCache.fix(throwOnError: true);
-      expect(numFixed, greaterThan(PubCache.packagesToFix.length));
-    });
+    test(
+      'fixes cache',
+      timeout: Timeout.none,
+      skip: !platform.environment.containsKey('CI'),
+      () async {
+        final result = await pubCache.repair();
+        expect(
+          result.exitCode,
+          0,
+          reason: '${result.stdout}\n${result.stderr}',
+        );
+        final numFixed = await pubCache.fix(throwOnError: true);
+        expect(numFixed, greaterThan(PubCache.packagesToFix.length));
+      },
+    );
   });
 }

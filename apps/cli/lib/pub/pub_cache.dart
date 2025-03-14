@@ -26,7 +26,7 @@ final class PubCache {
     'celest_auth': '>=$currentMinorVersion <2.0.0',
     'celest': '>=$currentMinorVersion <2.0.0',
     'celest_core': '>=$currentMinorVersion <2.0.0',
-    'objective_c': '>=2.0.0',
+    'objective_c': '>=2.0.0 <8.0.0',
   };
   static final _logger = Logger('PubCache');
 
@@ -101,7 +101,7 @@ final class PubCache {
     for (final package in packagesToFix.entries) {
       // Run serially to avoid flutter lock
       final result = await processManager
-          .start([
+          .start(runInShell: true, [
             Sdk.current.sdkType.name,
             'pub',
             'cache',

@@ -41,7 +41,7 @@ void main() {
     });
 
     group('uninstall AOT', () {
-      test('windows', () async {
+      test('windows', testOn: 'windows', () async {
         ctx.fileSystem = MemoryFileSystem.test(style: FileSystemStyle.windows);
 
         const appData = r'C:\Users\test\AppData\Local\Microsoft\WindowsApps';
@@ -114,7 +114,7 @@ void main() {
         ).called(1);
       });
 
-      test('macos', () async {
+      test('macos', testOn: 'posix', () async {
         ctx.fileSystem = MemoryFileSystem.test(style: FileSystemStyle.posix);
         final configDir = ctx.fileSystem.systemTempDirectory
             .childDirectory('Library')
@@ -182,7 +182,7 @@ void main() {
         ).called(1);
       });
 
-      group('linux', () {
+      group('linux', testOn: 'posix', () {
         test('deb installation', () async {
           ctx.fileSystem = MemoryFileSystem.test(style: FileSystemStyle.posix);
           final configDir = ctx.fileSystem.systemTempDirectory
