@@ -132,11 +132,7 @@ final class Cli {
 
     const sdkFinder = DartSdkFinder();
     final result = await sdkFinder.findSdk();
-    Sdk.current = Sdk(
-      result.sdk.path,
-      sdkType: result.sdk.type,
-      version: result.sdk.version,
-    );
+    Sdk.current = result.sdk;
   }
 
   void _setVersion(CelestCommand command) {

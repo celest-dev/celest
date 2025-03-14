@@ -40,8 +40,7 @@ final class CelestAllocator implements Allocator {
     @visibleForTesting String? clientPackageName,
     @visibleForTesting ProjectPaths? projectPaths,
   }) : packageName = packageName ?? celestProject.pubspec.name,
-       clientPackageName =
-           clientPackageName ?? celestProject.clientPubspec.name,
+       clientPackageName = clientPackageName ?? celestProject.clientPackageName,
        projectPaths = projectPaths ?? celestProject.projectPaths;
 
   static const _doNotPrefix = ['dart:core', 'package:meta/meta.dart'];

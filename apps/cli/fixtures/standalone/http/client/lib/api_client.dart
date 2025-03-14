@@ -17,14 +17,14 @@ import 'package:native_storage/native_storage.dart'
 
 export 'package:celest_backend/exceptions/http_errors.dart'
     show
+        AnotherNotFoundException,
+        BadGatewayError,
         CustomBadRequestException,
         ForbiddenException,
-        NotFoundException,
-        AnotherNotFoundException,
-        BadGatewayError;
+        NotFoundException;
 export 'package:celest_backend/models/http_errors.dart' show ExceptionType;
 export 'package:celest_backend/models/http_header_query.dart'
-    show HttpQueryParams, HttpHeaderParams;
+    show HttpHeaderParams, HttpQueryParams;
 
 final Celest celest = Celest();
 

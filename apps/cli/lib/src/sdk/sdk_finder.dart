@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:dcli/dcli.dart' as dcli;
 import 'package:logging/logging.dart';
 import 'package:process/process.dart';
@@ -9,44 +9,29 @@ import 'package:process/process.dart';
 import 'package:process/src/interface/common.dart';
 import 'package:pub_semver/pub_semver.dart';
 
-abstract interface class SdkFinder<T> {
+abstract interface class SdkFinder {
   const SdkFinder();
 
-  Future<SdkFinderResult<T>> findSdk();
+  Future<SdkFinderResult> findSdk();
 }
 
-sealed class SdkFinderResult<T> {
+sealed class SdkFinderResult {
   const SdkFinderResult();
 
-  LocalSdk<T>? get sdk => null;
+  Sdk? get sdk => null;
 }
 
-final class LocalSdk<T> {
-  const LocalSdk({
-    required this.type,
-    required this.path,
-    required this.version,
-  });
-
-  final T type;
-  final String path;
-  final Version version;
-
-  @override
-  String toString() => '$type $version at $path';
-}
-
-final class SdkFound<T> extends SdkFinderResult<T> {
+final class SdkFound extends SdkFinderResult {
   SdkFound(this.sdk);
 
   @override
-  final LocalSdk<T> sdk;
+  final Sdk sdk;
 
   @override
   String toString() => 'Found SDK: $sdk';
 }
 
-final class SdkNotFound extends SdkFinderResult<Never> {
+final class SdkNotFound extends SdkFinderResult {
   const SdkNotFound({this.searchPath = const [], this.candidates = const []});
 
   final List<String> searchPath;
@@ -75,10 +60,7 @@ final class SdkNotFound extends SdkFinderResult<Never> {
   }
 }
 
-typedef DartSdkResult = SdkFinderResult<SdkType>;
-typedef DartSdk = LocalSdk<SdkType>;
-
-final class DartSdkFinder implements SdkFinder<SdkType> {
+final class DartSdkFinder implements SdkFinder {
   const DartSdkFinder();
 
   static final Logger _logger = Logger('Sdk');
@@ -96,20 +78,17 @@ final class DartSdkFinder implements SdkFinder<SdkType> {
   static bool isValid(String sdkPath) =>
       localFileSystem.isDirectorySync(p.join(sdkPath, 'bin', 'snapshots'));
 
-  static Future<DartSdk> _found(SdkType type, String sdkPath) async {
+  static Future<Sdk> _found(SdkType type, String sdkPath) async {
     final versionStr =
         await localFileSystem
             .directory(sdkPath)
             .childFile('version')
             .readAsString();
-    return LocalSdk(
-      type: type,
-      path: sdkPath,
-      version: Version.parse(versionStr.trim()),
-    );
+    final factory = type == SdkType.flutter ? Sdk.flutter : Sdk.dart;
+    return factory(sdkPath, version: Version.parse(versionStr.trim()));
   }
 
-  Future<DartSdkResult> _findFlutterExe() async {
+  Future<SdkFinderResult> _findFlutterExe() async {
     late String flutterPath;
     try {
       flutterPath =
@@ -145,7 +124,7 @@ final class DartSdkFinder implements SdkFinder<SdkType> {
     return SdkNotFound(searchPath: searchPath, candidates: candidates);
   }
 
-  Future<DartSdkResult> _findDartExe() async {
+  Future<SdkFinderResult> _findDartExe() async {
     late String dartPath;
     try {
       dartPath =
@@ -204,8 +183,7 @@ final class DartSdkFinder implements SdkFinder<SdkType> {
   }
 
   @override
-  Future<SdkFound<SdkType>> findSdk() async {
-    storage.clear();
+  Future<SdkFound> findSdk() async {
     // Check for existing Flutter SDK preference.
     if (storage.read('sdk.flutter.preferred')
         case final preferredFlutterPath?) {

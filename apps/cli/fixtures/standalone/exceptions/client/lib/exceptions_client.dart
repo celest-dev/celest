@@ -16,7 +16,7 @@ import 'package:native_storage/native_storage.dart'
     as _$native_storage_native_storage;
 
 export 'package:celest_backend/exceptions/exceptions.dart'
-    show BaseException, CustomException, BaseError, CustomError;
+    show BaseError, BaseException, CustomError, CustomException;
 
 final Celest celest = Celest();
 

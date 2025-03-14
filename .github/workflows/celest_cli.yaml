@@ -26,7 +26,7 @@ jobs:
           - macos-latest
           - windows-latest
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 20
+    timeout-minutes: 30 # Windows is really slow
     steps:
       - name: Git Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
@@ -36,7 +36,7 @@ jobs:
           cache: true
           # Because many golden tests encode the precise Dart/Flutter SDKs used to generate
           # them, these values must be consistently used when running tests locally and in CI.
-          flutter-version: 3.29.1
+          flutter-version: 3.29.2
       - name: Setup Libsecret
         if: runner.os == 'Linux'
         run: tool/setup-ci.sh
@@ -47,6 +47,5 @@ jobs:
         working-directory: apps/cli
         run: dart test -x e2e --fail-fast -j 1
       - name: Test (Fixtures)
-        if: runner.os == 'macOS' # TODO: Goldens differ on other OSes
         working-directory: apps/cli
         run: dart test fixtures/fixtures_test.dart --fail-fast -j 1
