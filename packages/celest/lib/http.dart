@@ -2,7 +2,7 @@
 ///
 /// See the [docs](https://celest.dev/docs/functions/http/customization) for
 /// usage and examples.
-library http;
+library;
 
 export 'package:celest_core/_internal.dart' show httpError, HttpStatus;
 

@@ -29,7 +29,7 @@ jobs:
       - name: Setup Melos
         run: dart pub global activate melos
       - name: Get Packages
-        run: melos bootstrap
+        run: melos exec -c 1 --dir-exists=celest -- flutter pub get
       - name: Analyze
         run: melos exec -c 1 --dir-exists=celest -- flutter analyze --fatal-infos --fatal-warnings
       - name: Format

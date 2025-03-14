@@ -23,10 +23,13 @@ jobs:
         with:
           channel: stable
           cache: true
-      - name: Setup Melos
-        run: dart pub global activate melos
       - name: Get Packages
-        run: melos bootstrap
+        working-directory: packages/celest_auth
+        run: |
+          dart pub get
+          flutter pub get -C example
+          dart pub get -C example/celest
+          dart pub get -C example/celest/client
       - name: Analyze
         working-directory: packages/celest_auth
         run: dart analyze --fatal-infos --fatal-warnings

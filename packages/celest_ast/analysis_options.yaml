@@ -3,3 +3,5 @@ include: package:lints/recommended.yaml
 analyzer:
   errors:
     implementation_imports: ignore
+  exclude:
+    - '**/*.pb.dart'

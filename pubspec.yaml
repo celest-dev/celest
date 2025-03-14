@@ -4,5 +4,15 @@ publish_to: none
 environment:
   sdk: ^3.7.0
 
+workspace:
+  - apps/cli
+  - packages/celest
+  - packages/celest_ast
+  - packages/celest_auth
+  - packages/celest_cloud
+  - packages/celest_core
+  - packages/celest_lints
+  - services/celest_cloud_auth
+
 dev_dependencies:
   melos: ^5.3.0

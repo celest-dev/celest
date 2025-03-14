@@ -24,10 +24,9 @@ jobs:
         uses: subosito/flutter-action@f2c4f6686ca8e8d6e6d0f28410eeef506ed66aff # 2.18.0
         with:
           cache: true
-      - name: Setup Melos
-        run: dart pub global activate melos
       - name: Get Packages
-        run: melos bootstrap
+        working-directory: packages/celest_ast
+        run: dart pub upgrade
       - name: Analyze
         working-directory: packages/celest_ast
         run: dart analyze --fatal-infos --fatal-warnings .

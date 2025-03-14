@@ -14,18 +14,6 @@ To get started contributing to Celest, clone the repository using the `git clone
 $ git clone https://github.com/celest-dev/celest.git
 ```
 
-The monorepo uses [melos](https://pub.dev/packages/melos) for managing dependency linking and versioning. Before starting, ensure you have melos installed globally:
-
-```bash
-$ dart pub global activate melos
-```
-
-Then run `melos bootstrap` to link all packages together:
-
-```bash
-$ melos bootstrap
-```
-
 ### Submitting a Pull Request
 
 Ensure that any changes made to a package have accompanying tests. To run tests for a package, navigate to the package directory and run the following command:
