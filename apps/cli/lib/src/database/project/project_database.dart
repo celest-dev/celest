@@ -12,7 +12,7 @@ part 'project_database.g.dart';
 @DriftDatabase(include: {'project.drift'})
 final class ProjectDatabase extends _$ProjectDatabase {
   ProjectDatabase({required String projectRoot, required bool verbose})
-    : super(_openConnection(projectRoot, verbose: verbose));
+      : super(_openConnection(projectRoot, verbose: verbose));
 
   ProjectDatabase.memory() : super(NativeDatabase.memory(setup: _setup));
 
@@ -24,25 +24,22 @@ final class ProjectDatabase extends _$ProjectDatabase {
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
-      beforeOpen:
-          (details) => _lock.withResource(() async {
-            await customStatement('PRAGMA foreign_keys = ON');
-            await customStatement('PRAGMA journal_mode = WAL');
-            await customStatement('PRAGMA busy_timeout = 5000');
-            await customStatement('PRAGMA synchronous = NORMAL');
-            await customStatement('PRAGMA mmap_size = 30000000000');
-            await customStatement('PRAGMA cache_size = 1000000000');
-            await customStatement('PRAGMA page_size = 32768');
-            await customStatement('PRAGMA temp_store = memory');
-          }),
-      onCreate:
-          (m) => _lock.withResource(() async {
-            await m.createAll();
-          }),
-      onUpgrade:
-          (m, from, to) => _lock.withResource(() async {
-            return stepByStep()(m, from, to);
-          }),
+      beforeOpen: (details) => _lock.withResource(() async {
+        await customStatement('PRAGMA foreign_keys = ON');
+        await customStatement('PRAGMA journal_mode = WAL');
+        await customStatement('PRAGMA busy_timeout = 5000');
+        await customStatement('PRAGMA synchronous = NORMAL');
+        await customStatement('PRAGMA mmap_size = 30000000000');
+        await customStatement('PRAGMA cache_size = 1000000000');
+        await customStatement('PRAGMA page_size = 32768');
+        await customStatement('PRAGMA temp_store = memory');
+      }),
+      onCreate: (m) => _lock.withResource(() async {
+        await m.createAll();
+      }),
+      onUpgrade: (m, from, to) => _lock.withResource(() async {
+        return stepByStep()(m, from, to);
+      }),
     );
   }
 
@@ -50,13 +47,12 @@ final class ProjectDatabase extends _$ProjectDatabase {
     String name, {
     required String environmentId,
   }) async {
-    final query =
-        select(environmentVariables)
-          ..where(
-            (env) =>
-                env.name.equals(name) & env.environmentId.equals(environmentId),
-          )
-          ..limit(1);
+    final query = select(environmentVariables)
+      ..where(
+        (env) =>
+            env.name.equals(name) & env.environmentId.equals(environmentId),
+      )
+      ..limit(1);
     final values = await query.get();
     return values.firstOrNull?.value;
   }

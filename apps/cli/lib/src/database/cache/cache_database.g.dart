@@ -38,11 +38,10 @@ class AnalyzerByteStore extends Table
   AnalyzerByteStoreData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return AnalyzerByteStoreData(
-      cacheKey:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}cache_key'],
-          )!,
+      cacheKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cache_key'],
+      )!,
       content: attachedDatabase.typeMapping.read(
         DriftSqlType.blob,
         data['${effectivePrefix}content'],
@@ -99,10 +98,11 @@ class AnalyzerByteStoreData extends DataClass
   AnalyzerByteStoreData copyWith({
     String? cacheKey,
     Value<Uint8List?> content = const Value.absent(),
-  }) => AnalyzerByteStoreData(
-    cacheKey: cacheKey ?? this.cacheKey,
-    content: content.present ? content.value : this.content,
-  );
+  }) =>
+      AnalyzerByteStoreData(
+        cacheKey: cacheKey ?? this.cacheKey,
+        content: content.present ? content.value : this.content,
+      );
   AnalyzerByteStoreData copyWithCompanion(AnalyzerByteStoreCompanion data) {
     return AnalyzerByteStoreData(
       cacheKey: data.cacheKey.present ? data.cacheKey.value : this.cacheKey,
@@ -236,16 +236,14 @@ class VersionInfo extends Table with TableInfo<VersionInfo, VersionInfoData> {
   VersionInfoData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return VersionInfoData(
-      celest:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}celest'],
-          )!,
-      dart:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}dart'],
-          )!,
+      celest: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}celest'],
+      )!,
+      dart: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}dart'],
+      )!,
       flutter: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}flutter'],
@@ -312,11 +310,12 @@ class VersionInfoData extends DataClass implements Insertable<VersionInfoData> {
     String? celest,
     String? dart,
     Value<String?> flutter = const Value.absent(),
-  }) => VersionInfoData(
-    celest: celest ?? this.celest,
-    dart: dart ?? this.dart,
-    flutter: flutter.present ? flutter.value : this.flutter,
-  );
+  }) =>
+      VersionInfoData(
+        celest: celest ?? this.celest,
+        dart: dart ?? this.dart,
+        flutter: flutter.present ? flutter.value : this.flutter,
+      );
   VersionInfoData copyWithCompanion(VersionInfoCompanion data) {
     return VersionInfoData(
       celest: data.celest.present ? data.celest.value : this.celest,
@@ -362,8 +361,8 @@ class VersionInfoCompanion extends UpdateCompanion<VersionInfoData> {
     required String dart,
     this.flutter = const Value.absent(),
     this.rowid = const Value.absent(),
-  }) : celest = Value(celest),
-       dart = Value(dart);
+  })  : celest = Value(celest),
+        dart = Value(dart);
   static Insertable<VersionInfoData> custom({
     Expression<String>? celest,
     Expression<String>? dart,
@@ -473,23 +472,23 @@ abstract class _$CacheDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
-    analyzerByteStore,
-    versionInfo,
-  ];
+        analyzerByteStore,
+        versionInfo,
+      ];
 }
 
-typedef $AnalyzerByteStoreCreateCompanionBuilder =
-    AnalyzerByteStoreCompanion Function({
-      required String cacheKey,
-      Value<Uint8List?> content,
-      Value<int> rowid,
-    });
-typedef $AnalyzerByteStoreUpdateCompanionBuilder =
-    AnalyzerByteStoreCompanion Function({
-      Value<String> cacheKey,
-      Value<Uint8List?> content,
-      Value<int> rowid,
-    });
+typedef $AnalyzerByteStoreCreateCompanionBuilder = AnalyzerByteStoreCompanion
+    Function({
+  required String cacheKey,
+  Value<Uint8List?> content,
+  Value<int> rowid,
+});
+typedef $AnalyzerByteStoreUpdateCompanionBuilder = AnalyzerByteStoreCompanion
+    Function({
+  Value<String> cacheKey,
+  Value<Uint8List?> content,
+  Value<int> rowid,
+});
 
 class $AnalyzerByteStoreFilterComposer
     extends Composer<_$CacheDatabase, AnalyzerByteStore> {
@@ -501,14 +500,14 @@ class $AnalyzerByteStoreFilterComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<String> get cacheKey => $composableBuilder(
-    column: $table.cacheKey,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.cacheKey,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<Uint8List> get content => $composableBuilder(
-    column: $table.content,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.content,
+        builder: (column) => ColumnFilters(column),
+      );
 }
 
 class $AnalyzerByteStoreOrderingComposer
@@ -521,14 +520,14 @@ class $AnalyzerByteStoreOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<String> get cacheKey => $composableBuilder(
-    column: $table.cacheKey,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.cacheKey,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<Uint8List> get content => $composableBuilder(
-    column: $table.content,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.content,
+        builder: (column) => ColumnOrderings(column),
+      );
 }
 
 class $AnalyzerByteStoreAnnotationComposer
@@ -547,110 +546,92 @@ class $AnalyzerByteStoreAnnotationComposer
       $composableBuilder(column: $table.content, builder: (column) => column);
 }
 
-class $AnalyzerByteStoreTableManager
-    extends
-        RootTableManager<
-          _$CacheDatabase,
-          AnalyzerByteStore,
-          AnalyzerByteStoreData,
-          $AnalyzerByteStoreFilterComposer,
-          $AnalyzerByteStoreOrderingComposer,
-          $AnalyzerByteStoreAnnotationComposer,
-          $AnalyzerByteStoreCreateCompanionBuilder,
-          $AnalyzerByteStoreUpdateCompanionBuilder,
-          (
-            AnalyzerByteStoreData,
-            BaseReferences<
-              _$CacheDatabase,
-              AnalyzerByteStore,
-              AnalyzerByteStoreData
-            >,
-          ),
-          AnalyzerByteStoreData,
-          PrefetchHooks Function()
-        > {
+class $AnalyzerByteStoreTableManager extends RootTableManager<
+    _$CacheDatabase,
+    AnalyzerByteStore,
+    AnalyzerByteStoreData,
+    $AnalyzerByteStoreFilterComposer,
+    $AnalyzerByteStoreOrderingComposer,
+    $AnalyzerByteStoreAnnotationComposer,
+    $AnalyzerByteStoreCreateCompanionBuilder,
+    $AnalyzerByteStoreUpdateCompanionBuilder,
+    (
+      AnalyzerByteStoreData,
+      BaseReferences<_$CacheDatabase, AnalyzerByteStore, AnalyzerByteStoreData>,
+    ),
+    AnalyzerByteStoreData,
+    PrefetchHooks Function()> {
   $AnalyzerByteStoreTableManager(_$CacheDatabase db, AnalyzerByteStore table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer:
-              () => $AnalyzerByteStoreFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => $AnalyzerByteStoreOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () =>
-                  $AnalyzerByteStoreAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> cacheKey = const Value.absent(),
-                Value<Uint8List?> content = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => AnalyzerByteStoreCompanion(
-                cacheKey: cacheKey,
-                content: content,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String cacheKey,
-                Value<Uint8List?> content = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => AnalyzerByteStoreCompanion.insert(
-                cacheKey: cacheKey,
-                content: content,
-                rowid: rowid,
-              ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
+      : super(
+          TableManagerState(
+            db: db,
+            table: table,
+            createFilteringComposer: () =>
+                $AnalyzerByteStoreFilterComposer($db: db, $table: table),
+            createOrderingComposer: () =>
+                $AnalyzerByteStoreOrderingComposer($db: db, $table: table),
+            createComputedFieldComposer: () =>
+                $AnalyzerByteStoreAnnotationComposer($db: db, $table: table),
+            updateCompanionCallback: ({
+              Value<String> cacheKey = const Value.absent(),
+              Value<Uint8List?> content = const Value.absent(),
+              Value<int> rowid = const Value.absent(),
+            }) =>
+                AnalyzerByteStoreCompanion(
+              cacheKey: cacheKey,
+              content: content,
+              rowid: rowid,
+            ),
+            createCompanionCallback: ({
+              required String cacheKey,
+              Value<Uint8List?> content = const Value.absent(),
+              Value<int> rowid = const Value.absent(),
+            }) =>
+                AnalyzerByteStoreCompanion.insert(
+              cacheKey: cacheKey,
+              content: content,
+              rowid: rowid,
+            ),
+            withReferenceMapper: (p0) => p0
+                .map(
+                  (e) => (
+                    e.readTable(table),
+                    BaseReferences(db, table, e),
+                  ),
+                )
+                .toList(),
+            prefetchHooksCallback: null,
+          ),
+        );
 }
 
-typedef $AnalyzerByteStoreProcessedTableManager =
-    ProcessedTableManager<
-      _$CacheDatabase,
-      AnalyzerByteStore,
+typedef $AnalyzerByteStoreProcessedTableManager = ProcessedTableManager<
+    _$CacheDatabase,
+    AnalyzerByteStore,
+    AnalyzerByteStoreData,
+    $AnalyzerByteStoreFilterComposer,
+    $AnalyzerByteStoreOrderingComposer,
+    $AnalyzerByteStoreAnnotationComposer,
+    $AnalyzerByteStoreCreateCompanionBuilder,
+    $AnalyzerByteStoreUpdateCompanionBuilder,
+    (
       AnalyzerByteStoreData,
-      $AnalyzerByteStoreFilterComposer,
-      $AnalyzerByteStoreOrderingComposer,
-      $AnalyzerByteStoreAnnotationComposer,
-      $AnalyzerByteStoreCreateCompanionBuilder,
-      $AnalyzerByteStoreUpdateCompanionBuilder,
-      (
-        AnalyzerByteStoreData,
-        BaseReferences<
-          _$CacheDatabase,
-          AnalyzerByteStore,
-          AnalyzerByteStoreData
-        >,
-      ),
-      AnalyzerByteStoreData,
-      PrefetchHooks Function()
-    >;
-typedef $VersionInfoCreateCompanionBuilder =
-    VersionInfoCompanion Function({
-      required String celest,
-      required String dart,
-      Value<String?> flutter,
-      Value<int> rowid,
-    });
-typedef $VersionInfoUpdateCompanionBuilder =
-    VersionInfoCompanion Function({
-      Value<String> celest,
-      Value<String> dart,
-      Value<String?> flutter,
-      Value<int> rowid,
-    });
+      BaseReferences<_$CacheDatabase, AnalyzerByteStore, AnalyzerByteStoreData>,
+    ),
+    AnalyzerByteStoreData,
+    PrefetchHooks Function()>;
+typedef $VersionInfoCreateCompanionBuilder = VersionInfoCompanion Function({
+  required String celest,
+  required String dart,
+  Value<String?> flutter,
+  Value<int> rowid,
+});
+typedef $VersionInfoUpdateCompanionBuilder = VersionInfoCompanion Function({
+  Value<String> celest,
+  Value<String> dart,
+  Value<String?> flutter,
+  Value<int> rowid,
+});
 
 class $VersionInfoFilterComposer
     extends Composer<_$CacheDatabase, VersionInfo> {
@@ -662,19 +643,19 @@ class $VersionInfoFilterComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<String> get celest => $composableBuilder(
-    column: $table.celest,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.celest,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<String> get dart => $composableBuilder(
-    column: $table.dart,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.dart,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<String> get flutter => $composableBuilder(
-    column: $table.flutter,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.flutter,
+        builder: (column) => ColumnFilters(column),
+      );
 }
 
 class $VersionInfoOrderingComposer
@@ -687,19 +668,19 @@ class $VersionInfoOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<String> get celest => $composableBuilder(
-    column: $table.celest,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.celest,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<String> get dart => $composableBuilder(
-    column: $table.dart,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.dart,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<String> get flutter => $composableBuilder(
-    column: $table.flutter,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.flutter,
+        builder: (column) => ColumnOrderings(column),
+      );
 }
 
 class $VersionInfoAnnotationComposer
@@ -721,91 +702,84 @@ class $VersionInfoAnnotationComposer
       $composableBuilder(column: $table.flutter, builder: (column) => column);
 }
 
-class $VersionInfoTableManager
-    extends
-        RootTableManager<
-          _$CacheDatabase,
-          VersionInfo,
-          VersionInfoData,
-          $VersionInfoFilterComposer,
-          $VersionInfoOrderingComposer,
-          $VersionInfoAnnotationComposer,
-          $VersionInfoCreateCompanionBuilder,
-          $VersionInfoUpdateCompanionBuilder,
-          (
-            VersionInfoData,
-            BaseReferences<_$CacheDatabase, VersionInfo, VersionInfoData>,
-          ),
-          VersionInfoData,
-          PrefetchHooks Function()
-        > {
+class $VersionInfoTableManager extends RootTableManager<
+    _$CacheDatabase,
+    VersionInfo,
+    VersionInfoData,
+    $VersionInfoFilterComposer,
+    $VersionInfoOrderingComposer,
+    $VersionInfoAnnotationComposer,
+    $VersionInfoCreateCompanionBuilder,
+    $VersionInfoUpdateCompanionBuilder,
+    (
+      VersionInfoData,
+      BaseReferences<_$CacheDatabase, VersionInfo, VersionInfoData>,
+    ),
+    VersionInfoData,
+    PrefetchHooks Function()> {
   $VersionInfoTableManager(_$CacheDatabase db, VersionInfo table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer:
-              () => $VersionInfoFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => $VersionInfoOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $VersionInfoAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> celest = const Value.absent(),
-                Value<String> dart = const Value.absent(),
-                Value<String?> flutter = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => VersionInfoCompanion(
-                celest: celest,
-                dart: dart,
-                flutter: flutter,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String celest,
-                required String dart,
-                Value<String?> flutter = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => VersionInfoCompanion.insert(
-                celest: celest,
-                dart: dart,
-                flutter: flutter,
-                rowid: rowid,
-              ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
+      : super(
+          TableManagerState(
+            db: db,
+            table: table,
+            createFilteringComposer: () =>
+                $VersionInfoFilterComposer($db: db, $table: table),
+            createOrderingComposer: () =>
+                $VersionInfoOrderingComposer($db: db, $table: table),
+            createComputedFieldComposer: () =>
+                $VersionInfoAnnotationComposer($db: db, $table: table),
+            updateCompanionCallback: ({
+              Value<String> celest = const Value.absent(),
+              Value<String> dart = const Value.absent(),
+              Value<String?> flutter = const Value.absent(),
+              Value<int> rowid = const Value.absent(),
+            }) =>
+                VersionInfoCompanion(
+              celest: celest,
+              dart: dart,
+              flutter: flutter,
+              rowid: rowid,
+            ),
+            createCompanionCallback: ({
+              required String celest,
+              required String dart,
+              Value<String?> flutter = const Value.absent(),
+              Value<int> rowid = const Value.absent(),
+            }) =>
+                VersionInfoCompanion.insert(
+              celest: celest,
+              dart: dart,
+              flutter: flutter,
+              rowid: rowid,
+            ),
+            withReferenceMapper: (p0) => p0
+                .map(
+                  (e) => (
+                    e.readTable(table),
+                    BaseReferences(db, table, e),
+                  ),
+                )
+                .toList(),
+            prefetchHooksCallback: null,
+          ),
+        );
 }
 
-typedef $VersionInfoProcessedTableManager =
-    ProcessedTableManager<
-      _$CacheDatabase,
-      VersionInfo,
+typedef $VersionInfoProcessedTableManager = ProcessedTableManager<
+    _$CacheDatabase,
+    VersionInfo,
+    VersionInfoData,
+    $VersionInfoFilterComposer,
+    $VersionInfoOrderingComposer,
+    $VersionInfoAnnotationComposer,
+    $VersionInfoCreateCompanionBuilder,
+    $VersionInfoUpdateCompanionBuilder,
+    (
       VersionInfoData,
-      $VersionInfoFilterComposer,
-      $VersionInfoOrderingComposer,
-      $VersionInfoAnnotationComposer,
-      $VersionInfoCreateCompanionBuilder,
-      $VersionInfoUpdateCompanionBuilder,
-      (
-        VersionInfoData,
-        BaseReferences<_$CacheDatabase, VersionInfo, VersionInfoData>,
-      ),
-      VersionInfoData,
-      PrefetchHooks Function()
-    >;
+      BaseReferences<_$CacheDatabase, VersionInfo, VersionInfoData>,
+    ),
+    VersionInfoData,
+    PrefetchHooks Function()>;
 
 class $CacheDatabaseManager {
   final _$CacheDatabase _db;

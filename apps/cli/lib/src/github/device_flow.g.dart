@@ -16,12 +16,12 @@ Map<String, dynamic> _$DeviceFlowStartToJson(DeviceFlowStart instance) =>
     <String, dynamic>{'client_id': instance.clientId, 'scope': instance.scope};
 
 DeviceFlow _$DeviceFlowFromJson(Map<String, dynamic> json) => DeviceFlow(
-  deviceCode: json['device_code'] as String,
-  userCode: json['user_code'] as String,
-  verificationUri: Uri.parse(json['verification_uri'] as String),
-  expiresIn: (json['expires_in'] as num).toInt(),
-  interval: (json['interval'] as num).toInt(),
-);
+      deviceCode: json['device_code'] as String,
+      userCode: json['user_code'] as String,
+      verificationUri: Uri.parse(json['verification_uri'] as String),
+      expiresIn: (json['expires_in'] as num).toInt(),
+      interval: (json['interval'] as num).toInt(),
+    );
 
 Map<String, dynamic> _$DeviceFlowToJson(DeviceFlow instance) =>
     <String, dynamic>{

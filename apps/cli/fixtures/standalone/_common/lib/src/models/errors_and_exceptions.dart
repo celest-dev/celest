@@ -51,8 +51,8 @@ class UserException implements Exception {
     this.code,
     VoidCallback? onOk,
     VoidCallback? onCancel,
-  })  : _onOk = onOk,
-        _onCancel = onCancel;
+  }) : _onOk = onOk,
+       _onCancel = onCancel;
 
   /// Adding `.debug` to the constructor will print the exception to the console.
   /// Use this for debugging purposes only.
@@ -64,13 +64,15 @@ class UserException implements Exception {
     this.code,
     VoidCallback? onOk,
     VoidCallback? onCancel,
-  })  : _onOk = onOk,
-        _onCancel = onCancel {
-    print('================================================================\n'
-        "UserException${code == null ? "" : " (code: $code)"}:\n"
-        'Msg = $msg,\n'
-        "${cause == null ? "" : "Cause = $cause,\n"}"
-        '================================================================');
+  }) : _onOk = onOk,
+       _onCancel = onCancel {
+    print(
+      '================================================================\n'
+      "UserException${code == null ? "" : " (code: $code)"}:\n"
+      'Msg = $msg,\n'
+      "${cause == null ? "" : "Cause = $cause,\n"}"
+      '================================================================',
+    );
   }
 
   /// Creates a [UserException] from a JSON object.
@@ -163,15 +165,16 @@ class UserException implements Exception {
   /// Returns a deep copy of this exception, but stopping at, and not
   /// including, the first [cause] which is not a UserException.
   UserException withoutHardCause() => UserException(
-        msg,
-        cause: (cause is UserException)
+    msg,
+    cause:
+        (cause is UserException)
             ? //
             (cause as UserException).withoutHardCause()
             : null,
-        code: code,
-        onOk: _onOk,
-        onCancel: _onCancel,
-      );
+    code: code,
+    onOk: _onOk,
+    onCancel: _onCancel,
+  );
 
   String dialogTitle([Locale? locale]) => //
       (cause is UserException || cause is String)
@@ -188,22 +191,20 @@ class UserException implements Exception {
       return _codeAsTextOrMsg(locale);
   }
 
-  String _dialogTitleAndContent([Locale? locale]) => (cause is UserException)
-      ? joinExceptionMainAndCause(
-          locale,
-          _codeAsTextOrMsg(locale),
-          (cause as UserException)._codeAsTextOrMsg(locale),
-        )
-      : _codeAsTextOrMsg(locale);
+  String _dialogTitleAndContent([Locale? locale]) =>
+      (cause is UserException)
+          ? joinExceptionMainAndCause(
+            locale,
+            _codeAsTextOrMsg(locale),
+            (cause as UserException)._codeAsTextOrMsg(locale),
+          )
+          : _codeAsTextOrMsg(locale);
 
   /// Return the string that join the main message and the reason message.
   /// You can change this variable to inject another way to join them.
-  static var joinExceptionMainAndCause = (
-    Locale? locale,
-    String? mainMsg,
-    String? causeMsg,
-  ) =>
-      "$mainMsg\n\n${_getReasonFromLocale(locale) ?? "Reason"}: $causeMsg";
+  static var joinExceptionMainAndCause =
+      (Locale? locale, String? mainMsg, String? causeMsg) =>
+          "$mainMsg\n\n${_getReasonFromLocale(locale) ?? "Reason"}: $causeMsg";
 
   static String? _getReasonFromLocale(Locale? locale) {
     if (locale == null) {
@@ -266,10 +267,10 @@ class UserException implements Exception {
   /// export 'package:async_redux_core/user_exception.dart;
   /// ```
   Map<String, dynamic> toJson() => {
-        'msg': msg,
-        if (cause != null) 'cause': cause.toString(),
-        if (code != null) 'code': code.toString(),
-      };
+    'msg': msg,
+    if (cause != null) 'cause': cause.toString(),
+    if (code != null) 'code': code.toString(),
+  };
 
   @override
   bool operator ==(Object other) =>
@@ -299,10 +300,7 @@ abstract class ExceptionCode {
 
 /// Used for Bugs.
 class AppError extends AssertionError {
-  AppError([
-    Object? msg,
-    this.error,
-  ]) : super(msg?.toString());
+  AppError([Object? msg, this.error]) : super(msg?.toString());
   //
   final Object? error;
 
@@ -313,7 +311,8 @@ class AppError extends AssertionError {
     if (error is Error) {
       final errorObj = error as Error;
       errorStr = '\n\n\n\n$errorObj\n\n\n\n${errorObj.stackTrace}\n\n\n\n';
-    } else if (error != null) errorStr = ' Error: $error';
+    } else if (error != null)
+      errorStr = ' Error: $error';
 
     return 'Assertion failed with message:\n>>> ${message.toString() + errorStr} <<<';
   }
@@ -343,9 +342,10 @@ class AppException implements Exception {
 /// Used when something will be implemented in the future.
 class NotYetImplementedError extends AssertionError {
   NotYetImplementedError([dynamic msg])
-      : msg = (msg == null)
-            ? StackTrace.current.toString()
-            : '$msg\n\n${StackTrace.current}';
+    : msg =
+          (msg == null)
+              ? StackTrace.current.toString()
+              : '$msg\n\n${StackTrace.current}';
   final String msg;
 
   @override
@@ -403,11 +403,8 @@ class ValidateError extends TypeError {
 /// Note: To remove it, just remove the "_ShowInConsole" part.
 class UserException_ShowInConsole extends UserException {
   //
-  UserException_ShowInConsole(
-    String msg, {
-    Object? cause,
-    ExceptionCode? code,
-  }) : super(msg, cause: cause, code: code) {
+  UserException_ShowInConsole(String msg, {Object? cause, ExceptionCode? code})
+    : super(msg, cause: cause, code: code) {
     print(
       '\nMsg = $msg, '
       '================================================================'

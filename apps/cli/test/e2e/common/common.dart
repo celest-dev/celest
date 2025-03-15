@@ -116,16 +116,17 @@ mixin TestHelpers {
     List<String> args = const [],
     String? workingDirectory,
     Map<String, String>? environment,
-  }) => runCommand(
-    [...target.executable, command, '--json', ...args],
-    workingDirectory: workingDirectory,
-    environment: {
-      if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
-      ...defaultCliEnvironment,
-      ...target.environment,
-      ...?environment,
-    },
-  );
+  }) =>
+      runCommand(
+        [...target.executable, command, '--json', ...args],
+        workingDirectory: workingDirectory,
+        environment: {
+          if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
+          ...defaultCliEnvironment,
+          ...target.environment,
+          ...?environment,
+        },
+      );
 
   Command celestCommand(String command, [List<String> args = const []]) =>
       Command([...target.executable, command, '--json', ...args]).environment({

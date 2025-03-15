@@ -53,10 +53,10 @@ void main() {
 
   final testRunners = <TestRunner>[];
   final testDirs = [
-        // TODO(dnys1): Need to ensure Firebase/Supabase pre-reqs are installed
-        // p.join(fileSystem.currentDirectory.path, 'fixtures', 'apps'),
-        p.join(fileSystem.currentDirectory.path, 'fixtures', 'standalone'),
-      ]
+    // TODO(dnys1): Need to ensure Firebase/Supabase pre-reqs are installed
+    // p.join(fileSystem.currentDirectory.path, 'fixtures', 'apps'),
+    p.join(fileSystem.currentDirectory.path, 'fixtures', 'standalone'),
+  ]
       .map(fileSystem.directory)
       .expand((testDir) => testDir.listSync().whereType<Directory>());
   for (final testDir in testDirs) {
@@ -203,11 +203,11 @@ class TestRunner {
     // Analyzer needs a bit longer.
     // TODO(dnys1): Benchmark + improve performance of analysis.
     test('analyzer', timeout: const Timeout.factor(3), () async {
-      final CelestAnalysisResult(:project, :errors, :warnings) = await analyzer
-          .analyzeProject(
-            migrateProject: false,
-            updateResources: updateGoldens,
-          );
+      final CelestAnalysisResult(:project, :errors, :warnings) =
+          await analyzer.analyzeProject(
+        migrateProject: false,
+        updateResources: updateGoldens,
+      );
       expect(errors, isEmpty);
       expect(warnings, isEmpty);
       expect(project, isNotNull);
@@ -232,20 +232,19 @@ class TestRunner {
 
   void testCodegen() {
     test('codegen', () async {
-      final CelestAnalysisResult(:project, :errors, :warnings) = await analyzer
-          .analyzeProject(
-            migrateProject: false,
-            updateResources: updateGoldens,
-          );
+      final CelestAnalysisResult(:project, :errors, :warnings) =
+          await analyzer.analyzeProject(
+        migrateProject: false,
+        updateResources: updateGoldens,
+      );
       expect(errors, isEmpty);
       expect(warnings, isEmpty);
       expect(project, isNotNull);
 
-      final configValues =
-          await ConfigValueSolver(
-            project: project!,
-            environmentId: 'local',
-          ).solveAll();
+      final configValues = await ConfigValueSolver(
+        project: project!,
+        environmentId: 'local',
+      ).solveAll();
       final projectResolver = ProjectResolver(
         configValues: configValues,
         environmentId: 'local',
@@ -283,20 +282,19 @@ class TestRunner {
 
   void testResolve() {
     test('resolve', () async {
-      final CelestAnalysisResult(:project, :errors, :warnings) = await analyzer
-          .analyzeProject(
-            migrateProject: false,
-            updateResources: updateGoldens,
-          );
+      final CelestAnalysisResult(:project, :errors, :warnings) =
+          await analyzer.analyzeProject(
+        migrateProject: false,
+        updateResources: updateGoldens,
+      );
       expect(errors, isEmpty);
       expect(warnings, isEmpty);
       expect(project, isNotNull);
 
-      final configValues =
-          await ConfigValueSolver(
-            project: project!,
-            environmentId: 'local',
-          ).solveAll();
+      final configValues = await ConfigValueSolver(
+        project: project!,
+        environmentId: 'local',
+      ).solveAll();
       final projectResolver = ProjectResolver(
         configValues: configValues,
         environmentId: 'local',
@@ -321,19 +319,18 @@ class TestRunner {
 
   void testClient() {
     test('client', () async {
-      final CelestAnalysisResult(:project, :errors) = await analyzer
-          .analyzeProject(
-            migrateProject: false,
-            updateResources: updateGoldens,
-          );
+      final CelestAnalysisResult(:project, :errors) =
+          await analyzer.analyzeProject(
+        migrateProject: false,
+        updateResources: updateGoldens,
+      );
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
-      final configValues =
-          await ConfigValueSolver(
-            project: project!,
-            environmentId: 'local',
-          ).solveAll();
+      final configValues = await ConfigValueSolver(
+        project: project!,
+        environmentId: 'local',
+      ).solveAll();
       final projectResolver = ProjectResolver(
         configValues: configValues,
         environmentId: 'local',
@@ -400,19 +397,18 @@ class TestRunner {
 
       setUpAll(() async {
         final entrypoint = projectPaths.localApiEntrypoint;
-        final CelestAnalysisResult(:project, :errors) = await analyzer
-            .analyzeProject(
-              migrateProject: false,
-              updateResources: updateGoldens,
-            );
+        final CelestAnalysisResult(:project, :errors) =
+            await analyzer.analyzeProject(
+          migrateProject: false,
+          updateResources: updateGoldens,
+        );
         expect(errors, isEmpty);
         expect(project, isNotNull);
 
-        final configValues =
-            await ConfigValueSolver(
-              project: project!,
-              environmentId: 'local',
-            ).solveAll();
+        final configValues = await ConfigValueSolver(
+          project: project!,
+          environmentId: 'local',
+        ).solveAll();
         final projectResolver = ProjectResolver(
           configValues: configValues,
           environmentId: 'local',
@@ -469,20 +465,19 @@ class TestRunner {
     group(functionName, () {
       for (final testCase in httpTests) {
         test(testCase.name, () async {
-          final request =
-              Request(
-                  testCase.method,
-                  apiUri()
-                      .resolve(
-                        '/${apiName.paramCase}/${functionName.paramCase}',
-                      )
-                      .replace(queryParameters: testCase.queryParameters),
+          final request = Request(
+            testCase.method,
+            apiUri()
+                .resolve(
+                  '/${apiName.paramCase}/${functionName.paramCase}',
                 )
-                ..headers.addAll({
-                  'Content-Type': 'application/json',
-                  ...testCase.headers,
-                })
-                ..body = jsonEncode(testCase.input);
+                .replace(queryParameters: testCase.queryParameters),
+          )
+            ..headers.addAll({
+              'Content-Type': 'application/json',
+              ...testCase.headers,
+            })
+            ..body = jsonEncode(testCase.input);
           if (testCase.setup case final setup?) {
             await setup(request);
           }
@@ -4428,8 +4423,7 @@ final tests = <String, Test>{
                 final jwt = JWT(
                   {
                     'aud': 'authenticated',
-                    'exp':
-                        DateTime.now()
+                    'exp': DateTime.now()
                             .add(const Duration(days: 1))
                             .millisecondsSinceEpoch ~/
                         1000,

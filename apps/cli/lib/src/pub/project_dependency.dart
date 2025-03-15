@@ -169,7 +169,7 @@ final class ProjectDependency {
     'lints',
     DependencyType.devDependency,
     HostedDependency(
-      version: VersionConstraint.compatibleWith(Version.parse('4.0.0')),
+      version: VersionConstraint.compatibleWith(Version.parse('5.0.0')),
     ),
   );
 
@@ -202,14 +202,14 @@ final class ProjectDependency {
   bool upToDate(Pubspec pubspec) {
     final (expected, actual) = switch (type) {
       DependencyType.dependency when pubspec.name == 'celest_backend' => (
-        backendDependencies,
-        pubspec.dependencies,
-      ),
+          backendDependencies,
+          pubspec.dependencies,
+        ),
       DependencyType.dependency => (clientDependencies, pubspec.dependencies),
       DependencyType.devDependency => (
-        devDependencies,
-        pubspec.devDependencies,
-      ),
+          devDependencies,
+          pubspec.devDependencies,
+        ),
       _ => unreachable(),
     };
     final expectedVersion = expected[name]!.pubDependency.version;

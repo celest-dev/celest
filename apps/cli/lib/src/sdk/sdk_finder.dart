@@ -100,14 +100,13 @@ final class DartSdkFinder implements SdkFinder {
   Future<SdkFinderResult> _findFlutterExe() async {
     late String flutterPath;
     try {
-      flutterPath =
-          getExecutablePath(
-            'flutter',
-            fileSystem.currentDirectory.path,
-            platform: platform,
-            fs: fileSystem,
-            throwOnFailure: true,
-          )!; // never null when `throwOnFailure: true`
+      flutterPath = getExecutablePath(
+        'flutter',
+        fileSystem.currentDirectory.path,
+        platform: platform,
+        fs: fileSystem,
+        throwOnFailure: true,
+      )!; // never null when `throwOnFailure: true`
     } on ProcessPackageExecutableNotFoundException catch (e) {
       _logger.finest('Could not find Flutter SDK in PATH.', e);
       return SdkNotFound(searchPath: e.searchPath, candidates: e.candidates);
@@ -136,14 +135,13 @@ final class DartSdkFinder implements SdkFinder {
   Future<SdkFinderResult> _findDartExe() async {
     late String dartPath;
     try {
-      dartPath =
-          getExecutablePath(
-            'dart',
-            fileSystem.currentDirectory.path,
-            platform: platform,
-            fs: fileSystem,
-            throwOnFailure: true,
-          )!; // never null when `throwOnFailure: true`
+      dartPath = getExecutablePath(
+        'dart',
+        fileSystem.currentDirectory.path,
+        platform: platform,
+        fs: fileSystem,
+        throwOnFailure: true,
+      )!; // never null when `throwOnFailure: true`
     } on ProcessPackageExecutableNotFoundException catch (e) {
       _logger.finest('Could not find Dart SDK in PATH.', e);
       return SdkNotFound(searchPath: e.searchPath, candidates: e.candidates);
@@ -158,15 +156,15 @@ final class DartSdkFinder implements SdkFinder {
       // `dart` and `flutter` are aliased to /usr/bin/snap on Ubuntu snap installation.
       // See `/snap/flutter/current/env.sh`
       'snap' => p.join(
-        platform.environment['HOME']!,
-        'snap',
-        'flutter',
-        'common',
-        'flutter',
-        'bin',
-        'cache',
-        'dart-sdk',
-      ),
+          platform.environment['HOME']!,
+          'snap',
+          'flutter',
+          'common',
+          'flutter',
+          'bin',
+          'cache',
+          'dart-sdk',
+        ),
       // `sdk/bin/dart` -> `sdk`
       _ => p.dirname(p.dirname(dartPath)),
     };

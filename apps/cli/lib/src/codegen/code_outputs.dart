@@ -51,8 +51,7 @@ final class CodeOutputs extends DelegatingMap<String, String> {
         pubspec = pubspec.addDeps(
           dependencies: {
             for (final dependency in codegenDependencies)
-              dependency:
-                  ProjectDependency.all[dependency]?.pubDependency ??
+              dependency: ProjectDependency.all[dependency]?.pubDependency ??
                   HostedDependency(version: VersionConstraint.any),
           },
         );

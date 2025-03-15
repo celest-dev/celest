@@ -115,13 +115,12 @@ final class CelestFrontend {
           )
           .where((event) => event.type != ChangeType.ADD)
           .where((event) {
-            final isReloadable = _isReloadablePath(event.path);
-            if (!isReloadable) {
-              logger.finest('Ignoring non-reloadable path: ${event.path}');
-            }
-            return isReloadable;
-          })
-          .buffer(_readyForChanges.stream),
+        final isReloadable = _isReloadablePath(event.path);
+        if (!isReloadable) {
+          logger.finest('Ignoring non-reloadable path: ${event.path}');
+        }
+        return isReloadable;
+      }).buffer(_readyForChanges.stream),
     );
     _readyForChanges.add(null);
 
@@ -185,12 +184,11 @@ final class CelestFrontend {
   // safe, we invalidate all files on every reload. This is not ideal, but
   // it's the safest option for now.
   Future<Set<String>> _invalidateAllProjectFiles() async {
-    final allProjectFiles =
-        await fileSystem
-            .directory(projectPaths.projectRoot)
-            .list(recursive: true)
-            .whereType<File>()
-            .toList();
+    final allProjectFiles = await fileSystem
+        .directory(projectPaths.projectRoot)
+        .list(recursive: true)
+        .whereType<File>()
+        .toList();
     // Invalidate all paths.
     typeHelper.reset();
     final toInvalidate =
@@ -309,10 +307,10 @@ final class CelestFrontend {
                 environmentId: 'local',
                 resolvedProject: resolvedProject,
                 restartMode: restartMode,
-                port:
-                    (await isolatedSecureStorage.getLocalUri(
-                      project.name,
-                    )).port,
+                port: (await isolatedSecureStorage.getLocalUri(
+                  project.name,
+                ))
+                    .port,
               );
             } on CompilationException catch (e, st) {
               cliLogger.err(
@@ -438,16 +436,17 @@ final class CelestFrontend {
   /// Analyzes the project and reports if there are any errors.
   Future<CelestAnalysisResult> _analyzeProject({
     required bool migrateProject,
-  }) => performance.trace('CelestFrontend', 'analyzeProject', () async {
-    logger.fine('Analyzing project...');
-    final result = await analyzer.analyzeProject(
-      migrateProject: migrateProject,
-    );
-    if (stopped) {
-      throw const CancellationException('Celest was stopped');
-    }
-    return result;
-  });
+  }) =>
+      performance.trace('CelestFrontend', 'analyzeProject', () async {
+        logger.fine('Analyzing project...');
+        final result = await analyzer.analyzeProject(
+          migrateProject: migrateProject,
+        );
+        if (stopped) {
+          throw const CancellationException('Celest was stopped');
+        }
+        return result;
+      });
 
   /// Generates code for [project] and writes to the output directory.
   ///
@@ -455,46 +454,47 @@ final class CelestFrontend {
   Future<List<String>> _generateBackendCode({
     required ast.Project project,
     required ast.ResolvedProject resolvedProject,
-  }) => performance.trace('CelestFrontend', 'generateBackendCode', () async {
-    logger.fine('Generating backend code...');
-    final codeGenerator = CloudCodeGenerator(
-      project: project,
-      resolvedProject: resolvedProject,
-    );
-    final outputs = codeGenerator.generate();
-    final outputsDir = Directory(projectPaths.outputsDir);
-    if (outputsDir.existsSync() && !_didFirstCompile) {
-      await outputsDir.delete(recursive: true);
-    }
-    if (stopped) {
-      throw const CancellationException('Celest was stopped');
-    }
-    await (outputs.write(), celestProject.invalidate(outputs.keys)).wait;
-    if (stopped) {
-      throw const CancellationException('Celest was stopped');
-    }
-    return codeGenerator.fileOutputs.keys.toList();
-  });
+  }) =>
+      performance.trace('CelestFrontend', 'generateBackendCode', () async {
+        logger.fine('Generating backend code...');
+        final codeGenerator = CloudCodeGenerator(
+          project: project,
+          resolvedProject: resolvedProject,
+        );
+        final outputs = codeGenerator.generate();
+        final outputsDir = Directory(projectPaths.outputsDir);
+        if (outputsDir.existsSync() && !_didFirstCompile) {
+          await outputsDir.delete(recursive: true);
+        }
+        if (stopped) {
+          throw const CancellationException('Celest was stopped');
+        }
+        await (outputs.write(), celestProject.invalidate(outputs.keys)).wait;
+        if (stopped) {
+          throw const CancellationException('Celest was stopped');
+        }
+        return codeGenerator.fileOutputs.keys.toList();
+      });
 
   /// Resolves the project AST applying transformations for things such as authorization.
   Future<ResolvedProject> _resolveProject(
     ast.Project project, {
     required String environmentId,
-  }) => performance.trace('CelestFrontend', 'resolveProject', () async {
-    logger.fine('Resolving configuration values...');
-    final configValues =
-        await ConfigValueSolver(
+  }) =>
+      performance.trace('CelestFrontend', 'resolveProject', () async {
+        logger.fine('Resolving configuration values...');
+        final configValues = await ConfigValueSolver(
           project: project,
           environmentId: environmentId,
         ).solveAll();
-    logger.fine('Resolving project...');
-    final projectResolver = ProjectResolver(
-      configValues: configValues,
-      environmentId: environmentId,
-    );
-    project.acceptWithArg(projectResolver, project);
-    return projectResolver.resolvedProject;
-  });
+        logger.fine('Resolving project...');
+        final projectResolver = ProjectResolver(
+          configValues: configValues,
+          environmentId: environmentId,
+        );
+        project.acceptWithArg(projectResolver, project);
+        return projectResolver.resolvedProject;
+      });
 
   Future<void> _writeProjectOutputs({
     required Project project,
@@ -525,9 +525,7 @@ final class CelestFrontend {
         .childFile('Dockerfile')
         .writeAsString(dockerfile.generate());
 
-    await buildOutputs
-        .childFile('celest.json')
-        .writeAsString(
+    await buildOutputs.childFile('celest.json').writeAsString(
           prettyPrintJson(resolvedProject.toProto().toProto3Json()),
         );
   }
@@ -585,39 +583,42 @@ final class CelestFrontend {
     required ast.Project project,
     required ast.ResolvedProject resolvedProject,
     required CelestProjectUris projectUris,
-  }) => performance.trace('CelestFrontend', 'generateClientCode', () async {
-    logger.fine('Generating client code...');
-    final generator = ClientCodeGenerator(
-      project: project,
-      resolvedProject: resolvedProject,
-      projectUris: projectUris,
-    );
-    await generator.generate().write();
-    if (celestProject.parentProject case ParentProject(
-      type: ast.SdkType.flutter,
-      :final path,
-    ) when project.databases.isNotEmpty) {
-      final webDir = fileSystem.directory(path).childDirectory('web');
-      if (webDir.existsSync()) {
-        final sqliteWasm = webDir.childFile('sqlite3.wasm');
-        if (!sqliteWasm.existsSync()) {
-          final downloadedSqliteWasm = celestProject.config.configDir.childFile(
-            'sqlite3.wasm',
-          );
-          if (downloadedSqliteWasm.existsSync()) {
-            await downloadedSqliteWasm.copy(sqliteWasm.path);
-          } else {
-            cliLogger.warn('''
+  }) =>
+      performance.trace('CelestFrontend', 'generateClientCode', () async {
+        logger.fine('Generating client code...');
+        final generator = ClientCodeGenerator(
+          project: project,
+          resolvedProject: resolvedProject,
+          projectUris: projectUris,
+        );
+        await generator.generate().write();
+        if (celestProject.parentProject
+            case ParentProject(
+              type: ast.SdkType.flutter,
+              :final path,
+            ) when project.databases.isNotEmpty) {
+          final webDir = fileSystem.directory(path).childDirectory('web');
+          if (webDir.existsSync()) {
+            final sqliteWasm = webDir.childFile('sqlite3.wasm');
+            if (!sqliteWasm.existsSync()) {
+              final downloadedSqliteWasm =
+                  celestProject.config.configDir.childFile(
+                'sqlite3.wasm',
+              );
+              if (downloadedSqliteWasm.existsSync()) {
+                await downloadedSqliteWasm.copy(sqliteWasm.path);
+              } else {
+                cliLogger.warn('''
 To use Celest Data in your Flutter Web project, follow the steps in the Drift
 documentation to add the SQLite3 WASM file to your project:
 
 https://drift.simonbinder.eu/web/
 ''');
+              }
+            }
           }
         }
-      }
-    }
-  });
+      });
 
   Future<void> close() =>
       performance.trace('CelestFrontend', 'close', () async {

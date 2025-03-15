@@ -394,10 +394,10 @@ final class TypeHelper {
     // Perform for nullable version of [type] so that subsequent
     // nullable/non-nullable promotions which require [fromReference] succeed.
     if (!reference.isNullableOrFalse) {
-      _referenceToDartType[reference.withNullability(true)] ??= (type
-              as TypeImpl)
-          .withNullability(NullabilitySuffix.question)
-          .withAlias(type.alias);
+      _referenceToDartType[reference.withNullability(true)] ??=
+          (type as TypeImpl)
+              .withNullability(NullabilitySuffix.question)
+              .withAlias(type.alias);
       _referenceToDartType[reference.withNullability(false)] ??= type;
     }
     if (toUri(type) case final wireType?) {
@@ -418,9 +418,9 @@ final class TypeHelper {
   }
 
   String? toUri(DartType type) => switch (type.element) {
-    final element? => urlOfElement(element),
-    _ => null,
-  };
+        final element? => urlOfElement(element),
+        _ => null,
+      };
 
   DartType fromWireType(String wireType) {
     final type = _wireTypeToDartType[wireType];
@@ -446,20 +446,16 @@ final class TypeHelper {
   ///   all fields present. For these classes, we generate custom serialization
   ///   code.
   Verdict isSerializable(DartType type) {
-    final verdict =
-        serializationVerdicts[type] ??= runZoned(
-          () => type.asOverriden.accept(const IsSerializable()),
-          zoneValues: {
-            _seenKey:
-                Zone.current[_seenKey] ??
-                HashSet(
-                  equals:
-                      const DartTypeEquality(ignoreNullability: true).equals,
-                  hashCode:
-                      const DartTypeEquality(ignoreNullability: true).hash,
-                ),
-          },
-        );
+    final verdict = serializationVerdicts[type] ??= runZoned(
+      () => type.asOverriden.accept(const IsSerializable()),
+      zoneValues: {
+        _seenKey: Zone.current[_seenKey] ??
+            HashSet(
+              equals: const DartTypeEquality(ignoreNullability: true).equals,
+              hashCode: const DartTypeEquality(ignoreNullability: true).hash,
+            ),
+      },
+    );
     assert(() {
       bool isValidOverride(Verdict verdict) {
         if (verdict is! VerdictYes) {
@@ -543,45 +539,43 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
   @override
   codegen.Reference visitFunctionType(FunctionType type) {
     return codegen.FunctionType(
-      (b) =>
-          b
-            ..returnType = typeHelper.toReference(type.returnType)
-            ..optionalParameters.addAll([
-              for (final parameter in type.parameters.where(
-                (p) => p.isOptionalPositional,
-              ))
-                typeHelper.toReference(parameter.type),
-            ])
-            ..requiredParameters.addAll([
-              for (final parameter in type.parameters.where(
-                (p) => p.isRequiredPositional,
-              ))
-                typeHelper.toReference(parameter.type),
-            ])
-            ..namedParameters.addAll({
-              for (final parameter in type.parameters.where(
-                (p) => p.isOptionalNamed,
-              ))
-                parameter.name: typeHelper.toReference(parameter.type),
-            })
-            ..namedRequiredParameters.addAll({
-              for (final parameter in type.parameters.where(
-                (p) => p.isRequiredNamed,
-              ))
-                parameter.name: typeHelper.toReference(parameter.type),
-            })
-            ..types.addAll([
-              for (final formal in type.typeFormals)
-                codegen.TypeReference(
-                  (t) =>
-                      t
-                        ..symbol = formal.name
-                        ..bound = switch (formal.bound) {
-                          final bound? => typeHelper.toReference(bound),
-                          _ => null,
-                        },
-                ),
-            ]),
+      (b) => b
+        ..returnType = typeHelper.toReference(type.returnType)
+        ..optionalParameters.addAll([
+          for (final parameter in type.parameters.where(
+            (p) => p.isOptionalPositional,
+          ))
+            typeHelper.toReference(parameter.type),
+        ])
+        ..requiredParameters.addAll([
+          for (final parameter in type.parameters.where(
+            (p) => p.isRequiredPositional,
+          ))
+            typeHelper.toReference(parameter.type),
+        ])
+        ..namedParameters.addAll({
+          for (final parameter in type.parameters.where(
+            (p) => p.isOptionalNamed,
+          ))
+            parameter.name: typeHelper.toReference(parameter.type),
+        })
+        ..namedRequiredParameters.addAll({
+          for (final parameter in type.parameters.where(
+            (p) => p.isRequiredNamed,
+          ))
+            parameter.name: typeHelper.toReference(parameter.type),
+        })
+        ..types.addAll([
+          for (final formal in type.typeFormals)
+            codegen.TypeReference(
+              (t) => t
+                ..symbol = formal.name
+                ..bound = switch (formal.bound) {
+                  final bound? => typeHelper.toReference(bound),
+                  _ => null,
+                },
+            ),
+        ]),
     );
   }
 
@@ -589,12 +583,11 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
   codegen.Reference visitInterfaceType(InterfaceType type) {
     final typeArguments = type.typeArguments.map(typeHelper.toReference);
     final ref = codegen.TypeReference(
-      (t) =>
-          t
-            ..symbol = type.element.name
-            ..url = type.uri.toString()
-            ..types.addAll(typeArguments)
-            ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
+      (t) => t
+        ..symbol = type.element.name
+        ..url = type.uri.toString()
+        ..types.addAll(typeArguments)
+        ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
     );
     return builtInTypeToReference[type] ?? ref;
   }
@@ -610,43 +603,38 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
   codegen.Reference visitRecordType(RecordType type) {
     if (type.alias case final alias?) {
       return codegen.TypeReference(
-        (b) =>
-            b
-              ..symbol = alias.element.displayName
-              ..url =
-                  projectPaths
-                      .normalizeUri(alias.element.sourceLocation!.sourceUrl!)
-                      .toString()
-              // TODO(dnys1): https://github.com/dart-lang/sdk/issues/54346
-              // ..isNullable = alias.element.nullabilitySuffix != NullabilitySuffix.none,
-              ..isNullable = typeHelper.typeSystem.isNullable(type),
+        (b) => b
+          ..symbol = alias.element.displayName
+          ..url = projectPaths
+              .normalizeUri(alias.element.sourceLocation!.sourceUrl!)
+              .toString()
+          // TODO(dnys1): https://github.com/dart-lang/sdk/issues/54346
+          // ..isNullable = alias.element.nullabilitySuffix != NullabilitySuffix.none,
+          ..isNullable = typeHelper.typeSystem.isNullable(type),
       );
     }
     return codegen.RecordType(
-      (r) =>
-          r
-            ..positionalFieldTypes.addAll([
-              for (final parameter in type.positionalFields)
-                typeHelper.toReference(parameter.type),
-            ])
-            ..namedFieldTypes.addAll({
-              for (final parameter in type.namedFields)
-                parameter.name: typeHelper.toReference(parameter.type),
-            })
-            ..isNullable = type.nullabilitySuffix == NullabilitySuffix.question,
+      (r) => r
+        ..positionalFieldTypes.addAll([
+          for (final parameter in type.positionalFields)
+            typeHelper.toReference(parameter.type),
+        ])
+        ..namedFieldTypes.addAll({
+          for (final parameter in type.namedFields)
+            parameter.name: typeHelper.toReference(parameter.type),
+        })
+        ..isNullable = type.nullabilitySuffix == NullabilitySuffix.question,
     );
   }
 
   @override
   codegen.Reference visitTypeParameterType(TypeParameterType type) {
     return codegen.TypeReference(
-      (t) =>
-          t
-            ..symbol = type.getDisplayString()
-            ..bound =
-                type.bound is DynamicType
-                    ? null
-                    : typeHelper.toReference(type.bound),
+      (t) => t
+        ..symbol = type.getDisplayString()
+        ..bound = type.bound is DynamicType
+            ? null
+            : typeHelper.toReference(type.bound),
     );
   }
 

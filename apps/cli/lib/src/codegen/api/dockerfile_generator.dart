@@ -47,13 +47,13 @@ EXPOSE 8080
   String generate() {
     return switch (project.sdkConfig.targetSdk) {
       SdkType.flutter => _flutterTemplate.replaceAll(
-        '{{version}}',
-        project.sdkConfig.flutter!.version.canonicalizedVersion,
-      ),
+          '{{version}}',
+          project.sdkConfig.flutter!.version.canonicalizedVersion,
+        ),
       SdkType.dart => _dartTemplate.replaceAll(
-        '{{version}}',
-        project.sdkConfig.dart.version.canonicalizedVersion,
-      ),
+          '{{version}}',
+          project.sdkConfig.dart.version.canonicalizedVersion,
+        ),
       final unknown => unreachable('Unknown SDK: $unknown'),
     };
   }

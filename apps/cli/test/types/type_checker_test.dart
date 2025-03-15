@@ -49,79 +49,68 @@ void main() {
       inputId: AssetId('celest_cli', 'test/example.dart'),
     );
 
-    final staticIterable = core
-        .getClass('Iterable')!
-        .instantiate(
-          typeArguments: [core.typeProvider.dynamicType],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
+    final staticIterable = core.getClass('Iterable')!.instantiate(
+      typeArguments: [core.typeProvider.dynamicType],
+      nullabilitySuffix: NullabilitySuffix.none,
+    );
     staticIterableChecker = TypeChecker.fromStatic(staticIterable);
-    staticUri = core
-        .getClass('Uri')!
-        .instantiate(
-          typeArguments: [],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
-    staticMap = core
-        .getClass('Map')!
-        .instantiate(
-          typeArguments: [
-            core.typeProvider.dynamicType,
-            core.typeProvider.dynamicType,
-          ],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
+    staticUri = core.getClass('Uri')!.instantiate(
+      typeArguments: [],
+      nullabilitySuffix: NullabilitySuffix.none,
+    );
+    staticMap = core.getClass('Map')!.instantiate(
+      typeArguments: [
+        core.typeProvider.dynamicType,
+        core.typeProvider.dynamicType,
+      ],
+      nullabilitySuffix: NullabilitySuffix.none,
+    );
     staticMapChecker = TypeChecker.fromStatic(staticMap);
-    staticEnum = core
-        .getClass('Enum')!
-        .instantiate(
-          typeArguments: [],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
+    staticEnum = core.getClass('Enum')!.instantiate(
+      typeArguments: [],
+      nullabilitySuffix: NullabilitySuffix.none,
+    );
     staticEnumChecker = TypeChecker.fromStatic(staticEnum);
-    staticEnumMixin = (testSource.exportNamespace.get('MyEnumMixin')!
-            as InterfaceElement)
-        .instantiate(
-          typeArguments: [],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
+    staticEnumMixin =
+        (testSource.exportNamespace.get('MyEnumMixin')! as InterfaceElement)
+            .instantiate(
+      typeArguments: [],
+      nullabilitySuffix: NullabilitySuffix.none,
+    );
     staticEnumMixinChecker = TypeChecker.fromStatic(staticEnumMixin);
-    staticMapMixin = (testSource.exportNamespace.get('MyMapMixin')!
-            as InterfaceElement)
-        .instantiate(
-          typeArguments: [],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
+    staticMapMixin =
+        (testSource.exportNamespace.get('MyMapMixin')! as InterfaceElement)
+            .instantiate(
+      typeArguments: [],
+      nullabilitySuffix: NullabilitySuffix.none,
+    );
     staticMapMixinChecker = TypeChecker.fromStatic(staticMapMixin);
-    staticMyEnum = (testSource.exportNamespace.get('MyEnum')!
-            as InterfaceElement)
-        .instantiate(
-          typeArguments: [],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
-    staticMyEnumWithMixin = (testSource.exportNamespace.get('MyEnumWithMixin')!
-            as InterfaceElement)
-        .instantiate(
-          typeArguments: [],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
+    staticMyEnum =
+        (testSource.exportNamespace.get('MyEnum')! as InterfaceElement)
+            .instantiate(
+      typeArguments: [],
+      nullabilitySuffix: NullabilitySuffix.none,
+    );
+    staticMyEnumWithMixin =
+        (testSource.exportNamespace.get('MyEnumWithMixin')! as InterfaceElement)
+            .instantiate(
+      typeArguments: [],
+      nullabilitySuffix: NullabilitySuffix.none,
+    );
 
-    staticHashMap = collection
-        .getClass('HashMap')!
-        .instantiate(
-          typeArguments: [
-            core.typeProvider.dynamicType,
-            core.typeProvider.dynamicType,
-          ],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
+    staticHashMap = collection.getClass('HashMap')!.instantiate(
+      typeArguments: [
+        core.typeProvider.dynamicType,
+        core.typeProvider.dynamicType,
+      ],
+      nullabilitySuffix: NullabilitySuffix.none,
+    );
     staticHashMapChecker = TypeChecker.fromStatic(staticHashMap);
-    staticUnmodifiableListView = collection
-        .getClass('UnmodifiableListView')!
-        .instantiate(
-          typeArguments: [core.typeProvider.dynamicType],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
+    staticUnmodifiableListView =
+        collection.getClass('UnmodifiableListView')!.instantiate(
+      typeArguments: [core.typeProvider.dynamicType],
+      nullabilitySuffix: NullabilitySuffix.none,
+    );
   });
 
   // Run a common set of type comparison checks with various implementations.
@@ -255,15 +244,13 @@ void main() {
     commonTests(
       checkIterable: () => const TypeChecker.fromUrl('dart:core#Iterable'),
       checkEnum: () => const TypeChecker.fromUrl('dart:core#Enum'),
-      checkEnumMixin:
-          () => const TypeChecker.fromUrl(
-            'asset:celest_cli/test/types/type_checker_test.dart#MyEnumMixin',
-          ),
+      checkEnumMixin: () => const TypeChecker.fromUrl(
+        'asset:celest_cli/test/types/type_checker_test.dart#MyEnumMixin',
+      ),
       checkMap: () => const TypeChecker.fromUrl('dart:core#Map'),
-      checkMapMixin:
-          () => const TypeChecker.fromUrl(
-            'asset:celest_cli/test/types/type_checker_test.dart#MyMapMixin',
-          ),
+      checkMapMixin: () => const TypeChecker.fromUrl(
+        'asset:celest_cli/test/types/type_checker_test.dart#MyMapMixin',
+      ),
       checkHashMap: () => const TypeChecker.fromUrl('dart:collection#HashMap'),
     );
   });
@@ -341,28 +328,22 @@ void main() {
     ''', (resolver) async => (await resolver.findLibraryByName('_test'))!);
 
       $A = TypeChecker.fromStatic(
-        library
-            .getClass('A')!
-            .instantiate(
-              typeArguments: [],
-              nullabilitySuffix: NullabilitySuffix.none,
-            ),
+        library.getClass('A')!.instantiate(
+          typeArguments: [],
+          nullabilitySuffix: NullabilitySuffix.none,
+        ),
       );
       $B = TypeChecker.fromStatic(
-        library
-            .getClass('B')!
-            .instantiate(
-              typeArguments: [],
-              nullabilitySuffix: NullabilitySuffix.none,
-            ),
+        library.getClass('B')!.instantiate(
+          typeArguments: [],
+          nullabilitySuffix: NullabilitySuffix.none,
+        ),
       );
       $C = TypeChecker.fromStatic(
-        library
-            .getClass('C')!
-            .instantiate(
-              typeArguments: [],
-              nullabilitySuffix: NullabilitySuffix.none,
-            ),
+        library.getClass('C')!.instantiate(
+          typeArguments: [],
+          nullabilitySuffix: NullabilitySuffix.none,
+        ),
       );
       $ExampleOfA = library.getClass('ExampleOfA')!;
       $ExampleOfMultiA = library.getClass('ExampleOfMultiA')!;
@@ -425,20 +406,17 @@ void main() {
       }
     ''', (resolver) async => (await resolver.findLibraryByName('_test'))!);
       $A = TypeChecker.fromStatic(
-        library
-            .getClass('A')!
-            .instantiate(
-              typeArguments: [],
-              nullabilitySuffix: NullabilitySuffix.none,
-            ),
+        library.getClass('A')!.instantiate(
+          typeArguments: [],
+          nullabilitySuffix: NullabilitySuffix.none,
+        ),
       );
       $ExampleOfA = library.getClass('ExampleOfA')!;
-      $annotatedParameter =
-          library.topLevelElements
-              .whereType<FunctionElement>()
-              .firstWhere((f) => f.name == 'annotatedParameter')
-              .parameters
-              .single;
+      $annotatedParameter = library.topLevelElements
+          .whereType<FunctionElement>()
+          .firstWhere((f) => f.name == 'annotatedParameter')
+          .parameters
+          .single;
     });
 
     test('should throw by default', () {

@@ -18,9 +18,9 @@ enum CustomType {
   exception;
 
   String get dir => switch (this) {
-    model => projectPaths.modelsDir,
-    exception => projectPaths.exceptionsDir,
-  };
+        model => projectPaths.modelsDir,
+        exception => projectPaths.exceptionsDir,
+      };
 }
 
 final class SourceEdit {
@@ -181,8 +181,7 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     }
     final interfaceType = interfaceElement.thisType;
     final interfaceUri = interfaceElement.library.source.uri;
-    final isExceptionType =
-        identical(
+    final isExceptionType = identical(
           interfaceElement,
           typeHelper.coreTypes.coreExceptionType.element,
         ) ||
@@ -190,8 +189,7 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
           interfaceType.extensionTypeErasure,
           typeHelper.coreTypes.coreExceptionType,
         );
-    final isErrorType =
-        identical(
+    final isErrorType = identical(
           interfaceElement,
           typeHelper.coreTypes.coreErrorType.element,
         ) ||
@@ -210,9 +208,9 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       exportedFromExceptionsDart,
     ) = switch (context.currentSession.uriConverter.uriToPath(interfaceUri)) {
       final path? => (
-        p.isWithin(projectPaths.projectRoot, path),
-        p.isWithin(projectPaths.projectLib, path),
-      ),
+          p.isWithin(projectPaths.projectRoot, path),
+          p.isWithin(projectPaths.projectLib, path),
+        ),
       _ => (false, false),
     };
     if (!exportedFromExceptionsDart && mustBeExportedFromExceptionsDart) {
@@ -225,9 +223,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       return null;
     }
     final isInstantiable = switch (interfaceElement) {
-      final ClassElement classElement =>
-        classElement.isConstructable ||
-            classElement.constructors.any((ctor) => ctor.isFactory),
+      final ClassElement classElement => classElement.isConstructable ||
+          classElement.constructors.any((ctor) => ctor.isFactory),
       ExtensionTypeElement() || EnumElement() => true,
       _ => false,
     };
@@ -279,13 +276,12 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     required CustomType type,
   }) {
     final (isCustomType, isDefinedInLib) = switch (context
-        .currentSession
-        .uriConverter
+        .currentSession.uriConverter
         .uriToPath(modelType.library.source.uri)) {
       final path? => (
-        p.isWithin(projectPaths.projectRoot, path),
-        p.isWithin(projectPaths.projectLib, path),
-      ),
+          p.isWithin(projectPaths.projectRoot, path),
+          p.isWithin(projectPaths.projectLib, path),
+        ),
       _ => (false, false),
     };
     if (isCustomType && !isDefinedInLib) {
@@ -350,8 +346,10 @@ extension TopLevelConstants on LibraryElement {
   }
 }
 
-typedef TopLevelConstant =
-    ({TopLevelVariableElement element, DartObject value});
+typedef TopLevelConstant = ({
+  TopLevelVariableElement element,
+  DartObject value
+});
 
 extension GetClassType on LibraryElementResult {
   ClassElement getClassElement(String name) =>

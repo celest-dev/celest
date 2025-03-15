@@ -13,10 +13,9 @@ final class HelloProjectTest extends E2ETest {
 
   @override
   Future<void> run() async {
-    final helloExample =
-        Directory.current.uri
-            .resolve('../../celest/packages/celest/example')
-            .toFilePath();
+    final helloExample = Directory.current.uri
+        .resolve('../../celest/packages/celest/example')
+        .toFilePath();
     await celestCommand('start')
         .workingDirectory(helloExample)
         .start()

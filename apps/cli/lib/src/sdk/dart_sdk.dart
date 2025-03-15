@@ -26,21 +26,21 @@ class Sdk {
     Version? version,
     Version? flutterVersion,
     FileSystem? fileSystem,
-  }) : sdkType = flutterSdkRoot == null ? SdkType.dart : SdkType.flutter,
-       _version = version,
-       _flutterVersion = flutterVersion,
-       _fileSystem = fileSystem ?? const LocalFileSystem();
+  })  : sdkType = flutterSdkRoot == null ? SdkType.dart : SdkType.flutter,
+        _version = version,
+        _flutterVersion = flutterVersion,
+        _fileSystem = fileSystem ?? const LocalFileSystem();
 
   Sdk.flutter(String sdkRoot, {Version? version, FileSystem? fileSystem})
-    : this._(
-        sdkPath: p.join(sdkRoot, 'bin', 'cache', 'dart-sdk'),
-        flutterSdkRoot: sdkRoot,
-        flutterVersion: version,
-        fileSystem: fileSystem,
-      );
+      : this._(
+          sdkPath: p.join(sdkRoot, 'bin', 'cache', 'dart-sdk'),
+          flutterSdkRoot: sdkRoot,
+          flutterVersion: version,
+          fileSystem: fileSystem,
+        );
 
   Sdk.dart(String sdkPath, {Version? version, FileSystem? fileSystem})
-    : this._(sdkPath: sdkPath, version: version, fileSystem: fileSystem);
+      : this._(sdkPath: sdkPath, version: version, fileSystem: fileSystem);
 
   static late Sdk current;
 
@@ -56,8 +56,7 @@ class Sdk {
   Version get version => _version ??= _parseVersion(sdkPath);
 
   /// The Flutter SDK's semantic versioning version (x.y.z-a.b.channel).
-  Version? get flutterVersion =>
-      _flutterVersion ??= switch (flutterSdkRoot) {
+  Version? get flutterVersion => _flutterVersion ??= switch (flutterSdkRoot) {
         final flutterSdkRoot? => _parseVersion(flutterSdkRoot),
         null => null,
       };
@@ -117,18 +116,17 @@ class Sdk {
   String get frontendServerSnapshot =>
       p.absolute(sdkPath, 'bin', 'snapshots', 'frontend_server.dart.snapshot');
 
-  String? get flutterPatchedSdk =>
-      flutterSdkRoot == null
-          ? null
-          : p.absolute(
-            flutterSdkRoot!,
-            'bin',
-            'cache',
-            'artifacts',
-            'engine',
-            'common',
-            'flutter_patched_sdk',
-          );
+  String? get flutterPatchedSdk => flutterSdkRoot == null
+      ? null
+      : p.absolute(
+          flutterSdkRoot!,
+          'bin',
+          'cache',
+          'artifacts',
+          'engine',
+          'common',
+          'flutter_patched_sdk',
+        );
 
   String get flutterTester => p.join(flutterOsArtifacts, 'flutter_tester');
 
@@ -150,11 +148,11 @@ class Sdk {
   //       );
 
   String get frontendServerAotSnapshot => p.absolute(
-    sdkPath,
-    'bin',
-    'snapshots',
-    'frontend_server_aot.dart.snapshot',
-  );
+        sdkPath,
+        'bin',
+        'snapshots',
+        'frontend_server_aot.dart.snapshot',
+      );
 
   // flutterSdkRoot == null
   //     ? p.absolute(
@@ -181,43 +179,41 @@ class Sdk {
   String get devToolsBinaries =>
       p.absolute(sdkPath, 'bin', 'resources', 'devtools');
 
-  String? get flutterPlatformDill =>
-      flutterSdkRoot == null
-          ? null
-          : p.absolute(
-            flutterSdkRoot!,
-            'bin',
-            'cache',
-            'artifacts',
-            'engine',
-            'common',
-            'flutter_patched_sdk',
-            'platform_strong.dill',
-          );
+  String? get flutterPlatformDill => flutterSdkRoot == null
+      ? null
+      : p.absolute(
+          flutterSdkRoot!,
+          'bin',
+          'cache',
+          'artifacts',
+          'engine',
+          'common',
+          'flutter_patched_sdk',
+          'platform_strong.dill',
+        );
 
-  String? get flutterPlatformProductDill =>
-      flutterSdkRoot == null
-          ? null
-          : p.absolute(
-            flutterSdkRoot!,
-            'bin',
-            'cache',
-            'artifacts',
-            'engine',
-            'common',
-            'flutter_patched_sdk_product',
-            'platform_strong.dill',
-          );
+  String? get flutterPlatformProductDill => flutterSdkRoot == null
+      ? null
+      : p.absolute(
+          flutterSdkRoot!,
+          'bin',
+          'cache',
+          'artifacts',
+          'engine',
+          'common',
+          'flutter_patched_sdk_product',
+          'platform_strong.dill',
+        );
 
   String get vmPlatformDill =>
       p.absolute(sdkPath, 'lib', '_internal', 'vm_platform_strong.dill');
 
   String get vmPlatformProductDill => p.absolute(
-    sdkPath,
-    'lib',
-    '_internal',
-    'vm_platform_strong_product.dill',
-  );
+        sdkPath,
+        'lib',
+        '_internal',
+        'vm_platform_strong_product.dill',
+      );
 
   /// The version when the new bytecode format and compiler was [introduced](https://github.com/dart-lang/sdk/commit/3abf78212c480cbbbfd43f6382ff262532c90e4d).
   ///

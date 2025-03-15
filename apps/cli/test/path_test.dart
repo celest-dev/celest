@@ -14,9 +14,9 @@ enum _Style {
   windows;
 
   path.Context get context => switch (this) {
-    _Style.posix => p.posix,
-    _Style.windows => p.windows,
-  };
+        _Style.posix => p.posix,
+        _Style.windows => p.windows,
+      };
 }
 
 void main() {

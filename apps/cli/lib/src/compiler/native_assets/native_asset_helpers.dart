@@ -67,9 +67,7 @@ Future<File> generateNativeAssetsYaml({
   final copiedFiles = await Future.wait([
     for (final assetMapping in assetTargetLocations.entries)
       if (assetMapping.value.path is KernelAssetRelativePath)
-        fileSystem
-            .file(assetMapping.key.file)
-            .copy(
+        fileSystem.file(assetMapping.key.file).copy(
               outputDir.uri
                   .resolveUri(
                     (assetMapping.value.path as KernelAssetRelativePath).uri,

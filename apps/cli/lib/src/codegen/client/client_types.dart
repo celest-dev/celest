@@ -5,10 +5,10 @@ import 'package:code_builder/code_builder.dart';
 
 abstract final class ClientPaths {
   static String get client => p.join(
-    projectPaths.clientRoot,
-    'lib',
-    '${celestProject.projectName.snakeCase}_client.dart',
-  );
+        projectPaths.clientRoot,
+        'lib',
+        '${celestProject.projectName.snakeCase}_client.dart',
+      );
   static String get functions =>
       p.join(projectPaths.clientOutputsDir, 'functions.dart');
   static String get serializers =>
@@ -26,9 +26,9 @@ final class ClientTypes {
   static ClientTypes get functionsClass =>
       ClientTypes._('CelestFunctions', ClientPaths.functions);
   static ClientTypes api(Api api) => ClientTypes._(
-    '${ClientTypes.functionsClass.name}${api.name.pascalCase}',
-    ClientPaths.functions,
-  );
+        '${ClientTypes.functionsClass.name}${api.name.pascalCase}',
+        ClientPaths.functions,
+      );
   static ClientTypes get authClass =>
       ClientTypes._('CelestAuth', ClientPaths.auth);
 

@@ -16,12 +16,12 @@ final class CelestAnalyzerPlugin extends ServerPlugin {
     void Function()? onDone,
     this.withDebugging = false,
     @visibleForTesting ResourceProvider? resourceProvider,
-  }) : _onError = onError,
-       _onDone = onDone,
-       super(
-         resourceProvider:
-             resourceProvider ?? PhysicalResourceProvider.INSTANCE,
-       );
+  })  : _onError = onError,
+        _onDone = onDone,
+        super(
+          resourceProvider:
+              resourceProvider ?? PhysicalResourceProvider.INSTANCE,
+        );
 
   static final Logger logger = Logger('Celest.AnalyzerPlugin');
 
