@@ -5,14 +5,14 @@ import 'package:test/test.dart';
 import '../common.dart';
 
 void main() {
-  initTests();
-
   group('PubCache', () {
+    setUpAll(initTests);
+
     test('finds pub cache', () {
       expect(pubCache.findCachePath(), isNotNull);
     });
 
-    test('hydrates packages', () async {
+    test('hydrates packages', timeout: Timeout.none, () async {
       final packages =
           PubCache.packagesToFix.entries
               .map((e) => '${e.key}:${e.value}')

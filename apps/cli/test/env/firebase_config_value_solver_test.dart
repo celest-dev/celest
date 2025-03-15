@@ -82,9 +82,9 @@ name: celest_backend
 }
 
 void main() {
-  initTests();
-
   group('FirebaseConfigValueSolver', () {
+    setUpAll(initTests);
+
     setUp(() {
       secureStorage = NativeMemoryStorage();
     });

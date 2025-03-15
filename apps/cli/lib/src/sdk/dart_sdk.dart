@@ -4,12 +4,9 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
-import 'package:logging/logging.dart';
-import 'package:process/process.dart';
-// ignore: implementation_imports
-import 'package:process/src/interface/common.dart';
+import 'package:file/file.dart';
+import 'package:file/local.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 export 'package:celest_ast/celest_ast.dart' show SdkType;
@@ -28,23 +25,24 @@ class Sdk {
     this.flutterSdkRoot,
     Version? version,
     Version? flutterVersion,
+    FileSystem? fileSystem,
   }) : sdkType = flutterSdkRoot == null ? SdkType.dart : SdkType.flutter,
        _version = version,
-       _flutterVersion = flutterVersion;
+       _flutterVersion = flutterVersion,
+       _fileSystem = fileSystem ?? const LocalFileSystem();
 
-  Sdk.flutter(String sdkRoot, {Version? version})
+  Sdk.flutter(String sdkRoot, {Version? version, FileSystem? fileSystem})
     : this._(
         sdkPath: p.join(sdkRoot, 'bin', 'cache', 'dart-sdk'),
         flutterSdkRoot: sdkRoot,
         flutterVersion: version,
+        fileSystem: fileSystem,
       );
 
-  Sdk.dart(this.sdkPath, {Version? version})
-    : flutterSdkRoot = null,
-      sdkType = SdkType.dart,
-      _version = version;
+  Sdk.dart(String sdkPath, {Version? version, FileSystem? fileSystem})
+    : this._(sdkPath: sdkPath, version: version, fileSystem: fileSystem);
 
-  static Sdk current = load();
+  static late Sdk current;
 
   /// Path to SDK directory.
   final String sdkPath;
@@ -88,8 +86,10 @@ class Sdk {
     );
   }();
 
+  final FileSystem _fileSystem;
+
   Version _parseVersion(String path) {
-    final versionFile = localFileSystem.file(p.join(path, 'version'));
+    final versionFile = _fileSystem.file(p.join(path, 'version'));
     if (!versionFile.existsSync()) {
       throw StateError(
         'Could not find Dart SDK version file at ${versionFile.path}.',
@@ -233,116 +233,6 @@ class Sdk {
   bool get supportsBytecode {
     return version >= bytecodeVersion;
   }
-
-  /// Follows links when resolving an executable's [path].
-  static String _resolveLinks(String path) {
-    if (fileSystem.isLinkSync(path)) {
-      return p.canonicalize(fileSystem.link(path).resolveSymbolicLinksSync());
-    }
-    return p.canonicalize(path);
-  }
-
-  static Sdk load() {
-    // Find SDK path.
-
-    bool isValid(String sdkPath) =>
-        fileSystem.isDirectorySync(p.join(sdkPath, 'bin', 'snapshots'));
-
-    String? flutterPath;
-    try {
-      flutterPath = getExecutablePath(
-        'flutter',
-        fileSystem.currentDirectory.path,
-        platform: platform,
-        fs: fileSystem,
-        throwOnFailure: true,
-      );
-    } on ProcessPackageExecutableNotFoundException catch (e) {
-      _logger.finest('Could not find Flutter SDK in PATH.', e);
-    }
-    if (flutterPath != null) {
-      flutterPath = _resolveLinks(flutterPath);
-      final sdkPath = p.canonicalize(
-        p.join(p.dirname(flutterPath), 'cache', 'dart-sdk'),
-      );
-      _logger.finest('Checking if Flutter: $flutterPath -> $sdkPath');
-      if (!isValid(sdkPath)) {
-        throw const CliException('Could not find Flutter SDK.');
-      }
-      return Sdk._(
-        sdkPath: sdkPath,
-        flutterSdkRoot: p.canonicalize(p.dirname(p.dirname(flutterPath))),
-      );
-    }
-
-    // The common case, and how cli_util.dart computes the Dart SDK directory,
-    // [path.dirname] called twice on Platform.resolvedExecutable. We confirm by
-    // asserting that the directory `./bin/snapshots/` exists in this directory:
-    final resolvedExecutable = _resolveLinks(platform.resolvedExecutable);
-
-    var sdkPath = p.dirname(p.dirname(resolvedExecutable));
-    _logger.finest(
-      'Checking resolved executable: $resolvedExecutable -> $sdkPath',
-    );
-    String? flutterSdkRoot;
-    if (!isValid(sdkPath)) {
-      // If the common case fails, we try to find the SDK path by looking for
-      // the `dart` executable in the PATH environment variable.
-      String? dartPath;
-      try {
-        dartPath = getExecutablePath(
-          'dart',
-          fileSystem.currentDirectory.path,
-          platform: platform,
-          fs: fileSystem,
-          throwOnFailure: true,
-        );
-      } on ProcessPackageExecutableNotFoundException catch (e) {
-        _logger.finest('Could not find Dart SDK in PATH.', e);
-      }
-      if (dartPath == null) {
-        throw const CliException('Could not find Dart SDK.');
-      }
-      dartPath = _resolveLinks(dartPath);
-      sdkPath = switch (p.basename(dartPath)) {
-        // `dart` and `flutter` are aliased to /usr/bin/snap on Ubuntu snap installation.
-        // See `/snap/flutter/current/env.sh`
-        'snap' => p.join(
-          platform.environment['HOME']!,
-          'snap',
-          'flutter',
-          'common',
-          'flutter',
-          'bin',
-          'cache',
-          'dart-sdk',
-        ),
-        // `sdk/bin/dart` -> `sdk`
-        _ => p.dirname(p.dirname(dartPath)),
-      };
-      _logger.finest('Checking resolved PATH: $dartPath -> $sdkPath');
-      if (!isValid(sdkPath)) {
-        // Check if using Dart from Flutter SDK.
-        // `flutter/bin/dart` -> `flutter/bin/cache/dart-sdk`
-        sdkPath = p.join(p.dirname(dartPath), 'cache', 'dart-sdk');
-        _logger.finest('Checking if Flutter: $dartPath -> $sdkPath');
-        if (!isValid(sdkPath)) {
-          throw const CliException('Could not find Dart SDK.');
-        }
-        flutterSdkRoot = p.dirname(p.dirname(dartPath));
-      }
-    }
-
-    _logger.finest('Found Dart SDK: $sdkPath');
-
-    return Sdk._(
-      sdkPath: p.canonicalize(sdkPath),
-      flutterSdkRoot:
-          flutterSdkRoot == null ? null : p.canonicalize(flutterSdkRoot),
-    );
-  }
-
-  static final _logger = Logger('Sdk');
 }
 
 /// Information about the current runtime.

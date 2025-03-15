@@ -2,12 +2,11 @@
 
 import 'dart:io';
 
-import 'package:celest_cli/src/context.dart' as ctx;
-import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/sdk/dart_sdk.dart';
+import 'package:celest_cli/src/sdk/sdk_finder.dart';
 import 'package:file/chroot.dart';
 import 'package:file/local.dart';
 import 'package:logging/logging.dart';
+import 'package:path/path.dart' as p;
 import 'package:platform/platform.dart';
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
@@ -18,7 +17,7 @@ void main() {
     print('${record.level.name}: ${record.message}');
   });
 
-  group('Sdk', () {
+  group('DartSdkFinder', () {
     group('Flutter', () {
       test('homebrew', testOn: '!windows', () async {
         // Mimics the directory structure of a Homebrew-installed Flutter SDK.
@@ -34,11 +33,13 @@ void main() {
               d.dir('flutter', [
                 d.dir('3.22.2', [
                   d.dir('flutter', [
+                    d.file('version', '3.22.2\n'),
                     d.dir('bin', [
                       d.file('flutter'),
                       d.dir('cache', [
                         d.dir('dart-sdk', [
                           d.dir('bin', [d.file('dart'), d.dir('snapshots')]),
+                          d.file('version', '3.2.3\n'),
                         ]),
                       ]),
                     ]),
@@ -52,9 +53,9 @@ void main() {
         await root.validate();
         print(root.describe());
 
+        final fileSystem = ChrootFileSystem(const LocalFileSystem(), d.sandbox);
         const localPlatform = LocalPlatform();
-        ctx.fileSystem = ChrootFileSystem(const LocalFileSystem(), d.sandbox);
-        ctx.platform = FakePlatform(
+        final platform = FakePlatform(
           operatingSystem: localPlatform.operatingSystem,
           version: localPlatform.version,
           environment: {'PATH': '/opt/homebrew/bin'},
@@ -71,10 +72,17 @@ void main() {
           await Process.run('chmod', ['+x', '${d.sandbox}$target']);
         }
 
+        final finder = DartSdkFinder(
+          fileSystem: fileSystem,
+          platform: platform,
+        );
+        final result = await finder.findSdk();
         expect(
-          Sdk.load().sdkPath,
+          result.sdk.sdkPath,
           '/opt/homebrew/Caskroom/flutter/3.22.2/flutter/bin/cache/dart-sdk',
         );
+        expect(result.sdk.version.toString(), '3.2.3');
+        expect(result.sdk.flutterVersion.toString(), '3.22.2');
       });
     });
 
@@ -97,6 +105,7 @@ void main() {
                   ]),
                   d.dir('libexec', [
                     d.dir('bin', [d.file('dart'), d.dir('snapshots')]),
+                    d.file('version', '3.2.0\n'),
                   ]),
                 ]),
               ]),
@@ -107,9 +116,9 @@ void main() {
         await root.validate();
         print(root.describe());
 
+        final fileSystem = ChrootFileSystem(const LocalFileSystem(), d.sandbox);
         const localPlatform = LocalPlatform();
-        ctx.fileSystem = ChrootFileSystem(const LocalFileSystem(), d.sandbox);
-        ctx.platform = FakePlatform(
+        final platform = FakePlatform(
           operatingSystem: localPlatform.operatingSystem,
           version: localPlatform.version,
           environment: {'PATH': '/opt/homebrew/bin'},
@@ -127,7 +136,14 @@ void main() {
           await Process.run('chmod', ['+x', '${d.sandbox}$target']);
         }
 
-        expect(Sdk.load().sdkPath, '/opt/homebrew/Cellar/dart/3.2.0/libexec');
+        final finder = DartSdkFinder(
+          fileSystem: fileSystem,
+          platform: platform,
+        );
+        final result = await finder.findSdk();
+        expect(result.sdk.sdkPath, '/opt/homebrew/Cellar/dart/3.2.0/libexec');
+        expect(result.sdk.version.toString(), '3.2.0');
+        expect(result.sdk.flutterVersion, isNull);
       });
 
       test('snap', testOn: '!windows', () async {
@@ -153,11 +169,13 @@ void main() {
               d.dir('flutter', [
                 d.dir('common', [
                   d.dir('flutter', [
+                    d.file('version', '3.22.2\n'),
                     d.dir('bin', [
                       d.file('dart'),
                       d.dir('cache', [
                         d.dir('dart-sdk', [
                           d.dir('bin', [d.file('dart'), d.dir('snapshots')]),
+                          d.file('version', '3.2.3\n'),
                         ]),
                       ]),
                     ]),
@@ -170,9 +188,9 @@ void main() {
         await home.create();
         await home.validate();
 
+        final fileSystem = ChrootFileSystem(const LocalFileSystem(), d.sandbox);
         const localPlatform = LocalPlatform();
-        ctx.fileSystem = ChrootFileSystem(const LocalFileSystem(), d.sandbox);
-        ctx.platform = FakePlatform(
+        final platform = FakePlatform(
           operatingSystem: localPlatform.operatingSystem,
           version: localPlatform.version,
           environment: {'PATH': '/usr/bin:/snap/bin', 'HOME': '/home/user'},
@@ -190,10 +208,17 @@ void main() {
           await Process.run('chmod', ['+x', '${d.sandbox}$target']);
         }
 
+        final finder = DartSdkFinder(
+          fileSystem: fileSystem,
+          platform: platform,
+        );
+        final result = await finder.findSdk();
         expect(
-          Sdk.load().sdkPath,
+          result.sdk.sdkPath,
           '/home/user/snap/flutter/common/flutter/bin/cache/dart-sdk',
         );
+        expect(result.sdk.version.toString(), '3.2.3');
+        expect(result.sdk.flutterVersion, isNull);
       });
     });
   });
