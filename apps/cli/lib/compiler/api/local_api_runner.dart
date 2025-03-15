@@ -94,18 +94,18 @@ final class LocalApiRunner {
       }
     }
 
-    // Copy SQLite3 to the output directory on Windows.
-    if (platform.isWindows) {
-      final sqlite3Out = fileSystem
-          .directory(p.dirname(path))
-          .childFile('sqlite3.dll');
-      if (!sqlite3Out.existsSync()) {
-        final cachedSqlite3 = celestProject.config.configDir.childFile(
-          'sqlite3.dll',
-        );
-        await cachedSqlite3.copy(sqlite3Out.path);
-      }
-    }
+    // // Copy SQLite3 to the output directory on Windows.
+    // if (platform.isWindows) {
+    //   final sqlite3Out = fileSystem
+    //       .directory(p.dirname(path))
+    //       .childFile('sqlite3.dll');
+    //   if (!sqlite3Out.existsSync()) {
+    //     final cachedSqlite3 = celestProject.config.configDir.childFile(
+    //       'sqlite3.dll',
+    //     );
+    //     await cachedSqlite3.copy(sqlite3Out.path);
+    //   }
+    // }
 
     // NOTE: FE server requires file: URIs for *some* paths on Windows.
     final genKernelRes = await processManager.start(<String>[

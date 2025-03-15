@@ -128,6 +128,9 @@ final class CelestProject {
 
   String get packageName => 'celest_backend';
 
+  /// The name of the client package.
+  String get clientPackageName => '${projectName}_client';
+
   final ProjectPaths projectPaths;
   AnalysisOptions _analysisOptions;
   AnalysisOptions get analysisOptions => _analysisOptions;

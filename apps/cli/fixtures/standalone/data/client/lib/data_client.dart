@@ -16,7 +16,7 @@ import 'package:native_storage/native_storage.dart'
     as _$native_storage_native_storage;
 
 export 'package:celest_backend/src/database/task_database.dart'
-    show Task, Priority;
+    show Priority, Task;
 
 final Celest celest = Celest();
 

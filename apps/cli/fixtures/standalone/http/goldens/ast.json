@@ -4936,7 +4936,7 @@
     "celest": "1.0.7",
     "dart": {
       "type": "dart",
-      "version": "3.29.1",
+      "version": "3.7.2",
       "enabledExperiments": []
     },
     "targetSdk": "dart",
@@ -4945,7 +4945,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.29.1",
+      "version": "3.29.2",
       "enabledExperiments": []
     }
   },

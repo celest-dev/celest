@@ -95,7 +95,7 @@ final class ProjectPaths {
         pathSegments: [final package, ...final pathSegments],
       )
           when package == 'celest_backend' ||
-              package == celestProject.clientPubspec.name =>
+              package == celestProject.clientPackageName =>
         packageToFileUri(package, pathSegments),
       _ => uri,
     };
@@ -116,7 +116,7 @@ final class ProjectPaths {
       path = p.relative(path, from: clientPackageRoot).to(p.url);
       return Uri(
         scheme: 'package',
-        pathSegments: [celestProject.clientPubspec.name, ...p.url.split(path)],
+        pathSegments: [celestProject.clientPackageName, ...p.url.split(path)],
       );
     }
     return p.toUri(path);
@@ -126,7 +126,7 @@ final class ProjectPaths {
     if (package == 'celest_backend') {
       return Uri.file(p.joinAll([packageRoot, ...pathSegments]));
     }
-    if (package == celestProject.clientPubspec.name) {
+    if (package == celestProject.clientPackageName) {
       return Uri.file(p.joinAll([clientPackageRoot, ...pathSegments]));
     }
     throw ArgumentError('Cannot denormalize package $package');

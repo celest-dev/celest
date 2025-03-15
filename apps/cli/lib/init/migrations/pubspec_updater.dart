@@ -192,29 +192,32 @@ final class PubspecUpdater extends ProjectMigration {
     // Update client dependencies
     final clientRoot = fileSystem.directory(projectPaths.clientRoot);
     final clientPubspecFile = clientRoot.childFile('pubspec.yaml');
-    if (clientPubspecFile.existsSync()) {
-      final clientPubspecYaml = await clientPubspecFile.readAsString();
-      final clientPubspec = Pubspec.parse(clientPubspecYaml);
-      final clientNeedsMigration = await _updateClientDependencies(
-        clientRoot: clientRoot,
-        pubspec: clientPubspec,
-        pubspecYaml: clientPubspecYaml,
-        pubspecFile: clientPubspecFile,
-      );
-      needsAnalyzerMigration |= clientNeedsMigration;
-      if (clientNeedsMigration) {
-        operations.add(
-          runPub(action: PubAction.get, workingDirectory: clientRoot.path),
-        );
-      }
-      _logger.fine('Client pubspec updated');
+    ProjectMigrationResult clientPubspecResult =
+        const ProjectMigrationSuccess();
+    if (!clientPubspecFile.existsSync()) {
+      clientPubspecResult =
+          await ProjectFile.client(projectRoot, projectName).create();
     }
+    final clientPubspecYaml = await clientPubspecFile.readAsString();
+    final clientPubspec = Pubspec.parse(clientPubspecYaml);
+    final clientNeedsMigration = await _updateClientDependencies(
+      clientRoot: clientRoot,
+      pubspec: clientPubspec,
+      pubspecYaml: clientPubspecYaml,
+      pubspecFile: clientPubspecFile,
+    );
+    needsAnalyzerMigration |= clientNeedsMigration;
+    if (clientNeedsMigration) {
+      operations.add(
+        runPub(action: PubAction.get, workingDirectory: clientRoot.path),
+      );
+    }
+    _logger.fine('Client pubspec updated');
 
     // Update app pubspec
     await _updateAppPubspec();
 
-    return ProjectMigrationSuccess(
-      needsAnalyzerMigration: needsAnalyzerMigration,
-    );
+    return clientPubspecResult &
+        ProjectMigrationSuccess(needsAnalyzerMigration: needsAnalyzerMigration);
   }
 }

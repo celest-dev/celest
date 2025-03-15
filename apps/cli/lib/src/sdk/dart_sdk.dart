@@ -23,15 +23,20 @@ class Sdk {
         _ => throw ArgumentError.value(sdkType, 'sdkType'),
       };
 
-  Sdk._({required this.sdkPath, this.flutterSdkRoot, Version? version})
-    : sdkType = flutterSdkRoot == null ? SdkType.dart : SdkType.flutter,
-      _version = version;
+  Sdk._({
+    required this.sdkPath,
+    this.flutterSdkRoot,
+    Version? version,
+    Version? flutterVersion,
+  }) : sdkType = flutterSdkRoot == null ? SdkType.dart : SdkType.flutter,
+       _version = version,
+       _flutterVersion = flutterVersion;
 
   Sdk.flutter(String sdkRoot, {Version? version})
     : this._(
         sdkPath: p.join(sdkRoot, 'bin', 'cache', 'dart-sdk'),
         flutterSdkRoot: sdkRoot,
-        version: version,
+        flutterVersion: version,
       );
 
   Sdk.dart(this.sdkPath, {Version? version})
@@ -46,14 +51,18 @@ class Sdk {
 
   final SdkType sdkType;
 
+  Version? _version;
+  Version? _flutterVersion;
+
   /// The SDK's semantic versioning version (x.y.z-a.b.channel).
   Version get version => _version ??= _parseVersion(sdkPath);
 
-  Version? _version;
-
   /// The Flutter SDK's semantic versioning version (x.y.z-a.b.channel).
-  late final Version? flutterVersion =
-      flutterSdkRoot == null ? null : _parseVersion(flutterSdkRoot!);
+  Version? get flutterVersion =>
+      _flutterVersion ??= switch (flutterSdkRoot) {
+        final flutterSdkRoot? => _parseVersion(flutterSdkRoot),
+        null => null,
+      };
 
   /// If using the Flutter SDK, the root directory of the Flutter SDK.
   ///

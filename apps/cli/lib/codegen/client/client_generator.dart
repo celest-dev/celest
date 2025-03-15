@@ -120,7 +120,7 @@ final class ClientGenerator {
                 .map(
                   (symbols) => Directive.export(
                     symbols.key,
-                    show: symbols.value.map((s) => s.symbol!).toSet().toList(),
+                    show: symbols.value.map((s) => s.symbol!).toSet().sorted(),
                   ),
                 ),
           ])
