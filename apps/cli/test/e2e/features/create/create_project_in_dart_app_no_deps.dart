@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/pub/pub_environment.dart';
 import 'package:checks/checks.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 

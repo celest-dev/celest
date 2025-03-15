@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:benchmark_harness/benchmark_harness.dart';
-import 'package:celest_cli/analyzer/celest_analyzer.dart';
-import 'package:celest_cli/pub/pub_action.dart';
+import 'package:celest_cli/src/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/pub/pub_action.dart';
 import 'package:path/path.dart' as p;
 
 Future<void> main() async {

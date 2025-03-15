@@ -1,10 +1,10 @@
 import 'package:celest_ast/celest_ast.dart';
-import 'package:celest_cli/init/migrations/pubspec_updater.dart';
-import 'package:celest_cli/init/project_migration.dart';
-import 'package:celest_cli/project/celest_project.dart';
-import 'package:celest_cli/pub/project_dependency.dart';
-import 'package:celest_cli/pub/pub_environment.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/init/migrations/pubspec_updater.dart';
+import 'package:celest_cli/src/init/project_migration.dart';
+import 'package:celest_cli/src/project/celest_project.dart';
+import 'package:celest_cli/src/pub/project_dependency.dart';
+import 'package:celest_cli/src/pub/pub_environment.dart';
 import 'package:file/file.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';

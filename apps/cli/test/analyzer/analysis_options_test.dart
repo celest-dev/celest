@@ -1,4 +1,4 @@
-import 'package:celest_cli/analyzer/analysis_options.dart';
+import 'package:celest_cli/src/analyzer/analysis_options.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;

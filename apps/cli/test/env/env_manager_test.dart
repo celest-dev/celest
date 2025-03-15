@@ -1,6 +1,6 @@
-import 'package:celest_cli/env/env_manager.dart';
-import 'package:celest_cli/project/project_paths.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/env/env_manager.dart';
+import 'package:celest_cli/src/project/project_paths.dart';
 import 'package:checks/checks.dart';
 import 'package:test/test.dart';
 
