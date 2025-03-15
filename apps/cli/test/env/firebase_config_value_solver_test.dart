@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:celest_ast/celest_ast.dart';
-import 'package:celest_cli/database/cache/cache_database.dart';
-import 'package:celest_cli/database/project/project_database.dart';
-import 'package:celest_cli/env/firebase_config_value_solver.dart';
-import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/database/cache/cache_database.dart';
+import 'package:celest_cli/src/database/project/project_database.dart';
+import 'package:celest_cli/src/env/firebase_config_value_solver.dart';
+import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:checks/checks.dart';
 import 'package:file/memory.dart';
 import 'package:native_storage/native_storage.dart';

@@ -6,9 +6,9 @@ library;
 
 import 'dart:io' show Platform;
 
-import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
+import 'package:celest_cli/src/pub/pub_action.dart';
 import 'package:celest_cli/src/sdk/versions.dart';
 import 'package:file/file.dart';
 import 'package:test/test.dart';

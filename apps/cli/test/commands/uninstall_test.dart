@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:celest_cli/commands/uninstall/celest_uninstaller.dart';
+import 'package:celest_cli/src/commands/uninstall/celest_uninstaller.dart';
 import 'package:celest_cli/src/context.dart' as ctx;
 import 'package:celest_cli/src/context.dart';
 import 'package:file/memory.dart';

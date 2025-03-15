@@ -1,5 +1,5 @@
-import 'package:celest_cli/pub/pub_cache.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/pub/pub_cache.dart';
 import 'package:test/test.dart';
 
 import '../common.dart';
