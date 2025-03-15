@@ -35,10 +35,11 @@ class ProjectMigrator {
   Future<ProjectMigrationResult> migrate() async {
     final migrations = [
       PubspecUpdater(projectRoot, parentProject, projectName),
-      if (parentProject case ParentProject(
-        path: final appRoot,
-        :final type,
-      )) ...[
+      if (parentProject
+          case ParentProject(
+            path: final appRoot,
+            :final type,
+          )) ...[
         AddAnalyzerPlugin(projectRoot, appRoot),
         if (type == SdkType.flutter) MacOsEntitlements(projectRoot, appRoot),
       ],

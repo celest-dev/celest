@@ -32,8 +32,7 @@ extension CFStringPointerX on Pointer<CFString> {
     // Call CFStringGetCString as a backup.
     // See: https://developer.apple.com/documentation/corefoundation/1542133-cfstringgetcstringptr
     final strLen = lib.CFStringGetLength(this);
-    final maxLen =
-        lib.CFStringGetMaximumSizeForEncoding(
+    final maxLen = lib.CFStringGetMaximumSizeForEncoding(
           strLen,
           CFStringBuiltInEncodings.kCFStringEncodingUTF8,
         ) +
@@ -46,7 +45,7 @@ extension CFStringPointerX on Pointer<CFString> {
         maxLen,
         CFStringBuiltInEncodings.kCFStringEncodingUTF8,
       );
-      if (ret == 0 /* FALSE */ ) {
+      if (ret == 0 /* FALSE */) {
         return null;
       }
       return buffer.cast<Utf8>().toDartString();

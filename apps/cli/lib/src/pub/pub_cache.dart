@@ -100,33 +100,31 @@ final class PubCache {
     final results = <(int, String)>[];
     for (final package in packagesToFix.entries) {
       // Run serially to avoid flutter lock
-      final result = await processManager
-          .start(runInShell: true, [
-            Sdk.current.sdkType.name,
-            'pub',
-            'cache',
-            'add',
-            package.key,
-            '--version',
-            package.value,
-            '--all',
-          ])
-          .then((process) async {
-            final combinedOutput = StringBuffer();
-            process.captureStdout(
-              sink: (line) {
-                _logger.finest(line);
-                combinedOutput.writeln(line);
-              },
-            );
-            process.captureStderr(
-              sink: (line) {
-                _logger.finest(line);
-                combinedOutput.writeln(line);
-              },
-            );
-            return (await process.exitCode, combinedOutput.toString());
-          });
+      final result = await processManager.start(runInShell: true, [
+        Sdk.current.sdkType.name,
+        'pub',
+        'cache',
+        'add',
+        package.key,
+        '--version',
+        package.value,
+        '--all',
+      ]).then((process) async {
+        final combinedOutput = StringBuffer();
+        process.captureStdout(
+          sink: (line) {
+            _logger.finest(line);
+            combinedOutput.writeln(line);
+          },
+        );
+        process.captureStderr(
+          sink: (line) {
+            _logger.finest(line);
+            combinedOutput.writeln(line);
+          },
+        );
+        return (await process.exitCode, combinedOutput.toString());
+      });
       results.add(result);
     }
     return results;
@@ -153,9 +151,8 @@ final class PubCache {
       _logger.finest('No pub cache found at $cachePath. Skipping fix.');
       return 0;
     }
-    final hostedPubDevDir = cacheDir
-        .childDirectory('hosted')
-        .childDirectory('pub.dev');
+    final hostedPubDevDir =
+        cacheDir.childDirectory('hosted').childDirectory('pub.dev');
     if (!hostedPubDevDir.existsSync()) {
       if (throwOnError) {
         throw Exception('No pub cache found at ${hostedPubDevDir.path}.');

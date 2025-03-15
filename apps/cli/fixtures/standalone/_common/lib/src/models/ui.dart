@@ -1,10 +1,6 @@
 import 'package:_common/src/utils/map_deserialization_extension.dart';
 
-enum ScreenChoice {
-  signup,
-  configuration,
-  portfolioAndCashBalance;
-}
+enum ScreenChoice { signup, configuration, portfolioAndCashBalance }
 
 class Ui {
   const Ui({
@@ -18,23 +14,17 @@ class Ui {
 
   Ui toggleLightAndDarkMode() => copy(isDarkMode: !isDarkMode);
 
-  Ui copy({
-    bool? isDarkMode,
-    ScreenChoice? screenChoice,
-  }) =>
-      Ui(
-        isDarkMode: isDarkMode ?? this.isDarkMode,
-        screenChoice: screenChoice ?? this.screenChoice,
-      );
+  Ui copy({bool? isDarkMode, ScreenChoice? screenChoice}) => Ui(
+    isDarkMode: isDarkMode ?? this.isDarkMode,
+    screenChoice: screenChoice ?? this.screenChoice,
+  );
 
   @override
   String toString() =>
       'Ui{isDarkMode: $isDarkMode, screenChoice: $screenChoice}';
 
   /// Don't include [screenChoice].
-  Json toJson() => {
-        'isDarkMode': isDarkMode,
-      };
+  Json toJson() => {'isDarkMode': isDarkMode};
 
   /// Don't include [screenChoice].
   static Ui fromJson(Json? json) {

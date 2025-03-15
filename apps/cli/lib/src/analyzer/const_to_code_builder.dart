@@ -135,9 +135,7 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
       (el) => el.toCodeBuilder ?? literalNull,
     );
     if (constructorEl.name.isNotEmpty) {
-      return typeHelper
-          .toReference(expressionType)
-          .constInstanceNamed(
+      return typeHelper.toReference(expressionType).constInstanceNamed(
             constructorEl.name,
             positionalParameters,
             namedParameters,
@@ -161,10 +159,11 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
   Expression visitMapValue(
     Map<DartObjectImpl, DartObjectImpl> mapValue,
     DartType staticType,
-  ) => literalConstMap({
-    for (final MapEntry(:key, :value) in mapValue.entries)
-      key.toCodeBuilder: value.toCodeBuilder ?? literalNull,
-  });
+  ) =>
+      literalConstMap({
+        for (final MapEntry(:key, :value) in mapValue.entries)
+          key.toCodeBuilder: value.toCodeBuilder ?? literalNull,
+      });
 
   @override
   Expression? visitNullValue() => null;
@@ -196,13 +195,13 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
   Expression visitVariableReference(VariableElement variable) {
     return switch (variable) {
       TopLevelVariableElement() => refer(
-        variable.name,
-        variable.library.source.uri.toString(),
-      ),
+          variable.name,
+          variable.library.source.uri.toString(),
+        ),
       FieldElement(enclosingElement3: final enclosingElement) => refer(
-        enclosingElement.displayName,
-        enclosingElement.library!.source.uri.toString(),
-      ).property(variable.name),
+          enclosingElement.displayName,
+          enclosingElement.library!.source.uri.toString(),
+        ).property(variable.name),
       _ => unreachable('Invalid variable element: $variable'),
     };
   }
@@ -232,18 +231,16 @@ final class _ConstToDartValue extends DartObjectVisitor<ast.DartValue> {
     final namedParameters = invocation.namedArguments.map((name, value) {
       return MapEntry(name, value.accept(this));
     });
-    final positionalParameterNames =
-        constructorEl.parameters
-            .where((it) => it.isPositional)
-            .map((it) => it.name)
-            .toList();
+    final positionalParameterNames = constructorEl.parameters
+        .where((it) => it.isPositional)
+        .map((it) => it.name)
+        .toList();
     final positionalParameterValues =
         invocation.positionalArguments.map((el) => el.accept(this)).toList();
     final className = constructorEl.enclosingElement3.displayName;
-    final classRef =
-        typeHelper
-            .toReference(constructorEl.enclosingElement3.thisType)
-            .toTypeReference;
+    final classRef = typeHelper
+        .toReference(constructorEl.enclosingElement3.thisType)
+        .toTypeReference;
     assert(() {
       if (positionalParameterNames.length < positionalParameterValues.length) {
         final constructorName = switch (constructorEl.name) {

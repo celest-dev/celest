@@ -54,9 +54,8 @@ final class SupabaseConfigValueSolver extends PromptConfigValueSolver {
     }
     // The path used by Supabase CLI to store the linked project ref.
     // https://github.com/supabase/cli/blob/333a2ca5522e493cd35a853f258e9fd9b5098558/internal/utils/misc.go#L133
-    final projectRefFile = supabaseDir
-        .childDirectory('.temp')
-        .childFile('project-ref');
+    final projectRefFile =
+        supabaseDir.childDirectory('.temp').childFile('project-ref');
     if (!projectRefFile.existsSync()) {
       _logger.finest('Supabase project ref not found in $supabaseDir');
       return null;
@@ -81,9 +80,9 @@ final class SupabaseConfigValueSolver extends PromptConfigValueSolver {
       return switch (configToml.toMap()) {
         {'api': {'external_url': final String externalUrl}} => externalUrl,
         _ => run(() {
-          _logger.fine('Supabase config.toml does not specify external_url');
-          return null;
-        }),
+            _logger.fine('Supabase config.toml does not specify external_url');
+            return null;
+          }),
       };
     } on Object catch (e, st) {
       _logger.fine('Failed to parse Supabase config.toml', e, st);

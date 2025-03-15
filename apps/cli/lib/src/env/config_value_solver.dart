@@ -13,9 +13,9 @@ enum ConfigValueType {
   secret;
 
   String get displayName => switch (this) {
-    environmentVariable => 'environment variable',
-    secret => 'secret',
-  };
+        environmentVariable => 'environment variable',
+        secret => 'secret',
+      };
 }
 
 final class ConfigValueSolver {
@@ -36,10 +36,9 @@ final class ConfigValueSolver {
     final envManager = await celestProject.envManager.environment(
       environmentId,
     );
-    final allConfigValues =
-        ConfigVarSet()
-          ..addAll(project.variables)
-          ..addAll(project.secrets);
+    final allConfigValues = ConfigVarSet()
+      ..addAll(project.variables)
+      ..addAll(project.secrets);
     final allConfigEntries = {
       ...envValues,
       ...secretValues,
@@ -57,10 +56,8 @@ final class ConfigValueSolver {
     // resolution logic.
     final authVariables = project.auth?.variables;
     final authSecrets = project.auth?.secrets;
-    final authConfigValues = BuiltListMultimap<
-      ast.AuthProviderType,
-      ast.ConfigurationVariable
-    >.build((b) {
+    final authConfigValues = BuiltListMultimap<ast.AuthProviderType,
+        ast.ConfigurationVariable>.build((b) {
       authVariables?.forEach(b.add);
       authSecrets?.forEach(b.add);
     });

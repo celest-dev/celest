@@ -10,7 +10,7 @@ class AvailableStock {
   }) : currentPrice = round(currentPrice);
 
   AvailableStock.from(({String ticker, String name, double price}) stock)
-      : this(stock.ticker, name: stock.name, currentPrice: stock.price);
+    : this(stock.ticker, name: stock.name, currentPrice: stock.price);
   final String ticker;
   final String name;
   final double currentPrice;

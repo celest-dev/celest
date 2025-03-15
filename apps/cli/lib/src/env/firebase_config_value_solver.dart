@@ -22,23 +22,20 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
   static final Logger _logger = Logger('FirebaseConfigValueSolver');
 
   String? _pick(List<FirebaseProject> projects) {
-    return cliLogger
-        .chooseOne(
-          'Choose a Firebase project to associate with environment "$environmentId"',
-          choices: projects,
-          defaultValue:
-              projects.firstWhereOrNull((entry) => entry.active) ??
-              projects.firstWhereOrNull(
-                (project) => project.alias == 'default',
-              ),
-          display: (entry) {
-            if (entry.alias case final alias?) {
-              return '${entry.projectId} ($alias)';
-            }
-            return entry.projectId;
-          },
-        )
-        .projectId;
+    return cliLogger.chooseOne(
+      'Choose a Firebase project to associate with environment "$environmentId"',
+      choices: projects,
+      defaultValue: projects.firstWhereOrNull((entry) => entry.active) ??
+          projects.firstWhereOrNull(
+            (project) => project.alias == 'default',
+          ),
+      display: (entry) {
+        if (entry.alias case final alias?) {
+          return '${entry.projectId} ($alias)';
+        }
+        return entry.projectId;
+      },
+    ).projectId;
   }
 
   Future<String?> _readFromGlobalConfig(Directory searchDir) async {
@@ -62,14 +59,15 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
         return const {};
       }
       final firebaseJson = jsonDecode(await firebaseJsonFile.readAsString());
-      if (firebaseJson case {
-        'flutter': {
-          'platforms': {
-            // Structure is { <relative options path>: { ... } }
-            'dart': final Map<String, Object?> dartConfiguration,
-          },
-        },
-      }) {
+      if (firebaseJson
+          case {
+            'flutter': {
+              'platforms': {
+                // Structure is { <relative options path>: { ... } }
+                'dart': final Map<String, Object?> dartConfiguration,
+              },
+            },
+          }) {
         return {
           for (final entry in dartConfiguration.entries)
             if (entry.value case {'projectId': final String projectId})
@@ -105,9 +103,10 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
       final firebaseRc = jsonDecode(await firebaseRcFile.readAsString());
       return switch (firebaseRc) {
         {'projects': final Map<String, Object?> aliases} => {
-          // Reverse the map so that we get projectID -> alias.
-          for (final entry in aliases.entries) entry.value as String: entry.key,
-        },
+            // Reverse the map so that we get projectID -> alias.
+            for (final entry in aliases.entries)
+              entry.value as String: entry.key,
+          },
         _ => const {},
       };
     } on Object catch (e, st) {
@@ -157,16 +156,15 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
       }
       final resultJson = stdout.substring(resultJsonStart).trimRight();
       return switch (jsonDecode(resultJson)) {
-        {'results': final List<Object?> results} =>
-          results
-              .map(
-                (result) => switch (result) {
-                  {'projectId': final String projectId} => projectId,
-                  _ => null,
-                },
-              )
-              .nonNulls
-              .toList(),
+        {'results': final List<Object?> results} => results
+            .map(
+              (result) => switch (result) {
+                {'projectId': final String projectId} => projectId,
+                _ => null,
+              },
+            )
+            .nonNulls
+            .toList(),
         _ => const [],
       };
     } on Object catch (e, st) {
@@ -214,10 +212,9 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
       _logger.finest('Active project found in global config: $activeProject');
 
       // When there is an alias matching the environment ID, we always use that.
-      final matchingEnvironmentId =
-          aliasesByProjectId.entries
-              .firstWhereOrNull((entry) => entry.value == environmentId)
-              ?.key;
+      final matchingEnvironmentId = aliasesByProjectId.entries
+          .firstWhereOrNull((entry) => entry.value == environmentId)
+          ?.key;
       if (matchingEnvironmentId != null) {
         _logger.finest(
           'Found project matching environment ID: $matchingEnvironmentId',
@@ -240,8 +237,7 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
               //
               // We only know if it's a project ID if it's not an alias. Aliases
               // are stored separately per-project in the `.firebaserc` file.
-              active:
-                  activeProject != null &&
+              active: activeProject != null &&
                   (entry.key == activeProject || entry.value == activeProject),
               projectId: entry.key,
               alias: entry.value,
@@ -295,10 +291,10 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
 
 final class FirebaseConfiguration {
   FirebaseConfiguration._({required Map<String, String> activeProjects})
-    : activeProjects = LinkedHashMap(
-        equals: (a, b) => p.equals(a, b),
-        hashCode: (a) => p.hash(a),
-      )..addAll(activeProjects);
+      : activeProjects = LinkedHashMap(
+          equals: (a, b) => p.equals(a, b),
+          hashCode: (a) => p.hash(a),
+        )..addAll(activeProjects);
 
   static Future<FirebaseConfiguration?> load() async {
     final home = switch (platform.operatingSystem) {

@@ -30,7 +30,10 @@ class CelestFunctions {
 /// Tests that types thrown from external packages can be detected via
 /// recursive imports and serialized correctly.
 class CelestFunctionsExternal {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -40,9 +43,9 @@ class CelestFunctionsExternal {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -50,10 +53,10 @@ class CelestFunctionsExternal {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
@@ -107,16 +110,14 @@ class CelestFunctionsExternal {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -132,16 +133,14 @@ class CelestFunctionsExternal {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -151,9 +150,8 @@ class CelestFunctionsExternal {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -169,23 +167,20 @@ class CelestFunctionsExternal {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -196,9 +191,8 @@ class CelestFunctionsExternal {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -215,9 +209,8 @@ class CelestFunctionsExternal {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -246,9 +239,8 @@ class CelestFunctionsExternal {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -271,16 +263,14 @@ class CelestFunctionsExternal {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -354,7 +344,10 @@ class CelestFunctionsExternal {
 
 /// A library with methods that do not through but call methods that do throw.
 class CelestFunctionsNonthrowing {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -364,9 +357,9 @@ class CelestFunctionsNonthrowing {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -374,18 +367,17 @@ class CelestFunctionsNonthrowing {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -396,9 +388,8 @@ class CelestFunctionsNonthrowing {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -415,9 +406,8 @@ class CelestFunctionsNonthrowing {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -446,9 +436,8 @@ class CelestFunctionsNonthrowing {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -471,16 +460,14 @@ class CelestFunctionsNonthrowing {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -527,16 +514,14 @@ class CelestFunctionsNonthrowing {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -552,16 +537,14 @@ class CelestFunctionsNonthrowing {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -571,9 +554,8 @@ class CelestFunctionsNonthrowing {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -589,16 +571,14 @@ class CelestFunctionsNonthrowing {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       case 'exceptions.v1.BaseException':
@@ -608,9 +588,8 @@ class CelestFunctionsNonthrowing {
         );
       case 'exceptions.v1.CustomException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<CustomException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<CustomException>(errorValue),
           stackTrace,
         );
       case 'exceptions.v1.BaseError':
@@ -657,7 +636,10 @@ class CelestFunctionsNonthrowing {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'nonthrowing', function: 'callsThrowsBaseError')
+  @_$celest.CloudFunction(
+    api: 'nonthrowing',
+    function: 'callsThrowsBaseError',
+  )
   Future<void> callsThrowsBaseError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/nonthrowing/calls-throws-base-error'),
@@ -722,7 +704,10 @@ class CelestFunctionsNonthrowing {
 }
 
 class CelestFunctionsThrowing {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -732,9 +717,9 @@ class CelestFunctionsThrowing {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -742,18 +727,17 @@ class CelestFunctionsThrowing {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -764,9 +748,8 @@ class CelestFunctionsThrowing {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -783,9 +766,8 @@ class CelestFunctionsThrowing {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -814,9 +796,8 @@ class CelestFunctionsThrowing {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -839,16 +820,14 @@ class CelestFunctionsThrowing {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -895,16 +874,14 @@ class CelestFunctionsThrowing {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -920,16 +897,14 @@ class CelestFunctionsThrowing {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -939,9 +914,8 @@ class CelestFunctionsThrowing {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -957,16 +931,14 @@ class CelestFunctionsThrowing {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       case 'exceptions.v1.BaseException':
@@ -976,9 +948,8 @@ class CelestFunctionsThrowing {
         );
       case 'exceptions.v1.CustomException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<CustomException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<CustomException>(errorValue),
           stackTrace,
         );
       case 'exceptions.v1.BaseError':
@@ -1003,7 +974,10 @@ class CelestFunctionsThrowing {
     }
   }
 
-  @_$celest.CloudFunction(api: 'throwing', function: 'throwsCustomError')
+  @_$celest.CloudFunction(
+    api: 'throwing',
+    function: 'throwsCustomError',
+  )
   Future<void> throwsCustomError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-custom-error'),
@@ -1022,7 +996,10 @@ class CelestFunctionsThrowing {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'throwing', function: 'throwsBaseError')
+  @_$celest.CloudFunction(
+    api: 'throwing',
+    function: 'throwsBaseError',
+  )
   Future<void> throwsBaseError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-base-error'),
@@ -1041,7 +1018,10 @@ class CelestFunctionsThrowing {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'throwing', function: 'throwsCustomException')
+  @_$celest.CloudFunction(
+    api: 'throwing',
+    function: 'throwsCustomException',
+  )
   Future<void> throwsCustomException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-custom-exception'),
@@ -1060,7 +1040,10 @@ class CelestFunctionsThrowing {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'throwing', function: 'throwsBaseException')
+  @_$celest.CloudFunction(
+    api: 'throwing',
+    function: 'throwsBaseException',
+  )
   Future<void> throwsBaseException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/throwing/throws-base-exception'),

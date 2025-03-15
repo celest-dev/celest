@@ -80,16 +80,14 @@ final class Cli {
     ctx.processManager = processManager ?? const LoggingProcessManager();
     ctx.fileSystem = fileSystem ?? const LocalFileSystem();
     ctx.platform = platform ?? const LocalPlatform();
-    ctx.httpClient =
-        httpClient ??
+    ctx.httpClient = httpClient ??
         (sentryDsn == null
             ? ctx.httpClient
             : SentryHttpClient(client: ctx.httpClient));
-    ctx.performance =
-        (sentryDsn == null ||
-                io.Platform.environment.containsKey('CELEST_NO_ANALYTICS'))
-            ? const CelestPerformance()
-            : const SentryPerformance();
+    ctx.performance = (sentryDsn == null ||
+            io.Platform.environment.containsKey('CELEST_NO_ANALYTICS'))
+        ? const CelestPerformance()
+        : const SentryPerformance();
     ctx.storage = storage ?? Storage();
 
     try {
@@ -116,15 +114,14 @@ final class Cli {
       ctx.secureStorage = NativeMemoryStorage(namespace: Storage.cliNamespace);
     }
 
-    ctx.analytics =
-        postHogConfig == null ||
-                io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
-            ? const NoopAnalytics()
-            : PostHog(
-              config: postHogConfig,
-              client: ctx.httpClient,
-              storage: ctx.secureStorage,
-            );
+    ctx.analytics = postHogConfig == null ||
+            io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
+        ? const NoopAnalytics()
+        : PostHog(
+            config: postHogConfig,
+            client: ctx.httpClient,
+            storage: ctx.secureStorage,
+          );
 
     if (kReleaseMode) {
       ctx.analytics.identifyUser(setOnce: {'local_iterations_mvp': true});
@@ -199,13 +196,10 @@ final class Cli {
             ..release = '$name@$version'
             ..environment = ctx.kCliEnvironment
             ..debug = verbose
-            ..tracesSampleRate =
-                1 // TODO: Lower as needed
-            ..sampleRate =
-                1 // TODO: Lower as needed
+            ..tracesSampleRate = 1 // TODO: Lower as needed
+            ..sampleRate = 1 // TODO: Lower as needed
             ..attachStacktrace = true
-            ..sendDefaultPii =
-                true // TODO: Turn off for compliance
+            ..sendDefaultPii = true // TODO: Turn off for compliance
             ..attachThreads = true
             ..captureFailedRequests = true
             ..httpClient = ctx.httpClient
@@ -284,10 +278,10 @@ final class Cli {
             ctx.verbose ? verboseMessage.toString() : message.toString();
         switch (record.level) {
           case Level.FINEST ||
-              Level.FINER ||
-              Level.FINE ||
-              Level.CONFIG ||
-              LogEvent.level:
+                Level.FINER ||
+                Level.FINE ||
+                Level.CONFIG ||
+                LogEvent.level:
             ctx.cliLogger.detail(cliMessage);
           case Level.WARNING:
             ctx.cliLogger.warn(cliMessage);
@@ -301,14 +295,14 @@ final class Cli {
       });
 
       final sdk = Sdk.current;
-      final sdkInfo =
-          StringBuffer()
-            ..writeln('Celest version: $version')
-            ..writeln('Dart SDK version: ${sdk.version} (${sdk.dart})');
-      if ((sdk.flutterVersion, sdk.flutterSdkRoot) case (
-        final flutterVersion?,
-        final flutterRoot?,
-      )) {
+      final sdkInfo = StringBuffer()
+        ..writeln('Celest version: $version')
+        ..writeln('Dart SDK version: ${sdk.version} (${sdk.dart})');
+      if ((sdk.flutterVersion, sdk.flutterSdkRoot)
+          case (
+            final flutterVersion?,
+            final flutterRoot?,
+          )) {
         sdkInfo.writeln('Flutter SDK version: $flutterVersion ($flutterRoot)');
       }
 

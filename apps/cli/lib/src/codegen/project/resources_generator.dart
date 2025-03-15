@@ -15,10 +15,9 @@ final class ResourcesGenerator {
   ResourcesGenerator({required this.project});
 
   final Project project;
-  final _library =
-      LibraryBuilder()
-        ..name = ''
-        ..comments.addAll(_header);
+  final _library = LibraryBuilder()
+    ..name = ''
+    ..comments.addAll(_header);
 
   // SplayTree ensures consistent ordering in output file which helps with
   // diffs.
@@ -47,24 +46,22 @@ final class ResourcesGenerator {
     // Adds a typedef for the old name to avoid breaking changes.
     if (oldName != null) {
       final typedef = TypeDef(
-        (b) =>
-            b
-              ..annotations.add(
-                DartTypes.core.deprecated.newInstance([
-                  literalString('Use `$name` instead.'),
-                ]),
-              )
-              ..name = oldName
-              ..definition = refer(name),
+        (b) => b
+          ..annotations.add(
+            DartTypes.core.deprecated.newInstance([
+              literalString('Use `$name` instead.'),
+            ]),
+          )
+          ..name = oldName
+          ..definition = refer(name),
       );
       _library.body.add(typedef);
     }
 
-    final builder =
-        ClassBuilder()
-          ..name = name
-          ..abstract = true
-          ..modifier = ClassModifier.final$;
+    final builder = ClassBuilder()
+      ..name = name
+      ..abstract = true
+      ..modifier = ClassModifier.final$;
     _library.body.add(lazySpec(builder.build));
     return builder;
   }
@@ -76,15 +73,13 @@ final class ResourcesGenerator {
   }) {
     final apiFieldName = api.name.camelCase;
     apis[apiFieldName] ??= Field(
-      (f) =>
-          f
-            ..static = true
-            ..modifier = FieldModifier.constant
-            ..name = api.name.camelCase
-            ..assignment =
-                DartTypes.celest.cloudApi.constInstance([], {
-                  'name': literalString(api.name, raw: true),
-                }).code,
+      (f) => f
+        ..static = true
+        ..modifier = FieldModifier.constant
+        ..name = api.name.camelCase
+        ..assignment = DartTypes.celest.cloudApi.constInstance([], {
+          'name': literalString(api.name, raw: true),
+        }).code,
     );
     for (final function in api.functions.values) {
       // final inputParameters =
@@ -109,16 +104,14 @@ final class ResourcesGenerator {
       // // };
       final functionFieldName = '${api.name}_${function.name}'.camelCase;
       functions[functionFieldName] ??= Field(
-        (f) =>
-            f
-              ..static = true
-              ..name = functionFieldName
-              ..modifier = FieldModifier.constant
-              ..assignment =
-                  DartTypes.celest.cloudFunction.constInstance([], {
-                    'api': literalString(api.name, raw: true),
-                    'functionName': literalString(function.name, raw: true),
-                  }).code,
+        (f) => f
+          ..static = true
+          ..name = functionFieldName
+          ..modifier = FieldModifier.constant
+          ..assignment = DartTypes.celest.cloudFunction.constInstance([], {
+            'api': literalString(api.name, raw: true),
+            'functionName': literalString(function.name, raw: true),
+          }).code,
       );
       _allResources[api] = 'Apis.$apiFieldName';
       _allResources[function] = 'Functions.$functionFieldName';
@@ -131,15 +124,14 @@ final class ResourcesGenerator {
       final fieldName = envVar.name.camelCase;
       env.fields.add(
         Field(
-          (f) =>
-              f
-                ..static = true
-                ..modifier = FieldModifier.constant
-                ..name = fieldName
-                ..assignment =
-                    DartTypes.celest.environmentVariable.constInstance([], {
-                      'name': literalString(envVar.name, raw: true),
-                    }).code,
+          (f) => f
+            ..static = true
+            ..modifier = FieldModifier.constant
+            ..name = fieldName
+            ..assignment =
+                DartTypes.celest.environmentVariable.constInstance([], {
+              'name': literalString(envVar.name, raw: true),
+            }).code,
         ),
       );
       _allResources[envVar] = 'env.$fieldName';
@@ -147,45 +139,40 @@ final class ResourcesGenerator {
   }
 
   void _generateContext() {
-    final context =
-        _beginClass('context', null)
-          ..constructors.add(
-            Constructor(
-              (c) =>
-                  c
-                    ..name = '_'
-                    ..constant = true
-                    ..requiredParameters.add(
-                      Parameter(
-                        (p) =>
-                            p
-                              ..name = 'key'
-                              ..toThis = true,
-                      ),
-                    ),
+    final context = _beginClass('context', null)
+      ..constructors.add(
+        Constructor(
+          (c) => c
+            ..name = '_'
+            ..constant = true
+            ..requiredParameters.add(
+              Parameter(
+                (p) => p
+                  ..name = 'key'
+                  ..toThis = true,
+              ),
             ),
-          )
-          ..fields.add(
-            Field(
-              (f) =>
-                  f
-                    ..modifier = FieldModifier.final$
-                    ..type = DartTypes.core.string
-                    ..name = 'key',
-            ),
-          );
+        ),
+      )
+      ..fields.add(
+        Field(
+          (f) => f
+            ..modifier = FieldModifier.final$
+            ..type = DartTypes.core.string
+            ..name = 'key',
+        ),
+      );
     if (project.auth != null) {
       context.constructors.add(
         Constructor(
-          (c) =>
-              c
-                ..constant = true
-                ..name = 'user'
-                ..initializers.add(
-                  refer('this').property('_').call([
-                    literalString(raw: true, r'$user'),
-                  ]).code,
-                ),
+          (c) => c
+            ..constant = true
+            ..name = 'user'
+            ..initializers.add(
+              refer('this').property('_').call([
+                literalString(raw: true, r'$user'),
+              ]).code,
+            ),
         ),
       );
     }

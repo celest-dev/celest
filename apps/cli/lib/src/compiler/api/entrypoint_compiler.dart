@@ -42,9 +42,9 @@ final class EntrypointResult {
 
   @override
   String toString() => prettyPrintJson({
-    'outputDillPath': outputDillPath,
-    'outputDillSha256': outputDillDigest.toString(),
-  });
+        'outputDillPath': outputDillPath,
+        'outputDillSha256': outputDillDigest.toString(),
+      });
 }
 
 final class EntrypointCompiler {
@@ -79,19 +79,18 @@ final class EntrypointCompiler {
       toRoot: projectPaths.outputsDir,
     );
     final outputPath = '$pathWithoutDart.dill';
-    final (target, platformDill, sdkRoot) = switch (resolvedProject
-        .sdkConfig
-        .targetSdk) {
+    final (target, platformDill, sdkRoot) =
+        switch (resolvedProject.sdkConfig.targetSdk) {
       SdkType.flutter => (
-        'flutter',
-        Sdk.current.flutterPlatformDill!,
-        Sdk.current.flutterPatchedSdk!,
-      ),
+          'flutter',
+          Sdk.current.flutterPlatformDill!,
+          Sdk.current.flutterPatchedSdk!,
+        ),
       SdkType.dart => (
-        'vm',
-        Sdk.current.vmPlatformDill,
-        p.join(Sdk.current.sdkPath, 'lib', '_internal'),
-      ),
+          'vm',
+          Sdk.current.vmPlatformDill,
+          p.join(Sdk.current.sdkPath, 'lib', '_internal'),
+        ),
       final unknown => unreachable('Unknown SDK type: $unknown'),
     };
 

@@ -29,10 +29,10 @@ class Stock {
   String toString() => '$howManyShares $ticker @$averagePrice';
 
   Json toJson() => {
-        'ticker': ticker,
-        'howManyShares': howManyShares,
-        'averagePrice': averagePrice,
-      };
+    'ticker': ticker,
+    'howManyShares': howManyShares,
+    'averagePrice': averagePrice,
+  };
 
   @override
   bool operator ==(Object other) =>

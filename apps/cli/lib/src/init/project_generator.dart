@@ -34,10 +34,11 @@ class ProjectGenerator {
         ProjectFile.analysisOptions(projectRoot),
         ProjectFile.pubspec(projectRoot, projectName, parentProject),
         ProjectTemplate.hello(projectRoot, projectName),
-        if (parentProject case ParentProject(
-          path: final appRoot,
-          :final type,
-        )) ...[
+        if (parentProject
+            case ParentProject(
+              path: final appRoot,
+              :final type,
+            )) ...[
           AddAnalyzerPlugin(projectRoot, appRoot),
           if (type == SdkType.flutter) MacOsEntitlements(projectRoot, appRoot),
         ],

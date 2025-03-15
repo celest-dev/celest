@@ -8,9 +8,9 @@ final class ProjectPaths {
     this.parentAppRoot,
     String? clientDir,
     String? outputsDir,
-  }) : clientRoot = clientDir ?? p.join(outputsDir ?? projectRoot, 'client'),
-       outputsDir =
-           outputsDir ?? p.join(projectRoot, '.dart_tool', 'celest', 'outputs');
+  })  : clientRoot = clientDir ?? p.join(outputsDir ?? projectRoot, 'client'),
+        outputsDir = outputsDir ??
+            p.join(projectRoot, '.dart_tool', 'celest', 'outputs');
 
   final String projectRoot;
   final String outputsDir;

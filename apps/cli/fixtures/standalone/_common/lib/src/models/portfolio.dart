@@ -11,14 +11,12 @@ import 'stock.dart';
 
 @immutable
 class Portfolio {
-  Portfolio({
-    Iterable<Stock>? stocks,
-    this.cashBalance = CashBalance.ZERO,
-  }) : stocks = IList.orNull(stocks) ?? const IListConst([]);
+  Portfolio({Iterable<Stock>? stocks, this.cashBalance = CashBalance.ZERO})
+    : stocks = IList.orNull(stocks) ?? const IListConst([]);
 
   const Portfolio._()
-      : stocks = const IListConst([]),
-        cashBalance = CashBalance.ZERO;
+    : stocks = const IListConst([]),
+      cashBalance = CashBalance.ZERO;
 
   factory Portfolio.fromJson(Json? json) {
     if (json == null) {
@@ -34,10 +32,7 @@ class Portfolio {
   final IList<Stock> stocks;
   final CashBalance cashBalance;
 
-  Portfolio copyWith({
-    Iterable<Stock>? stocks,
-    CashBalance? cashBalance,
-  }) {
+  Portfolio copyWith({Iterable<Stock>? stocks, CashBalance? cashBalance}) {
     return Portfolio(
       stocks: (stocks != null) ? stocks.toIList() : this.stocks,
       cashBalance: cashBalance ?? this.cashBalance,
@@ -68,8 +63,11 @@ class Portfolio {
     final newStocks = stocks.where((stock) => stock.ticker != ticker).toList();
 
     if (quantity > 0) {
-      final newStock =
-          Stock(ticker, howManyShares: quantity, averagePrice: averagePrice);
+      final newStock = Stock(
+        ticker,
+        howManyShares: quantity,
+        averagePrice: averagePrice,
+      );
       newStocks.add(newStock);
     }
 
@@ -132,9 +130,10 @@ class Portfolio {
         );
 
         if (newShares == 0) {
-          newStocks = newStocks
-              .where((stock) => stock.ticker != availableStock.ticker)
-              .toList();
+          newStocks =
+              newStocks
+                  .where((stock) => stock.ticker != availableStock.ticker)
+                  .toList();
         }
 
         final newCashBalance = CashBalance(
@@ -158,9 +157,9 @@ class Portfolio {
   String toString() => 'Portfolio{stocks: $stocks, cashBalance: $cashBalance}';
 
   Json toJson() => {
-        'stocks': stocks.map((stock) => stock.toJson()).toList(),
-        'cashBalance': cashBalance.toJson(),
-      };
+    'stocks': stocks.map((stock) => stock.toJson()).toList(),
+    'cashBalance': cashBalance.toJson(),
+  };
 
   @override
   bool operator ==(Object other) =>

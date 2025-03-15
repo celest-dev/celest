@@ -29,11 +29,10 @@ class Environments extends Table with TableInfo<Environments, Environment> {
   Environment map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Environment(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
     );
   }
 
@@ -180,21 +179,18 @@ class EnvironmentVariables extends Table
   EnvironmentVariable map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return EnvironmentVariable(
-      environmentId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}environment_id'],
-          )!,
-      name:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}name'],
-          )!,
-      value:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}value'],
-          )!,
+      environmentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}environment_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
     );
   }
 
@@ -205,9 +201,9 @@ class EnvironmentVariables extends Table
 
   @override
   List<String> get customConstraints => const [
-    'PRIMARY KEY(environment_id, name)',
-    'CONSTRAINT fk_environment_variables_environment_id FOREIGN KEY(environment_id)REFERENCES environments(id)ON UPDATE CASCADE ON DELETE CASCADE',
-  ];
+        'PRIMARY KEY(environment_id, name)',
+        'CONSTRAINT fk_environment_variables_environment_id FOREIGN KEY(environment_id)REFERENCES environments(id)ON UPDATE CASCADE ON DELETE CASCADE',
+      ];
   @override
   bool get dontWriteConstraints => true;
 }
@@ -261,17 +257,17 @@ class EnvironmentVariable extends DataClass
     String? environmentId,
     String? name,
     String? value,
-  }) => EnvironmentVariable(
-    environmentId: environmentId ?? this.environmentId,
-    name: name ?? this.name,
-    value: value ?? this.value,
-  );
+  }) =>
+      EnvironmentVariable(
+        environmentId: environmentId ?? this.environmentId,
+        name: name ?? this.name,
+        value: value ?? this.value,
+      );
   EnvironmentVariable copyWithCompanion(EnvironmentVariablesCompanion data) {
     return EnvironmentVariable(
-      environmentId:
-          data.environmentId.present
-              ? data.environmentId.value
-              : this.environmentId,
+      environmentId: data.environmentId.present
+          ? data.environmentId.value
+          : this.environmentId,
       name: data.name.present ? data.name.value : this.name,
       value: data.value.present ? data.value.value : this.value,
     );
@@ -315,9 +311,9 @@ class EnvironmentVariablesCompanion
     required String name,
     required String value,
     this.rowid = const Value.absent(),
-  }) : environmentId = Value(environmentId),
-       name = Value(name),
-       value = Value(value);
+  })  : environmentId = Value(environmentId),
+        name = Value(name),
+        value = Value(value);
   static Insertable<EnvironmentVariable> custom({
     Expression<String>? environmentId,
     Expression<String>? name,
@@ -418,21 +414,18 @@ class Secrets extends Table with TableInfo<Secrets, Secret> {
   Secret map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Secret(
-      environmentId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}environment_id'],
-          )!,
-      name:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}name'],
-          )!,
-      valueRef:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}value_ref'],
-          )!,
+      environmentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}environment_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      valueRef: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value_ref'],
+      )!,
     );
   }
 
@@ -443,9 +436,9 @@ class Secrets extends Table with TableInfo<Secrets, Secret> {
 
   @override
   List<String> get customConstraints => const [
-    'PRIMARY KEY(environment_id, name)',
-    'CONSTRAINT fk_secrets_environment_id FOREIGN KEY(environment_id)REFERENCES environments(id)ON UPDATE CASCADE ON DELETE CASCADE',
-  ];
+        'PRIMARY KEY(environment_id, name)',
+        'CONSTRAINT fk_secrets_environment_id FOREIGN KEY(environment_id)REFERENCES environments(id)ON UPDATE CASCADE ON DELETE CASCADE',
+      ];
   @override
   bool get dontWriteConstraints => true;
 }
@@ -502,10 +495,9 @@ class Secret extends DataClass implements Insertable<Secret> {
       );
   Secret copyWithCompanion(SecretsCompanion data) {
     return Secret(
-      environmentId:
-          data.environmentId.present
-              ? data.environmentId.value
-              : this.environmentId,
+      environmentId: data.environmentId.present
+          ? data.environmentId.value
+          : this.environmentId,
       name: data.name.present ? data.name.value : this.name,
       valueRef: data.valueRef.present ? data.valueRef.value : this.valueRef,
     );
@@ -548,9 +540,9 @@ class SecretsCompanion extends UpdateCompanion<Secret> {
     required String name,
     required String valueRef,
     this.rowid = const Value.absent(),
-  }) : environmentId = Value(environmentId),
-       name = Value(name),
-       valueRef = Value(valueRef);
+  })  : environmentId = Value(environmentId),
+        name = Value(name),
+        valueRef = Value(valueRef);
   static Insertable<Secret> custom({
     Expression<String>? environmentId,
     Expression<String>? name,
@@ -734,47 +726,51 @@ abstract class _$ProjectDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
-    environments,
-    environmentVariables,
-    secrets,
-  ];
+        environments,
+        environmentVariables,
+        secrets,
+      ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'environments',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [TableUpdate('environment_variables', kind: UpdateKind.delete)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'environments',
-        limitUpdateKind: UpdateKind.update,
-      ),
-      result: [TableUpdate('environment_variables', kind: UpdateKind.update)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'environments',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [TableUpdate('secrets', kind: UpdateKind.delete)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'environments',
-        limitUpdateKind: UpdateKind.update,
-      ),
-      result: [TableUpdate('secrets', kind: UpdateKind.update)],
-    ),
-  ]);
+        WritePropagation(
+          on: TableUpdateQuery.onTableName(
+            'environments',
+            limitUpdateKind: UpdateKind.delete,
+          ),
+          result: [
+            TableUpdate('environment_variables', kind: UpdateKind.delete)
+          ],
+        ),
+        WritePropagation(
+          on: TableUpdateQuery.onTableName(
+            'environments',
+            limitUpdateKind: UpdateKind.update,
+          ),
+          result: [
+            TableUpdate('environment_variables', kind: UpdateKind.update)
+          ],
+        ),
+        WritePropagation(
+          on: TableUpdateQuery.onTableName(
+            'environments',
+            limitUpdateKind: UpdateKind.delete,
+          ),
+          result: [TableUpdate('secrets', kind: UpdateKind.delete)],
+        ),
+        WritePropagation(
+          on: TableUpdateQuery.onTableName(
+            'environments',
+            limitUpdateKind: UpdateKind.update,
+          ),
+          result: [TableUpdate('secrets', kind: UpdateKind.update)],
+        ),
+      ]);
 }
 
-typedef $EnvironmentsCreateCompanionBuilder =
-    EnvironmentsCompanion Function({required String id, Value<int> rowid});
-typedef $EnvironmentsUpdateCompanionBuilder =
-    EnvironmentsCompanion Function({Value<String> id, Value<int> rowid});
+typedef $EnvironmentsCreateCompanionBuilder = EnvironmentsCompanion Function(
+    {required String id, Value<int> rowid});
+typedef $EnvironmentsUpdateCompanionBuilder = EnvironmentsCompanion Function(
+    {Value<String> id, Value<int> rowid});
 
 class $EnvironmentsFilterComposer
     extends Composer<_$ProjectDatabase, Environments> {
@@ -786,9 +782,9 @@ class $EnvironmentsFilterComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.id,
+        builder: (column) => ColumnFilters(column),
+      );
 }
 
 class $EnvironmentsOrderingComposer
@@ -801,9 +797,9 @@ class $EnvironmentsOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.id,
+        builder: (column) => ColumnOrderings(column),
+      );
 }
 
 class $EnvironmentsAnnotationComposer
@@ -819,89 +815,83 @@ class $EnvironmentsAnnotationComposer
       $composableBuilder(column: $table.id, builder: (column) => column);
 }
 
-class $EnvironmentsTableManager
-    extends
-        RootTableManager<
-          _$ProjectDatabase,
-          Environments,
-          Environment,
-          $EnvironmentsFilterComposer,
-          $EnvironmentsOrderingComposer,
-          $EnvironmentsAnnotationComposer,
-          $EnvironmentsCreateCompanionBuilder,
-          $EnvironmentsUpdateCompanionBuilder,
-          (
-            Environment,
-            BaseReferences<_$ProjectDatabase, Environments, Environment>,
-          ),
-          Environment,
-          PrefetchHooks Function()
-        > {
+class $EnvironmentsTableManager extends RootTableManager<
+    _$ProjectDatabase,
+    Environments,
+    Environment,
+    $EnvironmentsFilterComposer,
+    $EnvironmentsOrderingComposer,
+    $EnvironmentsAnnotationComposer,
+    $EnvironmentsCreateCompanionBuilder,
+    $EnvironmentsUpdateCompanionBuilder,
+    (
+      Environment,
+      BaseReferences<_$ProjectDatabase, Environments, Environment>,
+    ),
+    Environment,
+    PrefetchHooks Function()> {
   $EnvironmentsTableManager(_$ProjectDatabase db, Environments table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer:
-              () => $EnvironmentsFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => $EnvironmentsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $EnvironmentsAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => EnvironmentsCompanion(id: id, rowid: rowid),
-          createCompanionCallback:
-              ({required String id, Value<int> rowid = const Value.absent()}) =>
-                  EnvironmentsCompanion.insert(id: id, rowid: rowid),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
+      : super(
+          TableManagerState(
+            db: db,
+            table: table,
+            createFilteringComposer: () =>
+                $EnvironmentsFilterComposer($db: db, $table: table),
+            createOrderingComposer: () =>
+                $EnvironmentsOrderingComposer($db: db, $table: table),
+            createComputedFieldComposer: () =>
+                $EnvironmentsAnnotationComposer($db: db, $table: table),
+            updateCompanionCallback: ({
+              Value<String> id = const Value.absent(),
+              Value<int> rowid = const Value.absent(),
+            }) =>
+                EnvironmentsCompanion(id: id, rowid: rowid),
+            createCompanionCallback: (
+                    {required String id,
+                    Value<int> rowid = const Value.absent()}) =>
+                EnvironmentsCompanion.insert(id: id, rowid: rowid),
+            withReferenceMapper: (p0) => p0
+                .map(
+                  (e) => (
+                    e.readTable(table),
+                    BaseReferences(db, table, e),
+                  ),
+                )
+                .toList(),
+            prefetchHooksCallback: null,
+          ),
+        );
 }
 
-typedef $EnvironmentsProcessedTableManager =
-    ProcessedTableManager<
-      _$ProjectDatabase,
-      Environments,
+typedef $EnvironmentsProcessedTableManager = ProcessedTableManager<
+    _$ProjectDatabase,
+    Environments,
+    Environment,
+    $EnvironmentsFilterComposer,
+    $EnvironmentsOrderingComposer,
+    $EnvironmentsAnnotationComposer,
+    $EnvironmentsCreateCompanionBuilder,
+    $EnvironmentsUpdateCompanionBuilder,
+    (
       Environment,
-      $EnvironmentsFilterComposer,
-      $EnvironmentsOrderingComposer,
-      $EnvironmentsAnnotationComposer,
-      $EnvironmentsCreateCompanionBuilder,
-      $EnvironmentsUpdateCompanionBuilder,
-      (
-        Environment,
-        BaseReferences<_$ProjectDatabase, Environments, Environment>,
-      ),
-      Environment,
-      PrefetchHooks Function()
-    >;
-typedef $EnvironmentVariablesCreateCompanionBuilder =
-    EnvironmentVariablesCompanion Function({
-      required String environmentId,
-      required String name,
-      required String value,
-      Value<int> rowid,
-    });
-typedef $EnvironmentVariablesUpdateCompanionBuilder =
-    EnvironmentVariablesCompanion Function({
-      Value<String> environmentId,
-      Value<String> name,
-      Value<String> value,
-      Value<int> rowid,
-    });
+      BaseReferences<_$ProjectDatabase, Environments, Environment>,
+    ),
+    Environment,
+    PrefetchHooks Function()>;
+typedef $EnvironmentVariablesCreateCompanionBuilder
+    = EnvironmentVariablesCompanion Function({
+  required String environmentId,
+  required String name,
+  required String value,
+  Value<int> rowid,
+});
+typedef $EnvironmentVariablesUpdateCompanionBuilder
+    = EnvironmentVariablesCompanion Function({
+  Value<String> environmentId,
+  Value<String> name,
+  Value<String> value,
+  Value<int> rowid,
+});
 
 class $EnvironmentVariablesFilterComposer
     extends Composer<_$ProjectDatabase, EnvironmentVariables> {
@@ -913,19 +903,19 @@ class $EnvironmentVariablesFilterComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<String> get environmentId => $composableBuilder(
-    column: $table.environmentId,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.environmentId,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.name,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<String> get value => $composableBuilder(
-    column: $table.value,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.value,
+        builder: (column) => ColumnFilters(column),
+      );
 }
 
 class $EnvironmentVariablesOrderingComposer
@@ -938,19 +928,19 @@ class $EnvironmentVariablesOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<String> get environmentId => $composableBuilder(
-    column: $table.environmentId,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.environmentId,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.name,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<String> get value => $composableBuilder(
-    column: $table.value,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.value,
+        builder: (column) => ColumnOrderings(column),
+      );
 }
 
 class $EnvironmentVariablesAnnotationComposer
@@ -963,9 +953,9 @@ class $EnvironmentVariablesAnnotationComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   GeneratedColumn<String> get environmentId => $composableBuilder(
-    column: $table.environmentId,
-    builder: (column) => column,
-  );
+        column: $table.environmentId,
+        builder: (column) => column,
+      );
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
@@ -974,119 +964,103 @@ class $EnvironmentVariablesAnnotationComposer
       $composableBuilder(column: $table.value, builder: (column) => column);
 }
 
-class $EnvironmentVariablesTableManager
-    extends
-        RootTableManager<
-          _$ProjectDatabase,
-          EnvironmentVariables,
-          EnvironmentVariable,
-          $EnvironmentVariablesFilterComposer,
-          $EnvironmentVariablesOrderingComposer,
-          $EnvironmentVariablesAnnotationComposer,
-          $EnvironmentVariablesCreateCompanionBuilder,
-          $EnvironmentVariablesUpdateCompanionBuilder,
-          (
-            EnvironmentVariable,
-            BaseReferences<
-              _$ProjectDatabase,
-              EnvironmentVariables,
-              EnvironmentVariable
-            >,
-          ),
-          EnvironmentVariable,
-          PrefetchHooks Function()
-        > {
+class $EnvironmentVariablesTableManager extends RootTableManager<
+    _$ProjectDatabase,
+    EnvironmentVariables,
+    EnvironmentVariable,
+    $EnvironmentVariablesFilterComposer,
+    $EnvironmentVariablesOrderingComposer,
+    $EnvironmentVariablesAnnotationComposer,
+    $EnvironmentVariablesCreateCompanionBuilder,
+    $EnvironmentVariablesUpdateCompanionBuilder,
+    (
+      EnvironmentVariable,
+      BaseReferences<_$ProjectDatabase, EnvironmentVariables,
+          EnvironmentVariable>,
+    ),
+    EnvironmentVariable,
+    PrefetchHooks Function()> {
   $EnvironmentVariablesTableManager(
     _$ProjectDatabase db,
     EnvironmentVariables table,
   ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer:
-              () => $EnvironmentVariablesFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () =>
-                  $EnvironmentVariablesOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $EnvironmentVariablesAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<String> environmentId = const Value.absent(),
-                Value<String> name = const Value.absent(),
-                Value<String> value = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => EnvironmentVariablesCompanion(
-                environmentId: environmentId,
-                name: name,
-                value: value,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String environmentId,
-                required String name,
-                required String value,
-                Value<int> rowid = const Value.absent(),
-              }) => EnvironmentVariablesCompanion.insert(
-                environmentId: environmentId,
-                name: name,
-                value: value,
-                rowid: rowid,
-              ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
+          TableManagerState(
+            db: db,
+            table: table,
+            createFilteringComposer: () =>
+                $EnvironmentVariablesFilterComposer($db: db, $table: table),
+            createOrderingComposer: () =>
+                $EnvironmentVariablesOrderingComposer($db: db, $table: table),
+            createComputedFieldComposer: () =>
+                $EnvironmentVariablesAnnotationComposer(
+              $db: db,
+              $table: table,
+            ),
+            updateCompanionCallback: ({
+              Value<String> environmentId = const Value.absent(),
+              Value<String> name = const Value.absent(),
+              Value<String> value = const Value.absent(),
+              Value<int> rowid = const Value.absent(),
+            }) =>
+                EnvironmentVariablesCompanion(
+              environmentId: environmentId,
+              name: name,
+              value: value,
+              rowid: rowid,
+            ),
+            createCompanionCallback: ({
+              required String environmentId,
+              required String name,
+              required String value,
+              Value<int> rowid = const Value.absent(),
+            }) =>
+                EnvironmentVariablesCompanion.insert(
+              environmentId: environmentId,
+              name: name,
+              value: value,
+              rowid: rowid,
+            ),
+            withReferenceMapper: (p0) => p0
+                .map(
+                  (e) => (
+                    e.readTable(table),
+                    BaseReferences(db, table, e),
+                  ),
+                )
+                .toList(),
+            prefetchHooksCallback: null,
+          ),
+        );
 }
 
-typedef $EnvironmentVariablesProcessedTableManager =
-    ProcessedTableManager<
-      _$ProjectDatabase,
-      EnvironmentVariables,
+typedef $EnvironmentVariablesProcessedTableManager = ProcessedTableManager<
+    _$ProjectDatabase,
+    EnvironmentVariables,
+    EnvironmentVariable,
+    $EnvironmentVariablesFilterComposer,
+    $EnvironmentVariablesOrderingComposer,
+    $EnvironmentVariablesAnnotationComposer,
+    $EnvironmentVariablesCreateCompanionBuilder,
+    $EnvironmentVariablesUpdateCompanionBuilder,
+    (
       EnvironmentVariable,
-      $EnvironmentVariablesFilterComposer,
-      $EnvironmentVariablesOrderingComposer,
-      $EnvironmentVariablesAnnotationComposer,
-      $EnvironmentVariablesCreateCompanionBuilder,
-      $EnvironmentVariablesUpdateCompanionBuilder,
-      (
-        EnvironmentVariable,
-        BaseReferences<
-          _$ProjectDatabase,
-          EnvironmentVariables,
-          EnvironmentVariable
-        >,
-      ),
-      EnvironmentVariable,
-      PrefetchHooks Function()
-    >;
-typedef $SecretsCreateCompanionBuilder =
-    SecretsCompanion Function({
-      required String environmentId,
-      required String name,
-      required String valueRef,
-      Value<int> rowid,
-    });
-typedef $SecretsUpdateCompanionBuilder =
-    SecretsCompanion Function({
-      Value<String> environmentId,
-      Value<String> name,
-      Value<String> valueRef,
-      Value<int> rowid,
-    });
+      BaseReferences<_$ProjectDatabase, EnvironmentVariables,
+          EnvironmentVariable>,
+    ),
+    EnvironmentVariable,
+    PrefetchHooks Function()>;
+typedef $SecretsCreateCompanionBuilder = SecretsCompanion Function({
+  required String environmentId,
+  required String name,
+  required String valueRef,
+  Value<int> rowid,
+});
+typedef $SecretsUpdateCompanionBuilder = SecretsCompanion Function({
+  Value<String> environmentId,
+  Value<String> name,
+  Value<String> valueRef,
+  Value<int> rowid,
+});
 
 class $SecretsFilterComposer extends Composer<_$ProjectDatabase, Secrets> {
   $SecretsFilterComposer({
@@ -1097,19 +1071,19 @@ class $SecretsFilterComposer extends Composer<_$ProjectDatabase, Secrets> {
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<String> get environmentId => $composableBuilder(
-    column: $table.environmentId,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.environmentId,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.name,
+        builder: (column) => ColumnFilters(column),
+      );
 
   ColumnFilters<String> get valueRef => $composableBuilder(
-    column: $table.valueRef,
-    builder: (column) => ColumnFilters(column),
-  );
+        column: $table.valueRef,
+        builder: (column) => ColumnFilters(column),
+      );
 }
 
 class $SecretsOrderingComposer extends Composer<_$ProjectDatabase, Secrets> {
@@ -1121,19 +1095,19 @@ class $SecretsOrderingComposer extends Composer<_$ProjectDatabase, Secrets> {
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<String> get environmentId => $composableBuilder(
-    column: $table.environmentId,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.environmentId,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.name,
+        builder: (column) => ColumnOrderings(column),
+      );
 
   ColumnOrderings<String> get valueRef => $composableBuilder(
-    column: $table.valueRef,
-    builder: (column) => ColumnOrderings(column),
-  );
+        column: $table.valueRef,
+        builder: (column) => ColumnOrderings(column),
+      );
 }
 
 class $SecretsAnnotationComposer extends Composer<_$ProjectDatabase, Secrets> {
@@ -1145,9 +1119,9 @@ class $SecretsAnnotationComposer extends Composer<_$ProjectDatabase, Secrets> {
     super.$removeJoinBuilderFromRootComposer,
   });
   GeneratedColumn<String> get environmentId => $composableBuilder(
-    column: $table.environmentId,
-    builder: (column) => column,
-  );
+        column: $table.environmentId,
+        builder: (column) => column,
+      );
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
@@ -1156,85 +1130,78 @@ class $SecretsAnnotationComposer extends Composer<_$ProjectDatabase, Secrets> {
       $composableBuilder(column: $table.valueRef, builder: (column) => column);
 }
 
-class $SecretsTableManager
-    extends
-        RootTableManager<
-          _$ProjectDatabase,
-          Secrets,
-          Secret,
-          $SecretsFilterComposer,
-          $SecretsOrderingComposer,
-          $SecretsAnnotationComposer,
-          $SecretsCreateCompanionBuilder,
-          $SecretsUpdateCompanionBuilder,
-          (Secret, BaseReferences<_$ProjectDatabase, Secrets, Secret>),
-          Secret,
-          PrefetchHooks Function()
-        > {
+class $SecretsTableManager extends RootTableManager<
+    _$ProjectDatabase,
+    Secrets,
+    Secret,
+    $SecretsFilterComposer,
+    $SecretsOrderingComposer,
+    $SecretsAnnotationComposer,
+    $SecretsCreateCompanionBuilder,
+    $SecretsUpdateCompanionBuilder,
+    (Secret, BaseReferences<_$ProjectDatabase, Secrets, Secret>),
+    Secret,
+    PrefetchHooks Function()> {
   $SecretsTableManager(_$ProjectDatabase db, Secrets table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer:
-              () => $SecretsFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => $SecretsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $SecretsAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> environmentId = const Value.absent(),
-                Value<String> name = const Value.absent(),
-                Value<String> valueRef = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => SecretsCompanion(
-                environmentId: environmentId,
-                name: name,
-                valueRef: valueRef,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String environmentId,
-                required String name,
-                required String valueRef,
-                Value<int> rowid = const Value.absent(),
-              }) => SecretsCompanion.insert(
-                environmentId: environmentId,
-                name: name,
-                valueRef: valueRef,
-                rowid: rowid,
-              ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
+      : super(
+          TableManagerState(
+            db: db,
+            table: table,
+            createFilteringComposer: () =>
+                $SecretsFilterComposer($db: db, $table: table),
+            createOrderingComposer: () =>
+                $SecretsOrderingComposer($db: db, $table: table),
+            createComputedFieldComposer: () =>
+                $SecretsAnnotationComposer($db: db, $table: table),
+            updateCompanionCallback: ({
+              Value<String> environmentId = const Value.absent(),
+              Value<String> name = const Value.absent(),
+              Value<String> valueRef = const Value.absent(),
+              Value<int> rowid = const Value.absent(),
+            }) =>
+                SecretsCompanion(
+              environmentId: environmentId,
+              name: name,
+              valueRef: valueRef,
+              rowid: rowid,
+            ),
+            createCompanionCallback: ({
+              required String environmentId,
+              required String name,
+              required String valueRef,
+              Value<int> rowid = const Value.absent(),
+            }) =>
+                SecretsCompanion.insert(
+              environmentId: environmentId,
+              name: name,
+              valueRef: valueRef,
+              rowid: rowid,
+            ),
+            withReferenceMapper: (p0) => p0
+                .map(
+                  (e) => (
+                    e.readTable(table),
+                    BaseReferences(db, table, e),
+                  ),
+                )
+                .toList(),
+            prefetchHooksCallback: null,
+          ),
+        );
 }
 
-typedef $SecretsProcessedTableManager =
-    ProcessedTableManager<
-      _$ProjectDatabase,
-      Secrets,
-      Secret,
-      $SecretsFilterComposer,
-      $SecretsOrderingComposer,
-      $SecretsAnnotationComposer,
-      $SecretsCreateCompanionBuilder,
-      $SecretsUpdateCompanionBuilder,
-      (Secret, BaseReferences<_$ProjectDatabase, Secrets, Secret>),
-      Secret,
-      PrefetchHooks Function()
-    >;
+typedef $SecretsProcessedTableManager = ProcessedTableManager<
+    _$ProjectDatabase,
+    Secrets,
+    Secret,
+    $SecretsFilterComposer,
+    $SecretsOrderingComposer,
+    $SecretsAnnotationComposer,
+    $SecretsCreateCompanionBuilder,
+    $SecretsUpdateCompanionBuilder,
+    (Secret, BaseReferences<_$ProjectDatabase, Secrets, Secret>),
+    Secret,
+    PrefetchHooks Function()>;
 
 class $ProjectDatabaseManager {
   final _$ProjectDatabase _db;

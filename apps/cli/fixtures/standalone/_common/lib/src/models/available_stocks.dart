@@ -30,14 +30,17 @@ class AvailableStocks {
   AvailableStocks withAvailableStock(AvailableStock newAvailableStock) {
     final isPresent = list.any((s) => s.ticker == newAvailableStock.ticker);
 
-    final newList = isPresent
-        ? list
-            .map(
-              (s) =>
-                  s.ticker == newAvailableStock.ticker ? newAvailableStock : s,
-            )
-            .toIList()
-        : list.add(newAvailableStock);
+    final newList =
+        isPresent
+            ? list
+                .map(
+                  (s) =>
+                      s.ticker == newAvailableStock.ticker
+                          ? newAvailableStock
+                          : s,
+                )
+                .toIList()
+            : list.add(newAvailableStock);
 
     return AvailableStocks(newList);
   }
@@ -45,11 +48,13 @@ class AvailableStocks {
   /// Updates the available stock with the new available stock.
   /// If the stock is not found, it is NOT added to the list.
   AvailableStocks withUpdatedAvailableStock(AvailableStock newAvailableStock) {
-    final newList = list
-        .map(
-          (s) => s.ticker == newAvailableStock.ticker ? newAvailableStock : s,
-        )
-        .toIList();
+    final newList =
+        list
+            .map(
+              (s) =>
+                  s.ticker == newAvailableStock.ticker ? newAvailableStock : s,
+            )
+            .toIList();
 
     return AvailableStocks(newList);
   }

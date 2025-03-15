@@ -69,8 +69,7 @@ final class Initialized implements ConfigureState {
 base mixin Configure on CelestCommand {
   abstract Progress? currentProgress;
 
-  static Never _throwNoProject() =>
-      throw const CliException(
+  static Never _throwNoProject() => throw const CliException(
         'No Celest project found in the current directory. '
         'To create a new project, run `celest init`.',
       );
@@ -82,10 +81,9 @@ base mixin Configure on CelestCommand {
     defaultName ??= 'my_project';
     String? projectName;
     while (projectName == null) {
-      final input =
-          dcli
-              .ask('Enter a name for your project', defaultValue: defaultName)
-              .trim();
+      final input = dcli
+          .ask('Enter a name for your project', defaultValue: defaultName)
+          .trim();
       if (input.isEmpty) {
         cliLogger.err('Project name cannot be empty.');
         continue;
@@ -158,22 +156,22 @@ base mixin Configure on CelestCommand {
     )) {
       // We're inside the `celest` directory.
       (true, _) => (
-        currentDir,
-        true,
-        await ParentProject.load(currentDir.parent.path),
-      ),
+          currentDir,
+          true,
+          await ParentProject.load(currentDir.parent.path),
+        ),
 
       // We're inside a parent project.
       (false, true) => await run(() async {
-        final celestDir = fileSystem.directory(
-          p.join(currentDir.path, 'celest'),
-        );
-        return (
-          celestDir,
-          celestDir.existsSync(),
-          await ParentProject.load(currentDir.path),
-        );
-      }),
+          final celestDir = fileSystem.directory(
+            p.join(currentDir.path, 'celest'),
+          );
+          return (
+            celestDir,
+            celestDir.existsSync(),
+            await ParentProject.load(currentDir.path),
+          );
+        }),
 
       // We're inside a folder which is neither a Dart/Flutter app nor a
       // Celest project.
@@ -228,17 +226,17 @@ base mixin Configure on CelestCommand {
         // for the project which is unattached to any parent project, named
         // after the project.
         null when !currentDirIsEmpty => await run(() async {
-          final projectRoot = p.join(currentDir.path, projectName);
-          final projectDir = fileSystem.directory(projectRoot);
-          if (projectDir.existsSync() && !await projectDir.list().isEmpty) {
-            throw CliException(
-              'A directory named "$projectName" already exists. '
-              'Please choose a different name, or run this command from a '
-              'different directory.',
-            );
-          }
-          return projectRoot;
-        }),
+            final projectRoot = p.join(currentDir.path, projectName);
+            final projectDir = fileSystem.directory(projectRoot);
+            if (projectDir.existsSync() && !await projectDir.list().isEmpty) {
+              throw CliException(
+                'A directory named "$projectName" already exists. '
+                'Please choose a different name, or run this command from a '
+                'different directory.',
+              );
+            }
+            return projectRoot;
+          }),
 
         // Otherwise, we're in an empty directory, and can use it as the root.
         null => currentDir.path,

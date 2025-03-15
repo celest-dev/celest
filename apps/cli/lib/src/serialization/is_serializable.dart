@@ -88,7 +88,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       return switch (valueType) {
         // This is the only case where `Object`/`dynamic` are allowed.
         InterfaceType(isDartCoreObject: true) ||
-        DynamicType() => const Verdict.yes(),
+        DynamicType() =>
+          const Verdict.yes(),
         _ => _isJson(valueType),
       };
     }
@@ -128,14 +129,12 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     // `Object Function(T) fromJsonT`.
     fromJsonCtor = fromJsonCtor.declaration;
 
-    final positionalParameters =
-        fromJsonCtor.parameters
-            .where((parameter) => parameter.isPositional)
-            .toList();
-    final namedParameters =
-        fromJsonCtor.parameters
-            .where((parameter) => parameter.isNamed)
-            .toList();
+    final positionalParameters = fromJsonCtor.parameters
+        .where((parameter) => parameter.isPositional)
+        .toList();
+    final namedParameters = fromJsonCtor.parameters
+        .where((parameter) => parameter.isNamed)
+        .toList();
     if (positionalParameters.isEmpty) {
       final functionSignature =
           'factory ${type.element.name}.fromJson(${wireType.getDisplayString()} json)';
@@ -189,15 +188,15 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     for (final parameter in parameters.where((p) => p.isPositional)) {
       switch (parameter.type) {
         case FunctionType(
-          returnType: final TypeParameterType funcReturnType,
-          normalParameterTypes: [
-            DynamicType() ||
-                DartType(
-                  isDartCoreObject: true,
-                  nullabilitySuffix: NullabilitySuffix.question,
-                ),
-          ],
-        ):
+            returnType: final TypeParameterType funcReturnType,
+            normalParameterTypes: [
+              DynamicType() ||
+                  DartType(
+                    isDartCoreObject: true,
+                    nullabilitySuffix: NullabilitySuffix.question,
+                  ),
+            ],
+          ):
           final expectedCtorParamName = fromJsonForName(
             funcReturnType.element.name,
           );
@@ -240,9 +239,9 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     for (final parameter in toJsonMethod.parameters) {
       switch (parameter.type) {
         case FunctionType(
-          returnType: DartType(isDartCoreObject: true) || DynamicType(),
-          normalParameterTypes: [final TypeParameterType funcParameterType],
-        ):
+            returnType: DartType(isDartCoreObject: true) || DynamicType(),
+            normalParameterTypes: [final TypeParameterType funcParameterType],
+          ):
           final expectedFuncParamName = toJsonForName(
             funcParameterType.element.name,
           );
@@ -267,10 +266,10 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     verdict &= switch (_isJson(returnType)) {
       VerdictYes() => const Verdict.yes(),
       _ => Verdict.no(
-        'Invalid return type of ${type.element.name}\'s toJson method: '
-        '$returnType. Only simple JSON types are allowed.',
-        location: toJsonMethod.sourceLocation,
-      ),
+          'Invalid return type of ${type.element.name}\'s toJson method: '
+          '$returnType. Only simple JSON types are allowed.',
+          location: toJsonMethod.sourceLocation,
+        ),
     };
     return verdict;
   }
@@ -308,8 +307,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             // ignore: unnecessary_null_checks
             VerdictYes(:final primarySpec!, :final additionalSpecs) =>
               Verdict.yes(
-                primarySpec:
-                    primarySpec..representationType = erasurePrimaySpec.erased,
+                primarySpec: primarySpec
+                  ..representationType = erasurePrimaySpec.erased,
                 additionalSpecs: {
                   // Create a representation type spec which has no fromJson/toJson
                   // methods but which carries the correct wire type.
@@ -351,8 +350,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             type.interfaceMembers;
         // The representation type is either a built-in or a primitive at
         // this point.
-        final wireType =
-            builtInTypeToReference[erasureType] ??
+        final wireType = builtInTypeToReference[erasureType] ??
             typeHelper.toReference(erasureType);
         return erasureVerdict.withPrimarySpec(
           SerializationSpec(
@@ -369,9 +367,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             constructorParameters: constructor.parameterSpecs,
             fromJsonParameters: fromJsonCtor.parameterSpecs,
             fromJsonType: fromJsonCtor?.returnType as InterfaceType?,
-            toJsonType:
-                (toJsonMethod?.enclosingElement3 as InterfaceElement?)
-                    ?.thisType,
+            toJsonType: (toJsonMethod?.enclosingElement3 as InterfaceElement?)
+                ?.thisType,
             representationType: SerializationSpec(
               type: erasureType,
               wireType: wireType,
@@ -559,7 +556,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         // and others allow Map<String, Object?> and this allows for a cleaner
         // migration path from using those types with Celest.
         InterfaceType(isDartCoreObject: true) ||
-        DynamicType() => const Verdict.yes(),
+        DynamicType() =>
+          const Verdict.yes(),
         _ => typeHelper.isSerializable(valueType),
       };
     }
@@ -830,20 +828,19 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
   Verdict visitVoidType(VoidType type) => unreachable('Not a class type');
 }
 
-typedef InterfaceMembers =
-    ({
-      MethodElement? toJsonMethod,
-      ExecutableElement? fromJsonCtor,
-      DartType wireType,
-    });
+typedef InterfaceMembers = ({
+  MethodElement? toJsonMethod,
+  ExecutableElement? fromJsonCtor,
+  DartType wireType,
+});
 
 extension on InterfaceType {
   MethodElement? get toJsonMethod => switch (element) {
-    // Extension types always reset the toJson method to the representation
-    // type.
-    ExtensionTypeElement() => getMethod('toJson'),
-    _ => lookUpMethod2('toJson', element.library),
-  };
+        // Extension types always reset the toJson method to the representation
+        // type.
+        ExtensionTypeElement() => getMethod('toJson'),
+        _ => lookUpMethod2('toJson', element.library),
+      };
 
   ExecutableElement? get fromJsonCtor =>
       lookUpConstructor('fromJson', element.library) ??
@@ -922,9 +919,9 @@ extension on InterfaceType {
       }
       final isJsonKey = switch (value.type) {
         final type? => identical(
-          type,
-          typeHelper.coreTypes.jsonKeyElement?.thisType,
-        ),
+            type,
+            typeHelper.coreTypes.jsonKeyElement?.thisType,
+          ),
         _ => false,
       };
       if (!isJsonKey) {
@@ -946,23 +943,24 @@ extension on InterfaceType {
   }
 
   List<FieldSpec> get fieldSpecs => switch (element) {
-    final ClassElement element => [
-      for (final field in element.sortedFields(this))
-        run(() {
-          final (:ignoreToJson, :ignoreFromJson) = _ignoredByJsonKey(field);
-          return FieldSpec(
-            name: field.displayName,
-            type: field.type,
-            ignore: ignoreToJson || field.type.isDartCoreNull,
-          );
-        }),
-    ],
-    EnumElement() => const [],
-    ExtensionTypeElement(:final representation) => [
-      FieldSpec(name: representation.name, type: representation.type),
-    ],
-    _ => unreachable(),
-  };
+        final ClassElement element => [
+            for (final field in element.sortedFields(this))
+              run(() {
+                final (:ignoreToJson, :ignoreFromJson) =
+                    _ignoredByJsonKey(field);
+                return FieldSpec(
+                  name: field.displayName,
+                  type: field.type,
+                  ignore: ignoreToJson || field.type.isDartCoreNull,
+                );
+              }),
+          ],
+        EnumElement() => const [],
+        ExtensionTypeElement(:final representation) => [
+            FieldSpec(name: representation.name, type: representation.type),
+          ],
+        _ => unreachable(),
+      };
 
   InterfaceMembers get interfaceMembers {
     switch (element) {
@@ -1100,20 +1098,19 @@ extension on ClassElement {
 
     // Get the list of all fields for `element`
     final allFields = elementInstanceFields.keys.toSet().union(
-      inheritedFields.keys.toSet(),
-    );
+          inheritedFields.keys.toSet(),
+        );
 
-    final fields =
-        allFields
-            .map(
-              (e) => _FieldSet(
-                overriddenFields[e],
-                elementInstanceFields[e],
-                inheritedFields[e],
-              ),
-            )
-            .toList()
-          ..sort();
+    final fields = allFields
+        .map(
+          (e) => _FieldSet(
+            overriddenFields[e],
+            elementInstanceFields[e],
+            inheritedFields[e],
+          ),
+        )
+        .toList()
+      ..sort();
 
     // Remove fields which are synthetic and not serializable.
     final filtered = <FieldElement>[];

@@ -6,7 +6,7 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 
 final class FeatureFlags {
   FeatureFlags._({required Version runtimeVersion})
-    : _runtimeVersion = runtimeVersion;
+      : _runtimeVersion = runtimeVersion;
 
   static Future<FeatureFlags> load() async {
     final packageConfigFile = fileSystem.file(projectPaths.packagesConfig);

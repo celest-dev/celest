@@ -163,10 +163,10 @@ void main() {
           (it) =>
               it.equals((active: true, projectId: devProjectId, alias: 'dev')),
           (it) => it.equals((
-            active: false,
-            projectId: prodProjectId,
-            alias: 'prod',
-          )),
+                active: false,
+                projectId: prodProjectId,
+                alias: 'prod',
+              )),
         ]);
       });
 
@@ -181,10 +181,10 @@ void main() {
           (it) =>
               it.equals((active: false, projectId: devProjectId, alias: 'dev')),
           (it) => it.equals((
-            active: true,
-            projectId: prodProjectId,
-            alias: 'prod',
-          )),
+                active: true,
+                projectId: prodProjectId,
+                alias: 'prod',
+              )),
         ]);
       });
     });

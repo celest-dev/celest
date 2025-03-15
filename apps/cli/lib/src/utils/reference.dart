@@ -7,11 +7,10 @@ import 'package:code_builder/code_builder.dart';
 
 extension ReferenceHelper on Reference {
   bool get isPackageCelest => switch (url) {
-    final url? =>
-      url.startsWith('package:celest') &&
-          !url.startsWith('package:celest_backend'),
-    _ => false,
-  };
+        final url? => url.startsWith('package:celest') &&
+            !url.startsWith('package:celest_backend'),
+        _ => false,
+      };
   bool get isFunctionContext =>
       symbol == 'FunctionContext' &&
       (url?.startsWith('package:celest') ?? false);
@@ -20,29 +19,30 @@ extension ReferenceHelper on Reference {
   bool get isDartCoreObject => symbol == 'Object' && url == 'dart:core';
 
   TypeReference get toTypeReference => switch (this) {
-    final TypeReference type => type,
-    final RecordType recordType => TypeReference((t) {
-      final dartType = typeHelper.fromReference(recordType) as ast.RecordType;
-      t
-        ..symbol = dartType.symbol
-        ..url = dartType.sourceUri?.toString()
-        ..isNullable = recordType.isNullable;
-    }),
-    final FunctionType functionType => TypeReference((t) {
-      final dartType =
-          typeHelper.fromReference(functionType) as ast.FunctionType;
-      t
-        ..symbol = dartType.getDisplayString()
-        ..url = dartType.sourceUri?.toString()
-        ..isNullable = functionType.isNullable;
-    }),
-    _ => TypeReference((t) {
-      assert(symbol != null);
-      t
-        ..symbol = symbol
-        ..url = url;
-    }),
-  };
+        final TypeReference type => type,
+        final RecordType recordType => TypeReference((t) {
+            final dartType =
+                typeHelper.fromReference(recordType) as ast.RecordType;
+            t
+              ..symbol = dartType.symbol
+              ..url = dartType.sourceUri?.toString()
+              ..isNullable = recordType.isNullable;
+          }),
+        final FunctionType functionType => TypeReference((t) {
+            final dartType =
+                typeHelper.fromReference(functionType) as ast.FunctionType;
+            t
+              ..symbol = dartType.getDisplayString()
+              ..url = dartType.sourceUri?.toString()
+              ..isNullable = functionType.isNullable;
+          }),
+        _ => TypeReference((t) {
+            assert(symbol != null);
+            t
+              ..symbol = symbol
+              ..url = url;
+          }),
+      };
 
   /// Returns a nullable version of `this`.
   TypeReference get nullable {
@@ -57,42 +57,40 @@ extension ReferenceHelper on Reference {
   Reference get noBound {
     return switch (this) {
       final TypeReference type => type.rebuild(
-        (t) =>
-            t
-              ..bound = null
-              ..types.map((t) => t.toTypeReference.noBound),
-      ),
+          (t) => t
+            ..bound = null
+            ..types.map((t) => t.toTypeReference.noBound),
+        ),
       _ => this,
     };
   }
 
   Reference withNullability(bool isNullable) => switch (this) {
-    final RecordType recordType => recordType.rebuild(
-      (t) => t..isNullable = isNullable,
-    ),
-    final FunctionType functionType => functionType.rebuild(
-      (t) => t..isNullable = isNullable,
-    ),
-    final TypeReference type => type.rebuild((t) {
-      if (symbol != 'dynamic') t.isNullable = isNullable;
-    }),
-    _ => toTypeReference.rebuild((t) => t..isNullable = isNullable),
-  };
+        final RecordType recordType => recordType.rebuild(
+            (t) => t..isNullable = isNullable,
+          ),
+        final FunctionType functionType => functionType.rebuild(
+            (t) => t..isNullable = isNullable,
+          ),
+        final TypeReference type => type.rebuild((t) {
+            if (symbol != 'dynamic') t.isNullable = isNullable;
+          }),
+        _ => toTypeReference.rebuild((t) => t..isNullable = isNullable),
+      };
 
   bool get isNullableOrFalse => switch (this) {
-    TypeReference(:final isNullable) => isNullable ?? false,
-    RecordType(:final isNullable) => isNullable ?? false,
-    _ => false,
-  };
+        TypeReference(:final isNullable) => isNullable ?? false,
+        RecordType(:final isNullable) => isNullable ?? false,
+        _ => false,
+      };
 
   /// Constructs a `built_value` FullType reference for this.
   Expression fullType([Iterable<Reference>? parameters]) {
     final typeRef = toTypeReference;
-    final ctor =
-        typeRef.isNullable ?? false
-            ? (Iterable<Expression> args) => DartTypes.builtValue.fullType
-                .constInstanceNamed('nullable', args)
-            : DartTypes.builtValue.fullType.constInstance;
+    final ctor = typeRef.isNullable ?? false
+        ? (Iterable<Expression> args) =>
+            DartTypes.builtValue.fullType.constInstanceNamed('nullable', args)
+        : DartTypes.builtValue.fullType.constInstance;
     if (typeRef.types.isEmpty && (parameters == null || parameters.isEmpty)) {
       return ctor([typeRef.nonNullable]);
     }
@@ -123,7 +121,8 @@ extension ReferenceHelper on Reference {
       // TODO(dnys1): Include organization name
       // TODO(dnys1): Include version tag
       Uri(scheme: 'package', pathSegments: ['celest_backend', ...]) ||
-      Uri(pathSegments: []) => '$projectName.v1',
+      Uri(pathSegments: []) =>
+        '$projectName.v1',
       Uri(scheme: 'package', pathSegments: [final package, ...])
           when isPackageCelest =>
         '${package.split('_').join('.')}.v1',
@@ -189,11 +188,12 @@ Expression nullCheckBind(
   String variableName,
   Expression expression, {
   bool isNullable = true,
-}) => NullCheckCaseExpression(
-  variableName: variableName,
-  caseClause: expression,
-  isNullable: isNullable,
-);
+}) =>
+    NullCheckCaseExpression(
+      variableName: variableName,
+      caseClause: expression,
+      isNullable: isNullable,
+    );
 
 // Creates a `value case final variable?` expression.
 final class NullCheckCaseExpression extends Expression {

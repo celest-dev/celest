@@ -112,9 +112,9 @@ class EventTestSuccess extends EventTest {
     super.logs,
     super.setup,
   }) : output = emitsInOrder([
-         for (final event in events ?? const []) jsonEncode(event),
-         emitsDone,
-       ]);
+          for (final event in events ?? const []) jsonEncode(event),
+          emitsDone,
+        ]);
 
   final Object? output;
 }

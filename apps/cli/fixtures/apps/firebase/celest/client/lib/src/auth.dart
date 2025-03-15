@@ -26,7 +26,7 @@ extension type CelestAuth._(_$celest.AuthImpl _hub) implements _$celest.Auth {
 class ExternalAuth extends _$celest.TokenSource {
   /// {@macro celest_auth.token_source.of}
   const ExternalAuth.of({required super.provider, required super.stream})
-    : super.of();
+      : super.of();
 
   /// Creates an instance of [ExternalAuth] for Firebase Auth.
   ///

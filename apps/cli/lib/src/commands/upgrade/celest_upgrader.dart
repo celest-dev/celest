@@ -27,14 +27,11 @@ final class CelestUpgrader {
       case 'windows' || 'macos':
         return ReleaseType.installer;
       case 'linux':
-        final isDpkg =
-            processManager
-                .runSync(
-                  <String>['dpkg', '-S', platform.resolvedExecutable],
-                  stdoutEncoding: utf8,
-                  stderrEncoding: utf8,
-                )
-                .exitCode ==
+        final isDpkg = processManager.runSync(
+              <String>['dpkg', '-S', platform.resolvedExecutable],
+              stdoutEncoding: utf8,
+              stderrEncoding: utf8,
+            ).exitCode ==
             0;
         return isDpkg ? ReleaseType.installer : ReleaseType.zip;
       default:

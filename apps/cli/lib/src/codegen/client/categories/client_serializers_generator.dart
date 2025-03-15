@@ -15,72 +15,64 @@ final class ClientSerializersGenerator {
 
   Method get _initSerializers {
     return Method(
-      (m) =>
-          m
-            ..returns = DartTypes.core.void$
-            ..name = 'initSerializers'
-            ..optionalParameters.add(
-              Parameter(
-                (p) =>
-                    p
-                      ..name = 'serializers'
-                      ..type = DartTypes.celest.serializers.nullable
-                      ..named = true,
-              ),
+      (m) => m
+        ..returns = DartTypes.core.void$
+        ..name = 'initSerializers'
+        ..optionalParameters.add(
+          Parameter(
+            (p) => p
+              ..name = 'serializers'
+              ..type = DartTypes.celest.serializers.nullable
+              ..named = true,
+          ),
+        )
+        ..body = DartTypes.async.runZoned
+            .call(
+              [
+                Method(
+                  (m) => m
+                    ..body = Block.of(
+                      customSerializers.sorted((a, b) {
+                        final aLoc = a.type.url;
+                        final bLoc = b.type.url;
+                        if (aLoc == null) {
+                          return -1;
+                        }
+                        if (bLoc == null) {
+                          return 1;
+                        }
+                        final loc = aLoc.compareTo(bLoc);
+                        if (loc != 0) {
+                          return loc;
+                        }
+                        final aSym = a.type.symbol!;
+                        final bSym = b.type.symbol!;
+                        return aSym.compareTo(bSym);
+                      }).map((s) => s.initAll),
+                    ),
+                ).closure,
+              ],
+              {
+                'zoneValues': literalMap({
+                  DartTypes.celest.serializers: refer('serializers'),
+                }),
+              },
             )
-            ..body =
-                DartTypes.async.runZoned
-                    .call(
-                      [
-                        Method(
-                          (m) =>
-                              m
-                                ..body = Block.of(
-                                  customSerializers
-                                      .sorted((a, b) {
-                                        final aLoc = a.type.url;
-                                        final bLoc = b.type.url;
-                                        if (aLoc == null) {
-                                          return -1;
-                                        }
-                                        if (bLoc == null) {
-                                          return 1;
-                                        }
-                                        final loc = aLoc.compareTo(bLoc);
-                                        if (loc != 0) {
-                                          return loc;
-                                        }
-                                        final aSym = a.type.symbol!;
-                                        final bSym = b.type.symbol!;
-                                        return aSym.compareTo(bSym);
-                                      })
-                                      .map((s) => s.initAll),
-                                ),
-                        ).closure,
-                      ],
-                      {
-                        'zoneValues': literalMap({
-                          DartTypes.celest.serializers: refer('serializers'),
-                        }),
-                      },
-                    )
-                    .returned
-                    .statement,
+            .returned
+            .statement,
     );
   }
 
   Library generate() => Library(
-    (lib) =>
-        lib.body
+        (lib) => lib.body
           ..add(_initSerializers)
           ..addAll(
             anonymousRecordTypes.entries
                 .map(
                   (recordType) => TypeDef(
-                    (t) =>
-                        t
-                          ..name = recordType.key
-                          ..definition = recordType.value,
+                    (t) => t
+                      ..name = recordType.key
+                      ..definition = recordType.value,
                   ),
                 )
                 .toList()
@@ -90,5 +82,5 @@ final class ClientSerializersGenerator {
             customSerializers.map((s) => s.serializerClass).nonNulls.toList()
               ..sort((a, b) => a.name.compareTo(b.name)),
           ),
-  );
+      );
 }

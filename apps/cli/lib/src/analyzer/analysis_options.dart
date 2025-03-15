@@ -12,10 +12,9 @@ final class AnalysisOptions {
   static final _logger = Logger('AnalysisOptions');
 
   static Future<AnalysisOptions> load(String path) async {
-    path =
-        p.isAbsolute(path)
-            ? path
-            : p.canonicalize(p.join(projectPaths.projectRoot, path));
+    path = p.isAbsolute(path)
+        ? path
+        : p.canonicalize(p.join(projectPaths.projectRoot, path));
     final analysisOptionsFile = fileSystem.file(path);
     if (!await analysisOptionsFile.exists()) {
       _logger.finest('No analysis options file detected at $path');

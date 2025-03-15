@@ -69,10 +69,10 @@ final class PubspecUpdater extends ProjectMigration {
     }
     final fromVersion = switch (pubspec.dependencies['celest']) {
       final HostedDependency hosted => switch (hosted.version) {
-        final Version version => version,
-        final VersionRange range => range.min,
-        _ => Version.none,
-      },
+          final Version version => version,
+          final VersionRange range => range.min,
+          _ => Version.none,
+        },
       _ => Version.none,
     };
     _logger.fine('Updating project dependencies to latest versions...');

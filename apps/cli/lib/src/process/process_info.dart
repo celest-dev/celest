@@ -61,13 +61,12 @@ final class Processes {
       );
       return Processes._empty();
     }
-    final processes =
-        LineSplitter.split(processesRes.stdout as String)
-            .skip(1)
-            .map((line) => line.trim())
-            .where((line) => line.isNotEmpty)
-            .map((line) => ProcessInfo.parseUnix(line, portInfo))
-            .toList();
+    final processes = LineSplitter.split(processesRes.stdout as String)
+        .skip(1)
+        .map((line) => line.trim())
+        .where((line) => line.isNotEmpty)
+        .map((line) => ProcessInfo.parseUnix(line, portInfo))
+        .toList();
     return Processes._(processes);
   }
 
@@ -98,14 +97,13 @@ final class Processes {
       );
       return Processes._empty();
     }
-    final processes =
-        LineSplitter.split(processesRes.stdout as String)
-            .skip(1)
-            .map((line) => line.trim())
-            .where((line) => line.isNotEmpty)
-            .map((line) => ProcessInfo.parseWindows(line, portInfo))
-            .nonNulls
-            .toList();
+    final processes = LineSplitter.split(processesRes.stdout as String)
+        .skip(1)
+        .map((line) => line.trim())
+        .where((line) => line.isNotEmpty)
+        .map((line) => ProcessInfo.parseWindows(line, portInfo))
+        .nonNulls
+        .toList();
     return Processes._(processes);
   }
 

@@ -21,33 +21,35 @@ final builtInTypeChecker = TypeChecker.any([
 
 /// Built-in types with their corresponding [Reference]s.
 Map<DartType, Reference> get builtInTypeToReference => {
-  typeHelper.coreTypes.coreBigIntType: DartTypes.core.bigInt,
-  typeHelper.coreTypes.dateTimeType: DartTypes.core.dateTime,
-  typeHelper.coreTypes.durationType: DartTypes.core.duration,
-  typeHelper.coreTypes.coreRegExpType: DartTypes.core.regExp,
-  typeHelper.coreTypes.coreStackTraceType: DartTypes.core.stackTrace,
-  typeHelper.coreTypes.coreUriType: DartTypes.core.uri,
-  typeHelper.coreTypes.coreUriDataType: DartTypes.core.uriData,
-  typeHelper.coreTypes.typedDataUint8ListType: DartTypes.typedData.uint8List,
-};
+      typeHelper.coreTypes.coreBigIntType: DartTypes.core.bigInt,
+      typeHelper.coreTypes.dateTimeType: DartTypes.core.dateTime,
+      typeHelper.coreTypes.durationType: DartTypes.core.duration,
+      typeHelper.coreTypes.coreRegExpType: DartTypes.core.regExp,
+      typeHelper.coreTypes.coreStackTraceType: DartTypes.core.stackTrace,
+      typeHelper.coreTypes.coreUriType: DartTypes.core.uri,
+      typeHelper.coreTypes.coreUriDataType: DartTypes.core.uriData,
+      typeHelper.coreTypes.typedDataUint8ListType:
+          DartTypes.typedData.uint8List,
+    };
 
 /// Built-in types with their corresponding [DartType]s.
 Map<Reference, DartType> get builtInReferenceToType => {
-  DartTypes.core.bigInt: typeHelper.coreTypes.coreBigIntType,
-  DartTypes.core.dateTime: typeHelper.coreTypes.dateTimeType,
-  DartTypes.core.duration: typeHelper.coreTypes.durationType,
-  DartTypes.core.regExp: typeHelper.coreTypes.coreRegExpType,
-  DartTypes.core.stackTrace: typeHelper.coreTypes.coreStackTraceType,
-  DartTypes.core.uri: typeHelper.coreTypes.coreUriType,
-  DartTypes.core.uriData: typeHelper.coreTypes.coreUriDataType,
-  DartTypes.typedData.uint8List: typeHelper.coreTypes.typedDataUint8ListType,
-};
+      DartTypes.core.bigInt: typeHelper.coreTypes.coreBigIntType,
+      DartTypes.core.dateTime: typeHelper.coreTypes.dateTimeType,
+      DartTypes.core.duration: typeHelper.coreTypes.durationType,
+      DartTypes.core.regExp: typeHelper.coreTypes.coreRegExpType,
+      DartTypes.core.stackTrace: typeHelper.coreTypes.coreStackTraceType,
+      DartTypes.core.uri: typeHelper.coreTypes.coreUriType,
+      DartTypes.core.uriData: typeHelper.coreTypes.coreUriDataType,
+      DartTypes.typedData.uint8List:
+          typeHelper.coreTypes.typedDataUint8ListType,
+    };
 
 /// The [DartType] of `Map<String, Object?>`.
 DartType get jsonMapType => typeHelper.typeProvider.mapType(
-  typeHelper.typeProvider.stringType,
-  typeHelper.typeProvider.objectQuestionType,
-);
+      typeHelper.typeProvider.stringType,
+      typeHelper.typeProvider.objectQuestionType,
+    );
 
 /// Valid types for injected env variables.
 final validEnvTypes = TypeChecker.any([

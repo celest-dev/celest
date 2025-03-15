@@ -123,11 +123,12 @@ abstract base class TypeChecker {
   Iterable<DartObject> annotationsOf(
     Element element, {
     bool throwOnUnresolved = true,
-  }) => _annotationsWhere(
-    element,
-    isAssignableFromType,
-    throwOnUnresolved: throwOnUnresolved,
-  );
+  }) =>
+      _annotationsWhere(
+        element,
+        isAssignableFromType,
+        throwOnUnresolved: throwOnUnresolved,
+      );
 
   Iterable<DartObject> _annotationsWhere(
     Element element,
@@ -153,11 +154,12 @@ abstract base class TypeChecker {
   Iterable<DartObject> annotationsOfExact(
     Element element, {
     bool throwOnUnresolved = true,
-  }) => _annotationsWhere(
-    element,
-    isExactlyType,
-    throwOnUnresolved: throwOnUnresolved,
-  );
+  }) =>
+      _annotationsWhere(
+        element,
+        isExactlyType,
+        throwOnUnresolved: throwOnUnresolved,
+      );
 
   /// Returns `true` if the type of [element] can be assigned to this type.
   bool isAssignableFrom(Element element) =>
@@ -173,9 +175,9 @@ abstract base class TypeChecker {
 
   /// Returns `true` if representing the exact same type as [staticType].
   bool isExactlyType(DartType staticType) => switch (staticType.element) {
-    final element? => isExactly(element),
-    _ => false,
-  };
+        final element? => isExactly(element),
+        _ => false,
+      };
 
   /// Returns `true` if representing a super class of [element].
   ///
@@ -259,14 +261,13 @@ final class _AnyChecker extends TypeChecker {
 
 /// Returns a URL representing [element].
 String urlOfElement(Element element) => switch (element.kind) {
-  ElementKind.DYNAMIC => 'dart:core#dynamic',
-  ElementKind.NEVER => 'dart:core#Never',
-  // using librarySource.uri – in case the element is in a part
-  _ =>
-    normalizeUrl(
-      element.librarySource!.uri,
-    ).replace(fragment: element.name).toString(),
-};
+      ElementKind.DYNAMIC => 'dart:core#dynamic',
+      ElementKind.NEVER => 'dart:core#Never',
+      // using librarySource.uri – in case the element is in a part
+      _ => normalizeUrl(
+          element.librarySource!.uri,
+        ).replace(fragment: element.name).toString(),
+    };
 
 Uri normalizeUrl(Uri url) {
   switch (url.scheme) {
@@ -287,10 +288,9 @@ Uri normalizeUrl(Uri url) {
 ///
 /// This isn't a user-knowable path, so we strip out extra path segments
 /// and only expose `dart:core`.
-Uri normalizeDartUrl(Uri url) =>
-    url.pathSegments.isNotEmpty
-        ? url.replace(pathSegments: url.pathSegments.take(1))
-        : url;
+Uri normalizeDartUrl(Uri url) => url.pathSegments.isNotEmpty
+    ? url.replace(pathSegments: url.pathSegments.take(1))
+    : url;
 
 Uri _fileToAssetUrl(Uri url) {
   if (!p.isWithin(p.url.current, url.path)) return url;
@@ -308,17 +308,16 @@ Uri _fileToAssetUrl(Uri url) {
 ///
 /// For example, this transforms `package:source_gen/source_gen.dart` into:
 /// `asset:source_gen/lib/source_gen.dart`.
-Uri _packageToAssetUrl(Uri url) =>
-    url.scheme == 'package'
-        ? url.replace(
-          scheme: 'asset',
-          pathSegments: <String>[
-            url.pathSegments.first,
-            'lib',
-            ...url.pathSegments.skip(1),
-          ],
-        )
-        : url;
+Uri _packageToAssetUrl(Uri url) => url.scheme == 'package'
+    ? url.replace(
+        scheme: 'asset',
+        pathSegments: <String>[
+          url.pathSegments.first,
+          'lib',
+          ...url.pathSegments.skip(1),
+        ],
+      )
+    : url;
 
 final String _rootPackageName = () {
   final name =
@@ -363,11 +362,9 @@ class UnresolvedAnnotationException implements Exception {
   final SourceSpan? annotationSource;
 
   static SourceSpan? _findSpan(Element annotatedElement, int annotationIndex) {
-    final parsedLibrary =
-        annotatedElement.session!.getParsedLibraryByElement(
-              annotatedElement.library!,
-            )
-            as ParsedLibraryResult;
+    final parsedLibrary = annotatedElement.session!.getParsedLibraryByElement(
+      annotatedElement.library!,
+    ) as ParsedLibraryResult;
     final declaration = parsedLibrary.getElementDeclaration(annotatedElement);
     if (declaration == null) {
       return null;

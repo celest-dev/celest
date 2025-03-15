@@ -14,7 +14,10 @@ extension type CelestAuth._(_$celest.AuthImpl _hub) implements _$celest.Auth {
   CelestAuth(
     _$celest.CelestBase celest, {
     required _$native_storage_native_storage.NativeStorage storage,
-  }) : _hub = _$celest.AuthImpl(celest, storage: storage);
+  }) : _hub = _$celest.AuthImpl(
+          celest,
+          storage: storage,
+        );
 
   _$celest.Email get email => _$celest.Email(_hub);
 }

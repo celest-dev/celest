@@ -91,7 +91,10 @@ class CelestFunctions {
 }
 
 class CelestFunctionsAsserts {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -101,9 +104,9 @@ class CelestFunctionsAsserts {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -111,18 +114,17 @@ class CelestFunctionsAsserts {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -133,9 +135,8 @@ class CelestFunctionsAsserts {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -152,9 +153,8 @@ class CelestFunctionsAsserts {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -183,9 +183,8 @@ class CelestFunctionsAsserts {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -208,16 +207,14 @@ class CelestFunctionsAsserts {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -264,16 +261,14 @@ class CelestFunctionsAsserts {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -289,16 +284,14 @@ class CelestFunctionsAsserts {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -308,9 +301,8 @@ class CelestFunctionsAsserts {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -326,16 +318,14 @@ class CelestFunctionsAsserts {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       default:
@@ -351,7 +341,10 @@ class CelestFunctionsAsserts {
   }
 
   /// Tests that asserts are enabled when running the local API.
-  @_$celest.CloudFunction(api: 'asserts', function: 'assertsEnabled')
+  @_$celest.CloudFunction(
+    api: 'asserts',
+    function: 'assertsEnabled',
+  )
   Future<bool> assertsEnabled() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/asserts/asserts-enabled'),
@@ -374,7 +367,10 @@ class CelestFunctionsAsserts {
 /// Tests that classes with and without explicit fromJson/toJson methods are
 /// serializable and deserializable.
 class CelestFunctionsClasses {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -384,9 +380,9 @@ class CelestFunctionsClasses {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -394,18 +390,17 @@ class CelestFunctionsClasses {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -416,9 +411,8 @@ class CelestFunctionsClasses {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -435,9 +429,8 @@ class CelestFunctionsClasses {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -466,9 +459,8 @@ class CelestFunctionsClasses {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -491,16 +483,14 @@ class CelestFunctionsClasses {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -547,16 +537,14 @@ class CelestFunctionsClasses {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -572,16 +560,14 @@ class CelestFunctionsClasses {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -591,9 +577,8 @@ class CelestFunctionsClasses {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -609,16 +594,14 @@ class CelestFunctionsClasses {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       default:
@@ -633,7 +616,10 @@ class CelestFunctionsClasses {
     }
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'empty')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'empty',
+  )
   Future<Empty> empty(Empty value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/empty'),
@@ -641,9 +627,8 @@ class CelestFunctionsClasses {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<Empty>(value),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'value': _$celest.Serializers.instance.serialize<Empty>(value)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -655,7 +640,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<Empty>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'asyncEmpty')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncEmpty',
+  )
   Future<Empty> asyncEmpty(Empty value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-empty'),
@@ -663,9 +651,8 @@ class CelestFunctionsClasses {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<Empty>(value),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'value': _$celest.Serializers.instance.serialize<Empty>(value)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -677,7 +664,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<Empty>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'fields')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'fields',
+  )
   Future<Fields> fields(Fields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/fields'),
@@ -685,9 +675,8 @@ class CelestFunctionsClasses {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<Fields>(value),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'value': _$celest.Serializers.instance.serialize<Fields>(value)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -699,7 +688,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<Fields>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'asyncFields')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncFields',
+  )
   Future<Fields> asyncFields(Fields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-fields'),
@@ -707,9 +699,8 @@ class CelestFunctionsClasses {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<Fields>(value),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'value': _$celest.Serializers.instance.serialize<Fields>(value)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -721,7 +712,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<Fields>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'nullableFields')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'nullableFields',
+  )
   Future<Fields?> nullableFields(Fields? value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/nullable-fields'),
@@ -729,9 +723,8 @@ class CelestFunctionsClasses {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<Fields?>(value),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'value': _$celest.Serializers.instance.serialize<Fields?>(value)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -743,7 +736,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<Fields?>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'asyncNullableFields')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncNullableFields',
+  )
   Future<Fields?> asyncNullableFields(Fields? value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-nullable-fields'),
@@ -751,9 +747,8 @@ class CelestFunctionsClasses {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<Fields?>(value),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'value': _$celest.Serializers.instance.serialize<Fields?>(value)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -765,7 +760,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<Fields?>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'namedFields')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'namedFields',
+  )
   Future<NamedFields> namedFields(NamedFields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/named-fields'),
@@ -774,7 +772,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<NamedFields>(value),
+        r'value': _$celest.Serializers.instance.serialize<NamedFields>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -787,7 +785,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<NamedFields>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'asyncNamedFields')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncNamedFields',
+  )
   Future<NamedFields> asyncNamedFields(NamedFields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-named-fields'),
@@ -796,7 +797,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<NamedFields>(value),
+        r'value': _$celest.Serializers.instance.serialize<NamedFields>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -809,7 +810,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<NamedFields>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'mixedFields')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'mixedFields',
+  )
   Future<MixedFields> mixedFields(MixedFields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/mixed-fields'),
@@ -818,7 +822,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<MixedFields>(value),
+        r'value': _$celest.Serializers.instance.serialize<MixedFields>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -831,7 +835,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<MixedFields>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'asyncMixedFields')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncMixedFields',
+  )
   Future<MixedFields> asyncMixedFields(MixedFields value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-mixed-fields'),
@@ -840,7 +847,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<MixedFields>(value),
+        r'value': _$celest.Serializers.instance.serialize<MixedFields>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -853,7 +860,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<MixedFields>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'defaultValues')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'defaultValues',
+  )
   Future<DefaultValues> defaultValues(DefaultValues value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/default-values'),
@@ -862,7 +872,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<DefaultValues>(value),
+        r'value': _$celest.Serializers.instance.serialize<DefaultValues>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -875,7 +885,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<DefaultValues>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'asyncDefaultValues')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncDefaultValues',
+  )
   Future<DefaultValues> asyncDefaultValues(DefaultValues value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-default-values'),
@@ -884,7 +897,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<DefaultValues>(value),
+        r'value': _$celest.Serializers.instance.serialize<DefaultValues>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -897,7 +910,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<DefaultValues>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'nestedClass')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'nestedClass',
+  )
   Future<NestedClass> nestedClass(NestedClass value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/nested-class'),
@@ -906,7 +922,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<NestedClass>(value),
+        r'value': _$celest.Serializers.instance.serialize<NestedClass>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -919,7 +935,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<NestedClass>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'asyncNestedClass')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncNestedClass',
+  )
   Future<NestedClass> asyncNestedClass(NestedClass value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-nested-class'),
@@ -928,7 +947,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<NestedClass>(value),
+        r'value': _$celest.Serializers.instance.serialize<NestedClass>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -941,7 +960,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<NestedClass>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'onlyFromJson')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'onlyFromJson',
+  )
   Future<OnlyFromJson> onlyFromJson(OnlyFromJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/only-from-json'),
@@ -950,7 +972,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<OnlyFromJson>(value),
+        r'value': _$celest.Serializers.instance.serialize<OnlyFromJson>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -963,7 +985,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<OnlyFromJson>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'asyncOnlyFromJson')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncOnlyFromJson',
+  )
   Future<OnlyFromJson> asyncOnlyFromJson(OnlyFromJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-only-from-json'),
@@ -972,7 +997,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<OnlyFromJson>(value),
+        r'value': _$celest.Serializers.instance.serialize<OnlyFromJson>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -985,7 +1010,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<OnlyFromJson>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'onlyToJson')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'onlyToJson',
+  )
   Future<OnlyToJson> onlyToJson(OnlyToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/only-to-json'),
@@ -994,7 +1022,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<OnlyToJson>(value),
+        r'value': _$celest.Serializers.instance.serialize<OnlyToJson>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1007,7 +1035,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<OnlyToJson>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'asyncOnlyToJson')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncOnlyToJson',
+  )
   Future<OnlyToJson> asyncOnlyToJson(OnlyToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-only-to-json'),
@@ -1016,7 +1047,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<OnlyToJson>(value),
+        r'value': _$celest.Serializers.instance.serialize<OnlyToJson>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1029,10 +1060,12 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<OnlyToJson>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'onlyToJsonWithDefaults')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'onlyToJsonWithDefaults',
+  )
   Future<OnlyToJsonWithDefaults> onlyToJsonWithDefaults(
-    OnlyToJsonWithDefaults value,
-  ) async {
+      OnlyToJsonWithDefaults value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/only-to-json-with-defaults'),
       headers: const {
@@ -1041,7 +1074,7 @@ class CelestFunctionsClasses {
       },
       body: _$celest.JsonUtf8.encode({
         r'value': _$celest.Serializers.instance
-            .serialize<OnlyToJsonWithDefaults>(value),
+            .serialize<OnlyToJsonWithDefaults>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1051,9 +1084,8 @@ class CelestFunctionsClasses {
         body: ($body as Map<String, Object?>),
       );
     }
-    return _$celest.Serializers.instance.deserialize<OnlyToJsonWithDefaults>(
-      $body,
-    );
+    return _$celest.Serializers.instance
+        .deserialize<OnlyToJsonWithDefaults>($body);
   }
 
   @_$celest.CloudFunction(
@@ -1061,8 +1093,7 @@ class CelestFunctionsClasses {
     function: 'asyncOnlyToJsonWithDefaults',
   )
   Future<OnlyToJsonWithDefaults> asyncOnlyToJsonWithDefaults(
-    OnlyToJsonWithDefaults value,
-  ) async {
+      OnlyToJsonWithDefaults value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-only-to-json-with-defaults'),
       headers: const {
@@ -1071,7 +1102,7 @@ class CelestFunctionsClasses {
       },
       body: _$celest.JsonUtf8.encode({
         r'value': _$celest.Serializers.instance
-            .serialize<OnlyToJsonWithDefaults>(value),
+            .serialize<OnlyToJsonWithDefaults>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1081,12 +1112,14 @@ class CelestFunctionsClasses {
         body: ($body as Map<String, Object?>),
       );
     }
-    return _$celest.Serializers.instance.deserialize<OnlyToJsonWithDefaults>(
-      $body,
-    );
+    return _$celest.Serializers.instance
+        .deserialize<OnlyToJsonWithDefaults>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'fromAndToJson')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'fromAndToJson',
+  )
   Future<FromJsonAndToJson> fromAndToJson(FromJsonAndToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/from-and-to-json'),
@@ -1095,9 +1128,8 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<FromJsonAndToJson>(
-          value,
-        ),
+        r'value':
+            _$celest.Serializers.instance.serialize<FromJsonAndToJson>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1110,7 +1142,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<FromJsonAndToJson>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'asyncFromAndToJson')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncFromAndToJson',
+  )
   Future<FromJsonAndToJson> asyncFromAndToJson(FromJsonAndToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-from-and-to-json'),
@@ -1119,9 +1154,8 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<FromJsonAndToJson>(
-          value,
-        ),
+        r'value':
+            _$celest.Serializers.instance.serialize<FromJsonAndToJson>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1134,7 +1168,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<FromJsonAndToJson>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'nonMapToJson')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'nonMapToJson',
+  )
   Future<NonMapToJson> nonMapToJson(NonMapToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/non-map-to-json'),
@@ -1143,7 +1180,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<NonMapToJson>(value),
+        r'value': _$celest.Serializers.instance.serialize<NonMapToJson>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1156,7 +1193,10 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<NonMapToJson>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'asyncNonMapToJson')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncNonMapToJson',
+  )
   Future<NonMapToJson> asyncNonMapToJson(NonMapToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-non-map-to-json'),
@@ -1165,7 +1205,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<NonMapToJson>(value),
+        r'value': _$celest.Serializers.instance.serialize<NonMapToJson>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1178,10 +1218,12 @@ class CelestFunctionsClasses {
     return _$celest.Serializers.instance.deserialize<NonMapToJson>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'nonMapToJsonWithDefaults')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'nonMapToJsonWithDefaults',
+  )
   Future<NonMapToJsonWithDefaults> nonMapToJsonWithDefaults(
-    NonMapToJsonWithDefaults value,
-  ) async {
+      NonMapToJsonWithDefaults value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/non-map-to-json-with-defaults'),
       headers: const {
@@ -1190,7 +1232,7 @@ class CelestFunctionsClasses {
       },
       body: _$celest.JsonUtf8.encode({
         r'value': _$celest.Serializers.instance
-            .serialize<NonMapToJsonWithDefaults>(value),
+            .serialize<NonMapToJsonWithDefaults>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1200,9 +1242,8 @@ class CelestFunctionsClasses {
         body: ($body as Map<String, Object?>),
       );
     }
-    return _$celest.Serializers.instance.deserialize<NonMapToJsonWithDefaults>(
-      $body,
-    );
+    return _$celest.Serializers.instance
+        .deserialize<NonMapToJsonWithDefaults>($body);
   }
 
   @_$celest.CloudFunction(
@@ -1210,8 +1251,7 @@ class CelestFunctionsClasses {
     function: 'asyncNonMapToJsonWithDefaults',
   )
   Future<NonMapToJsonWithDefaults> asyncNonMapToJsonWithDefaults(
-    NonMapToJsonWithDefaults value,
-  ) async {
+      NonMapToJsonWithDefaults value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-non-map-to-json-with-defaults'),
       headers: const {
@@ -1220,7 +1260,7 @@ class CelestFunctionsClasses {
       },
       body: _$celest.JsonUtf8.encode({
         r'value': _$celest.Serializers.instance
-            .serialize<NonMapToJsonWithDefaults>(value),
+            .serialize<NonMapToJsonWithDefaults>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1230,15 +1270,16 @@ class CelestFunctionsClasses {
         body: ($body as Map<String, Object?>),
       );
     }
-    return _$celest.Serializers.instance.deserialize<NonMapToJsonWithDefaults>(
-      $body,
-    );
+    return _$celest.Serializers.instance
+        .deserialize<NonMapToJsonWithDefaults>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'nonMapFromAndToJson')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'nonMapFromAndToJson',
+  )
   Future<NonMapFromAndToJson> nonMapFromAndToJson(
-    NonMapFromAndToJson value,
-  ) async {
+      NonMapFromAndToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/non-map-from-and-to-json'),
       headers: const {
@@ -1246,9 +1287,8 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<NonMapFromAndToJson>(
-          value,
-        ),
+        r'value':
+            _$celest.Serializers.instance.serialize<NonMapFromAndToJson>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1258,15 +1298,16 @@ class CelestFunctionsClasses {
         body: ($body as Map<String, Object?>),
       );
     }
-    return _$celest.Serializers.instance.deserialize<NonMapFromAndToJson>(
-      $body,
-    );
+    return _$celest.Serializers.instance
+        .deserialize<NonMapFromAndToJson>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'asyncNonMapFromAndToJson')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'asyncNonMapFromAndToJson',
+  )
   Future<NonMapFromAndToJson> asyncNonMapFromAndToJson(
-    NonMapFromAndToJson value,
-  ) async {
+      NonMapFromAndToJson value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/async-non-map-from-and-to-json'),
       headers: const {
@@ -1274,9 +1315,8 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<NonMapFromAndToJson>(
-          value,
-        ),
+        r'value':
+            _$celest.Serializers.instance.serialize<NonMapFromAndToJson>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1286,12 +1326,14 @@ class CelestFunctionsClasses {
         body: ($body as Map<String, Object?>),
       );
     }
-    return _$celest.Serializers.instance.deserialize<NonMapFromAndToJson>(
-      $body,
-    );
+    return _$celest.Serializers.instance
+        .deserialize<NonMapFromAndToJson>($body);
   }
 
-  @_$celest.CloudFunction(api: 'classes', function: 'fromJsonStatic')
+  @_$celest.CloudFunction(
+    api: 'classes',
+    function: 'fromJsonStatic',
+  )
   Future<FromJsonStatic> fromJsonStatic(FromJsonStatic value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/classes/from-json-static'),
@@ -1300,9 +1342,7 @@ class CelestFunctionsClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<FromJsonStatic>(
-          value,
-        ),
+        r'value': _$celest.Serializers.instance.serialize<FromJsonStatic>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1319,7 +1359,10 @@ class CelestFunctionsClasses {
 /// Tests that collections (e.g. Lists/Maps) can be used as parameter and
 /// return types.
 class CelestFunctionsCollections {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -1329,9 +1372,9 @@ class CelestFunctionsCollections {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -1339,18 +1382,17 @@ class CelestFunctionsCollections {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -1361,9 +1403,8 @@ class CelestFunctionsCollections {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -1380,9 +1421,8 @@ class CelestFunctionsCollections {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -1411,9 +1451,8 @@ class CelestFunctionsCollections {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -1436,16 +1475,14 @@ class CelestFunctionsCollections {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -1492,16 +1529,14 @@ class CelestFunctionsCollections {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -1517,16 +1552,14 @@ class CelestFunctionsCollections {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -1536,9 +1569,8 @@ class CelestFunctionsCollections {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -1554,16 +1586,14 @@ class CelestFunctionsCollections {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       default:
@@ -1578,7 +1608,10 @@ class CelestFunctionsCollections {
     }
   }
 
-  @_$celest.CloudFunction(api: 'collections', function: 'simpleList')
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'simpleList',
+  )
   Future<List<String>> simpleList(List<String> list) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/simple-list'),
@@ -1598,7 +1631,10 @@ class CelestFunctionsCollections {
     return ($body as Iterable<Object?>).map((el) => (el as String)).toList();
   }
 
-  @_$celest.CloudFunction(api: 'collections', function: 'complexList')
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'complexList',
+  )
   Future<List<SimpleClass>> complexList(List<SimpleClass> list) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/complex-list'),
@@ -1607,13 +1643,10 @@ class CelestFunctionsCollections {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'list':
-            list
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass>(el),
-                )
-                .toList(),
+        r'list': list
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleClass>(el))
+            .toList()
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1628,7 +1661,10 @@ class CelestFunctionsCollections {
         .toList();
   }
 
-  @_$celest.CloudFunction(api: 'collections', function: 'simpleMap')
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'simpleMap',
+  )
   Future<Map<String, String>> simpleMap(Map<String, String> map) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/simple-map'),
@@ -1645,12 +1681,20 @@ class CelestFunctionsCollections {
         body: ($body as Map<String, Object?>),
       );
     }
-    return ($body as Map<String, Object?>).map(
-      (key, value) => MapEntry(key, (value as String)),
-    );
+    return ($body as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          (value as String),
+        ));
   }
 
-  @_$celest.CloudFunction(api: 'collections', function: 'dynamicMap')
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'dynamicMap',
+  )
   Future<Map<String, dynamic>> dynamicMap(Map<String, dynamic> map) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/dynamic-map'),
@@ -1670,7 +1714,10 @@ class CelestFunctionsCollections {
     return ($body as Map<String, Object?>);
   }
 
-  @_$celest.CloudFunction(api: 'collections', function: 'objectMap')
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'objectMap',
+  )
   Future<Map<String, Object>> objectMap(Map<String, Object> map) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/object-map'),
@@ -1687,15 +1734,22 @@ class CelestFunctionsCollections {
         body: ($body as Map<String, Object?>),
       );
     }
-    return ($body as Map<String, Object?>).map(
-      (key, value) => MapEntry(key, value!),
-    );
+    return ($body as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          value!,
+        ));
   }
 
-  @_$celest.CloudFunction(api: 'collections', function: 'objectNullableMap')
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'objectNullableMap',
+  )
   Future<Map<String, Object?>> objectNullableMap(
-    Map<String, Object?> map,
-  ) async {
+      Map<String, Object?> map) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/object-nullable-map'),
       headers: const {
@@ -1714,10 +1768,12 @@ class CelestFunctionsCollections {
     return ($body as Map<String, Object?>);
   }
 
-  @_$celest.CloudFunction(api: 'collections', function: 'complexMap')
+  @_$celest.CloudFunction(
+    api: 'collections',
+    function: 'complexMap',
+  )
   Future<Map<String, SimpleClass>> complexMap(
-    Map<String, SimpleClass> map,
-  ) async {
+      Map<String, SimpleClass> map) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/collections/complex-map'),
       headers: const {
@@ -1725,12 +1781,14 @@ class CelestFunctionsCollections {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'map': map.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<SimpleClass>(value),
-          ),
-        ),
+        r'map': map.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<SimpleClass>(value),
+            ))
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -1740,19 +1798,24 @@ class CelestFunctionsCollections {
         body: ($body as Map<String, Object?>),
       );
     }
-    return ($body as Map<String, Object?>).map(
-      (key, value) => MapEntry(
-        key,
-        _$celest.Serializers.instance.deserialize<SimpleClass>(value),
-      ),
-    );
+    return ($body as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          _$celest.Serializers.instance.deserialize<SimpleClass>(value),
+        ));
   }
 }
 
 /// Tests that some cycles are allowed, e.g. when there is at least one level
 /// of indirection.
 class CelestFunctionsCycles {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -1762,9 +1825,9 @@ class CelestFunctionsCycles {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -1772,18 +1835,17 @@ class CelestFunctionsCycles {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -1794,9 +1856,8 @@ class CelestFunctionsCycles {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -1813,9 +1874,8 @@ class CelestFunctionsCycles {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -1844,9 +1904,8 @@ class CelestFunctionsCycles {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -1869,16 +1928,14 @@ class CelestFunctionsCycles {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -1925,16 +1982,14 @@ class CelestFunctionsCycles {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -1950,16 +2005,14 @@ class CelestFunctionsCycles {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -1969,9 +2022,8 @@ class CelestFunctionsCycles {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -1987,16 +2039,14 @@ class CelestFunctionsCycles {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       default:
@@ -2011,7 +2061,10 @@ class CelestFunctionsCycles {
     }
   }
 
-  @_$celest.CloudFunction(api: 'cycles', function: 'createTree')
+  @_$celest.CloudFunction(
+    api: 'cycles',
+    function: 'createTree',
+  )
   Future<Node> createTree() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/create-tree'),
@@ -2030,7 +2083,10 @@ class CelestFunctionsCycles {
     return _$celest.Serializers.instance.deserialize<Node>($body);
   }
 
-  @_$celest.CloudFunction(api: 'cycles', function: 'printTree')
+  @_$celest.CloudFunction(
+    api: 'cycles',
+    function: 'printTree',
+  )
   Future<void> printTree(Node node) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/print-tree'),
@@ -2038,9 +2094,8 @@ class CelestFunctionsCycles {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'node': _$celest.Serializers.instance.serialize<Node>(node),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'node': _$celest.Serializers.instance.serialize<Node>(node)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -2052,7 +2107,10 @@ class CelestFunctionsCycles {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'cycles', function: 'combineTrees')
+  @_$celest.CloudFunction(
+    api: 'cycles',
+    function: 'combineTrees',
+  )
   Future<Node> combineTrees(
     Node tree1, [
     Parent? tree2,
@@ -2069,10 +2127,9 @@ class CelestFunctionsCycles {
         r'tree1': _$celest.Serializers.instance.serialize<Node>(tree1),
         r'tree2': _$celest.Serializers.instance.serialize<Parent?>(tree2),
         r'tree3': _$celest.Serializers.instance.serialize<Node?>(tree3),
-        r'additionalChildren':
-            additionalChildren
-                .map((el) => _$celest.Serializers.instance.serialize<Node?>(el))
-                .toList(),
+        r'additionalChildren': additionalChildren
+            .map((el) => _$celest.Serializers.instance.serialize<Node?>(el))
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -2087,10 +2144,12 @@ class CelestFunctionsCycles {
 
   /// Tests that self-referencing is allowed when there is a level
   /// of indirection, e.g. nullability, generics, or a wrapper.
-  @_$celest.CloudFunction(api: 'cycles', function: 'selfReferencing')
+  @_$celest.CloudFunction(
+    api: 'cycles',
+    function: 'selfReferencing',
+  )
   Future<SelfReferencing> selfReferencing(
-    SelfReferencing selfReferencing,
-  ) async {
+      SelfReferencing selfReferencing) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/cycles/self-referencing'),
       headers: const {
@@ -2099,7 +2158,7 @@ class CelestFunctionsCycles {
       },
       body: _$celest.JsonUtf8.encode({
         r'selfReferencing': _$celest.Serializers.instance
-            .serialize<SelfReferencing>(selfReferencing),
+            .serialize<SelfReferencing>(selfReferencing)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -2114,7 +2173,10 @@ class CelestFunctionsCycles {
 }
 
 class CelestFunctionsDemo {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -2124,9 +2186,9 @@ class CelestFunctionsDemo {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -2134,18 +2196,17 @@ class CelestFunctionsDemo {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -2156,9 +2217,8 @@ class CelestFunctionsDemo {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -2175,9 +2235,8 @@ class CelestFunctionsDemo {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -2206,9 +2265,8 @@ class CelestFunctionsDemo {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -2231,16 +2289,14 @@ class CelestFunctionsDemo {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -2287,16 +2343,14 @@ class CelestFunctionsDemo {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -2312,16 +2366,14 @@ class CelestFunctionsDemo {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -2331,9 +2383,8 @@ class CelestFunctionsDemo {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -2349,23 +2400,20 @@ class CelestFunctionsDemo {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       case 'api.v1.BadNameException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<BadNameException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<BadNameException>(errorValue),
           stackTrace,
         );
       default:
@@ -2381,7 +2429,10 @@ class CelestFunctionsDemo {
   }
 
   /// Says hello to a [person].
-  @_$celest.CloudFunction(api: 'demo', function: 'sayHello')
+  @_$celest.CloudFunction(
+    api: 'demo',
+    function: 'sayHello',
+  )
   Future<String> sayHello({required Person person}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/demo/say-hello'),
@@ -2389,9 +2440,8 @@ class CelestFunctionsDemo {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'person': _$celest.Serializers.instance.serialize<Person>(person),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'person': _$celest.Serializers.instance.serialize<Person>(person)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -2405,7 +2455,10 @@ class CelestFunctionsDemo {
 }
 
 class CelestFunctionsExceptions {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -2415,9 +2468,9 @@ class CelestFunctionsExceptions {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -2425,18 +2478,17 @@ class CelestFunctionsExceptions {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -2447,9 +2499,8 @@ class CelestFunctionsExceptions {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -2466,9 +2517,8 @@ class CelestFunctionsExceptions {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -2497,9 +2547,8 @@ class CelestFunctionsExceptions {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -2522,16 +2571,14 @@ class CelestFunctionsExceptions {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -2578,16 +2625,14 @@ class CelestFunctionsExceptions {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -2603,16 +2648,14 @@ class CelestFunctionsExceptions {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -2622,9 +2665,8 @@ class CelestFunctionsExceptions {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -2640,30 +2682,26 @@ class CelestFunctionsExceptions {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       case 'api.v1.CustomException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<CustomException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<CustomException>(errorValue),
           stackTrace,
         );
       case 'api.v1.CustomExceptionToFromJson':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<CustomExceptionToFromJson>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<CustomExceptionToFromJson>(errorValue),
           stackTrace,
         );
       case 'api.v1.CustomError':
@@ -2673,16 +2711,14 @@ class CelestFunctionsExceptions {
         );
       case 'api.v1.CustomErrorToFromJson':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<CustomErrorToFromJson>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<CustomErrorToFromJson>(errorValue),
           stackTrace,
         );
       case 'api.v1.CustomErrorWithStackTrace':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<CustomErrorWithStackTrace>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<CustomErrorWithStackTrace>(errorValue),
           stackTrace,
         );
       default:
@@ -2697,7 +2733,10 @@ class CelestFunctionsExceptions {
     }
   }
 
-  @_$celest.CloudFunction(api: 'exceptions', function: 'throwsException')
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsException',
+  )
   Future<void> throwsException({required SupportedExceptionType type}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-exception'),
@@ -2707,7 +2746,7 @@ class CelestFunctionsExceptions {
       },
       body: _$celest.JsonUtf8.encode({
         r'type': _$celest.Serializers.instance
-            .serialize<SupportedExceptionType>(type),
+            .serialize<SupportedExceptionType>(type)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -2720,7 +2759,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'exceptions', function: 'throwsError')
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsError',
+  )
   Future<void> throwsError({required SupportedErrorType type}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-error'),
@@ -2729,9 +2771,8 @@ class CelestFunctionsExceptions {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'type': _$celest.Serializers.instance.serialize<SupportedErrorType>(
-          type,
-        ),
+        r'type':
+            _$celest.Serializers.instance.serialize<SupportedErrorType>(type)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -2744,7 +2785,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'exceptions', function: 'throwsCustomException')
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsCustomException',
+  )
   Future<void> throwsCustomException() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-custom-exception'),
@@ -2769,9 +2813,8 @@ class CelestFunctionsExceptions {
   )
   Future<void> throwsCustomExceptionToFromJson() async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/exceptions/throws-custom-exception-to-from-json',
-      ),
+      celest.baseUri
+          .resolve('/exceptions/throws-custom-exception-to-from-json'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -2787,7 +2830,10 @@ class CelestFunctionsExceptions {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'exceptions', function: 'throwsCustomError')
+  @_$celest.CloudFunction(
+    api: 'exceptions',
+    function: 'throwsCustomError',
+  )
   Future<void> throwsCustomError() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/exceptions/throws-custom-error'),
@@ -2834,9 +2880,8 @@ class CelestFunctionsExceptions {
   )
   Future<void> throwsCustomErrorWithStackTrace() async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/exceptions/throws-custom-error-with-stack-trace',
-      ),
+      celest.baseUri
+          .resolve('/exceptions/throws-custom-error-with-stack-trace'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -2855,7 +2900,10 @@ class CelestFunctionsExceptions {
 
 /// Tests that extension types are correctly handled by the analyzer.
 class CelestFunctionsExtensionTypes {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -2865,9 +2913,9 @@ class CelestFunctionsExtensionTypes {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -2875,10 +2923,10 @@ class CelestFunctionsExtensionTypes {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
@@ -2889,16 +2937,14 @@ class CelestFunctionsExtensionTypes {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Error':
@@ -2933,16 +2979,14 @@ class CelestFunctionsExtensionTypes {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -2958,16 +3002,14 @@ class CelestFunctionsExtensionTypes {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -2977,9 +3019,8 @@ class CelestFunctionsExtensionTypes {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -2990,9 +3031,8 @@ class CelestFunctionsExtensionTypes {
         );
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -3003,9 +3043,8 @@ class CelestFunctionsExtensionTypes {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -3022,9 +3061,8 @@ class CelestFunctionsExtensionTypes {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -3053,9 +3091,8 @@ class CelestFunctionsExtensionTypes {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -3078,16 +3115,14 @@ class CelestFunctionsExtensionTypes {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -3114,7 +3149,10 @@ class CelestFunctionsExtensionTypes {
     }
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'string')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'string',
+  )
   Future<StringX> string(StringX s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string'),
@@ -3126,7 +3164,7 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringX>(
           s,
           const _$celest.TypeToken<StringX>('StringX'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3142,7 +3180,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'asyncOrString')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'asyncOrString',
+  )
   Future<StringX> asyncOrString(StringX s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/async-or-string'),
@@ -3154,7 +3195,7 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringX>(
           s,
           const _$celest.TypeToken<StringX>('StringX'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3170,7 +3211,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'asyncString')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'asyncString',
+  )
   Future<StringX> asyncString(StringX s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/async-string'),
@@ -3182,7 +3226,7 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringX>(
           s,
           const _$celest.TypeToken<StringX>('StringX'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3198,7 +3242,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'stringImpl')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringImpl',
+  )
   Future<StringXImpl> stringImpl(StringXImpl s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-impl'),
@@ -3210,7 +3257,7 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringXImpl>(
           s,
           const _$celest.TypeToken<StringXImpl>('StringXImpl'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3226,7 +3273,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'stringToFromJson')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringToFromJson',
+  )
   Future<StringXToFromJson> stringToFromJson(StringXToFromJson s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-to-from-json'),
@@ -3238,7 +3288,7 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringXToFromJson>(
           s,
           const _$celest.TypeToken<StringXToFromJson>('StringXToFromJson'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3254,7 +3304,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'stringToJson')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringToJson',
+  )
   Future<StringXToJson> stringToJson(StringXToJson s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-to-json'),
@@ -3266,7 +3319,7 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringXToJson>(
           s,
           const _$celest.TypeToken<StringXToJson>('StringXToJson'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3282,7 +3335,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'stringToJsonImpl')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringToJsonImpl',
+  )
   Future<StringXToJsonImpl> stringToJsonImpl(StringXToJsonImpl s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-to-json-impl'),
@@ -3294,7 +3350,7 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringXToJsonImpl>(
           s,
           const _$celest.TypeToken<StringXToJsonImpl>('StringXToJsonImpl'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3310,7 +3366,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'stringFromJson')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringFromJson',
+  )
   Future<StringXFromJson> stringFromJson(StringXFromJson s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-from-json'),
@@ -3322,7 +3381,7 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringXFromJson>(
           s,
           const _$celest.TypeToken<StringXFromJson>('StringXFromJson'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3353,7 +3412,7 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringXFromJsonImpl>(
           s,
           const _$celest.TypeToken<StringXFromJsonImpl>('StringXFromJsonImpl'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3374,8 +3433,7 @@ class CelestFunctionsExtensionTypes {
     function: 'stringFromJsonStatic',
   )
   Future<StringXFromJsonStatic> stringFromJsonStatic(
-    StringXFromJsonStatic s,
-  ) async {
+      StringXFromJsonStatic s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-from-json-static'),
       headers: const {
@@ -3386,9 +3444,8 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringXFromJsonStatic>(
           s,
           const _$celest.TypeToken<StringXFromJsonStatic>(
-            'StringXFromJsonStatic',
-          ),
-        ),
+              'StringXFromJsonStatic'),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3419,7 +3476,7 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringXPrivateField>(
           s,
           const _$celest.TypeToken<StringXPrivateField>('StringXPrivateField'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3440,8 +3497,7 @@ class CelestFunctionsExtensionTypes {
     function: 'stringPrivateFieldImpl',
   )
   Future<StringXPrivateFieldImpl> stringPrivateFieldImpl(
-    StringXPrivateFieldImpl s,
-  ) async {
+      StringXPrivateFieldImpl s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-field-impl'),
       headers: const {
@@ -3452,9 +3508,8 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringXPrivateFieldImpl>(
           s,
           const _$celest.TypeToken<StringXPrivateFieldImpl>(
-            'StringXPrivateFieldImpl',
-          ),
-        ),
+              'StringXPrivateFieldImpl'),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3467,12 +3522,14 @@ class CelestFunctionsExtensionTypes {
     return _$celest.Serializers.instance.deserialize<StringXPrivateFieldImpl>(
       $body,
       const _$celest.TypeToken<StringXPrivateFieldImpl>(
-        'StringXPrivateFieldImpl',
-      ),
+          'StringXPrivateFieldImpl'),
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'stringPrivateCtor')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'stringPrivateCtor',
+  )
   Future<StringXPrivateCtor> stringPrivateCtor(StringXPrivateCtor s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-ctor'),
@@ -3484,7 +3541,7 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringXPrivateCtor>(
           s,
           const _$celest.TypeToken<StringXPrivateCtor>('StringXPrivateCtor'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3505,8 +3562,7 @@ class CelestFunctionsExtensionTypes {
     function: 'stringPrivateCtorImpl',
   )
   Future<StringXPrivateCtorImpl> stringPrivateCtorImpl(
-    StringXPrivateCtorImpl s,
-  ) async {
+      StringXPrivateCtorImpl s) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/string-private-ctor-impl'),
       headers: const {
@@ -3517,9 +3573,8 @@ class CelestFunctionsExtensionTypes {
         r's': _$celest.Serializers.instance.serialize<StringXPrivateCtorImpl>(
           s,
           const _$celest.TypeToken<StringXPrivateCtorImpl>(
-            'StringXPrivateCtorImpl',
-          ),
-        ),
+              'StringXPrivateCtorImpl'),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3532,12 +3587,14 @@ class CelestFunctionsExtensionTypes {
     return _$celest.Serializers.instance.deserialize<StringXPrivateCtorImpl>(
       $body,
       const _$celest.TypeToken<StringXPrivateCtorImpl>(
-        'StringXPrivateCtorImpl',
-      ),
+          'StringXPrivateCtorImpl'),
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'value')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'value',
+  )
   Future<Value> value(Value v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value'),
@@ -3545,9 +3602,8 @@ class CelestFunctionsExtensionTypes {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'v': _$celest.Serializers.instance.serialize<Value>(v),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'v': _$celest.Serializers.instance.serialize<Value>(v)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -3559,7 +3615,10 @@ class CelestFunctionsExtensionTypes {
     return _$celest.Serializers.instance.deserialize<Value>($body);
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'valueX')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueX',
+  )
   Future<ValueX> valueX(ValueX v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x'),
@@ -3571,7 +3630,7 @@ class CelestFunctionsExtensionTypes {
         r'v': _$celest.Serializers.instance.serialize<ValueX>(
           v,
           const _$celest.TypeToken<ValueX>('ValueX'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3587,7 +3646,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'valueXImpl')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueXImpl',
+  )
   Future<ValueXImpl> valueXImpl(ValueXImpl v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-impl'),
@@ -3599,7 +3661,7 @@ class CelestFunctionsExtensionTypes {
         r'v': _$celest.Serializers.instance.serialize<ValueXImpl>(
           v,
           const _$celest.TypeToken<ValueXImpl>('ValueXImpl'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3615,7 +3677,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'valueXToFromJson')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueXToFromJson',
+  )
   Future<ValueXToFromJson> valueXToFromJson(ValueXToFromJson v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-from-json'),
@@ -3627,7 +3692,7 @@ class CelestFunctionsExtensionTypes {
         r'v': _$celest.Serializers.instance.serialize<ValueXToFromJson>(
           v,
           const _$celest.TypeToken<ValueXToFromJson>('ValueXToFromJson'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3643,7 +3708,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'valueXToJson')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueXToJson',
+  )
   Future<ValueXToJson> valueXToJson(ValueXToJson v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-json'),
@@ -3655,7 +3723,7 @@ class CelestFunctionsExtensionTypes {
         r'v': _$celest.Serializers.instance.serialize<ValueXToJson>(
           v,
           const _$celest.TypeToken<ValueXToJson>('ValueXToJson'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3671,7 +3739,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'valueXToJsonImpl')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueXToJsonImpl',
+  )
   Future<ValueXToJsonImpl> valueXToJsonImpl(ValueXToJsonImpl v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-to-json-impl'),
@@ -3683,7 +3754,7 @@ class CelestFunctionsExtensionTypes {
         r'v': _$celest.Serializers.instance.serialize<ValueXToJsonImpl>(
           v,
           const _$celest.TypeToken<ValueXToJsonImpl>('ValueXToJsonImpl'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3699,7 +3770,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'valueXFromJson')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'valueXFromJson',
+  )
   Future<ValueXFromJson> valueXFromJson(ValueXFromJson v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-from-json'),
@@ -3711,7 +3785,7 @@ class CelestFunctionsExtensionTypes {
         r'v': _$celest.Serializers.instance.serialize<ValueXFromJson>(
           v,
           const _$celest.TypeToken<ValueXFromJson>('ValueXFromJson'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3742,7 +3816,7 @@ class CelestFunctionsExtensionTypes {
         r'v': _$celest.Serializers.instance.serialize<ValueXFromJsonImpl>(
           v,
           const _$celest.TypeToken<ValueXFromJsonImpl>('ValueXFromJsonImpl'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3763,8 +3837,7 @@ class CelestFunctionsExtensionTypes {
     function: 'valueXFromJsonStatic',
   )
   Future<ValueXFromJsonStatic> valueXFromJsonStatic(
-    ValueXFromJsonStatic v,
-  ) async {
+      ValueXFromJsonStatic v) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/value-x-from-json-static'),
       headers: const {
@@ -3775,9 +3848,8 @@ class CelestFunctionsExtensionTypes {
         r'v': _$celest.Serializers.instance.serialize<ValueXFromJsonStatic>(
           v,
           const _$celest.TypeToken<ValueXFromJsonStatic>(
-            'ValueXFromJsonStatic',
-          ),
-        ),
+              'ValueXFromJsonStatic'),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3793,7 +3865,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'color')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'color',
+  )
   Future<Color> color(Color color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color'),
@@ -3801,9 +3876,8 @@ class CelestFunctionsExtensionTypes {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'color': _$celest.Serializers.instance.serialize<Color>(color),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'color': _$celest.Serializers.instance.serialize<Color>(color)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -3815,7 +3889,10 @@ class CelestFunctionsExtensionTypes {
     return _$celest.Serializers.instance.deserialize<Color>($body);
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'colorX')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorX',
+  )
   Future<ColorX> colorX(ColorX color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x'),
@@ -3827,7 +3904,7 @@ class CelestFunctionsExtensionTypes {
         r'color': _$celest.Serializers.instance.serialize<ColorX>(
           color,
           const _$celest.TypeToken<ColorX>('ColorX'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3843,7 +3920,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'colorXImpl')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorXImpl',
+  )
   Future<ColorXImpl> colorXImpl(ColorXImpl color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-impl'),
@@ -3855,7 +3935,7 @@ class CelestFunctionsExtensionTypes {
         r'color': _$celest.Serializers.instance.serialize<ColorXImpl>(
           color,
           const _$celest.TypeToken<ColorXImpl>('ColorXImpl'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3871,7 +3951,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'colorXToFromJson')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorXToFromJson',
+  )
   Future<ColorXToFromJson> colorXToFromJson(ColorXToFromJson color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-from-json'),
@@ -3883,7 +3966,7 @@ class CelestFunctionsExtensionTypes {
         r'color': _$celest.Serializers.instance.serialize<ColorXToFromJson>(
           color,
           const _$celest.TypeToken<ColorXToFromJson>('ColorXToFromJson'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3899,7 +3982,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'colorXToJson')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorXToJson',
+  )
   Future<ColorXToJson> colorXToJson(ColorXToJson color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-json'),
@@ -3911,7 +3997,7 @@ class CelestFunctionsExtensionTypes {
         r'color': _$celest.Serializers.instance.serialize<ColorXToJson>(
           color,
           const _$celest.TypeToken<ColorXToJson>('ColorXToJson'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3927,7 +4013,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'colorXToJsonImpl')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorXToJsonImpl',
+  )
   Future<ColorXToJsonImpl> colorXToJsonImpl(ColorXToJsonImpl color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-to-json-impl'),
@@ -3939,7 +4028,7 @@ class CelestFunctionsExtensionTypes {
         r'color': _$celest.Serializers.instance.serialize<ColorXToJsonImpl>(
           color,
           const _$celest.TypeToken<ColorXToJsonImpl>('ColorXToJsonImpl'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3955,7 +4044,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'colorXFromJson')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'colorXFromJson',
+  )
   Future<ColorXFromJson> colorXFromJson(ColorXFromJson color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-from-json'),
@@ -3967,7 +4059,7 @@ class CelestFunctionsExtensionTypes {
         r'color': _$celest.Serializers.instance.serialize<ColorXFromJson>(
           color,
           const _$celest.TypeToken<ColorXFromJson>('ColorXFromJson'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -3988,8 +4080,7 @@ class CelestFunctionsExtensionTypes {
     function: 'colorXFromJsonImpl',
   )
   Future<ColorXFromJsonImpl> colorXFromJsonImpl(
-    ColorXFromJsonImpl color,
-  ) async {
+      ColorXFromJsonImpl color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-from-json-impl'),
       headers: const {
@@ -4000,7 +4091,7 @@ class CelestFunctionsExtensionTypes {
         r'color': _$celest.Serializers.instance.serialize<ColorXFromJsonImpl>(
           color,
           const _$celest.TypeToken<ColorXFromJsonImpl>('ColorXFromJsonImpl'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4021,8 +4112,7 @@ class CelestFunctionsExtensionTypes {
     function: 'colorXFromJsonStatic',
   )
   Future<ColorXFromJsonStatic> colorXFromJsonStatic(
-    ColorXFromJsonStatic color,
-  ) async {
+      ColorXFromJsonStatic color) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/color-x-from-json-static'),
       headers: const {
@@ -4033,9 +4123,8 @@ class CelestFunctionsExtensionTypes {
         r'color': _$celest.Serializers.instance.serialize<ColorXFromJsonStatic>(
           color,
           const _$celest.TypeToken<ColorXFromJsonStatic>(
-            'ColorXFromJsonStatic',
-          ),
-        ),
+              'ColorXFromJsonStatic'),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4051,7 +4140,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'jsonValue')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonValue',
+  )
   Future<_$celest.JsonValue> jsonValue(_$celest.JsonValue value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-value'),
@@ -4063,7 +4155,7 @@ class CelestFunctionsExtensionTypes {
         r'value': _$celest.Serializers.instance.serialize<_$celest.JsonValue>(
           value,
           const _$celest.TypeToken<_$celest.JsonValue>('JsonValue'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4079,7 +4171,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'jsonString')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonString',
+  )
   Future<_$celest.JsonString> jsonString(_$celest.JsonString value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-string'),
@@ -4091,7 +4186,7 @@ class CelestFunctionsExtensionTypes {
         r'value': _$celest.Serializers.instance.serialize<_$celest.JsonString>(
           value,
           const _$celest.TypeToken<_$celest.JsonString>('JsonString'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4107,7 +4202,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'jsonNum')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonNum',
+  )
   Future<_$celest.JsonNum> jsonNum(_$celest.JsonNum value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-num'),
@@ -4119,7 +4217,7 @@ class CelestFunctionsExtensionTypes {
         r'value': _$celest.Serializers.instance.serialize<_$celest.JsonNum>(
           value,
           const _$celest.TypeToken<_$celest.JsonNum>('JsonNum'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4135,7 +4233,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'jsonInt')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonInt',
+  )
   Future<_$celest.JsonInt> jsonInt(_$celest.JsonInt value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-int'),
@@ -4147,7 +4248,7 @@ class CelestFunctionsExtensionTypes {
         r'value': _$celest.Serializers.instance.serialize<_$celest.JsonInt>(
           value,
           const _$celest.TypeToken<_$celest.JsonInt>('JsonInt'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4163,7 +4264,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'jsonDouble')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonDouble',
+  )
   Future<_$celest.JsonDouble> jsonDouble(_$celest.JsonDouble value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-double'),
@@ -4175,7 +4279,7 @@ class CelestFunctionsExtensionTypes {
         r'value': _$celest.Serializers.instance.serialize<_$celest.JsonDouble>(
           value,
           const _$celest.TypeToken<_$celest.JsonDouble>('JsonDouble'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4191,7 +4295,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'jsonBool')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonBool',
+  )
   Future<_$celest.JsonBool> jsonBool(_$celest.JsonBool value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-bool'),
@@ -4203,7 +4310,7 @@ class CelestFunctionsExtensionTypes {
         r'value': _$celest.Serializers.instance.serialize<_$celest.JsonBool>(
           value,
           const _$celest.TypeToken<_$celest.JsonBool>('JsonBool'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4219,7 +4326,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'jsonList')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonList',
+  )
   Future<_$celest.JsonList> jsonList(_$celest.JsonList value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-list'),
@@ -4231,7 +4341,7 @@ class CelestFunctionsExtensionTypes {
         r'value': _$celest.Serializers.instance.serialize<_$celest.JsonList>(
           value,
           const _$celest.TypeToken<_$celest.JsonList>('JsonList'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4247,7 +4357,10 @@ class CelestFunctionsExtensionTypes {
     );
   }
 
-  @_$celest.CloudFunction(api: 'extension_types', function: 'jsonMap')
+  @_$celest.CloudFunction(
+    api: 'extension_types',
+    function: 'jsonMap',
+  )
   Future<_$celest.JsonMap> jsonMap(_$celest.JsonMap value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/extension-types/json-map'),
@@ -4259,7 +4372,7 @@ class CelestFunctionsExtensionTypes {
         r'value': _$celest.Serializers.instance.serialize<_$celest.JsonMap>(
           value,
           const _$celest.TypeToken<_$celest.JsonMap>('JsonMap'),
-        ),
+        )
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4281,7 +4394,10 @@ class CelestFunctionsExtensionTypes {
 /// having a `toJson` method with function parameters for mapping the
 /// underlying types to JSON (Object Function(T) toJsonT).
 class CelestFunctionsGenericWrappers {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -4291,9 +4407,9 @@ class CelestFunctionsGenericWrappers {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -4301,18 +4417,17 @@ class CelestFunctionsGenericWrappers {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -4323,9 +4438,8 @@ class CelestFunctionsGenericWrappers {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -4342,9 +4456,8 @@ class CelestFunctionsGenericWrappers {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -4373,9 +4486,8 @@ class CelestFunctionsGenericWrappers {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -4398,16 +4510,14 @@ class CelestFunctionsGenericWrappers {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -4454,16 +4564,14 @@ class CelestFunctionsGenericWrappers {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -4479,16 +4587,14 @@ class CelestFunctionsGenericWrappers {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -4498,9 +4604,8 @@ class CelestFunctionsGenericWrappers {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -4516,16 +4621,14 @@ class CelestFunctionsGenericWrappers {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       default:
@@ -4540,7 +4643,10 @@ class CelestFunctionsGenericWrappers {
     }
   }
 
-  @_$celest.CloudFunction(api: 'generic_wrappers', function: 'genericWrappers')
+  @_$celest.CloudFunction(
+    api: 'generic_wrappers',
+    function: 'genericWrappers',
+  )
   Future<GenericWrappers> genericWrappers(GenericWrappers value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/generic-wrappers/generic-wrappers'),
@@ -4549,9 +4655,8 @@ class CelestFunctionsGenericWrappers {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<GenericWrappers>(
-          value,
-        ),
+        r'value':
+            _$celest.Serializers.instance.serialize<GenericWrappers>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4576,9 +4681,8 @@ class CelestFunctionsGenericWrappers {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<GenericWrappers>(
-          value,
-        ),
+        r'value':
+            _$celest.Serializers.instance.serialize<GenericWrappers>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4599,53 +4703,38 @@ class CelestFunctionsGenericWrappers {
     required _$fast_immutable_collections_ilist.IList<String> listOfString,
     required _$fast_immutable_collections_ilist.IList<Uri> listOfUri,
     required _$fast_immutable_collections_ilist.IList<SimpleClass>
-    listOfSimpleClass,
-    required _$fast_immutable_collections_ilist.IList<
-      _$fast_immutable_collections_ilist.IList<String>
-    >
-    listOfListOfString,
-    required _$fast_immutable_collections_ilist.IList<
-      _$fast_immutable_collections_ilist.IList<Uri>
-    >
-    listOfListOfUri,
-    required _$fast_immutable_collections_ilist.IList<
-      _$fast_immutable_collections_ilist.IList<SimpleClass>
-    >
-    listOfListOfSimpleClass,
+        listOfSimpleClass,
+    required _$fast_immutable_collections_ilist
+        .IList<_$fast_immutable_collections_ilist.IList<String>>
+        listOfListOfString,
+    required _$fast_immutable_collections_ilist
+        .IList<_$fast_immutable_collections_ilist.IList<Uri>>
+        listOfListOfUri,
+    required _$fast_immutable_collections_ilist
+        .IList<_$fast_immutable_collections_ilist.IList<SimpleClass>>
+        listOfListOfSimpleClass,
     required _$fast_immutable_collections_imap.IMap<String, String> mapOfString,
     required _$fast_immutable_collections_imap.IMap<String, Uri> mapOfUri,
     required _$fast_immutable_collections_imap.IMap<String, SimpleClass>
-    mapOfSimpleClass,
-    required _$fast_immutable_collections_imap.IMap<
-      String,
-      _$fast_immutable_collections_ilist.IList<String>
-    >
-    mapOfListOfString,
-    required _$fast_immutable_collections_imap.IMap<
-      String,
-      _$fast_immutable_collections_ilist.IList<Uri>
-    >
-    mapOfListOfUri,
-    required _$fast_immutable_collections_imap.IMap<
-      String,
-      _$fast_immutable_collections_ilist.IList<SimpleClass>
-    >
-    mapOfListOfSimpleClass,
-    required _$fast_immutable_collections_imap.IMap<
-      String,
-      _$fast_immutable_collections_imap.IMap<String, String>
-    >
-    mapOfMapOfString,
-    required _$fast_immutable_collections_imap.IMap<
-      String,
-      _$fast_immutable_collections_imap.IMap<String, Uri>
-    >
-    mapOfMapOfUri,
-    required _$fast_immutable_collections_imap.IMap<
-      String,
-      _$fast_immutable_collections_imap.IMap<String, SimpleClass>
-    >
-    mapOfMapOfSimpleClass,
+        mapOfSimpleClass,
+    required _$fast_immutable_collections_imap
+        .IMap<String, _$fast_immutable_collections_ilist.IList<String>>
+        mapOfListOfString,
+    required _$fast_immutable_collections_imap
+        .IMap<String, _$fast_immutable_collections_ilist.IList<Uri>>
+        mapOfListOfUri,
+    required _$fast_immutable_collections_imap
+        .IMap<String, _$fast_immutable_collections_ilist.IList<SimpleClass>>
+        mapOfListOfSimpleClass,
+    required _$fast_immutable_collections_imap
+        .IMap<String, _$fast_immutable_collections_imap.IMap<String, String>>
+        mapOfMapOfString,
+    required _$fast_immutable_collections_imap
+        .IMap<String, _$fast_immutable_collections_imap.IMap<String, Uri>>
+        mapOfMapOfUri,
+    required _$fast_immutable_collections_imap.IMap<String,
+            _$fast_immutable_collections_imap.IMap<String, SimpleClass>>
+        mapOfMapOfSimpleClass,
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/generic-wrappers/generic-wrapper-parameters'),
@@ -4656,78 +4745,62 @@ class CelestFunctionsGenericWrappers {
       body: _$celest.JsonUtf8.encode({
         r'listOfString': _$celest.Serializers.instance
             .serialize<_$fast_immutable_collections_ilist.IList<String>>(
-              listOfString,
-            ),
+                listOfString),
         r'listOfUri': _$celest.Serializers.instance
             .serialize<_$fast_immutable_collections_ilist.IList<Uri>>(
-              listOfUri,
-            ),
+                listOfUri),
         r'listOfSimpleClass': _$celest.Serializers.instance
             .serialize<_$fast_immutable_collections_ilist.IList<SimpleClass>>(
-              listOfSimpleClass,
-            ),
+                listOfSimpleClass),
         r'listOfListOfString': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_ilist.IList<
-            _$fast_immutable_collections_ilist.IList<String>
-          >
-        >(listOfListOfString),
+                _$fast_immutable_collections_ilist
+                .IList<_$fast_immutable_collections_ilist.IList<String>>>(
+            listOfListOfString),
         r'listOfListOfUri': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_ilist.IList<
-            _$fast_immutable_collections_ilist.IList<Uri>
-          >
-        >(listOfListOfUri),
+                _$fast_immutable_collections_ilist
+                .IList<_$fast_immutable_collections_ilist.IList<Uri>>>(
+            listOfListOfUri),
         r'listOfListOfSimpleClass': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_ilist.IList<
-            _$fast_immutable_collections_ilist.IList<SimpleClass>
-          >
-        >(listOfListOfSimpleClass),
+                _$fast_immutable_collections_ilist
+                .IList<_$fast_immutable_collections_ilist.IList<SimpleClass>>>(
+            listOfListOfSimpleClass),
         r'mapOfString': _$celest.Serializers.instance
             .serialize<_$fast_immutable_collections_imap.IMap<String, String>>(
-              mapOfString,
-            ),
+                mapOfString),
         r'mapOfUri': _$celest.Serializers.instance
             .serialize<_$fast_immutable_collections_imap.IMap<String, Uri>>(
-              mapOfUri,
-            ),
+                mapOfUri),
         r'mapOfSimpleClass': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<String, SimpleClass>
-        >(mapOfSimpleClass),
+            _$fast_immutable_collections_imap
+            .IMap<String, SimpleClass>>(mapOfSimpleClass),
         r'mapOfListOfString': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_ilist.IList<String>
-          >
-        >(mapOfListOfString),
+            _$fast_immutable_collections_imap.IMap<
+                String,
+                _$fast_immutable_collections_ilist
+                .IList<String>>>(mapOfListOfString),
         r'mapOfListOfUri': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_ilist.IList<Uri>
-          >
-        >(mapOfListOfUri),
+            _$fast_immutable_collections_imap.IMap<String,
+                _$fast_immutable_collections_ilist.IList<Uri>>>(mapOfListOfUri),
         r'mapOfListOfSimpleClass': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_ilist.IList<SimpleClass>
-          >
-        >(mapOfListOfSimpleClass),
+            _$fast_immutable_collections_imap.IMap<
+                String,
+                _$fast_immutable_collections_ilist
+                .IList<SimpleClass>>>(mapOfListOfSimpleClass),
         r'mapOfMapOfString': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_imap.IMap<String, String>
-          >
-        >(mapOfMapOfString),
+            _$fast_immutable_collections_imap.IMap<
+                String,
+                _$fast_immutable_collections_imap
+                .IMap<String, String>>>(mapOfMapOfString),
         r'mapOfMapOfUri': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_imap.IMap<String, Uri>
-          >
-        >(mapOfMapOfUri),
+            _$fast_immutable_collections_imap.IMap<
+                String,
+                _$fast_immutable_collections_imap
+                .IMap<String, Uri>>>(mapOfMapOfUri),
         r'mapOfMapOfSimpleClass': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_imap.IMap<String, SimpleClass>
-          >
-        >(mapOfMapOfSimpleClass),
+            _$fast_immutable_collections_imap.IMap<
+                String,
+                _$fast_immutable_collections_imap
+                .IMap<String, SimpleClass>>>(mapOfMapOfSimpleClass),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4744,7 +4817,10 @@ class CelestFunctionsGenericWrappers {
 /// Tests that metadata associated with functions and parameters are correctly
 /// parsed and transferred to the generated client.
 class CelestFunctionsMetadata {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -4754,9 +4830,9 @@ class CelestFunctionsMetadata {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -4764,18 +4840,17 @@ class CelestFunctionsMetadata {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -4786,9 +4861,8 @@ class CelestFunctionsMetadata {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -4805,9 +4879,8 @@ class CelestFunctionsMetadata {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -4836,9 +4909,8 @@ class CelestFunctionsMetadata {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -4861,16 +4933,14 @@ class CelestFunctionsMetadata {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -4917,16 +4987,14 @@ class CelestFunctionsMetadata {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -4942,16 +5010,14 @@ class CelestFunctionsMetadata {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -4961,9 +5027,8 @@ class CelestFunctionsMetadata {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -4979,16 +5044,14 @@ class CelestFunctionsMetadata {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       default:
@@ -5017,7 +5080,10 @@ class CelestFunctionsMetadata {
   /// ```dart
   /// void hasDocComments() {}
   /// ```
-  @_$celest.CloudFunction(api: 'metadata', function: 'hasDocComments')
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'hasDocComments',
+  )
   Future<void> hasDocComments() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-doc-comments'),
@@ -5037,7 +5103,10 @@ class CelestFunctionsMetadata {
   }
 
   @deprecated
-  @_$celest.CloudFunction(api: 'metadata', function: 'hasDeprecatedAnnotation')
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'hasDeprecatedAnnotation',
+  )
   Future<void> hasDeprecatedAnnotation() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-deprecated-annotation'),
@@ -5079,7 +5148,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
-  @MyAnnotation.create('positional', named: 'named')
+  @MyAnnotation.create(
+    'positional',
+    named: 'named',
+  )
   @_$celest.CloudFunction(
     api: 'metadata',
     function: 'hasNamedConstructedAnnotation',
@@ -5112,7 +5184,10 @@ class CelestFunctionsMetadata {
     enumValue: LiteralEnum.a,
     recordValue: const (a: 'a', b: 'b', c: 'c'),
   )
-  @_$celest.CloudFunction(api: 'metadata', function: 'hasLiteralsAnnotation')
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'hasLiteralsAnnotation',
+  )
   Future<void> hasLiteralsAnnotation(
     @Literals(
       string: 'string',
@@ -5143,7 +5218,10 @@ class CelestFunctionsMetadata {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({r'value': value, r'named': named}),
+      body: _$celest.JsonUtf8.encode({
+        r'value': value,
+        r'named': named,
+      }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -5156,7 +5234,10 @@ class CelestFunctionsMetadata {
   }
 
   @exportable
-  @_$celest.CloudFunction(api: 'metadata', function: 'hasExportableAnnotation')
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'hasExportableAnnotation',
+  )
   Future<void> hasExportableAnnotation(
     @exportable String value, {
     @exportable String named = 'named',
@@ -5167,7 +5248,10 @@ class CelestFunctionsMetadata {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({r'value': value, r'named': named}),
+      body: _$celest.JsonUtf8.encode({
+        r'value': value,
+        r'named': named,
+      }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -5194,7 +5278,10 @@ class CelestFunctionsMetadata {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({r'value': value, r'named': named}),
+      body: _$celest.JsonUtf8.encode({
+        r'value': value,
+        r'named': named,
+      }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -5221,7 +5308,10 @@ class CelestFunctionsMetadata {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({r'value': value, r'named': named}),
+      body: _$celest.JsonUtf8.encode({
+        r'value': value,
+        r'named': named,
+      }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -5233,7 +5323,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'metadata', function: 'positionalDefaultValues')
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'positionalDefaultValues',
+  )
   Future<void> positionalDefaultValues([
     String value = 'value',
     int intValue = 1,
@@ -5244,11 +5337,11 @@ class CelestFunctionsMetadata {
     Exportable exportable = const Exportable(),
     Serializable serializable = const Serializable.forType('String'),
     LiteralEnum enumValue = LiteralEnum.a,
-    ({String a, String b, String c}) recordValue = const (
-      a: 'a',
-      b: 'b',
-      c: 'c',
-    ),
+    ({
+      String a,
+      String b,
+      String c
+    }) recordValue = const (a: 'a', b: 'b', c: 'c'),
   ]) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/positional-default-values'),
@@ -5263,15 +5356,12 @@ class CelestFunctionsMetadata {
         r'boolValue': boolValue,
         r'list': list,
         r'map': map,
-        r'exportable': _$celest.Serializers.instance.serialize<Exportable>(
-          exportable,
-        ),
-        r'serializable': _$celest.Serializers.instance.serialize<Serializable>(
-          serializable,
-        ),
-        r'enumValue': _$celest.Serializers.instance.serialize<LiteralEnum>(
-          enumValue,
-        ),
+        r'exportable':
+            _$celest.Serializers.instance.serialize<Exportable>(exportable),
+        r'serializable':
+            _$celest.Serializers.instance.serialize<Serializable>(serializable),
+        r'enumValue':
+            _$celest.Serializers.instance.serialize<LiteralEnum>(enumValue),
         r'recordValue': _$celest.Serializers.instance
             .serialize<({String a, String b, String c})>(recordValue),
       }),
@@ -5300,11 +5390,11 @@ class CelestFunctionsMetadata {
     Exportable? exportable = const Exportable(),
     Serializable? serializable = const Serializable.forType('String'),
     LiteralEnum? enumValue = LiteralEnum.a,
-    ({String a, String b, String c})? recordValue = const (
-      a: 'a',
-      b: 'b',
-      c: 'c',
-    ),
+    ({
+      String a,
+      String b,
+      String c
+    })? recordValue = const (a: 'a', b: 'b', c: 'c'),
   ]) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/nullable-positional-default-values'),
@@ -5319,15 +5409,12 @@ class CelestFunctionsMetadata {
         r'boolValue': boolValue,
         r'list': list,
         r'map': map,
-        r'exportable': _$celest.Serializers.instance.serialize<Exportable?>(
-          exportable,
-        ),
-        r'serializable': _$celest.Serializers.instance.serialize<Serializable?>(
-          serializable,
-        ),
-        r'enumValue': _$celest.Serializers.instance.serialize<LiteralEnum?>(
-          enumValue,
-        ),
+        r'exportable':
+            _$celest.Serializers.instance.serialize<Exportable?>(exportable),
+        r'serializable': _$celest.Serializers.instance
+            .serialize<Serializable?>(serializable),
+        r'enumValue':
+            _$celest.Serializers.instance.serialize<LiteralEnum?>(enumValue),
         r'recordValue': _$celest.Serializers.instance
             .serialize<({String a, String b, String c})?>(recordValue),
       }),
@@ -5342,7 +5429,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'metadata', function: 'namedDefaultValues')
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'namedDefaultValues',
+  )
   Future<void> namedDefaultValues({
     String value = 'value',
     int intValue = 1,
@@ -5353,11 +5443,11 @@ class CelestFunctionsMetadata {
     Exportable exportable = const Exportable(),
     Serializable serializable = const Serializable.forType('String'),
     LiteralEnum enumValue = LiteralEnum.a,
-    ({String a, String b, String c}) recordValue = const (
-      a: 'a',
-      b: 'b',
-      c: 'c',
-    ),
+    ({
+      String a,
+      String b,
+      String c
+    }) recordValue = const (a: 'a', b: 'b', c: 'c'),
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/named-default-values'),
@@ -5372,15 +5462,12 @@ class CelestFunctionsMetadata {
         r'boolValue': boolValue,
         r'list': list,
         r'map': map,
-        r'exportable': _$celest.Serializers.instance.serialize<Exportable>(
-          exportable,
-        ),
-        r'serializable': _$celest.Serializers.instance.serialize<Serializable>(
-          serializable,
-        ),
-        r'enumValue': _$celest.Serializers.instance.serialize<LiteralEnum>(
-          enumValue,
-        ),
+        r'exportable':
+            _$celest.Serializers.instance.serialize<Exportable>(exportable),
+        r'serializable':
+            _$celest.Serializers.instance.serialize<Serializable>(serializable),
+        r'enumValue':
+            _$celest.Serializers.instance.serialize<LiteralEnum>(enumValue),
         r'recordValue': _$celest.Serializers.instance
             .serialize<({String a, String b, String c})>(recordValue),
       }),
@@ -5409,11 +5496,11 @@ class CelestFunctionsMetadata {
     Exportable? exportable = const Exportable(),
     Serializable? serializable = const Serializable.forType('String'),
     LiteralEnum? enumValue = LiteralEnum.a,
-    ({String a, String b, String c})? recordValue = const (
-      a: 'a',
-      b: 'b',
-      c: 'c',
-    ),
+    ({
+      String a,
+      String b,
+      String c
+    })? recordValue = const (a: 'a', b: 'b', c: 'c'),
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/nullable-named-default-values'),
@@ -5428,15 +5515,12 @@ class CelestFunctionsMetadata {
         r'boolValue': boolValue,
         r'list': list,
         r'map': map,
-        r'exportable': _$celest.Serializers.instance.serialize<Exportable?>(
-          exportable,
-        ),
-        r'serializable': _$celest.Serializers.instance.serialize<Serializable?>(
-          serializable,
-        ),
-        r'enumValue': _$celest.Serializers.instance.serialize<LiteralEnum?>(
-          enumValue,
-        ),
+        r'exportable':
+            _$celest.Serializers.instance.serialize<Exportable?>(exportable),
+        r'serializable': _$celest.Serializers.instance
+            .serialize<Serializable?>(serializable),
+        r'enumValue':
+            _$celest.Serializers.instance.serialize<LiteralEnum?>(enumValue),
         r'recordValue': _$celest.Serializers.instance
             .serialize<({String a, String b, String c})?>(recordValue),
       }),
@@ -5480,17 +5564,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': _$celest.Serializers.instance.serialize<LiteralEnum>(
-          enumValue,
-        ),
+        r'enumValue':
+            _$celest.Serializers.instance.serialize<LiteralEnum>(enumValue),
         r'recordValue': _$celest.Serializers.instance
             .serialize<({String a, String b, String c})>(recordValue),
-        r'exportable': _$celest.Serializers.instance.serialize<Exportable>(
-          exportable,
-        ),
-        r'serializable': _$celest.Serializers.instance.serialize<Serializable>(
-          serializable,
-        ),
+        r'exportable':
+            _$celest.Serializers.instance.serialize<Exportable>(exportable),
+        r'serializable':
+            _$celest.Serializers.instance.serialize<Serializable>(serializable),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -5520,9 +5601,8 @@ class CelestFunctionsMetadata {
     Serializable? serializable = defaultSerializable,
   ]) async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/metadata/nullable-positional-default-value-vars',
-      ),
+      celest.baseUri
+          .resolve('/metadata/nullable-positional-default-value-vars'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -5534,17 +5614,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': _$celest.Serializers.instance.serialize<LiteralEnum?>(
-          enumValue,
-        ),
+        r'enumValue':
+            _$celest.Serializers.instance.serialize<LiteralEnum?>(enumValue),
         r'recordValue': _$celest.Serializers.instance
             .serialize<({String a, String b, String c})?>(recordValue),
-        r'exportable': _$celest.Serializers.instance.serialize<Exportable?>(
-          exportable,
-        ),
-        r'serializable': _$celest.Serializers.instance.serialize<Serializable?>(
-          serializable,
-        ),
+        r'exportable':
+            _$celest.Serializers.instance.serialize<Exportable?>(exportable),
+        r'serializable': _$celest.Serializers.instance
+            .serialize<Serializable?>(serializable),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -5557,7 +5634,10 @@ class CelestFunctionsMetadata {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'metadata', function: 'namedDefaultValueVars')
+  @_$celest.CloudFunction(
+    api: 'metadata',
+    function: 'namedDefaultValueVars',
+  )
   Future<void> namedDefaultValueVars({
     int value = defaultInt,
     double doubleValue = defaultDouble,
@@ -5583,17 +5663,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': _$celest.Serializers.instance.serialize<LiteralEnum>(
-          enumValue,
-        ),
+        r'enumValue':
+            _$celest.Serializers.instance.serialize<LiteralEnum>(enumValue),
         r'recordValue': _$celest.Serializers.instance
             .serialize<({String a, String b, String c})>(recordValue),
-        r'exportable': _$celest.Serializers.instance.serialize<Exportable>(
-          exportable,
-        ),
-        r'serializable': _$celest.Serializers.instance.serialize<Serializable>(
-          serializable,
-        ),
+        r'exportable':
+            _$celest.Serializers.instance.serialize<Exportable>(exportable),
+        r'serializable':
+            _$celest.Serializers.instance.serialize<Serializable>(serializable),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -5635,17 +5712,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': _$celest.Serializers.instance.serialize<LiteralEnum?>(
-          enumValue,
-        ),
+        r'enumValue':
+            _$celest.Serializers.instance.serialize<LiteralEnum?>(enumValue),
         r'recordValue': _$celest.Serializers.instance
             .serialize<({String a, String b, String c})?>(recordValue),
-        r'exportable': _$celest.Serializers.instance.serialize<Exportable?>(
-          exportable,
-        ),
-        r'serializable': _$celest.Serializers.instance.serialize<Serializable?>(
-          serializable,
-        ),
+        r'exportable':
+            _$celest.Serializers.instance.serialize<Exportable?>(exportable),
+        r'serializable': _$celest.Serializers.instance
+            .serialize<Serializable?>(serializable),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -5670,11 +5744,11 @@ class CelestFunctionsMetadata {
     List<String> listValue = const ['default'],
     Map<String, String> mapValue = const {'default': 'default'},
     LiteralEnum enumValue = LiteralEnum.a,
-    ({String a, String b, String c}) recordValue = const (
-      a: 'a',
-      b: 'b',
-      c: 'c',
-    ),
+    ({
+      String a,
+      String b,
+      String c
+    }) recordValue = const (a: 'a', b: 'b', c: 'c'),
     Exportable exportable = const Exportable(),
     Serializable serializable = const Serializable.forType('String'),
   ]) async {
@@ -5691,17 +5765,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': _$celest.Serializers.instance.serialize<LiteralEnum>(
-          enumValue,
-        ),
+        r'enumValue':
+            _$celest.Serializers.instance.serialize<LiteralEnum>(enumValue),
         r'recordValue': _$celest.Serializers.instance
             .serialize<({String a, String b, String c})>(recordValue),
-        r'exportable': _$celest.Serializers.instance.serialize<Exportable>(
-          exportable,
-        ),
-        r'serializable': _$celest.Serializers.instance.serialize<Serializable>(
-          serializable,
-        ),
+        r'exportable':
+            _$celest.Serializers.instance.serialize<Exportable>(exportable),
+        r'serializable':
+            _$celest.Serializers.instance.serialize<Serializable>(serializable),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -5726,18 +5797,17 @@ class CelestFunctionsMetadata {
     List<String>? listValue = const ['default'],
     Map<String, String>? mapValue = const {'default': 'default'},
     LiteralEnum? enumValue = LiteralEnum.a,
-    ({String a, String b, String c})? recordValue = const (
-      a: 'a',
-      b: 'b',
-      c: 'c',
-    ),
+    ({
+      String a,
+      String b,
+      String c
+    })? recordValue = const (a: 'a', b: 'b', c: 'c'),
     Exportable? exportable = const Exportable(),
     Serializable? serializable = const Serializable.forType('String'),
   ]) async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/metadata/nullable-positional-default-value-vars-private',
-      ),
+      celest.baseUri
+          .resolve('/metadata/nullable-positional-default-value-vars-private'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -5749,17 +5819,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': _$celest.Serializers.instance.serialize<LiteralEnum?>(
-          enumValue,
-        ),
+        r'enumValue':
+            _$celest.Serializers.instance.serialize<LiteralEnum?>(enumValue),
         r'recordValue': _$celest.Serializers.instance
             .serialize<({String a, String b, String c})?>(recordValue),
-        r'exportable': _$celest.Serializers.instance.serialize<Exportable?>(
-          exportable,
-        ),
-        r'serializable': _$celest.Serializers.instance.serialize<Serializable?>(
-          serializable,
-        ),
+        r'exportable':
+            _$celest.Serializers.instance.serialize<Exportable?>(exportable),
+        r'serializable': _$celest.Serializers.instance
+            .serialize<Serializable?>(serializable),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -5784,11 +5851,11 @@ class CelestFunctionsMetadata {
     List<String> listValue = const ['default'],
     Map<String, String> mapValue = const {'default': 'default'},
     LiteralEnum enumValue = LiteralEnum.a,
-    ({String a, String b, String c}) recordValue = const (
-      a: 'a',
-      b: 'b',
-      c: 'c',
-    ),
+    ({
+      String a,
+      String b,
+      String c
+    }) recordValue = const (a: 'a', b: 'b', c: 'c'),
     Exportable exportable = const Exportable(),
     Serializable serializable = const Serializable.forType('String'),
   }) async {
@@ -5805,17 +5872,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': _$celest.Serializers.instance.serialize<LiteralEnum>(
-          enumValue,
-        ),
+        r'enumValue':
+            _$celest.Serializers.instance.serialize<LiteralEnum>(enumValue),
         r'recordValue': _$celest.Serializers.instance
             .serialize<({String a, String b, String c})>(recordValue),
-        r'exportable': _$celest.Serializers.instance.serialize<Exportable>(
-          exportable,
-        ),
-        r'serializable': _$celest.Serializers.instance.serialize<Serializable>(
-          serializable,
-        ),
+        r'exportable':
+            _$celest.Serializers.instance.serialize<Exportable>(exportable),
+        r'serializable':
+            _$celest.Serializers.instance.serialize<Serializable>(serializable),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -5840,18 +5904,17 @@ class CelestFunctionsMetadata {
     List<String>? listValue = const ['default'],
     Map<String, String>? mapValue = const {'default': 'default'},
     LiteralEnum? enumValue = LiteralEnum.a,
-    ({String a, String b, String c})? recordValue = const (
-      a: 'a',
-      b: 'b',
-      c: 'c',
-    ),
+    ({
+      String a,
+      String b,
+      String c
+    })? recordValue = const (a: 'a', b: 'b', c: 'c'),
     Exportable? exportable = const Exportable(),
     Serializable? serializable = const Serializable.forType('String'),
   }) async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/metadata/nullable-named-default-value-vars-private',
-      ),
+      celest.baseUri
+          .resolve('/metadata/nullable-named-default-value-vars-private'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -5863,17 +5926,14 @@ class CelestFunctionsMetadata {
         r'stringValue': stringValue,
         r'listValue': listValue,
         r'mapValue': mapValue,
-        r'enumValue': _$celest.Serializers.instance.serialize<LiteralEnum?>(
-          enumValue,
-        ),
+        r'enumValue':
+            _$celest.Serializers.instance.serialize<LiteralEnum?>(enumValue),
         r'recordValue': _$celest.Serializers.instance
             .serialize<({String a, String b, String c})?>(recordValue),
-        r'exportable': _$celest.Serializers.instance.serialize<Exportable?>(
-          exportable,
-        ),
-        r'serializable': _$celest.Serializers.instance.serialize<Serializable?>(
-          serializable,
-        ),
+        r'exportable':
+            _$celest.Serializers.instance.serialize<Exportable?>(exportable),
+        r'serializable': _$celest.Serializers.instance
+            .serialize<Serializable?>(serializable),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -5890,7 +5950,10 @@ class CelestFunctionsMetadata {
 /// Tests that types can be recursively overriden in the serialization protocol
 /// using extension types.
 class CelestFunctionsOverrides {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -5900,9 +5963,9 @@ class CelestFunctionsOverrides {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -5910,18 +5973,17 @@ class CelestFunctionsOverrides {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -5932,9 +5994,8 @@ class CelestFunctionsOverrides {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -5951,9 +6012,8 @@ class CelestFunctionsOverrides {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -5982,9 +6042,8 @@ class CelestFunctionsOverrides {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -6007,16 +6066,14 @@ class CelestFunctionsOverrides {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -6063,16 +6120,14 @@ class CelestFunctionsOverrides {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -6088,16 +6143,14 @@ class CelestFunctionsOverrides {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -6107,9 +6160,8 @@ class CelestFunctionsOverrides {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -6125,16 +6177,14 @@ class CelestFunctionsOverrides {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       case '_common.CustomException':
@@ -6151,9 +6201,8 @@ class CelestFunctionsOverrides {
         );
       case 'api.v1.OverriddenException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OverriddenException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OverriddenException>(errorValue),
           stackTrace,
         );
       default:
@@ -6168,10 +6217,12 @@ class CelestFunctionsOverrides {
     }
   }
 
-  @_$celest.CloudFunction(api: 'overrides', function: 'commonNestedParent')
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'commonNestedParent',
+  )
   Future<_$_common__common.NestedParent> commonNestedParent(
-    _$_common__common.NestedParent parent,
-  ) async {
+      _$_common__common.NestedParent parent) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/overrides/common-nested-parent'),
       headers: const {
@@ -6180,7 +6231,7 @@ class CelestFunctionsOverrides {
       },
       body: _$celest.JsonUtf8.encode({
         r'parent': _$celest.Serializers.instance
-            .serialize<_$_common__common.NestedParent>(parent),
+            .serialize<_$_common__common.NestedParent>(parent)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -6194,10 +6245,12 @@ class CelestFunctionsOverrides {
         .deserialize<_$_common__common.NestedParent>($body);
   }
 
-  @_$celest.CloudFunction(api: 'overrides', function: 'commonNestedChild')
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'commonNestedChild',
+  )
   Future<_$_common__common.NestedChild> commonNestedChild(
-    _$_common__common.NestedChild child,
-  ) async {
+      _$_common__common.NestedChild child) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/overrides/common-nested-child'),
       headers: const {
@@ -6206,7 +6259,7 @@ class CelestFunctionsOverrides {
       },
       body: _$celest.JsonUtf8.encode({
         r'child': _$celest.Serializers.instance
-            .serialize<_$_common__common.NestedChild>(child),
+            .serialize<_$_common__common.NestedChild>(child)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -6220,10 +6273,12 @@ class CelestFunctionsOverrides {
         .deserialize<_$_common__common.NestedChild>($body);
   }
 
-  @_$celest.CloudFunction(api: 'overrides', function: 'nestedGrandparent')
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'nestedGrandparent',
+  )
   Future<NestedGrandparent> nestedGrandparent(
-    NestedGrandparent grandparent,
-  ) async {
+      NestedGrandparent grandparent) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/overrides/nested-grandparent'),
       headers: const {
@@ -6232,7 +6287,7 @@ class CelestFunctionsOverrides {
       },
       body: _$celest.JsonUtf8.encode({
         r'grandparent': _$celest.Serializers.instance
-            .serialize<NestedGrandparent>(grandparent),
+            .serialize<NestedGrandparent>(grandparent)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -6245,7 +6300,10 @@ class CelestFunctionsOverrides {
     return _$celest.Serializers.instance.deserialize<NestedGrandparent>($body);
   }
 
-  @_$celest.CloudFunction(api: 'overrides', function: 'nestedParent')
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'nestedParent',
+  )
   Future<NestedParent> nestedParent(NestedParent parent) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/overrides/nested-parent'),
@@ -6254,9 +6312,7 @@ class CelestFunctionsOverrides {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'parent': _$celest.Serializers.instance.serialize<NestedParent>(
-          parent,
-        ),
+        r'parent': _$celest.Serializers.instance.serialize<NestedParent>(parent)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -6269,7 +6325,10 @@ class CelestFunctionsOverrides {
     return _$celest.Serializers.instance.deserialize<NestedParent>($body);
   }
 
-  @_$celest.CloudFunction(api: 'overrides', function: 'nestedChild')
+  @_$celest.CloudFunction(
+    api: 'overrides',
+    function: 'nestedChild',
+  )
   Future<NestedChild> nestedChild(NestedChild child) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/overrides/nested-child'),
@@ -6278,7 +6337,7 @@ class CelestFunctionsOverrides {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'child': _$celest.Serializers.instance.serialize<NestedChild>(child),
+        r'child': _$celest.Serializers.instance.serialize<NestedChild>(child)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -6297,9 +6356,8 @@ class CelestFunctionsOverrides {
   )
   Future<void> callsThrowsCommonOverriddenException() async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/overrides/calls-throws-common-overridden-exception',
-      ),
+      celest.baseUri
+          .resolve('/overrides/calls-throws-common-overridden-exception'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -6383,7 +6441,10 @@ class CelestFunctionsOverrides {
 }
 
 class CelestFunctionsParameterTypes {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -6393,9 +6454,9 @@ class CelestFunctionsParameterTypes {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -6403,18 +6464,17 @@ class CelestFunctionsParameterTypes {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -6425,9 +6485,8 @@ class CelestFunctionsParameterTypes {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -6444,9 +6503,8 @@ class CelestFunctionsParameterTypes {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -6475,9 +6533,8 @@ class CelestFunctionsParameterTypes {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -6500,16 +6557,14 @@ class CelestFunctionsParameterTypes {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -6556,16 +6611,14 @@ class CelestFunctionsParameterTypes {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -6581,16 +6634,14 @@ class CelestFunctionsParameterTypes {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -6600,9 +6651,8 @@ class CelestFunctionsParameterTypes {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -6618,16 +6668,14 @@ class CelestFunctionsParameterTypes {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       default:
@@ -6642,7 +6690,10 @@ class CelestFunctionsParameterTypes {
     }
   }
 
-  @_$celest.CloudFunction(api: 'parameter_types', function: 'simple')
+  @_$celest.CloudFunction(
+    api: 'parameter_types',
+    function: 'simple',
+  )
   Future<void> simple(
     String aString,
     int anInt,
@@ -6703,147 +6754,131 @@ class CelestFunctionsParameterTypes {
         r'anEnum': _$celest.Serializers.instance.serialize<MyEnum>(anEnum),
         r'aNull': aNull,
         r'aBigInt': _$celest.Serializers.instance.serialize<BigInt>(aBigInt),
-        r'aDateTime': _$celest.Serializers.instance.serialize<DateTime>(
-          aDateTime,
-        ),
-        r'aDuration': _$celest.Serializers.instance.serialize<Duration>(
-          aDuration,
-        ),
+        r'aDateTime':
+            _$celest.Serializers.instance.serialize<DateTime>(aDateTime),
+        r'aDuration':
+            _$celest.Serializers.instance.serialize<Duration>(aDuration),
         r'aRegExp': _$celest.Serializers.instance.serialize<RegExp>(aRegExp),
-        r'aStackTrace': _$celest.Serializers.instance.serialize<StackTrace>(
-          aStackTrace,
-        ),
+        r'aStackTrace':
+            _$celest.Serializers.instance.serialize<StackTrace>(aStackTrace),
         r'aUri': _$celest.Serializers.instance.serialize<Uri>(aUri),
         r'aUriData': _$celest.Serializers.instance.serialize<UriData>(aUriData),
-        r'aUint8List': _$celest.Serializers.instance.serialize<Uint8List>(
-          aUint8List,
-        ),
+        r'aUint8List':
+            _$celest.Serializers.instance.serialize<Uint8List>(aUint8List),
         r'anIterableOfString': anIterableOfString,
-        r'anIterableOfUint8List':
-            anIterableOfUint8List
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<Uint8List>(el),
-                )
-                .toList(),
+        r'anIterableOfUint8List': anIterableOfUint8List
+            .map((el) => _$celest.Serializers.instance.serialize<Uint8List>(el))
+            .toList(),
         r'aListOfString': aListOfString,
         r'aListOfInt': aListOfInt,
         r'aListOfDouble': aListOfDouble,
         r'aListOfBool': aListOfBool,
-        r'aListOfEnum':
-            aListOfEnum
-                .map(
-                  (el) => _$celest.Serializers.instance.serialize<MyEnum>(el),
-                )
-                .toList(),
+        r'aListOfEnum': aListOfEnum
+            .map((el) => _$celest.Serializers.instance.serialize<MyEnum>(el))
+            .toList(),
         r'aListOfNull': aListOfNull,
-        r'aListOfBigInt':
-            aListOfBigInt
-                .map(
-                  (el) => _$celest.Serializers.instance.serialize<BigInt>(el),
-                )
-                .toList(),
-        r'aListOfDateTime':
-            aListOfDateTime
-                .map(
-                  (el) => _$celest.Serializers.instance.serialize<DateTime>(el),
-                )
-                .toList(),
-        r'aListOfDuration':
-            aListOfDuration
-                .map(
-                  (el) => _$celest.Serializers.instance.serialize<Duration>(el),
-                )
-                .toList(),
-        r'aListOfRegExp':
-            aListOfRegExp
-                .map(
-                  (el) => _$celest.Serializers.instance.serialize<RegExp>(el),
-                )
-                .toList(),
-        r'aListOfStackTrace':
-            aListOfStackTrace
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<StackTrace>(el),
-                )
-                .toList(),
-        r'aListOfUri':
-            aListOfUri
-                .map((el) => _$celest.Serializers.instance.serialize<Uri>(el))
-                .toList(),
-        r'aListOfUriData':
-            aListOfUriData
-                .map(
-                  (el) => _$celest.Serializers.instance.serialize<UriData>(el),
-                )
-                .toList(),
-        r'aListOfUint8List':
-            aListOfUint8List
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<Uint8List>(el),
-                )
-                .toList(),
+        r'aListOfBigInt': aListOfBigInt
+            .map((el) => _$celest.Serializers.instance.serialize<BigInt>(el))
+            .toList(),
+        r'aListOfDateTime': aListOfDateTime
+            .map((el) => _$celest.Serializers.instance.serialize<DateTime>(el))
+            .toList(),
+        r'aListOfDuration': aListOfDuration
+            .map((el) => _$celest.Serializers.instance.serialize<Duration>(el))
+            .toList(),
+        r'aListOfRegExp': aListOfRegExp
+            .map((el) => _$celest.Serializers.instance.serialize<RegExp>(el))
+            .toList(),
+        r'aListOfStackTrace': aListOfStackTrace
+            .map(
+                (el) => _$celest.Serializers.instance.serialize<StackTrace>(el))
+            .toList(),
+        r'aListOfUri': aListOfUri
+            .map((el) => _$celest.Serializers.instance.serialize<Uri>(el))
+            .toList(),
+        r'aListOfUriData': aListOfUriData
+            .map((el) => _$celest.Serializers.instance.serialize<UriData>(el))
+            .toList(),
+        r'aListOfUint8List': aListOfUint8List
+            .map((el) => _$celest.Serializers.instance.serialize<Uint8List>(el))
+            .toList(),
         r'aMapOfString': aMapOfString,
         r'aMapOfInt': aMapOfInt,
         r'aMapOfDouble': aMapOfDouble,
         r'aMapOfBool': aMapOfBool,
-        r'aMapOfEnum': aMapOfEnum.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<MyEnum>(value),
-          ),
-        ),
+        r'aMapOfEnum': aMapOfEnum.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<MyEnum>(value),
+            )),
         r'aMapOfNull': aMapOfNull,
-        r'aMapOfBigInt': aMapOfBigInt.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<BigInt>(value),
-          ),
-        ),
-        r'aMapOfDateTime': aMapOfDateTime.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<DateTime>(value),
-          ),
-        ),
-        r'aMapOfDuration': aMapOfDuration.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<Duration>(value),
-          ),
-        ),
-        r'aMapOfRegExp': aMapOfRegExp.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<RegExp>(value),
-          ),
-        ),
-        r'aMapOfStackTrace': aMapOfStackTrace.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<StackTrace>(value),
-          ),
-        ),
-        r'aMapOfUri': aMapOfUri.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<Uri>(value),
-          ),
-        ),
-        r'aMapOfUriData': aMapOfUriData.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<UriData>(value),
-          ),
-        ),
-        r'aMapOfUint8List': aMapOfUint8List.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<Uint8List>(value),
-          ),
-        ),
+        r'aMapOfBigInt': aMapOfBigInt.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<BigInt>(value),
+            )),
+        r'aMapOfDateTime': aMapOfDateTime.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<DateTime>(value),
+            )),
+        r'aMapOfDuration': aMapOfDuration.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<Duration>(value),
+            )),
+        r'aMapOfRegExp': aMapOfRegExp.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<RegExp>(value),
+            )),
+        r'aMapOfStackTrace': aMapOfStackTrace.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<StackTrace>(value),
+            )),
+        r'aMapOfUri': aMapOfUri.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<Uri>(value),
+            )),
+        r'aMapOfUriData': aMapOfUriData.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<UriData>(value),
+            )),
+        r'aMapOfUint8List': aMapOfUint8List.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<Uint8List>(value),
+            )),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -6856,7 +6891,10 @@ class CelestFunctionsParameterTypes {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'parameter_types', function: 'simpleOptional')
+  @_$celest.CloudFunction(
+    api: 'parameter_types',
+    function: 'simpleOptional',
+  )
   Future<void> simpleOptional(
     String? aString,
     int? anInt,
@@ -6917,149 +6955,134 @@ class CelestFunctionsParameterTypes {
         r'anEnum': _$celest.Serializers.instance.serialize<MyEnum?>(anEnum),
         r'aNull': aNull,
         r'aBigInt': _$celest.Serializers.instance.serialize<BigInt?>(aBigInt),
-        r'aDateTime': _$celest.Serializers.instance.serialize<DateTime?>(
-          aDateTime,
-        ),
-        r'aDuration': _$celest.Serializers.instance.serialize<Duration?>(
-          aDuration,
-        ),
+        r'aDateTime':
+            _$celest.Serializers.instance.serialize<DateTime?>(aDateTime),
+        r'aDuration':
+            _$celest.Serializers.instance.serialize<Duration?>(aDuration),
         r'aRegExp': _$celest.Serializers.instance.serialize<RegExp?>(aRegExp),
-        r'aStackTrace': _$celest.Serializers.instance.serialize<StackTrace?>(
-          aStackTrace,
-        ),
+        r'aStackTrace':
+            _$celest.Serializers.instance.serialize<StackTrace?>(aStackTrace),
         r'aUri': _$celest.Serializers.instance.serialize<Uri?>(aUri),
-        r'aUriData': _$celest.Serializers.instance.serialize<UriData?>(
-          aUriData,
-        ),
-        r'aUint8List': _$celest.Serializers.instance.serialize<Uint8List?>(
-          aUint8List,
-        ),
+        r'aUriData':
+            _$celest.Serializers.instance.serialize<UriData?>(aUriData),
+        r'aUint8List':
+            _$celest.Serializers.instance.serialize<Uint8List?>(aUint8List),
         r'anIterableOfString': anIterableOfString,
-        r'anIterableOfUint8List':
-            anIterableOfUint8List
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<Uint8List>(el),
-                )
-                .toList(),
+        r'anIterableOfUint8List': anIterableOfUint8List
+            ?.map(
+                (el) => _$celest.Serializers.instance.serialize<Uint8List>(el))
+            .toList(),
         r'aListOfString': aListOfString,
         r'aListOfInt': aListOfInt,
         r'aListOfDouble': aListOfDouble,
         r'aListOfBool': aListOfBool,
-        r'aListOfEnum':
-            aListOfEnum
-                ?.map(
-                  (el) => _$celest.Serializers.instance.serialize<MyEnum>(el),
-                )
-                .toList(),
+        r'aListOfEnum': aListOfEnum
+            ?.map((el) => _$celest.Serializers.instance.serialize<MyEnum>(el))
+            .toList(),
         r'aListOfNull': aListOfNull,
-        r'aListOfBigInt':
-            aListOfBigInt
-                ?.map(
-                  (el) => _$celest.Serializers.instance.serialize<BigInt>(el),
-                )
-                .toList(),
-        r'aListOfDateTime':
-            aListOfDateTime
-                ?.map(
-                  (el) => _$celest.Serializers.instance.serialize<DateTime>(el),
-                )
-                .toList(),
-        r'aListOfDuration':
-            aListOfDuration
-                ?.map(
-                  (el) => _$celest.Serializers.instance.serialize<Duration>(el),
-                )
-                .toList(),
-        r'aListOfRegExp':
-            aListOfRegExp
-                ?.map(
-                  (el) => _$celest.Serializers.instance.serialize<RegExp>(el),
-                )
-                .toList(),
-        r'aListOfStackTrace':
-            aListOfStackTrace
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<StackTrace>(el),
-                )
-                .toList(),
-        r'aListOfUri':
-            aListOfUri
-                ?.map((el) => _$celest.Serializers.instance.serialize<Uri>(el))
-                .toList(),
-        r'aListOfUriData':
-            aListOfUriData
-                ?.map(
-                  (el) => _$celest.Serializers.instance.serialize<UriData>(el),
-                )
-                .toList(),
-        r'aListOfUint8List':
-            aListOfUint8List
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<Uint8List>(el),
-                )
-                .toList(),
+        r'aListOfBigInt': aListOfBigInt
+            ?.map((el) => _$celest.Serializers.instance.serialize<BigInt>(el))
+            .toList(),
+        r'aListOfDateTime': aListOfDateTime
+            ?.map((el) => _$celest.Serializers.instance.serialize<DateTime>(el))
+            .toList(),
+        r'aListOfDuration': aListOfDuration
+            ?.map((el) => _$celest.Serializers.instance.serialize<Duration>(el))
+            .toList(),
+        r'aListOfRegExp': aListOfRegExp
+            ?.map((el) => _$celest.Serializers.instance.serialize<RegExp>(el))
+            .toList(),
+        r'aListOfStackTrace': aListOfStackTrace
+            ?.map(
+                (el) => _$celest.Serializers.instance.serialize<StackTrace>(el))
+            .toList(),
+        r'aListOfUri': aListOfUri
+            ?.map((el) => _$celest.Serializers.instance.serialize<Uri>(el))
+            .toList(),
+        r'aListOfUriData': aListOfUriData
+            ?.map((el) => _$celest.Serializers.instance.serialize<UriData>(el))
+            .toList(),
+        r'aListOfUint8List': aListOfUint8List
+            ?.map(
+                (el) => _$celest.Serializers.instance.serialize<Uint8List>(el))
+            .toList(),
         r'aMapOfString': aMapOfString,
         r'aMapOfInt': aMapOfInt,
         r'aMapOfDouble': aMapOfDouble,
         r'aMapOfBool': aMapOfBool,
-        r'aMapOfEnum': aMapOfEnum?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<MyEnum>(value),
-          ),
-        ),
+        r'aMapOfEnum': aMapOfEnum?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<MyEnum>(value),
+            )),
         r'aMapOfNull': aMapOfNull,
-        r'aMapOfBigInt': aMapOfBigInt?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<BigInt>(value),
-          ),
-        ),
-        r'aMapOfDateTime': aMapOfDateTime?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<DateTime>(value),
-          ),
-        ),
-        r'aMapOfDuration': aMapOfDuration?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<Duration>(value),
-          ),
-        ),
-        r'aMapOfRegExp': aMapOfRegExp?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<RegExp>(value),
-          ),
-        ),
-        r'aMapOfStackTrace': aMapOfStackTrace?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<StackTrace>(value),
-          ),
-        ),
-        r'aMapOfUri': aMapOfUri?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<Uri>(value),
-          ),
-        ),
-        r'aMapOfUriData': aMapOfUriData?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<UriData>(value),
-          ),
-        ),
-        r'aMapOfUint8List': aMapOfUint8List?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<Uint8List>(value),
-          ),
-        ),
+        r'aMapOfBigInt': aMapOfBigInt?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<BigInt>(value),
+            )),
+        r'aMapOfDateTime': aMapOfDateTime?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<DateTime>(value),
+            )),
+        r'aMapOfDuration': aMapOfDuration?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<Duration>(value),
+            )),
+        r'aMapOfRegExp': aMapOfRegExp?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<RegExp>(value),
+            )),
+        r'aMapOfStackTrace': aMapOfStackTrace?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<StackTrace>(value),
+            )),
+        r'aMapOfUri': aMapOfUri?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<Uri>(value),
+            )),
+        r'aMapOfUriData': aMapOfUriData?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<UriData>(value),
+            )),
+        r'aMapOfUint8List': aMapOfUint8List?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<Uint8List>(value),
+            )),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -7072,7 +7095,10 @@ class CelestFunctionsParameterTypes {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'parameter_types', function: 'complex')
+  @_$celest.CloudFunction(
+    api: 'parameter_types',
+    function: 'complex',
+  )
   Future<void> complex(
     SimpleStruct aSimpleStruct,
     ComplexStruct aComplexStruct,
@@ -7130,17 +7156,14 @@ class CelestFunctionsParameterTypes {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'aSimpleStruct': _$celest.Serializers.instance.serialize<SimpleStruct>(
-          aSimpleStruct,
-        ),
+        r'aSimpleStruct': _$celest.Serializers.instance
+            .serialize<SimpleStruct>(aSimpleStruct),
         r'aComplexStruct': _$celest.Serializers.instance
             .serialize<ComplexStruct>(aComplexStruct),
-        r'aSimpleClass': _$celest.Serializers.instance.serialize<SimpleClass>(
-          aSimpleClass,
-        ),
-        r'aComplexClass': _$celest.Serializers.instance.serialize<ComplexClass>(
-          aComplexClass,
-        ),
+        r'aSimpleClass':
+            _$celest.Serializers.instance.serialize<SimpleClass>(aSimpleClass),
+        r'aComplexClass': _$celest.Serializers.instance
+            .serialize<ComplexClass>(aComplexClass),
         r'aNullableSimpleStruct': _$celest.Serializers.instance
             .serialize<SimpleStruct?>(aNullableSimpleStruct),
         r'aNullableComplexStruct': _$celest.Serializers.instance
@@ -7149,274 +7172,235 @@ class CelestFunctionsParameterTypes {
             .serialize<SimpleClass?>(aNullableSimpleClass),
         r'aNullableComplexClass': _$celest.Serializers.instance
             .serialize<ComplexClass?>(aNullableComplexClass),
-        r'anIterableOfSimpleStruct':
-            anIterableOfSimpleStruct
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleStruct>(el),
-                )
-                .toList(),
-        r'anIterableOfComplexStruct':
-            anIterableOfComplexStruct
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexStruct>(el),
-                )
-                .toList(),
-        r'anIterableOfSimpleClass':
-            anIterableOfSimpleClass
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass>(el),
-                )
-                .toList(),
-        r'anIterableOfComplexClass':
-            anIterableOfComplexClass
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<ComplexClass>(el),
-                )
-                .toList(),
-        r'aNullableIterableOfSimpleStruct':
-            aNullableIterableOfSimpleStruct
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleStruct>(el),
-                )
-                .toList(),
-        r'aNullableIterableOfComplexStruct':
-            aNullableIterableOfComplexStruct
-                ?.map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexStruct>(el),
-                )
-                .toList(),
-        r'aNullableIterableOfSimpleClass':
-            aNullableIterableOfSimpleClass
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass>(el),
-                )
-                .toList(),
-        r'aNullableIterableOfComplexClass':
-            aNullableIterableOfComplexClass
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<ComplexClass>(el),
-                )
-                .toList(),
-        r'anIterableOfNullableSimpleStruct':
-            anIterableOfNullableSimpleStruct
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<SimpleStruct?>(el),
-                )
-                .toList(),
-        r'anIterableOfNullableComplexStruct':
-            anIterableOfNullableComplexStruct
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexStruct?>(el),
-                )
-                .toList(),
-        r'anIterableOfNullableSimpleClass':
-            anIterableOfNullableSimpleClass
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass?>(el),
-                )
-                .toList(),
-        r'anIterableOfNullableComplexClass':
-            anIterableOfNullableComplexClass
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexClass?>(el),
-                )
-                .toList(),
-        r'aListOfSimpleStruct':
-            aListOfSimpleStruct
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleStruct>(el),
-                )
-                .toList(),
-        r'aListOfComplexStruct':
-            aListOfComplexStruct
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexStruct>(el),
-                )
-                .toList(),
-        r'aListOfSimpleClass':
-            aListOfSimpleClass
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass>(el),
-                )
-                .toList(),
-        r'aListOfComplexClass':
-            aListOfComplexClass
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<ComplexClass>(el),
-                )
-                .toList(),
-        r'aNullableListOfSimpleStruct':
-            aNullableListOfSimpleStruct
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleStruct>(el),
-                )
-                .toList(),
-        r'aNullableListOfComplexStruct':
-            aNullableListOfComplexStruct
-                ?.map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexStruct>(el),
-                )
-                .toList(),
-        r'aNullableListOfSimpleClass':
-            aNullableListOfSimpleClass
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass>(el),
-                )
-                .toList(),
-        r'aNullableListOfComplexClass':
-            aNullableListOfComplexClass
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<ComplexClass>(el),
-                )
-                .toList(),
-        r'aListOfNullableSimpleStruct':
-            aListOfNullableSimpleStruct
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<SimpleStruct?>(el),
-                )
-                .toList(),
-        r'aListOfNullableComplexStruct':
-            aListOfNullableComplexStruct
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexStruct?>(el),
-                )
-                .toList(),
-        r'aListOfNullableSimpleClass':
-            aListOfNullableSimpleClass
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass?>(el),
-                )
-                .toList(),
-        r'aListOfNullableComplexClass':
-            aListOfNullableComplexClass
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexClass?>(el),
-                )
-                .toList(),
-        r'aMapOfSimpleStruct': aMapOfSimpleStruct.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<SimpleStruct>(value),
-          ),
-        ),
-        r'aMapOfComplexStruct': aMapOfComplexStruct.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<ComplexStruct>(value),
-          ),
-        ),
-        r'aMapOfSimpleClass': aMapOfSimpleClass.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<SimpleClass>(value),
-          ),
-        ),
-        r'aMapOfComplexClass': aMapOfComplexClass.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<ComplexClass>(value),
-          ),
-        ),
-        r'aNullableMapOfSimpleStruct': aNullableMapOfSimpleStruct?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<SimpleStruct>(value),
-          ),
-        ),
-        r'aNullableMapOfComplexStruct': aNullableMapOfComplexStruct?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<ComplexStruct>(value),
-          ),
-        ),
-        r'aNullableMapOfSimpleClass': aNullableMapOfSimpleClass?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<SimpleClass>(value),
-          ),
-        ),
-        r'aNullableMapOfComplexClass': aNullableMapOfComplexClass?.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<ComplexClass>(value),
-          ),
-        ),
-        r'aMapOfNullableSimpleStruct': aMapOfNullableSimpleStruct.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<SimpleStruct?>(value),
-          ),
-        ),
-        r'aMapOfNullableComplexStruct': aMapOfNullableComplexStruct.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<ComplexStruct?>(value),
-          ),
-        ),
-        r'aMapOfNullableSimpleClass': aMapOfNullableSimpleClass.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<SimpleClass?>(value),
-          ),
-        ),
-        r'aMapOfNullableComplexClass': aMapOfNullableComplexClass.map(
-          (key, value) => MapEntry(
-            key,
-            _$celest.Serializers.instance.serialize<ComplexClass?>(value),
-          ),
-        ),
+        r'anIterableOfSimpleStruct': anIterableOfSimpleStruct
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleStruct>(el))
+            .toList(),
+        r'anIterableOfComplexStruct': anIterableOfComplexStruct
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<ComplexStruct>(el))
+            .toList(),
+        r'anIterableOfSimpleClass': anIterableOfSimpleClass
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleClass>(el))
+            .toList(),
+        r'anIterableOfComplexClass': anIterableOfComplexClass
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<ComplexClass>(el))
+            .toList(),
+        r'aNullableIterableOfSimpleStruct': aNullableIterableOfSimpleStruct
+            ?.map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleStruct>(el))
+            .toList(),
+        r'aNullableIterableOfComplexStruct': aNullableIterableOfComplexStruct
+            ?.map((el) =>
+                _$celest.Serializers.instance.serialize<ComplexStruct>(el))
+            .toList(),
+        r'aNullableIterableOfSimpleClass': aNullableIterableOfSimpleClass
+            ?.map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleClass>(el))
+            .toList(),
+        r'aNullableIterableOfComplexClass': aNullableIterableOfComplexClass
+            ?.map((el) =>
+                _$celest.Serializers.instance.serialize<ComplexClass>(el))
+            .toList(),
+        r'anIterableOfNullableSimpleStruct': anIterableOfNullableSimpleStruct
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleStruct?>(el))
+            .toList(),
+        r'anIterableOfNullableComplexStruct': anIterableOfNullableComplexStruct
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<ComplexStruct?>(el))
+            .toList(),
+        r'anIterableOfNullableSimpleClass': anIterableOfNullableSimpleClass
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleClass?>(el))
+            .toList(),
+        r'anIterableOfNullableComplexClass': anIterableOfNullableComplexClass
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<ComplexClass?>(el))
+            .toList(),
+        r'aListOfSimpleStruct': aListOfSimpleStruct
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleStruct>(el))
+            .toList(),
+        r'aListOfComplexStruct': aListOfComplexStruct
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<ComplexStruct>(el))
+            .toList(),
+        r'aListOfSimpleClass': aListOfSimpleClass
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleClass>(el))
+            .toList(),
+        r'aListOfComplexClass': aListOfComplexClass
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<ComplexClass>(el))
+            .toList(),
+        r'aNullableListOfSimpleStruct': aNullableListOfSimpleStruct
+            ?.map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleStruct>(el))
+            .toList(),
+        r'aNullableListOfComplexStruct': aNullableListOfComplexStruct
+            ?.map((el) =>
+                _$celest.Serializers.instance.serialize<ComplexStruct>(el))
+            .toList(),
+        r'aNullableListOfSimpleClass': aNullableListOfSimpleClass
+            ?.map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleClass>(el))
+            .toList(),
+        r'aNullableListOfComplexClass': aNullableListOfComplexClass
+            ?.map((el) =>
+                _$celest.Serializers.instance.serialize<ComplexClass>(el))
+            .toList(),
+        r'aListOfNullableSimpleStruct': aListOfNullableSimpleStruct
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleStruct?>(el))
+            .toList(),
+        r'aListOfNullableComplexStruct': aListOfNullableComplexStruct
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<ComplexStruct?>(el))
+            .toList(),
+        r'aListOfNullableSimpleClass': aListOfNullableSimpleClass
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<SimpleClass?>(el))
+            .toList(),
+        r'aListOfNullableComplexClass': aListOfNullableComplexClass
+            .map((el) =>
+                _$celest.Serializers.instance.serialize<ComplexClass?>(el))
+            .toList(),
+        r'aMapOfSimpleStruct': aMapOfSimpleStruct.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<SimpleStruct>(value),
+            )),
+        r'aMapOfComplexStruct': aMapOfComplexStruct.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<ComplexStruct>(value),
+            )),
+        r'aMapOfSimpleClass': aMapOfSimpleClass.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<SimpleClass>(value),
+            )),
+        r'aMapOfComplexClass': aMapOfComplexClass.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<ComplexClass>(value),
+            )),
+        r'aNullableMapOfSimpleStruct': aNullableMapOfSimpleStruct?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<SimpleStruct>(value),
+            )),
+        r'aNullableMapOfComplexStruct': aNullableMapOfComplexStruct?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<ComplexStruct>(value),
+            )),
+        r'aNullableMapOfSimpleClass': aNullableMapOfSimpleClass?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<SimpleClass>(value),
+            )),
+        r'aNullableMapOfComplexClass': aNullableMapOfComplexClass?.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<ComplexClass>(value),
+            )),
+        r'aMapOfNullableSimpleStruct': aMapOfNullableSimpleStruct.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<SimpleStruct?>(value),
+            )),
+        r'aMapOfNullableComplexStruct': aMapOfNullableComplexStruct.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<ComplexStruct?>(value),
+            )),
+        r'aMapOfNullableSimpleClass': aMapOfNullableSimpleClass.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<SimpleClass?>(value),
+            )),
+        r'aMapOfNullableComplexClass': aMapOfNullableComplexClass.map((
+          key,
+          value,
+        ) =>
+            MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<ComplexClass?>(value),
+            )),
         r'aNullableMapOfNullableSimpleStruct':
-            aNullableMapOfNullableSimpleStruct?.map(
-              (key, value) => MapEntry(
-                key,
-                _$celest.Serializers.instance.serialize<SimpleStruct?>(value),
-              ),
-            ),
+            aNullableMapOfNullableSimpleStruct?.map((
+          key,
+          value,
+        ) =>
+                MapEntry(
+                  key,
+                  _$celest.Serializers.instance.serialize<SimpleStruct?>(value),
+                )),
         r'aNullableMapOfNullableComplexStruct':
-            aNullableMapOfNullableComplexStruct?.map(
-              (key, value) => MapEntry(
-                key,
-                _$celest.Serializers.instance.serialize<ComplexStruct?>(value),
-              ),
-            ),
-        r'aNullableMapOfNullableSimpleClass': aNullableMapOfNullableSimpleClass
-            ?.map(
-              (key, value) => MapEntry(
-                key,
-                _$celest.Serializers.instance.serialize<SimpleClass?>(value),
-              ),
-            ),
+            aNullableMapOfNullableComplexStruct?.map((
+          key,
+          value,
+        ) =>
+                MapEntry(
+                  key,
+                  _$celest.Serializers.instance
+                      .serialize<ComplexStruct?>(value),
+                )),
+        r'aNullableMapOfNullableSimpleClass':
+            aNullableMapOfNullableSimpleClass?.map((
+          key,
+          value,
+        ) =>
+                MapEntry(
+                  key,
+                  _$celest.Serializers.instance.serialize<SimpleClass?>(value),
+                )),
         r'aNullableMapOfNullableComplexClass':
-            aNullableMapOfNullableComplexClass?.map(
-              (key, value) => MapEntry(
-                key,
-                _$celest.Serializers.instance.serialize<ComplexClass?>(value),
-              ),
-            ),
+            aNullableMapOfNullableComplexClass?.map((
+          key,
+          value,
+        ) =>
+                MapEntry(
+                  key,
+                  _$celest.Serializers.instance.serialize<ComplexClass?>(value),
+                )),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -7431,7 +7415,10 @@ class CelestFunctionsParameterTypes {
 }
 
 class CelestFunctionsParameters {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -7441,9 +7428,9 @@ class CelestFunctionsParameters {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -7451,18 +7438,17 @@ class CelestFunctionsParameters {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -7473,9 +7459,8 @@ class CelestFunctionsParameters {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -7492,9 +7477,8 @@ class CelestFunctionsParameters {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -7523,9 +7507,8 @@ class CelestFunctionsParameters {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -7548,16 +7531,14 @@ class CelestFunctionsParameters {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -7604,16 +7585,14 @@ class CelestFunctionsParameters {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -7629,16 +7608,14 @@ class CelestFunctionsParameters {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -7648,9 +7625,8 @@ class CelestFunctionsParameters {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -7666,16 +7642,14 @@ class CelestFunctionsParameters {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       default:
@@ -7690,7 +7664,10 @@ class CelestFunctionsParameters {
     }
   }
 
-  @_$celest.CloudFunction(api: 'parameters', function: 'optionalPositional')
+  @_$celest.CloudFunction(
+    api: 'parameters',
+    function: 'optionalPositional',
+  )
   Future<void> optionalPositional([
     String? optionalString,
     int? optionalInt,
@@ -7716,8 +7693,14 @@ class CelestFunctionsParameters {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'parameters', function: 'optionalNamed')
-  Future<void> optionalNamed({String? namedString, int? namedInt}) async {
+  @_$celest.CloudFunction(
+    api: 'parameters',
+    function: 'optionalNamed',
+  )
+  Future<void> optionalNamed({
+    String? namedString,
+    int? namedInt,
+  }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/parameters/optional-named'),
       headers: const {
@@ -7739,7 +7722,10 @@ class CelestFunctionsParameters {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'parameters', function: 'requiredPositional')
+  @_$celest.CloudFunction(
+    api: 'parameters',
+    function: 'requiredPositional',
+  )
   Future<void> requiredPositional(
     String requiredString,
     int requiredInt,
@@ -7765,7 +7751,10 @@ class CelestFunctionsParameters {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'parameters', function: 'requiredNamed')
+  @_$celest.CloudFunction(
+    api: 'parameters',
+    function: 'requiredNamed',
+  )
   Future<void> requiredNamed({
     required String requiredString,
     required int requiredInt,
@@ -7795,7 +7784,10 @@ class CelestFunctionsParameters {
 /// Tests that records with and without aliases are serializable and
 /// deserializable.
 class CelestFunctionsRecords {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -7805,9 +7797,9 @@ class CelestFunctionsRecords {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -7815,18 +7807,17 @@ class CelestFunctionsRecords {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -7837,9 +7828,8 @@ class CelestFunctionsRecords {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -7856,9 +7846,8 @@ class CelestFunctionsRecords {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -7887,9 +7876,8 @@ class CelestFunctionsRecords {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -7912,16 +7900,14 @@ class CelestFunctionsRecords {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -7968,16 +7954,14 @@ class CelestFunctionsRecords {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -7993,16 +7977,14 @@ class CelestFunctionsRecords {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -8012,9 +7994,8 @@ class CelestFunctionsRecords {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -8030,16 +8011,14 @@ class CelestFunctionsRecords {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       default:
@@ -8054,10 +8033,12 @@ class CelestFunctionsRecords {
     }
   }
 
-  @_$celest.CloudFunction(api: 'records', function: 'nonAliasedNamedFields')
-  Future<({String anotherField, String field})> nonAliasedNamedFields({
-    required ({String anotherField, String field}) value,
-  }) async {
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'nonAliasedNamedFields',
+  )
+  Future<({String anotherField, String field})> nonAliasedNamedFields(
+      {required ({String anotherField, String field}) value}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/non-aliased-named-fields'),
       headers: const {
@@ -8066,7 +8047,7 @@ class CelestFunctionsRecords {
       },
       body: _$celest.JsonUtf8.encode({
         r'value': _$celest.Serializers.instance
-            .serialize<({String anotherField, String field})>(value),
+            .serialize<({String anotherField, String field})>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -8084,9 +8065,8 @@ class CelestFunctionsRecords {
     api: 'records',
     function: 'asyncNonAliasedNamedFields',
   )
-  Future<({String anotherField, String field})> asyncNonAliasedNamedFields({
-    required ({String anotherField, String field}) value,
-  }) async {
+  Future<({String anotherField, String field})> asyncNonAliasedNamedFields(
+      {required ({String anotherField, String field}) value}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-non-aliased-named-fields'),
       headers: const {
@@ -8095,7 +8075,7 @@ class CelestFunctionsRecords {
       },
       body: _$celest.JsonUtf8.encode({
         r'value': _$celest.Serializers.instance
-            .serialize<({String anotherField, String field})>(value),
+            .serialize<({String anotherField, String field})>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -8109,10 +8089,12 @@ class CelestFunctionsRecords {
         .deserialize<({String anotherField, String field})>($body);
   }
 
-  @_$celest.CloudFunction(api: 'records', function: 'aliasedNamedFields')
-  Future<NamedFieldsRecord> aliasedNamedFields({
-    required NamedFieldsRecord value,
-  }) async {
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'aliasedNamedFields',
+  )
+  Future<NamedFieldsRecord> aliasedNamedFields(
+      {required NamedFieldsRecord value}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/aliased-named-fields'),
       headers: const {
@@ -8120,9 +8102,8 @@ class CelestFunctionsRecords {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<NamedFieldsRecord>(
-          value,
-        ),
+        r'value':
+            _$celest.Serializers.instance.serialize<NamedFieldsRecord>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -8135,10 +8116,12 @@ class CelestFunctionsRecords {
     return _$celest.Serializers.instance.deserialize<NamedFieldsRecord>($body);
   }
 
-  @_$celest.CloudFunction(api: 'records', function: 'asyncAliasedNamedFields')
-  Future<NamedFieldsRecord> asyncAliasedNamedFields({
-    required NamedFieldsRecord value,
-  }) async {
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'asyncAliasedNamedFields',
+  )
+  Future<NamedFieldsRecord> asyncAliasedNamedFields(
+      {required NamedFieldsRecord value}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-aliased-named-fields'),
       headers: const {
@@ -8146,9 +8129,8 @@ class CelestFunctionsRecords {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<NamedFieldsRecord>(
-          value,
-        ),
+        r'value':
+            _$celest.Serializers.instance.serialize<NamedFieldsRecord>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -8161,14 +8143,15 @@ class CelestFunctionsRecords {
     return _$celest.Serializers.instance.deserialize<NamedFieldsRecord>($body);
   }
 
-  @_$celest.CloudFunction(api: 'records', function: 'namedFields')
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'namedFields',
+  )
   Future<
-    ({
-      NamedFieldsRecord aliased,
-      ({String anotherField, String field}) nonAliased,
-    })
-  >
-  namedFields({
+      ({
+        NamedFieldsRecord aliased,
+        ({String anotherField, String field}) nonAliased
+      })> namedFields({
     required ({String anotherField, String field}) nonAliased,
     required NamedFieldsRecord aliased,
   }) async {
@@ -8181,9 +8164,8 @@ class CelestFunctionsRecords {
       body: _$celest.JsonUtf8.encode({
         r'nonAliased': _$celest.Serializers.instance
             .serialize<({String anotherField, String field})>(nonAliased),
-        r'aliased': _$celest.Serializers.instance.serialize<NamedFieldsRecord>(
-          aliased,
-        ),
+        r'aliased':
+            _$celest.Serializers.instance.serialize<NamedFieldsRecord>(aliased),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -8194,21 +8176,21 @@ class CelestFunctionsRecords {
       );
     }
     return _$celest.Serializers.instance.deserialize<
-      ({
-        NamedFieldsRecord aliased,
-        ({String anotherField, String field}) nonAliased,
-      })
-    >($body);
+        ({
+          NamedFieldsRecord aliased,
+          ({String anotherField, String field}) nonAliased
+        })>($body);
   }
 
-  @_$celest.CloudFunction(api: 'records', function: 'asyncNamedFields')
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'asyncNamedFields',
+  )
   Future<
-    ({
-      NamedFieldsRecord aliased,
-      ({String anotherField, String field}) nonAliased,
-    })
-  >
-  asyncNamedFields({
+      ({
+        NamedFieldsRecord aliased,
+        ({String anotherField, String field}) nonAliased
+      })> asyncNamedFields({
     required ({String anotherField, String field}) nonAliased,
     required NamedFieldsRecord aliased,
   }) async {
@@ -8221,9 +8203,8 @@ class CelestFunctionsRecords {
       body: _$celest.JsonUtf8.encode({
         r'nonAliased': _$celest.Serializers.instance
             .serialize<({String anotherField, String field})>(nonAliased),
-        r'aliased': _$celest.Serializers.instance.serialize<NamedFieldsRecord>(
-          aliased,
-        ),
+        r'aliased':
+            _$celest.Serializers.instance.serialize<NamedFieldsRecord>(aliased),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -8234,14 +8215,16 @@ class CelestFunctionsRecords {
       );
     }
     return _$celest.Serializers.instance.deserialize<
-      ({
-        NamedFieldsRecord aliased,
-        ({String anotherField, String field}) nonAliased,
-      })
-    >($body);
+        ({
+          NamedFieldsRecord aliased,
+          ({String anotherField, String field}) nonAliased
+        })>($body);
   }
 
-  @_$celest.CloudFunction(api: 'records', function: 'nested')
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'nested',
+  )
   Future<Nested> nested(Nested value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/nested'),
@@ -8249,9 +8232,8 @@ class CelestFunctionsRecords {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<Nested>(value),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'value': _$celest.Serializers.instance.serialize<Nested>(value)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -8263,7 +8245,10 @@ class CelestFunctionsRecords {
     return _$celest.Serializers.instance.deserialize<Nested>($body);
   }
 
-  @_$celest.CloudFunction(api: 'records', function: 'asyncNested')
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'asyncNested',
+  )
   Future<Nested> asyncNested(Nested value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-nested'),
@@ -8271,9 +8256,8 @@ class CelestFunctionsRecords {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<Nested>(value),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'value': _$celest.Serializers.instance.serialize<Nested>(value)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -8285,7 +8269,10 @@ class CelestFunctionsRecords {
     return _$celest.Serializers.instance.deserialize<Nested>($body);
   }
 
-  @_$celest.CloudFunction(api: 'records', function: 'nullableNested')
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'nullableNested',
+  )
   Future<NullableNested?> nullableNested(NullableNested? value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/nullable-nested'),
@@ -8294,9 +8281,8 @@ class CelestFunctionsRecords {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<NullableNested?>(
-          value,
-        ),
+        r'value':
+            _$celest.Serializers.instance.serialize<NullableNested?>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -8309,7 +8295,10 @@ class CelestFunctionsRecords {
     return _$celest.Serializers.instance.deserialize<NullableNested?>($body);
   }
 
-  @_$celest.CloudFunction(api: 'records', function: 'asyncNullableNested')
+  @_$celest.CloudFunction(
+    api: 'records',
+    function: 'asyncNullableNested',
+  )
   Future<NullableNested?> asyncNullableNested(NullableNested? value) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/records/async-nullable-nested'),
@@ -8318,9 +8307,8 @@ class CelestFunctionsRecords {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'value': _$celest.Serializers.instance.serialize<NullableNested?>(
-          value,
-        ),
+        r'value':
+            _$celest.Serializers.instance.serialize<NullableNested?>(value)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -8336,7 +8324,10 @@ class CelestFunctionsRecords {
 
 /// Validates all permutations of return types.
 class CelestFunctionsReturnTypes {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -8346,9 +8337,9 @@ class CelestFunctionsReturnTypes {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -8356,18 +8347,17 @@ class CelestFunctionsReturnTypes {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -8378,9 +8368,8 @@ class CelestFunctionsReturnTypes {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -8397,9 +8386,8 @@ class CelestFunctionsReturnTypes {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -8428,9 +8416,8 @@ class CelestFunctionsReturnTypes {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -8453,16 +8440,14 @@ class CelestFunctionsReturnTypes {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -8509,16 +8494,14 @@ class CelestFunctionsReturnTypes {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -8534,16 +8517,14 @@ class CelestFunctionsReturnTypes {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -8553,9 +8534,8 @@ class CelestFunctionsReturnTypes {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -8571,16 +8551,14 @@ class CelestFunctionsReturnTypes {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       default:
@@ -8595,7 +8573,10 @@ class CelestFunctionsReturnTypes {
     }
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncVoidReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncVoidReturn',
+  )
   Future<void> asyncVoidReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-void-return'),
@@ -8614,7 +8595,10 @@ class CelestFunctionsReturnTypes {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncStringReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncStringReturn',
+  )
   Future<String> asyncStringReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-string-return'),
@@ -8633,7 +8617,10 @@ class CelestFunctionsReturnTypes {
     return ($body as String);
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncIntReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncIntReturn',
+  )
   Future<int> asyncIntReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-int-return'),
@@ -8652,7 +8639,10 @@ class CelestFunctionsReturnTypes {
     return ($body as num).toInt();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncDoubleReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncDoubleReturn',
+  )
   Future<double> asyncDoubleReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-double-return'),
@@ -8671,7 +8661,10 @@ class CelestFunctionsReturnTypes {
     return ($body as num).toDouble();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncBoolReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncBoolReturn',
+  )
   Future<bool> asyncBoolReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-bool-return'),
@@ -8690,7 +8683,10 @@ class CelestFunctionsReturnTypes {
     return ($body as bool);
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncIterableReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncIterableReturn',
+  )
   Future<Iterable<String>> asyncIterableReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-iterable-return'),
@@ -8709,7 +8705,10 @@ class CelestFunctionsReturnTypes {
     return ($body as Iterable<Object?>).map((el) => (el as String)).toList();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncListReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncListReturn',
+  )
   Future<List<String>> asyncListReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-list-return'),
@@ -8728,7 +8727,10 @@ class CelestFunctionsReturnTypes {
     return ($body as Iterable<Object?>).map((el) => (el as String)).toList();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncMapReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncMapReturn',
+  )
   Future<Map<String, String>> asyncMapReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-map-return'),
@@ -8744,12 +8746,20 @@ class CelestFunctionsReturnTypes {
         body: ($body as Map<String, Object?>),
       );
     }
-    return ($body as Map<String, Object?>).map(
-      (key, value) => MapEntry(key, (value as String)),
-    );
+    return ($body as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          (value as String),
+        ));
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncStructReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncStructReturn',
+  )
   Future<SimpleStruct> asyncStructReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-struct-return'),
@@ -8818,9 +8828,8 @@ class CelestFunctionsReturnTypes {
   )
   Future<ComplexStruct?> asyncComplexStructReturnNullable() async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/return-types/async-complex-struct-return-nullable',
-      ),
+      celest.baseUri
+          .resolve('/return-types/async-complex-struct-return-nullable'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -8880,7 +8889,10 @@ class CelestFunctionsReturnTypes {
     return _$celest.Serializers.instance.deserialize<SimpleClass?>($body);
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncOrVoidReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrVoidReturn',
+  )
   Future<void> asyncOrVoidReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-void-return'),
@@ -8899,7 +8911,10 @@ class CelestFunctionsReturnTypes {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncOrStringReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrStringReturn',
+  )
   Future<String> asyncOrStringReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-string-return'),
@@ -8918,7 +8933,10 @@ class CelestFunctionsReturnTypes {
     return ($body as String);
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncOrIntReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrIntReturn',
+  )
   Future<int> asyncOrIntReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-int-return'),
@@ -8937,7 +8955,10 @@ class CelestFunctionsReturnTypes {
     return ($body as num).toInt();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncOrDoubleReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrDoubleReturn',
+  )
   Future<double> asyncOrDoubleReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-double-return'),
@@ -8956,7 +8977,10 @@ class CelestFunctionsReturnTypes {
     return ($body as num).toDouble();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncOrBoolReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrBoolReturn',
+  )
   Future<bool> asyncOrBoolReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-bool-return'),
@@ -8997,7 +9021,10 @@ class CelestFunctionsReturnTypes {
     return ($body as Iterable<Object?>).map((el) => (el as String)).toList();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncOrListReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrListReturn',
+  )
   Future<List<String>> asyncOrListReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-list-return'),
@@ -9016,7 +9043,10 @@ class CelestFunctionsReturnTypes {
     return ($body as Iterable<Object?>).map((el) => (el as String)).toList();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncOrMapReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrMapReturn',
+  )
   Future<Map<String, String>> asyncOrMapReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-map-return'),
@@ -9032,12 +9062,20 @@ class CelestFunctionsReturnTypes {
         body: ($body as Map<String, Object?>),
       );
     }
-    return ($body as Map<String, Object?>).map(
-      (key, value) => MapEntry(key, (value as String)),
-    );
+    return ($body as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          (value as String),
+        ));
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'asyncOrStructReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'asyncOrStructReturn',
+  )
   Future<SimpleStruct> asyncOrStructReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/async-or-struct-return'),
@@ -9251,9 +9289,14 @@ class CelestFunctionsReturnTypes {
         body: ($body as Map<String, Object?>),
       );
     }
-    return ($body as Map<String, Object?>?)?.map(
-      (key, value) => MapEntry(key, (value as String)),
-    );
+    return ($body as Map<String, Object?>?)?.map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          (value as String),
+        ));
   }
 
   @_$celest.CloudFunction(
@@ -9284,9 +9327,8 @@ class CelestFunctionsReturnTypes {
   )
   Future<ComplexStruct?> asyncOrComplexStructReturnNullable() async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/return-types/async-or-complex-struct-return-nullable',
-      ),
+      celest.baseUri
+          .resolve('/return-types/async-or-complex-struct-return-nullable'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -9308,9 +9350,8 @@ class CelestFunctionsReturnTypes {
   )
   Future<SimpleClass?> asyncOrSimpleClassReturnNullable() async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/return-types/async-or-simple-class-return-nullable',
-      ),
+      celest.baseUri
+          .resolve('/return-types/async-or-simple-class-return-nullable'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -9332,9 +9373,8 @@ class CelestFunctionsReturnTypes {
   )
   Future<ComplexClass?> asyncOrComplexClassReturnNullable() async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/return-types/async-or-complex-class-return-nullable',
-      ),
+      celest.baseUri
+          .resolve('/return-types/async-or-complex-class-return-nullable'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -9350,7 +9390,10 @@ class CelestFunctionsReturnTypes {
     return _$celest.Serializers.instance.deserialize<ComplexClass?>($body);
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'voidReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'voidReturn',
+  )
   Future<void> voidReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/void-return'),
@@ -9369,7 +9412,10 @@ class CelestFunctionsReturnTypes {
     return;
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'stringReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'stringReturn',
+  )
   Future<String> stringReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/string-return'),
@@ -9388,7 +9434,10 @@ class CelestFunctionsReturnTypes {
     return ($body as String);
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'intReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'intReturn',
+  )
   Future<int> intReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/int-return'),
@@ -9407,7 +9456,10 @@ class CelestFunctionsReturnTypes {
     return ($body as num).toInt();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'doubleReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'doubleReturn',
+  )
   Future<double> doubleReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/double-return'),
@@ -9426,7 +9478,10 @@ class CelestFunctionsReturnTypes {
     return ($body as num).toDouble();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'boolReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'boolReturn',
+  )
   Future<bool> boolReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/bool-return'),
@@ -9445,7 +9500,10 @@ class CelestFunctionsReturnTypes {
     return ($body as bool);
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'iterableReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'iterableReturn',
+  )
   Future<Iterable<String>> iterableReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/iterable-return'),
@@ -9464,7 +9522,10 @@ class CelestFunctionsReturnTypes {
     return ($body as Iterable<Object?>).map((el) => (el as String)).toList();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'listReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'listReturn',
+  )
   Future<List<String>> listReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/list-return'),
@@ -9483,7 +9544,10 @@ class CelestFunctionsReturnTypes {
     return ($body as Iterable<Object?>).map((el) => (el as String)).toList();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'mapReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'mapReturn',
+  )
   Future<Map<String, String>> mapReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/map-return'),
@@ -9499,12 +9563,20 @@ class CelestFunctionsReturnTypes {
         body: ($body as Map<String, Object?>),
       );
     }
-    return ($body as Map<String, Object?>).map(
-      (key, value) => MapEntry(key, (value as String)),
-    );
+    return ($body as Map<String, Object?>).map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          (value as String),
+        ));
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'structReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'structReturn',
+  )
   Future<SimpleStruct> structReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/struct-return'),
@@ -9523,7 +9595,10 @@ class CelestFunctionsReturnTypes {
     return _$celest.Serializers.instance.deserialize<SimpleStruct>($body);
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'complexReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'complexReturn',
+  )
   Future<ComplexStruct> complexReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/complex-return'),
@@ -9542,7 +9617,10 @@ class CelestFunctionsReturnTypes {
     return _$celest.Serializers.instance.deserialize<ComplexStruct>($body);
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'simpleClassReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'simpleClassReturn',
+  )
   Future<SimpleClass> simpleClassReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/simple-class-return'),
@@ -9561,7 +9639,10 @@ class CelestFunctionsReturnTypes {
     return _$celest.Serializers.instance.deserialize<SimpleClass>($body);
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'complexClassReturn')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'complexClassReturn',
+  )
   Future<ComplexClass> complexClassReturn() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/complex-class-return'),
@@ -9580,7 +9661,10 @@ class CelestFunctionsReturnTypes {
     return _$celest.Serializers.instance.deserialize<ComplexClass>($body);
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'stringReturnNullable')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'stringReturnNullable',
+  )
   Future<String?> stringReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/string-return-nullable'),
@@ -9599,7 +9683,10 @@ class CelestFunctionsReturnTypes {
     return ($body as String?);
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'intReturnNullable')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'intReturnNullable',
+  )
   Future<int?> intReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/int-return-nullable'),
@@ -9618,7 +9705,10 @@ class CelestFunctionsReturnTypes {
     return ($body as num?)?.toInt();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'doubleReturnNullable')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'doubleReturnNullable',
+  )
   Future<double?> doubleReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/double-return-nullable'),
@@ -9637,7 +9727,10 @@ class CelestFunctionsReturnTypes {
     return ($body as num?)?.toDouble();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'boolReturnNullable')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'boolReturnNullable',
+  )
   Future<bool?> boolReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/bool-return-nullable'),
@@ -9678,7 +9771,10 @@ class CelestFunctionsReturnTypes {
     return ($body as Iterable<Object?>?)?.map((el) => (el as String)).toList();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'listReturnNullable')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'listReturnNullable',
+  )
   Future<List<String>?> listReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/list-return-nullable'),
@@ -9697,7 +9793,10 @@ class CelestFunctionsReturnTypes {
     return ($body as Iterable<Object?>?)?.map((el) => (el as String)).toList();
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'mapReturnNullable')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'mapReturnNullable',
+  )
   Future<Map<String, String>?> mapReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/map-return-nullable'),
@@ -9713,12 +9812,20 @@ class CelestFunctionsReturnTypes {
         body: ($body as Map<String, Object?>),
       );
     }
-    return ($body as Map<String, Object?>?)?.map(
-      (key, value) => MapEntry(key, (value as String)),
-    );
+    return ($body as Map<String, Object?>?)?.map((
+      key,
+      value,
+    ) =>
+        MapEntry(
+          key,
+          (value as String),
+        ));
   }
 
-  @_$celest.CloudFunction(api: 'return_types', function: 'structReturnNullable')
+  @_$celest.CloudFunction(
+    api: 'return_types',
+    function: 'structReturnNullable',
+  )
   Future<SimpleStruct?> structReturnNullable() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/return-types/struct-return-nullable'),
@@ -9805,7 +9912,10 @@ class CelestFunctionsReturnTypes {
 }
 
 class CelestFunctionsSealedClasses {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -9815,9 +9925,9 @@ class CelestFunctionsSealedClasses {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -9825,18 +9935,17 @@ class CelestFunctionsSealedClasses {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -9847,9 +9956,8 @@ class CelestFunctionsSealedClasses {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -9866,9 +9974,8 @@ class CelestFunctionsSealedClasses {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -9897,9 +10004,8 @@ class CelestFunctionsSealedClasses {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -9922,16 +10028,14 @@ class CelestFunctionsSealedClasses {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -9978,16 +10082,14 @@ class CelestFunctionsSealedClasses {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -10003,16 +10105,14 @@ class CelestFunctionsSealedClasses {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -10022,9 +10122,8 @@ class CelestFunctionsSealedClasses {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -10040,30 +10139,26 @@ class CelestFunctionsSealedClasses {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       case 'api.v1.CustomException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<CustomException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<CustomException>(errorValue),
           stackTrace,
         );
       case 'api.v1.CustomExceptionToFromJson':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<CustomExceptionToFromJson>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<CustomExceptionToFromJson>(errorValue),
           stackTrace,
         );
       case 'api.v1.CustomError':
@@ -10073,16 +10168,14 @@ class CelestFunctionsSealedClasses {
         );
       case 'api.v1.CustomErrorToFromJson':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<CustomErrorToFromJson>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<CustomErrorToFromJson>(errorValue),
           stackTrace,
         );
       case 'api.v1.CustomErrorWithStackTrace':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<CustomErrorWithStackTrace>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<CustomErrorWithStackTrace>(errorValue),
           stackTrace,
         );
       default:
@@ -10097,7 +10190,10 @@ class CelestFunctionsSealedClasses {
     }
   }
 
-  @_$celest.CloudFunction(api: 'sealed_classes', function: 'area')
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'area',
+  )
   Future<double> area(Shape shape) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/area'),
@@ -10105,9 +10201,8 @@ class CelestFunctionsSealedClasses {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'shape': _$celest.Serializers.instance.serialize<Shape>(shape),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'shape': _$celest.Serializers.instance.serialize<Shape>(shape)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -10119,7 +10214,10 @@ class CelestFunctionsSealedClasses {
     return ($body as num).toDouble();
   }
 
-  @_$celest.CloudFunction(api: 'sealed_classes', function: 'sealedClass')
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'sealedClass',
+  )
   Future<List<Shape>> sealedClass({required List<Shape> shapes}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/sealed-class'),
@@ -10128,10 +10226,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList()
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10146,7 +10243,10 @@ class CelestFunctionsSealedClasses {
         .toList();
   }
 
-  @_$celest.CloudFunction(api: 'sealed_classes', function: 'rectangle')
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'rectangle',
+  )
   Future<Rectangle> rectangle(Rectangle rectangle) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/rectangle'),
@@ -10155,9 +10255,8 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'rectangle': _$celest.Serializers.instance.serialize<Rectangle>(
-          rectangle,
-        ),
+        r'rectangle':
+            _$celest.Serializers.instance.serialize<Rectangle>(rectangle)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10170,7 +10269,10 @@ class CelestFunctionsSealedClasses {
     return _$celest.Serializers.instance.deserialize<Rectangle>($body);
   }
 
-  @_$celest.CloudFunction(api: 'sealed_classes', function: 'circle')
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'circle',
+  )
   Future<Circle> circle(Circle circle) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/circle'),
@@ -10178,9 +10280,8 @@ class CelestFunctionsSealedClasses {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'circle': _$celest.Serializers.instance.serialize<Circle>(circle),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'circle': _$celest.Serializers.instance.serialize<Circle>(circle)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -10196,26 +10297,20 @@ class CelestFunctionsSealedClasses {
     api: 'sealed_classes',
     function: 'sealedClassWithInheritedCustomJson',
   )
-  Future<List<ShapeWithInheritedCustomJson>>
-  sealedClassWithInheritedCustomJson({
-    required List<ShapeWithInheritedCustomJson> shapes,
-  }) async {
+  Future<List<ShapeWithInheritedCustomJson>> sealedClassWithInheritedCustomJson(
+      {required List<ShapeWithInheritedCustomJson> shapes}) async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/sealed-classes/sealed-class-with-inherited-custom-json',
-      ),
+      celest.baseUri
+          .resolve('/sealed-classes/sealed-class-with-inherited-custom-json'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ShapeWithInheritedCustomJson>(el),
-                )
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance
+                .serialize<ShapeWithInheritedCustomJson>(el))
+            .toList()
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10226,10 +10321,8 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body as Iterable<Object?>)
-        .map(
-          (el) => _$celest.Serializers.instance
-              .deserialize<ShapeWithInheritedCustomJson>(el),
-        )
+        .map((el) => _$celest.Serializers.instance
+            .deserialize<ShapeWithInheritedCustomJson>(el))
         .toList();
   }
 
@@ -10237,9 +10330,8 @@ class CelestFunctionsSealedClasses {
     api: 'sealed_classes',
     function: 'sealedClassWithCustomJson',
   )
-  Future<List<ShapeWithCustomJson>> sealedClassWithCustomJson({
-    required List<ShapeWithCustomJson> shapes,
-  }) async {
+  Future<List<ShapeWithCustomJson>> sealedClassWithCustomJson(
+      {required List<ShapeWithCustomJson> shapes}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/sealed-class-with-custom-json'),
       headers: const {
@@ -10247,13 +10339,10 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ShapeWithCustomJson>(el),
-                )
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance
+                .serialize<ShapeWithCustomJson>(el))
+            .toList()
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10264,10 +10353,8 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body as Iterable<Object?>)
-        .map(
-          (el) => _$celest.Serializers.instance
-              .deserialize<ShapeWithCustomJson>(el),
-        )
+        .map((el) =>
+            _$celest.Serializers.instance.deserialize<ShapeWithCustomJson>(el))
         .toList();
   }
 
@@ -10276,15 +10363,14 @@ class CelestFunctionsSealedClasses {
     function: 'sealedClassWithOverriddenCustomJson',
   )
   Future<List<ShapeWithOverriddenCustomJson>>
-  sealedClassWithOverriddenCustomJson({
+      sealedClassWithOverriddenCustomJson({
     required CircleWithOverriddenCustomJson circle,
     required RectangleWithOverriddenCustomJson rectangle,
     required List<ShapeWithOverriddenCustomJson> other,
   }) async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/sealed-classes/sealed-class-with-overridden-custom-json',
-      ),
+      celest.baseUri
+          .resolve('/sealed-classes/sealed-class-with-overridden-custom-json'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -10294,13 +10380,10 @@ class CelestFunctionsSealedClasses {
             .serialize<CircleWithOverriddenCustomJson>(circle),
         r'rectangle': _$celest.Serializers.instance
             .serialize<RectangleWithOverriddenCustomJson>(rectangle),
-        r'other':
-            other
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ShapeWithOverriddenCustomJson>(el),
-                )
-                .toList(),
+        r'other': other
+            .map((el) => _$celest.Serializers.instance
+                .serialize<ShapeWithOverriddenCustomJson>(el))
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10311,10 +10394,8 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body as Iterable<Object?>)
-        .map(
-          (el) => _$celest.Serializers.instance
-              .deserialize<ShapeWithOverriddenCustomJson>(el),
-        )
+        .map((el) => _$celest.Serializers.instance
+            .deserialize<ShapeWithOverriddenCustomJson>(el))
         .toList();
   }
 
@@ -10323,19 +10404,17 @@ class CelestFunctionsSealedClasses {
     function: 'rectangleWithOverriddenCustomJson',
   )
   Future<ShapeWithOverriddenCustomJson> rectangleWithOverriddenCustomJson(
-    RectangleWithOverriddenCustomJson rectangle,
-  ) async {
+      RectangleWithOverriddenCustomJson rectangle) async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/sealed-classes/rectangle-with-overridden-custom-json',
-      ),
+      celest.baseUri
+          .resolve('/sealed-classes/rectangle-with-overridden-custom-json'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
         r'rectangle': _$celest.Serializers.instance
-            .serialize<RectangleWithOverriddenCustomJson>(rectangle),
+            .serialize<RectangleWithOverriddenCustomJson>(rectangle)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10354,19 +10433,17 @@ class CelestFunctionsSealedClasses {
     function: 'circleWithOverriddenCustomJson',
   )
   Future<CircleWithOverriddenCustomJson> circleWithOverriddenCustomJson(
-    ShapeWithOverriddenCustomJson circle,
-  ) async {
+      ShapeWithOverriddenCustomJson circle) async {
     final $response = await celest.httpClient.post(
-      celest.baseUri.resolve(
-        '/sealed-classes/circle-with-overridden-custom-json',
-      ),
+      celest.baseUri
+          .resolve('/sealed-classes/circle-with-overridden-custom-json'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
         r'circle': _$celest.Serializers.instance
-            .serialize<ShapeWithOverriddenCustomJson>(circle),
+            .serialize<ShapeWithOverriddenCustomJson>(circle)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10380,7 +10457,10 @@ class CelestFunctionsSealedClasses {
         .deserialize<CircleWithOverriddenCustomJson>($body);
   }
 
-  @_$celest.CloudFunction(api: 'sealed_classes', function: 'okShapeResults')
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'okShapeResults',
+  )
   Future<List<OkResult<Shape>>> okShapeResults(List<Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/ok-shape-results'),
@@ -10389,10 +10469,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList()
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10403,14 +10482,15 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body as Iterable<Object?>)
-        .map(
-          (el) =>
-              _$celest.Serializers.instance.deserialize<OkResult<Shape>>(el),
-        )
+        .map((el) =>
+            _$celest.Serializers.instance.deserialize<OkResult<Shape>>(el))
         .toList();
   }
 
-  @_$celest.CloudFunction(api: 'sealed_classes', function: 'errShapeResults')
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'errShapeResults',
+  )
   Future<List<ErrResult<String>>> errShapeResults(List<Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/err-shape-results'),
@@ -10419,10 +10499,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList()
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10433,14 +10512,15 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body as Iterable<Object?>)
-        .map(
-          (el) =>
-              _$celest.Serializers.instance.deserialize<ErrResult<String>>(el),
-        )
+        .map((el) =>
+            _$celest.Serializers.instance.deserialize<ErrResult<String>>(el))
         .toList();
   }
 
-  @_$celest.CloudFunction(api: 'sealed_classes', function: 'shapeResults')
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'shapeResults',
+  )
   Future<List<Result<Shape, String>>> shapeResults(List<Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/shape-results'),
@@ -10449,10 +10529,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList()
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10463,10 +10542,8 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body as Iterable<Object?>)
-        .map(
-          (el) => _$celest.Serializers.instance
-              .deserialize<Result<Shape, String>>(el),
-        )
+        .map((el) => _$celest.Serializers.instance
+            .deserialize<Result<Shape, String>>(el))
         .toList();
   }
 
@@ -10475,8 +10552,7 @@ class CelestFunctionsSealedClasses {
     function: 'aliasedOkShapeResults',
   )
   Future<List<Result<Shape, String>>> aliasedOkShapeResults(
-    List<Shape> shapes,
-  ) async {
+      List<Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/aliased-ok-shape-results'),
       headers: const {
@@ -10484,10 +10560,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList()
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10498,10 +10573,8 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body as Iterable<Object?>)
-        .map(
-          (el) => _$celest.Serializers.instance
-              .deserialize<Result<Shape, String>>(el),
-        )
+        .map((el) => _$celest.Serializers.instance
+            .deserialize<Result<Shape, String>>(el))
         .toList();
   }
 
@@ -10510,8 +10583,7 @@ class CelestFunctionsSealedClasses {
     function: 'aliasedErrShapeResults',
   )
   Future<List<Result<Shape, String>>> aliasedErrShapeResults(
-    List<Shape> shapes,
-  ) async {
+      List<Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/aliased-err-shape-results'),
       headers: const {
@@ -10519,10 +10591,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList()
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10533,10 +10604,8 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body as Iterable<Object?>)
-        .map(
-          (el) => _$celest.Serializers.instance
-              .deserialize<Result<Shape, String>>(el),
-        )
+        .map((el) => _$celest.Serializers.instance
+            .deserialize<Result<Shape, String>>(el))
         .toList();
   }
 
@@ -10545,8 +10614,7 @@ class CelestFunctionsSealedClasses {
     function: 'aliasedShapeResults',
   )
   Future<List<Result<Shape, String>>> aliasedShapeResults(
-    List<Shape> shapes,
-  ) async {
+      List<Shape> shapes) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/aliased-shape-results'),
       headers: const {
@@ -10554,10 +10622,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList()
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10568,17 +10635,17 @@ class CelestFunctionsSealedClasses {
       );
     }
     return ($body as Iterable<Object?>)
-        .map(
-          (el) => _$celest.Serializers.instance
-              .deserialize<Result<Shape, String>>(el),
-        )
+        .map((el) => _$celest.Serializers.instance
+            .deserialize<Result<Shape, String>>(el))
         .toList();
   }
 
-  @_$celest.CloudFunction(api: 'sealed_classes', function: 'swappedResult')
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'swappedResult',
+  )
   Future<SwappedResult<Shape, String>> swappedResult(
-    Result<Shape, String> result,
-  ) async {
+      Result<Shape, String> result) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/swapped-result'),
       headers: const {
@@ -10587,7 +10654,7 @@ class CelestFunctionsSealedClasses {
       },
       body: _$celest.JsonUtf8.encode({
         r'result': _$celest.Serializers.instance
-            .serialize<Result<Shape, String>>(result),
+            .serialize<Result<Shape, String>>(result)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10601,9 +10668,16 @@ class CelestFunctionsSealedClasses {
         .deserialize<SwappedResult<Shape, String>>($body);
   }
 
-  @_$celest.CloudFunction(api: 'sealed_classes', function: 'genericResult')
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'genericResult',
+  )
   Future<OkResult<T>> genericResult<T extends Shape>(T data) async {
-    const $T = {Shape: r'Shape', Circle: r'Circle', Rectangle: r'Rectangle'};
+    const $T = {
+      Shape: r'Shape',
+      Circle: r'Circle',
+      Rectangle: r'Rectangle',
+    };
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/generic-result'),
       headers: const {
@@ -10629,11 +10703,16 @@ class CelestFunctionsSealedClasses {
     api: 'sealed_classes',
     function: 'multipleGenericResult',
   )
-  Future<List<Result<T, E>>> multipleGenericResult<
-    T extends Shape,
-    E extends ShapeException
-  >(T data, E error) async {
-    const $T = {Shape: r'Shape', Circle: r'Circle', Rectangle: r'Rectangle'};
+  Future<List<Result<T, E>>>
+      multipleGenericResult<T extends Shape, E extends ShapeException>(
+    T data,
+    E error,
+  ) async {
+    const $T = {
+      Shape: r'Shape',
+      Circle: r'Circle',
+      Rectangle: r'Rectangle',
+    };
     const $E = {
       ShapeException: r'ShapeException',
       BadShapeException: r'BadShapeException',
@@ -10660,12 +10739,14 @@ class CelestFunctionsSealedClasses {
     }
     return ($body as Iterable<Object?>)
         .map(
-          (el) => _$celest.Serializers.instance.deserialize<Result<T, E>>(el),
-        )
+            (el) => _$celest.Serializers.instance.deserialize<Result<T, E>>(el))
         .toList();
   }
 
-  @_$celest.CloudFunction(api: 'sealed_classes', function: 'okShapeResult')
+  @_$celest.CloudFunction(
+    api: 'sealed_classes',
+    function: 'okShapeResult',
+  )
   Future<OkShapeResult> okShapeResult(Shape shape) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/sealed-classes/ok-shape-result'),
@@ -10673,9 +10754,8 @@ class CelestFunctionsSealedClasses {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: _$celest.JsonUtf8.encode({
-        r'shape': _$celest.Serializers.instance.serialize<Shape>(shape),
-      }),
+      body: _$celest.JsonUtf8.encode(
+          {r'shape': _$celest.Serializers.instance.serialize<Shape>(shape)}),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -10690,7 +10770,10 @@ class CelestFunctionsSealedClasses {
 
 /// Checks that typedefs work as expected.
 class CelestFunctionsTypedefs {
-  Never _throwError({int? code, required Map<String, Object?> body}) {
+  Never _throwError({
+    int? code,
+    required Map<String, Object?> body,
+  }) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -10700,9 +10783,9 @@ class CelestFunctionsTypedefs {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String,
+          'value': final stackTraceValue as String
         },
-        ...,
+        ...
       ] =>
         (
           errorDetails['@type'],
@@ -10710,18 +10793,17 @@ class CelestFunctionsTypedefs {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.CloudException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -10732,9 +10814,8 @@ class CelestFunctionsTypedefs {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnknownError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -10751,9 +10832,8 @@ class CelestFunctionsTypedefs {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.NotFoundException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -10782,9 +10862,8 @@ class CelestFunctionsTypedefs {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.AbortedException>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -10807,16 +10886,14 @@ class CelestFunctionsTypedefs {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.UnavailableError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<_$celest.DataLossError>(errorValue),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -10863,16 +10940,14 @@ class CelestFunctionsTypedefs {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnsupportedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnsupportedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<UnimplementedError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<UnimplementedError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -10888,16 +10963,14 @@ class CelestFunctionsTypedefs {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<OutOfMemoryError>(errorValue),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<StackOverflowError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<StackOverflowError>(errorValue),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -10907,9 +10980,8 @@ class CelestFunctionsTypedefs {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<FormatException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<FormatException>(errorValue),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -10925,16 +10997,14 @@ class CelestFunctionsTypedefs {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<TimeoutException>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<TimeoutException>(errorValue),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
-            errorValue,
-          ),
+          _$celest.Serializers.instance
+              .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
       default:
@@ -10949,7 +11019,10 @@ class CelestFunctionsTypedefs {
     }
   }
 
-  @_$celest.CloudFunction(api: 'typedefs', function: 'portfolio')
+  @_$celest.CloudFunction(
+    api: 'typedefs',
+    function: 'portfolio',
+  )
   Future<Portfolio> portfolio(Portfolio portfolio) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/typedefs/portfolio'),
@@ -10958,9 +11031,8 @@ class CelestFunctionsTypedefs {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'portfolio': _$celest.Serializers.instance.serialize<Portfolio>(
-          portfolio,
-        ),
+        r'portfolio':
+            _$celest.Serializers.instance.serialize<Portfolio>(portfolio)
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10973,7 +11045,10 @@ class CelestFunctionsTypedefs {
     return _$celest.Serializers.instance.deserialize<Portfolio>($body);
   }
 
-  @_$celest.CloudFunction(api: 'typedefs', function: 'json')
+  @_$celest.CloudFunction(
+    api: 'typedefs',
+    function: 'json',
+  )
   Future<Map<String, dynamic>> json(Map<String, dynamic> json) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/typedefs/json'),
@@ -10993,7 +11068,10 @@ class CelestFunctionsTypedefs {
     return ($body as Map<String, Object?>);
   }
 
-  @_$celest.CloudFunction(api: 'typedefs', function: 'nullableJson')
+  @_$celest.CloudFunction(
+    api: 'typedefs',
+    function: 'nullableJson',
+  )
   Future<Map<String, dynamic>?> nullableJson(Map<String, dynamic>? json) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/typedefs/nullable-json'),
@@ -11013,7 +11091,10 @@ class CelestFunctionsTypedefs {
     return ($body as Map<String, Object?>?);
   }
 
-  @_$celest.CloudFunction(api: 'typedefs', function: 'mixedJson')
+  @_$celest.CloudFunction(
+    api: 'typedefs',
+    function: 'mixedJson',
+  )
   Future<Map<String, dynamic>?> mixedJson(Map<String, dynamic> json) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/typedefs/mixed-json'),

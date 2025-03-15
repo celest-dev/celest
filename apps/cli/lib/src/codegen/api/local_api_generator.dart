@@ -11,15 +11,14 @@ class LocalApiGenerator {
     required this.project,
     required Map<String, Reference> targets,
   }) : // Provides consistent ordering which helps with codegen diffing.
-       // TODO(dnys1): Order by API then definition order.
-       targets = SplayTreeMap.of(targets);
+        // TODO(dnys1): Order by API then definition order.
+        targets = SplayTreeMap.of(targets);
 
   final Project project;
   final SplayTreeMap<String, Reference> targets;
 
   Method get _mainMethod => Method(
-    (m) =>
-        m
+        (m) => m
           ..name = 'main'
           ..returns = DartTypes.core.future(DartTypes.core.void$)
           ..modifier = MethodModifier.async
@@ -50,17 +49,16 @@ return start();
               final unknown => unreachable('Unknown project type: $unknown'),
             },
           ),
-  );
+      );
 
   Method get _setupCallback {
     return Method((m) {
       m
         ..requiredParameters.add(
           Parameter(
-            (p) =>
-                p
-                  ..name = 'context'
-                  ..type = DartTypes.celest.context,
+            (p) => p
+              ..name = 'context'
+              ..type = DartTypes.celest.context,
           ),
         )
         ..modifier = MethodModifier.async
@@ -84,8 +82,7 @@ return start();
   }
 
   Method get _startMethod => Method(
-    (m) =>
-        m
+        (m) => m
           ..name = 'start'
           ..returns = DartTypes.core.future(DartTypes.core.void$)
           ..modifier = MethodModifier.async
@@ -119,7 +116,7 @@ return start();
               }).awaited,
             );
           }),
-  );
+      );
 
   List<Method> get body => [_mainMethod, _startMethod];
 

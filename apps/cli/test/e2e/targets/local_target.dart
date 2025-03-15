@@ -37,11 +37,11 @@ final class LocalTarget extends TestTarget {
 
   @override
   Map<String, String> get environment => {
-    // <root>/apps/cli/ -> <root>/celest/
-    'CELEST_LOCAL_PATH':
-        fileSystem.currentDirectory.parent.parent.absolute.uri
+        // <root>/apps/cli/ -> <root>/celest/
+        'CELEST_LOCAL_PATH': fileSystem
+            .currentDirectory.parent.parent.absolute.uri
             .resolve('celest/')
             .toFilePath(),
-    'CELEST_TEST': 'true',
-  };
+        'CELEST_TEST': 'true',
+      };
 }

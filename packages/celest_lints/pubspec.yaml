@@ -5,7 +5,7 @@ homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/packages/celest_lints
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.5.0
 resolution: workspace
 
 dependencies:
