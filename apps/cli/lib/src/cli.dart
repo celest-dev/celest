@@ -130,7 +130,10 @@ final class Cli {
       ctx.analytics.identifyUser(setOnce: {'local_iterations_mvp': true});
     }
 
-    const sdkFinder = DartSdkFinder();
+    final sdkFinder = DartSdkFinder(
+      platform: ctx.platform,
+      fileSystem: ctx.fileSystem,
+    );
     final result = await sdkFinder.findSdk();
     Sdk.current = result.sdk;
   }

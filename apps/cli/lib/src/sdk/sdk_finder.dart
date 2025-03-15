@@ -1,9 +1,13 @@
 import 'dart:io';
 
-import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/context.dart' show cliLogger, storage;
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:dcli/dcli.dart' as dcli;
+import 'package:file/file.dart';
+import 'package:file/local.dart';
 import 'package:logging/logging.dart';
+import 'package:path/path.dart' as p;
+import 'package:platform/platform.dart';
 import 'package:process/process.dart';
 // ignore: implementation_imports
 import 'package:process/src/interface/common.dart';
@@ -61,32 +65,37 @@ final class SdkNotFound extends SdkFinderResult {
 }
 
 final class DartSdkFinder implements SdkFinder {
-  const DartSdkFinder();
+  const DartSdkFinder({
+    this.platform = const LocalPlatform(),
+    this.fileSystem = const LocalFileSystem(),
+  });
 
   static final Logger _logger = Logger('Sdk');
 
   /// Follows links when resolving an executable's [path].
-  static String _resolveLinks(String path) {
-    if (localFileSystem.isLinkSync(path)) {
-      return p.canonicalize(
-        localFileSystem.link(path).resolveSymbolicLinksSync(),
-      );
+  String _resolveLinks(String path) {
+    if (fileSystem.isLinkSync(path)) {
+      return p.canonicalize(fileSystem.link(path).resolveSymbolicLinksSync());
     }
     return p.canonicalize(path);
   }
 
-  static bool isValid(String sdkPath) =>
-      localFileSystem.isDirectorySync(p.join(sdkPath, 'bin', 'snapshots'));
+  bool isValid(String sdkPath) =>
+      fileSystem.isDirectorySync(p.join(sdkPath, 'bin', 'snapshots'));
 
-  static Future<Sdk> _found(SdkType type, String sdkPath) async {
+  Future<Sdk> _found(SdkType type, String sdkPath) async {
     final versionStr =
-        await localFileSystem
-            .directory(sdkPath)
-            .childFile('version')
-            .readAsString();
+        await fileSystem.directory(sdkPath).childFile('version').readAsString();
     final factory = type == SdkType.flutter ? Sdk.flutter : Sdk.dart;
-    return factory(sdkPath, version: Version.parse(versionStr.trim()));
+    return factory(
+      sdkPath,
+      version: Version.parse(versionStr.trim()),
+      fileSystem: fileSystem,
+    );
   }
+
+  final Platform platform;
+  final FileSystem fileSystem;
 
   Future<SdkFinderResult> _findFlutterExe() async {
     late String flutterPath;
@@ -94,9 +103,9 @@ final class DartSdkFinder implements SdkFinder {
       flutterPath =
           getExecutablePath(
             'flutter',
-            localFileSystem.currentDirectory.path,
+            fileSystem.currentDirectory.path,
             platform: platform,
-            fs: localFileSystem,
+            fs: fileSystem,
             throwOnFailure: true,
           )!; // never null when `throwOnFailure: true`
     } on ProcessPackageExecutableNotFoundException catch (e) {
@@ -130,9 +139,9 @@ final class DartSdkFinder implements SdkFinder {
       dartPath =
           getExecutablePath(
             'dart',
-            localFileSystem.currentDirectory.path,
+            fileSystem.currentDirectory.path,
             platform: platform,
-            fs: localFileSystem,
+            fs: fileSystem,
             throwOnFailure: true,
           )!; // never null when `throwOnFailure: true`
     } on ProcessPackageExecutableNotFoundException catch (e) {

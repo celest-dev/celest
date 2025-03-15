@@ -22,6 +22,8 @@ import 'package:celest_cli/project/celest_project.dart';
 import 'package:celest_cli/project/project_resolver.dart';
 import 'package:celest_cli/pub/pub_action.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/sdk/dart_sdk.dart';
+import 'package:celest_cli/src/sdk/sdk_finder.dart';
 import 'package:celest_cli/src/utils/recase.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:file/file.dart';
@@ -125,12 +127,18 @@ class TestRunner {
   late CelestAnalyzer analyzer;
 
   static Future<void> _warmUp(String projectRoot) {
-    return Isolate.run(() => CelestAnalyzer.warmUp(projectRoot));
+    return Isolate.run(() async {
+      final sdkResult = await const DartSdkFinder().findSdk();
+      Sdk.current = sdkResult.sdk;
+      return CelestAnalyzer.warmUp(projectRoot);
+    });
   }
 
   void run() {
     group(testName, () {
       setUpAll(() async {
+        final sdkResult = await const DartSdkFinder().findSdk();
+        Sdk.current = sdkResult.sdk;
         await runPub(
           exe: Platform.resolvedExecutable,
           action: PubAction.upgrade,
