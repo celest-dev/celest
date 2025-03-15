@@ -17,6 +17,7 @@ import 'package:celest_cli/src/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/env/config_value_solver.dart';
 import 'package:celest_cli/src/exceptions.dart';
+import 'package:celest_cli/src/frontend/child_process.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/project/project_resolver.dart';
 import 'package:celest_cli/src/utils/json.dart';
@@ -242,6 +243,7 @@ final class CelestFrontend {
   Future<int> run({
     required bool migrateProject,
     required Progress? currentProgress,
+    ChildProcess? childProcess,
   }) async {
     try {
       while (!stopped) {
@@ -352,9 +354,26 @@ final class CelestFrontend {
             }
 
             currentProgress = null;
+
+            if (childProcess case final childProcess?
+                when !childProcess.isStarted) {
+              logger.info('Running command: ${childProcess.command.join(' ')}');
+              await childProcess.start();
+              unawaited(
+                _stopSignal.future.then(childProcess.stop),
+              );
+            }
         }
 
-        await _nextChangeSet();
+        // Wait for the next changeset or for the child process to exit, if
+        // there is one.
+        final exitCode = await Future.any([
+          _nextChangeSet().then((_) => null),
+          Future.value(childProcess?.exitCode),
+        ]);
+        if (exitCode != null) {
+          return exitCode;
+        }
       }
       return 0;
     } on CancellationException {
