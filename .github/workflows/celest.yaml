@@ -11,8 +11,14 @@ concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
   cancel-in-progress: true
 
+env:
+  CELEST: ${{ github.workspace }}/apps/cli/bin/celest.dart
+defaults:
+  run:
+    shell: bash
+
 jobs:
-  analyze_and_format:
+  test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -23,10 +29,6 @@ jobs:
         with:
           channel: stable
           cache: true
-      - name: Setup Turso
-        run: curl -sSfL https://get.tur.so/install.sh | bash
-        env:
-          TURSO_INSTALL_SKIP_SIGNUP: true
       - name: Get Packages
         working-directory: packages/celest
         run: |
@@ -50,3 +52,180 @@ jobs:
       - name: Test (dart2wasm)
         working-directory: packages/celest
         run: dart test -p chrome -c dart2wasm
+  test_darwin:
+    needs: [test]
+    runs-on: macos-latest-xlarge
+    timeout-minutes: 20
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@f2c4f6686ca8e8d6e6d0f28410eeef506ed66aff # 2.18.0
+        with:
+          cache: true
+      - name: Get Packages
+        working-directory: apps/cli
+        run: dart pub get
+      - name: Get Packages (Example)
+        working-directory: packages/celest/example
+        run: flutter pub get
+      - name: Setup iOS Simulator
+        run: |
+          RUNTIME=$(xcrun simctl list runtimes | grep 'iOS 18' | tail -n 1 | cut -d' ' -f 7)
+          echo "Using runtime: $RUNTIME"
+          xcrun simctl create ios 'iPhone 16 Pro Max' $RUNTIME
+          echo "Booting simulator"
+          xcrun simctl boot ios
+          echo "Booted simulator"
+      - name: Integration Test (iOS)
+        working-directory: packages/celest/example
+        run: dart run $CELEST start --verbose -- flutter test -d ios integration_test
+      - name: Integration Test (macOS)
+        working-directory: packages/celest/example
+        run: dart run $CELEST start --verbose -- flutter test -d macos integration_test
+  # TODO: Keeps timing out on Linux. Fails hard on macOS...
+  # test_android:
+  #   needs: [test]
+  #   runs-on: macos-latest-xlarge
+  #   timeout-minutes: 30
+  #   steps:
+  #     - name: Git Checkout
+  #       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+  #     - name: Setup Flutter
+  #       uses: subosito/flutter-action@f2c4f6686ca8e8d6e6d0f28410eeef506ed66aff # 2.18.0
+  #       with:
+  #         cache: true
+  #     - name: Get Packages
+  #       working-directory: apps/cli
+  #       run: dart pub get
+  #     - name: Get Packages (Example)
+  #       working-directory: packages/celest/example
+  #       run: flutter pub get
+  #     - name: Start Celest
+  #       working-directory: packages/celest/example
+  #       run: dart run $CELEST start --verbose &
+  #     - name: Build APK
+  #       working-directory: packages/celest/example
+  #       run: flutter build apk --debug
+  #     # - name: Enable KVM
+  #     #   run: |
+  #     #     echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+  #     #     sudo udevadm control --reload-rules
+  #     #     sudo udevadm trigger --name-match=kvm
+  #     - name: Test (API 31)
+  #       uses: ReactiveCircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # 2.33.0
+  #       with:
+  #         # Matches `package:jni` compileSdkVersion
+  #         # https://github.com/dart-lang/native/blob/001910c9f40d637cb25c19bb500fb89cebdf7450/pkgs/jni/android/build.gradle#L57C23-L57C25
+  #         api-level: 31
+  #         arch: arm64-v8a
+  #         working-directory: packages/celest/example
+  #         script: flutter test -d emulator integration_test
+  #     - name: Test (API 21)
+  #       uses: ReactiveCircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # 2.33.0
+  #       with:
+  #         # Minimum supported API level
+  #         # Should match build.gradle: https://github.com/celest-dev/celest/blob/main/packages/native/storage/android/build.gradle#L49
+  #         api-level: 21
+  #         arch: arm64-v8a
+  #         working-directory: packages/celest/example
+  #         script: flutter test -d emulator integration_test
+  test_linux:
+    needs: [test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@f2c4f6686ca8e8d6e6d0f28410eeef506ed66aff # 2.18.0
+        with:
+          cache: true
+      - name: Install Build Dependencies
+        run: |
+          sudo apt-get update && \
+          sudo apt-get install -y clang cmake git ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
+      - name: Setup Test Environment
+        run: tool/setup-ci.sh
+      - name: Get Packages
+        working-directory: apps/cli
+        run: dart pub get
+      - name: Get Packages (Example)
+        working-directory: packages/celest/example
+        run: flutter pub get
+      - name: Integration Test (Linux)
+        working-directory: packages/celest/example
+        run: |
+          # Headless tests require virtual display for the linux tests to run.
+          export DISPLAY=:99
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+          dart run $CELEST start --verbose -- flutter test -d linux integration_test
+  test_windows:
+    needs: [test]
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@f2c4f6686ca8e8d6e6d0f28410eeef506ed66aff # 2.18.0
+        with:
+          cache: true
+      - name: Get Packages
+        working-directory: apps/cli
+        run: dart pub get
+      - name: Get Packages (Example)
+        working-directory: packages/celest/example
+        run: flutter pub get
+      - name: Test (Windows)
+        working-directory: packages/celest/example
+        run: dart run "$CELEST" start --verbose -- flutter test -d windows integration_test
+  test_web:
+    needs: [test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@f2c4f6686ca8e8d6e6d0f28410eeef506ed66aff # 2.18.0
+        with:
+          cache: true
+      - name: Setup Chromedriver
+        uses: nanasess/setup-chromedriver@v2
+      - name: Get Packages
+        working-directory: apps/cli
+        run: dart pub get
+      - name: Get Packages (Example)
+        working-directory: packages/celest/example
+        run: flutter pub get
+      - name: Start Chromedriver
+        run: |
+          # Headless tests require virtual display for the chromedriver tests to run.
+          export DISPLAY=:99
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+
+          chromedriver --port=4444 &
+      - name: Test (Web/JS)
+        working-directory: packages/celest/example
+        run: |
+          dart run "$CELEST" start --verbose -- \
+            flutter drive \
+              --driver=test_driver/integration_test.dart \
+              --target=integration_test/integration_test.dart \
+              -d web-server \
+              --debug \
+              --browser-name=chrome \
+              --no-headless
+      - name: Test (Web/WASM)
+        working-directory: packages/celest/example
+        run: |
+          dart run "$CELEST" start --verbose -- \
+            flutter drive \
+              --driver=test_driver/integration_test.dart \
+              --target=integration_test/integration_test.dart \
+              -d web-server \
+              --debug \
+              --browser-name=chrome \
+              --no-headless \
+              --wasm
