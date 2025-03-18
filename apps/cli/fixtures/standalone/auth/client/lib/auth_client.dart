@@ -82,7 +82,7 @@ class Celest with _$celest.CelestBase {
     }
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
-    scheduleMicrotask(_auth.init);
+    scheduleMicrotask(() => _auth.init());
     if (!_initialized) {
       initSerializers(serializers: serializers);
     }

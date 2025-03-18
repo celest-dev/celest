@@ -387,6 +387,84 @@
           }
         ]
       }
+    },
+    "celest.cloud.auth.v1alpha1.Authentication": {
+      "apiId": "celest.cloud.auth.v1alpha1.Authentication",
+      "functions": {
+        "GetOpenIdUserInfo": {
+          "functionId": "GetOpenIdUserInfo",
+          "apiId": "celest.cloud.auth.v1alpha1.Authentication",
+          "httpConfig": {
+            "route": {
+              "method": "GET",
+              "path": "/v1alpha1/auth/userinfo"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        },
+        "StartSession": {
+          "functionId": "StartSession",
+          "apiId": "celest.cloud.auth.v1alpha1.Authentication",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/v1alpha1/auth/sessions:startSession"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        },
+        "ContinueSession": {
+          "functionId": "ContinueSession",
+          "apiId": "celest.cloud.auth.v1alpha1.Authentication",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/v1alpha1/auth/sessions:continueSession"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        },
+        "EndSession": {
+          "functionId": "EndSession",
+          "apiId": "celest.cloud.auth.v1alpha1.Authentication",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/v1alpha1/auth/sessions:endSession"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        }
+      },
+      "policySet": {
+        "policies": {},
+        "templates": {},
+        "templateLinks": [
+          {
+            "templateId": "cloud.functions.public",
+            "newId": "celest.cloud.auth.v1alpha1.Authentication",
+            "values": {
+              "?resource": "Celest::Api::\"celest.cloud.auth.v1alpha1.Authentication\""
+            }
+          }
+        ]
+      }
     }
   },
   "variables": [
