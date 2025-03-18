@@ -20,7 +20,7 @@ import 'package:celest_cli/src/database/project/project_database.dart';
 import 'package:celest_cli/src/env/config_value_solver.dart';
 import 'package:celest_cli/src/init/project_migrator.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
-import 'package:celest_cli/src/project/project_resolver.dart';
+import 'package:celest_cli/src/project/project_linker.dart';
 import 'package:celest_cli/src/pub/pub_action.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/sdk/sdk_finder.dart';
@@ -245,7 +245,7 @@ class TestRunner {
         project: project!,
         environmentId: 'local',
       ).solveAll();
-      final projectResolver = ProjectResolver(
+      final projectResolver = ProjectLinker(
         configValues: configValues,
         environmentId: 'local',
       );
@@ -295,7 +295,7 @@ class TestRunner {
         project: project!,
         environmentId: 'local',
       ).solveAll();
-      final projectResolver = ProjectResolver(
+      final projectResolver = ProjectLinker(
         configValues: configValues,
         environmentId: 'local',
       );
@@ -331,7 +331,7 @@ class TestRunner {
         project: project!,
         environmentId: 'local',
       ).solveAll();
-      final projectResolver = ProjectResolver(
+      final projectResolver = ProjectLinker(
         configValues: configValues,
         environmentId: 'local',
       );
@@ -409,7 +409,7 @@ class TestRunner {
           project: project!,
           environmentId: 'local',
         ).solveAll();
-        final projectResolver = ProjectResolver(
+        final projectResolver = ProjectLinker(
           configValues: configValues,
           environmentId: 'local',
         );

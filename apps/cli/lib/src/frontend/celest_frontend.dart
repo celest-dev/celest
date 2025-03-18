@@ -19,7 +19,7 @@ import 'package:celest_cli/src/env/config_value_solver.dart';
 import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/frontend/child_process.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
-import 'package:celest_cli/src/project/project_resolver.dart';
+import 'package:celest_cli/src/project/project_linker.dart';
 import 'package:celest_cli/src/utils/json.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
@@ -367,9 +367,10 @@ final class CelestFrontend {
 
         // Wait for the next changeset or for the child process to exit, if
         // there is one.
-        final exitCode = await Future.any([
+        final exitCode = await Future.any<int?>([
           _nextChangeSet().then((_) => null),
-          Future.value(childProcess?.exitCode),
+          if (childProcess case final childProcess?)
+            Future.value(childProcess.exitCode),
         ]);
         if (exitCode != null) {
           return exitCode;
@@ -507,7 +508,7 @@ final class CelestFrontend {
           environmentId: environmentId,
         ).solveAll();
         logger.fine('Resolving project...');
-        final projectResolver = ProjectResolver(
+        final projectResolver = ProjectLinker(
           configValues: configValues,
           environmentId: environmentId,
         );

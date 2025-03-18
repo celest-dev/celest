@@ -399,15 +399,12 @@ final class ClientGenerator {
         )
         ..addExpression(
           refer('scheduleMicrotask', 'dart:async').call([
-            if (hasExternalAuth)
-              Method(
-                (m) => m
-                  ..body = refer('_auth').property('init').call([], {
-                    'externalAuth': refer('externalAuth'),
-                  }).code,
-              ).closure
-            else
-              refer('_auth').property('init'),
+            Method(
+              (m) => m
+                ..body = refer('_auth').property('init').call([], {
+                  if (hasExternalAuth) 'externalAuth': refer('externalAuth'),
+                }).code,
+            ).closure
           ]),
         );
     }

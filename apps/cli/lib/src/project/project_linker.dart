@@ -3,6 +3,8 @@ import 'package:cedar/cedar.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/run.dart';
+import 'package:celest_cloud_auth/celest_cloud_auth.dart'
+    show AuthenticationService;
 
 extension on CloudFunction {
   EntityUid get uid => EntityUid.of('Celest::Function', '$apiName/$name');
@@ -65,8 +67,8 @@ extension on ApiAuth {
   }
 }
 
-final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
-  ProjectResolver({
+final class ProjectLinker extends AstVisitorWithArg<Node?, AstNode> {
+  ProjectLinker({
     required Map<String, String> configValues,
     required String environmentId,
     this.driftSchemas = const {},
@@ -218,6 +220,20 @@ final class ProjectResolver extends AstVisitorWithArg<Node?, AstNode> {
 
   @override
   ResolvedAuth visitAuth(Auth auth, Project context) {
+    assert(
+      auth.providers.isNotEmpty || auth.externalProviders.isNotEmpty,
+      'Must have at least one auth provider',
+    );
+
+    // Ensure auth routes are exposed in the route map.
+    //
+    // External auth providers do not require custom routes exposed on the
+    // Celest backend.
+    if (auth.providers.isNotEmpty) {
+      final authService = AuthenticationService.api;
+      _resolvedProject.apis[authService.apiId] = authService;
+    }
+
     return ResolvedAuth.build((b) {
       for (final authProvider in auth.providers) {
         b.providers.add(visitAuthProvider(authProvider, auth));
