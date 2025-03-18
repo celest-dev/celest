@@ -20,12 +20,9 @@ import 'package:drift/src/remote/communication.dart' as _$drift_communication;
 import 'package:drift/src/runtime/cancellation_zone.dart'
     as _$drift_cancellation_zone;
 import 'package:drift/src/runtime/exceptions.dart' as _$drift_exceptions;
-import 'package:google_cloud/src/bad_configuration_exception.dart'
-    as _$google_cloud_bad_configuration_exception;
-import 'package:google_cloud/src/bad_request_exception.dart'
-    as _$google_cloud_bad_request_exception;
 import 'package:hrana/src/exception.dart' as _$hrana_exception;
 import 'package:http/src/exception.dart' as _$http_exception;
+import 'package:path/src/path_exception.dart' as _$path_path_exception;
 import 'package:shelf/src/hijack_exception.dart' as _$shelf_hijack_exception;
 import 'package:sqlite3/src/exception.dart' as _$sqlite3_exception;
 import 'package:sqlite3/src/vfs.dart' as _$sqlite3_vfs;
@@ -379,20 +376,6 @@ class CelestFunctionsTasks {
               .deserialize<IsolateSpawnException>(errorValue),
           stackTrace,
         );
-      case 'google_cloud.BadConfigurationException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<
-              _$google_cloud_bad_configuration_exception
-              .BadConfigurationException>(errorValue),
-          stackTrace,
-        );
-      case 'google_cloud.BadRequestException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<
-              _$google_cloud_bad_request_exception
-              .BadRequestException>(errorValue),
-          stackTrace,
-        );
       case 'http.ClientException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
@@ -419,6 +402,12 @@ class CelestFunctionsTasks {
                   errorValue),
           stackTrace,
         );
+      case 'sqlite3.VfsException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$sqlite3_vfs.VfsException>(errorValue),
+          stackTrace,
+        );
       case 'drift.ConnectionClosedException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
@@ -426,10 +415,10 @@ class CelestFunctionsTasks {
                   errorValue),
           stackTrace,
         );
-      case 'sqlite3.VfsException':
+      case 'path.PathException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
-              .deserialize<_$sqlite3_vfs.VfsException>(errorValue),
+              .deserialize<_$path_path_exception.PathException>(errorValue),
           stackTrace,
         );
       case 'hrana.ConnectionClosed':

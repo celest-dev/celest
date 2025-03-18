@@ -17,12 +17,9 @@ import 'package:drift/src/remote/communication.dart' as _$drift_communication;
 import 'package:drift/src/runtime/cancellation_zone.dart'
     as _$drift_cancellation_zone;
 import 'package:drift/src/runtime/exceptions.dart' as _$drift_exceptions;
-import 'package:google_cloud/src/bad_configuration_exception.dart'
-    as _$google_cloud_bad_configuration_exception;
-import 'package:google_cloud/src/bad_request_exception.dart'
-    as _$google_cloud_bad_request_exception;
 import 'package:hrana/src/exception.dart' as _$hrana_exception;
 import 'package:http/src/exception.dart' as _$http_exception;
+import 'package:path/src/path_exception.dart' as _$path_path_exception;
 import 'package:shelf/src/hijack_exception.dart' as _$shelf_hijack_exception;
 import 'package:sqlite3/src/exception.dart' as _$sqlite3_exception;
 import 'package:sqlite3/src/vfs.dart' as _$sqlite3_vfs;
@@ -455,10 +452,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
       ));
       _$celest.Serializers.instance.put(
           _$celest.Serializer.define<WebSocketException, Map<String, Object?>?>(
-        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          if ($value.httpStatusCode case final httpStatusCode?)
+            r'httpStatusCode': httpStatusCode,
+        },
         deserialize: ($serialized) {
           return WebSocketException(
-              (($serialized?[r'message'] as String?)) ?? '');
+            (($serialized?[r'message'] as String?)) ?? '',
+            ($serialized?[r'httpStatusCode'] as num?)?.toInt(),
+          );
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
@@ -951,44 +954,6 @@ void initSerializers({_$celest.Serializers? serializers}) {
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
-          _$google_cloud_bad_configuration_exception.BadConfigurationException,
-          Map<String, Object?>>(
-        serialize: ($value) => <String, Object?>{
-          r'message': $value.message,
-          if ($value.details case final details?) r'details': details,
-        },
-        deserialize: ($serialized) {
-          return _$google_cloud_bad_configuration_exception
-              .BadConfigurationException(
-            ($serialized[r'message'] as String),
-            details: ($serialized[r'details'] as String?),
-          );
-        },
-      ));
-      _$celest.Serializers.instance.put(_$celest.Serializer.define<
-          _$google_cloud_bad_request_exception.BadRequestException,
-          Map<String, Object?>>(
-        serialize: ($value) => <String, Object?>{
-          r'statusCode': $value.statusCode,
-          r'message': $value.message,
-          if ($value.innerError case final innerError?)
-            r'innerError': innerError,
-          if (_$celest.Serializers.instance
-                  .serialize<StackTrace?>($value.innerStack)
-              case final innerStack?)
-            r'innerStack': innerStack,
-        },
-        deserialize: ($serialized) {
-          return _$google_cloud_bad_request_exception.BadRequestException(
-            ($serialized[r'statusCode'] as num).toInt(),
-            ($serialized[r'message'] as String),
-            innerError: $serialized[r'innerError'],
-            innerStack: _$celest.Serializers.instance
-                .deserialize<StackTrace?>($serialized[r'innerStack']),
-          );
-        },
-      ));
-      _$celest.Serializers.instance.put(_$celest.Serializer.define<
           _$hrana_exception.ConnectionClosed, Map<String, Object?>?>(
         serialize: ($value) => const <String, Object?>{},
         deserialize: ($serialized) {
@@ -1025,6 +990,14 @@ void initSerializers({_$celest.Serializers? serializers}) {
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$path_path_exception.PathException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return _$path_path_exception.PathException(
+              ($serialized[r'message'] as String));
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
           _$shelf_hijack_exception.HijackException, Map<String, Object?>?>(
         serialize: ($value) => const <String, Object?>{},
         deserialize: ($serialized) {
@@ -1039,6 +1012,7 @@ void initSerializers({_$celest.Serializers? serializers}) {
             r'explanation': explanation,
           r'extendedResultCode': $value.extendedResultCode,
           r'resultCode': $value.resultCode,
+          if ($value.offset case final offset?) r'offset': offset,
           if ($value.operation case final operation?) r'operation': operation,
           if ($value.causingStatement case final causingStatement?)
             r'causingStatement': causingStatement,
@@ -1054,6 +1028,7 @@ void initSerializers({_$celest.Serializers? serializers}) {
             ($serialized[r'parametersToStatement'] as Iterable<Object?>?)
                 ?.toList(),
             ($serialized[r'operation'] as String?),
+            ($serialized[r'offset'] as num?)?.toInt(),
           );
         },
       ));
