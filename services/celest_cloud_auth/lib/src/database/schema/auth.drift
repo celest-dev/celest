@@ -315,6 +315,39 @@ createCork:
         :expire_time
     );
 
+upsertCork:
+    INSERT INTO corks(
+        cork_id, 
+        crypto_key_id, 
+        bearer_type, 
+        bearer_id, 
+        audience_type, 
+        audience_id, 
+        issuer_type, 
+        issuer_id, 
+        expire_time
+    )
+    VALUES (
+        :cork_id, 
+        :crypto_key_id, 
+        :bearer_type, 
+        :bearer_id, 
+        :audience_type, 
+        :audience_id, 
+        :issuer_type, 
+        :issuer_id, 
+        :expire_time
+    )
+    ON CONFLICT(cork_id) DO UPDATE SET
+        crypto_key_id = excluded.crypto_key_id,
+        bearer_type = excluded.bearer_type,
+        bearer_id = excluded.bearer_id,
+        audience_type = excluded.audience_type,
+        audience_id = excluded.audience_id,
+        issuer_type = excluded.issuer_type,
+        issuer_id = excluded.issuer_id,
+        expire_time = excluded.expire_time;
+
 -- Retrieves the cork for the given ID.
 getCork:
     SELECT * FROM corks

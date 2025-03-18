@@ -366,7 +366,7 @@ void main() {
         check(() => session.sessionToken).returnsNormally();
         await check(
           tester.authenticationService.endSession(
-            sessionId: session.sessionId,
+            sessionId: session.sessionId.encoded,
             sessionToken: session.sessionToken,
           ),
         ).completes();
@@ -402,7 +402,7 @@ void main() {
 
         await check(
           tester.authenticationService.endSession(
-            sessionId: session.sessionId,
+            sessionId: session.sessionId.encoded,
             sessionToken: cork.toString(),
           ),
         ).throws<InvalidSignatureException>();

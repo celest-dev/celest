@@ -18,6 +18,7 @@ import 'package:celest_core/_internal.dart';
 import 'package:meta/meta.dart';
 import 'package:shelf/shelf.dart';
 
+export 'package:celest_cloud_auth/src/authentication/authentication_service.dart';
 export 'package:celest_cloud_auth/src/database/auth_database.dart';
 export 'package:celest_cloud_auth/src/email/email_provider.dart';
 export 'package:celest_cloud_auth/src/otp/otp_provider.dart';

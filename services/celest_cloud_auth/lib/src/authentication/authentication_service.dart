@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:cedar/cedar.dart';
 // ignore: invalid_use_of_internal_member
 import 'package:celest/src/runtime/http/cloud_middleware.dart';
@@ -253,13 +255,17 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
   }
 
   Future<SessionStateSuccess> _authenticateUser({
+    required TypeId<Session> sessionId,
     required String userId,
   }) async {
     final user = await _db.getUser(userId: userId);
     if (user == null) {
       throw const NotFoundException('User not found');
     }
-    final cork = await _corks.createUserCork(user: user);
+    final cork = await _corks.createUserCork(
+      user: user,
+      sessionId: sessionId,
+    );
     return SessionStateSuccess(
       cork: cork,
       user: user,
@@ -268,6 +274,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
   }
 
   Future<SessionStateSuccess> _createUser({
+    required TypeId<Session> sessionId,
     required AuthenticationFactor factor,
   }) async {
     final (user, cork) = await _db.transaction(() async {
@@ -289,7 +296,10 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
           roles: const [EntityUid.of('Celest::Role', 'authenticated')],
         ),
       );
-      final cork = await _corks.createUserCork(user: user);
+      final cork = await _corks.createUserCork(
+        user: user,
+        sessionId: sessionId,
+      );
       return (user, cork);
     });
     return SessionStateSuccess(
@@ -350,10 +360,14 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
         );
     }
     if (session.userId case final userId?) {
-      return _authenticateUser(userId: userId);
+      return _authenticateUser(
+        userId: userId,
+        sessionId: session.sessionId,
+      );
     }
     return _createUser(
       factor: factor,
+      sessionId: session.sessionId,
     );
   }
 
@@ -477,26 +491,35 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
 
   @visibleForTesting
   Future<void> endSession({
-    required TypeId<Session> sessionId,
+    required String sessionId,
     required String sessionToken,
   }) async {
-    final session = await _db.authDrift
-        .getSession(sessionId: sessionId.encoded)
-        .getSingleOrNull();
-    if (session == null) {
-      throw const NotFoundException('Session not found');
+    if (sessionId.isNotEmpty) {
+      final session = await _db.authDrift
+          .getSession(sessionId: sessionId)
+          .getSingleOrNull();
+      if (session == null) {
+        throw const NotFoundException('Session not found');
+      }
+      sessionId = session.sessionId.encoded;
+    } else {
+      final sessionCork = CedarCork.parse(sessionToken);
+      await _corks.verify(cork: sessionCork);
+      sessionId = TypeId.decode(String.fromCharCodes(sessionCork.id)).encoded;
     }
-    final sessionCork = CedarCork.parse(sessionToken);
-    await _corks.verify(cork: sessionCork);
-
-    await _db.authDrift.deleteSession(sessionId: sessionId.encoded);
+    await _db.transaction(() async {
+      await _db.authDrift.deleteSession(sessionId: sessionId);
+      await _db.authDrift.deleteCork(
+        corkId: Uint8List.fromList(sessionId.codeUnits),
+      );
+    });
   }
 
   Future<Response> handleEndSession(Request request) async {
     final jsonRequest = await JsonUtf8.decodeStream(request.read());
     final pbRequest = pb.EndSessionRequest()..mergeFromProto3Json(jsonRequest);
     await endSession(
-      sessionId: TypeId.decode(pbRequest.sessionId),
+      sessionId: pbRequest.sessionId,
       sessionToken: pbRequest.sessionToken,
     );
     final response = pb.EndSessionResponse(
