@@ -16,7 +16,7 @@ import 'package:tasks_client/src/functions.dart';
 import 'package:tasks_client/src/serializers.dart';
 
 export 'package:celest_backend/src/database/task_database.dart'
-    show Task, Priority;
+    show Priority, Task;
 export 'package:celest_backend/src/functions/tasks.dart' show ServerException;
 
 final Celest celest = Celest();
@@ -26,8 +26,8 @@ enum CelestEnvironment {
 
   Uri get baseUri => switch (this) {
         local => _$celest.kIsWeb || !Platform.isAndroid
-            ? Uri.parse('http://localhost:56903')
-            : Uri.parse('http://10.0.2.2:56903'),
+            ? Uri.parse('http://localhost:53358')
+            : Uri.parse('http://10.0.2.2:53358'),
       };
 }
 
