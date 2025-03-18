@@ -2,11 +2,11 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use, invalid_use_of_internal_member
 
-library;
+library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:celest/celest.dart';
-import 'package:celest/src/core/context.dart';
-import 'package:celest/src/runtime/data/connect.dart';
+import 'package:celest/celest.dart' as _$celest;
+import 'package:celest/src/core/context.dart' as _$celest;
+import 'package:celest/src/runtime/data/connect.dart' as _$celest;
 import 'package:celest_backend/src/database/task_database.dart';
 
 /// The data services for the Celest backend.
@@ -17,23 +17,23 @@ class CelestData {
   const CelestData();
 
   /// Initializes the databases attached to this project in the given [context].
-  static Future<void> init(Context context) async {
+  static Future<void> init(_$celest.Context context) async {
     context.put(
       _databaseKey,
-      await connect(
+      await _$celest.connect(
         context,
         name: 'TaskDatabase',
         factory: TaskDatabase.new,
-        hostnameVariable: const env('CELEST_DATABASE_HOST'),
-        tokenSecret: const secret('CELEST_DATABASE_TOKEN'),
+        hostnameVariable: const _$celest.env('CELEST_DATABASE_HOST'),
+        tokenSecret: const _$celest.secret('CELEST_DATABASE_TOKEN'),
       ),
     );
   }
 
   /// The `TaskDatabase` instance for this project.
-  TaskDatabase get database => Context.current.expect(_databaseKey);
+  TaskDatabase get database => _$celest.Context.current.expect(_databaseKey);
 
   /// The context key for the [database] instance.
-  static ContextKey<TaskDatabase> get _databaseKey =>
-      const ContextKey('TaskDatabase');
+  static _$celest.ContextKey<TaskDatabase> get _databaseKey =>
+      const _$celest.ContextKey('TaskDatabase');
 }

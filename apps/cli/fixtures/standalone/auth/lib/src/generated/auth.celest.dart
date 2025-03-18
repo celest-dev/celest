@@ -2,12 +2,12 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use, invalid_use_of_internal_member
 
-library;
+library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:celest/celest.dart';
-import 'package:celest/src/core/context.dart';
-import 'package:celest/src/runtime/data/connect.dart';
-import 'package:celest_cloud_auth/celest_cloud_auth.dart';
+import 'package:celest/celest.dart' as _$celest;
+import 'package:celest/src/core/context.dart' as _$celest;
+import 'package:celest/src/runtime/data/connect.dart' as _$celest;
+import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _$celest;
 
 /// The auth service for the Celest backend.
 ///
@@ -17,21 +17,21 @@ class CelestAuth {
   const CelestAuth();
 
   /// Initializes the Celest Auth service in the given [context].
-  static Future<void> init(Context context) async {
-    final database = await connect(
+  static Future<void> init(_$celest.Context context) async {
+    final database = await _$celest.connect(
       context,
       name: 'CelestAuthDatabase',
-      factory: AuthDatabase.new,
-      hostnameVariable: const env('CELEST_AUTH_DATABASE_HOST'),
-      tokenSecret: const secret('CELEST_AUTH_DATABASE_TOKEN'),
+      factory: _$celest.AuthDatabase.new,
+      hostnameVariable: const _$celest.env('CELEST_AUTH_DATABASE_HOST'),
+      tokenSecret: const _$celest.secret('CELEST_AUTH_DATABASE_TOKEN'),
     );
-    final service = await CelestCloudAuth.create(database: database);
+    final service = await _$celest.CelestCloudAuth.create(database: database);
     context.router.mount(
       '/v1alpha1/auth/',
       service.handler,
     );
     context.put(
-      CelestCloudAuth.contextKey,
+      _$celest.CelestCloudAuth.contextKey,
       service,
     );
   }
