@@ -43,7 +43,7 @@ final class CloudCodeGenerator extends AstVisitor<void> {
         library.value,
         forFile: filePath,
         pathStrategy: PathStrategy.pretty,
-        prefixingStrategy: PrefixingStrategy.none,
+        prefixingStrategy: PrefixingStrategy.pretty,
       );
     }
 
