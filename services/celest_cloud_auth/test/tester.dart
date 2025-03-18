@@ -7,7 +7,6 @@ import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud/celest_cloud.dart' show CelestCloud, ClientType;
 import 'package:celest_cloud_auth/celest_cloud_auth.dart';
-import 'package:celest_cloud_auth/src/authentication/authentication_service.dart';
 import 'package:celest_cloud_auth/src/authorization/authorization_middleware.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/authorization/cedar_interop.dart';

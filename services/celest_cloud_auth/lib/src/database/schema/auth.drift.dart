@@ -2441,6 +2441,33 @@ class AuthDrift extends i7.ModularAccessor {
     );
   }
 
+  Future<int> upsertCork(
+      {required i2.Uint8List corkId,
+      required i2.Uint8List cryptoKeyId,
+      String? bearerType,
+      String? bearerId,
+      String? audienceType,
+      String? audienceId,
+      String? issuerType,
+      String? issuerId,
+      DateTime? expireTime}) {
+    return customInsert(
+      'INSERT INTO corks (cork_id, crypto_key_id, bearer_type, bearer_id, audience_type, audience_id, issuer_type, issuer_id, expire_time) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) ON CONFLICT (cork_id) DO UPDATE SET crypto_key_id = excluded.crypto_key_id, bearer_type = excluded.bearer_type, bearer_id = excluded.bearer_id, audience_type = excluded.audience_type, audience_id = excluded.audience_id, issuer_type = excluded.issuer_type, issuer_id = excluded.issuer_id, expire_time = excluded.expire_time',
+      variables: [
+        i0.Variable<i2.Uint8List>(corkId),
+        i0.Variable<i2.Uint8List>(cryptoKeyId),
+        i0.Variable<String>(bearerType),
+        i0.Variable<String>(bearerId),
+        i0.Variable<String>(audienceType),
+        i0.Variable<String>(audienceId),
+        i0.Variable<String>(issuerType),
+        i0.Variable<String>(issuerId),
+        i0.Variable<DateTime>(expireTime, const i5.TimestampType())
+      ],
+      updates: {corks},
+    );
+  }
+
   i0.Selectable<i3.Cork> getCork({required i2.Uint8List corkId}) {
     return customSelect('SELECT * FROM corks WHERE cork_id = ?1', variables: [
       i0.Variable<i2.Uint8List>(corkId)

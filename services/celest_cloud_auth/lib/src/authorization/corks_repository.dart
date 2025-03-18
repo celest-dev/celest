@@ -42,33 +42,47 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
 
   /// Creates a new cork for the given [user].
   Future<Cork> createUserCork({
+    // TODO(dnys1): Make this required
+    TypeId<Session>? sessionId,
     required User user,
     EntityUid? audience,
   }) async {
-    final corkId = TypeId<Cork>().uuid.value;
+    sessionId ??= TypeId<Session>();
+    audience ??= issuer;
+    final cryptoKey = await _cryptoKeys.getOrMintHmacKey(
+      cryptoKeyId: sessionId.uuid.value,
+    );
+    final userId = EntityUid.of('Celest::User', user.userId);
+    final expireTime = DateTime.timestamp().add(const Duration(days: 30));
     final userEntity = Entity(
-      uid: EntityUid.of('Celest::User', user.userId),
+      uid: userId,
       parents: [
         ...user.roles,
         issuer,
       ],
-      attributes: RecordValue.fromJson(user.toJson()).attributes,
+      attributes: {
+        ...RecordValue.fromJson(user.toJson()).attributes,
+        'expireTime': Value.integer(expireTime.millisecondsSinceEpoch ~/ 1000),
+      },
     );
-    final corkBuilder = CedarCork.builder(corkId)
-      ..bearer = EntityUid.of('Celest::User', user.userId)
+    final corkBuilder = CedarCork.builder(sessionId.uuid.value)
+      ..bearer = userId
+      ..audience = audience
       ..issuer = issuer
-      ..audience = audience ?? issuer
       ..claims = userEntity;
-    final hmacKey = _cryptoKeys.rootKey;
-    final cork = await corkBuilder.build().sign(hmacKey.signer);
+    final cork = await corkBuilder.build().sign(cryptoKey.signer);
     await _db.transaction(() async {
       await _db.createEntity(userEntity);
-      await _db.authDrift.createCork(
-        corkId: corkId,
-        cryptoKeyId: hmacKey.cryptoKeyId,
+      await _db.authDrift.upsertCork(
+        corkId: cork.id,
+        cryptoKeyId: cryptoKey.cryptoKeyId,
         bearerType: 'Celest::User',
         bearerId: user.userId,
-        expireTime: DateTime.timestamp().add(const Duration(days: 30)),
+        audienceType: audience!.type,
+        audienceId: audience.id,
+        issuerType: issuer.type,
+        issuerId: issuer.id,
+        expireTime: expireTime,
       );
     });
     return cork;
@@ -97,7 +111,7 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
         ),
       },
     );
-    final corkBuilder = CedarCork.builder(cryptoKey.cryptoKeyId)
+    final corkBuilder = CedarCork.builder(session.sessionId.uuid.value)
       ..bearer = sessionUid
       ..issuer = issuer
       ..audience = issuer
@@ -110,6 +124,10 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
         cryptoKeyId: session.cryptoKeyId,
         bearerType: sessionUid.type,
         bearerId: sessionUid.id,
+        audienceType: issuer.type,
+        audienceId: issuer.id,
+        issuerType: issuer.type,
+        issuerId: issuer.id,
         expireTime: session.expireTime,
       );
     });
