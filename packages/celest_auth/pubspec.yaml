@@ -1,6 +1,6 @@
 name: celest_auth
 description: The Auth runtime and client library for Celest, the Flutter cloud platform.
-version: 1.0.0
+version: 1.0.1
 homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/packages/celest_auth
 

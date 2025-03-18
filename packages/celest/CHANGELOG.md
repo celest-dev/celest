@@ -1,3 +1,9 @@
+## 1.0.2
+
+- chore: Bump minimum Dart SDK to 3.5
+- chore: Migrate to pub workspaces
+- chore: Update example
+
 ## 1.0.1+2
 
 - fix: Fallback to in-memory database

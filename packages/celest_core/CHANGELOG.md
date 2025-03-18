@@ -1,3 +1,9 @@
+## 1.0.1
+
+- chore: Bump minimum Dart SDK to 3.5
+- chore: Migrate to pub workspaces
+- fix: WASM detection
+
 ## 1.0.0
 
 The first release of Celest V1!
