@@ -515,7 +515,10 @@ final class CloudClientGenerator {
               );
               b.addExpression(
                 refer('context').property('put').call([
-                  refer('CelestCloudAuth').property('contextKey'),
+                  refer(
+                    'CelestCloudAuth',
+                    'package:celest_cloud_auth/celest_cloud_auth.dart',
+                  ).property('contextKey'),
                   refer('service'),
                 ]),
               );
