@@ -1,3 +1,8 @@
+## 0.1.5
+
+- chore: Bump minimum Dart SDK to 3.5
+- chore: Migrate to pub workspaces
+
 ## 0.1.4
 
 - feat: Adds `Database` and `DatabaseSchema` models, and corresponding resolved types.
