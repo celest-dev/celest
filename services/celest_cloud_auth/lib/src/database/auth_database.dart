@@ -5,6 +5,7 @@ import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud_auth/src/authorization/cedar_interop.dart';
 import 'package:celest_cloud_auth/src/authorization/policy_set.g.dart';
 import 'package:celest_cloud_auth/src/context.dart';
+import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart';
 import 'package:celest_cloud_auth/src/database/schema/users.drift.dart';
 import 'package:celest_cloud_auth/src/database/schema_versions.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
@@ -74,6 +75,18 @@ class AuthDatabase extends $AuthDatabase {
       );
     });
   }
+
+  /// Types from `authorization/cedar/schema.cedarschema`.
+  @visibleForTesting
+  static const List<String> coreTypes = [
+    'Celest::Service',
+    'Celest::Role',
+    'Celest::User',
+    'Celest::Session',
+    'Celest::Api',
+    'Celest::Function',
+    'Celest::Action',
+  ];
 
   @visibleForTesting
   static final Map<EntityUid, Entity> coreEntities = {
@@ -163,6 +176,11 @@ class AuthDatabase extends $AuthDatabase {
   Future<void> seed() async {
     _logger.finer('Seeding database');
     await transaction(() async {
+      await batch((b) {
+        b.insertAllOnConflictUpdate(cedarTypes, [
+          for (final type in coreTypes) CedarTypesCompanion.insert(fqn: type),
+        ]);
+      });
       await Future.wait(
         coreEntities.values.map(createEntity),
         eagerError: true,
