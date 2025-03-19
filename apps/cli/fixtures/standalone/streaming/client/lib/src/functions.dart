@@ -282,7 +282,7 @@ class CelestFunctionsServerSide {
         .connect(celest.baseUri.resolve('/server-side/hello'));
     $channel.sink.add({r'names': names});
     return $channel.stream.map(($event) {
-      if ($event is Map<String, Object?> && $event.containsKey('@error')) {
+      if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
       }
       return ($event as String);
@@ -298,7 +298,7 @@ class CelestFunctionsServerSide {
         .resolve('/server-side/stock-ticker')
         .replace(queryParameters: {r'symbol': symbol}));
     return $channel.stream.map(($event) {
-      if ($event is Map<String, Object?> && $event.containsKey('@error')) {
+      if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
       }
       return _$celest.Serializers.instance
@@ -314,7 +314,7 @@ class CelestFunctionsServerSide {
     final $channel = celest.eventClient
         .connect(celest.baseUri.resolve('/server-side/json-values'));
     return $channel.stream.map(($event) {
-      if ($event is Map<String, Object?> && $event.containsKey('@error')) {
+      if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
       }
       return _$celest.Serializers.instance.deserialize<_$celest.JsonValue>(
