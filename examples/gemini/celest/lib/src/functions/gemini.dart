@@ -16,7 +16,7 @@ Future<List<String>> availableModels() async => _availableModels;
 /// This is maintained on the server and can be updated without updating the
 /// client or Flutter app.
 const _availableModels = [
-  'gemini-pro',
+  'gemini-2.0-flash',
 ];
 
 /// Prompts the Gemini [modelName] with the given [prompt] and [parameters].

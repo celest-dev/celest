@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "438379435794",
+    "project_id": "prj-n-firebase-test",
+    "storage_bucket": "prj-n-firebase-test.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438379435794:android:52f5bb6d5762612b1245cb",
+        "android_client_info": {
+          "package_name": "dev.celest.firebase_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsXbfOCSSzN5g93X33DfrVSiNwPX-b4HI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438379435794:android:8960ca1dc816fd971245cb",
+        "android_client_info": {
+          "package_name": "dev.celest.firebase_test_nonprod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsXbfOCSSzN5g93X33DfrVSiNwPX-b4HI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -345,7 +345,7 @@ class CelestFunctionsGemini {
       r'prompt': prompt,
     });
     return $channel.stream.map(($event) {
-      if ($event is Map<String, Object?> && $event.containsKey('@error')) {
+      if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
       }
       return ($event as String);

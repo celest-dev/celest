@@ -20,9 +20,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  native_authentication: cf7783d5074db2e2e3babf81b12e14da700f0bcd
-  objective_c: e5f8194456e8fc943e034d1af00510a1bc29c067
+  native_authentication: e98f968601d32af65f26cab7ca987e3f369567b5
+  objective_c: ec13431e45ba099cb734eb2829a5c1cd37986cba
 
 PODFILE CHECKSUM: 9ebaf0ce3d369aaa26a9ea0e159195ed94724cf3
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
