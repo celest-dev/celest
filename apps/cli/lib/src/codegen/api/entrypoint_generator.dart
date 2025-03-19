@@ -611,7 +611,7 @@ final class EntrypointGenerator {
       ...function.metadata.whereType<ApiAuth>(),
       ...api.metadata.whereType<ApiAuth>(),
     ];
-    // final authRequired = authMetadata.whereType<ApiAuthenticated>().isNotEmpty;
+    final authRequired = authMetadata.whereType<ApiAuthenticated>().isNotEmpty;
     if (authMetadata.isNotEmpty) {
       if (project.auth?.providers.isNotEmpty ?? false) {
         authMiddleware = DartTypes.celest.middleware.property('shelf').call([
@@ -640,7 +640,7 @@ final class EntrypointGenerator {
                   ),
                 ]),
               ]),
-              'required': literalBool(false),
+              'required': literalBool(authRequired),
             });
           case SupabaseExternalAuthProvider(
               :final projectUrl,
@@ -671,7 +671,7 @@ final class EntrypointGenerator {
                     ]),
                   ],
                 ),
-              'required': literalBool(false),
+              'required': literalBool(authRequired),
             });
         }
       }
