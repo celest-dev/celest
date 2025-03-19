@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart'
 ///
 /// Example:
 /// ```dart
-/// import 'firebase_options_nonprod.dart';
+/// import 'firebase_options.dart';
 /// // ...
 /// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
@@ -21,10 +21,7 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for ios - '
@@ -55,8 +52,16 @@ class DefaultFirebaseOptions {
     messagingSenderId: '438379435794',
     projectId: 'prj-n-firebase-test',
     authDomain: 'prj-n-firebase-test.firebaseapp.com',
-    storageBucket: 'prj-n-firebase-test.appspot.com',
+    storageBucket: 'prj-n-firebase-test.firebasestorage.app',
     measurementId: 'G-SG5Q1CZ9VY',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyCsXbfOCSSzN5g93X33DfrVSiNwPX-b4HI',
+    appId: '1:438379435794:android:52f5bb6d5762612b1245cb',
+    messagingSenderId: '438379435794',
+    projectId: 'prj-n-firebase-test',
+    storageBucket: 'prj-n-firebase-test.firebasestorage.app',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
@@ -65,7 +70,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '438379435794',
     projectId: 'prj-n-firebase-test',
     authDomain: 'prj-n-firebase-test.firebaseapp.com',
-    storageBucket: 'prj-n-firebase-test.appspot.com',
+    storageBucket: 'prj-n-firebase-test.firebasestorage.app',
     measurementId: 'G-N4MBCYTJZ5',
   );
 }

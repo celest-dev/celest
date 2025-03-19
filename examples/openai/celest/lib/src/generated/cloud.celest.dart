@@ -2,9 +2,9 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use, invalid_use_of_internal_member
 
-library;
+library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:celest/src/core/context.dart';
+import 'package:celest/src/core/context.dart' as _$celest;
 import 'package:celest_backend/src/generated/config.celest.dart';
 
 /// The interface to your Celest backend.
@@ -16,7 +16,7 @@ const CelestCloud celest = CelestCloud._();
 
 /// A per-request context object which propogates request information and common
 /// accessors to the Celest server environment.
-CelestContext get context => CelestContext._(context);
+CelestContext get context => CelestContext._(_$celest.context);
 
 /// The interface to your Celest backend.
 ///
@@ -48,4 +48,5 @@ class CelestCloud {
 
 /// A per-request context object which propogates request information and common
 /// accessors to the Celest server environment.
-extension type CelestContext._(Context _context) implements Context {}
+extension type CelestContext._(_$celest.Context _context)
+    implements _$celest.Context {}

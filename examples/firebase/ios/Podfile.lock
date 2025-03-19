@@ -1,17 +1,16 @@
 PODS:
-  - Firebase/Auth (11.8.1):
+  - Firebase/Auth (11.8.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 11.8.1)
-  - Firebase/CoreOnly (11.8.1):
-    - FirebaseCore (~> 11.8.1)
+    - FirebaseAuth (~> 11.8.0)
+  - Firebase/CoreOnly (11.8.0):
+    - FirebaseCore (~> 11.8.0)
   - firebase_auth (5.5.1):
-    - Firebase/Auth (~> 11.8.0)
-    - Firebase/CoreOnly (~> 11.8.0)
+    - Firebase/Auth (= 11.8.0)
     - firebase_core
-    - FlutterMacOS
+    - Flutter
   - firebase_core (3.12.1):
-    - Firebase/CoreOnly (~> 11.8.0)
-    - FlutterMacOS
+    - Firebase/CoreOnly (= 11.8.0)
+    - Flutter
   - FirebaseAppCheckInterop (11.10.0)
   - FirebaseAuth (11.8.1):
     - FirebaseAppCheckInterop (~> 11.0)
@@ -31,7 +30,7 @@ PODS:
     - FirebaseCore (~> 11.8.0)
   - FirebaseCoreInternal (11.8.0):
     - "GoogleUtilities/NSData+zlib (~> 8.0)"
-  - FlutterMacOS (1.0.0)
+  - Flutter (1.0.0)
   - GoogleUtilities/AppDelegateSwizzler (8.0.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -55,16 +54,17 @@ PODS:
     - GoogleUtilities/Privacy
   - GTMSessionFetcher/Core (4.4.0)
   - native_authentication (0.0.1):
-    - FlutterMacOS
+    - Flutter
   - objective_c (0.0.1):
-    - FlutterMacOS
+    - Flutter
+  - RecaptchaInterop (100.0.0)
 
 DEPENDENCIES:
-  - firebase_auth (from `Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos`)
-  - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
-  - FlutterMacOS (from `Flutter/ephemeral`)
-  - native_authentication (from `Flutter/ephemeral/.symlinks/plugins/native_authentication/macos`)
-  - objective_c (from `Flutter/ephemeral/.symlinks/plugins/objective_c/macos`)
+  - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
+  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - Flutter (from `Flutter`)
+  - native_authentication (from `.symlinks/plugins/native_authentication/ios`)
+  - objective_c (from `.symlinks/plugins/objective_c/ios`)
 
 SPEC REPOS:
   trunk:
@@ -77,35 +77,37 @@ SPEC REPOS:
     - FirebaseCoreInternal
     - GoogleUtilities
     - GTMSessionFetcher
+    - RecaptchaInterop
 
 EXTERNAL SOURCES:
   firebase_auth:
-    :path: Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos
+    :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
-    :path: Flutter/ephemeral/.symlinks/plugins/firebase_core/macos
-  FlutterMacOS:
-    :path: Flutter/ephemeral
+    :path: ".symlinks/plugins/firebase_core/ios"
+  Flutter:
+    :path: Flutter
   native_authentication:
-    :path: Flutter/ephemeral/.symlinks/plugins/native_authentication/macos
+    :path: ".symlinks/plugins/native_authentication/ios"
   objective_c:
-    :path: Flutter/ephemeral/.symlinks/plugins/objective_c/macos
+    :path: ".symlinks/plugins/objective_c/ios"
 
 SPEC CHECKSUMS:
-  Firebase: 973c28133496aab0223e9ea99f0abafb9f91ad58
-  firebase_auth: 56b54cd41d84b8ac95a4041d984105c2500b08cb
-  firebase_core: 3dcdf8453dfb144a023ee70f49e0463b97177f71
+  Firebase: d80354ed7f6df5f9aca55e9eb47cc4b634735eaf
+  firebase_auth: 9ebbd83276bf977dea1c74dfc199acf9d2a2f42f
+  firebase_core: 8d552814f6c01ccde5d88939fced4ec26f2f5510
   FirebaseAppCheckInterop: 9664c858489710f682766ef54e2b6741d3b62070
   FirebaseAuth: ad59a1a7b161e75f74c39f70179d2482d40e2737
   FirebaseAuthInterop: 01a804fb074424fd58b92dd50dd0272277199356
   FirebaseCore: 99fe0c4b44a39f37d99e6404e02009d2db5d718d
   FirebaseCoreExtension: 3d3f2017a00d06e09ab4ebe065391b0bb642565e
   FirebaseCoreInternal: df24ce5af28864660ecbd13596fc8dd3a8c34629
-  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
   GTMSessionFetcher: 75b671f9e551e4c49153d4c4f8659ef4f559b970
-  native_authentication: e98f968601d32af65f26cab7ca987e3f369567b5
-  objective_c: ec13431e45ba099cb734eb2829a5c1cd37986cba
+  native_authentication: 9584603fb050c3f86d19c53d25a3f4dea200588f
+  objective_c: 89e720c30d716b036faf9c9684022048eee1eee2
+  RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
 
-PODFILE CHECKSUM: 9ebaf0ce3d369aaa26a9ea0e159195ed94724cf3
+PODFILE CHECKSUM: ade96bceabe3919b69c16573938e4268fe3a6c9d
 
 COCOAPODS: 1.16.2

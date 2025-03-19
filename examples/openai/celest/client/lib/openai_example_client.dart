@@ -24,8 +24,8 @@ enum CelestEnvironment {
 
   Uri get baseUri => switch (this) {
         local => _$celest.kIsWeb || !Platform.isAndroid
-            ? Uri.parse('http://localhost:55830')
-            : Uri.parse('http://10.0.2.2:55830'),
+            ? Uri.parse('http://localhost:49761')
+            : Uri.parse('http://10.0.2.2:49761'),
       };
 }
 
