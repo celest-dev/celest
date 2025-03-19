@@ -302,7 +302,7 @@ class CelestFunctionsAuthenticatedLib {
     final $channel = celest.eventClient
         .connect(celest.baseUri.resolve('/authenticated-lib/stream-hello'));
     return $channel.stream.map(($event) {
-      if ($event is Map<String, Object?> && $event.containsKey('@error')) {
+      if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
       }
       return ($event as String);
@@ -590,7 +590,7 @@ class CelestFunctionsLib {
     final $channel = celest.eventClient
         .connect(celest.baseUri.resolve('/lib/stream-hello-authenticated'));
     return $channel.stream.map(($event) {
-      if ($event is Map<String, Object?> && $event.containsKey('@error')) {
+      if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
       }
       return ($event as String);
@@ -627,7 +627,7 @@ class CelestFunctionsLib {
     final $channel = celest.eventClient
         .connect(celest.baseUri.resolve('/lib/stream-hello-public'));
     return $channel.stream.map(($event) {
-      if ($event is Map<String, Object?> && $event.containsKey('@error')) {
+      if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
       }
       return ($event as String);
@@ -664,7 +664,7 @@ class CelestFunctionsLib {
     final $channel =
         celest.eventClient.connect(celest.baseUri.resolve('/lib/stream-hello'));
     return $channel.stream.map(($event) {
-      if ($event is Map<String, Object?> && $event.containsKey('@error')) {
+      if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
       }
       return ($event as String);
@@ -952,7 +952,7 @@ class CelestFunctionsPublicLib {
     final $channel = celest.eventClient
         .connect(celest.baseUri.resolve('/public-lib/stream-hello'));
     return $channel.stream.map(($event) {
-      if ($event is Map<String, Object?> && $event.containsKey('@error')) {
+      if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
       }
       return ($event as String);

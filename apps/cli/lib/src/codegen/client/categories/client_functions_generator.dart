@@ -152,7 +152,7 @@ final class ClientFunctionsGenerator {
             ..requiredParameters.add(Parameter((p) => p.name = r'$event'))
             ..body = Block.of([
               const Code(r'''
-if ($event is Map<String, Object?> && $event.containsKey('@error')) {
+if ($event is Map<String, Object?> && $event.containsKey('@status')) {
   _throwError(body: $event);
 }'''),
               returnedBody,
