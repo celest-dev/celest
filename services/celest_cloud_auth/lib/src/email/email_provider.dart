@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/otp/otp_provider.dart';
 
@@ -7,6 +9,7 @@ extension type const EmailOtpProvider._(OtpSender _send) implements Object {
   const EmailOtpProvider([OtpSender send = _defaultSend]) : this._(send);
 
   static Future<void> _defaultSend(Otp message) async {
+    developer.postEvent('celest.cloud_auth.emailOtpSent', message.toJson());
     context.logger.info('Verification code for ${message.to}: ${message.code}');
   }
 
