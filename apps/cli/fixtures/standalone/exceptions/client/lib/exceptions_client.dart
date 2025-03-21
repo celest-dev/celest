@@ -68,11 +68,16 @@ class Celest with _$celest.CelestBase {
     CelestEnvironment environment = CelestEnvironment.local,
     _$celest.Serializers? serializers,
   }) {
+    if (_initialized) {
+      _reset();
+    }
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
-    if (!_initialized) {
-      initSerializers(serializers: serializers);
-    }
+    initSerializers(serializers: serializers);
     _initialized = true;
+  }
+
+  void _reset() {
+    _initialized = false;
   }
 }

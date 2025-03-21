@@ -951,6 +951,10 @@ class _Meta {
 
   /// Creates a [meta.immutable] reference.
   DartTypeReference get immutable => const DartTypeReference('immutable', _url);
+
+  /// Creates a [meta.visibleForTesting] reference.
+  DartTypeReference get visibleForTesting =>
+      const DartTypeReference('visibleForTesting', _url);
 }
 
 /// `package:native_storage` types

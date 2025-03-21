@@ -304,12 +304,43 @@ final class ClientGenerator {
       ],
     ]);
 
+  Method get resetMethod {
+    return Method((m) {
+      m
+        ..returns = DartTypes.core.void$
+        ..name = '_reset'
+        ..body = Block((b) {
+          if (project.auth != null) {
+            b.addExpression(
+              refer('_auth')
+                  .property('close')
+                  .call([])
+                  .property('ignore')
+                  .call([]),
+            );
+            b.addExpression(
+              refer('_auth').assign(
+                ClientTypes.authClass.ref.newInstance(
+                  [refer('this')],
+                  {'storage': refer('nativeStorage')},
+                ),
+              ),
+            );
+          }
+          b.addExpression(refer('_initialized').assign(literalFalse));
+        });
+    });
+  }
+
   Map<String, Library> generate() {
     final libraries = <String, Library>{};
 
     final clientInitBody = BlockBuilder();
 
     // Common setup work
+    clientInitBody.statements.add(
+      refer('_reset').call([]).wrapWithBlockIf(refer('_initialized')),
+    );
     clientInitBody.addExpression(
       refer('_currentEnvironment').assign(refer('environment')),
     );
@@ -367,7 +398,6 @@ final class ClientGenerator {
           Field(
             (f) => f
               ..late = true
-              ..modifier = FieldModifier.final$
               ..type = ClientTypes.authClass.ref
               ..name = '_auth'
               ..assignment = ClientTypes.authClass.ref.newInstance(
@@ -388,25 +418,16 @@ final class ClientGenerator {
               ]).code,
           ),
         );
-      clientInitBody
-        ..statements.insert(
-          0,
-          refer('_auth').property('signOut').call([]).wrapWithBlockIf(
-            refer('_initialized').and(
-              refer('environment').notEqualTo(refer('_currentEnvironment')),
-            ),
-          ),
-        )
-        ..addExpression(
-          refer('scheduleMicrotask', 'dart:async').call([
-            Method(
-              (m) => m
-                ..body = refer('_auth').property('init').call([], {
-                  if (hasExternalAuth) 'externalAuth': refer('externalAuth'),
-                }).code,
-            ).closure
-          ]),
-        );
+      clientInitBody.addExpression(
+        refer('scheduleMicrotask', 'dart:async').call([
+          Method(
+            (m) => m
+              ..body = refer('_auth').property('init').call([], {
+                if (hasExternalAuth) 'externalAuth': refer('externalAuth'),
+              }).code,
+          ).closure
+        ]),
+      );
     }
 
     if (customSerializers.isNotEmpty) {
@@ -420,9 +441,7 @@ final class ClientGenerator {
         'initSerializers',
         ClientPaths.serializers,
       ).call([], {'serializers': refer('serializers')}).statement;
-      clientInitBody.statements.add(
-        initSerializers.wrapWithBlockIf(refer('_initialized').negate()),
-      );
+      clientInitBody.statements.add(initSerializers);
     }
 
     clientInitBody.addExpression(
@@ -458,7 +477,9 @@ final class ClientGenerator {
         ])
         ..body = clientInitBody.build(),
     );
-    _clientClass.methods.add(clientInit);
+    _clientClass.methods
+      ..add(clientInit)
+      ..add(resetMethod);
     libraries[ClientPaths.client] = _library.build();
 
     return libraries;
