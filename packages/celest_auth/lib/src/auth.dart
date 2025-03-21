@@ -28,4 +28,7 @@ abstract interface class Auth {
 
   /// Signs out the current user, if any.
   Future<void> signOut();
+
+  /// Closes the Auth plugin.
+  Future<void> close();
 }
