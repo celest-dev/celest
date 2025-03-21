@@ -349,6 +349,11 @@ final class CelestFrontend {
                 'Celest is running and watching for updates',
               );
               cliLogger.detail('Local API running at: $localUri');
+              if (verbose) {
+                cliLogger.detail(
+                  'VM Service URI: ${_localApiRunner!.wsUri}',
+                );
+              }
             } else {
               currentProgress!.complete('Reloaded project');
             }
@@ -358,7 +363,11 @@ final class CelestFrontend {
             if (childProcess case final childProcess?
                 when !childProcess.isStarted) {
               logger.info('Running command: ${childProcess.command.join(' ')}');
-              await childProcess.start();
+              await childProcess.start(
+                dartDefines: {
+                  'CELEST_SERVICE_WS_URI': _localApiRunner!.wsUri,
+                },
+              );
               unawaited(
                 _stopSignal.future.then(childProcess.stop),
               );
