@@ -1,16 +1,28 @@
 PODS:
   - FlutterMacOS (1.0.0)
+  - native_authentication (0.0.1):
+    - FlutterMacOS
+  - objective_c (0.0.1):
+    - FlutterMacOS
 
 DEPENDENCIES:
   - FlutterMacOS (from `Flutter/ephemeral`)
+  - native_authentication (from `Flutter/ephemeral/.symlinks/plugins/native_authentication/macos`)
+  - objective_c (from `Flutter/ephemeral/.symlinks/plugins/objective_c/macos`)
 
 EXTERNAL SOURCES:
   FlutterMacOS:
     :path: Flutter/ephemeral
+  native_authentication:
+    :path: Flutter/ephemeral/.symlinks/plugins/native_authentication/macos
+  objective_c:
+    :path: Flutter/ephemeral/.symlinks/plugins/objective_c/macos
 
 SPEC CHECKSUMS:
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  native_authentication: e98f968601d32af65f26cab7ca987e3f369567b5
+  objective_c: ec13431e45ba099cb734eb2829a5c1cd37986cba
 
-PODFILE CHECKSUM: 236401fc2c932af29a9fcf0e97baeeb2d750d367
+PODFILE CHECKSUM: 9ebaf0ce3d369aaa26a9ea0e159195ed94724cf3
 
-COCOAPODS: 1.15.0
+COCOAPODS: 1.16.2

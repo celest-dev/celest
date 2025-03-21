@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import 'package:celest_core/_internal.dart';
+import 'package:celest_test/src/vm_service_factory.dart';
 import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 import 'package:vm_service/vm_service.dart';
-import 'package:vm_service/vm_service_io.dart';
 
 /// A helper class for running integration tests with Celest.
 final class CelestTester {
@@ -19,11 +20,12 @@ final class CelestTester {
     _logger.fine('Connecting to Celest service: $wsUri');
 
     var uri = Uri.parse(wsUri);
-    if (uri.host case '127.0.0.1' || 'localhost' when Platform.isAndroid) {
+    if (uri.host case '127.0.0.1' || 'localhost'
+        when !kIsWeb && Platform.isAndroid) {
       uri = uri.replace(host: '10.0.2.2');
     }
 
-    final vmService = await vmServiceConnectUri(uri.toString());
+    final vmService = await vmServiceConnect(uri);
     await vmService.streamListen(EventStreams.kExtension);
 
     final tester = CelestTester._(vmService);

@@ -1,3 +1,4 @@
+import 'package:celest_auth_example/test_keys.dart';
 import 'package:celest_auth_example_client/celest_auth_example_client.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class _MainAppState extends State<MainApp> {
   final _otpController = TextEditingController();
   Future<Object>? _request;
 
-  Future<void> signUp() async {
+  Future<void> signIn() async {
     try {
       if (_emailController.text.isNotEmpty) {
         await celest.auth.email.authenticate(
@@ -47,6 +48,9 @@ class _MainAppState extends State<MainApp> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 }
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
                 final state = snapshot.data!;
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -55,11 +59,16 @@ class _MainAppState extends State<MainApp> {
                       Text(
                         'Currently signed in: id=${user.id}, '
                         'email=${user.primaryEmail?.email}',
+                        key: TestKeys.txtSignedIn,
                       )
                     else
-                      const Text('Currently signed out'),
+                      Text(
+                        'Currently signed out',
+                        key: TestKeys.txtSignedOut,
+                      ),
                     const SizedBox(height: 16),
                     TextButton(
+                      key: TestKeys.btnMakeRequest,
                       onPressed: () {
                         setState(() {
                           _request = celest.functions.greeting.sayHello();
@@ -73,6 +82,7 @@ class _MainAppState extends State<MainApp> {
                         height: 50,
                         child: Center(
                           child: FutureBuilder(
+                            key: TestKeys.wMakeRequestResponse,
                             future: request,
                             builder: (context, snapshot) => switch (snapshot) {
                               AsyncSnapshot(:final error?) =>
@@ -89,7 +99,7 @@ class _MainAppState extends State<MainApp> {
                     ...switch (state) {
                       OtpNeedsVerification() => [
                           TextField(
-                            key: const ValueKey('otp'),
+                            key: TestKeys.inOtp,
                             controller: _otpController,
                             decoration: const InputDecoration(
                               labelText: 'OTP',
@@ -101,6 +111,7 @@ class _MainAppState extends State<MainApp> {
                           ),
                           const SizedBox(height: 16),
                           TextButton(
+                            key: TestKeys.btnVerifyOtp,
                             onPressed: () => state.verify(
                               otpCode: _otpController.text,
                             ),
@@ -109,7 +120,7 @@ class _MainAppState extends State<MainApp> {
                         ],
                       Unauthenticated() => [
                           TextField(
-                            key: const ValueKey('email'),
+                            key: TestKeys.inEmail,
                             controller: _emailController,
                             decoration: const InputDecoration(
                               labelText: 'Email',
@@ -121,12 +132,14 @@ class _MainAppState extends State<MainApp> {
                           ),
                           const SizedBox(height: 16),
                           TextButton(
-                            onPressed: signUp,
+                            key: TestKeys.btnSignIn,
+                            onPressed: signIn,
                             child: const Text('Sign In'),
                           ),
                         ],
                       Authenticated() => [
                           TextButton(
+                            key: TestKeys.btnSignOut,
                             onPressed: celest.auth.signOut,
                             child: const Text('Sign out'),
                           ),
