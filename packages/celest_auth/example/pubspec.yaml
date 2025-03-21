@@ -1,10 +1,10 @@
 name: celest_auth_example
-description: "A new Flutter project."
-publish_to: "none"
+description: Example project using the authentication module of Celest.
+publish_to: none
 version: 0.1.0
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+  sdk: ^3.5.0
 
 dependencies:
   celest_auth_example_client:
@@ -24,11 +24,16 @@ dependency_overrides:
     path: ../../../services/celest_cloud_auth
   celest_core:
     path: ../../celest_core
+  celest_test:
+    path: ../../celest_test
 
 dev_dependencies:
+  celest_test: ^0.1.0
+  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  integration_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: false

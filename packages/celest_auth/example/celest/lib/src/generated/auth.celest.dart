@@ -2,15 +2,12 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use, invalid_use_of_internal_member
 
-library;
+library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:celest/celest.dart';
-import 'package:celest/src/core/context.dart';
-import 'package:celest_cloud_auth/celest_cloud_auth.dart';
-import 'package:drift/native.dart';
-import 'package:drift/src/runtime/api/runtime_api.dart';
-import 'package:drift/src/runtime/executor/executor.dart';
-import 'package:drift_hrana/drift_hrana.dart';
+import 'package:celest/celest.dart' as _$celest;
+import 'package:celest/src/core/context.dart' as _$celest;
+import 'package:celest/src/runtime/data/connect.dart' as _$celest;
+import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _$celest;
 
 /// The auth service for the Celest backend.
 ///
@@ -20,59 +17,22 @@ class CelestAuth {
   const CelestAuth();
 
   /// Initializes the Celest Auth service in the given [context].
-  static Future<void> init(Context context) async {
-    final database = await _connect(
+  static Future<void> init(_$celest.Context context) async {
+    final database = await _$celest.connect(
       context,
       name: 'CelestAuthDatabase',
-      factory: AuthDatabase.new,
-      hostnameVariable: const env('CELEST_AUTH_DATABASE_HOST'),
-      tokenSecret: const secret('CELEST_AUTH_DATABASE_TOKEN'),
+      factory: _$celest.AuthDatabase.new,
+      hostnameVariable: const _$celest.env('CELEST_AUTH_DATABASE_HOST'),
+      tokenSecret: const _$celest.secret('CELEST_AUTH_DATABASE_TOKEN'),
     );
-    final service = await CelestCloudAuth.create(database: database);
+    final service = await _$celest.CelestCloudAuth.create(database: database);
     context.router.mount(
       '/v1alpha1/auth/',
       service.handler,
     );
     context.put(
-      CelestCloudAuth.contextKey,
+      _$celest.CelestCloudAuth.contextKey,
       service,
     );
   }
-}
-
-/// Checks the connection to the database by running a simple query.
-Future<Database> _checkConnection<Database extends GeneratedDatabase>(
-    Database db) async {
-  await db.transaction(() async {
-    await db.customSelect('SELECT 1').get();
-  });
-  return db;
-}
-
-/// Constructs a new [Database] and connects to it using the provided
-/// [hostnameVariable] and [tokenSecret] configuration values.
-Future<Database> _connect<Database extends GeneratedDatabase>(
-  Context context, {
-  required String name,
-  required Database Function(QueryExecutor) factory,
-  required env hostnameVariable,
-  required secret tokenSecret,
-}) async {
-  if (context.environment == Environment.local) {
-    return _checkConnection(factory(NativeDatabase.memory()));
-  }
-  final host = context.get(hostnameVariable);
-  final token = context.get(tokenSecret);
-  if (host == null || token == null) {
-    throw StateError(
-      'Missing database hostname or token for $name. '
-      'Please set the `$hostnameVariable` and `$tokenSecret` values '
-      'in the environment or Celest configuration file.',
-    );
-  }
-  final connector = HranaDatabase(
-    Uri(scheme: 'libsql', host: host),
-    jwtToken: token,
-  );
-  return _checkConnection(factory(connector));
 }
