@@ -26,12 +26,39 @@ final class ChildProcess {
   }
 
   /// Starts the process and streams stdout/stderr to the console.
+  ///
+  /// If [environment] is not null, it is passed to [Process.start].
+  ///
+  /// If [dartDefines] are specified and the [command] is a `dart` or `flutter`
+  /// command, then the given values are passed to the command via the respective
+  /// flag.
   Future<void> start({
     Map<String, String>? environment,
+    Map<String, String>? dartDefines,
   }) async {
     if (_process != null) {
       return;
     }
+
+    var command = this.command;
+    if (dartDefines != null) {
+      switch (command.first) {
+        case 'dart':
+          command = [
+            'dart',
+            for (final MapEntry(:key, :value) in dartDefines.entries)
+              '-D$key=$value',
+            ...command.sublist(1),
+          ];
+        case 'flutter':
+          command = [
+            ...command,
+            for (final MapEntry(:key, :value) in dartDefines.entries)
+              '--dart-define=$key=$value'
+          ];
+      }
+    }
+
     final process = _process = await processManager.start(
       command,
       environment: environment,

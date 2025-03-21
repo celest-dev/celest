@@ -41,6 +41,9 @@ final class LocalApiRunner {
   VmService? _vmService;
   late final String _vmIsolateId;
 
+  /// The WebSocket URI of the running Celest server.
+  String get wsUri => _vmService!.wsUri!;
+
   late final StreamSubscription<String> _stdoutSub;
   late final StreamSubscription<String> _stderrSub;
 
