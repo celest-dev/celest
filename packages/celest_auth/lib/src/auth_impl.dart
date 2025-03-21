@@ -219,6 +219,7 @@ final class AuthImpl implements Auth {
   NativeStorage get localStorage => _storage;
   IsolatedNativeStorage get secureStorage => _storage.secure.isolated;
 
+  @override
   Future<void> close() async {
     for (final subscription in _authProviderSubs.values) {
       subscription.cancel().ignore();
@@ -227,7 +228,5 @@ final class AuthImpl implements Auth {
     await _authStateSubscription?.cancel();
     await _authFlowSubscription?.cancel();
     await _authStateController.close();
-    localStorage.close();
-    await secureStorage.close();
   }
 }
