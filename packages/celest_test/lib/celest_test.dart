@@ -35,8 +35,35 @@ final class CelestTester {
 
   final VmService _vmService;
 
+  /// Auth-related test helpers.
+  late final CelestAuthTester auth = CelestAuthTester._(_vmService);
+
   /// Closes the connection to the VM service.
   Future<void> close() async {
     await _vmService.dispose();
+  }
+}
+
+/// An OTP code sent by the server.
+typedef Otp = ({String to, String code});
+
+/// A helper class for running integration tests with Celest Auth.
+final class CelestAuthTester {
+  CelestAuthTester._(this._vmService);
+
+  final VmService _vmService;
+
+  /// OTP codes sent to users during sign up/sign in.
+  Stream<Otp> get onSentOtp async* {
+    await for (final event in _vmService.onExtensionEvent) {
+      if (event.extensionKind != 'celest.cloud_auth.emailOtpSent') {
+        continue;
+      }
+      final data = event.extensionData!.data;
+      yield (
+        to: data['to'] as String,
+        code: data['code'] as String,
+      );
+    }
   }
 }
