@@ -43,7 +43,14 @@ class Celest {
     CelestEnvironment environment = CelestEnvironment.local,
     _$celest.Serializers? serializers,
   }) {
+    if (_initialized) {
+      _reset();
+    }
     _currentEnvironment = environment;
     _initialized = true;
+  }
+
+  void _reset() {
+    _initialized = false;
   }
 }

@@ -44,7 +44,7 @@ final class CelestAllocator implements Allocator {
             clientPackageName ?? celestProject.clientPackageName,
         projectPaths = projectPaths ?? celestProject.projectPaths;
 
-  static const _doNotPrefix = ['dart:core', 'package:meta/meta.dart'];
+  static const _doNotPrefix = ['dart:core'];
   static final Logger _logger = Logger('CelestAllocator');
 
   final String forFile;
