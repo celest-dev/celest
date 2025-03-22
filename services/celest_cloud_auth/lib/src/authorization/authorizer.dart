@@ -16,14 +16,12 @@ extension type Authorizer._(AuthDatabase _db) implements Object {
     Component? resource,
     EntityUid? action,
     Map<String, Value>? context,
-    bool debug = false,
   }) async {
     final response = await authorize(
       principal: principal,
       resource: resource,
       action: action,
       context: context,
-      debug: debug,
     );
     response.expectAuthorized(
       request: AuthorizationRequest(
@@ -41,7 +39,6 @@ extension type Authorizer._(AuthDatabase _db) implements Object {
     Component? resource,
     EntityUid? action,
     Map<String, Value>? context,
-    bool debug = false,
   }) async {
     final (policySet, closure) = await (
       _db.effectivePolicySet,
@@ -93,18 +90,21 @@ extension type Authorizer._(AuthDatabase _db) implements Object {
   }
 }
 
-extension on AuthorizationResponse {
-  void expectAuthorized({AuthorizationRequest? request}) {
+@internal
+extension ExpectAuthorized on AuthorizationResponse {
+  void expectAuthorized({required AuthorizationRequest request}) {
     if (decision != Decision.allow) {
-      if (request == null) {
-        throw PermissionDeniedException(
-          'Authorization denied',
-          JsonList(reasons),
-        );
+      // If the principal is `null`, that means that either one could not be
+      // extracted from the cork (invalid cork) or that there is no cork.
+      //
+      // In either case, we want to return the appropriate HTTP response code
+      // of 401 via an `UnauthorizedException`.
+      final principal = request.principal;
+      if (principal == null) {
+        throw const UnauthorizedException();
       }
       const unknown = EntityUid.of('', '<unknown>');
-      final EntityUid(type: principalType, id: principalId) =
-          (request.principal ?? unknown).uid;
+      final EntityUid(type: principalType, id: principalId) = principal.uid;
       final EntityUid(type: resourceType, id: resourceId) =
           (request.resource ?? unknown).uid;
       final actionId = request.action?.id;

@@ -13,6 +13,8 @@ import 'package:celest_cloud_auth/src/database/auth_database.dart';
 import 'package:celest_cloud_auth/src/email/email_provider.dart';
 import 'package:celest_cloud_auth/src/model/route_map.dart';
 import 'package:celest_cloud_auth/src/otp/otp_repository.dart';
+import 'package:celest_cloud_auth/src/sessions/sessions_repository.dart';
+import 'package:celest_cloud_auth/src/users/users_repository.dart';
 import 'package:celest_cloud_auth/src/users/users_service.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:meta/meta.dart';
@@ -100,6 +102,7 @@ final class CelestCloudAuth {
 
   /// An authorization middleware which can be added to a Shelf pipeline.
   AuthorizationMiddleware get middleware => AuthorizationMiddleware(
+        issuer: context.rootEntity,
         routeMap: routeMap,
         corks: corks,
         db: db,
@@ -125,22 +128,38 @@ final class CelestCloudAuth {
         cryptoKeys: cryptoKeys,
       );
 
-  /// A map of routes to their respective [EntityUid]s.
   @visibleForTesting
-  late final RouteMap routeMap = RouteMap.of(celest.context.project);
+  SessionsRepository get sessions => SessionsRepository(
+        corks: corks,
+        db: db,
+        cryptoKeys: cryptoKeys,
+        users: users,
+      );
 
   @visibleForTesting
-  late final AuthenticationService authentication = AuthenticationService(
+  UsersRepository get users => UsersRepository(db: db);
+
+  /// A map of routes to their respective [EntityUid]s.
+  @visibleForTesting
+  late final RouteMap routeMap = RouteMap.of(context.project);
+
+  @visibleForTesting
+  late final AuthenticationService authenticationService =
+      AuthenticationService(
+    issuer: context.rootEntity,
     routeMap: routeMap,
     otp: otp,
     authorizer: authorizer,
     corks: corks,
     cryptoKeys: cryptoKeys,
     db: db,
+    sessions: sessions,
+    users: users,
   );
 
   @visibleForTesting
-  late final UsersService users = UsersService(
+  late final UsersService usersService = UsersService(
+    issuer: context.rootEntity,
     routeMap: routeMap,
     authorizer: authorizer,
     corks: corks,
@@ -151,8 +170,8 @@ final class CelestCloudAuth {
     final pipeline =
         const Pipeline().addMiddleware(const CloudExceptionMiddleware().call);
     final cascade = Cascade(statusCodes: [HttpStatus.notFound])
-        .add(authentication.handler)
-        .add(users.handler)
+        .add(authenticationService.handler)
+        .add(usersService.handler)
         .handler;
     return pipeline.addHandler(cascade);
   }

@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:cedar/cedar.dart';
 // ignore: invalid_use_of_internal_member
 import 'package:celest/src/runtime/http/cloud_middleware.dart';
@@ -15,6 +13,8 @@ import 'package:celest_cloud_auth/src/database/auth_database.dart';
 import 'package:celest_cloud_auth/src/http/http_helpers.dart';
 import 'package:celest_cloud_auth/src/model/route_map.dart';
 import 'package:celest_cloud_auth/src/otp/otp_repository.dart';
+import 'package:celest_cloud_auth/src/sessions/sessions_repository.dart';
+import 'package:celest_cloud_auth/src/users/users_repository.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:corks_cedar/corks_cedar.dart';
@@ -23,37 +23,47 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 typedef _Deps = ({
+  EntityUid issuer,
   RouteMap routeMap,
   AuthDatabase db,
   OtpRepository otp,
   CryptoKeyRepository cryptoKeys,
   Authorizer authorizer,
   CorksRepository corks,
+  SessionsRepository sessions,
+  UsersRepository users,
 });
 
 extension type AuthenticationService._(_Deps _deps) implements Object {
   AuthenticationService({
+    required EntityUid issuer,
     required RouteMap routeMap,
     required AuthDatabase db,
     required OtpRepository otp,
     required CryptoKeyRepository cryptoKeys,
     required Authorizer authorizer,
     required CorksRepository corks,
+    required SessionsRepository sessions,
+    required UsersRepository users,
   }) : this._(
           (
+            issuer: issuer,
             routeMap: routeMap,
             db: db,
             otp: otp,
             cryptoKeys: cryptoKeys,
             authorizer: authorizer,
             corks: corks,
+            sessions: sessions,
+            users: users,
           ),
         );
 
   AuthDatabase get _db => _deps.db;
   OtpRepository get _otp => _deps.otp;
-  CryptoKeyRepository get _cryptoKeys => _deps.cryptoKeys;
   CorksRepository get _corks => _deps.corks;
+  SessionsRepository get _sessions => _deps.sessions;
+  UsersRepository get _users => _deps.users;
 
   static const String apiId = 'celest.cloud.auth.v1alpha1.Authentication';
   static const EntityUid apiUid = EntityUid.of('Celest::Api', apiId);
@@ -130,6 +140,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
       corks: _deps.corks,
       db: _deps.db,
       authorizer: _deps.authorizer,
+      issuer: _deps.issuer,
     );
     return const Pipeline()
         .addMiddleware(const CloudExceptionMiddleware().call)
@@ -160,32 +171,6 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
     );
   }
 
-  Future<Session> _createSession({
-    required TypeId<Session> sessionId,
-    required String? userId,
-    required AuthenticationFactor factor,
-    required SessionClient clientInfo,
-    DateTime? expireTime,
-    String? ipAddress,
-  }) async {
-    expireTime ??= DateTime.timestamp().add(const Duration(minutes: 15));
-    return _db.transaction(() async {
-      final keyData = await _cryptoKeys.mintHmacKey(
-        cryptoKeyId: sessionId.uuid.value,
-      );
-      final session = await _db.authDrift.createSession(
-        sessionId: sessionId.encoded,
-        cryptoKeyId: keyData.cryptoKeyId,
-        userId: userId,
-        expireTime: expireTime!,
-        authenticationFactor: factor,
-        clientInfo: clientInfo,
-        ipAddress: ipAddress,
-      );
-      return session.first;
-    });
-  }
-
   Future<Response> handleGetOpenIdUserInfo(Request request) async {
     final userInfo = await getUserInfo();
     return userInfo.jsonResponse();
@@ -197,7 +182,6 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
     required SessionClient clientInfo,
     String? ipAddress,
   }) async {
-    final sessionId = TypeId<Session>();
     var user = context.get(ContextKey.principal);
     if (user == null) {
       switch (factor) {
@@ -207,32 +191,26 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
           user = await _db.findUserByPhoneNumber(phoneNumber: phoneNumber);
       }
     }
-    await _createSession(
-      sessionId: sessionId,
-      userId: user?.userId,
-      factor: factor,
-      clientInfo: clientInfo,
-      ipAddress: ipAddress,
-    );
 
-    try {
+    return _db.transaction(() async {
+      final session = await _sessions.createSession(
+        userId: user?.userId,
+        factor: factor,
+        clientInfo: clientInfo,
+        ipAddress: ipAddress,
+      );
+      final sessionId = session.sessionId;
+
       final nextStep = await _sendOtp(
         sessionId: sessionId,
         factor: factor,
         resend: null,
       );
-      return await _db.transaction(() async {
-        final session = await _updateSessionState(
-          sessionId: sessionId,
-          state: nextStep,
-        );
-        final sessionToken = await _corks.createSessionCork(session: session);
-        return session.copyWith(sessionToken: sessionToken.toString());
-      });
-    } on Object {
-      await _db.authDrift.deleteSession(sessionId: sessionId.encoded);
-      rethrow;
-    }
+      return _sessions.updateSession(
+        session: session,
+        state: nextStep,
+      );
+    });
   }
 
   Future<Response> handleStartSession(Request request) async {
@@ -251,73 +229,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
       clientInfo: clientInfo,
       ipAddress: request.clientIp,
     );
-    return session.toProto().jsonResponse();
-  }
-
-  Future<SessionStateSuccess> _authenticateUser({
-    required TypeId<Session> sessionId,
-    required String userId,
-  }) async {
-    final user = await _db.getUser(userId: userId);
-    if (user == null) {
-      throw const NotFoundException('User not found');
-    }
-    final cork = await _corks.createUserCork(
-      user: user,
-      sessionId: sessionId,
-    );
-    return SessionStateSuccess(
-      cork: cork,
-      user: user,
-      isNewUser: false,
-    );
-  }
-
-  Future<SessionStateSuccess> _createUser({
-    required TypeId<Session> sessionId,
-    required AuthenticationFactor factor,
-  }) async {
-    final (user, cork) = await _db.transaction(() async {
-      final user = await _db.createUser(
-        user: User(
-          userId: typeId<User>(),
-          emails: [
-            if (factor case AuthenticationFactorEmailOtp(:final email))
-              Email(email: email, isVerified: true, isPrimary: true),
-          ],
-          phoneNumbers: [
-            if (factor case AuthenticationFactorSmsOtp(:final phoneNumber))
-              PhoneNumber(
-                phoneNumber: phoneNumber,
-                isVerified: true,
-                isPrimary: true,
-              ),
-          ],
-          roles: const [EntityUid.of('Celest::Role', 'authenticated')],
-        ),
-      );
-      final cork = await _corks.createUserCork(
-        user: user,
-        sessionId: sessionId,
-      );
-      return (user, cork);
-    });
-    return SessionStateSuccess(
-      cork: cork,
-      user: user,
-      isNewUser: true,
-    );
-  }
-
-  Future<Session> _updateSessionState<T extends SessionState>({
-    required TypeId<Session> sessionId,
-    required T state,
-  }) async {
-    final updated = await _db.authDrift.updateSession(
-      sessionId: sessionId.encoded,
-      state: state,
-    );
-    return updated.first;
+    return session.toResponse();
   }
 
   Future<SessionState> _verifyOtp({
@@ -359,15 +271,29 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
           'Invalid proof. Expected ${factor.runtimeType}',
         );
     }
-    if (session.userId case final userId?) {
-      return _authenticateUser(
-        userId: userId,
-        sessionId: session.sessionId,
+    var user = await _users.getUser(userId: session.userId);
+    if (user == null) {
+      throw InternalServerError('Unknown user: ${session.userId}');
+    }
+
+    final isNewUser = user.roles.contains(
+      const EntityUid.of('Celest::Role', 'anonymous'),
+    );
+    if (isNewUser) {
+      user = await _users.updateUser(
+        userId: session.userId,
+        factor: factor,
+        roles: const [EntityUid.of('Celest::Role', 'authenticated')],
       );
     }
-    return _createUser(
-      factor: factor,
-      sessionId: session.sessionId,
+    final cork = await _corks.createCork(
+      user: user,
+      session: session,
+    );
+    return SessionStateSuccess(
+      cork: cork,
+      user: user,
+      isNewUser: isNewUser,
     );
   }
 
@@ -433,7 +359,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
     SessionStatePendingConfirmation? confirmation,
     AuthenticationFactor? resend,
   }) async {
-    final session = await _db.authDrift
+    var session = await _db.authDrift
         .getSession(sessionId: sessionId.encoded)
         .getSingleOrNull();
     if (session == null) {
@@ -461,10 +387,11 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
       null => throw StateError('Unexpected state'),
     };
 
-    return _updateSessionState(
-      sessionId: sessionId,
+    session = await _sessions.updateSession(
+      session: session,
       state: updatedState,
     );
+    return session.copyWith(sessionToken: sessionToken);
   }
 
   Future<Response> handleContinueSession(Request request) async {
@@ -486,46 +413,68 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
           ? AuthenticationFactor.fromProto(pbRequest.resend)
           : null,
     );
-    return session.toProto(sessionToken: pbRequest.sessionToken).jsonResponse();
+    return session.toResponse();
   }
 
   @visibleForTesting
   Future<void> endSession({
-    required String sessionId,
-    required String sessionToken,
+    required TypeId<Session>? sessionId,
+    required String? sessionToken,
   }) async {
-    if (sessionId.isNotEmpty) {
-      final session = await _db.authDrift
-          .getSession(sessionId: sessionId)
-          .getSingleOrNull();
-      if (session == null) {
-        throw const NotFoundException('Session not found');
+    if (sessionId == null) {
+      CedarCork? sessionCork;
+      if (sessionToken != null) {
+        sessionCork = CedarCork.parse(sessionToken);
+      } else {
+        sessionCork = context.cork;
       }
-      sessionId = session.sessionId.encoded;
-    } else {
-      final sessionCork = CedarCork.parse(sessionToken);
+      if (sessionCork == null) {
+        throw UnauthorizedException();
+      }
       await _corks.verify(cork: sessionCork);
-      sessionId = TypeId.decode(String.fromCharCodes(sessionCork.id)).encoded;
+
+      switch (sessionCork.bearer) {
+        case EntityUid(type: 'Celest::Session', :final id):
+          sessionId = TypeId.decode(id);
+        case final unknownType:
+          throw BadRequestException(
+            'Invalid session cork type: ${unknownType.type}. '
+            'Expected "Celest::Session"',
+          );
+      }
     }
-    await _db.transaction(() async {
-      await _db.authDrift.deleteSession(sessionId: sessionId);
-      await _db.authDrift.deleteCork(
-        corkId: Uint8List.fromList(sessionId.codeUnits),
-      );
-    });
+    await _sessions.deleteSession(sessionId: sessionId);
   }
 
   Future<Response> handleEndSession(Request request) async {
     final jsonRequest = await JsonUtf8.decodeStream(request.read());
     final pbRequest = pb.EndSessionRequest()..mergeFromProto3Json(jsonRequest);
     await endSession(
-      sessionId: pbRequest.sessionId,
-      sessionToken: pbRequest.sessionToken,
+      sessionId: switch (pbRequest.sessionId) {
+        '' => null,
+        final sessionId => TypeId.decode(sessionId),
+      },
+      sessionToken: switch (pbRequest.sessionToken) {
+        '' => null,
+        final sessionToken => sessionToken,
+      },
     );
     final response = pb.EndSessionResponse(
       sessionId: pbRequest.sessionId,
       success: pb.Empty(),
     );
-    return response.jsonResponse();
+    return response.jsonResponse().clearCork();
+  }
+}
+
+extension on Session {
+  Response toResponse() {
+    var response = toProto().jsonResponse();
+    if (state case SessionStateSuccess(:final cork)) {
+      response = response.setCork(cork);
+    } else {
+      response = response.setCork(sessionCork);
+    }
+    return response;
   }
 }

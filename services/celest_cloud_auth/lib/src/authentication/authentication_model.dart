@@ -283,17 +283,16 @@ final class Session {
     EntityUid? parent,
     required String sessionId,
     required this.cryptoKeyId,
-    this.userId,
+    required this.userId,
     required this.expireTime,
-    String? sessionToken,
+    this.sessionToken,
     required this.authenticationFactor,
     this.state,
-    required this.clientInfo,
+    this.clientInfo,
     this.ipAddress,
     this.externalSessionId,
   })  : parent = parent ?? context.rootEntity,
-        sessionId = TypeId<Session>.decode(sessionId),
-        _sessionToken = sessionToken;
+        sessionId = TypeId<Session>.decode(sessionId);
 
   const Session._({
     required this.parent,
@@ -301,25 +300,26 @@ final class Session {
     required this.cryptoKeyId,
     required this.userId,
     required this.expireTime,
-    required String? sessionToken,
+    required this.sessionToken,
     required this.authenticationFactor,
     required this.state,
     required this.clientInfo,
     required this.ipAddress,
     required this.externalSessionId,
-  }) : _sessionToken = sessionToken;
+  });
 
   final EntityUid? parent;
   final TypeId<Session> sessionId;
   final Uint8List cryptoKeyId;
-  final String? userId;
+  final String userId;
   final DateTime expireTime;
-  final String? _sessionToken;
-  String get sessionToken => _sessionToken!;
+  final String? sessionToken;
+
+  CedarCork get sessionCork => CedarCork.parse(sessionToken!);
 
   final AuthenticationFactor authenticationFactor;
   final SessionState? state;
-  final SessionClient clientInfo;
+  final SessionClient? clientInfo;
   final String? ipAddress;
   final String? externalSessionId;
 
@@ -331,7 +331,7 @@ final class Session {
       sessionId: sessionId.encoded,
       sessionToken: sessionToken ?? this.sessionToken,
       expireTime: expireTime.toProto(),
-      client: clientInfo.toProto(),
+      client: clientInfo?.toProto(),
     );
     state?.apply(session);
     return session;
@@ -355,7 +355,7 @@ final class Session {
       cryptoKeyId: cryptoKeyId ?? this.cryptoKeyId,
       userId: userId ?? this.userId,
       expireTime: expireTime ?? this.expireTime,
-      sessionToken: sessionToken ?? _sessionToken,
+      sessionToken: sessionToken ?? this.sessionToken,
       authenticationFactor: authenticationFactor ?? this.authenticationFactor,
       state: state ?? this.state,
       clientInfo: clientInfo ?? this.clientInfo,

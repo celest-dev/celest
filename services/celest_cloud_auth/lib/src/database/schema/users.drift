@@ -126,10 +126,18 @@ upsertUserEmail(
     :is_primary AS BOOLEAN OR NULL
 ): 
     INSERT INTO user_emails (user_id, email, is_verified, is_primary)
-    VALUES (:user_id, :email, :is_verified, :is_primary)
+    VALUES (
+        :user_id, 
+        :email, 
+        coalesce(:is_verified, FALSE), 
+        coalesce(
+            :is_primary,
+            (SELECT count(*) = 0 FROM user_emails WHERE user_id = :user_id)
+        )
+    )
     ON CONFLICT(user_id, email) DO UPDATE SET
-        is_verified = coalesce(excluded.is_verified, is_verified),
-        is_primary = coalesce(excluded.is_primary, is_primary)
+        is_verified = coalesce(:is_verified, is_verified),
+        is_primary = coalesce(:is_primary, is_primary)
     RETURNING *;
 
 getUserEmails:
@@ -153,10 +161,18 @@ upsertUserPhoneNumber(
     :is_primary AS BOOLEAN OR NULL
 ):
     INSERT INTO user_phone_numbers (user_id, phone_number, is_verified, is_primary)
-    VALUES (:user_id, :phone_number, :is_verified, :is_primary)
+    VALUES (
+        :user_id, 
+        :phone_number,
+        coalesce(:is_verified, FALSE), 
+        coalesce(
+            :is_primary,
+            (SELECT count(*) = 0 FROM user_phone_numbers WHERE user_id = :user_id)
+        )
+    )
     ON CONFLICT(user_id, phone_number) DO UPDATE SET
-        is_verified = coalesce(excluded.is_verified, is_verified),
-        is_primary = coalesce(excluded.is_primary, is_primary)
+        is_verified = coalesce(:is_verified, is_verified),
+        is_primary = coalesce(:is_primary, is_primary)
     RETURNING *;
 
 getUserPhoneNumbers:

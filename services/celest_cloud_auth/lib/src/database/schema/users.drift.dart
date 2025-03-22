@@ -1066,7 +1066,7 @@ class UsersDrift extends i4.ModularAccessor {
       bool? isVerified,
       bool? isPrimary}) {
     return customWriteReturning(
-        'INSERT INTO user_emails (user_id, email, is_verified, is_primary) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (user_id, email) DO UPDATE SET is_verified = coalesce(excluded.is_verified, is_verified), is_primary = coalesce(excluded.is_primary, is_primary) RETURNING *',
+        'INSERT INTO user_emails (user_id, email, is_verified, is_primary) VALUES (?1, ?2, coalesce(?3, FALSE), coalesce(?4, (SELECT count(*) = 0 FROM user_emails WHERE user_id = ?1))) ON CONFLICT (user_id, email) DO UPDATE SET is_verified = coalesce(?3, is_verified), is_primary = coalesce(?4, is_primary) RETURNING *',
         variables: [
           i0.Variable<String>(userId),
           i0.Variable<String>(email),
@@ -1119,7 +1119,7 @@ class UsersDrift extends i4.ModularAccessor {
       bool? isVerified,
       bool? isPrimary}) {
     return customWriteReturning(
-        'INSERT INTO user_phone_numbers (user_id, phone_number, is_verified, is_primary) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (user_id, phone_number) DO UPDATE SET is_verified = coalesce(excluded.is_verified, is_verified), is_primary = coalesce(excluded.is_primary, is_primary) RETURNING *',
+        'INSERT INTO user_phone_numbers (user_id, phone_number, is_verified, is_primary) VALUES (?1, ?2, coalesce(?3, FALSE), coalesce(?4, (SELECT count(*) = 0 FROM user_phone_numbers WHERE user_id = ?1))) ON CONFLICT (user_id, phone_number) DO UPDATE SET is_verified = coalesce(?3, is_verified), is_primary = coalesce(?4, is_primary) RETURNING *',
         variables: [
           i0.Variable<String>(userId),
           i0.Variable<String>(phoneNumber),

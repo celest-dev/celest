@@ -2,4 +2,5 @@ targets:
   $default:
     sources:
       include:
+        - 'lib/$lib$'
         - 'test/runtime/data/**'

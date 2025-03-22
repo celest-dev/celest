@@ -46,10 +46,12 @@ CREATE TABLE IF NOT EXISTS sessions (
     crypto_key_id BLOB NOT NULL,
 
     -- The ID of the user who started the session.
-    user_id TEXT,
+    --
+    -- All sessions belong to a user, even if the user is anonymous.
+    user_id TEXT NOT NULL,
 
     -- Client information for the session.
-    client_info BLOB NOT NULL MAPPED BY `const SessionClientConverter()`,
+    client_info BLOB MAPPED BY `const SessionClientConverter()`,
 
     -- The authentication factor used to start the session.
     authentication_factor BLOB NOT NULL MAPPED BY `const AuthenticationFactorConverter()`,
@@ -269,7 +271,9 @@ getSession:
 -- Updates the state of the auth session for the given ID.
 updateSession:
     UPDATE sessions
-    SET state = :state
+    SET 
+        state = :state,
+        user_id = :user_id
     WHERE 
         session_id = :session_id
     OR  external_session_id = :session_id

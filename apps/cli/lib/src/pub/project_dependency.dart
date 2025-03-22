@@ -97,7 +97,7 @@ final class ProjectDependency {
     'celest_cloud_auth',
     DependencyType.dependency,
     HostedDependency(
-      version: VersionConstraint.compatibleWith(Version.parse('0.1.0')),
+      version: VersionConstraint.compatibleWith(Version.parse('0.2.0')),
     ),
   );
 

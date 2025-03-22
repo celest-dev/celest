@@ -1,3 +1,4 @@
+import 'package:cedar/cedar.dart';
 import 'package:celest_cloud/src/proto.dart' as pb;
 import 'package:celest_core/celest_core.dart';
 
@@ -14,6 +15,20 @@ extension UserInterop on User {
       timeZone: timeZone,
       createTime: createTime?.toProto(),
       updateTime: updateTime?.toProto(),
+    );
+  }
+
+  Entity toEntity({
+    List<EntityUid>? parents,
+  }) {
+    final userUid = EntityUid.of('Celest::User', userId);
+    return Entity(
+      uid: userUid,
+      parents: {
+        ...roles,
+        ...?parents,
+      }.toList(),
+      attributes: RecordValue.fromJson(toJson()).attributes,
     );
   }
 }

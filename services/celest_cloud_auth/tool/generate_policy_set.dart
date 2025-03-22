@@ -33,7 +33,7 @@ library;
 import 'package:cedar/cedar.dart';
 
 /// The core policy set.
-/// 
+///
 /// Included policies:
 ${policies.map((f) => p.basename(f.path)).map((p) => '/// - $p').join('\n')}
 final corePolicySet = PolicySet.parse(corePolicySetCedar);

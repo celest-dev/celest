@@ -1,3 +1,5 @@
+## 0.2.0-wip
+
 ## 0.1.1
 
 - fix: Ensure Cedar types are registered during seeding

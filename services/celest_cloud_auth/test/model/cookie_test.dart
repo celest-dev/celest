@@ -1,4 +1,7 @@
+import 'package:cedar/cedar.dart';
 import 'package:celest_cloud_auth/src/model/cookie.dart';
+import 'package:celest_cloud_auth/src/util/random_bytes.dart';
+import 'package:corks_cedar/corks_cedar.dart';
 import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
@@ -23,6 +26,21 @@ void main() {
         expect(actual, equals(testCase.expected));
       });
     }
+
+    test('parses cork', () async {
+      final cork = (CedarCork.builder()
+            ..issuer = EntityUid.of('Celest::Service', 'test')
+            ..bearer = EntityUid.of('Celest::User', 'user'))
+          .build();
+
+      final signer = Signer(cork.id, secureRandomBytes(16));
+      final signed = await cork.sign(signer);
+
+      final cookies = parseCookies({
+        'cookie': ['cork=$signed'],
+      });
+      expect(cookies['cork'], '$signed');
+    });
   });
 }
 

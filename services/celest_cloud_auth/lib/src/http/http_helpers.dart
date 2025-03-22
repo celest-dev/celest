@@ -45,7 +45,7 @@ extension ResponseHelpers on Response {
   }
 
   /// Adds a `Set-Cookie` header to clear the user's cork.
-  Response clearCookie() {
+  Response clearCork() {
     return setCookie(Corkie.clear());
   }
 }

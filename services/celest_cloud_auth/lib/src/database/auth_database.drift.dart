@@ -98,6 +98,34 @@ abstract class $AuthDatabase extends i0.GeneratedDatabase {
             ],
           ),
           i0.WritePropagation(
+            on: i0.TableUpdateQuery.onTableName('cedar_entities',
+                limitUpdateKind: i0.UpdateKind.delete),
+            result: [
+              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+            ],
+          ),
+          i0.WritePropagation(
+            on: i0.TableUpdateQuery.onTableName('cedar_entities',
+                limitUpdateKind: i0.UpdateKind.update),
+            result: [
+              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.update),
+            ],
+          ),
+          i0.WritePropagation(
+            on: i0.TableUpdateQuery.onTableName('cedar_entities',
+                limitUpdateKind: i0.UpdateKind.delete),
+            result: [
+              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+            ],
+          ),
+          i0.WritePropagation(
+            on: i0.TableUpdateQuery.onTableName('cedar_entities',
+                limitUpdateKind: i0.UpdateKind.update),
+            result: [
+              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.update),
+            ],
+          ),
+          i0.WritePropagation(
             on: i0.TableUpdateQuery.onTableName('users',
                 limitUpdateKind: i0.UpdateKind.delete),
             result: [

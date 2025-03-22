@@ -8,3 +8,4 @@ analyzer:
   exclude:
     - '**/*.g.dart'
     - '**/*.drift.dart'
+    - 'test/database/auth_database/generated'

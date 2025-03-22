@@ -6,7 +6,7 @@ import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
 import 'package:celest_cloud_auth/src/database/auth_database.dart';
 import 'package:celest_cloud_auth/src/database/schema/auth.drift.dart' as drift;
-import 'package:celest_cloud_auth/src/util/typeid.dart';
+import 'package:celest_cloud_auth/src/model/interop.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:corks_cedar/corks_cedar.dart';
 import 'package:drift/drift.dart' as drift;
@@ -41,94 +41,51 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
   }
 
   /// Creates a new cork for the given [user].
-  Future<Cork> createUserCork({
-    // TODO(dnys1): Make this required
-    TypeId<Session>? sessionId,
+  Future<Cork> createCork({
+    required Session session,
     required User user,
     EntityUid? audience,
   }) async {
-    sessionId ??= TypeId<Session>();
     audience ??= issuer;
     final cryptoKey = await _cryptoKeys.getOrMintHmacKey(
-      cryptoKeyId: sessionId.uuid.value,
+      cryptoKeyId: session.cryptoKeyId,
     );
-    final userId = EntityUid.of('Celest::User', user.userId);
-    final expireTime = DateTime.timestamp().add(const Duration(days: 30));
-    final userEntity = Entity(
-      uid: userId,
+    final userEntity = user.toEntity(parents: [issuer]);
+
+    final sessionUid = EntityUid.of(
+      'Celest::Session',
+      session.sessionId.encoded,
+    );
+    final expireTime = session.expireTime;
+    final sessionEntity = Entity(
+      uid: sessionUid,
       parents: [
-        ...user.roles,
-        issuer,
+        userEntity.uid,
       ],
       attributes: {
-        ...RecordValue.fromJson(user.toJson()).attributes,
         'expireTime': Value.integer(expireTime.millisecondsSinceEpoch ~/ 1000),
       },
     );
-    final corkBuilder = CedarCork.builder(sessionId.uuid.value)
-      ..bearer = userId
+
+    final corkBuilder = CedarCork.builder(session.sessionId.uuid.value)
+      ..bearer = sessionEntity.uid
       ..audience = audience
       ..issuer = issuer
-      ..claims = userEntity;
+      ..claims = sessionEntity;
     final cork = await corkBuilder.build().sign(cryptoKey.signer);
     await _db.transaction(() async {
       await _db.createEntity(userEntity);
+      await _db.createEntity(sessionEntity);
       await _db.authDrift.upsertCork(
         corkId: cork.id,
         cryptoKeyId: cryptoKey.cryptoKeyId,
-        bearerType: 'Celest::User',
-        bearerId: user.userId,
+        bearerType: sessionUid.type,
+        bearerId: sessionUid.id,
         audienceType: audience!.type,
         audienceId: audience.id,
         issuerType: issuer.type,
         issuerId: issuer.id,
         expireTime: expireTime,
-      );
-    });
-    return cork;
-  }
-
-  /// Creates a new cork for the given [session].
-  Future<Cork> createSessionCork({
-    required Session session,
-  }) async {
-    final cryptoKey = await _cryptoKeys.getOrMintHmacKey(
-      cryptoKeyId: session.cryptoKeyId,
-    );
-    final sessionUid = EntityUid.of(
-      'Celest::Session',
-      session.sessionId.encoded,
-    );
-    final sessionEntity = Entity(
-      uid: sessionUid,
-      parents: [
-        if (session.userId case final userId?)
-          EntityUid.of('Celest::User', userId),
-      ],
-      attributes: {
-        'expireTime': Value.integer(
-          session.expireTime.millisecondsSinceEpoch ~/ 1000,
-        ),
-      },
-    );
-    final corkBuilder = CedarCork.builder(session.sessionId.uuid.value)
-      ..bearer = sessionUid
-      ..issuer = issuer
-      ..audience = issuer
-      ..claims = sessionEntity;
-    final cork = await corkBuilder.build().sign(cryptoKey.signer);
-    await _db.transaction(() async {
-      await _db.createEntity(sessionEntity);
-      await _db.authDrift.createCork(
-        corkId: cork.id,
-        cryptoKeyId: session.cryptoKeyId,
-        bearerType: sessionUid.type,
-        bearerId: sessionUid.id,
-        audienceType: issuer.type,
-        audienceId: issuer.id,
-        issuerType: issuer.type,
-        issuerId: issuer.id,
-        expireTime: session.expireTime,
       );
     });
     return cork;
