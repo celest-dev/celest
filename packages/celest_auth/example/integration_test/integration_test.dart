@@ -14,7 +14,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Initial state is signed out.
-    expect(find.byKey(TestKeys.txtSignedOut), findsOneWidget);
+    expect(find.byKey(TestKeys.txtSignedOut), findsOne);
 
     // Send an unauthenticated request.
     await tester.tap(find.byKey(TestKeys.btnMakeRequest));
@@ -24,7 +24,7 @@ void main() {
         of: find.byKey(TestKeys.wMakeRequestResponse),
         matching: find.textContaining('Error'),
       ),
-      findsOneWidget,
+      findsOne,
     );
   });
 
@@ -36,7 +36,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Initial state is signed out.
-    expect(find.byKey(TestKeys.txtSignedOut), findsOneWidget);
+    expect(find.byKey(TestKeys.txtSignedOut), findsOne);
 
     // Sign in with email.
     await tester.enterText(
@@ -51,10 +51,15 @@ void main() {
     );
 
     await tester.tap(find.byKey(TestKeys.btnSignIn));
+
+    await expectLater(
+      celest.auth.authStateChanges,
+      emitsThrough(isA<AuthFlowInProgress>()),
+    );
     await tester.pumpAndSettle();
 
-    expect(find.byKey(TestKeys.inOtp), findsOneWidget);
-    expect(find.byKey(TestKeys.btnVerifyOtp), findsOneWidget);
+    expect(find.byKey(TestKeys.inOtp), findsOne);
+    expect(find.byKey(TestKeys.btnVerifyOtp), findsOne);
   });
 
   testWidgets('signs in/out', (tester) async {
@@ -65,7 +70,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Initial state is signed out.
-    expect(find.byKey(TestKeys.txtSignedOut), findsOneWidget);
+    expect(find.byKey(TestKeys.txtSignedOut), findsOne);
 
     // Sign in with email.
     await tester.enterText(
@@ -74,14 +79,24 @@ void main() {
     );
     final otpCode = celestTester.auth.onSentOtp.first;
     await tester.tap(find.byKey(TestKeys.btnSignIn));
+
+    await expectLater(
+      celest.auth.authStateChanges,
+      emitsThrough(isA<AuthFlowInProgress>()),
+    );
     await tester.pumpAndSettle();
 
     // Enter OTP code received.
     await tester.enterText(find.byKey(TestKeys.inOtp), (await otpCode).code);
     await tester.tap(find.byKey(TestKeys.btnVerifyOtp));
+
+    await expectLater(
+      celest.auth.authStateChanges,
+      emitsThrough(isA<Authenticated>()),
+    );
     await tester.pumpAndSettle();
 
-    expect(find.byKey(TestKeys.txtSignedIn), findsOneWidget);
+    expect(find.byKey(TestKeys.txtSignedIn), findsOne);
 
     // Make authenticated request
     await tester.tap(find.byKey(TestKeys.btnMakeRequest));
@@ -92,13 +107,18 @@ void main() {
         of: find.byKey(TestKeys.wMakeRequestResponse),
         matching: find.textContaining('Response'),
       ),
-      findsOneWidget,
+      findsOne,
     );
 
     // Sign out
     await tester.tap(find.byKey(TestKeys.btnSignOut));
+
+    await expectLater(
+      celest.auth.authStateChanges,
+      emitsThrough(isA<Unauthenticated>()),
+    );
     await tester.pumpAndSettle();
 
-    expect(find.byKey(TestKeys.txtSignedOut), findsOneWidget);
+    expect(find.byKey(TestKeys.txtSignedOut), findsOne);
   });
 }

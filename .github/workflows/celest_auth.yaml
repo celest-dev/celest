@@ -19,7 +19,7 @@ defaults:
 
 jobs:
   test:
-    runs-on: macos-latest-xlarge
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - name: Git Checkout
@@ -63,6 +63,7 @@ jobs:
         working-directory: packages/celest_auth/example
         run: flutter pub get
       - name: Setup iOS Simulator
+        id: simulator
         run: |
           RUNTIME=$(xcrun simctl list runtimes | grep 'iOS 18' | tail -n 1 | cut -d' ' -f 7)
           echo "Using runtime: $RUNTIME"
@@ -70,12 +71,32 @@ jobs:
           echo "Booting simulator"
           xcrun simctl boot ios
           echo "Booted simulator"
+          xcrun simctl io booted recordVideo --codec=h264 /tmp/test.mp4 &
+          echo "recording_pid=$!" >> $GITHUB_OUTPUT
       - name: Integration Test (iOS)
+        id: test-ios
+        continue-on-error: true
         working-directory: packages/celest_auth/example
         run: dart run $CELEST start --verbose -- flutter test -d ios integration_test
-      - name: Integration Test (macOS)
-        working-directory: packages/celest_auth/example
-        run: dart run $CELEST start --verbose -- flutter test -d macos integration_test
+      - name: Stop recording
+        if: always()
+        run: |
+          kill -INT ${{ steps.simulator.outputs.recording_pid }}
+          sleep 5 # Give some time for the video to save
+      - name: Upload test video recording
+        if: steps.test-ios.outcome == 'failure'  # Only upload if tests failed
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # 4.6.2
+        with:
+          name: test-recording
+          path: /tmp/test.mp4
+          retention-days: 7
+      - name: Fail job if tests failed
+        if: steps.test-ios.outcome == 'failure'
+        run: exit 1
+      # TODO: Need signing certs in CI to test
+      # - name: Integration Test (macOS)
+      #   working-directory: packages/celest_auth/example
+      #   run: dart run $CELEST start --verbose -- flutter test -d macos integration_test
   # TODO: Keeps timing out on Linux. Fails hard on macOS...
   # test_android:
   #   needs: [test]
