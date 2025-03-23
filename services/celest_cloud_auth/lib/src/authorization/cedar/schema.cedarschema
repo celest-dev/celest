@@ -32,6 +32,8 @@ namespace Celest {
     // Sessions are used to track the state of a user's authentication and
     // authorization. They can be used to track the user's activity and
     // provide a means of revoking access.
+    //
+    // Users can have multiple active sessions.
     entity Session in [User];
 
     // APIs in Celest are a collection of functions which participate in a

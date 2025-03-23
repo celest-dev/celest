@@ -2,23 +2,41 @@ import 'package:cedar/cedar.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud_auth/src/authorization/cedar_interop.dart';
 import 'package:celest_cloud_auth/src/model/route.dart';
+import 'package:collection/collection.dart';
 
 /// A map of routes to their respective [EntityUid]s.
-extension type const RouteMap(Map<EntityUid, Route> _routes)
-    implements Map<EntityUid, Route> {
+class RouteMap extends DelegatingMap<EntityUid, Route> {
+  RouteMap(super.base);
+
   /// Computes the route map for the given [project].
   ///
   /// Optionally, [additionalRoutes] can be provided to be included in the map.
   factory RouteMap.of(
     ResolvedProject project, {
-    RouteMap additionalRoutes = const RouteMap({}),
+    RouteMap? additionalRoutes,
   }) {
     final collector = _RouteCollector();
     project.accept(collector);
     return RouteMap({
       ...collector._routes,
-      ...additionalRoutes,
+      ...?additionalRoutes,
     });
+  }
+
+  /// Lookup index for finding a route ID by path.
+  final Map<String, EntityUid?> _lookupIndex = {};
+
+  /// Finds a route by [path].
+  EntityUid? lookupRoute(String path) {
+    if (_lookupIndex.containsKey(path)) {
+      return _lookupIndex[path];
+    }
+    for (final MapEntry(key: uid, value: route) in entries) {
+      if (route.matches(path)) {
+        return _lookupIndex[path] = uid;
+      }
+    }
+    return _lookupIndex[path] = null;
   }
 }
 

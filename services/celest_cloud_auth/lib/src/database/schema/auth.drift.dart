@@ -198,8 +198,8 @@ typedef $SessionsCreateCompanionBuilder = i3.SessionsCompanion Function({
   i0.Value<int> rowid,
   required String sessionId,
   required i2.Uint8List cryptoKeyId,
-  i0.Value<String?> userId,
-  required i4.SessionClient clientInfo,
+  required String userId,
+  i0.Value<i4.SessionClient?> clientInfo,
   required i4.AuthenticationFactor authenticationFactor,
   i0.Value<i4.SessionState?> state,
   i0.Value<String?> ipAddress,
@@ -213,8 +213,8 @@ typedef $SessionsUpdateCompanionBuilder = i3.SessionsCompanion Function({
   i0.Value<int> rowid,
   i0.Value<String> sessionId,
   i0.Value<i2.Uint8List> cryptoKeyId,
-  i0.Value<String?> userId,
-  i0.Value<i4.SessionClient> clientInfo,
+  i0.Value<String> userId,
+  i0.Value<i4.SessionClient?> clientInfo,
   i0.Value<i4.AuthenticationFactor> authenticationFactor,
   i0.Value<i4.SessionState?> state,
   i0.Value<String?> ipAddress,
@@ -247,7 +247,7 @@ class $SessionsFilterComposer
   i0.ColumnFilters<String> get userId => $composableBuilder(
       column: $table.userId, builder: (column) => i0.ColumnFilters(column));
 
-  i0.ColumnWithTypeConverterFilters<i4.SessionClient, i4.SessionClient,
+  i0.ColumnWithTypeConverterFilters<i4.SessionClient?, i4.SessionClient,
           i2.Uint8List>
       get clientInfo => $composableBuilder(
           column: $table.clientInfo,
@@ -366,7 +366,7 @@ class $SessionsAnnotationComposer
   i0.GeneratedColumn<String> get userId =>
       $composableBuilder(column: $table.userId, builder: (column) => column);
 
-  i0.GeneratedColumnWithTypeConverter<i4.SessionClient, i2.Uint8List>
+  i0.GeneratedColumnWithTypeConverter<i4.SessionClient?, i2.Uint8List>
       get clientInfo => $composableBuilder(
           column: $table.clientInfo, builder: (column) => column);
 
@@ -426,8 +426,8 @@ class $SessionsTableManager extends i0.RootTableManager<
             i0.Value<int> rowid = const i0.Value.absent(),
             i0.Value<String> sessionId = const i0.Value.absent(),
             i0.Value<i2.Uint8List> cryptoKeyId = const i0.Value.absent(),
-            i0.Value<String?> userId = const i0.Value.absent(),
-            i0.Value<i4.SessionClient> clientInfo = const i0.Value.absent(),
+            i0.Value<String> userId = const i0.Value.absent(),
+            i0.Value<i4.SessionClient?> clientInfo = const i0.Value.absent(),
             i0.Value<i4.AuthenticationFactor> authenticationFactor =
                 const i0.Value.absent(),
             i0.Value<i4.SessionState?> state = const i0.Value.absent(),
@@ -457,8 +457,8 @@ class $SessionsTableManager extends i0.RootTableManager<
             i0.Value<int> rowid = const i0.Value.absent(),
             required String sessionId,
             required i2.Uint8List cryptoKeyId,
-            i0.Value<String?> userId = const i0.Value.absent(),
-            required i4.SessionClient clientInfo,
+            required String userId,
+            i0.Value<i4.SessionClient?> clientInfo = const i0.Value.absent(),
             required i4.AuthenticationFactor authenticationFactor,
             i0.Value<i4.SessionState?> state = const i0.Value.absent(),
             i0.Value<String?> ipAddress = const i0.Value.absent(),
@@ -1139,17 +1139,18 @@ class Sessions extends i0.Table with i0.TableInfo<Sessions, i4.Session> {
           requiredDuringInsert: true,
           $customConstraints: 'NOT NULL');
   late final i0.GeneratedColumn<String> userId = i0.GeneratedColumn<String>(
-      'user_id', aliasedName, true,
+      'user_id', aliasedName, false,
       type: i0.DriftSqlType.string,
-      requiredDuringInsert: false,
-      $customConstraints: '');
-  late final i0.GeneratedColumnWithTypeConverter<i4.SessionClient, i2.Uint8List>
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  late final i0
+      .GeneratedColumnWithTypeConverter<i4.SessionClient?, i2.Uint8List>
       clientInfo = i0.GeneratedColumn<i2.Uint8List>(
-              'client_info', aliasedName, false,
+              'client_info', aliasedName, true,
               type: i0.DriftSqlType.blob,
-              requiredDuringInsert: true,
-              $customConstraints: 'NOT NULL')
-          .withConverter<i4.SessionClient>(i3.Sessions.$converterclientInfo);
+              requiredDuringInsert: false,
+              $customConstraints: '')
+          .withConverter<i4.SessionClient?>(i3.Sessions.$converterclientInfon);
   late final i0
       .GeneratedColumnWithTypeConverter<i4.AuthenticationFactor, i2.Uint8List>
       authenticationFactor = i0.GeneratedColumn<i2.Uint8List>(
@@ -1231,7 +1232,7 @@ class Sessions extends i0.Table with i0.TableInfo<Sessions, i4.Session> {
       cryptoKeyId: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.blob, data['${effectivePrefix}crypto_key_id'])!,
       userId: attachedDatabase.typeMapping
-          .read(i0.DriftSqlType.string, data['${effectivePrefix}user_id']),
+          .read(i0.DriftSqlType.string, data['${effectivePrefix}user_id'])!,
       expireTime: attachedDatabase.typeMapping.read(
           const i5.TimestampType(), data['${effectivePrefix}expire_time'])!,
       authenticationFactor: i3.Sessions.$converterauthenticationFactor.fromSql(
@@ -1239,9 +1240,9 @@ class Sessions extends i0.Table with i0.TableInfo<Sessions, i4.Session> {
               data['${effectivePrefix}authentication_factor'])!),
       state: i3.Sessions.$converterstaten.fromSql(attachedDatabase.typeMapping
           .read(i0.DriftSqlType.blob, data['${effectivePrefix}state'])),
-      clientInfo: i3.Sessions.$converterclientInfo.fromSql(attachedDatabase
+      clientInfo: i3.Sessions.$converterclientInfon.fromSql(attachedDatabase
           .typeMapping
-          .read(i0.DriftSqlType.blob, data['${effectivePrefix}client_info'])!),
+          .read(i0.DriftSqlType.blob, data['${effectivePrefix}client_info'])),
       ipAddress: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.string, data['${effectivePrefix}ip_address']),
       externalSessionId: attachedDatabase.typeMapping.read(
@@ -1257,6 +1258,9 @@ class Sessions extends i0.Table with i0.TableInfo<Sessions, i4.Session> {
 
   static i0.TypeConverter<i4.SessionClient, i2.Uint8List> $converterclientInfo =
       const i6.SessionClientConverter();
+  static i0.TypeConverter<i4.SessionClient?, i2.Uint8List?>
+      $converterclientInfon =
+      i0.NullAwareTypeConverter.wrap($converterclientInfo);
   static i0.TypeConverter<i4.AuthenticationFactor, i2.Uint8List>
       $converterauthenticationFactor = const i6.AuthenticationFactorConverter();
   static i0.TypeConverter<i4.SessionState, i2.Uint8List> $converterstate =
@@ -1276,8 +1280,8 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
   final i0.Value<int> rowid;
   final i0.Value<String> sessionId;
   final i0.Value<i2.Uint8List> cryptoKeyId;
-  final i0.Value<String?> userId;
-  final i0.Value<i4.SessionClient> clientInfo;
+  final i0.Value<String> userId;
+  final i0.Value<i4.SessionClient?> clientInfo;
   final i0.Value<i4.AuthenticationFactor> authenticationFactor;
   final i0.Value<i4.SessionState?> state;
   final i0.Value<String?> ipAddress;
@@ -1305,8 +1309,8 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
     this.rowid = const i0.Value.absent(),
     required String sessionId,
     required i2.Uint8List cryptoKeyId,
-    this.userId = const i0.Value.absent(),
-    required i4.SessionClient clientInfo,
+    required String userId,
+    this.clientInfo = const i0.Value.absent(),
     required i4.AuthenticationFactor authenticationFactor,
     this.state = const i0.Value.absent(),
     this.ipAddress = const i0.Value.absent(),
@@ -1317,7 +1321,7 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
     this.cancelTime = const i0.Value.absent(),
   })  : sessionId = i0.Value(sessionId),
         cryptoKeyId = i0.Value(cryptoKeyId),
-        clientInfo = i0.Value(clientInfo),
+        userId = i0.Value(userId),
         authenticationFactor = i0.Value(authenticationFactor),
         expireTime = i0.Value(expireTime);
   static i0.Insertable<i4.Session> custom({
@@ -1357,8 +1361,8 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
       {i0.Value<int>? rowid,
       i0.Value<String>? sessionId,
       i0.Value<i2.Uint8List>? cryptoKeyId,
-      i0.Value<String?>? userId,
-      i0.Value<i4.SessionClient>? clientInfo,
+      i0.Value<String>? userId,
+      i0.Value<i4.SessionClient?>? clientInfo,
       i0.Value<i4.AuthenticationFactor>? authenticationFactor,
       i0.Value<i4.SessionState?>? state,
       i0.Value<String?>? ipAddress,
@@ -1401,7 +1405,7 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
     }
     if (clientInfo.present) {
       map['client_info'] = i0.Variable<i2.Uint8List>(
-          i3.Sessions.$converterclientInfo.toSql(clientInfo.value));
+          i3.Sessions.$converterclientInfon.toSql(clientInfo.value));
     }
     if (authenticationFactor.present) {
       map['authentication_factor'] = i0.Variable<i2.Uint8List>(i3
@@ -2342,8 +2346,8 @@ class AuthDrift extends i7.ModularAccessor {
   i8.Future<List<i4.Session>> createSession(
       {required String sessionId,
       required i2.Uint8List cryptoKeyId,
-      String? userId,
-      required i4.SessionClient clientInfo,
+      required String userId,
+      i4.SessionClient? clientInfo,
       required i4.AuthenticationFactor authenticationFactor,
       i4.SessionState? state,
       String? ipAddress,
@@ -2357,7 +2361,7 @@ class AuthDrift extends i7.ModularAccessor {
           i0.Variable<i2.Uint8List>(cryptoKeyId),
           i0.Variable<String>(userId),
           i0.Variable<i2.Uint8List>(
-              i3.Sessions.$converterclientInfo.toSql(clientInfo)),
+              i3.Sessions.$converterclientInfon.toSql(clientInfo)),
           i0.Variable<i2.Uint8List>(i3.Sessions.$converterauthenticationFactor
               .toSql(authenticationFactor)),
           i0.Variable<i2.Uint8List>(i3.Sessions.$converterstaten.toSql(state)),
@@ -2383,12 +2387,13 @@ class AuthDrift extends i7.ModularAccessor {
   }
 
   i8.Future<List<i4.Session>> updateSession(
-      {i4.SessionState? state, String? sessionId}) {
+      {i4.SessionState? state, required String userId, String? sessionId}) {
     return customWriteReturning(
-            'UPDATE sessions SET state = ?1 WHERE session_id = ?2 OR external_session_id = ?2 RETURNING *',
+            'UPDATE sessions SET state = ?1, user_id = ?2 WHERE session_id = ?3 OR external_session_id = ?3 RETURNING *',
             variables: [
               i0.Variable<i2.Uint8List>(
                   i3.Sessions.$converterstaten.toSql(state)),
+              i0.Variable<String>(userId),
               i0.Variable<String>(sessionId)
             ],
             updates: {sessions},

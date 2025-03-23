@@ -4,6 +4,7 @@ import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/database/auth_database.dart';
 import 'package:celest_cloud_auth/src/http/http_helpers.dart';
+import 'package:celest_cloud_auth/src/model/interop.dart';
 import 'package:celest_cloud_auth/src/model/route_map.dart';
 import 'package:celest_core/celest_core.dart' as core;
 import 'package:celest_core/celest_core.dart';
@@ -17,6 +18,7 @@ typedef _Deps = ({
   CorksRepository corks,
   AuthDatabase db,
   Authorizer authorizer,
+  EntityUid issuer,
 });
 
 /// {@template celest_cloud_auth.request_authorizer}
@@ -29,12 +31,14 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
     required CorksRepository corks,
     required AuthDatabase db,
     required Authorizer authorizer,
+    required EntityUid issuer,
   }) : this._(
           (
             routeMap: routeMap,
             corks: corks,
             db: db,
             authorizer: authorizer,
+            issuer: issuer,
           ),
         );
 
@@ -62,14 +66,8 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
   @visibleForTesting
   Future<core.User?> authenticate(Request request) async {
     final requestPath = request.requestedUri.path;
-    EntityUid? function;
-    for (final MapEntry(key: uid, value: route) in _routeMap.entries) {
-      if (route.matches(requestPath)) {
-        function = uid;
-        break;
-      }
-    }
-    if (function == null) {
+    final route = _routeMap.lookupRoute(requestPath);
+    if (route == null) {
       throw core.InternalServerError('Route not found: $requestPath');
     }
 
@@ -80,11 +78,10 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
     await _authorizer.expectAuthorized(
       principal: principal,
       action: const EntityUid.of('Celest::Action', 'invoke'),
-      resource: function.uid,
+      resource: route.uid,
       context: {
         'ip': Value.string(request.clientIp),
       },
-      debug: true,
     );
     context.logger.finest('Authorized request');
 
@@ -120,11 +117,20 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
       context.logger.severe('Invalid cork signature: $cork', e);
       throw const UnauthorizedException('Invalid cork signature');
     }
+
+    context.put(contextKeyCork, cork);
     switch (cork.bearer) {
-      case EntityUid(type: 'Celest::User', id: final userId):
-        final user = await _db.getUser(userId: userId);
+      case EntityUid(type: 'Celest::Session', id: final sessionId):
+        final session = await _db.getSession(sessionId: sessionId);
+        if (session == null) {
+          throw const UnauthorizedException('Invalid session');
+        }
+        final user = await _db.getUser(userId: session.userId);
+        if (user == null) {
+          throw const UnauthorizedException('Invalid user');
+        }
         context.logger.finest('Found user for cork: $user');
-        return (user, cork.claims);
+        return (user, user.toEntity());
       default:
         context.logger.severe('Valid cork but no bearer: $cork');
         return const (null, null);

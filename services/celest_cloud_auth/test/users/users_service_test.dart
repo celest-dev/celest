@@ -11,7 +11,7 @@ import 'package:test/test.dart';
 import '../tester.dart';
 
 void main() {
-  final tester = AuthorizationTester(persistData: false);
+  final tester = AuthorizationTester(persistData: true);
 
   group('UsersService', () {
     tester.setUp();
@@ -22,20 +22,17 @@ void main() {
 
       test('unauthenticated', () async {
         await tester.httpTest({
-          route: expectStatus(403),
+          route: expectStatus(401),
         });
 
         final cloud = tester.cloud();
         await check(cloud.users.get('users/$userId'))
-            .throws<PermissionDeniedException>();
+            .throws<UnauthorizedException>();
       });
 
       test('anonymous', () async {
-        final cork = await tester.corks.createUserCork(
-          user: User(
-            userId: userId,
-            roles: const [roleAnonymous],
-          ),
+        final (user, cork) = await tester.createUser(
+          roles: const [roleAnonymous],
         );
 
         await tester.httpTest(cork: cork, {
@@ -50,13 +47,10 @@ void main() {
       });
 
       test('authenticated', () async {
-        final user = await tester.db.createUser(
-          user: User(
-            userId: userId,
-            roles: const [roleAuthenticated],
-          ),
+        final (user, cork) = await tester.createUser(
+          userId: userId,
+          roles: const [roleAuthenticated],
         );
-        final cork = await tester.corks.createUserCork(user: user);
         await tester.httpTest(cork: cork, {
           route: expectAll([
             expectStatus(200),
@@ -67,6 +61,7 @@ void main() {
                   .isA<String>()
                   .has(DateTime.parse, 'DateTime')
                   .isLessOrEqual(DateTime.now()),
+              'emails': [user.primaryEmail!.toJson()],
             }),
           ]),
         });
@@ -75,20 +70,17 @@ void main() {
         await check(cloud.users.get('users/$userId')).completes(
           (it) => it
             ..has((it) => it.userId, 'userId').equals(userId)
-            ..has((it) => it.emails, 'emails').isEmpty(),
+            ..has((it) => it.emails, 'emails').isNotEmpty(),
         );
       });
 
       test('admin', () async {
         const email = 'admin@celest.dev';
-        final user = await tester.db.createUser(
-          user: User(
-            userId: userId,
-            emails: const [Email(email: email)],
-            roles: const [roleAdmin],
-          ),
+        final (user, cork) = await tester.createUser(
+          userId: userId,
+          email: email,
+          roles: const [roleAdmin],
         );
-        final cork = await tester.corks.createUserCork(user: user);
         await tester.httpTest(cork: cork, {
           route: expectAll([
             expectStatus(200),
@@ -101,9 +93,9 @@ void main() {
                   .isLessOrEqual(DateTime.now()),
               'emails': [
                 {
-                  'email': 'admin@celest.dev',
-                  'isPrimary': false,
+                  'email': email,
                   'isVerified': false,
+                  'isPrimary': true,
                 }
               ],
             }),
@@ -241,16 +233,13 @@ void main() {
       group('auth', () {
         test('unauthenticated', () async {
           await tester.httpTest(query: request, {
-            route: expectStatus(403),
+            route: expectStatus(401),
           });
         });
 
         test('anonymous', () async {
-          final cork = await tester.corks.createUserCork(
-            user: User(
-              userId: typeId<User>(),
-              roles: const [roleAnonymous],
-            ),
+          final (user, cork) = await tester.createUser(
+            roles: const [roleAnonymous],
           );
 
           await tester.httpTest(cork: cork, query: request, {
@@ -264,13 +253,9 @@ void main() {
         });
 
         test('authenticated', () async {
-          final user = await tester.db.createUser(
-            user: User(
-              userId: typeId<User>(),
-              roles: const [roleAuthenticated],
-            ),
+          final (user, cork) = await tester.createUser(
+            roles: const [roleAuthenticated],
           );
-          final cork = await tester.corks.createUserCork(user: user);
           await tester.httpTest(cork: cork, query: request, {
             route: expectAll([
               // Only admins can list users
@@ -283,14 +268,10 @@ void main() {
         });
 
         test('admin', () async {
-          final userId = typeId<User>();
-          final user = await tester.db.createUser(
-            user: User(
-              userId: userId,
-              roles: const [roleAdmin],
-            ),
+          final (user, cork) = await tester.createUser(
+            roles: const [roleAdmin],
           );
-          final cork = await tester.corks.createUserCork(user: user);
+          final userId = user.userId;
           await tester.httpTest(cork: cork, query: request, {
             route: expectAll([
               expectStatus(200),
@@ -323,11 +304,9 @@ void main() {
       final userId = typeId<User>();
 
       test('can update fields', () async {
-        final user = await tester.db.createUser(
-          user: User(
-            userId: userId,
-            roles: const [roleAuthenticated],
-          ),
+        final (user, cork) = await tester.createUser(
+          userId: userId,
+          roles: const [roleAuthenticated],
         );
         final before = await tester.usersService.getUser(userId: userId);
         check(before.givenName).isNull();
@@ -347,11 +326,9 @@ void main() {
       });
 
       test('can set field mask', () async {
-        final user = await tester.db.createUser(
-          user: User(
-            userId: userId,
-            roles: const [roleAuthenticated],
-          ),
+        final (user, cork) = await tester.createUser(
+          userId: userId,
+          roles: const [roleAuthenticated],
         );
         final before = await tester.usersService.getUser(userId: userId);
         check(before.givenName).isNull();
@@ -384,7 +361,7 @@ void main() {
 
         test('unauthenticated', () async {
           await tester.httpTest({
-            selfRoute: expectStatus(403),
+            selfRoute: expectStatus(401),
           });
 
           final cloud = tester.cloud();
@@ -397,15 +374,12 @@ void main() {
               ),
               updateMask: pb.FieldMask(paths: ['given_name', 'family_name']),
             ),
-          ).throws<PermissionDeniedException>();
+          ).throws<UnauthorizedException>();
         });
 
         test('anonymous', () async {
-          final cork = await tester.corks.createUserCork(
-            user: User(
-              userId: userId,
-              roles: const [roleAnonymous],
-            ),
+          final (user, cork) = await tester.createUser(
+            roles: const [roleAnonymous],
           );
 
           await tester.httpTest(cork: cork, body: request, {
@@ -428,19 +402,14 @@ void main() {
         });
 
         test('authenticated', () async {
-          final user = await tester.db.createUser(
-            user: User(
-              userId: userId,
-              roles: const [roleAuthenticated],
-            ),
+          final (user, cork) = await tester.createUser(
+            userId: userId,
+            roles: const [roleAuthenticated],
           );
-          await tester.db.createUser(
-            user: User(
-              userId: otherUserId,
-              roles: const [roleAuthenticated],
-            ),
+          await tester.createUser(
+            userId: otherUserId,
+            roles: const [roleAuthenticated],
           );
-          final cork = await tester.corks.createUserCork(user: user);
           await tester.httpTest(cork: cork, body: request, {
             // Can update self
             selfRoute: expectStatus(200),
@@ -478,19 +447,14 @@ void main() {
         });
 
         test('admin', () async {
-          final adminUser = await tester.db.createUser(
-            user: User(
-              userId: userId,
-              roles: const [roleAdmin],
-            ),
+          final (user, cork) = await tester.createUser(
+            userId: userId,
+            roles: const [roleAdmin],
           );
-          await tester.db.createUser(
-            user: User(
-              userId: otherUserId,
-              roles: const [roleAuthenticated],
-            ),
+          await tester.createUser(
+            userId: otherUserId,
+            roles: const [roleAuthenticated],
           );
-          final cork = await tester.corks.createUserCork(user: adminUser);
 
           await tester.httpTest(cork: cork, body: request, {
             // Can update self
@@ -537,16 +501,10 @@ void main() {
     group('deleteUser', () {
       final userId = typeId<User>();
 
-      setUp(() async {
-        await tester.db.usersDrift.deleteUser(userId: userId);
-      });
-
       test('can delete user', () async {
-        final user = await tester.db.createUser(
-          user: User(
-            userId: userId,
-            roles: const [roleAuthenticated],
-          ),
+        final (user, cork) = await tester.createUser(
+          userId: userId,
+          roles: const [roleAuthenticated],
         );
         final before = await tester.usersService.getUser(userId: userId);
         check(before).equals(user);
@@ -567,45 +525,44 @@ void main() {
 
         test('unauthenticated', () async {
           await tester.httpTest({
-            selfRoute: expectStatus(403),
+            selfRoute: expectStatus(401),
           });
 
           final cloud = tester.cloud();
           await check(cloud.users.delete('users/$userId'))
-              .throws<PermissionDeniedException>();
+              .throws<UnauthorizedException>();
         });
 
         test('anonymous', () async {
-          final cork = await tester.corks.createUserCork(
-            user: User(
-              userId: userId,
-              roles: const [roleAnonymous],
-            ),
+          final (user, cork) = await tester.createUser(
+            userId: userId,
+            roles: const [roleAnonymous],
           );
 
           await tester.httpTest(cork: cork, {
-            selfRoute: expectStatus(403),
+            selfRoute: expectStatus(200),
           });
+        });
+
+        test('anonymous (cloud)', () async {
+          final (user, cork) = await tester.createUser(
+            userId: userId,
+            roles: const [roleAnonymous],
+          );
 
           final cloud = tester.cloud(cork: cork);
-          await check(cloud.users.delete('users/$userId'))
-              .throws<PermissionDeniedException>();
+          await check(cloud.users.delete('users/$userId')).completes();
         });
 
         test('authenticated', () async {
-          final user = await tester.db.createUser(
-            user: User(
-              userId: userId,
-              roles: const [roleAuthenticated],
-            ),
+          final (user, cork) = await tester.createUser(
+            userId: userId,
+            roles: const [roleAuthenticated],
           );
-          await tester.db.createUser(
-            user: User(
-              userId: otherUserId,
-              roles: const [roleAuthenticated],
-            ),
+          await tester.createUser(
+            userId: otherUserId,
+            roles: const [roleAuthenticated],
           );
-          final cork = await tester.corks.createUserCork(user: user);
           await tester.httpTest(cork: cork, {
             // Cannot delete others
             otherRoute: expectStatus(403),
@@ -615,25 +572,20 @@ void main() {
           });
 
           // and then nothing more
-          await tester.httpTest({
-            selfRoute: expectStatus(403),
+          await tester.httpTest(cork: cork, {
+            selfRoute: expectStatus(401),
           });
         });
 
         test('authenticated (cloud)', () async {
-          final user = await tester.db.createUser(
-            user: User(
-              userId: userId,
-              roles: const [roleAuthenticated],
-            ),
+          final (user, cork) = await tester.createUser(
+            userId: userId,
+            roles: const [roleAuthenticated],
           );
-          await tester.db.createUser(
-            user: User(
-              userId: otherUserId,
-              roles: const [roleAuthenticated],
-            ),
+          await tester.createUser(
+            userId: otherUserId,
+            roles: const [roleAuthenticated],
           );
-          final cork = await tester.corks.createUserCork(user: user);
 
           final cloud = tester.cloud(cork: cork);
           // Cannot delete others
@@ -649,19 +601,14 @@ void main() {
         });
 
         test('admin', () async {
-          final adminUser = await tester.db.createUser(
-            user: User(
-              userId: userId,
-              roles: const [roleAdmin],
-            ),
+          final (user, cork) = await tester.createUser(
+            userId: userId,
+            roles: const [roleAdmin],
           );
-          await tester.db.createUser(
-            user: User(
-              userId: otherUserId,
-              roles: const [roleAuthenticated],
-            ),
+          await tester.createUser(
+            userId: otherUserId,
+            roles: const [roleAuthenticated],
           );
-          final cork = await tester.corks.createUserCork(user: adminUser);
 
           await tester.httpTest(cork: cork, {
             // Can delete others
@@ -672,25 +619,20 @@ void main() {
           });
 
           // and then nothing more
-          await tester.httpTest({
-            selfRoute: expectStatus(403),
+          await tester.httpTest(cork: cork, {
+            selfRoute: expectStatus(401),
           });
         });
 
         test('admin (cloud)', () async {
-          final user = await tester.db.createUser(
-            user: User(
-              userId: userId,
-              roles: const [roleAdmin],
-            ),
+          final (user, cork) = await tester.createUser(
+            userId: userId,
+            roles: const [roleAdmin],
           );
-          await tester.db.createUser(
-            user: User(
-              userId: otherUserId,
-              roles: const [roleAuthenticated],
-            ),
+          await tester.createUser(
+            userId: otherUserId,
+            roles: const [roleAuthenticated],
           );
-          final cork = await tester.corks.createUserCork(user: user);
 
           final cloud = tester.cloud(cork: cork);
 

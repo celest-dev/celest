@@ -2,16 +2,19 @@ import 'package:async/async.dart';
 import 'package:cedar/ast.dart';
 import 'package:cedar/cedar.dart';
 import 'package:celest_ast/celest_ast.dart';
+import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:celest_cloud_auth/src/authorization/cedar_interop.dart';
 import 'package:celest_cloud_auth/src/authorization/policy_set.g.dart';
 import 'package:celest_cloud_auth/src/context.dart';
+import 'package:celest_cloud_auth/src/database/auth_database.steps.dart';
 import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart';
 import 'package:celest_cloud_auth/src/database/schema/users.drift.dart';
-import 'package:celest_cloud_auth/src/database/schema_versions.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
+import 'package:drift/drift.dart' as drift show Value;
 import 'package:drift/drift.dart' hide Component;
 import 'package:drift/native.dart';
 import 'package:file/file.dart';
@@ -30,18 +33,19 @@ import 'auth_database.drift.dart';
   },
 )
 class AuthDatabase extends $AuthDatabase {
-  AuthDatabase(super.e) : _project = null;
-
-  AuthDatabase._(super.e, this._project);
+  AuthDatabase(
+    super.e, {
+    ResolvedProject? project,
+  }) : _project = project;
 
   factory AuthDatabase.localDir(
     Directory dir, {
     ResolvedProject? project,
     bool verbose = false,
   }) {
-    return AuthDatabase._(
+    return AuthDatabase(
       _openDirConnection(dir, verbose: verbose),
-      project,
+      project: project,
     );
   }
 
@@ -53,7 +57,7 @@ class AuthDatabase extends $AuthDatabase {
       logStatements: verbose,
       cachePreparedStatements: true,
     );
-    return AuthDatabase._(nativeDb, project);
+    return AuthDatabase(nativeDb, project: project);
   }
 
   static final Logger _logger = Logger('Celest.AuthDatabase');
@@ -129,7 +133,7 @@ class AuthDatabase extends $AuthDatabase {
   ResolvedProject get project => _project ?? context.project;
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration {
@@ -138,7 +142,42 @@ class AuthDatabase extends $AuthDatabase {
         await m.createAll();
         await seed();
       },
-      onUpgrade: stepByStep(),
+      onUpgrade: stepByStep(
+        from1To2: (m, schema) async {
+          await transaction(() async {
+            // Migrate `sessions.user_id` from `` to `NOT NULL`
+            final removeMissingUserId = delete(schema.sessions)
+              ..where((s) => schema.sessions.userId.isNull());
+            final missingUserId = await removeMissingUserId.goAndReturn();
+
+            // Remove associated values, if any.
+            await batch((b) {
+              for (final session in missingUserId) {
+                b.deleteWhere(
+                  corks,
+                  (cork) =>
+                      cork.bearerType.equals('Celest::Session') &
+                      cork.bearerId.equals(session.read('session_id')),
+                );
+                b.deleteWhere(
+                  cryptoKeys,
+                  (key) =>
+                      key.cryptoKeyId.equals(session.read('crypto_key_id')),
+                );
+                b.deleteWhere(
+                  cedarEntities,
+                  (entity) =>
+                      entity.entityType.equals('Celest::Session') &
+                      entity.entityId.equals(session.read('session_id')),
+                );
+              }
+            });
+
+            await m.alterTable(TableMigration(sessions));
+            await m.alterTable(TableMigration(cedarRelationships));
+          });
+        },
+      ),
       beforeOpen: (details) {
         return _withoutForeignKeys(() async {
           await upsertProject();
@@ -154,6 +193,15 @@ class AuthDatabase extends $AuthDatabase {
     try {
       result = await action();
     } finally {
+      if (kDebugMode) {
+        // Fail if the action broke foreign keys
+        final wrongForeignKeys =
+            await customSelect('PRAGMA foreign_key_check').get();
+        assert(
+          wrongForeignKeys.isEmpty,
+          '${wrongForeignKeys.map((e) => e.data)}',
+        );
+      }
       await customStatement('pragma foreign_keys = ON');
     }
     return result;
@@ -180,11 +228,28 @@ class AuthDatabase extends $AuthDatabase {
         b.insertAllOnConflictUpdate(cedarTypes, [
           for (final type in coreTypes) CedarTypesCompanion.insert(fqn: type),
         ]);
+        for (final entity in coreEntities.values) {
+          b.insert(
+            cedarEntities,
+            CedarEntitiesCompanion.insert(
+              entityType: entity.uid.type,
+              entityId: entity.uid.id,
+              attributeJson: drift.Value(entity.attributes),
+            ),
+          );
+          for (final parent in entity.parents) {
+            b.insert(
+              cedarRelationships,
+              CedarRelationshipsCompanion.insert(
+                entityType: entity.uid.type,
+                entityId: entity.uid.id,
+                parentType: parent.type,
+                parentId: parent.id,
+              ),
+            );
+          }
+        }
       });
-      await Future.wait(
-        coreEntities.values.map(createEntity),
-        eagerError: true,
-      );
       await upsertPolicySet(corePolicySet);
     });
   }
@@ -456,17 +521,14 @@ class AuthDatabase extends $AuthDatabase {
           isPrimary: phoneNumber.isPrimary,
         );
       }
-      for (final role in user.roles) {
-        await cedarDrift.createRelationship(
-          entityType: 'Celest::User',
-          entityId: newUser.first.userId,
-          parentType: role.type,
-          parentId: role.id,
-        );
-      }
+      final roles = await setUserRoles(
+        userId: newUser.first.id,
+        roles: user.roles,
+      );
       return newUser.first.copyWith(
         emails: user.emails,
         phoneNumbers: user.phoneNumbers,
+        roles: roles,
       );
     });
   }
@@ -478,14 +540,46 @@ class AuthDatabase extends $AuthDatabase {
       if (user == null) {
         return null;
       }
-      final (emails, phoneNumbers) = await (
+      final (emails, phoneNumbers, roles) = await (
         usersDrift.getUserEmails(userId: userId).get(),
         usersDrift.getUserPhoneNumbers(userId: userId).get(),
+        cedarDrift
+            .getEntityRoles(entityType: 'Celest::User', entityId: userId)
+            .get(),
       ).wait;
       return user.copyWith(
         emails: emails,
         phoneNumbers: phoneNumbers,
+        roles: roles.map(EntityUid.parse).toList(),
       );
+    });
+  }
+
+  Future<List<EntityUid>> setUserRoles({
+    required String userId,
+    required List<EntityUid> roles,
+  }) async {
+    return transaction(() async {
+      // Remove existing roles
+      final removeExisting = delete(cedarRelationships)
+        ..where(
+          (rel) =>
+              rel.entityType.equals('Celest::User') &
+              rel.entityId.equals(userId) &
+              rel.parentType.equals('Celest::Role'),
+        );
+      await removeExisting.go();
+
+      for (final role in roles) {
+        await cedarDrift.createRelationship(
+          entityType: 'Celest::User',
+          entityId: userId,
+          parentType: role.type,
+          parentId: role.id,
+        );
+      }
+
+      return roles;
     });
   }
 
@@ -551,6 +645,12 @@ class AuthDatabase extends $AuthDatabase {
       }
       return getUser(userId: user.userId);
     });
+  }
+
+  Future<Session?> getSession({
+    required String sessionId,
+  }) async {
+    return authDrift.getSession(sessionId: sessionId).getSingleOrNull();
   }
 }
 

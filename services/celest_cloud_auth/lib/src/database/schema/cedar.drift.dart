@@ -2017,8 +2017,8 @@ class CedarRelationships extends i0.Table
   @override
   List<String> get customConstraints => const [
         'CONSTRAINT cedar_relationships_pk PRIMARY KEY(entity_type, entity_id, parent_type, parent_id)ON CONFLICT IGNORE',
-        'CONSTRAINT cedar_relationships_fk_entity FOREIGN KEY(entity_type, entity_id)REFERENCES cedar_entities(entity_type, entity_id)',
-        'CONSTRAINT cedar_relationships_fk_parent FOREIGN KEY(parent_type, parent_id)REFERENCES cedar_entities(entity_type, entity_id)'
+        'CONSTRAINT cedar_relationships_fk_entity FOREIGN KEY(entity_type, entity_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE',
+        'CONSTRAINT cedar_relationships_fk_parent FOREIGN KEY(parent_type, parent_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE'
       ];
   @override
   bool get dontWriteConstraints => true;
@@ -4067,6 +4067,19 @@ class CedarDrift extends i6.ModularAccessor {
         }).asyncMap(cedarEntities.mapFromRow);
   }
 
+  i0.Selectable<String> getEntityRoles(
+      {required String entityType, required String entityId}) {
+    return customSelect(
+        'SELECT \'Celest::Role::"\' || parent_id || \'"\' AS _c0 FROM cedar_relationships WHERE entity_type = ?1 AND entity_id = ?2 AND parent_type = \'Celest::Role\'',
+        variables: [
+          i0.Variable<String>(entityType),
+          i0.Variable<String>(entityId)
+        ],
+        readsFrom: {
+          cedarRelationships,
+        }).map((i0.QueryRow row) => row.read<String>('_c0'));
+  }
+
   i0.Selectable<i1.CedarRelationship> getRelationship(
       {required String entityType, required String entityId}) {
     return customSelect(
@@ -4093,6 +4106,19 @@ class CedarDrift extends i6.ModularAccessor {
       ],
       updates: {cedarEntities},
       updateKind: i0.UpdateKind.update,
+    );
+  }
+
+  Future<int> deleteEntity(
+      {required String entityType, required String entityId}) {
+    return customUpdate(
+      'DELETE FROM cedar_entities WHERE entity_type = ?1 AND entity_id = ?2',
+      variables: [
+        i0.Variable<String>(entityType),
+        i0.Variable<String>(entityId)
+      ],
+      updates: {cedarEntities},
+      updateKind: i0.UpdateKind.delete,
     );
   }
 

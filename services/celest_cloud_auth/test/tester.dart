@@ -7,6 +7,7 @@ import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud/celest_cloud.dart' show CelestCloud, ClientType;
 import 'package:celest_cloud_auth/celest_cloud_auth.dart';
+import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:celest_cloud_auth/src/authorization/authorization_middleware.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/authorization/cedar_interop.dart';
@@ -14,7 +15,10 @@ import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_model.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
+import 'package:celest_cloud_auth/src/sessions/sessions_repository.dart';
+import 'package:celest_cloud_auth/src/users/users_repository.dart';
 import 'package:celest_cloud_auth/src/users/users_service.dart';
+import 'package:celest_cloud_auth/src/util/typeid.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:checks/checks.dart';
 import 'package:corks_cedar/corks_cedar.dart';
@@ -158,8 +162,8 @@ final class AuthorizationTester {
   late CelestCloudAuth _authService;
 
   AuthenticationService get authenticationService =>
-      _authService.authentication;
-  UsersService get usersService => _authService.users;
+      _authService.authenticationService;
+  UsersService get usersService => _authService.usersService;
   AuthDatabase get db => _authService.db;
   AuthorizationMiddleware get middleware => _authService.middleware;
   Authorizer get authorizer => _authService.authorizer;
@@ -167,6 +171,8 @@ final class AuthorizationTester {
   CryptoKey get rootKey => _authService.cryptoKeys.rootKey;
   Signer get signer => rootKey.signer;
   CorksRepository get corks => _authService.corks;
+  SessionsRepository get sessions => _authService.sessions;
+  UsersRepository get users => _authService.users;
 
   late CelestService _service;
   Uri get address => Uri.http('localhost:${_service.port}');
@@ -283,6 +289,36 @@ final class AuthorizationTester {
       print('${response.statusCode} $responseBody');
       checkRes(check(http.Response(responseBody, response.statusCode)));
     }
+  }
+
+  Future<(User, Cork)> createUser({
+    String? userId,
+    String email = 'test@celest.dev',
+    required List<EntityUid> roles,
+  }) async {
+    userId ??= typeId<User>();
+    final user = await db.createUser(
+      user: User(
+        userId: userId,
+        roles: roles,
+        emails: [
+          Email(email: email, isPrimary: true),
+        ],
+      ),
+    );
+    final session = await sessions.createSession(
+      userId: userId,
+      factor: AuthenticationFactorEmailOtp(email: email),
+    );
+    final cork = await corks.createCork(
+      user: user,
+      session: session,
+    );
+    // t.addTearDown(() async {
+    //   await sessions.deleteSession(sessionId: session.sessionId);
+    //   await users.deleteUser(userId: userId!);
+    // });
+    return (user, cork);
   }
 }
 

@@ -29,7 +29,7 @@ final class AuthImpl implements Auth {
         celest_cloud.CelestCloud(
           authenticator: Authenticator(
             secureStorage: _storage.secure,
-            onRevoke: signOut,
+            onRevoke: _revokeSession,
           ),
           uri: celest.baseUri,
           httpClient: celest.httpClient,
@@ -80,8 +80,7 @@ final class AuthImpl implements Auth {
     _authProviderSubs[type] = tokenSource.listen(
       (token) async {
         if (token == null) {
-          _reset();
-          _authStateController.add(const Unauthenticated());
+          _revokeSession();
           return;
         }
         await secureStorage.write('cork', token);
@@ -113,7 +112,7 @@ final class AuthImpl implements Auth {
       return initialState;
     }
     if (localStorage.read('userId') == null) {
-      _reset();
+      _revokeSession();
       return const Unauthenticated();
     }
     try {
@@ -121,10 +120,10 @@ final class AuthImpl implements Auth {
       initialState = Authenticated(user: user.toCelest());
     } on UnauthorizedException {
       initialState = const Unauthenticated();
-      _reset();
+      _revokeSession();
     } on NotFoundException {
       initialState = const Unauthenticated();
-      _reset();
+      _revokeSession();
     }
     return initialState;
   }
@@ -197,16 +196,16 @@ final class AuthImpl implements Auth {
     } on Object {
       // TODO(dnys1): Log error
     } finally {
-      _reset();
-      if (!_authStateController.isClosed) {
-        _authStateController.add(const Unauthenticated());
-      }
+      _revokeSession();
     }
   }
 
-  void _reset() {
+  void _revokeSession() {
     localStorage.delete('userId');
-    secureStorage.delete('cork').ignore();
+    unawaited(secureStorage.delete('cork'));
+    if (_authState != null && !_authStateController.isClosed) {
+      _authStateController.add(const Unauthenticated());
+    }
   }
 
   final CelestBase celest;

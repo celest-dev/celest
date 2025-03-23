@@ -24,6 +24,7 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 typedef _Deps = ({
+  EntityUid issuer,
   RouteMap routeMap,
   CorksRepository corks,
   AuthDatabase db,
@@ -32,12 +33,14 @@ typedef _Deps = ({
 
 extension type UsersService._(_Deps _deps) implements Object {
   UsersService({
+    required EntityUid issuer,
     required RouteMap routeMap,
     required CorksRepository corks,
     required AuthDatabase db,
     required Authorizer authorizer,
   }) : this._(
           (
+            issuer: issuer,
             routeMap: routeMap,
             corks: corks,
             db: db,
@@ -62,6 +65,7 @@ extension type UsersService._(_Deps _deps) implements Object {
       corks: _deps.corks,
       db: _deps.db,
       authorizer: _deps.authorizer,
+      issuer: _deps.issuer,
     );
     return const Pipeline()
         .addMiddleware(const CloudExceptionMiddleware().call)
@@ -125,7 +129,7 @@ extension type UsersService._(_Deps _deps) implements Object {
           annotations: Annotations({
             'id': apiId,
           }),
-          resource: const ResourceIn(EntityUid.of('Celest::Api', apiId)),
+          resource: const ResourceIn(apiUid),
           conditions: [],
         ),
       },
@@ -265,8 +269,6 @@ extension type UsersService._(_Deps _deps) implements Object {
     await _authorizer.expectAuthorized(
       principal: principal?.uid,
       action: CelestAction.list,
-      // resource: parent.uid,
-      debug: true,
     );
     final response = await listUsers(
       parent: request.url.queryParameters['parent'],
@@ -308,10 +310,10 @@ extension type UsersService._(_Deps _deps) implements Object {
       updateTime: Value(DateTime.timestamp()),
     );
 
-    final updated = await (_db.update(_db.users)
-          ..where((tbl) => tbl.userId.equals(userId)))
-        .writeReturning(update);
-    return updated.single;
+    await (_db.update(_db.users)..where((tbl) => tbl.userId.equals(userId)))
+        .write(update);
+    final updated = await _db.getUser(userId: userId);
+    return updated!;
   }
 
   Future<Response> handleUpdateUser(Request request) async {
@@ -347,8 +349,11 @@ extension type UsersService._(_Deps _deps) implements Object {
       if (user == null) {
         throw NotFoundException('User not found. id=$userId');
       }
-      if (etag != null && user.etag != etag) {
-        throw const FailedPreconditionException('Etag mismatch');
+      if (etag != null) {
+        assert(user.etag != null, 'Missing etag to compare against');
+        if (user.etag != etag) {
+          throw const FailedPreconditionException('Etag mismatch');
+        }
       }
 
       return (_db.delete(_db.users)..where((t) => t.userId.equals(userId)))

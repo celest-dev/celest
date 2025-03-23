@@ -1,10 +1,9 @@
 import 'dart:math';
-import 'dart:typed_data';
 
+import 'package:cedar/cedar.dart' show EntityUid;
 import 'package:celest_cloud/celest_cloud.dart' as pb;
 import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:celest_cloud_auth/src/model/interop.dart';
-import 'package:celest_cloud_auth/src/util/typeid.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:checks/checks.dart';
 import 'package:clock/clock.dart';
@@ -29,40 +28,32 @@ void main() {
       });
 
       test('authenticated', () async {
-        final userId = typeId<User>();
-        final user = await tester.db.createUser(
-          user: User(
-            userId: userId,
-            roles: const [roleAuthenticated],
-          ),
+        final (user, cork) = await tester.createUser(
+          roles: const [roleAuthenticated],
         );
-        final cork = await tester.corks.createUserCork(user: user);
         await tester.httpTest(cork: cork, {
           route: expectAll([
             expectStatus(200),
             expectBody({
-              'sub': userId,
+              'sub': user.userId,
+              'email': 'test@celest.dev',
+              'email_verified': false,
             }),
           ]),
         });
       });
 
       test('admin', () async {
-        final userId = typeId<User>();
         const email = 'admin@celest.dev';
-        final user = await tester.db.createUser(
-          user: User(
-            userId: userId,
-            emails: const [Email(email: email)],
-            roles: const [roleAdmin],
-          ),
+        final (user, cork) = await tester.createUser(
+          email: email,
+          roles: const [roleAdmin],
         );
-        final cork = await tester.corks.createUserCork(user: user);
         await tester.httpTest(cork: cork, {
           route: expectAll([
             expectStatus(200),
             expectBody({
-              'sub': userId,
+              'sub': user.userId,
               'email': email,
               'email_verified': false,
             }),
@@ -84,7 +75,7 @@ void main() {
         ),
       );
 
-      check(() => session.sessionToken).returnsNormally();
+      check(session.sessionToken).isNotNull();
       check(session.state)
           .isA<SessionStateNeedsProof>()
           .has((s) => s.factor, 'factor')
@@ -94,7 +85,7 @@ void main() {
 
       final result = await tester.authenticationService.continueSession(
         sessionId: session.sessionId,
-        sessionToken: session.sessionToken,
+        sessionToken: session.sessionToken!,
         proof: AuthenticationFactorEmailOtp(email: email, code: code),
       );
 
@@ -104,9 +95,18 @@ void main() {
           Email(email: email, isVerified: true, isPrimary: true),
         )
         ..has(
-          (s) => CedarCork(s.cork).bearer.id == s.user.userId,
-          'cork bearer == userId',
-        ).isTrue();
+          (s) =>
+              CedarCork(s.cork).bearer ==
+              EntityUid.of('Celest::Session', session.sessionId.encoded),
+          'cork bearer == sessionId',
+        ).isTrue()
+        ..has(
+          (s) => CedarCork(s.cork)
+              .claims
+              ?.parents
+              .contains(EntityUid.of('Celest::User', s.user.userId)),
+          'cork <: user',
+        ).isNotNull().isTrue();
     });
 
     test('re-authenticate', () async {
@@ -122,7 +122,7 @@ void main() {
         ),
       );
 
-      check(() => session.sessionToken).returnsNormally();
+      check(session.sessionToken).isNotNull();
       check(session.state)
           .isA<SessionStateNeedsProof>()
           .has((s) => s.factor, 'factor')
@@ -132,7 +132,7 @@ void main() {
 
       final result = await tester.authenticationService.continueSession(
         sessionId: session.sessionId,
-        sessionToken: session.sessionToken,
+        sessionToken: session.sessionToken!,
         proof: AuthenticationFactorEmailOtp(email: email, code: code),
       );
 
@@ -162,7 +162,7 @@ void main() {
 
       final result2 = await tester.authenticationService.continueSession(
         sessionId: session2.sessionId,
-        sessionToken: session2.sessionToken,
+        sessionToken: session2.sessionToken!,
         proof: AuthenticationFactorEmailOtp(email: email, code: code2),
       );
 
@@ -187,7 +187,7 @@ void main() {
         ),
       );
 
-      check(() => session.sessionToken).returnsNormally();
+      check(session.sessionToken).isNotNull();
       check(session.state)
           .isA<SessionStateNeedsProof>()
           .has((s) => s.factor, 'factor')
@@ -199,7 +199,7 @@ void main() {
       await withClock(Clock.fixed(nextResend), () async {
         final result = await tester.authenticationService.continueSession(
           sessionId: session.sessionId,
-          sessionToken: session.sessionToken,
+          sessionToken: session.sessionToken!,
           resend: AuthenticationFactorEmailOtp(email: email),
         );
         check(result.state).isA<SessionStateNeedsProof>();
@@ -209,7 +209,7 @@ void main() {
 
       final result2 = await tester.authenticationService.continueSession(
         sessionId: session.sessionId,
-        sessionToken: session.sessionToken,
+        sessionToken: session.sessionToken!,
         proof: AuthenticationFactorEmailOtp(email: email, code: code),
       );
 
@@ -232,14 +232,9 @@ void main() {
         });
 
         test('authenticated', () async {
-          final userId = typeId<User>();
-          final user = await tester.db.createUser(
-            user: User(
-              userId: userId,
-              roles: const [roleAuthenticated],
-            ),
+          final (user, cork) = await tester.createUser(
+            roles: const [roleAuthenticated],
           );
-          final cork = await tester.corks.createUserCork(user: user);
 
           final cloud = tester.cloud(cork: cork);
           await check(
@@ -315,14 +310,10 @@ void main() {
         });
 
         test('re-authenticate', () async {
-          final userId = typeId<User>();
-          final user = await tester.db.createUser(
-            user: User(
-              userId: userId,
-              roles: const [roleAuthenticated],
-            ),
+          final (user, cork) = await tester.createUser(
+            roles: const [roleAuthenticated],
           );
-          final cork = await tester.corks.createUserCork(user: user);
+
           await tester.httpTest(cork: cork, body: request, {
             route: expectAll([
               expectStatus(200),
@@ -363,50 +354,50 @@ void main() {
           ),
         );
 
-        check(() => session.sessionToken).returnsNormally();
+        check(session.sessionToken).isNotNull();
         await check(
           tester.authenticationService.endSession(
-            sessionId: session.sessionId.encoded,
-            sessionToken: session.sessionToken,
+            sessionId: session.sessionId,
+            sessionToken: session.sessionToken!,
           ),
         ).completes();
       });
 
-      test('bad sessionToken', skip: true, () async {
-        final session = await tester.authenticationService.startSession(
-          factor: const AuthenticationFactorEmailOtp(email: 'test@celest.dev'),
-          clientInfo: SessionClient(
-            clientId: 'test',
-            callbacks: SessionCallbacks(
-              successUri: Uri.parse('https://celest.dev'),
-            ),
-          ),
-        );
+      // test('bad sessionToken', skip: true, () async {
+      //   final session = await tester.authenticationService.startSession(
+      //     factor: const AuthenticationFactorEmailOtp(email: 'test@celest.dev'),
+      //     clientInfo: SessionClient(
+      //       clientId: 'test',
+      //       callbacks: SessionCallbacks(
+      //         successUri: Uri.parse('https://celest.dev'),
+      //       ),
+      //     ),
+      //   );
 
-        final cork = await tester.corks.createSessionCork(
-          session: Session(
-            sessionId: typeId<Session>(),
-            cryptoKeyId: Uint8List(0),
-            expireTime: DateTime.now().add(const Duration(days: 1)),
-            authenticationFactor: const AuthenticationFactorEmailOtp(
-              email: 'test@celest.dev',
-            ),
-            clientInfo: SessionClient(
-              clientId: 'test',
-              callbacks: SessionCallbacks(
-                successUri: Uri.parse('https://celest.dev'),
-              ),
-            ),
-          ),
-        );
+      //   final cork = await tester.corks.createSessionCork(
+      //     session: Session(
+      //       sessionId: typeId<Session>(),
+      //       cryptoKeyId: Uint8List(0),
+      //       expireTime: DateTime.now().add(const Duration(days: 1)),
+      //       authenticationFactor: const AuthenticationFactorEmailOtp(
+      //         email: 'test@celest.dev',
+      //       ),
+      //       clientInfo: SessionClient(
+      //         clientId: 'test',
+      //         callbacks: SessionCallbacks(
+      //           successUri: Uri.parse('https://celest.dev'),
+      //         ),
+      //       ),
+      //     ),
+      //   );
 
-        await check(
-          tester.authenticationService.endSession(
-            sessionId: session.sessionId.encoded,
-            sessionToken: cork.toString(),
-          ),
-        ).throws<InvalidSignatureException>();
-      });
+      //   await check(
+      //     tester.authenticationService.endSession(
+      //       sessionId: session.sessionId,
+      //       sessionToken: cork.toString(),
+      //     ),
+      //   ).throws<InvalidSignatureException>();
+      // });
     });
   });
 }

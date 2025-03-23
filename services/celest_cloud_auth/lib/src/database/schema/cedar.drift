@@ -61,10 +61,12 @@ CREATE TABLE IF NOT EXISTS cedar_relationships (
     PRIMARY KEY (entity_type, entity_id, parent_type, parent_id) ON CONFLICT IGNORE,
     
     CONSTRAINT cedar_relationships_fk_entity
-    FOREIGN KEY (entity_type, entity_id) REFERENCES cedar_entities(entity_type, entity_id),
+    FOREIGN KEY (entity_type, entity_id) REFERENCES cedar_entities(entity_type, entity_id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
     
     CONSTRAINT cedar_relationships_fk_parent
     FOREIGN KEY (parent_type, parent_id) REFERENCES cedar_entities(entity_type, entity_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
 ) WITHOUT ROWID;
 
 -- Indexes for the cedar_relationships foreign keys.
@@ -614,6 +616,17 @@ WHERE
     entity_type = :entity_type
 AND entity_id   = :entity_id;
 
+-- Gets all roles associated with an entity
+getEntityRoles: 
+SELECT
+    'Celest::Role::"' || parent_id || '"'
+FROM
+    cedar_relationships
+WHERE
+    entity_type = :entity_type
+AND entity_id   = :entity_id
+AND parent_type = 'Celest::Role';
+
 -- name: GetCedarRelationships :one
 -- Retrieves all relationships for an entity from the cedar database.
 getRelationship: SELECT * 
@@ -628,3 +641,7 @@ AND entity_id   = :entity_id;
 updateEntity(:attribute_json AS TEXT OR NULL): UPDATE cedar_entities
 SET attribute_json = coalesce(:attribute_json, attribute_json)
 WHERE entity_type = :entity_type AND entity_id = :entity_id;
+
+deleteEntity:
+    DELETE FROM cedar_entities
+    WHERE entity_type = :entity_type AND entity_id = :entity_id;

@@ -26,12 +26,6 @@ void main() {
       ),
       findsOneWidget,
     );
-
-    // TODO(dnys1): Fix unhandled exception.
-    final _ = tester.takeException();
-    addTearDown(() {
-      tester.takeException();
-    });
   });
 
   testWidgets('sends OTP code', (tester) async {
@@ -101,12 +95,10 @@ void main() {
       findsOneWidget,
     );
 
-    // TODO
-
     // Sign out
-    // await tester.tap(find.byKey(TestKeys.btnSignOut));
-    // await tester.pumpAndSettle();
+    await tester.tap(find.byKey(TestKeys.btnSignOut));
+    await tester.pumpAndSettle();
 
-    // expect(find.byKey(TestKeys.txtSignedOut), findsOneWidget);
+    expect(find.byKey(TestKeys.txtSignedOut), findsOneWidget);
   });
 }

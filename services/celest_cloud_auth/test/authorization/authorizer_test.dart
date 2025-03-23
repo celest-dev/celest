@@ -98,7 +98,6 @@ void main() {
             action: request.action,
             context: request.context,
             resource: request.resource,
-            debug: true,
           );
           if (response.decision != expected) {
             fail(
