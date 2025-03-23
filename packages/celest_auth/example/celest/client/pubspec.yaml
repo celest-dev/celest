@@ -3,7 +3,7 @@ description: The Celest client for celest_auth_example.
 publish_to: none
 
 environment:
-  sdk: ^3.4.0
+  sdk: ^3.5.0
 
 dependencies:
   celest: ^1.0.0
@@ -11,10 +11,11 @@ dependencies:
     path: ../
   celest_core: ^1.0.0
   http: ^1.0.0
+  meta: ^1.12.0
   native_storage: ^0.2.2
 
 dev_dependencies:
-  lints: ^4.0.0
+  lints: ^5.0.0
   test: ^1.25.0
 dependency_overrides:
   celest:

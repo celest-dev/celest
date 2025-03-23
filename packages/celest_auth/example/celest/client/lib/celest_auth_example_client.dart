@@ -27,8 +27,8 @@ enum CelestEnvironment {
 
   Uri get baseUri => switch (this) {
         local => _$celest.kIsWeb || !Platform.isAndroid
-            ? Uri.parse('http://localhost:51375')
-            : Uri.parse('http://10.0.2.2:51375'),
+            ? Uri.parse('http://localhost:61552')
+            : Uri.parse('http://10.0.2.2:61552'),
       };
 }
 
@@ -48,7 +48,7 @@ class Celest with _$celest.CelestBase {
 
   final _functions = CelestFunctions();
 
-  late final CelestAuth _auth = CelestAuth(
+  late CelestAuth _auth = CelestAuth(
     this,
     storage: nativeStorage,
   );
@@ -75,15 +75,22 @@ class Celest with _$celest.CelestBase {
     CelestEnvironment environment = CelestEnvironment.local,
     _$celest.Serializers? serializers,
   }) {
-    if (_initialized && environment != _currentEnvironment) {
-      _auth.signOut();
+    if (_initialized) {
+      _reset();
     }
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
-    scheduleMicrotask(_auth.init);
-    if (!_initialized) {
-      initSerializers(serializers: serializers);
-    }
+    scheduleMicrotask(() => _auth.init());
+    initSerializers(serializers: serializers);
     _initialized = true;
+  }
+
+  void _reset() {
+    _auth.close().ignore();
+    _auth = CelestAuth(
+      this,
+      storage: nativeStorage,
+    );
+    _initialized = false;
   }
 }
