@@ -584,7 +584,7 @@
             },
             "text": "database"
           },
-          "name": "CELEST_DATABASE_HOST",
+          "name": "TASK_DATABASE_HOST",
           "docs": []
         },
         "token": {
@@ -603,7 +603,7 @@
             },
             "text": "database"
           },
-          "name": "CELEST_DATABASE_TOKEN",
+          "name": "TASK_DATABASE_TOKEN",
           "docs": []
         }
       },
