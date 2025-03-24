@@ -102,7 +102,7 @@ void main() {
         }
       });
 
-      final platform = FakePlatform();
+      final platform = FakePlatform(environment: {});
       Context.current.put(env.environment, 'local');
       Context.current.put(ContextKey.platform, platform);
       final database = await connect(
@@ -124,7 +124,7 @@ void main() {
       final tmpDir = await Directory.systemTemp.createTemp('celest_test');
       addTearDown(() => tmpDir.delete(recursive: true));
 
-      final platform = FakePlatform();
+      final platform = FakePlatform(environment: {});
       Context.current.put(env.environment, 'local');
       Context.current.put(ContextKey.platform, platform);
       final database = await connect(
