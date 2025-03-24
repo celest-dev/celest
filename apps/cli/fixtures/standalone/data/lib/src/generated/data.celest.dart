@@ -24,8 +24,8 @@ class CelestData {
         context,
         name: 'TaskDatabase',
         factory: TaskDatabase.new,
-        hostnameVariable: const _$celest.env('CELEST_DATABASE_HOST'),
-        tokenSecret: const _$celest.secret('CELEST_DATABASE_TOKEN'),
+        hostnameVariable: const _$celest.env('TASK_DATABASE_HOST'),
+        tokenSecret: const _$celest.secret('TASK_DATABASE_TOKEN'),
       ),
     );
   }

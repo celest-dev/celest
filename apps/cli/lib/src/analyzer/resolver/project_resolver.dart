@@ -21,6 +21,7 @@ import 'package:celest_cli/src/types/type_checker.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/list.dart';
+import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cli/src/version.dart';
@@ -1264,8 +1265,9 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     }
 
     final schemaTypeReference = typeHelper.toReference(driftDatabaseType);
+    final databaseName = schemaTypeReference.symbol!;
     return ast.Database(
-      name: schemaTypeReference.symbol!,
+      name: databaseName,
       dartName: databaseDefinitionElement.name,
       docs: databaseDefinitionElement.docLines,
       schema: ast.DriftDatabaseSchema(
@@ -1274,11 +1276,11 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       ),
       config: ast.CelestDatabaseConfig(
         hostname: ast.Variable(
-          'CELEST_DATABASE_HOST',
+          '${databaseName.screamingCase}_HOST',
           location: databaseDefinitionLocation,
         ),
         token: ast.Secret(
-          'CELEST_DATABASE_TOKEN',
+          '${databaseName.screamingCase}_TOKEN',
           location: databaseDefinitionLocation,
         ),
       ),
