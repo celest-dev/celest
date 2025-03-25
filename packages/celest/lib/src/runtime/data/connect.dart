@@ -27,27 +27,48 @@ Future<Database> connect<Database extends GeneratedDatabase>(
   required secret tokenSecret,
   String? path,
 }) async {
-  if (context.environment == Environment.local) {
-    final executor = await localExecutor(name: name, path: path);
-    return _checkConnection(factory(executor));
-  }
   final host = context.get(hostnameVariable);
-  final token = context.get(tokenSecret);
   if (host == null) {
+    if (context.environment == Environment.local) {
+      final executor = await localExecutor(name: name, path: path);
+      return _checkConnection(factory(executor));
+    }
     throw StateError(
-      'Missing database hostname $name. '
+      'Missing database hostname for $name. '
       'Set the `$hostnameVariable` value in the environment or Celest '
       'configuration file to connect.',
     );
   }
-  final hostUri = Uri.tryParse(host) ?? Uri(scheme: 'libsql', host: host);
-  if (token == null) {
-    _logger.fine(
-      'Missing database token for $name. Expecting a secret named '
-      '`$tokenSecret` in the environment or Celest configuration file.',
+  final hostUri = Uri.tryParse(host);
+  if (hostUri == null) {
+    throw StateError(
+      'Invalid or empty host URI set for $hostnameVariable: $host',
     );
-    _logger.fine('Connecting to $hostUri without a token.');
   }
-  final connector = HranaDatabase(hostUri, jwtToken: token);
+  final QueryExecutor connector;
+  switch (hostUri) {
+    case Uri(scheme: 'file', path: '/:memory:'):
+      connector = await inMemoryExecutor();
+    case Uri(scheme: 'file', :final path):
+      connector = await localExecutor(name: name, path: path);
+    case Uri(scheme: 'ws' || 'wss' || 'http' || 'https' || 'libsql'):
+      final token = context.get(tokenSecret);
+      if (token == null) {
+        if (context.environment != Environment.local) {
+          _logger.warning(
+            'Missing database token for $name. It\'s recommended to configure '
+            '`$tokenSecret` in the environment or Celest configuration file.',
+          );
+        }
+        _logger.config('Connecting to $hostUri without a token.');
+      }
+      connector = HranaDatabase(hostUri, jwtToken: token);
+    default:
+      throw StateError(
+        'Invalid host URI set for $hostnameVariable: $host. '
+        "Expected a scheme of 'file', 'ws', 'wss', 'http', 'https', or 'libsql'.",
+      );
+  }
+
   return _checkConnection(factory(connector));
 }
