@@ -10,7 +10,8 @@ void main(List<String> args) async {
     ..addCommand(StartCommand())
     ..addCommand(BuildCommand())
     ..addCommand(AnalysisServerCommand())
-    ..addCommand(UpgradeCommand())
+    // TODO(dnys1): Re-implement the upgrade command
+    // ..addCommand(UpgradeCommand())
     ..addCommand(UninstallCommand())
     ..addCommand(PrecacheCommand());
 
