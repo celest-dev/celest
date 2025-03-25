@@ -348,10 +348,8 @@ const project = Project(name: 'cache_warmup');
       'resolveDatabases',
       _resolveDatabases,
     );
-    if (databases.isNotEmpty) {
-      _project.databases.addAll({
-        for (final database in databases) database.name: database,
-      });
+    for (final database in databases) {
+      _project.databases[database.name] = database;
     }
 
     if (migrateProject) {

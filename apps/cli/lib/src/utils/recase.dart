@@ -24,6 +24,9 @@ extension StringRecase on String {
   /// The `snake_case` version of `this`.
   String get snakeCase => groupIntoWords().snakeCase;
 
+  /// The `SCREAMING_CASE` version of `this`.
+  String get screamingCase => groupIntoWords().screamingCase;
+
   // "acm-success"-> "acm success"
   static final _nonAlphaNumericChars = RegExp(r'[^A-Za-z0-9+]');
 
@@ -123,4 +126,7 @@ extension type WordGroup(List<String> _group) implements List<String> {
 
   /// The `snake_case` version of `this`.
   String get snakeCase => map((word) => word.toLowerCase()).join('_');
+
+  /// The `SCREAMING_CASE` version of `this`.
+  String get screamingCase => map((word) => word.toUpperCase()).join('_');
 }

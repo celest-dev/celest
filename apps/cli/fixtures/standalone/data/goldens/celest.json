@@ -43,11 +43,11 @@
       },
       "celest": {
         "hostname": {
-          "name": "CELEST_DATABASE_HOST",
+          "name": "TASK_DATABASE_HOST",
           "value": ""
         },
         "token": {
-          "name": "CELEST_DATABASE_TOKEN",
+          "name": "TASK_DATABASE_TOKEN",
           "value": ""
         }
       }
