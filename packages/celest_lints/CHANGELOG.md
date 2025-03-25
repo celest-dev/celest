@@ -1,3 +1,7 @@
+## 1.1.1-wip
+
+- chore: Update license
+
 ## 1.1.0
 
 - Bump min Dart SDK version to 3.7.

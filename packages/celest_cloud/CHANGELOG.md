@@ -1,3 +1,7 @@
+# 0.1.5-wip
+
+- chore: Update license
+
 # 0.1.4
 
 - feat: Finalize project environment API

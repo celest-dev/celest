@@ -1,4 +1,4 @@
-Copyright (c) 2024 Teo, Inc. (Celest)
+Copyright (c) 2025 The Celest project authors
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

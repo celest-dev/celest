@@ -1,3 +1,8 @@
+## 1.0.2
+
+- chore: Make close part of the public API (#267)
+- refactor(cloud_auth)!: Consolidate session logic (#273)
+
 ## 1.0.1
 
 - chore: Bump minimum Dart SDK to 3.5

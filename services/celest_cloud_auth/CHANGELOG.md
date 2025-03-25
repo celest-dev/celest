@@ -1,4 +1,7 @@
-## 0.2.0-wip
+## 0.2.0
+
+- refactor(cloud_auth)!: Consolidate session logic (#273)
+- chore: Update license
 
 ## 0.1.1
 
