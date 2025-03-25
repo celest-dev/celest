@@ -1,6 +1,6 @@
 name: celest_ast
 description: A structured representation of Celest project and service definitions.
-version: 0.1.5
+version: 0.1.6-wip
 homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/packages/celest_ast
 

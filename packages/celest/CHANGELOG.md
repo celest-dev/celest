@@ -1,3 +1,9 @@
+## 1.0.3
+
+- fix(runtime): Treat database host values as DSN strings (#276)
+- refactor(cloud_auth)!: Consolidate session logic (#273)
+- chore: Update license
+
 ## 1.0.2
 
 - chore: Bump minimum Dart SDK to 3.5

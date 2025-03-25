@@ -240,8 +240,8 @@
     "celest": {
       "major": 1,
       "minor": 0,
-      "patch": 7,
-      "canonicalizedVersion": "1.0.7"
+      "patch": 8,
+      "canonicalizedVersion": "1.0.8"
     },
     "dart": {
       "type": "DART",

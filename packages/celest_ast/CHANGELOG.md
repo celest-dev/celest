@@ -1,3 +1,7 @@
+## 0.1.6
+
+- chore: Update license
+
 ## 0.1.5
 
 - chore: Bump minimum Dart SDK to 3.5
