@@ -3,6 +3,7 @@
 @Tags(['goldens'])
 library;
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io' hide Directory;
 import 'dart:isolate';
@@ -10,6 +11,7 @@ import 'dart:math';
 
 import 'package:async/async.dart';
 import 'package:celest/src/runtime/serve.dart';
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/src/analyzer/analysis_result.dart';
 import 'package:celest_cli/src/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/src/codegen/client_code_generator.dart';
@@ -18,12 +20,15 @@ import 'package:celest_cli/src/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/database/project/project_database.dart';
 import 'package:celest_cli/src/env/config_value_solver.dart';
+import 'package:celest_cli/src/frontend/celest_frontend.dart';
 import 'package:celest_cli/src/init/project_migrator.dart';
+import 'package:celest_cli/src/process/port_finder.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/project/project_linker.dart';
 import 'package:celest_cli/src/pub/pub_action.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/sdk/sdk_finder.dart';
+import 'package:celest_cli/src/utils/cli.dart';
 import 'package:celest_cli/src/utils/recase.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:file/file.dart';
@@ -189,6 +194,7 @@ class TestRunner {
       testResolve();
       testCodegen();
       testClient();
+      testBuild();
 
       final apisDir = fileSystem.directory(
         p.join(projectRoot, 'lib', 'src', 'functions'),
@@ -372,6 +378,78 @@ class TestRunner {
     });
   }
 
+  void testBuild() {
+    // Docker only available on Linux runner in CI.
+    final isCI = platform.environment.containsKey('CI');
+    final shouldRun = !isCI || platform.isLinux;
+    test('build', skip: !shouldRun, () async {
+      final CelestAnalysisResult(:project, :errors) =
+          await analyzer.analyzeProject(
+        migrateProject: false,
+        updateResources: updateGoldens,
+      );
+      expect(errors, isEmpty);
+      expect(project, isNotNull);
+
+      final frontend = CelestFrontend();
+      final result = await frontend.build(
+        migrateProject: false,
+        currentProgress: cliLogger.progress('Building project...'),
+        environmentId: 'production',
+      );
+      expect(result, 0);
+
+      final outputDir = projectPaths.buildDir;
+      final imageName = '$testName-${Random().nextInt(1000000)}';
+      final dockerBuild = await processManager.run(
+        ['docker', 'build', '-t', imageName, '.'],
+        workingDirectory: outputDir,
+      );
+      expect(
+        dockerBuild.exitCode,
+        0,
+        reason: '${dockerBuild.stdout}\n${dockerBuild.stderr}',
+      );
+
+      addTearDown(() async {
+        await processManager.run(
+          ['docker', 'image', 'rm', imageName],
+        );
+      });
+
+      final openPort = await RandomPortFinder().findOpenPort();
+      final dockerRun = await processManager.start(
+        [
+          'docker',
+          'run',
+          '--rm',
+          '-p',
+          '$openPort:8080',
+          for (final database in project!.databases.values)
+            if (database.config case ast.CelestDatabaseConfig(:final hostname))
+              '--env=${hostname.name}=file::memory:',
+          if (project.auth?.providers.isNotEmpty ?? false)
+            '--env=CELEST_AUTH_DATABASE_HOST=file::memory:',
+          imageName,
+        ],
+      );
+      addTearDown(() => dockerRun.kill(ProcessSignal.sigkill));
+
+      final dockerOutput = StreamController<String>.broadcast(sync: true);
+      unawaited(dockerRun.exitCode.then((_) => dockerOutput.close()));
+
+      dockerRun
+        ..captureStdout()
+        ..captureStdout(sink: dockerOutput.add)
+        ..captureStderr()
+        ..captureStderr(sink: dockerOutput.add);
+      await expectLater(
+        dockerOutput.stream,
+        emitsThrough('Serving on http://localhost:8080'),
+      );
+    });
+  }
+
   void testApis(Directory apisDir, List<String>? includeApis) {
     final apis = testCases?.apis ?? const {};
     if (apis.isEmpty) {
@@ -417,7 +495,15 @@ class TestRunner {
         apiRunner = await LocalApiRunner.start(
           resolvedProject: projectResolver.resolvedProject,
           path: entrypoint,
-          configValues: configValues,
+          configValues: {
+            ...configValues,
+            for (final database in project.databases.values)
+              if (database.config
+                  case ast.CelestDatabaseConfig(:final hostname))
+                hostname.name: 'file::memory:',
+            if (project.auth?.providers.isNotEmpty ?? false)
+              'CELEST_AUTH_DATABASE_HOST': 'file::memory:',
+          },
           environmentId: 'local',
           verbose: false,
           stdoutPipe: logSink,

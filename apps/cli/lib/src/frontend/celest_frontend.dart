@@ -29,9 +29,7 @@ import 'package:watcher/watcher.dart';
 enum RestartMode { hotReload, fullRestart }
 
 final class CelestFrontend {
-  factory CelestFrontend() => instance ??= CelestFrontend._();
-
-  CelestFrontend._() {
+  CelestFrontend() {
     // Initialize immediately instead of lazily since _stopSub is never accessed
     // directly until `close`.
     _stopSub = StreamGroup.merge([
@@ -491,13 +489,6 @@ final class CelestFrontend {
           resolvedProject: resolvedProject,
         );
         final outputs = codeGenerator.generate();
-        final outputsDir = Directory(projectPaths.outputsDir);
-        if (outputsDir.existsSync() && !_didFirstCompile) {
-          await outputsDir.delete(recursive: true);
-        }
-        if (stopped) {
-          throw const CancellationException('Celest was stopped');
-        }
         await (outputs.write(), celestProject.invalidate(outputs.keys)).wait;
         if (stopped) {
           throw const CancellationException('Celest was stopped');
@@ -530,24 +521,44 @@ final class CelestFrontend {
     required ResolvedProject resolvedProject,
     required String environmentId,
   }) async {
-    final entrypointCompiler = EntrypointCompiler(
-      logger: logger,
-      verbose: verbose,
-      enabledExperiments: celestProject.analysisOptions.enabledExperiments,
-    );
-    final kernel = await entrypointCompiler.compile(
-      resolvedProject: resolvedProject,
-      entrypointPath: projectPaths.localApiEntrypoint,
-    );
-
     final buildOutputs = fileSystem.directory(projectPaths.buildDir);
     if (!buildOutputs.existsSync()) {
       await buildOutputs.create(recursive: true);
     }
-
-    await buildOutputs
-        .childFile('celest.aot.dill')
-        .writeAsBytes(kernel.outputDill);
+    switch (resolvedProject.sdkConfig.targetSdk) {
+      case ast.SdkType.dart:
+        final entrypointCompiler = EntrypointCompiler(
+          logger: logger,
+          verbose: verbose,
+          enabledExperiments: celestProject.analysisOptions.enabledExperiments,
+        );
+        final kernel = await entrypointCompiler.compile(
+          resolvedProject: resolvedProject,
+          entrypointPath: projectPaths.localApiEntrypoint,
+        );
+        await buildOutputs
+            .childFile('celest.aot.dill')
+            .writeAsBytes(kernel.outputDill);
+      case ast.SdkType.flutter:
+        final bundleRes = await processManager.run(
+          [
+            'flutter',
+            'build',
+            'bundle',
+            '--packages=${projectPaths.packagesConfig}',
+            '--asset-dir=${p.join(buildOutputs.path, 'flutter_assets')}',
+            '--target=${projectPaths.localApiEntrypoint}',
+            '--target-platform=linux-x64',
+          ],
+          workingDirectory: projectPaths.projectRoot,
+        );
+        if (bundleRes.exitCode != 0) {
+          throw CliException(
+            'Failed to build project:\n'
+            '${bundleRes.stdout}\n${bundleRes.stderr}',
+          );
+        }
+    }
 
     final dockerfile = DockerfileGenerator(project: project);
     await buildOutputs
