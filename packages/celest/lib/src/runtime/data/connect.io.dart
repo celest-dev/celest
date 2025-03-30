@@ -5,15 +5,21 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
+import 'package:sqlite3/common.dart' as sqlite3;
 
 final Logger _logger = Logger('Celest.Data');
 
 /// A [QueryExecutor] for an in-memory database.
-Future<QueryExecutor> inMemoryExecutor() async => NativeDatabase.memory();
+Future<QueryExecutor> inMemoryExecutor({
+  void Function(sqlite3.CommonDatabase)? setup,
+}) async {
+  return NativeDatabase.memory(setup: setup);
+}
 
 /// A [QueryExecutor] with local persistence.
 Future<QueryExecutor> localExecutor({
   required String name,
+  void Function(sqlite3.CommonDatabase)? setup,
   String? path,
 }) async {
   if (path == null) {
@@ -28,7 +34,7 @@ Future<QueryExecutor> localExecutor({
         'Failed to determine package config path. '
         'Falling back to in-memory database.',
       );
-      return inMemoryExecutor();
+      return inMemoryExecutor(setup: setup);
     }
     path = p.join(
       p.dirname(p.fromUri(packageConfig)),
@@ -45,5 +51,6 @@ Future<QueryExecutor> localExecutor({
     databaseFile,
     cachePreparedStatements: true,
     enableMigrations: true,
+    setup: setup,
   );
 }

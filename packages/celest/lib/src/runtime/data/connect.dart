@@ -6,6 +6,7 @@ import 'package:celest/src/runtime/data/connect.io.dart'
 import 'package:drift/drift.dart';
 import 'package:drift_hrana/drift_hrana.dart';
 import 'package:logging/logging.dart';
+import 'package:sqlite3/common.dart' as sqlite3;
 
 final Logger _logger = Logger('Celest.Data');
 
@@ -25,12 +26,17 @@ Future<Database> connect<Database extends GeneratedDatabase>(
   required Database Function(QueryExecutor) factory,
   required env hostnameVariable,
   required secret tokenSecret,
+  void Function(sqlite3.CommonDatabase)? setup,
   String? path,
 }) async {
   final host = context.get(hostnameVariable);
   if (host == null) {
     if (context.environment == Environment.local) {
-      final executor = await localExecutor(name: name, path: path);
+      final executor = await localExecutor(
+        name: name,
+        path: path,
+        setup: setup,
+      );
       return _checkConnection(factory(executor));
     }
     throw StateError(
@@ -48,9 +54,9 @@ Future<Database> connect<Database extends GeneratedDatabase>(
   final QueryExecutor connector;
   switch (hostUri) {
     case Uri(scheme: 'file', path: '/:memory:'):
-      connector = await inMemoryExecutor();
+      connector = await inMemoryExecutor(setup: setup);
     case Uri(scheme: 'file', :final path):
-      connector = await localExecutor(name: name, path: path);
+      connector = await localExecutor(name: name, path: path, setup: setup);
     case Uri(scheme: 'ws' || 'wss' || 'http' || 'https' || 'libsql'):
       final token = context.get(tokenSecret);
       if (token == null) {
