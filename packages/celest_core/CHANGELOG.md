@@ -1,6 +1,7 @@
 ## 1.0.2-wip
 
 - chore: Update license
+- chore: Improve gRPC interop
 
 ## 1.0.1
 
