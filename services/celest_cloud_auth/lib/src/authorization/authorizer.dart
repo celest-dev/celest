@@ -6,10 +6,12 @@ import 'package:celest_core/celest_core.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 
-extension type Authorizer._(AuthDatabase _db) implements Object {
-  Authorizer({required AuthDatabase db}) : this._(db);
+class Authorizer {
+  Authorizer({required AuthDatabase db}) : _db = db;
 
   static final Logger _logger = Logger('Celest.Authorizer');
+
+  final AuthDatabase _db;
 
   Future<void> expectAuthorized({
     Component? principal,

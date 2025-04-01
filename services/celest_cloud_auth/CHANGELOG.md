@@ -1,3 +1,7 @@
+## 0.2.1-wip
+
+- chore: Make `Authorizer` a class
+
 ## 0.2.0
 
 - refactor(cloud_auth)!: Consolidate session logic (#273)
