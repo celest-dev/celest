@@ -1,0 +1,119 @@
+import '../../model/lifecycle_state.dart';
+
+-- Stores project environments for a Celest Cloud project.
+CREATE TABLE IF NOT EXISTS project_environments (
+    -- Immutable. The unique identifier for the project environment.
+    --
+    -- Maps to the `uid` field in the Protobuf.
+    --
+    -- Format: env_<typeid>
+    id TEXT NOT NULL PRIMARY KEY,
+
+    -- The Cedar type of the parent entity.
+    --
+    -- Must be `Celest::Project`.
+    parent_type TEXT,
+
+    -- The unique identifier of the parent entity.
+    --
+    -- Must be an existing project.
+    parent_id TEXT,
+
+    -- The primary alias for the environment.
+    project_environment_id TEXT NOT NULL,
+
+    -- The state of the environment.
+    --
+    -- Defaults to `LifecycleState.CREATING`.
+    state ENUM(LifecycleState) NOT NULL DEFAULT 1,
+
+    -- A human-readable name for the environment.
+    display_name TEXT,
+
+    create_time DATETIME NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+    update_time DATETIME NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+    delete_time DATETIME,
+
+    -- User-defined annotations for the environment.
+    --
+    -- Type: map[string]string
+    annotations TEXT,
+
+    -- Whether the environment is in the process of being reconciled.
+    reconciling BOOLEAN NOT NULL GENERATED ALWAYS AS (state IN (1, 4, 6)) VIRTUAL,
+
+    -- The environment's etag.
+    etag TEXT NOT NULL GENERATED ALWAYS AS (
+        hex(
+            md5(
+                json_array(
+                    id,
+                    parent_type,
+                    parent_id,
+                    project_environment_id,
+                    state,
+                    display_name,
+                    create_time,
+                    update_time,
+                    delete_time,
+                    annotations,
+                    reconciling
+                )
+            )
+        )
+    ) STORED,
+
+    CHECK (parent_type IS NULL OR parent_type = 'Celest::Project')
+);
+
+-- This trigger is used to update the update_time when a row is updated.
+CREATE TRIGGER IF NOT EXISTS project_environments_trigger_update_time
+AFTER UPDATE ON project_environments
+BEGIN
+    UPDATE project_environments
+    SET update_time = unixepoch('now', 'subsec')
+    WHERE id = OLD.id;
+END;
+
+-- Stores metadata for Celest Cloud project environments.
+CREATE TABLE IF NOT EXISTS project_environment_asts(
+    -- The ID of the linked environment.
+    project_environment_id TEXT NOT NULL PRIMARY KEY,
+
+    -- The environment's project AST.
+    --
+    -- Format: ProtoAny[celest.ast.<version>.ResolvedProject]
+    ast BLOB NOT NULL,
+
+    -- The environment's project AST version.
+    version INTEGER NOT NULL,
+
+    -- The environment's project AST digest.
+    digest TEXT NOT NULL GENERATED ALWAYS AS (hex(md5(ast))) STORED,
+
+    CONSTRAINT fk_environment_metadata_project_environment_id FOREIGN KEY (project_environment_id) REFERENCES project_environments(id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+) WITHOUT ROWID;
+
+-- Stores assets for a Celest Cloud project environment.
+CREATE TABLE IF NOT EXISTS project_environment_assets(
+    -- The ID of the linked environment.
+    project_environment_id TEXT NOT NULL,
+
+    -- The asset's type.
+    type TEXT NOT NULL,
+
+    -- The bucket storing the asset.
+    bucket TEXT NOT NULL,
+
+    -- The asset's name in the bucket.
+    name TEXT NOT NULL,
+
+    -- The asset's digest.
+    etag TEXT NOT NULL,
+
+    PRIMARY KEY (project_environment_id, name),
+
+    CONSTRAINT fk_environment_assets_project_environment_id FOREIGN KEY (project_environment_id) REFERENCES project_environments(id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+) WITHOUT ROWID;

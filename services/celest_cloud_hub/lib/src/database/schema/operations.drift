@@ -1,0 +1,110 @@
+-- Stores longrunning operations for Celest Cloud.
+CREATE TABLE IF NOT EXISTS celest_operations (
+    -- Immutable. The unique identifier for the organization.
+    --
+    -- Maps to the `uid` field in the Protobuf.
+    --
+    -- Format: op_<typeid>
+    id TEXT NOT NULL PRIMARY KEY,
+
+    -- Optional metadata associated with the operation.
+    --
+    -- For all Celest operations, this will be a protobuf Any message
+    -- wrapping the operation-specific metadata.
+    --
+    -- Type: JSON
+    -- JSON: google.protobuf.Any
+    metadata TEXT,
+
+    -- The operation's response, present if the operation completed successfully.
+    --
+    -- For all Celest operations, this will be a protobuf Any message
+    -- wrapping the operation-specific response.
+    --
+    -- Type: JSON
+    -- JSON: google.protobuf.Any
+    response TEXT,
+
+    -- The operation's error, present if the operation failed.
+    --
+    -- For all Celest operations, this will be a google.rpc.Status message.
+    --
+    -- Type: JSON
+    -- JSON: google.rpc.Status
+    error TEXT,
+
+    -- Whether the operation is done, meaning it hass reached a success or 
+    -- error state.
+    done BOOLEAN NOT NULL GENERATED ALWAYS AS (
+        response IS NOT NULL
+        OR error IS NOT NULL
+    ) VIRTUAL,
+
+    create_time DATETIME NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+
+    -- The full resource name of the operation in GCP, including the project, location and service.
+    --
+    -- Format: //cloudresourcemanager.googleapis.com/projects/<project>/locations/<location>/operations/<operation>
+    full_resource_name TEXT,
+
+    -- The type of the operation's owner.
+    --
+    -- For example, this could be `Celest::User`.
+    owner_type TEXT,
+
+    -- The ID of the operation's owner.
+    --
+    -- For example, this could be the ID of a user for a user operation.
+    owner_id TEXT,
+
+    -- The type of the resource that the operation is associated with.
+    --
+    -- For example, this could be `Celest::Function` for a function operation.
+    resource_type TEXT,
+
+    -- The ID of the resource that the operation is associated with.
+    --
+    -- For example, this could be the ID of a function for a function operation.
+    resource_id TEXT
+);
+
+getOperation:
+    SELECT * FROM celest_operations 
+    WHERE id = :id;
+
+createOperation:
+    INSERT INTO celest_operations (
+        id,
+        metadata,
+        response,
+        error,
+        full_resource_name,
+        owner_type,
+        owner_id,
+        resource_type,
+        resource_id
+    ) VALUES (
+        :id,
+        :metadata,
+        :response,
+        :error,
+        :full_resource_name,
+        :owner_type,
+        :owner_id,
+        :resource_type,
+        :resource_id
+    )
+    RETURNING *;
+
+updateOperation(
+    :metadata AS TEXT OR NULL,
+    :response AS TEXT OR NULL,
+    :error AS TEXT OR NULL
+):
+    UPDATE celest_operations
+    SET
+        metadata = coalesce(:metadata, metadata),
+        response = coalesce(:response, response),
+        error = coalesce(:error, error)
+    WHERE id = :id
+    RETURNING *;
