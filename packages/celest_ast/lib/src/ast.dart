@@ -1065,6 +1065,9 @@ sealed class DatabaseSchema implements AstNode {
   /// The type of database schema.
   DatabaseSchemaType get type;
 
+  /// The version of the schema.
+  int get version;
+
   /// The Dart type declaring the database schema.
   TypeReference get declaration;
 }
@@ -1088,10 +1091,12 @@ abstract class DriftDatabaseSchema
         DatabaseSchema {
   factory DriftDatabaseSchema({
     required TypeReference declaration,
+    int version = 1,
     required FileSpan location,
   }) {
     return _$DriftDatabaseSchema._(
       declaration: declaration,
+      version: version,
       location: location,
     );
   }

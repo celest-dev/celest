@@ -1,8 +1,12 @@
 import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/src/dart/analysis/session_helper.dart';
+import 'package:analyzer/src/dart/ast/ast.dart';
 import 'package:analyzer/src/dart/resolver/scope.dart';
 import 'package:celest_cli/src/analyzer/analysis_error.dart';
 import 'package:celest_cli/src/analyzer/resolver/project_resolver.dart';
@@ -52,6 +56,11 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
   AnalysisContext get context;
   Set<InterfaceElement> get customExceptionTypes;
   Set<InterfaceElement> get customModelTypes;
+
+  static final Expando<AnalysisSessionHelper> _sessionHelpers = Expando();
+  AnalysisSessionHelper get helper =>
+      _sessionHelpers[context.currentSession] ??=
+          AnalysisSessionHelper(context.currentSession);
 
   final pendingEdits = <String, Set<SourceEdit>>{};
 
@@ -290,6 +299,84 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
         'within the `celest/lib` folder.',
         location: location,
       );
+    }
+  }
+
+  /// Resolves the schema version of a Drift database class.
+  Future<int> resolveSchemaVersion(ClassElement2 databaseClass) async {
+    final schemaVersionMethod =
+        databaseClass.getGetter2('schemaVersion')?.variable3;
+    if (schemaVersionMethod == null) {
+      reportError(
+        'Invalid database class: No `schemaVersion` getter.',
+        severity: AnalysisErrorSeverity.error,
+        location: databaseClass.sourceLocation,
+      );
+      return -1;
+    }
+    final declaration = await helper.getElementDeclaration(
+      schemaVersionMethod.isSynthetic
+          ? schemaVersionMethod.getter2!.firstFragment
+          : schemaVersionMethod.firstFragment,
+    );
+
+    int? resolveExpression(Expression? expression) {
+      switch (expression) {
+        // int get schemaVersion => 1;
+        case IntegerLiteral(value: final version?):
+          return version;
+
+        // int get schemaVersion => someConstVariable;
+        case Identifier(
+            staticElement: PropertyAccessorElement(:final variable2?)
+          ):
+          if (variable2.computeConstantValue()?.toIntValue()
+              case final version?) {
+            return version;
+          }
+      }
+
+      return null;
+    }
+
+    switch (declaration?.node) {
+      case VariableDeclaration(:final initializer):
+        if (resolveExpression(initializer) case final version?) {
+          return version;
+        }
+
+        // Could not determine schema version.
+        reportError(
+          'Invalid `schemaVersion` declaration: Must resolve to an integer.',
+          severity: AnalysisErrorSeverity.error,
+          location: schemaVersionMethod.sourceLocation,
+        );
+        return -1;
+
+      case MethodDeclaration(:final body):
+        switch (body) {
+          case ExpressionFunctionBody(:final expression):
+            if (resolveExpression(expression) case final version?) {
+              return version;
+            }
+          case BlockFunctionBody():
+          case EmptyFunctionBody():
+          case NativeFunctionBody():
+        }
+
+        // Could not determine schema version.
+        reportError(
+          'Invalid `schemaVersion` declaration: Must use => syntax.',
+          severity: AnalysisErrorSeverity.error,
+          location: schemaVersionMethod.sourceLocation,
+        );
+        return -1;
+
+      case final unknown:
+        throw StateError(
+          'Failed to resolve method declaration for $schemaVersionMethod: '
+          'Got $unknown (${unknown.runtimeType})',
+        );
     }
   }
 }

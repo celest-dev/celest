@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/source/source.dart';
@@ -108,6 +109,12 @@ extension DartTypeHelper on DartType {
 
   bool get isCelestSecret =>
       element == typeHelper.coreTypes.celestSecretElement;
+
+  bool get isCloudAuthDatabaseMixin => switch (element) {
+        MixinElement(:final name, :final library) =>
+          name == 'CloudAuthDatabaseMixin' && library.isCelestSdk,
+        _ => false,
+      };
 
   bool get isAuth => switch (element) {
         ClassElement(:final name, :final library) =>
@@ -658,6 +665,21 @@ extension ElementSourceLocation on Element {
           LineSplitter.split(documentationComment).toList(),
         _ => const <String>[],
       };
+}
+
+extension Element2SourceLocation on Element2 {
+  FileSpan? get sourceLocation {
+    final source = library2?.firstFragment.source;
+    if (source == null || !source.exists()) {
+      return null;
+    }
+    final nameOffset = firstFragment.nameOffset2 ?? -1;
+    final nameLength = firstFragment.name2?.length ?? 0;
+    if (nameOffset < 0) {
+      return null;
+    }
+    return source.toSpan(nameOffset, nameOffset + nameLength);
+  }
 }
 
 extension ElementAnnotationSourceLocation on ElementAnnotation {

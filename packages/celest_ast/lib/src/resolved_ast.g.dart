@@ -1479,16 +1479,17 @@ class ResolvedProjectBuilder
     try {
       _$result = _$v ??
           new _$ResolvedProject._(
-              projectId: BuiltValueNullFieldError.checkNotNull(
-                  projectId, r'ResolvedProject', 'projectId'),
-              environmentId: BuiltValueNullFieldError.checkNotNull(
-                  environmentId, r'ResolvedProject', 'environmentId'),
-              apis: apis.build(),
-              variables: variables.build(),
-              secrets: secrets.build(),
-              auth: _auth?.build(),
-              databases: databases.build(),
-              sdkConfig: sdkConfig.build());
+            projectId: BuiltValueNullFieldError.checkNotNull(
+                projectId, r'ResolvedProject', 'projectId'),
+            environmentId: BuiltValueNullFieldError.checkNotNull(
+                environmentId, r'ResolvedProject', 'environmentId'),
+            apis: apis.build(),
+            variables: variables.build(),
+            secrets: secrets.build(),
+            auth: _auth?.build(),
+            databases: databases.build(),
+            sdkConfig: sdkConfig.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1621,10 +1622,11 @@ class ResolvedApiBuilder implements Builder<ResolvedApi, ResolvedApiBuilder> {
     try {
       _$result = _$v ??
           new _$ResolvedApi._(
-              apiId: BuiltValueNullFieldError.checkNotNull(
-                  apiId, r'ResolvedApi', 'apiId'),
-              functions: functions.build(),
-              policySet: _policySet?.build());
+            apiId: BuiltValueNullFieldError.checkNotNull(
+                apiId, r'ResolvedApi', 'apiId'),
+            functions: functions.build(),
+            policySet: _policySet?.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1810,15 +1812,16 @@ class ResolvedCloudFunctionBuilder
     try {
       _$result = _$v ??
           new _$ResolvedCloudFunction._(
-              functionId: BuiltValueNullFieldError.checkNotNull(
-                  functionId, r'ResolvedCloudFunction', 'functionId'),
-              apiId: BuiltValueNullFieldError.checkNotNull(
-                  apiId, r'ResolvedCloudFunction', 'apiId'),
-              httpConfig: httpConfig.build(),
-              streamConfig: _streamConfig?.build(),
-              variables: variables.build(),
-              secrets: secrets.build(),
-              policySet: _policySet?.build());
+            functionId: BuiltValueNullFieldError.checkNotNull(
+                functionId, r'ResolvedCloudFunction', 'functionId'),
+            apiId: BuiltValueNullFieldError.checkNotNull(
+                apiId, r'ResolvedCloudFunction', 'apiId'),
+            httpConfig: httpConfig.build(),
+            streamConfig: _streamConfig?.build(),
+            variables: variables.build(),
+            secrets: secrets.build(),
+            policySet: _policySet?.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1973,11 +1976,12 @@ class ResolvedHttpConfigBuilder
     try {
       _$result = _$v ??
           new _$ResolvedHttpConfig._(
-              route: route.build(),
-              additionalRoutes: additionalRoutes.build(),
-              status: BuiltValueNullFieldError.checkNotNull(
-                  status, r'ResolvedHttpConfig', 'status'),
-              statusMappings: statusMappings.build());
+            route: route.build(),
+            additionalRoutes: additionalRoutes.build(),
+            status: BuiltValueNullFieldError.checkNotNull(
+                status, r'ResolvedHttpConfig', 'status'),
+            statusMappings: statusMappings.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -2074,7 +2078,10 @@ class ResolvedStreamConfigBuilder
   ResolvedStreamConfig build() => _build();
 
   _$ResolvedStreamConfig _build() {
-    final _$result = _$v ?? new _$ResolvedStreamConfig._(type: type);
+    final _$result = _$v ??
+        new _$ResolvedStreamConfig._(
+          type: type,
+        );
     replace(_$result);
     return _$result;
   }
@@ -2173,10 +2180,11 @@ class ResolvedHttpRouteBuilder
     ResolvedHttpRoute._defaults(this);
     final _$result = _$v ??
         new _$ResolvedHttpRoute._(
-            method: BuiltValueNullFieldError.checkNotNull(
-                method, r'ResolvedHttpRoute', 'method'),
-            path: BuiltValueNullFieldError.checkNotNull(
-                path, r'ResolvedHttpRoute', 'path'));
+          method: BuiltValueNullFieldError.checkNotNull(
+              method, r'ResolvedHttpRoute', 'method'),
+          path: BuiltValueNullFieldError.checkNotNull(
+              path, r'ResolvedHttpRoute', 'path'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2272,10 +2280,11 @@ class ResolvedVariableBuilder
   _$ResolvedVariable _build() {
     final _$result = _$v ??
         new _$ResolvedVariable._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'ResolvedVariable', 'name'),
-            value: BuiltValueNullFieldError.checkNotNull(
-                value, r'ResolvedVariable', 'value'));
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'ResolvedVariable', 'name'),
+          value: BuiltValueNullFieldError.checkNotNull(
+              value, r'ResolvedVariable', 'value'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2370,10 +2379,11 @@ class ResolvedSecretBuilder
   _$ResolvedSecret _build() {
     final _$result = _$v ??
         new _$ResolvedSecret._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'ResolvedSecret', 'name'),
-            value: BuiltValueNullFieldError.checkNotNull(
-                value, r'ResolvedSecret', 'value'));
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'ResolvedSecret', 'name'),
+          value: BuiltValueNullFieldError.checkNotNull(
+              value, r'ResolvedSecret', 'value'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2478,8 +2488,9 @@ class ResolvedAuthBuilder
     try {
       _$result = _$v ??
           new _$ResolvedAuth._(
-              providers: providers.build(),
-              externalProviders: externalProviders.build());
+            providers: providers.build(),
+            externalProviders: externalProviders.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -2617,10 +2628,11 @@ class ResolvedEmailAuthProviderBuilder
     ResolvedEmailAuthProvider._finalize(this);
     final _$result = _$v ??
         new _$ResolvedEmailAuthProvider._(
-            authProviderId: BuiltValueNullFieldError.checkNotNull(
-                authProviderId, r'ResolvedEmailAuthProvider', 'authProviderId'),
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'ResolvedEmailAuthProvider', 'type'));
+          authProviderId: BuiltValueNullFieldError.checkNotNull(
+              authProviderId, r'ResolvedEmailAuthProvider', 'authProviderId'),
+          type: BuiltValueNullFieldError.checkNotNull(
+              type, r'ResolvedEmailAuthProvider', 'type'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2725,10 +2737,11 @@ class ResolvedSmsAuthProviderBuilder
     ResolvedSmsAuthProvider._finalize(this);
     final _$result = _$v ??
         new _$ResolvedSmsAuthProvider._(
-            authProviderId: BuiltValueNullFieldError.checkNotNull(
-                authProviderId, r'ResolvedSmsAuthProvider', 'authProviderId'),
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'ResolvedSmsAuthProvider', 'type'));
+          authProviderId: BuiltValueNullFieldError.checkNotNull(
+              authProviderId, r'ResolvedSmsAuthProvider', 'authProviderId'),
+          type: BuiltValueNullFieldError.checkNotNull(
+              type, r'ResolvedSmsAuthProvider', 'type'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2866,14 +2879,15 @@ class ResolvedGoogleAuthProviderBuilder
     try {
       _$result = _$v ??
           new _$ResolvedGoogleAuthProvider._(
-              clientId: clientId.build(),
-              clientSecret: clientSecret.build(),
-              authProviderId: BuiltValueNullFieldError.checkNotNull(
-                  authProviderId,
-                  r'ResolvedGoogleAuthProvider',
-                  'authProviderId'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'ResolvedGoogleAuthProvider', 'type'));
+            clientId: clientId.build(),
+            clientSecret: clientSecret.build(),
+            authProviderId: BuiltValueNullFieldError.checkNotNull(
+                authProviderId,
+                r'ResolvedGoogleAuthProvider',
+                'authProviderId'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'ResolvedGoogleAuthProvider', 'type'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -3053,16 +3067,15 @@ class ResolvedAppleAuthProviderBuilder
     try {
       _$result = _$v ??
           new _$ResolvedAppleAuthProvider._(
-              clientId: clientId.build(),
-              teamId: teamId.build(),
-              keyId: keyId.build(),
-              privateKey: privateKey.build(),
-              authProviderId: BuiltValueNullFieldError.checkNotNull(
-                  authProviderId,
-                  r'ResolvedAppleAuthProvider',
-                  'authProviderId'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'ResolvedAppleAuthProvider', 'type'));
+            clientId: clientId.build(),
+            teamId: teamId.build(),
+            keyId: keyId.build(),
+            privateKey: privateKey.build(),
+            authProviderId: BuiltValueNullFieldError.checkNotNull(
+                authProviderId, r'ResolvedAppleAuthProvider', 'authProviderId'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'ResolvedAppleAuthProvider', 'type'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -3217,14 +3230,15 @@ class ResolvedGitHubAuthProviderBuilder
     try {
       _$result = _$v ??
           new _$ResolvedGitHubAuthProvider._(
-              clientId: clientId.build(),
-              clientSecret: clientSecret.build(),
-              authProviderId: BuiltValueNullFieldError.checkNotNull(
-                  authProviderId,
-                  r'ResolvedGitHubAuthProvider',
-                  'authProviderId'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'ResolvedGitHubAuthProvider', 'type'));
+            clientId: clientId.build(),
+            clientSecret: clientSecret.build(),
+            authProviderId: BuiltValueNullFieldError.checkNotNull(
+                authProviderId,
+                r'ResolvedGitHubAuthProvider',
+                'authProviderId'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'ResolvedGitHubAuthProvider', 'type'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -3365,13 +3379,14 @@ class ResolvedFirebaseExternalAuthProviderBuilder
     try {
       _$result = _$v ??
           new _$ResolvedFirebaseExternalAuthProvider._(
-              projectId: projectId.build(),
-              authProviderId: BuiltValueNullFieldError.checkNotNull(
-                  authProviderId,
-                  r'ResolvedFirebaseExternalAuthProvider',
-                  'authProviderId'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'ResolvedFirebaseExternalAuthProvider', 'type'));
+            projectId: projectId.build(),
+            authProviderId: BuiltValueNullFieldError.checkNotNull(
+                authProviderId,
+                r'ResolvedFirebaseExternalAuthProvider',
+                'authProviderId'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'ResolvedFirebaseExternalAuthProvider', 'type'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -3525,14 +3540,15 @@ class ResolvedSupabaseExternalAuthProviderBuilder
     try {
       _$result = _$v ??
           new _$ResolvedSupabaseExternalAuthProvider._(
-              projectUrl: projectUrl.build(),
-              jwtSecret: _jwtSecret?.build(),
-              authProviderId: BuiltValueNullFieldError.checkNotNull(
-                  authProviderId,
-                  r'ResolvedSupabaseExternalAuthProvider',
-                  'authProviderId'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'ResolvedSupabaseExternalAuthProvider', 'type'));
+            projectUrl: projectUrl.build(),
+            jwtSecret: _jwtSecret?.build(),
+            authProviderId: BuiltValueNullFieldError.checkNotNull(
+                authProviderId,
+                r'ResolvedSupabaseExternalAuthProvider',
+                'authProviderId'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'ResolvedSupabaseExternalAuthProvider', 'type'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -3690,16 +3706,17 @@ class ResolvedDriftDatabaseSchemaBuilder
   _$ResolvedDriftDatabaseSchema _build() {
     final _$result = _$v ??
         new _$ResolvedDriftDatabaseSchema._(
-            databaseSchemaId: BuiltValueNullFieldError.checkNotNull(
-                databaseSchemaId,
-                r'ResolvedDriftDatabaseSchema',
-                'databaseSchemaId'),
-            version: BuiltValueNullFieldError.checkNotNull(
-                version, r'ResolvedDriftDatabaseSchema', 'version'),
-            $schemaJson: BuiltValueNullFieldError.checkNotNull(
-                $schemaJson, r'ResolvedDriftDatabaseSchema', '\$schemaJson'),
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'ResolvedDriftDatabaseSchema', 'type'));
+          databaseSchemaId: BuiltValueNullFieldError.checkNotNull(
+              databaseSchemaId,
+              r'ResolvedDriftDatabaseSchema',
+              'databaseSchemaId'),
+          version: BuiltValueNullFieldError.checkNotNull(
+              version, r'ResolvedDriftDatabaseSchema', 'version'),
+          $schemaJson: BuiltValueNullFieldError.checkNotNull(
+              $schemaJson, r'ResolvedDriftDatabaseSchema', '\$schemaJson'),
+          type: BuiltValueNullFieldError.checkNotNull(
+              type, r'ResolvedDriftDatabaseSchema', 'type'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -3811,12 +3828,13 @@ class ResolvedDatabaseBuilder
   _$ResolvedDatabase _build() {
     final _$result = _$v ??
         new _$ResolvedDatabase._(
-            databaseId: BuiltValueNullFieldError.checkNotNull(
-                databaseId, r'ResolvedDatabase', 'databaseId'),
-            schema: BuiltValueNullFieldError.checkNotNull(
-                schema, r'ResolvedDatabase', 'schema'),
-            config: BuiltValueNullFieldError.checkNotNull(
-                config, r'ResolvedDatabase', 'config'));
+          databaseId: BuiltValueNullFieldError.checkNotNull(
+              databaseId, r'ResolvedDatabase', 'databaseId'),
+          schema: BuiltValueNullFieldError.checkNotNull(
+              schema, r'ResolvedDatabase', 'schema'),
+          config: BuiltValueNullFieldError.checkNotNull(
+              config, r'ResolvedDatabase', 'config'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -3924,7 +3942,9 @@ class ResolvedCelestDatabaseConfigBuilder
     try {
       _$result = _$v ??
           new _$ResolvedCelestDatabaseConfig._(
-              hostname: hostname.build(), token: token.build());
+            hostname: hostname.build(),
+            token: token.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {

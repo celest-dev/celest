@@ -348,13 +348,14 @@ class SdkConfigurationBuilder
     try {
       _$result = _$v ??
           new _$SdkConfiguration._(
-              celest: BuiltValueNullFieldError.checkNotNull(
-                  celest, r'SdkConfiguration', 'celest'),
-              dart: dart.build(),
-              flutter: _flutter?.build(),
-              targetSdk: BuiltValueNullFieldError.checkNotNull(
-                  targetSdk, r'SdkConfiguration', 'targetSdk'),
-              featureFlags: featureFlags.build());
+            celest: BuiltValueNullFieldError.checkNotNull(
+                celest, r'SdkConfiguration', 'celest'),
+            dart: dart.build(),
+            flutter: _flutter?.build(),
+            targetSdk: BuiltValueNullFieldError.checkNotNull(
+                targetSdk, r'SdkConfiguration', 'targetSdk'),
+            featureFlags: featureFlags.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -483,10 +484,11 @@ class SdkBuilder implements Builder<Sdk, SdkBuilder> {
     try {
       _$result = _$v ??
           new _$Sdk._(
-              type: BuiltValueNullFieldError.checkNotNull(type, r'Sdk', 'type'),
-              version: BuiltValueNullFieldError.checkNotNull(
-                  version, r'Sdk', 'version'),
-              enabledExperiments: enabledExperiments.build());
+            type: BuiltValueNullFieldError.checkNotNull(type, r'Sdk', 'type'),
+            version: BuiltValueNullFieldError.checkNotNull(
+                version, r'Sdk', 'version'),
+            enabledExperiments: enabledExperiments.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {

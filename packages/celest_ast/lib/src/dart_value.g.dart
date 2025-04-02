@@ -725,9 +725,10 @@ class DartStringBuilder implements Builder<DartString, DartStringBuilder> {
     try {
       _$result = _$v ??
           new _$DartString._(
-              value: BuiltValueNullFieldError.checkNotNull(
-                  value, r'DartString', 'value'),
-              staticType: staticType.build());
+            value: BuiltValueNullFieldError.checkNotNull(
+                value, r'DartString', 'value'),
+            staticType: staticType.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -835,9 +836,10 @@ class DartIntBuilder implements Builder<DartInt, DartIntBuilder> {
     try {
       _$result = _$v ??
           new _$DartInt._(
-              value: BuiltValueNullFieldError.checkNotNull(
-                  value, r'DartInt', 'value'),
-              staticType: staticType.build());
+            value: BuiltValueNullFieldError.checkNotNull(
+                value, r'DartInt', 'value'),
+            staticType: staticType.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -946,9 +948,10 @@ class DartDoubleBuilder implements Builder<DartDouble, DartDoubleBuilder> {
     try {
       _$result = _$v ??
           new _$DartDouble._(
-              value: BuiltValueNullFieldError.checkNotNull(
-                  value, r'DartDouble', 'value'),
-              staticType: staticType.build());
+            value: BuiltValueNullFieldError.checkNotNull(
+                value, r'DartDouble', 'value'),
+            staticType: staticType.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1057,9 +1060,10 @@ class DartBoolBuilder implements Builder<DartBool, DartBoolBuilder> {
     try {
       _$result = _$v ??
           new _$DartBool._(
-              value: BuiltValueNullFieldError.checkNotNull(
-                  value, r'DartBool', 'value'),
-              staticType: staticType.build());
+            value: BuiltValueNullFieldError.checkNotNull(
+                value, r'DartBool', 'value'),
+            staticType: staticType.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1169,7 +1173,9 @@ class DartListBuilder implements Builder<DartList, DartListBuilder> {
     try {
       _$result = _$v ??
           new _$DartList._(
-              value: value.build(), staticType: staticType.build());
+            value: value.build(),
+            staticType: staticType.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1279,7 +1285,10 @@ class DartMapBuilder implements Builder<DartMap, DartMapBuilder> {
     _$DartMap _$result;
     try {
       _$result = _$v ??
-          new _$DartMap._(value: value.build(), staticType: staticType.build());
+          new _$DartMap._(
+            value: value.build(),
+            staticType: staticType.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1376,7 +1385,10 @@ class DartNullBuilder implements Builder<DartNull, DartNullBuilder> {
   _$DartNull _build() {
     _$DartNull _$result;
     try {
-      _$result = _$v ?? new _$DartNull._(staticType: staticType.build());
+      _$result = _$v ??
+          new _$DartNull._(
+            staticType: staticType.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1506,9 +1518,10 @@ class DartRecordBuilder implements Builder<DartRecord, DartRecordBuilder> {
     try {
       _$result = _$v ??
           new _$DartRecord._(
-              positionalFields: positionalFields.build(),
-              namedFields: namedFields.build(),
-              staticType: staticType.build());
+            positionalFields: positionalFields.build(),
+            namedFields: namedFields.build(),
+            staticType: staticType.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1635,10 +1648,11 @@ class DartEnumBuilder implements Builder<DartEnum, DartEnumBuilder> {
     try {
       _$result = _$v ??
           new _$DartEnum._(
-              enumRef: enumRef.build(),
-              value: BuiltValueNullFieldError.checkNotNull(
-                  value, r'DartEnum', 'value'),
-              staticType: staticType.build());
+            enumRef: enumRef.build(),
+            value: BuiltValueNullFieldError.checkNotNull(
+                value, r'DartEnum', 'value'),
+            staticType: staticType.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1799,12 +1813,13 @@ class DartInstanceBuilder
     try {
       _$result = _$v ??
           new _$DartInstance._(
-              classRef: classRef.build(),
-              constructor: BuiltValueNullFieldError.checkNotNull(
-                  constructor, r'DartInstance', 'constructor'),
-              positionalArguments: positionalArguments.build(),
-              namedArguments: namedArguments.build(),
-              staticType: staticType.build());
+            classRef: classRef.build(),
+            constructor: BuiltValueNullFieldError.checkNotNull(
+                constructor, r'DartInstance', 'constructor'),
+            positionalArguments: positionalArguments.build(),
+            namedArguments: namedArguments.build(),
+            staticType: staticType.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1923,7 +1938,9 @@ class DartTypeLiteralBuilder
     try {
       _$result = _$v ??
           new _$DartTypeLiteral._(
-              type: type.build(), staticType: staticType.build());
+            type: type.build(),
+            staticType: staticType.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -2038,9 +2055,10 @@ class DartSymbolLiteralBuilder
     try {
       _$result = _$v ??
           new _$DartSymbolLiteral._(
-              value: BuiltValueNullFieldError.checkNotNull(
-                  value, r'DartSymbolLiteral', 'value'),
-              staticType: staticType.build());
+            value: BuiltValueNullFieldError.checkNotNull(
+                value, r'DartSymbolLiteral', 'value'),
+            staticType: staticType.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {

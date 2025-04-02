@@ -1,5 +1,6 @@
-## 0.1.6
+## 0.1.6-wip
 
+- chore: Add `version` field to `DatabaseSchema`
 - chore: Update license
 
 ## 0.1.5
