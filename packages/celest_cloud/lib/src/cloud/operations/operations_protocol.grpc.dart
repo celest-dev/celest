@@ -24,4 +24,9 @@ final class OperationsProtocolGrpc implements OperationsProtocol {
   Future<ListOperationsResponse> list(ListOperationsRequest request) {
     return _client.listOperations(request);
   }
+
+  @override
+  Future<Operation> wait(WaitOperationRequest request) {
+    return _client.waitOperation(request);
+  }
 }
