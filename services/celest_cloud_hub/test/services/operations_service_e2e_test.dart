@@ -8,50 +8,77 @@ import 'package:celest_cloud/celest_cloud.dart' as pb hide OperationState;
 import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/operations.pbenum.dart'
     as pb;
-import 'package:celest_cloud/src/proto/google/longrunning/operations.pb.dart';
 import 'package:celest_cloud/src/proto/google/protobuf/duration.pb.dart' as pb;
 import 'package:celest_cloud/src/proto/google/protobuf/struct.pb.dart' as pb;
 import 'package:celest_cloud/src/proto/google/protobuf/timestamp.pb.dart' as pb;
 import 'package:celest_cloud/src/proto/google/protobuf/wrappers.pb.dart' as pb;
 import 'package:celest_cloud/src/proto/google/rpc/status.pb.dart' as pb;
-import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
-import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/model/protobuf.dart';
 import 'package:celest_cloud_hub/src/model/type_registry.dart';
-import 'package:celest_cloud_hub/src/services/operations_service.dart';
 import 'package:celest_core/_internal.dart';
+import 'package:celest_core/celest_core.dart';
 import 'package:fixnum/fixnum.dart';
-import 'package:grpc/grpc.dart' as grpc;
-import 'package:grpc/grpc.dart';
-import 'package:test/fake.dart';
+import 'package:logging/logging.dart';
 import 'package:test/test.dart';
+
+import '../e2e_tester.dart';
 
 const user = EntityUid.of('Celest::User', 'test');
 
 void main() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    print('[${record.loggerName}] ${record.message}');
+  });
+
   group('OperationsService', () {
+    late E2ETester tester;
     late CloudHubDatabase database;
-    late OperationsService service;
+    late CelestCloud service;
 
     setUp(() async {
-      database = CloudHubDatabase.memory();
-      await database.ping();
+      tester = E2ETester();
+      await tester.start();
 
-      service = OperationsService(database, FakeAuthorizer());
+      database = tester.database;
+      service = tester.service;
     });
 
-    tearDown(() async {
-      await database.close();
+    group('permissions', () {
+      test('denied when not owner', () async {
+        await database.operationsDrift.createOperation(id: 'test');
+        expect(
+          service.operations.get('operations/test'),
+          throwsA(isA<PermissionDeniedException>()),
+        );
+      });
+
+      test('allowed when owner', () async {
+        await database.operationsDrift.createOperation(
+          id: 'test',
+          ownerType: user.type,
+          ownerId: user.id,
+        );
+        expect(service.operations.get('operations/test'), completes);
+      });
     });
 
     group('getOperation', () {
-      test('empty', () async {
-        await database.operationsDrift.createOperation(id: 'test');
-        final result = await service.getOperation(
-          FakeServiceCall(),
-          GetOperationRequest(name: 'operations/test'),
+      test('not found', () async {
+        expect(
+          service.operations.get('operations/test'),
+          throwsA(isA<NotFoundException>()),
         );
+      });
+
+      test('empty', () async {
+        await database.operationsDrift.createOperation(
+          id: 'test',
+          ownerType: user.type,
+          ownerId: user.id,
+        );
+        final result = await service.operations.get('operations/test');
         expect(result.name, 'operations/test');
         expect(result.done, isFalse);
         expect(result.hasMetadata(), isFalse);
@@ -84,11 +111,10 @@ void main() {
           metadata: jsonEncode(
             anyMetadata.toProto3Json(typeRegistry: typeRegistry),
           ),
+          ownerType: user.type,
+          ownerId: user.id,
         );
-        final result = await service.getOperation(
-          FakeServiceCall(),
-          GetOperationRequest(name: 'operations/test'),
-        );
+        final result = await service.operations.get('operations/test');
         expect(result.name, 'operations/test');
         expect(result.done, isFalse);
         expect(result.hasMetadata(), isTrue);
@@ -113,11 +139,10 @@ void main() {
           response: jsonEncode(
             anyResource.toProto3Json(typeRegistry: typeRegistry),
           ),
+          ownerType: user.type,
+          ownerId: user.id,
         );
-        final result = await service.getOperation(
-          FakeServiceCall(),
-          GetOperationRequest(name: 'operations/test'),
-        );
+        final result = await service.operations.get('operations/test');
         expect(result.name, 'operations/test');
         expect(result.done, isTrue);
         expect(result.hasMetadata(), isFalse);
@@ -156,11 +181,10 @@ void main() {
         await database.operationsDrift.createOperation(
           id: 'test',
           error: jsonEncode(error.toProto3Json(typeRegistry: typeRegistry)),
+          ownerType: user.type,
+          ownerId: user.id,
         );
-        final result = await service.getOperation(
-          FakeServiceCall(),
-          GetOperationRequest(name: 'operations/test'),
-        );
+        final result = await service.operations.get('operations/test');
         expect(result.name, 'operations/test');
         expect(result.done, isTrue);
         expect(result.hasMetadata(), isFalse);
@@ -179,10 +203,7 @@ void main() {
             ownerId: user.id,
           );
         }
-        final result = await service.listOperations(
-          FakeServiceCall(),
-          ListOperationsRequest(pageSize: 10),
-        );
+        final result = await service.operations.list(pageSize: 10);
         expect(result.operations, hasLength(9));
         expect(result.hasNextPageToken(), isFalse);
       });
@@ -201,9 +222,9 @@ void main() {
         final allOperations = <pb.Operation>[];
         var nextPageToken = '';
         do {
-          final result = await service.listOperations(
-            FakeServiceCall(),
-            ListOperationsRequest(pageSize: 10, pageToken: nextPageToken),
+          final result = await service.operations.list(
+            pageSize: 10,
+            pageToken: nextPageToken,
           );
           allOperations.addAll(result.operations);
           nextPageToken = result.nextPageToken;
@@ -221,13 +242,14 @@ void main() {
 
     group('waitOperation', () {
       test('success', () async {
-        await database.operationsDrift.createOperation(id: 'test');
-        final result = service.waitOperation(
-          FakeServiceCall(),
-          WaitOperationRequest(
-            name: 'operations/test',
-            timeout: const Duration(seconds: 2).toProto(),
-          ),
+        await database.operationsDrift.createOperation(
+          id: 'test',
+          ownerType: user.type,
+          ownerId: user.id,
+        );
+        final result = service.operations.wait(
+          'operations/test',
+          timeout: const Duration(seconds: 2),
         );
         unawaited(
           expectLater(
@@ -246,90 +268,26 @@ void main() {
       });
 
       test('timeout', () async {
-        await database.operationsDrift.createOperation(id: 'test');
-        final result = service.waitOperation(
-          FakeServiceCall(),
-          WaitOperationRequest(
-            name: 'operations/test',
-            timeout: const Duration(seconds: 1).toProto(),
-          ),
+        await database.operationsDrift.createOperation(
+          id: 'test',
+          ownerType: user.type,
+          ownerId: user.id,
         );
-        unawaited(
-          expectLater(
-            result,
-            throwsA(
-              isA<GrpcError>().having(
-                (it) => it.code,
-                'code',
-                grpc.StatusCode.deadlineExceeded,
-              ),
-            ),
-          ),
+        final result = service.operations.wait(
+          'operations/test',
+          timeout: const Duration(seconds: 1),
         );
+        unawaited(expectLater(result, throwsA(isA<DeadlineExceededError>())));
         await Future<void>.delayed(const Duration(seconds: 2));
       });
 
-      test('canceled', () async {
-        await database.operationsDrift.createOperation(id: 'test');
-        final result = service.waitOperation(
-          FakeServiceCall(isCanceled: true),
-          WaitOperationRequest(
-            name: 'operations/test',
-            timeout: const Duration(seconds: 1).toProto(),
-          ),
-        );
-        await expectLater(
-          result,
-          throwsA(
-            isA<GrpcError>().having(
-              (it) => it.code,
-              'code',
-              grpc.StatusCode.cancelled,
-            ),
-          ),
-        );
-      });
-
       test('not found', () async {
-        final result = service.waitOperation(
-          FakeServiceCall(),
-          WaitOperationRequest(
-            name: 'operations/test',
-            timeout: const Duration(seconds: 1).toProto(),
-          ),
+        final result = service.operations.wait(
+          'operations/test',
+          timeout: const Duration(seconds: 1),
         );
-        await expectLater(
-          result,
-          throwsA(
-            isA<GrpcError>().having(
-              (it) => it.code,
-              'code',
-              grpc.StatusCode.notFound,
-            ),
-          ),
-        );
+        await expectLater(result, throwsA(isA<NotFoundException>()));
       });
     });
   });
-}
-
-final class FakeServiceCall extends Fake implements ServiceCall {
-  FakeServiceCall({EntityUid? principal = user, this.isCanceled = false}) {
-    if (principal != null) {
-      this.principal = Entity(uid: principal);
-    }
-  }
-
-  @override
-  final bool isCanceled;
-}
-
-final class FakeAuthorizer extends Fake implements Authorizer {
-  @override
-  Future<void> expectAuthorized({
-    Component? principal,
-    Component? resource,
-    EntityUid? action,
-    Map<String, Value>? context,
-  }) async {}
 }

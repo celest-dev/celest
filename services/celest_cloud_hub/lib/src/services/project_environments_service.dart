@@ -2,7 +2,6 @@ import 'package:cedar/cedar.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud/src/grpc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:protobuf/protobuf.dart';
 
 final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase {
   ProjectEnvironmentsService();
@@ -23,15 +22,6 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase {
       ],
     ),
   );
-
-  static final Map<String, GeneratedMessage> requestTypes = {
-    'CreateProjectEnvironment': CreateProjectEnvironmentRequest(),
-    'DeleteProjectEnvironment': DeleteProjectEnvironmentRequest(),
-    'DeployProjectEnvironment': DeployProjectEnvironmentRequest(),
-    'GetProjectEnvironment': GetProjectEnvironmentRequest(),
-    'ListProjectEnvironments': ListProjectEnvironmentsRequest(),
-    'UpdateProjectEnvironment': UpdateProjectEnvironmentRequest(),
-  };
 
   @override
   Future<Operation> createProjectEnvironment(

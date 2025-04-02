@@ -1,6 +1,4 @@
 import 'package:celest_cloud/celest_cloud.dart';
-import 'package:celest_cloud/src/proto/google/protobuf/duration.pb.dart' as pb;
-import 'package:fixnum/fixnum.dart';
 import 'package:protobuf/protobuf.dart';
 
 extension AnyHelper<T extends GeneratedMessage> on T {
@@ -19,12 +17,4 @@ extension AnyHelper<T extends GeneratedMessage> on T {
     final AnyMixin anotherAny => Any()..mergeFromMessage(anotherAny),
     _ => Any.pack(this),
   };
-}
-
-extension DurationToProto on Duration {
-  pb.Duration toProto() {
-    return pb.Duration()
-      ..seconds = Int64(inSeconds)
-      ..nanos = inMicroseconds.remainder(Duration.microsecondsPerSecond) * 1000;
-  }
 }

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cedar/cedar.dart';
 import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_auth/src/model/route_map.dart';
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
@@ -19,7 +18,7 @@ final class Gateway {
 
   static Future<Gateway> create({
     required InternetAddress grpcAddress,
-    required AuthDatabase authDb,
+    required CloudAuthDatabaseMixin db,
     int port = 8080,
   }) async {
     final clientChannel = grpc.ClientChannel(
@@ -30,7 +29,7 @@ final class Gateway {
     );
     final router = Router();
 
-    final cloudAuth = await CelestCloudAuth.create(database: authDb);
+    final cloudAuth = await CelestCloudAuth.create(database: db);
     router.mount('/v1alpha1/auth/', cloudAuth.handler);
 
     final routeMap = RouteMap.of(project);
