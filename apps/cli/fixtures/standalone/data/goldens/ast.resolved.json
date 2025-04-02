@@ -22,6 +22,180 @@
           "streamConfig": {}
         }
       }
+    },
+    "celest.cloud.auth.v1alpha1.Authentication": {
+      "apiId": "celest.cloud.auth.v1alpha1.Authentication",
+      "functions": {
+        "GetOpenIdUserInfo": {
+          "functionId": "GetOpenIdUserInfo",
+          "apiId": "celest.cloud.auth.v1alpha1.Authentication",
+          "httpConfig": {
+            "route": {
+              "method": "GET",
+              "path": "/v1alpha1/auth/userinfo"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        },
+        "StartSession": {
+          "functionId": "StartSession",
+          "apiId": "celest.cloud.auth.v1alpha1.Authentication",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/v1alpha1/auth/sessions:startSession"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        },
+        "ContinueSession": {
+          "functionId": "ContinueSession",
+          "apiId": "celest.cloud.auth.v1alpha1.Authentication",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/v1alpha1/auth/sessions:continueSession"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        },
+        "EndSession": {
+          "functionId": "EndSession",
+          "apiId": "celest.cloud.auth.v1alpha1.Authentication",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/v1alpha1/auth/sessions:endSession"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        }
+      },
+      "policySet": {
+        "policies": {},
+        "templates": {},
+        "templateLinks": [
+          {
+            "templateId": "cloud.functions.public",
+            "newId": "celest.cloud.auth.v1alpha1.Authentication",
+            "values": {
+              "?resource": "Celest::Api::\"celest.cloud.auth.v1alpha1.Authentication\""
+            }
+          }
+        ]
+      }
+    },
+    "celest.cloud.auth.v1alpha1.Users": {
+      "apiId": "celest.cloud.auth.v1alpha1.Users",
+      "functions": {
+        "GetUser": {
+          "functionId": "GetUser",
+          "apiId": "celest.cloud.auth.v1alpha1.Users",
+          "httpConfig": {
+            "route": {
+              "method": "GET",
+              "path": "/v1alpha1/auth/{name=users/*}"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        },
+        "ListUsers": {
+          "functionId": "ListUsers",
+          "apiId": "celest.cloud.auth.v1alpha1.Users",
+          "httpConfig": {
+            "route": {
+              "method": "GET",
+              "path": "/v1alpha1/auth/users"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        },
+        "UpdateUser": {
+          "functionId": "UpdateUser",
+          "apiId": "celest.cloud.auth.v1alpha1.Users",
+          "httpConfig": {
+            "route": {
+              "method": "PATCH",
+              "path": "/v1alpha1/auth/{user.name=users/*}"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        },
+        "DeleteUser": {
+          "functionId": "DeleteUser",
+          "apiId": "celest.cloud.auth.v1alpha1.Users",
+          "httpConfig": {
+            "route": {
+              "method": "DELETE",
+              "path": "/v1alpha1/auth/{name=users/*}"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        }
+      },
+      "policySet": {
+        "policies": {
+          "celest.cloud.auth.v1alpha1.Users": {
+            "effect": "permit",
+            "principal": {
+              "op": "is",
+              "entity_type": "Celest::User"
+            },
+            "action": {
+              "op": "==",
+              "entity": {
+                "type": "Celest::Action",
+                "id": "invoke"
+              }
+            },
+            "resource": {
+              "op": "in",
+              "entity": {
+                "type": "Celest::Api",
+                "id": "celest.cloud.auth.v1alpha1.Users"
+              }
+            },
+            "conditions": [],
+            "annotations": {
+              "id": "celest.cloud.auth.v1alpha1.Users"
+            }
+          }
+        },
+        "templates": {},
+        "templateLinks": []
+      }
     }
   },
   "variables": [
@@ -70,5 +244,15 @@
       "version": "3.29.2",
       "enabledExperiments": []
     }
+  },
+  "auth": {
+    "providers": [
+      {
+        "$": "ResolvedEmailAuthProvider",
+        "authProviderId": "emailOtp",
+        "type": "EMAIL_OTP"
+      }
+    ],
+    "externalProviders": []
   }
 }

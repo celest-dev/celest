@@ -428,8 +428,6 @@ class TestRunner {
           for (final database in project!.databases.values)
             if (database.config case ast.CelestDatabaseConfig(:final hostname))
               '--env=${hostname.name}=file::memory:',
-          if (project.auth?.providers.isNotEmpty ?? false)
-            '--env=CELEST_AUTH_DATABASE_HOST=file::memory:',
           imageName,
         ],
       );
@@ -501,8 +499,6 @@ class TestRunner {
               if (database.config
                   case ast.CelestDatabaseConfig(:final hostname))
                 hostname.name: 'file::memory:',
-            if (project.auth?.providers.isNotEmpty ?? false)
-              'CELEST_AUTH_DATABASE_HOST': 'file::memory:',
           },
           environmentId: 'local',
           verbose: false,

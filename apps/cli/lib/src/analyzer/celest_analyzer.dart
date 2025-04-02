@@ -24,6 +24,7 @@ import 'package:celest_cli/src/pub/pubspec.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
@@ -343,22 +344,52 @@ const project = Project(name: 'cache_warmup');
       ),
     );
 
+    final hasCloudAuth = auth?.providers.isNotEmpty ?? false;
     final databases = await performance.trace(
       'CelestAnalyzer',
       'resolveDatabases',
-      _resolveDatabases,
+      () => _resolveDatabases(hasCloudAuth: hasCloudAuth),
     );
-    for (final database in databases) {
-      _project.databases[database.name] = database;
-    }
-
-    if (migrateProject) {
-      await performance.trace(
-        'CelestAnalyzer',
-        'applyMigrations',
-        _applyMigrations,
+    if (databases.isNotEmpty) {
+      for (final database in databases) {
+        _project.databases[database.name] = database;
+      }
+    } else if (hasCloudAuth) {
+      final cloudAuthElement = await helper.getClass(
+        'package:celest_cloud_auth/src/database/auth_database.dart',
+        'CloudAuthDatabase',
+      );
+      if (cloudAuthElement == null) {
+        throw StateError('Failed to resolve CloudAuthDatabase');
+      }
+      _project.databases['CloudAuthDatabase'] = ast.Database(
+        name: 'CloudAuthDatabase',
+        dartName: 'cloudAuth',
+        schema: ast.DriftDatabaseSchema(
+          declaration:
+              typeHelper.toReference(cloudAuthElement.thisType).toTypeReference,
+          version: await resolveSchemaVersion(cloudAuthElement),
+          location: cloudAuthElement.sourceLocation!,
+        ),
+        config: ast.CelestDatabaseConfig(
+          hostname: ast.Variable(
+            'CLOUD_AUTH_DATABASE_HOST',
+            location: cloudAuthElement.sourceLocation!,
+          ),
+          token: ast.Secret(
+            'CLOUD_AUTH_DATABASE_TOKEN',
+            location: cloudAuthElement.sourceLocation!,
+          ),
+        ),
+        location: auth!.location,
       );
     }
+
+    await performance.trace(
+      'CelestAnalyzer',
+      'applyMigrations',
+      _applyMigrations,
+    );
 
     // Add config values only at the end since other components may contribute
     // to them.
@@ -535,7 +566,9 @@ const project = Project(name: 'cache_warmup');
     return null;
   }
 
-  Future<List<ast.Database>> _resolveDatabases() async {
+  Future<List<ast.Database>> _resolveDatabases({
+    required bool hasCloudAuth,
+  }) async {
     final databaseFile = fileSystem.file(projectPaths.projectDart);
     if (!databaseFile.existsSync()) {
       return const [];
@@ -544,6 +577,7 @@ const project = Project(name: 'cache_warmup');
     final database = await resolver.resolveDatabase(
       databaseFilepath: databaseFile.path,
       databaseLibrary: databaseLibrary,
+      hasCloudAuth: hasCloudAuth,
     );
     return database == null ? const [] : [database];
   }

@@ -49,6 +49,9 @@ Future<CelestProject> newProject({
   final celestCoreDir = p.fromUri(
     Directory.current.uri.resolve('../../packages/celest_core/'),
   );
+  final celestCloudAuthDir = p.fromUri(
+    Directory.current.uri.resolve('../../services/celest_cloud_auth/'),
+  );
   final packageConfig = PackageConfig([
     Package(
       'celest',
@@ -59,6 +62,12 @@ Future<CelestProject> newProject({
     Package(
       'celest_core',
       p.toUri(celestCoreDir),
+      packageUriRoot: Uri.parse('lib/'),
+      relativeRoot: false,
+    ),
+    Package(
+      'celest_cloud_auth',
+      p.toUri(celestCloudAuthDir),
       packageUriRoot: Uri.parse('lib/'),
       relativeRoot: false,
     ),

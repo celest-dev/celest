@@ -2055,7 +2055,93 @@
   },
   "variables": [],
   "secrets": [],
-  "databases": {},
+  "databases": {
+    "CloudAuthDatabase": {
+      "name": "CloudAuthDatabase",
+      "dartName": "cloudAuth",
+      "docs": [],
+      "schema": {
+        "$": "DriftDatabaseSchema",
+        "declaration": {
+          "symbol": "CloudAuthDatabase",
+          "url": "package:celest_cloud_auth/src/database/auth_database.dart",
+          "isNullable": false
+        },
+        "version": 3,
+        "location": {
+          "start": {
+            "offset": 468,
+            "uri": "package:celest_cloud_auth/src/database/auth_database.dart",
+            "line": 11,
+            "column": 6
+          },
+          "end": {
+            "offset": 485,
+            "uri": "package:celest_cloud_auth/src/database/auth_database.dart",
+            "line": 11,
+            "column": 23
+          },
+          "text": "CloudAuthDatabase"
+        }
+      },
+      "config": {
+        "$": "CelestDatabaseConfig",
+        "hostname": {
+          "location": {
+            "start": {
+              "offset": 468,
+              "uri": "package:celest_cloud_auth/src/database/auth_database.dart",
+              "line": 11,
+              "column": 6
+            },
+            "end": {
+              "offset": 485,
+              "uri": "package:celest_cloud_auth/src/database/auth_database.dart",
+              "line": 11,
+              "column": 23
+            },
+            "text": "CloudAuthDatabase"
+          },
+          "name": "CLOUD_AUTH_DATABASE_HOST",
+          "docs": []
+        },
+        "token": {
+          "location": {
+            "start": {
+              "offset": 468,
+              "uri": "package:celest_cloud_auth/src/database/auth_database.dart",
+              "line": 11,
+              "column": 6
+            },
+            "end": {
+              "offset": 485,
+              "uri": "package:celest_cloud_auth/src/database/auth_database.dart",
+              "line": 11,
+              "column": 23
+            },
+            "text": "CloudAuthDatabase"
+          },
+          "name": "CLOUD_AUTH_DATABASE_TOKEN",
+          "docs": []
+        }
+      },
+      "location": {
+        "start": {
+          "offset": 84,
+          "uri": "package:celest_backend/src/project.dart",
+          "line": 4,
+          "column": 6
+        },
+        "end": {
+          "offset": 88,
+          "uri": "package:celest_backend/src/project.dart",
+          "line": 4,
+          "column": 10
+        },
+        "text": "auth"
+      }
+    }
+  },
   "sdkConfig": {
     "celest": "1.0.8",
     "dart": {

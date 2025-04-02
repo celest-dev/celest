@@ -3,6 +3,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/core/context.dart' as _i3;
 import 'package:celest/src/runtime/serve.dart' as _i1;
+import 'package:celest_backend/src/generated/auth.celest.dart' as _i5;
 import 'package:celest_backend/src/generated/data.celest.dart' as _i4;
 
 import 'functions/tasks/create.dart' as _i2;
@@ -16,6 +17,7 @@ Future<void> start() async {
     targets: {'/tasks/create': _i2.CreateTarget()},
     setup: (_i3.Context context) async {
       await _i4.CelestData.init(context);
+      await _i5.CelestAuth.init(context);
     },
   );
 }

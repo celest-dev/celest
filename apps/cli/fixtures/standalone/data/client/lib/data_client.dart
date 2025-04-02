@@ -4,19 +4,23 @@
 
 library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:celest_core/_internal.dart' as _$celest;
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/util/globals.dart' as _$celest;
+import 'package:data_client/src/auth.dart';
 import 'package:data_client/src/functions.dart';
 import 'package:data_client/src/serializers.dart';
 import 'package:http/http.dart' as _$http_http;
 import 'package:native_storage/native_storage.dart'
     as _$native_storage_native_storage;
 
-export 'package:celest_backend/src/database/task_database.dart'
-    show Priority, Task;
+export 'package:celest_auth/celest_auth.dart';
+export 'package:celest_backend/src/database/task_database.dart' show Priority;
+export 'package:celest_backend/src/database/task_database.drift.dart' show Task;
+export 'src/auth.dart';
 
 final Celest celest = Celest();
 
@@ -48,6 +52,11 @@ class Celest with _$celest.CelestBase {
 
   final _functions = CelestFunctions();
 
+  late CelestAuth _auth = CelestAuth(
+    this,
+    storage: nativeStorage,
+  );
+
   T _checkInitialized<T>(T Function() value) {
     if (!_initialized) {
       throw StateError(
@@ -64,6 +73,8 @@ class Celest with _$celest.CelestBase {
 
   CelestFunctions get functions => _checkInitialized(() => _functions);
 
+  CelestAuth get auth => _checkInitialized(() => _auth);
+
   void init({
     CelestEnvironment environment = CelestEnvironment.local,
     _$celest.Serializers? serializers,
@@ -73,11 +84,17 @@ class Celest with _$celest.CelestBase {
     }
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
+    scheduleMicrotask(() => _auth.init());
     initSerializers(serializers: serializers);
     _initialized = true;
   }
 
   void _reset() {
+    _auth.close().ignore();
+    _auth = CelestAuth(
+      this,
+      storage: nativeStorage,
+    );
     _initialized = false;
   }
 }

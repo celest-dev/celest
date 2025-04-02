@@ -93,7 +93,7 @@
               {
                 "$": "TypeReference",
                 "symbol": "Task",
-                "url": "package:celest_backend/src/database/task_database.dart",
+                "url": "package:celest_backend/src/database/task_database.drift.dart",
                 "isNullable": false
               }
             ],
@@ -102,7 +102,7 @@
           "flattenedReturnType": {
             "$": "TypeReference",
             "symbol": "Task",
-            "url": "package:celest_backend/src/database/task_database.dart",
+            "url": "package:celest_backend/src/database/task_database.drift.dart",
             "isNullable": false
           },
           "metadata": [],
@@ -364,18 +364,6 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "DriftWrappedException",
-          "url": "package:drift/src/runtime/exceptions.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "CouldNotRollBackException",
-          "url": "package:drift/src/runtime/exceptions.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "OSError",
           "url": "dart:io",
           "isNullable": false
@@ -478,8 +466,86 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "SqliteException",
-          "url": "package:sqlite3/src/exception.dart",
+          "symbol": "MaximumSizeExceeded",
+          "url": "package:chunked_stream/src/read_chunked_stream.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AuthorizationException",
+          "url": "package:cedar/src/authorization/authorization_response.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "EntityNotFoundException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnspecifiedEntityException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TypeException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AttributeAccessException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OverflowException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ArityException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnknownExtensionException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TemplateException",
+          "url": "package:mustache_template/src/template_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InvalidCorkException",
+          "url": "package:corks_cedar/src/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "MissingSignatureError",
+          "url": "package:corks_cedar/src/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "DriftWrappedException",
+          "url": "package:drift/src/runtime/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CouldNotRollBackException",
+          "url": "package:drift/src/runtime/exceptions.dart",
           "isNullable": false
         },
         {
@@ -490,8 +556,56 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "SqliteException",
+          "url": "package:sqlite3/src/exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "VfsException",
           "url": "package:sqlite3/src/vfs.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StringScannerException",
+          "url": "package:string_scanner/src/exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SourceSpanException",
+          "url": "package:source_span/src/span_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SourceSpanFormatException",
+          "url": "package:source_span/src/span_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BuiltValueNullFieldError",
+          "url": "package:built_value/built_value.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BuiltValueMissingGenericsError",
+          "url": "package:built_value/built_value.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BuiltValueNestedFieldError",
+          "url": "package:built_value/built_value.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ParserException",
+          "url": "package:petitparser/src/core/exception.dart",
           "isNullable": false
         },
         {
@@ -550,17 +664,18 @@
           "url": "package:celest_backend/src/database/task_database.dart",
           "isNullable": false
         },
+        "version": 1,
         "location": {
           "start": {
-            "offset": 149,
+            "offset": 218,
             "uri": "package:celest_backend/src/project.dart",
-            "line": 5,
+            "line": 11,
             "column": 6
           },
           "end": {
-            "offset": 157,
+            "offset": 226,
             "uri": "package:celest_backend/src/project.dart",
-            "line": 5,
+            "line": 11,
             "column": 14
           },
           "text": "database"
@@ -571,15 +686,15 @@
         "hostname": {
           "location": {
             "start": {
-              "offset": 149,
+              "offset": 218,
               "uri": "package:celest_backend/src/project.dart",
-              "line": 5,
+              "line": 11,
               "column": 6
             },
             "end": {
-              "offset": 157,
+              "offset": 226,
               "uri": "package:celest_backend/src/project.dart",
-              "line": 5,
+              "line": 11,
               "column": 14
             },
             "text": "database"
@@ -590,15 +705,15 @@
         "token": {
           "location": {
             "start": {
-              "offset": 149,
+              "offset": 218,
               "uri": "package:celest_backend/src/project.dart",
-              "line": 5,
+              "line": 11,
               "column": 6
             },
             "end": {
-              "offset": 157,
+              "offset": 226,
               "uri": "package:celest_backend/src/project.dart",
-              "line": 5,
+              "line": 11,
               "column": 14
             },
             "text": "database"
@@ -609,15 +724,15 @@
       },
       "location": {
         "start": {
-          "offset": 149,
+          "offset": 218,
           "uri": "package:celest_backend/src/project.dart",
-          "line": 5,
+          "line": 11,
           "column": 6
         },
         "end": {
-          "offset": 157,
+          "offset": 226,
           "uri": "package:celest_backend/src/project.dart",
-          "line": 5,
+          "line": 11,
           "column": 14
         },
         "text": "database"
@@ -655,5 +770,45 @@
       "column": 37
     },
     "text": "project = Project(name: 'data')"
+  },
+  "auth": {
+    "providers": [
+      {
+        "$": "EmailAuthProvider",
+        "name": "emailOtp",
+        "type": "EMAIL_OTP",
+        "location": {
+          "start": {
+            "offset": 149,
+            "uri": "package:celest_backend/src/project.dart",
+            "line": 5,
+            "column": 6
+          },
+          "end": {
+            "offset": 153,
+            "uri": "package:celest_backend/src/project.dart",
+            "line": 5,
+            "column": 10
+          },
+          "text": "auth"
+        }
+      }
+    ],
+    "externalProviders": [],
+    "location": {
+      "start": {
+        "offset": 149,
+        "uri": "package:celest_backend/src/project.dart",
+        "line": 5,
+        "column": 6
+      },
+      "end": {
+        "offset": 153,
+        "uri": "package:celest_backend/src/project.dart",
+        "line": 5,
+        "column": 10
+      },
+      "text": "auth"
+    }
   }
 }

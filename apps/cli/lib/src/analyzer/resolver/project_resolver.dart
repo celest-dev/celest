@@ -1,9 +1,11 @@
 import 'dart:collection';
 
 import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/dart/ast/ast.dart' as dart_ast;
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/source/file_source.dart';
@@ -1183,10 +1185,137 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     );
   }
 
+  bool _databaseRequiresMigration(
+    ClassElement2 databaseClass, {
+    required bool hasCloudAuth,
+  }) {
+    if (!hasCloudAuth) {
+      return false;
+    }
+    final hasMixin = databaseClass.firstFragment.mixins
+        .any((type) => type.isCloudAuthDatabaseMixin);
+    return !hasMixin;
+  }
+
+  Future<void> _migrateDatabase(ClassElement2 databaseClass) async {
+    final declaration =
+        await helper.getElementDeclaration(databaseClass.firstFragment);
+    if (declaration == null) {
+      throw StateError('Failed to resolve declaration for $databaseClass');
+    }
+    final overlay =
+        pendingEdits[databaseClass.library2.firstFragment.source.fullName] ??=
+            {};
+
+    final node = declaration.node as dart_ast.ClassDeclaration;
+    final compilationUnit =
+        node.thisOrAncestorOfType<dart_ast.CompilationUnit>()!;
+
+    // Add the import for `package:celest_cloud_auth`.
+    final importDirectives =
+        compilationUnit.directives.whereType<dart_ast.ImportDirective>();
+    final lastImport = importDirectives.last;
+    final addImportOffset = lastImport.offset + lastImport.length;
+    final addImport = SourceEdit(addImportOffset, 0,
+        "\nimport 'package:celest_cloud_auth/celest_cloud_auth.dart';");
+    overlay.add(addImport);
+
+    // Cloud Auth requires the use of modular drift units, so we must convert
+    // the data class to use imports and modular accessors.
+    final libraryBasename = p.basenameWithoutExtension(
+      databaseClass.library2.firstFragment.source.fullName,
+    );
+    final driftPartName = '$libraryBasename.g.dart';
+    final driftPart = compilationUnit.directives
+        .whereType<dart_ast.PartDirective>()
+        .firstWhereOrNull((part) => part.uri.stringValue == driftPartName);
+    if (driftPart != null) {
+      // 1. Remove the part and replace with an import.
+      final changePart = SourceEdit(
+        driftPart.offset,
+        driftPart.length,
+        "import '$libraryBasename.drift.dart';\n\n"
+        "export '$libraryBasename.drift.dart';",
+      );
+      overlay.add(changePart);
+
+      // 2. Change the `extends` clause to use the public base class.
+      final superclass = node.extendsClause!.superclass;
+      final changeSuperclass = SourceEdit(
+        superclass.offset,
+        superclass.length,
+        superclass.name2.lexeme.substring(1), // _$MyDatabase -> $MyDatabase
+      );
+      overlay.add(changeSuperclass);
+
+      // TODO(dnys1): Add build.yaml, delete part file, re-run build_runner
+    }
+
+    // Add the `with CloudAuthDatabaseMixin` clause depending on the current
+    // `with` and `implements` clauses.
+    final SourceEdit addMixin;
+    if (node.withClause case final withClause?) {
+      final lastMixin = withClause.mixinTypes.last;
+      final insertOffset = lastMixin.offset + lastMixin.length;
+      addMixin = SourceEdit(insertOffset, 0, ', CloudAuthDatabaseMixin');
+    } else if (node.implementsClause case final implementsClause?) {
+      final insertOffset = implementsClause.offset;
+      addMixin = SourceEdit(insertOffset, 0, 'with CloudAuthDatabaseMixin ');
+    } else {
+      final insertOffset = node.leftBracket.offset;
+      addMixin = SourceEdit(insertOffset, 0, 'with CloudAuthDatabaseMixin ');
+    }
+    overlay.add(addMixin);
+
+    // Adds the `include` parameter to the `DriftDatabase` declaration.
+    //
+    // We need `@DriftDatabase(include: CloudAuthDatabaseMixin.includes})`
+    // so that all Cloud Auth tables are generated.
+    final driftDeclaration = node.metadata.firstWhere(
+      (meta) => meta.name.name == 'DriftDatabase',
+    );
+    final includeParameter = driftDeclaration.arguments?.arguments
+        .whereType<dart_ast.NamedExpression>()
+        .firstWhereOrNull((arg) => arg.name.label.name == 'include');
+    final includeExpression = includeParameter?.expression;
+    final SourceEdit cloudAuthIncludes;
+    if (includeParameter == null) {
+      final hasTrailingComma =
+          driftDeclaration.findPrevious(driftDeclaration.endToken)!.lexeme ==
+              ',';
+      cloudAuthIncludes = SourceEdit(
+        driftDeclaration.offset + driftDeclaration.length - 1,
+        0,
+        '${hasTrailingComma ? '' : ','} include: CloudAuthDatabaseMixin.includes',
+      );
+    } else if (includeExpression is dart_ast.SetOrMapLiteral) {
+      final hasTrailingComma = includeExpression
+              .findPrevious(includeExpression.rightBracket)!
+              .lexeme ==
+          ',';
+      final offset = includeExpression.rightBracket.offset;
+      cloudAuthIncludes = SourceEdit(
+        offset,
+        0,
+        '${hasTrailingComma ? '' : ','} ...CloudAuthDatabaseMixin.includes',
+      );
+    } else {
+      // `include` expression is a variable reference or something. Create a new
+      // set literal and spread both values into it.
+      cloudAuthIncludes = SourceEdit(
+        includeExpression!.offset,
+        includeExpression.length,
+        '{...${includeExpression.toSource()}, ...CloudAuthDatabaseMixin.includes}',
+      );
+    }
+    overlay.add(cloudAuthIncludes);
+  }
+
   /// Collects the Celest Data components of the project.
   Future<ast.Database?> resolveDatabase({
     required String databaseFilepath,
     required ResolvedLibraryResult databaseLibrary,
+    required bool hasCloudAuth,
   }) async {
     final (topLevelConstants, hasErrors) = databaseLibrary.element
         .topLevelConstants(errorReporter: _errorReporter);
@@ -1264,6 +1393,11 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       return null;
     }
 
+    final databaseClass = driftDatabaseType.element3 as ClassElement2;
+    if (_databaseRequiresMigration(databaseClass, hasCloudAuth: hasCloudAuth)) {
+      await _migrateDatabase(databaseClass);
+    }
+
     final schemaTypeReference = typeHelper.toReference(driftDatabaseType);
     final databaseName = schemaTypeReference.symbol!;
     return ast.Database(
@@ -1271,6 +1405,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       dartName: databaseDefinitionElement.name,
       docs: databaseDefinitionElement.docLines,
       schema: ast.DriftDatabaseSchema(
+        version: await resolveSchemaVersion(databaseClass),
         declaration: schemaTypeReference.toTypeReference,
         location: databaseDefinitionLocation,
       ),
