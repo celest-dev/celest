@@ -49,9 +49,6 @@ final class Context {
   }
 
   /// Sets the root [Context] for the current execution scope.
-  ///
-  /// This is only allowed in tests.
-  @internal
   static set root(Context value) {
     if (_root != null && kReleaseMode) {
       throw UnsupportedError(

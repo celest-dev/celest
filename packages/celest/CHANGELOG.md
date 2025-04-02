@@ -1,3 +1,7 @@
+## NEXT
+
+- chore: Remove `@internal` from `set Context.root`
+
 ## 1.0.3
 
 - fix(runtime): Treat database host values as DSN strings (#276)
