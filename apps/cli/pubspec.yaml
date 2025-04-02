@@ -52,8 +52,6 @@ dependencies:
   mason_logger: ^0.3.0
   meta: ^1.10.0
   mustache_template: ^2.0.0
-  native_assets_builder: ^0.8.1
-  native_assets_cli: ^0.7.2
   native_storage: ^0.2.2
   os_detect: ^2.0.1
   package_config: ^2.1.0

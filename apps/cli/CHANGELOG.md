@@ -1,3 +1,7 @@
+## 1.0.9-wip
+
+- chore: Remove unused native assets code
+
 ## 1.0.8
 
 - fix: Websocket error condition (#265)
