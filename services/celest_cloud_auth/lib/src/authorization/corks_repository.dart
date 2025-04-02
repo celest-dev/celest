@@ -1,10 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:cedar/cedar.dart';
-import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
-import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
 import 'package:celest_cloud_auth/src/database/schema/auth.drift.dart' as drift;
 import 'package:celest_cloud_auth/src/model/interop.dart';
 import 'package:celest_core/celest_core.dart';
@@ -13,14 +12,14 @@ import 'package:drift/drift.dart' as drift;
 
 typedef _Dependencies = ({
   EntityUid issuer,
-  AuthDatabase db,
+  CloudAuthDatabaseMixin db,
   CryptoKeyRepository cryptoKeys,
 });
 
 extension type CorksRepository._(_Dependencies _deps) implements Object {
   CorksRepository({
     required EntityUid issuer,
-    required AuthDatabase db,
+    required CloudAuthDatabaseMixin db,
     required CryptoKeyRepository cryptoKeys,
   }) : this._(
           (
@@ -31,7 +30,7 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
         );
 
   EntityUid get issuer => _deps.issuer;
-  AuthDatabase get _db => _deps.db;
+  CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
   CryptoKeyRepository get _cryptoKeys => _deps.cryptoKeys;
 
   Future<drift.Cork?> getCork({

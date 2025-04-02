@@ -1,16 +1,15 @@
-import 'package:celest_cloud_auth/src/crypto/crypto_key_model.dart';
-import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_auth/src/util/random_bytes.dart';
 import 'package:drift/drift.dart';
 
 typedef _Deps = ({
-  AuthDatabase db,
+  CloudAuthDatabaseMixin db,
   CryptoKey rootKey,
 });
 
 extension type CryptoKeyRepository._(_Deps _deps) implements Object {
   static Future<CryptoKeyRepository> create({
-    required AuthDatabase db,
+    required CloudAuthDatabaseMixin db,
     CryptoKey? rootKey,
   }) async {
     rootKey ??= LocalCryptoKey(
@@ -19,7 +18,7 @@ extension type CryptoKeyRepository._(_Deps _deps) implements Object {
       keyAlgorithm: KeyAlgorithm.hmacSha256,
       keyMaterial: secureRandomBytes(32),
     );
-    rootKey = (await db.authDrift.createCryptoKey(
+    rootKey = (await db.cloudAuth.authDrift.createCryptoKey(
       cryptoKeyId: rootKey.cryptoKeyId,
       keyPurpose: rootKey.keyPurpose.name,
       keyAlgorithm: rootKey.keyAlgorithm.name,
@@ -34,7 +33,7 @@ extension type CryptoKeyRepository._(_Deps _deps) implements Object {
     );
   }
 
-  AuthDatabase get _db => _deps.db;
+  CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
   CryptoKey get rootKey => _deps.rootKey;
 
   Future<CryptoKey> getKey({

@@ -1,5 +1,7 @@
 ## 0.2.1-wip
 
+- feat: Make database modular
+- refactor: Rename `AuthDatabase` to `CloudAuthDatabase`
 - chore: Make `Authorizer` a class
 
 ## 0.2.0

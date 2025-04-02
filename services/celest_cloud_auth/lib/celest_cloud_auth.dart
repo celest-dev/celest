@@ -1,4 +1,3 @@
-import 'package:cedar/cedar.dart';
 import 'package:celest/src/core/context.dart' as celest;
 // ignore: invalid_use_of_internal_member
 import 'package:celest/src/runtime/http/cloud_middleware.dart';
@@ -7,9 +6,9 @@ import 'package:celest_cloud_auth/src/authorization/authorization_middleware.dar
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
-import 'package:celest_cloud_auth/src/crypto/crypto_key_model.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
 import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
 import 'package:celest_cloud_auth/src/email/email_provider.dart';
 import 'package:celest_cloud_auth/src/model/route_map.dart';
 import 'package:celest_cloud_auth/src/otp/otp_repository.dart';
@@ -22,8 +21,10 @@ import 'package:shelf/shelf.dart';
 
 export 'package:celest_cloud_auth/src/authentication/authentication_service.dart';
 export 'package:celest_cloud_auth/src/database/auth_database.dart';
+export 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
 export 'package:celest_cloud_auth/src/email/email_provider.dart';
 export 'package:celest_cloud_auth/src/otp/otp_provider.dart';
+export 'package:celest_cloud_auth/src/users/users_service.dart';
 
 /// The Celest authentication and authorization service.
 final class CelestCloudAuth {
@@ -69,10 +70,9 @@ final class CelestCloudAuth {
   /// }
   /// ```
   static Future<CelestCloudAuth> create({
-    required AuthDatabase database,
+    required CloudAuthDatabaseMixin database,
     EmailOtpProvider? emailProvider,
   }) async {
-    await database.ping();
     final cryptoKeys = await CryptoKeyRepository.create(db: database);
     if (emailProvider != null) {
       celest.context.put(contextKeyEmailOtpProvider, emailProvider);
@@ -85,11 +85,10 @@ final class CelestCloudAuth {
 
   @visibleForTesting
   static Future<CelestCloudAuth> test({
-    AuthDatabase? db,
+    CloudAuthDatabaseMixin? db,
     CryptoKey? rootKey,
   }) async {
-    db ??= AuthDatabase.memory();
-    await db.ping();
+    db ??= CloudAuthDatabase.memory();
     final cryptoKeys = await CryptoKeyRepository.create(
       db: db,
       rootKey: rootKey,
@@ -110,7 +109,7 @@ final class CelestCloudAuth {
       );
 
   @visibleForTesting
-  final AuthDatabase db;
+  final CloudAuthDatabaseMixin db;
 
   @visibleForTesting
   final CryptoKeyRepository cryptoKeys;

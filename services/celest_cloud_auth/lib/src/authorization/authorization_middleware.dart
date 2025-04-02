@@ -2,7 +2,7 @@ import 'package:cedar/cedar.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
-import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
 import 'package:celest_cloud_auth/src/http/http_helpers.dart';
 import 'package:celest_cloud_auth/src/model/interop.dart';
 import 'package:celest_cloud_auth/src/model/route_map.dart';
@@ -16,7 +16,7 @@ import 'package:shelf/shelf.dart' show Handler, Request;
 typedef _Deps = ({
   RouteMap routeMap,
   CorksRepository corks,
-  AuthDatabase db,
+  CloudAuthDatabaseMixin db,
   Authorizer authorizer,
   EntityUid issuer,
 });
@@ -29,7 +29,7 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
   AuthorizationMiddleware({
     required RouteMap routeMap,
     required CorksRepository corks,
-    required AuthDatabase db,
+    required CloudAuthDatabaseMixin db,
     required Authorizer authorizer,
     required EntityUid issuer,
   }) : this._(
@@ -44,7 +44,7 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
 
   RouteMap get _routeMap => _deps.routeMap;
   CorksRepository get _corks => _deps.corks;
-  AuthDatabase get _db => _deps.db;
+  CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
   Authorizer get _authorizer => _deps.authorizer;
 
   Handler call(Handler inner) {

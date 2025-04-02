@@ -358,7 +358,7 @@ void main() {
         await check(
           tester.authenticationService.endSession(
             sessionId: session.sessionId,
-            sessionToken: session.sessionToken!,
+            sessionToken: session.sessionToken,
           ),
         ).completes();
       });

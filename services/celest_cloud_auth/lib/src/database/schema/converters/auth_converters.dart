@@ -1,17 +1,6 @@
 import 'package:celest_cloud/src/proto.dart' as pb;
 import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:drift/drift.dart';
-import 'package:protobuf/protobuf.dart';
-
-final typeRegistry = TypeRegistry([
-  pb.AuthenticationSuccess(),
-  pb.AuthenticationFactor(),
-  pb.AuthenticationFactorEmailOtp(),
-  pb.AuthenticationFactorSmsOtp(),
-  pb.Session(),
-  pb.SessionClient(),
-  pb.SessionCallbacks(),
-]);
 
 final class SessionClientConverter
     implements TypeConverter<SessionClient, Uint8List> {

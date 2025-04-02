@@ -1,8 +1,7 @@
 import 'package:celest/celest.dart';
-import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
-import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
 import 'package:celest_cloud_auth/src/users/users_repository.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
 import 'package:drift/drift.dart';
@@ -10,14 +9,14 @@ import 'package:drift/drift.dart';
 typedef _Deps = ({
   CorksRepository corks,
   CryptoKeyRepository cryptoKeys,
-  AuthDatabase db,
+  CloudAuthDatabaseMixin db,
   UsersRepository users,
 });
 
 extension type SessionsRepository._(_Deps _deps) {
   SessionsRepository({
     required CorksRepository corks,
-    required AuthDatabase db,
+    required CloudAuthDatabaseMixin db,
     required CryptoKeyRepository cryptoKeys,
     required UsersRepository users,
   }) : _deps = (
@@ -28,7 +27,7 @@ extension type SessionsRepository._(_Deps _deps) {
         );
 
   CorksRepository get _corks => _deps.corks;
-  AuthDatabase get _db => _deps.db;
+  CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
   CryptoKeyRepository get _cryptoKeys => _deps.cryptoKeys;
   UsersRepository get _users => _deps.users;
 

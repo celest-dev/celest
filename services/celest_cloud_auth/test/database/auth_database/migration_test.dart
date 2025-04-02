@@ -2,13 +2,9 @@
 // ignore_for_file: unused_local_variable, unused_import
 import 'dart:convert';
 
-import 'package:cedar/cedar.dart' hide Value;
-import 'package:celest_cloud_auth/src/authentication/authentication_model.dart'
-    show Session;
-import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_auth/src/util/random_bytes.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
-import 'package:celest_core/celest_core.dart' show User;
 import 'package:crypto/crypto.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_dev/api/migrations_native.dart';
@@ -20,6 +16,7 @@ import '../db_functions.dart';
 import 'generated/schema.dart';
 import 'generated/schema_v1.dart' as v1;
 import 'generated/schema_v2.dart' as v2;
+import 'generated/schema_v3.dart' as v3;
 
 void main() {
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
@@ -39,7 +36,7 @@ void main() {
         for (final toVersion in versions.skip(i + 1)) {
           test('to $toVersion', () async {
             final schema = await verifier.schemaAt(fromVersion);
-            final db = AuthDatabase(
+            final db = CloudAuthDatabase(
               schema.newConnection(),
               project: defaultProject,
             );
@@ -51,7 +48,7 @@ void main() {
     }
   });
 
-  test('migration from v1 to v2 does not corrupt data', () async {
+  test('migration from v1 to v2', () async {
     // Add data to insert into the old database, and the expected rows after the
     // migration.
     final createTime = DateTime.now().millisecondsSinceEpoch / 1000.0;
@@ -188,11 +185,12 @@ void main() {
       newVersion: 2,
       createOld: v1.DatabaseAtV1.new,
       createNew: v2.DatabaseAtV2.new,
-      openTestedDatabase: (e) => AuthDatabase(e, project: defaultProject),
+      openTestedDatabase: (e) => CloudAuthDatabase(e, project: defaultProject),
       createItems: (batch, oldDb) {
         batch.insertAll(
           oldDb.cedarTypes,
-          AuthDatabase.coreTypes.map((fqn) => v1.CedarTypesData(fqn: fqn)),
+          CloudAuthDatabaseAccessors.coreTypes
+              .map((fqn) => v1.CedarTypesData(fqn: fqn)),
         );
         batch.insertAll(oldDb.cryptoKeys, oldCryptoKeys);
         batch.insertAll(oldDb.users, oldUsers);
@@ -232,6 +230,26 @@ void main() {
         expect(
           await newDb.select(newDb.corks).get(),
           newCorks,
+        );
+      },
+    );
+  });
+
+  test('migration from v2 to v3', () async {
+    await verifier.testWithDataIntegrity(
+      oldVersion: 2,
+      newVersion: 3,
+      createOld: v2.DatabaseAtV2.new,
+      createNew: v3.DatabaseAtV3.new,
+      openTestedDatabase: (e) => CloudAuthDatabase(e, project: defaultProject),
+      createItems: (batch, oldDb) {},
+      validateItems: (newDb) async {
+        final max = newDb.celestCloudAuthMeta.schemaVersion.max();
+        final latestSchemaVersion = newDb.celestCloudAuthMeta.selectOnly()
+          ..addColumns([max]);
+        expect(
+          latestSchemaVersion.getSingle().then((it) => it.read(max)),
+          completion(3),
         );
       },
     );

@@ -5,12 +5,13 @@ import 'package:celest_cloud_auth/src/database/schema/users.drift.dart' as i1;
 import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i2;
 import 'package:celest_cloud_auth/src/database/schema/projects.drift.dart'
     as i3;
-import 'package:celest_cloud_auth/src/database/schema/auth.drift.dart' as i4;
-import 'package:drift/internal/modular.dart' as i5;
+import 'package:celest_cloud_auth/src/database/schema/meta.drift.dart' as i4;
+import 'package:celest_cloud_auth/src/database/schema/auth.drift.dart' as i5;
+import 'package:drift/internal/modular.dart' as i6;
 
-abstract class $AuthDatabase extends i0.GeneratedDatabase {
-  $AuthDatabase(i0.QueryExecutor e) : super(e);
-  $AuthDatabaseManager get managers => $AuthDatabaseManager(this);
+abstract class $CloudAuthDatabase extends i0.GeneratedDatabase {
+  $CloudAuthDatabase(i0.QueryExecutor e) : super(e);
+  $CloudAuthDatabaseManager get managers => $CloudAuthDatabaseManager(this);
   late final i1.Users users = i1.Users(this);
   late final i2.CedarTypes cedarTypes = i2.CedarTypes(this);
   late final i2.CedarEntities cedarEntities = i2.CedarEntities(this);
@@ -21,6 +22,8 @@ abstract class $AuthDatabase extends i0.GeneratedDatabase {
   late final i3.CelestProjects celestProjects = i3.CelestProjects(this);
   late final i3.CelestApis celestApis = i3.CelestApis(this);
   late final i3.CelestFunctions celestFunctions = i3.CelestFunctions(this);
+  late final i4.CelestCloudAuthMeta celestCloudAuthMeta =
+      i4.CelestCloudAuthMeta(this);
   late final i2.CedarPolicies cedarPolicies = i2.CedarPolicies(this);
   late final i2.CedarPolicyTemplates cedarPolicyTemplates =
       i2.CedarPolicyTemplates(this);
@@ -28,18 +31,20 @@ abstract class $AuthDatabase extends i0.GeneratedDatabase {
       i2.CedarPolicyTemplateLinks(this);
   late final i2.CedarAuthorizationLogs cedarAuthorizationLogs =
       i2.CedarAuthorizationLogs(this);
-  late final i4.CryptoKeys cryptoKeys = i4.CryptoKeys(this);
-  late final i4.Sessions sessions = i4.Sessions(this);
-  late final i4.OtpCodes otpCodes = i4.OtpCodes(this);
-  late final i4.Corks corks = i4.Corks(this);
-  i4.AuthDrift get authDrift =>
-      i5.ReadDatabaseContainer(this).accessor<i4.AuthDrift>(i4.AuthDrift.new);
+  late final i5.CryptoKeys cryptoKeys = i5.CryptoKeys(this);
+  late final i5.Sessions sessions = i5.Sessions(this);
+  late final i5.OtpCodes otpCodes = i5.OtpCodes(this);
+  late final i5.Corks corks = i5.Corks(this);
+  i5.AuthDrift get authDrift =>
+      i6.ReadDatabaseContainer(this).accessor<i5.AuthDrift>(i5.AuthDrift.new);
   i2.CedarDrift get cedarDrift =>
-      i5.ReadDatabaseContainer(this).accessor<i2.CedarDrift>(i2.CedarDrift.new);
-  i3.ProjectsDrift get projectsDrift => i5.ReadDatabaseContainer(this)
+      i6.ReadDatabaseContainer(this).accessor<i2.CedarDrift>(i2.CedarDrift.new);
+  i4.MetaDrift get metaDrift =>
+      i6.ReadDatabaseContainer(this).accessor<i4.MetaDrift>(i4.MetaDrift.new);
+  i3.ProjectsDrift get projectsDrift => i6.ReadDatabaseContainer(this)
       .accessor<i3.ProjectsDrift>(i3.ProjectsDrift.new);
   i1.UsersDrift get usersDrift =>
-      i5.ReadDatabaseContainer(this).accessor<i1.UsersDrift>(i1.UsersDrift.new);
+      i6.ReadDatabaseContainer(this).accessor<i1.UsersDrift>(i1.UsersDrift.new);
   @override
   Iterable<i0.TableInfo<i0.Table, Object?>> get allTables =>
       allSchemaEntities.whereType<i0.TableInfo<i0.Table, Object?>>();
@@ -62,6 +67,7 @@ abstract class $AuthDatabase extends i0.GeneratedDatabase {
         i3.celestFunctionsApiIdx,
         i3.celestFunctionsTriggerCreate,
         i3.celestFunctionsTriggerDelete,
+        celestCloudAuthMeta,
         i2.cedarRelationshipsFkEntityIdx,
         i2.cedarRelationshipsFkParentIdx,
         cedarPolicies,
@@ -72,19 +78,19 @@ abstract class $AuthDatabase extends i0.GeneratedDatabase {
         i2.cedarPolicyTemplateLinksFkResourceIdx,
         cedarAuthorizationLogs,
         cryptoKeys,
-        i4.cryptoKeysExternalCryptoKeyIdIdx,
+        i5.cryptoKeysExternalCryptoKeyIdIdx,
         sessions,
-        i4.sessionsUserIdx,
-        i4.sessionsCryptoKeyIdx,
-        i4.sessionsExternalSessionIdIdx,
-        i4.authSessionsUpdateTime,
+        i5.sessionsUserIdx,
+        i5.sessionsCryptoKeyIdx,
+        i5.sessionsExternalSessionIdIdx,
+        i5.authSessionsUpdateTime,
         otpCodes,
-        i4.otpCodesSessionIdx,
+        i5.otpCodesSessionIdx,
         corks,
-        i4.corksCryptoKeyIdx,
-        i4.corksBearerIdx,
-        i4.corksAudienceIdx,
-        i4.corksIssuerIdx
+        i5.corksCryptoKeyIdx,
+        i5.corksBearerIdx,
+        i5.corksAudienceIdx,
+        i5.corksIssuerIdx
       ];
   @override
   i0.StreamQueryUpdateRules get streamUpdateRules =>
@@ -361,9 +367,9 @@ abstract class $AuthDatabase extends i0.GeneratedDatabase {
       );
 }
 
-class $AuthDatabaseManager {
-  final $AuthDatabase _db;
-  $AuthDatabaseManager(this._db);
+class $CloudAuthDatabaseManager {
+  final $CloudAuthDatabase _db;
+  $CloudAuthDatabaseManager(this._db);
   i1.$UsersTableManager get users => i1.$UsersTableManager(_db, _db.users);
   i2.$CedarTypesTableManager get cedarTypes =>
       i2.$CedarTypesTableManager(_db, _db.cedarTypes);
@@ -381,6 +387,8 @@ class $AuthDatabaseManager {
       i3.$CelestApisTableManager(_db, _db.celestApis);
   i3.$CelestFunctionsTableManager get celestFunctions =>
       i3.$CelestFunctionsTableManager(_db, _db.celestFunctions);
+  i4.$CelestCloudAuthMetaTableManager get celestCloudAuthMeta =>
+      i4.$CelestCloudAuthMetaTableManager(_db, _db.celestCloudAuthMeta);
   i2.$CedarPoliciesTableManager get cedarPolicies =>
       i2.$CedarPoliciesTableManager(_db, _db.cedarPolicies);
   i2.$CedarPolicyTemplatesTableManager get cedarPolicyTemplates =>
@@ -389,11 +397,11 @@ class $AuthDatabaseManager {
       .$CedarPolicyTemplateLinksTableManager(_db, _db.cedarPolicyTemplateLinks);
   i2.$CedarAuthorizationLogsTableManager get cedarAuthorizationLogs =>
       i2.$CedarAuthorizationLogsTableManager(_db, _db.cedarAuthorizationLogs);
-  i4.$CryptoKeysTableManager get cryptoKeys =>
-      i4.$CryptoKeysTableManager(_db, _db.cryptoKeys);
-  i4.$SessionsTableManager get sessions =>
-      i4.$SessionsTableManager(_db, _db.sessions);
-  i4.$OtpCodesTableManager get otpCodes =>
-      i4.$OtpCodesTableManager(_db, _db.otpCodes);
-  i4.$CorksTableManager get corks => i4.$CorksTableManager(_db, _db.corks);
+  i5.$CryptoKeysTableManager get cryptoKeys =>
+      i5.$CryptoKeysTableManager(_db, _db.cryptoKeys);
+  i5.$SessionsTableManager get sessions =>
+      i5.$SessionsTableManager(_db, _db.sessions);
+  i5.$OtpCodesTableManager get otpCodes =>
+      i5.$OtpCodesTableManager(_db, _db.otpCodes);
+  i5.$CorksTableManager get corks => i5.$CorksTableManager(_db, _db.corks);
 }
