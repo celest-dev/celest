@@ -1799,6 +1799,8 @@ class _$DriftDatabaseSchemaSerializer
       'declaration',
       serializers.serialize(object.declaration,
           specifiedType: const FullType(TypeReference)),
+      'version',
+      serializers.serialize(object.version, specifiedType: const FullType(int)),
       'location',
       serializers.serialize(object.location,
           specifiedType: const FullType(FileSpan)),
@@ -1822,6 +1824,10 @@ class _$DriftDatabaseSchemaSerializer
         case 'declaration':
           result.declaration.replace(serializers.deserialize(value,
               specifiedType: const FullType(TypeReference))! as TypeReference);
+          break;
+        case 'version':
+          result.version = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
           break;
         case 'location':
           result.location = serializers.deserialize(value,
@@ -2183,22 +2189,23 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
     try {
       _$result = _$v ??
           new _$Project._(
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'Project', 'name'),
-              environment: BuiltValueNullFieldError.checkNotNull(
-                  environment, r'Project', 'environment'),
-              displayName: displayName,
-              primaryRegion: primaryRegion,
-              reference: BuiltValueNullFieldError.checkNotNull(
-                  reference, r'Project', 'reference'),
-              apis: apis.build(),
-              variables: variables.build(),
-              secrets: secrets.build(),
-              auth: _auth?.build(),
-              databases: databases.build(),
-              sdkConfig: sdkConfig.build(),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'Project', 'location'));
+            name:
+                BuiltValueNullFieldError.checkNotNull(name, r'Project', 'name'),
+            environment: BuiltValueNullFieldError.checkNotNull(
+                environment, r'Project', 'environment'),
+            displayName: displayName,
+            primaryRegion: primaryRegion,
+            reference: BuiltValueNullFieldError.checkNotNull(
+                reference, r'Project', 'reference'),
+            apis: apis.build(),
+            variables: variables.build(),
+            secrets: secrets.build(),
+            auth: _auth?.build(),
+            databases: databases.build(),
+            sdkConfig: sdkConfig.build(),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'Project', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -2372,13 +2379,14 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
     try {
       _$result = _$v ??
           new _$Api._(
-              name: BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name'),
-              metadata: metadata.build(),
-              functions: functions.build(),
-              docs: docs.build(),
-              exceptionTypes: exceptionTypes.build(),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'Api', 'location'));
+            name: BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name'),
+            metadata: metadata.build(),
+            functions: functions.build(),
+            docs: docs.build(),
+            exceptionTypes: exceptionTypes.build(),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'Api', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -2476,8 +2484,9 @@ class ApiPublicBuilder implements Builder<ApiPublic, ApiPublicBuilder> {
   _$ApiPublic _build() {
     final _$result = _$v ??
         new _$ApiPublic._(
-            location: BuiltValueNullFieldError.checkNotNull(
-                location, r'ApiPublic', 'location'));
+          location: BuiltValueNullFieldError.checkNotNull(
+              location, r'ApiPublic', 'location'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2562,8 +2571,9 @@ class ApiAuthenticatedBuilder
   _$ApiAuthenticated _build() {
     final _$result = _$v ??
         new _$ApiAuthenticated._(
-            location: BuiltValueNullFieldError.checkNotNull(
-                location, r'ApiAuthenticated', 'location'));
+          location: BuiltValueNullFieldError.checkNotNull(
+              location, r'ApiAuthenticated', 'location'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2658,10 +2668,11 @@ class ApiMiddlewareBuilder
   _$ApiMiddleware _build() {
     final _$result = _$v ??
         new _$ApiMiddleware._(
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'ApiMiddleware', 'type'),
-            location: BuiltValueNullFieldError.checkNotNull(
-                location, r'ApiMiddleware', 'location'));
+          type: BuiltValueNullFieldError.checkNotNull(
+              type, r'ApiMiddleware', 'type'),
+          location: BuiltValueNullFieldError.checkNotNull(
+              location, r'ApiMiddleware', 'location'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2770,12 +2781,13 @@ class ApiHttpConfigBuilder
   _$ApiHttpConfig _build() {
     final _$result = _$v ??
         new _$ApiHttpConfig._(
-            method: BuiltValueNullFieldError.checkNotNull(
-                method, r'ApiHttpConfig', 'method'),
-            statusCode: BuiltValueNullFieldError.checkNotNull(
-                statusCode, r'ApiHttpConfig', 'statusCode'),
-            location: BuiltValueNullFieldError.checkNotNull(
-                location, r'ApiHttpConfig', 'location'));
+          method: BuiltValueNullFieldError.checkNotNull(
+              method, r'ApiHttpConfig', 'method'),
+          statusCode: BuiltValueNullFieldError.checkNotNull(
+              statusCode, r'ApiHttpConfig', 'statusCode'),
+          location: BuiltValueNullFieldError.checkNotNull(
+              location, r'ApiHttpConfig', 'location'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2886,11 +2898,12 @@ class ApiHttpErrorBuilder
     try {
       _$result = _$v ??
           new _$ApiHttpError._(
-              type: type.build(),
-              statusCode: BuiltValueNullFieldError.checkNotNull(
-                  statusCode, r'ApiHttpError', 'statusCode'),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'ApiHttpError', 'location'));
+            type: type.build(),
+            statusCode: BuiltValueNullFieldError.checkNotNull(
+                statusCode, r'ApiHttpError', 'statusCode'),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'ApiHttpError', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -3110,21 +3123,22 @@ class CloudFunctionParameterBuilder
     try {
       _$result = _$v ??
           new _$CloudFunctionParameter._(
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'CloudFunctionParameter', 'name'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'CloudFunctionParameter', 'type'),
-              required: BuiltValueNullFieldError.checkNotNull(
-                  required, r'CloudFunctionParameter', 'required'),
-              named: BuiltValueNullFieldError.checkNotNull(
-                  named, r'CloudFunctionParameter', 'named'),
-              references: _references?.build(),
-              annotationExpressions: annotationExpressions.build(),
-              annotations: annotations.build(),
-              defaultToExpression: defaultToExpression,
-              defaultTo: defaultTo,
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'CloudFunctionParameter', 'location'));
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'CloudFunctionParameter', 'name'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'CloudFunctionParameter', 'type'),
+            required: BuiltValueNullFieldError.checkNotNull(
+                required, r'CloudFunctionParameter', 'required'),
+            named: BuiltValueNullFieldError.checkNotNull(
+                named, r'CloudFunctionParameter', 'named'),
+            references: _references?.build(),
+            annotationExpressions: annotationExpressions.build(),
+            annotations: annotations.build(),
+            defaultToExpression: defaultToExpression,
+            defaultTo: defaultTo,
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'CloudFunctionParameter', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -3376,23 +3390,24 @@ class CloudFunctionBuilder
     try {
       _$result = _$v ??
           new _$CloudFunction._(
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'CloudFunction', 'name'),
-              apiName: BuiltValueNullFieldError.checkNotNull(
-                  apiName, r'CloudFunction', 'apiName'),
-              typeParameters: typeParameters.build(),
-              parameters: parameters.build(),
-              returnType: BuiltValueNullFieldError.checkNotNull(
-                  returnType, r'CloudFunction', 'returnType'),
-              flattenedReturnType: BuiltValueNullFieldError.checkNotNull(
-                  flattenedReturnType, r'CloudFunction', 'flattenedReturnType'),
-              streamType: streamType,
-              metadata: metadata.build(),
-              annotationExpressions: annotationExpressions.build(),
-              annotations: annotations.build(),
-              docs: docs.build(),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'CloudFunction', 'location'));
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'CloudFunction', 'name'),
+            apiName: BuiltValueNullFieldError.checkNotNull(
+                apiName, r'CloudFunction', 'apiName'),
+            typeParameters: typeParameters.build(),
+            parameters: parameters.build(),
+            returnType: BuiltValueNullFieldError.checkNotNull(
+                returnType, r'CloudFunction', 'returnType'),
+            flattenedReturnType: BuiltValueNullFieldError.checkNotNull(
+                flattenedReturnType, r'CloudFunction', 'flattenedReturnType'),
+            streamType: streamType,
+            metadata: metadata.build(),
+            annotationExpressions: annotationExpressions.build(),
+            annotations: annotations.build(),
+            docs: docs.build(),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'CloudFunction', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -3546,13 +3561,14 @@ class VariableBuilder implements Builder<Variable, VariableBuilder> {
     try {
       _$result = _$v ??
           new _$Variable._(
-              value: value,
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'Variable', 'location'),
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'Variable', 'name'),
-              dartName: dartName,
-              docs: docs.build());
+            value: value,
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'Variable', 'location'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'Variable', 'name'),
+            dartName: dartName,
+            docs: docs.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -3684,12 +3700,13 @@ class SecretBuilder implements Builder<Secret, SecretBuilder> {
     try {
       _$result = _$v ??
           new _$Secret._(
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'Secret', 'location'),
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'Secret', 'name'),
-              dartName: dartName,
-              docs: docs.build());
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'Secret', 'location'),
+            name:
+                BuiltValueNullFieldError.checkNotNull(name, r'Secret', 'name'),
+            dartName: dartName,
+            docs: docs.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -3815,10 +3832,11 @@ class AuthBuilder implements Builder<Auth, AuthBuilder> {
     try {
       _$result = _$v ??
           new _$Auth._(
-              providers: providers.build(),
-              externalProviders: externalProviders.build(),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'Auth', 'location'));
+            providers: providers.build(),
+            externalProviders: externalProviders.build(),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'Auth', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -3970,12 +3988,13 @@ class EmailAuthProviderBuilder
     EmailAuthProvider._finalize(this);
     final _$result = _$v ??
         new _$EmailAuthProvider._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'EmailAuthProvider', 'name'),
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'EmailAuthProvider', 'type'),
-            location: BuiltValueNullFieldError.checkNotNull(
-                location, r'EmailAuthProvider', 'location'));
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'EmailAuthProvider', 'name'),
+          type: BuiltValueNullFieldError.checkNotNull(
+              type, r'EmailAuthProvider', 'type'),
+          location: BuiltValueNullFieldError.checkNotNull(
+              location, r'EmailAuthProvider', 'location'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -4087,12 +4106,13 @@ class SmsAuthProviderBuilder
     SmsAuthProvider._finalize(this);
     final _$result = _$v ??
         new _$SmsAuthProvider._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'SmsAuthProvider', 'name'),
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'SmsAuthProvider', 'type'),
-            location: BuiltValueNullFieldError.checkNotNull(
-                location, r'SmsAuthProvider', 'location'));
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'SmsAuthProvider', 'name'),
+          type: BuiltValueNullFieldError.checkNotNull(
+              type, r'SmsAuthProvider', 'type'),
+          location: BuiltValueNullFieldError.checkNotNull(
+              location, r'SmsAuthProvider', 'location'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -4239,14 +4259,15 @@ class GoogleAuthProviderBuilder
     try {
       _$result = _$v ??
           new _$GoogleAuthProvider._(
-              clientId: clientId.build(),
-              clientSecret: clientSecret.build(),
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'GoogleAuthProvider', 'name'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'GoogleAuthProvider', 'type'),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'GoogleAuthProvider', 'location'));
+            clientId: clientId.build(),
+            clientSecret: clientSecret.build(),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'GoogleAuthProvider', 'name'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'GoogleAuthProvider', 'type'),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'GoogleAuthProvider', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -4429,16 +4450,17 @@ class AppleAuthProviderBuilder
     try {
       _$result = _$v ??
           new _$AppleAuthProvider._(
-              clientId: clientId.build(),
-              teamId: teamId.build(),
-              keyId: keyId.build(),
-              privateKey: privateKey.build(),
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'AppleAuthProvider', 'name'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'AppleAuthProvider', 'type'),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'AppleAuthProvider', 'location'));
+            clientId: clientId.build(),
+            teamId: teamId.build(),
+            keyId: keyId.build(),
+            privateKey: privateKey.build(),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'AppleAuthProvider', 'name'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'AppleAuthProvider', 'type'),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'AppleAuthProvider', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -4602,14 +4624,15 @@ class GitHubAuthProviderBuilder
     try {
       _$result = _$v ??
           new _$GitHubAuthProvider._(
-              clientId: clientId.build(),
-              clientSecret: clientSecret.build(),
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'GitHubAuthProvider', 'name'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'GitHubAuthProvider', 'type'),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'GitHubAuthProvider', 'location'));
+            clientId: clientId.build(),
+            clientSecret: clientSecret.build(),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'GitHubAuthProvider', 'name'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'GitHubAuthProvider', 'type'),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'GitHubAuthProvider', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -4757,13 +4780,14 @@ class FirebaseExternalAuthProviderBuilder
     try {
       _$result = _$v ??
           new _$FirebaseExternalAuthProvider._(
-              projectId: projectId.build(),
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'FirebaseExternalAuthProvider', 'name'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'FirebaseExternalAuthProvider', 'type'),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'FirebaseExternalAuthProvider', 'location'));
+            projectId: projectId.build(),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'FirebaseExternalAuthProvider', 'name'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'FirebaseExternalAuthProvider', 'type'),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'FirebaseExternalAuthProvider', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -4922,14 +4946,15 @@ class SupabaseExternalAuthProviderBuilder
     try {
       _$result = _$v ??
           new _$SupabaseExternalAuthProvider._(
-              projectUrl: projectUrl.build(),
-              jwtSecret: _jwtSecret?.build(),
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'SupabaseExternalAuthProvider', 'name'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'SupabaseExternalAuthProvider', 'type'),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'SupabaseExternalAuthProvider', 'location'));
+            projectUrl: projectUrl.build(),
+            jwtSecret: _jwtSecret?.build(),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'SupabaseExternalAuthProvider', 'name'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'SupabaseExternalAuthProvider', 'type'),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'SupabaseExternalAuthProvider', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -5034,10 +5059,11 @@ class NodeReferenceBuilder
   _$NodeReference _build() {
     final _$result = _$v ??
         new _$NodeReference._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'NodeReference', 'name'),
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'NodeReference', 'type'));
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'NodeReference', 'name'),
+          type: BuiltValueNullFieldError.checkNotNull(
+              type, r'NodeReference', 'type'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -5047,16 +5073,23 @@ class _$DriftDatabaseSchema extends DriftDatabaseSchema {
   @override
   final TypeReference declaration;
   @override
+  final int version;
+  @override
   final FileSpan location;
 
   factory _$DriftDatabaseSchema(
           [void Function(DriftDatabaseSchemaBuilder)? updates]) =>
       (new DriftDatabaseSchemaBuilder()..update(updates))._build();
 
-  _$DriftDatabaseSchema._({required this.declaration, required this.location})
+  _$DriftDatabaseSchema._(
+      {required this.declaration,
+      required this.version,
+      required this.location})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         declaration, r'DriftDatabaseSchema', 'declaration');
+    BuiltValueNullFieldError.checkNotNull(
+        version, r'DriftDatabaseSchema', 'version');
     BuiltValueNullFieldError.checkNotNull(
         location, r'DriftDatabaseSchema', 'location');
   }
@@ -5075,6 +5108,7 @@ class _$DriftDatabaseSchema extends DriftDatabaseSchema {
     if (identical(other, this)) return true;
     return other is DriftDatabaseSchema &&
         declaration == other.declaration &&
+        version == other.version &&
         location == other.location;
   }
 
@@ -5082,6 +5116,7 @@ class _$DriftDatabaseSchema extends DriftDatabaseSchema {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, declaration.hashCode);
+    _$hash = $jc(_$hash, version.hashCode);
     _$hash = $jc(_$hash, location.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -5091,6 +5126,7 @@ class _$DriftDatabaseSchema extends DriftDatabaseSchema {
   String toString() {
     return (newBuiltValueToStringHelper(r'DriftDatabaseSchema')
           ..add('declaration', declaration)
+          ..add('version', version)
           ..add('location', location))
         .toString();
   }
@@ -5106,6 +5142,10 @@ class DriftDatabaseSchemaBuilder
   set declaration(TypeReferenceBuilder? declaration) =>
       _$this._declaration = declaration;
 
+  int? _version;
+  int? get version => _$this._version;
+  set version(int? version) => _$this._version = version;
+
   FileSpan? _location;
   FileSpan? get location => _$this._location;
   set location(FileSpan? location) => _$this._location = location;
@@ -5116,6 +5156,7 @@ class DriftDatabaseSchemaBuilder
     final $v = _$v;
     if ($v != null) {
       _declaration = $v.declaration.toBuilder();
+      _version = $v.version;
       _location = $v.location;
       _$v = null;
     }
@@ -5141,9 +5182,12 @@ class DriftDatabaseSchemaBuilder
     try {
       _$result = _$v ??
           new _$DriftDatabaseSchema._(
-              declaration: declaration.build(),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'DriftDatabaseSchema', 'location'));
+            declaration: declaration.build(),
+            version: BuiltValueNullFieldError.checkNotNull(
+                version, r'DriftDatabaseSchema', 'version'),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'DriftDatabaseSchema', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -5300,17 +5344,18 @@ class DatabaseBuilder implements Builder<Database, DatabaseBuilder> {
     try {
       _$result = _$v ??
           new _$Database._(
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'Database', 'name'),
-              dartName: BuiltValueNullFieldError.checkNotNull(
-                  dartName, r'Database', 'dartName'),
-              docs: docs.build(),
-              schema: BuiltValueNullFieldError.checkNotNull(
-                  schema, r'Database', 'schema'),
-              config: BuiltValueNullFieldError.checkNotNull(
-                  config, r'Database', 'config'),
-              location: BuiltValueNullFieldError.checkNotNull(
-                  location, r'Database', 'location'));
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'Database', 'name'),
+            dartName: BuiltValueNullFieldError.checkNotNull(
+                dartName, r'Database', 'dartName'),
+            docs: docs.build(),
+            schema: BuiltValueNullFieldError.checkNotNull(
+                schema, r'Database', 'schema'),
+            config: BuiltValueNullFieldError.checkNotNull(
+                config, r'Database', 'config'),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, r'Database', 'location'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -5423,7 +5468,9 @@ class CelestDatabaseConfigBuilder
     try {
       _$result = _$v ??
           new _$CelestDatabaseConfig._(
-              hostname: hostname.build(), token: token.build());
+            hostname: hostname.build(),
+            token: token.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
