@@ -1,3 +1,6 @@
+/// @docImport 'dart:io';
+library;
+
 import 'package:celest_cloud/src/cloud/authentication/authentication.dart';
 import 'package:celest_cloud/src/cloud/cloud_protocol.dart';
 import 'package:celest_cloud/src/cloud/cloud_protocol.grpc.dart';
@@ -15,31 +18,89 @@ import 'package:os_detect/os_detect.dart' as os;
 import 'package:protobuf/protobuf.dart';
 
 class CelestCloud {
-  CelestCloud({
+  factory CelestCloud({
     required Uri uri,
     Authenticator authenticator = const Authenticator.static(),
     ClientType? clientType,
     Logger? logger,
     String? userAgent,
     http.Client? httpClient,
-  })  : _protocol = kIsWeb
-            ? CloudProtocolHttp(
-                uri: uri,
-                httpClient: httpClient,
-                authenticator: authenticator,
-                logger: logger,
-              )
-            : CloudProtocolGrpc(
-                uri: uri,
-                userAgent: userAgent,
-                authenticator: authenticator,
-                logger: logger,
-              ),
+  }) {
+    return kIsWeb
+        ? CelestCloud.http(
+            uri,
+            authenticator: authenticator,
+            clientType: clientType,
+            logger: logger,
+            httpClient: httpClient,
+          )
+        : CelestCloud.grpc(
+            uri,
+            authenticator: authenticator,
+            clientType: clientType,
+            logger: logger,
+            userAgent: userAgent,
+            httpClient: httpClient,
+          );
+  }
+
+  CelestCloud._({
+    required CloudProtocol protocol,
+    Uri? uri,
+    Authenticator authenticator = const Authenticator.static(),
+    ClientType? clientType,
+    Logger? logger,
+    http.Client? httpClient,
+  })  : _protocol = protocol,
         _baseUri = uri,
         _httpClient = httpClient,
         _authenticator = authenticator,
         _clientType = clientType ?? _defaultClientType,
         _logger = logger ?? Logger('Celest.Cloud');
+
+  CelestCloud.http(
+    Uri uri, {
+    Authenticator authenticator = const Authenticator.static(),
+    ClientType? clientType,
+    Logger? logger,
+    http.Client? httpClient,
+  }) : this._(
+          uri: uri,
+          authenticator: authenticator,
+          protocol: CloudProtocolHttp(
+            uri: uri,
+            httpClient: httpClient,
+            authenticator: authenticator,
+            logger: logger,
+          ),
+          clientType: clientType,
+          logger: logger,
+          httpClient: httpClient,
+        );
+
+  /// Creates a gRPC interface for Celest Cloud.
+  ///
+  /// [address] must be either a [Uri] or [InternetAddress].
+  CelestCloud.grpc(
+    Object address, {
+    Authenticator authenticator = const Authenticator.static(),
+    ClientType? clientType,
+    String? userAgent,
+    Logger? logger,
+    http.Client? httpClient,
+  }) : this._(
+          uri: address is Uri ? address : null,
+          authenticator: authenticator,
+          protocol: CloudProtocolGrpc(
+            host: address,
+            userAgent: userAgent,
+            authenticator: authenticator,
+            logger: logger,
+          ),
+          clientType: clientType,
+          logger: logger,
+          httpClient: httpClient,
+        );
 
   static final _defaultClientType = kIsWeb
       ? ClientType.WEB
@@ -63,7 +124,7 @@ class CelestCloud {
     ProjectEnvironment(),
   ]);
 
-  final Uri _baseUri;
+  final Uri? _baseUri;
   final http.Client? _httpClient;
   final Authenticator _authenticator;
 
@@ -72,7 +133,7 @@ class CelestCloud {
   final Logger _logger;
 
   late final CloudProtocolHttp _httpProtocol = CloudProtocolHttp(
-    uri: _baseUri,
+    uri: _baseUri!,
     authenticator: _authenticator,
     httpClient: _httpClient,
     logger: _logger,

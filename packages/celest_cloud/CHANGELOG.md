@@ -2,6 +2,7 @@
 
 - feat: Add `Operations.waitOperation`
 - chore: Update license
+- chore: Improve gRPC interface
 
 # 0.1.4
 
