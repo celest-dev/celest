@@ -3,26 +3,37 @@ targets:
     sources:
       exclude:
         - "fixtures/**"
-        - "lib/database/**"
-    auto_apply_builders: false
+        - "lib/src/database/**"
     builders:
+      drift_dev:
+        enabled: false
+      
       json_serializable:
         enabled: true
         options:
           explicit_to_json: true
 
-  $default:
+  drift:
     sources:
       include:
-        - "lib/database/**"
+        - "lib/src/database/**"
     dependencies:
-      - ":json"
+      - :json
     builders:
+      json_serializable:
+        enabled: false
+
       drift_dev:
+        # disable drift's default builder, we're using the modular setup
+        # instead.
+        enabled: false
+
+      # Instead, enable drift_dev:analyzer and drift_dev:modular manually:
+      drift_dev:analyzer:
         enabled: true
-        options:
-          named_parameters: true
-          store_date_time_values_as_text: false
+        generate_for:
+           - "lib/src/database/**"
+        options: &options
           sql:
             dialect: sqlite
             options:
@@ -31,7 +42,23 @@ targets:
                 - json1
               known_functions:
                 typeid: text(text)
+
+          named_parameters: true
+          store_date_time_values_as_text: false
           
           # Reduces generated code
           skip_verification_code: true
           data_class_to_companions: false
+
+      drift_dev:modular:
+        enabled: true
+        generate_for:
+           - "lib/src/database/**"
+        # We use yaml anchors to give the two builders the same options
+        options: *options
+
+  $default:
+    auto_apply_builders: false
+    dependencies:
+      - :drift
+      - :json

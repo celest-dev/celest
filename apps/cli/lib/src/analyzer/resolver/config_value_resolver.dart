@@ -8,6 +8,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/src/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/database/project/project.drift.dart';
 import 'package:celest_cli/src/database/project/project_database.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/run.dart';
@@ -258,13 +259,14 @@ extension WithEnvironment on ProjectDatabase {
     required String environmentId,
   }) {
     return transaction(() async {
-      if (await lookupEnvironment(id: environmentId).get()
+      if (await projectDrift.lookupEnvironment(id: environmentId).get()
           case [
             final environment,
           ]) {
         return withEnv(environment);
       }
-      final [environment] = await createEnvironment(id: environmentId);
+      final [environment] =
+          await projectDrift.createEnvironment(id: environmentId);
       return withEnv(environment);
     });
   }
@@ -278,7 +280,7 @@ extension ResolveConfigurationVariable on ast.ConfigurationVariable {
     ) async {
       switch (this) {
         case ast.Variable(:final name):
-          final value = await db
+          final value = await db.projectDrift
               .getEnvironmentVariable(
                 environmentId: environment.id,
                 name: name,
@@ -286,7 +288,7 @@ extension ResolveConfigurationVariable on ast.ConfigurationVariable {
               .get();
           return value.singleOrNull;
         case ast.Secret(:final name):
-          final value = await db
+          final value = await db.projectDrift
               .getSecret(environmentId: environment.id, name: name)
               .get();
           final ref = value.singleOrNull;
@@ -316,7 +318,7 @@ extension ResolveConfigurationVariables<T extends ast.ConfigurationVariable>
       final values = <String, String>{};
       switch (first) {
         case ast.Variable():
-          final dbValues = await db
+          final dbValues = await db.projectDrift
               .getEnvironmentVariables(
                 environmentId: environment.id,
                 names: variableNames,
@@ -326,7 +328,7 @@ extension ResolveConfigurationVariables<T extends ast.ConfigurationVariable>
             values[value.name] = value.value;
           }
         case ast.Secret():
-          final dbValues = await db
+          final dbValues = await db.projectDrift
               .getSecrets(
                 environmentId: environment.id,
                 names: variableNames,

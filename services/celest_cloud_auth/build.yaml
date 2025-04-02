@@ -1,12 +1,13 @@
 targets:
-  drift:
-    auto_apply_builders: false
+  $default:
     builders:
       drift_dev:
         enabled: false
       
       drift_dev:analyzer:
         enabled: true
+        generate_for:
+          - lib/src/database/**
         options: &options
           databases:
             auth_database: lib/src/database/auth_database.dart
@@ -29,11 +30,6 @@ targets:
 
       drift_dev:modular:
         enabled: true
+        generate_for:
+          - lib/src/database/**
         options: *options
-
-  $default:
-    dependencies:
-      - ":drift"
-    builders:
-      drift_dev:
-        enabled: false

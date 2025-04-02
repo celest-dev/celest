@@ -1,4 +1,5 @@
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/database/project/project.drift.dart';
 import 'package:celest_cli/src/database/project/project.migrations.dart';
 import 'package:celest_cli/src/utils/typeid.dart';
 import 'package:drift/drift.dart';
@@ -7,10 +8,10 @@ import 'package:file/memory.dart';
 import 'package:pool/pool.dart';
 import 'package:sqlite3/sqlite3.dart';
 
-part 'project_database.g.dart';
+import 'project_database.drift.dart';
 
 @DriftDatabase(include: {'project.drift'})
-final class ProjectDatabase extends _$ProjectDatabase {
+final class ProjectDatabase extends $ProjectDatabase {
   ProjectDatabase({required String projectRoot, required bool verbose})
       : super(_openConnection(projectRoot, verbose: verbose));
 

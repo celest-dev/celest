@@ -16,5 +16,9 @@ workspace:
   - services/celest_cloud_auth
   - services/celest_cloud_hub
 
+dependencies:
+  drift: '>=2.26.0 <2.27.0'
+
 dev_dependencies:
-  melos: ^5.3.0
+  drift_dev: '>=2.26.0 <2.27.0'
+  melos: ^6.3.2

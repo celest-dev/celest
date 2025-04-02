@@ -13,7 +13,10 @@ DeviceFlowStart _$DeviceFlowStartFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$DeviceFlowStartToJson(DeviceFlowStart instance) =>
-    <String, dynamic>{'client_id': instance.clientId, 'scope': instance.scope};
+    <String, dynamic>{
+      'client_id': instance.clientId,
+      'scope': instance.scope,
+    };
 
 DeviceFlow _$DeviceFlowFromJson(Map<String, dynamic> json) => DeviceFlow(
       deviceCode: json['device_code'] as String,

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:analyzer/src/dart/analysis/byte_store.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/database/cache/cache.drift.dart';
 import 'package:celest_cli/src/database/cache/cache.migrations.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/utils/error.dart';
@@ -16,10 +17,10 @@ import 'package:pool/pool.dart';
 import 'package:pub_semver/pub_semver.dart' as semver;
 import 'package:sqlite3/sqlite3.dart';
 
-part 'cache_database.g.dart';
+import 'cache_database.drift.dart';
 
 @DriftDatabase(include: {'cache.drift'})
-final class CacheDatabase extends _$CacheDatabase {
+final class CacheDatabase extends $CacheDatabase {
   CacheDatabase(super.e);
 
   CacheDatabase._(
@@ -53,7 +54,8 @@ final class CacheDatabase extends _$CacheDatabase {
       verbose: verbose,
       rawDatabase: rawCompleter,
     );
-    final versionInfo = await database.getVersionInfo().getSingleOrNull();
+    final versionInfo =
+        await database.cacheDrift.getVersionInfo().getSingleOrNull();
     if (versionInfo
         case VersionInfoData(
           :final dart,
@@ -85,13 +87,13 @@ final class CacheDatabase extends _$CacheDatabase {
 
   Future<void> _setVersionInfo({required bool update}) async {
     if (update) {
-      await updateVersionInfo(
+      await cacheDrift.updateVersionInfo(
         celest: packageVersion,
         dart: Sdk.current.version.toString(),
         flutter: Sdk.current.flutterVersion?.toString(),
       );
     } else {
-      await setVersionInfo(
+      await cacheDrift.setVersionInfo(
         celest: packageVersion,
         dart: Sdk.current.version.toString(),
         flutter: Sdk.current.flutterVersion?.toString(),
