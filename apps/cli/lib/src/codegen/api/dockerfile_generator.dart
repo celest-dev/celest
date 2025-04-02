@@ -84,17 +84,14 @@ CMD [ "/app/kernel_blob.bin" ]
 ''');
 
   String generate() {
-    // TODO(dnys1): Add this database to the project AST so that it's included
-    // in `project.databases`.
-    final hasAuthDatabase = project.auth?.providers.isNotEmpty ?? false;
     return switch (project.sdkConfig.targetSdk) {
       SdkType.flutter => _flutterTemplate.renderString({
           'version': project.sdkConfig.flutter!.version.canonicalizedVersion,
-          'includes_data': project.databases.isNotEmpty || hasAuthDatabase,
+          'includes_data': project.databases.isNotEmpty,
         }),
       SdkType.dart => _dartTemplate.renderString({
           'version': project.sdkConfig.dart.version.canonicalizedVersion,
-          'includes_data': project.databases.isNotEmpty || hasAuthDatabase,
+          'includes_data': project.databases.isNotEmpty,
         }),
       final unknown => unreachable('Unknown SDK: $unknown'),
     };

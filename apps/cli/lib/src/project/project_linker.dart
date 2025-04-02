@@ -4,7 +4,7 @@ import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cloud_auth/celest_cloud_auth.dart'
-    show AuthenticationService;
+    show AuthenticationService, UsersService;
 
 extension on CloudFunction {
   EntityUid get uid => EntityUid.of('Celest::Function', '$apiName/$name');
@@ -231,7 +231,11 @@ final class ProjectLinker extends AstVisitorWithArg<Node?, AstNode> {
     // Celest backend.
     if (auth.providers.isNotEmpty) {
       final authService = AuthenticationService.api;
-      _resolvedProject.apis[authService.apiId] = authService;
+      final usersService = UsersService.api;
+      _resolvedProject.apis.addAll({
+        authService.apiId: authService,
+        usersService.apiId: usersService,
+      });
     }
 
     return ResolvedAuth.build((b) {
@@ -334,14 +338,7 @@ final class ProjectLinker extends AstVisitorWithArg<Node?, AstNode> {
             token: ResolvedSecret(name: token.name, value: ''),
           ),
       };
-      b.schema = switch (database.schema) {
-        // TODO(dnys1): Use drift_dev to resolve the schema.
-        DriftDatabaseSchema() => ResolvedDriftDatabaseSchema(
-            databaseSchemaId: database.name,
-            version: 1,
-            schemaJson: {},
-          ),
-      };
+      b.schema = visitDatabaseSchema(database.schema, database);
     });
   }
 
@@ -350,7 +347,13 @@ final class ProjectLinker extends AstVisitorWithArg<Node?, AstNode> {
     DatabaseSchema schema,
     Database context,
   ) {
-    // TODO: implement visitSchema
-    throw UnimplementedError();
+    return switch (schema) {
+      // TODO(dnys1): Use drift_dev to resolve the schema.
+      DriftDatabaseSchema() => ResolvedDriftDatabaseSchema(
+          databaseSchemaId: context.name,
+          version: schema.version,
+          schemaJson: {},
+        ),
+    };
   }
 }

@@ -18,7 +18,7 @@ class CelestAuth {
   /// Initializes the Celest Auth service in the given [context].
   static Future<void> init(_$celest.Context context) async {
     final service =
-        await _$celest.CelestCloudAuth.create(database: celest.data.cloudAuth);
+        await _$celest.CelestCloudAuth.create(database: celest.data.database);
     context.router.mount(
       '/v1alpha1/auth/',
       service.handler,

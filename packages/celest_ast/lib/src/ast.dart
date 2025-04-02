@@ -1091,7 +1091,7 @@ abstract class DriftDatabaseSchema
         DatabaseSchema {
   factory DriftDatabaseSchema({
     required TypeReference declaration,
-    int version = 1,
+    required int version,
     required FileSpan location,
   }) {
     return _$DriftDatabaseSchema._(

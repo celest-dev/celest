@@ -6,22 +6,41 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:built_value/built_value.dart' as _$built_value_built_value;
+import 'package:cedar/src/authorization/authorization_response.dart'
+    as _$cedar_authorization_response;
+import 'package:cedar/src/model/errors.dart' as _$cedar_errors;
+import 'package:cedar/src/model/value.dart' as _$cedar_value;
 import 'package:celest_backend/src/database/task_database.dart';
+import 'package:celest_backend/src/database/task_database.drift.dart';
 import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
 import 'package:celest_core/src/serialization/json_value.dart' as _$celest;
+import 'package:chunked_stream/src/read_chunked_stream.dart'
+    as _$chunked_stream_read_chunked_stream;
+import 'package:corks_cedar/src/exceptions.dart' as _$corks_cedar_exceptions;
 import 'package:drift/src/remote/communication.dart' as _$drift_communication;
 import 'package:drift/src/runtime/cancellation_zone.dart'
     as _$drift_cancellation_zone;
 import 'package:drift/src/runtime/exceptions.dart' as _$drift_exceptions;
 import 'package:hrana/src/exception.dart' as _$hrana_exception;
 import 'package:http/src/exception.dart' as _$http_exception;
+import 'package:mustache_template/src/template_exception.dart'
+    as _$mustache_template_template_exception;
 import 'package:path/src/path_exception.dart' as _$path_path_exception;
+import 'package:petitparser/src/core/exception.dart' as _$petitparser_exception;
+import 'package:petitparser/src/core/result.dart' as _$petitparser_result;
 import 'package:shelf/src/hijack_exception.dart' as _$shelf_hijack_exception;
+import 'package:source_span/src/location.dart' as _$source_span_location;
+import 'package:source_span/src/span.dart' as _$source_span_span;
+import 'package:source_span/src/span_exception.dart'
+    as _$source_span_span_exception;
 import 'package:sqlite3/src/exception.dart' as _$sqlite3_exception;
 import 'package:sqlite3/src/vfs.dart' as _$sqlite3_vfs;
+import 'package:string_scanner/src/exception.dart'
+    as _$string_scanner_exception;
 
 void initSerializers({_$celest.Serializers? serializers}) {
   return runZoned(
@@ -470,6 +489,140 @@ void initSerializers({_$celest.Serializers? serializers}) {
           return IsolateSpawnException(($serialized[r'message'] as String));
         },
       ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$built_value_built_value.BuiltValueMissingGenericsError,
+          Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'type': $value.type,
+          r'parameter': $value.parameter,
+        },
+        deserialize: ($serialized) {
+          return _$built_value_built_value.BuiltValueMissingGenericsError(
+            ($serialized[r'type'] as String),
+            ($serialized[r'parameter'] as String),
+          );
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$built_value_built_value.BuiltValueNestedFieldError,
+          Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'type': $value.type,
+          r'field': $value.field,
+          r'error': $value.error,
+        },
+        deserialize: ($serialized) {
+          return _$built_value_built_value.BuiltValueNestedFieldError(
+            ($serialized[r'type'] as String),
+            ($serialized[r'field'] as String),
+            ($serialized[r'error'] as String),
+          );
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$built_value_built_value.BuiltValueNullFieldError,
+          Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'type': $value.type,
+          r'field': $value.field,
+        },
+        deserialize: ($serialized) {
+          return _$built_value_built_value.BuiltValueNullFieldError(
+            ($serialized[r'type'] as String),
+            ($serialized[r'field'] as String),
+          );
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$cedar_authorization_response.AuthorizationException,
+          Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          if ($value.policyId case final policyId?) r'policyId': policyId,
+          r'message': $value.message,
+        },
+        deserialize: ($serialized) {
+          return _$cedar_authorization_response.AuthorizationException.fromJson(
+              $serialized);
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$cedar_errors.ArityException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'name': $value.name,
+          r'expected': $value.expected,
+          r'actual': $value.actual,
+        },
+        deserialize: ($serialized) {
+          return _$cedar_errors.ArityException(
+            ($serialized[r'name'] as String),
+            ($serialized[r'expected'] as num).toInt(),
+            ($serialized[r'actual'] as num).toInt(),
+          );
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$cedar_errors.AttributeAccessException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'type': $value.type,
+          r'attribute': $value.attribute,
+        },
+        deserialize: ($serialized) {
+          return _$cedar_errors.AttributeAccessException(
+            ($serialized[r'type'] as String),
+            ($serialized[r'attribute'] as String),
+          );
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$cedar_errors.EntityNotFoundException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'entityId': _$celest.Serializers.instance
+              .serialize<_$cedar_value.EntityUid>($value.entityId)
+        },
+        deserialize: ($serialized) {
+          return _$cedar_errors.EntityNotFoundException(_$celest
+              .Serializers.instance
+              .deserialize<_$cedar_value.EntityUid>($serialized[r'entityId']));
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$cedar_errors.OverflowException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return _$cedar_errors.OverflowException(
+              ($serialized[r'message'] as String));
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$cedar_errors.TypeException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return _$cedar_errors.TypeException(
+              ($serialized[r'message'] as String));
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$cedar_errors.UnknownExtensionException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'name': $value.name},
+        deserialize: ($serialized) {
+          return _$cedar_errors.UnknownExtensionException(
+              ($serialized[r'name'] as String));
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$cedar_errors.UnspecifiedEntityException, Map<String, Object?>?>(
+        serialize: ($value) => const <String, Object?>{},
+        deserialize: ($serialized) {
+          return _$cedar_errors.UnspecifiedEntityException();
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$cedar_value.EntityUid, Map<String, Object?>>(
+        serialize: ($value) => $value.toJson(),
+        deserialize: ($serialized) {
+          return _$cedar_value.EntityUid.fromJson($serialized);
+        },
+      ));
       _$celest.Serializers.instance
           .put(_$celest.Serializer.define<Priority, String>(
         serialize: ($value) => $value.name,
@@ -895,6 +1048,35 @@ void initSerializers({_$celest.Serializers? serializers}) {
         const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       );
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$chunked_stream_read_chunked_stream.MaximumSizeExceeded,
+          Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'maxSize': $value.maxSize},
+        deserialize: ($serialized) {
+          return _$chunked_stream_read_chunked_stream.MaximumSizeExceeded(
+              ($serialized[r'maxSize'] as num).toInt());
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$corks_cedar_exceptions.InvalidCorkException, Map<String, Object?>?>(
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          r'source': $value.source,
+          if ($value.offset case final offset?) r'offset': offset,
+        },
+        deserialize: ($serialized) {
+          return _$corks_cedar_exceptions.InvalidCorkException(
+              (($serialized?[r'message'] as String?)) ?? '');
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$corks_cedar_exceptions.MissingSignatureError,
+          Map<String, Object?>?>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return _$corks_cedar_exceptions.MissingSignatureError();
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
           _$drift_communication.ConnectionClosedException,
           Map<String, Object?>?>(
         serialize: ($value) => const <String, Object?>{},
@@ -982,6 +1164,28 @@ void initSerializers({_$celest.Serializers? serializers}) {
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$mustache_template_template_exception.TemplateException,
+          Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          if ($value.templateName case final templateName?)
+            r'templateName': templateName,
+          if ($value.source case final source?) r'source': source,
+          if ($value.offset case final offset?) r'offset': offset,
+          r'line': $value.line,
+          r'column': $value.column,
+          r'context': $value.context,
+        },
+        deserialize: ($serialized) {
+          return _$mustache_template_template_exception.TemplateException(
+            ($serialized[r'message'] as String),
+            ($serialized[r'templateName'] as String?),
+            ($serialized[r'source'] as String?),
+            ($serialized[r'offset'] as num?)?.toInt(),
+          );
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
           _$path_path_exception.PathException, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{r'message': $value.message},
         deserialize: ($serialized) {
@@ -990,10 +1194,129 @@ void initSerializers({_$celest.Serializers? serializers}) {
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$petitparser_exception.ParserException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'failure': _$celest.Serializers.instance
+              .serialize<_$petitparser_result.Failure>($value.failure),
+          r'message': $value.message,
+          r'offset': $value.offset,
+          r'source': $value.source,
+        },
+        deserialize: ($serialized) {
+          return _$petitparser_exception.ParserException(_$celest
+              .Serializers.instance
+              .deserialize<_$petitparser_result.Failure>(
+                  $serialized[r'failure']));
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$petitparser_result.Failure, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'buffer': $value.buffer,
+          r'position': $value.position,
+          r'isSuccess': $value.isSuccess,
+          r'isFailure': $value.isFailure,
+          r'message': $value.message,
+        },
+        deserialize: ($serialized) {
+          return _$petitparser_result.Failure(
+            ($serialized[r'buffer'] as String),
+            ($serialized[r'position'] as num).toInt(),
+            ($serialized[r'message'] as String),
+          );
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
           _$shelf_hijack_exception.HijackException, Map<String, Object?>?>(
         serialize: ($value) => const <String, Object?>{},
         deserialize: ($serialized) {
           return _$shelf_hijack_exception.HijackException();
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$source_span_location.SourceLocation, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          if (_$celest.Serializers.instance.serialize<Uri?>($value.sourceUrl)
+              case final sourceUrl?)
+            r'sourceUrl': sourceUrl,
+          r'offset': $value.offset,
+          r'line': $value.line,
+          r'column': $value.column,
+          r'toolString': $value.toolString,
+        },
+        deserialize: ($serialized) {
+          return _$source_span_location.SourceLocation(
+            ($serialized[r'offset'] as num).toInt(),
+            sourceUrl: $serialized[r'sourceUrl'],
+            line: ($serialized[r'line'] as num?)?.toInt(),
+            column: ($serialized[r'column'] as num?)?.toInt(),
+          );
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$source_span_span.SourceSpan, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'start': _$celest.Serializers.instance
+              .serialize<_$source_span_location.SourceLocation>($value.start),
+          r'end': _$celest.Serializers.instance
+              .serialize<_$source_span_location.SourceLocation>($value.end),
+          r'text': $value.text,
+          if (_$celest.Serializers.instance.serialize<Uri?>($value.sourceUrl)
+              case final sourceUrl?)
+            r'sourceUrl': sourceUrl,
+          r'length': $value.length,
+        },
+        deserialize: ($serialized) {
+          return _$source_span_span.SourceSpan(
+            _$celest.Serializers.instance
+                .deserialize<_$source_span_location.SourceLocation>(
+                    $serialized[r'start']),
+            _$celest.Serializers.instance
+                .deserialize<_$source_span_location.SourceLocation>(
+                    $serialized[r'end']),
+            ($serialized[r'text'] as String),
+          );
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$source_span_span_exception.SourceSpanException,
+          Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          if (_$celest.Serializers.instance
+                  .serialize<_$source_span_span.SourceSpan?>($value.span)
+              case final span?)
+            r'span': span,
+        },
+        deserialize: ($serialized) {
+          return _$source_span_span_exception.SourceSpanException(
+            ($serialized[r'message'] as String),
+            _$celest.Serializers.instance
+                .deserialize<_$source_span_span.SourceSpan?>(
+                    $serialized[r'span']),
+          );
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$source_span_span_exception.SourceSpanFormatException,
+          Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          if (_$celest.Serializers.instance
+                  .serialize<_$source_span_span.SourceSpan?>($value.span)
+              case final span?)
+            r'span': span,
+          r'source': $value.source,
+          if ($value.offset case final offset?) r'offset': offset,
+        },
+        deserialize: ($serialized) {
+          return _$source_span_span_exception.SourceSpanFormatException(
+            ($serialized[r'message'] as String),
+            _$celest.Serializers.instance
+                .deserialize<_$source_span_span.SourceSpan?>(
+                    $serialized[r'span']),
+            $serialized[r'source'],
+          );
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
@@ -1031,6 +1354,31 @@ void initSerializers({_$celest.Serializers? serializers}) {
         deserialize: ($serialized) {
           return _$sqlite3_vfs.VfsException(
               ($serialized[r'returnCode'] as num).toInt());
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$string_scanner_exception.StringScannerException,
+          Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          if (_$celest.Serializers.instance
+                  .serialize<_$source_span_span.SourceSpan?>($value.span)
+              case final span?)
+            r'span': span,
+          if ($value.offset case final offset?) r'offset': offset,
+          r'source': $value.source,
+          if (_$celest.Serializers.instance.serialize<Uri?>($value.sourceUrl)
+              case final sourceUrl?)
+            r'sourceUrl': sourceUrl,
+        },
+        deserialize: ($serialized) {
+          return _$string_scanner_exception.StringScannerException(
+            ($serialized[r'message'] as String),
+            _$celest.Serializers.instance
+                .deserialize<_$source_span_span.SourceSpan>(
+                    $serialized[r'span']),
+            ($serialized[r'source'] as String),
+          );
         },
       ));
     },

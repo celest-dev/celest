@@ -8,7 +8,8 @@ import 'package:celest/celest.dart' as _i7;
 import 'package:celest/src/core/context.dart' as _i3;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/src/functions/public_lib.dart' as _i4;
-import 'package:celest_backend/src/generated/auth.celest.dart' as _i13;
+import 'package:celest_backend/src/generated/auth.celest.dart' as _i14;
+import 'package:celest_backend/src/generated/data.celest.dart' as _i13;
 import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _i2;
 import 'package:celest_core/celest_core.dart' as _i6;
 import 'package:celest_core/src/auth/user.dart' as _i11;
@@ -1599,7 +1600,8 @@ Future<void> start() async {
   await _i1.serve(
     targets: {'/': StreamHelloTarget()},
     setup: (_i3.Context context) async {
-      await _i13.CelestAuth.init(context);
+      await _i13.CelestData.init(context);
+      await _i14.CelestAuth.init(context);
     },
   );
 }

@@ -6,6 +6,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:celest/src/core/context.dart' as _$celest;
 import 'package:celest_backend/src/generated/config.celest.dart';
+import 'package:celest_backend/src/generated/data.celest.dart';
 
 /// The interface to your Celest backend.
 ///
@@ -38,6 +39,12 @@ class CelestCloud {
   /// This class provides access to the values configured for the
   /// [currentEnvironment].
   CelestVariables get variables => const CelestVariables();
+
+  /// The data services for the Celest backend.
+  ///
+  /// This class provides access to the databases that are configured
+  /// for the [currentEnvironment].
+  CelestData get data => const CelestData();
 }
 
 /// A per-request context object which propogates request information and common

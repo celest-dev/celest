@@ -9,11 +9,9 @@ Future<Task> create({
   Priority priority = Priority.high,
 }) async {
   final db = celest.data.database;
-  final task = await db.transaction(() async {
-    return db.into(db.tasks).insertReturning(
-          TasksCompanion.insert(title: title, priority: priority),
-        );
-  });
+  final task = await db.managers.tasks.createReturning(
+    (task) => task(title: title, priority: priority),
+  );
   print('Created task: $task');
   return task;
 }

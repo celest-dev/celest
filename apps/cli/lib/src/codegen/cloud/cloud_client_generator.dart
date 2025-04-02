@@ -36,17 +36,16 @@ final class CloudClientGenerator {
       ..name = ''
       ..comments.addAll(kClientHeader)
       ..body.addAll([_dataClass]);
-    _authLibrary = LibraryBuilder()
-      ..name = ''
-      ..comments.addAll(kClientHeader)
-      ..body.addAll([_authClass]);
   }
 
   final ast.Project project;
   late final LibraryBuilder _library;
   late final LibraryBuilder _configLibrary;
   late final LibraryBuilder _dataLibrary;
-  late final LibraryBuilder _authLibrary;
+  late final LibraryBuilder _authLibrary = LibraryBuilder()
+    ..name = ''
+    ..comments.addAll(kClientHeader)
+    ..body.addAll([_authClass]);
 
   final _client = Field(
     (f) => f
@@ -449,6 +448,8 @@ final class CloudClientGenerator {
   });
 
   late final _authClass = Class((b) {
+    final hasCloudAuth = project.auth?.providers.isNotEmpty ?? false;
+
     b
       ..name = CloudClientTypes.authClass.name
       ..docs.addAll([
@@ -476,34 +477,22 @@ final class CloudClientGenerator {
               '/// Initializes the Celest Auth service in the given [context].',
             ])
             ..body = Block((b) {
-              final database = declareFinal('database').assign(
-                refer('connect', 'package:celest/src/runtime/data/connect.dart')
-                    .call(
-                  [refer('context')],
-                  {
-                    'name': literalString('CelestAuthDatabase'),
-                    'factory': refer(
-                      'AuthDatabase',
-                      'package:celest_cloud_auth/celest_cloud_auth.dart',
-                    ).property('new'),
-                    'hostnameVariable':
-                        DartTypes.celest.environmentVariable.constInstance([
-                      literalString('CELEST_AUTH_DATABASE_HOST'),
-                    ]),
-                    'tokenSecret': DartTypes.celest.secret.constInstance([
-                      literalString('CELEST_AUTH_DATABASE_TOKEN'),
-                    ]),
-                  },
-                ).awaited,
+              if (!hasCloudAuth) {
+                return;
+              }
+              assert(
+                project.databases.isNotEmpty,
+                'When using Cloud Auth, we should always have a database for it',
               );
-              b.addExpression(database);
               b.addExpression(
                 declareFinal('service').assign(
                   refer(
                     'CelestCloudAuth',
                     'package:celest_cloud_auth/celest_cloud_auth.dart',
                   ).property('create').call([], {
-                    'database': refer('database'),
+                    'database': refer('celest', CloudPaths.client.toString())
+                        .property('data')
+                        .property(project.databases.values.single.dartName),
                   }).awaited,
                 ),
               );

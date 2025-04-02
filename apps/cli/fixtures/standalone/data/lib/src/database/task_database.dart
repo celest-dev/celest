@@ -1,6 +1,9 @@
+import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:drift/drift.dart';
 
-part 'task_database.g.dart';
+import 'task_database.drift.dart';
+
+export 'task_database.drift.dart';
 
 enum Priority { low, medium, high }
 
@@ -11,8 +14,8 @@ class Tasks extends Table {
   BoolColumn get completed => boolean().withDefault(const Constant(false))();
 }
 
-@DriftDatabase(tables: [Tasks])
-class TaskDatabase extends _$TaskDatabase {
+@DriftDatabase(tables: [Tasks], include: CloudAuthDatabaseMixin.includes)
+class TaskDatabase extends $TaskDatabase with CloudAuthDatabaseMixin {
   TaskDatabase(super.e);
 
   @override

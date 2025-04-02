@@ -3,7 +3,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:celest/src/core/context.dart' as _i12;
 import 'package:celest/src/runtime/serve.dart' as _i1;
-import 'package:celest_backend/src/generated/auth.celest.dart' as _i13;
+import 'package:celest_backend/src/generated/auth.celest.dart' as _i14;
+import 'package:celest_backend/src/generated/data.celest.dart' as _i13;
 
 import 'functions/authenticated_lib/sayHello.dart' as _i2;
 import 'functions/authenticated_lib/streamHello.dart' as _i3;
@@ -35,7 +36,8 @@ Future<void> start() async {
       '/public-lib/stream-hello': _i11.StreamHelloTarget(),
     },
     setup: (_i12.Context context) async {
-      await _i13.CelestAuth.init(context);
+      await _i13.CelestData.init(context);
+      await _i14.CelestAuth.init(context);
     },
   );
 }
