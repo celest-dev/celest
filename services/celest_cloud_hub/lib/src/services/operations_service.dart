@@ -11,10 +11,12 @@ import 'package:celest_cloud/src/proto/google/rpc/status.pb.dart' as pb;
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/model/page_token.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
-import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart' as dto;
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
+import 'package:celest_cloud_hub/src/database/schema/operations.drift.dart'
+    as dto;
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
 import 'package:celest_cloud_hub/src/model/type_registry.dart';
+import 'package:celest_core/celest_core.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:grpc/grpc.dart';
@@ -65,9 +67,20 @@ final class OperationsService extends OperationsServiceBase {
       ),
     },
     policySet: PolicySet(
+      policies: {
+        'google.longrunning.Operations/GetOperation': Policy.parse('''
+permit (
+  principal,
+  action == Celest::Action::"get",
+  resource is Celest::Operation
+) when {
+  resource in principal
+};
+'''),
+      },
       templateLinks: [
         TemplateLink(
-          templateId: 'cloud.functions.public',
+          templateId: 'cloud.functions.authenticated',
           newId: OperationsService.apiId,
           values: {SlotId.resource: OperationsService.apiUid},
         ),
@@ -93,29 +106,34 @@ final class OperationsService extends OperationsServiceBase {
       ['operations', final id] => id,
       _ => throw GrpcError.invalidArgument('Invalid operation name'),
     };
-    final operation = await _db.getOperation(id: id).getSingleOrNull();
+    final operation =
+        await _db.operationsDrift.getOperation(id: id).getSingleOrNull();
+    if (operation == null) {
+      throw GrpcError.notFound();
+    }
     final resource = Entity(
       uid: EntityUid.of('Celest::Operation', id),
       parents: [
-        if ((operation?.resourceType, operation?.resourceId) case (
+        if ((operation.resourceType, operation.resourceId) case (
           final resourceType?,
           final resourceId?,
         ))
           EntityUid.of(resourceType, resourceId),
-        if ((operation?.ownerType, operation?.ownerId) case (
+        if ((operation.ownerType, operation.ownerId) case (
           final ownerType?,
           final ownerId?,
         ))
           EntityUid.of(ownerType, ownerId),
       ],
     );
-    await _authorizer.expectAuthorized(
-      principal: call.principal,
-      resource: resource,
-      action: EntityUid.of('Celest::Action', 'get'),
-    );
-    if (operation == null) {
-      throw GrpcError.notFound('Operation not found');
+    try {
+      await _authorizer.expectAuthorized(
+        principal: call.principal,
+        resource: resource,
+        action: EntityUid.of('Celest::Action', 'get'),
+      );
+    } on CloudException catch (e, st) {
+      Error.throwWithStackTrace(e.toGrpcError(), st);
     }
     return operation.toProto();
   }
@@ -247,9 +265,10 @@ final class OperationsService extends OperationsServiceBase {
       if (call.isCanceled) {
         throw GrpcError.cancelled('Operation cancelled');
       }
-      final result = _db.computeWithDatabase<Result<CelestOperation>>(
+      final result = _db.computeWithDatabase<Result<dto.CelestOperation>>(
         computation: (db) async {
-          final operation = await db.getOperation(id: id).getSingleOrNull();
+          final operation =
+              await db.operationsDrift.getOperation(id: id).getSingleOrNull();
           if (operation == null) {
             return Result.error(GrpcError.notFound('Operation not found'));
           }

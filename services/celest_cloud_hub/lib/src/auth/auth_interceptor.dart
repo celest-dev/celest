@@ -1,7 +1,6 @@
-import 'package:cedar/cedar.dart';
+import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
-import 'package:celest_cloud_auth/src/database/auth_database.dart';
 import 'package:celest_cloud_auth/src/model/cookie.dart';
 import 'package:celest_cloud_auth/src/model/interop.dart';
 import 'package:celest_core/celest_core.dart' as core;
@@ -11,7 +10,7 @@ import 'package:corks_cedar/corks_cedar.dart';
 import 'package:grpc/grpc.dart';
 import 'package:meta/meta.dart';
 
-typedef _Deps = ({CorksRepository corks, AuthDatabase db});
+typedef _Deps = ({CorksRepository corks, CloudAuthDatabaseAccessors db});
 
 /// {@template celest_cloud_auth.request_authorizer}
 /// A middleware that authorizes requests based on the current policy set.
@@ -20,11 +19,11 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
   /// {@macro celest_cloud_auth.request_authorizer}
   AuthorizationMiddleware({
     required CorksRepository corks,
-    required AuthDatabase db,
+    required CloudAuthDatabaseAccessors db,
   }) : this._((corks: corks, db: db));
 
   CorksRepository get _corks => _deps.corks;
-  AuthDatabase get _db => _deps.db;
+  CloudAuthDatabaseAccessors get _db => _deps.db;
 
   /// Authenticates the request and returns the user if the request is
   /// authorized.

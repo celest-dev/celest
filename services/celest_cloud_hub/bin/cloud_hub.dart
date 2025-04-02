@@ -34,20 +34,6 @@ Future<void> main() async {
 
   context.logger.config('Starting Cloud Hub');
 
-  context.logger.config('Configuring Auth database');
-  final authDb = await connect(
-    Context.current,
-    name: 'AuthDatabase',
-    factory: AuthDatabase.new,
-    hostnameVariable: const env('AUTH_DATABASE_HOST'),
-    tokenSecret: const secret('AUTH_DATABASE_TOKEN'),
-  );
-  await authDb.ping();
-
-  final issuer = EntityUid.of('Celest::Service', 'cloud-hub');
-  final authorizer = Authorizer(db: authDb);
-  final cryptoKeys = await CryptoKeyRepository.create(db: authDb);
-
   context.logger.config('Configuring Cloud Hub database');
   final db = await connect(
     Context.current,
@@ -59,9 +45,13 @@ Future<void> main() async {
   );
   await db.ping();
 
+  final issuer = EntityUid.of('Celest::Service', 'cloud-hub');
+  final authorizer = Authorizer(db: db);
+  final cryptoKeys = await CryptoKeyRepository.create(db: db);
+
   final authMiddleware = AuthorizationMiddleware(
-    corks: CorksRepository(issuer: issuer, db: authDb, cryptoKeys: cryptoKeys),
-    db: authDb,
+    corks: CorksRepository(issuer: issuer, db: db, cryptoKeys: cryptoKeys),
+    db: db.cloudAuth,
   );
 
   final server = grpc.Server.create(
@@ -91,7 +81,7 @@ Future<void> main() async {
   );
 
   final gateway = await Gateway.create(
-    authDb: authDb,
+    db: db,
     grpcAddress: grpcAddress,
     port: switch (Platform.environment['PORT']) {
       final port? =>
@@ -117,7 +107,7 @@ Future<void> main() async {
     },
   );
 
-  context.logger.info('Serving on http://0.0.0.0:${gateway.port}');
+  print('Serving on http://0.0.0.0:${gateway.port}');
 
   final signal =
       await StreamGroup.merge([
@@ -128,7 +118,6 @@ Future<void> main() async {
 
   await server.shutdown();
   await gateway.close();
-  await authDb.close();
   await db.close();
   context.logger.fine('Server stopped');
 }
