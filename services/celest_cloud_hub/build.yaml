@@ -9,6 +9,8 @@ targets:
       # Instead, enable drift_dev:analyzer and drift_dev:modular manually:
       drift_dev:analyzer:
         enabled: true
+        generate_for:
+          - lib/src/database/**
         options: &options
           sql:
             dialect: sqlite
@@ -19,5 +21,7 @@ targets:
           store_date_time_values_as_text: false
       drift_dev:modular:
         enabled: true
+        generate_for:
+          - lib/src/database/**
         # We use yaml anchors to give the two builders the same options
         options: *options

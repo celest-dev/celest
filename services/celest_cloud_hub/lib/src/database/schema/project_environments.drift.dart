@@ -836,9 +836,6 @@ class ProjectEnvironments extends i0.Table
         requiredDuringInsert: true,
         $customConstraints: 'NOT NULL',
       );
-  static const i0.VerificationMeta _stateMeta = const i0.VerificationMeta(
-    'state',
-  );
   late final i0.GeneratedColumnWithTypeConverter<i2.LifecycleState, int> state =
       i0.GeneratedColumn<int>(
         'state',
@@ -1006,7 +1003,6 @@ class ProjectEnvironments extends i0.Table
     } else if (isInserting) {
       context.missing(_projectEnvironmentIdMeta);
     }
-    context.handle(_stateMeta, const i0.VerificationResult.success());
     if (data.containsKey('display_name')) {
       context.handle(
         _displayNameMeta,

@@ -23,23 +23,14 @@ CelestReleasesInfo _$CelestReleasesInfoFromJson(Map<String, dynamic> json) =>
       ),
     );
 
-Map<String, dynamic> _$CelestReleasesInfoToJson(CelestReleasesInfo instance) {
-  final val = <String, dynamic>{
-    'schemaVersion':
-        _$CelestReleaseSchemaVersionEnumMap[instance.schemaVersion]!,
-    'latest': instance.latest.toJson(),
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('latestDev', instance.latestDev?.toJson());
-  val['releases'] = instance.releases.map((k, e) => MapEntry(k, e.toJson()));
-  return val;
-}
+Map<String, dynamic> _$CelestReleasesInfoToJson(CelestReleasesInfo instance) =>
+    <String, dynamic>{
+      'schemaVersion':
+          _$CelestReleaseSchemaVersionEnumMap[instance.schemaVersion]!,
+      'latest': instance.latest.toJson(),
+      if (instance.latestDev?.toJson() case final value?) 'latestDev': value,
+      'releases': instance.releases.map((k, e) => MapEntry(k, e.toJson())),
+    };
 
 const _$CelestReleaseSchemaVersionEnumMap = {
   CelestReleaseSchemaVersion.v1: 'v1',
@@ -52,18 +43,9 @@ CelestReleaseInfo _$CelestReleaseInfoFromJson(Map<String, dynamic> json) =>
       zip: json['zip'] as String?,
     );
 
-Map<String, dynamic> _$CelestReleaseInfoToJson(CelestReleaseInfo instance) {
-  final val = <String, dynamic>{
-    'version': const VersionConverter().toJson(instance.version),
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('zip', instance.zip);
-  writeNotNull('installer', instance.installer);
-  return val;
-}
+Map<String, dynamic> _$CelestReleaseInfoToJson(CelestReleaseInfo instance) =>
+    <String, dynamic>{
+      'version': const VersionConverter().toJson(instance.version),
+      if (instance.zip case final value?) 'zip': value,
+      if (instance.installer case final value?) 'installer': value,
+    };

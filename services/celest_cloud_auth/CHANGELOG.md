@@ -3,6 +3,7 @@
 - feat: Make database modular
 - refactor: Rename `AuthDatabase` to `CloudAuthDatabase`
 - chore: Make `Authorizer` a class
+- chore: Update dependencies
 
 ## 0.2.0
 

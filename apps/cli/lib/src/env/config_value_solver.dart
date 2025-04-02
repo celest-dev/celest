@@ -122,7 +122,7 @@ abstract base class BaseConfigValueSolver {
     await projectDb.withEnvironment(environmentId: environmentId, (
       environment,
     ) async {
-      await projectDb.upsertEnvironmentVariable(
+      await projectDb.projectDrift.upsertEnvironmentVariable(
         environmentId: environment.id,
         name: name,
         value: value,
@@ -141,7 +141,7 @@ abstract base class BaseConfigValueSolver {
         name,
       );
       secureStorage.scoped(scope).write(key, value);
-      await projectDb.upsertSecret(
+      await projectDb.projectDrift.upsertSecret(
         environmentId: environment.id,
         name: name,
         valueRef: '$scope/$key',
