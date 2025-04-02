@@ -18,26 +18,33 @@ import 'package:logging/logging.dart';
 
 final class CloudProtocolGrpc implements CloudProtocol {
   CloudProtocolGrpc({
-    required Uri uri,
+    required Object host,
     required Authenticator authenticator,
     String? userAgent,
     Logger? logger,
   })  : _channel = AuthenticatingGrpcChannel(
-          uri.host,
+          switch (host) {
+            final Uri uri => uri.host,
+            _ => host,
+          },
           authenticator: authenticator,
           options: ChannelOptions(
-            credentials: uri.scheme == 'http'
-                ? const ChannelCredentials.insecure()
-                : const ChannelCredentials.secure(),
+            credentials: switch (host) {
+              Uri(scheme: 'https') => const ChannelCredentials.secure(),
+              _ => const ChannelCredentials.insecure(),
+            },
             userAgent: userAgent ?? 'celest/dart',
           ),
-          port: uri.hasPort
-              ? uri.port
-              : switch (uri.scheme) {
-                  'http' => 80,
-                  'https' => 443,
-                  _ => throw Exception('Unsupported scheme: ${uri.scheme}'),
-                },
+          port: switch (host) {
+            final Uri uri => uri.hasPort
+                ? uri.port
+                : switch (uri.scheme) {
+                    'http' => 80,
+                    'https' => 443,
+                    _ => throw Exception('Unsupported scheme: ${uri.scheme}'),
+                  },
+            _ => 50051,
+          },
         ),
         _interceptors = [
           RevokingGrpcInterceptor(
