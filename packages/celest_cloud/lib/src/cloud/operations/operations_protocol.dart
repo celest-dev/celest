@@ -4,4 +4,5 @@ abstract interface class OperationsProtocol {
   Future<Operation> get(GetOperationRequest request);
   Future<ListOperationsResponse> list(ListOperationsRequest request);
   Future<void> cancel(CancelOperationRequest request);
+  Future<Operation> wait(WaitOperationRequest request);
 }

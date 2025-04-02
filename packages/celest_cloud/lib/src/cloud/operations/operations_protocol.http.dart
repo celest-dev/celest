@@ -94,4 +94,33 @@ final class OperationsProtocolHttp
         typeRegistry: CelestCloud.typeRegistry,
       );
   }
+
+  @override
+  Future<Operation> wait(WaitOperationRequest request) async {
+    if (request.name == '') {
+      throw ArgumentError.value(request.name, 'name', 'must not be empty');
+    }
+    final url = Uri.parse('/v1alpha1/${request.name}:wait');
+    final req = http.Request('POST', url)
+      ..headers['content-type'] = 'application/json'
+      ..headers['accept'] = 'application/json'
+      ..body = jsonEncode(
+        request.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      );
+    final res = await _client.send(req);
+    final body = await res.stream.toBytes();
+    if (res.statusCode != 200) {
+      throwError(
+        statusCode: res.statusCode,
+        bodyBytes: body,
+      );
+    }
+    return Operation()
+      ..mergeFromProto3Json(
+        JsonUtf8.decode(body),
+        typeRegistry: CelestCloud.typeRegistry,
+      );
+  }
 }
