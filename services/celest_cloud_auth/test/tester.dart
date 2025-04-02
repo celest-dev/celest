@@ -7,17 +7,14 @@ import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud/celest_cloud.dart' show CelestCloud, ClientType;
 import 'package:celest_cloud_auth/celest_cloud_auth.dart';
-import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:celest_cloud_auth/src/authorization/authorization_middleware.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/authorization/cedar_interop.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
-import 'package:celest_cloud_auth/src/crypto/crypto_key_model.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
 import 'package:celest_cloud_auth/src/sessions/sessions_repository.dart';
 import 'package:celest_cloud_auth/src/users/users_repository.dart';
-import 'package:celest_cloud_auth/src/users/users_service.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:checks/checks.dart';
@@ -164,7 +161,7 @@ final class AuthorizationTester {
   AuthenticationService get authenticationService =>
       _authService.authenticationService;
   UsersService get usersService => _authService.usersService;
-  AuthDatabase get db => _authService.db;
+  CloudAuthDatabaseAccessors get db => _authService.db.cloudAuth;
   AuthorizationMiddleware get middleware => _authService.middleware;
   Authorizer get authorizer => _authService.authorizer;
   CryptoKeyRepository get cryptoKeys => _authService.cryptoKeys;
@@ -230,7 +227,7 @@ final class AuthorizationTester {
           );
           context.put(ContextKey.project, project);
 
-          AuthDatabase db;
+          CloudAuthDatabase db;
           if (persistData) {
             final directory = context.fileSystem.currentDirectory
                 .childDirectory('.dart_tool')
@@ -239,12 +236,12 @@ final class AuthorizationTester {
               directory.deleteSync(recursive: true);
             }
             directory.createSync();
-            db = AuthDatabase.localDir(
+            db = CloudAuthDatabase.localDir(
               directory,
               verbose: true,
             );
           } else {
-            db = AuthDatabase.memory(
+            db = CloudAuthDatabase.memory(
               verbose: true,
             );
           }
@@ -314,10 +311,10 @@ final class AuthorizationTester {
       user: user,
       session: session,
     );
-    // t.addTearDown(() async {
-    //   await sessions.deleteSession(sessionId: session.sessionId);
-    //   await users.deleteUser(userId: userId!);
-    // });
+    t.addTearDown(() async {
+      await sessions.deleteSession(sessionId: session.sessionId);
+      await users.deleteUser(userId: userId!);
+    });
     return (user, cork);
   }
 }

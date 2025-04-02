@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:cedar/cedar.dart';
 import 'package:drift/drift.dart' hide Value;
 
+// Typedef to avoid conflict with drift.Value in generated code.
+typedef CedarValue = Value;
+
 final class CedarEntityConverter implements TypeConverter<Entity, String> {
   const CedarEntityConverter();
 
@@ -33,18 +36,18 @@ final class CedarEntityUidConverter
 }
 
 final class CedarAttributesConverter
-    implements TypeConverter<Map<String, Value>, String> {
+    implements TypeConverter<Map<String, CedarValue>, String> {
   const CedarAttributesConverter();
 
   @override
-  Map<String, Value> fromSql(String fromDb) {
+  Map<String, CedarValue> fromSql(String fromDb) {
     return (jsonDecode(fromDb) as Map<Object?, Object?>)
         .cast<String, Object?>()
-        .map((key, value) => MapEntry(key, Value.fromJson(value)));
+        .map((key, value) => MapEntry(key, CedarValue.fromJson(value)));
   }
 
   @override
-  String toSql(Map<String, Value> value) {
+  String toSql(Map<String, CedarValue> value) {
     return jsonEncode(value.map((key, value) => MapEntry(key, value.toJson())));
   }
 }

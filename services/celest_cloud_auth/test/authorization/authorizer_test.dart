@@ -68,12 +68,12 @@ void main() {
   });
 
   group('Authorizer', () {
-    late AuthDatabase db;
+    late CloudAuthDatabase db;
     late Authorizer authorizer;
 
     Future<void> createEntities(List<Entity> entities) async {
       for (final entity in entities) {
-        await db.createEntity(entity);
+        await db.cloudAuth.createEntity(entity);
       }
     }
 
@@ -83,7 +83,7 @@ void main() {
       required ResolvedProject project,
     }) {
       setUpAll(() async {
-        db = AuthDatabase.memory(project: project);
+        db = CloudAuthDatabase.memory(project: project);
         await db.ping();
         await createEntities(entities);
         addTearDown(db.close);

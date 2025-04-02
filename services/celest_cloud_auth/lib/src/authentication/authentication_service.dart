@@ -3,13 +3,12 @@ import 'package:cedar/cedar.dart';
 import 'package:celest/src/runtime/http/cloud_middleware.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud/src/proto.dart' as pb;
-import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:celest_cloud_auth/src/authorization/authorization_middleware.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
-import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
 import 'package:celest_cloud_auth/src/http/http_helpers.dart';
 import 'package:celest_cloud_auth/src/model/route_map.dart';
 import 'package:celest_cloud_auth/src/otp/otp_repository.dart';
@@ -25,7 +24,7 @@ import 'package:shelf_router/shelf_router.dart';
 typedef _Deps = ({
   EntityUid issuer,
   RouteMap routeMap,
-  AuthDatabase db,
+  CloudAuthDatabaseMixin db,
   OtpRepository otp,
   CryptoKeyRepository cryptoKeys,
   Authorizer authorizer,
@@ -38,7 +37,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
   AuthenticationService({
     required EntityUid issuer,
     required RouteMap routeMap,
-    required AuthDatabase db,
+    required CloudAuthDatabaseMixin db,
     required OtpRepository otp,
     required CryptoKeyRepository cryptoKeys,
     required Authorizer authorizer,
@@ -59,7 +58,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
           ),
         );
 
-  AuthDatabase get _db => _deps.db;
+  CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
   OtpRepository get _otp => _deps.otp;
   CorksRepository get _corks => _deps.corks;
   SessionsRepository get _sessions => _deps.sessions;

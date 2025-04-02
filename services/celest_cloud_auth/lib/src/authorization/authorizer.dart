@@ -1,17 +1,17 @@
 import 'dart:async';
 
 import 'package:cedar/cedar.dart';
-import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 
 class Authorizer {
-  Authorizer({required AuthDatabase db}) : _db = db;
+  Authorizer({required CloudAuthDatabaseMixin db}) : _db = db.cloudAuth;
 
   static final Logger _logger = Logger('Celest.Authorizer');
 
-  final AuthDatabase _db;
+  final CloudAuthDatabaseAccessors _db;
 
   Future<void> expectAuthorized({
     Component? principal,
@@ -65,6 +65,25 @@ class Authorizer {
       },
     );
     final response = policySet.isAuthorized(request);
+    _logger.finest(() {
+      final buffer = StringBuffer()
+        ..writeln('Request:')
+        ..writeln('  Principal: $principal')
+        ..writeln('  Resource: $resource')
+        ..writeln('  Action: $action');
+
+      final jsonContext = context?.map((k, v) => MapEntry(k, v.toJson()));
+      buffer.writeln('  Context: $jsonContext');
+
+      buffer.writeln('Decision: ${response.decision}');
+      if (response.errors.isNotEmpty) {
+        buffer.writeln('  Errors: ${response.errors.join(', ')}');
+      }
+      if (response.reasons.isNotEmpty) {
+        buffer.writeln('  Reasons: ${response.reasons.join(', ')}');
+      }
+      return buffer;
+    });
     unawaited(_recordAuthorization(request, response));
     return response;
   }

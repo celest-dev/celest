@@ -1,9 +1,8 @@
 import 'dart:typed_data';
 
-import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
-import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
 import 'package:celest_cloud_auth/src/database/schema/auth.drift.dart';
 import 'package:celest_cloud_auth/src/email/email_provider.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
@@ -18,14 +17,14 @@ typedef OtpData = ({
 
 typedef _Deps = ({
   CryptoKeyRepository cryptoKeys,
-  AuthDatabase db,
+  CloudAuthDatabaseMixin db,
 });
 
 /// A provider for generating and verifying OTP codes.
 extension type OtpRepository._(_Deps _deps) implements Object {
   OtpRepository({
     required CryptoKeyRepository cryptoKeys,
-    required AuthDatabase db,
+    required CloudAuthDatabaseMixin db,
   }) : this._(
           (
             cryptoKeys: cryptoKeys,
@@ -34,7 +33,7 @@ extension type OtpRepository._(_Deps _deps) implements Object {
         );
 
   CryptoKeyRepository get _cryptoKeys => _deps.cryptoKeys;
-  AuthDatabase get _db => _deps.db;
+  CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
 
   /// The rate limiting options for resending of an OTP code for a single
   /// session.

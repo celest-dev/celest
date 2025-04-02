@@ -2,9 +2,9 @@
 // ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
 import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i1;
-import 'package:cedar/src/model/value.dart' as i2;
 import 'package:celest_cloud_auth/src/database/schema/converters/cedar_converters.dart'
-    as i3;
+    as i2;
+import 'package:cedar/src/model/value.dart' as i3;
 import 'package:cedar/src/model/policy.dart' as i4;
 import 'package:cedar/src/authorization/authorization_response.dart' as i5;
 import 'package:drift/internal/modular.dart' as i6;
@@ -225,13 +225,13 @@ typedef $CedarEntitiesCreateCompanionBuilder = i1.CedarEntitiesCompanion
     Function({
   required String entityType,
   required String entityId,
-  i0.Value<Map<String, i2.Value>> attributeJson,
+  i0.Value<Map<String, i2.CedarValue>> attributeJson,
 });
 typedef $CedarEntitiesUpdateCompanionBuilder = i1.CedarEntitiesCompanion
     Function({
   i0.Value<String> entityType,
   i0.Value<String> entityId,
-  i0.Value<Map<String, i2.Value>> attributeJson,
+  i0.Value<Map<String, i2.CedarValue>> attributeJson,
 });
 
 final class $CedarEntitiesReferences extends i0
@@ -277,13 +277,13 @@ class $CedarEntitiesFilterComposer
   i0.ColumnFilters<String> get entityId => $composableBuilder(
       column: $table.entityId, builder: (column) => i0.ColumnFilters(column));
 
-  i0.ColumnWithTypeConverterFilters<Map<String, i2.Value>,
-          Map<String, i2.Value>, String>
+  i0.ColumnWithTypeConverterFilters<Map<String, i2.CedarValue>,
+          Map<String, i2.CedarValue>, String>
       get attributeJson => $composableBuilder(
           column: $table.attributeJson,
           builder: (column) => i0.ColumnWithTypeConverterFilters(column));
 
-  i0.ColumnWithTypeConverterFilters<i2.EntityUid, i2.EntityUid, String>
+  i0.ColumnWithTypeConverterFilters<i3.EntityUid, i3.EntityUid, String>
       get entityJson => $composableBuilder(
           column: $table.entityJson,
           builder: (column) => i0.ColumnWithTypeConverterFilters(column));
@@ -366,11 +366,11 @@ class $CedarEntitiesAnnotationComposer
   i0.GeneratedColumn<String> get entityId =>
       $composableBuilder(column: $table.entityId, builder: (column) => column);
 
-  i0.GeneratedColumnWithTypeConverter<Map<String, i2.Value>, String>
+  i0.GeneratedColumnWithTypeConverter<Map<String, i2.CedarValue>, String>
       get attributeJson => $composableBuilder(
           column: $table.attributeJson, builder: (column) => column);
 
-  i0.GeneratedColumnWithTypeConverter<i2.EntityUid, String> get entityJson =>
+  i0.GeneratedColumnWithTypeConverter<i3.EntityUid, String> get entityJson =>
       $composableBuilder(
           column: $table.entityJson, builder: (column) => column);
 
@@ -422,7 +422,7 @@ class $CedarEntitiesTableManager extends i0.RootTableManager<
           updateCompanionCallback: ({
             i0.Value<String> entityType = const i0.Value.absent(),
             i0.Value<String> entityId = const i0.Value.absent(),
-            i0.Value<Map<String, i2.Value>> attributeJson =
+            i0.Value<Map<String, i2.CedarValue>> attributeJson =
                 const i0.Value.absent(),
           }) =>
               i1.CedarEntitiesCompanion(
@@ -433,7 +433,7 @@ class $CedarEntitiesTableManager extends i0.RootTableManager<
           createCompanionCallback: ({
             required String entityType,
             required String entityId,
-            i0.Value<Map<String, i2.Value>> attributeJson =
+            i0.Value<Map<String, i2.CedarValue>> attributeJson =
                 const i0.Value.absent(),
           }) =>
               i1.CedarEntitiesCompanion.insert(
@@ -527,7 +527,7 @@ class $CedarRelationshipsFilterComposer
   i0.ColumnFilters<String> get entityId => $composableBuilder(
       column: $table.entityId, builder: (column) => i0.ColumnFilters(column));
 
-  i0.ColumnWithTypeConverterFilters<i2.EntityUid, i2.EntityUid, String>
+  i0.ColumnWithTypeConverterFilters<i3.EntityUid, i3.EntityUid, String>
       get entityJson => $composableBuilder(
           column: $table.entityJson,
           builder: (column) => i0.ColumnWithTypeConverterFilters(column));
@@ -538,7 +538,7 @@ class $CedarRelationshipsFilterComposer
   i0.ColumnFilters<String> get parentId => $composableBuilder(
       column: $table.parentId, builder: (column) => i0.ColumnFilters(column));
 
-  i0.ColumnWithTypeConverterFilters<i2.EntityUid, i2.EntityUid, String>
+  i0.ColumnWithTypeConverterFilters<i3.EntityUid, i3.EntityUid, String>
       get parentJson => $composableBuilder(
           column: $table.parentJson,
           builder: (column) => i0.ColumnWithTypeConverterFilters(column));
@@ -591,7 +591,7 @@ class $CedarRelationshipsAnnotationComposer
   i0.GeneratedColumn<String> get entityId =>
       $composableBuilder(column: $table.entityId, builder: (column) => column);
 
-  i0.GeneratedColumnWithTypeConverter<i2.EntityUid, String> get entityJson =>
+  i0.GeneratedColumnWithTypeConverter<i3.EntityUid, String> get entityJson =>
       $composableBuilder(
           column: $table.entityJson, builder: (column) => column);
 
@@ -601,7 +601,7 @@ class $CedarRelationshipsAnnotationComposer
   i0.GeneratedColumn<String> get parentId =>
       $composableBuilder(column: $table.parentId, builder: (column) => column);
 
-  i0.GeneratedColumnWithTypeConverter<i2.EntityUid, String> get parentJson =>
+  i0.GeneratedColumnWithTypeConverter<i3.EntityUid, String> get parentJson =>
       $composableBuilder(
           column: $table.parentJson, builder: (column) => column);
 }
@@ -1236,7 +1236,7 @@ typedef $CedarAuthorizationLogsCreateCompanionBuilder
   i0.Value<String?> actionId,
   i0.Value<String?> resourceType,
   i0.Value<String?> resourceId,
-  i0.Value<Map<String, i2.Value>> contextJson,
+  i0.Value<Map<String, i2.CedarValue>> contextJson,
   required bool decision,
   i0.Value<List<String>> reasonsJson,
   i0.Value<i5.AuthorizationErrors> errorsJson,
@@ -1252,7 +1252,7 @@ typedef $CedarAuthorizationLogsUpdateCompanionBuilder
   i0.Value<String?> actionId,
   i0.Value<String?> resourceType,
   i0.Value<String?> resourceId,
-  i0.Value<Map<String, i2.Value>> contextJson,
+  i0.Value<Map<String, i2.CedarValue>> contextJson,
   i0.Value<bool> decision,
   i0.Value<List<String>> reasonsJson,
   i0.Value<i5.AuthorizationErrors> errorsJson,
@@ -1297,8 +1297,8 @@ class $CedarAuthorizationLogsFilterComposer
   i0.ColumnFilters<String> get resourceId => $composableBuilder(
       column: $table.resourceId, builder: (column) => i0.ColumnFilters(column));
 
-  i0.ColumnWithTypeConverterFilters<Map<String, i2.Value>,
-          Map<String, i2.Value>, String>
+  i0.ColumnWithTypeConverterFilters<Map<String, i2.CedarValue>,
+          Map<String, i2.CedarValue>, String>
       get contextJson => $composableBuilder(
           column: $table.contextJson,
           builder: (column) => i0.ColumnWithTypeConverterFilters(column));
@@ -1413,7 +1413,7 @@ class $CedarAuthorizationLogsAnnotationComposer
   i0.GeneratedColumn<String> get resourceId => $composableBuilder(
       column: $table.resourceId, builder: (column) => column);
 
-  i0.GeneratedColumnWithTypeConverter<Map<String, i2.Value>, String>
+  i0.GeneratedColumnWithTypeConverter<Map<String, i2.CedarValue>, String>
       get contextJson => $composableBuilder(
           column: $table.contextJson, builder: (column) => column);
 
@@ -1467,7 +1467,7 @@ class $CedarAuthorizationLogsTableManager extends i0.RootTableManager<
             i0.Value<String?> actionId = const i0.Value.absent(),
             i0.Value<String?> resourceType = const i0.Value.absent(),
             i0.Value<String?> resourceId = const i0.Value.absent(),
-            i0.Value<Map<String, i2.Value>> contextJson =
+            i0.Value<Map<String, i2.CedarValue>> contextJson =
                 const i0.Value.absent(),
             i0.Value<bool> decision = const i0.Value.absent(),
             i0.Value<List<String>> reasonsJson = const i0.Value.absent(),
@@ -1499,7 +1499,7 @@ class $CedarAuthorizationLogsTableManager extends i0.RootTableManager<
             i0.Value<String?> actionId = const i0.Value.absent(),
             i0.Value<String?> resourceType = const i0.Value.absent(),
             i0.Value<String?> resourceId = const i0.Value.absent(),
-            i0.Value<Map<String, i2.Value>> contextJson =
+            i0.Value<Map<String, i2.CedarValue>> contextJson =
                 const i0.Value.absent(),
             required bool decision,
             i0.Value<List<String>> reasonsJson = const i0.Value.absent(),
@@ -1700,16 +1700,17 @@ class CedarEntities extends i0.Table
       type: i0.DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
-  late final i0.GeneratedColumnWithTypeConverter<Map<String, i2.Value>, String>
+  late final i0
+      .GeneratedColumnWithTypeConverter<Map<String, i2.CedarValue>, String>
       attributeJson = i0.GeneratedColumn<String>(
               'attribute_json', aliasedName, false,
               type: i0.DriftSqlType.string,
               requiredDuringInsert: false,
               $customConstraints: 'NOT NULL DEFAULT \'{}\'',
               defaultValue: const i0.CustomExpression('\'{}\''))
-          .withConverter<Map<String, i2.Value>>(
+          .withConverter<Map<String, i2.CedarValue>>(
               i1.CedarEntities.$converterattributeJson);
-  late final i0.GeneratedColumnWithTypeConverter<i2.EntityUid,
+  late final i0.GeneratedColumnWithTypeConverter<i3.EntityUid,
       String> entityJson = i0.GeneratedColumn<String>(
           'entity_json', aliasedName, false,
           generatedAs: i0.GeneratedAs(
@@ -1720,7 +1721,7 @@ class CedarEntities extends i0.Table
           requiredDuringInsert: false,
           $customConstraints:
               'NOT NULL GENERATED ALWAYS AS (json_object(\'type\', entity_type, \'id\', entity_id)) VIRTUAL')
-      .withConverter<i2.EntityUid>(i1.CedarEntities.$converterentityJson);
+      .withConverter<i3.EntityUid>(i1.CedarEntities.$converterentityJson);
   @override
   List<i0.GeneratedColumn> get $columns =>
       [entityType, entityId, attributeJson, entityJson];
@@ -1753,10 +1754,10 @@ class CedarEntities extends i0.Table
     return CedarEntities(attachedDatabase, alias);
   }
 
-  static i0.TypeConverter<Map<String, i2.Value>, String>
-      $converterattributeJson = const i3.CedarAttributesConverter();
-  static i0.TypeConverter<i2.EntityUid, String> $converterentityJson =
-      const i3.CedarEntityUidConverter();
+  static i0.TypeConverter<Map<String, i2.CedarValue>, String>
+      $converterattributeJson = const i2.CedarAttributesConverter();
+  static i0.TypeConverter<i3.EntityUid, String> $converterentityJson =
+      const i2.CedarEntityUidConverter();
   @override
   bool get withoutRowId => true;
   @override
@@ -1778,10 +1779,10 @@ class CedarEntity extends i0.DataClass
   /// The attributes of the entity.
   ///
   /// These should only be static attributes that are needed for authorization decisions.
-  final Map<String, i2.Value> attributeJson;
+  final Map<String, i2.CedarValue> attributeJson;
 
   /// A JSON representation of the entity.
-  final i2.EntityUid entityJson;
+  final i3.EntityUid entityJson;
   const CedarEntity(
       {required this.entityType,
       required this.entityId,
@@ -1805,9 +1806,9 @@ class CedarEntity extends i0.DataClass
     return CedarEntity(
       entityType: serializer.fromJson<String>(json['entity_type']),
       entityId: serializer.fromJson<String>(json['entity_id']),
-      attributeJson:
-          serializer.fromJson<Map<String, i2.Value>>(json['attribute_json']),
-      entityJson: serializer.fromJson<i2.EntityUid>(json['entity_json']),
+      attributeJson: serializer
+          .fromJson<Map<String, i2.CedarValue>>(json['attribute_json']),
+      entityJson: serializer.fromJson<i3.EntityUid>(json['entity_json']),
     );
   }
   @override
@@ -1816,16 +1817,17 @@ class CedarEntity extends i0.DataClass
     return <String, dynamic>{
       'entity_type': serializer.toJson<String>(entityType),
       'entity_id': serializer.toJson<String>(entityId),
-      'attribute_json': serializer.toJson<Map<String, i2.Value>>(attributeJson),
-      'entity_json': serializer.toJson<i2.EntityUid>(entityJson),
+      'attribute_json':
+          serializer.toJson<Map<String, i2.CedarValue>>(attributeJson),
+      'entity_json': serializer.toJson<i3.EntityUid>(entityJson),
     };
   }
 
   i1.CedarEntity copyWith(
           {String? entityType,
           String? entityId,
-          Map<String, i2.Value>? attributeJson,
-          i2.EntityUid? entityJson}) =>
+          Map<String, i2.CedarValue>? attributeJson,
+          i3.EntityUid? entityJson}) =>
       i1.CedarEntity(
         entityType: entityType ?? this.entityType,
         entityId: entityId ?? this.entityId,
@@ -1859,7 +1861,7 @@ class CedarEntity extends i0.DataClass
 class CedarEntitiesCompanion extends i0.UpdateCompanion<i1.CedarEntity> {
   final i0.Value<String> entityType;
   final i0.Value<String> entityId;
-  final i0.Value<Map<String, i2.Value>> attributeJson;
+  final i0.Value<Map<String, i2.CedarValue>> attributeJson;
   const CedarEntitiesCompanion({
     this.entityType = const i0.Value.absent(),
     this.entityId = const i0.Value.absent(),
@@ -1886,7 +1888,7 @@ class CedarEntitiesCompanion extends i0.UpdateCompanion<i1.CedarEntity> {
   i1.CedarEntitiesCompanion copyWith(
       {i0.Value<String>? entityType,
       i0.Value<String>? entityId,
-      i0.Value<Map<String, i2.Value>>? attributeJson}) {
+      i0.Value<Map<String, i2.CedarValue>>? attributeJson}) {
     return i1.CedarEntitiesCompanion(
       entityType: entityType ?? this.entityType,
       entityId: entityId ?? this.entityId,
@@ -1937,7 +1939,7 @@ class CedarRelationships extends i0.Table
       type: i0.DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
-  late final i0.GeneratedColumnWithTypeConverter<i2.EntityUid,
+  late final i0.GeneratedColumnWithTypeConverter<i3.EntityUid,
       String> entityJson = i0.GeneratedColumn<String>(
           'entity_json', aliasedName, false,
           generatedAs: i0.GeneratedAs(
@@ -1948,7 +1950,7 @@ class CedarRelationships extends i0.Table
           requiredDuringInsert: false,
           $customConstraints:
               'NOT NULL GENERATED ALWAYS AS (json_object(\'type\', entity_type, \'id\', entity_id)) VIRTUAL')
-      .withConverter<i2.EntityUid>(i1.CedarRelationships.$converterentityJson);
+      .withConverter<i3.EntityUid>(i1.CedarRelationships.$converterentityJson);
   late final i0.GeneratedColumn<String> parentType = i0.GeneratedColumn<String>(
       'parent_type', aliasedName, false,
       type: i0.DriftSqlType.string,
@@ -1959,7 +1961,7 @@ class CedarRelationships extends i0.Table
       type: i0.DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
-  late final i0.GeneratedColumnWithTypeConverter<i2.EntityUid,
+  late final i0.GeneratedColumnWithTypeConverter<i3.EntityUid,
       String> parentJson = i0.GeneratedColumn<String>(
           'parent_json', aliasedName, false,
           generatedAs: i0.GeneratedAs(
@@ -1970,7 +1972,7 @@ class CedarRelationships extends i0.Table
           requiredDuringInsert: false,
           $customConstraints:
               'NOT NULL GENERATED ALWAYS AS (json_object(\'type\', parent_type, \'id\', parent_id)) VIRTUAL')
-      .withConverter<i2.EntityUid>(i1.CedarRelationships.$converterparentJson);
+      .withConverter<i3.EntityUid>(i1.CedarRelationships.$converterparentJson);
   @override
   List<i0.GeneratedColumn> get $columns =>
       [entityType, entityId, entityJson, parentType, parentId, parentJson];
@@ -2008,10 +2010,10 @@ class CedarRelationships extends i0.Table
     return CedarRelationships(attachedDatabase, alias);
   }
 
-  static i0.TypeConverter<i2.EntityUid, String> $converterentityJson =
-      const i3.CedarEntityUidConverter();
-  static i0.TypeConverter<i2.EntityUid, String> $converterparentJson =
-      const i3.CedarEntityUidConverter();
+  static i0.TypeConverter<i3.EntityUid, String> $converterentityJson =
+      const i2.CedarEntityUidConverter();
+  static i0.TypeConverter<i3.EntityUid, String> $converterparentJson =
+      const i2.CedarEntityUidConverter();
   @override
   bool get withoutRowId => true;
   @override
@@ -2029,12 +2031,12 @@ class CedarRelationship extends i0.DataClass
   /// The entity (child) of the relationship.
   final String entityType;
   final String entityId;
-  final i2.EntityUid entityJson;
+  final i3.EntityUid entityJson;
 
   /// The parent (ancestor) of the relationship.
   final String parentType;
   final String parentId;
-  final i2.EntityUid parentJson;
+  final i3.EntityUid parentJson;
   const CedarRelationship(
       {required this.entityType,
       required this.entityId,
@@ -2058,10 +2060,10 @@ class CedarRelationship extends i0.DataClass
     return CedarRelationship(
       entityType: serializer.fromJson<String>(json['entity_type']),
       entityId: serializer.fromJson<String>(json['entity_id']),
-      entityJson: serializer.fromJson<i2.EntityUid>(json['entity_json']),
+      entityJson: serializer.fromJson<i3.EntityUid>(json['entity_json']),
       parentType: serializer.fromJson<String>(json['parent_type']),
       parentId: serializer.fromJson<String>(json['parent_id']),
-      parentJson: serializer.fromJson<i2.EntityUid>(json['parent_json']),
+      parentJson: serializer.fromJson<i3.EntityUid>(json['parent_json']),
     );
   }
   @override
@@ -2070,20 +2072,20 @@ class CedarRelationship extends i0.DataClass
     return <String, dynamic>{
       'entity_type': serializer.toJson<String>(entityType),
       'entity_id': serializer.toJson<String>(entityId),
-      'entity_json': serializer.toJson<i2.EntityUid>(entityJson),
+      'entity_json': serializer.toJson<i3.EntityUid>(entityJson),
       'parent_type': serializer.toJson<String>(parentType),
       'parent_id': serializer.toJson<String>(parentId),
-      'parent_json': serializer.toJson<i2.EntityUid>(parentJson),
+      'parent_json': serializer.toJson<i3.EntityUid>(parentJson),
     };
   }
 
   i1.CedarRelationship copyWith(
           {String? entityType,
           String? entityId,
-          i2.EntityUid? entityJson,
+          i3.EntityUid? entityJson,
           String? parentType,
           String? parentId,
-          i2.EntityUid? parentJson}) =>
+          i3.EntityUid? parentJson}) =>
       i1.CedarRelationship(
         entityType: entityType ?? this.entityType,
         entityId: entityId ?? this.entityId,
@@ -2265,7 +2267,7 @@ class CedarPolicies extends i0.Table
   }
 
   static i0.TypeConverter<i4.Policy, String> $converterpolicy =
-      const i3.CedarPolicyConverter();
+      const i2.CedarPolicyConverter();
   @override
   List<String> get customConstraints =>
       const ['CHECK(enforcement_level IN (0, 1))'];
@@ -2523,7 +2525,7 @@ class CedarPolicyTemplates extends i0.Table
   }
 
   static i0.TypeConverter<i4.Policy, String> $convertertemplate =
-      const i3.CedarPolicyConverter();
+      const i2.CedarPolicyConverter();
   @override
   List<String> get customConstraints =>
       const ['CHECK(template IS NOT NULL OR template IS NOT NULL)'];
@@ -3168,14 +3170,15 @@ class CedarAuthorizationLogs extends i0.Table
       type: i0.DriftSqlType.string,
       requiredDuringInsert: false,
       $customConstraints: '');
-  late final i0.GeneratedColumnWithTypeConverter<Map<String, i2.Value>, String>
+  late final i0
+      .GeneratedColumnWithTypeConverter<Map<String, i2.CedarValue>, String>
       contextJson = i0.GeneratedColumn<String>(
               'context_json', aliasedName, false,
               type: i0.DriftSqlType.string,
               requiredDuringInsert: false,
               $customConstraints: 'NOT NULL DEFAULT \'{}\'',
               defaultValue: const i0.CustomExpression('\'{}\''))
-          .withConverter<Map<String, i2.Value>>(
+          .withConverter<Map<String, i2.CedarValue>>(
               i1.CedarAuthorizationLogs.$convertercontextJson);
   late final i0.GeneratedColumn<bool> decision = i0.GeneratedColumn<bool>(
       'decision', aliasedName, false,
@@ -3264,12 +3267,12 @@ class CedarAuthorizationLogs extends i0.Table
     return CedarAuthorizationLogs(attachedDatabase, alias);
   }
 
-  static i0.TypeConverter<Map<String, i2.Value>, String> $convertercontextJson =
-      const i3.CedarAttributesConverter();
+  static i0.TypeConverter<Map<String, i2.CedarValue>, String>
+      $convertercontextJson = const i2.CedarAttributesConverter();
   static i0.TypeConverter<List<String>, String> $converterreasonsJson =
-      const i3.CedarAuthorizationReasonsConverter();
+      const i2.CedarAuthorizationReasonsConverter();
   static i0.TypeConverter<i5.AuthorizationErrors, String> $convertererrorsJson =
-      const i3.CedarAuthorizationErrorsConverter();
+      const i2.CedarAuthorizationErrorsConverter();
   @override
   bool get dontWriteConstraints => true;
 }
@@ -3322,7 +3325,7 @@ class CedarAuthorizationLog extends i0.DataClass
   ///
   /// Type: JSON
   /// JSON: `{ [key: string]: string }`
-  final Map<String, i2.Value> contextJson;
+  final Map<String, i2.CedarValue> contextJson;
 
   /// The authorization decision.
   ///
@@ -3418,7 +3421,7 @@ class CedarAuthorizationLog extends i0.DataClass
       resourceType: serializer.fromJson<String?>(json['resource_type']),
       resourceId: serializer.fromJson<String?>(json['resource_id']),
       contextJson:
-          serializer.fromJson<Map<String, i2.Value>>(json['context_json']),
+          serializer.fromJson<Map<String, i2.CedarValue>>(json['context_json']),
       decision: serializer.fromJson<bool>(json['decision']),
       reasonsJson: serializer.fromJson<List<String>>(json['reasons_json']),
       errorsJson:
@@ -3438,7 +3441,8 @@ class CedarAuthorizationLog extends i0.DataClass
       'action_id': serializer.toJson<String?>(actionId),
       'resource_type': serializer.toJson<String?>(resourceType),
       'resource_id': serializer.toJson<String?>(resourceId),
-      'context_json': serializer.toJson<Map<String, i2.Value>>(contextJson),
+      'context_json':
+          serializer.toJson<Map<String, i2.CedarValue>>(contextJson),
       'decision': serializer.toJson<bool>(decision),
       'reasons_json': serializer.toJson<List<String>>(reasonsJson),
       'errors_json': serializer.toJson<i5.AuthorizationErrors>(errorsJson),
@@ -3455,7 +3459,7 @@ class CedarAuthorizationLog extends i0.DataClass
           i0.Value<String?> actionId = const i0.Value.absent(),
           i0.Value<String?> resourceType = const i0.Value.absent(),
           i0.Value<String?> resourceId = const i0.Value.absent(),
-          Map<String, i2.Value>? contextJson,
+          Map<String, i2.CedarValue>? contextJson,
           bool? decision,
           List<String>? reasonsJson,
           i5.AuthorizationErrors? errorsJson}) =>
@@ -3572,7 +3576,7 @@ class CedarAuthorizationLogsCompanion
   final i0.Value<String?> actionId;
   final i0.Value<String?> resourceType;
   final i0.Value<String?> resourceId;
-  final i0.Value<Map<String, i2.Value>> contextJson;
+  final i0.Value<Map<String, i2.CedarValue>> contextJson;
   final i0.Value<bool> decision;
   final i0.Value<List<String>> reasonsJson;
   final i0.Value<i5.AuthorizationErrors> errorsJson;
@@ -3648,7 +3652,7 @@ class CedarAuthorizationLogsCompanion
       i0.Value<String?>? actionId,
       i0.Value<String?>? resourceType,
       i0.Value<String?>? resourceId,
-      i0.Value<Map<String, i2.Value>>? contextJson,
+      i0.Value<Map<String, i2.CedarValue>>? contextJson,
       i0.Value<bool>? decision,
       i0.Value<List<String>>? reasonsJson,
       i0.Value<i5.AuthorizationErrors>? errorsJson}) {
@@ -3743,7 +3747,7 @@ class CedarAuthorizationLogsCompanion
 
 class CedarDrift extends i6.ModularAccessor {
   CedarDrift(i0.GeneratedDatabase db) : super(db);
-  i0.Selectable<List<i2.Entity>> getEntityClosure(
+  i0.Selectable<List<i3.Entity>> getEntityClosure(
       {required String type, required String id}) {
     return customSelect(
         'WITH RECURSIVE parents AS (SELECT e.entity_type, e.entity_id, e.parent_type, e.parent_id, e.parent_json FROM cedar_relationships AS e WHERE e.entity_type = ?1 AND e.entity_id = ?2 UNION ALL SELECT p.entity_type, p.entity_id, p.parent_type, p.parent_id, p.parent_json FROM cedar_relationships AS p INNER JOIN parents AS a ON p.entity_id = a.parent_id AND p.entity_type = a.parent_type), entities AS (SELECT * FROM cedar_entities WHERE (entity_type, entity_id) IN (SELECT entity_type, entity_id FROM parents) OR (entity_type, entity_id) IN (SELECT parent_type, parent_id FROM parents) OR (entity_type, entity_id) = (?1, ?2)) SELECT json_group_array(json_object(\'uid\', entity_json, \'attrs\', json(attribute_json), \'parents\', (SELECT json_group_array(json(parent_json)) FROM parents AS p WHERE p.entity_type = e.entity_type AND p.entity_id = e.entity_id))) AS _c0 FROM entities AS e',
@@ -3754,7 +3758,7 @@ class CedarDrift extends i6.ModularAccessor {
         readsFrom: {
           cedarRelationships,
           cedarEntities,
-        }).map((i0.QueryRow row) => const i3.CedarEntityClosureConverter()
+        }).map((i0.QueryRow row) => const i2.CedarEntityClosureConverter()
         .fromSql(row.read<String>('_c0')));
   }
 
@@ -3987,7 +3991,7 @@ class CedarDrift extends i6.ModularAccessor {
       String? actionId,
       String? resourceType,
       String? resourceId,
-      required Map<String, i2.Value> contextJson,
+      required Map<String, i2.CedarValue> contextJson,
       required bool decision,
       required List<String> reasonsJson,
       required i5.AuthorizationErrors errorsJson}) {
@@ -4032,7 +4036,7 @@ class CedarDrift extends i6.ModularAccessor {
   i7.Future<List<i1.CedarEntity>> createEntity(
       {required String entityType,
       required String entityId,
-      required Map<String, i2.Value> attributeJson}) {
+      required Map<String, i2.CedarValue> attributeJson}) {
     return customWriteReturning(
         'INSERT INTO cedar_entities (entity_type, entity_id, attribute_json) VALUES (?1, ?2, ?3) ON CONFLICT (entity_type, entity_id) DO UPDATE SET attribute_json = excluded.attribute_json RETURNING *',
         variables: [

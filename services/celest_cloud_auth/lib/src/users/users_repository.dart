@@ -1,20 +1,16 @@
-import 'package:cedar/cedar.dart';
-import 'package:celest/celest.dart';
-import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
-import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
-import 'package:celest_core/celest_core.dart' show Email, PhoneNumber, User;
 
 typedef _Deps = ({
-  AuthDatabase db,
+  CloudAuthDatabaseMixin db,
 });
 
 extension type UsersRepository._(_Deps _deps) {
   UsersRepository({
-    required AuthDatabase db,
+    required CloudAuthDatabaseMixin db,
   }) : _deps = (db: db);
 
-  AuthDatabase get _db => _deps.db;
+  CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
 
   /// Creates a new user, authenticated by the given [factor].
   Future<User> createUser({

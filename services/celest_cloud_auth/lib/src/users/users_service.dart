@@ -9,7 +9,7 @@ import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/authorization/celest_action.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
-import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
 import 'package:celest_cloud_auth/src/database/schema/users.drift.dart';
 import 'package:celest_cloud_auth/src/http/http_helpers.dart';
 import 'package:celest_cloud_auth/src/model/interop.dart';
@@ -27,7 +27,7 @@ typedef _Deps = ({
   EntityUid issuer,
   RouteMap routeMap,
   CorksRepository corks,
-  AuthDatabase db,
+  CloudAuthDatabaseMixin db,
   Authorizer authorizer,
 });
 
@@ -36,7 +36,7 @@ extension type UsersService._(_Deps _deps) implements Object {
     required EntityUid issuer,
     required RouteMap routeMap,
     required CorksRepository corks,
-    required AuthDatabase db,
+    required CloudAuthDatabaseMixin db,
     required Authorizer authorizer,
   }) : this._(
           (
@@ -48,7 +48,7 @@ extension type UsersService._(_Deps _deps) implements Object {
           ),
         );
 
-  AuthDatabase get _db => _deps.db;
+  CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
   Authorizer get _authorizer => _deps.authorizer;
 
   Router get _router {
