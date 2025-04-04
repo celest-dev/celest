@@ -16,6 +16,7 @@ import 'package:celest_cli/src/analyzer/celest_analysis_helpers.dart';
 import 'package:celest_cli/src/analyzer/resolver/config_value_resolver.dart';
 import 'package:celest_cli/src/config/feature_flags.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/init/edits/source_edit.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/serialization/common.dart';
 import 'package:celest_cli/src/serialization/serialization_verdict.dart';
