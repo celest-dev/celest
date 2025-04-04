@@ -99,6 +99,13 @@ class Sdk {
 
   String get dart => p.join(sdkPath, 'bin', 'dart');
 
+  String? get flutter {
+    if (flutterSdkRoot case final flutterRoot?) {
+      return p.join(flutterRoot, 'bin', 'flutter');
+    }
+    return null;
+  }
+
   String get dartAotRuntime => p.join(sdkPath, 'bin', 'dartaotruntime');
 
   String get analysisServerSnapshot =>

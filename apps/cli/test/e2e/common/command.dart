@@ -23,6 +23,7 @@ final class Command {
   Matcher? _expectedExitCode;
   Matcher? _expectedError;
   bool _usePublishedRuntime = false;
+  bool _runInShell = false;
 
   Future<void> run() async {
     final result = await Process.run(
@@ -53,6 +54,7 @@ final class Command {
       workingDirectory: _workingDirectory,
       environment: environment,
       includeParentEnvironment: false,
+      runInShell: _runInShell,
     );
     return InteractiveCommand._(process);
   }
@@ -69,6 +71,11 @@ final class Command {
 
   Command withPublishedRuntime() {
     _usePublishedRuntime = true;
+    return this;
+  }
+
+  Command runInShell() {
+    _runInShell = true;
     return this;
   }
 
@@ -156,6 +163,7 @@ final class InteractiveCommand {
           );
         }
       });
+      _started = true;
       return process;
     }).onError<Object>((e, st) => _fail('start', e, st));
     _logs = StreamQueue(
@@ -187,6 +195,7 @@ final class InteractiveCommand {
     );
   }
 
+  var _started = false;
   late final Process _process;
   late final StreamQueue<LogMessage> _logs;
 
@@ -205,7 +214,7 @@ final class InteractiveCommand {
   }) {
     _pendingTasks = _currentTasks.then((_) {
       _logger.fine('$methodName started');
-      return Future.value(task()).trace(methodName, timeout);
+      return Future(task).trace(methodName, timeout);
     });
     return this;
   }
@@ -282,9 +291,11 @@ final class InteractiveCommand {
   Future<void> run() async {
     _logger.fine('Running to completion');
     await flush().trace('run').whenComplete(() {
-      _logger.fine('Killing process and draining logs');
-      _process.kill();
-      return _logs.rest.drain();
+      if (_started) {
+        _logger.fine('Killing process and draining logs');
+        _process.kill();
+        unawaited(_logs.rest.drain());
+      }
     });
     await _process.exitCode;
     _logger.fine('Flushing test logs');
