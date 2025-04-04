@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import, flutter_style_todos
 
+import 'dart:io';
+
 import 'package:celest_cli/src/context.dart';
 import 'package:test/test.dart';
 
@@ -15,10 +17,15 @@ import 'features/hot_reload/hot_reload_add_auth.dart';
 import 'features/hot_reload/hot_reload_add_model_after_error.dart';
 import 'features/package_support/supports_supabase.dart';
 import 'targets/installed_target.dart';
+import 'targets/local_aot_target.dart';
 import 'targets/local_target.dart';
 
 void main() {
-  final targets = <TestTarget>[LocalTarget(), InstalledTarget()];
+  final targets = <TestTarget>[
+    LocalTarget(),
+    // LocalAotTarget(),
+    InstalledTarget(),
+  ];
 
   final tests = <E2ETest Function(TestTarget)>[
     // Example projects
@@ -53,9 +60,15 @@ void main() {
             await t.setUp();
             await t.run();
           } on Object {
+            await t.logFile.writeAsString(
+              '',
+              mode: FileMode.append,
+              flush: true,
+            );
+
             print('LOGS');
             print('--------------------------------');
-            print(t.logFile.readAsStringSync());
+            print(await t.logFile.readAsString());
             print('--------------------------------');
             print('Full logs written to: ${t.logFile.path}');
             rethrow;

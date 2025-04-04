@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
+import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:cli_script/cli_script.dart';
@@ -48,8 +49,8 @@ Future<void> runPub({
   required String workingDirectory,
 }) async {
   exe ??= kDebugMode
-      ? platform.resolvedExecutable
-      : (await celestProject.determineProjectType()).name;
+      ? Sdk.current.dart
+      : (await celestProject.determineProjectType()).executable;
 
   final command = <String>[exe, 'pub', action.name];
   final logger = Logger(command.join(' '));

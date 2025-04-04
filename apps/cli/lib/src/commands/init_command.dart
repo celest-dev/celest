@@ -7,7 +7,15 @@ import 'package:celest_cli/src/init/project_init.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 final class InitCommand extends CelestCommand with Configure, ProjectCreator {
-  InitCommand();
+  InitCommand() {
+    argParser.addFlag(
+      'precache',
+      help: 'Precache assets and warm up analyzer in the background.',
+      negatable: true,
+      hide: true,
+      defaultsTo: true,
+    );
+  }
 
   @override
   String get description => 'Creates a new Celest project.';
@@ -32,18 +40,20 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
           'celest_cli:celest',
           'precache',
           projectPaths.projectRoot,
+          if (verbose) '--verbose',
         ],
       CliRuntime.local => <String>[
           platform.resolvedExecutable,
-          'run',
           platform.script.toFilePath(),
           'precache',
           projectPaths.projectRoot,
+          if (verbose) '--verbose',
         ],
       CliRuntime.aot => <String>[
           platform.resolvedExecutable,
           'precache',
           projectPaths.projectRoot,
+          if (verbose) '--verbose',
         ],
     };
     try {
@@ -59,13 +69,17 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
     }
   }
 
+  bool get precache => argResults!.flag('precache');
+
   @override
   Future<int> run() async {
     await super.run();
 
     await checkForLatestVersion();
     await configure();
-    await _precacheInBackground();
+    if (precache) {
+      await _precacheInBackground();
+    }
 
     final projectRoot = projectPaths.projectRoot;
 
@@ -82,10 +96,10 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
     }
     stdout.writeln();
     cliLogger.success('🚀 To start a local development server, run:');
-    stdout
-      ..writeln()
-      ..writeln('      $command')
-      ..writeln();
+    cliLogger
+      ..write(Platform.lineTerminator)
+      ..write('      $command${Platform.lineTerminator}')
+      ..write(Platform.lineTerminator);
 
     return 0;
   }

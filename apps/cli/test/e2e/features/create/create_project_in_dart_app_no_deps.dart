@@ -26,7 +26,7 @@ environment:
     final projectDir = fileSystem.directory(p.join(tempDir.path, projectName));
     await check(
       Process.run(
-        'dart',
+        platform.resolvedExecutable,
         ['pub', 'get'],
         runInShell: platform.isWindows,
         workingDirectory: projectDir.path,
@@ -35,11 +35,9 @@ environment:
     await celestCommand('start')
         .workingDirectory(projectDir.path)
         .start()
-        .expectNext('Enter a name for your project')
-        .writeLine(projectName)
         .expectLater('Generating project')
         .expectLater('Project generated successfully')
-        .expectLater('Starting Celest')
+        .expectLater('Starting local environment')
         .expectNext('Celest is running')
         .run();
   }

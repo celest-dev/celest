@@ -9,7 +9,7 @@ final class HotReloadNonExistentModel extends E2ETest with TestDartProject {
   HotReloadNonExistentModel(super.target);
 
   @override
-  String get name => 'hot reload (add auth)';
+  String get name => 'hot reload (non-existent model)';
 
   // TODO(dnys1): Get watcher working on Windows so that SIGUSR1 is not
   // needed.
@@ -21,13 +21,13 @@ final class HotReloadNonExistentModel extends E2ETest with TestDartProject {
     final celest = celestCommand('start')
         .workingDirectory(projectDir.path)
         .start()
-        .expectNext('Enter a name for your project')
-        .writeLine(projectName)
         .expectLater('Celest is running');
     await celest.flush();
 
+    final sourceDir = celestDir.childDirectory('lib').childDirectory('src');
+
     log('Creating API with non-existent model');
-    final api = celestDir.childDirectory('functions').childFile('test.dart');
+    final api = sourceDir.childDirectory('functions').childFile('test.dart');
     await api.writeAsString('''
 import 'package:celest/celest.dart';
 
@@ -40,10 +40,7 @@ Future<Model> createModel() async {
     await celest.hotReload().expectLater('Project has errors').flush();
 
     log('Adding model');
-    final model = celestDir
-        .childDirectory('lib')
-        .childDirectory('models')
-        .childFile('model.dart');
+    final model = sourceDir.childDirectory('models').childFile('model.dart');
     await model.create(recursive: true);
     await model.writeAsString('''
 import 'package:celest/celest.dart';
@@ -52,7 +49,7 @@ class Model {}
 ''');
     await api.writeAsString('''
 import 'package:celest/celest.dart';
-import 'package:celest_backend/models/model.dart';
+import 'package:celest_backend/src/models/model.dart';
 
 @cloud
 Future<Model> createModel() async {
@@ -63,7 +60,7 @@ Future<Model> createModel() async {
     await celest
         .hotReload()
         .expectLater('Reloading Celest')
-        .expectLater('Celest is running')
+        .expectNext('Reloaded project')
         .run();
   }
 }

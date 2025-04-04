@@ -11,13 +11,12 @@ final class SupportsSupabase extends E2ETest with TestDartProject {
   @override
   Future<void> run() async {
     // Create project
-    await celestCommand('start')
+    await celestCommand('init')
         .withPublishedRuntime()
         .workingDirectory(projectDir.path)
         .start()
-        .expectNext('Enter a name for your project')
-        .writeLine(projectName)
-        .expectLater('Celest is running')
+        .expectLater('Generating project')
+        .expectLater('Project generated successfully')
         .run();
 
     // Add dependency on supabase
