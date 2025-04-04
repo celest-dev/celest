@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:celest_cli/src/cli/cli_runtime.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/utils/error.dart';
@@ -17,12 +18,14 @@ class CelestUninstaller {
   Future<void> uninstall() async {
     await removeConfig();
 
-    if (fileSystem.path.fromUri(platform.script).endsWith('.snapshot')) {
-      await _uninstallPubGlobal();
-    } else if (platform.executable.contains('dart')) {
-      // Celest is running from source. Nothing to uninstall.
-    } else {
-      await _uninstallAot();
+    switch (CliRuntime.current) {
+      case CliRuntime.pubGlobal:
+        await _uninstallPubGlobal();
+      case CliRuntime.local:
+        // Celest is running from source. Nothing to uninstall.
+        break;
+      case CliRuntime.aot:
+        await _uninstallAot();
     }
   }
 

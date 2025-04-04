@@ -19,24 +19,35 @@ sealed class ProjectMigrationResult {
   const ProjectMigrationResult();
 
   bool get needsAnalyzerMigration => false;
+  bool get needsDartFix => false;
 
   ProjectMigrationResult operator &(ProjectMigrationResult other);
 }
 
 final class ProjectMigrationSuccess extends ProjectMigrationResult {
-  const ProjectMigrationSuccess({this.needsAnalyzerMigration = false});
+  const ProjectMigrationSuccess({
+    this.needsAnalyzerMigration = false,
+    this.needsDartFix = false,
+  });
 
   @override
   final bool needsAnalyzerMigration;
 
   @override
+  final bool needsDartFix;
+
+  @override
   ProjectMigrationResult operator &(ProjectMigrationResult other) {
     return switch (other) {
       ProjectMigrationSkipped() => this,
-      ProjectMigrationSuccess(:final needsAnalyzerMigration) =>
+      ProjectMigrationSuccess(
+        :final needsAnalyzerMigration,
+        :final needsDartFix
+      ) =>
         ProjectMigrationSuccess(
           needsAnalyzerMigration:
               this.needsAnalyzerMigration || needsAnalyzerMigration,
+          needsDartFix: this.needsDartFix || needsDartFix,
         ),
     };
   }
@@ -73,8 +84,14 @@ final class ProjectMigrationReport {
     final buffer = StringBuffer('ProjectMigrationReport(\n');
     for (final entry in migrations.entries) {
       final value = switch (entry.value) {
-        ProjectMigrationSuccess(needsAnalyzerMigration: false) => 'success',
-        ProjectMigrationSuccess(needsAnalyzerMigration: true) => 'partial',
+        ProjectMigrationSuccess(
+          needsAnalyzerMigration: false,
+          needsDartFix: false
+        ) =>
+          'success',
+        ProjectMigrationSuccess(needsAnalyzerMigration: true) ||
+        ProjectMigrationSuccess(needsDartFix: true) =>
+          'partial',
         ProjectMigrationSkipped() => 'skipped',
       };
       buffer.writeln('  ${entry.key}: $value,');

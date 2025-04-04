@@ -180,6 +180,7 @@ class TestRunner {
           projectRoot: projectRoot,
           projectName: celestProject.projectName,
           parentProject: parentProject,
+          upgradeFromVersion: null,
         );
         await (_warmUp(projectRoot), migrator.migrate()).wait;
       });

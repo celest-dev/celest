@@ -128,6 +128,49 @@ base mixin Configure on CelestCommand {
 
   /// Returns true if the project needs to be migrated.
   Stream<ConfigureState> _configure() async* {
+    final (projectName, projectRoot, isExistingProject, parentProject) =
+        await _locateProject();
+
+    yield const Initializing();
+    await init(projectRoot: projectRoot, parentProject: parentProject);
+
+    var needsAnalyzerMigration = false;
+    Future<void>? upgradePackages;
+    if (!isExistingProject) {
+      if (this case final ProjectCreator projectCreator) {
+        yield const CreatingProject();
+        await projectCreator.createProject(
+          projectName: projectName!,
+          parentProject: parentProject,
+        );
+        yield const CreatedProject();
+      } else {
+        _throwNoProject();
+      }
+    } else if (this case final Migrate projectMigrator) {
+      yield const MigratingProject();
+      final result = await projectMigrator.migrateProject(
+        parentProject: parentProject,
+        upgradeFromVersion: celestProject.cacheDb.upgradeFromVersion,
+      );
+      needsAnalyzerMigration = result.needsAnalyzerMigration;
+      await (upgradePackages = _pubUpgrade());
+      if (result.needsDartFix && parentProject != null) {
+        await processManager.run(<String>[
+          Sdk.current.dart,
+          'fix',
+          '--apply',
+        ], workingDirectory: parentProject.path);
+      }
+      yield const MigratedProject();
+    }
+    await (upgradePackages ??= _pubUpgrade());
+
+    yield Initialized(needsAnalyzerMigration: needsAnalyzerMigration);
+  }
+
+  Future<(String? name, String root, bool, ParentProject?)>
+      _locateProject() async {
     var currentDir = fileSystem.currentDirectory;
     final currentDirIsEmpty = await currentDir.list().isEmpty;
 
@@ -243,41 +286,7 @@ base mixin Configure on CelestCommand {
       };
     }
 
-    yield const Initializing();
-    await init(projectRoot: projectRoot, parentProject: parentProject);
-
-    final postUpgrade = celestProject.cacheDb.needsProjectUpgrade;
-    var needsAnalyzerMigration = false;
-    Future<void>? upgradePackages;
-    if (!isExistingProject) {
-      if (this case final ProjectCreator projectCreator) {
-        yield const CreatingProject();
-        await projectCreator.createProject(
-          projectName: projectName!,
-          parentProject: parentProject,
-        );
-        yield const CreatedProject();
-      } else {
-        _throwNoProject();
-      }
-    } else if (this case final Migrate projectMigrator) {
-      yield const MigratingProject();
-      needsAnalyzerMigration = await projectMigrator.migrateProject(
-        parentProject: parentProject,
-      );
-      await (upgradePackages = _pubUpgrade());
-      if (postUpgrade && parentProject != null) {
-        await processManager.run(<String>[
-          Sdk.current.dart,
-          'fix',
-          '--apply',
-        ], workingDirectory: parentProject.path);
-      }
-      yield const MigratedProject();
-    }
-    await (upgradePackages ??= _pubUpgrade());
-
-    yield Initialized(needsAnalyzerMigration: needsAnalyzerMigration);
+    return (projectName, projectRoot, isExistingProject, parentProject);
   }
 
   // TODO(dnys1): Improve logic here so that we don't run pub upgrade if

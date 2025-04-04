@@ -13,12 +13,18 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:yaml_edit/yaml_edit.dart' hide SourceEdit;
 
 final class PubspecUpdater extends ProjectMigration {
-  const PubspecUpdater(super.projectRoot, this.parentProject, this.projectName);
+  const PubspecUpdater(
+    super.projectRoot,
+    this.parentProject,
+    this.projectName, {
+    this.upgradeFromVersion,
+  });
 
   static final _logger = Logger('PubspecUpdater');
 
   final ParentProject? parentProject;
   final String projectName;
+  final Version? upgradeFromVersion;
 
   @override
   String get name => 'core.project.pubspec';
@@ -55,7 +61,7 @@ final class PubspecUpdater extends ProjectMigration {
   }
 
   /// Returns the version updated from.
-  Future<Version?> _updateBackendDependencies({
+  Future<void> _updateBackendDependencies({
     required Pubspec pubspec,
     required String pubspecYaml,
     required File pubspecFile,
@@ -65,16 +71,8 @@ final class PubspecUpdater extends ProjectMigration {
     if (ProjectDependency.backendDependencies.upToDate(pubspec) &&
         currentSdkVersion == requiredSdkVersion) {
       _logger.fine('Project dependencies are up to date.');
-      return null;
+      return;
     }
-    final fromVersion = switch (pubspec.dependencies['celest']) {
-      final HostedDependency hosted => switch (hosted.version) {
-          final Version version => version,
-          final VersionRange range => range.min,
-          _ => Version.none,
-        },
-      _ => Version.none,
-    };
     _logger.fine('Updating project dependencies to latest versions...');
     pubspec = pubspec.copyWith(
       environment: {'sdk': PubEnvironment.dartSdkConstraint},
@@ -95,7 +93,6 @@ final class PubspecUpdater extends ProjectMigration {
     );
     pubspecYaml = pubspec.toYaml(source: pubspecYaml);
     await pubspecFile.writeAsString(pubspecYaml);
-    return fromVersion;
   }
 
   Future<bool> _updateClientDependencies({
@@ -173,14 +170,14 @@ final class PubspecUpdater extends ProjectMigration {
       final pubspecFile = fileSystem.file(p.join(projectRoot, 'pubspec.yaml'));
       final pubspecYaml = await pubspecFile.readAsString();
       final pubspec = Pubspec.parse(pubspecYaml);
-      final fromVersion = await _updateBackendDependencies(
+      await _updateBackendDependencies(
         pubspec: pubspec,
         pubspecYaml: pubspecYaml,
         pubspecFile: pubspecFile,
       );
       // await _updateProjectName();
-      needsAnalyzerMigration |=
-          fromVersion != null && fromVersion < Version(1, 0, 0).firstPreRelease;
+      needsAnalyzerMigration |= upgradeFromVersion != null &&
+          upgradeFromVersion! < Version(1, 0, 0).firstPreRelease;
       if (needsAnalyzerMigration) {
         operations.add(
           runPub(action: PubAction.get, workingDirectory: projectRoot),
