@@ -74,7 +74,7 @@ final class CelestUpgrader {
       // Skip on Linux installer since we shell out to dpkg which conflicts
       // with our CLI spinner.
       if (platform.isWindows) {
-        _progress = cliLogger.progress('Updating Celest');
+        _progress = cliLogger.progress('Upgrading Celest');
       } else if (platform.isMacOS) {
         cliLogger.info(
           'Please enter your password in the dialog that appears.',

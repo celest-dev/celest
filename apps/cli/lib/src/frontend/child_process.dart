@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/utils/cli.dart';
+import 'package:celest_cli/src/utils/process.dart';
 
 /// A process which is a child of a command like `celest start`.
 ///

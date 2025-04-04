@@ -1,4 +1,4 @@
-export 'src/cli.dart';
+export 'src/cli/cli.dart';
 export 'src/commands/analysis_server_command.dart';
 export 'src/commands/build_command.dart';
 export 'src/commands/init_command.dart';

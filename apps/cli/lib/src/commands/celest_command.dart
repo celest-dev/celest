@@ -3,15 +3,17 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:celest_cli/src/cli/cli_runtime.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/models.dart';
+import 'package:celest_cli/src/releases/celest_release_info.dart';
 import 'package:celest_cli/src/releases/latest_release.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
-import 'package:cli_util/cli_util.dart';
+import 'package:celest_cli/src/version.dart';
+import 'package:collection/collection.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
-import 'package:path/path.dart' as p;
 import 'package:pub_semver/pub_semver.dart';
 
 /// Base class for all commands in this package providing common functionality.
@@ -23,16 +25,6 @@ abstract base class CelestCommand extends Command<int> {
 
   /// Whether verbose logging is enabled.
   bool get verbose => globalResults?['verbose'] as bool? ?? false;
-
-  /// The path to the Flutter SDK, if installed.
-  late final String? flutterRoot = () {
-    final dartSdkPath = getSdkPath();
-    final flutterBin = p.dirname(p.dirname(dartSdkPath));
-    if (File(p.join(flutterBin, 'flutter')).existsSync()) {
-      return p.dirname(flutterBin);
-    }
-    return null;
-  }();
 
   /// Resolves the latest version information from `pub.dev`.
   Future<PubVersionInfo?> resolveVersionInfo(String package) async {
@@ -66,23 +58,57 @@ abstract base class CelestCommand extends Command<int> {
     return PubVersionInfo(semvers..sort());
   }
 
-  Future<void> checkForLatestVersion() async {
+  Future<void> checkForLatestVersion({bool? includeDev}) async {
+    final (latestVersion, _) = await getLatestVersion(includeDev: includeDev);
+    if (latestVersion < currentVersion) {
+      cliLogger.warn(
+        'A new version of Celest is available! Run `celest upgrade` '
+        'to get the latest changes.',
+      );
+    }
+  }
+
+  Future<(Version, CelestReleaseInfo?)> getLatestVersion({
+    bool? includeDev,
+  }) async {
+    includeDev ??= currentVersion.isPreRelease;
     try {
-      final latestRelease = await performance.trace(
+      final (latestVersion, releaseInfo) = await performance.trace(
         'CelestCommand',
         'retrieveLatestRelease',
-        () =>
-            retrieveLatestRelease(version).timeout(const Duration(seconds: 3)),
+        () => switch (CliRuntime.current) {
+          CliRuntime.aot => retrieveLatestRelease(includeDev: includeDev!)
+              .then((release) => (release.version, release)),
+          CliRuntime.local => Future.value((currentVersion, null)),
+          CliRuntime.pubGlobal => _latestVersionPub(includeDev: includeDev!)
+              .then((version) => (version, null)),
+        }
+            .timeout(const Duration(seconds: 3)),
       );
-      if (latestRelease.version > Version.parse(version)) {
-        cliLogger.warn(
-          'A new version of Celest is available! Run `celest upgrade` '
-          'to get the latest changes.',
-        );
-      }
+      return (latestVersion, releaseInfo);
     } on Object catch (e, st) {
       performance.captureError(e, stackTrace: st);
+      return (currentVersion, null);
     }
+  }
+
+  Future<Version> _latestVersionPub({
+    bool includeDev = false,
+  }) async {
+    final versionInfo = await resolveVersionInfo('celest_cli');
+    if (versionInfo == null) {
+      throw Exception(
+        'Failed to resolve version information for celest_cli.',
+      );
+    }
+    return maxBy(
+      [
+        currentVersion,
+        versionInfo.latestVersion,
+        if (includeDev) versionInfo.latestPrerelease,
+      ].nonNulls,
+      (v) => v,
+    )!;
   }
 
   @override

@@ -1,6 +1,7 @@
 ## 1.0.9-wip
 
 - chore: Remove unused native assets code
+- feat: Re-implement `celest upgrade`
 
 ## 1.0.8
 

@@ -28,7 +28,7 @@ import 'package:celest_cli/src/project/project_linker.dart';
 import 'package:celest_cli/src/pub/pub_action.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/sdk/sdk_finder.dart';
-import 'package:celest_cli/src/utils/cli.dart';
+import 'package:celest_cli/src/utils/process.dart';
 import 'package:celest_cli/src/utils/recase.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:file/file.dart';
