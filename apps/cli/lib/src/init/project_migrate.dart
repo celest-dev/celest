@@ -1,5 +1,5 @@
-import 'package:celest_cli/src/commands/project_init.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/init/project_init.dart';
 import 'package:celest_cli/src/init/project_migrator.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 

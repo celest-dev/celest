@@ -1,6 +1,6 @@
 import 'dart:io' as io;
 
-import 'package:celest_cli/src/cli.dart';
+import 'package:celest_cli/src/cli/cli.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/storage/storage.dart';
 import 'package:drift/drift.dart';

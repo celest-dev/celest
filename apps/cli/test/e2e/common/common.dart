@@ -2,7 +2,7 @@ import 'dart:io' show Process, Platform, ProcessException;
 import 'dart:math';
 
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/utils/cli.dart';
+import 'package:celest_cli/src/utils/process.dart';
 import 'package:celest_cli/src/utils/recase.dart';
 import 'package:file/file.dart';
 import 'package:meta/meta.dart';

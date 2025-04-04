@@ -28,13 +28,11 @@ Future<CelestReleasesInfo> retrieveCliReleases() async {
   return CelestReleasesInfo.fromJson(releasesJson);
 }
 
-Future<CelestReleaseInfo> retrieveLatestRelease(
-  String packageVersion, {
-  bool includeDev = false,
+Future<CelestReleaseInfo> retrieveLatestRelease({
+  required bool includeDev,
 }) async {
   final releasesInfo = await retrieveCliReleases();
-  final currentVersion = Version.parse(packageVersion);
-  if (currentVersion.isPreRelease || includeDev) {
+  if (includeDev) {
     return maxBy<CelestReleaseInfo, Version>([
       if (releasesInfo.latestDev case final latestDev?) latestDev,
       ...releasesInfo.releases.values,

@@ -1,9 +1,9 @@
 import 'package:celest_cli/src/commands/celest_command.dart';
-import 'package:celest_cli/src/commands/project_init.dart';
-import 'package:celest_cli/src/commands/project_migrate.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/frontend/celest_frontend.dart';
 import 'package:celest_cli/src/frontend/child_process.dart';
+import 'package:celest_cli/src/init/project_init.dart';
+import 'package:celest_cli/src/init/project_migrate.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 final class StartCommand extends CelestCommand
