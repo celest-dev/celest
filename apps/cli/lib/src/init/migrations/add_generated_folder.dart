@@ -2,33 +2,26 @@
 
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/init/project_migration.dart';
-import 'package:file/file.dart';
 
 final class GeneratedFolder extends ProjectMigration {
-  const GeneratedFolder(super.projectRoot);
+  GeneratedFolder(super.projectRoot);
+
+  late final _readmeFile = fileSystem
+      .directory(projectRoot)
+      .childDirectory('generated')
+      .childFile('README.md');
 
   @override
-  bool get needsMigration => false;
+  bool get needsMigration => !_readmeFile.existsSync();
 
   @override
   String get name => 'core.layout.generated';
 
   @override
   Future<ProjectMigrationResult> create() async {
-    final generatedDir =
-        fileSystem.directory(projectRoot).childDirectory('generated');
-    await _createIfNotExists(
-      generatedDir.childFile('README.md'),
-      generated_README,
-    );
+    await _readmeFile.create(recursive: true);
+    await _readmeFile.writeAsString(generated_README);
     return const ProjectMigrationSuccess();
-  }
-}
-
-Future<void> _createIfNotExists(File file, String content) async {
-  if (!file.existsSync()) {
-    await file.create(recursive: true);
-    await file.writeAsString(content);
   }
 }
 
@@ -40,6 +33,4 @@ your backend.
 
 This code can be safely checked into version control, but it should not be
 modified directly.
-
-It is planned to replace this directory with macros when they become stable.
 ''';

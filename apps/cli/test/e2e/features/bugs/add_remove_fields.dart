@@ -20,23 +20,23 @@ final class AddRemoveFieldsTest extends E2ETest with TestDartProject {
 
   @override
   Future<void> run() async {
-    final celest = celestCommand('start')
-        .workingDirectory(projectDir.path)
-        .start()
-        .expectNext('Enter a name for your project')
-        .writeLine(projectName);
+    final celest =
+        celestCommand('start').workingDirectory(projectDir.path).start();
     log('Waiting for initial start');
     await celest
-        .expectLater('Starting Celest')
+        .expectLater('Starting local environment')
         .expectNext('Celest is running')
         .flush();
     final functionFile = await celestDir
+        .childDirectory('lib')
+        .childDirectory('src')
         .childDirectory('functions')
         .childFile('location.dart')
         .create();
     final modelsDir = projectDir
         .childDirectory('celest')
         .childDirectory('lib')
+        .childDirectory('src')
         .childDirectory('models');
 
     final locationFile =
@@ -45,7 +45,7 @@ final class AddRemoveFieldsTest extends E2ETest with TestDartProject {
     // Create location function
     log('Creating location function');
     await functionFile.writeAsString('''
-import 'package:celest_backend/models/location.dart';
+import 'package:celest_backend/src/models/location.dart';
 
 Future<Location> getLocation(String name) async {
   return Location(name: name);
@@ -67,7 +67,7 @@ class Location {
     await celest
         .hotReload()
         .expectLater('Reloading Celest')
-        .expectNext('Celest is running')
+        .expectNext('Reloaded project')
         .flush();
 
     // Add GPS field to location
@@ -89,7 +89,7 @@ class Location {
 
     log('Fixing location function');
     await functionFile.writeAsString('''
-import 'package:celest_backend/models/location.dart';
+import 'package:celest_backend/src/models/location.dart';
 
 Future<Location> getLocation(String name) async {
   return Location(name: name, gps: (latitude: 0.0, longitude: 0.0));
@@ -98,7 +98,7 @@ Future<Location> getLocation(String name) async {
     await celest
         .hotReload()
         .expectLater('Reloading Celest')
-        .expectNext('Celest is running')
+        .expectNext('Reloaded project')
         .flush();
 
     // Remove GPS field
@@ -117,7 +117,7 @@ class Location {
 
     log('Fixing location function');
     await functionFile.writeAsString('''
-import 'package:celest_backend/models/location.dart';
+import 'package:celest_backend/src/models/location.dart';
 
 Future<Location> getLocation(String name) async {
   return Location(name: name);
@@ -126,7 +126,7 @@ Future<Location> getLocation(String name) async {
     await celest
         .hotReload()
         .expectLater('Reloading Celest')
-        .expectNext('Celest is running')
+        .expectNext('Reloaded project')
         .run();
   }
 }

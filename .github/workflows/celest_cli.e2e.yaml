@@ -1,0 +1,54 @@
+name: celest_cli (E2E)
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/apps_cli_e2e.yaml"
+      - "apps/cli/lib/src/version.dart"
+      - "apps/cli/test/e2e/**"
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/cli/**"
+
+# Prevent duplicate runs due to Graphite
+# https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
+  cancel-in-progress: true
+
+# Uncomment if using self-hosted runners for consistency with other workflows which run setup-dart with OIDC enabled.
+# permissions:
+#   contents: read
+#   id-token: write
+
+env:
+  CELEST_LOCAL_PATH: ${{ github.workspace }}
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-large
+          - macos-latest-xlarge
+          - windows-large
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # 4.1.7
+      - name: Setup Flutter
+        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # 2.16.0
+        with:
+          cache: true
+      - name: Setup Deps
+        if: runner.os == 'Linux'
+        run: tool/setup-ci.sh
+      - name: Get Packages
+        working-directory: apps/cli
+        run: dart pub upgrade
+      - name: Test
+        working-directory: apps/cli
+        run: dart test -t e2e-local --fail-fast

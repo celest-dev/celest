@@ -1,3 +1,5 @@
+import 'dart:io' show FileMode;
+
 import 'package:celest_cli/src/context.dart';
 
 import '../../common/common.dart';
@@ -19,26 +21,22 @@ final class HotReloadAddAuthTest extends E2ETest with TestDartProject {
     final celest = celestCommand('start')
         .workingDirectory(projectDir.path)
         .start()
-        .expectNext('Enter a name for your project')
-        .writeLine(projectName)
         .expectLater('Celest is running');
     await celest.flush();
 
     log('Adding auth');
-    await celestDir.childFile('auth.dart').writeAsString('''
-import 'package:celest/celest.dart';
-
+    await celestDir.childFile('project.dart').writeAsString('''
 const auth = Auth(
   providers: [
     AuthProvider.email(),
   ],
 );
-''');
+''', mode: FileMode.append);
 
     await celest
         .hotReload()
         .expectLater('Reloading Celest')
-        .expectLater('Celest is running')
+        .expectNext('Reloaded project')
         .run();
   }
 }

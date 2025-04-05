@@ -11,11 +11,9 @@ final class CreateProjectInDartAppTest extends E2ETest with TestDartProject {
     await celestCommand('start')
         .workingDirectory(projectDir.path)
         .start()
-        .expectNext('Enter a name for your project')
-        .writeLine(projectName)
         .expectLater('Generating project')
         .expectLater('Project generated successfully')
-        .expectLater('Starting Celest')
+        .expectLater('Starting local environment')
         .expectNext('Celest is running')
         .run();
   }

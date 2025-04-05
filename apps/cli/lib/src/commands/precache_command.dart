@@ -1,7 +1,9 @@
 import 'dart:isolate';
 
 import 'package:celest_cli/src/analyzer/celest_analyzer.dart';
+import 'package:celest_cli/src/cli/cli.dart';
 import 'package:celest_cli/src/commands/celest_command.dart';
+import 'package:celest_cli/src/context.dart' as ctx;
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/pub/pub_cache.dart';
 
@@ -10,7 +12,8 @@ final class PrecacheCommand extends CelestCommand {
   String get name => 'precache';
 
   @override
-  String get description => 'Precaches assets for a Celest Cloud project.';
+  String get description =>
+      'Precaches assets and warms up the analyzer for a Celest project.';
 
   @override
   bool get hidden => true;
@@ -20,7 +23,12 @@ final class PrecacheCommand extends CelestCommand {
 
   static Future<void> _warmUp() async {
     final projectRoot = projectPaths.projectRoot;
-    await Isolate.run(() => CelestAnalyzer.warmUp(projectRoot));
+    final verbose = ctx.verbose;
+    await Isolate.run(() async {
+      await Cli.configure(verbose: verbose);
+      await init(projectRoot: projectRoot);
+      await CelestAnalyzer.warmUp(projectRoot);
+    });
   }
 
   @override

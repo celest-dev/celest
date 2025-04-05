@@ -10,44 +10,43 @@ final class CreateProjectIsolatedTest extends E2ETest {
 
   @override
   Future<void> run() async {
+    // Non-empty directory
     {
       final celest = celestCommand('start')
           .workingDirectory(tempDir.path)
           .start()
-          .expectNext('Would you like to create one?')
-          .writeLine('y')
-          .expectNext('Enter a name for your project')
-          .writeLine(projectName)
           .expectLater('Generating project')
           .expectLater('Project generated successfully')
-          .expectLater('Starting Celest')
+          .expectLater('Starting local environment')
           .expectNext('Celest is running');
       await celest.run();
 
       check(
+        because: 'The project should be created in the sub-directory '
+            'with the name of the project (defaults to `my_project`)',
         tempDir
-            .childDirectory(projectName)
+            .childDirectory('my_project')
             .childFile('pubspec.yaml')
             .existsSync(),
       ).isTrue();
     }
 
+    // Empty directory
     {
       final emptyDir = await tempDir.createTemp('empty');
       final celest = celestCommand('start')
           .workingDirectory(emptyDir.path)
           .start()
-          .expectNext('Would you like to create one?')
-          .writeLine('y')
-          .expectNext('Enter a name for your project')
-          .writeLine(projectName)
           .expectLater('Generating project')
           .expectLater('Project generated successfully')
-          .expectLater('Starting Celest')
+          .expectLater('Starting local environment')
           .expectNext('Celest is running');
       await celest.run();
 
-      check(emptyDir.childFile('pubspec.yaml').existsSync()).isTrue();
+      check(
+        because: 'The project should be created in the current directory',
+        emptyDir.childFile('pubspec.yaml').existsSync(),
+      ).isTrue();
     }
   }
 }
