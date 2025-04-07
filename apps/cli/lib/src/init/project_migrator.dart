@@ -5,6 +5,7 @@ import 'package:celest_cli/src/init/migrations/pubspec_updater.dart';
 import 'package:celest_cli/src/init/project_migration.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:logging/logging.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 /// Manages the migration of a Celest project to the latest version.
 class ProjectMigrator {
@@ -12,6 +13,7 @@ class ProjectMigrator {
     required this.projectRoot,
     required this.projectName,
     required this.parentProject,
+    required this.upgradeFromVersion,
   });
 
   /// The root directory of the enclosing Flutter project.
@@ -27,6 +29,11 @@ class ProjectMigrator {
   /// The name of the project, as defined by the user.
   final String projectName;
 
+  /// The version of the Celest SDK that the project is being upgraded from.
+  ///
+  /// This is used to determine if certain migrations need to be performed.
+  final Version? upgradeFromVersion;
+
   static final Logger _logger = Logger('ProjectMigrator');
 
   /// Generates a new Celest project.
@@ -34,7 +41,12 @@ class ProjectMigrator {
   /// Returns `true` if the project needs further migration by the analyzer.
   Future<ProjectMigrationResult> migrate() async {
     final migrations = [
-      PubspecUpdater(projectRoot, parentProject, projectName),
+      PubspecUpdater(
+        projectRoot,
+        parentProject,
+        projectName,
+        upgradeFromVersion: upgradeFromVersion,
+      ),
       if (parentProject
           case ParentProject(
             path: final appRoot,

@@ -17,6 +17,7 @@ import 'package:celest_cli/src/ast/ast.dart';
 import 'package:celest_cli/src/config/feature_flags.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/database/cache/cache_database.dart';
+import 'package:celest_cli/src/init/edits/source_edit_applier.dart';
 import 'package:celest_cli/src/pub/project_dependency.dart';
 import 'package:celest_cli/src/pub/pub_action.dart';
 import 'package:celest_cli/src/pub/pub_environment.dart';
@@ -25,7 +26,6 @@ import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
-import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:source_span/source_span.dart';
@@ -583,47 +583,7 @@ const project = Project(name: 'cache_warmup');
   }
 
   Future<void> _applyMigrations() async {
-    if (resolver.pendingEdits.isEmpty) {
-      return;
-    }
-
-    _logger.fine('Applying ${resolver.pendingEdits.length} migrations');
-
-    final fileChanges = <Future<void>>[];
-    for (final entry in resolver.pendingEdits.entries) {
-      final path = entry.key;
-
-      // Sort edits in reserve order to avoid offset changes.
-      final edits = entry.value.sorted((a, b) {
-        return -a.offset.compareTo(b.offset);
-      });
-
-      _logger.finest('Applying migrations to $path: $edits');
-
-      final file = context.currentSession.getFile(path) as FileResult;
-      var source = file.content;
-
-      for (final edit in edits) {
-        source = source.replaceRange(
-          edit.offset,
-          edit.offset + edit.length,
-          edit.replacement,
-        );
-      }
-
-      fileChanges.add(fileSystem.file(path).writeAsString(source));
-    }
-
-    await Future.wait(fileChanges);
-
-    _logger.finest('Applied migrations to disk');
-
-    for (final path in pendingEdits.keys) {
-      context.changeFile(path);
-    }
-    final changes = await context.applyPendingFileChanges();
-
-    _logger.finest('Applied changes in analyzer: $changes');
+    await SourceEditApplier(resolver.pendingEdits).apply();
   }
 }
 

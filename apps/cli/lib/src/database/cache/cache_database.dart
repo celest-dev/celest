@@ -69,12 +69,12 @@ final class CacheDatabase extends $CacheDatabase {
         await database.clear();
         await database._setVersionInfo(update: true);
       }
-      if (semver.Version.parse(celest) < semver.Version.parse(packageVersion)) {
-        database._needsProjectUpgrade = true;
+      final upgradeFromVersion = semver.Version.parse(celest);
+      database._upgradeFromVersion = upgradeFromVersion;
+      if (upgradeFromVersion < currentVersion) {
         await database._setVersionInfo(update: true);
       }
     } else if (versionInfo == null) {
-      database._needsProjectUpgrade = true;
       await database._setVersionInfo(update: false);
     }
     final rawDb = await rawCompleter.future;
@@ -82,8 +82,10 @@ final class CacheDatabase extends $CacheDatabase {
     return database;
   }
 
-  bool _needsProjectUpgrade = false;
-  bool get needsProjectUpgrade => _needsProjectUpgrade;
+  semver.Version? _upgradeFromVersion;
+
+  /// The version of the Celest package before the current one.
+  semver.Version? get upgradeFromVersion => _upgradeFromVersion;
 
   Future<void> _setVersionInfo({required bool update}) async {
     if (update) {
