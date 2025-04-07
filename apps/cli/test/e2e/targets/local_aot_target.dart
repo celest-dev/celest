@@ -5,30 +5,30 @@ import 'package:celest_cli/src/sdk/dart_sdk.dart';
 
 import '../common/common.dart';
 
-final class LocalTarget extends TestTarget {
+final class LocalAotTarget extends TestTarget {
   @override
-  String get name => 'Local';
+  String get name => 'Local (AOT)';
 
   @override
   Future<void> setUpAll() async {
     // Speed up tests by precompiling the CLI to kernel.
     final entrypoint =
         Directory.current.uri.resolve('bin/celest.dart').toFilePath();
-    final output = tempDir.childFile('celest.dill').path;
+    final output = tempDir.childFile('celest.aot').path;
     await runCommand(<String>[
-      Sdk.current.dartAotRuntime,
-      Sdk.current.genKernelAotSnapshot,
+      Sdk.current.dart,
+      'compile',
+      'aot-snapshot',
+      '-Ddart.vm.product=false',
       '--enable-asserts',
-      '--platform=${Sdk.current.vmPlatformDill}',
-      '-Dart.vm.product=false',
       '--output=$output',
       entrypoint,
     ]);
-    executable = [Sdk.current.dart, output];
+    executable = [Sdk.current.dartAotRuntime, output];
   }
 
   @override
-  List<String> get tags => const ['e2e-local'];
+  List<String> get tags => const ['e2e-local', 'aot'];
 
   @override
   late final List<String> executable;

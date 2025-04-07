@@ -38,7 +38,8 @@ abstract base class E2ETest with TestHelpers {
   final TestTarget target;
 
   @override
-  File get logFile => tempDir.childFile('${name.snakeCase}.log')..createSync();
+  late final File logFile = tempDir.childFile('${name.snakeCase}.log')
+    ..createSync();
 
   @override
   void log(Object? object) {
@@ -128,10 +129,18 @@ mixin TestHelpers {
         },
       );
 
-  Command celestCommand(String command, [List<String> args = const []]) =>
-      Command([...target.executable, command, '--json', ...args]).environment({
+  Command celestCommand(String command,
+          [String? arg0, String? arg1, String? arg2]) =>
+      Command([
+        ...target.executable,
+        command,
+        '--json',
+        if (arg0 != null) arg0,
+        if (arg1 != null) arg1,
+        if (arg2 != null) arg2,
+      ]).environment({
         if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
         ...defaultCliEnvironment,
         ...target.environment,
-      });
+      }).runInShell();
 }

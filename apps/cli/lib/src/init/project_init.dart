@@ -109,13 +109,13 @@ base mixin Configure on CelestCommand {
           currentProgress?.complete();
           currentProgress = cliLogger.progress('Generating project');
         case CreatedProject():
-          currentProgress?.complete('Project successfully generated');
+          currentProgress?.complete('Project generated successfully');
           currentProgress = null;
         case MigratingProject():
           currentProgress?.complete();
           currentProgress = cliLogger.progress('Migrating project');
         case MigratedProject():
-          currentProgress?.complete('Project successfully migrated');
+          currentProgress?.complete('Project migrated successfully');
           currentProgress = null;
         case Initialized(needsAnalyzerMigration: final needsMigration):
           currentProgress?.complete();
@@ -292,23 +292,24 @@ base mixin Configure on CelestCommand {
   // TODO(dnys1): Improve logic here so that we don't run pub upgrade if
   // the dependencies in the lockfile are already up to date.
   Future<void> _pubUpgrade() async {
-    await Future.wait([
-      runPub(
-        action: PubAction.upgrade,
-        workingDirectory: projectPaths.projectRoot,
-      ),
-      runPub(
-        action: PubAction.get,
-        workingDirectory: projectPaths.clientRoot,
-      ),
-    ]);
+    await runPub(
+      action: PubAction.upgrade,
+      workingDirectory: projectPaths.projectRoot,
+    );
     // Run serially to avoid `flutter pub` locks.
     if (celestProject.parentProject case final parentProject?) {
       await runPub(
-        exe: parentProject.type.name,
+        exe: parentProject.type.executable,
         action: PubAction.get,
         workingDirectory: parentProject.path,
       );
     }
+
+    // Get dependencies in client so that the analyzer does not show red
+    // everywhere, but ignore to avoid blocking the current command.
+    runPub(
+      action: PubAction.get,
+      workingDirectory: projectPaths.clientRoot,
+    ).ignore();
   }
 }

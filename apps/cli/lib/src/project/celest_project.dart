@@ -2,7 +2,8 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:analyzer/dart/analysis/analysis_context.dart';
-import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/dart/analysis/features.dart';
+import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/src/dart/analysis/byte_store.dart';
@@ -18,6 +19,7 @@ import 'package:celest_cli/src/env/env_manager.dart';
 import 'package:celest_cli/src/project/project_paths.dart';
 import 'package:celest_cli/src/pub/cached_pubspec.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
+import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
@@ -225,36 +227,39 @@ final class CelestProject {
       // the project is generated.
       throw StateError('No project.dart file found in the project root.');
     }
-    final projectLibrary = analysisContext.currentSession.getParsedLibrary(
-      projectDart.path,
+
+    final parseResult = parseFile(
+      path: projectDart.path,
+      featureSet: FeatureSet.fromEnableFlags2(
+        sdkLanguageVersion: Sdk.current.version,
+        flags: _analysisOptions.enabledExperiments,
+      ),
+      throwIfDiagnostics: true,
     );
-    switch (projectLibrary) {
-      case ParsedLibraryResult(:final units):
-        final declarations = units
-            .expand((unit) => unit.unit.declarations)
-            .whereType<TopLevelVariableDeclaration>()
-            .expand((declaration) => declaration.variables.variables);
-        for (final declaration in declarations) {
-          if (declaration.initializer
-              case MethodInvocation(
-                methodName: SimpleIdentifier(name: 'Project'),
-                :final argumentList,
+    final projectLibrary = parseResult.unit;
+
+    final declarations = projectLibrary.declarations
+        .whereType<TopLevelVariableDeclaration>()
+        .expand((declaration) => declaration.variables.variables);
+    for (final declaration in declarations) {
+      if (declaration.initializer
+          case MethodInvocation(
+            methodName: SimpleIdentifier(name: 'Project'),
+            :final argumentList,
+          )) {
+        for (final argument in argumentList.arguments) {
+          if (argument
+              case NamedExpression(
+                name: Label(label: SimpleIdentifier(name: 'name')),
+                expression: SimpleStringLiteral(value: final projectName),
               )) {
-            for (final argument in argumentList.arguments) {
-              if (argument
-                  case NamedExpression(
-                    name: Label(label: SimpleIdentifier(name: 'name')),
-                    expression: SimpleStringLiteral(value: final projectName),
-                  )) {
-                return projectName;
-              }
-            }
+            return projectName;
           }
         }
-        throw StateError('No Project(name: "name") found in project.dart');
-      default:
-        throw StateError('Failed to parse project.dart');
+      }
     }
+
+    throw StateError('No Project(name: "name") found in project.dart');
   }
 
   Future<void> close() async {
@@ -290,4 +295,12 @@ extension CelestProjectUriStorage on IsolatedNativeStorage {
     await write('$projectName.localUri', uri.toString());
     return uri;
   }
+}
+
+extension SdkExe on SdkType {
+  String get executable => switch (this) {
+        SdkType.dart => Sdk.current.dart,
+        SdkType.flutter => Sdk.current.flutter!,
+        _ => unreachable(),
+      };
 }

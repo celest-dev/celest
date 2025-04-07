@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:celest_cli/src/context.dart';
+
 import '../common/common.dart';
 
 final class HelloProjectTest extends E2ETest {
@@ -9,25 +11,18 @@ final class HelloProjectTest extends E2ETest {
   String get name => 'start (hello project)';
 
   @override
-  bool get skip => !hasFlutter;
+  bool get skip => !hasFlutter || !platform.environment.containsKey('CI');
 
   @override
   Future<void> run() async {
     final helloExample = Directory.current.uri
-        .resolve('../../celest/packages/celest/example')
+        .resolve('../../packages/celest/example')
         .toFilePath();
     await celestCommand('start')
         .workingDirectory(helloExample)
         .start()
-        .expectLater('Starting Celest')
+        .expectLater('Starting local environment')
         .expectNext('Celest is running')
         .run();
-    print('Resetting git repo');
-    await runCommand([
-      'git',
-      'reset',
-      '--hard',
-      'HEAD',
-    ], workingDirectory: helloExample);
   }
 }
