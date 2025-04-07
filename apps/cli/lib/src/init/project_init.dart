@@ -3,11 +3,11 @@ import 'dart:io';
 
 import 'package:celest_cli/src/commands/celest_command.dart';
 import 'package:celest_cli/src/commands/init_command.dart';
-import 'package:celest_cli/src/commands/project_migrate.dart';
 import 'package:celest_cli/src/commands/start_command.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/init/project_generator.dart';
+import 'package:celest_cli/src/init/project_migrate.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/pub/pub_action.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
@@ -283,8 +283,16 @@ base mixin Configure on CelestCommand {
   // TODO(dnys1): Improve logic here so that we don't run pub upgrade if
   // the dependencies in the lockfile are already up to date.
   Future<void> _pubUpgrade() async {
-    final projectRoot = projectPaths.projectRoot;
-    await runPub(action: PubAction.upgrade, workingDirectory: projectRoot);
+    await Future.wait([
+      runPub(
+        action: PubAction.upgrade,
+        workingDirectory: projectPaths.projectRoot,
+      ),
+      runPub(
+        action: PubAction.get,
+        workingDirectory: projectPaths.clientRoot,
+      ),
+    ]);
     // Run serially to avoid `flutter pub` locks.
     if (celestProject.parentProject case final parentProject?) {
       await runPub(

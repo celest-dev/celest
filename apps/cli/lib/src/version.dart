@@ -11,3 +11,5 @@ final String packageVersion = run(() {
   }
   return _version;
 });
+
+final Version currentVersion = Version.parse(packageVersion);

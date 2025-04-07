@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/pub/project_dependency.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
-import 'package:celest_cli/src/utils/cli.dart';
+import 'package:celest_cli/src/utils/process.dart';
 import 'package:collection/collection.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
