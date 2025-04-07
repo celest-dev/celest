@@ -1,9 +1,11 @@
 .dockerignore
 Dockerfile
 build/
+example/
 .dart_tool/
 .git/
 .github/
 .gitignore
 .idea/
 .packages
+build.sh

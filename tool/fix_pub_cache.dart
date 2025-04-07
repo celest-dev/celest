@@ -26,15 +26,19 @@ Future<void> main() async {
 
   for (final package in fixPackages) {
     print('Adding $package to pub cache');
-    final res = await Process.run(Platform.resolvedExecutable, [
-      'pub',
-      'cache',
-      'add',
-      package,
-      '--all',
-    ]);
-    if (res.exitCode != 0) {
-      print('Failed to add $package to pub cache: ${res.stderr}');
+    final proc = await Process.start(
+      Platform.resolvedExecutable,
+      [
+        'pub',
+        'cache',
+        'add',
+        package,
+        '--all',
+      ],
+      mode: ProcessStartMode.inheritStdio,
+    );
+    if (await proc.exitCode != 0) {
+      print('Failed to add $package to pub cache');
       exit(1);
     }
   }

@@ -5,6 +5,7 @@ import 'package:celest_cloud_auth/src/model/route_map.dart';
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
 import 'package:celest_cloud_hub/src/model/type_registry.dart';
 import 'package:celest_cloud_hub/src/project.dart';
+import 'package:celest_cloud_hub/src/services/health_service.dart';
 import 'package:celest_cloud_hub/src/services/operations_service.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:grpc/grpc.dart' as grpc;
@@ -37,7 +38,7 @@ final class Gateway {
       clientChannel: clientChannel,
       routeMap: routeMap,
     );
-    router.mount('/v1alpha1/', grpcHandler.handle);
+    router.mount('/', grpcHandler.handle);
 
     return Gateway._(
       const shelf.Pipeline()
@@ -71,6 +72,7 @@ final class Gateway {
 final class _GrpcHandler {
   _GrpcHandler({required this.routeMap, required this.clientChannel}) {
     addTypes(OperationsService.apiId, OperationsService.$handlers);
+    addTypes(HealthService.apiId, HealthService.$handlers);
   }
 
   final grpc.ClientChannel clientChannel;

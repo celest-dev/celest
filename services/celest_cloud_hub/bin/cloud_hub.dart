@@ -15,6 +15,7 @@ import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/db_functions.dart';
 import 'package:celest_cloud_hub/src/gateway/gateway.dart';
 import 'package:celest_cloud_hub/src/project.dart';
+import 'package:celest_cloud_hub/src/services/health_service.dart';
 import 'package:celest_cloud_hub/src/services/operations_service.dart';
 import 'package:celest_cloud_hub/src/services/project_environments_service.dart';
 import 'package:celest_core/_internal.dart';
@@ -25,6 +26,12 @@ Future<void> main() async {
   context.logger.level = Level.ALL;
   context.logger.onRecord.listen((record) {
     print('${record.level.name}: ${record.time}: ${record.message}');
+    if (record.error != null) {
+      print(record.error);
+    }
+    if (record.stackTrace != null) {
+      print(record.stackTrace);
+    }
   });
   context.put(ContextKey.project, project);
   context.put(
@@ -55,7 +62,11 @@ Future<void> main() async {
   );
 
   final server = grpc.Server.create(
-    services: [ProjectEnvironmentsService(), OperationsService(db, authorizer)],
+    services: [
+      ProjectEnvironmentsService(),
+      OperationsService(db, authorizer),
+      HealthService(),
+    ],
     interceptors: [
       (call, method) async {
         try {

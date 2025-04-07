@@ -1,0 +1,26 @@
+# fly.yaml app configuration file generated for cloud-hub on 2025-04-07T11:42:36-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app: cloud-hub
+primary_region: lax
+
+build:
+  image: celestdev/cloud-hub:latest
+
+env:
+  CLOUD_HUB_DATABASE_HOST: "file::memory:"
+
+http_service:
+  internal_port: 8080
+  force_https: true
+  auto_stop_machines: true
+  auto_start_machines: true
+  min_machines_running: 0
+
+  processes:
+    - app
+
+vm:
+  - size: performance-8x
