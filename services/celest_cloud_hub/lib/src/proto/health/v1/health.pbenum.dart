@@ -14,23 +14,32 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class HealthCheckResponse_ServingStatus extends $pb.ProtobufEnum {
-  static const HealthCheckResponse_ServingStatus UNKNOWN = HealthCheckResponse_ServingStatus._(0, _omitEnumNames ? '' : 'UNKNOWN');
-  static const HealthCheckResponse_ServingStatus SERVING = HealthCheckResponse_ServingStatus._(1, _omitEnumNames ? '' : 'SERVING');
-  static const HealthCheckResponse_ServingStatus NOT_SERVING = HealthCheckResponse_ServingStatus._(2, _omitEnumNames ? '' : 'NOT_SERVING');
-  static const HealthCheckResponse_ServingStatus SERVICE_UNKNOWN = HealthCheckResponse_ServingStatus._(3, _omitEnumNames ? '' : 'SERVICE_UNKNOWN');
+  static const HealthCheckResponse_ServingStatus UNKNOWN =
+      HealthCheckResponse_ServingStatus._(0, _omitEnumNames ? '' : 'UNKNOWN');
+  static const HealthCheckResponse_ServingStatus SERVING =
+      HealthCheckResponse_ServingStatus._(1, _omitEnumNames ? '' : 'SERVING');
+  static const HealthCheckResponse_ServingStatus NOT_SERVING =
+      HealthCheckResponse_ServingStatus._(
+          2, _omitEnumNames ? '' : 'NOT_SERVING');
+  static const HealthCheckResponse_ServingStatus SERVICE_UNKNOWN =
+      HealthCheckResponse_ServingStatus._(
+          3, _omitEnumNames ? '' : 'SERVICE_UNKNOWN');
 
-  static const $core.List<HealthCheckResponse_ServingStatus> values = <HealthCheckResponse_ServingStatus> [
+  static const $core.List<HealthCheckResponse_ServingStatus> values =
+      <HealthCheckResponse_ServingStatus>[
     UNKNOWN,
     SERVING,
     NOT_SERVING,
     SERVICE_UNKNOWN,
   ];
 
-  static final $core.Map<$core.int, HealthCheckResponse_ServingStatus> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static HealthCheckResponse_ServingStatus? valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, HealthCheckResponse_ServingStatus>
+      _byValue = $pb.ProtobufEnum.initByValue(values);
+  static HealthCheckResponse_ServingStatus? valueOf($core.int value) =>
+      _byValue[value];
 
-  const HealthCheckResponse_ServingStatus._($core.int v, $core.String n) : super(v, n);
+  const HealthCheckResponse_ServingStatus._($core.int v, $core.String n)
+      : super(v, n);
 }
-
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

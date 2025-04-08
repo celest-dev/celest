@@ -7,6 +7,7 @@ import 'package:celest_cloud_hub/src/model/type_registry.dart';
 import 'package:celest_cloud_hub/src/project.dart';
 import 'package:celest_cloud_hub/src/services/health_service.dart';
 import 'package:celest_cloud_hub/src/services/operations_service.dart';
+import 'package:celest_cloud_hub/src/services/organizations_service.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:protobuf/protobuf.dart';
@@ -72,6 +73,7 @@ final class Gateway {
 final class _GrpcHandler {
   _GrpcHandler({required this.routeMap, required this.clientChannel}) {
     addTypes(OperationsService.apiId, OperationsService.$handlers);
+    addTypes(OrganizationsService.apiId, OrganizationsService.$handlers);
     addTypes(HealthService.apiId, HealthService.$handlers);
   }
 

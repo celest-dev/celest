@@ -1,0 +1,171 @@
+import 'package:celest_cloud_auth/src/database/schema/cedar.drift';
+import 'package:celest_cloud_hub/src/database/schema/organizations.drift';
+import 'package:celest_cloud_hub/src/database/schema/projects.drift';
+import 'package:celest_cloud_hub/src/database/schema/project_environments.drift';
+
+-- Stores user memberships in organizations and projects.
+CREATE TABLE IF NOT EXISTS user_memberships (
+    -- The unique identifier for the user membership.
+    membership_id TEXT NOT NULL PRIMARY KEY,
+
+    -- The unique identifier for the user.
+    user_id TEXT NOT NULL,
+
+    -- The Cedar type of the parent entity.
+    --
+    -- Must be `Celest::Organization`, `Celest::Project`, or `Celest::Project::Environment`.
+    parent_type TEXT NOT NULL,
+
+    -- The unique identifier of the parent entity.
+    --
+    -- Must be an existing organization or project.
+    parent_id TEXT NOT NULL,
+
+    -- The role of the user in the organization or project.
+    role TEXT NOT NULL,
+
+    create_time DATETIME NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+    update_time DATETIME NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+
+    CHECK (parent_type = 'Celest::Organization' OR parent_type = 'Celest::Project' OR parent_type = 'Celest::Project::Environment'),
+
+    CONSTRAINT user_memberships_parent_fk FOREIGN KEY (parent_type, parent_id) REFERENCES cedar_entities(entity_type, entity_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+        DEFERRABLE INITIALLY DEFERRED
+);
+
+-- Index for the user membership's FK.
+CREATE INDEX IF NOT EXISTS user_memberships_parent_idx ON user_memberships(parent_type, parent_id);
+
+----------------------------------------------
+-------------- Cedar Triggers ----------------
+----------------------------------------------
+
+-- This trigger is used to create the Cedar entity when a row is inserted.
+CREATE TRIGGER IF NOT EXISTS user_memberships_create_trg
+BEFORE INSERT ON user_memberships
+BEGIN
+    INSERT INTO cedar_entities(entity_type, entity_id, attribute_json)
+    VALUES (
+        NEW.parent_type || '::Member', 
+        NEW.membership_id, 
+        json_object(
+            'role', json_object(
+                'type', 'Celest::Role',
+                'id', NEW.role
+            ), 
+            'parent', json_object(
+                'type', NEW.parent_type, 
+                'id', NEW.parent_id
+            )
+        )
+    );
+    INSERT INTO cedar_relationships(entity_type, entity_id, parent_type, parent_id)
+    VALUES ('Celest::User', NEW.user_id, NEW.parent_type || '::Member', NEW.membership_id);
+END;
+
+-- This trigger is used to update the Cedar entity when a row is updated.
+CREATE TRIGGER IF NOT EXISTS user_memberships_update_trg
+AFTER UPDATE ON user_memberships
+BEGIN
+    UPDATE cedar_entities
+    SET attribute_json = json_object(
+        'role', json_object(
+            'type', 'Celest::Role',
+            'id', NEW.role
+        ), 
+        'parent', json_object(
+            'type', OLD.parent_type,
+            'id', OLD.parent_id
+        )
+    )
+    WHERE entity_id = OLD.membership_id AND entity_type = OLD.parent_type || '::Member';
+    UPDATE cedar_relationships
+    SET parent_id = NEW.role
+    WHERE entity_id = OLD.membership_id AND entity_type = OLD.parent_type || '::Member' AND parent_type = 'Celest::Role';
+END;
+
+-- This trigger is used to delete the parent relationship when a row is deleted.
+CREATE TRIGGER IF NOT EXISTS user_memberships_delete_trg
+AFTER DELETE ON user_memberships
+BEGIN
+    DELETE FROM cedar_relationships
+    WHERE 
+        entity_id = OLD.membership_id 
+        AND entity_type = OLD.parent_type || '::Member';
+    DELETE FROM cedar_relationships
+    WHERE
+        parent_id = OLD.membership_id 
+        AND parent_type = OLD.parent_type || '::Member';
+    DELETE FROM cedar_entities
+    WHERE
+        entity_id = OLD.membership_id
+        AND entity_type = OLD.parent_type || '::Member';
+END;
+
+
+-- This trigger is used to delete the user memberships when an organization is deleted.
+CREATE TRIGGER IF NOT EXISTS organizations_delete_user_memberships_trg
+AFTER DELETE ON organizations
+BEGIN
+    DELETE FROM user_memberships
+    WHERE
+        parent_type = 'Celest::Organization'
+        AND parent_id = OLD.id;
+END;
+
+-- This trigger is used to delete the user memberships when a project is deleted.
+CREATE TRIGGER IF NOT EXISTS projects_delete_user_memberships_trg
+AFTER DELETE ON projects
+BEGIN
+    DELETE FROM user_memberships
+    WHERE
+        parent_type = 'Celest::Project'
+        AND parent_id = OLD.id;
+END;
+
+-- This trigger is used to delete the user memberships when a project environment is deleted.
+CREATE TRIGGER IF NOT EXISTS project_environments_delete_user_memberships_trg
+AFTER DELETE ON project_environments
+BEGIN
+    DELETE FROM user_memberships
+    WHERE
+        parent_type = 'Celest::Project::Environment'
+        AND parent_id = OLD.id;
+END;
+
+----------------------------------------------
+-------------- /Cedar Triggers ---------------
+----------------------------------------------
+
+-- name: CreateUserMembership :one
+createUserMembership: 
+    INSERT INTO user_memberships(membership_id, user_id, parent_type, parent_id, role)
+    VALUES (:membership_id, :user_id, :parent_type, :parent_id, :role)
+    RETURNING *;
+
+-- name: GetUserMembership :one
+getUserMembership:
+    SELECT * FROM user_memberships
+    WHERE membership_id = :membership_id;
+
+-- name: FindUserMembership :one
+findUserMembership:
+    SELECT * FROM user_memberships
+    WHERE user_id = :user_id
+    AND parent_type = :parent_type
+    AND parent_id   = :parent_id;
+
+-- name: UpdateUserMembership :one
+updateUserMembership:
+    UPDATE user_memberships
+    SET
+        role = coalesce(:role, role)
+    WHERE membership_id = :membership_id
+    RETURNING *;
+
+-- name: DeleteUserMembership :one
+deleteUserMembership:
+    DELETE FROM user_memberships
+    WHERE membership_id = :membership_id
+    RETURNING *;

@@ -11,6 +11,7 @@ targets:
         enabled: true
         generate_for:
           - lib/src/database/**
+          - lib/src/model/**
         options: &options
           sql:
             dialect: sqlite
@@ -23,5 +24,6 @@ targets:
         enabled: true
         generate_for:
           - lib/src/database/**
+          - lib/src/model/**
         # We use yaml anchors to give the two builders the same options
         options: *options

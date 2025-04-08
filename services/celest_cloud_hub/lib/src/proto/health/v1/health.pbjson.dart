@@ -22,14 +22,22 @@ const HealthCheckRequest$json = {
 };
 
 /// Descriptor for `HealthCheckRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List healthCheckRequestDescriptor = $convert.base64Decode(
-    'ChJIZWFsdGhDaGVja1JlcXVlc3QSGAoHc2VydmljZRgBIAEoCVIHc2VydmljZQ==');
+final $typed_data.Uint8List healthCheckRequestDescriptor =
+    $convert.base64Decode(
+        'ChJIZWFsdGhDaGVja1JlcXVlc3QSGAoHc2VydmljZRgBIAEoCVIHc2VydmljZQ==');
 
 @$core.Deprecated('Use healthCheckResponseDescriptor instead')
 const HealthCheckResponse$json = {
   '1': 'HealthCheckResponse',
   '2': [
-    {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.grpc.health.v1.HealthCheckResponse.ServingStatus', '10': 'status'},
+    {
+      '1': 'status',
+      '3': 1,
+      '4': 1,
+      '5': 14,
+      '6': '.grpc.health.v1.HealthCheckResponse.ServingStatus',
+      '10': 'status'
+    },
   ],
   '4': [HealthCheckResponse_ServingStatus$json],
 };
@@ -51,4 +59,3 @@ final $typed_data.Uint8List healthCheckResponseDescriptor = $convert.base64Decod
     'hlYWx0aENoZWNrUmVzcG9uc2UuU2VydmluZ1N0YXR1c1IGc3RhdHVzIk8KDVNlcnZpbmdTdGF0'
     'dXMSCwoHVU5LTk9XThAAEgsKB1NFUlZJTkcQARIPCgtOT1RfU0VSVklORxACEhMKD1NFUlZJQ0'
     'VfVU5LTk9XThAD');
-

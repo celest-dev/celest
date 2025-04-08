@@ -97,9 +97,9 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
     stdout.writeln();
     cliLogger.success('🚀 To start a local development server, run:');
     cliLogger
-      ..write(Platform.lineTerminator)
-      ..write('      $command${Platform.lineTerminator}')
-      ..write(Platform.lineTerminator);
+      ..info(Platform.lineTerminator)
+      ..info('      $command${Platform.lineTerminator}')
+      ..info(Platform.lineTerminator);
 
     return 0;
   }
