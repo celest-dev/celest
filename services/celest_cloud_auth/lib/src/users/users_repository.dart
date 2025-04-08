@@ -62,13 +62,13 @@ extension type UsersRepository._(_Deps _deps) {
     return _db.transaction(() async {
       switch (factor) {
         case AuthenticationFactorEmailOtp(:final email):
-          await _db.usersDrift.upsertUserEmail(
+          await _db.cloudAuthUsersDrift.upsertUserEmail(
             userId: userId,
             email: email,
             isVerified: true,
           );
         case AuthenticationFactorSmsOtp(:final phoneNumber):
-          await _db.usersDrift.upsertUserPhoneNumber(
+          await _db.cloudAuthUsersDrift.upsertUserPhoneNumber(
             userId: userId,
             phoneNumber: phoneNumber,
             isVerified: true,

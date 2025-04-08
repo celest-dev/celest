@@ -18,7 +18,7 @@ extension type CryptoKeyRepository._(_Deps _deps) implements Object {
       keyAlgorithm: KeyAlgorithm.hmacSha256,
       keyMaterial: secureRandomBytes(32),
     );
-    rootKey = (await db.cloudAuth.authDrift.createCryptoKey(
+    rootKey = (await db.cloudAuth.cloudAuthCoreDrift.createCryptoKey(
       cryptoKeyId: rootKey.cryptoKeyId,
       keyPurpose: rootKey.keyPurpose.name,
       keyAlgorithm: rootKey.keyAlgorithm.name,
@@ -39,13 +39,15 @@ extension type CryptoKeyRepository._(_Deps _deps) implements Object {
   Future<CryptoKey> getKey({
     required Uint8List cryptoKeyId,
   }) async {
-    return _db.authDrift.getCryptoKey(cryptoKeyId: cryptoKeyId).getSingle();
+    return _db.cloudAuthCoreDrift
+        .getCryptoKey(cryptoKeyId: cryptoKeyId)
+        .getSingle();
   }
 
   Future<CryptoKey> insertKey({
     required CryptoKey cryptoKey,
   }) async {
-    final result = await _db.authDrift.createCryptoKey(
+    final result = await _db.cloudAuthCoreDrift.createCryptoKey(
       cryptoKeyId: cryptoKey.cryptoKeyId,
       keyPurpose: cryptoKey.keyPurpose.name,
       keyAlgorithm: cryptoKey.keyAlgorithm.name,
@@ -58,7 +60,7 @@ extension type CryptoKeyRepository._(_Deps _deps) implements Object {
   Future<CryptoKey> getOrMintHmacKey({
     required Uint8List cryptoKeyId,
   }) async {
-    final key = await _db.authDrift
+    final key = await _db.cloudAuthCoreDrift
         .getCryptoKey(cryptoKeyId: cryptoKeyId)
         .getSingleOrNull();
     return key ?? mintHmacKey(cryptoKeyId: cryptoKeyId);

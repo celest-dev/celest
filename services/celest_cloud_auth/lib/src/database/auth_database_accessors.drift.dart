@@ -2,18 +2,22 @@
 // ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
 import 'package:drift/src/runtime/api/runtime_api.dart' as i1;
-import 'package:celest_cloud_auth/src/database/schema/users.drift.dart' as i2;
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_users.drift.dart'
+    as i2;
 import 'package:drift/internal/modular.dart' as i3;
 import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i4;
-import 'package:celest_cloud_auth/src/database/schema/projects.drift.dart'
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_projects.drift.dart'
     as i5;
-import 'package:celest_cloud_auth/src/database/schema/meta.drift.dart' as i6;
-import 'package:celest_cloud_auth/src/database/schema/auth.drift.dart' as i7;
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_meta.drift.dart'
+    as i6;
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_core.drift.dart'
+    as i7;
 
 mixin $CloudAuthDatabaseAccessorsMixin
     on i0.DatabaseAccessor<i1.GeneratedDatabase> {
-  i2.Users get users =>
-      i3.ReadDatabaseContainer(attachedDatabase).resultSet<i2.Users>('users');
+  i2.CloudAuthUsers get cloudAuthUsers =>
+      i3.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i2.CloudAuthUsers>('cloud_auth_users');
   i4.CedarTypes get cedarTypes => i3.ReadDatabaseContainer(attachedDatabase)
       .resultSet<i4.CedarTypes>('cedar_types');
   i4.CedarEntities get cedarEntities =>
@@ -22,22 +26,37 @@ mixin $CloudAuthDatabaseAccessorsMixin
   i4.CedarRelationships get cedarRelationships =>
       i3.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i4.CedarRelationships>('cedar_relationships');
-  i2.UserEmails get userEmails => i3.ReadDatabaseContainer(attachedDatabase)
-      .resultSet<i2.UserEmails>('user_emails');
-  i2.UserPhoneNumbers get userPhoneNumbers =>
+  i2.CloudAuthUserEmails get cloudAuthUserEmails =>
       i3.ReadDatabaseContainer(attachedDatabase)
-          .resultSet<i2.UserPhoneNumbers>('user_phone_numbers');
-  i5.CelestProjects get celestProjects =>
+          .resultSet<i2.CloudAuthUserEmails>('cloud_auth_user_emails');
+  i2.CloudAuthUserPhoneNumbers get cloudAuthUserPhoneNumbers =>
       i3.ReadDatabaseContainer(attachedDatabase)
-          .resultSet<i5.CelestProjects>('celest_projects');
-  i5.CelestApis get celestApis => i3.ReadDatabaseContainer(attachedDatabase)
-      .resultSet<i5.CelestApis>('celest_apis');
-  i5.CelestFunctions get celestFunctions =>
+          .resultSet<i2.CloudAuthUserPhoneNumbers>(
+              'cloud_auth_user_phone_numbers');
+  i5.CloudAuthProjects get cloudAuthProjects =>
       i3.ReadDatabaseContainer(attachedDatabase)
-          .resultSet<i5.CelestFunctions>('celest_functions');
-  i6.CelestCloudAuthMeta get celestCloudAuthMeta =>
+          .resultSet<i5.CloudAuthProjects>('cloud_auth_projects');
+  i5.CloudAuthApis get cloudAuthApis =>
       i3.ReadDatabaseContainer(attachedDatabase)
-          .resultSet<i6.CelestCloudAuthMeta>('_celest_cloud_auth_meta');
+          .resultSet<i5.CloudAuthApis>('cloud_auth_apis');
+  i5.CloudAuthFunctions get cloudAuthFunctions =>
+      i3.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i5.CloudAuthFunctions>('cloud_auth_functions');
+  i6.CloudAuthMeta get cloudAuthMeta =>
+      i3.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i6.CloudAuthMeta>('cloud_auth_meta');
+  i7.CloudAuthCryptoKeys get cloudAuthCryptoKeys =>
+      i3.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i7.CloudAuthCryptoKeys>('cloud_auth_crypto_keys');
+  i7.CloudAuthSessions get cloudAuthSessions =>
+      i3.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i7.CloudAuthSessions>('cloud_auth_sessions');
+  i7.CloudAuthOtpCodes get cloudAuthOtpCodes =>
+      i3.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i7.CloudAuthOtpCodes>('cloud_auth_otp_codes');
+  i7.CloudAuthCorks get cloudAuthCorks =>
+      i3.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i7.CloudAuthCorks>('cloud_auth_corks');
   i4.CedarPolicies get cedarPolicies =>
       i3.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i4.CedarPolicies>('cedar_policies');
@@ -51,23 +70,18 @@ mixin $CloudAuthDatabaseAccessorsMixin
   i4.CedarAuthorizationLogs get cedarAuthorizationLogs =>
       i3.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i4.CedarAuthorizationLogs>('cedar_authorization_logs');
-  i7.CryptoKeys get cryptoKeys => i3.ReadDatabaseContainer(attachedDatabase)
-      .resultSet<i7.CryptoKeys>('crypto_keys');
-  i7.Sessions get sessions => i3.ReadDatabaseContainer(attachedDatabase)
-      .resultSet<i7.Sessions>('sessions');
-  i7.OtpCodes get otpCodes => i3.ReadDatabaseContainer(attachedDatabase)
-      .resultSet<i7.OtpCodes>('otp_codes');
-  i7.Corks get corks =>
-      i3.ReadDatabaseContainer(attachedDatabase).resultSet<i7.Corks>('corks');
-  i7.AuthDrift get authDrift => i3.ReadDatabaseContainer(attachedDatabase)
-      .accessor<i7.AuthDrift>(i7.AuthDrift.new);
   i4.CedarDrift get cedarDrift => i3.ReadDatabaseContainer(attachedDatabase)
       .accessor<i4.CedarDrift>(i4.CedarDrift.new);
-  i6.MetaDrift get metaDrift => i3.ReadDatabaseContainer(attachedDatabase)
-      .accessor<i6.MetaDrift>(i6.MetaDrift.new);
-  i5.ProjectsDrift get projectsDrift =>
+  i7.CloudAuthCoreDrift get cloudAuthCoreDrift =>
       i3.ReadDatabaseContainer(attachedDatabase)
-          .accessor<i5.ProjectsDrift>(i5.ProjectsDrift.new);
-  i2.UsersDrift get usersDrift => i3.ReadDatabaseContainer(attachedDatabase)
-      .accessor<i2.UsersDrift>(i2.UsersDrift.new);
+          .accessor<i7.CloudAuthCoreDrift>(i7.CloudAuthCoreDrift.new);
+  i6.CloudAuthMetaDrift get cloudAuthMetaDrift =>
+      i3.ReadDatabaseContainer(attachedDatabase)
+          .accessor<i6.CloudAuthMetaDrift>(i6.CloudAuthMetaDrift.new);
+  i5.CloudAuthProjectsDrift get cloudAuthProjectsDrift =>
+      i3.ReadDatabaseContainer(attachedDatabase)
+          .accessor<i5.CloudAuthProjectsDrift>(i5.CloudAuthProjectsDrift.new);
+  i2.CloudAuthUsersDrift get cloudAuthUsersDrift =>
+      i3.ReadDatabaseContainer(attachedDatabase)
+          .accessor<i2.CloudAuthUsersDrift>(i2.CloudAuthUsersDrift.new);
 }

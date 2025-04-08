@@ -57,7 +57,7 @@ extension type SessionsRepository._(_Deps _deps) {
         user = userLookup;
       }
 
-      final sessions = await _db.authDrift.createSession(
+      final sessions = await _db.cloudAuthCoreDrift.createSession(
         sessionId: sessionId.encoded,
         cryptoKeyId: keyData.cryptoKeyId,
         userId: userId!,
@@ -82,7 +82,7 @@ extension type SessionsRepository._(_Deps _deps) {
   }) {
     return _db.transaction(() async {
       final sessionToken = session.sessionToken;
-      session = (await _db.authDrift.updateSession(
+      session = (await _db.cloudAuthCoreDrift.updateSession(
         sessionId: session.sessionId.encoded,
         state: state ?? session.state,
         userId: userId ?? session.userId,
@@ -99,7 +99,7 @@ extension type SessionsRepository._(_Deps _deps) {
     required TypeId<Session> sessionId,
   }) {
     return _db.transaction(() async {
-      final session = await _db.authDrift
+      final session = await _db.cloudAuthCoreDrift
           .getSession(sessionId: sessionId.encoded)
           .getSingleOrNull();
       if (session == null) {
@@ -108,7 +108,7 @@ extension type SessionsRepository._(_Deps _deps) {
 
       // Due to cascade statements, the session and associated cork
       // will be deleted as well.
-      await _db.cryptoKeys.deleteWhere(
+      await _db.cloudAuthCryptoKeys.deleteWhere(
         (key) => key.cryptoKeyId.equals(session.cryptoKeyId),
       );
       await _db.cedarDrift.deleteEntity(

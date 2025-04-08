@@ -1,12 +1,12 @@
-CREATE TABLE IF NOT EXISTS _celest_cloud_auth_meta (
+CREATE TABLE IF NOT EXISTS cloud_auth_meta (
     -- The version of the schema.
     schema_version INTEGER NOT NULL PRIMARY KEY
 );
 
 getSchemaVersion:
-    SELECT max(schema_version) FROM _celest_cloud_auth_meta;
+    SELECT max(schema_version) FROM cloud_auth_meta;
 
 setSchemaVersion:
-    INSERT INTO _celest_cloud_auth_meta(schema_version)
+    INSERT INTO cloud_auth_meta(schema_version)
     VALUES (:schema_version)
     ON CONFLICT DO NOTHING;

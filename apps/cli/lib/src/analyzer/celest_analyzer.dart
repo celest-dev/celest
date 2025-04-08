@@ -584,6 +584,7 @@ const project = Project(name: 'cache_warmup');
 
   Future<void> _applyMigrations() async {
     await SourceEditApplier(resolver.pendingEdits).apply();
+    resolver.pendingEdits.clear();
   }
 }
 

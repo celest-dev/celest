@@ -1,7 +1,7 @@
 // dart format width=80
 // ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
-import 'package:celest_cloud_auth/src/database/schema/projects.drift.dart'
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_projects.drift.dart'
     as i1;
 import 'package:celest_ast/src/resolved_ast.dart' as i2;
 import 'dart:typed_data' as i3;
@@ -11,7 +11,7 @@ import 'package:drift/internal/modular.dart' as i5;
 import 'dart:async' as i6;
 import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i7;
 
-typedef $CelestProjectsCreateCompanionBuilder = i1.CelestProjectsCompanion
+typedef $CloudAuthProjectsCreateCompanionBuilder = i1.CloudAuthProjectsCompanion
     Function({
   required String projectId,
   required String version,
@@ -19,7 +19,7 @@ typedef $CelestProjectsCreateCompanionBuilder = i1.CelestProjectsCompanion
   required String etag,
   i0.Value<int> rowid,
 });
-typedef $CelestProjectsUpdateCompanionBuilder = i1.CelestProjectsCompanion
+typedef $CloudAuthProjectsUpdateCompanionBuilder = i1.CloudAuthProjectsCompanion
     Function({
   i0.Value<String> projectId,
   i0.Value<String> version,
@@ -28,9 +28,9 @@ typedef $CelestProjectsUpdateCompanionBuilder = i1.CelestProjectsCompanion
   i0.Value<int> rowid,
 });
 
-class $CelestProjectsFilterComposer
-    extends i0.Composer<i0.GeneratedDatabase, i1.CelestProjects> {
-  $CelestProjectsFilterComposer({
+class $CloudAuthProjectsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CloudAuthProjects> {
+  $CloudAuthProjectsFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -53,9 +53,9 @@ class $CelestProjectsFilterComposer
       column: $table.etag, builder: (column) => i0.ColumnFilters(column));
 }
 
-class $CelestProjectsOrderingComposer
-    extends i0.Composer<i0.GeneratedDatabase, i1.CelestProjects> {
-  $CelestProjectsOrderingComposer({
+class $CloudAuthProjectsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CloudAuthProjects> {
+  $CloudAuthProjectsOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -77,9 +77,9 @@ class $CelestProjectsOrderingComposer
       column: $table.etag, builder: (column) => i0.ColumnOrderings(column));
 }
 
-class $CelestProjectsAnnotationComposer
-    extends i0.Composer<i0.GeneratedDatabase, i1.CelestProjects> {
-  $CelestProjectsAnnotationComposer({
+class $CloudAuthProjectsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CloudAuthProjects> {
+  $CloudAuthProjectsAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -100,32 +100,33 @@ class $CelestProjectsAnnotationComposer
       $composableBuilder(column: $table.etag, builder: (column) => column);
 }
 
-class $CelestProjectsTableManager extends i0.RootTableManager<
+class $CloudAuthProjectsTableManager extends i0.RootTableManager<
     i0.GeneratedDatabase,
-    i1.CelestProjects,
-    i1.CelestProject,
-    i1.$CelestProjectsFilterComposer,
-    i1.$CelestProjectsOrderingComposer,
-    i1.$CelestProjectsAnnotationComposer,
-    $CelestProjectsCreateCompanionBuilder,
-    $CelestProjectsUpdateCompanionBuilder,
+    i1.CloudAuthProjects,
+    i1.CloudAuthProject,
+    i1.$CloudAuthProjectsFilterComposer,
+    i1.$CloudAuthProjectsOrderingComposer,
+    i1.$CloudAuthProjectsAnnotationComposer,
+    $CloudAuthProjectsCreateCompanionBuilder,
+    $CloudAuthProjectsUpdateCompanionBuilder,
     (
-      i1.CelestProject,
-      i0
-      .BaseReferences<i0.GeneratedDatabase, i1.CelestProjects, i1.CelestProject>
+      i1.CloudAuthProject,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CloudAuthProjects,
+          i1.CloudAuthProject>
     ),
-    i1.CelestProject,
+    i1.CloudAuthProject,
     i0.PrefetchHooks Function()> {
-  $CelestProjectsTableManager(i0.GeneratedDatabase db, i1.CelestProjects table)
+  $CloudAuthProjectsTableManager(
+      i0.GeneratedDatabase db, i1.CloudAuthProjects table)
       : super(i0.TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              i1.$CelestProjectsFilterComposer($db: db, $table: table),
+              i1.$CloudAuthProjectsFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              i1.$CelestProjectsOrderingComposer($db: db, $table: table),
+              i1.$CloudAuthProjectsOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              i1.$CelestProjectsAnnotationComposer($db: db, $table: table),
+              i1.$CloudAuthProjectsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             i0.Value<String> projectId = const i0.Value.absent(),
             i0.Value<String> version = const i0.Value.absent(),
@@ -133,7 +134,7 @@ class $CelestProjectsTableManager extends i0.RootTableManager<
             i0.Value<String> etag = const i0.Value.absent(),
             i0.Value<int> rowid = const i0.Value.absent(),
           }) =>
-              i1.CelestProjectsCompanion(
+              i1.CloudAuthProjectsCompanion(
             projectId: projectId,
             version: version,
             resolvedAst: resolvedAst,
@@ -147,7 +148,7 @@ class $CelestProjectsTableManager extends i0.RootTableManager<
             required String etag,
             i0.Value<int> rowid = const i0.Value.absent(),
           }) =>
-              i1.CelestProjectsCompanion.insert(
+              i1.CloudAuthProjectsCompanion.insert(
             projectId: projectId,
             version: version,
             resolvedAst: resolvedAst,
@@ -161,30 +162,32 @@ class $CelestProjectsTableManager extends i0.RootTableManager<
         ));
 }
 
-typedef $CelestProjectsProcessedTableManager = i0.ProcessedTableManager<
+typedef $CloudAuthProjectsProcessedTableManager = i0.ProcessedTableManager<
     i0.GeneratedDatabase,
-    i1.CelestProjects,
-    i1.CelestProject,
-    i1.$CelestProjectsFilterComposer,
-    i1.$CelestProjectsOrderingComposer,
-    i1.$CelestProjectsAnnotationComposer,
-    $CelestProjectsCreateCompanionBuilder,
-    $CelestProjectsUpdateCompanionBuilder,
+    i1.CloudAuthProjects,
+    i1.CloudAuthProject,
+    i1.$CloudAuthProjectsFilterComposer,
+    i1.$CloudAuthProjectsOrderingComposer,
+    i1.$CloudAuthProjectsAnnotationComposer,
+    $CloudAuthProjectsCreateCompanionBuilder,
+    $CloudAuthProjectsUpdateCompanionBuilder,
     (
-      i1.CelestProject,
-      i0
-      .BaseReferences<i0.GeneratedDatabase, i1.CelestProjects, i1.CelestProject>
+      i1.CloudAuthProject,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CloudAuthProjects,
+          i1.CloudAuthProject>
     ),
-    i1.CelestProject,
+    i1.CloudAuthProject,
     i0.PrefetchHooks Function()>;
-typedef $CelestApisCreateCompanionBuilder = i1.CelestApisCompanion Function({
+typedef $CloudAuthApisCreateCompanionBuilder = i1.CloudAuthApisCompanion
+    Function({
   required String apiId,
   required String projectId,
   required i2.ResolvedApi resolvedAst,
   required String etag,
   i0.Value<int> rowid,
 });
-typedef $CelestApisUpdateCompanionBuilder = i1.CelestApisCompanion Function({
+typedef $CloudAuthApisUpdateCompanionBuilder = i1.CloudAuthApisCompanion
+    Function({
   i0.Value<String> apiId,
   i0.Value<String> projectId,
   i0.Value<i2.ResolvedApi> resolvedAst,
@@ -192,9 +195,9 @@ typedef $CelestApisUpdateCompanionBuilder = i1.CelestApisCompanion Function({
   i0.Value<int> rowid,
 });
 
-class $CelestApisFilterComposer
-    extends i0.Composer<i0.GeneratedDatabase, i1.CelestApis> {
-  $CelestApisFilterComposer({
+class $CloudAuthApisFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CloudAuthApis> {
+  $CloudAuthApisFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -217,9 +220,9 @@ class $CelestApisFilterComposer
       column: $table.etag, builder: (column) => i0.ColumnFilters(column));
 }
 
-class $CelestApisOrderingComposer
-    extends i0.Composer<i0.GeneratedDatabase, i1.CelestApis> {
-  $CelestApisOrderingComposer({
+class $CloudAuthApisOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CloudAuthApis> {
+  $CloudAuthApisOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -241,9 +244,9 @@ class $CelestApisOrderingComposer
       column: $table.etag, builder: (column) => i0.ColumnOrderings(column));
 }
 
-class $CelestApisAnnotationComposer
-    extends i0.Composer<i0.GeneratedDatabase, i1.CelestApis> {
-  $CelestApisAnnotationComposer({
+class $CloudAuthApisAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CloudAuthApis> {
+  $CloudAuthApisAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -264,31 +267,31 @@ class $CelestApisAnnotationComposer
       $composableBuilder(column: $table.etag, builder: (column) => column);
 }
 
-class $CelestApisTableManager extends i0.RootTableManager<
+class $CloudAuthApisTableManager extends i0.RootTableManager<
     i0.GeneratedDatabase,
-    i1.CelestApis,
-    i1.CelestApi,
-    i1.$CelestApisFilterComposer,
-    i1.$CelestApisOrderingComposer,
-    i1.$CelestApisAnnotationComposer,
-    $CelestApisCreateCompanionBuilder,
-    $CelestApisUpdateCompanionBuilder,
+    i1.CloudAuthApis,
+    i1.CloudAuthApi,
+    i1.$CloudAuthApisFilterComposer,
+    i1.$CloudAuthApisOrderingComposer,
+    i1.$CloudAuthApisAnnotationComposer,
+    $CloudAuthApisCreateCompanionBuilder,
+    $CloudAuthApisUpdateCompanionBuilder,
     (
-      i1.CelestApi,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestApis, i1.CelestApi>
+      i1.CloudAuthApi,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CloudAuthApis, i1.CloudAuthApi>
     ),
-    i1.CelestApi,
+    i1.CloudAuthApi,
     i0.PrefetchHooks Function()> {
-  $CelestApisTableManager(i0.GeneratedDatabase db, i1.CelestApis table)
+  $CloudAuthApisTableManager(i0.GeneratedDatabase db, i1.CloudAuthApis table)
       : super(i0.TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              i1.$CelestApisFilterComposer($db: db, $table: table),
+              i1.$CloudAuthApisFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              i1.$CelestApisOrderingComposer($db: db, $table: table),
+              i1.$CloudAuthApisOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              i1.$CelestApisAnnotationComposer($db: db, $table: table),
+              i1.$CloudAuthApisAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             i0.Value<String> apiId = const i0.Value.absent(),
             i0.Value<String> projectId = const i0.Value.absent(),
@@ -296,7 +299,7 @@ class $CelestApisTableManager extends i0.RootTableManager<
             i0.Value<String> etag = const i0.Value.absent(),
             i0.Value<int> rowid = const i0.Value.absent(),
           }) =>
-              i1.CelestApisCompanion(
+              i1.CloudAuthApisCompanion(
             apiId: apiId,
             projectId: projectId,
             resolvedAst: resolvedAst,
@@ -310,7 +313,7 @@ class $CelestApisTableManager extends i0.RootTableManager<
             required String etag,
             i0.Value<int> rowid = const i0.Value.absent(),
           }) =>
-              i1.CelestApisCompanion.insert(
+              i1.CloudAuthApisCompanion.insert(
             apiId: apiId,
             projectId: projectId,
             resolvedAst: resolvedAst,
@@ -324,31 +327,31 @@ class $CelestApisTableManager extends i0.RootTableManager<
         ));
 }
 
-typedef $CelestApisProcessedTableManager = i0.ProcessedTableManager<
+typedef $CloudAuthApisProcessedTableManager = i0.ProcessedTableManager<
     i0.GeneratedDatabase,
-    i1.CelestApis,
-    i1.CelestApi,
-    i1.$CelestApisFilterComposer,
-    i1.$CelestApisOrderingComposer,
-    i1.$CelestApisAnnotationComposer,
-    $CelestApisCreateCompanionBuilder,
-    $CelestApisUpdateCompanionBuilder,
+    i1.CloudAuthApis,
+    i1.CloudAuthApi,
+    i1.$CloudAuthApisFilterComposer,
+    i1.$CloudAuthApisOrderingComposer,
+    i1.$CloudAuthApisAnnotationComposer,
+    $CloudAuthApisCreateCompanionBuilder,
+    $CloudAuthApisUpdateCompanionBuilder,
     (
-      i1.CelestApi,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestApis, i1.CelestApi>
+      i1.CloudAuthApi,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CloudAuthApis, i1.CloudAuthApi>
     ),
-    i1.CelestApi,
+    i1.CloudAuthApi,
     i0.PrefetchHooks Function()>;
-typedef $CelestFunctionsCreateCompanionBuilder = i1.CelestFunctionsCompanion
-    Function({
+typedef $CloudAuthFunctionsCreateCompanionBuilder
+    = i1.CloudAuthFunctionsCompanion Function({
   required String functionId,
   required String apiId,
   required i2.ResolvedCloudFunction resolvedAst,
   required String etag,
   i0.Value<int> rowid,
 });
-typedef $CelestFunctionsUpdateCompanionBuilder = i1.CelestFunctionsCompanion
-    Function({
+typedef $CloudAuthFunctionsUpdateCompanionBuilder
+    = i1.CloudAuthFunctionsCompanion Function({
   i0.Value<String> functionId,
   i0.Value<String> apiId,
   i0.Value<i2.ResolvedCloudFunction> resolvedAst,
@@ -356,9 +359,9 @@ typedef $CelestFunctionsUpdateCompanionBuilder = i1.CelestFunctionsCompanion
   i0.Value<int> rowid,
 });
 
-class $CelestFunctionsFilterComposer
-    extends i0.Composer<i0.GeneratedDatabase, i1.CelestFunctions> {
-  $CelestFunctionsFilterComposer({
+class $CloudAuthFunctionsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CloudAuthFunctions> {
+  $CloudAuthFunctionsFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -381,9 +384,9 @@ class $CelestFunctionsFilterComposer
       column: $table.etag, builder: (column) => i0.ColumnFilters(column));
 }
 
-class $CelestFunctionsOrderingComposer
-    extends i0.Composer<i0.GeneratedDatabase, i1.CelestFunctions> {
-  $CelestFunctionsOrderingComposer({
+class $CloudAuthFunctionsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CloudAuthFunctions> {
+  $CloudAuthFunctionsOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -405,9 +408,9 @@ class $CelestFunctionsOrderingComposer
       column: $table.etag, builder: (column) => i0.ColumnOrderings(column));
 }
 
-class $CelestFunctionsAnnotationComposer
-    extends i0.Composer<i0.GeneratedDatabase, i1.CelestFunctions> {
-  $CelestFunctionsAnnotationComposer({
+class $CloudAuthFunctionsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.CloudAuthFunctions> {
+  $CloudAuthFunctionsAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -428,33 +431,33 @@ class $CelestFunctionsAnnotationComposer
       $composableBuilder(column: $table.etag, builder: (column) => column);
 }
 
-class $CelestFunctionsTableManager extends i0.RootTableManager<
+class $CloudAuthFunctionsTableManager extends i0.RootTableManager<
     i0.GeneratedDatabase,
-    i1.CelestFunctions,
-    i1.CelestFunction,
-    i1.$CelestFunctionsFilterComposer,
-    i1.$CelestFunctionsOrderingComposer,
-    i1.$CelestFunctionsAnnotationComposer,
-    $CelestFunctionsCreateCompanionBuilder,
-    $CelestFunctionsUpdateCompanionBuilder,
+    i1.CloudAuthFunctions,
+    i1.CloudAuthFunction,
+    i1.$CloudAuthFunctionsFilterComposer,
+    i1.$CloudAuthFunctionsOrderingComposer,
+    i1.$CloudAuthFunctionsAnnotationComposer,
+    $CloudAuthFunctionsCreateCompanionBuilder,
+    $CloudAuthFunctionsUpdateCompanionBuilder,
     (
-      i1.CelestFunction,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestFunctions,
-          i1.CelestFunction>
+      i1.CloudAuthFunction,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CloudAuthFunctions,
+          i1.CloudAuthFunction>
     ),
-    i1.CelestFunction,
+    i1.CloudAuthFunction,
     i0.PrefetchHooks Function()> {
-  $CelestFunctionsTableManager(
-      i0.GeneratedDatabase db, i1.CelestFunctions table)
+  $CloudAuthFunctionsTableManager(
+      i0.GeneratedDatabase db, i1.CloudAuthFunctions table)
       : super(i0.TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              i1.$CelestFunctionsFilterComposer($db: db, $table: table),
+              i1.$CloudAuthFunctionsFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              i1.$CelestFunctionsOrderingComposer($db: db, $table: table),
+              i1.$CloudAuthFunctionsOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              i1.$CelestFunctionsAnnotationComposer($db: db, $table: table),
+              i1.$CloudAuthFunctionsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             i0.Value<String> functionId = const i0.Value.absent(),
             i0.Value<String> apiId = const i0.Value.absent(),
@@ -463,7 +466,7 @@ class $CelestFunctionsTableManager extends i0.RootTableManager<
             i0.Value<String> etag = const i0.Value.absent(),
             i0.Value<int> rowid = const i0.Value.absent(),
           }) =>
-              i1.CelestFunctionsCompanion(
+              i1.CloudAuthFunctionsCompanion(
             functionId: functionId,
             apiId: apiId,
             resolvedAst: resolvedAst,
@@ -477,7 +480,7 @@ class $CelestFunctionsTableManager extends i0.RootTableManager<
             required String etag,
             i0.Value<int> rowid = const i0.Value.absent(),
           }) =>
-              i1.CelestFunctionsCompanion.insert(
+              i1.CloudAuthFunctionsCompanion.insert(
             functionId: functionId,
             apiId: apiId,
             resolvedAst: resolvedAst,
@@ -491,29 +494,29 @@ class $CelestFunctionsTableManager extends i0.RootTableManager<
         ));
 }
 
-typedef $CelestFunctionsProcessedTableManager = i0.ProcessedTableManager<
+typedef $CloudAuthFunctionsProcessedTableManager = i0.ProcessedTableManager<
     i0.GeneratedDatabase,
-    i1.CelestFunctions,
-    i1.CelestFunction,
-    i1.$CelestFunctionsFilterComposer,
-    i1.$CelestFunctionsOrderingComposer,
-    i1.$CelestFunctionsAnnotationComposer,
-    $CelestFunctionsCreateCompanionBuilder,
-    $CelestFunctionsUpdateCompanionBuilder,
+    i1.CloudAuthFunctions,
+    i1.CloudAuthFunction,
+    i1.$CloudAuthFunctionsFilterComposer,
+    i1.$CloudAuthFunctionsOrderingComposer,
+    i1.$CloudAuthFunctionsAnnotationComposer,
+    $CloudAuthFunctionsCreateCompanionBuilder,
+    $CloudAuthFunctionsUpdateCompanionBuilder,
     (
-      i1.CelestFunction,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.CelestFunctions,
-          i1.CelestFunction>
+      i1.CloudAuthFunction,
+      i0.BaseReferences<i0.GeneratedDatabase, i1.CloudAuthFunctions,
+          i1.CloudAuthFunction>
     ),
-    i1.CelestFunction,
+    i1.CloudAuthFunction,
     i0.PrefetchHooks Function()>;
 
-class CelestProjects extends i0.Table
-    with i0.TableInfo<CelestProjects, i1.CelestProject> {
+class CloudAuthProjects extends i0.Table
+    with i0.TableInfo<CloudAuthProjects, i1.CloudAuthProject> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
-  CelestProjects(this.attachedDatabase, [this._alias]);
+  CloudAuthProjects(this.attachedDatabase, [this._alias]);
   late final i0.GeneratedColumn<String> projectId = i0.GeneratedColumn<String>(
       'project_id', aliasedName, false,
       type: i0.DriftSqlType.string,
@@ -532,7 +535,7 @@ class CelestProjects extends i0.Table
               requiredDuringInsert: true,
               $customConstraints: 'NOT NULL')
           .withConverter<i2.ResolvedProject>(
-              i1.CelestProjects.$converterresolvedAst);
+              i1.CloudAuthProjects.$converterresolvedAst);
   late final i0.GeneratedColumn<String> etag = i0.GeneratedColumn<String>(
       'etag', aliasedName, false,
       type: i0.DriftSqlType.string,
@@ -545,18 +548,18 @@ class CelestProjects extends i0.Table
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'celest_projects';
+  static const String $name = 'cloud_auth_projects';
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {projectId};
   @override
-  i1.CelestProject map(Map<String, dynamic> data, {String? tablePrefix}) {
+  i1.CloudAuthProject map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return i1.CelestProject(
+    return i1.CloudAuthProject(
       projectId: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.string, data['${effectivePrefix}project_id'])!,
       version: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.string, data['${effectivePrefix}version'])!,
-      resolvedAst: i1.CelestProjects.$converterresolvedAst.fromSql(
+      resolvedAst: i1.CloudAuthProjects.$converterresolvedAst.fromSql(
           attachedDatabase.typeMapping.read(
               i0.DriftSqlType.blob, data['${effectivePrefix}resolved_ast'])!),
       etag: attachedDatabase.typeMapping
@@ -565,8 +568,8 @@ class CelestProjects extends i0.Table
   }
 
   @override
-  CelestProjects createAlias(String alias) {
-    return CelestProjects(attachedDatabase, alias);
+  CloudAuthProjects createAlias(String alias) {
+    return CloudAuthProjects(attachedDatabase, alias);
   }
 
   static i0.TypeConverter<i2.ResolvedProject, i3.Uint8List>
@@ -575,8 +578,8 @@ class CelestProjects extends i0.Table
   bool get dontWriteConstraints => true;
 }
 
-class CelestProject extends i0.DataClass
-    implements i0.Insertable<i1.CelestProject> {
+class CloudAuthProject extends i0.DataClass
+    implements i0.Insertable<i1.CloudAuthProject> {
   /// The unique identifier of the project.
   final String projectId;
 
@@ -590,7 +593,7 @@ class CelestProject extends i0.DataClass
 
   /// A hash of the project metadata.
   final String etag;
-  const CelestProject(
+  const CloudAuthProject(
       {required this.projectId,
       required this.version,
       required this.resolvedAst,
@@ -602,16 +605,16 @@ class CelestProject extends i0.DataClass
     map['version'] = i0.Variable<String>(version);
     {
       map['resolved_ast'] = i0.Variable<i3.Uint8List>(
-          i1.CelestProjects.$converterresolvedAst.toSql(resolvedAst));
+          i1.CloudAuthProjects.$converterresolvedAst.toSql(resolvedAst));
     }
     map['etag'] = i0.Variable<String>(etag);
     return map;
   }
 
-  factory CelestProject.fromJson(Map<String, dynamic> json,
+  factory CloudAuthProject.fromJson(Map<String, dynamic> json,
       {i0.ValueSerializer? serializer}) {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
-    return CelestProject(
+    return CloudAuthProject(
       projectId: serializer.fromJson<String>(json['project_id']),
       version: serializer.fromJson<String>(json['version']),
       resolvedAst:
@@ -630,19 +633,19 @@ class CelestProject extends i0.DataClass
     };
   }
 
-  i1.CelestProject copyWith(
+  i1.CloudAuthProject copyWith(
           {String? projectId,
           String? version,
           i2.ResolvedProject? resolvedAst,
           String? etag}) =>
-      i1.CelestProject(
+      i1.CloudAuthProject(
         projectId: projectId ?? this.projectId,
         version: version ?? this.version,
         resolvedAst: resolvedAst ?? this.resolvedAst,
         etag: etag ?? this.etag,
       );
-  CelestProject copyWithCompanion(i1.CelestProjectsCompanion data) {
-    return CelestProject(
+  CloudAuthProject copyWithCompanion(i1.CloudAuthProjectsCompanion data) {
+    return CloudAuthProject(
       projectId: data.projectId.present ? data.projectId.value : this.projectId,
       version: data.version.present ? data.version.value : this.version,
       resolvedAst:
@@ -653,7 +656,7 @@ class CelestProject extends i0.DataClass
 
   @override
   String toString() {
-    return (StringBuffer('CelestProject(')
+    return (StringBuffer('CloudAuthProject(')
           ..write('projectId: $projectId, ')
           ..write('version: $version, ')
           ..write('resolvedAst: $resolvedAst, ')
@@ -667,27 +670,28 @@ class CelestProject extends i0.DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is i1.CelestProject &&
+      (other is i1.CloudAuthProject &&
           other.projectId == this.projectId &&
           other.version == this.version &&
           other.resolvedAst == this.resolvedAst &&
           other.etag == this.etag);
 }
 
-class CelestProjectsCompanion extends i0.UpdateCompanion<i1.CelestProject> {
+class CloudAuthProjectsCompanion
+    extends i0.UpdateCompanion<i1.CloudAuthProject> {
   final i0.Value<String> projectId;
   final i0.Value<String> version;
   final i0.Value<i2.ResolvedProject> resolvedAst;
   final i0.Value<String> etag;
   final i0.Value<int> rowid;
-  const CelestProjectsCompanion({
+  const CloudAuthProjectsCompanion({
     this.projectId = const i0.Value.absent(),
     this.version = const i0.Value.absent(),
     this.resolvedAst = const i0.Value.absent(),
     this.etag = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   });
-  CelestProjectsCompanion.insert({
+  CloudAuthProjectsCompanion.insert({
     required String projectId,
     required String version,
     required i2.ResolvedProject resolvedAst,
@@ -697,7 +701,7 @@ class CelestProjectsCompanion extends i0.UpdateCompanion<i1.CelestProject> {
         version = i0.Value(version),
         resolvedAst = i0.Value(resolvedAst),
         etag = i0.Value(etag);
-  static i0.Insertable<i1.CelestProject> custom({
+  static i0.Insertable<i1.CloudAuthProject> custom({
     i0.Expression<String>? projectId,
     i0.Expression<String>? version,
     i0.Expression<i3.Uint8List>? resolvedAst,
@@ -713,13 +717,13 @@ class CelestProjectsCompanion extends i0.UpdateCompanion<i1.CelestProject> {
     });
   }
 
-  i1.CelestProjectsCompanion copyWith(
+  i1.CloudAuthProjectsCompanion copyWith(
       {i0.Value<String>? projectId,
       i0.Value<String>? version,
       i0.Value<i2.ResolvedProject>? resolvedAst,
       i0.Value<String>? etag,
       i0.Value<int>? rowid}) {
-    return i1.CelestProjectsCompanion(
+    return i1.CloudAuthProjectsCompanion(
       projectId: projectId ?? this.projectId,
       version: version ?? this.version,
       resolvedAst: resolvedAst ?? this.resolvedAst,
@@ -739,7 +743,7 @@ class CelestProjectsCompanion extends i0.UpdateCompanion<i1.CelestProject> {
     }
     if (resolvedAst.present) {
       map['resolved_ast'] = i0.Variable<i3.Uint8List>(
-          i1.CelestProjects.$converterresolvedAst.toSql(resolvedAst.value));
+          i1.CloudAuthProjects.$converterresolvedAst.toSql(resolvedAst.value));
     }
     if (etag.present) {
       map['etag'] = i0.Variable<String>(etag.value);
@@ -752,7 +756,7 @@ class CelestProjectsCompanion extends i0.UpdateCompanion<i1.CelestProject> {
 
   @override
   String toString() {
-    return (StringBuffer('CelestProjectsCompanion(')
+    return (StringBuffer('CloudAuthProjectsCompanion(')
           ..write('projectId: $projectId, ')
           ..write('version: $version, ')
           ..write('resolvedAst: $resolvedAst, ')
@@ -763,11 +767,12 @@ class CelestProjectsCompanion extends i0.UpdateCompanion<i1.CelestProject> {
   }
 }
 
-class CelestApis extends i0.Table with i0.TableInfo<CelestApis, i1.CelestApi> {
+class CloudAuthApis extends i0.Table
+    with i0.TableInfo<CloudAuthApis, i1.CloudAuthApi> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
-  CelestApis(this.attachedDatabase, [this._alias]);
+  CloudAuthApis(this.attachedDatabase, [this._alias]);
   late final i0.GeneratedColumn<String> apiId = i0.GeneratedColumn<String>(
       'api_id', aliasedName, false,
       type: i0.DriftSqlType.string,
@@ -784,7 +789,8 @@ class CelestApis extends i0.Table with i0.TableInfo<CelestApis, i1.CelestApi> {
               type: i0.DriftSqlType.blob,
               requiredDuringInsert: true,
               $customConstraints: 'NOT NULL')
-          .withConverter<i2.ResolvedApi>(i1.CelestApis.$converterresolvedAst);
+          .withConverter<i2.ResolvedApi>(
+              i1.CloudAuthApis.$converterresolvedAst);
   late final i0.GeneratedColumn<String> etag = i0.GeneratedColumn<String>(
       'etag', aliasedName, false,
       type: i0.DriftSqlType.string,
@@ -797,41 +803,42 @@ class CelestApis extends i0.Table with i0.TableInfo<CelestApis, i1.CelestApi> {
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'celest_apis';
+  static const String $name = 'cloud_auth_apis';
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {apiId};
   @override
-  i1.CelestApi map(Map<String, dynamic> data, {String? tablePrefix}) {
+  i1.CloudAuthApi map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return i1.CelestApi(
+    return i1.CloudAuthApi(
       apiId: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.string, data['${effectivePrefix}api_id'])!,
       projectId: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.string, data['${effectivePrefix}project_id'])!,
-      resolvedAst: i1.CelestApis.$converterresolvedAst.fromSql(attachedDatabase
-          .typeMapping
-          .read(i0.DriftSqlType.blob, data['${effectivePrefix}resolved_ast'])!),
+      resolvedAst: i1.CloudAuthApis.$converterresolvedAst.fromSql(
+          attachedDatabase.typeMapping.read(
+              i0.DriftSqlType.blob, data['${effectivePrefix}resolved_ast'])!),
       etag: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.string, data['${effectivePrefix}etag'])!,
     );
   }
 
   @override
-  CelestApis createAlias(String alias) {
-    return CelestApis(attachedDatabase, alias);
+  CloudAuthApis createAlias(String alias) {
+    return CloudAuthApis(attachedDatabase, alias);
   }
 
   static i0.TypeConverter<i2.ResolvedApi, i3.Uint8List> $converterresolvedAst =
       const i4.ResolvedApiConverter();
   @override
   List<String> get customConstraints => const [
-        'CONSTRAINT celest_apis_project_fk FOREIGN KEY(project_id)REFERENCES celest_projects(project_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
+        'CONSTRAINT cloud_auth_apis_project_fk FOREIGN KEY(project_id)REFERENCES cloud_auth_projects(project_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
       ];
   @override
   bool get dontWriteConstraints => true;
 }
 
-class CelestApi extends i0.DataClass implements i0.Insertable<i1.CelestApi> {
+class CloudAuthApi extends i0.DataClass
+    implements i0.Insertable<i1.CloudAuthApi> {
   /// The unique identifier of the API.
   final String apiId;
 
@@ -845,7 +852,7 @@ class CelestApi extends i0.DataClass implements i0.Insertable<i1.CelestApi> {
 
   /// A hash of the API metadata.
   final String etag;
-  const CelestApi(
+  const CloudAuthApi(
       {required this.apiId,
       required this.projectId,
       required this.resolvedAst,
@@ -857,16 +864,16 @@ class CelestApi extends i0.DataClass implements i0.Insertable<i1.CelestApi> {
     map['project_id'] = i0.Variable<String>(projectId);
     {
       map['resolved_ast'] = i0.Variable<i3.Uint8List>(
-          i1.CelestApis.$converterresolvedAst.toSql(resolvedAst));
+          i1.CloudAuthApis.$converterresolvedAst.toSql(resolvedAst));
     }
     map['etag'] = i0.Variable<String>(etag);
     return map;
   }
 
-  factory CelestApi.fromJson(Map<String, dynamic> json,
+  factory CloudAuthApi.fromJson(Map<String, dynamic> json,
       {i0.ValueSerializer? serializer}) {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
-    return CelestApi(
+    return CloudAuthApi(
       apiId: serializer.fromJson<String>(json['api_id']),
       projectId: serializer.fromJson<String>(json['project_id']),
       resolvedAst: serializer.fromJson<i2.ResolvedApi>(json['resolved_ast']),
@@ -884,19 +891,19 @@ class CelestApi extends i0.DataClass implements i0.Insertable<i1.CelestApi> {
     };
   }
 
-  i1.CelestApi copyWith(
+  i1.CloudAuthApi copyWith(
           {String? apiId,
           String? projectId,
           i2.ResolvedApi? resolvedAst,
           String? etag}) =>
-      i1.CelestApi(
+      i1.CloudAuthApi(
         apiId: apiId ?? this.apiId,
         projectId: projectId ?? this.projectId,
         resolvedAst: resolvedAst ?? this.resolvedAst,
         etag: etag ?? this.etag,
       );
-  CelestApi copyWithCompanion(i1.CelestApisCompanion data) {
-    return CelestApi(
+  CloudAuthApi copyWithCompanion(i1.CloudAuthApisCompanion data) {
+    return CloudAuthApi(
       apiId: data.apiId.present ? data.apiId.value : this.apiId,
       projectId: data.projectId.present ? data.projectId.value : this.projectId,
       resolvedAst:
@@ -907,7 +914,7 @@ class CelestApi extends i0.DataClass implements i0.Insertable<i1.CelestApi> {
 
   @override
   String toString() {
-    return (StringBuffer('CelestApi(')
+    return (StringBuffer('CloudAuthApi(')
           ..write('apiId: $apiId, ')
           ..write('projectId: $projectId, ')
           ..write('resolvedAst: $resolvedAst, ')
@@ -921,27 +928,27 @@ class CelestApi extends i0.DataClass implements i0.Insertable<i1.CelestApi> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is i1.CelestApi &&
+      (other is i1.CloudAuthApi &&
           other.apiId == this.apiId &&
           other.projectId == this.projectId &&
           other.resolvedAst == this.resolvedAst &&
           other.etag == this.etag);
 }
 
-class CelestApisCompanion extends i0.UpdateCompanion<i1.CelestApi> {
+class CloudAuthApisCompanion extends i0.UpdateCompanion<i1.CloudAuthApi> {
   final i0.Value<String> apiId;
   final i0.Value<String> projectId;
   final i0.Value<i2.ResolvedApi> resolvedAst;
   final i0.Value<String> etag;
   final i0.Value<int> rowid;
-  const CelestApisCompanion({
+  const CloudAuthApisCompanion({
     this.apiId = const i0.Value.absent(),
     this.projectId = const i0.Value.absent(),
     this.resolvedAst = const i0.Value.absent(),
     this.etag = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   });
-  CelestApisCompanion.insert({
+  CloudAuthApisCompanion.insert({
     required String apiId,
     required String projectId,
     required i2.ResolvedApi resolvedAst,
@@ -951,7 +958,7 @@ class CelestApisCompanion extends i0.UpdateCompanion<i1.CelestApi> {
         projectId = i0.Value(projectId),
         resolvedAst = i0.Value(resolvedAst),
         etag = i0.Value(etag);
-  static i0.Insertable<i1.CelestApi> custom({
+  static i0.Insertable<i1.CloudAuthApi> custom({
     i0.Expression<String>? apiId,
     i0.Expression<String>? projectId,
     i0.Expression<i3.Uint8List>? resolvedAst,
@@ -967,13 +974,13 @@ class CelestApisCompanion extends i0.UpdateCompanion<i1.CelestApi> {
     });
   }
 
-  i1.CelestApisCompanion copyWith(
+  i1.CloudAuthApisCompanion copyWith(
       {i0.Value<String>? apiId,
       i0.Value<String>? projectId,
       i0.Value<i2.ResolvedApi>? resolvedAst,
       i0.Value<String>? etag,
       i0.Value<int>? rowid}) {
-    return i1.CelestApisCompanion(
+    return i1.CloudAuthApisCompanion(
       apiId: apiId ?? this.apiId,
       projectId: projectId ?? this.projectId,
       resolvedAst: resolvedAst ?? this.resolvedAst,
@@ -993,7 +1000,7 @@ class CelestApisCompanion extends i0.UpdateCompanion<i1.CelestApi> {
     }
     if (resolvedAst.present) {
       map['resolved_ast'] = i0.Variable<i3.Uint8List>(
-          i1.CelestApis.$converterresolvedAst.toSql(resolvedAst.value));
+          i1.CloudAuthApis.$converterresolvedAst.toSql(resolvedAst.value));
     }
     if (etag.present) {
       map['etag'] = i0.Variable<String>(etag.value);
@@ -1006,7 +1013,7 @@ class CelestApisCompanion extends i0.UpdateCompanion<i1.CelestApi> {
 
   @override
   String toString() {
-    return (StringBuffer('CelestApisCompanion(')
+    return (StringBuffer('CloudAuthApisCompanion(')
           ..write('apiId: $apiId, ')
           ..write('projectId: $projectId, ')
           ..write('resolvedAst: $resolvedAst, ')
@@ -1017,21 +1024,21 @@ class CelestApisCompanion extends i0.UpdateCompanion<i1.CelestApi> {
   }
 }
 
-i0.Index get celestApisProjectIdx => i0.Index('celest_apis_project_idx',
-    'CREATE INDEX IF NOT EXISTS celest_apis_project_idx ON celest_apis (project_id)');
-i0.Trigger get celestApisTriggerCreate => i0.Trigger(
-    'CREATE TRIGGER IF NOT EXISTS celest_apis_trigger_create BEFORE INSERT ON celest_apis BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::Api\', NEW.api_id);END',
-    'celest_apis_trigger_create');
-i0.Trigger get celestApisTriggerDelete => i0.Trigger(
-    'CREATE TRIGGER IF NOT EXISTS celest_apis_trigger_delete AFTER DELETE ON celest_apis BEGIN DELETE FROM cedar_relationships WHERE entity_type = \'Celest::Api\' AND entity_id = OLD.api_id;DELETE FROM cedar_relationships WHERE parent_type = \'Celest::Api\' AND parent_id = OLD.api_id;DELETE FROM cedar_entities WHERE entity_type = \'Celest::Api\' AND entity_id = OLD.api_id;END',
-    'celest_apis_trigger_delete');
+i0.Index get cloudAuthApisProjectIdx => i0.Index('cloud_auth_apis_project_idx',
+    'CREATE INDEX IF NOT EXISTS cloud_auth_apis_project_idx ON cloud_auth_apis (project_id)');
+i0.Trigger get cloudAuthApisCreateTrg => i0.Trigger(
+    'CREATE TRIGGER IF NOT EXISTS cloud_auth_apis_create_trg BEFORE INSERT ON cloud_auth_apis BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::Api\', NEW.api_id);END',
+    'cloud_auth_apis_create_trg');
+i0.Trigger get cloudAuthApisDeleteTrg => i0.Trigger(
+    'CREATE TRIGGER IF NOT EXISTS cloud_auth_apis_delete_trg AFTER DELETE ON cloud_auth_apis BEGIN DELETE FROM cedar_relationships WHERE entity_type = \'Celest::Api\' AND entity_id = OLD.api_id;DELETE FROM cedar_relationships WHERE parent_type = \'Celest::Api\' AND parent_id = OLD.api_id;DELETE FROM cedar_entities WHERE entity_type = \'Celest::Api\' AND entity_id = OLD.api_id;END',
+    'cloud_auth_apis_delete_trg');
 
-class CelestFunctions extends i0.Table
-    with i0.TableInfo<CelestFunctions, i1.CelestFunction> {
+class CloudAuthFunctions extends i0.Table
+    with i0.TableInfo<CloudAuthFunctions, i1.CloudAuthFunction> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
-  CelestFunctions(this.attachedDatabase, [this._alias]);
+  CloudAuthFunctions(this.attachedDatabase, [this._alias]);
   late final i0.GeneratedColumn<String> functionId = i0.GeneratedColumn<String>(
       'function_id', aliasedName, false,
       type: i0.DriftSqlType.string,
@@ -1050,7 +1057,7 @@ class CelestFunctions extends i0.Table
               requiredDuringInsert: true,
               $customConstraints: 'NOT NULL')
           .withConverter<i2.ResolvedCloudFunction>(
-              i1.CelestFunctions.$converterresolvedAst);
+              i1.CloudAuthFunctions.$converterresolvedAst);
   late final i0.GeneratedColumn<String> etag = i0.GeneratedColumn<String>(
       'etag', aliasedName, false,
       type: i0.DriftSqlType.string,
@@ -1063,18 +1070,18 @@ class CelestFunctions extends i0.Table
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'celest_functions';
+  static const String $name = 'cloud_auth_functions';
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {functionId};
   @override
-  i1.CelestFunction map(Map<String, dynamic> data, {String? tablePrefix}) {
+  i1.CloudAuthFunction map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return i1.CelestFunction(
+    return i1.CloudAuthFunction(
       functionId: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.string, data['${effectivePrefix}function_id'])!,
       apiId: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.string, data['${effectivePrefix}api_id'])!,
-      resolvedAst: i1.CelestFunctions.$converterresolvedAst.fromSql(
+      resolvedAst: i1.CloudAuthFunctions.$converterresolvedAst.fromSql(
           attachedDatabase.typeMapping.read(
               i0.DriftSqlType.blob, data['${effectivePrefix}resolved_ast'])!),
       etag: attachedDatabase.typeMapping
@@ -1083,22 +1090,22 @@ class CelestFunctions extends i0.Table
   }
 
   @override
-  CelestFunctions createAlias(String alias) {
-    return CelestFunctions(attachedDatabase, alias);
+  CloudAuthFunctions createAlias(String alias) {
+    return CloudAuthFunctions(attachedDatabase, alias);
   }
 
   static i0.TypeConverter<i2.ResolvedCloudFunction, i3.Uint8List>
       $converterresolvedAst = const i4.ResolvedFunctionConverter();
   @override
   List<String> get customConstraints => const [
-        'CONSTRAINT celest_functions_api_fk FOREIGN KEY(api_id)REFERENCES celest_apis(api_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
+        'CONSTRAINT cloud_auth_functions_api_fk FOREIGN KEY(api_id)REFERENCES cloud_auth_apis(api_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
       ];
   @override
   bool get dontWriteConstraints => true;
 }
 
-class CelestFunction extends i0.DataClass
-    implements i0.Insertable<i1.CelestFunction> {
+class CloudAuthFunction extends i0.DataClass
+    implements i0.Insertable<i1.CloudAuthFunction> {
   /// The unique identifier of the function.
   final String functionId;
 
@@ -1112,7 +1119,7 @@ class CelestFunction extends i0.DataClass
 
   /// A hash of the function metadata.
   final String etag;
-  const CelestFunction(
+  const CloudAuthFunction(
       {required this.functionId,
       required this.apiId,
       required this.resolvedAst,
@@ -1124,16 +1131,16 @@ class CelestFunction extends i0.DataClass
     map['api_id'] = i0.Variable<String>(apiId);
     {
       map['resolved_ast'] = i0.Variable<i3.Uint8List>(
-          i1.CelestFunctions.$converterresolvedAst.toSql(resolvedAst));
+          i1.CloudAuthFunctions.$converterresolvedAst.toSql(resolvedAst));
     }
     map['etag'] = i0.Variable<String>(etag);
     return map;
   }
 
-  factory CelestFunction.fromJson(Map<String, dynamic> json,
+  factory CloudAuthFunction.fromJson(Map<String, dynamic> json,
       {i0.ValueSerializer? serializer}) {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
-    return CelestFunction(
+    return CloudAuthFunction(
       functionId: serializer.fromJson<String>(json['function_id']),
       apiId: serializer.fromJson<String>(json['api_id']),
       resolvedAst:
@@ -1152,19 +1159,19 @@ class CelestFunction extends i0.DataClass
     };
   }
 
-  i1.CelestFunction copyWith(
+  i1.CloudAuthFunction copyWith(
           {String? functionId,
           String? apiId,
           i2.ResolvedCloudFunction? resolvedAst,
           String? etag}) =>
-      i1.CelestFunction(
+      i1.CloudAuthFunction(
         functionId: functionId ?? this.functionId,
         apiId: apiId ?? this.apiId,
         resolvedAst: resolvedAst ?? this.resolvedAst,
         etag: etag ?? this.etag,
       );
-  CelestFunction copyWithCompanion(i1.CelestFunctionsCompanion data) {
-    return CelestFunction(
+  CloudAuthFunction copyWithCompanion(i1.CloudAuthFunctionsCompanion data) {
+    return CloudAuthFunction(
       functionId:
           data.functionId.present ? data.functionId.value : this.functionId,
       apiId: data.apiId.present ? data.apiId.value : this.apiId,
@@ -1176,7 +1183,7 @@ class CelestFunction extends i0.DataClass
 
   @override
   String toString() {
-    return (StringBuffer('CelestFunction(')
+    return (StringBuffer('CloudAuthFunction(')
           ..write('functionId: $functionId, ')
           ..write('apiId: $apiId, ')
           ..write('resolvedAst: $resolvedAst, ')
@@ -1190,27 +1197,28 @@ class CelestFunction extends i0.DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is i1.CelestFunction &&
+      (other is i1.CloudAuthFunction &&
           other.functionId == this.functionId &&
           other.apiId == this.apiId &&
           other.resolvedAst == this.resolvedAst &&
           other.etag == this.etag);
 }
 
-class CelestFunctionsCompanion extends i0.UpdateCompanion<i1.CelestFunction> {
+class CloudAuthFunctionsCompanion
+    extends i0.UpdateCompanion<i1.CloudAuthFunction> {
   final i0.Value<String> functionId;
   final i0.Value<String> apiId;
   final i0.Value<i2.ResolvedCloudFunction> resolvedAst;
   final i0.Value<String> etag;
   final i0.Value<int> rowid;
-  const CelestFunctionsCompanion({
+  const CloudAuthFunctionsCompanion({
     this.functionId = const i0.Value.absent(),
     this.apiId = const i0.Value.absent(),
     this.resolvedAst = const i0.Value.absent(),
     this.etag = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   });
-  CelestFunctionsCompanion.insert({
+  CloudAuthFunctionsCompanion.insert({
     required String functionId,
     required String apiId,
     required i2.ResolvedCloudFunction resolvedAst,
@@ -1220,7 +1228,7 @@ class CelestFunctionsCompanion extends i0.UpdateCompanion<i1.CelestFunction> {
         apiId = i0.Value(apiId),
         resolvedAst = i0.Value(resolvedAst),
         etag = i0.Value(etag);
-  static i0.Insertable<i1.CelestFunction> custom({
+  static i0.Insertable<i1.CloudAuthFunction> custom({
     i0.Expression<String>? functionId,
     i0.Expression<String>? apiId,
     i0.Expression<i3.Uint8List>? resolvedAst,
@@ -1236,13 +1244,13 @@ class CelestFunctionsCompanion extends i0.UpdateCompanion<i1.CelestFunction> {
     });
   }
 
-  i1.CelestFunctionsCompanion copyWith(
+  i1.CloudAuthFunctionsCompanion copyWith(
       {i0.Value<String>? functionId,
       i0.Value<String>? apiId,
       i0.Value<i2.ResolvedCloudFunction>? resolvedAst,
       i0.Value<String>? etag,
       i0.Value<int>? rowid}) {
-    return i1.CelestFunctionsCompanion(
+    return i1.CloudAuthFunctionsCompanion(
       functionId: functionId ?? this.functionId,
       apiId: apiId ?? this.apiId,
       resolvedAst: resolvedAst ?? this.resolvedAst,
@@ -1262,7 +1270,7 @@ class CelestFunctionsCompanion extends i0.UpdateCompanion<i1.CelestFunction> {
     }
     if (resolvedAst.present) {
       map['resolved_ast'] = i0.Variable<i3.Uint8List>(
-          i1.CelestFunctions.$converterresolvedAst.toSql(resolvedAst.value));
+          i1.CloudAuthFunctions.$converterresolvedAst.toSql(resolvedAst.value));
     }
     if (etag.present) {
       map['etag'] = i0.Variable<String>(etag.value);
@@ -1275,7 +1283,7 @@ class CelestFunctionsCompanion extends i0.UpdateCompanion<i1.CelestFunction> {
 
   @override
   String toString() {
-    return (StringBuffer('CelestFunctionsCompanion(')
+    return (StringBuffer('CloudAuthFunctionsCompanion(')
           ..write('functionId: $functionId, ')
           ..write('apiId: $apiId, ')
           ..write('resolvedAst: $resolvedAst, ')
@@ -1286,131 +1294,136 @@ class CelestFunctionsCompanion extends i0.UpdateCompanion<i1.CelestFunction> {
   }
 }
 
-i0.Index get celestFunctionsApiIdx => i0.Index('celest_functions_api_idx',
-    'CREATE INDEX IF NOT EXISTS celest_functions_api_idx ON celest_functions (api_id)');
-i0.Trigger get celestFunctionsTriggerCreate => i0.Trigger(
-    'CREATE TRIGGER IF NOT EXISTS celest_functions_trigger_create BEFORE INSERT ON celest_functions BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::Function\', NEW.function_id);INSERT INTO cedar_relationships (entity_type, entity_id, parent_type, parent_id) VALUES (\'Celest::Function\', NEW.function_id, \'Celest::Api\', NEW.api_id);END',
-    'celest_functions_trigger_create');
-i0.Trigger get celestFunctionsTriggerDelete => i0.Trigger(
-    'CREATE TRIGGER IF NOT EXISTS celest_functions_trigger_delete AFTER DELETE ON celest_functions BEGIN DELETE FROM cedar_relationships WHERE entity_type = \'Celest::Function\' AND entity_id = OLD.function_id;DELETE FROM cedar_relationships WHERE parent_type = \'Celest::Function\' AND parent_id = OLD.function_id;DELETE FROM cedar_entities WHERE entity_type = \'Celest::Function\' AND entity_id = OLD.function_id;END',
-    'celest_functions_trigger_delete');
+i0.Index get cloudAuthFunctionsApiIdx => i0.Index(
+    'cloud_auth_functions_api_idx',
+    'CREATE INDEX IF NOT EXISTS cloud_auth_functions_api_idx ON cloud_auth_functions (api_id)');
+i0.Trigger get cloudAuthFunctionsCreateTrg => i0.Trigger(
+    'CREATE TRIGGER IF NOT EXISTS cloud_auth_functions_create_trg BEFORE INSERT ON cloud_auth_functions BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::Function\', NEW.function_id);INSERT INTO cedar_relationships (entity_type, entity_id, parent_type, parent_id) VALUES (\'Celest::Function\', NEW.function_id, \'Celest::Api\', NEW.api_id);END',
+    'cloud_auth_functions_create_trg');
+i0.Trigger get cloudAuthFunctionsDeleteTrg => i0.Trigger(
+    'CREATE TRIGGER IF NOT EXISTS cloud_auth_functions_delete_trg AFTER DELETE ON cloud_auth_functions BEGIN DELETE FROM cedar_relationships WHERE entity_type = \'Celest::Function\' AND entity_id = OLD.function_id;DELETE FROM cedar_relationships WHERE parent_type = \'Celest::Function\' AND parent_id = OLD.function_id;DELETE FROM cedar_entities WHERE entity_type = \'Celest::Function\' AND entity_id = OLD.function_id;END',
+    'cloud_auth_functions_delete_trg');
 
-class ProjectsDrift extends i5.ModularAccessor {
-  ProjectsDrift(i0.GeneratedDatabase db) : super(db);
-  i6.Future<List<i1.CelestProject>> upsertProject(
+class CloudAuthProjectsDrift extends i5.ModularAccessor {
+  CloudAuthProjectsDrift(i0.GeneratedDatabase db) : super(db);
+  i6.Future<List<i1.CloudAuthProject>> upsertProject(
       {required String projectId,
       required String version,
       required i2.ResolvedProject resolvedAst,
       required String etag}) {
     return customWriteReturning(
-        'INSERT INTO celest_projects (project_id, version, resolved_ast, etag) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (project_id) DO UPDATE SET version = excluded.version, resolved_ast = excluded.resolved_ast, etag = excluded.etag RETURNING *',
+        'INSERT INTO cloud_auth_projects (project_id, version, resolved_ast, etag) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (project_id) DO UPDATE SET version = excluded.version, resolved_ast = excluded.resolved_ast, etag = excluded.etag RETURNING *',
         variables: [
           i0.Variable<String>(projectId),
           i0.Variable<String>(version),
           i0.Variable<i3.Uint8List>(
-              i1.CelestProjects.$converterresolvedAst.toSql(resolvedAst)),
+              i1.CloudAuthProjects.$converterresolvedAst.toSql(resolvedAst)),
           i0.Variable<String>(etag)
         ],
         updates: {
-          celestProjects
-        }).then((rows) => Future.wait(rows.map(celestProjects.mapFromRow)));
+          cloudAuthProjects
+        }).then((rows) => Future.wait(rows.map(cloudAuthProjects.mapFromRow)));
   }
 
-  i0.Selectable<i1.CelestProject> getProject({required String projectId}) {
-    return customSelect('SELECT * FROM celest_projects WHERE project_id = ?1',
+  i0.Selectable<i1.CloudAuthProject> getProject({required String projectId}) {
+    return customSelect(
+        'SELECT * FROM cloud_auth_projects WHERE project_id = ?1',
         variables: [
           i0.Variable<String>(projectId)
         ],
         readsFrom: {
-          celestProjects,
-        }).asyncMap(celestProjects.mapFromRow);
+          cloudAuthProjects,
+        }).asyncMap(cloudAuthProjects.mapFromRow);
   }
 
-  i6.Future<List<i1.CelestApi>> upsertApi(
+  i6.Future<List<i1.CloudAuthApi>> upsertApi(
       {required String apiId,
       required String projectId,
       required i2.ResolvedApi resolvedAst,
       required String etag}) {
     return customWriteReturning(
-        'INSERT INTO celest_apis (api_id, project_id, resolved_ast, etag) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (api_id) DO UPDATE SET project_id = excluded.project_id, resolved_ast = excluded.resolved_ast, etag = excluded.etag RETURNING *',
+        'INSERT INTO cloud_auth_apis (api_id, project_id, resolved_ast, etag) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (api_id) DO UPDATE SET project_id = excluded.project_id, resolved_ast = excluded.resolved_ast, etag = excluded.etag RETURNING *',
         variables: [
           i0.Variable<String>(apiId),
           i0.Variable<String>(projectId),
           i0.Variable<i3.Uint8List>(
-              i1.CelestApis.$converterresolvedAst.toSql(resolvedAst)),
+              i1.CloudAuthApis.$converterresolvedAst.toSql(resolvedAst)),
           i0.Variable<String>(etag)
         ],
         updates: {
-          celestApis
-        }).then((rows) => Future.wait(rows.map(celestApis.mapFromRow)));
+          cloudAuthApis
+        }).then((rows) => Future.wait(rows.map(cloudAuthApis.mapFromRow)));
   }
 
-  i0.Selectable<i1.CelestApi> getApi({required String apiId}) {
-    return customSelect('SELECT * FROM celest_apis WHERE api_id = ?1',
+  i0.Selectable<i1.CloudAuthApi> getApi({required String apiId}) {
+    return customSelect('SELECT * FROM cloud_auth_apis WHERE api_id = ?1',
         variables: [
           i0.Variable<String>(apiId)
         ],
         readsFrom: {
-          celestApis,
-        }).asyncMap(celestApis.mapFromRow);
+          cloudAuthApis,
+        }).asyncMap(cloudAuthApis.mapFromRow);
   }
 
-  i0.Selectable<i1.CelestApi> listApis({required String projectId}) {
-    return customSelect('SELECT * FROM celest_apis WHERE project_id = ?1',
+  i0.Selectable<i1.CloudAuthApi> listApis({required String projectId}) {
+    return customSelect('SELECT * FROM cloud_auth_apis WHERE project_id = ?1',
         variables: [
           i0.Variable<String>(projectId)
         ],
         readsFrom: {
-          celestApis,
-        }).asyncMap(celestApis.mapFromRow);
+          cloudAuthApis,
+        }).asyncMap(cloudAuthApis.mapFromRow);
   }
 
-  i6.Future<List<i1.CelestFunction>> upsertFunction(
+  i6.Future<List<i1.CloudAuthFunction>> upsertFunction(
       {required String functionId,
       required String apiId,
       required i2.ResolvedCloudFunction resolvedAst,
       required String etag}) {
     return customWriteReturning(
-        'INSERT INTO celest_functions (function_id, api_id, resolved_ast, etag) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (function_id) DO UPDATE SET api_id = excluded.api_id, resolved_ast = excluded.resolved_ast, etag = excluded.etag RETURNING *',
+        'INSERT INTO cloud_auth_functions (function_id, api_id, resolved_ast, etag) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (function_id) DO UPDATE SET api_id = excluded.api_id, resolved_ast = excluded.resolved_ast, etag = excluded.etag RETURNING *',
         variables: [
           i0.Variable<String>(functionId),
           i0.Variable<String>(apiId),
           i0.Variable<i3.Uint8List>(
-              i1.CelestFunctions.$converterresolvedAst.toSql(resolvedAst)),
+              i1.CloudAuthFunctions.$converterresolvedAst.toSql(resolvedAst)),
           i0.Variable<String>(etag)
         ],
         updates: {
-          celestFunctions
-        }).then((rows) => Future.wait(rows.map(celestFunctions.mapFromRow)));
+          cloudAuthFunctions
+        }).then((rows) => Future.wait(rows.map(cloudAuthFunctions.mapFromRow)));
   }
 
-  i0.Selectable<i1.CelestFunction> getFunction({required String functionId}) {
-    return customSelect('SELECT * FROM celest_functions WHERE function_id = ?1',
+  i0.Selectable<i1.CloudAuthFunction> getFunction(
+      {required String functionId}) {
+    return customSelect(
+        'SELECT * FROM cloud_auth_functions WHERE function_id = ?1',
         variables: [
           i0.Variable<String>(functionId)
         ],
         readsFrom: {
-          celestFunctions,
-        }).asyncMap(celestFunctions.mapFromRow);
+          cloudAuthFunctions,
+        }).asyncMap(cloudAuthFunctions.mapFromRow);
   }
 
-  i0.Selectable<i1.CelestFunction> listFunctions({required String apiId}) {
-    return customSelect('SELECT * FROM celest_functions WHERE api_id = ?1',
+  i0.Selectable<i1.CloudAuthFunction> listFunctions({required String apiId}) {
+    return customSelect('SELECT * FROM cloud_auth_functions WHERE api_id = ?1',
         variables: [
           i0.Variable<String>(apiId)
         ],
         readsFrom: {
-          celestFunctions,
-        }).asyncMap(celestFunctions.mapFromRow);
+          cloudAuthFunctions,
+        }).asyncMap(cloudAuthFunctions.mapFromRow);
   }
 
-  i1.CelestProjects get celestProjects =>
+  i1.CloudAuthProjects get cloudAuthProjects =>
       i5.ReadDatabaseContainer(attachedDatabase)
-          .resultSet<i1.CelestProjects>('celest_projects');
-  i1.CelestApis get celestApis => i5.ReadDatabaseContainer(attachedDatabase)
-      .resultSet<i1.CelestApis>('celest_apis');
-  i1.CelestFunctions get celestFunctions =>
+          .resultSet<i1.CloudAuthProjects>('cloud_auth_projects');
+  i1.CloudAuthApis get cloudAuthApis =>
       i5.ReadDatabaseContainer(attachedDatabase)
-          .resultSet<i1.CelestFunctions>('celest_functions');
+          .resultSet<i1.CloudAuthApis>('cloud_auth_apis');
+  i1.CloudAuthFunctions get cloudAuthFunctions =>
+      i5.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i1.CloudAuthFunctions>('cloud_auth_functions');
   i7.CedarDrift get cedarDrift => this.accessor(i7.CedarDrift.new);
 }

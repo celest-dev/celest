@@ -1,7 +1,8 @@
-## 0.2.1-wip
+## 0.3.0-wip
 
-- feat: Make database modular
-- refactor: Rename `AuthDatabase` to `CloudAuthDatabase`
+- feat!: Make database modular
+- refactor!: Rename `AuthDatabase` to `CloudAuthDatabase`
+- refactor!: Rename all entities with `cloud_auth_` prefix
 - chore: Make `Authorizer` a class
 - chore: Update dependencies
 

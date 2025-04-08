@@ -520,7 +520,7 @@ void main() {
         final otherRoute = ('DELETE', '/v1alpha1/auth/users/$otherUserId');
 
         setUp(() async {
-          await tester.db.usersDrift.deleteUser(userId: otherUserId);
+          await tester.db.cloudAuthUsersDrift.deleteUser(userId: otherUserId);
         });
 
         test('unauthenticated', () async {
