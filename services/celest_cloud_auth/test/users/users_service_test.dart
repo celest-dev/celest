@@ -280,6 +280,7 @@ void main() {
                   {
                     'name': 'users/$userId',
                     'userId': userId,
+                    'emails': [user.primaryEmail!.toJson()],
                     'createTime': (Subject<Object?> it) => it
                         .isA<String>()
                         .has(DateTime.parse, 'DateTime')

@@ -17,7 +17,6 @@ import 'package:celest_cloud_auth/src/model/order_by.dart';
 import 'package:celest_cloud_auth/src/model/page_token.dart';
 import 'package:celest_cloud_auth/src/model/route_map.dart';
 import 'package:celest_core/celest_core.dart';
-import 'package:drift/drift.dart' as drift;
 import 'package:drift/drift.dart';
 import 'package:meta/meta.dart';
 import 'package:shelf/shelf.dart';
@@ -191,74 +190,37 @@ extension type UsersService._(_Deps _deps) implements Object {
     final startTime = pageData?.startTime ??
         DateTime.timestamp().add(const Duration(seconds: 1));
 
-    /*
-    Roughly, we're trying to construct the query:
-
-      WITH rowed AS(
-          SELECT 
-              ROW_NUMBER() OVER (ORDER BY create_time DESC) AS row_num,
-              id,
-              create_time
-          FROM users
-          WHERE create_time <= coalesce(:start_time, unixepoch('now', '+1 second', 'subsec'))
-      )
-      SELECT 
-          row_num, 
-          users.*
-      FROM users
-      JOIN rowed ON users.id = rowed.id
-      WHERE row_num > coalesce(:page_offset, 0)
-      ORDER BY :order_by
-      LIMIT :page_size;
-
-    Since we want a dynamic `ORDER BY` clause, we need to construct the query
-    programmatically. We can't pass `:order_by` as a variable to Drift.
-    */
-
-    const rowNum = CustomExpression<int>(
-      'ROW_NUMBER() OVER (ORDER BY create_time DESC)',
-    );
-    final rowedQuery = Subquery(
-      _db.cloudAuthUsers.selectOnly()
-        ..addColumns([
-          rowNum,
-          _db.cloudAuthUsers.userId,
-          _db.cloudAuthUsers.createTime,
-        ])
-        ..where(
-          _db.cloudAuthUsers.createTime.isSmallerThanValue(startTime),
-        ),
-      'rowed',
-    );
-
-    final query = _db.cloudAuthUsersDrift.select(_db.cloudAuthUsers).join([
-      innerJoin(
-        rowedQuery,
-        _db.cloudAuthUsers.userId
-            .equalsExp(rowedQuery.ref(_db.cloudAuthUsers.userId)),
-        useColumns: false,
-      ),
-    ])
-      ..addColumns([rowedQuery.ref(rowNum)])
-      ..where(
-        rowedQuery.ref(rowNum).isBiggerThanValue(pageOffset),
-      );
-
+    OrderByClause? orderByClause;
     if (orderBy != null) {
-      final clause = OrderByClause.parse(orderBy);
-      query.orderBy(clause.toOrderingTerms(_db.cloudAuthUsers).toList());
+      orderByClause = OrderByClause.parse(orderBy);
     }
 
-    query.limit(pageSize);
-    final rows = await query.get();
+    final rows = await _db.cloudAuthUsersDrift
+        .listUsers(
+          startTime: startTime,
+          offset: pageOffset,
+          limit: pageSize,
+          order_by: (tbl) => switch (orderByClause) {
+            final orderBy? => OrderBy(orderBy.toOrderingTerms(tbl).toList()),
+            _ => OrderBy([
+                OrderingTerm(
+                  expression: tbl.createTime,
+                  mode: OrderingMode.desc,
+                ),
+              ]),
+          },
+        )
+        .get();
     final users = rows
-        .map((user) => user.readTable(_db.cloudAuthUsers).toProto())
+        .map((row) => row.cloudAuthUsers
+            .copyWith(emails: row.emails, phoneNumbers: row.phoneNumbers)
+            .toProto())
         .toList();
     final nextPageToken = rows.isEmpty || rows.length < pageSize
         ? null
         : PageToken(
             startTime: startTime,
-            offset: rows.last.read(rowedQuery.ref(rowNum))!,
+            offset: rows.last.rowNum,
           ).encode();
     return pb.ListUsersResponse(
       users: users,

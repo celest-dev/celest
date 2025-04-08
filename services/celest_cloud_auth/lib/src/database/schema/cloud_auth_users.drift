@@ -117,6 +117,38 @@ getUser:
     SELECT * FROM cloud_auth_users
     WHERE user_id = :user_id;
 
+listUsers(
+    :start_time AS DATETIME OR NULL,
+    :offset AS INTEGER,
+    :limit AS INTEGER
+):
+    WITH rowed AS(
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY create_time DESC) AS row_num,
+            user_id
+        FROM cloud_auth_users
+        WHERE
+            cloud_auth_users.create_time < coalesce(:start_time, unixepoch('now', '+1 second', 'subsec'))
+    )
+    SELECT
+        row_num,
+        cloud_auth_users.**,
+        LIST(
+            SELECT *
+            FROM cloud_auth_user_emails
+            WHERE user_id = rowed.user_id
+        ) AS emails,
+        LIST(
+            SELECT *
+            FROM cloud_auth_user_phone_numbers
+            WHERE user_id = rowed.user_id
+        ) AS phone_numbers
+    FROM cloud_auth_users
+    INNER JOIN rowed ON cloud_auth_users.user_id = rowed.user_id
+    WHERE row_num > :offset
+    ORDER BY $order_by
+    LIMIT :limit;
+
 deleteUser:
     DELETE FROM cloud_auth_users
     WHERE user_id = :user_id;
