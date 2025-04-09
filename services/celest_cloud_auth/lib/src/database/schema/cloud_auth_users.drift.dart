@@ -1072,6 +1072,52 @@ class CloudAuthUsersDrift extends i4.ModularAccessor {
         }).asyncMap(cloudAuthUsers.mapFromRow);
   }
 
+  i0.Selectable<ListUsersResult> listUsers(
+      {DateTime? startTime,
+      required int offset,
+      ListUsers$orderBy? order_by,
+      required int limit}) {
+    var $arrayStartIndex = 4;
+    final generatedorder_by = $write(
+        order_by?.call(this.cloudAuthUsers) ?? const i0.OrderBy.nothing(),
+        startIndex: $arrayStartIndex);
+    $arrayStartIndex += generatedorder_by.amountOfVariables;
+    return customSelect(
+        'WITH rowed AS (SELECT ROW_NUMBER()OVER (ORDER BY create_time DESC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS row_num, user_id FROM cloud_auth_users WHERE cloud_auth_users.create_time < coalesce(?1, unixepoch(\'now\', \'+1 second\', \'subsec\'))) SELECT row_num,"cloud_auth_users"."user_id" AS "nested_0.user_id", "cloud_auth_users"."given_name" AS "nested_0.given_name", "cloud_auth_users"."family_name" AS "nested_0.family_name", "cloud_auth_users"."time_zone" AS "nested_0.time_zone", "cloud_auth_users"."language_code" AS "nested_0.language_code", "cloud_auth_users"."create_time" AS "nested_0.create_time", "cloud_auth_users"."update_time" AS "nested_0.update_time", rowed.user_id AS "\$n_0", rowed.user_id AS "\$n_1" FROM cloud_auth_users INNER JOIN rowed ON cloud_auth_users.user_id = rowed.user_id WHERE row_num > ?2 ${generatedorder_by.sql} LIMIT ?3',
+        variables: [
+          i0.Variable<DateTime>(startTime),
+          i0.Variable<int>(offset),
+          i0.Variable<int>(limit),
+          ...generatedorder_by.introducedVariables
+        ],
+        readsFrom: {
+          cloudAuthUsers,
+          cloudAuthUserEmails,
+          cloudAuthUserPhoneNumbers,
+          ...generatedorder_by.watchedTables,
+        }).asyncMap((i0.QueryRow row) async => ListUsersResult(
+          rowNum: row.read<int>('row_num'),
+          cloudAuthUsers:
+              await cloudAuthUsers.mapFromRow(row, tablePrefix: 'nested_0'),
+          emails: await customSelect(
+              'SELECT * FROM cloud_auth_user_emails WHERE user_id = ?1',
+              variables: [
+                i0.Variable<String>(row.read('\$n_0'))
+              ],
+              readsFrom: {
+                cloudAuthUserEmails,
+              }).asyncMap(cloudAuthUserEmails.mapFromRow).get(),
+          phoneNumbers: await customSelect(
+              'SELECT * FROM cloud_auth_user_phone_numbers WHERE user_id = ?1',
+              variables: [
+                i0.Variable<String>(row.read('\$n_1'))
+              ],
+              readsFrom: {
+                cloudAuthUserPhoneNumbers,
+              }).asyncMap(cloudAuthUserPhoneNumbers.mapFromRow).get(),
+        ));
+  }
+
   Future<int> deleteUser({required String userId}) {
     return customUpdate(
       'DELETE FROM cloud_auth_users WHERE user_id = ?1',
@@ -1211,6 +1257,22 @@ class CloudAuthUsersDrift extends i4.ModularAccessor {
               'cloud_auth_user_phone_numbers');
   i6.CedarDrift get cedarDrift => this.accessor(i6.CedarDrift.new);
 }
+
+class ListUsersResult {
+  final int rowNum;
+  final i1.User cloudAuthUsers;
+  final List<i1.Email> emails;
+  final List<i1.PhoneNumber> phoneNumbers;
+  ListUsersResult({
+    required this.rowNum,
+    required this.cloudAuthUsers,
+    required this.emails,
+    required this.phoneNumbers,
+  });
+}
+
+typedef ListUsers$orderBy = i0.OrderBy Function(
+    i2.CloudAuthUsers cloud_auth_users);
 
 class LookupUserByEmailResult {
   final i1.User cloudAuthUsers;
