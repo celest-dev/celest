@@ -1,5 +1,8 @@
 include: package:celest_lints/app.yaml
+
 analyzer:
   errors:
     avoid_print: ignore
     implementation_imports: ignore
+  exclude:
+    - lib/src/proto

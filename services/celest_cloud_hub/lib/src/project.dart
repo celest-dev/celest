@@ -1,4 +1,5 @@
 import 'package:celest_ast/celest_ast.dart';
+import 'package:celest_cloud_hub/src/services/health_service.dart';
 import 'package:celest_cloud_hub/src/services/operations_service.dart';
 import 'package:celest_cloud_hub/src/services/project_environments_service.dart';
 import 'package:celest_core/_internal.dart';
@@ -14,5 +15,6 @@ final ResolvedProject project = ResolvedProject(
   apis: {
     OperationsService.apiId: OperationsService.api,
     ProjectEnvironmentsService.apiId: ProjectEnvironmentsService.api,
+    HealthService.apiId: HealthService.api,
   },
 );
