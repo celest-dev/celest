@@ -5,9 +5,10 @@ import 'package:celest_cloud_hub/src/database/schema/operations.drift.dart'
     as i1;
 import 'package:drift/internal/modular.dart' as i2;
 import 'dart:async' as i3;
+import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i4;
 
-typedef $CelestOperationsCreateCompanionBuilder =
-    i1.CelestOperationsCompanion Function({
+typedef $OperationsCreateCompanionBuilder =
+    i1.OperationsCompanion Function({
       required String id,
       i0.Value<String?> metadata,
       i0.Value<String?> response,
@@ -20,8 +21,8 @@ typedef $CelestOperationsCreateCompanionBuilder =
       i0.Value<String?> resourceId,
       i0.Value<int> rowid,
     });
-typedef $CelestOperationsUpdateCompanionBuilder =
-    i1.CelestOperationsCompanion Function({
+typedef $OperationsUpdateCompanionBuilder =
+    i1.OperationsCompanion Function({
       i0.Value<String> id,
       i0.Value<String?> metadata,
       i0.Value<String?> response,
@@ -35,9 +36,9 @@ typedef $CelestOperationsUpdateCompanionBuilder =
       i0.Value<int> rowid,
     });
 
-class $CelestOperationsFilterComposer
-    extends i0.Composer<i0.GeneratedDatabase, i1.CelestOperations> {
-  $CelestOperationsFilterComposer({
+class $OperationsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.Operations> {
+  $OperationsFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -100,9 +101,9 @@ class $CelestOperationsFilterComposer
   );
 }
 
-class $CelestOperationsOrderingComposer
-    extends i0.Composer<i0.GeneratedDatabase, i1.CelestOperations> {
-  $CelestOperationsOrderingComposer({
+class $OperationsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.Operations> {
+  $OperationsOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -165,9 +166,9 @@ class $CelestOperationsOrderingComposer
   );
 }
 
-class $CelestOperationsAnnotationComposer
-    extends i0.Composer<i0.GeneratedDatabase, i1.CelestOperations> {
-  $CelestOperationsAnnotationComposer({
+class $OperationsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.Operations> {
+  $OperationsAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -216,45 +217,39 @@ class $CelestOperationsAnnotationComposer
   );
 }
 
-class $CelestOperationsTableManager
+class $OperationsTableManager
     extends
         i0.RootTableManager<
           i0.GeneratedDatabase,
-          i1.CelestOperations,
-          i1.CelestOperation,
-          i1.$CelestOperationsFilterComposer,
-          i1.$CelestOperationsOrderingComposer,
-          i1.$CelestOperationsAnnotationComposer,
-          $CelestOperationsCreateCompanionBuilder,
-          $CelestOperationsUpdateCompanionBuilder,
+          i1.Operations,
+          i1.Operation,
+          i1.$OperationsFilterComposer,
+          i1.$OperationsOrderingComposer,
+          i1.$OperationsAnnotationComposer,
+          $OperationsCreateCompanionBuilder,
+          $OperationsUpdateCompanionBuilder,
           (
-            i1.CelestOperation,
+            i1.Operation,
             i0.BaseReferences<
               i0.GeneratedDatabase,
-              i1.CelestOperations,
-              i1.CelestOperation
+              i1.Operations,
+              i1.Operation
             >,
           ),
-          i1.CelestOperation,
+          i1.Operation,
           i0.PrefetchHooks Function()
         > {
-  $CelestOperationsTableManager(
-    i0.GeneratedDatabase db,
-    i1.CelestOperations table,
-  ) : super(
+  $OperationsTableManager(i0.GeneratedDatabase db, i1.Operations table)
+    : super(
         i0.TableManagerState(
           db: db,
           table: table,
           createFilteringComposer:
-              () => i1.$CelestOperationsFilterComposer($db: db, $table: table),
+              () => i1.$OperationsFilterComposer($db: db, $table: table),
           createOrderingComposer:
-              () =>
-                  i1.$CelestOperationsOrderingComposer($db: db, $table: table),
+              () => i1.$OperationsOrderingComposer($db: db, $table: table),
           createComputedFieldComposer:
-              () => i1.$CelestOperationsAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
+              () => i1.$OperationsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<String> id = const i0.Value.absent(),
@@ -268,7 +263,7 @@ class $CelestOperationsTableManager
                 i0.Value<String?> resourceType = const i0.Value.absent(),
                 i0.Value<String?> resourceId = const i0.Value.absent(),
                 i0.Value<int> rowid = const i0.Value.absent(),
-              }) => i1.CelestOperationsCompanion(
+              }) => i1.OperationsCompanion(
                 id: id,
                 metadata: metadata,
                 response: response,
@@ -294,7 +289,7 @@ class $CelestOperationsTableManager
                 i0.Value<String?> resourceType = const i0.Value.absent(),
                 i0.Value<String?> resourceId = const i0.Value.absent(),
                 i0.Value<int> rowid = const i0.Value.absent(),
-              }) => i1.CelestOperationsCompanion.insert(
+              }) => i1.OperationsCompanion.insert(
                 id: id,
                 metadata: metadata,
                 response: response,
@@ -322,34 +317,29 @@ class $CelestOperationsTableManager
       );
 }
 
-typedef $CelestOperationsProcessedTableManager =
+typedef $OperationsProcessedTableManager =
     i0.ProcessedTableManager<
       i0.GeneratedDatabase,
-      i1.CelestOperations,
-      i1.CelestOperation,
-      i1.$CelestOperationsFilterComposer,
-      i1.$CelestOperationsOrderingComposer,
-      i1.$CelestOperationsAnnotationComposer,
-      $CelestOperationsCreateCompanionBuilder,
-      $CelestOperationsUpdateCompanionBuilder,
+      i1.Operations,
+      i1.Operation,
+      i1.$OperationsFilterComposer,
+      i1.$OperationsOrderingComposer,
+      i1.$OperationsAnnotationComposer,
+      $OperationsCreateCompanionBuilder,
+      $OperationsUpdateCompanionBuilder,
       (
-        i1.CelestOperation,
-        i0.BaseReferences<
-          i0.GeneratedDatabase,
-          i1.CelestOperations,
-          i1.CelestOperation
-        >,
+        i1.Operation,
+        i0.BaseReferences<i0.GeneratedDatabase, i1.Operations, i1.Operation>,
       ),
-      i1.CelestOperation,
+      i1.Operation,
       i0.PrefetchHooks Function()
     >;
 
-class CelestOperations extends i0.Table
-    with i0.TableInfo<CelestOperations, i1.CelestOperation> {
+class Operations extends i0.Table with i0.TableInfo<Operations, i1.Operation> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
-  CelestOperations(this.attachedDatabase, [this._alias]);
+  Operations(this.attachedDatabase, [this._alias]);
   static const i0.VerificationMeta _idMeta = const i0.VerificationMeta('id');
   late final i0.GeneratedColumn<String> id = i0.GeneratedColumn<String>(
     'id',
@@ -496,10 +486,10 @@ class CelestOperations extends i0.Table
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'celest_operations';
+  static const String $name = 'operations';
   @override
   i0.VerificationContext validateIntegrity(
-    i0.Insertable<i1.CelestOperation> instance, {
+    i0.Insertable<i1.Operation> instance, {
     bool isInserting = false,
   }) {
     final context = i0.VerificationContext();
@@ -581,9 +571,9 @@ class CelestOperations extends i0.Table
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {id};
   @override
-  i1.CelestOperation map(Map<String, dynamic> data, {String? tablePrefix}) {
+  i1.Operation map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return i1.CelestOperation(
+    return i1.Operation(
       id:
           attachedDatabase.typeMapping.read(
             i0.DriftSqlType.string,
@@ -635,16 +625,15 @@ class CelestOperations extends i0.Table
   }
 
   @override
-  CelestOperations createAlias(String alias) {
-    return CelestOperations(attachedDatabase, alias);
+  Operations createAlias(String alias) {
+    return Operations(attachedDatabase, alias);
   }
 
   @override
   bool get dontWriteConstraints => true;
 }
 
-class CelestOperation extends i0.DataClass
-    implements i0.Insertable<i1.CelestOperation> {
+class Operation extends i0.DataClass implements i0.Insertable<i1.Operation> {
   /// Immutable. The unique identifier for the organization.
   ///
   /// Maps to the `uid` field in the Protobuf.
@@ -707,7 +696,7 @@ class CelestOperation extends i0.DataClass
   ///
   /// For example, this could be the ID of a function for a function operation.
   final String? resourceId;
-  const CelestOperation({
+  const Operation({
     required this.id,
     this.metadata,
     this.response,
@@ -752,8 +741,8 @@ class CelestOperation extends i0.DataClass
     return map;
   }
 
-  i1.CelestOperationsCompanion toCompanion(bool nullToAbsent) {
-    return i1.CelestOperationsCompanion(
+  i1.OperationsCompanion toCompanion(bool nullToAbsent) {
+    return i1.OperationsCompanion(
       id: i0.Value(id),
       metadata:
           metadata == null && nullToAbsent
@@ -791,12 +780,12 @@ class CelestOperation extends i0.DataClass
     );
   }
 
-  factory CelestOperation.fromJson(
+  factory Operation.fromJson(
     Map<String, dynamic> json, {
     i0.ValueSerializer? serializer,
   }) {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
-    return CelestOperation(
+    return Operation(
       id: serializer.fromJson<String>(json['id']),
       metadata: serializer.fromJson<String?>(json['metadata']),
       response: serializer.fromJson<String?>(json['response']),
@@ -830,7 +819,7 @@ class CelestOperation extends i0.DataClass
     };
   }
 
-  i1.CelestOperation copyWith({
+  i1.Operation copyWith({
     String? id,
     i0.Value<String?> metadata = const i0.Value.absent(),
     i0.Value<String?> response = const i0.Value.absent(),
@@ -842,7 +831,7 @@ class CelestOperation extends i0.DataClass
     i0.Value<String?> ownerId = const i0.Value.absent(),
     i0.Value<String?> resourceType = const i0.Value.absent(),
     i0.Value<String?> resourceId = const i0.Value.absent(),
-  }) => i1.CelestOperation(
+  }) => i1.Operation(
     id: id ?? this.id,
     metadata: metadata.present ? metadata.value : this.metadata,
     response: response.present ? response.value : this.response,
@@ -860,7 +849,7 @@ class CelestOperation extends i0.DataClass
   );
   @override
   String toString() {
-    return (StringBuffer('CelestOperation(')
+    return (StringBuffer('Operation(')
           ..write('id: $id, ')
           ..write('metadata: $metadata, ')
           ..write('response: $response, ')
@@ -893,7 +882,7 @@ class CelestOperation extends i0.DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is i1.CelestOperation &&
+      (other is i1.Operation &&
           other.id == this.id &&
           other.metadata == this.metadata &&
           other.response == this.response &&
@@ -907,7 +896,7 @@ class CelestOperation extends i0.DataClass
           other.resourceId == this.resourceId);
 }
 
-class CelestOperationsCompanion extends i0.UpdateCompanion<i1.CelestOperation> {
+class OperationsCompanion extends i0.UpdateCompanion<i1.Operation> {
   final i0.Value<String> id;
   final i0.Value<String?> metadata;
   final i0.Value<String?> response;
@@ -919,7 +908,7 @@ class CelestOperationsCompanion extends i0.UpdateCompanion<i1.CelestOperation> {
   final i0.Value<String?> resourceType;
   final i0.Value<String?> resourceId;
   final i0.Value<int> rowid;
-  const CelestOperationsCompanion({
+  const OperationsCompanion({
     this.id = const i0.Value.absent(),
     this.metadata = const i0.Value.absent(),
     this.response = const i0.Value.absent(),
@@ -932,7 +921,7 @@ class CelestOperationsCompanion extends i0.UpdateCompanion<i1.CelestOperation> {
     this.resourceId = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   });
-  CelestOperationsCompanion.insert({
+  OperationsCompanion.insert({
     required String id,
     this.metadata = const i0.Value.absent(),
     this.response = const i0.Value.absent(),
@@ -945,7 +934,7 @@ class CelestOperationsCompanion extends i0.UpdateCompanion<i1.CelestOperation> {
     this.resourceId = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   }) : id = i0.Value(id);
-  static i0.Insertable<i1.CelestOperation> custom({
+  static i0.Insertable<i1.Operation> custom({
     i0.Expression<String>? id,
     i0.Expression<String>? metadata,
     i0.Expression<String>? response,
@@ -973,7 +962,7 @@ class CelestOperationsCompanion extends i0.UpdateCompanion<i1.CelestOperation> {
     });
   }
 
-  i1.CelestOperationsCompanion copyWith({
+  i1.OperationsCompanion copyWith({
     i0.Value<String>? id,
     i0.Value<String?>? metadata,
     i0.Value<String?>? response,
@@ -986,7 +975,7 @@ class CelestOperationsCompanion extends i0.UpdateCompanion<i1.CelestOperation> {
     i0.Value<String?>? resourceId,
     i0.Value<int>? rowid,
   }) {
-    return i1.CelestOperationsCompanion(
+    return i1.OperationsCompanion(
       id: id ?? this.id,
       metadata: metadata ?? this.metadata,
       response: response ?? this.response,
@@ -1042,7 +1031,7 @@ class CelestOperationsCompanion extends i0.UpdateCompanion<i1.CelestOperation> {
 
   @override
   String toString() {
-    return (StringBuffer('CelestOperationsCompanion(')
+    return (StringBuffer('OperationsCompanion(')
           ..write('id: $id, ')
           ..write('metadata: $metadata, ')
           ..write('response: $response, ')
@@ -1059,17 +1048,58 @@ class CelestOperationsCompanion extends i0.UpdateCompanion<i1.CelestOperation> {
   }
 }
 
+i0.Index get operationsFkOwnerIdx => i0.Index(
+  'operations_fk_owner_idx',
+  'CREATE INDEX IF NOT EXISTS operations_fk_owner_idx ON operations (owner_type, owner_id)',
+);
+i0.Index get operationsFkResourceIdx => i0.Index(
+  'operations_fk_resource_idx',
+  'CREATE INDEX IF NOT EXISTS operations_fk_resource_idx ON operations (resource_type, resource_id)',
+);
+i0.Trigger get operationsTriggerCreate => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS operations_trigger_create BEFORE INSERT ON operations BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::Operation\', NEW.id);END',
+  'operations_trigger_create',
+);
+i0.Trigger get operationsTriggerCreateOwner => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS operations_trigger_create_owner AFTER INSERT ON operations WHEN NEW.owner_id IS NOT NULL BEGIN INSERT INTO cedar_relationships (entity_type, entity_id, parent_type, parent_id) VALUES (\'Celest::Operation\', NEW.id, NEW.owner_type, NEW.owner_id);END',
+  'operations_trigger_create_owner',
+);
+i0.Trigger get operationsTriggerCreateResource => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS operations_trigger_create_resource AFTER INSERT ON operations WHEN NEW.resource_id IS NOT NULL BEGIN INSERT INTO cedar_relationships (entity_type, entity_id, parent_type, parent_id) VALUES (\'Celest::Operation\', NEW.id, NEW.resource_type, NEW.resource_id);END',
+  'operations_trigger_create_resource',
+);
+i0.Trigger get operationsTriggerAddOwner => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS operations_trigger_add_owner AFTER UPDATE OF owner_id ON operations WHEN OLD.owner_id IS NULL AND NEW.owner_id IS NOT NULL BEGIN INSERT INTO cedar_relationships (entity_type, entity_id, parent_type, parent_id) VALUES (\'Celest::Operation\', NEW.id, NEW.owner_type, NEW.owner_id);END',
+  'operations_trigger_add_owner',
+);
+i0.Trigger get operationsTriggerAddResource => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS operations_trigger_add_resource AFTER UPDATE OF resource_id ON operations WHEN OLD.resource_id IS NULL AND NEW.resource_id IS NOT NULL BEGIN INSERT INTO cedar_relationships (entity_type, entity_id, parent_type, parent_id) VALUES (\'Celest::Operation\', NEW.id, NEW.resource_type, NEW.resource_id);END',
+  'operations_trigger_add_resource',
+);
+i0.Trigger get operationsTriggerSetOwner => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS operations_trigger_set_owner AFTER UPDATE OF owner_type, owner_id ON operations WHEN(OLD.owner_type != NEW.owner_type OR OLD.owner_id != NEW.owner_id)AND OLD.owner_id IS NOT NULL AND NEW.owner_id IS NOT NULL BEGIN UPDATE cedar_relationships SET parent_type = NEW.owner_type, parent_id = NEW.owner_id WHERE entity_id = OLD.id AND entity_type = \'Celest::Operation\' AND parent_type = OLD.owner_type AND parent_id = OLD.owner_id;END',
+  'operations_trigger_set_owner',
+);
+i0.Trigger get operationsTriggerSetResource => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS operations_trigger_set_resource AFTER UPDATE OF resource_type, resource_id ON operations WHEN(OLD.resource_type != NEW.resource_type OR OLD.resource_id != NEW.resource_id)AND OLD.resource_id IS NOT NULL AND NEW.resource_id IS NOT NULL BEGIN UPDATE cedar_relationships SET parent_type = NEW.resource_type, parent_id = NEW.resource_id WHERE entity_id = OLD.id AND entity_type = \'Celest::Operation\' AND parent_type = OLD.resource_type AND parent_id = OLD.resource_id;END',
+  'operations_trigger_set_resource',
+);
+i0.Trigger get operationsTriggerDelete => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS operations_trigger_delete AFTER DELETE ON operations BEGIN DELETE FROM cedar_relationships WHERE entity_id = OLD.id AND entity_type = \'Celest::Operation\';DELETE FROM cedar_entities WHERE entity_id = OLD.id AND entity_type = \'Celest::Operation\';END',
+  'operations_trigger_delete',
+);
+
 class OperationsDrift extends i2.ModularAccessor {
   OperationsDrift(i0.GeneratedDatabase db) : super(db);
-  i0.Selectable<i1.CelestOperation> getOperation({required String id}) {
+  i0.Selectable<i1.Operation> getOperation({required String id}) {
     return customSelect(
-      'SELECT * FROM celest_operations WHERE id = ?1',
+      'SELECT * FROM operations WHERE id = ?1 LIMIT 1',
       variables: [i0.Variable<String>(id)],
-      readsFrom: {celestOperations},
-    ).asyncMap(celestOperations.mapFromRow);
+      readsFrom: {operations},
+    ).asyncMap(operations.mapFromRow);
   }
 
-  i3.Future<List<i1.CelestOperation>> createOperation({
+  i3.Future<List<i1.Operation>> createOperation({
     required String id,
     String? metadata,
     String? response,
@@ -1081,7 +1111,7 @@ class OperationsDrift extends i2.ModularAccessor {
     String? resourceId,
   }) {
     return customWriteReturning(
-      'INSERT INTO celest_operations (id, metadata, response, error, full_resource_name, owner_type, owner_id, resource_type, resource_id) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) RETURNING *',
+      'INSERT INTO operations (id, metadata, response, error, full_resource_name, owner_type, owner_id, resource_type, resource_id) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) RETURNING *',
       variables: [
         i0.Variable<String>(id),
         i0.Variable<String>(metadata),
@@ -1093,30 +1123,85 @@ class OperationsDrift extends i2.ModularAccessor {
         i0.Variable<String>(resourceType),
         i0.Variable<String>(resourceId),
       ],
-      updates: {celestOperations},
-    ).then((rows) => Future.wait(rows.map(celestOperations.mapFromRow)));
+      updates: {operations},
+    ).then((rows) => Future.wait(rows.map(operations.mapFromRow)));
   }
 
-  i3.Future<List<i1.CelestOperation>> updateOperation({
+  i0.Selectable<ListOperationsResult> listOperations({
+    String? ownerType,
+    String? ownerId,
+    String? resourceType,
+    String? resourceId,
+    DateTime? startTime,
+    required int offset,
+    required int limit,
+  }) {
+    return customSelect(
+      'WITH rowed AS (SELECT ROW_NUMBER()OVER (ORDER BY create_time DESC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS row_num, id FROM operations WHERE(operations.owner_type IS NULL AND ?1 IS NULL OR operations.owner_type = ?1)AND(operations.owner_id IS NULL AND ?2 IS NULL OR operations.owner_id = ?2)AND(operations.resource_type IS NULL AND ?3 IS NULL OR operations.resource_type = ?3)AND(operations.resource_id IS NULL AND ?4 IS NULL OR operations.resource_id = ?4)AND operations.create_time < coalesce(?5, unixepoch(\'now\', \'+1 second\', \'subsec\'))) SELECT row_num,"operations"."id" AS "nested_0.id", "operations"."metadata" AS "nested_0.metadata", "operations"."response" AS "nested_0.response", "operations"."error" AS "nested_0.error", "operations"."done" AS "nested_0.done", "operations"."create_time" AS "nested_0.create_time", "operations"."full_resource_name" AS "nested_0.full_resource_name", "operations"."owner_type" AS "nested_0.owner_type", "operations"."owner_id" AS "nested_0.owner_id", "operations"."resource_type" AS "nested_0.resource_type", "operations"."resource_id" AS "nested_0.resource_id" FROM operations INNER JOIN rowed ON operations.id = rowed.id WHERE row_num > ?6 ORDER BY create_time DESC LIMIT ?7',
+      variables: [
+        i0.Variable<String>(ownerType),
+        i0.Variable<String>(ownerId),
+        i0.Variable<String>(resourceType),
+        i0.Variable<String>(resourceId),
+        i0.Variable<DateTime>(startTime),
+        i0.Variable<int>(offset),
+        i0.Variable<int>(limit),
+      ],
+      readsFrom: {operations},
+    ).asyncMap(
+      (i0.QueryRow row) async => ListOperationsResult(
+        rowNum: row.read<int>('row_num'),
+        operations: await operations.mapFromRow(row, tablePrefix: 'nested_0'),
+      ),
+    );
+  }
+
+  i3.Future<List<i1.Operation>> updateOperation({
     String? metadata,
     String? response,
     String? error,
+    String? fullResourceName,
+    String? resourceType,
+    String? resourceId,
+    String? ownerType,
+    String? ownerId,
     required String id,
   }) {
     return customWriteReturning(
-      'UPDATE celest_operations SET metadata = coalesce(?1, metadata), response = coalesce(?2, response), error = coalesce(?3, error) WHERE id = ?4 RETURNING *',
+      'UPDATE operations SET metadata = coalesce(?1, metadata), response = coalesce(?2, response), error = coalesce(?3, error), full_resource_name = coalesce(?4, full_resource_name), resource_type = coalesce(?5, resource_type), resource_id = coalesce(?6, resource_id), owner_type = coalesce(?7, owner_type), owner_id = coalesce(?8, owner_id) WHERE id = ?9 RETURNING *',
       variables: [
         i0.Variable<String>(metadata),
         i0.Variable<String>(response),
         i0.Variable<String>(error),
+        i0.Variable<String>(fullResourceName),
+        i0.Variable<String>(resourceType),
+        i0.Variable<String>(resourceId),
+        i0.Variable<String>(ownerType),
+        i0.Variable<String>(ownerId),
         i0.Variable<String>(id),
       ],
-      updates: {celestOperations},
+      updates: {operations},
       updateKind: i0.UpdateKind.update,
-    ).then((rows) => Future.wait(rows.map(celestOperations.mapFromRow)));
+    ).then((rows) => Future.wait(rows.map(operations.mapFromRow)));
   }
 
-  i1.CelestOperations get celestOperations => i2.ReadDatabaseContainer(
+  i3.Future<List<i1.Operation>> deleteOperation({required String id}) {
+    return customWriteReturning(
+      'DELETE FROM operations WHERE id = ?1 RETURNING *',
+      variables: [i0.Variable<String>(id)],
+      updates: {operations},
+      updateKind: i0.UpdateKind.delete,
+    ).then((rows) => Future.wait(rows.map(operations.mapFromRow)));
+  }
+
+  i1.Operations get operations => i2.ReadDatabaseContainer(
     attachedDatabase,
-  ).resultSet<i1.CelestOperations>('celest_operations');
+  ).resultSet<i1.Operations>('operations');
+  i4.CedarDrift get cedarDrift => this.accessor(i4.CedarDrift.new);
+}
+
+class ListOperationsResult {
+  final int rowNum;
+  final i1.Operation operations;
+  ListOperationsResult({required this.rowNum, required this.operations});
 }

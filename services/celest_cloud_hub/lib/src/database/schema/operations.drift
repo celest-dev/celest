@@ -1,5 +1,7 @@
+import 'package:celest_cloud_auth/src/database/schema/cedar.drift';
+
 -- Stores longrunning operations for Celest Cloud.
-CREATE TABLE IF NOT EXISTS celest_operations (
+CREATE TABLE IF NOT EXISTS operations (
     -- Immutable. The unique identifier for the organization.
     --
     -- Maps to the `uid` field in the Protobuf.
@@ -68,12 +70,109 @@ CREATE TABLE IF NOT EXISTS celest_operations (
     resource_id TEXT
 );
 
+-- Index for the FK.
+CREATE INDEX IF NOT EXISTS operations_fk_owner_idx ON operations(owner_type, owner_id);
+CREATE INDEX IF NOT EXISTS operations_fk_resource_idx ON operations(resource_type, resource_id);
+
+----------------------------------------------
+-------------- Cedar Triggers ----------------
+----------------------------------------------
+
+-- This trigger is used to create the Cedar entity when a row is inserted.
+CREATE TRIGGER IF NOT EXISTS operations_trigger_create
+BEFORE INSERT ON operations
+BEGIN
+    INSERT INTO cedar_entities(entity_type, entity_id)
+    VALUES ('Celest::Operation', NEW.id);
+END;
+
+CREATE TRIGGER IF NOT EXISTS operations_trigger_create_owner
+AFTER INSERT ON operations
+WHEN NEW.owner_id IS NOT NULL
+BEGIN
+    INSERT INTO cedar_relationships(entity_type, entity_id, parent_type, parent_id)
+    VALUES ('Celest::Operation', NEW.id, NEW.owner_type, NEW.owner_id);
+END;
+
+CREATE TRIGGER IF NOT EXISTS operations_trigger_create_resource
+AFTER INSERT ON operations
+WHEN NEW.resource_id IS NOT NULL
+BEGIN
+    INSERT INTO cedar_relationships(entity_type, entity_id, parent_type, parent_id)
+    VALUES ('Celest::Operation', NEW.id, NEW.resource_type, NEW.resource_id);
+END;
+
+CREATE TRIGGER IF NOT EXISTS operations_trigger_add_owner
+AFTER UPDATE OF owner_id ON operations
+WHEN OLD.owner_id IS NULL AND NEW.owner_id IS NOT NULL
+BEGIN
+    INSERT INTO cedar_relationships(entity_type, entity_id, parent_type, parent_id)
+    VALUES ('Celest::Operation', NEW.id, NEW.owner_type, NEW.owner_id);
+END;
+
+CREATE TRIGGER IF NOT EXISTS operations_trigger_add_resource
+AFTER UPDATE OF resource_id ON operations
+WHEN OLD.resource_id IS NULL AND NEW.resource_id IS NOT NULL
+BEGIN
+    INSERT INTO cedar_relationships(entity_type, entity_id, parent_type, parent_id)
+    VALUES ('Celest::Operation', NEW.id, NEW.resource_type, NEW.resource_id);
+END;
+
+CREATE TRIGGER IF NOT EXISTS operations_trigger_set_owner
+AFTER UPDATE OF owner_type, owner_id ON operations
+WHEN (OLD.owner_type != NEW.owner_type OR OLD.owner_id != NEW.owner_id) AND OLD.owner_id IS NOT NULL AND NEW.owner_id IS NOT NULL
+BEGIN
+    UPDATE cedar_relationships
+    SET 
+        parent_type = NEW.owner_type,
+        parent_id = NEW.owner_id
+    WHERE 
+        entity_id = OLD.id
+        AND entity_type = 'Celest::Operation'
+        AND parent_type = OLD.owner_type
+        AND parent_id = OLD.owner_id;
+END;
+
+CREATE TRIGGER IF NOT EXISTS operations_trigger_set_resource
+AFTER UPDATE OF resource_type, resource_id ON operations
+WHEN (OLD.resource_type != NEW.resource_type OR OLD.resource_id != NEW.resource_id) AND OLD.resource_id IS NOT NULL AND NEW.resource_id IS NOT NULL
+BEGIN
+    UPDATE cedar_relationships
+    SET 
+        parent_type = NEW.resource_type,
+        parent_id = NEW.resource_id
+    WHERE 
+        entity_id = OLD.id
+        AND entity_type = 'Celest::Operation'
+        AND parent_type = OLD.resource_type
+        AND parent_id = OLD.resource_id;
+END;
+
+-- This trigger is used to delete the parent relationship when a row is deleted.
+CREATE TRIGGER IF NOT EXISTS operations_trigger_delete
+AFTER DELETE ON operations
+BEGIN
+    DELETE FROM cedar_relationships
+    WHERE 
+        entity_id = OLD.id
+        AND entity_type = 'Celest::Operation';
+    DELETE FROM cedar_entities
+    WHERE
+        entity_id = OLD.id
+        AND entity_type = 'Celest::Operation';
+END;
+
+----------------------------------------------
+-------------- /Cedar Triggers ---------------
+----------------------------------------------
+
 getOperation:
-    SELECT * FROM celest_operations 
-    WHERE id = :id;
+    SELECT * FROM operations 
+    WHERE id = :id
+    LIMIT 1;
 
 createOperation:
-    INSERT INTO celest_operations (
+    INSERT INTO operations (
         id,
         metadata,
         response,
@@ -96,15 +195,63 @@ createOperation:
     )
     RETURNING *;
 
+listOperations(
+    :owner_type AS TEXT OR NULL,
+    :owner_id AS TEXT OR NULL,
+    :resource_type AS TEXT OR NULL,
+    :resource_id AS TEXT OR NULL,
+    :start_time AS DATETIME OR NULL,
+    :offset AS INTEGER,
+    :limit AS INTEGER
+):
+    WITH rowed AS(
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY create_time DESC) AS row_num,
+            id
+        FROM operations
+        WHERE
+            (operations.owner_type IS NULL AND :owner_type IS NULL OR operations.owner_type = :owner_type) AND
+            (operations.owner_id IS NULL AND :owner_id IS NULL OR operations.owner_id = :owner_id) AND
+            (operations.resource_type IS NULL AND :resource_type IS NULL OR operations.resource_type = :resource_type) AND
+            (operations.resource_id IS NULL AND :resource_id IS NULL OR operations.resource_id = :resource_id) AND
+            operations.create_time < coalesce(:start_time, unixepoch('now', '+1 second', 'subsec'))
+    )
+    SELECT
+        row_num,
+        operations.**
+    FROM operations
+    INNER JOIN rowed ON operations.id = rowed.id
+    WHERE row_num > :offset
+    ORDER BY create_time DESC
+    LIMIT :limit;
+
+-- name: UpdateOperation :one
 updateOperation(
+    :id AS TEXT,
     :metadata AS TEXT OR NULL,
     :response AS TEXT OR NULL,
-    :error AS TEXT OR NULL
-):
-    UPDATE celest_operations
-    SET
+    :error AS TEXT OR NULL,
+    :full_resource_name AS TEXT OR NULL,
+    :owner_type AS TEXT OR NULL,
+    :owner_id AS TEXT OR NULL,
+    :resource_type AS TEXT OR NULL,
+    :resource_id AS TEXT OR NULL
+): 
+    UPDATE operations
+    SET 
         metadata = coalesce(:metadata, metadata),
         response = coalesce(:response, response),
-        error = coalesce(:error, error)
+        error = coalesce(:error, error),
+        full_resource_name = coalesce(:full_resource_name, full_resource_name),
+        resource_type = coalesce(:resource_type, resource_type),
+        resource_id = coalesce(:resource_id, resource_id),
+        owner_type = coalesce(:owner_type, owner_type),
+        owner_id = coalesce(:owner_id, owner_id)
+    WHERE id = :id
+    RETURNING *;
+
+-- name: DeleteOperation :one
+deleteOperation: 
+    DELETE FROM operations
     WHERE id = :id
     RETURNING *;

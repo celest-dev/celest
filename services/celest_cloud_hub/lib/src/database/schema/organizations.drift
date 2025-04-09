@@ -1,0 +1,271 @@
+import 'package:celest_cloud_auth/src/database/schema/cedar.drift';
+import 'package:celest_cloud_hub/src/database/schema/user_memberships.drift';
+
+-- Stores metadata for all Celest Cloud organizations.
+CREATE TABLE IF NOT EXISTS organizations (
+    -- Immutable. The unique identifier for the organization.
+    --
+    -- Maps to the `uid` field in the Protobuf.
+    --
+    -- Format: org_<typeid>
+    id TEXT NOT NULL PRIMARY KEY,
+
+    -- The Cedar type of the parent entity, e.g. `Celest::Account`.
+    parent_type TEXT,
+
+    -- The unique identifier of the parent entity.
+    parent_id TEXT,
+
+    -- The primary alias for the organization.
+    organization_id TEXT NOT NULL UNIQUE,
+
+    -- The current state of the organization.
+    state TEXT NOT NULL DEFAULT 'CREATING',
+
+    -- A human-readable name for the organization.
+    display_name TEXT NOT NULL,
+
+    create_time DATETIME NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+    update_time DATETIME NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+    delete_time DATETIME,
+    purge_time DATETIME,
+
+    -- User-defined annotations for the organization.
+    --
+    -- Type: map[string]string
+    annotations TEXT,
+
+    -- The organization's primary region.
+    primary_region TEXT,
+
+    reconciling BOOLEAN NOT NULL DEFAULT FALSE,
+    etag TEXT NOT NULL GENERATED ALWAYS AS (
+        hex(
+            md5(
+                json_array(
+                    id,
+                    parent_type,
+                    parent_id,
+                    organization_id,
+                    state,
+                    display_name,
+                    create_time,
+                    update_time,
+                    delete_time,
+                    purge_time,
+                    annotations,
+                    primary_region,
+                    reconciling
+                )
+            )
+        )
+    ) STORED,
+
+    CONSTRAINT organizations_parent_fk FOREIGN KEY (parent_type, parent_id) REFERENCES cedar_entities(entity_type, entity_id) 
+        ON UPDATE CASCADE ON DELETE SET NULL
+);
+
+-- Index for the organization's FK.
+CREATE INDEX IF NOT EXISTS organizations_parent_idx ON organizations(parent_type, parent_id);
+
+-- This trigger is used to update the update_time when an organization is updated.
+CREATE TRIGGER IF NOT EXISTS organizations_update_time
+AFTER UPDATE ON organizations
+BEGIN
+    UPDATE organizations
+    SET update_time = unixepoch('now', 'subsec')
+    WHERE id = OLD.id;
+END;
+
+----------------------------------------------
+-------------- Cedar Triggers ----------------
+----------------------------------------------
+
+-- This trigger is used to create the Cedar entity when a row is inserted.
+CREATE TRIGGER IF NOT EXISTS organizations_create
+BEFORE INSERT ON organizations
+BEGIN
+    INSERT INTO cedar_entities(entity_type, entity_id)
+    VALUES ('Celest::Organization', NEW.id);
+END;
+
+-- This trigger is used to create a parent relationship when a row is inserted.
+CREATE TRIGGER IF NOT EXISTS organizations_create_parent
+AFTER INSERT ON organizations
+WHEN NEW.parent_id IS NOT NULL
+BEGIN
+    INSERT INTO cedar_relationships(entity_type, entity_id, parent_type, parent_id)
+    VALUES ('Celest::Organization', NEW.id, NEW.parent_type, NEW.parent_id);
+END;
+
+-- This trigger is used to add the parent relationship when a parent is assigned.
+CREATE TRIGGER IF NOT EXISTS organizations_add_parent
+AFTER UPDATE OF parent_id ON organizations
+WHEN OLD.parent_id IS NULL AND NEW.parent_id IS NOT NULL
+BEGIN
+    INSERT INTO cedar_relationships(entity_type, entity_id, parent_type, parent_id)
+    VALUES ('Celest::Organization', NEW.id, NEW.parent_type, NEW.parent_id);
+END;
+
+-- This trigger is used to update the parent relationship when the parent_id is set to a new value.
+CREATE TRIGGER IF NOT EXISTS organizations_set_parent
+AFTER UPDATE OF parent_type, parent_id ON organizations
+WHEN (OLD.parent_type != NEW.parent_type OR OLD.parent_id != NEW.parent_id) AND NEW.parent_id IS NOT NULL
+BEGIN
+    UPDATE cedar_relationships
+    SET 
+        parent_type = NEW.parent_type,
+        parent_id = NEW.parent_id
+    WHERE 
+        entity_id = OLD.id 
+        AND entity_type = 'Celest::Organization';
+END;
+
+-- This trigger is used to delete the parent relationship when the parent_id is set to NULL.
+CREATE TRIGGER IF NOT EXISTS organizations_remove_parent
+AFTER UPDATE OF parent_id ON organizations
+WHEN OLD.parent_id IS NOT NULL AND NEW.parent_id IS NULL
+BEGIN
+    DELETE FROM cedar_relationships
+    WHERE 
+        entity_id = OLD.id 
+        AND entity_type = 'Celest::Organization'
+        AND parent_id = OLD.parent_id
+        AND parent_type = OLD.parent_type;
+END;
+
+-- This trigger is used to delete the parent relationship when the parent_id is set to NULL.
+CREATE TRIGGER IF NOT EXISTS organizations_delete
+AFTER DELETE ON organizations
+BEGIN
+    DELETE FROM cedar_relationships
+    WHERE 
+        entity_type = 'Celest::Organization'
+        AND entity_id = OLD.id;
+    DELETE FROM cedar_relationships
+    WHERE 
+        parent_type = 'Celest::Organization'
+        AND parent_id = OLD.id;
+    DELETE FROM cedar_entities
+    WHERE
+        entity_type = 'Celest::Organization'
+        AND entity_id = OLD.id;
+END;
+
+----------------------------------------------
+-------------- /Cedar Triggers ---------------
+----------------------------------------------
+
+-- name: CreateOrganization :one
+createOrganization: INSERT INTO organizations (id, parent_type, parent_id, organization_id, state, display_name, annotations, primary_region)
+VALUES (
+    :id, 
+    :parent_type,
+    :parent_id,
+    :organization_id,
+    :state,
+    :display_name,
+    :annotations,
+    :primary_region
+)
+RETURNING *;
+
+-- name: GetOrganization :one
+getOrganization: SELECT * FROM organizations
+WHERE id = :id OR organization_id = :id;
+
+-- name: ListOrganizations :many
+listOrganizations(
+    :user_id AS TEXT,
+    :parent_id AS TEXT OR NULL,
+    :start_time AS DATETIME OR NULL,
+    :show_deleted AS BOOLEAN,
+    :offset AS INTEGER,
+    :limit AS INTEGER
+):
+    WITH memberships AS (
+        SELECT
+            parent_id AS organization_id
+        FROM
+            user_memberships
+        WHERE
+            user_id = :user_id AND
+            parent_type = 'Celest::Organization'
+    ),
+    rowed AS(
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY create_time DESC) AS row_num,
+            id
+        FROM organizations
+        INNER JOIN memberships ON organizations.id = memberships.organization_id
+        WHERE
+            (organizations.parent_id IS NULL AND :parent_id IS NULL OR organizations.parent_id = :parent_id) AND
+            organizations.create_time < coalesce(:start_time, unixepoch('now', '+1 second', 'subsec')) AND
+            (:show_deleted OR organizations.state != 'DELETED')
+    )
+    SELECT
+        row_num,
+        organizations.**
+    FROM organizations
+    INNER JOIN rowed ON organizations.id = rowed.id
+    WHERE row_num > :offset
+    ORDER BY $order_by
+    LIMIT :limit;
+
+-- name: DebugDumpOrganizations :many
+-- FOR DEBUGGING ONLY. Returns all organizations in the database.
+debugDump: SELECT * FROM organizations;
+
+-- name: UpdateOrganization :one
+updateOrganization(
+    :parent_type AS TEXT OR NULL,
+    :parent_id AS TEXT OR NULL,
+    :state AS TEXT OR NULL,
+    :display_name AS TEXT OR NULL,
+    :annotations AS TEXT OR NULL,
+    :delete_time AS DATETIME OR NULL,
+    :purge_time AS DATETIME OR NULL,
+    :primary_region AS TEXT OR NULL
+):
+UPDATE organizations
+SET 
+    parent_type = coalesce(:parent_type, parent_type),
+    parent_id = coalesce(:parent_id, parent_id), 
+    state = coalesce(:state, state),
+    display_name = coalesce(:display_name, display_name),
+    annotations = coalesce(:annotations, annotations),
+    update_time = unixepoch('now', 'subsec'),
+    delete_time = coalesce(:delete_time, delete_time),
+    purge_time = coalesce(:purge_time, purge_time),
+    primary_region = coalesce(:primary_region, primary_region)
+WHERE (id = :id OR organization_id = :id) AND state != 'DELETED'
+RETURNING *;
+
+-- name: DeleteOrganization :one
+deleteOrganization(
+    :state AS TEXT OR NULL,
+    :delete_time AS DATETIME OR NULL,
+    :purge_time AS DATETIME OR NULL
+):
+UPDATE organizations
+SET 
+    state = coalesce(:state, 'DELETED'),
+    delete_time = coalesce(:delete_time, delete_time, unixepoch('now', 'subsec')),
+    purge_time = coalesce(:purge_time, purge_time, unixepoch('now', '+30 days', 'subsec'))
+WHERE id = :id OR organization_id = :id
+RETURNING *;
+
+-- name: UndeleteOrganization :one
+undeleteOrganization(:state AS TEXT OR NULL):
+UPDATE organizations
+SET 
+    state = coalesce(:state, 'ACTIVE'),
+    delete_time = NULL,
+    purge_time = NULL
+WHERE id = :id OR organization_id = :id
+RETURNING *;
+
+-- name: PurgeOrganization :one
+purgeOrganization: DELETE FROM organizations
+WHERE id = :id OR organization_id = :id
+RETURNING *;

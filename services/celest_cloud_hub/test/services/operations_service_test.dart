@@ -37,6 +37,7 @@ void main() {
     setUp(() async {
       database = CloudHubDatabase.memory();
       await database.ping();
+      await database.cloudAuthUsersDrift.createUser(userId: 'test');
 
       service = OperationsService(database, FakeAuthorizer());
     });

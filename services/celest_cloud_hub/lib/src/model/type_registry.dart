@@ -12,6 +12,9 @@ import 'package:protobuf/protobuf.dart';
 final TypeRegistry typeRegistry = TypeRegistry([
   // Cloud
   OperationMetadata(),
+  Operation(),
+  Organization(),
+  Project(),
   ProjectEnvironment(),
 
   // RPC

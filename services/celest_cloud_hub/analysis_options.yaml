@@ -5,4 +5,4 @@ analyzer:
     avoid_print: ignore
     implementation_imports: ignore
   exclude:
-    - lib/src/proto
+    - lib/src/proto/**

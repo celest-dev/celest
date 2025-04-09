@@ -598,6 +598,18 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "MaximumSizeExceeded",
+          "url": "package:chunked_stream/src/read_chunked_stream.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ParserException",
+          "url": "package:petitparser/src/core/exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "ConnectionClosedException",
           "url": "package:drift/src/remote/communication.dart",
           "isNullable": false
@@ -734,7 +746,7 @@
       "version": "3.7.2",
       "enabledExperiments": []
     },
-    "targetSdk": "flutter",
+    "targetSdk": "dart",
     "featureFlags": [
       "streaming"
     ],

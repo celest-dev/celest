@@ -1,4 +1,4 @@
-import '../../model/lifecycle_state.dart';
+import 'package:celest_cloud_hub/src/model/lifecycle_state.dart';
 
 -- Stores project environments for a Celest Cloud project.
 CREATE TABLE IF NOT EXISTS project_environments (
@@ -117,3 +117,115 @@ CREATE TABLE IF NOT EXISTS project_environment_assets(
     CONSTRAINT fk_environment_assets_project_environment_id FOREIGN KEY (project_environment_id) REFERENCES project_environments(id)
         ON UPDATE CASCADE ON DELETE CASCADE
 ) WITHOUT ROWID;
+
+-- Stores state for Celest Cloud project environments.
+CREATE TABLE IF NOT EXISTS project_environment_states (
+    -- The ID of the linked project environment.
+    project_environment_id TEXT NOT NULL PRIMARY KEY,
+
+    -- The ID of the project environment's Fly app.
+    fly_app_id TEXT,
+
+    -- The ID of the project environment's database.
+    turso_database_id TEXT,
+
+    -- The domain name of the project environment.
+    domain_name TEXT,
+
+    CONSTRAINT fk_project_environment_state_project_environment_id FOREIGN KEY (project_environment_id) REFERENCES project_environments(id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+) WITHOUT ROWID;
+
+createProjectEnvironment:
+    INSERT INTO project_environments (
+        id,
+        parent_type,
+        parent_id,
+        project_environment_id,
+        state,
+        display_name,
+        annotations
+    ) VALUES (
+        :id,
+        :parentType,
+        :parentId,
+        :projectEnvironmentId,
+        :state,
+        :displayName,
+        :annotations
+    )
+    RETURNING *;
+
+getProjectEnvironment:
+    SELECT * FROM project_environments
+    WHERE id = :id;
+
+lookupProjectEnvironment:
+    SELECT * FROM project_environments
+    WHERE 
+        parent_type = 'Celest::Project' AND
+        parent_id = :projectId AND
+        project_environment_id = :projectEnvironmentId
+    LIMIT 1;
+
+updateProjectEnvironment(
+    :parentType AS TEXT OR NULL,
+    :parentId AS TEXT OR NULL,
+    :projectEnvironmentId AS TEXT OR NULL,
+    :state AS LifecycleState OR NULL,
+    :displayName AS TEXT OR NULL,
+    :annotations AS TEXT OR NULL
+):
+    UPDATE project_environments
+    SET
+        parent_type = coalesce(:parentType, parent_type),
+        parent_id = coalesce(:parentId, parent_id),
+        project_environment_id = coalesce(:projectEnvironmentId, project_environment_id),
+        state = coalesce(:state, state),
+        display_name = coalesce(:displayName, display_name),
+        annotations = coalesce(:annotations, annotations)
+    WHERE id = :id
+    RETURNING *;
+
+deleteProjectEnvironment:
+    UPDATE project_environments
+    SET 
+        delete_time = unixepoch('now', 'subsec'),
+        state = 8 -- LifecycleState.DELETED
+    WHERE id = :id
+    RETURNING *;
+
+purgeProjectEnvironment:
+    DELETE FROM project_environments
+    WHERE id = :id;
+
+getProjectEnvironmentState:
+    SELECT * FROM project_environment_states
+    WHERE project_environment_id = :projectEnvironmentId;
+
+createProjectEnvironmentState:
+    INSERT INTO project_environment_states (
+        project_environment_id,
+        fly_app_id,
+        turso_database_id,
+        domain_name
+    ) VALUES (
+        :projectEnvironmentId,
+        :flyAppId,
+        :tursoDatabaseId,
+        :domainName
+    )
+    RETURNING *;
+
+updateProjectEnvironmentState(
+    :flyAppId AS TEXT OR NULL,
+    :tursoDatabaseId AS TEXT OR NULL,
+    :domainName AS TEXT OR NULL
+):
+    UPDATE project_environment_states
+    SET
+        fly_app_id = coalesce(:flyAppId, fly_app_id),
+        turso_database_id = coalesce(:tursoDatabaseId, turso_database_id),
+        domain_name = coalesce(:domainName, domain_name)
+    WHERE project_environment_id = :projectEnvironmentId
+    RETURNING *;

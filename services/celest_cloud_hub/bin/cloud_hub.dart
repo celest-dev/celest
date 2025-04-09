@@ -17,6 +17,7 @@ import 'package:celest_cloud_hub/src/gateway/gateway.dart';
 import 'package:celest_cloud_hub/src/project.dart';
 import 'package:celest_cloud_hub/src/services/health_service.dart';
 import 'package:celest_cloud_hub/src/services/operations_service.dart';
+import 'package:celest_cloud_hub/src/services/organizations_service.dart';
 import 'package:celest_cloud_hub/src/services/project_environments_service.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:grpc/grpc.dart' as grpc;
@@ -63,9 +64,10 @@ Future<void> main() async {
 
   final server = grpc.Server.create(
     services: [
-      ProjectEnvironmentsService(),
-      OperationsService(db, authorizer),
       HealthService(),
+      OperationsService(db, authorizer),
+      OrganizationsService(db, authorizer),
+      ProjectEnvironmentsService(db, authorizer),
     ],
     interceptors: [
       (call, method) async {

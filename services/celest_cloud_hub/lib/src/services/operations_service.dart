@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:async/async.dart';
 import 'package:cedar/cedar.dart';
@@ -7,7 +6,6 @@ import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud/src/proto.dart' as pb;
 import 'package:celest_cloud/src/proto/google/longrunning/operations.pbgrpc.dart';
 import 'package:celest_cloud/src/proto/google/protobuf/empty.pb.dart';
-import 'package:celest_cloud/src/proto/google/rpc/status.pb.dart' as pb;
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/model/page_token.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
@@ -15,9 +13,8 @@ import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/schema/operations.drift.dart'
     as dto;
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
-import 'package:celest_cloud_hub/src/model/type_registry.dart';
+import 'package:celest_cloud_hub/src/proto/interop.dart';
 import 'package:celest_core/celest_core.dart';
-import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:grpc/grpc.dart';
 import 'package:protobuf/protobuf.dart' as pb;
@@ -170,74 +167,23 @@ permit (
         pageData?.startTime ??
         DateTime.timestamp().add(const Duration(seconds: 1));
 
-    /*
-    Roughly, we're trying to construct the query:
-
-      WITH rowed AS(
-          SELECT 
-              ROW_NUMBER() OVER (ORDER BY create_time DESC) AS row_num,
-              id,
-              create_time
-          FROM <table>
-          WHERE create_time <= coalesce(:start_time, unixepoch('now', '+1 second', 'subsec'))
-      )
-      SELECT 
-          row_num, 
-          <table>.*
-      FROM <table>
-      JOIN rowed ON <table>.id = rowed.id
-      WHERE
-            row_num > coalesce(:page_offset, 0)
-        AND owner_type = :owner_type
-        AND owner_id = :owner_id
-      ORDER BY :order_by
-      LIMIT :page_size;
-
-    Since we want a dynamic `ORDER BY` clause, we need to construct the query
-    programmatically. We can't pass `:order_by` as a variable to Drift.
-    */
-
-    const rowNum = CustomExpression<int>(
-      'ROW_NUMBER() OVER (ORDER BY create_time DESC)',
-    );
-    final rowedQuery = Subquery(
-      _db.celestOperations.selectOnly()
-        ..addColumns([
-          rowNum,
-          _db.celestOperations.id,
-          _db.celestOperations.createTime,
-        ])
-        ..where(_db.celestOperations.createTime.isSmallerThanValue(startTime)),
-      'rowed',
-    );
-
-    final query =
-        _db.select(_db.celestOperations).join([
-            innerJoin(
-              rowedQuery,
-              _db.celestOperations.id.equalsExp(
-                rowedQuery.ref(_db.celestOperations.id),
-              ),
-              useColumns: false,
-            ),
-          ])
-          ..addColumns([rowedQuery.ref(rowNum)])
-          ..where(
-            rowedQuery.ref(rowNum).isBiggerThanValue(pageOffset) &
-                _db.celestOperations.ownerType.equals(principal.uid.type) &
-                _db.celestOperations.ownerId.equals(principal.uid.id),
-          );
-
-    query.limit(pageSize);
-    final rows = await query.get();
-    final operations =
-        rows.map((op) => op.readTable(_db.celestOperations).toProto()).toList();
+    final rows =
+        await _db.operationsDrift
+            .listOperations(
+              ownerType: principal.uid.type,
+              ownerId: principal.uid.id,
+              startTime: startTime,
+              offset: pageOffset,
+              limit: pageSize,
+            )
+            .get();
+    final operations = rows.map((op) => op.operations.toProto()).toList();
     final nextPageToken =
         rows.isEmpty || rows.length < pageSize
             ? null
             : PageToken(
               startTime: startTime,
-              offset: rows.last.read(rowedQuery.ref(rowNum))!,
+              offset: rows.last.rowNum,
             ).encode();
 
     return ListOperationsResponse(
@@ -265,7 +211,7 @@ permit (
       if (call.isCanceled) {
         throw GrpcError.cancelled('Operation cancelled');
       }
-      final result = _db.computeWithDatabase<Result<dto.CelestOperation>>(
+      final result = _db.computeWithDatabase<Result<dto.Operation>>(
         computation: (db) async {
           final operation =
               await db.operationsDrift.getOperation(id: id).getSingleOrNull();
@@ -299,39 +245,6 @@ permit (
     DeleteOperationRequest request,
   ) async {
     throw GrpcError.unimplemented('Delete operation is not supported');
-  }
-}
-
-extension on dto.CelestOperation {
-  pb.Operation toProto() {
-    return pb.Operation(
-      name: 'operations/$id',
-      done: done,
-      error: switch (error) {
-        final error? =>
-          pb.Status()..mergeFromProto3Json(
-            jsonDecode(error),
-            typeRegistry: typeRegistry,
-          ),
-        _ => null,
-      },
-      response: switch (response) {
-        final response? =>
-          pb.Any()..mergeFromProto3Json(
-            jsonDecode(response),
-            typeRegistry: typeRegistry,
-          ),
-        _ => null,
-      },
-      metadata: switch (metadata) {
-        final metadata? =>
-          pb.Any()..mergeFromProto3Json(
-            jsonDecode(metadata),
-            typeRegistry: typeRegistry,
-          ),
-        _ => null,
-      },
-    );
   }
 }
 

@@ -1,0 +1,258 @@
+import 'package:celest_cloud_auth/src/database/schema/cedar.drift';
+import 'package:celest_cloud_hub/src/database/schema/organizations.drift';
+
+-- Stores projects in a Celest Cloud organization.
+CREATE TABLE IF NOT EXISTS projects (
+    -- Immutable. The unique identifier for the project.
+    --
+    -- Maps to the `uid` field in the Protobuf.
+    --
+    -- Format: prj_<typeid>
+    id TEXT NOT NULL PRIMARY KEY,
+
+    -- The Cedar type of the parent entity.
+    --
+    -- Must be `Celest::Organization` for projects.
+    parent_type TEXT NOT NULL,
+
+    -- The unique identifier of the parent entity.
+    --
+    -- Must be an existing organization.
+    parent_id TEXT NOT NULL,
+
+    -- The primary alias for the project.
+    project_id TEXT NOT NULL,
+
+    -- The current state of the project.
+    state TEXT NOT NULL DEFAULT 'CREATING',
+
+    -- A human-readable name for the project.
+    display_name TEXT,
+
+    create_time DATETIME NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+    update_time DATETIME NOT NULL DEFAULT (unixepoch('now', 'subsec')),
+    delete_time DATETIME,
+    purge_time DATETIME,
+
+    -- User-defined annotations for the project.
+    --
+    -- Type: map[string]string
+    annotations TEXT,
+
+    -- The project's region.
+    region TEXT NOT NULL,
+
+    reconciling BOOLEAN NOT NULL DEFAULT FALSE,
+    etag TEXT NOT NULL GENERATED ALWAYS AS (
+        hex(
+            md5(
+                json_array(
+                    id,
+                    parent_type,
+                    parent_id,
+                    project_id,
+                    state,
+                    display_name,
+                    create_time,
+                    update_time,
+                    delete_time,
+                    purge_time,
+                    annotations,
+                    region,
+                    reconciling
+                )
+            )
+        )
+    ) STORED,
+
+    CHECK (parent_type = 'Celest::Organization'),
+
+    CONSTRAINT projects_fk_parent FOREIGN KEY (parent_type, parent_id) REFERENCES cedar_entities(entity_type, entity_id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT projects_fk_organization FOREIGN KEY (parent_id) REFERENCES organizations(id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT projects_uq_project_id UNIQUE (project_id, parent_id)
+);
+
+-- Index for the project's FK.
+CREATE INDEX IF NOT EXISTS projects_fk_parent_idx ON projects(parent_type, parent_id);
+
+-- This trigger is used to update the update_time when a project is updated.
+CREATE TRIGGER IF NOT EXISTS projects_update_time
+AFTER UPDATE ON projects
+BEGIN
+    UPDATE projects
+    SET update_time = unixepoch('now', 'subsec')
+    WHERE id = OLD.id;
+END;
+
+----------------------------------------------
+-------------- Cedar Triggers ----------------
+----------------------------------------------
+
+-- This trigger is used to create the Cedar entity when a row is inserted.
+CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_create
+BEFORE INSERT ON projects
+BEGIN
+    INSERT INTO cedar_entities(entity_type, entity_id)
+    VALUES ('Celest::Project', NEW.id);
+END;
+
+-- This trigger is used to create a parent relationship when a row is inserted.
+CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_create_parent
+AFTER INSERT ON projects
+WHEN NEW.parent_id IS NOT NULL
+BEGIN
+    INSERT INTO cedar_relationships(entity_type, entity_id, parent_type, parent_id)
+    VALUES ('Celest::Project', NEW.id, NEW.parent_type, NEW.parent_id);
+END;
+
+-- This trigger is used to add the parent relationship when a parent is assigned.
+CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_add_parent
+AFTER UPDATE OF parent_id ON projects
+WHEN OLD.parent_id IS NULL AND NEW.parent_id IS NOT NULL
+BEGIN
+    INSERT INTO cedar_relationships(entity_type, entity_id, parent_type, parent_id)
+    VALUES ('Celest::Project', NEW.id, NEW.parent_type, NEW.parent_id);
+END;
+
+-- This trigger is used to update the parent relationship when the parent_id is set to a new value.
+CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_set_parent
+AFTER UPDATE OF parent_type, parent_id ON projects
+WHEN (OLD.parent_type != NEW.parent_type OR OLD.parent_id != NEW.parent_id) AND NEW.parent_id IS NOT NULL
+BEGIN
+    UPDATE cedar_relationships
+    SET 
+        parent_type = NEW.parent_type,
+        parent_id = NEW.parent_id
+    WHERE 
+        entity_id = OLD.id 
+        AND entity_type = 'Celest::Project';
+END;
+
+-- This trigger is used to delete the parent relationship when the parent_id is set to NULL.
+CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_remove_parent
+AFTER UPDATE OF parent_id ON projects
+WHEN OLD.parent_id IS NOT NULL AND NEW.parent_id IS NULL
+BEGIN
+    DELETE FROM cedar_relationships
+    WHERE 
+        entity_id = OLD.id 
+        AND entity_type = 'Celest::Project'
+        AND parent_id = OLD.parent_id
+        AND parent_type = OLD.parent_type;
+END;
+
+-- This trigger is used to delete the parent relationship when the parent_id is set to NULL.
+CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_delete
+AFTER DELETE ON projects
+BEGIN
+    DELETE FROM cedar_relationships
+    WHERE 
+        entity_type = 'Celest::Project'
+        AND entity_id = OLD.id;
+    DELETE FROM cedar_relationships
+    WHERE 
+        parent_type = 'Celest::Project'
+        AND parent_id = OLD.id;
+    DELETE FROM cedar_entities
+    WHERE
+        entity_id = OLD.id
+        AND entity_type = 'Celest::Project';
+END;
+
+----------------------------------------------
+-------------- /Cedar Triggers ---------------
+----------------------------------------------
+
+-- name: CreateProject :one
+createProject: INSERT INTO projects (id, parent_type, parent_id, project_id, state, display_name, annotations, region)
+VALUES (
+    :id, 
+    :parent_type,
+    :parent_id,
+    :project_id,
+    :state,
+    :display_name,
+    :annotations,
+    :region
+)
+RETURNING *;
+
+-- name: GetProject :one
+getProject: SELECT * FROM projects
+WHERE id = :id OR project_id = :id;
+
+-- name: ListProjects :many
+listProjects(:start_time AS DATETIME OR NULL): WITH rowed AS(
+    SELECT 
+        ROW_NUMBER() OVER (ORDER BY create_time DESC) AS row_num,
+        id
+    FROM projects
+    WHERE 
+        projects.parent_id = :parent_id AND
+        projects.create_time < coalesce(:start_time, unixepoch('now', '+1 second', 'subsec')) AND
+        (:show_deleted OR projects.state != 'DELETED')
+)
+SELECT 
+    row_num,
+    projects.**
+FROM projects
+JOIN rowed ON projects.id = rowed.id
+WHERE row_num > cast(:offset as INT)
+ORDER BY create_time DESC
+LIMIT :limit;
+
+-- name: DebugDumpProjects :many
+-- FOR DEBUGGING ONLY. Returns all projects in the database.
+debugDump: SELECT * FROM projects;
+
+-- name: UpdateProject :one
+updateProject(
+    :parent_type AS TEXT OR NULL,
+    :parent_id AS TEXT OR NULL,
+    :state AS TEXT OR NULL,
+    :display_name AS TEXT OR NULL,
+    :annotations AS TEXT OR NULL,
+    :delete_time AS DATETIME OR NULL,
+    :purge_time AS DATETIME OR NULL
+): UPDATE projects
+SET 
+    parent_type = coalesce(:parent_type, parent_type),
+    parent_id = coalesce(:parent_id, parent_id), 
+    state = coalesce(:state, state),
+    display_name = coalesce(:display_name, display_name),
+    annotations = coalesce(:annotations, annotations),
+    update_time = unixepoch('now', 'subsec'),
+    delete_time = coalesce(:delete_time, delete_time),
+    purge_time = coalesce(:purge_time, purge_time)
+WHERE (id = :id OR project_id = :id) AND state != 'DELETED'
+RETURNING *;
+
+-- name: DeleteProject :one
+deleteProject(
+    :state AS TEXT OR NULL,
+    :delete_time AS DATETIME OR NULL,
+    :purge_time AS DATETIME OR NULL
+): UPDATE projects
+SET 
+    state = coalesce(:state, 'DELETED'),
+    delete_time = coalesce(:delete_time, delete_time, unixepoch('now', 'subsec')),
+    purge_time = coalesce(:purge_time, purge_time, unixepoch('now', '+30 days', 'subsec'))
+WHERE id = :id OR project_id = :id
+RETURNING *;
+
+-- name: UndeleteProject :one
+undeleteProject(:state AS TEXT OR NULL):
+UPDATE projects
+SET 
+    state = coalesce(:state, 'ACTIVE'),
+    delete_time = NULL,
+    purge_time = NULL
+WHERE id = :id OR project_id = :id
+RETURNING *;
+
+-- name: PurgeProject :one
+purgeProject: DELETE FROM projects
+WHERE id = :id OR project_id = :id
+RETURNING *;

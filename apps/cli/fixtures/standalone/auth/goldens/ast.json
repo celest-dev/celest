@@ -2070,15 +2070,15 @@
         "version": 4,
         "location": {
           "start": {
-            "offset": 468,
+            "offset": 423,
             "uri": "package:celest_cloud_auth/src/database/auth_database.dart",
-            "line": 11,
+            "line": 10,
             "column": 6
           },
           "end": {
-            "offset": 485,
+            "offset": 440,
             "uri": "package:celest_cloud_auth/src/database/auth_database.dart",
-            "line": 11,
+            "line": 10,
             "column": 23
           },
           "text": "CloudAuthDatabase"
@@ -2089,15 +2089,15 @@
         "hostname": {
           "location": {
             "start": {
-              "offset": 468,
+              "offset": 423,
               "uri": "package:celest_cloud_auth/src/database/auth_database.dart",
-              "line": 11,
+              "line": 10,
               "column": 6
             },
             "end": {
-              "offset": 485,
+              "offset": 440,
               "uri": "package:celest_cloud_auth/src/database/auth_database.dart",
-              "line": 11,
+              "line": 10,
               "column": 23
             },
             "text": "CloudAuthDatabase"
@@ -2108,15 +2108,15 @@
         "token": {
           "location": {
             "start": {
-              "offset": 468,
+              "offset": 423,
               "uri": "package:celest_cloud_auth/src/database/auth_database.dart",
-              "line": 11,
+              "line": 10,
               "column": 6
             },
             "end": {
-              "offset": 485,
+              "offset": 440,
               "uri": "package:celest_cloud_auth/src/database/auth_database.dart",
-              "line": 11,
+              "line": 10,
               "column": 23
             },
             "text": "CloudAuthDatabase"

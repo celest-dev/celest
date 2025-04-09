@@ -46,10 +46,18 @@ class E2ETester {
         Directory.current.uri.resolve('./bin/cloud_hub.dart').toFilePath(),
       ],
       environment: {
+        'PORT': '0',
         'CLOUD_HUB_DATABASE_HOST': Uri.file(databasePath).toString(),
       },
     );
-    addTearDown(server.kill);
+    addTearDown(() async {
+      server.kill(ProcessSignal.sigkill);
+      await server.exitCode.timeout(const Duration(seconds: 1));
+      final sock = File('/tmp/cloud_hub.sock');
+      if (sock.existsSync()) {
+        await sock.delete();
+      }
+    });
     final stdout =
         server.stdout
             .transform(utf8.decoder)

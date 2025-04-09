@@ -56,7 +56,7 @@ FROM scratch
 COPY --from=build /runtime/ /
 COPY --from=build /app/cloud_hub /app/cloud_hub
 COPY --from=build /app/libsqlite3.so /app/libsqlite3.so
-COPY --from=build /usr/local/bin/flyctl /usr/local/bin/fly
+COPY --from=build /usr/local/bin/flyctl /usr/local/bin/flyctl
 
 ENV PORT=8080
 EXPOSE $PORT

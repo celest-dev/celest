@@ -235,7 +235,7 @@
       "version": "3.7.2",
       "enabledExperiments": []
     },
-    "targetSdk": "flutter",
+    "targetSdk": "dart",
     "featureFlags": [
       "streaming"
     ],

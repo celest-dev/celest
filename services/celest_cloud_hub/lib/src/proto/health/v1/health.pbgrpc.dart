@@ -21,27 +21,35 @@ export 'health.pb.dart';
 
 @$pb.GrpcServiceName('grpc.health.v1.Health')
 class HealthClient extends $grpc.Client {
-  static final _$check = $grpc.ClientMethod<$0.HealthCheckRequest, $0.HealthCheckResponse>(
-      '/grpc.health.v1.Health/Check',
-      ($0.HealthCheckRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.HealthCheckResponse.fromBuffer(value));
-  static final _$watch = $grpc.ClientMethod<$0.HealthCheckRequest, $0.HealthCheckResponse>(
-      '/grpc.health.v1.Health/Watch',
-      ($0.HealthCheckRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.HealthCheckResponse.fromBuffer(value));
+  static final _$check =
+      $grpc.ClientMethod<$0.HealthCheckRequest, $0.HealthCheckResponse>(
+          '/grpc.health.v1.Health/Check',
+          ($0.HealthCheckRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.HealthCheckResponse.fromBuffer(value));
+  static final _$watch =
+      $grpc.ClientMethod<$0.HealthCheckRequest, $0.HealthCheckResponse>(
+          '/grpc.health.v1.Health/Watch',
+          ($0.HealthCheckRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.HealthCheckResponse.fromBuffer(value));
 
   HealthClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options,
-        interceptors: interceptors);
+      : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.HealthCheckResponse> check($0.HealthCheckRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.HealthCheckResponse> check(
+      $0.HealthCheckRequest request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$check, request, options: options);
   }
 
-  $grpc.ResponseStream<$0.HealthCheckResponse> watch($0.HealthCheckRequest request, {$grpc.CallOptions? options}) {
-    return $createStreamingCall(_$watch, $async.Stream.fromIterable([request]), options: options);
+  $grpc.ResponseStream<$0.HealthCheckResponse> watch(
+      $0.HealthCheckRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$watch, $async.Stream.fromIterable([request]),
+        options: options);
   }
 }
 
@@ -50,30 +58,38 @@ abstract class HealthServiceBase extends $grpc.Service {
   $core.String get $name => 'grpc.health.v1.Health';
 
   HealthServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.HealthCheckRequest, $0.HealthCheckResponse>(
-        'Check',
-        check_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $0.HealthCheckRequest.fromBuffer(value),
-        ($0.HealthCheckResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.HealthCheckRequest, $0.HealthCheckResponse>(
-        'Watch',
-        watch_Pre,
-        false,
-        true,
-        ($core.List<$core.int> value) => $0.HealthCheckRequest.fromBuffer(value),
-        ($0.HealthCheckResponse value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.HealthCheckRequest, $0.HealthCheckResponse>(
+            'Check',
+            check_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.HealthCheckRequest.fromBuffer(value),
+            ($0.HealthCheckResponse value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.HealthCheckRequest, $0.HealthCheckResponse>(
+            'Watch',
+            watch_Pre,
+            false,
+            true,
+            ($core.List<$core.int> value) =>
+                $0.HealthCheckRequest.fromBuffer(value),
+            ($0.HealthCheckResponse value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.HealthCheckResponse> check_Pre($grpc.ServiceCall call, $async.Future<$0.HealthCheckRequest> request) async {
+  $async.Future<$0.HealthCheckResponse> check_Pre($grpc.ServiceCall call,
+      $async.Future<$0.HealthCheckRequest> request) async {
     return check(call, await request);
   }
 
-  $async.Stream<$0.HealthCheckResponse> watch_Pre($grpc.ServiceCall call, $async.Future<$0.HealthCheckRequest> request) async* {
+  $async.Stream<$0.HealthCheckResponse> watch_Pre($grpc.ServiceCall call,
+      $async.Future<$0.HealthCheckRequest> request) async* {
     yield* watch(call, await request);
   }
 
-  $async.Future<$0.HealthCheckResponse> check($grpc.ServiceCall call, $0.HealthCheckRequest request);
-  $async.Stream<$0.HealthCheckResponse> watch($grpc.ServiceCall call, $0.HealthCheckRequest request);
+  $async.Future<$0.HealthCheckResponse> check(
+      $grpc.ServiceCall call, $0.HealthCheckRequest request);
+  $async.Stream<$0.HealthCheckResponse> watch(
+      $grpc.ServiceCall call, $0.HealthCheckRequest request);
 }

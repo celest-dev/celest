@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:celest_cloud_auth/celest_cloud_auth.dart';
+import 'package:celest_cloud_hub/src/auth/policy_set.g.dart';
 import 'package:celest_cloud_hub/src/database/db_functions.dart';
 import 'package:celest_cloud_hub/src/project.dart';
+import 'package:celest_cloud_hub/src/services/service_mixin.dart';
+import 'package:celest_core/_internal.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 
@@ -11,7 +14,10 @@ import 'cloud_hub_database.drift.dart';
 @DriftDatabase(
   include: {
     'schema/operations.drift',
+    'schema/organizations.drift',
+    'schema/projects.drift',
     'schema/project_environments.drift',
+    'schema/user_memberships.drift',
 
     // Cloud Auth
     ...CloudAuthDatabaseMixin.includes,
@@ -39,6 +45,10 @@ final class CloudHubDatabase extends $CloudHubDatabase
   @override
   int get schemaVersion => 1;
 
+  static final Entity rootOrg = Entity(
+    uid: const EntityUid.of('Celest::Organization', 'celest-dev'),
+  );
+
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) async {
@@ -48,12 +58,81 @@ final class CloudHubDatabase extends $CloudHubDatabase
       await cloudAuth.onUpgrade(m);
     },
     beforeOpen: (details) async {
-      if (details.wasCreated) {
-        await cloudAuth.seed();
-      }
-      await cloudAuth.upsertProject(project: project);
+      await withoutForeignKeys(() async {
+        if (details.wasCreated) {
+          await cloudAuth.seed(
+            additionalCedarTypes: {
+              'Celest::Operation',
+              'Celest::Organization',
+              'Celest::Organization::Member',
+              'Celest::Project',
+              'Celest::Project::Member',
+              'Celest::Project::Environment',
+              'Celest::Project::Environment::Member',
+            },
+            additionalCedarEntities: {
+              rootOrg.uid: rootOrg,
+              ProjectEnvironmentAction.deploy: Entity(
+                uid: ProjectEnvironmentAction.deploy,
+                parents: [CelestAction.owner],
+              ),
+            },
+            additionalCedarPolicies: corePolicySet,
+          );
+        }
+        await cloudAuth.upsertProject(project: project);
+      });
     },
   );
+
+  /// Runs [action] in a context without foreign keys enabled.
+  Future<R> withoutForeignKeys<R>(Future<R> Function() action) async {
+    await customStatement('pragma foreign_keys = OFF');
+    R result;
+    try {
+      result = await transaction(action);
+    } finally {
+      if (kDebugMode) {
+        // Fail if the action broke foreign keys
+        final wrongForeignKeys =
+            await customSelect('PRAGMA foreign_key_check').get();
+        assert(
+          wrongForeignKeys.isEmpty,
+          '${wrongForeignKeys.map((e) => e.data)}',
+        );
+      }
+      await customStatement('pragma foreign_keys = ON');
+    }
+    return result;
+  }
+
+  // ignore: unused_element
+  Future<void> _dumpBrokenCedarForeignKeys() async {
+    final allEntitiesRaw = await cedarEntities.select().get();
+    final allEntities = {
+      for (final entity in allEntitiesRaw)
+        EntityUid.of(entity.entityType, entity.entityId),
+    };
+    final allRelationships = await cedarRelationships.select().get();
+    for (final relationship in allRelationships) {
+      final entityId = EntityUid.of(
+        relationship.entityType,
+        relationship.entityId,
+      );
+      final parentId = EntityUid.of(
+        relationship.parentType,
+        relationship.parentId,
+      );
+      if (!allEntities.contains(entityId)) {
+        print('Relationship has bad (entity_type, entity_id): $entityId');
+        print('  $relationship');
+      }
+      if (!allEntities.contains(parentId)) {
+        print('Relationship has bad (parent_type, parent_id): $parentId');
+        print('  $relationship');
+      }
+    }
+  }
 
   Future<void> ping() async {
     await customSelect('SELECT 1').get();
