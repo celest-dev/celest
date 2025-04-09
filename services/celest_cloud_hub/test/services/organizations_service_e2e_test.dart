@@ -24,6 +24,8 @@ void main() {
     late CloudHubDatabase database;
     late CelestCloud service;
 
+    setUpAll(E2ETester.init);
+
     setUp(() async {
       tester = E2ETester();
       await tester.start();

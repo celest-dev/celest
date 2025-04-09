@@ -113,7 +113,7 @@ final class ProjectEnvironments with BaseService {
     );
   }
 
-  CloudOperation<Empty> delete(
+  CloudOperation<ProjectEnvironment> delete(
     String name, {
     String? etag,
     bool allowMissing = false,
@@ -133,7 +133,7 @@ final class ProjectEnvironments with BaseService {
     yield* operation.stream(
       operations: _operations,
       logger: logger,
-      response: Empty(),
+      response: ProjectEnvironment(),
       metadata: OperationMetadata(),
     );
   }

@@ -6,6 +6,8 @@ import 'package:celest_cloud_hub/src/database/schema/operations.drift.dart'
     as dto;
 import 'package:celest_cloud_hub/src/database/schema/organizations.drift.dart'
     as dto;
+import 'package:celest_cloud_hub/src/database/schema/project_environments.drift.dart'
+    as dto;
 import 'package:celest_cloud_hub/src/database/schema/projects.drift.dart'
     as dto;
 import 'package:celest_cloud_hub/src/model/type_registry.dart';
@@ -96,6 +98,29 @@ extension ProjectToProto on dto.Project {
       updateTime: updateTime.toProto(),
       deleteTime: deleteTime?.toProto(),
       purgeTime: purgeTime?.toProto(),
+      annotations: switch (annotations) {
+        final annotations? =>
+          (jsonDecode(annotations) as Map<String, Object?>).cast(),
+        _ => null,
+      },
+    );
+  }
+}
+
+extension ProjectEnvironmentToProto on dto.ProjectEnvironment {
+  pb.ProjectEnvironment toProto() {
+    return pb.ProjectEnvironment(
+      name: 'projects/$parentId/environments/$id',
+      parent: 'projects/$parentId',
+      uid: TypeId.decode(id).uuid.hexValue,
+      projectEnvironmentId: projectEnvironmentId,
+      displayName: displayName,
+      etag: etag,
+      reconciling: reconciling,
+      state: pb.LifecycleState.values.firstWhere((s) => s.name == state),
+      createTime: createTime.toProto(),
+      updateTime: updateTime.toProto(),
+      deleteTime: deleteTime?.toProto(),
       annotations: switch (annotations) {
         final annotations? =>
           (jsonDecode(annotations) as Map<String, Object?>).cast(),

@@ -223,7 +223,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
             ownerType: principal.uid.type,
             ownerId: principal.uid.id,
             resourceType: 'Celest::Project',
-            resourceId: projectId.encoded,
+            resourceId: project.id,
             response: jsonEncode(
               operationResponse.toProto3Json(typeRegistry: typeRegistry),
             ),

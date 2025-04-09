@@ -1,4 +1,4 @@
-import 'package:celest_cloud_hub/src/model/lifecycle_state.dart';
+import 'package:celest_cloud_hub/src/database/schema/projects.drift';
 
 -- Stores project environments for a Celest Cloud project.
 CREATE TABLE IF NOT EXISTS project_environments (
@@ -12,20 +12,18 @@ CREATE TABLE IF NOT EXISTS project_environments (
     -- The Cedar type of the parent entity.
     --
     -- Must be `Celest::Project`.
-    parent_type TEXT,
+    parent_type TEXT NOT NULL,
 
     -- The unique identifier of the parent entity.
     --
     -- Must be an existing project.
-    parent_id TEXT,
+    parent_id TEXT NOT NULL,
 
     -- The primary alias for the environment.
     project_environment_id TEXT NOT NULL,
 
     -- The state of the environment.
-    --
-    -- Defaults to `LifecycleState.CREATING`.
-    state ENUM(LifecycleState) NOT NULL DEFAULT 1,
+    state TEXT NOT NULL DEFAULT 'CREATING',
 
     -- A human-readable name for the environment.
     display_name TEXT,
@@ -40,7 +38,7 @@ CREATE TABLE IF NOT EXISTS project_environments (
     annotations TEXT,
 
     -- Whether the environment is in the process of being reconciled.
-    reconciling BOOLEAN NOT NULL GENERATED ALWAYS AS (state IN (1, 4, 6)) VIRTUAL,
+    reconciling BOOLEAN NOT NULL GENERATED ALWAYS AS (state IN ('CREATING', 'UPDATING', 'DELETING')) VIRTUAL,
 
     -- The environment's etag.
     etag TEXT NOT NULL GENERATED ALWAYS AS (
@@ -63,17 +61,73 @@ CREATE TABLE IF NOT EXISTS project_environments (
         )
     ) STORED,
 
-    CHECK (parent_type IS NULL OR parent_type = 'Celest::Project')
+    CHECK (parent_type = 'Celest::Project'),
+
+    CONSTRAINT project_environments_parent_fk FOREIGN KEY (parent_type, parent_id) REFERENCES cedar_entities(entity_type, entity_id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT project_environments_organization_fk FOREIGN KEY (parent_id) REFERENCES projects(id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT project_environments_project_environment_id_unique_idx UNIQUE (project_environment_id, parent_id)
 );
 
+-- Index for the project's FK.
+CREATE INDEX IF NOT EXISTS project_environments_parent_idx ON project_environments(parent_type, parent_id);
+
 -- This trigger is used to update the update_time when a row is updated.
-CREATE TRIGGER IF NOT EXISTS project_environments_trigger_update_time
+CREATE TRIGGER IF NOT EXISTS project_environments_update_time_trg
 AFTER UPDATE ON project_environments
 BEGIN
     UPDATE project_environments
     SET update_time = unixepoch('now', 'subsec')
     WHERE id = OLD.id;
 END;
+
+
+----------------------------------------------
+-------------- Cedar Triggers ----------------
+----------------------------------------------
+
+-- This trigger is used to create the Cedar entity when a row is inserted.
+CREATE TRIGGER IF NOT EXISTS project_environments_create_trg
+BEFORE INSERT ON project_environments
+BEGIN
+    INSERT INTO cedar_entities(entity_type, entity_id)
+    VALUES ('Celest::Project::Environment', NEW.id);
+    INSERT INTO cedar_relationships(entity_type, entity_id, parent_type, parent_id)
+    VALUES ('Celest::Project::Environment', NEW.id, NEW.parent_type, NEW.parent_id);
+END;
+
+-- This trigger is used to update the parent relationship when the parent_id is set to a new value.
+CREATE TRIGGER IF NOT EXISTS project_environments_set_parent_trg
+AFTER UPDATE OF parent_type, parent_id ON project_environments
+WHEN OLD.parent_type != NEW.parent_type OR OLD.parent_id != NEW.parent_id
+BEGIN
+    UPDATE cedar_relationships
+    SET 
+        parent_type = NEW.parent_type,
+        parent_id = NEW.parent_id
+    WHERE 
+        entity_id = OLD.id 
+        AND entity_type = 'Celest::Project::Environment';
+END;
+
+-- This trigger is used to delete the parent relationship when the parent_id is set to NULL.
+CREATE TRIGGER IF NOT EXISTS project_environments_delete_trg
+AFTER DELETE ON project_environments
+BEGIN
+    DELETE FROM cedar_relationships
+    WHERE 
+        entity_id = OLD.id 
+        AND entity_type = 'Celest::Project::Environment';
+    DELETE FROM cedar_entities
+    WHERE
+        entity_id = OLD.id
+        AND entity_type = 'Celest::Project::Environment';
+END;
+
+----------------------------------------------
+-------------- /Cedar Triggers ---------------
+----------------------------------------------
 
 -- Stores metadata for Celest Cloud project environments.
 CREATE TABLE IF NOT EXISTS project_environment_asts(
@@ -165,14 +219,49 @@ lookupProjectEnvironment:
     WHERE 
         parent_type = 'Celest::Project' AND
         parent_id = :projectId AND
-        project_environment_id = :projectEnvironmentId
+        (id = :projectEnvironmentId OR project_environment_id = :projectEnvironmentId)
     LIMIT 1;
+
+listProjectEnvironments(
+    :user_id AS TEXT,
+    :parent_id AS TEXT OR NULL,
+    :start_time AS DATETIME OR NULL,
+    :offset AS INTEGER,
+    :limit AS INTEGER
+):
+    WITH memberships AS (
+        SELECT
+            parent_id AS project_environment_id
+        FROM
+            user_memberships
+        WHERE
+            user_id = :user_id AND
+            parent_type = 'Celest::Project::Environment'
+    ),
+    rowed AS(
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY create_time DESC) AS row_num,
+            id
+        FROM project_environments
+        INNER JOIN memberships ON project_environments.id = memberships.project_environment_id
+        WHERE
+            (project_environments.parent_id IS NULL AND :parent_id IS NULL OR project_environments.parent_id = :parent_id) AND
+            project_environments.create_time < coalesce(:start_time, unixepoch('now', '+1 second', 'subsec'))
+    )
+    SELECT
+        row_num,
+        project_environments.**
+    FROM project_environments
+    INNER JOIN rowed ON project_environments.id = rowed.id
+    WHERE row_num > :offset
+    ORDER BY $order_by
+    LIMIT :limit;
 
 updateProjectEnvironment(
     :parentType AS TEXT OR NULL,
     :parentId AS TEXT OR NULL,
     :projectEnvironmentId AS TEXT OR NULL,
-    :state AS LifecycleState OR NULL,
+    :state AS TEXT OR NULL,
     :displayName AS TEXT OR NULL,
     :annotations AS TEXT OR NULL
 ):
@@ -191,7 +280,7 @@ deleteProjectEnvironment:
     UPDATE project_environments
     SET 
         delete_time = unixepoch('now', 'subsec'),
-        state = 8 -- LifecycleState.DELETED
+        state = 'DELETED'
     WHERE id = :id
     RETURNING *;
 

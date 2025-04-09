@@ -159,18 +159,19 @@ abstract class $CloudHubDatabase extends i0.GeneratedDatabase {
     i6.projectsDeleteUserMembershipsTrg,
     projectEnvironments,
     i6.projectEnvironmentsDeleteUserMembershipsTrg,
-    i9.projectEnvironmentsTriggerUpdateTime,
+    i9.projectEnvironmentsParentIdx,
+    i9.projectEnvironmentsUpdateTimeTrg,
+    i9.projectEnvironmentsCreateTrg,
+    i9.projectEnvironmentsSetParentTrg,
+    i9.projectEnvironmentsDeleteTrg,
     projectEnvironmentAsts,
     projectEnvironmentAssets,
     projectEnvironmentStates,
     i8.projectsFkParentIdx,
-    i8.projectsUpdateTime,
-    i8.celestCloudProjectsTriggerCreate,
-    i8.celestCloudProjectsTriggerCreateParent,
-    i8.celestCloudProjectsTriggerAddParent,
-    i8.celestCloudProjectsTriggerSetParent,
-    i8.celestCloudProjectsTriggerRemoveParent,
-    i8.celestCloudProjectsTriggerDelete,
+    i8.projectsUpdateTimeTrg,
+    i8.projectsCreateTrg,
+    i8.projectsSetParentTrg,
+    i8.projectsDeleteTrg,
     i7.organizationsParentIdx,
     i7.organizationsUpdateTime,
     i7.organizationsCreate,
@@ -627,6 +628,42 @@ abstract class $CloudHubDatabase extends i0.GeneratedDatabase {
     ),
     i0.WritePropagation(
       on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('project_environments', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('project_environments', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'projects',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('project_environments', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'projects',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('project_environments', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
         'project_environments',
         limitUpdateKind: i0.UpdateKind.delete,
       ),
@@ -639,6 +676,35 @@ abstract class $CloudHubDatabase extends i0.GeneratedDatabase {
       ),
       result: [
         i0.TableUpdate('project_environments', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'project_environments',
+        limitUpdateKind: i0.UpdateKind.insert,
+      ),
+      result: [
+        i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert),
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.insert),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'project_environments',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'project_environments',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+        i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
       ],
     ),
     i0.WritePropagation(
@@ -719,23 +785,8 @@ abstract class $CloudHubDatabase extends i0.GeneratedDatabase {
         'projects',
         limitUpdateKind: i0.UpdateKind.insert,
       ),
-      result: [i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert)],
-    ),
-    i0.WritePropagation(
-      on: i0.TableUpdateQuery.onTableName(
-        'projects',
-        limitUpdateKind: i0.UpdateKind.insert,
-      ),
       result: [
-        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.insert),
-      ],
-    ),
-    i0.WritePropagation(
-      on: i0.TableUpdateQuery.onTableName(
-        'projects',
-        limitUpdateKind: i0.UpdateKind.update,
-      ),
-      result: [
+        i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert),
         i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.insert),
       ],
     ),
@@ -746,15 +797,6 @@ abstract class $CloudHubDatabase extends i0.GeneratedDatabase {
       ),
       result: [
         i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.update),
-      ],
-    ),
-    i0.WritePropagation(
-      on: i0.TableUpdateQuery.onTableName(
-        'projects',
-        limitUpdateKind: i0.UpdateKind.update,
-      ),
-      result: [
-        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
       ],
     ),
     i0.WritePropagation(

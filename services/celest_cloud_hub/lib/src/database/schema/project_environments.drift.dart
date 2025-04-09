@@ -3,18 +3,20 @@
 import 'package:drift/drift.dart' as i0;
 import 'package:celest_cloud_hub/src/database/schema/project_environments.drift.dart'
     as i1;
-import 'package:celest_cloud_hub/src/model/lifecycle_state.dart' as i2;
-import 'dart:typed_data' as i3;
-import 'package:drift/internal/modular.dart' as i4;
-import 'dart:async' as i5;
+import 'dart:typed_data' as i2;
+import 'package:drift/internal/modular.dart' as i3;
+import 'dart:async' as i4;
+import 'package:celest_cloud_hub/src/database/schema/user_memberships.drift.dart'
+    as i5;
+import 'package:celest_cloud_hub/src/database/schema/projects.drift.dart' as i6;
 
 typedef $ProjectEnvironmentsCreateCompanionBuilder =
     i1.ProjectEnvironmentsCompanion Function({
       required String id,
-      i0.Value<String?> parentType,
-      i0.Value<String?> parentId,
+      required String parentType,
+      required String parentId,
       required String projectEnvironmentId,
-      i0.Value<i2.LifecycleState> state,
+      i0.Value<String> state,
       i0.Value<String?> displayName,
       i0.Value<DateTime> createTime,
       i0.Value<DateTime> updateTime,
@@ -25,10 +27,10 @@ typedef $ProjectEnvironmentsCreateCompanionBuilder =
 typedef $ProjectEnvironmentsUpdateCompanionBuilder =
     i1.ProjectEnvironmentsCompanion Function({
       i0.Value<String> id,
-      i0.Value<String?> parentType,
-      i0.Value<String?> parentId,
+      i0.Value<String> parentType,
+      i0.Value<String> parentId,
       i0.Value<String> projectEnvironmentId,
-      i0.Value<i2.LifecycleState> state,
+      i0.Value<String> state,
       i0.Value<String?> displayName,
       i0.Value<DateTime> createTime,
       i0.Value<DateTime> updateTime,
@@ -66,10 +68,9 @@ class $ProjectEnvironmentsFilterComposer
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnWithTypeConverterFilters<i2.LifecycleState, i2.LifecycleState, int>
-  get state => $composableBuilder(
+  i0.ColumnFilters<String> get state => $composableBuilder(
     column: $table.state,
-    builder: (column) => i0.ColumnWithTypeConverterFilters(column),
+    builder: (column) => i0.ColumnFilters(column),
   );
 
   i0.ColumnFilters<String> get displayName => $composableBuilder(
@@ -137,7 +138,7 @@ class $ProjectEnvironmentsOrderingComposer
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<int> get state => $composableBuilder(
+  i0.ColumnOrderings<String> get state => $composableBuilder(
     column: $table.state,
     builder: (column) => i0.ColumnOrderings(column),
   );
@@ -203,7 +204,7 @@ class $ProjectEnvironmentsAnnotationComposer
     builder: (column) => column,
   );
 
-  i0.GeneratedColumnWithTypeConverter<i2.LifecycleState, int> get state =>
+  i0.GeneratedColumn<String> get state =>
       $composableBuilder(column: $table.state, builder: (column) => column);
 
   i0.GeneratedColumn<String> get displayName => $composableBuilder(
@@ -285,10 +286,10 @@ class $ProjectEnvironmentsTableManager
           updateCompanionCallback:
               ({
                 i0.Value<String> id = const i0.Value.absent(),
-                i0.Value<String?> parentType = const i0.Value.absent(),
-                i0.Value<String?> parentId = const i0.Value.absent(),
+                i0.Value<String> parentType = const i0.Value.absent(),
+                i0.Value<String> parentId = const i0.Value.absent(),
                 i0.Value<String> projectEnvironmentId = const i0.Value.absent(),
-                i0.Value<i2.LifecycleState> state = const i0.Value.absent(),
+                i0.Value<String> state = const i0.Value.absent(),
                 i0.Value<String?> displayName = const i0.Value.absent(),
                 i0.Value<DateTime> createTime = const i0.Value.absent(),
                 i0.Value<DateTime> updateTime = const i0.Value.absent(),
@@ -311,10 +312,10 @@ class $ProjectEnvironmentsTableManager
           createCompanionCallback:
               ({
                 required String id,
-                i0.Value<String?> parentType = const i0.Value.absent(),
-                i0.Value<String?> parentId = const i0.Value.absent(),
+                required String parentType,
+                required String parentId,
                 required String projectEnvironmentId,
-                i0.Value<i2.LifecycleState> state = const i0.Value.absent(),
+                i0.Value<String> state = const i0.Value.absent(),
                 i0.Value<String?> displayName = const i0.Value.absent(),
                 i0.Value<DateTime> createTime = const i0.Value.absent(),
                 i0.Value<DateTime> updateTime = const i0.Value.absent(),
@@ -373,13 +374,13 @@ typedef $ProjectEnvironmentsProcessedTableManager =
 typedef $ProjectEnvironmentAstsCreateCompanionBuilder =
     i1.ProjectEnvironmentAstsCompanion Function({
       required String projectEnvironmentId,
-      required i3.Uint8List ast,
+      required i2.Uint8List ast,
       required int version,
     });
 typedef $ProjectEnvironmentAstsUpdateCompanionBuilder =
     i1.ProjectEnvironmentAstsCompanion Function({
       i0.Value<String> projectEnvironmentId,
-      i0.Value<i3.Uint8List> ast,
+      i0.Value<i2.Uint8List> ast,
       i0.Value<int> version,
     });
 
@@ -397,7 +398,7 @@ class $ProjectEnvironmentAstsFilterComposer
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnFilters<i3.Uint8List> get ast => $composableBuilder(
+  i0.ColumnFilters<i2.Uint8List> get ast => $composableBuilder(
     column: $table.ast,
     builder: (column) => i0.ColumnFilters(column),
   );
@@ -427,7 +428,7 @@ class $ProjectEnvironmentAstsOrderingComposer
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<i3.Uint8List> get ast => $composableBuilder(
+  i0.ColumnOrderings<i2.Uint8List> get ast => $composableBuilder(
     column: $table.ast,
     builder: (column) => i0.ColumnOrderings(column),
   );
@@ -457,7 +458,7 @@ class $ProjectEnvironmentAstsAnnotationComposer
     builder: (column) => column,
   );
 
-  i0.GeneratedColumn<i3.Uint8List> get ast =>
+  i0.GeneratedColumn<i2.Uint8List> get ast =>
       $composableBuilder(column: $table.ast, builder: (column) => column);
 
   i0.GeneratedColumn<int> get version =>
@@ -514,7 +515,7 @@ class $ProjectEnvironmentAstsTableManager
           updateCompanionCallback:
               ({
                 i0.Value<String> projectEnvironmentId = const i0.Value.absent(),
-                i0.Value<i3.Uint8List> ast = const i0.Value.absent(),
+                i0.Value<i2.Uint8List> ast = const i0.Value.absent(),
                 i0.Value<int> version = const i0.Value.absent(),
               }) => i1.ProjectEnvironmentAstsCompanion(
                 projectEnvironmentId: projectEnvironmentId,
@@ -524,7 +525,7 @@ class $ProjectEnvironmentAstsTableManager
           createCompanionCallback:
               ({
                 required String projectEnvironmentId,
-                required i3.Uint8List ast,
+                required i2.Uint8List ast,
                 required int version,
               }) => i1.ProjectEnvironmentAstsCompanion.insert(
                 projectEnvironmentId: projectEnvironmentId,
@@ -1018,10 +1019,10 @@ class ProjectEnvironments extends i0.Table
   late final i0.GeneratedColumn<String> parentType = i0.GeneratedColumn<String>(
     'parent_type',
     aliasedName,
-    true,
+    false,
     type: i0.DriftSqlType.string,
-    requiredDuringInsert: false,
-    $customConstraints: '',
+    requiredDuringInsert: true,
+    $customConstraints: 'NOT NULL',
   );
   static const i0.VerificationMeta _parentIdMeta = const i0.VerificationMeta(
     'parentId',
@@ -1029,10 +1030,10 @@ class ProjectEnvironments extends i0.Table
   late final i0.GeneratedColumn<String> parentId = i0.GeneratedColumn<String>(
     'parent_id',
     aliasedName,
-    true,
+    false,
     type: i0.DriftSqlType.string,
-    requiredDuringInsert: false,
-    $customConstraints: '',
+    requiredDuringInsert: true,
+    $customConstraints: 'NOT NULL',
   );
   static const i0.VerificationMeta _projectEnvironmentIdMeta =
       const i0.VerificationMeta('projectEnvironmentId');
@@ -1045,18 +1046,18 @@ class ProjectEnvironments extends i0.Table
         requiredDuringInsert: true,
         $customConstraints: 'NOT NULL',
       );
-  late final i0.GeneratedColumnWithTypeConverter<i2.LifecycleState, int> state =
-      i0.GeneratedColumn<int>(
-        'state',
-        aliasedName,
-        false,
-        type: i0.DriftSqlType.int,
-        requiredDuringInsert: false,
-        $customConstraints: 'NOT NULL DEFAULT 1',
-        defaultValue: const i0.CustomExpression('1'),
-      ).withConverter<i2.LifecycleState>(
-        i1.ProjectEnvironments.$converterstate,
-      );
+  static const i0.VerificationMeta _stateMeta = const i0.VerificationMeta(
+    'state',
+  );
+  late final i0.GeneratedColumn<String> state = i0.GeneratedColumn<String>(
+    'state',
+    aliasedName,
+    false,
+    type: i0.DriftSqlType.string,
+    requiredDuringInsert: false,
+    $customConstraints: 'NOT NULL DEFAULT \'CREATING\'',
+    defaultValue: const i0.CustomExpression('\'CREATING\''),
+  );
   static const i0.VerificationMeta _displayNameMeta = const i0.VerificationMeta(
     'displayName',
   );
@@ -1131,13 +1132,15 @@ class ProjectEnvironments extends i0.Table
     aliasedName,
     false,
     generatedAs: i0.GeneratedAs(
-      const i0.CustomExpression('state IN (1, 4, 6)'),
+      const i0.CustomExpression(
+        'state IN (\'CREATING\', \'UPDATING\', \'DELETING\')',
+      ),
       false,
     ),
     type: i0.DriftSqlType.bool,
     requiredDuringInsert: false,
     $customConstraints:
-        'NOT NULL GENERATED ALWAYS AS (state IN (1, 4, 6)) VIRTUAL',
+        'NOT NULL GENERATED ALWAYS AS (state IN (\'CREATING\', \'UPDATING\', \'DELETING\')) VIRTUAL',
   );
   static const i0.VerificationMeta _etagMeta = const i0.VerificationMeta(
     'etag',
@@ -1194,12 +1197,16 @@ class ProjectEnvironments extends i0.Table
         _parentTypeMeta,
         parentType.isAcceptableOrUnknown(data['parent_type']!, _parentTypeMeta),
       );
+    } else if (isInserting) {
+      context.missing(_parentTypeMeta);
     }
     if (data.containsKey('parent_id')) {
       context.handle(
         _parentIdMeta,
         parentId.isAcceptableOrUnknown(data['parent_id']!, _parentIdMeta),
       );
+    } else if (isInserting) {
+      context.missing(_parentIdMeta);
     }
     if (data.containsKey('project_environment_id')) {
       context.handle(
@@ -1211,6 +1218,12 @@ class ProjectEnvironments extends i0.Table
       );
     } else if (isInserting) {
       context.missing(_projectEnvironmentIdMeta);
+    }
+    if (data.containsKey('state')) {
+      context.handle(
+        _stateMeta,
+        state.isAcceptableOrUnknown(data['state']!, _stateMeta),
+      );
     }
     if (data.containsKey('display_name')) {
       context.handle(
@@ -1269,6 +1282,10 @@ class ProjectEnvironments extends i0.Table
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {id};
   @override
+  List<Set<i0.GeneratedColumn>> get uniqueKeys => [
+    {projectEnvironmentId, parentId},
+  ];
+  @override
   i1.ProjectEnvironment map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.ProjectEnvironment(
@@ -1277,25 +1294,26 @@ class ProjectEnvironments extends i0.Table
             i0.DriftSqlType.string,
             data['${effectivePrefix}id'],
           )!,
-      parentType: attachedDatabase.typeMapping.read(
-        i0.DriftSqlType.string,
-        data['${effectivePrefix}parent_type'],
-      ),
-      parentId: attachedDatabase.typeMapping.read(
-        i0.DriftSqlType.string,
-        data['${effectivePrefix}parent_id'],
-      ),
+      parentType:
+          attachedDatabase.typeMapping.read(
+            i0.DriftSqlType.string,
+            data['${effectivePrefix}parent_type'],
+          )!,
+      parentId:
+          attachedDatabase.typeMapping.read(
+            i0.DriftSqlType.string,
+            data['${effectivePrefix}parent_id'],
+          )!,
       projectEnvironmentId:
           attachedDatabase.typeMapping.read(
             i0.DriftSqlType.string,
             data['${effectivePrefix}project_environment_id'],
           )!,
-      state: i1.ProjectEnvironments.$converterstate.fromSql(
-        attachedDatabase.typeMapping.read(
-          i0.DriftSqlType.int,
-          data['${effectivePrefix}state'],
-        )!,
-      ),
+      state:
+          attachedDatabase.typeMapping.read(
+            i0.DriftSqlType.string,
+            data['${effectivePrefix}state'],
+          )!,
       displayName: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
         data['${effectivePrefix}display_name'],
@@ -1336,11 +1354,12 @@ class ProjectEnvironments extends i0.Table
     return ProjectEnvironments(attachedDatabase, alias);
   }
 
-  static i0.JsonTypeConverter2<i2.LifecycleState, int, int> $converterstate =
-      const i0.EnumIndexConverter<i2.LifecycleState>(i2.LifecycleState.values);
   @override
   List<String> get customConstraints => const [
-    'CHECK(parent_type IS NULL OR parent_type = \'Celest::Project\')',
+    'CHECK(parent_type = \'Celest::Project\')',
+    'CONSTRAINT project_environments_parent_fk FOREIGN KEY(parent_type, parent_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE',
+    'CONSTRAINT project_environments_organization_fk FOREIGN KEY(parent_id)REFERENCES projects(id)ON UPDATE CASCADE ON DELETE CASCADE',
+    'CONSTRAINT project_environments_project_environment_id_unique_idx UNIQUE(project_environment_id, parent_id)',
   ];
   @override
   bool get dontWriteConstraints => true;
@@ -1358,20 +1377,18 @@ class ProjectEnvironment extends i0.DataClass
   /// The Cedar type of the parent entity.
   ///
   /// Must be `Celest::Project`.
-  final String? parentType;
+  final String parentType;
 
   /// The unique identifier of the parent entity.
   ///
   /// Must be an existing project.
-  final String? parentId;
+  final String parentId;
 
   /// The primary alias for the environment.
   final String projectEnvironmentId;
 
   /// The state of the environment.
-  ///
-  /// Defaults to `LifecycleState.CREATING`.
-  final i2.LifecycleState state;
+  final String state;
 
   /// A human-readable name for the environment.
   final String? displayName;
@@ -1391,8 +1408,8 @@ class ProjectEnvironment extends i0.DataClass
   final String etag;
   const ProjectEnvironment({
     required this.id,
-    this.parentType,
-    this.parentId,
+    required this.parentType,
+    required this.parentId,
     required this.projectEnvironmentId,
     required this.state,
     this.displayName,
@@ -1407,18 +1424,10 @@ class ProjectEnvironment extends i0.DataClass
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
     final map = <String, i0.Expression>{};
     map['id'] = i0.Variable<String>(id);
-    if (!nullToAbsent || parentType != null) {
-      map['parent_type'] = i0.Variable<String>(parentType);
-    }
-    if (!nullToAbsent || parentId != null) {
-      map['parent_id'] = i0.Variable<String>(parentId);
-    }
+    map['parent_type'] = i0.Variable<String>(parentType);
+    map['parent_id'] = i0.Variable<String>(parentId);
     map['project_environment_id'] = i0.Variable<String>(projectEnvironmentId);
-    {
-      map['state'] = i0.Variable<int>(
-        i1.ProjectEnvironments.$converterstate.toSql(state),
-      );
-    }
+    map['state'] = i0.Variable<String>(state);
     if (!nullToAbsent || displayName != null) {
       map['display_name'] = i0.Variable<String>(displayName);
     }
@@ -1436,14 +1445,8 @@ class ProjectEnvironment extends i0.DataClass
   i1.ProjectEnvironmentsCompanion toCompanion(bool nullToAbsent) {
     return i1.ProjectEnvironmentsCompanion(
       id: i0.Value(id),
-      parentType:
-          parentType == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(parentType),
-      parentId:
-          parentId == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(parentId),
+      parentType: i0.Value(parentType),
+      parentId: i0.Value(parentId),
       projectEnvironmentId: i0.Value(projectEnvironmentId),
       state: i0.Value(state),
       displayName:
@@ -1470,14 +1473,12 @@ class ProjectEnvironment extends i0.DataClass
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return ProjectEnvironment(
       id: serializer.fromJson<String>(json['id']),
-      parentType: serializer.fromJson<String?>(json['parent_type']),
-      parentId: serializer.fromJson<String?>(json['parent_id']),
+      parentType: serializer.fromJson<String>(json['parent_type']),
+      parentId: serializer.fromJson<String>(json['parent_id']),
       projectEnvironmentId: serializer.fromJson<String>(
         json['project_environment_id'],
       ),
-      state: i1.ProjectEnvironments.$converterstate.fromJson(
-        serializer.fromJson<int>(json['state']),
-      ),
+      state: serializer.fromJson<String>(json['state']),
       displayName: serializer.fromJson<String?>(json['display_name']),
       createTime: serializer.fromJson<DateTime>(json['create_time']),
       updateTime: serializer.fromJson<DateTime>(json['update_time']),
@@ -1492,12 +1493,10 @@ class ProjectEnvironment extends i0.DataClass
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
-      'parent_type': serializer.toJson<String?>(parentType),
-      'parent_id': serializer.toJson<String?>(parentId),
+      'parent_type': serializer.toJson<String>(parentType),
+      'parent_id': serializer.toJson<String>(parentId),
       'project_environment_id': serializer.toJson<String>(projectEnvironmentId),
-      'state': serializer.toJson<int>(
-        i1.ProjectEnvironments.$converterstate.toJson(state),
-      ),
+      'state': serializer.toJson<String>(state),
       'display_name': serializer.toJson<String?>(displayName),
       'create_time': serializer.toJson<DateTime>(createTime),
       'update_time': serializer.toJson<DateTime>(updateTime),
@@ -1510,10 +1509,10 @@ class ProjectEnvironment extends i0.DataClass
 
   i1.ProjectEnvironment copyWith({
     String? id,
-    i0.Value<String?> parentType = const i0.Value.absent(),
-    i0.Value<String?> parentId = const i0.Value.absent(),
+    String? parentType,
+    String? parentId,
     String? projectEnvironmentId,
-    i2.LifecycleState? state,
+    String? state,
     i0.Value<String?> displayName = const i0.Value.absent(),
     DateTime? createTime,
     DateTime? updateTime,
@@ -1523,8 +1522,8 @@ class ProjectEnvironment extends i0.DataClass
     String? etag,
   }) => i1.ProjectEnvironment(
     id: id ?? this.id,
-    parentType: parentType.present ? parentType.value : this.parentType,
-    parentId: parentId.present ? parentId.value : this.parentId,
+    parentType: parentType ?? this.parentType,
+    parentId: parentId ?? this.parentId,
     projectEnvironmentId: projectEnvironmentId ?? this.projectEnvironmentId,
     state: state ?? this.state,
     displayName: displayName.present ? displayName.value : this.displayName,
@@ -1590,10 +1589,10 @@ class ProjectEnvironment extends i0.DataClass
 class ProjectEnvironmentsCompanion
     extends i0.UpdateCompanion<i1.ProjectEnvironment> {
   final i0.Value<String> id;
-  final i0.Value<String?> parentType;
-  final i0.Value<String?> parentId;
+  final i0.Value<String> parentType;
+  final i0.Value<String> parentId;
   final i0.Value<String> projectEnvironmentId;
-  final i0.Value<i2.LifecycleState> state;
+  final i0.Value<String> state;
   final i0.Value<String?> displayName;
   final i0.Value<DateTime> createTime;
   final i0.Value<DateTime> updateTime;
@@ -1615,8 +1614,8 @@ class ProjectEnvironmentsCompanion
   });
   ProjectEnvironmentsCompanion.insert({
     required String id,
-    this.parentType = const i0.Value.absent(),
-    this.parentId = const i0.Value.absent(),
+    required String parentType,
+    required String parentId,
     required String projectEnvironmentId,
     this.state = const i0.Value.absent(),
     this.displayName = const i0.Value.absent(),
@@ -1626,13 +1625,15 @@ class ProjectEnvironmentsCompanion
     this.annotations = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   }) : id = i0.Value(id),
+       parentType = i0.Value(parentType),
+       parentId = i0.Value(parentId),
        projectEnvironmentId = i0.Value(projectEnvironmentId);
   static i0.Insertable<i1.ProjectEnvironment> custom({
     i0.Expression<String>? id,
     i0.Expression<String>? parentType,
     i0.Expression<String>? parentId,
     i0.Expression<String>? projectEnvironmentId,
-    i0.Expression<int>? state,
+    i0.Expression<String>? state,
     i0.Expression<String>? displayName,
     i0.Expression<DateTime>? createTime,
     i0.Expression<DateTime>? updateTime,
@@ -1658,10 +1659,10 @@ class ProjectEnvironmentsCompanion
 
   i1.ProjectEnvironmentsCompanion copyWith({
     i0.Value<String>? id,
-    i0.Value<String?>? parentType,
-    i0.Value<String?>? parentId,
+    i0.Value<String>? parentType,
+    i0.Value<String>? parentId,
     i0.Value<String>? projectEnvironmentId,
-    i0.Value<i2.LifecycleState>? state,
+    i0.Value<String>? state,
     i0.Value<String?>? displayName,
     i0.Value<DateTime>? createTime,
     i0.Value<DateTime>? updateTime,
@@ -1702,9 +1703,7 @@ class ProjectEnvironmentsCompanion
       );
     }
     if (state.present) {
-      map['state'] = i0.Variable<int>(
-        i1.ProjectEnvironments.$converterstate.toSql(state.value),
-      );
+      map['state'] = i0.Variable<String>(state.value);
     }
     if (displayName.present) {
       map['display_name'] = i0.Variable<String>(displayName.value);
@@ -1746,9 +1745,25 @@ class ProjectEnvironmentsCompanion
   }
 }
 
-i0.Trigger get projectEnvironmentsTriggerUpdateTime => i0.Trigger(
-  'CREATE TRIGGER IF NOT EXISTS project_environments_trigger_update_time AFTER UPDATE ON project_environments BEGIN UPDATE project_environments SET update_time = unixepoch(\'now\', \'subsec\') WHERE id = OLD.id;END',
-  'project_environments_trigger_update_time',
+i0.Index get projectEnvironmentsParentIdx => i0.Index(
+  'project_environments_parent_idx',
+  'CREATE INDEX IF NOT EXISTS project_environments_parent_idx ON project_environments (parent_type, parent_id)',
+);
+i0.Trigger get projectEnvironmentsUpdateTimeTrg => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS project_environments_update_time_trg AFTER UPDATE ON project_environments BEGIN UPDATE project_environments SET update_time = unixepoch(\'now\', \'subsec\') WHERE id = OLD.id;END',
+  'project_environments_update_time_trg',
+);
+i0.Trigger get projectEnvironmentsCreateTrg => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS project_environments_create_trg BEFORE INSERT ON project_environments BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::Project::Environment\', NEW.id);INSERT INTO cedar_relationships (entity_type, entity_id, parent_type, parent_id) VALUES (\'Celest::Project::Environment\', NEW.id, NEW.parent_type, NEW.parent_id);END',
+  'project_environments_create_trg',
+);
+i0.Trigger get projectEnvironmentsSetParentTrg => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS project_environments_set_parent_trg AFTER UPDATE OF parent_type, parent_id ON project_environments WHEN OLD.parent_type != NEW.parent_type OR OLD.parent_id != NEW.parent_id BEGIN UPDATE cedar_relationships SET parent_type = NEW.parent_type, parent_id = NEW.parent_id WHERE entity_id = OLD.id AND entity_type = \'Celest::Project::Environment\';END',
+  'project_environments_set_parent_trg',
+);
+i0.Trigger get projectEnvironmentsDeleteTrg => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS project_environments_delete_trg AFTER DELETE ON project_environments BEGIN DELETE FROM cedar_relationships WHERE entity_id = OLD.id AND entity_type = \'Celest::Project::Environment\';DELETE FROM cedar_entities WHERE entity_id = OLD.id AND entity_type = \'Celest::Project::Environment\';END',
+  'project_environments_delete_trg',
 );
 
 class ProjectEnvironmentAsts extends i0.Table
@@ -1769,8 +1784,8 @@ class ProjectEnvironmentAsts extends i0.Table
         $customConstraints: 'NOT NULL PRIMARY KEY',
       );
   static const i0.VerificationMeta _astMeta = const i0.VerificationMeta('ast');
-  late final i0.GeneratedColumn<i3.Uint8List> ast =
-      i0.GeneratedColumn<i3.Uint8List>(
+  late final i0.GeneratedColumn<i2.Uint8List> ast =
+      i0.GeneratedColumn<i2.Uint8List>(
         'ast',
         aliasedName,
         false,
@@ -1914,7 +1929,7 @@ class ProjectEnvironmentAst extends i0.DataClass
   /// The environment's project AST.
   ///
   /// Format: ProtoAny[celest.ast.<version>.ResolvedProject]
-  final i3.Uint8List ast;
+  final i2.Uint8List ast;
 
   /// The environment's project AST version.
   final int version;
@@ -1931,7 +1946,7 @@ class ProjectEnvironmentAst extends i0.DataClass
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
     final map = <String, i0.Expression>{};
     map['project_environment_id'] = i0.Variable<String>(projectEnvironmentId);
-    map['ast'] = i0.Variable<i3.Uint8List>(ast);
+    map['ast'] = i0.Variable<i2.Uint8List>(ast);
     map['version'] = i0.Variable<int>(version);
     return map;
   }
@@ -1953,7 +1968,7 @@ class ProjectEnvironmentAst extends i0.DataClass
       projectEnvironmentId: serializer.fromJson<String>(
         json['project_environment_id'],
       ),
-      ast: serializer.fromJson<i3.Uint8List>(json['ast']),
+      ast: serializer.fromJson<i2.Uint8List>(json['ast']),
       version: serializer.fromJson<int>(json['version']),
       digest: serializer.fromJson<String>(json['digest']),
     );
@@ -1963,7 +1978,7 @@ class ProjectEnvironmentAst extends i0.DataClass
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'project_environment_id': serializer.toJson<String>(projectEnvironmentId),
-      'ast': serializer.toJson<i3.Uint8List>(ast),
+      'ast': serializer.toJson<i2.Uint8List>(ast),
       'version': serializer.toJson<int>(version),
       'digest': serializer.toJson<String>(digest),
     };
@@ -1971,7 +1986,7 @@ class ProjectEnvironmentAst extends i0.DataClass
 
   i1.ProjectEnvironmentAst copyWith({
     String? projectEnvironmentId,
-    i3.Uint8List? ast,
+    i2.Uint8List? ast,
     int? version,
     String? digest,
   }) => i1.ProjectEnvironmentAst(
@@ -2011,7 +2026,7 @@ class ProjectEnvironmentAst extends i0.DataClass
 class ProjectEnvironmentAstsCompanion
     extends i0.UpdateCompanion<i1.ProjectEnvironmentAst> {
   final i0.Value<String> projectEnvironmentId;
-  final i0.Value<i3.Uint8List> ast;
+  final i0.Value<i2.Uint8List> ast;
   final i0.Value<int> version;
   const ProjectEnvironmentAstsCompanion({
     this.projectEnvironmentId = const i0.Value.absent(),
@@ -2020,14 +2035,14 @@ class ProjectEnvironmentAstsCompanion
   });
   ProjectEnvironmentAstsCompanion.insert({
     required String projectEnvironmentId,
-    required i3.Uint8List ast,
+    required i2.Uint8List ast,
     required int version,
   }) : projectEnvironmentId = i0.Value(projectEnvironmentId),
        ast = i0.Value(ast),
        version = i0.Value(version);
   static i0.Insertable<i1.ProjectEnvironmentAst> custom({
     i0.Expression<String>? projectEnvironmentId,
-    i0.Expression<i3.Uint8List>? ast,
+    i0.Expression<i2.Uint8List>? ast,
     i0.Expression<int>? version,
   }) {
     return i0.RawValuesInsertable({
@@ -2040,7 +2055,7 @@ class ProjectEnvironmentAstsCompanion
 
   i1.ProjectEnvironmentAstsCompanion copyWith({
     i0.Value<String>? projectEnvironmentId,
-    i0.Value<i3.Uint8List>? ast,
+    i0.Value<i2.Uint8List>? ast,
     i0.Value<int>? version,
   }) {
     return i1.ProjectEnvironmentAstsCompanion(
@@ -2059,7 +2074,7 @@ class ProjectEnvironmentAstsCompanion
       );
     }
     if (ast.present) {
-      map['ast'] = i0.Variable<i3.Uint8List>(ast.value);
+      map['ast'] = i0.Variable<i2.Uint8List>(ast.value);
     }
     if (version.present) {
       map['version'] = i0.Variable<int>(version.value);
@@ -2836,14 +2851,14 @@ class ProjectEnvironmentStatesCompanion
   }
 }
 
-class ProjectEnvironmentsDrift extends i4.ModularAccessor {
+class ProjectEnvironmentsDrift extends i3.ModularAccessor {
   ProjectEnvironmentsDrift(i0.GeneratedDatabase db) : super(db);
-  i5.Future<List<i1.ProjectEnvironment>> createProjectEnvironment({
+  i4.Future<List<i1.ProjectEnvironment>> createProjectEnvironment({
     required String id,
-    String? parentType,
-    String? parentId,
+    required String parentType,
+    required String parentId,
     required String projectEnvironmentId,
-    required i2.LifecycleState state,
+    required String state,
     String? displayName,
     String? annotations,
   }) {
@@ -2854,7 +2869,7 @@ class ProjectEnvironmentsDrift extends i4.ModularAccessor {
         i0.Variable<String>(parentType),
         i0.Variable<String>(parentId),
         i0.Variable<String>(projectEnvironmentId),
-        i0.Variable<int>(i1.ProjectEnvironments.$converterstate.toSql(state)),
+        i0.Variable<String>(state),
         i0.Variable<String>(displayName),
         i0.Variable<String>(annotations),
       ],
@@ -2873,11 +2888,11 @@ class ProjectEnvironmentsDrift extends i4.ModularAccessor {
   }
 
   i0.Selectable<i1.ProjectEnvironment> lookupProjectEnvironment({
-    String? projectId,
+    required String projectId,
     required String projectEnvironmentId,
   }) {
     return customSelect(
-      'SELECT * FROM project_environments WHERE parent_type = \'Celest::Project\' AND parent_id = ?1 AND project_environment_id = ?2 LIMIT 1',
+      'SELECT * FROM project_environments WHERE parent_type = \'Celest::Project\' AND parent_id = ?1 AND(id = ?2 OR project_environment_id = ?2)LIMIT 1',
       variables: [
         i0.Variable<String>(projectId),
         i0.Variable<String>(projectEnvironmentId),
@@ -2886,11 +2901,51 @@ class ProjectEnvironmentsDrift extends i4.ModularAccessor {
     ).asyncMap(projectEnvironments.mapFromRow);
   }
 
-  i5.Future<List<i1.ProjectEnvironment>> updateProjectEnvironment({
+  i0.Selectable<ListProjectEnvironmentsResult> listProjectEnvironments({
+    required String userId,
+    String? parentId,
+    DateTime? startTime,
+    required int offset,
+    ListProjectEnvironments$orderBy? order_by,
+    required int limit,
+  }) {
+    var $arrayStartIndex = 6;
+    final generatedorder_by = $write(
+      order_by?.call(this.projectEnvironments) ?? const i0.OrderBy.nothing(),
+      startIndex: $arrayStartIndex,
+    );
+    $arrayStartIndex += generatedorder_by.amountOfVariables;
+    return customSelect(
+      'WITH memberships AS (SELECT parent_id AS project_environment_id FROM user_memberships WHERE user_id = ?1 AND parent_type = \'Celest::Project::Environment\'), rowed AS (SELECT ROW_NUMBER()OVER (ORDER BY create_time DESC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS row_num, id FROM project_environments INNER JOIN memberships ON project_environments.id = memberships.project_environment_id WHERE(project_environments.parent_id IS NULL AND ?2 IS NULL OR project_environments.parent_id = ?2)AND project_environments.create_time < coalesce(?3, unixepoch(\'now\', \'+1 second\', \'subsec\'))) SELECT row_num,"project_environments"."id" AS "nested_0.id", "project_environments"."parent_type" AS "nested_0.parent_type", "project_environments"."parent_id" AS "nested_0.parent_id", "project_environments"."project_environment_id" AS "nested_0.project_environment_id", "project_environments"."state" AS "nested_0.state", "project_environments"."display_name" AS "nested_0.display_name", "project_environments"."create_time" AS "nested_0.create_time", "project_environments"."update_time" AS "nested_0.update_time", "project_environments"."delete_time" AS "nested_0.delete_time", "project_environments"."annotations" AS "nested_0.annotations", "project_environments"."reconciling" AS "nested_0.reconciling", "project_environments"."etag" AS "nested_0.etag" FROM project_environments INNER JOIN rowed ON project_environments.id = rowed.id WHERE row_num > ?4 ${generatedorder_by.sql} LIMIT ?5',
+      variables: [
+        i0.Variable<String>(userId),
+        i0.Variable<String>(parentId),
+        i0.Variable<DateTime>(startTime),
+        i0.Variable<int>(offset),
+        i0.Variable<int>(limit),
+        ...generatedorder_by.introducedVariables,
+      ],
+      readsFrom: {
+        userMemberships,
+        projectEnvironments,
+        ...generatedorder_by.watchedTables,
+      },
+    ).asyncMap(
+      (i0.QueryRow row) async => ListProjectEnvironmentsResult(
+        rowNum: row.read<int>('row_num'),
+        projectEnvironments: await projectEnvironments.mapFromRow(
+          row,
+          tablePrefix: 'nested_0',
+        ),
+      ),
+    );
+  }
+
+  i4.Future<List<i1.ProjectEnvironment>> updateProjectEnvironment({
     String? parentType,
     String? parentId,
     String? projectEnvironmentId,
-    double? state,
+    String? state,
     String? displayName,
     String? annotations,
     required String id,
@@ -2901,7 +2956,7 @@ class ProjectEnvironmentsDrift extends i4.ModularAccessor {
         i0.Variable<String>(parentType),
         i0.Variable<String>(parentId),
         i0.Variable<String>(projectEnvironmentId),
-        i0.Variable<double>(state),
+        i0.Variable<String>(state),
         i0.Variable<String>(displayName),
         i0.Variable<String>(annotations),
         i0.Variable<String>(id),
@@ -2911,11 +2966,11 @@ class ProjectEnvironmentsDrift extends i4.ModularAccessor {
     ).then((rows) => Future.wait(rows.map(projectEnvironments.mapFromRow)));
   }
 
-  i5.Future<List<i1.ProjectEnvironment>> deleteProjectEnvironment({
+  i4.Future<List<i1.ProjectEnvironment>> deleteProjectEnvironment({
     required String id,
   }) {
     return customWriteReturning(
-      'UPDATE project_environments SET delete_time = unixepoch(\'now\', \'subsec\'), state = 8 WHERE id = ?1 RETURNING *',
+      'UPDATE project_environments SET delete_time = unixepoch(\'now\', \'subsec\'), state = \'DELETED\' WHERE id = ?1 RETURNING *',
       variables: [i0.Variable<String>(id)],
       updates: {projectEnvironments},
       updateKind: i0.UpdateKind.update,
@@ -2941,7 +2996,7 @@ class ProjectEnvironmentsDrift extends i4.ModularAccessor {
     ).asyncMap(projectEnvironmentStates.mapFromRow);
   }
 
-  i5.Future<List<i1.ProjectEnvironmentState>> createProjectEnvironmentState({
+  i4.Future<List<i1.ProjectEnvironmentState>> createProjectEnvironmentState({
     required String projectEnvironmentId,
     String? flyAppId,
     String? tursoDatabaseId,
@@ -2961,7 +3016,7 @@ class ProjectEnvironmentsDrift extends i4.ModularAccessor {
     );
   }
 
-  i5.Future<List<i1.ProjectEnvironmentState>> updateProjectEnvironmentState({
+  i4.Future<List<i1.ProjectEnvironmentState>> updateProjectEnvironmentState({
     String? flyAppId,
     String? tursoDatabaseId,
     String? domainName,
@@ -2982,11 +3037,27 @@ class ProjectEnvironmentsDrift extends i4.ModularAccessor {
     );
   }
 
-  i1.ProjectEnvironments get projectEnvironments => i4.ReadDatabaseContainer(
+  i1.ProjectEnvironments get projectEnvironments => i3.ReadDatabaseContainer(
     attachedDatabase,
   ).resultSet<i1.ProjectEnvironments>('project_environments');
+  i5.UserMemberships get userMemberships => i3.ReadDatabaseContainer(
+    attachedDatabase,
+  ).resultSet<i5.UserMemberships>('user_memberships');
   i1.ProjectEnvironmentStates get projectEnvironmentStates =>
-      i4.ReadDatabaseContainer(
+      i3.ReadDatabaseContainer(
         attachedDatabase,
       ).resultSet<i1.ProjectEnvironmentStates>('project_environment_states');
+  i6.ProjectsDrift get projectsDrift => this.accessor(i6.ProjectsDrift.new);
 }
+
+class ListProjectEnvironmentsResult {
+  final int rowNum;
+  final i1.ProjectEnvironment projectEnvironments;
+  ListProjectEnvironmentsResult({
+    required this.rowNum,
+    required this.projectEnvironments,
+  });
+}
+
+typedef ListProjectEnvironments$orderBy =
+    i0.OrderBy Function(i1.ProjectEnvironments project_environments);
