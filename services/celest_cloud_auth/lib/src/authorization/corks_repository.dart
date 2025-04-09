@@ -4,7 +4,8 @@ import 'package:cedar/cedar.dart';
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
 import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
-import 'package:celest_cloud_auth/src/database/schema/auth.drift.dart' as drift;
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_core.drift.dart'
+    as drift;
 import 'package:celest_cloud_auth/src/model/interop.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:corks_cedar/corks_cedar.dart';
@@ -33,10 +34,10 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
   CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
   CryptoKeyRepository get _cryptoKeys => _deps.cryptoKeys;
 
-  Future<drift.Cork?> getCork({
+  Future<drift.CloudAuthCork?> getCork({
     required Uint8List corkId,
   }) async {
-    return _db.authDrift.getCork(corkId: corkId).getSingleOrNull();
+    return _db.cloudAuthCoreDrift.getCork(corkId: corkId).getSingleOrNull();
   }
 
   /// Creates a new cork for the given [user].
@@ -75,7 +76,7 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
     await _db.transaction(() async {
       await _db.createEntity(userEntity);
       await _db.createEntity(sessionEntity);
-      await _db.authDrift.upsertCork(
+      await _db.cloudAuthCoreDrift.upsertCork(
         corkId: cork.id,
         cryptoKeyId: cryptoKey.cryptoKeyId,
         bearerType: sessionUid.type,
@@ -110,10 +111,10 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
     required Cork cork,
   }) async {
     try {
-      final query = _db.update(_db.authDrift.corks)
+      final query = _db.update(_db.cloudAuthCorks)
         ..where((tbl) => tbl.corkId.equals(cork.id));
       await query.write(
-        drift.CorksCompanion(
+        drift.CloudAuthCorksCompanion(
           lastUseTime: drift.Value(DateTime.timestamp()),
         ),
       );

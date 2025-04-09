@@ -1,6 +1,5 @@
 import 'package:celest_cloud_auth/src/database/auth_database.drift.dart';
 import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
-import 'package:celest_core/_internal.dart';
 import 'package:drift/drift.dart' hide Component;
 import 'package:drift/native.dart';
 import 'package:file/file.dart';
@@ -58,45 +57,24 @@ class CloudAuthDatabase extends $CloudAuthDatabase with CloudAuthDatabaseMixin {
   final ResolvedProject? _project;
 
   @override
-  int get schemaVersion => CloudAuthDatabaseAccessors.schemaVersion;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
       onCreate: (m) async {
         await m.createAll();
-        await cloudAuth.seed();
       },
       onUpgrade: (m, from, to) async {
-        await cloudAuth.onUpgrade(m);
+        await cloudAuth.onUpgrade(m, from: from, to: to);
       },
-      beforeOpen: (details) {
-        return _withoutForeignKeys(() async {
-          await cloudAuth.upsertProject(project: _project);
-        });
+      beforeOpen: (details) async {
+        if (details.versionNow != schemaVersion) {
+          return;
+        }
+        await cloudAuth.onBeforeOpen(details, project: _project);
       },
     );
-  }
-
-  /// Runs [action] in a context without foreign keys enabled.
-  Future<R> _withoutForeignKeys<R>(Future<R> Function() action) async {
-    await customStatement('pragma foreign_keys = OFF');
-    R result;
-    try {
-      result = await action();
-    } finally {
-      if (kDebugMode) {
-        // Fail if the action broke foreign keys
-        final wrongForeignKeys =
-            await customSelect('PRAGMA foreign_key_check').get();
-        assert(
-          wrongForeignKeys.isEmpty,
-          '${wrongForeignKeys.map((e) => e.data)}',
-        );
-      }
-      await customStatement('pragma foreign_keys = ON');
-    }
-    return result;
   }
 
   /// Pings the database to ensure a valid connection.

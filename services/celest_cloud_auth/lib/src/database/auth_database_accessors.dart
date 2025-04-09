@@ -4,13 +4,16 @@ import 'package:cedar/cedar.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:celest_cloud_auth/src/authorization/cedar_interop.dart';
+import 'package:celest_cloud_auth/src/authorization/celest_action.dart';
+import 'package:celest_cloud_auth/src/authorization/celest_role.dart';
 import 'package:celest_cloud_auth/src/authorization/policy_set.g.dart';
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/database/auth_database.steps.dart';
 import 'package:celest_cloud_auth/src/database/auth_database_accessors.drift.dart';
 import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart';
-import 'package:celest_cloud_auth/src/database/schema/users.drift.dart';
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_users.drift.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
+import 'package:celest_core/_internal.dart' show kDebugMode;
 import 'package:celest_core/celest_core.dart';
 import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
@@ -36,16 +39,38 @@ export 'schema/schema_imports.dart';
 mixin CloudAuthDatabaseMixin on GeneratedDatabase {
   /// Include paths required for creating the tables used by Cloud Auth.
   static const Set<String> includes = {
-    'package:celest_cloud_auth/src/database/schema/auth.drift',
     'package:celest_cloud_auth/src/database/schema/cedar.drift',
-    'package:celest_cloud_auth/src/database/schema/meta.drift',
-    'package:celest_cloud_auth/src/database/schema/projects.drift',
-    'package:celest_cloud_auth/src/database/schema/users.drift',
+    'package:celest_cloud_auth/src/database/schema/cloud_auth_core.drift',
+    'package:celest_cloud_auth/src/database/schema/cloud_auth_meta.drift',
+    'package:celest_cloud_auth/src/database/schema/cloud_auth_projects.drift',
+    'package:celest_cloud_auth/src/database/schema/cloud_auth_users.drift',
   };
 
   /// Database accessors for Cloud Auth tables.
   late final CloudAuthDatabaseAccessors cloudAuth =
       CloudAuthDatabaseAccessors(this);
+
+  /// Create a migration wrapping over Cloud Auth migrations.
+  MigrationStrategy createMigration({
+    OnCreate? onCreate,
+    OnUpgrade? onUpgrade,
+    OnBeforeOpen? onBeforeOpen,
+  }) {
+    final defaultStrategy = MigrationStrategy();
+    onCreate ??= defaultStrategy.onCreate;
+    onUpgrade ??= defaultStrategy.onUpgrade;
+    return MigrationStrategy(
+      onCreate: onCreate,
+      onUpgrade: (m, from, to) async {
+        await onUpgrade!(m, from, to);
+        await cloudAuth.onUpgrade(m);
+      },
+      beforeOpen: (details) async {
+        await onBeforeOpen?.call(details);
+        await cloudAuth.onBeforeOpen(details);
+      },
+    );
+  }
 }
 
 /// Database accessors for Cloud Auth tables.
@@ -69,7 +94,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
 
   static final Logger _logger = Logger('Celest.CloudAuth.Database');
 
-  static const int schemaVersion = 3;
+  static const int schemaVersion = 4;
 
   /// Types from `authorization/cedar/schema.cedarschema`.
   @visibleForTesting
@@ -85,50 +110,84 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
 
   @visibleForTesting
   static final Map<EntityUid, Entity> coreEntities = {
-    const EntityUid.of('Celest::Action', 'create'): const Entity(
-      uid: EntityUid.of('Celest::Action', 'create'),
+    // Core actions
+    CelestAction.owner: const Entity(uid: CelestAction.owner),
+    CelestAction.admin: const Entity(
+      uid: CelestAction.admin,
+      parents: [CelestAction.owner],
     ),
-    const EntityUid.of('Celest::Action', 'get'): const Entity(
-      uid: EntityUid.of('Celest::Action', 'get'),
+    CelestAction.edit: const Entity(
+      uid: CelestAction.edit,
+      parents: [CelestAction.admin],
     ),
-    const EntityUid.of('Celest::Action', 'list'): const Entity(
-      uid: EntityUid.of('Celest::Action', 'list'),
+    CelestAction.view: const Entity(
+      uid: CelestAction.view,
+      parents: [CelestAction.edit],
     ),
-    const EntityUid.of('Celest::Action', 'update'): const Entity(
-      uid: EntityUid.of('Celest::Action', 'update'),
+    CelestAction.create: const Entity(
+      uid: CelestAction.create,
+      parents: [CelestAction.admin],
     ),
-    const EntityUid.of('Celest::Action', 'delete'): const Entity(
-      uid: EntityUid.of('Celest::Action', 'delete'),
+    CelestAction.get: const Entity(
+      uid: CelestAction.get,
+      parents: [CelestAction.view],
     ),
-    const EntityUid.of('Celest::Action', 'invoke'): const Entity(
-      uid: EntityUid.of('Celest::Action', 'invoke'),
+    CelestAction.list: const Entity(
+      uid: CelestAction.list,
+      parents: [CelestAction.view],
     ),
-    const EntityUid.of('Celest::Role', 'anonymous'): const Entity(
-      uid: EntityUid.of('Celest::Role', 'anonymous'),
+    CelestAction.update: const Entity(
+      uid: CelestAction.update,
+      parents: [CelestAction.edit],
     ),
-    const EntityUid.of('Celest::Role', 'authenticated'): const Entity(
-      uid: EntityUid.of('Celest::Role', 'authenticated'),
-      parents: [
-        EntityUid.of('Celest::Role', 'anonymous'),
-      ],
+    CelestAction.delete: const Entity(
+      uid: CelestAction.delete,
+      parents: [CelestAction.owner],
     ),
-    const EntityUid.of('Celest::Role', 'admin'): const Entity(
-      uid: EntityUid.of('Celest::Role', 'admin'),
-      parents: [
-        EntityUid.of('Celest::Role', 'authenticated'),
-      ],
+    CelestAction.invoke: const Entity(
+      uid: CelestAction.invoke,
+      parents: [CelestAction.owner],
+    ),
+
+    // Core roles
+    CelestRole.anonymous: const Entity(uid: CelestRole.anonymous),
+    CelestRole.authenticated: const Entity(
+      uid: CelestRole.authenticated,
+      parents: [CelestRole.anonymous],
+    ),
+    CelestRole.admin: const Entity(
+      uid: CelestRole.admin,
+      parents: [CelestRole.authenticated],
+    ),
+    CelestRole.owner: const Entity(
+      uid: CelestRole.owner,
+      parents: [CelestRole.admin],
     ),
   };
 
   /// Seeds the database with core types, entities, and relationships.
-  Future<void> seed() async {
+  Future<void> seed({
+    Iterable<String> additionalCedarTypes = const {},
+    Map<EntityUid, Entity> additionalCedarEntities = const {},
+    PolicySet? additionalCedarPolicies,
+  }) async {
     _logger.finer('Seeding database');
+
+    final allCedarTypes = {
+      ...coreTypes,
+      ...additionalCedarTypes,
+    };
+    final allCedarEntities = {
+      ...coreEntities,
+      ...additionalCedarEntities,
+    };
     await transaction(() async {
       await batch((b) {
         b.insertAllOnConflictUpdate(cedarTypes, [
-          for (final type in coreTypes) CedarTypesCompanion.insert(fqn: type),
+          for (final type in allCedarTypes)
+            CedarTypesCompanion.insert(fqn: type),
         ]);
-        for (final entity in coreEntities.values) {
+        for (final entity in allCedarEntities.values) {
           b.insert(
             cedarEntities,
             CedarEntitiesCompanion.insert(
@@ -150,7 +209,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
           }
         }
       });
-      await upsertPolicySet(corePolicySet);
+      await upsertPolicySet(corePolicySet.merge(additionalCedarPolicies));
     });
   }
 
@@ -166,52 +225,188 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
         await batch((b) {
           for (final session in missingUserId) {
             b.deleteWhere(
-              corks,
+              schema.corks,
               (cork) =>
-                  cork.bearerType.equals('Celest::Session') &
-                  cork.bearerId.equals(session.read('session_id')),
+                  schema.corks.bearerType.equals('Celest::Session') &
+                  schema.corks.bearerId.equals(session.read('session_id')),
             );
             b.deleteWhere(
-              cryptoKeys,
-              (key) => key.cryptoKeyId.equals(session.read('crypto_key_id')),
+              schema.cryptoKeys,
+              (key) => schema.cryptoKeys.cryptoKeyId
+                  .equals(session.read('crypto_key_id')),
             );
             b.deleteWhere(
-              cedarEntities,
+              schema.cedarEntities,
               (entity) =>
-                  entity.entityType.equals('Celest::Session') &
-                  entity.entityId.equals(session.read('session_id')),
+                  schema.cedarEntities.entityType.equals('Celest::Session') &
+                  schema.cedarEntities.entityId
+                      .equals(session.read('session_id')),
             );
           }
         });
 
-        await m.alterTable(TableMigration(sessions));
-        await m.alterTable(TableMigration(cedarRelationships));
+        await m.alterTable(TableMigration(schema.sessions));
+        await m.alterTable(TableMigration(schema.cedarRelationships));
       });
     },
     from2To3: (m, schema) async {
       await transaction(() async {
-        await m.createTable(celestCloudAuthMeta);
+        await m.createTable(schema.celestCloudAuthMeta);
+      });
+    },
+    from3To4: (m, schema) async {
+      await transaction(() async {
+        // core
+        await m.renameTable(schema.cloudAuthCryptoKeys, 'crypto_keys');
+        await m.alterTable(TableMigration(schema.cloudAuthCryptoKeys));
+        await m.renameTable(schema.cloudAuthSessions, 'sessions');
+        await m.alterTable(TableMigration(schema.cloudAuthSessions));
+        await m.renameTable(schema.cloudAuthCorks, 'corks');
+        await m.alterTable(TableMigration(schema.cloudAuthCorks));
+        await m.renameTable(schema.cloudAuthOtpCodes, 'otp_codes');
+        await m.alterTable(TableMigration(schema.cloudAuthOtpCodes));
+
+        // meta
+        await m.renameTable(schema.cloudAuthMeta, '_celest_cloud_auth_meta');
+        await m.alterTable(TableMigration(schema.cloudAuthMeta));
+
+        // users
+        await m.renameTable(schema.cloudAuthUsers, 'users');
+        await m.alterTable(TableMigration(schema.cloudAuthUsers));
+        await m.renameTable(schema.cloudAuthUserEmails, 'user_emails');
+        await m.alterTable(TableMigration(schema.cloudAuthUserEmails));
+        await m.renameTable(
+          schema.cloudAuthUserPhoneNumbers,
+          'user_phone_numbers',
+        );
+        await m.alterTable(TableMigration(schema.cloudAuthUserPhoneNumbers));
+
+        // projects
+        await m.renameTable(schema.cloudAuthProjects, 'celest_projects');
+        await m.alterTable(TableMigration(schema.cloudAuthProjects));
+        await m.renameTable(schema.cloudAuthApis, 'celest_apis');
+        await m.alterTable(TableMigration(schema.cloudAuthApis));
+        await m.renameTable(schema.cloudAuthFunctions, 'celest_functions');
+        await m.alterTable(TableMigration(schema.cloudAuthFunctions));
+
+        final indexes = [
+          schema.cloudAuthCorksIssuerIdx,
+          schema.cloudAuthApisProjectIdx,
+          schema.cloudAuthCorksBearerIdx,
+          schema.cloudAuthFunctionsApiIdx,
+          schema.cloudAuthSessionsUserIdx,
+          schema.cloudAuthCorksAudienceIdx,
+          schema.cloudAuthCorksCryptoKeyIdx,
+          schema.cloudAuthOtpCodesSessionIdIdx,
+          schema.cloudAuthOtpCodesSessionIdIdx,
+          schema.cloudAuthSessionsCryptoKeyIdx,
+          schema.cloudAuthSessionsExternalSessionIdIdx,
+          schema.cloudAuthCryptoKeysExternalCryptoKeyIdIdx,
+        ];
+        for (final index in indexes) {
+          await m.createIndex(index);
+        }
+
+        final triggers = [
+          schema.cloudAuthApisCreateTrg,
+          schema.cloudAuthApisDeleteTrg,
+          schema.cloudAuthUsersCreateTrg,
+          schema.cloudAuthUsersDeleteTrg,
+          schema.cloudAuthFunctionsCreateTrg,
+          schema.cloudAuthFunctionsDeleteTrg,
+          schema.cloudAuthSessionsUpdateTimeTrg,
+        ];
+        for (final trigger in triggers) {
+          await m.createTrigger(trigger);
+        }
       });
     },
   );
 
-  Future<void> onUpgrade(Migrator migrator) async {
-    int? from;
+  /// The default [MigrationStrategy.onUpgrade] for Cloud Auth.
+  Future<void> onUpgrade(
+    Migrator migrator, {
+    @internal int? from,
+    @internal int? to,
+  }) async {
     try {
-      from = await metaDrift.getSchemaVersion().getSingle();
+      from ??= await cloudAuthMetaDrift.getSchemaVersion().getSingle();
     } on Object catch (e, st) {
       _logger.finest('Error getting latest schema version', e, st);
     }
 
     from ??= 1;
-    if (from < schemaVersion) {
-      _logger.fine('Migrating from version $from to version $schemaVersion');
-      await _migrate(migrator, from, schemaVersion);
-      await metaDrift.setSchemaVersion(schemaVersion: schemaVersion);
+    to ??= schemaVersion;
+    if (from < to) {
+      _logger.fine('Migrating from version $from to version $to');
+      await _migrate(migrator, from, to);
+      if (to == schemaVersion) {
+        await cloudAuthMetaDrift.setSchemaVersion(schemaVersion: to);
+      }
       _logger.fine('Migration complete');
     } else {
       _logger.fine('Skipping migration');
     }
+  }
+
+  /// The default [MigrationStrategy.onBeforeOpen] for Cloud Auth.
+  Future<void> onBeforeOpen(
+    OpeningDetails details, {
+    ResolvedProject? project,
+  }) async {
+    await _withoutForeignKeys(() async {
+      if (details.wasCreated) {
+        await seed();
+      }
+      await upsertProject(project: project);
+    });
+  }
+
+  List<TableInfo<Table, dynamic>> get _cloudAuthTables => [
+        cedarAuthorizationLogs,
+        cedarEntities,
+        cedarPolicies,
+        cedarPolicyTemplateLinks,
+        cedarPolicyTemplates,
+        cedarRelationships,
+        cedarTypes,
+        cloudAuthApis,
+        cloudAuthCorks,
+        cloudAuthCryptoKeys,
+        cloudAuthFunctions,
+        cloudAuthMeta,
+        cloudAuthOtpCodes,
+        cloudAuthProjects,
+        cloudAuthSessions,
+        cloudAuthUserEmails,
+        cloudAuthUserPhoneNumbers,
+        cloudAuthUsers,
+      ];
+
+  /// Runs [action] in a context without foreign keys enabled.
+  Future<R> _withoutForeignKeys<R>(Future<R> Function() action) async {
+    await customStatement('pragma foreign_keys = OFF');
+    R result;
+    try {
+      result = await action();
+    } finally {
+      if (kDebugMode) {
+        // Fail if the action broke foreign keys
+        final wrongForeignKeysAll =
+            await customSelect('PRAGMA foreign_key_check').get();
+        final cloudAuthTables =
+            _cloudAuthTables.map((it) => it.actualTableName).toList();
+        final wrongForeignKeys = [
+          for (final foreignKey in wrongForeignKeysAll)
+            if (cloudAuthTables
+                .contains(foreignKey.data['table_name'] as String))
+              foreignKey.data,
+        ];
+        assert(wrongForeignKeys.isEmpty, '$wrongForeignKeys');
+      }
+      await customStatement('pragma foreign_keys = ON');
+    }
+    return result;
   }
 
   final _effectivePolicySetCache =
@@ -301,10 +496,10 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
     _logger.finer('Upserting project: ${project.projectId}');
 
     return transaction(() async {
-      final oldProject = await projectsDrift
+      final oldProject = await cloudAuthProjectsDrift
           .getProject(projectId: project!.projectId)
           .getSingleOrNull();
-      final newProject = (await projectsDrift.upsertProject(
+      final newProject = (await cloudAuthProjectsDrift.upsertProject(
         projectId: project.projectId,
         version: 'v1',
         resolvedAst: project,
@@ -318,7 +513,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
       await createEntity(Entity(uid: project.uid));
       for (final api in project.apis.values) {
         _logger.finer('Upserting API: ${api.apiId}');
-        await projectsDrift.upsertApi(
+        await cloudAuthProjectsDrift.upsertApi(
           projectId: project.projectId,
           apiId: api.apiId,
           resolvedAst: api,
@@ -327,7 +522,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
         await createEntity(Entity(uid: api.uid, parents: [project.uid]));
         for (final function in api.functions.values) {
           _logger.finer('Upserting function: ${function.functionId}');
-          await projectsDrift.upsertFunction(
+          await cloudAuthProjectsDrift.upsertFunction(
             apiId: api.apiId,
             functionId: function.functionId,
             resolvedAst: function,
@@ -469,7 +664,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   }) {
     _logger.finer('Creating user: ${user.userId}');
     return transaction(() async {
-      final newUser = await usersDrift.createUser(
+      final newUser = await cloudAuthUsersDrift.createUser(
         userId: user.userId,
         givenName: user.givenName,
         familyName: user.familyName,
@@ -477,7 +672,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
         languageCode: user.languageCode,
       );
       for (final email in user.emails) {
-        await usersDrift.upsertUserEmail(
+        await cloudAuthUsersDrift.upsertUserEmail(
           userId: user.userId,
           email: email.email,
           isVerified: email.isVerified,
@@ -485,7 +680,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
         );
       }
       for (final phoneNumber in user.phoneNumbers) {
-        await usersDrift.upsertUserPhoneNumber(
+        await cloudAuthUsersDrift.upsertUserPhoneNumber(
           userId: user.userId,
           phoneNumber: phoneNumber.phoneNumber,
           isVerified: phoneNumber.isVerified,
@@ -507,13 +702,14 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   /// Retrieves a user from the database.
   Future<User?> getUser({required String userId}) {
     return transaction(() async {
-      final user = await usersDrift.getUser(userId: userId).getSingleOrNull();
+      final user =
+          await cloudAuthUsersDrift.getUser(userId: userId).getSingleOrNull();
       if (user == null) {
         return null;
       }
       final (emails, phoneNumbers, roles) = await (
-        usersDrift.getUserEmails(userId: userId).get(),
-        usersDrift.getUserPhoneNumbers(userId: userId).get(),
+        cloudAuthUsersDrift.getUserEmails(userId: userId).get(),
+        cloudAuthUsersDrift.getUserPhoneNumbers(userId: userId).get(),
         cedarDrift
             .getEntityRoles(entityType: 'Celest::User', entityId: userId)
             .get(),
@@ -557,20 +753,21 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   /// Finds a user by email.
   Future<User?> findUserByEmail({required String email}) {
     return transaction(() async {
-      final results = await usersDrift.lookupUserByEmail(email: email).get();
+      final results =
+          await cloudAuthUsersDrift.lookupUserByEmail(email: email).get();
       if (results.isEmpty) {
         return null;
       }
       final LookupUserByEmailResult(
-        users: user,
-        userEmails: emailData,
+        cloudAuthUsers: user,
+        cloudAuthUserEmails: emailData,
       ) = results.first;
       if (!emailData.isPrimary) {
         final formattedResults = results.map((it) {
           final Email(:email, isVerified: verified, isPrimary: primary) =
-              it.userEmails;
+              it.cloudAuthUserEmails;
           return (
-            it.users,
+            it.cloudAuthUsers,
             (email: email, verified: verified, primary: primary),
           );
         }).join(' | ');
@@ -587,14 +784,15 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   /// Finds a user by phone number.
   Future<User?> findUserByPhoneNumber({required String phoneNumber}) {
     return transaction(() async {
-      final results =
-          await usersDrift.lookupUserByPhone(phoneNumber: phoneNumber).get();
+      final results = await cloudAuthUsersDrift
+          .lookupUserByPhone(phoneNumber: phoneNumber)
+          .get();
       if (results.isEmpty) {
         return null;
       }
       final LookupUserByPhoneResult(
-        users: user,
-        userPhoneNumbers: phoneNumberData
+        cloudAuthUsers: user,
+        cloudAuthUserPhoneNumbers: phoneNumberData
       ) = results.first;
       if (!phoneNumberData.isPrimary) {
         final formattedResults = results.map((it) {
@@ -602,9 +800,9 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
             :phoneNumber,
             isVerified: verified,
             isPrimary: primary
-          ) = it.userPhoneNumbers;
+          ) = it.cloudAuthUserPhoneNumbers;
           return (
-            it.users,
+            it.cloudAuthUsers,
             (phoneNumber: phoneNumber, verified: verified, primary: primary),
           );
         }).join(' | ');
@@ -621,7 +819,9 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   Future<Session?> getSession({
     required String sessionId,
   }) async {
-    return authDrift.getSession(sessionId: sessionId).getSingleOrNull();
+    return cloudAuthCoreDrift
+        .getSession(sessionId: sessionId)
+        .getSingleOrNull();
   }
 }
 

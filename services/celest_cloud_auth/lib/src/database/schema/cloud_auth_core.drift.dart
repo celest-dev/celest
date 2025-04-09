@@ -3,7 +3,8 @@
 import 'package:drift/drift.dart' as i0;
 import 'package:celest_cloud_auth/src/crypto/crypto_key_model.dart' as i1;
 import 'dart:typed_data' as i2;
-import 'package:celest_cloud_auth/src/database/schema/auth.drift.dart' as i3;
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_core.drift.dart'
+    as i3;
 import 'package:celest_cloud_auth/src/authentication/authentication_model.dart'
     as i4;
 import 'package:celest_cloud_auth/src/database/database_model.dart' as i5;
@@ -12,9 +13,11 @@ import 'package:celest_cloud_auth/src/database/schema/converters/auth_converters
 import 'package:drift/internal/modular.dart' as i7;
 import 'dart:async' as i8;
 import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i9;
-import 'package:celest_cloud_auth/src/database/schema/users.drift.dart' as i10;
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_users.drift.dart'
+    as i10;
 
-typedef $CryptoKeysCreateCompanionBuilder = i3.CryptoKeysCompanion Function({
+typedef $CloudAuthCryptoKeysCreateCompanionBuilder
+    = i3.CloudAuthCryptoKeysCompanion Function({
   required i2.Uint8List cryptoKeyId,
   required String keyPurpose,
   required String keyAlgorithm,
@@ -22,7 +25,8 @@ typedef $CryptoKeysCreateCompanionBuilder = i3.CryptoKeysCompanion Function({
   i0.Value<String?> externalCryptoKeyId,
   i0.Value<int> rowid,
 });
-typedef $CryptoKeysUpdateCompanionBuilder = i3.CryptoKeysCompanion Function({
+typedef $CloudAuthCryptoKeysUpdateCompanionBuilder
+    = i3.CloudAuthCryptoKeysCompanion Function({
   i0.Value<i2.Uint8List> cryptoKeyId,
   i0.Value<String> keyPurpose,
   i0.Value<String> keyAlgorithm,
@@ -31,9 +35,9 @@ typedef $CryptoKeysUpdateCompanionBuilder = i3.CryptoKeysCompanion Function({
   i0.Value<int> rowid,
 });
 
-class $CryptoKeysFilterComposer
-    extends i0.Composer<i0.GeneratedDatabase, i3.CryptoKeys> {
-  $CryptoKeysFilterComposer({
+class $CloudAuthCryptoKeysFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CloudAuthCryptoKeys> {
+  $CloudAuthCryptoKeysFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -60,9 +64,9 @@ class $CryptoKeysFilterComposer
       builder: (column) => i0.ColumnFilters(column));
 }
 
-class $CryptoKeysOrderingComposer
-    extends i0.Composer<i0.GeneratedDatabase, i3.CryptoKeys> {
-  $CryptoKeysOrderingComposer({
+class $CloudAuthCryptoKeysOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CloudAuthCryptoKeys> {
+  $CloudAuthCryptoKeysOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -90,9 +94,9 @@ class $CryptoKeysOrderingComposer
       builder: (column) => i0.ColumnOrderings(column));
 }
 
-class $CryptoKeysAnnotationComposer
-    extends i0.Composer<i0.GeneratedDatabase, i3.CryptoKeys> {
-  $CryptoKeysAnnotationComposer({
+class $CloudAuthCryptoKeysAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CloudAuthCryptoKeys> {
+  $CloudAuthCryptoKeysAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -115,31 +119,33 @@ class $CryptoKeysAnnotationComposer
       column: $table.externalCryptoKeyId, builder: (column) => column);
 }
 
-class $CryptoKeysTableManager extends i0.RootTableManager<
+class $CloudAuthCryptoKeysTableManager extends i0.RootTableManager<
     i0.GeneratedDatabase,
-    i3.CryptoKeys,
+    i3.CloudAuthCryptoKeys,
     i1.CryptoKey,
-    i3.$CryptoKeysFilterComposer,
-    i3.$CryptoKeysOrderingComposer,
-    i3.$CryptoKeysAnnotationComposer,
-    $CryptoKeysCreateCompanionBuilder,
-    $CryptoKeysUpdateCompanionBuilder,
+    i3.$CloudAuthCryptoKeysFilterComposer,
+    i3.$CloudAuthCryptoKeysOrderingComposer,
+    i3.$CloudAuthCryptoKeysAnnotationComposer,
+    $CloudAuthCryptoKeysCreateCompanionBuilder,
+    $CloudAuthCryptoKeysUpdateCompanionBuilder,
     (
       i1.CryptoKey,
-      i0.BaseReferences<i0.GeneratedDatabase, i3.CryptoKeys, i1.CryptoKey>
+      i0.BaseReferences<i0.GeneratedDatabase, i3.CloudAuthCryptoKeys,
+          i1.CryptoKey>
     ),
     i1.CryptoKey,
     i0.PrefetchHooks Function()> {
-  $CryptoKeysTableManager(i0.GeneratedDatabase db, i3.CryptoKeys table)
+  $CloudAuthCryptoKeysTableManager(
+      i0.GeneratedDatabase db, i3.CloudAuthCryptoKeys table)
       : super(i0.TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              i3.$CryptoKeysFilterComposer($db: db, $table: table),
+              i3.$CloudAuthCryptoKeysFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              i3.$CryptoKeysOrderingComposer($db: db, $table: table),
+              i3.$CloudAuthCryptoKeysOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              i3.$CryptoKeysAnnotationComposer($db: db, $table: table),
+              i3.$CloudAuthCryptoKeysAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             i0.Value<i2.Uint8List> cryptoKeyId = const i0.Value.absent(),
             i0.Value<String> keyPurpose = const i0.Value.absent(),
@@ -148,7 +154,7 @@ class $CryptoKeysTableManager extends i0.RootTableManager<
             i0.Value<String?> externalCryptoKeyId = const i0.Value.absent(),
             i0.Value<int> rowid = const i0.Value.absent(),
           }) =>
-              i3.CryptoKeysCompanion(
+              i3.CloudAuthCryptoKeysCompanion(
             cryptoKeyId: cryptoKeyId,
             keyPurpose: keyPurpose,
             keyAlgorithm: keyAlgorithm,
@@ -164,7 +170,7 @@ class $CryptoKeysTableManager extends i0.RootTableManager<
             i0.Value<String?> externalCryptoKeyId = const i0.Value.absent(),
             i0.Value<int> rowid = const i0.Value.absent(),
           }) =>
-              i3.CryptoKeysCompanion.insert(
+              i3.CloudAuthCryptoKeysCompanion.insert(
             cryptoKeyId: cryptoKeyId,
             keyPurpose: keyPurpose,
             keyAlgorithm: keyAlgorithm,
@@ -179,22 +185,24 @@ class $CryptoKeysTableManager extends i0.RootTableManager<
         ));
 }
 
-typedef $CryptoKeysProcessedTableManager = i0.ProcessedTableManager<
+typedef $CloudAuthCryptoKeysProcessedTableManager = i0.ProcessedTableManager<
     i0.GeneratedDatabase,
-    i3.CryptoKeys,
+    i3.CloudAuthCryptoKeys,
     i1.CryptoKey,
-    i3.$CryptoKeysFilterComposer,
-    i3.$CryptoKeysOrderingComposer,
-    i3.$CryptoKeysAnnotationComposer,
-    $CryptoKeysCreateCompanionBuilder,
-    $CryptoKeysUpdateCompanionBuilder,
+    i3.$CloudAuthCryptoKeysFilterComposer,
+    i3.$CloudAuthCryptoKeysOrderingComposer,
+    i3.$CloudAuthCryptoKeysAnnotationComposer,
+    $CloudAuthCryptoKeysCreateCompanionBuilder,
+    $CloudAuthCryptoKeysUpdateCompanionBuilder,
     (
       i1.CryptoKey,
-      i0.BaseReferences<i0.GeneratedDatabase, i3.CryptoKeys, i1.CryptoKey>
+      i0.BaseReferences<i0.GeneratedDatabase, i3.CloudAuthCryptoKeys,
+          i1.CryptoKey>
     ),
     i1.CryptoKey,
     i0.PrefetchHooks Function()>;
-typedef $SessionsCreateCompanionBuilder = i3.SessionsCompanion Function({
+typedef $CloudAuthSessionsCreateCompanionBuilder = i3.CloudAuthSessionsCompanion
+    Function({
   i0.Value<int> rowid,
   required String sessionId,
   required i2.Uint8List cryptoKeyId,
@@ -209,7 +217,8 @@ typedef $SessionsCreateCompanionBuilder = i3.SessionsCompanion Function({
   required DateTime expireTime,
   i0.Value<DateTime?> cancelTime,
 });
-typedef $SessionsUpdateCompanionBuilder = i3.SessionsCompanion Function({
+typedef $CloudAuthSessionsUpdateCompanionBuilder = i3.CloudAuthSessionsCompanion
+    Function({
   i0.Value<int> rowid,
   i0.Value<String> sessionId,
   i0.Value<i2.Uint8List> cryptoKeyId,
@@ -225,9 +234,9 @@ typedef $SessionsUpdateCompanionBuilder = i3.SessionsCompanion Function({
   i0.Value<DateTime?> cancelTime,
 });
 
-class $SessionsFilterComposer
-    extends i0.Composer<i0.GeneratedDatabase, i3.Sessions> {
-  $SessionsFilterComposer({
+class $CloudAuthSessionsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CloudAuthSessions> {
+  $CloudAuthSessionsFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -285,9 +294,9 @@ class $SessionsFilterComposer
       column: $table.cancelTime, builder: (column) => i0.ColumnFilters(column));
 }
 
-class $SessionsOrderingComposer
-    extends i0.Composer<i0.GeneratedDatabase, i3.Sessions> {
-  $SessionsOrderingComposer({
+class $CloudAuthSessionsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CloudAuthSessions> {
+  $CloudAuthSessionsOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -345,9 +354,9 @@ class $SessionsOrderingComposer
       builder: (column) => i0.ColumnOrderings(column));
 }
 
-class $SessionsAnnotationComposer
-    extends i0.Composer<i0.GeneratedDatabase, i3.Sessions> {
-  $SessionsAnnotationComposer({
+class $CloudAuthSessionsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CloudAuthSessions> {
+  $CloudAuthSessionsAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -397,31 +406,32 @@ class $SessionsAnnotationComposer
       column: $table.cancelTime, builder: (column) => column);
 }
 
-class $SessionsTableManager extends i0.RootTableManager<
+class $CloudAuthSessionsTableManager extends i0.RootTableManager<
     i0.GeneratedDatabase,
-    i3.Sessions,
+    i3.CloudAuthSessions,
     i4.Session,
-    i3.$SessionsFilterComposer,
-    i3.$SessionsOrderingComposer,
-    i3.$SessionsAnnotationComposer,
-    $SessionsCreateCompanionBuilder,
-    $SessionsUpdateCompanionBuilder,
+    i3.$CloudAuthSessionsFilterComposer,
+    i3.$CloudAuthSessionsOrderingComposer,
+    i3.$CloudAuthSessionsAnnotationComposer,
+    $CloudAuthSessionsCreateCompanionBuilder,
+    $CloudAuthSessionsUpdateCompanionBuilder,
     (
       i4.Session,
-      i0.BaseReferences<i0.GeneratedDatabase, i3.Sessions, i4.Session>
+      i0.BaseReferences<i0.GeneratedDatabase, i3.CloudAuthSessions, i4.Session>
     ),
     i4.Session,
     i0.PrefetchHooks Function()> {
-  $SessionsTableManager(i0.GeneratedDatabase db, i3.Sessions table)
+  $CloudAuthSessionsTableManager(
+      i0.GeneratedDatabase db, i3.CloudAuthSessions table)
       : super(i0.TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              i3.$SessionsFilterComposer($db: db, $table: table),
+              i3.$CloudAuthSessionsFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              i3.$SessionsOrderingComposer($db: db, $table: table),
+              i3.$CloudAuthSessionsOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              i3.$SessionsAnnotationComposer($db: db, $table: table),
+              i3.$CloudAuthSessionsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             i0.Value<int> rowid = const i0.Value.absent(),
             i0.Value<String> sessionId = const i0.Value.absent(),
@@ -438,7 +448,7 @@ class $SessionsTableManager extends i0.RootTableManager<
             i0.Value<DateTime> expireTime = const i0.Value.absent(),
             i0.Value<DateTime?> cancelTime = const i0.Value.absent(),
           }) =>
-              i3.SessionsCompanion(
+              i3.CloudAuthSessionsCompanion(
             rowid: rowid,
             sessionId: sessionId,
             cryptoKeyId: cryptoKeyId,
@@ -468,7 +478,7 @@ class $SessionsTableManager extends i0.RootTableManager<
             required DateTime expireTime,
             i0.Value<DateTime?> cancelTime = const i0.Value.absent(),
           }) =>
-              i3.SessionsCompanion.insert(
+              i3.CloudAuthSessionsCompanion.insert(
             rowid: rowid,
             sessionId: sessionId,
             cryptoKeyId: cryptoKeyId,
@@ -490,29 +500,31 @@ class $SessionsTableManager extends i0.RootTableManager<
         ));
 }
 
-typedef $SessionsProcessedTableManager = i0.ProcessedTableManager<
+typedef $CloudAuthSessionsProcessedTableManager = i0.ProcessedTableManager<
     i0.GeneratedDatabase,
-    i3.Sessions,
+    i3.CloudAuthSessions,
     i4.Session,
-    i3.$SessionsFilterComposer,
-    i3.$SessionsOrderingComposer,
-    i3.$SessionsAnnotationComposer,
-    $SessionsCreateCompanionBuilder,
-    $SessionsUpdateCompanionBuilder,
+    i3.$CloudAuthSessionsFilterComposer,
+    i3.$CloudAuthSessionsOrderingComposer,
+    i3.$CloudAuthSessionsAnnotationComposer,
+    $CloudAuthSessionsCreateCompanionBuilder,
+    $CloudAuthSessionsUpdateCompanionBuilder,
     (
       i4.Session,
-      i0.BaseReferences<i0.GeneratedDatabase, i3.Sessions, i4.Session>
+      i0.BaseReferences<i0.GeneratedDatabase, i3.CloudAuthSessions, i4.Session>
     ),
     i4.Session,
     i0.PrefetchHooks Function()>;
-typedef $OtpCodesCreateCompanionBuilder = i3.OtpCodesCompanion Function({
+typedef $CloudAuthOtpCodesCreateCompanionBuilder = i3.CloudAuthOtpCodesCompanion
+    Function({
   i0.Value<int> rowid,
   required String sessionId,
   i0.Value<int> resendAttempt,
   i0.Value<int> verifyAttempt,
   i0.Value<DateTime> updateTime,
 });
-typedef $OtpCodesUpdateCompanionBuilder = i3.OtpCodesCompanion Function({
+typedef $CloudAuthOtpCodesUpdateCompanionBuilder = i3.CloudAuthOtpCodesCompanion
+    Function({
   i0.Value<int> rowid,
   i0.Value<String> sessionId,
   i0.Value<int> resendAttempt,
@@ -520,9 +532,9 @@ typedef $OtpCodesUpdateCompanionBuilder = i3.OtpCodesCompanion Function({
   i0.Value<DateTime> updateTime,
 });
 
-class $OtpCodesFilterComposer
-    extends i0.Composer<i0.GeneratedDatabase, i3.OtpCodes> {
-  $OtpCodesFilterComposer({
+class $CloudAuthOtpCodesFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CloudAuthOtpCodes> {
+  $CloudAuthOtpCodesFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -547,9 +559,9 @@ class $OtpCodesFilterComposer
       column: $table.updateTime, builder: (column) => i0.ColumnFilters(column));
 }
 
-class $OtpCodesOrderingComposer
-    extends i0.Composer<i0.GeneratedDatabase, i3.OtpCodes> {
-  $OtpCodesOrderingComposer({
+class $CloudAuthOtpCodesOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CloudAuthOtpCodes> {
+  $CloudAuthOtpCodesOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -576,9 +588,9 @@ class $OtpCodesOrderingComposer
       builder: (column) => i0.ColumnOrderings(column));
 }
 
-class $OtpCodesAnnotationComposer
-    extends i0.Composer<i0.GeneratedDatabase, i3.OtpCodes> {
-  $OtpCodesAnnotationComposer({
+class $CloudAuthOtpCodesAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CloudAuthOtpCodes> {
+  $CloudAuthOtpCodesAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -601,31 +613,33 @@ class $OtpCodesAnnotationComposer
       column: $table.updateTime, builder: (column) => column);
 }
 
-class $OtpCodesTableManager extends i0.RootTableManager<
+class $CloudAuthOtpCodesTableManager extends i0.RootTableManager<
     i0.GeneratedDatabase,
-    i3.OtpCodes,
-    i3.OtpCode,
-    i3.$OtpCodesFilterComposer,
-    i3.$OtpCodesOrderingComposer,
-    i3.$OtpCodesAnnotationComposer,
-    $OtpCodesCreateCompanionBuilder,
-    $OtpCodesUpdateCompanionBuilder,
+    i3.CloudAuthOtpCodes,
+    i3.CloudAuthOtpCode,
+    i3.$CloudAuthOtpCodesFilterComposer,
+    i3.$CloudAuthOtpCodesOrderingComposer,
+    i3.$CloudAuthOtpCodesAnnotationComposer,
+    $CloudAuthOtpCodesCreateCompanionBuilder,
+    $CloudAuthOtpCodesUpdateCompanionBuilder,
     (
-      i3.OtpCode,
-      i0.BaseReferences<i0.GeneratedDatabase, i3.OtpCodes, i3.OtpCode>
+      i3.CloudAuthOtpCode,
+      i0.BaseReferences<i0.GeneratedDatabase, i3.CloudAuthOtpCodes,
+          i3.CloudAuthOtpCode>
     ),
-    i3.OtpCode,
+    i3.CloudAuthOtpCode,
     i0.PrefetchHooks Function()> {
-  $OtpCodesTableManager(i0.GeneratedDatabase db, i3.OtpCodes table)
+  $CloudAuthOtpCodesTableManager(
+      i0.GeneratedDatabase db, i3.CloudAuthOtpCodes table)
       : super(i0.TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              i3.$OtpCodesFilterComposer($db: db, $table: table),
+              i3.$CloudAuthOtpCodesFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              i3.$OtpCodesOrderingComposer($db: db, $table: table),
+              i3.$CloudAuthOtpCodesOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              i3.$OtpCodesAnnotationComposer($db: db, $table: table),
+              i3.$CloudAuthOtpCodesAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             i0.Value<int> rowid = const i0.Value.absent(),
             i0.Value<String> sessionId = const i0.Value.absent(),
@@ -633,7 +647,7 @@ class $OtpCodesTableManager extends i0.RootTableManager<
             i0.Value<int> verifyAttempt = const i0.Value.absent(),
             i0.Value<DateTime> updateTime = const i0.Value.absent(),
           }) =>
-              i3.OtpCodesCompanion(
+              i3.CloudAuthOtpCodesCompanion(
             rowid: rowid,
             sessionId: sessionId,
             resendAttempt: resendAttempt,
@@ -647,7 +661,7 @@ class $OtpCodesTableManager extends i0.RootTableManager<
             i0.Value<int> verifyAttempt = const i0.Value.absent(),
             i0.Value<DateTime> updateTime = const i0.Value.absent(),
           }) =>
-              i3.OtpCodesCompanion.insert(
+              i3.CloudAuthOtpCodesCompanion.insert(
             rowid: rowid,
             sessionId: sessionId,
             resendAttempt: resendAttempt,
@@ -661,22 +675,24 @@ class $OtpCodesTableManager extends i0.RootTableManager<
         ));
 }
 
-typedef $OtpCodesProcessedTableManager = i0.ProcessedTableManager<
+typedef $CloudAuthOtpCodesProcessedTableManager = i0.ProcessedTableManager<
     i0.GeneratedDatabase,
-    i3.OtpCodes,
-    i3.OtpCode,
-    i3.$OtpCodesFilterComposer,
-    i3.$OtpCodesOrderingComposer,
-    i3.$OtpCodesAnnotationComposer,
-    $OtpCodesCreateCompanionBuilder,
-    $OtpCodesUpdateCompanionBuilder,
+    i3.CloudAuthOtpCodes,
+    i3.CloudAuthOtpCode,
+    i3.$CloudAuthOtpCodesFilterComposer,
+    i3.$CloudAuthOtpCodesOrderingComposer,
+    i3.$CloudAuthOtpCodesAnnotationComposer,
+    $CloudAuthOtpCodesCreateCompanionBuilder,
+    $CloudAuthOtpCodesUpdateCompanionBuilder,
     (
-      i3.OtpCode,
-      i0.BaseReferences<i0.GeneratedDatabase, i3.OtpCodes, i3.OtpCode>
+      i3.CloudAuthOtpCode,
+      i0.BaseReferences<i0.GeneratedDatabase, i3.CloudAuthOtpCodes,
+          i3.CloudAuthOtpCode>
     ),
-    i3.OtpCode,
+    i3.CloudAuthOtpCode,
     i0.PrefetchHooks Function()>;
-typedef $CorksCreateCompanionBuilder = i3.CorksCompanion Function({
+typedef $CloudAuthCorksCreateCompanionBuilder = i3.CloudAuthCorksCompanion
+    Function({
   required i2.Uint8List corkId,
   required i2.Uint8List cryptoKeyId,
   i0.Value<String?> bearerType,
@@ -690,7 +706,8 @@ typedef $CorksCreateCompanionBuilder = i3.CorksCompanion Function({
   i0.Value<DateTime?> lastUseTime,
   i0.Value<int> rowid,
 });
-typedef $CorksUpdateCompanionBuilder = i3.CorksCompanion Function({
+typedef $CloudAuthCorksUpdateCompanionBuilder = i3.CloudAuthCorksCompanion
+    Function({
   i0.Value<i2.Uint8List> corkId,
   i0.Value<i2.Uint8List> cryptoKeyId,
   i0.Value<String?> bearerType,
@@ -705,8 +722,9 @@ typedef $CorksUpdateCompanionBuilder = i3.CorksCompanion Function({
   i0.Value<int> rowid,
 });
 
-class $CorksFilterComposer extends i0.Composer<i0.GeneratedDatabase, i3.Corks> {
-  $CorksFilterComposer({
+class $CloudAuthCorksFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CloudAuthCorks> {
+  $CloudAuthCorksFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -750,9 +768,9 @@ class $CorksFilterComposer extends i0.Composer<i0.GeneratedDatabase, i3.Corks> {
       builder: (column) => i0.ColumnFilters(column));
 }
 
-class $CorksOrderingComposer
-    extends i0.Composer<i0.GeneratedDatabase, i3.Corks> {
-  $CorksOrderingComposer({
+class $CloudAuthCorksOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CloudAuthCorks> {
+  $CloudAuthCorksOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -801,9 +819,9 @@ class $CorksOrderingComposer
       builder: (column) => i0.ColumnOrderings(column));
 }
 
-class $CorksAnnotationComposer
-    extends i0.Composer<i0.GeneratedDatabase, i3.Corks> {
-  $CorksAnnotationComposer({
+class $CloudAuthCorksAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i3.CloudAuthCorks> {
+  $CloudAuthCorksAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -844,28 +862,32 @@ class $CorksAnnotationComposer
       column: $table.lastUseTime, builder: (column) => column);
 }
 
-class $CorksTableManager extends i0.RootTableManager<
+class $CloudAuthCorksTableManager extends i0.RootTableManager<
     i0.GeneratedDatabase,
-    i3.Corks,
-    i3.Cork,
-    i3.$CorksFilterComposer,
-    i3.$CorksOrderingComposer,
-    i3.$CorksAnnotationComposer,
-    $CorksCreateCompanionBuilder,
-    $CorksUpdateCompanionBuilder,
-    (i3.Cork, i0.BaseReferences<i0.GeneratedDatabase, i3.Corks, i3.Cork>),
-    i3.Cork,
+    i3.CloudAuthCorks,
+    i3.CloudAuthCork,
+    i3.$CloudAuthCorksFilterComposer,
+    i3.$CloudAuthCorksOrderingComposer,
+    i3.$CloudAuthCorksAnnotationComposer,
+    $CloudAuthCorksCreateCompanionBuilder,
+    $CloudAuthCorksUpdateCompanionBuilder,
+    (
+      i3.CloudAuthCork,
+      i0
+      .BaseReferences<i0.GeneratedDatabase, i3.CloudAuthCorks, i3.CloudAuthCork>
+    ),
+    i3.CloudAuthCork,
     i0.PrefetchHooks Function()> {
-  $CorksTableManager(i0.GeneratedDatabase db, i3.Corks table)
+  $CloudAuthCorksTableManager(i0.GeneratedDatabase db, i3.CloudAuthCorks table)
       : super(i0.TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              i3.$CorksFilterComposer($db: db, $table: table),
+              i3.$CloudAuthCorksFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              i3.$CorksOrderingComposer($db: db, $table: table),
+              i3.$CloudAuthCorksOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              i3.$CorksAnnotationComposer($db: db, $table: table),
+              i3.$CloudAuthCorksAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             i0.Value<i2.Uint8List> corkId = const i0.Value.absent(),
             i0.Value<i2.Uint8List> cryptoKeyId = const i0.Value.absent(),
@@ -880,7 +902,7 @@ class $CorksTableManager extends i0.RootTableManager<
             i0.Value<DateTime?> lastUseTime = const i0.Value.absent(),
             i0.Value<int> rowid = const i0.Value.absent(),
           }) =>
-              i3.CorksCompanion(
+              i3.CloudAuthCorksCompanion(
             corkId: corkId,
             cryptoKeyId: cryptoKeyId,
             bearerType: bearerType,
@@ -908,7 +930,7 @@ class $CorksTableManager extends i0.RootTableManager<
             i0.Value<DateTime?> lastUseTime = const i0.Value.absent(),
             i0.Value<int> rowid = const i0.Value.absent(),
           }) =>
-              i3.CorksCompanion.insert(
+              i3.CloudAuthCorksCompanion.insert(
             corkId: corkId,
             cryptoKeyId: cryptoKeyId,
             bearerType: bearerType,
@@ -929,24 +951,29 @@ class $CorksTableManager extends i0.RootTableManager<
         ));
 }
 
-typedef $CorksProcessedTableManager = i0.ProcessedTableManager<
+typedef $CloudAuthCorksProcessedTableManager = i0.ProcessedTableManager<
     i0.GeneratedDatabase,
-    i3.Corks,
-    i3.Cork,
-    i3.$CorksFilterComposer,
-    i3.$CorksOrderingComposer,
-    i3.$CorksAnnotationComposer,
-    $CorksCreateCompanionBuilder,
-    $CorksUpdateCompanionBuilder,
-    (i3.Cork, i0.BaseReferences<i0.GeneratedDatabase, i3.Corks, i3.Cork>),
-    i3.Cork,
+    i3.CloudAuthCorks,
+    i3.CloudAuthCork,
+    i3.$CloudAuthCorksFilterComposer,
+    i3.$CloudAuthCorksOrderingComposer,
+    i3.$CloudAuthCorksAnnotationComposer,
+    $CloudAuthCorksCreateCompanionBuilder,
+    $CloudAuthCorksUpdateCompanionBuilder,
+    (
+      i3.CloudAuthCork,
+      i0
+      .BaseReferences<i0.GeneratedDatabase, i3.CloudAuthCorks, i3.CloudAuthCork>
+    ),
+    i3.CloudAuthCork,
     i0.PrefetchHooks Function()>;
 
-class CryptoKeys extends i0.Table with i0.TableInfo<CryptoKeys, i1.CryptoKey> {
+class CloudAuthCryptoKeys extends i0.Table
+    with i0.TableInfo<CloudAuthCryptoKeys, i1.CryptoKey> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
-  CryptoKeys(this.attachedDatabase, [this._alias]);
+  CloudAuthCryptoKeys(this.attachedDatabase, [this._alias]);
   late final i0.GeneratedColumn<i2.Uint8List> cryptoKeyId =
       i0.GeneratedColumn<i2.Uint8List>('crypto_key_id', aliasedName, false,
           type: i0.DriftSqlType.blob,
@@ -979,7 +1006,7 @@ class CryptoKeys extends i0.Table with i0.TableInfo<CryptoKeys, i1.CryptoKey> {
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'crypto_keys';
+  static const String $name = 'cloud_auth_crypto_keys';
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {cryptoKeyId};
   @override
@@ -1001,8 +1028,8 @@ class CryptoKeys extends i0.Table with i0.TableInfo<CryptoKeys, i1.CryptoKey> {
   }
 
   @override
-  CryptoKeys createAlias(String alias) {
-    return CryptoKeys(attachedDatabase, alias);
+  CloudAuthCryptoKeys createAlias(String alias) {
+    return CloudAuthCryptoKeys(attachedDatabase, alias);
   }
 
   @override
@@ -1013,14 +1040,14 @@ class CryptoKeys extends i0.Table with i0.TableInfo<CryptoKeys, i1.CryptoKey> {
   bool get dontWriteConstraints => true;
 }
 
-class CryptoKeysCompanion extends i0.UpdateCompanion<i1.CryptoKey> {
+class CloudAuthCryptoKeysCompanion extends i0.UpdateCompanion<i1.CryptoKey> {
   final i0.Value<i2.Uint8List> cryptoKeyId;
   final i0.Value<String> keyPurpose;
   final i0.Value<String> keyAlgorithm;
   final i0.Value<i2.Uint8List?> keyMaterial;
   final i0.Value<String?> externalCryptoKeyId;
   final i0.Value<int> rowid;
-  const CryptoKeysCompanion({
+  const CloudAuthCryptoKeysCompanion({
     this.cryptoKeyId = const i0.Value.absent(),
     this.keyPurpose = const i0.Value.absent(),
     this.keyAlgorithm = const i0.Value.absent(),
@@ -1028,7 +1055,7 @@ class CryptoKeysCompanion extends i0.UpdateCompanion<i1.CryptoKey> {
     this.externalCryptoKeyId = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   });
-  CryptoKeysCompanion.insert({
+  CloudAuthCryptoKeysCompanion.insert({
     required i2.Uint8List cryptoKeyId,
     required String keyPurpose,
     required String keyAlgorithm,
@@ -1057,14 +1084,14 @@ class CryptoKeysCompanion extends i0.UpdateCompanion<i1.CryptoKey> {
     });
   }
 
-  i3.CryptoKeysCompanion copyWith(
+  i3.CloudAuthCryptoKeysCompanion copyWith(
       {i0.Value<i2.Uint8List>? cryptoKeyId,
       i0.Value<String>? keyPurpose,
       i0.Value<String>? keyAlgorithm,
       i0.Value<i2.Uint8List?>? keyMaterial,
       i0.Value<String?>? externalCryptoKeyId,
       i0.Value<int>? rowid}) {
-    return i3.CryptoKeysCompanion(
+    return i3.CloudAuthCryptoKeysCompanion(
       cryptoKeyId: cryptoKeyId ?? this.cryptoKeyId,
       keyPurpose: keyPurpose ?? this.keyPurpose,
       keyAlgorithm: keyAlgorithm ?? this.keyAlgorithm,
@@ -1101,7 +1128,7 @@ class CryptoKeysCompanion extends i0.UpdateCompanion<i1.CryptoKey> {
 
   @override
   String toString() {
-    return (StringBuffer('CryptoKeysCompanion(')
+    return (StringBuffer('CloudAuthCryptoKeysCompanion(')
           ..write('cryptoKeyId: $cryptoKeyId, ')
           ..write('keyPurpose: $keyPurpose, ')
           ..write('keyAlgorithm: $keyAlgorithm, ')
@@ -1113,15 +1140,16 @@ class CryptoKeysCompanion extends i0.UpdateCompanion<i1.CryptoKey> {
   }
 }
 
-i0.Index get cryptoKeysExternalCryptoKeyIdIdx => i0.Index(
-    'crypto_keys_external_crypto_key_id_idx',
-    'CREATE INDEX IF NOT EXISTS crypto_keys_external_crypto_key_id_idx ON crypto_keys (external_crypto_key_id)');
+i0.Index get cloudAuthCryptoKeysExternalCryptoKeyIdIdx => i0.Index(
+    'cloud_auth_crypto_keys_external_crypto_key_id_idx',
+    'CREATE INDEX IF NOT EXISTS cloud_auth_crypto_keys_external_crypto_key_id_idx ON cloud_auth_crypto_keys (external_crypto_key_id)');
 
-class Sessions extends i0.Table with i0.TableInfo<Sessions, i4.Session> {
+class CloudAuthSessions extends i0.Table
+    with i0.TableInfo<CloudAuthSessions, i4.Session> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
-  Sessions(this.attachedDatabase, [this._alias]);
+  CloudAuthSessions(this.attachedDatabase, [this._alias]);
   late final i0.GeneratedColumn<int> rowid = i0.GeneratedColumn<int>(
       'rowid', aliasedName, false,
       hasAutoIncrement: true,
@@ -1150,7 +1178,8 @@ class Sessions extends i0.Table with i0.TableInfo<Sessions, i4.Session> {
               type: i0.DriftSqlType.blob,
               requiredDuringInsert: false,
               $customConstraints: '')
-          .withConverter<i4.SessionClient?>(i3.Sessions.$converterclientInfon);
+          .withConverter<i4.SessionClient?>(
+              i3.CloudAuthSessions.$converterclientInfon);
   late final i0
       .GeneratedColumnWithTypeConverter<i4.AuthenticationFactor, i2.Uint8List>
       authenticationFactor = i0.GeneratedColumn<i2.Uint8List>(
@@ -1159,13 +1188,14 @@ class Sessions extends i0.Table with i0.TableInfo<Sessions, i4.Session> {
               requiredDuringInsert: true,
               $customConstraints: 'NOT NULL')
           .withConverter<i4.AuthenticationFactor>(
-              i3.Sessions.$converterauthenticationFactor);
+              i3.CloudAuthSessions.$converterauthenticationFactor);
   late final i0.GeneratedColumnWithTypeConverter<i4.SessionState?, i2.Uint8List>
       state = i0.GeneratedColumn<i2.Uint8List>('state', aliasedName, true,
               type: i0.DriftSqlType.blob,
               requiredDuringInsert: false,
               $customConstraints: '')
-          .withConverter<i4.SessionState?>(i3.Sessions.$converterstaten);
+          .withConverter<i4.SessionState?>(
+              i3.CloudAuthSessions.$converterstaten);
   late final i0.GeneratedColumn<String> ipAddress = i0.GeneratedColumn<String>(
       'ip_address', aliasedName, true,
       type: i0.DriftSqlType.string,
@@ -1220,7 +1250,7 @@ class Sessions extends i0.Table with i0.TableInfo<Sessions, i4.Session> {
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'sessions';
+  static const String $name = 'cloud_auth_sessions';
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {rowid};
   @override
@@ -1235,14 +1265,15 @@ class Sessions extends i0.Table with i0.TableInfo<Sessions, i4.Session> {
           .read(i0.DriftSqlType.string, data['${effectivePrefix}user_id'])!,
       expireTime: attachedDatabase.typeMapping.read(
           const i5.TimestampType(), data['${effectivePrefix}expire_time'])!,
-      authenticationFactor: i3.Sessions.$converterauthenticationFactor.fromSql(
-          attachedDatabase.typeMapping.read(i0.DriftSqlType.blob,
+      authenticationFactor: i3.CloudAuthSessions.$converterauthenticationFactor
+          .fromSql(attachedDatabase.typeMapping.read(i0.DriftSqlType.blob,
               data['${effectivePrefix}authentication_factor'])!),
-      state: i3.Sessions.$converterstaten.fromSql(attachedDatabase.typeMapping
-          .read(i0.DriftSqlType.blob, data['${effectivePrefix}state'])),
-      clientInfo: i3.Sessions.$converterclientInfon.fromSql(attachedDatabase
+      state: i3.CloudAuthSessions.$converterstaten.fromSql(attachedDatabase
           .typeMapping
-          .read(i0.DriftSqlType.blob, data['${effectivePrefix}client_info'])),
+          .read(i0.DriftSqlType.blob, data['${effectivePrefix}state'])),
+      clientInfo: i3.CloudAuthSessions.$converterclientInfon.fromSql(
+          attachedDatabase.typeMapping.read(
+              i0.DriftSqlType.blob, data['${effectivePrefix}client_info'])),
       ipAddress: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.string, data['${effectivePrefix}ip_address']),
       externalSessionId: attachedDatabase.typeMapping.read(
@@ -1252,8 +1283,8 @@ class Sessions extends i0.Table with i0.TableInfo<Sessions, i4.Session> {
   }
 
   @override
-  Sessions createAlias(String alias) {
-    return Sessions(attachedDatabase, alias);
+  CloudAuthSessions createAlias(String alias) {
+    return CloudAuthSessions(attachedDatabase, alias);
   }
 
   static i0.TypeConverter<i4.SessionClient, i2.Uint8List> $converterclientInfo =
@@ -1269,14 +1300,14 @@ class Sessions extends i0.Table with i0.TableInfo<Sessions, i4.Session> {
       i0.NullAwareTypeConverter.wrap($converterstate);
   @override
   List<String> get customConstraints => const [
-        'CONSTRAINT sessions_user_fk FOREIGN KEY(user_id)REFERENCES users(user_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
-        'CONSTRAINT sessions_key_fk FOREIGN KEY(crypto_key_id)REFERENCES crypto_keys(crypto_key_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
+        'CONSTRAINT cloud_auth_sessions_user_fk FOREIGN KEY(user_id)REFERENCES cloud_auth_users(user_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+        'CONSTRAINT cloud_auth_sessions_key_fk FOREIGN KEY(crypto_key_id)REFERENCES cloud_auth_crypto_keys(crypto_key_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
       ];
   @override
   bool get dontWriteConstraints => true;
 }
 
-class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
+class CloudAuthSessionsCompanion extends i0.UpdateCompanion<i4.Session> {
   final i0.Value<int> rowid;
   final i0.Value<String> sessionId;
   final i0.Value<i2.Uint8List> cryptoKeyId;
@@ -1290,7 +1321,7 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
   final i0.Value<DateTime?> updateTime;
   final i0.Value<DateTime> expireTime;
   final i0.Value<DateTime?> cancelTime;
-  const SessionsCompanion({
+  const CloudAuthSessionsCompanion({
     this.rowid = const i0.Value.absent(),
     this.sessionId = const i0.Value.absent(),
     this.cryptoKeyId = const i0.Value.absent(),
@@ -1305,7 +1336,7 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
     this.expireTime = const i0.Value.absent(),
     this.cancelTime = const i0.Value.absent(),
   });
-  SessionsCompanion.insert({
+  CloudAuthSessionsCompanion.insert({
     this.rowid = const i0.Value.absent(),
     required String sessionId,
     required i2.Uint8List cryptoKeyId,
@@ -1357,7 +1388,7 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
     });
   }
 
-  i3.SessionsCompanion copyWith(
+  i3.CloudAuthSessionsCompanion copyWith(
       {i0.Value<int>? rowid,
       i0.Value<String>? sessionId,
       i0.Value<i2.Uint8List>? cryptoKeyId,
@@ -1371,7 +1402,7 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
       i0.Value<DateTime?>? updateTime,
       i0.Value<DateTime>? expireTime,
       i0.Value<DateTime?>? cancelTime}) {
-    return i3.SessionsCompanion(
+    return i3.CloudAuthSessionsCompanion(
       rowid: rowid ?? this.rowid,
       sessionId: sessionId ?? this.sessionId,
       cryptoKeyId: cryptoKeyId ?? this.cryptoKeyId,
@@ -1405,16 +1436,16 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
     }
     if (clientInfo.present) {
       map['client_info'] = i0.Variable<i2.Uint8List>(
-          i3.Sessions.$converterclientInfon.toSql(clientInfo.value));
+          i3.CloudAuthSessions.$converterclientInfon.toSql(clientInfo.value));
     }
     if (authenticationFactor.present) {
       map['authentication_factor'] = i0.Variable<i2.Uint8List>(i3
-          .Sessions.$converterauthenticationFactor
+          .CloudAuthSessions.$converterauthenticationFactor
           .toSql(authenticationFactor.value));
     }
     if (state.present) {
       map['state'] = i0.Variable<i2.Uint8List>(
-          i3.Sessions.$converterstaten.toSql(state.value));
+          i3.CloudAuthSessions.$converterstaten.toSql(state.value));
     }
     if (ipAddress.present) {
       map['ip_address'] = i0.Variable<String>(ipAddress.value);
@@ -1443,7 +1474,7 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
 
   @override
   String toString() {
-    return (StringBuffer('SessionsCompanion(')
+    return (StringBuffer('CloudAuthSessionsCompanion(')
           ..write('rowid: $rowid, ')
           ..write('sessionId: $sessionId, ')
           ..write('cryptoKeyId: $cryptoKeyId, ')
@@ -1462,22 +1493,25 @@ class SessionsCompanion extends i0.UpdateCompanion<i4.Session> {
   }
 }
 
-i0.Index get sessionsUserIdx => i0.Index('sessions_user_idx',
-    'CREATE INDEX IF NOT EXISTS sessions_user_idx ON sessions (user_id)');
-i0.Index get sessionsCryptoKeyIdx => i0.Index('sessions_crypto_key_idx',
-    'CREATE INDEX IF NOT EXISTS sessions_crypto_key_idx ON sessions (crypto_key_id)');
-i0.Index get sessionsExternalSessionIdIdx => i0.Index(
-    'sessions_external_session_id_idx',
-    'CREATE INDEX IF NOT EXISTS sessions_external_session_id_idx ON sessions (external_session_id)');
-i0.Trigger get authSessionsUpdateTime => i0.Trigger(
-    'CREATE TRIGGER IF NOT EXISTS auth_sessions_update_time AFTER UPDATE ON sessions BEGIN UPDATE sessions SET update_time = unixepoch(\'now\', \'subsec\') WHERE "rowid" = OLD."rowid";END',
-    'auth_sessions_update_time');
+i0.Index get cloudAuthSessionsUserIdx => i0.Index(
+    'cloud_auth_sessions_user_idx',
+    'CREATE INDEX IF NOT EXISTS cloud_auth_sessions_user_idx ON cloud_auth_sessions (user_id)');
+i0.Index get cloudAuthSessionsCryptoKeyIdx => i0.Index(
+    'cloud_auth_sessions_crypto_key_idx',
+    'CREATE INDEX IF NOT EXISTS cloud_auth_sessions_crypto_key_idx ON cloud_auth_sessions (crypto_key_id)');
+i0.Index get cloudAuthSessionsExternalSessionIdIdx => i0.Index(
+    'cloud_auth_sessions_external_session_id_idx',
+    'CREATE INDEX IF NOT EXISTS cloud_auth_sessions_external_session_id_idx ON cloud_auth_sessions (external_session_id)');
+i0.Trigger get cloudAuthSessionsUpdateTimeTrg => i0.Trigger(
+    'CREATE TRIGGER IF NOT EXISTS cloud_auth_sessions_update_time_trg AFTER UPDATE ON cloud_auth_sessions BEGIN UPDATE cloud_auth_sessions SET update_time = unixepoch(\'now\', \'subsec\') WHERE "rowid" = OLD."rowid";END',
+    'cloud_auth_sessions_update_time_trg');
 
-class OtpCodes extends i0.Table with i0.TableInfo<OtpCodes, i3.OtpCode> {
+class CloudAuthOtpCodes extends i0.Table
+    with i0.TableInfo<CloudAuthOtpCodes, i3.CloudAuthOtpCode> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
-  OtpCodes(this.attachedDatabase, [this._alias]);
+  CloudAuthOtpCodes(this.attachedDatabase, [this._alias]);
   late final i0.GeneratedColumn<int> rowid = i0.GeneratedColumn<int>(
       'rowid', aliasedName, false,
       hasAutoIncrement: true,
@@ -1517,13 +1551,13 @@ class OtpCodes extends i0.Table with i0.TableInfo<OtpCodes, i3.OtpCode> {
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'otp_codes';
+  static const String $name = 'cloud_auth_otp_codes';
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {rowid};
   @override
-  i3.OtpCode map(Map<String, dynamic> data, {String? tablePrefix}) {
+  i3.CloudAuthOtpCode map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return i3.OtpCode(
+    return i3.CloudAuthOtpCode(
       rowid: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.int, data['${effectivePrefix}rowid'])!,
       sessionId: attachedDatabase.typeMapping
@@ -1538,19 +1572,20 @@ class OtpCodes extends i0.Table with i0.TableInfo<OtpCodes, i3.OtpCode> {
   }
 
   @override
-  OtpCodes createAlias(String alias) {
-    return OtpCodes(attachedDatabase, alias);
+  CloudAuthOtpCodes createAlias(String alias) {
+    return CloudAuthOtpCodes(attachedDatabase, alias);
   }
 
   @override
   List<String> get customConstraints => const [
-        'CONSTRAINT otp_codes_session_fk FOREIGN KEY(session_id)REFERENCES sessions(session_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
+        'CONSTRAINT cloud_auth_otp_codes_session_id_fk FOREIGN KEY(session_id)REFERENCES cloud_auth_sessions(session_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
       ];
   @override
   bool get dontWriteConstraints => true;
 }
 
-class OtpCode extends i0.DataClass implements i0.Insertable<i3.OtpCode> {
+class CloudAuthOtpCode extends i0.DataClass
+    implements i0.Insertable<i3.CloudAuthOtpCode> {
   final int rowid;
 
   /// The ID of the session.
@@ -1564,7 +1599,7 @@ class OtpCode extends i0.DataClass implements i0.Insertable<i3.OtpCode> {
 
   /// The time the HOTP code was last used.
   final DateTime updateTime;
-  const OtpCode(
+  const CloudAuthOtpCode(
       {required this.rowid,
       required this.sessionId,
       required this.resendAttempt,
@@ -1582,10 +1617,10 @@ class OtpCode extends i0.DataClass implements i0.Insertable<i3.OtpCode> {
     return map;
   }
 
-  factory OtpCode.fromJson(Map<String, dynamic> json,
+  factory CloudAuthOtpCode.fromJson(Map<String, dynamic> json,
       {i0.ValueSerializer? serializer}) {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
-    return OtpCode(
+    return CloudAuthOtpCode(
       rowid: serializer.fromJson<int>(json['rowid']),
       sessionId: serializer.fromJson<String>(json['session_id']),
       resendAttempt: serializer.fromJson<int>(json['resend_attempt']),
@@ -1605,21 +1640,21 @@ class OtpCode extends i0.DataClass implements i0.Insertable<i3.OtpCode> {
     };
   }
 
-  i3.OtpCode copyWith(
+  i3.CloudAuthOtpCode copyWith(
           {int? rowid,
           String? sessionId,
           int? resendAttempt,
           int? verifyAttempt,
           DateTime? updateTime}) =>
-      i3.OtpCode(
+      i3.CloudAuthOtpCode(
         rowid: rowid ?? this.rowid,
         sessionId: sessionId ?? this.sessionId,
         resendAttempt: resendAttempt ?? this.resendAttempt,
         verifyAttempt: verifyAttempt ?? this.verifyAttempt,
         updateTime: updateTime ?? this.updateTime,
       );
-  OtpCode copyWithCompanion(i3.OtpCodesCompanion data) {
-    return OtpCode(
+  CloudAuthOtpCode copyWithCompanion(i3.CloudAuthOtpCodesCompanion data) {
+    return CloudAuthOtpCode(
       rowid: data.rowid.present ? data.rowid.value : this.rowid,
       sessionId: data.sessionId.present ? data.sessionId.value : this.sessionId,
       resendAttempt: data.resendAttempt.present
@@ -1635,7 +1670,7 @@ class OtpCode extends i0.DataClass implements i0.Insertable<i3.OtpCode> {
 
   @override
   String toString() {
-    return (StringBuffer('OtpCode(')
+    return (StringBuffer('CloudAuthOtpCode(')
           ..write('rowid: $rowid, ')
           ..write('sessionId: $sessionId, ')
           ..write('resendAttempt: $resendAttempt, ')
@@ -1651,7 +1686,7 @@ class OtpCode extends i0.DataClass implements i0.Insertable<i3.OtpCode> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is i3.OtpCode &&
+      (other is i3.CloudAuthOtpCode &&
           other.rowid == this.rowid &&
           other.sessionId == this.sessionId &&
           other.resendAttempt == this.resendAttempt &&
@@ -1659,27 +1694,28 @@ class OtpCode extends i0.DataClass implements i0.Insertable<i3.OtpCode> {
           other.updateTime == this.updateTime);
 }
 
-class OtpCodesCompanion extends i0.UpdateCompanion<i3.OtpCode> {
+class CloudAuthOtpCodesCompanion
+    extends i0.UpdateCompanion<i3.CloudAuthOtpCode> {
   final i0.Value<int> rowid;
   final i0.Value<String> sessionId;
   final i0.Value<int> resendAttempt;
   final i0.Value<int> verifyAttempt;
   final i0.Value<DateTime> updateTime;
-  const OtpCodesCompanion({
+  const CloudAuthOtpCodesCompanion({
     this.rowid = const i0.Value.absent(),
     this.sessionId = const i0.Value.absent(),
     this.resendAttempt = const i0.Value.absent(),
     this.verifyAttempt = const i0.Value.absent(),
     this.updateTime = const i0.Value.absent(),
   });
-  OtpCodesCompanion.insert({
+  CloudAuthOtpCodesCompanion.insert({
     this.rowid = const i0.Value.absent(),
     required String sessionId,
     this.resendAttempt = const i0.Value.absent(),
     this.verifyAttempt = const i0.Value.absent(),
     this.updateTime = const i0.Value.absent(),
   }) : sessionId = i0.Value(sessionId);
-  static i0.Insertable<i3.OtpCode> custom({
+  static i0.Insertable<i3.CloudAuthOtpCode> custom({
     i0.Expression<int>? rowid,
     i0.Expression<String>? sessionId,
     i0.Expression<int>? resendAttempt,
@@ -1695,13 +1731,13 @@ class OtpCodesCompanion extends i0.UpdateCompanion<i3.OtpCode> {
     });
   }
 
-  i3.OtpCodesCompanion copyWith(
+  i3.CloudAuthOtpCodesCompanion copyWith(
       {i0.Value<int>? rowid,
       i0.Value<String>? sessionId,
       i0.Value<int>? resendAttempt,
       i0.Value<int>? verifyAttempt,
       i0.Value<DateTime>? updateTime}) {
-    return i3.OtpCodesCompanion(
+    return i3.CloudAuthOtpCodesCompanion(
       rowid: rowid ?? this.rowid,
       sessionId: sessionId ?? this.sessionId,
       resendAttempt: resendAttempt ?? this.resendAttempt,
@@ -1734,7 +1770,7 @@ class OtpCodesCompanion extends i0.UpdateCompanion<i3.OtpCode> {
 
   @override
   String toString() {
-    return (StringBuffer('OtpCodesCompanion(')
+    return (StringBuffer('CloudAuthOtpCodesCompanion(')
           ..write('rowid: $rowid, ')
           ..write('sessionId: $sessionId, ')
           ..write('resendAttempt: $resendAttempt, ')
@@ -1745,14 +1781,16 @@ class OtpCodesCompanion extends i0.UpdateCompanion<i3.OtpCode> {
   }
 }
 
-i0.Index get otpCodesSessionIdx => i0.Index('otp_codes_session_idx',
-    'CREATE INDEX IF NOT EXISTS otp_codes_session_idx ON otp_codes (session_id)');
+i0.Index get cloudAuthOtpCodesSessionIdIdx => i0.Index(
+    'cloud_auth_otp_codes_session_id_idx',
+    'CREATE INDEX IF NOT EXISTS cloud_auth_otp_codes_session_id_idx ON cloud_auth_otp_codes (session_id)');
 
-class Corks extends i0.Table with i0.TableInfo<Corks, i3.Cork> {
+class CloudAuthCorks extends i0.Table
+    with i0.TableInfo<CloudAuthCorks, i3.CloudAuthCork> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
-  Corks(this.attachedDatabase, [this._alias]);
+  CloudAuthCorks(this.attachedDatabase, [this._alias]);
   late final i0.GeneratedColumn<i2.Uint8List> corkId =
       i0.GeneratedColumn<i2.Uint8List>('cork_id', aliasedName, false,
           type: i0.DriftSqlType.blob,
@@ -1830,13 +1868,13 @@ class Corks extends i0.Table with i0.TableInfo<Corks, i3.Cork> {
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'corks';
+  static const String $name = 'cloud_auth_corks';
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {corkId};
   @override
-  i3.Cork map(Map<String, dynamic> data, {String? tablePrefix}) {
+  i3.CloudAuthCork map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return i3.Cork(
+    return i3.CloudAuthCork(
       corkId: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.blob, data['${effectivePrefix}cork_id'])!,
       cryptoKeyId: attachedDatabase.typeMapping
@@ -1863,22 +1901,23 @@ class Corks extends i0.Table with i0.TableInfo<Corks, i3.Cork> {
   }
 
   @override
-  Corks createAlias(String alias) {
-    return Corks(attachedDatabase, alias);
+  CloudAuthCorks createAlias(String alias) {
+    return CloudAuthCorks(attachedDatabase, alias);
   }
 
   @override
   List<String> get customConstraints => const [
-        'CONSTRAINT corks_crypto_key_fk FOREIGN KEY(crypto_key_id)REFERENCES crypto_keys(crypto_key_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
-        'CONSTRAINT corks_bearer_fk FOREIGN KEY(bearer_type, bearer_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
-        'CONSTRAINT corks_audience_fk FOREIGN KEY(audience_type, audience_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
-        'CONSTRAINT corks_issuer_fk FOREIGN KEY(issuer_type, issuer_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
+        'CONSTRAINT cloud_auth_corks_crypto_key_fk FOREIGN KEY(crypto_key_id)REFERENCES cloud_auth_crypto_keys(crypto_key_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+        'CONSTRAINT cloud_auth_corks_bearer_fk FOREIGN KEY(bearer_type, bearer_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+        'CONSTRAINT cloud_auth_corks_audience_fk FOREIGN KEY(audience_type, audience_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+        'CONSTRAINT cloud_auth_corks_issuer_fk FOREIGN KEY(issuer_type, issuer_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
       ];
   @override
   bool get dontWriteConstraints => true;
 }
 
-class Cork extends i0.DataClass implements i0.Insertable<i3.Cork> {
+class CloudAuthCork extends i0.DataClass
+    implements i0.Insertable<i3.CloudAuthCork> {
   /// The unique identifier for the cork and its root key.
   final i2.Uint8List corkId;
 
@@ -1919,7 +1958,7 @@ class Cork extends i0.DataClass implements i0.Insertable<i3.Cork> {
 
   /// The time the cork was last used.
   final DateTime? lastUseTime;
-  const Cork(
+  const CloudAuthCork(
       {required this.corkId,
       required this.cryptoKeyId,
       this.bearerType,
@@ -1967,10 +2006,10 @@ class Cork extends i0.DataClass implements i0.Insertable<i3.Cork> {
     return map;
   }
 
-  factory Cork.fromJson(Map<String, dynamic> json,
+  factory CloudAuthCork.fromJson(Map<String, dynamic> json,
       {i0.ValueSerializer? serializer}) {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
-    return Cork(
+    return CloudAuthCork(
       corkId: serializer.fromJson<i2.Uint8List>(json['cork_id']),
       cryptoKeyId: serializer.fromJson<i2.Uint8List>(json['crypto_key_id']),
       bearerType: serializer.fromJson<String?>(json['bearer_type']),
@@ -2002,7 +2041,7 @@ class Cork extends i0.DataClass implements i0.Insertable<i3.Cork> {
     };
   }
 
-  i3.Cork copyWith(
+  i3.CloudAuthCork copyWith(
           {i2.Uint8List? corkId,
           i2.Uint8List? cryptoKeyId,
           i0.Value<String?> bearerType = const i0.Value.absent(),
@@ -2014,7 +2053,7 @@ class Cork extends i0.DataClass implements i0.Insertable<i3.Cork> {
           DateTime? createTime,
           i0.Value<DateTime?> expireTime = const i0.Value.absent(),
           i0.Value<DateTime?> lastUseTime = const i0.Value.absent()}) =>
-      i3.Cork(
+      i3.CloudAuthCork(
         corkId: corkId ?? this.corkId,
         cryptoKeyId: cryptoKeyId ?? this.cryptoKeyId,
         bearerType: bearerType.present ? bearerType.value : this.bearerType,
@@ -2028,8 +2067,8 @@ class Cork extends i0.DataClass implements i0.Insertable<i3.Cork> {
         expireTime: expireTime.present ? expireTime.value : this.expireTime,
         lastUseTime: lastUseTime.present ? lastUseTime.value : this.lastUseTime,
       );
-  Cork copyWithCompanion(i3.CorksCompanion data) {
-    return Cork(
+  CloudAuthCork copyWithCompanion(i3.CloudAuthCorksCompanion data) {
+    return CloudAuthCork(
       corkId: data.corkId.present ? data.corkId.value : this.corkId,
       cryptoKeyId:
           data.cryptoKeyId.present ? data.cryptoKeyId.value : this.cryptoKeyId,
@@ -2055,7 +2094,7 @@ class Cork extends i0.DataClass implements i0.Insertable<i3.Cork> {
 
   @override
   String toString() {
-    return (StringBuffer('Cork(')
+    return (StringBuffer('CloudAuthCork(')
           ..write('corkId: $corkId, ')
           ..write('cryptoKeyId: $cryptoKeyId, ')
           ..write('bearerType: $bearerType, ')
@@ -2087,7 +2126,7 @@ class Cork extends i0.DataClass implements i0.Insertable<i3.Cork> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is i3.Cork &&
+      (other is i3.CloudAuthCork &&
           i0.$driftBlobEquality.equals(other.corkId, this.corkId) &&
           i0.$driftBlobEquality.equals(other.cryptoKeyId, this.cryptoKeyId) &&
           other.bearerType == this.bearerType &&
@@ -2101,7 +2140,7 @@ class Cork extends i0.DataClass implements i0.Insertable<i3.Cork> {
           other.lastUseTime == this.lastUseTime);
 }
 
-class CorksCompanion extends i0.UpdateCompanion<i3.Cork> {
+class CloudAuthCorksCompanion extends i0.UpdateCompanion<i3.CloudAuthCork> {
   final i0.Value<i2.Uint8List> corkId;
   final i0.Value<i2.Uint8List> cryptoKeyId;
   final i0.Value<String?> bearerType;
@@ -2114,7 +2153,7 @@ class CorksCompanion extends i0.UpdateCompanion<i3.Cork> {
   final i0.Value<DateTime?> expireTime;
   final i0.Value<DateTime?> lastUseTime;
   final i0.Value<int> rowid;
-  const CorksCompanion({
+  const CloudAuthCorksCompanion({
     this.corkId = const i0.Value.absent(),
     this.cryptoKeyId = const i0.Value.absent(),
     this.bearerType = const i0.Value.absent(),
@@ -2128,7 +2167,7 @@ class CorksCompanion extends i0.UpdateCompanion<i3.Cork> {
     this.lastUseTime = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   });
-  CorksCompanion.insert({
+  CloudAuthCorksCompanion.insert({
     required i2.Uint8List corkId,
     required i2.Uint8List cryptoKeyId,
     this.bearerType = const i0.Value.absent(),
@@ -2143,7 +2182,7 @@ class CorksCompanion extends i0.UpdateCompanion<i3.Cork> {
     this.rowid = const i0.Value.absent(),
   })  : corkId = i0.Value(corkId),
         cryptoKeyId = i0.Value(cryptoKeyId);
-  static i0.Insertable<i3.Cork> custom({
+  static i0.Insertable<i3.CloudAuthCork> custom({
     i0.Expression<i2.Uint8List>? corkId,
     i0.Expression<i2.Uint8List>? cryptoKeyId,
     i0.Expression<String>? bearerType,
@@ -2173,7 +2212,7 @@ class CorksCompanion extends i0.UpdateCompanion<i3.Cork> {
     });
   }
 
-  i3.CorksCompanion copyWith(
+  i3.CloudAuthCorksCompanion copyWith(
       {i0.Value<i2.Uint8List>? corkId,
       i0.Value<i2.Uint8List>? cryptoKeyId,
       i0.Value<String?>? bearerType,
@@ -2186,7 +2225,7 @@ class CorksCompanion extends i0.UpdateCompanion<i3.Cork> {
       i0.Value<DateTime?>? expireTime,
       i0.Value<DateTime?>? lastUseTime,
       i0.Value<int>? rowid}) {
-    return i3.CorksCompanion(
+    return i3.CloudAuthCorksCompanion(
       corkId: corkId ?? this.corkId,
       cryptoKeyId: cryptoKeyId ?? this.cryptoKeyId,
       bearerType: bearerType ?? this.bearerType,
@@ -2249,7 +2288,7 @@ class CorksCompanion extends i0.UpdateCompanion<i3.Cork> {
 
   @override
   String toString() {
-    return (StringBuffer('CorksCompanion(')
+    return (StringBuffer('CloudAuthCorksCompanion(')
           ..write('corkId: $corkId, ')
           ..write('cryptoKeyId: $cryptoKeyId, ')
           ..write('bearerType: $bearerType, ')
@@ -2267,17 +2306,19 @@ class CorksCompanion extends i0.UpdateCompanion<i3.Cork> {
   }
 }
 
-i0.Index get corksCryptoKeyIdx => i0.Index('corks_crypto_key_idx',
-    'CREATE INDEX IF NOT EXISTS corks_crypto_key_idx ON corks (crypto_key_id)');
-i0.Index get corksBearerIdx => i0.Index('corks_bearer_idx',
-    'CREATE INDEX IF NOT EXISTS corks_bearer_idx ON corks (bearer_type, bearer_id)');
-i0.Index get corksAudienceIdx => i0.Index('corks_audience_idx',
-    'CREATE INDEX IF NOT EXISTS corks_audience_idx ON corks (audience_type, audience_id)');
-i0.Index get corksIssuerIdx => i0.Index('corks_issuer_idx',
-    'CREATE INDEX IF NOT EXISTS corks_issuer_idx ON corks (issuer_type, issuer_id)');
+i0.Index get cloudAuthCorksCryptoKeyIdx => i0.Index(
+    'cloud_auth_corks_crypto_key_idx',
+    'CREATE INDEX IF NOT EXISTS cloud_auth_corks_crypto_key_idx ON cloud_auth_corks (crypto_key_id)');
+i0.Index get cloudAuthCorksBearerIdx => i0.Index('cloud_auth_corks_bearer_idx',
+    'CREATE INDEX IF NOT EXISTS cloud_auth_corks_bearer_idx ON cloud_auth_corks (bearer_type, bearer_id)');
+i0.Index get cloudAuthCorksAudienceIdx => i0.Index(
+    'cloud_auth_corks_audience_idx',
+    'CREATE INDEX IF NOT EXISTS cloud_auth_corks_audience_idx ON cloud_auth_corks (audience_type, audience_id)');
+i0.Index get cloudAuthCorksIssuerIdx => i0.Index('cloud_auth_corks_issuer_idx',
+    'CREATE INDEX IF NOT EXISTS cloud_auth_corks_issuer_idx ON cloud_auth_corks (issuer_type, issuer_id)');
 
-class AuthDrift extends i7.ModularAccessor {
-  AuthDrift(i0.GeneratedDatabase db) : super(db);
+class CloudAuthCoreDrift extends i7.ModularAccessor {
+  CloudAuthCoreDrift(i0.GeneratedDatabase db) : super(db);
   i8.Future<List<i1.CryptoKey>> createCryptoKey(
       {required i2.Uint8List cryptoKeyId,
       required String keyPurpose,
@@ -2285,7 +2326,7 @@ class AuthDrift extends i7.ModularAccessor {
       i2.Uint8List? keyMaterial,
       String? externalCryptoKeyId}) {
     return customWriteReturning(
-        'INSERT INTO crypto_keys (crypto_key_id, key_purpose, key_algorithm, key_material, external_crypto_key_id) VALUES (?1, ?2, ?3, ?4, ?5) ON CONFLICT DO NOTHING RETURNING *',
+        'INSERT INTO cloud_auth_crypto_keys (crypto_key_id, key_purpose, key_algorithm, key_material, external_crypto_key_id) VALUES (?1, ?2, ?3, ?4, ?5) ON CONFLICT DO NOTHING RETURNING *',
         variables: [
           i0.Variable<i2.Uint8List>(cryptoKeyId),
           i0.Variable<String>(keyPurpose),
@@ -2294,51 +2335,53 @@ class AuthDrift extends i7.ModularAccessor {
           i0.Variable<String>(externalCryptoKeyId)
         ],
         updates: {
-          cryptoKeys
-        }).then((rows) => Future.wait(rows.map(cryptoKeys.mapFromRow)));
+          cloudAuthCryptoKeys
+        }).then(
+        (rows) => Future.wait(rows.map(cloudAuthCryptoKeys.mapFromRow)));
   }
 
   i0.Selectable<i1.CryptoKey> getCryptoKey(
       {required i2.Uint8List cryptoKeyId}) {
-    return customSelect('SELECT * FROM crypto_keys WHERE crypto_key_id = ?1',
+    return customSelect(
+        'SELECT * FROM cloud_auth_crypto_keys WHERE crypto_key_id = ?1',
         variables: [
           i0.Variable<i2.Uint8List>(cryptoKeyId)
         ],
         readsFrom: {
-          cryptoKeys,
-        }).asyncMap(cryptoKeys.mapFromRow);
+          cloudAuthCryptoKeys,
+        }).asyncMap(cloudAuthCryptoKeys.mapFromRow);
   }
 
   i0.Selectable<i1.CryptoKey> getExternalCryptoKey(
       {String? externalCryptoKeyId}) {
     return customSelect(
-        'SELECT * FROM crypto_keys WHERE external_crypto_key_id = ?1',
+        'SELECT * FROM cloud_auth_crypto_keys WHERE external_crypto_key_id = ?1',
         variables: [
           i0.Variable<String>(externalCryptoKeyId)
         ],
         readsFrom: {
-          cryptoKeys,
-        }).asyncMap(cryptoKeys.mapFromRow);
+          cloudAuthCryptoKeys,
+        }).asyncMap(cloudAuthCryptoKeys.mapFromRow);
   }
 
   i0.Selectable<i1.CryptoKey> findCryptoKey(
       {required String keyPurpose, required String keyAlgorithm}) {
     return customSelect(
-        'SELECT * FROM crypto_keys WHERE key_purpose = ?1 AND key_algorithm = ?2',
+        'SELECT * FROM cloud_auth_crypto_keys WHERE key_purpose = ?1 AND key_algorithm = ?2',
         variables: [
           i0.Variable<String>(keyPurpose),
           i0.Variable<String>(keyAlgorithm)
         ],
         readsFrom: {
-          cryptoKeys,
-        }).asyncMap(cryptoKeys.mapFromRow);
+          cloudAuthCryptoKeys,
+        }).asyncMap(cloudAuthCryptoKeys.mapFromRow);
   }
 
   Future<int> deleteCryptoKey({required i2.Uint8List cryptoKeyId}) {
     return customUpdate(
-      'DELETE FROM crypto_keys WHERE crypto_key_id = ?1',
+      'DELETE FROM cloud_auth_crypto_keys WHERE crypto_key_id = ?1',
       variables: [i0.Variable<i2.Uint8List>(cryptoKeyId)],
-      updates: {cryptoKeys},
+      updates: {cloudAuthCryptoKeys},
       updateKind: i0.UpdateKind.delete,
     );
   }
@@ -2355,66 +2398,68 @@ class AuthDrift extends i7.ModularAccessor {
       DateTime? cancelTime,
       String? externalSessionId}) {
     return customWriteReturning(
-        'INSERT INTO sessions (session_id, crypto_key_id, user_id, client_info, authentication_factor, state, ip_address, expire_time, cancel_time, external_session_id) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10) RETURNING *',
+        'INSERT INTO cloud_auth_sessions (session_id, crypto_key_id, user_id, client_info, authentication_factor, state, ip_address, expire_time, cancel_time, external_session_id) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10) RETURNING *',
         variables: [
           i0.Variable<String>(sessionId),
           i0.Variable<i2.Uint8List>(cryptoKeyId),
           i0.Variable<String>(userId),
           i0.Variable<i2.Uint8List>(
-              i3.Sessions.$converterclientInfon.toSql(clientInfo)),
-          i0.Variable<i2.Uint8List>(i3.Sessions.$converterauthenticationFactor
+              i3.CloudAuthSessions.$converterclientInfon.toSql(clientInfo)),
+          i0.Variable<i2.Uint8List>(i3
+              .CloudAuthSessions.$converterauthenticationFactor
               .toSql(authenticationFactor)),
-          i0.Variable<i2.Uint8List>(i3.Sessions.$converterstaten.toSql(state)),
+          i0.Variable<i2.Uint8List>(
+              i3.CloudAuthSessions.$converterstaten.toSql(state)),
           i0.Variable<String>(ipAddress),
           i0.Variable<DateTime>(expireTime, const i5.TimestampType()),
           i0.Variable<DateTime>(cancelTime, const i5.TimestampType()),
           i0.Variable<String>(externalSessionId)
         ],
         updates: {
-          sessions
-        }).then((rows) => Future.wait(rows.map(sessions.mapFromRow)));
+          cloudAuthSessions
+        }).then((rows) => Future.wait(rows.map(cloudAuthSessions.mapFromRow)));
   }
 
   i0.Selectable<i4.Session> getSession({String? sessionId}) {
     return customSelect(
-        'SELECT * FROM sessions WHERE(sessions.session_id = ?1 OR sessions.external_session_id = ?1)AND sessions.expire_time > unixepoch(\'now\', \'subsec\') AND sessions.cancel_time IS NULL',
+        'SELECT * FROM cloud_auth_sessions WHERE(cloud_auth_sessions.session_id = ?1 OR cloud_auth_sessions.external_session_id = ?1)AND cloud_auth_sessions.expire_time > unixepoch(\'now\', \'subsec\') AND cloud_auth_sessions.cancel_time IS NULL',
         variables: [
           i0.Variable<String>(sessionId)
         ],
         readsFrom: {
-          sessions,
-        }).asyncMap(sessions.mapFromRow);
+          cloudAuthSessions,
+        }).asyncMap(cloudAuthSessions.mapFromRow);
   }
 
   i8.Future<List<i4.Session>> updateSession(
       {i4.SessionState? state, required String userId, String? sessionId}) {
     return customWriteReturning(
-            'UPDATE sessions SET state = ?1, user_id = ?2 WHERE session_id = ?3 OR external_session_id = ?3 RETURNING *',
+            'UPDATE cloud_auth_sessions SET state = ?1, user_id = ?2 WHERE session_id = ?3 OR external_session_id = ?3 RETURNING *',
             variables: [
               i0.Variable<i2.Uint8List>(
-                  i3.Sessions.$converterstaten.toSql(state)),
+                  i3.CloudAuthSessions.$converterstaten.toSql(state)),
               i0.Variable<String>(userId),
               i0.Variable<String>(sessionId)
             ],
-            updates: {sessions},
+            updates: {cloudAuthSessions},
             updateKind: i0.UpdateKind.update)
-        .then((rows) => Future.wait(rows.map(sessions.mapFromRow)));
+        .then((rows) => Future.wait(rows.map(cloudAuthSessions.mapFromRow)));
   }
 
   Future<int> deleteSession({String? sessionId}) {
     return customUpdate(
-      'DELETE FROM sessions WHERE session_id = ?1 OR external_session_id = ?1',
+      'DELETE FROM cloud_auth_sessions WHERE session_id = ?1 OR external_session_id = ?1',
       variables: [i0.Variable<String>(sessionId)],
-      updates: {sessions},
+      updates: {cloudAuthSessions},
       updateKind: i0.UpdateKind.delete,
     );
   }
 
   Future<int> cancelSession({String? sessionId}) {
     return customUpdate(
-      'UPDATE sessions SET cancel_time = unixepoch(\'now\', \'subsec\') WHERE session_id = ?1 OR external_session_id = ?1',
+      'UPDATE cloud_auth_sessions SET cancel_time = unixepoch(\'now\', \'subsec\') WHERE session_id = ?1 OR external_session_id = ?1',
       variables: [i0.Variable<String>(sessionId)],
-      updates: {sessions},
+      updates: {cloudAuthSessions},
       updateKind: i0.UpdateKind.update,
     );
   }
@@ -2430,7 +2475,7 @@ class AuthDrift extends i7.ModularAccessor {
       String? issuerId,
       DateTime? expireTime}) {
     return customInsert(
-      'INSERT INTO corks (cork_id, crypto_key_id, bearer_type, bearer_id, audience_type, audience_id, issuer_type, issuer_id, expire_time) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)',
+      'INSERT INTO cloud_auth_corks (cork_id, crypto_key_id, bearer_type, bearer_id, audience_type, audience_id, issuer_type, issuer_id, expire_time) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)',
       variables: [
         i0.Variable<i2.Uint8List>(corkId),
         i0.Variable<i2.Uint8List>(cryptoKeyId),
@@ -2442,7 +2487,7 @@ class AuthDrift extends i7.ModularAccessor {
         i0.Variable<String>(issuerId),
         i0.Variable<DateTime>(expireTime, const i5.TimestampType())
       ],
-      updates: {corks},
+      updates: {cloudAuthCorks},
     );
   }
 
@@ -2457,7 +2502,7 @@ class AuthDrift extends i7.ModularAccessor {
       String? issuerId,
       DateTime? expireTime}) {
     return customInsert(
-      'INSERT INTO corks (cork_id, crypto_key_id, bearer_type, bearer_id, audience_type, audience_id, issuer_type, issuer_id, expire_time) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) ON CONFLICT (cork_id) DO UPDATE SET crypto_key_id = excluded.crypto_key_id, bearer_type = excluded.bearer_type, bearer_id = excluded.bearer_id, audience_type = excluded.audience_type, audience_id = excluded.audience_id, issuer_type = excluded.issuer_type, issuer_id = excluded.issuer_id, expire_time = excluded.expire_time',
+      'INSERT INTO cloud_auth_corks (cork_id, crypto_key_id, bearer_type, bearer_id, audience_type, audience_id, issuer_type, issuer_id, expire_time) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) ON CONFLICT (cork_id) DO UPDATE SET crypto_key_id = excluded.crypto_key_id, bearer_type = excluded.bearer_type, bearer_id = excluded.bearer_id, audience_type = excluded.audience_type, audience_id = excluded.audience_id, issuer_type = excluded.issuer_type, issuer_id = excluded.issuer_id, expire_time = excluded.expire_time',
       variables: [
         i0.Variable<i2.Uint8List>(corkId),
         i0.Variable<i2.Uint8List>(cryptoKeyId),
@@ -2469,28 +2514,30 @@ class AuthDrift extends i7.ModularAccessor {
         i0.Variable<String>(issuerId),
         i0.Variable<DateTime>(expireTime, const i5.TimestampType())
       ],
-      updates: {corks},
+      updates: {cloudAuthCorks},
     );
   }
 
-  i0.Selectable<i3.Cork> getCork({required i2.Uint8List corkId}) {
-    return customSelect('SELECT * FROM corks WHERE cork_id = ?1', variables: [
-      i0.Variable<i2.Uint8List>(corkId)
-    ], readsFrom: {
-      corks,
-    }).asyncMap(corks.mapFromRow);
+  i0.Selectable<i3.CloudAuthCork> getCork({required i2.Uint8List corkId}) {
+    return customSelect('SELECT * FROM cloud_auth_corks WHERE cork_id = ?1',
+        variables: [
+          i0.Variable<i2.Uint8List>(corkId)
+        ],
+        readsFrom: {
+          cloudAuthCorks,
+        }).asyncMap(cloudAuthCorks.mapFromRow);
   }
 
   Future<int> deleteCork({required i2.Uint8List corkId}) {
     return customUpdate(
-      'DELETE FROM corks WHERE cork_id = ?1',
+      'DELETE FROM cloud_auth_corks WHERE cork_id = ?1',
       variables: [i0.Variable<i2.Uint8List>(corkId)],
-      updates: {corks},
+      updates: {cloudAuthCorks},
       updateKind: i0.UpdateKind.delete,
     );
   }
 
-  i8.Future<List<i2.Uint8List>> deleteCorksForEntity(
+  i8.Future<List<i2.Uint8List>> deletecloud_auth_corksForEntity(
       {String? bearerType,
       String? bearerId,
       String? audienceType,
@@ -2498,7 +2545,7 @@ class AuthDrift extends i7.ModularAccessor {
       String? issuerType,
       String? issuerId}) {
     return customWriteReturning(
-            'DELETE FROM corks WHERE(?1 IS NULL OR bearer_type = ?1)AND(?2 IS NULL OR bearer_id = ?2)AND(?3 IS NULL OR audience_type = ?3)AND(?4 IS NULL OR audience_id = ?4)AND(?5 IS NULL OR issuer_type = ?5)AND(?6 IS NULL OR issuer_id = ?6)RETURNING cork_id',
+            'DELETE FROM cloud_auth_corks WHERE(?1 IS NULL OR bearer_type = ?1)AND(?2 IS NULL OR bearer_id = ?2)AND(?3 IS NULL OR audience_type = ?3)AND(?4 IS NULL OR audience_id = ?4)AND(?5 IS NULL OR issuer_type = ?5)AND(?6 IS NULL OR issuer_id = ?6)RETURNING cork_id',
             variables: [
               i0.Variable<String>(bearerType),
               i0.Variable<String>(bearerId),
@@ -2507,59 +2554,65 @@ class AuthDrift extends i7.ModularAccessor {
               i0.Variable<String>(issuerType),
               i0.Variable<String>(issuerId)
             ],
-            updates: {corks},
+            updates: {cloudAuthCorks},
             updateKind: i0.UpdateKind.delete)
         .then((rows) => rows
             .map((i0.QueryRow row) => row.read<i2.Uint8List>('cork_id'))
             .toList());
   }
 
-  i8.Future<List<i3.OtpCode>> upsertOtpCode(
+  i8.Future<List<i3.CloudAuthOtpCode>> upsertOtpCode(
       {required String sessionId, int? resendAttempt, int? verifyAttempt}) {
     return customWriteReturning(
-        'INSERT INTO otp_codes (session_id, resend_attempt, verify_attempt) VALUES (?1, coalesce(?2, 0), coalesce(?3, 0)) ON CONFLICT (session_id) DO UPDATE SET resend_attempt = coalesce(?2, resend_attempt), verify_attempt = coalesce(?3, verify_attempt) RETURNING *',
+        'INSERT INTO cloud_auth_otp_codes (session_id, resend_attempt, verify_attempt) VALUES (?1, coalesce(?2, 0), coalesce(?3, 0)) ON CONFLICT (session_id) DO UPDATE SET resend_attempt = coalesce(?2, resend_attempt), verify_attempt = coalesce(?3, verify_attempt) RETURNING *',
         variables: [
           i0.Variable<String>(sessionId),
           i0.Variable<int>(resendAttempt),
           i0.Variable<int>(verifyAttempt)
         ],
         updates: {
-          otpCodes
-        }).then((rows) => Future.wait(rows.map(otpCodes.mapFromRow)));
+          cloudAuthOtpCodes
+        }).then((rows) => Future.wait(rows.map(cloudAuthOtpCodes.mapFromRow)));
   }
 
-  i8.Future<List<i3.OtpCode>> updateOtpCode(
+  i8.Future<List<i3.CloudAuthOtpCode>> updateOtpCode(
       {int? resendAttempt, int? verifyAttempt, required String sessionId}) {
     return customWriteReturning(
-            'UPDATE otp_codes SET resend_attempt = coalesce(?1, resend_attempt), verify_attempt = coalesce(?2, verify_attempt) WHERE session_id = ?3 RETURNING *',
+            'UPDATE cloud_auth_otp_codes SET resend_attempt = coalesce(?1, resend_attempt), verify_attempt = coalesce(?2, verify_attempt) WHERE session_id = ?3 RETURNING *',
             variables: [
               i0.Variable<int>(resendAttempt),
               i0.Variable<int>(verifyAttempt),
               i0.Variable<String>(sessionId)
             ],
-            updates: {otpCodes},
+            updates: {cloudAuthOtpCodes},
             updateKind: i0.UpdateKind.update)
-        .then((rows) => Future.wait(rows.map(otpCodes.mapFromRow)));
+        .then((rows) => Future.wait(rows.map(cloudAuthOtpCodes.mapFromRow)));
   }
 
-  i0.Selectable<i3.OtpCode> getOtpCode({required String sessionId}) {
-    return customSelect('SELECT * FROM otp_codes WHERE session_id = ?1',
+  i0.Selectable<i3.CloudAuthOtpCode> getOtpCode({required String sessionId}) {
+    return customSelect(
+        'SELECT * FROM cloud_auth_otp_codes WHERE session_id = ?1',
         variables: [
           i0.Variable<String>(sessionId)
         ],
         readsFrom: {
-          otpCodes,
-        }).asyncMap(otpCodes.mapFromRow);
+          cloudAuthOtpCodes,
+        }).asyncMap(cloudAuthOtpCodes.mapFromRow);
   }
 
-  i3.CryptoKeys get cryptoKeys => i7.ReadDatabaseContainer(attachedDatabase)
-      .resultSet<i3.CryptoKeys>('crypto_keys');
-  i3.Sessions get sessions => i7.ReadDatabaseContainer(attachedDatabase)
-      .resultSet<i3.Sessions>('sessions');
-  i3.Corks get corks =>
-      i7.ReadDatabaseContainer(attachedDatabase).resultSet<i3.Corks>('corks');
-  i3.OtpCodes get otpCodes => i7.ReadDatabaseContainer(attachedDatabase)
-      .resultSet<i3.OtpCodes>('otp_codes');
+  i3.CloudAuthCryptoKeys get cloudAuthCryptoKeys =>
+      i7.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i3.CloudAuthCryptoKeys>('cloud_auth_crypto_keys');
+  i3.CloudAuthSessions get cloudAuthSessions =>
+      i7.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i3.CloudAuthSessions>('cloud_auth_sessions');
+  i3.CloudAuthCorks get cloudAuthCorks =>
+      i7.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i3.CloudAuthCorks>('cloud_auth_corks');
+  i3.CloudAuthOtpCodes get cloudAuthOtpCodes =>
+      i7.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i3.CloudAuthOtpCodes>('cloud_auth_otp_codes');
   i9.CedarDrift get cedarDrift => this.accessor(i9.CedarDrift.new);
-  i10.UsersDrift get usersDrift => this.accessor(i10.UsersDrift.new);
+  i10.CloudAuthUsersDrift get cloudAuthUsersDrift =>
+      this.accessor(i10.CloudAuthUsersDrift.new);
 }

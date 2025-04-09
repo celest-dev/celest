@@ -358,7 +358,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
     SessionStatePendingConfirmation? confirmation,
     AuthenticationFactor? resend,
   }) async {
-    var session = await _db.authDrift
+    var session = await _db.cloudAuthCoreDrift
         .getSession(sessionId: sessionId.encoded)
         .getSingleOrNull();
     if (session == null) {

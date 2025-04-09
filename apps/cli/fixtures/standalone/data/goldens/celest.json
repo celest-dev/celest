@@ -240,7 +240,7 @@
         "canonicalizedVersion": "3.29.2"
       }
     },
-    "targetSdk": "DART",
+    "targetSdk": "FLUTTER",
     "featureFlags": [
       "STREAMING"
     ]

@@ -284,6 +284,126 @@ class CelestFunctionsTasks {
               .deserialize<JsonUnsupportedObjectError>(errorValue),
           stackTrace,
         );
+      case 'drift.DriftWrappedException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$drift_exceptions.DriftWrappedException>(
+                  errorValue),
+          stackTrace,
+        );
+      case 'drift.CouldNotRollBackException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$drift_exceptions.CouldNotRollBackException>(
+                  errorValue),
+          stackTrace,
+        );
+      case 'cedar.AuthorizationException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<
+              _$cedar_authorization_response
+              .AuthorizationException>(errorValue),
+          stackTrace,
+        );
+      case 'cedar.EntityNotFoundException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$cedar_errors.EntityNotFoundException>(errorValue),
+          stackTrace,
+        );
+      case 'cedar.UnspecifiedEntityException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$cedar_errors.UnspecifiedEntityException>(
+                  errorValue),
+          stackTrace,
+        );
+      case 'cedar.TypeException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$cedar_errors.TypeException>(errorValue),
+          stackTrace,
+        );
+      case 'cedar.AttributeAccessException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$cedar_errors.AttributeAccessException>(errorValue),
+          stackTrace,
+        );
+      case 'cedar.OverflowException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$cedar_errors.OverflowException>(errorValue),
+          stackTrace,
+        );
+      case 'cedar.ArityException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$cedar_errors.ArityException>(errorValue),
+          stackTrace,
+        );
+      case 'cedar.UnknownExtensionException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$cedar_errors.UnknownExtensionException>(
+                  errorValue),
+          stackTrace,
+        );
+      case 'string_scanner.StringScannerException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$string_scanner_exception.StringScannerException>(
+                  errorValue),
+          stackTrace,
+        );
+      case 'source_span.SourceSpanException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$source_span_span_exception.SourceSpanException>(
+                  errorValue),
+          stackTrace,
+        );
+      case 'source_span.SourceSpanFormatException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<
+              _$source_span_span_exception
+              .SourceSpanFormatException>(errorValue),
+          stackTrace,
+        );
+      case 'built_value.BuiltValueNullFieldError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$built_value_built_value.BuiltValueNullFieldError>(
+                  errorValue),
+          stackTrace,
+        );
+      case 'built_value.BuiltValueMissingGenericsError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<
+              _$built_value_built_value
+              .BuiltValueMissingGenericsError>(errorValue),
+          stackTrace,
+        );
+      case 'built_value.BuiltValueNestedFieldError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<
+              _$built_value_built_value.BuiltValueNestedFieldError>(errorValue),
+          stackTrace,
+        );
+      case 'corks_cedar.InvalidCorkException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$corks_cedar_exceptions.InvalidCorkException>(
+                  errorValue),
+          stackTrace,
+        );
+      case 'corks_cedar.MissingSignatureError':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$corks_cedar_exceptions.MissingSignatureError>(
+                  errorValue),
+          stackTrace,
+        );
       case 'dart.io.OSError':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance.deserialize<OSError>(errorValue),
@@ -383,97 +503,11 @@ class CelestFunctionsTasks {
                   errorValue),
           stackTrace,
         );
-      case 'chunked_stream.MaximumSizeExceeded':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<
-              _$chunked_stream_read_chunked_stream
-              .MaximumSizeExceeded>(errorValue),
-          stackTrace,
-        );
-      case 'cedar.AuthorizationException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<
-              _$cedar_authorization_response
-              .AuthorizationException>(errorValue),
-          stackTrace,
-        );
-      case 'cedar.EntityNotFoundException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$cedar_errors.EntityNotFoundException>(errorValue),
-          stackTrace,
-        );
-      case 'cedar.UnspecifiedEntityException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$cedar_errors.UnspecifiedEntityException>(
-                  errorValue),
-          stackTrace,
-        );
-      case 'cedar.TypeException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$cedar_errors.TypeException>(errorValue),
-          stackTrace,
-        );
-      case 'cedar.AttributeAccessException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$cedar_errors.AttributeAccessException>(errorValue),
-          stackTrace,
-        );
-      case 'cedar.OverflowException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$cedar_errors.OverflowException>(errorValue),
-          stackTrace,
-        );
-      case 'cedar.ArityException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$cedar_errors.ArityException>(errorValue),
-          stackTrace,
-        );
-      case 'cedar.UnknownExtensionException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$cedar_errors.UnknownExtensionException>(
-                  errorValue),
-          stackTrace,
-        );
       case 'mustache_template.TemplateException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance.deserialize<
               _$mustache_template_template_exception
               .TemplateException>(errorValue),
-          stackTrace,
-        );
-      case 'corks_cedar.InvalidCorkException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$corks_cedar_exceptions.InvalidCorkException>(
-                  errorValue),
-          stackTrace,
-        );
-      case 'corks_cedar.MissingSignatureError':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$corks_cedar_exceptions.MissingSignatureError>(
-                  errorValue),
-          stackTrace,
-        );
-      case 'drift.DriftWrappedException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$drift_exceptions.DriftWrappedException>(
-                  errorValue),
-          stackTrace,
-        );
-      case 'drift.CouldNotRollBackException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$drift_exceptions.CouldNotRollBackException>(
-                  errorValue),
           stackTrace,
         );
       case 'drift.CancellationException':
@@ -495,45 +529,11 @@ class CelestFunctionsTasks {
               .deserialize<_$sqlite3_vfs.VfsException>(errorValue),
           stackTrace,
         );
-      case 'string_scanner.StringScannerException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$string_scanner_exception.StringScannerException>(
-                  errorValue),
-          stackTrace,
-        );
-      case 'source_span.SourceSpanException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$source_span_span_exception.SourceSpanException>(
-                  errorValue),
-          stackTrace,
-        );
-      case 'source_span.SourceSpanFormatException':
+      case 'chunked_stream.MaximumSizeExceeded':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance.deserialize<
-              _$source_span_span_exception
-              .SourceSpanFormatException>(errorValue),
-          stackTrace,
-        );
-      case 'built_value.BuiltValueNullFieldError':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$built_value_built_value.BuiltValueNullFieldError>(
-                  errorValue),
-          stackTrace,
-        );
-      case 'built_value.BuiltValueMissingGenericsError':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<
-              _$built_value_built_value
-              .BuiltValueMissingGenericsError>(errorValue),
-          stackTrace,
-        );
-      case 'built_value.BuiltValueNestedFieldError':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<
-              _$built_value_built_value.BuiltValueNestedFieldError>(errorValue),
+              _$chunked_stream_read_chunked_stream
+              .MaximumSizeExceeded>(errorValue),
           stackTrace,
         );
       case 'petitparser.ParserException':

@@ -364,6 +364,114 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "DriftWrappedException",
+          "url": "package:drift/src/runtime/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "CouldNotRollBackException",
+          "url": "package:drift/src/runtime/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AuthorizationException",
+          "url": "package:cedar/src/authorization/authorization_response.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "EntityNotFoundException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnspecifiedEntityException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "TypeException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "AttributeAccessException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "OverflowException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ArityException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "UnknownExtensionException",
+          "url": "package:cedar/src/model/errors.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "StringScannerException",
+          "url": "package:string_scanner/src/exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SourceSpanException",
+          "url": "package:source_span/src/span_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "SourceSpanFormatException",
+          "url": "package:source_span/src/span_exception.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BuiltValueNullFieldError",
+          "url": "package:built_value/built_value.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BuiltValueMissingGenericsError",
+          "url": "package:built_value/built_value.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "BuiltValueNestedFieldError",
+          "url": "package:built_value/built_value.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "InvalidCorkException",
+          "url": "package:corks_cedar/src/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "MissingSignatureError",
+          "url": "package:corks_cedar/src/exceptions.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "OSError",
           "url": "dart:io",
           "isNullable": false
@@ -466,86 +574,8 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "MaximumSizeExceeded",
-          "url": "package:chunked_stream/src/read_chunked_stream.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "AuthorizationException",
-          "url": "package:cedar/src/authorization/authorization_response.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "EntityNotFoundException",
-          "url": "package:cedar/src/model/errors.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "UnspecifiedEntityException",
-          "url": "package:cedar/src/model/errors.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "TypeException",
-          "url": "package:cedar/src/model/errors.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "AttributeAccessException",
-          "url": "package:cedar/src/model/errors.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "OverflowException",
-          "url": "package:cedar/src/model/errors.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "ArityException",
-          "url": "package:cedar/src/model/errors.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "UnknownExtensionException",
-          "url": "package:cedar/src/model/errors.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "TemplateException",
           "url": "package:mustache_template/src/template_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "InvalidCorkException",
-          "url": "package:corks_cedar/src/exceptions.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "MissingSignatureError",
-          "url": "package:corks_cedar/src/exceptions.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "DriftWrappedException",
-          "url": "package:drift/src/runtime/exceptions.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "CouldNotRollBackException",
-          "url": "package:drift/src/runtime/exceptions.dart",
           "isNullable": false
         },
         {
@@ -564,48 +594,6 @@
           "$": "TypeReference",
           "symbol": "VfsException",
           "url": "package:sqlite3/src/vfs.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "StringScannerException",
-          "url": "package:string_scanner/src/exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "SourceSpanException",
-          "url": "package:source_span/src/span_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "SourceSpanFormatException",
-          "url": "package:source_span/src/span_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "BuiltValueNullFieldError",
-          "url": "package:built_value/built_value.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "BuiltValueMissingGenericsError",
-          "url": "package:built_value/built_value.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "BuiltValueNestedFieldError",
-          "url": "package:built_value/built_value.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "ParserException",
-          "url": "package:petitparser/src/core/exception.dart",
           "isNullable": false
         },
         {
@@ -746,7 +734,7 @@
       "version": "3.7.2",
       "enabledExperiments": []
     },
-    "targetSdk": "dart",
+    "targetSdk": "flutter",
     "featureFlags": [
       "streaming"
     ],

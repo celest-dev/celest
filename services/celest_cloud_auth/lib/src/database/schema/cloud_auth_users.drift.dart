@@ -2,13 +2,15 @@
 // ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
 import 'package:celest_core/src/auth/user.dart' as i1;
-import 'package:celest_cloud_auth/src/database/schema/users.drift.dart' as i2;
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_users.drift.dart'
+    as i2;
 import 'package:celest_cloud_auth/src/database/database_model.dart' as i3;
 import 'package:drift/internal/modular.dart' as i4;
 import 'dart:async' as i5;
 import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i6;
 
-typedef $UsersCreateCompanionBuilder = i2.UsersCompanion Function({
+typedef $CloudAuthUsersCreateCompanionBuilder = i2.CloudAuthUsersCompanion
+    Function({
   required String userId,
   i0.Value<String?> givenName,
   i0.Value<String?> familyName,
@@ -18,7 +20,8 @@ typedef $UsersCreateCompanionBuilder = i2.UsersCompanion Function({
   i0.Value<DateTime?> updateTime,
   i0.Value<int> rowid,
 });
-typedef $UsersUpdateCompanionBuilder = i2.UsersCompanion Function({
+typedef $CloudAuthUsersUpdateCompanionBuilder = i2.CloudAuthUsersCompanion
+    Function({
   i0.Value<String> userId,
   i0.Value<String?> givenName,
   i0.Value<String?> familyName,
@@ -29,8 +32,9 @@ typedef $UsersUpdateCompanionBuilder = i2.UsersCompanion Function({
   i0.Value<int> rowid,
 });
 
-class $UsersFilterComposer extends i0.Composer<i0.GeneratedDatabase, i2.Users> {
-  $UsersFilterComposer({
+class $CloudAuthUsersFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.CloudAuthUsers> {
+  $CloudAuthUsersFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -60,9 +64,9 @@ class $UsersFilterComposer extends i0.Composer<i0.GeneratedDatabase, i2.Users> {
       column: $table.updateTime, builder: (column) => i0.ColumnFilters(column));
 }
 
-class $UsersOrderingComposer
-    extends i0.Composer<i0.GeneratedDatabase, i2.Users> {
-  $UsersOrderingComposer({
+class $CloudAuthUsersOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.CloudAuthUsers> {
+  $CloudAuthUsersOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -96,9 +100,9 @@ class $UsersOrderingComposer
       builder: (column) => i0.ColumnOrderings(column));
 }
 
-class $UsersAnnotationComposer
-    extends i0.Composer<i0.GeneratedDatabase, i2.Users> {
-  $UsersAnnotationComposer({
+class $CloudAuthUsersAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.CloudAuthUsers> {
+  $CloudAuthUsersAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -127,28 +131,31 @@ class $UsersAnnotationComposer
       column: $table.updateTime, builder: (column) => column);
 }
 
-class $UsersTableManager extends i0.RootTableManager<
+class $CloudAuthUsersTableManager extends i0.RootTableManager<
     i0.GeneratedDatabase,
-    i2.Users,
+    i2.CloudAuthUsers,
     i1.User,
-    i2.$UsersFilterComposer,
-    i2.$UsersOrderingComposer,
-    i2.$UsersAnnotationComposer,
-    $UsersCreateCompanionBuilder,
-    $UsersUpdateCompanionBuilder,
-    (i1.User, i0.BaseReferences<i0.GeneratedDatabase, i2.Users, i1.User>),
+    i2.$CloudAuthUsersFilterComposer,
+    i2.$CloudAuthUsersOrderingComposer,
+    i2.$CloudAuthUsersAnnotationComposer,
+    $CloudAuthUsersCreateCompanionBuilder,
+    $CloudAuthUsersUpdateCompanionBuilder,
+    (
+      i1.User,
+      i0.BaseReferences<i0.GeneratedDatabase, i2.CloudAuthUsers, i1.User>
+    ),
     i1.User,
     i0.PrefetchHooks Function()> {
-  $UsersTableManager(i0.GeneratedDatabase db, i2.Users table)
+  $CloudAuthUsersTableManager(i0.GeneratedDatabase db, i2.CloudAuthUsers table)
       : super(i0.TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              i2.$UsersFilterComposer($db: db, $table: table),
+              i2.$CloudAuthUsersFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              i2.$UsersOrderingComposer($db: db, $table: table),
+              i2.$CloudAuthUsersOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              i2.$UsersAnnotationComposer($db: db, $table: table),
+              i2.$CloudAuthUsersAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             i0.Value<String> userId = const i0.Value.absent(),
             i0.Value<String?> givenName = const i0.Value.absent(),
@@ -159,7 +166,7 @@ class $UsersTableManager extends i0.RootTableManager<
             i0.Value<DateTime?> updateTime = const i0.Value.absent(),
             i0.Value<int> rowid = const i0.Value.absent(),
           }) =>
-              i2.UsersCompanion(
+              i2.CloudAuthUsersCompanion(
             userId: userId,
             givenName: givenName,
             familyName: familyName,
@@ -179,7 +186,7 @@ class $UsersTableManager extends i0.RootTableManager<
             i0.Value<DateTime?> updateTime = const i0.Value.absent(),
             i0.Value<int> rowid = const i0.Value.absent(),
           }) =>
-              i2.UsersCompanion.insert(
+              i2.CloudAuthUsersCompanion.insert(
             userId: userId,
             givenName: givenName,
             familyName: familyName,
@@ -196,34 +203,39 @@ class $UsersTableManager extends i0.RootTableManager<
         ));
 }
 
-typedef $UsersProcessedTableManager = i0.ProcessedTableManager<
+typedef $CloudAuthUsersProcessedTableManager = i0.ProcessedTableManager<
     i0.GeneratedDatabase,
-    i2.Users,
+    i2.CloudAuthUsers,
     i1.User,
-    i2.$UsersFilterComposer,
-    i2.$UsersOrderingComposer,
-    i2.$UsersAnnotationComposer,
-    $UsersCreateCompanionBuilder,
-    $UsersUpdateCompanionBuilder,
-    (i1.User, i0.BaseReferences<i0.GeneratedDatabase, i2.Users, i1.User>),
+    i2.$CloudAuthUsersFilterComposer,
+    i2.$CloudAuthUsersOrderingComposer,
+    i2.$CloudAuthUsersAnnotationComposer,
+    $CloudAuthUsersCreateCompanionBuilder,
+    $CloudAuthUsersUpdateCompanionBuilder,
+    (
+      i1.User,
+      i0.BaseReferences<i0.GeneratedDatabase, i2.CloudAuthUsers, i1.User>
+    ),
     i1.User,
     i0.PrefetchHooks Function()>;
-typedef $UserEmailsCreateCompanionBuilder = i2.UserEmailsCompanion Function({
+typedef $CloudAuthUserEmailsCreateCompanionBuilder
+    = i2.CloudAuthUserEmailsCompanion Function({
   required String userId,
   required String email,
   i0.Value<bool> isVerified,
   i0.Value<bool> isPrimary,
 });
-typedef $UserEmailsUpdateCompanionBuilder = i2.UserEmailsCompanion Function({
+typedef $CloudAuthUserEmailsUpdateCompanionBuilder
+    = i2.CloudAuthUserEmailsCompanion Function({
   i0.Value<String> userId,
   i0.Value<String> email,
   i0.Value<bool> isVerified,
   i0.Value<bool> isPrimary,
 });
 
-class $UserEmailsFilterComposer
-    extends i0.Composer<i0.GeneratedDatabase, i2.UserEmails> {
-  $UserEmailsFilterComposer({
+class $CloudAuthUserEmailsFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.CloudAuthUserEmails> {
+  $CloudAuthUserEmailsFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -243,9 +255,9 @@ class $UserEmailsFilterComposer
       column: $table.isPrimary, builder: (column) => i0.ColumnFilters(column));
 }
 
-class $UserEmailsOrderingComposer
-    extends i0.Composer<i0.GeneratedDatabase, i2.UserEmails> {
-  $UserEmailsOrderingComposer({
+class $CloudAuthUserEmailsOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.CloudAuthUserEmails> {
+  $CloudAuthUserEmailsOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -267,9 +279,9 @@ class $UserEmailsOrderingComposer
       builder: (column) => i0.ColumnOrderings(column));
 }
 
-class $UserEmailsAnnotationComposer
-    extends i0.Composer<i0.GeneratedDatabase, i2.UserEmails> {
-  $UserEmailsAnnotationComposer({
+class $CloudAuthUserEmailsAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.CloudAuthUserEmails> {
+  $CloudAuthUserEmailsAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -289,38 +301,39 @@ class $UserEmailsAnnotationComposer
       $composableBuilder(column: $table.isPrimary, builder: (column) => column);
 }
 
-class $UserEmailsTableManager extends i0.RootTableManager<
+class $CloudAuthUserEmailsTableManager extends i0.RootTableManager<
     i0.GeneratedDatabase,
-    i2.UserEmails,
+    i2.CloudAuthUserEmails,
     i1.Email,
-    i2.$UserEmailsFilterComposer,
-    i2.$UserEmailsOrderingComposer,
-    i2.$UserEmailsAnnotationComposer,
-    $UserEmailsCreateCompanionBuilder,
-    $UserEmailsUpdateCompanionBuilder,
+    i2.$CloudAuthUserEmailsFilterComposer,
+    i2.$CloudAuthUserEmailsOrderingComposer,
+    i2.$CloudAuthUserEmailsAnnotationComposer,
+    $CloudAuthUserEmailsCreateCompanionBuilder,
+    $CloudAuthUserEmailsUpdateCompanionBuilder,
     (
       i1.Email,
-      i0.BaseReferences<i0.GeneratedDatabase, i2.UserEmails, i1.Email>
+      i0.BaseReferences<i0.GeneratedDatabase, i2.CloudAuthUserEmails, i1.Email>
     ),
     i1.Email,
     i0.PrefetchHooks Function()> {
-  $UserEmailsTableManager(i0.GeneratedDatabase db, i2.UserEmails table)
+  $CloudAuthUserEmailsTableManager(
+      i0.GeneratedDatabase db, i2.CloudAuthUserEmails table)
       : super(i0.TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              i2.$UserEmailsFilterComposer($db: db, $table: table),
+              i2.$CloudAuthUserEmailsFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              i2.$UserEmailsOrderingComposer($db: db, $table: table),
+              i2.$CloudAuthUserEmailsOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              i2.$UserEmailsAnnotationComposer($db: db, $table: table),
+              i2.$CloudAuthUserEmailsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             i0.Value<String> userId = const i0.Value.absent(),
             i0.Value<String> email = const i0.Value.absent(),
             i0.Value<bool> isVerified = const i0.Value.absent(),
             i0.Value<bool> isPrimary = const i0.Value.absent(),
           }) =>
-              i2.UserEmailsCompanion(
+              i2.CloudAuthUserEmailsCompanion(
             userId: userId,
             email: email,
             isVerified: isVerified,
@@ -332,7 +345,7 @@ class $UserEmailsTableManager extends i0.RootTableManager<
             i0.Value<bool> isVerified = const i0.Value.absent(),
             i0.Value<bool> isPrimary = const i0.Value.absent(),
           }) =>
-              i2.UserEmailsCompanion.insert(
+              i2.CloudAuthUserEmailsCompanion.insert(
             userId: userId,
             email: email,
             isVerified: isVerified,
@@ -345,39 +358,39 @@ class $UserEmailsTableManager extends i0.RootTableManager<
         ));
 }
 
-typedef $UserEmailsProcessedTableManager = i0.ProcessedTableManager<
+typedef $CloudAuthUserEmailsProcessedTableManager = i0.ProcessedTableManager<
     i0.GeneratedDatabase,
-    i2.UserEmails,
+    i2.CloudAuthUserEmails,
     i1.Email,
-    i2.$UserEmailsFilterComposer,
-    i2.$UserEmailsOrderingComposer,
-    i2.$UserEmailsAnnotationComposer,
-    $UserEmailsCreateCompanionBuilder,
-    $UserEmailsUpdateCompanionBuilder,
+    i2.$CloudAuthUserEmailsFilterComposer,
+    i2.$CloudAuthUserEmailsOrderingComposer,
+    i2.$CloudAuthUserEmailsAnnotationComposer,
+    $CloudAuthUserEmailsCreateCompanionBuilder,
+    $CloudAuthUserEmailsUpdateCompanionBuilder,
     (
       i1.Email,
-      i0.BaseReferences<i0.GeneratedDatabase, i2.UserEmails, i1.Email>
+      i0.BaseReferences<i0.GeneratedDatabase, i2.CloudAuthUserEmails, i1.Email>
     ),
     i1.Email,
     i0.PrefetchHooks Function()>;
-typedef $UserPhoneNumbersCreateCompanionBuilder = i2.UserPhoneNumbersCompanion
-    Function({
+typedef $CloudAuthUserPhoneNumbersCreateCompanionBuilder
+    = i2.CloudAuthUserPhoneNumbersCompanion Function({
   required String userId,
   required String phoneNumber,
   i0.Value<bool> isVerified,
   i0.Value<bool> isPrimary,
 });
-typedef $UserPhoneNumbersUpdateCompanionBuilder = i2.UserPhoneNumbersCompanion
-    Function({
+typedef $CloudAuthUserPhoneNumbersUpdateCompanionBuilder
+    = i2.CloudAuthUserPhoneNumbersCompanion Function({
   i0.Value<String> userId,
   i0.Value<String> phoneNumber,
   i0.Value<bool> isVerified,
   i0.Value<bool> isPrimary,
 });
 
-class $UserPhoneNumbersFilterComposer
-    extends i0.Composer<i0.GeneratedDatabase, i2.UserPhoneNumbers> {
-  $UserPhoneNumbersFilterComposer({
+class $CloudAuthUserPhoneNumbersFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.CloudAuthUserPhoneNumbers> {
+  $CloudAuthUserPhoneNumbersFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -398,9 +411,9 @@ class $UserPhoneNumbersFilterComposer
       column: $table.isPrimary, builder: (column) => i0.ColumnFilters(column));
 }
 
-class $UserPhoneNumbersOrderingComposer
-    extends i0.Composer<i0.GeneratedDatabase, i2.UserPhoneNumbers> {
-  $UserPhoneNumbersOrderingComposer({
+class $CloudAuthUserPhoneNumbersOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.CloudAuthUserPhoneNumbers> {
+  $CloudAuthUserPhoneNumbersOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -423,9 +436,9 @@ class $UserPhoneNumbersOrderingComposer
       builder: (column) => i0.ColumnOrderings(column));
 }
 
-class $UserPhoneNumbersAnnotationComposer
-    extends i0.Composer<i0.GeneratedDatabase, i2.UserPhoneNumbers> {
-  $UserPhoneNumbersAnnotationComposer({
+class $CloudAuthUserPhoneNumbersAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i2.CloudAuthUserPhoneNumbers> {
+  $CloudAuthUserPhoneNumbersAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -445,40 +458,42 @@ class $UserPhoneNumbersAnnotationComposer
       $composableBuilder(column: $table.isPrimary, builder: (column) => column);
 }
 
-class $UserPhoneNumbersTableManager extends i0.RootTableManager<
+class $CloudAuthUserPhoneNumbersTableManager extends i0.RootTableManager<
     i0.GeneratedDatabase,
-    i2.UserPhoneNumbers,
+    i2.CloudAuthUserPhoneNumbers,
     i1.PhoneNumber,
-    i2.$UserPhoneNumbersFilterComposer,
-    i2.$UserPhoneNumbersOrderingComposer,
-    i2.$UserPhoneNumbersAnnotationComposer,
-    $UserPhoneNumbersCreateCompanionBuilder,
-    $UserPhoneNumbersUpdateCompanionBuilder,
+    i2.$CloudAuthUserPhoneNumbersFilterComposer,
+    i2.$CloudAuthUserPhoneNumbersOrderingComposer,
+    i2.$CloudAuthUserPhoneNumbersAnnotationComposer,
+    $CloudAuthUserPhoneNumbersCreateCompanionBuilder,
+    $CloudAuthUserPhoneNumbersUpdateCompanionBuilder,
     (
       i1.PhoneNumber,
-      i0
-      .BaseReferences<i0.GeneratedDatabase, i2.UserPhoneNumbers, i1.PhoneNumber>
+      i0.BaseReferences<i0.GeneratedDatabase, i2.CloudAuthUserPhoneNumbers,
+          i1.PhoneNumber>
     ),
     i1.PhoneNumber,
     i0.PrefetchHooks Function()> {
-  $UserPhoneNumbersTableManager(
-      i0.GeneratedDatabase db, i2.UserPhoneNumbers table)
+  $CloudAuthUserPhoneNumbersTableManager(
+      i0.GeneratedDatabase db, i2.CloudAuthUserPhoneNumbers table)
       : super(i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () =>
-              i2.$UserPhoneNumbersFilterComposer($db: db, $table: table),
+          createFilteringComposer: () => i2
+              .$CloudAuthUserPhoneNumbersFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              i2.$UserPhoneNumbersOrderingComposer($db: db, $table: table),
+              i2.$CloudAuthUserPhoneNumbersOrderingComposer(
+                  $db: db, $table: table),
           createComputedFieldComposer: () =>
-              i2.$UserPhoneNumbersAnnotationComposer($db: db, $table: table),
+              i2.$CloudAuthUserPhoneNumbersAnnotationComposer(
+                  $db: db, $table: table),
           updateCompanionCallback: ({
             i0.Value<String> userId = const i0.Value.absent(),
             i0.Value<String> phoneNumber = const i0.Value.absent(),
             i0.Value<bool> isVerified = const i0.Value.absent(),
             i0.Value<bool> isPrimary = const i0.Value.absent(),
           }) =>
-              i2.UserPhoneNumbersCompanion(
+              i2.CloudAuthUserPhoneNumbersCompanion(
             userId: userId,
             phoneNumber: phoneNumber,
             isVerified: isVerified,
@@ -490,7 +505,7 @@ class $UserPhoneNumbersTableManager extends i0.RootTableManager<
             i0.Value<bool> isVerified = const i0.Value.absent(),
             i0.Value<bool> isPrimary = const i0.Value.absent(),
           }) =>
-              i2.UserPhoneNumbersCompanion.insert(
+              i2.CloudAuthUserPhoneNumbersCompanion.insert(
             userId: userId,
             phoneNumber: phoneNumber,
             isVerified: isVerified,
@@ -503,28 +518,30 @@ class $UserPhoneNumbersTableManager extends i0.RootTableManager<
         ));
 }
 
-typedef $UserPhoneNumbersProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i2.UserPhoneNumbers,
-    i1.PhoneNumber,
-    i2.$UserPhoneNumbersFilterComposer,
-    i2.$UserPhoneNumbersOrderingComposer,
-    i2.$UserPhoneNumbersAnnotationComposer,
-    $UserPhoneNumbersCreateCompanionBuilder,
-    $UserPhoneNumbersUpdateCompanionBuilder,
-    (
-      i1.PhoneNumber,
-      i0
-      .BaseReferences<i0.GeneratedDatabase, i2.UserPhoneNumbers, i1.PhoneNumber>
-    ),
-    i1.PhoneNumber,
-    i0.PrefetchHooks Function()>;
+typedef $CloudAuthUserPhoneNumbersProcessedTableManager
+    = i0.ProcessedTableManager<
+        i0.GeneratedDatabase,
+        i2.CloudAuthUserPhoneNumbers,
+        i1.PhoneNumber,
+        i2.$CloudAuthUserPhoneNumbersFilterComposer,
+        i2.$CloudAuthUserPhoneNumbersOrderingComposer,
+        i2.$CloudAuthUserPhoneNumbersAnnotationComposer,
+        $CloudAuthUserPhoneNumbersCreateCompanionBuilder,
+        $CloudAuthUserPhoneNumbersUpdateCompanionBuilder,
+        (
+          i1.PhoneNumber,
+          i0.BaseReferences<i0.GeneratedDatabase, i2.CloudAuthUserPhoneNumbers,
+              i1.PhoneNumber>
+        ),
+        i1.PhoneNumber,
+        i0.PrefetchHooks Function()>;
 
-class Users extends i0.Table with i0.TableInfo<Users, i1.User> {
+class CloudAuthUsers extends i0.Table
+    with i0.TableInfo<CloudAuthUsers, i1.User> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
-  Users(this.attachedDatabase, [this._alias]);
+  CloudAuthUsers(this.attachedDatabase, [this._alias]);
   late final i0.GeneratedColumn<String> userId = i0.GeneratedColumn<String>(
       'user_id', aliasedName, false,
       type: i0.DriftSqlType.string,
@@ -578,7 +595,7 @@ class Users extends i0.Table with i0.TableInfo<Users, i1.User> {
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'users';
+  static const String $name = 'cloud_auth_users';
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {userId};
   @override
@@ -603,15 +620,15 @@ class Users extends i0.Table with i0.TableInfo<Users, i1.User> {
   }
 
   @override
-  Users createAlias(String alias) {
-    return Users(attachedDatabase, alias);
+  CloudAuthUsers createAlias(String alias) {
+    return CloudAuthUsers(attachedDatabase, alias);
   }
 
   @override
   bool get dontWriteConstraints => true;
 }
 
-class UsersCompanion extends i0.UpdateCompanion<i1.User> {
+class CloudAuthUsersCompanion extends i0.UpdateCompanion<i1.User> {
   final i0.Value<String> userId;
   final i0.Value<String?> givenName;
   final i0.Value<String?> familyName;
@@ -620,7 +637,7 @@ class UsersCompanion extends i0.UpdateCompanion<i1.User> {
   final i0.Value<DateTime> createTime;
   final i0.Value<DateTime?> updateTime;
   final i0.Value<int> rowid;
-  const UsersCompanion({
+  const CloudAuthUsersCompanion({
     this.userId = const i0.Value.absent(),
     this.givenName = const i0.Value.absent(),
     this.familyName = const i0.Value.absent(),
@@ -630,7 +647,7 @@ class UsersCompanion extends i0.UpdateCompanion<i1.User> {
     this.updateTime = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   });
-  UsersCompanion.insert({
+  CloudAuthUsersCompanion.insert({
     required String userId,
     this.givenName = const i0.Value.absent(),
     this.familyName = const i0.Value.absent(),
@@ -662,7 +679,7 @@ class UsersCompanion extends i0.UpdateCompanion<i1.User> {
     });
   }
 
-  i2.UsersCompanion copyWith(
+  i2.CloudAuthUsersCompanion copyWith(
       {i0.Value<String>? userId,
       i0.Value<String?>? givenName,
       i0.Value<String?>? familyName,
@@ -671,7 +688,7 @@ class UsersCompanion extends i0.UpdateCompanion<i1.User> {
       i0.Value<DateTime>? createTime,
       i0.Value<DateTime?>? updateTime,
       i0.Value<int>? rowid}) {
-    return i2.UsersCompanion(
+    return i2.CloudAuthUsersCompanion(
       userId: userId ?? this.userId,
       givenName: givenName ?? this.givenName,
       familyName: familyName ?? this.familyName,
@@ -717,7 +734,7 @@ class UsersCompanion extends i0.UpdateCompanion<i1.User> {
 
   @override
   String toString() {
-    return (StringBuffer('UsersCompanion(')
+    return (StringBuffer('CloudAuthUsersCompanion(')
           ..write('userId: $userId, ')
           ..write('givenName: $givenName, ')
           ..write('familyName: $familyName, ')
@@ -731,18 +748,19 @@ class UsersCompanion extends i0.UpdateCompanion<i1.User> {
   }
 }
 
-i0.Trigger get usersCreate => i0.Trigger(
-    'CREATE TRIGGER IF NOT EXISTS users_create BEFORE INSERT ON users BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::User\', NEW.user_id);END',
-    'users_create');
-i0.Trigger get usersDelete => i0.Trigger(
-    'CREATE TRIGGER IF NOT EXISTS users_delete AFTER DELETE ON users BEGIN DELETE FROM cedar_relationships WHERE(entity_type = \'Celest::User\' AND entity_id = OLD.user_id)OR(parent_type = \'Celest::User\' AND parent_id = OLD.user_id);DELETE FROM cedar_entities WHERE entity_id = OLD.user_id AND entity_type = \'Celest::User\';END',
-    'users_delete');
+i0.Trigger get cloudAuthUsersCreateTrg => i0.Trigger(
+    'CREATE TRIGGER IF NOT EXISTS cloud_auth_users_create_trg BEFORE INSERT ON cloud_auth_users BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::User\', NEW.user_id);END',
+    'cloud_auth_users_create_trg');
+i0.Trigger get cloudAuthUsersDeleteTrg => i0.Trigger(
+    'CREATE TRIGGER IF NOT EXISTS cloud_auth_users_delete_trg AFTER DELETE ON cloud_auth_users BEGIN DELETE FROM cedar_relationships WHERE(entity_type = \'Celest::User\' AND entity_id = OLD.user_id)OR(parent_type = \'Celest::User\' AND parent_id = OLD.user_id);DELETE FROM cedar_entities WHERE entity_id = OLD.user_id AND entity_type = \'Celest::User\';END',
+    'cloud_auth_users_delete_trg');
 
-class UserEmails extends i0.Table with i0.TableInfo<UserEmails, i1.Email> {
+class CloudAuthUserEmails extends i0.Table
+    with i0.TableInfo<CloudAuthUserEmails, i1.Email> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
-  UserEmails(this.attachedDatabase, [this._alias]);
+  CloudAuthUserEmails(this.attachedDatabase, [this._alias]);
   late final i0.GeneratedColumn<String> userId = i0.GeneratedColumn<String>(
       'user_id', aliasedName, false,
       type: i0.DriftSqlType.string,
@@ -772,7 +790,7 @@ class UserEmails extends i0.Table with i0.TableInfo<UserEmails, i1.Email> {
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'user_emails';
+  static const String $name = 'cloud_auth_user_emails';
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {userId, email};
   @override
@@ -789,33 +807,33 @@ class UserEmails extends i0.Table with i0.TableInfo<UserEmails, i1.Email> {
   }
 
   @override
-  UserEmails createAlias(String alias) {
-    return UserEmails(attachedDatabase, alias);
+  CloudAuthUserEmails createAlias(String alias) {
+    return CloudAuthUserEmails(attachedDatabase, alias);
   }
 
   @override
   bool get withoutRowId => true;
   @override
   List<String> get customConstraints => const [
-        'CONSTRAINT user_emails_pk PRIMARY KEY(user_id, email)',
-        'CONSTRAINT user_emails_user_fk FOREIGN KEY(user_id)REFERENCES users(user_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
+        'CONSTRAINT cloud_auth_user_emails_pk PRIMARY KEY(user_id, email)',
+        'CONSTRAINT cloud_auth_user_emails_user_fk FOREIGN KEY(user_id)REFERENCES cloud_auth_users(user_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
       ];
   @override
   bool get dontWriteConstraints => true;
 }
 
-class UserEmailsCompanion extends i0.UpdateCompanion<i1.Email> {
+class CloudAuthUserEmailsCompanion extends i0.UpdateCompanion<i1.Email> {
   final i0.Value<String> userId;
   final i0.Value<String> email;
   final i0.Value<bool> isVerified;
   final i0.Value<bool> isPrimary;
-  const UserEmailsCompanion({
+  const CloudAuthUserEmailsCompanion({
     this.userId = const i0.Value.absent(),
     this.email = const i0.Value.absent(),
     this.isVerified = const i0.Value.absent(),
     this.isPrimary = const i0.Value.absent(),
   });
-  UserEmailsCompanion.insert({
+  CloudAuthUserEmailsCompanion.insert({
     required String userId,
     required String email,
     this.isVerified = const i0.Value.absent(),
@@ -836,12 +854,12 @@ class UserEmailsCompanion extends i0.UpdateCompanion<i1.Email> {
     });
   }
 
-  i2.UserEmailsCompanion copyWith(
+  i2.CloudAuthUserEmailsCompanion copyWith(
       {i0.Value<String>? userId,
       i0.Value<String>? email,
       i0.Value<bool>? isVerified,
       i0.Value<bool>? isPrimary}) {
-    return i2.UserEmailsCompanion(
+    return i2.CloudAuthUserEmailsCompanion(
       userId: userId ?? this.userId,
       email: email ?? this.email,
       isVerified: isVerified ?? this.isVerified,
@@ -869,7 +887,7 @@ class UserEmailsCompanion extends i0.UpdateCompanion<i1.Email> {
 
   @override
   String toString() {
-    return (StringBuffer('UserEmailsCompanion(')
+    return (StringBuffer('CloudAuthUserEmailsCompanion(')
           ..write('userId: $userId, ')
           ..write('email: $email, ')
           ..write('isVerified: $isVerified, ')
@@ -879,12 +897,12 @@ class UserEmailsCompanion extends i0.UpdateCompanion<i1.Email> {
   }
 }
 
-class UserPhoneNumbers extends i0.Table
-    with i0.TableInfo<UserPhoneNumbers, i1.PhoneNumber> {
+class CloudAuthUserPhoneNumbers extends i0.Table
+    with i0.TableInfo<CloudAuthUserPhoneNumbers, i1.PhoneNumber> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
-  UserPhoneNumbers(this.attachedDatabase, [this._alias]);
+  CloudAuthUserPhoneNumbers(this.attachedDatabase, [this._alias]);
   late final i0.GeneratedColumn<String> userId = i0.GeneratedColumn<String>(
       'user_id', aliasedName, false,
       type: i0.DriftSqlType.string,
@@ -914,7 +932,7 @@ class UserPhoneNumbers extends i0.Table
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'user_phone_numbers';
+  static const String $name = 'cloud_auth_user_phone_numbers';
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {userId, phoneNumber};
   @override
@@ -931,33 +949,34 @@ class UserPhoneNumbers extends i0.Table
   }
 
   @override
-  UserPhoneNumbers createAlias(String alias) {
-    return UserPhoneNumbers(attachedDatabase, alias);
+  CloudAuthUserPhoneNumbers createAlias(String alias) {
+    return CloudAuthUserPhoneNumbers(attachedDatabase, alias);
   }
 
   @override
   bool get withoutRowId => true;
   @override
   List<String> get customConstraints => const [
-        'CONSTRAINT user_phone_numbers_pk PRIMARY KEY(user_id, phone_number)',
-        'CONSTRAINT user_phone_numbers_user_fk FOREIGN KEY(user_id)REFERENCES users(user_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
+        'CONSTRAINT cloud_auth_user_phone_numbers_pk PRIMARY KEY(user_id, phone_number)',
+        'CONSTRAINT cloud_auth_user_phone_numbers_user_fk FOREIGN KEY(user_id)REFERENCES cloud_auth_users(user_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED'
       ];
   @override
   bool get dontWriteConstraints => true;
 }
 
-class UserPhoneNumbersCompanion extends i0.UpdateCompanion<i1.PhoneNumber> {
+class CloudAuthUserPhoneNumbersCompanion
+    extends i0.UpdateCompanion<i1.PhoneNumber> {
   final i0.Value<String> userId;
   final i0.Value<String> phoneNumber;
   final i0.Value<bool> isVerified;
   final i0.Value<bool> isPrimary;
-  const UserPhoneNumbersCompanion({
+  const CloudAuthUserPhoneNumbersCompanion({
     this.userId = const i0.Value.absent(),
     this.phoneNumber = const i0.Value.absent(),
     this.isVerified = const i0.Value.absent(),
     this.isPrimary = const i0.Value.absent(),
   });
-  UserPhoneNumbersCompanion.insert({
+  CloudAuthUserPhoneNumbersCompanion.insert({
     required String userId,
     required String phoneNumber,
     this.isVerified = const i0.Value.absent(),
@@ -978,12 +997,12 @@ class UserPhoneNumbersCompanion extends i0.UpdateCompanion<i1.PhoneNumber> {
     });
   }
 
-  i2.UserPhoneNumbersCompanion copyWith(
+  i2.CloudAuthUserPhoneNumbersCompanion copyWith(
       {i0.Value<String>? userId,
       i0.Value<String>? phoneNumber,
       i0.Value<bool>? isVerified,
       i0.Value<bool>? isPrimary}) {
-    return i2.UserPhoneNumbersCompanion(
+    return i2.CloudAuthUserPhoneNumbersCompanion(
       userId: userId ?? this.userId,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       isVerified: isVerified ?? this.isVerified,
@@ -1011,7 +1030,7 @@ class UserPhoneNumbersCompanion extends i0.UpdateCompanion<i1.PhoneNumber> {
 
   @override
   String toString() {
-    return (StringBuffer('UserPhoneNumbersCompanion(')
+    return (StringBuffer('CloudAuthUserPhoneNumbersCompanion(')
           ..write('userId: $userId, ')
           ..write('phoneNumber: $phoneNumber, ')
           ..write('isVerified: $isVerified, ')
@@ -1021,8 +1040,8 @@ class UserPhoneNumbersCompanion extends i0.UpdateCompanion<i1.PhoneNumber> {
   }
 }
 
-class UsersDrift extends i4.ModularAccessor {
-  UsersDrift(i0.GeneratedDatabase db) : super(db);
+class CloudAuthUsersDrift extends i4.ModularAccessor {
+  CloudAuthUsersDrift(i0.GeneratedDatabase db) : super(db);
   i5.Future<List<i1.User>> createUser(
       {required String userId,
       String? givenName,
@@ -1030,7 +1049,7 @@ class UsersDrift extends i4.ModularAccessor {
       String? timeZone,
       String? languageCode}) {
     return customWriteReturning(
-        'INSERT INTO users (user_id, given_name, family_name, time_zone, language_code) VALUES (?1, ?2, ?3, ?4, ?5) RETURNING *',
+        'INSERT INTO cloud_auth_users (user_id, given_name, family_name, time_zone, language_code) VALUES (?1, ?2, ?3, ?4, ?5) RETURNING *',
         variables: [
           i0.Variable<String>(userId),
           i0.Variable<String>(givenName),
@@ -1039,23 +1058,25 @@ class UsersDrift extends i4.ModularAccessor {
           i0.Variable<String>(languageCode)
         ],
         updates: {
-          users
-        }).then((rows) => Future.wait(rows.map(users.mapFromRow)));
+          cloudAuthUsers
+        }).then((rows) => Future.wait(rows.map(cloudAuthUsers.mapFromRow)));
   }
 
   i0.Selectable<i1.User> getUser({required String userId}) {
-    return customSelect('SELECT * FROM users WHERE user_id = ?1', variables: [
-      i0.Variable<String>(userId)
-    ], readsFrom: {
-      users,
-    }).asyncMap(users.mapFromRow);
+    return customSelect('SELECT * FROM cloud_auth_users WHERE user_id = ?1',
+        variables: [
+          i0.Variable<String>(userId)
+        ],
+        readsFrom: {
+          cloudAuthUsers,
+        }).asyncMap(cloudAuthUsers.mapFromRow);
   }
 
   Future<int> deleteUser({required String userId}) {
     return customUpdate(
-      'DELETE FROM users WHERE user_id = ?1',
+      'DELETE FROM cloud_auth_users WHERE user_id = ?1',
       variables: [i0.Variable<String>(userId)],
-      updates: {users},
+      updates: {cloudAuthUsers},
       updateKind: i0.UpdateKind.delete,
     );
   }
@@ -1066,7 +1087,7 @@ class UsersDrift extends i4.ModularAccessor {
       bool? isVerified,
       bool? isPrimary}) {
     return customWriteReturning(
-        'INSERT INTO user_emails (user_id, email, is_verified, is_primary) VALUES (?1, ?2, coalesce(?3, FALSE), coalesce(?4, (SELECT count(*) = 0 FROM user_emails WHERE user_id = ?1))) ON CONFLICT (user_id, email) DO UPDATE SET is_verified = coalesce(?3, is_verified), is_primary = coalesce(?4, is_primary) RETURNING *',
+        'INSERT INTO cloud_auth_user_emails (user_id, email, is_verified, is_primary) VALUES (?1, ?2, coalesce(?3, FALSE), coalesce(?4, (SELECT count(*) = 0 FROM cloud_auth_user_emails WHERE user_id = ?1))) ON CONFLICT (user_id, email) DO UPDATE SET is_verified = coalesce(?3, is_verified), is_primary = coalesce(?4, is_primary) RETURNING *',
         variables: [
           i0.Variable<String>(userId),
           i0.Variable<String>(email),
@@ -1074,41 +1095,45 @@ class UsersDrift extends i4.ModularAccessor {
           i0.Variable<bool>(isPrimary)
         ],
         updates: {
-          userEmails
-        }).then((rows) => Future.wait(rows.map(userEmails.mapFromRow)));
+          cloudAuthUserEmails
+        }).then(
+        (rows) => Future.wait(rows.map(cloudAuthUserEmails.mapFromRow)));
   }
 
   i0.Selectable<i1.Email> getUserEmails({required String userId}) {
-    return customSelect('SELECT * FROM user_emails WHERE user_id = ?1',
+    return customSelect(
+        'SELECT * FROM cloud_auth_user_emails WHERE user_id = ?1',
         variables: [
           i0.Variable<String>(userId)
         ],
         readsFrom: {
-          userEmails,
-        }).asyncMap(userEmails.mapFromRow);
+          cloudAuthUserEmails,
+        }).asyncMap(cloudAuthUserEmails.mapFromRow);
   }
 
   i0.Selectable<LookupUserByEmailResult> lookupUserByEmail(
       {required String email}) {
     return customSelect(
-        'SELECT"users"."user_id" AS "nested_0.user_id", "users"."given_name" AS "nested_0.given_name", "users"."family_name" AS "nested_0.family_name", "users"."time_zone" AS "nested_0.time_zone", "users"."language_code" AS "nested_0.language_code", "users"."create_time" AS "nested_0.create_time", "users"."update_time" AS "nested_0.update_time","user_emails"."user_id" AS "nested_1.user_id", "user_emails"."email" AS "nested_1.email", "user_emails"."is_verified" AS "nested_1.is_verified", "user_emails"."is_primary" AS "nested_1.is_primary" FROM users INNER JOIN user_emails ON users.user_id = user_emails.user_id WHERE user_emails.email = ?1 AND user_emails.is_verified ORDER BY user_emails.is_primary DESC',
+        'SELECT"cloud_auth_users"."user_id" AS "nested_0.user_id", "cloud_auth_users"."given_name" AS "nested_0.given_name", "cloud_auth_users"."family_name" AS "nested_0.family_name", "cloud_auth_users"."time_zone" AS "nested_0.time_zone", "cloud_auth_users"."language_code" AS "nested_0.language_code", "cloud_auth_users"."create_time" AS "nested_0.create_time", "cloud_auth_users"."update_time" AS "nested_0.update_time","cloud_auth_user_emails"."user_id" AS "nested_1.user_id", "cloud_auth_user_emails"."email" AS "nested_1.email", "cloud_auth_user_emails"."is_verified" AS "nested_1.is_verified", "cloud_auth_user_emails"."is_primary" AS "nested_1.is_primary" FROM cloud_auth_users INNER JOIN cloud_auth_user_emails ON cloud_auth_users.user_id = cloud_auth_user_emails.user_id WHERE cloud_auth_user_emails.email = ?1 AND cloud_auth_user_emails.is_verified ORDER BY cloud_auth_user_emails.is_primary DESC',
         variables: [
           i0.Variable<String>(email)
         ],
         readsFrom: {
-          users,
-          userEmails,
+          cloudAuthUsers,
+          cloudAuthUserEmails,
         }).asyncMap((i0.QueryRow row) async => LookupUserByEmailResult(
-          users: await users.mapFromRow(row, tablePrefix: 'nested_0'),
-          userEmails: await userEmails.mapFromRow(row, tablePrefix: 'nested_1'),
+          cloudAuthUsers:
+              await cloudAuthUsers.mapFromRow(row, tablePrefix: 'nested_0'),
+          cloudAuthUserEmails: await cloudAuthUserEmails.mapFromRow(row,
+              tablePrefix: 'nested_1'),
         ));
   }
 
   Future<int> deleteUserEmail({required String userId, required String email}) {
     return customUpdate(
-      'DELETE FROM user_emails WHERE user_id = ?1 AND email = ?2',
+      'DELETE FROM cloud_auth_user_emails WHERE user_id = ?1 AND email = ?2',
       variables: [i0.Variable<String>(userId), i0.Variable<String>(email)],
-      updates: {userEmails},
+      updates: {cloudAuthUserEmails},
       updateKind: i0.UpdateKind.delete,
     );
   }
@@ -1119,7 +1144,7 @@ class UsersDrift extends i4.ModularAccessor {
       bool? isVerified,
       bool? isPrimary}) {
     return customWriteReturning(
-        'INSERT INTO user_phone_numbers (user_id, phone_number, is_verified, is_primary) VALUES (?1, ?2, coalesce(?3, FALSE), coalesce(?4, (SELECT count(*) = 0 FROM user_phone_numbers WHERE user_id = ?1))) ON CONFLICT (user_id, phone_number) DO UPDATE SET is_verified = coalesce(?3, is_verified), is_primary = coalesce(?4, is_primary) RETURNING *',
+        'INSERT INTO cloud_auth_user_phone_numbers (user_id, phone_number, is_verified, is_primary) VALUES (?1, ?2, coalesce(?3, FALSE), coalesce(?4, (SELECT count(*) = 0 FROM cloud_auth_user_phone_numbers WHERE user_id = ?1))) ON CONFLICT (user_id, phone_number) DO UPDATE SET is_verified = coalesce(?3, is_verified), is_primary = coalesce(?4, is_primary) RETURNING *',
         variables: [
           i0.Variable<String>(userId),
           i0.Variable<String>(phoneNumber),
@@ -1127,74 +1152,80 @@ class UsersDrift extends i4.ModularAccessor {
           i0.Variable<bool>(isPrimary)
         ],
         updates: {
-          userPhoneNumbers
-        }).then((rows) => Future.wait(rows.map(userPhoneNumbers.mapFromRow)));
+          cloudAuthUserPhoneNumbers
+        }).then(
+        (rows) => Future.wait(rows.map(cloudAuthUserPhoneNumbers.mapFromRow)));
   }
 
   i0.Selectable<i1.PhoneNumber> getUserPhoneNumbers({required String userId}) {
-    return customSelect('SELECT * FROM user_phone_numbers WHERE user_id = ?1',
+    return customSelect(
+        'SELECT * FROM cloud_auth_user_phone_numbers WHERE user_id = ?1',
         variables: [
           i0.Variable<String>(userId)
         ],
         readsFrom: {
-          userPhoneNumbers,
-        }).asyncMap(userPhoneNumbers.mapFromRow);
+          cloudAuthUserPhoneNumbers,
+        }).asyncMap(cloudAuthUserPhoneNumbers.mapFromRow);
   }
 
   i0.Selectable<LookupUserByPhoneResult> lookupUserByPhone(
       {required String phoneNumber}) {
     return customSelect(
-        'SELECT"users"."user_id" AS "nested_0.user_id", "users"."given_name" AS "nested_0.given_name", "users"."family_name" AS "nested_0.family_name", "users"."time_zone" AS "nested_0.time_zone", "users"."language_code" AS "nested_0.language_code", "users"."create_time" AS "nested_0.create_time", "users"."update_time" AS "nested_0.update_time","user_phone_numbers"."user_id" AS "nested_1.user_id", "user_phone_numbers"."phone_number" AS "nested_1.phone_number", "user_phone_numbers"."is_verified" AS "nested_1.is_verified", "user_phone_numbers"."is_primary" AS "nested_1.is_primary" FROM users INNER JOIN user_phone_numbers ON users.user_id = user_phone_numbers.user_id WHERE user_phone_numbers.phone_number = ?1 AND user_phone_numbers.is_verified ORDER BY user_phone_numbers.is_primary DESC',
+        'SELECT"cloud_auth_users"."user_id" AS "nested_0.user_id", "cloud_auth_users"."given_name" AS "nested_0.given_name", "cloud_auth_users"."family_name" AS "nested_0.family_name", "cloud_auth_users"."time_zone" AS "nested_0.time_zone", "cloud_auth_users"."language_code" AS "nested_0.language_code", "cloud_auth_users"."create_time" AS "nested_0.create_time", "cloud_auth_users"."update_time" AS "nested_0.update_time","cloud_auth_user_phone_numbers"."user_id" AS "nested_1.user_id", "cloud_auth_user_phone_numbers"."phone_number" AS "nested_1.phone_number", "cloud_auth_user_phone_numbers"."is_verified" AS "nested_1.is_verified", "cloud_auth_user_phone_numbers"."is_primary" AS "nested_1.is_primary" FROM cloud_auth_users INNER JOIN cloud_auth_user_phone_numbers ON cloud_auth_users.user_id = cloud_auth_user_phone_numbers.user_id WHERE cloud_auth_user_phone_numbers.phone_number = ?1 AND cloud_auth_user_phone_numbers.is_verified ORDER BY cloud_auth_user_phone_numbers.is_primary DESC',
         variables: [
           i0.Variable<String>(phoneNumber)
         ],
         readsFrom: {
-          users,
-          userPhoneNumbers,
+          cloudAuthUsers,
+          cloudAuthUserPhoneNumbers,
         }).asyncMap((i0.QueryRow row) async => LookupUserByPhoneResult(
-          users: await users.mapFromRow(row, tablePrefix: 'nested_0'),
-          userPhoneNumbers:
-              await userPhoneNumbers.mapFromRow(row, tablePrefix: 'nested_1'),
+          cloudAuthUsers:
+              await cloudAuthUsers.mapFromRow(row, tablePrefix: 'nested_0'),
+          cloudAuthUserPhoneNumbers: await cloudAuthUserPhoneNumbers
+              .mapFromRow(row, tablePrefix: 'nested_1'),
         ));
   }
 
   Future<int> deleteUserPhoneNumber(
       {required String userId, required String phoneNumber}) {
     return customUpdate(
-      'DELETE FROM user_phone_numbers WHERE user_id = ?1 AND phone_number = ?2',
+      'DELETE FROM cloud_auth_user_phone_numbers WHERE user_id = ?1 AND phone_number = ?2',
       variables: [
         i0.Variable<String>(userId),
         i0.Variable<String>(phoneNumber)
       ],
-      updates: {userPhoneNumbers},
+      updates: {cloudAuthUserPhoneNumbers},
       updateKind: i0.UpdateKind.delete,
     );
   }
 
-  i2.Users get users =>
-      i4.ReadDatabaseContainer(attachedDatabase).resultSet<i2.Users>('users');
-  i2.UserEmails get userEmails => i4.ReadDatabaseContainer(attachedDatabase)
-      .resultSet<i2.UserEmails>('user_emails');
-  i2.UserPhoneNumbers get userPhoneNumbers =>
+  i2.CloudAuthUsers get cloudAuthUsers =>
       i4.ReadDatabaseContainer(attachedDatabase)
-          .resultSet<i2.UserPhoneNumbers>('user_phone_numbers');
+          .resultSet<i2.CloudAuthUsers>('cloud_auth_users');
+  i2.CloudAuthUserEmails get cloudAuthUserEmails =>
+      i4.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i2.CloudAuthUserEmails>('cloud_auth_user_emails');
+  i2.CloudAuthUserPhoneNumbers get cloudAuthUserPhoneNumbers =>
+      i4.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i2.CloudAuthUserPhoneNumbers>(
+              'cloud_auth_user_phone_numbers');
   i6.CedarDrift get cedarDrift => this.accessor(i6.CedarDrift.new);
 }
 
 class LookupUserByEmailResult {
-  final i1.User users;
-  final i1.Email userEmails;
+  final i1.User cloudAuthUsers;
+  final i1.Email cloudAuthUserEmails;
   LookupUserByEmailResult({
-    required this.users,
-    required this.userEmails,
+    required this.cloudAuthUsers,
+    required this.cloudAuthUserEmails,
   });
 }
 
 class LookupUserByPhoneResult {
-  final i1.User users;
-  final i1.PhoneNumber userPhoneNumbers;
+  final i1.User cloudAuthUsers;
+  final i1.PhoneNumber cloudAuthUserPhoneNumbers;
   LookupUserByPhoneResult({
-    required this.users,
-    required this.userPhoneNumbers,
+    required this.cloudAuthUsers,
+    required this.cloudAuthUserPhoneNumbers,
   });
 }

@@ -582,7 +582,7 @@
         "databaseSchemaId": "CloudAuthDatabase",
         "type": "DRIFT",
         "drift": {
-          "version": 3,
+          "version": 4,
           "schemaJson": {}
         }
       },

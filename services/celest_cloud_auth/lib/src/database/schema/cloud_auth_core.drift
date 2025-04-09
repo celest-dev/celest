@@ -1,10 +1,10 @@
 import 'cedar.drift';
-import 'users.drift';
+import 'cloud_auth_users.drift';
 
 import 'schema_imports.dart';
 
 -- Stores crypto key metadata
-CREATE TABLE IF NOT EXISTS crypto_keys (
+CREATE TABLE IF NOT EXISTS cloud_auth_crypto_keys (
     -- The unique identifier of the key.
     crypto_key_id BLOB NOT NULL PRIMARY KEY,
 
@@ -27,10 +27,10 @@ CREATE TABLE IF NOT EXISTS crypto_keys (
     CHECK (key_material IS NOT NULL OR external_crypto_key_id IS NOT NULL)
 ) WITH CryptoKey;
 
-CREATE INDEX IF NOT EXISTS crypto_keys_external_crypto_key_id_idx ON crypto_keys(external_crypto_key_id);
+CREATE INDEX IF NOT EXISTS cloud_auth_crypto_keys_external_crypto_key_id_idx ON cloud_auth_crypto_keys(external_crypto_key_id);
 
 -- Stores ongoing authentication sessions.
-CREATE TABLE IF NOT EXISTS sessions (
+CREATE TABLE IF NOT EXISTS cloud_auth_sessions (
     -- Explicit rowid for codegen.
     rowid INTEGER PRIMARY KEY AUTOINCREMENT,
     
@@ -75,31 +75,31 @@ CREATE TABLE IF NOT EXISTS sessions (
     expire_time `const TimestampType()` NOT NULL,
     cancel_time `const TimestampType()`,
 
-    CONSTRAINT sessions_user_fk FOREIGN KEY (user_id) REFERENCES users(user_id)
+    CONSTRAINT cloud_auth_sessions_user_fk FOREIGN KEY (user_id) REFERENCES cloud_auth_users(user_id)
         ON UPDATE CASCADE ON DELETE CASCADE
         DEFERRABLE INITIALLY DEFERRED,
 
-    CONSTRAINT sessions_key_fk FOREIGN KEY (crypto_key_id) REFERENCES crypto_keys(crypto_key_id)
+    CONSTRAINT cloud_auth_sessions_key_fk FOREIGN KEY (crypto_key_id) REFERENCES cloud_auth_crypto_keys(crypto_key_id)
         ON UPDATE CASCADE ON DELETE CASCADE
         DEFERRABLE INITIALLY DEFERRED
 ) WITH Session;
 
 -- Index for the session's FK.
-CREATE INDEX IF NOT EXISTS sessions_user_idx ON sessions(user_id);
-CREATE INDEX IF NOT EXISTS sessions_crypto_key_idx ON sessions(crypto_key_id);
-CREATE INDEX IF NOT EXISTS sessions_external_session_id_idx ON sessions(external_session_id);
+CREATE INDEX IF NOT EXISTS cloud_auth_sessions_user_idx ON cloud_auth_sessions(user_id);
+CREATE INDEX IF NOT EXISTS cloud_auth_sessions_crypto_key_idx ON cloud_auth_sessions(crypto_key_id);
+CREATE INDEX IF NOT EXISTS cloud_auth_sessions_external_session_id_idx ON cloud_auth_sessions(external_session_id);
 
 -- Trigger to update the update_time when a session is updated.
-CREATE TRIGGER IF NOT EXISTS auth_sessions_update_time
-AFTER UPDATE ON sessions
+CREATE TRIGGER IF NOT EXISTS cloud_auth_sessions_update_time_trg
+AFTER UPDATE ON cloud_auth_sessions
 BEGIN
-    UPDATE sessions
+    UPDATE cloud_auth_sessions
     SET update_time = unixepoch('now', 'subsec')
     WHERE rowid = OLD.rowid;
 END;
 
 -- Stores HOTP parameters for ongoing authentication sessions.
-CREATE TABLE IF NOT EXISTS otp_codes (
+CREATE TABLE IF NOT EXISTS cloud_auth_otp_codes (
     -- The row ID which serves as the HOTP counter.
     rowid INTEGER PRIMARY KEY AUTOINCREMENT,
 
@@ -115,16 +115,16 @@ CREATE TABLE IF NOT EXISTS otp_codes (
     -- The time the HOTP code was last used.
     update_time `const TimestampType()` NOT NULL DEFAULT (unixepoch('now', 'subsec')),
 
-    CONSTRAINT otp_codes_session_fk FOREIGN KEY (session_id) REFERENCES sessions(session_id)
+    CONSTRAINT cloud_auth_otp_codes_session_id_fk FOREIGN KEY (session_id) REFERENCES cloud_auth_sessions(session_id)
         ON UPDATE CASCADE ON DELETE CASCADE
         DEFERRABLE INITIALLY DEFERRED
 );
 
 -- Index for the HOTP code's FK.
-CREATE INDEX IF NOT EXISTS otp_codes_session_idx ON otp_codes(session_id);
+CREATE INDEX IF NOT EXISTS cloud_auth_otp_codes_session_id_idx ON cloud_auth_otp_codes(session_id);
 
 -- Stores corks for Celest Cloud user sessions.
-CREATE TABLE IF NOT EXISTS corks (
+CREATE TABLE IF NOT EXISTS cloud_auth_corks (
     -- The unique identifier for the cork and its root key.
     cork_id BLOB NOT NULL PRIMARY KEY,
 
@@ -166,32 +166,32 @@ CREATE TABLE IF NOT EXISTS corks (
     -- The time the cork was last used.
     last_use_time `const TimestampType()`,
 
-    CONSTRAINT corks_crypto_key_fk FOREIGN KEY (crypto_key_id) REFERENCES crypto_keys(crypto_key_id)
+    CONSTRAINT cloud_auth_corks_crypto_key_fk FOREIGN KEY (crypto_key_id) REFERENCES cloud_auth_crypto_keys(crypto_key_id)
         ON UPDATE CASCADE ON DELETE CASCADE
         DEFERRABLE INITIALLY DEFERRED,
 
-    CONSTRAINT corks_bearer_fk FOREIGN KEY (bearer_type, bearer_id) REFERENCES cedar_entities(entity_type, entity_id)
+    CONSTRAINT cloud_auth_corks_bearer_fk FOREIGN KEY (bearer_type, bearer_id) REFERENCES cedar_entities(entity_type, entity_id)
         ON UPDATE CASCADE ON DELETE CASCADE
         DEFERRABLE INITIALLY DEFERRED,
 
-    CONSTRAINT corks_audience_fk FOREIGN KEY (audience_type, audience_id) REFERENCES cedar_entities(entity_type, entity_id)
+    CONSTRAINT cloud_auth_corks_audience_fk FOREIGN KEY (audience_type, audience_id) REFERENCES cedar_entities(entity_type, entity_id)
         ON UPDATE CASCADE ON DELETE CASCADE
         DEFERRABLE INITIALLY DEFERRED,
 
-    CONSTRAINT corks_issuer_fk FOREIGN KEY (issuer_type, issuer_id) REFERENCES cedar_entities(entity_type, entity_id)
+    CONSTRAINT cloud_auth_corks_issuer_fk FOREIGN KEY (issuer_type, issuer_id) REFERENCES cedar_entities(entity_type, entity_id)
         ON UPDATE CASCADE ON DELETE CASCADE
         DEFERRABLE INITIALLY DEFERRED
 );
 
 -- Index for the cork's FK.
-CREATE INDEX IF NOT EXISTS corks_crypto_key_idx ON corks(crypto_key_id);
-CREATE INDEX IF NOT EXISTS corks_bearer_idx ON corks(bearer_type, bearer_id);
-CREATE INDEX IF NOT EXISTS corks_audience_idx ON corks(audience_type, audience_id);
-CREATE INDEX IF NOT EXISTS corks_issuer_idx ON corks(issuer_type, issuer_id);
+CREATE INDEX IF NOT EXISTS cloud_auth_corks_crypto_key_idx ON cloud_auth_corks(crypto_key_id);
+CREATE INDEX IF NOT EXISTS cloud_auth_corks_bearer_idx ON cloud_auth_corks(bearer_type, bearer_id);
+CREATE INDEX IF NOT EXISTS cloud_auth_corks_audience_idx ON cloud_auth_corks(audience_type, audience_id);
+CREATE INDEX IF NOT EXISTS cloud_auth_corks_issuer_idx ON cloud_auth_corks(issuer_type, issuer_id);
 
 -- Creates a new crypto key.
 createCryptoKey:
-    INSERT INTO crypto_keys(
+    INSERT INTO cloud_auth_crypto_keys(
         crypto_key_id, 
         key_purpose, 
         key_algorithm, 
@@ -210,28 +210,28 @@ createCryptoKey:
 
 -- Retrieves the crypto key for the given ID.
 getCryptoKey:
-    SELECT * FROM crypto_keys
+    SELECT * FROM cloud_auth_crypto_keys
     WHERE crypto_key_id = :crypto_key_id;
 
 -- Retrieves the external crypto key for the given ID.
 getExternalCryptoKey:
-    SELECT * FROM crypto_keys
+    SELECT * FROM cloud_auth_crypto_keys
     WHERE external_crypto_key_id = :external_crypto_key_id;
 
 -- Finds the crypto key for the given purpose.
 findCryptoKey:
-    SELECT * FROM crypto_keys
+    SELECT * FROM cloud_auth_crypto_keys
     WHERE key_purpose = :key_purpose
     AND key_algorithm = :key_algorithm;
 
 -- Deletes the crypto key for the given ID.
 deleteCryptoKey:
-    DELETE FROM crypto_keys
+    DELETE FROM cloud_auth_crypto_keys
     WHERE crypto_key_id = :crypto_key_id;
 
 -- Creates a new auth session.
 createSession:
-    INSERT INTO sessions(
+    INSERT INTO cloud_auth_sessions(
         session_id, 
         crypto_key_id, 
         user_id, 
@@ -259,18 +259,18 @@ createSession:
 
 -- Retrieves the auth session for the given ID.
 getSession: 
-    SELECT * FROM sessions
+    SELECT * FROM cloud_auth_sessions
     WHERE 
     (
-           sessions.session_id = :session_id
-        OR sessions.external_session_id = :session_id
+           cloud_auth_sessions.session_id = :session_id
+        OR cloud_auth_sessions.external_session_id = :session_id
     )
-    AND sessions.expire_time > unixepoch('now', 'subsec')
-    AND sessions.cancel_time IS NULL;
+    AND cloud_auth_sessions.expire_time > unixepoch('now', 'subsec')
+    AND cloud_auth_sessions.cancel_time IS NULL;
 
 -- Updates the state of the auth session for the given ID.
 updateSession:
-    UPDATE sessions
+    UPDATE cloud_auth_sessions
     SET 
         state = :state,
         user_id = :user_id
@@ -281,14 +281,14 @@ updateSession:
 
 -- Deletes the auth session for the given ID.
 deleteSession:
-    DELETE FROM sessions
+    DELETE FROM cloud_auth_sessions
     WHERE 
         session_id = :session_id
     OR  external_session_id = :session_id;
 
 -- Cancels the auth session for the given ID.
 cancelSession:
-    UPDATE sessions
+    UPDATE cloud_auth_sessions
     SET cancel_time = unixepoch('now', 'subsec')
     WHERE
         session_id = :session_id
@@ -296,7 +296,7 @@ cancelSession:
 
 -- Creates a cork in the database.
 createCork:
-    INSERT INTO corks(
+    INSERT INTO cloud_auth_corks(
         cork_id, 
         crypto_key_id, 
         bearer_type, 
@@ -320,7 +320,7 @@ createCork:
     );
 
 upsertCork:
-    INSERT INTO corks(
+    INSERT INTO cloud_auth_corks(
         cork_id, 
         crypto_key_id, 
         bearer_type, 
@@ -354,16 +354,16 @@ upsertCork:
 
 -- Retrieves the cork for the given ID.
 getCork:
-    SELECT * FROM corks
+    SELECT * FROM cloud_auth_corks
     WHERE cork_id = :cork_id;
 
 -- Deletes the cork for the given ID.
 deleteCork:
-    DELETE FROM corks
+    DELETE FROM cloud_auth_corks
     WHERE cork_id = :cork_id;
 
--- Revokes all corks under the given entity.
-deleteCorksForEntity(
+-- Revokes all cloud_auth_corks under the given entity.
+deletecloud_auth_corksForEntity(
     :bearer_type AS TEXT OR NULL,
     :bearer_id AS TEXT OR NULL,
     :audience_type AS TEXT OR NULL,
@@ -371,7 +371,7 @@ deleteCorksForEntity(
     :issuer_type AS TEXT OR NULL,
     :issuer_id AS TEXT OR NULL
 ):
-    DELETE FROM corks
+    DELETE FROM cloud_auth_corks
     WHERE
         (:bearer_type IS NULL OR bearer_type = :bearer_type)
     AND (:bearer_id IS NULL OR bearer_id = :bearer_id)
@@ -387,7 +387,7 @@ upsertOtpCode(
     :resend_attempt AS INTEGER OR NULL, 
     :verify_attempt AS INTEGER OR NULL
 ):
-    INSERT INTO otp_codes(session_id, resend_attempt, verify_attempt)
+    INSERT INTO cloud_auth_otp_codes(session_id, resend_attempt, verify_attempt)
     VALUES (:session_id, coalesce(:resend_attempt, 0), coalesce(:verify_attempt, 0))
     ON CONFLICT(session_id) DO UPDATE
     SET
@@ -400,7 +400,7 @@ updateOtpCode(
     :resend_attempt AS INTEGER OR NULL, 
     :verify_attempt AS INTEGER OR NULL
 ):
-    UPDATE otp_codes
+    UPDATE cloud_auth_otp_codes
     SET
         resend_attempt = coalesce(:resend_attempt, resend_attempt), 
         verify_attempt = coalesce(:verify_attempt, verify_attempt)
@@ -409,5 +409,5 @@ updateOtpCode(
 
 -- Retrieves the HOTP code for the given session.
 getOtpCode:
-    SELECT * FROM otp_codes
+    SELECT * FROM cloud_auth_otp_codes
     WHERE session_id = :session_id;

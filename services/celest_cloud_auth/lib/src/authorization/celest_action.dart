@@ -1,6 +1,18 @@
 import 'package:cedar/cedar.dart';
 
 extension type const CelestAction._(EntityUid _) implements EntityUid {
+  static const CelestAction owner =
+      CelestAction._(EntityUid.of('Celest::Action', 'owner'));
+
+  static const CelestAction admin =
+      CelestAction._(EntityUid.of('Celest::Action', 'admin'));
+
+  static const CelestAction edit =
+      CelestAction._(EntityUid.of('Celest::Action', 'edit'));
+
+  static const CelestAction view =
+      CelestAction._(EntityUid.of('Celest::Action', 'view'));
+
   static const CelestAction create =
       CelestAction._(EntityUid.of('Celest::Action', 'create'));
 

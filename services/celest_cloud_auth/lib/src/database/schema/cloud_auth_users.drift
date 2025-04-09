@@ -3,7 +3,7 @@ import 'cedar.drift';
 import 'schema_imports.dart';
 
 -- Stores Celest Cloud users.
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS cloud_auth_users (
     -- Immutable. The unique identifier for the user.
     --
     -- Maps to the `uid` field in the Protobuf.
@@ -41,16 +41,16 @@ CREATE TABLE IF NOT EXISTS users (
 ----------------------------------------------
 
 -- This trigger is used to create the Cedar entity when a row is inserted.
-CREATE TRIGGER IF NOT EXISTS users_create
-BEFORE INSERT ON users
+CREATE TRIGGER IF NOT EXISTS cloud_auth_users_create_trg
+BEFORE INSERT ON cloud_auth_users
 BEGIN
     INSERT INTO cedar_entities(entity_type, entity_id)
     VALUES ('Celest::User', NEW.user_id);
 END;
 
 -- This trigger is used to delete the parent relationship when the parent_id is set to NULL.
-CREATE TRIGGER IF NOT EXISTS users_delete
-AFTER DELETE ON users
+CREATE TRIGGER IF NOT EXISTS cloud_auth_users_delete_trg
+AFTER DELETE ON cloud_auth_users
 BEGIN
     DELETE FROM cedar_relationships
     WHERE 
@@ -67,7 +67,7 @@ END;
 ----------------------------------------------
 
 -- Stores email addresses for Celest Cloud users.
-CREATE TABLE IF NOT EXISTS user_emails (
+CREATE TABLE IF NOT EXISTS cloud_auth_user_emails (
     -- The user's unique identifier.
     user_id TEXT NOT NULL,
 
@@ -80,15 +80,15 @@ CREATE TABLE IF NOT EXISTS user_emails (
     -- The email address's primary status.
     is_primary BOOLEAN NOT NULL DEFAULT FALSE,
 
-    CONSTRAINT user_emails_pk PRIMARY KEY (user_id, email),
+    CONSTRAINT cloud_auth_user_emails_pk PRIMARY KEY (user_id, email),
 
-    CONSTRAINT user_emails_user_fk FOREIGN KEY (user_id) REFERENCES users(user_id)
+    CONSTRAINT cloud_auth_user_emails_user_fk FOREIGN KEY (user_id) REFERENCES cloud_auth_users(user_id)
         ON UPDATE CASCADE ON DELETE CASCADE
         DEFERRABLE INITIALLY DEFERRED
 ) WITHOUT ROWID WITH Email;
 
 -- Stores phone numbers for Celest Cloud users.
-CREATE TABLE IF NOT EXISTS user_phone_numbers (
+CREATE TABLE IF NOT EXISTS cloud_auth_user_phone_numbers (
     -- The user's unique identifier.
     user_id TEXT NOT NULL,
 
@@ -101,38 +101,38 @@ CREATE TABLE IF NOT EXISTS user_phone_numbers (
     -- The phone number's primary status.
     is_primary BOOLEAN NOT NULL DEFAULT FALSE,
 
-    CONSTRAINT user_phone_numbers_pk PRIMARY KEY (user_id, phone_number),
+    CONSTRAINT cloud_auth_user_phone_numbers_pk PRIMARY KEY (user_id, phone_number),
 
-    CONSTRAINT user_phone_numbers_user_fk FOREIGN KEY (user_id) REFERENCES users(user_id)
+    CONSTRAINT cloud_auth_user_phone_numbers_user_fk FOREIGN KEY (user_id) REFERENCES cloud_auth_users(user_id)
         ON UPDATE CASCADE ON DELETE CASCADE
         DEFERRABLE INITIALLY DEFERRED
 ) WITHOUT ROWID WITH PhoneNumber;
 
 createUser:
-    INSERT INTO users (user_id, given_name, family_name, time_zone, language_code)
+    INSERT INTO cloud_auth_users (user_id, given_name, family_name, time_zone, language_code)
     VALUES (:user_id, :given_name, :family_name, :time_zone, :language_code)
     RETURNING *;
 
 getUser: 
-    SELECT * FROM users
+    SELECT * FROM cloud_auth_users
     WHERE user_id = :user_id;
 
 deleteUser:
-    DELETE FROM users
+    DELETE FROM cloud_auth_users
     WHERE user_id = :user_id;
 
 upsertUserEmail(
     :is_verified AS BOOLEAN OR NULL, 
     :is_primary AS BOOLEAN OR NULL
 ): 
-    INSERT INTO user_emails (user_id, email, is_verified, is_primary)
+    INSERT INTO cloud_auth_user_emails (user_id, email, is_verified, is_primary)
     VALUES (
         :user_id, 
         :email, 
         coalesce(:is_verified, FALSE), 
         coalesce(
             :is_primary,
-            (SELECT count(*) = 0 FROM user_emails WHERE user_id = :user_id)
+            (SELECT count(*) = 0 FROM cloud_auth_user_emails WHERE user_id = :user_id)
         )
     )
     ON CONFLICT(user_id, email) DO UPDATE SET
@@ -141,33 +141,33 @@ upsertUserEmail(
     RETURNING *;
 
 getUserEmails:
-    SELECT * FROM user_emails
+    SELECT * FROM cloud_auth_user_emails
     WHERE user_id = :user_id;
 
 lookupUserByEmail:
-    SELECT users.**, user_emails.** FROM users
-    INNER JOIN user_emails ON users.user_id = user_emails.user_id
+    SELECT cloud_auth_users.**, cloud_auth_user_emails.** FROM cloud_auth_users
+    INNER JOIN cloud_auth_user_emails ON cloud_auth_users.user_id = cloud_auth_user_emails.user_id
     WHERE 
-        user_emails.email = :email
-    AND user_emails.is_verified
-    ORDER BY user_emails.is_primary DESC;
+        cloud_auth_user_emails.email = :email
+    AND cloud_auth_user_emails.is_verified
+    ORDER BY cloud_auth_user_emails.is_primary DESC;
 
 deleteUserEmail:
-    DELETE FROM user_emails
+    DELETE FROM cloud_auth_user_emails
     WHERE user_id = :user_id AND email = :email;
 
 upsertUserPhoneNumber(
     :is_verified AS BOOLEAN OR NULL, 
     :is_primary AS BOOLEAN OR NULL
 ):
-    INSERT INTO user_phone_numbers (user_id, phone_number, is_verified, is_primary)
+    INSERT INTO cloud_auth_user_phone_numbers (user_id, phone_number, is_verified, is_primary)
     VALUES (
         :user_id, 
         :phone_number,
         coalesce(:is_verified, FALSE), 
         coalesce(
             :is_primary,
-            (SELECT count(*) = 0 FROM user_phone_numbers WHERE user_id = :user_id)
+            (SELECT count(*) = 0 FROM cloud_auth_user_phone_numbers WHERE user_id = :user_id)
         )
     )
     ON CONFLICT(user_id, phone_number) DO UPDATE SET
@@ -176,17 +176,17 @@ upsertUserPhoneNumber(
     RETURNING *;
 
 getUserPhoneNumbers:
-    SELECT * FROM user_phone_numbers
+    SELECT * FROM cloud_auth_user_phone_numbers
     WHERE user_id = :user_id;
 
 lookupUserByPhone:
-    SELECT users.**, user_phone_numbers.** FROM users
-    INNER JOIN user_phone_numbers ON users.user_id = user_phone_numbers.user_id
+    SELECT cloud_auth_users.**, cloud_auth_user_phone_numbers.** FROM cloud_auth_users
+    INNER JOIN cloud_auth_user_phone_numbers ON cloud_auth_users.user_id = cloud_auth_user_phone_numbers.user_id
     WHERE 
-        user_phone_numbers.phone_number = :phone_number
-    AND user_phone_numbers.is_verified
-    ORDER BY user_phone_numbers.is_primary DESC;
+        cloud_auth_user_phone_numbers.phone_number = :phone_number
+    AND cloud_auth_user_phone_numbers.is_verified
+    ORDER BY cloud_auth_user_phone_numbers.is_primary DESC;
 
 deleteUserPhoneNumber:
-    DELETE FROM user_phone_numbers
+    DELETE FROM cloud_auth_user_phone_numbers
     WHERE user_id = :user_id AND phone_number = :phone_number;

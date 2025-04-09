@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
 import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
-import 'package:celest_cloud_auth/src/database/schema/auth.drift.dart';
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_core.drift.dart';
 import 'package:celest_cloud_auth/src/email/email_provider.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
 import 'package:clock/clock.dart';
@@ -11,7 +11,7 @@ import 'package:corks_cedar/corks_cedar.dart';
 import 'package:meta/meta.dart';
 
 typedef OtpData = ({
-  OtpCode data,
+  CloudAuthOtpCode data,
   String code,
 });
 
@@ -50,12 +50,13 @@ extension type OtpRepository._(_Deps _deps) implements Object {
     required String to,
     required EmailOtpProvider provider,
   }) async {
-    final data =
-        (await _db.authDrift.upsertOtpCode(sessionId: sessionId.encoded)).first;
+    final data = (await _db.cloudAuthCoreDrift
+            .upsertOtpCode(sessionId: sessionId.encoded))
+        .first;
     if (canResend(data) case (false, final nextResend)) {
       return (false, nextResend);
     }
-    final session = await _db.authDrift
+    final session = await _db.cloudAuthCoreDrift
         .getSession(sessionId: sessionId.encoded)
         .getSingle();
     final key = await _cryptoKeys.getKey(cryptoKeyId: session.cryptoKeyId);
@@ -73,14 +74,14 @@ extension type OtpRepository._(_Deps _deps) implements Object {
     required TypeId<Session> sessionId,
     required String code,
   }) async {
-    final data = await _db.authDrift
+    final data = await _db.cloudAuthCoreDrift
         .getOtpCode(sessionId: sessionId.encoded)
         .getSingle();
     if (canVerify(data) case (false, final nextVerify)) {
       context.logger.warning('Cannot verify OTP code again until $nextVerify');
       return (false, nextVerify);
     }
-    final session = await _db.authDrift
+    final session = await _db.cloudAuthCoreDrift
         .getSession(sessionId: sessionId.encoded)
         .getSingle();
     final key = await _cryptoKeys.getKey(cryptoKeyId: session.cryptoKeyId);
@@ -127,27 +128,27 @@ extension type OtpRepository._(_Deps _deps) implements Object {
     return String.fromCharCodes(codeUnits);
   }
 
-  Future<DateTime> _incrementResend(OtpCode otpCode) async {
-    final data = await _db.authDrift.updateOtpCode(
+  Future<DateTime> _incrementResend(CloudAuthOtpCode otpCode) async {
+    final data = await _db.cloudAuthCoreDrift.updateOtpCode(
       sessionId: otpCode.sessionId,
       resendAttempt: otpCode.resendAttempt + 1,
     );
     return nextResend(data.first);
   }
 
-  Future<DateTime> _incrementVerify(OtpCode otpCode) async {
-    final data = await _db.authDrift.updateOtpCode(
+  Future<DateTime> _incrementVerify(CloudAuthOtpCode otpCode) async {
+    final data = await _db.cloudAuthCoreDrift.updateOtpCode(
       sessionId: otpCode.sessionId,
       verifyAttempt: otpCode.verifyAttempt + 1,
     );
     return nextVerify(data.first);
   }
 
-  DateTime nextResend(OtpCode otpCode) {
+  DateTime nextResend(CloudAuthOtpCode otpCode) {
     return otpCode.updateTime.add(resendDelay);
   }
 
-  (bool, DateTime?) canResend(OtpCode otpCode) {
+  (bool, DateTime?) canResend(CloudAuthOtpCode otpCode) {
     if (otpCode.resendAttempt == 0) {
       return (true, nextResend(otpCode));
     }
@@ -161,11 +162,11 @@ extension type OtpRepository._(_Deps _deps) implements Object {
     return (true, null);
   }
 
-  DateTime nextVerify(OtpCode otpCode) {
+  DateTime nextVerify(CloudAuthOtpCode otpCode) {
     return otpCode.updateTime.add(verifyDelay);
   }
 
-  (bool, DateTime?) canVerify(OtpCode otpCode) {
+  (bool, DateTime?) canVerify(CloudAuthOtpCode otpCode) {
     if (otpCode.verifyAttempt == 0) {
       return (true, nextVerify(otpCode));
     }

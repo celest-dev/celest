@@ -3,7 +3,7 @@ import 'cedar.drift';
 import 'schema_imports.dart';
 
 -- Stores Celest project metadata.
-CREATE TABLE IF NOT EXISTS celest_projects (
+CREATE TABLE IF NOT EXISTS cloud_auth_projects (
     -- The unique identifier of the project.
     project_id TEXT NOT NULL PRIMARY KEY,
 
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS celest_projects (
 );
 
 -- Stores Celest API metadata.
-CREATE TABLE IF NOT EXISTS celest_apis (
+CREATE TABLE IF NOT EXISTS cloud_auth_apis (
     -- The unique identifier of the API.
     api_id TEXT NOT NULL PRIMARY KEY,
 
@@ -37,29 +37,29 @@ CREATE TABLE IF NOT EXISTS celest_apis (
     -- A hash of the API metadata.
     etag TEXT NOT NULL,
 
-    CONSTRAINT celest_apis_project_fk FOREIGN KEY (project_id) REFERENCES celest_projects(project_id)
+    CONSTRAINT cloud_auth_apis_project_fk FOREIGN KEY (project_id) REFERENCES cloud_auth_projects(project_id)
         ON UPDATE CASCADE ON DELETE CASCADE
         DEFERRABLE INITIALLY DEFERRED
 );
 
 -- Indexes for the API's FKs.
-CREATE INDEX IF NOT EXISTS celest_apis_project_idx ON celest_apis(project_id);
+CREATE INDEX IF NOT EXISTS cloud_auth_apis_project_idx ON cloud_auth_apis(project_id);
 
 ----------------------------------------------
 -------------- Cedar Triggers ----------------
 ----------------------------------------------
 
 -- This trigger is used to create the Cedar entity when a row is inserted.
-CREATE TRIGGER IF NOT EXISTS celest_apis_trigger_create
-BEFORE INSERT ON celest_apis
+CREATE TRIGGER IF NOT EXISTS cloud_auth_apis_create_trg
+BEFORE INSERT ON cloud_auth_apis
 BEGIN
     INSERT INTO cedar_entities(entity_type, entity_id)
     VALUES ('Celest::Api', NEW.api_id);
 END;
 
 -- This trigger is used to delete the entity and relationships when a row is deleted.
-CREATE TRIGGER IF NOT EXISTS celest_apis_trigger_delete
-AFTER DELETE ON celest_apis
+CREATE TRIGGER IF NOT EXISTS cloud_auth_apis_delete_trg
+AFTER DELETE ON cloud_auth_apis
 BEGIN
     DELETE FROM cedar_relationships
     WHERE 
@@ -80,7 +80,7 @@ END;
 ----------------------------------------------
 
 -- Stores Celest function metadata.
-CREATE TABLE IF NOT EXISTS celest_functions (
+CREATE TABLE IF NOT EXISTS cloud_auth_functions (
     -- The unique identifier of the function.
     function_id TEXT NOT NULL PRIMARY KEY,
 
@@ -96,21 +96,21 @@ CREATE TABLE IF NOT EXISTS celest_functions (
     -- A hash of the function metadata.
     etag TEXT NOT NULL,
 
-    CONSTRAINT celest_functions_api_fk FOREIGN KEY (api_id) REFERENCES celest_apis(api_id)
+    CONSTRAINT cloud_auth_functions_api_fk FOREIGN KEY (api_id) REFERENCES cloud_auth_apis(api_id)
         ON UPDATE CASCADE ON DELETE CASCADE
         DEFERRABLE INITIALLY DEFERRED
 );
 
 -- Indexes for the function's FKs.
-CREATE INDEX IF NOT EXISTS celest_functions_api_idx ON celest_functions(api_id);
+CREATE INDEX IF NOT EXISTS cloud_auth_functions_api_idx ON cloud_auth_functions(api_id);
 
 ----------------------------------------------
 -------------- Cedar Triggers ----------------
 ----------------------------------------------
 
 -- This trigger is used to create the Cedar entity when a row is inserted.
-CREATE TRIGGER IF NOT EXISTS celest_functions_trigger_create
-BEFORE INSERT ON celest_functions
+CREATE TRIGGER IF NOT EXISTS cloud_auth_functions_create_trg
+BEFORE INSERT ON cloud_auth_functions
 BEGIN
     INSERT INTO cedar_entities(entity_type, entity_id)
     VALUES ('Celest::Function', NEW.function_id);
@@ -119,8 +119,8 @@ BEGIN
 END;
 
 -- This trigger is used to delete the entity and relationships when a row is deleted.
-CREATE TRIGGER IF NOT EXISTS celest_functions_trigger_delete
-AFTER DELETE ON celest_functions
+CREATE TRIGGER IF NOT EXISTS cloud_auth_functions_delete_trg
+AFTER DELETE ON cloud_auth_functions
 BEGIN
     DELETE FROM cedar_relationships
     WHERE 
@@ -141,7 +141,7 @@ END;
 ----------------------------------------------
 
 upsertProject:
-    INSERT INTO celest_projects (project_id, version, resolved_ast, etag)
+    INSERT INTO cloud_auth_projects (project_id, version, resolved_ast, etag)
     VALUES (:project_id, :version, :resolved_ast, :etag)
     ON CONFLICT(project_id) DO UPDATE SET
         version = excluded.version,
@@ -150,11 +150,11 @@ upsertProject:
     RETURNING *;
 
 getProject:
-    SELECT * FROM celest_projects
+    SELECT * FROM cloud_auth_projects
     WHERE project_id = :project_id;
 
 upsertApi:
-    INSERT INTO celest_apis (api_id, project_id, resolved_ast, etag)
+    INSERT INTO cloud_auth_apis (api_id, project_id, resolved_ast, etag)
     VALUES (:api_id, :project_id, :resolved_ast, :etag)
     ON CONFLICT(api_id) DO UPDATE SET
         project_id = excluded.project_id,
@@ -163,15 +163,15 @@ upsertApi:
     RETURNING *;
 
 getApi:
-    SELECT * FROM celest_apis
+    SELECT * FROM cloud_auth_apis
     WHERE api_id = :api_id;
 
 listApis:
-    SELECT * FROM celest_apis
+    SELECT * FROM cloud_auth_apis
     WHERE project_id = :project_id;
 
 upsertFunction:
-    INSERT INTO celest_functions (function_id, api_id, resolved_ast, etag)
+    INSERT INTO cloud_auth_functions (function_id, api_id, resolved_ast, etag)
     VALUES (:function_id, :api_id, :resolved_ast, :etag)
     ON CONFLICT(function_id) DO UPDATE SET
         api_id = excluded.api_id,
@@ -180,9 +180,9 @@ upsertFunction:
     RETURNING *;
 
 getFunction:
-    SELECT * FROM celest_functions
+    SELECT * FROM cloud_auth_functions
     WHERE function_id = :function_id;
 
 listFunctions:
-    SELECT * FROM celest_functions
+    SELECT * FROM cloud_auth_functions
     WHERE api_id = :api_id;

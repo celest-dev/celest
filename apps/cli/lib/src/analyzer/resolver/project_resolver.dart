@@ -4,6 +4,7 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart' as dart_ast;
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
+import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
@@ -1310,6 +1311,40 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       );
     }
     overlay.add(cloudAuthIncludes);
+
+    // Adds the `migration` getter if it doesn't exist or updates the existing
+    // one to call `createMigration` from the mixin.
+    final migrationGetter = node.members
+        .whereType<MethodDeclaration>()
+        .firstWhereOrNull((m) => m.name.lexeme == 'migration');
+    final SourceEdit updateMigration;
+    if (migrationGetter == null) {
+      // Add it right after the `schemaVersion` getter.
+      final schemaVersionGetter = node.members
+          .whereType<MethodDeclaration>()
+          .firstWhere((m) => m.name.lexeme == 'schemaVersion');
+      updateMigration = SourceEdit(schemaVersionGetter.end, 0, '''
+
+  @override
+  MigrationStrategy get migration => createMigration();
+''');
+    } else {
+      // Update the getter to not use `MigrationStrategy` constructor, but
+      // instead use `createMigration`.
+      final migrationStrategyElement = await helper.getClass(
+        'package:drift/drift.dart',
+        'MigrationStrategy',
+      );
+      final findConstructor = _FindConstructor(migrationStrategyElement!);
+      node.accept(findConstructor);
+      final migrationStategyReference = findConstructor.found!;
+      updateMigration = SourceEdit(
+        migrationStategyReference.offset,
+        migrationStategyReference.length,
+        'createMigration',
+      );
+    }
+    overlay.add(updateMigration);
   }
 
   /// Collects the Celest Data components of the project.
@@ -1422,5 +1457,20 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       ),
       location: databaseDefinitionLocation,
     );
+  }
+}
+
+final class _FindConstructor extends RecursiveAstVisitor<void> {
+  _FindConstructor(this.element);
+
+  final ClassElement2 element;
+  dart_ast.AstNode? found;
+
+  @override
+  void visitNamedType(dart_ast.NamedType node) {
+    super.visitNamedType(node);
+    if (node.element2 == element) {
+      found = node;
+    }
   }
 }

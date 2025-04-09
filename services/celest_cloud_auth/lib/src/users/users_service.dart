@@ -10,7 +10,7 @@ import 'package:celest_cloud_auth/src/authorization/celest_action.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
-import 'package:celest_cloud_auth/src/database/schema/users.drift.dart';
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_users.drift.dart';
 import 'package:celest_cloud_auth/src/http/http_helpers.dart';
 import 'package:celest_cloud_auth/src/model/interop.dart';
 import 'package:celest_cloud_auth/src/model/order_by.dart';
@@ -219,22 +219,23 @@ extension type UsersService._(_Deps _deps) implements Object {
       'ROW_NUMBER() OVER (ORDER BY create_time DESC)',
     );
     final rowedQuery = Subquery(
-      _db.users.selectOnly()
+      _db.cloudAuthUsers.selectOnly()
         ..addColumns([
           rowNum,
-          _db.users.userId,
-          _db.users.createTime,
+          _db.cloudAuthUsers.userId,
+          _db.cloudAuthUsers.createTime,
         ])
         ..where(
-          _db.users.createTime.isSmallerThanValue(startTime),
+          _db.cloudAuthUsers.createTime.isSmallerThanValue(startTime),
         ),
       'rowed',
     );
 
-    final query = _db.usersDrift.select(_db.users).join([
+    final query = _db.cloudAuthUsersDrift.select(_db.cloudAuthUsers).join([
       innerJoin(
         rowedQuery,
-        _db.users.userId.equalsExp(rowedQuery.ref(_db.users.userId)),
+        _db.cloudAuthUsers.userId
+            .equalsExp(rowedQuery.ref(_db.cloudAuthUsers.userId)),
         useColumns: false,
       ),
     ])
@@ -245,13 +246,14 @@ extension type UsersService._(_Deps _deps) implements Object {
 
     if (orderBy != null) {
       final clause = OrderByClause.parse(orderBy);
-      query.orderBy(clause.toOrderingTerms(_db.users).toList());
+      query.orderBy(clause.toOrderingTerms(_db.cloudAuthUsers).toList());
     }
 
     query.limit(pageSize);
     final rows = await query.get();
-    final users =
-        rows.map((user) => user.readTable(_db.users).toProto()).toList();
+    final users = rows
+        .map((user) => user.readTable(_db.cloudAuthUsers).toProto())
+        .toList();
     final nextPageToken = rows.isEmpty || rows.length < pageSize
         ? null
         : PageToken(
@@ -302,7 +304,7 @@ extension type UsersService._(_Deps _deps) implements Object {
       return Value(value);
     }
 
-    final update = UsersCompanion(
+    final update = CloudAuthUsersCompanion(
       givenName: mask('given_name', givenName),
       familyName: mask('family_name', familyName),
       timeZone: mask('time_zone', timeZone),
@@ -310,7 +312,8 @@ extension type UsersService._(_Deps _deps) implements Object {
       updateTime: Value(DateTime.timestamp()),
     );
 
-    await (_db.update(_db.users)..where((tbl) => tbl.userId.equals(userId)))
+    await (_db.update(_db.cloudAuthUsers)
+          ..where((tbl) => tbl.userId.equals(userId)))
         .write(update);
     final updated = await _db.getUser(userId: userId);
     return updated!;
@@ -356,7 +359,8 @@ extension type UsersService._(_Deps _deps) implements Object {
         }
       }
 
-      return (_db.delete(_db.users)..where((t) => t.userId.equals(userId)))
+      return (_db.delete(_db.cloudAuthUsers)
+            ..where((t) => t.userId.equals(userId)))
           .go();
     });
     switch (deleteEntities) {
