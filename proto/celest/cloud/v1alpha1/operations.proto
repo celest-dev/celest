@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package celest.cloud.v1alpha1;
+
+import "buf/validate/validate.proto";
+import "google/api/field_behavior.proto";
+import "google/api/field_info.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "celest/cloud/v1alpha1;cloudv1alpha1";
+
+// Metadata for long-running operations in Celest Cloud.
+message OperationMetadata {
+  // The resource name of the parent resource to the operation.
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
+
+  // The resource being operated on.
+  //
+  // (-- api-linter: core::0146::any=disabled --)
+  google.protobuf.Any resource = 2 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
+
+  // The state of the operation.
+  OperationState state = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
+
+  // The request ID used for the triggering request.
+  string request_id = 4 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.field_behavior) = OUTPUT_ONLY,
+    (google.api.field_info).format = UUID4
+  ];
+
+  // The time the operation was created.
+  google.protobuf.Timestamp create_time = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
+
+  // The time the operation was started.
+  google.protobuf.Timestamp start_time = 6 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
+
+  // The time the operation was completed.
+  google.protobuf.Timestamp end_time = 7 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
+
+  // If available, the progress of the operation.
+  //
+  // Range: [0, 100]
+  optional int32 progress = 8 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.field_behavior) = OUTPUT_ONLY,
+    (buf.validate.field).int32 = {
+      gte: 0
+      lte: 100
+    }
+  ];
+}
+
+// The state of an operation.
+enum OperationState {
+  // The operation state is unspecified.
+  OPERATION_STATE_UNSPECIFIED = 0;
+
+  // The operation is pending.
+  PENDING = 1;
+
+  // The operation is running.
+  RUNNING = 2;
+
+  // The operation is complete.
+  SUCCEEDED = 3;
+
+  // The operation failed.
+  FAILED = 4;
+
+  // The operation was cancelled.
+  CANCELLED = 5;
+}

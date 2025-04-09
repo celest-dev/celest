@@ -3,6 +3,7 @@
 - feat: Add `Operations.waitOperation`
 - chore: Update license
 - chore: Improve gRPC interface
+- chore: Update protobufs
 
 # 0.1.4
 

@@ -14,10 +14,10 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/duration.pb.dart' as $17;
+import '../../../google/protobuf/duration.pb.dart' as $15;
 import '../../../google/protobuf/empty.pb.dart' as $1;
-import '../../../google/protobuf/timestamp.pb.dart' as $20;
-import '../../../google/type/money.pb.dart' as $57;
+import '../../../google/protobuf/timestamp.pb.dart' as $8;
+import '../../../google/type/money.pb.dart' as $14;
 import 'subscriptions.pbenum.dart';
 
 export 'subscriptions.pbenum.dart';
@@ -41,8 +41,8 @@ class Subscription extends $pb.GeneratedMessage {
     CommunitySubscriptionPlan? community,
     BuilderSubscriptionPlan? builder,
     EnterpriseSubscriptionPlan? enterprise,
-    $20.Timestamp? createTime,
-    $20.Timestamp? updateTime,
+    $8.Timestamp? createTime,
+    $8.Timestamp? updateTime,
     SubscriptionPaymentRequired? paymentRequired,
     SubscriptionActive? active,
     SubscriptionPaused? paused,
@@ -127,10 +127,10 @@ class Subscription extends $pb.GeneratedMessage {
         subBuilder: BuilderSubscriptionPlan.create)
     ..aOM<EnterpriseSubscriptionPlan>(5, _omitFieldNames ? '' : 'enterprise',
         subBuilder: EnterpriseSubscriptionPlan.create)
-    ..aOM<$20.Timestamp>(6, _omitFieldNames ? '' : 'createTime',
-        subBuilder: $20.Timestamp.create)
-    ..aOM<$20.Timestamp>(7, _omitFieldNames ? '' : 'updateTime',
-        subBuilder: $20.Timestamp.create)
+    ..aOM<$8.Timestamp>(6, _omitFieldNames ? '' : 'createTime',
+        subBuilder: $8.Timestamp.create)
+    ..aOM<$8.Timestamp>(7, _omitFieldNames ? '' : 'updateTime',
+        subBuilder: $8.Timestamp.create)
     ..aOM<SubscriptionPaymentRequired>(
         8, _omitFieldNames ? '' : 'paymentRequired',
         subBuilder: SubscriptionPaymentRequired.create)
@@ -248,9 +248,9 @@ class Subscription extends $pb.GeneratedMessage {
 
   /// Output only. The time the subscription was created.
   @$pb.TagNumber(6)
-  $20.Timestamp get createTime => $_getN(5);
+  $8.Timestamp get createTime => $_getN(5);
   @$pb.TagNumber(6)
-  set createTime($20.Timestamp v) {
+  set createTime($8.Timestamp v) {
     setField(6, v);
   }
 
@@ -259,13 +259,13 @@ class Subscription extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   void clearCreateTime() => clearField(6);
   @$pb.TagNumber(6)
-  $20.Timestamp ensureCreateTime() => $_ensure(5);
+  $8.Timestamp ensureCreateTime() => $_ensure(5);
 
   /// Output only. The time the subscription was last updated.
   @$pb.TagNumber(7)
-  $20.Timestamp get updateTime => $_getN(6);
+  $8.Timestamp get updateTime => $_getN(6);
   @$pb.TagNumber(7)
-  set updateTime($20.Timestamp v) {
+  set updateTime($8.Timestamp v) {
     setField(7, v);
   }
 
@@ -274,7 +274,7 @@ class Subscription extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   void clearUpdateTime() => clearField(7);
   @$pb.TagNumber(7)
-  $20.Timestamp ensureUpdateTime() => $_ensure(6);
+  $8.Timestamp ensureUpdateTime() => $_ensure(6);
 
   /// The subscription requires payment.
   @$pb.TagNumber(8)
@@ -508,7 +508,7 @@ class SubscriptionActive extends $pb.GeneratedMessage {
 /// Information about the subscription billing.
 class SubscriptionBillingInfo extends $pb.GeneratedMessage {
   factory SubscriptionBillingInfo({
-    $20.Timestamp? nextBillingTime,
+    $8.Timestamp? nextBillingTime,
   }) {
     final $result = create();
     if (nextBillingTime != null) {
@@ -529,8 +529,8 @@ class SubscriptionBillingInfo extends $pb.GeneratedMessage {
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
-    ..aOM<$20.Timestamp>(1, _omitFieldNames ? '' : 'nextBillingTime',
-        subBuilder: $20.Timestamp.create)
+    ..aOM<$8.Timestamp>(1, _omitFieldNames ? '' : 'nextBillingTime',
+        subBuilder: $8.Timestamp.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -560,9 +560,9 @@ class SubscriptionBillingInfo extends $pb.GeneratedMessage {
 
   /// The time when the subscription will be billed next.
   @$pb.TagNumber(1)
-  $20.Timestamp get nextBillingTime => $_getN(0);
+  $8.Timestamp get nextBillingTime => $_getN(0);
   @$pb.TagNumber(1)
-  set nextBillingTime($20.Timestamp v) {
+  set nextBillingTime($8.Timestamp v) {
     setField(1, v);
   }
 
@@ -571,13 +571,13 @@ class SubscriptionBillingInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearNextBillingTime() => clearField(1);
   @$pb.TagNumber(1)
-  $20.Timestamp ensureNextBillingTime() => $_ensure(0);
+  $8.Timestamp ensureNextBillingTime() => $_ensure(0);
 }
 
 /// The message for when a subscription is paused.
 class SubscriptionPaused extends $pb.GeneratedMessage {
   factory SubscriptionPaused({
-    $20.Timestamp? resumeTime,
+    $8.Timestamp? resumeTime,
   }) {
     final $result = create();
     if (resumeTime != null) {
@@ -598,8 +598,8 @@ class SubscriptionPaused extends $pb.GeneratedMessage {
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
-    ..aOM<$20.Timestamp>(1, _omitFieldNames ? '' : 'resumeTime',
-        subBuilder: $20.Timestamp.create)
+    ..aOM<$8.Timestamp>(1, _omitFieldNames ? '' : 'resumeTime',
+        subBuilder: $8.Timestamp.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -627,9 +627,9 @@ class SubscriptionPaused extends $pb.GeneratedMessage {
 
   /// The time the subscription is scheduled to resume.
   @$pb.TagNumber(1)
-  $20.Timestamp get resumeTime => $_getN(0);
+  $8.Timestamp get resumeTime => $_getN(0);
   @$pb.TagNumber(1)
-  set resumeTime($20.Timestamp v) {
+  set resumeTime($8.Timestamp v) {
     setField(1, v);
   }
 
@@ -638,7 +638,7 @@ class SubscriptionPaused extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearResumeTime() => clearField(1);
   @$pb.TagNumber(1)
-  $20.Timestamp ensureResumeTime() => $_ensure(0);
+  $8.Timestamp ensureResumeTime() => $_ensure(0);
 }
 
 /// The message for when a subscription is suspended.
@@ -710,7 +710,7 @@ class SubscriptionSuspended extends $pb.GeneratedMessage {
 /// The message for when a subscription is canceled.
 class SubscriptionCanceled extends $pb.GeneratedMessage {
   factory SubscriptionCanceled({
-    $20.Timestamp? cancelTime,
+    $8.Timestamp? cancelTime,
     CancelSubscriptionDetails? details,
   }) {
     final $result = create();
@@ -735,8 +735,8 @@ class SubscriptionCanceled extends $pb.GeneratedMessage {
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
-    ..aOM<$20.Timestamp>(1, _omitFieldNames ? '' : 'cancelTime',
-        subBuilder: $20.Timestamp.create)
+    ..aOM<$8.Timestamp>(1, _omitFieldNames ? '' : 'cancelTime',
+        subBuilder: $8.Timestamp.create)
     ..aOM<CancelSubscriptionDetails>(2, _omitFieldNames ? '' : 'details',
         subBuilder: CancelSubscriptionDetails.create)
     ..hasRequiredFields = false;
@@ -767,9 +767,9 @@ class SubscriptionCanceled extends $pb.GeneratedMessage {
 
   /// The time the subscription was canceled.
   @$pb.TagNumber(1)
-  $20.Timestamp get cancelTime => $_getN(0);
+  $8.Timestamp get cancelTime => $_getN(0);
   @$pb.TagNumber(1)
-  set cancelTime($20.Timestamp v) {
+  set cancelTime($8.Timestamp v) {
     setField(1, v);
   }
 
@@ -778,7 +778,7 @@ class SubscriptionCanceled extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearCancelTime() => clearField(1);
   @$pb.TagNumber(1)
-  $20.Timestamp ensureCancelTime() => $_ensure(0);
+  $8.Timestamp ensureCancelTime() => $_ensure(0);
 
   /// The details of the cancellation, if provided.
   @$pb.TagNumber(2)
@@ -1271,7 +1271,7 @@ class ChangePlanResponse extends $pb.GeneratedMessage {
 class PauseSubscriptionRequest extends $pb.GeneratedMessage {
   factory PauseSubscriptionRequest({
     $core.String? name,
-    $20.Timestamp? resumeTime,
+    $8.Timestamp? resumeTime,
   }) {
     final $result = create();
     if (name != null) {
@@ -1296,8 +1296,8 @@ class PauseSubscriptionRequest extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..aOM<$20.Timestamp>(2, _omitFieldNames ? '' : 'resumeTime',
-        subBuilder: $20.Timestamp.create)
+    ..aOM<$8.Timestamp>(2, _omitFieldNames ? '' : 'resumeTime',
+        subBuilder: $8.Timestamp.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1340,9 +1340,9 @@ class PauseSubscriptionRequest extends $pb.GeneratedMessage {
 
   /// Optional. The time to resume the subscription.
   @$pb.TagNumber(2)
-  $20.Timestamp get resumeTime => $_getN(1);
+  $8.Timestamp get resumeTime => $_getN(1);
   @$pb.TagNumber(2)
-  set resumeTime($20.Timestamp v) {
+  set resumeTime($8.Timestamp v) {
     setField(2, v);
   }
 
@@ -1351,7 +1351,7 @@ class PauseSubscriptionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearResumeTime() => clearField(2);
   @$pb.TagNumber(2)
-  $20.Timestamp ensureResumeTime() => $_ensure(1);
+  $8.Timestamp ensureResumeTime() => $_ensure(1);
 }
 
 /// The response message for the `PauseSubscription` method.
@@ -1979,12 +1979,12 @@ enum Pricing_Promotion_Duration { forever, once, repeating, notSet }
 class Pricing_Promotion extends $pb.GeneratedMessage {
   factory Pricing_Promotion({
     $core.String? couponCode,
-    $57.Money? amount,
+    $14.Money? amount,
     $core.int? percentage,
     $1.Empty? forever,
     $1.Empty? once,
-    $17.Duration? repeating,
-    $20.Timestamp? expireTime,
+    $15.Duration? repeating,
+    $8.Timestamp? expireTime,
   }) {
     final $result = create();
     if (couponCode != null) {
@@ -2039,17 +2039,17 @@ class Pricing_Promotion extends $pb.GeneratedMessage {
     ..oo(0, [2, 3])
     ..oo(1, [4, 5, 6])
     ..aOS(1, _omitFieldNames ? '' : 'couponCode')
-    ..aOM<$57.Money>(2, _omitFieldNames ? '' : 'amount',
-        subBuilder: $57.Money.create)
+    ..aOM<$14.Money>(2, _omitFieldNames ? '' : 'amount',
+        subBuilder: $14.Money.create)
     ..a<$core.int>(3, _omitFieldNames ? '' : 'percentage', $pb.PbFieldType.O3)
     ..aOM<$1.Empty>(4, _omitFieldNames ? '' : 'forever',
         subBuilder: $1.Empty.create)
     ..aOM<$1.Empty>(5, _omitFieldNames ? '' : 'once',
         subBuilder: $1.Empty.create)
-    ..aOM<$17.Duration>(6, _omitFieldNames ? '' : 'repeating',
-        subBuilder: $17.Duration.create)
-    ..aOM<$20.Timestamp>(7, _omitFieldNames ? '' : 'expireTime',
-        subBuilder: $20.Timestamp.create)
+    ..aOM<$15.Duration>(6, _omitFieldNames ? '' : 'repeating',
+        subBuilder: $15.Duration.create)
+    ..aOM<$8.Timestamp>(7, _omitFieldNames ? '' : 'expireTime',
+        subBuilder: $8.Timestamp.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -2098,9 +2098,9 @@ class Pricing_Promotion extends $pb.GeneratedMessage {
 
   /// The discount amount.
   @$pb.TagNumber(2)
-  $57.Money get amount => $_getN(1);
+  $14.Money get amount => $_getN(1);
   @$pb.TagNumber(2)
-  set amount($57.Money v) {
+  set amount($14.Money v) {
     setField(2, v);
   }
 
@@ -2109,7 +2109,7 @@ class Pricing_Promotion extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearAmount() => clearField(2);
   @$pb.TagNumber(2)
-  $57.Money ensureAmount() => $_ensure(1);
+  $14.Money ensureAmount() => $_ensure(1);
 
   /// The discount percentage.
   @$pb.TagNumber(3)
@@ -2156,9 +2156,9 @@ class Pricing_Promotion extends $pb.GeneratedMessage {
 
   /// The duration of the promotion.
   @$pb.TagNumber(6)
-  $17.Duration get repeating => $_getN(5);
+  $15.Duration get repeating => $_getN(5);
   @$pb.TagNumber(6)
-  set repeating($17.Duration v) {
+  set repeating($15.Duration v) {
     setField(6, v);
   }
 
@@ -2167,13 +2167,13 @@ class Pricing_Promotion extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   void clearRepeating() => clearField(6);
   @$pb.TagNumber(6)
-  $17.Duration ensureRepeating() => $_ensure(5);
+  $15.Duration ensureRepeating() => $_ensure(5);
 
   /// Optional. The time the promotion expires.
   @$pb.TagNumber(7)
-  $20.Timestamp get expireTime => $_getN(6);
+  $8.Timestamp get expireTime => $_getN(6);
   @$pb.TagNumber(7)
-  set expireTime($20.Timestamp v) {
+  set expireTime($8.Timestamp v) {
     setField(7, v);
   }
 
@@ -2182,7 +2182,7 @@ class Pricing_Promotion extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   void clearExpireTime() => clearField(7);
   @$pb.TagNumber(7)
-  $20.Timestamp ensureExpireTime() => $_ensure(6);
+  $8.Timestamp ensureExpireTime() => $_ensure(6);
 }
 
 enum Pricing_Plan { community, builder, enterprise, notSet }
@@ -2193,7 +2193,7 @@ class Pricing extends $pb.GeneratedMessage {
     CommunitySubscriptionPlan? community,
     BuilderSubscriptionPlan? builder,
     EnterpriseSubscriptionPlan? enterprise,
-    $57.Money? price,
+    $14.Money? price,
     $core.Iterable<Pricing_Promotion>? promotions,
   }) {
     final $result = create();
@@ -2240,8 +2240,8 @@ class Pricing extends $pb.GeneratedMessage {
         subBuilder: BuilderSubscriptionPlan.create)
     ..aOM<EnterpriseSubscriptionPlan>(3, _omitFieldNames ? '' : 'enterprise',
         subBuilder: EnterpriseSubscriptionPlan.create)
-    ..aOM<$57.Money>(4, _omitFieldNames ? '' : 'price',
-        subBuilder: $57.Money.create)
+    ..aOM<$14.Money>(4, _omitFieldNames ? '' : 'price',
+        subBuilder: $14.Money.create)
     ..pc<Pricing_Promotion>(
         5, _omitFieldNames ? '' : 'promotions', $pb.PbFieldType.PM,
         subBuilder: Pricing_Promotion.create)
@@ -2318,9 +2318,9 @@ class Pricing extends $pb.GeneratedMessage {
 
   /// The price of the plan.
   @$pb.TagNumber(4)
-  $57.Money get price => $_getN(3);
+  $14.Money get price => $_getN(3);
   @$pb.TagNumber(4)
-  set price($57.Money v) {
+  set price($14.Money v) {
     setField(4, v);
   }
 
@@ -2329,7 +2329,7 @@ class Pricing extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearPrice() => clearField(4);
   @$pb.TagNumber(4)
-  $57.Money ensurePrice() => $_ensure(3);
+  $14.Money ensurePrice() => $_ensure(3);
 
   /// Optional. The active promotions for the plan, if any.
   @$pb.TagNumber(5)

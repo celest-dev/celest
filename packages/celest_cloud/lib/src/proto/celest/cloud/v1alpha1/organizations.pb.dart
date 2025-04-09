@@ -13,9 +13,9 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/field_mask.pb.dart' as $46;
-import '../../../google/protobuf/timestamp.pb.dart' as $20;
-import 'common.pbenum.dart' as $55;
+import '../../../google/protobuf/field_mask.pb.dart' as $9;
+import '../../../google/protobuf/timestamp.pb.dart' as $8;
+import 'common.pbenum.dart' as $12;
 
 /// A root-level organization resource.
 class Organization extends $pb.GeneratedMessage {
@@ -25,15 +25,15 @@ class Organization extends $pb.GeneratedMessage {
     $core.String? parent,
     $core.String? organizationId,
     $core.String? displayName,
-    $20.Timestamp? createTime,
-    $20.Timestamp? updateTime,
-    $20.Timestamp? deleteTime,
+    $8.Timestamp? createTime,
+    $8.Timestamp? updateTime,
+    $8.Timestamp? deleteTime,
     $core.String? etag,
     $core.Map<$core.String, $core.String>? annotations,
     $core.bool? reconciling,
-    $55.Region? primaryRegion,
-    $55.LifecycleState? state,
-    $20.Timestamp? purgeTime,
+    $12.Region? primaryRegion,
+    $12.LifecycleState? state,
+    $8.Timestamp? purgeTime,
   }) {
     final $result = create();
     if (name != null) {
@@ -98,12 +98,12 @@ class Organization extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'parent')
     ..aOS(4, _omitFieldNames ? '' : 'organizationId')
     ..aOS(5, _omitFieldNames ? '' : 'displayName')
-    ..aOM<$20.Timestamp>(6, _omitFieldNames ? '' : 'createTime',
-        subBuilder: $20.Timestamp.create)
-    ..aOM<$20.Timestamp>(7, _omitFieldNames ? '' : 'updateTime',
-        subBuilder: $20.Timestamp.create)
-    ..aOM<$20.Timestamp>(8, _omitFieldNames ? '' : 'deleteTime',
-        subBuilder: $20.Timestamp.create)
+    ..aOM<$8.Timestamp>(6, _omitFieldNames ? '' : 'createTime',
+        subBuilder: $8.Timestamp.create)
+    ..aOM<$8.Timestamp>(7, _omitFieldNames ? '' : 'updateTime',
+        subBuilder: $8.Timestamp.create)
+    ..aOM<$8.Timestamp>(8, _omitFieldNames ? '' : 'deleteTime',
+        subBuilder: $8.Timestamp.create)
     ..aOS(9, _omitFieldNames ? '' : 'etag')
     ..m<$core.String, $core.String>(10, _omitFieldNames ? '' : 'annotations',
         entryClassName: 'Organization.AnnotationsEntry',
@@ -111,18 +111,18 @@ class Organization extends $pb.GeneratedMessage {
         valueFieldType: $pb.PbFieldType.OS,
         packageName: const $pb.PackageName('celest.cloud.v1alpha1'))
     ..aOB(11, _omitFieldNames ? '' : 'reconciling')
-    ..e<$55.Region>(
+    ..e<$12.Region>(
         12, _omitFieldNames ? '' : 'primaryRegion', $pb.PbFieldType.OE,
-        defaultOrMaker: $55.Region.REGION_UNSPECIFIED,
-        valueOf: $55.Region.valueOf,
-        enumValues: $55.Region.values)
-    ..e<$55.LifecycleState>(
+        defaultOrMaker: $12.Region.REGION_UNSPECIFIED,
+        valueOf: $12.Region.valueOf,
+        enumValues: $12.Region.values)
+    ..e<$12.LifecycleState>(
         13, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
-        defaultOrMaker: $55.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
-        valueOf: $55.LifecycleState.valueOf,
-        enumValues: $55.LifecycleState.values)
-    ..aOM<$20.Timestamp>(14, _omitFieldNames ? '' : 'purgeTime',
-        subBuilder: $20.Timestamp.create)
+        defaultOrMaker: $12.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
+        valueOf: $12.LifecycleState.valueOf,
+        enumValues: $12.LifecycleState.values)
+    ..aOM<$8.Timestamp>(14, _omitFieldNames ? '' : 'purgeTime',
+        subBuilder: $8.Timestamp.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -221,9 +221,9 @@ class Organization extends $pb.GeneratedMessage {
 
   /// Output only. The time the organization was created.
   @$pb.TagNumber(6)
-  $20.Timestamp get createTime => $_getN(5);
+  $8.Timestamp get createTime => $_getN(5);
   @$pb.TagNumber(6)
-  set createTime($20.Timestamp v) {
+  set createTime($8.Timestamp v) {
     setField(6, v);
   }
 
@@ -232,13 +232,13 @@ class Organization extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   void clearCreateTime() => clearField(6);
   @$pb.TagNumber(6)
-  $20.Timestamp ensureCreateTime() => $_ensure(5);
+  $8.Timestamp ensureCreateTime() => $_ensure(5);
 
   /// Output only. The time the organization was last updated.
   @$pb.TagNumber(7)
-  $20.Timestamp get updateTime => $_getN(6);
+  $8.Timestamp get updateTime => $_getN(6);
   @$pb.TagNumber(7)
-  set updateTime($20.Timestamp v) {
+  set updateTime($8.Timestamp v) {
     setField(7, v);
   }
 
@@ -247,13 +247,13 @@ class Organization extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   void clearUpdateTime() => clearField(7);
   @$pb.TagNumber(7)
-  $20.Timestamp ensureUpdateTime() => $_ensure(6);
+  $8.Timestamp ensureUpdateTime() => $_ensure(6);
 
   /// Output only. The time the organization was soft-deleted.
   @$pb.TagNumber(8)
-  $20.Timestamp get deleteTime => $_getN(7);
+  $8.Timestamp get deleteTime => $_getN(7);
   @$pb.TagNumber(8)
-  set deleteTime($20.Timestamp v) {
+  set deleteTime($8.Timestamp v) {
     setField(8, v);
   }
 
@@ -262,7 +262,7 @@ class Organization extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   void clearDeleteTime() => clearField(8);
   @$pb.TagNumber(8)
-  $20.Timestamp ensureDeleteTime() => $_ensure(7);
+  $8.Timestamp ensureDeleteTime() => $_ensure(7);
 
   /// Output only. A checksum computed by the server based on the current value
   /// of the Organization resource. This may be sent on update and delete requests to
@@ -300,9 +300,9 @@ class Organization extends $pb.GeneratedMessage {
   ///
   ///  Cannot be changed after creation.
   @$pb.TagNumber(12)
-  $55.Region get primaryRegion => $_getN(11);
+  $12.Region get primaryRegion => $_getN(11);
   @$pb.TagNumber(12)
-  set primaryRegion($55.Region v) {
+  set primaryRegion($12.Region v) {
     setField(12, v);
   }
 
@@ -313,9 +313,9 @@ class Organization extends $pb.GeneratedMessage {
 
   /// Output only. The lifecycle state of the organization.
   @$pb.TagNumber(13)
-  $55.LifecycleState get state => $_getN(12);
+  $12.LifecycleState get state => $_getN(12);
   @$pb.TagNumber(13)
-  set state($55.LifecycleState v) {
+  set state($12.LifecycleState v) {
     setField(13, v);
   }
 
@@ -326,9 +326,9 @@ class Organization extends $pb.GeneratedMessage {
 
   /// Output only. The time the organization is scheduled for permanent deletion.
   @$pb.TagNumber(14)
-  $20.Timestamp get purgeTime => $_getN(13);
+  $8.Timestamp get purgeTime => $_getN(13);
   @$pb.TagNumber(14)
-  set purgeTime($20.Timestamp v) {
+  set purgeTime($8.Timestamp v) {
     setField(14, v);
   }
 
@@ -337,7 +337,7 @@ class Organization extends $pb.GeneratedMessage {
   @$pb.TagNumber(14)
   void clearPurgeTime() => clearField(14);
   @$pb.TagNumber(14)
-  $20.Timestamp ensurePurgeTime() => $_ensure(13);
+  $8.Timestamp ensurePurgeTime() => $_ensure(13);
 }
 
 /// Request message for the `CreateOrganization` method.
@@ -467,7 +467,7 @@ class CreateOrganizationRequest extends $pb.GeneratedMessage {
 class UpdateOrganizationRequest extends $pb.GeneratedMessage {
   factory UpdateOrganizationRequest({
     Organization? organization,
-    $46.FieldMask? updateMask,
+    $9.FieldMask? updateMask,
     $core.bool? allowMissing,
     $core.bool? validateOnly,
   }) {
@@ -501,8 +501,8 @@ class UpdateOrganizationRequest extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<Organization>(1, _omitFieldNames ? '' : 'organization',
         subBuilder: Organization.create)
-    ..aOM<$46.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
-        subBuilder: $46.FieldMask.create)
+    ..aOM<$9.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
+        subBuilder: $9.FieldMask.create)
     ..aOB(3, _omitFieldNames ? '' : 'allowMissing')
     ..aOB(4, _omitFieldNames ? '' : 'validateOnly')
     ..hasRequiredFields = false;
@@ -549,9 +549,9 @@ class UpdateOrganizationRequest extends $pb.GeneratedMessage {
 
   /// The update mask applies to the organization.
   @$pb.TagNumber(2)
-  $46.FieldMask get updateMask => $_getN(1);
+  $9.FieldMask get updateMask => $_getN(1);
   @$pb.TagNumber(2)
-  set updateMask($46.FieldMask v) {
+  set updateMask($9.FieldMask v) {
     setField(2, v);
   }
 
@@ -560,7 +560,7 @@ class UpdateOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearUpdateMask() => clearField(2);
   @$pb.TagNumber(2)
-  $46.FieldMask ensureUpdateMask() => $_ensure(1);
+  $9.FieldMask ensureUpdateMask() => $_ensure(1);
 
   /// If set to true, and the organization is not found, a new organization will be created.
   /// In this situation, `update_mask` is ignored.

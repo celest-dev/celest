@@ -4,6 +4,7 @@ import 'package:celest_cloud/src/cloud/project_environments/project_environments
 import 'package:celest_cloud/src/proto.dart' hide OperationState;
 import 'package:celest_cloud/src/util/operations.dart';
 import 'package:celest_core/celest_core.dart';
+import 'package:celest_core/src/util/let.dart';
 import 'package:logging/logging.dart';
 
 final class ProjectEnvironments with BaseService {
@@ -29,10 +30,15 @@ final class ProjectEnvironments with BaseService {
     final request = CreateProjectEnvironmentRequest(
       parent: parent,
       projectEnvironmentId: projectEnvironmentId,
-      projectEnvironment: ProjectEnvironment(
-        displayName: displayName,
-        annotations: annotations,
-      ),
+      projectEnvironment: ProjectEnvironment().let((env) {
+        if (displayName != null) {
+          env.displayName = displayName;
+        }
+        if (annotations != null) {
+          env.annotations.addAll(annotations);
+        }
+        return env;
+      }),
       validateOnly: validateOnly,
     );
     final operation = await run(

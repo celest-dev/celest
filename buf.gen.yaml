@@ -1,0 +1,12 @@
+version: v2
+managed:
+  enabled: true
+inputs:
+  - directory: proto
+  - module: buf.build/celest-dev/ast
+plugins:
+  # TODO: Bump when issues are fixed in generator
+  - remote: buf.build/protocolbuffers/dart:v21.1.2
+    out: packages/celest_cloud/lib/src/proto
+    opt:
+      - grpc

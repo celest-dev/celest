@@ -1,0 +1,427 @@
+syntax = "proto3";
+
+package celest.cloud.v1alpha1;
+
+import "buf/validate/validate.proto";
+import "celest/cloud/v1alpha1/common.proto";
+import "celest/cloud/v1alpha1/operations.proto";
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/api/field_info.proto";
+import "google/api/resource.proto";
+import "google/longrunning/operations.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "celest/cloud/v1alpha1;cloudv1alpha1";
+
+// Allows organization administrators to create projects.
+service Projects {
+  option (google.api.default_host) = "cloud.celest.dev";
+
+  // Creates a new project.
+  rpc CreateProject(CreateProjectRequest) returns (google.longrunning.Operation) {
+    option (google.api.http) = {
+      post: "/v1alpha1/{parent=organizations/*}/projects"
+      body: "project"
+    };
+    option (google.api.method_signature) = "parent,project,project_id";
+    option (google.longrunning.operation_info) = {
+      response_type: "Project"
+      metadata_type: "OperationMetadata"
+    };
+  }
+
+  // Retrieves the project identified by the specified name.
+  rpc GetProject(GetProjectRequest) returns (Project) {
+    option (google.api.http) = { get: "/v1alpha1/{name=organizations/*/projects/*}" };
+    option (google.api.method_signature) = "name";
+  }
+
+  // Lists projects in an organization.
+  rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
+    option (google.api.http) = { get: "/v1alpha1/{parent=organizations/*}/projects" };
+    option (google.api.method_signature) = "parent";
+  }
+
+  // Update the project identified by the specified name.
+  rpc UpdateProject(UpdateProjectRequest) returns (google.longrunning.Operation) {
+    option (google.api.http) = {
+      patch: "/v1alpha1/{project.name=organizations/*/projects/*}"
+      body: "project"
+    };
+    option (google.api.method_signature) = "project,update_mask";
+    option (google.longrunning.operation_info) = {
+      response_type: "Project"
+      metadata_type: "OperationMetadata"
+    };
+  }
+
+  // Marks a project for deletion.
+  rpc DeleteProject(DeleteProjectRequest) returns (google.longrunning.Operation) {
+    option (google.api.http) = { delete: "/v1alpha1/{name=organizations/*/projects/*}" };
+    option (google.api.method_signature) = "name";
+    option (google.longrunning.operation_info) = {
+      response_type: "Project"
+      metadata_type: "OperationMetadata"
+    };
+  }
+
+  // Undeletes a project.
+  rpc UndeleteProject(UndeleteProjectRequest) returns (google.longrunning.Operation) {
+    option (google.api.http) = {
+      post: "/v1alpha1/{name=organizations/*/projects/*}:undelete"
+      body: "*"
+    };
+    option (google.api.method_signature) = "name";
+    option (google.longrunning.operation_info) = {
+      response_type: "Project"
+      metadata_type: "OperationMetadata"
+    };
+  }
+
+  // Renames the project identified by the specified name.
+  //
+  // After renaming, the project can no longer be identified by the previous name. All of its child resources are
+  // also renamed and must be accessed using the new identifier.
+  //
+  // Renaming does not release the previous identifier from use. It is an error to attempt to create a new project
+  // with the same identifier as a previously renamed project.
+  //
+  // (-- api-linter: core::0136::declarative-standard-methods-only=disabled
+  //     aip.dev/not-precedent: Renaming is an inherently imperative method which should not be handled declaratively.
+  //     https://google.aip.dev/136#declarative-friendly-resources --)
+  rpc RenameProject(RenameProjectRequest) returns (google.longrunning.Operation) {
+    option (google.api.http) = {
+      post: "/v1alpha1/{name=organizations/*/projects/*}:rename"
+      body: "*"
+    };
+    option (google.api.method_signature) = "name,project_id";
+    option (google.longrunning.operation_info) = {
+      response_type: "Project"
+      metadata_type: "OperationMetadata"
+    };
+  }
+}
+
+// A project resource.
+message Project {
+  option (google.api.resource) = {
+    type: "cloud.celest.dev/Project"
+    pattern: "organizations/{organization}/projects/{project}"
+    plural: "projects"
+    singular: "project"
+    style: DECLARATIVE_FRIENDLY
+  };
+
+  // Identifier. The resource name of the project. Format:
+  // `organizations/{organization_id}/projects/{project_id}`.
+  string name = 1 [(google.api.field_behavior) = IDENTIFIER];
+
+  // A system-generated unique identifier for the project.
+  string uid = 2 [
+    (google.api.field_behavior) = OUTPUT_ONLY,
+    (google.api.field_info).format = UUID4
+  ];
+
+  // The parent organization of the project.
+  string parent = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // Immutable. The unique, user-assigned id of the project.
+  // It must be 6 to 30 lowercase ASCII letters, digits, or hyphens.
+  // It must start with a letter.
+  // Trailing hyphens are prohibited.
+  //
+  // Example: `tokyo-rain-123`
+  string project_id = 4 [
+    (google.api.field_behavior) = IMMUTABLE,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
+
+  // Output only. The project lifecycle state.
+  LifecycleState state = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The display name of the project.
+  string display_name = 6 [(google.api.field_behavior) = OPTIONAL];
+
+  // Output only. The time the project was created.
+  google.protobuf.Timestamp create_time = 7 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. The time the project was last updated.
+  google.protobuf.Timestamp update_time = 8 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. The time the project was soft-deleted.
+  google.protobuf.Timestamp delete_time = 9 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. The time the project is scheduled for permanent deletion.
+  google.protobuf.Timestamp purge_time = 10 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. A checksum computed by the server based on the current value
+  // of the Project resource. This may be sent on update and delete requests to
+  // ensure the client has an up-to-date value before proceeding.
+  string etag = 11 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Client-provided key-value pairs that are not directly used by the system.
+  map<string, string> annotations = 12 [
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).map = {
+      max_pairs: 64,
+      keys: {
+        cel: {
+          id: "valid_annotation_key",
+          message: "keys must be 1-63 characters and have only lowercase letters, numerics, underscores, and dashes, and must start with a lowercase letter",
+          expression: "this.matches('^[a-z][a-z0-9_-]{0,62}$')"
+        }
+      },
+      values: {
+        cel: {
+          id: "valid_annotation_value",
+          message: "values must be 0-63 characters and have only lowercase letters, numerics, underscores, and dashes",
+          expression: "this.matches('^[a-z0-9_-]{0,63}$')"
+        }
+      },
+    }
+  ];
+
+  // Output only. Indicates whether the project is currently being reconciled.
+  bool reconciling = 13 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Optional. The project region(s) where resources are deployed.
+  //
+  // If not specified, the project region is determined by the organization's default region. Or if not
+  // set either, the region closest to the caller.
+  //
+  // **NOTE**: This functionality is only available in enterprise subscriptions.
+  repeated Region regions = 14 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.field_behavior) = IMMUTABLE
+  ];
+}
+
+// Request message for the `CreateProject` method.
+message CreateProjectRequest {
+  // Required. The parent organization of the project.
+  //
+  // Format: `organizations/{organization}`
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "cloud.celest.dev/Organization"
+      child_type: "cloud.celest.dev/Project"
+    },
+    (buf.validate.field).cel = {
+      id: "valid_organization",
+      message: "parent must be a valid organization name",
+      expression: "this.matches('^organizations/[^/]+$')"
+    }
+  ];
+
+  // Required. The ID of the project to create.
+  //
+  // It must be 6 to 30 lowercase ASCII letters, digits, or hyphens.
+  string project_id = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).cel = {
+      id: "valid_project_alias",
+      message: "project_id must be a valid alias",
+      expression: "this.matches('^[a-z][a-z0-9-]{5,29}$')"
+    }
+  ];
+
+  // The project to create.
+  Project project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).cel = {
+      id: "valid_regions",
+      message: "only one region may be specified currently",
+      expression: "this.regions.size() <= 1"
+    }
+  ];
+
+  // If set to true, the request is validated but not actually executed.
+  bool validate_only = 4 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Request message for the `GetProject` method.
+message GetProjectRequest {
+  // The name of the project to retrieve.
+  // Format: `organizations/{organization}/projects/{project}`
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/Project" },
+    (buf.validate.field).cel = {
+      id: "valid_project",
+      message: "name must be a valid project name",
+      expression: "this.matches('projects/[^/]+$')"
+    }
+  ];
+}
+
+// Request message for the `ListProjects` method.
+message ListProjectsRequest {
+  // Required. The parent organization of the projects to list.
+  //
+  // Format: `organizations/{organization}`
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "cloud.celest.dev/Organization"
+      child_type: "cloud.celest.dev/Project"
+    },
+    (buf.validate.field).cel = {
+      id: "valid_parent",
+      message: "parent must be a valid organization name",
+      expression: "this.matches('^organizations/[^/]+$')"
+    }
+  ];
+
+  // Optional. The maximum number of projects to return.
+  int32 page_size = 2 [
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).int32.gte = 0
+  ];
+
+  // A page token, received from a previous `ListProjects` call.
+  string page_token = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // An optional filter to apply to the projects.
+  string filter = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // The order to sort the results by.
+  string order_by = 5 [(google.api.field_behavior) = OPTIONAL];
+
+  // Include soft-deleted projects in the results.
+  bool show_deleted = 6 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Response message for the `ListProjects` method.
+message ListProjectsResponse {
+  // The projects in the organization.
+  repeated Project projects = 1;
+
+  // A token to retrieve the next page of results.
+  string next_page_token = 2;
+}
+
+// Request message for the `UpdateProject` method.
+message UpdateProjectRequest {
+  option (buf.validate.message).cel = {
+    id: "valid_options",
+    message: "cannot set both allow_missing and update_mask",
+    expression: "this.allow_missing ? !has(this.update_mask) : true"
+  };
+
+  // Doesn't work at the field level for some reason.
+  option (buf.validate.message).cel = {
+    id: "valid_update_mask",
+    message: "update_mask may only include: 'display_name', 'annotations'",
+    // Must include `name` since the update mask is set to `all` by default and `name` is a required field.
+    expression: "this.update_mask.paths.all(path, path in ['name', 'display_name', 'annotations'])",
+  };
+
+  // The project to update.
+  //
+  // The project's `name` field is used to identify the project to update.
+  // Format: `organizations/{organization}/projects/{project}`
+  Project project = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The update mask to apply to the project.
+  google.protobuf.FieldMask update_mask = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // If set to true, and the project is not found, a new project will be created.
+  // In this situation, `update_mask` is ignored.
+  bool allow_missing = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // If set to true, the request is validated but not actually executed.
+  bool validate_only = 4 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Request message for the `DeleteProject` method.
+message DeleteProjectRequest {
+  // Required. The name of the project to delete.
+  //
+  // Format: `organizations/{organization}/projects/{project}`
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/Project" },
+    (buf.validate.field).cel = {
+      id: "valid_project",
+      message: "name must be a valid project name",
+      expression: "this.matches('^organizations/[^/]+/projects/[^/]+$')"
+    }
+  ];
+
+  // Optional. If set to true, any resources associated with the project will also be marked for deletion.
+  // (Otherwise, the request will only work if the project has no resources.)
+  bool force = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The etag of the project.
+  // If this is provided, it must match the server's etag.
+  string etag = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. If set to true, and the project is not found, the request will succeed
+  // but no action will be taken on the server.
+  bool allow_missing = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. If set to true, the request is validated but not actually executed.
+  bool validate_only = 5 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Request message for the `UndeleteProject` method.
+message UndeleteProjectRequest {
+  // Required. The name of the project to undelete.
+  //
+  // Format: `organizations/{organization}/projects/{project}`
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/Project" },
+    (buf.validate.field).cel = {
+      id: "valid_project",
+      message: "name must be a valid project name",
+      expression: "this.matches('^organizations/[^/]+/projects/[^/]+$')"
+    }
+  ];
+
+  // Optional. If set to true, the request is validated but not actually executed.
+  bool validate_only = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The etag of the project.
+  // If this is provided, it must match the server's etag.
+  string etag = 3 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Request message for the `RenameProject` operation.
+message RenameProjectRequest {
+  // Required. The name of the project to rename.
+  //
+  // Format: `organizations/{organization}/projects/{project}`
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/Project" },
+    (buf.validate.field).cel = {
+      id: "valid_project",
+      message: "name must be a valid project name",
+      expression: "this.matches('^organizations/[^/]+/projects/[^/]+$')"
+    }
+  ];
+
+  // Required. The new project identifier.
+  //
+  // It must be 6 to 30 lowercase ASCII letters, digits, or hyphens.
+  string project_id = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).cel = {
+      id: "valid_project_alias",
+      message: "project_id must be a valid alias",
+      expression: "this.matches('^[a-z][a-z0-9-]{5,29}$')"
+    }
+  ];
+
+  // Optional. The etag of the project.
+  // If this is provided, it must match the server's etag.
+  string etag = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. If set to true, the request is validated but not actually executed.
+  bool validate_only = 4 [(google.api.field_behavior) = OPTIONAL];
+}

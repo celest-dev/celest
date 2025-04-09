@@ -13,10 +13,10 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/field_mask.pb.dart' as $46;
-import '../../../google/protobuf/timestamp.pb.dart' as $20;
-import '../../ast/v1/resolved_ast.pb.dart' as $56;
-import 'common.pbenum.dart' as $55;
+import '../../../google/protobuf/field_mask.pb.dart' as $9;
+import '../../../google/protobuf/timestamp.pb.dart' as $8;
+import '../../ast/v1/resolved_ast.pb.dart' as $13;
+import 'common.pbenum.dart' as $12;
 import 'project_environments.pbenum.dart';
 
 export 'project_environments.pbenum.dart';
@@ -29,13 +29,13 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
     $core.String? parent,
     $core.String? projectEnvironmentId,
     $core.String? displayName,
-    $20.Timestamp? createTime,
-    $20.Timestamp? updateTime,
-    $20.Timestamp? deleteTime,
+    $8.Timestamp? createTime,
+    $8.Timestamp? updateTime,
+    $8.Timestamp? deleteTime,
     $core.String? etag,
     $core.Map<$core.String, $core.String>? annotations,
     $core.bool? reconciling,
-    $55.LifecycleState? state,
+    $12.LifecycleState? state,
   }) {
     final $result = create();
     if (name != null) {
@@ -94,12 +94,12 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'parent')
     ..aOS(4, _omitFieldNames ? '' : 'projectEnvironmentId')
     ..aOS(5, _omitFieldNames ? '' : 'displayName')
-    ..aOM<$20.Timestamp>(6, _omitFieldNames ? '' : 'createTime',
-        subBuilder: $20.Timestamp.create)
-    ..aOM<$20.Timestamp>(7, _omitFieldNames ? '' : 'updateTime',
-        subBuilder: $20.Timestamp.create)
-    ..aOM<$20.Timestamp>(8, _omitFieldNames ? '' : 'deleteTime',
-        subBuilder: $20.Timestamp.create)
+    ..aOM<$8.Timestamp>(6, _omitFieldNames ? '' : 'createTime',
+        subBuilder: $8.Timestamp.create)
+    ..aOM<$8.Timestamp>(7, _omitFieldNames ? '' : 'updateTime',
+        subBuilder: $8.Timestamp.create)
+    ..aOM<$8.Timestamp>(8, _omitFieldNames ? '' : 'deleteTime',
+        subBuilder: $8.Timestamp.create)
     ..aOS(9, _omitFieldNames ? '' : 'etag')
     ..m<$core.String, $core.String>(10, _omitFieldNames ? '' : 'annotations',
         entryClassName: 'ProjectEnvironment.AnnotationsEntry',
@@ -107,11 +107,11 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
         valueFieldType: $pb.PbFieldType.OS,
         packageName: const $pb.PackageName('celest.cloud.v1alpha1'))
     ..aOB(11, _omitFieldNames ? '' : 'reconciling')
-    ..e<$55.LifecycleState>(
+    ..e<$12.LifecycleState>(
         12, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
-        defaultOrMaker: $55.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
-        valueOf: $55.LifecycleState.valueOf,
-        enumValues: $55.LifecycleState.values)
+        defaultOrMaker: $12.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
+        valueOf: $12.LifecycleState.valueOf,
+        enumValues: $12.LifecycleState.values)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -206,9 +206,9 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
 
   /// Output only. The time the environment was created.
   @$pb.TagNumber(6)
-  $20.Timestamp get createTime => $_getN(5);
+  $8.Timestamp get createTime => $_getN(5);
   @$pb.TagNumber(6)
-  set createTime($20.Timestamp v) {
+  set createTime($8.Timestamp v) {
     setField(6, v);
   }
 
@@ -217,13 +217,13 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   void clearCreateTime() => clearField(6);
   @$pb.TagNumber(6)
-  $20.Timestamp ensureCreateTime() => $_ensure(5);
+  $8.Timestamp ensureCreateTime() => $_ensure(5);
 
   /// Output only. The time the environment was last updated.
   @$pb.TagNumber(7)
-  $20.Timestamp get updateTime => $_getN(6);
+  $8.Timestamp get updateTime => $_getN(6);
   @$pb.TagNumber(7)
-  set updateTime($20.Timestamp v) {
+  set updateTime($8.Timestamp v) {
     setField(7, v);
   }
 
@@ -232,13 +232,13 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   void clearUpdateTime() => clearField(7);
   @$pb.TagNumber(7)
-  $20.Timestamp ensureUpdateTime() => $_ensure(6);
+  $8.Timestamp ensureUpdateTime() => $_ensure(6);
 
   /// Output only. The time the environment was deleted.
   @$pb.TagNumber(8)
-  $20.Timestamp get deleteTime => $_getN(7);
+  $8.Timestamp get deleteTime => $_getN(7);
   @$pb.TagNumber(8)
-  set deleteTime($20.Timestamp v) {
+  set deleteTime($8.Timestamp v) {
     setField(8, v);
   }
 
@@ -247,7 +247,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   void clearDeleteTime() => clearField(8);
   @$pb.TagNumber(8)
-  $20.Timestamp ensureDeleteTime() => $_ensure(7);
+  $8.Timestamp ensureDeleteTime() => $_ensure(7);
 
   /// Output only. A checksum computed by the server based on the current value
   /// of the ProjectEnvironment resource. This may be sent on update and delete requests to
@@ -283,9 +283,9 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
 
   /// Output only. The current state of the environment.
   @$pb.TagNumber(12)
-  $55.LifecycleState get state => $_getN(11);
+  $12.LifecycleState get state => $_getN(11);
   @$pb.TagNumber(12)
-  set state($55.LifecycleState v) {
+  set state($12.LifecycleState v) {
     setField(12, v);
   }
 
@@ -515,7 +515,7 @@ class GetProjectEnvironmentRequest extends $pb.GeneratedMessage {
 class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   factory UpdateProjectEnvironmentRequest({
     ProjectEnvironment? projectEnvironment,
-    $46.FieldMask? updateMask,
+    $9.FieldMask? updateMask,
     $core.String? requestId,
     $core.bool? allowMissing,
     $core.bool? validateOnly,
@@ -553,8 +553,8 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<ProjectEnvironment>(1, _omitFieldNames ? '' : 'projectEnvironment',
         subBuilder: ProjectEnvironment.create)
-    ..aOM<$46.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
-        subBuilder: $46.FieldMask.create)
+    ..aOM<$9.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
+        subBuilder: $9.FieldMask.create)
     ..aOS(3, _omitFieldNames ? '' : 'requestId')
     ..aOB(4, _omitFieldNames ? '' : 'allowMissing')
     ..aOB(5, _omitFieldNames ? '' : 'validateOnly')
@@ -605,9 +605,9 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
 
   /// Optional. The update mask to apply to the environment.
   @$pb.TagNumber(2)
-  $46.FieldMask get updateMask => $_getN(1);
+  $9.FieldMask get updateMask => $_getN(1);
   @$pb.TagNumber(2)
-  set updateMask($46.FieldMask v) {
+  set updateMask($9.FieldMask v) {
     setField(2, v);
   }
 
@@ -616,7 +616,7 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearUpdateMask() => clearField(2);
   @$pb.TagNumber(2)
-  $46.FieldMask ensureUpdateMask() => $_ensure(1);
+  $9.FieldMask ensureUpdateMask() => $_ensure(1);
 
   /// Optional. The request ID to use for the update request. If provided, ensures this
   /// request is idempotent.
@@ -1172,7 +1172,7 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
     $core.String? requestId,
     $core.bool? validateOnly,
     $core.String? etag,
-    $56.ResolvedProject? resolvedProjectAst,
+    $13.ResolvedProject? resolvedProjectAst,
     $core.Iterable<ProjectAsset>? assets,
   }) {
     final $result = create();
@@ -1213,8 +1213,8 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'requestId')
     ..aOB(3, _omitFieldNames ? '' : 'validateOnly')
     ..aOS(4, _omitFieldNames ? '' : 'etag')
-    ..aOM<$56.ResolvedProject>(5, _omitFieldNames ? '' : 'resolvedProjectAst',
-        subBuilder: $56.ResolvedProject.create)
+    ..aOM<$13.ResolvedProject>(5, _omitFieldNames ? '' : 'resolvedProjectAst',
+        subBuilder: $13.ResolvedProject.create)
     ..pc<ProjectAsset>(6, _omitFieldNames ? '' : 'assets', $pb.PbFieldType.PM,
         subBuilder: ProjectAsset.create)
     ..hasRequiredFields = false;
@@ -1304,9 +1304,9 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
 
   /// Input only. The environment's project AST.
   @$pb.TagNumber(5)
-  $56.ResolvedProject get resolvedProjectAst => $_getN(4);
+  $13.ResolvedProject get resolvedProjectAst => $_getN(4);
   @$pb.TagNumber(5)
-  set resolvedProjectAst($56.ResolvedProject v) {
+  set resolvedProjectAst($13.ResolvedProject v) {
     setField(5, v);
   }
 
@@ -1315,7 +1315,7 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   void clearResolvedProjectAst() => clearField(5);
   @$pb.TagNumber(5)
-  $56.ResolvedProject ensureResolvedProjectAst() => $_ensure(4);
+  $13.ResolvedProject ensureResolvedProjectAst() => $_ensure(4);
 
   /// Input only. The assets of the environment.
   @$pb.TagNumber(6)
@@ -1326,7 +1326,7 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
 class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
   factory DeployProjectEnvironmentResponse({
     $core.String? uri,
-    $56.ResolvedProject? project,
+    $13.ResolvedProject? project,
   }) {
     final $result = create();
     if (uri != null) {
@@ -1351,8 +1351,8 @@ class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'uri')
-    ..aOM<$56.ResolvedProject>(2, _omitFieldNames ? '' : 'project',
-        subBuilder: $56.ResolvedProject.create)
+    ..aOM<$13.ResolvedProject>(2, _omitFieldNames ? '' : 'project',
+        subBuilder: $13.ResolvedProject.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1398,9 +1398,9 @@ class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
 
   /// The resolved project of the deployed environment, with any missing values filled in.
   @$pb.TagNumber(2)
-  $56.ResolvedProject get project => $_getN(1);
+  $13.ResolvedProject get project => $_getN(1);
   @$pb.TagNumber(2)
-  set project($56.ResolvedProject v) {
+  set project($13.ResolvedProject v) {
     setField(2, v);
   }
 
@@ -1409,7 +1409,7 @@ class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearProject() => clearField(2);
   @$pb.TagNumber(2)
-  $56.ResolvedProject ensureProject() => $_ensure(1);
+  $13.ResolvedProject ensureProject() => $_ensure(1);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
