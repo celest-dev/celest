@@ -144,6 +144,10 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
       uid: CelestAction.delete,
       parents: [CelestAction.owner],
     ),
+    CelestAction.undelete: const Entity(
+      uid: CelestAction.undelete,
+      parents: [CelestAction.admin],
+    ),
     CelestAction.invoke: const Entity(
       uid: CelestAction.invoke,
       parents: [CelestAction.owner],

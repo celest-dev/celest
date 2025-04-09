@@ -6,6 +6,8 @@ import 'package:celest_cloud_hub/src/database/schema/operations.drift.dart'
     as dto;
 import 'package:celest_cloud_hub/src/database/schema/organizations.drift.dart'
     as dto;
+import 'package:celest_cloud_hub/src/database/schema/projects.drift.dart'
+    as dto;
 import 'package:celest_cloud_hub/src/model/type_registry.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
 
@@ -70,6 +72,33 @@ extension OperationToProto on dto.Operation {
             jsonDecode(metadata),
             typeRegistry: typeRegistry,
           ),
+        _ => null,
+      },
+    );
+  }
+}
+
+extension ProjectToProto on dto.Project {
+  pb.Project toProto() {
+    return pb.Project(
+      name: 'organizations/$parentId/projects/$id',
+      parent: 'organizations/$parentId',
+      uid: TypeId.decode(id).uuid.hexValue,
+      displayName: displayName,
+      projectId: projectId,
+      regions: (jsonDecode(regions) as List<Object?>).map((region) {
+        return pb.Region.values.firstWhere((r) => r.name == region);
+      }),
+      etag: etag,
+      reconciling: reconciling,
+      state: pb.LifecycleState.values.firstWhere((s) => s.name == state),
+      createTime: createTime.toProto(),
+      updateTime: updateTime.toProto(),
+      deleteTime: deleteTime?.toProto(),
+      purgeTime: purgeTime?.toProto(),
+      annotations: switch (annotations) {
+        final annotations? =>
+          (jsonDecode(annotations) as Map<String, Object?>).cast(),
         _ => null,
       },
     );

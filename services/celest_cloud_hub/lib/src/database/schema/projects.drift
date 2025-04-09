@@ -39,8 +39,10 @@ CREATE TABLE IF NOT EXISTS projects (
     -- Type: map[string]string
     annotations TEXT,
 
-    -- The project's region.
-    region TEXT NOT NULL,
+    -- The project's regions.
+    --
+    -- Type: list[string]
+    regions TEXT NOT NULL,
 
     reconciling BOOLEAN NOT NULL DEFAULT FALSE,
     etag TEXT NOT NULL GENERATED ALWAYS AS (
@@ -58,7 +60,7 @@ CREATE TABLE IF NOT EXISTS projects (
                     delete_time,
                     purge_time,
                     annotations,
-                    region,
+                    regions,
                     reconciling
                 )
             )
@@ -166,7 +168,7 @@ END;
 ----------------------------------------------
 
 -- name: CreateProject :one
-createProject: INSERT INTO projects (id, parent_type, parent_id, project_id, state, display_name, annotations, region)
+createProject: INSERT INTO projects (id, parent_type, parent_id, project_id, state, display_name, annotations, regions)
 VALUES (
     :id, 
     :parent_type,
@@ -175,7 +177,7 @@ VALUES (
     :state,
     :display_name,
     :annotations,
-    :region
+    :regions
 )
 RETURNING *;
 
@@ -183,25 +185,42 @@ RETURNING *;
 getProject: SELECT * FROM projects
 WHERE id = :id OR project_id = :id;
 
--- name: ListProjects :many
-listProjects(:start_time AS DATETIME OR NULL): WITH rowed AS(
-    SELECT 
-        ROW_NUMBER() OVER (ORDER BY create_time DESC) AS row_num,
-        id
+listProjects(
+    :user_id AS TEXT,
+    :parent_id AS TEXT OR NULL,
+    :start_time AS DATETIME OR NULL,
+    :show_deleted AS BOOLEAN,
+    :offset AS INTEGER,
+    :limit AS INTEGER
+):
+    WITH memberships AS (
+        SELECT
+            parent_id AS project_id
+        FROM
+            user_memberships
+        WHERE
+            user_id = :user_id AND
+            parent_type = 'Celest::Project'
+    ),
+    rowed AS(
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY create_time DESC) AS row_num,
+            id
+        FROM projects
+        INNER JOIN memberships ON projects.id = memberships.project_id
+        WHERE
+            (projects.parent_id IS NULL AND :parent_id IS NULL OR projects.parent_id = :parent_id) AND
+            projects.create_time < coalesce(:start_time, unixepoch('now', '+1 second', 'subsec')) AND
+            (:show_deleted OR projects.state != 'DELETED')
+    )
+    SELECT
+        row_num,
+        projects.**
     FROM projects
-    WHERE 
-        projects.parent_id = :parent_id AND
-        projects.create_time < coalesce(:start_time, unixepoch('now', '+1 second', 'subsec')) AND
-        (:show_deleted OR projects.state != 'DELETED')
-)
-SELECT 
-    row_num,
-    projects.**
-FROM projects
-JOIN rowed ON projects.id = rowed.id
-WHERE row_num > cast(:offset as INT)
-ORDER BY create_time DESC
-LIMIT :limit;
+    INNER JOIN rowed ON projects.id = rowed.id
+    WHERE row_num > :offset
+    ORDER BY $order_by
+    LIMIT :limit;
 
 -- name: DebugDumpProjects :many
 -- FOR DEBUGGING ONLY. Returns all projects in the database.
@@ -215,7 +234,8 @@ updateProject(
     :display_name AS TEXT OR NULL,
     :annotations AS TEXT OR NULL,
     :delete_time AS DATETIME OR NULL,
-    :purge_time AS DATETIME OR NULL
+    :purge_time AS DATETIME OR NULL,
+    :regions AS TEXT OR NULL
 ): UPDATE projects
 SET 
     parent_type = coalesce(:parent_type, parent_type),
@@ -225,7 +245,8 @@ SET
     annotations = coalesce(:annotations, annotations),
     update_time = unixepoch('now', 'subsec'),
     delete_time = coalesce(:delete_time, delete_time),
-    purge_time = coalesce(:purge_time, purge_time)
+    purge_time = coalesce(:purge_time, purge_time),
+    regions = coalesce(:regions, regions)
 WHERE (id = :id OR project_id = :id) AND state != 'DELETED'
 RETURNING *;
 

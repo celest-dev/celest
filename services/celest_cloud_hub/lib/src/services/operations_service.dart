@@ -13,7 +13,7 @@ import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/schema/operations.drift.dart'
     as dto;
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
-import 'package:celest_cloud_hub/src/proto/interop.dart';
+import 'package:celest_cloud_hub/src/model/interop.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:drift/isolate.dart';
 import 'package:grpc/grpc.dart';

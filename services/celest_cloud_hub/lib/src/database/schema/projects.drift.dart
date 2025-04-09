@@ -4,9 +4,11 @@ import 'package:drift/drift.dart' as i0;
 import 'package:celest_cloud_hub/src/database/schema/projects.drift.dart' as i1;
 import 'package:drift/internal/modular.dart' as i2;
 import 'dart:async' as i3;
-import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i4;
+import 'package:celest_cloud_hub/src/database/schema/user_memberships.drift.dart'
+    as i4;
+import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i5;
 import 'package:celest_cloud_hub/src/database/schema/organizations.drift.dart'
-    as i5;
+    as i6;
 
 typedef $ProjectsCreateCompanionBuilder =
     i1.ProjectsCompanion Function({
@@ -21,7 +23,7 @@ typedef $ProjectsCreateCompanionBuilder =
       i0.Value<DateTime?> deleteTime,
       i0.Value<DateTime?> purgeTime,
       i0.Value<String?> annotations,
-      required String region,
+      required String regions,
       i0.Value<bool> reconciling,
       i0.Value<int> rowid,
     });
@@ -38,7 +40,7 @@ typedef $ProjectsUpdateCompanionBuilder =
       i0.Value<DateTime?> deleteTime,
       i0.Value<DateTime?> purgeTime,
       i0.Value<String?> annotations,
-      i0.Value<String> region,
+      i0.Value<String> regions,
       i0.Value<bool> reconciling,
       i0.Value<int> rowid,
     });
@@ -107,8 +109,8 @@ class $ProjectsFilterComposer
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnFilters<String> get region => $composableBuilder(
-    column: $table.region,
+  i0.ColumnFilters<String> get regions => $composableBuilder(
+    column: $table.regions,
     builder: (column) => i0.ColumnFilters(column),
   );
 
@@ -187,8 +189,8 @@ class $ProjectsOrderingComposer
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<String> get region => $composableBuilder(
-    column: $table.region,
+  i0.ColumnOrderings<String> get regions => $composableBuilder(
+    column: $table.regions,
     builder: (column) => i0.ColumnOrderings(column),
   );
 
@@ -257,8 +259,8 @@ class $ProjectsAnnotationComposer
     builder: (column) => column,
   );
 
-  i0.GeneratedColumn<String> get region =>
-      $composableBuilder(column: $table.region, builder: (column) => column);
+  i0.GeneratedColumn<String> get regions =>
+      $composableBuilder(column: $table.regions, builder: (column) => column);
 
   i0.GeneratedColumn<bool> get reconciling => $composableBuilder(
     column: $table.reconciling,
@@ -311,7 +313,7 @@ class $ProjectsTableManager
                 i0.Value<DateTime?> deleteTime = const i0.Value.absent(),
                 i0.Value<DateTime?> purgeTime = const i0.Value.absent(),
                 i0.Value<String?> annotations = const i0.Value.absent(),
-                i0.Value<String> region = const i0.Value.absent(),
+                i0.Value<String> regions = const i0.Value.absent(),
                 i0.Value<bool> reconciling = const i0.Value.absent(),
                 i0.Value<int> rowid = const i0.Value.absent(),
               }) => i1.ProjectsCompanion(
@@ -326,7 +328,7 @@ class $ProjectsTableManager
                 deleteTime: deleteTime,
                 purgeTime: purgeTime,
                 annotations: annotations,
-                region: region,
+                regions: regions,
                 reconciling: reconciling,
                 rowid: rowid,
               ),
@@ -343,7 +345,7 @@ class $ProjectsTableManager
                 i0.Value<DateTime?> deleteTime = const i0.Value.absent(),
                 i0.Value<DateTime?> purgeTime = const i0.Value.absent(),
                 i0.Value<String?> annotations = const i0.Value.absent(),
-                required String region,
+                required String regions,
                 i0.Value<bool> reconciling = const i0.Value.absent(),
                 i0.Value<int> rowid = const i0.Value.absent(),
               }) => i1.ProjectsCompanion.insert(
@@ -358,7 +360,7 @@ class $ProjectsTableManager
                 deleteTime: deleteTime,
                 purgeTime: purgeTime,
                 annotations: annotations,
-                region: region,
+                regions: regions,
                 reconciling: reconciling,
                 rowid: rowid,
               ),
@@ -532,11 +534,11 @@ class Projects extends i0.Table with i0.TableInfo<Projects, i1.Project> {
         requiredDuringInsert: false,
         $customConstraints: '',
       );
-  static const i0.VerificationMeta _regionMeta = const i0.VerificationMeta(
-    'region',
+  static const i0.VerificationMeta _regionsMeta = const i0.VerificationMeta(
+    'regions',
   );
-  late final i0.GeneratedColumn<String> region = i0.GeneratedColumn<String>(
-    'region',
+  late final i0.GeneratedColumn<String> regions = i0.GeneratedColumn<String>(
+    'regions',
     aliasedName,
     false,
     type: i0.DriftSqlType.string,
@@ -564,14 +566,14 @@ class Projects extends i0.Table with i0.TableInfo<Projects, i1.Project> {
     false,
     generatedAs: i0.GeneratedAs(
       const i0.CustomExpression(
-        'hex(md5(json_array(id, parent_type, parent_id, project_id, state, display_name, create_time, update_time, delete_time, purge_time, annotations, region, reconciling)))',
+        'hex(md5(json_array(id, parent_type, parent_id, project_id, state, display_name, create_time, update_time, delete_time, purge_time, annotations, regions, reconciling)))',
       ),
       true,
     ),
     type: i0.DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints:
-        'NOT NULL GENERATED ALWAYS AS (hex(md5(json_array(id, parent_type, parent_id, project_id, state, display_name, create_time, update_time, delete_time, purge_time, annotations, region, reconciling)))) STORED',
+        'NOT NULL GENERATED ALWAYS AS (hex(md5(json_array(id, parent_type, parent_id, project_id, state, display_name, create_time, update_time, delete_time, purge_time, annotations, regions, reconciling)))) STORED',
   );
   @override
   List<i0.GeneratedColumn> get $columns => [
@@ -586,7 +588,7 @@ class Projects extends i0.Table with i0.TableInfo<Projects, i1.Project> {
     deleteTime,
     purgeTime,
     annotations,
-    region,
+    regions,
     reconciling,
     etag,
   ];
@@ -679,13 +681,13 @@ class Projects extends i0.Table with i0.TableInfo<Projects, i1.Project> {
         ),
       );
     }
-    if (data.containsKey('region')) {
+    if (data.containsKey('regions')) {
       context.handle(
-        _regionMeta,
-        region.isAcceptableOrUnknown(data['region']!, _regionMeta),
+        _regionsMeta,
+        regions.isAcceptableOrUnknown(data['regions']!, _regionsMeta),
       );
     } else if (isInserting) {
-      context.missing(_regionMeta);
+      context.missing(_regionsMeta);
     }
     if (data.containsKey('reconciling')) {
       context.handle(
@@ -766,10 +768,10 @@ class Projects extends i0.Table with i0.TableInfo<Projects, i1.Project> {
         i0.DriftSqlType.string,
         data['${effectivePrefix}annotations'],
       ),
-      region:
+      regions:
           attachedDatabase.typeMapping.read(
             i0.DriftSqlType.string,
-            data['${effectivePrefix}region'],
+            data['${effectivePrefix}regions'],
           )!,
       reconciling:
           attachedDatabase.typeMapping.read(
@@ -836,8 +838,10 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
   /// Type: map[string]string
   final String? annotations;
 
-  /// The project's region.
-  final String region;
+  /// The project's regions.
+  ///
+  /// Type: list[string]
+  final String regions;
   final bool reconciling;
   final String etag;
   const Project({
@@ -852,7 +856,7 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
     this.deleteTime,
     this.purgeTime,
     this.annotations,
-    required this.region,
+    required this.regions,
     required this.reconciling,
     required this.etag,
   });
@@ -878,7 +882,7 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
     if (!nullToAbsent || annotations != null) {
       map['annotations'] = i0.Variable<String>(annotations);
     }
-    map['region'] = i0.Variable<String>(region);
+    map['regions'] = i0.Variable<String>(regions);
     map['reconciling'] = i0.Variable<bool>(reconciling);
     return map;
   }
@@ -908,7 +912,7 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
           annotations == null && nullToAbsent
               ? const i0.Value.absent()
               : i0.Value(annotations),
-      region: i0.Value(region),
+      regions: i0.Value(regions),
       reconciling: i0.Value(reconciling),
     );
   }
@@ -930,7 +934,7 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
       deleteTime: serializer.fromJson<DateTime?>(json['delete_time']),
       purgeTime: serializer.fromJson<DateTime?>(json['purge_time']),
       annotations: serializer.fromJson<String?>(json['annotations']),
-      region: serializer.fromJson<String>(json['region']),
+      regions: serializer.fromJson<String>(json['regions']),
       reconciling: serializer.fromJson<bool>(json['reconciling']),
       etag: serializer.fromJson<String>(json['etag']),
     );
@@ -950,7 +954,7 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
       'delete_time': serializer.toJson<DateTime?>(deleteTime),
       'purge_time': serializer.toJson<DateTime?>(purgeTime),
       'annotations': serializer.toJson<String?>(annotations),
-      'region': serializer.toJson<String>(region),
+      'regions': serializer.toJson<String>(regions),
       'reconciling': serializer.toJson<bool>(reconciling),
       'etag': serializer.toJson<String>(etag),
     };
@@ -968,7 +972,7 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
     i0.Value<DateTime?> deleteTime = const i0.Value.absent(),
     i0.Value<DateTime?> purgeTime = const i0.Value.absent(),
     i0.Value<String?> annotations = const i0.Value.absent(),
-    String? region,
+    String? regions,
     bool? reconciling,
     String? etag,
   }) => i1.Project(
@@ -983,7 +987,7 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
     deleteTime: deleteTime.present ? deleteTime.value : this.deleteTime,
     purgeTime: purgeTime.present ? purgeTime.value : this.purgeTime,
     annotations: annotations.present ? annotations.value : this.annotations,
-    region: region ?? this.region,
+    regions: regions ?? this.regions,
     reconciling: reconciling ?? this.reconciling,
     etag: etag ?? this.etag,
   );
@@ -1001,7 +1005,7 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
           ..write('deleteTime: $deleteTime, ')
           ..write('purgeTime: $purgeTime, ')
           ..write('annotations: $annotations, ')
-          ..write('region: $region, ')
+          ..write('regions: $regions, ')
           ..write('reconciling: $reconciling, ')
           ..write('etag: $etag')
           ..write(')'))
@@ -1021,7 +1025,7 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
     deleteTime,
     purgeTime,
     annotations,
-    region,
+    regions,
     reconciling,
     etag,
   );
@@ -1040,7 +1044,7 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
           other.deleteTime == this.deleteTime &&
           other.purgeTime == this.purgeTime &&
           other.annotations == this.annotations &&
-          other.region == this.region &&
+          other.regions == this.regions &&
           other.reconciling == this.reconciling &&
           other.etag == this.etag);
 }
@@ -1057,7 +1061,7 @@ class ProjectsCompanion extends i0.UpdateCompanion<i1.Project> {
   final i0.Value<DateTime?> deleteTime;
   final i0.Value<DateTime?> purgeTime;
   final i0.Value<String?> annotations;
-  final i0.Value<String> region;
+  final i0.Value<String> regions;
   final i0.Value<bool> reconciling;
   final i0.Value<int> rowid;
   const ProjectsCompanion({
@@ -1072,7 +1076,7 @@ class ProjectsCompanion extends i0.UpdateCompanion<i1.Project> {
     this.deleteTime = const i0.Value.absent(),
     this.purgeTime = const i0.Value.absent(),
     this.annotations = const i0.Value.absent(),
-    this.region = const i0.Value.absent(),
+    this.regions = const i0.Value.absent(),
     this.reconciling = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   });
@@ -1088,14 +1092,14 @@ class ProjectsCompanion extends i0.UpdateCompanion<i1.Project> {
     this.deleteTime = const i0.Value.absent(),
     this.purgeTime = const i0.Value.absent(),
     this.annotations = const i0.Value.absent(),
-    required String region,
+    required String regions,
     this.reconciling = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   }) : id = i0.Value(id),
        parentType = i0.Value(parentType),
        parentId = i0.Value(parentId),
        projectId = i0.Value(projectId),
-       region = i0.Value(region);
+       regions = i0.Value(regions);
   static i0.Insertable<i1.Project> custom({
     i0.Expression<String>? id,
     i0.Expression<String>? parentType,
@@ -1108,7 +1112,7 @@ class ProjectsCompanion extends i0.UpdateCompanion<i1.Project> {
     i0.Expression<DateTime>? deleteTime,
     i0.Expression<DateTime>? purgeTime,
     i0.Expression<String>? annotations,
-    i0.Expression<String>? region,
+    i0.Expression<String>? regions,
     i0.Expression<bool>? reconciling,
     i0.Expression<int>? rowid,
   }) {
@@ -1124,7 +1128,7 @@ class ProjectsCompanion extends i0.UpdateCompanion<i1.Project> {
       if (deleteTime != null) 'delete_time': deleteTime,
       if (purgeTime != null) 'purge_time': purgeTime,
       if (annotations != null) 'annotations': annotations,
-      if (region != null) 'region': region,
+      if (regions != null) 'regions': regions,
       if (reconciling != null) 'reconciling': reconciling,
       if (rowid != null) 'rowid': rowid,
     });
@@ -1142,7 +1146,7 @@ class ProjectsCompanion extends i0.UpdateCompanion<i1.Project> {
     i0.Value<DateTime?>? deleteTime,
     i0.Value<DateTime?>? purgeTime,
     i0.Value<String?>? annotations,
-    i0.Value<String>? region,
+    i0.Value<String>? regions,
     i0.Value<bool>? reconciling,
     i0.Value<int>? rowid,
   }) {
@@ -1158,7 +1162,7 @@ class ProjectsCompanion extends i0.UpdateCompanion<i1.Project> {
       deleteTime: deleteTime ?? this.deleteTime,
       purgeTime: purgeTime ?? this.purgeTime,
       annotations: annotations ?? this.annotations,
-      region: region ?? this.region,
+      regions: regions ?? this.regions,
       reconciling: reconciling ?? this.reconciling,
       rowid: rowid ?? this.rowid,
     );
@@ -1200,8 +1204,8 @@ class ProjectsCompanion extends i0.UpdateCompanion<i1.Project> {
     if (annotations.present) {
       map['annotations'] = i0.Variable<String>(annotations.value);
     }
-    if (region.present) {
-      map['region'] = i0.Variable<String>(region.value);
+    if (regions.present) {
+      map['regions'] = i0.Variable<String>(regions.value);
     }
     if (reconciling.present) {
       map['reconciling'] = i0.Variable<bool>(reconciling.value);
@@ -1226,7 +1230,7 @@ class ProjectsCompanion extends i0.UpdateCompanion<i1.Project> {
           ..write('deleteTime: $deleteTime, ')
           ..write('purgeTime: $purgeTime, ')
           ..write('annotations: $annotations, ')
-          ..write('region: $region, ')
+          ..write('regions: $regions, ')
           ..write('reconciling: $reconciling, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -1277,10 +1281,10 @@ class ProjectsDrift extends i2.ModularAccessor {
     required String state,
     String? displayName,
     String? annotations,
-    required String region,
+    required String regions,
   }) {
     return customWriteReturning(
-      'INSERT INTO projects (id, parent_type, parent_id, project_id, state, display_name, annotations, region) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8) RETURNING *',
+      'INSERT INTO projects (id, parent_type, parent_id, project_id, state, display_name, annotations, regions) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8) RETURNING *',
       variables: [
         i0.Variable<String>(id),
         i0.Variable<String>(parentType),
@@ -1289,7 +1293,7 @@ class ProjectsDrift extends i2.ModularAccessor {
         i0.Variable<String>(state),
         i0.Variable<String>(displayName),
         i0.Variable<String>(annotations),
-        i0.Variable<String>(region),
+        i0.Variable<String>(regions),
       ],
       updates: {projects},
     ).then((rows) => Future.wait(rows.map(projects.mapFromRow)));
@@ -1304,22 +1308,36 @@ class ProjectsDrift extends i2.ModularAccessor {
   }
 
   i0.Selectable<ListProjectsResult> listProjects({
-    required String parentId,
+    required String userId,
+    String? parentId,
     DateTime? startTime,
     required bool showDeleted,
-    required String offset,
+    required int offset,
+    ListProjects$orderBy? order_by,
     required int limit,
   }) {
+    var $arrayStartIndex = 7;
+    final generatedorder_by = $write(
+      order_by?.call(this.projects) ?? const i0.OrderBy.nothing(),
+      startIndex: $arrayStartIndex,
+    );
+    $arrayStartIndex += generatedorder_by.amountOfVariables;
     return customSelect(
-      'WITH rowed AS (SELECT ROW_NUMBER()OVER (ORDER BY create_time DESC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS row_num, id FROM projects WHERE projects.parent_id = ?1 AND projects.create_time < coalesce(?2, unixepoch(\'now\', \'+1 second\', \'subsec\')) AND(?3 OR projects.state != \'DELETED\')) SELECT row_num,"projects"."id" AS "nested_0.id", "projects"."parent_type" AS "nested_0.parent_type", "projects"."parent_id" AS "nested_0.parent_id", "projects"."project_id" AS "nested_0.project_id", "projects"."state" AS "nested_0.state", "projects"."display_name" AS "nested_0.display_name", "projects"."create_time" AS "nested_0.create_time", "projects"."update_time" AS "nested_0.update_time", "projects"."delete_time" AS "nested_0.delete_time", "projects"."purge_time" AS "nested_0.purge_time", "projects"."annotations" AS "nested_0.annotations", "projects"."region" AS "nested_0.region", "projects"."reconciling" AS "nested_0.reconciling", "projects"."etag" AS "nested_0.etag" FROM projects JOIN rowed ON projects.id = rowed.id WHERE row_num > CAST(?4 AS INT) ORDER BY create_time DESC LIMIT ?5',
+      'WITH memberships AS (SELECT parent_id AS project_id FROM user_memberships WHERE user_id = ?1 AND parent_type = \'Celest::Project\'), rowed AS (SELECT ROW_NUMBER()OVER (ORDER BY create_time DESC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS row_num, id FROM projects INNER JOIN memberships ON projects.id = memberships.project_id WHERE(projects.parent_id IS NULL AND ?2 IS NULL OR projects.parent_id = ?2)AND projects.create_time < coalesce(?3, unixepoch(\'now\', \'+1 second\', \'subsec\')) AND(?4 OR projects.state != \'DELETED\')) SELECT row_num,"projects"."id" AS "nested_0.id", "projects"."parent_type" AS "nested_0.parent_type", "projects"."parent_id" AS "nested_0.parent_id", "projects"."project_id" AS "nested_0.project_id", "projects"."state" AS "nested_0.state", "projects"."display_name" AS "nested_0.display_name", "projects"."create_time" AS "nested_0.create_time", "projects"."update_time" AS "nested_0.update_time", "projects"."delete_time" AS "nested_0.delete_time", "projects"."purge_time" AS "nested_0.purge_time", "projects"."annotations" AS "nested_0.annotations", "projects"."regions" AS "nested_0.regions", "projects"."reconciling" AS "nested_0.reconciling", "projects"."etag" AS "nested_0.etag" FROM projects INNER JOIN rowed ON projects.id = rowed.id WHERE row_num > ?5 ${generatedorder_by.sql} LIMIT ?6',
       variables: [
+        i0.Variable<String>(userId),
         i0.Variable<String>(parentId),
         i0.Variable<DateTime>(startTime),
         i0.Variable<bool>(showDeleted),
-        i0.Variable<String>(offset),
+        i0.Variable<int>(offset),
         i0.Variable<int>(limit),
+        ...generatedorder_by.introducedVariables,
       ],
-      readsFrom: {projects},
+      readsFrom: {
+        userMemberships,
+        projects,
+        ...generatedorder_by.watchedTables,
+      },
     ).asyncMap(
       (i0.QueryRow row) async => ListProjectsResult(
         rowNum: row.read<int>('row_num'),
@@ -1344,10 +1362,11 @@ class ProjectsDrift extends i2.ModularAccessor {
     String? annotations,
     DateTime? deleteTime,
     DateTime? purgeTime,
+    String? regions,
     required String id,
   }) {
     return customWriteReturning(
-      'UPDATE projects SET parent_type = coalesce(?1, parent_type), parent_id = coalesce(?2, parent_id), state = coalesce(?3, state), display_name = coalesce(?4, display_name), annotations = coalesce(?5, annotations), update_time = unixepoch(\'now\', \'subsec\'), delete_time = coalesce(?6, delete_time), purge_time = coalesce(?7, purge_time) WHERE(id = ?8 OR project_id = ?8)AND state != \'DELETED\' RETURNING *',
+      'UPDATE projects SET parent_type = coalesce(?1, parent_type), parent_id = coalesce(?2, parent_id), state = coalesce(?3, state), display_name = coalesce(?4, display_name), annotations = coalesce(?5, annotations), update_time = unixepoch(\'now\', \'subsec\'), delete_time = coalesce(?6, delete_time), purge_time = coalesce(?7, purge_time), regions = coalesce(?8, regions) WHERE(id = ?9 OR project_id = ?9)AND state != \'DELETED\' RETURNING *',
       variables: [
         i0.Variable<String>(parentType),
         i0.Variable<String>(parentId),
@@ -1356,6 +1375,7 @@ class ProjectsDrift extends i2.ModularAccessor {
         i0.Variable<String>(annotations),
         i0.Variable<DateTime>(deleteTime),
         i0.Variable<DateTime>(purgeTime),
+        i0.Variable<String>(regions),
         i0.Variable<String>(id),
       ],
       updates: {projects},
@@ -1406,9 +1426,12 @@ class ProjectsDrift extends i2.ModularAccessor {
   i1.Projects get projects => i2.ReadDatabaseContainer(
     attachedDatabase,
   ).resultSet<i1.Projects>('projects');
-  i4.CedarDrift get cedarDrift => this.accessor(i4.CedarDrift.new);
-  i5.OrganizationsDrift get organizationsDrift =>
-      this.accessor(i5.OrganizationsDrift.new);
+  i4.UserMemberships get userMemberships => i2.ReadDatabaseContainer(
+    attachedDatabase,
+  ).resultSet<i4.UserMemberships>('user_memberships');
+  i5.CedarDrift get cedarDrift => this.accessor(i5.CedarDrift.new);
+  i6.OrganizationsDrift get organizationsDrift =>
+      this.accessor(i6.OrganizationsDrift.new);
 }
 
 class ListProjectsResult {
@@ -1416,3 +1439,5 @@ class ListProjectsResult {
   final i1.Project projects;
   ListProjectsResult({required this.rowNum, required this.projects});
 }
+
+typedef ListProjects$orderBy = i0.OrderBy Function(i1.Projects projects);

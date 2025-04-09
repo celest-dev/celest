@@ -97,6 +97,33 @@ final class ProjectsProtocolHttp with BaseProtocol implements ProjectsProtocol {
   }
 
   @override
+  Future<Operation> undelete(UndeleteProjectRequest request) async {
+    final path = '/v1alpha1/${request.name}:undelete';
+    final uri = _baseUri.replace(path: path);
+    final req = http.Request('POST', uri)
+      ..body = jsonEncode(
+        request.toProto3Json(
+          typeRegistry: CelestCloud.typeRegistry,
+        ),
+      )
+      ..headers['content-type'] = 'application/json'
+      ..headers['accept'] = 'application/json';
+    final res = await _client.send(req);
+    final body = await res.stream.toBytes();
+    if (res.statusCode != 200) {
+      throwError(
+        statusCode: res.statusCode,
+        bodyBytes: body,
+      );
+    }
+    return Operation()
+      ..mergeFromProto3Json(
+        JsonUtf8.decode(body),
+        typeRegistry: CelestCloud.typeRegistry,
+      );
+  }
+
+  @override
   Future<Project> get(GetProjectRequest request) async {
     final path = '/v1alpha1/${request.name}';
     final uri = _baseUri.replace(path: path);

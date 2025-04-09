@@ -25,6 +25,9 @@ extension type const CelestAction._(EntityUid _) implements EntityUid {
   static const CelestAction delete =
       CelestAction._(EntityUid.of('Celest::Action', 'delete'));
 
+  static const CelestAction undelete =
+      CelestAction._(EntityUid.of('Celest::Action', 'undelete'));
+
   static const CelestAction list =
       CelestAction._(EntityUid.of('Celest::Action', 'list'));
 

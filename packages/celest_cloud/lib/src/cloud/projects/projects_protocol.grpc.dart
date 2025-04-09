@@ -30,6 +30,11 @@ final class ProjectsProtocolGrpc implements ProjectsProtocol {
   }
 
   @override
+  Future<Operation> undelete(UndeleteProjectRequest request) {
+    return _client.undeleteProject(request);
+  }
+
+  @override
   Future<Project> get(GetProjectRequest request) {
     return _client.getProject(request);
   }
