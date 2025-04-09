@@ -842,7 +842,11 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
   ///
   /// Type: list[string]
   final String regions;
+
+  /// Whether the project is in the process of being reconciled.
   final bool reconciling;
+
+  /// The project's etag.
   final String etag;
   const Project({
     required this.id,
@@ -1242,33 +1246,21 @@ i0.Index get projectsFkParentIdx => i0.Index(
   'projects_fk_parent_idx',
   'CREATE INDEX IF NOT EXISTS projects_fk_parent_idx ON projects (parent_type, parent_id)',
 );
-i0.Trigger get projectsUpdateTime => i0.Trigger(
-  'CREATE TRIGGER IF NOT EXISTS projects_update_time AFTER UPDATE ON projects BEGIN UPDATE projects SET update_time = unixepoch(\'now\', \'subsec\') WHERE id = OLD.id;END',
-  'projects_update_time',
+i0.Trigger get projectsUpdateTimeTrg => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS projects_update_time_trg AFTER UPDATE ON projects BEGIN UPDATE projects SET update_time = unixepoch(\'now\', \'subsec\') WHERE id = OLD.id;END',
+  'projects_update_time_trg',
 );
-i0.Trigger get celestCloudProjectsTriggerCreate => i0.Trigger(
-  'CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_create BEFORE INSERT ON projects BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::Project\', NEW.id);END',
-  'celest_cloud_projects_trigger_create',
+i0.Trigger get projectsCreateTrg => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS projects_create_trg BEFORE INSERT ON projects BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::Project\', NEW.id);INSERT INTO cedar_relationships (entity_type, entity_id, parent_type, parent_id) VALUES (\'Celest::Project\', NEW.id, NEW.parent_type, NEW.parent_id);END',
+  'projects_create_trg',
 );
-i0.Trigger get celestCloudProjectsTriggerCreateParent => i0.Trigger(
-  'CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_create_parent AFTER INSERT ON projects WHEN NEW.parent_id IS NOT NULL BEGIN INSERT INTO cedar_relationships (entity_type, entity_id, parent_type, parent_id) VALUES (\'Celest::Project\', NEW.id, NEW.parent_type, NEW.parent_id);END',
-  'celest_cloud_projects_trigger_create_parent',
+i0.Trigger get projectsSetParentTrg => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS projects_set_parent_trg AFTER UPDATE OF parent_type, parent_id ON projects WHEN OLD.parent_type != NEW.parent_type OR OLD.parent_id != NEW.parent_id BEGIN UPDATE cedar_relationships SET parent_type = NEW.parent_type, parent_id = NEW.parent_id WHERE entity_id = OLD.id AND entity_type = \'Celest::Project\';END',
+  'projects_set_parent_trg',
 );
-i0.Trigger get celestCloudProjectsTriggerAddParent => i0.Trigger(
-  'CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_add_parent AFTER UPDATE OF parent_id ON projects WHEN OLD.parent_id IS NULL AND NEW.parent_id IS NOT NULL BEGIN INSERT INTO cedar_relationships (entity_type, entity_id, parent_type, parent_id) VALUES (\'Celest::Project\', NEW.id, NEW.parent_type, NEW.parent_id);END',
-  'celest_cloud_projects_trigger_add_parent',
-);
-i0.Trigger get celestCloudProjectsTriggerSetParent => i0.Trigger(
-  'CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_set_parent AFTER UPDATE OF parent_type, parent_id ON projects WHEN(OLD.parent_type != NEW.parent_type OR OLD.parent_id != NEW.parent_id)AND NEW.parent_id IS NOT NULL BEGIN UPDATE cedar_relationships SET parent_type = NEW.parent_type, parent_id = NEW.parent_id WHERE entity_id = OLD.id AND entity_type = \'Celest::Project\';END',
-  'celest_cloud_projects_trigger_set_parent',
-);
-i0.Trigger get celestCloudProjectsTriggerRemoveParent => i0.Trigger(
-  'CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_remove_parent AFTER UPDATE OF parent_id ON projects WHEN OLD.parent_id IS NOT NULL AND NEW.parent_id IS NULL BEGIN DELETE FROM cedar_relationships WHERE entity_id = OLD.id AND entity_type = \'Celest::Project\' AND parent_id = OLD.parent_id AND parent_type = OLD.parent_type;END',
-  'celest_cloud_projects_trigger_remove_parent',
-);
-i0.Trigger get celestCloudProjectsTriggerDelete => i0.Trigger(
-  'CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_delete AFTER DELETE ON projects BEGIN DELETE FROM cedar_relationships WHERE entity_type = \'Celest::Project\' AND entity_id = OLD.id;DELETE FROM cedar_relationships WHERE parent_type = \'Celest::Project\' AND parent_id = OLD.id;DELETE FROM cedar_entities WHERE entity_id = OLD.id AND entity_type = \'Celest::Project\';END',
-  'celest_cloud_projects_trigger_delete',
+i0.Trigger get projectsDeleteTrg => i0.Trigger(
+  'CREATE TRIGGER IF NOT EXISTS projects_delete_trg AFTER DELETE ON projects BEGIN DELETE FROM cedar_relationships WHERE entity_type = \'Celest::Project\' AND entity_id = OLD.id;DELETE FROM cedar_relationships WHERE parent_type = \'Celest::Project\' AND parent_id = OLD.id;DELETE FROM cedar_entities WHERE entity_id = OLD.id AND entity_type = \'Celest::Project\';END',
+  'projects_delete_trg',
 );
 
 class ProjectsDrift extends i2.ModularAccessor {
@@ -1344,14 +1336,6 @@ class ProjectsDrift extends i2.ModularAccessor {
         projects: await projects.mapFromRow(row, tablePrefix: 'nested_0'),
       ),
     );
-  }
-
-  i0.Selectable<i1.Project> debugDump() {
-    return customSelect(
-      'SELECT * FROM projects',
-      variables: [],
-      readsFrom: {projects},
-    ).asyncMap(projects.mapFromRow);
   }
 
   i3.Future<List<i1.Project>> updateProject({

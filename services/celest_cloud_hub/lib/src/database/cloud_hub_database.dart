@@ -96,6 +96,7 @@ final class CloudHubDatabase extends $CloudHubDatabase
         // Fail if the action broke foreign keys
         final wrongForeignKeys =
             await customSelect('PRAGMA foreign_key_check').get();
+        await _dumpBrokenCedarForeignKeys();
         assert(
           wrongForeignKeys.isEmpty,
           '${wrongForeignKeys.map((e) => e.data)}',

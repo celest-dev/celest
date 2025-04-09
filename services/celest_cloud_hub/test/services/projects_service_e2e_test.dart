@@ -26,6 +26,8 @@ void main() {
     late CelestCloud service;
     late String organizationId;
 
+    setUpAll(E2ETester.init);
+
     setUp(() async {
       tester = E2ETester();
       await tester.start();

@@ -44,7 +44,10 @@ CREATE TABLE IF NOT EXISTS projects (
     -- Type: list[string]
     regions TEXT NOT NULL,
 
+    -- Whether the project is in the process of being reconciled.
     reconciling BOOLEAN NOT NULL DEFAULT FALSE,
+
+    -- The project's etag.
     etag TEXT NOT NULL GENERATED ALWAYS AS (
         hex(
             md5(
@@ -80,7 +83,7 @@ CREATE TABLE IF NOT EXISTS projects (
 CREATE INDEX IF NOT EXISTS projects_fk_parent_idx ON projects(parent_type, parent_id);
 
 -- This trigger is used to update the update_time when a project is updated.
-CREATE TRIGGER IF NOT EXISTS projects_update_time
+CREATE TRIGGER IF NOT EXISTS projects_update_time_trg
 AFTER UPDATE ON projects
 BEGIN
     UPDATE projects
@@ -93,35 +96,19 @@ END;
 ----------------------------------------------
 
 -- This trigger is used to create the Cedar entity when a row is inserted.
-CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_create
+CREATE TRIGGER IF NOT EXISTS projects_create_trg
 BEFORE INSERT ON projects
 BEGIN
     INSERT INTO cedar_entities(entity_type, entity_id)
     VALUES ('Celest::Project', NEW.id);
-END;
-
--- This trigger is used to create a parent relationship when a row is inserted.
-CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_create_parent
-AFTER INSERT ON projects
-WHEN NEW.parent_id IS NOT NULL
-BEGIN
-    INSERT INTO cedar_relationships(entity_type, entity_id, parent_type, parent_id)
-    VALUES ('Celest::Project', NEW.id, NEW.parent_type, NEW.parent_id);
-END;
-
--- This trigger is used to add the parent relationship when a parent is assigned.
-CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_add_parent
-AFTER UPDATE OF parent_id ON projects
-WHEN OLD.parent_id IS NULL AND NEW.parent_id IS NOT NULL
-BEGIN
     INSERT INTO cedar_relationships(entity_type, entity_id, parent_type, parent_id)
     VALUES ('Celest::Project', NEW.id, NEW.parent_type, NEW.parent_id);
 END;
 
 -- This trigger is used to update the parent relationship when the parent_id is set to a new value.
-CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_set_parent
+CREATE TRIGGER IF NOT EXISTS projects_set_parent_trg
 AFTER UPDATE OF parent_type, parent_id ON projects
-WHEN (OLD.parent_type != NEW.parent_type OR OLD.parent_id != NEW.parent_id) AND NEW.parent_id IS NOT NULL
+WHEN OLD.parent_type != NEW.parent_type OR OLD.parent_id != NEW.parent_id
 BEGIN
     UPDATE cedar_relationships
     SET 
@@ -133,20 +120,7 @@ BEGIN
 END;
 
 -- This trigger is used to delete the parent relationship when the parent_id is set to NULL.
-CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_remove_parent
-AFTER UPDATE OF parent_id ON projects
-WHEN OLD.parent_id IS NOT NULL AND NEW.parent_id IS NULL
-BEGIN
-    DELETE FROM cedar_relationships
-    WHERE 
-        entity_id = OLD.id 
-        AND entity_type = 'Celest::Project'
-        AND parent_id = OLD.parent_id
-        AND parent_type = OLD.parent_type;
-END;
-
--- This trigger is used to delete the parent relationship when the parent_id is set to NULL.
-CREATE TRIGGER IF NOT EXISTS celest_cloud_projects_trigger_delete
+CREATE TRIGGER IF NOT EXISTS projects_delete_trg
 AFTER DELETE ON projects
 BEGIN
     DELETE FROM cedar_relationships
@@ -221,10 +195,6 @@ listProjects(
     WHERE row_num > :offset
     ORDER BY $order_by
     LIMIT :limit;
-
--- name: DebugDumpProjects :many
--- FOR DEBUGGING ONLY. Returns all projects in the database.
-debugDump: SELECT * FROM projects;
 
 -- name: UpdateProject :one
 updateProject(

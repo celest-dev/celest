@@ -22,6 +22,35 @@ class E2ETester {
   late ClientChannel channel;
   late CelestCloud service;
 
+  static String? _compiledEntrypoint;
+
+  static Future<void> init() async {
+    if (_compiledEntrypoint != null) {
+      return;
+    }
+    final tempDir = await Directory.systemTemp.createTemp('celest_cloud_hub_');
+    addTearDown(() async {
+      _compiledEntrypoint = null;
+      try {
+        await tempDir.delete(recursive: true);
+      } on Object {
+        // OK
+      }
+    });
+
+    _compiledEntrypoint = p.join(tempDir.path, 'cloud_hub.dill');
+    final result = await Process.run(Platform.resolvedExecutable, [
+      'compile',
+      'kernel',
+      Directory.current.uri.resolve('./bin/cloud_hub.dart').toFilePath(),
+      '--output',
+      _compiledEntrypoint!,
+    ]);
+    if (result.exitCode != 0) {
+      throw StateError('Failed to compile cloud_hub.dart:\n${result.stderr}');
+    }
+  }
+
   static Future<String> getDatabasePath() async {
     final tempDir = await Directory.systemTemp.createTemp('test_');
     addTearDown(() => tempDir.delete(recursive: true));
@@ -41,10 +70,7 @@ class E2ETester {
 
     server = await Process.start(
       Platform.resolvedExecutable,
-      [
-        'run',
-        Directory.current.uri.resolve('./bin/cloud_hub.dart').toFilePath(),
-      ],
+      ['run', _compiledEntrypoint!],
       environment: {
         'PORT': '0',
         'CLOUD_HUB_DATABASE_HOST': Uri.file(databasePath).toString(),

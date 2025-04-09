@@ -60,11 +60,13 @@ service ProjectEnvironments {
   }
 
   // Deletes an environment.
+  //
+  // TODO: Add UndeleteProjectEnvironment
   rpc DeleteProjectEnvironment(DeleteProjectEnvironmentRequest) returns (google.longrunning.Operation) {
     option (google.api.http) = { delete: "/v1alpha1/{name=projects/*/environments/*}" };
     option (google.api.method_signature) = "name";
     option (google.longrunning.operation_info) = {
-      response_type: "google.protobuf.Empty"
+      response_type: "ProjectEnvironment"
       metadata_type: "OperationMetadata"
     };
   }
