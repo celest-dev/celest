@@ -1,0 +1,412 @@
+syntax = "proto3";
+
+package celest.cloud.auth.v1alpha1;
+
+import "buf/validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "celest/cloud/auth/v1alpha1;authv1alpha1";
+
+// Allows admins to manage users in Celest.
+service Users {
+  option (google.api.default_host) = "cloud.celest.dev";
+
+  // Retrieves the user identified by the specified name.
+  rpc GetUser(GetUserRequest) returns (User) {
+    option (google.api.http) = {
+      get: "/v1alpha1/auth/{name=users/*}"
+    };
+    option (google.api.method_signature) = "name";
+  }
+
+  // Lists users.
+  // (-- api-linter: core::0132::http-uri-parent=disabled 
+  //     aip.dev/not-precedent: Parent can be inferred for auth. --)
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
+    option (google.api.http) = {
+      get: "/v1alpha1/auth/users"
+      additional_bindings: { get: "/v1alpha1/{parent=organizations/*}/users" }
+      additional_bindings: { get: "/v1alpha1/{parent=organizations/*/projects/*}/users" }
+    };
+    option (google.api.method_signature) = "parent";
+  }
+
+  // Update the user identified by the specified name.
+  rpc UpdateUser(UpdateUserRequest) returns (User) {
+    option (google.api.http) = {
+      patch: "/v1alpha1/auth/{user.name=users/*}"
+      body: "user"
+    };
+    option (google.api.method_signature) = "user,update_mask";
+  }
+
+  // Deletes a user and all associated resources.
+  //
+  // This cannot be undone.
+  rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1alpha1/auth/{name=users/*}"
+    };
+    option (google.api.method_signature) = "name";
+  }
+
+  // Gets a user's membership to a resource.
+  rpc GetUserMembership(GetUserMembershipRequest) returns (UserMembership) {
+    option (google.api.http) = {
+      get: "/v1alpha1/auth/{name=users/*/memberships/*}"
+    };
+    option (google.api.method_signature) = "name";
+  }
+
+  // Lists memberships for a user.
+  rpc ListUserMemberships(ListUserMembershipsRequest) returns (ListUserMembershipsResponse) {
+    option (google.api.http) = {
+      get: "/v1alpha1/auth/{parent=users/*}/memberships"
+    };
+    option (google.api.method_signature) = "parent";
+  }
+}
+
+// A user identity within Celest.
+message User {
+  option (google.api.resource) = {
+    type: "cloud.celest.dev/User"
+    pattern: "users/{user}"
+    plural: "users"
+    singular: "user"
+  };
+
+  // Identifier. The resource name of the user.
+  //
+  // Format: `users/{user}`
+  string name = 1 [(google.api.field_behavior) = IDENTIFIER];
+
+  // The parent of the user.
+  string parent = 2 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.resource_reference) = { child_type: "cloud.celest.dev/User" }
+  ];
+
+  // The unique identifier of the user.
+  //
+  // Format: `usr_{random}`
+  string user_id = 3 [
+    (google.api.field_behavior) = IMMUTABLE,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
+
+  // Output only. The time the user was created.
+  google.protobuf.Timestamp create_time = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. The time the user was last updated.
+  google.protobuf.Timestamp update_time = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Optional. The given name of the user.
+  optional string given_name = 6 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The family name of the user.
+  optional string family_name = 7 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The time zone of the user.
+  //
+  // If provided, must be a valid IANA time zone identifier.
+  optional string time_zone = 8 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The language code of the user.
+  //
+  // If provided, must be a valid BCP 47 language tag.
+  optional string language_code = 9 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The user's email address.
+  repeated Email emails = 10 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The user's phone number.
+  repeated PhoneNumber phone_numbers = 11 [(google.api.field_behavior) = OPTIONAL];
+
+  // Output only. The user's external identities.
+  repeated ExternalIdentity external_identities = 12 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+// A email address used within Celest Cloud.
+message Email {
+  // The email address.
+  string email = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).cel = {
+      id: "valid_email",
+      message: "email must be a valid email",
+      expression: "this.isEmail()"
+    }
+  ];
+
+  // Whether the email address is verified.
+  bool is_verified = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Whether the email address is the primary email.
+  bool is_primary = 3 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+// A phone number used within Celest Cloud.
+message PhoneNumber {
+  // Output only. The parsed and decoded phone number.
+  string phone_number = 1 [
+    (google.api.field_behavior) = REQUIRED,
+
+    // Perform a quick validation to ensure a properly formatted phone number.
+    // Further validation is performed using libphonenumber.
+    (buf.validate.field).cel = {
+      id: "valid_phone_number",
+      message: "phone_number must include a country code",
+      expression: "this.startsWith('+')"
+    }
+  ];
+
+  // Whether the phone number is verified.
+  bool is_verified = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Whether the phone number is the primary phone number.
+  bool is_primary = 3 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+// An external identity used within Celest Cloud.
+message ExternalIdentity {
+  // The provider of the external identity.
+  IdentityProviderType provider = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The identifier of the external identity.
+  string provider_id = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+// Request message for the `CreateUser` method.
+message CreateUserRequest {
+  // The parent of the user.
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { child_type: "cloud.celest.dev/User" }
+  ];
+
+  // The user to create.
+  User user = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The unique identifier of the user.
+  string user_id = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // If set to true, the request is validated but not actually executed.
+  bool validate_only = 4 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Request message for the `GetUser` method.
+message GetUserRequest {
+  // The name of the user to retrieve.
+  // Format: `users/{user}` | `organizations/{organization}/users/{user}`
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/User" },
+    (buf.validate.field).cel = {
+      id: "valid_user_resource_name"
+      message: "invalid user resource name"
+      expression: "this.matches('users/[^/]+$')"
+    }
+  ];
+}
+
+// Request message for the `ListUsers` method.
+message ListUsersRequest {
+  // Optional. The parent of the users to list.
+  //
+  // Format: `organizations/{organization}` or `organizations/{organization}/projects/{project}`
+  //
+  // If the parent is not provided, the users for the current context (as identified by the bearer token)
+  // are listed.
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { child_type: "cloud.celest.dev/User" },
+    // The `/auth/users` endpoint is a special case where the parent is not required.
+    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).cel = {
+      id: "valid_parent",
+      message: "parent must be a valid parent",
+      expression: "this.matches('^organizations/[^/]+$|^organizations/[^/]+/projects/[^/]+$')"
+    }
+  ];
+
+  // The maximum number of users to return.
+  int32 page_size = 2 [
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).int32.gte = 0
+  ];
+
+  // A page token, received from a previous `ListUsers` call.
+  string page_token = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // An optional filter to apply to the users.
+  string filter = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // The order to sort the results by.
+  string order_by = 5 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Response message for the `ListUsers` method.
+message ListUsersResponse {
+  // The users.
+  repeated User users = 1;
+
+  // A token to retrieve the next page of results.
+  string next_page_token = 2;
+}
+
+// Request message for the `UpdateUser` method.
+message UpdateUserRequest {
+  // Doesn't work at the field level for some reason.
+  option (buf.validate.message).cel = {
+    id: "valid_field_mask",
+    message: "update_mask may only include: 'given_name', 'family_name', 'time_zone', 'language_code'",
+    // Must include `name` since the update mask is set to `all` by default and `name` is a required field.
+    expression: "this.update_mask.paths.all(path, path in ['name', 'given_name', 'family_name', 'time_zone', 'language_code'])",
+  };
+
+  // The user to update.
+  User user = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The fields to update.
+  google.protobuf.FieldMask update_mask = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // If set to true, the request is validated but not actually executed.
+  bool validate_only = 3 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Request message for the `DeleteUser` method.
+message DeleteUserRequest {
+  // The name of the user to delete.
+  // Format: `organizations/{organization}/users/{user}`
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/User" },
+    (buf.validate.field).cel = {
+      id: "valid_user_resource_name",
+      message: "invalid user resource name",
+      expression: "this.matches('users/[^/]+$')"
+    }
+  ];
+
+  // Optional. The etag of the user.
+  // If this is provided, it must match the server's etag.
+  string etag = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // If set to true, and the user is not found, the request will succeed
+  // but no action will be taken on the server.
+  bool allow_missing = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // If set to true, the request is validated but not actually executed.
+  bool validate_only = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // If set to true, all children resources of the user will be deleted.
+  bool force = 5 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// A user's membership to a project or organization.
+message UserMembership {
+  option (google.api.resource) = {
+    type: "cloud.celest.dev/UserMembership"
+    pattern: "users/{user}/memberships/{user_membership}"
+    singular: "userMembership"
+    plural: "userMemberships"
+  };
+
+  // The resource name of the user's membership.
+  //
+  // Format: `users/{user}/memberships/{user_membership}`
+  string name = 1 [(google.api.field_behavior) = IDENTIFIER];
+
+  // The resource name of the organization.
+  //
+  // Format: `organizations/{organization}`
+  // Format: `organizations/{organization}/projects/{project}`
+  string resource = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The resource name of the user.
+  //
+  // Format: `users/{user}`
+  string user = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/User" }
+  ];
+
+  // The role of the user in the resource.
+  //
+  // Format: `Celest::Cloud::Role::"{role}"`
+  string role = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for the `GetUserMembership` method.
+message GetUserMembershipRequest {
+  // The name of the user's membership to retrieve.
+  //
+  // Format: `users/{user}/memberships/{user_membership}`
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/UserMembership" },
+    (buf.validate.field).cel = {
+      id: "valid_user_membership_resource_name",
+      message: "invalid user membership resource name",
+      expression: "this.matches('users/[^/]+/memberships/[^/]+$')"
+    }
+  ];
+}
+
+// Request message for the `ListUserMemberships` method.
+message ListUserMembershipsRequest {
+  // The parent of the memberships to list.
+  // Format: `users/{user}`
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { child_type: "cloud.celest.dev/UserMembership" },
+    (buf.validate.field).cel = {
+      id: "valid_parent",
+      message: "parent must be a valid parent",
+      expression: "this.matches('users/[^/]+$')"
+    }
+  ];
+
+  // The maximum number of memberships to return.
+  int32 page_size = 2 [
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).int32.gte = 0
+  ];
+
+  // A page token, received from a previous `ListMemberships` call.
+  string page_token = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // An optional filter to apply to the memberships.
+  string filter = 4 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Response message for the `ListMemberships` method.
+message ListUserMembershipsResponse {
+  // The memberships.
+  repeated UserMembership user_memberships = 1;
+
+  // A token to retrieve the next page of results.
+  string next_page_token = 2;
+}
+
+// The social provider to authenticate with.
+enum IdentityProviderType {
+  // Unspecified identity provider.
+  IDENTITY_PROVIDER_TYPE_UNSPECIFIED = 0;
+
+  // Authenticate using Google.
+  GOOGLE = 1;
+
+  // Authenticate using Apple.
+  APPLE = 2;
+
+  // Authenticate using GitHub.
+  GITHUB = 3;
+}

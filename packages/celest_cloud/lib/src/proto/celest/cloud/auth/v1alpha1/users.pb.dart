@@ -13,8 +13,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../../google/protobuf/field_mask.pb.dart' as $46;
-import '../../../../google/protobuf/timestamp.pb.dart' as $20;
+import '../../../../google/protobuf/field_mask.pb.dart' as $9;
+import '../../../../google/protobuf/timestamp.pb.dart' as $8;
 import 'users.pbenum.dart';
 
 export 'users.pbenum.dart';
@@ -25,8 +25,8 @@ class User extends $pb.GeneratedMessage {
     $core.String? name,
     $core.String? parent,
     $core.String? userId,
-    $20.Timestamp? createTime,
-    $20.Timestamp? updateTime,
+    $8.Timestamp? createTime,
+    $8.Timestamp? updateTime,
     $core.String? givenName,
     $core.String? familyName,
     $core.String? timeZone,
@@ -90,10 +90,10 @@ class User extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOS(2, _omitFieldNames ? '' : 'parent')
     ..aOS(3, _omitFieldNames ? '' : 'userId')
-    ..aOM<$20.Timestamp>(4, _omitFieldNames ? '' : 'createTime',
-        subBuilder: $20.Timestamp.create)
-    ..aOM<$20.Timestamp>(5, _omitFieldNames ? '' : 'updateTime',
-        subBuilder: $20.Timestamp.create)
+    ..aOM<$8.Timestamp>(4, _omitFieldNames ? '' : 'createTime',
+        subBuilder: $8.Timestamp.create)
+    ..aOM<$8.Timestamp>(5, _omitFieldNames ? '' : 'updateTime',
+        subBuilder: $8.Timestamp.create)
     ..aOS(6, _omitFieldNames ? '' : 'givenName')
     ..aOS(7, _omitFieldNames ? '' : 'familyName')
     ..aOS(8, _omitFieldNames ? '' : 'timeZone')
@@ -174,9 +174,9 @@ class User extends $pb.GeneratedMessage {
 
   /// Output only. The time the user was created.
   @$pb.TagNumber(4)
-  $20.Timestamp get createTime => $_getN(3);
+  $8.Timestamp get createTime => $_getN(3);
   @$pb.TagNumber(4)
-  set createTime($20.Timestamp v) {
+  set createTime($8.Timestamp v) {
     setField(4, v);
   }
 
@@ -185,13 +185,13 @@ class User extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearCreateTime() => clearField(4);
   @$pb.TagNumber(4)
-  $20.Timestamp ensureCreateTime() => $_ensure(3);
+  $8.Timestamp ensureCreateTime() => $_ensure(3);
 
   /// Output only. The time the user was last updated.
   @$pb.TagNumber(5)
-  $20.Timestamp get updateTime => $_getN(4);
+  $8.Timestamp get updateTime => $_getN(4);
   @$pb.TagNumber(5)
-  set updateTime($20.Timestamp v) {
+  set updateTime($8.Timestamp v) {
     setField(5, v);
   }
 
@@ -200,7 +200,7 @@ class User extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   void clearUpdateTime() => clearField(5);
   @$pb.TagNumber(5)
-  $20.Timestamp ensureUpdateTime() => $_ensure(4);
+  $8.Timestamp ensureUpdateTime() => $_ensure(4);
 
   /// Optional. The given name of the user.
   @$pb.TagNumber(6)
@@ -958,7 +958,7 @@ class ListUsersResponse extends $pb.GeneratedMessage {
 class UpdateUserRequest extends $pb.GeneratedMessage {
   factory UpdateUserRequest({
     User? user,
-    $46.FieldMask? updateMask,
+    $9.FieldMask? updateMask,
     $core.bool? validateOnly,
   }) {
     final $result = create();
@@ -987,8 +987,8 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
     ..aOM<User>(1, _omitFieldNames ? '' : 'user', subBuilder: User.create)
-    ..aOM<$46.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
-        subBuilder: $46.FieldMask.create)
+    ..aOM<$9.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
+        subBuilder: $9.FieldMask.create)
     ..aOB(3, _omitFieldNames ? '' : 'validateOnly')
     ..hasRequiredFields = false;
 
@@ -1032,9 +1032,9 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
 
   /// The fields to update.
   @$pb.TagNumber(2)
-  $46.FieldMask get updateMask => $_getN(1);
+  $9.FieldMask get updateMask => $_getN(1);
   @$pb.TagNumber(2)
-  set updateMask($46.FieldMask v) {
+  set updateMask($9.FieldMask v) {
     setField(2, v);
   }
 
@@ -1043,7 +1043,7 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearUpdateMask() => clearField(2);
   @$pb.TagNumber(2)
-  $46.FieldMask ensureUpdateMask() => $_ensure(1);
+  $9.FieldMask ensureUpdateMask() => $_ensure(1);
 
   /// If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(3)

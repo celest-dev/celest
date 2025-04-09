@@ -2,6 +2,7 @@
 
 - chore: Add `version` field to `DatabaseSchema`
 - chore: Update license
+- chore: Update protobufs
 
 ## 0.1.5
 

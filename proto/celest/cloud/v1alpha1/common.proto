@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package celest.cloud.v1alpha1;
+
+import "google/api/visibility.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "celest/cloud/v1alpha1;cloudv1alpha1";
+
+// A common message for paginating through large sets of data.
+//
+// Page tokens are returned as opaque strings to prevent introspection. AIP
+// allows base64-encoded protobuf messages as acceptable tokens as long as
+// the types are not exposed in the API.
+message PageToken {
+  option (google.api.message_visibility).restriction = "INTERNAL";
+
+  // The offset of the next page of data.
+  int64 offset = 1;
+
+  // The start time of the pagination window.
+  google.protobuf.Timestamp start_time = 2;
+
+  // Whether to show deleted items.
+  bool show_deleted = 3;
+}
+
+// A region defines the service area of a Celest organization or project.
+//
+// Projects deployed to a region are highly available within that region,
+// services used are within the boundaries of that region, and all data is
+// persisted within that region.
+enum Region {
+  // The region is not specified.
+  REGION_UNSPECIFIED = 0;
+
+  // North America
+  NORTH_AMERICA = 1;
+
+  // Europe
+  EUROPE = 2;
+
+  // Asia/Pacific
+  ASIA_PACIFIC = 3;
+}
+
+// The lifecycle state of a Celest Cloud resource.
+enum LifecycleState {
+  // The state is not specified.
+  LIFECYCLE_STATE_UNSPECIFIED = 0;
+
+  // The resource is being created.
+  CREATING = 1;
+
+  // The resource failed to be created.
+  CREATION_FAILED = 2;
+
+  // The resource is active.
+  ACTIVE = 3;
+
+  // The resource is being updated.
+  UPDATING = 4;
+
+  // The resource failed to be updated.
+  UPDATE_FAILED = 5;
+
+  // The resource is being deleted.
+  DELETING = 6;
+
+  // The resource failed to be deleted.
+  DELETION_FAILED = 7;
+
+  // The resource has been deleted and is waiting to be purged.
+  DELETED = 8;
+}

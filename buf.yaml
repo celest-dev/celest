@@ -1,9 +1,11 @@
 version: v2
 deps:
+  - buf.build/bufbuild/protovalidate
   - buf.build/celest-dev/cedar
   - buf.build/googleapis/googleapis
 modules:
   - path: proto
+  - path: packages/celest_ast/proto
     name: buf.build/celest-dev/ast
 breaking:
   use:

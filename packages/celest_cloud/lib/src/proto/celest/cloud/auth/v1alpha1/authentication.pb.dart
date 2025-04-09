@@ -14,11 +14,11 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../../../../google/protobuf/empty.pb.dart' as $1;
-import '../../../../google/protobuf/struct.pb.dart' as $22;
-import '../../../../google/protobuf/timestamp.pb.dart' as $20;
+import '../../../../google/protobuf/struct.pb.dart' as $10;
+import '../../../../google/protobuf/timestamp.pb.dart' as $8;
 import 'authentication.pbenum.dart';
-import 'users.pb.dart' as $5;
-import 'users.pbenum.dart' as $5;
+import 'users.pb.dart' as $0;
+import 'users.pbenum.dart' as $0;
 
 export 'authentication.pbenum.dart';
 
@@ -30,7 +30,7 @@ class Session extends $pb.GeneratedMessage {
     $core.String? parent,
     $core.String? sessionId,
     $core.String? sessionToken,
-    $20.Timestamp? expireTime,
+    $8.Timestamp? expireTime,
     AuthenticationSuccess? success,
     AuthenticationStep? nextStep,
     SessionClient? client,
@@ -81,8 +81,8 @@ class Session extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'parent')
     ..aOS(2, _omitFieldNames ? '' : 'sessionId')
     ..aOS(3, _omitFieldNames ? '' : 'sessionToken')
-    ..aOM<$20.Timestamp>(4, _omitFieldNames ? '' : 'expireTime',
-        subBuilder: $20.Timestamp.create)
+    ..aOM<$8.Timestamp>(4, _omitFieldNames ? '' : 'expireTime',
+        subBuilder: $8.Timestamp.create)
     ..aOM<AuthenticationSuccess>(5, _omitFieldNames ? '' : 'success',
         subBuilder: AuthenticationSuccess.create)
     ..aOM<AuthenticationStep>(6, _omitFieldNames ? '' : 'nextStep',
@@ -158,9 +158,9 @@ class Session extends $pb.GeneratedMessage {
 
   /// Required. The time the flow will expire.
   @$pb.TagNumber(4)
-  $20.Timestamp get expireTime => $_getN(3);
+  $8.Timestamp get expireTime => $_getN(3);
   @$pb.TagNumber(4)
-  set expireTime($20.Timestamp v) {
+  set expireTime($8.Timestamp v) {
     setField(4, v);
   }
 
@@ -169,7 +169,7 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearExpireTime() => clearField(4);
   @$pb.TagNumber(4)
-  $20.Timestamp ensureExpireTime() => $_ensure(3);
+  $8.Timestamp ensureExpireTime() => $_ensure(3);
 
   /// The authentication operation was successful.
   @$pb.TagNumber(5)
@@ -860,7 +860,7 @@ class AuthenticationFactorSmsOtp extends $pb.GeneratedMessage {
 /// An authentication method which uses a social provider like Google or Apple.
 class AuthenticationFactorIdp extends $pb.GeneratedMessage {
   factory AuthenticationFactorIdp({
-    $5.IdentityProviderType? provider,
+    $0.IdentityProviderType? provider,
     $core.String? redirectUri,
   }) {
     final $result = create();
@@ -885,12 +885,12 @@ class AuthenticationFactorIdp extends $pb.GeneratedMessage {
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
-    ..e<$5.IdentityProviderType>(
+    ..e<$0.IdentityProviderType>(
         1, _omitFieldNames ? '' : 'provider', $pb.PbFieldType.OE,
         defaultOrMaker:
-            $5.IdentityProviderType.IDENTITY_PROVIDER_TYPE_UNSPECIFIED,
-        valueOf: $5.IdentityProviderType.valueOf,
-        enumValues: $5.IdentityProviderType.values)
+            $0.IdentityProviderType.IDENTITY_PROVIDER_TYPE_UNSPECIFIED,
+        valueOf: $0.IdentityProviderType.valueOf,
+        enumValues: $0.IdentityProviderType.values)
     ..aOS(2, _omitFieldNames ? '' : 'redirectUri')
     ..hasRequiredFields = false;
 
@@ -921,9 +921,9 @@ class AuthenticationFactorIdp extends $pb.GeneratedMessage {
 
   /// Required. The social provider to authenticate with.
   @$pb.TagNumber(1)
-  $5.IdentityProviderType get provider => $_getN(0);
+  $0.IdentityProviderType get provider => $_getN(0);
   @$pb.TagNumber(1)
-  set provider($5.IdentityProviderType v) {
+  set provider($0.IdentityProviderType v) {
     setField(1, v);
   }
 
@@ -1237,7 +1237,7 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
 class AuthenticationSuccess extends $pb.GeneratedMessage {
   factory AuthenticationSuccess({
     $core.String? identityToken,
-    $5.User? user,
+    $0.User? user,
     $core.bool? isNewUser,
   }) {
     final $result = create();
@@ -1266,7 +1266,7 @@ class AuthenticationSuccess extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'identityToken')
-    ..aOM<$5.User>(2, _omitFieldNames ? '' : 'user', subBuilder: $5.User.create)
+    ..aOM<$0.User>(2, _omitFieldNames ? '' : 'user', subBuilder: $0.User.create)
     ..aOB(3, _omitFieldNames ? '' : 'isNewUser')
     ..hasRequiredFields = false;
 
@@ -1310,9 +1310,9 @@ class AuthenticationSuccess extends $pb.GeneratedMessage {
 
   /// The user's information.
   @$pb.TagNumber(2)
-  $5.User get user => $_getN(1);
+  $0.User get user => $_getN(1);
   @$pb.TagNumber(2)
-  set user($5.User v) {
+  set user($0.User v) {
     setField(2, v);
   }
 
@@ -1321,7 +1321,7 @@ class AuthenticationSuccess extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearUser() => clearField(2);
   @$pb.TagNumber(2)
-  $5.User ensureUser() => $_ensure(1);
+  $0.User ensureUser() => $_ensure(1);
 
   /// Whether a new user was created or not.
   @$pb.TagNumber(3)
@@ -1346,8 +1346,8 @@ enum AuthenticationPendingConfirmation_Pending {
 /// The authentication operation needs confirmation from the user.
 class AuthenticationPendingConfirmation extends $pb.GeneratedMessage {
   factory AuthenticationPendingConfirmation({
-    $5.User? linkExistingUser,
-    $5.User? registerUser,
+    $0.User? linkExistingUser,
+    $0.User? registerUser,
   }) {
     final $result = create();
     if (linkExistingUser != null) {
@@ -1378,10 +1378,10 @@ class AuthenticationPendingConfirmation extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..aOM<$5.User>(1, _omitFieldNames ? '' : 'linkExistingUser',
-        subBuilder: $5.User.create)
-    ..aOM<$5.User>(2, _omitFieldNames ? '' : 'registerUser',
-        subBuilder: $5.User.create)
+    ..aOM<$0.User>(1, _omitFieldNames ? '' : 'linkExistingUser',
+        subBuilder: $0.User.create)
+    ..aOM<$0.User>(2, _omitFieldNames ? '' : 'registerUser',
+        subBuilder: $0.User.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1418,9 +1418,9 @@ class AuthenticationPendingConfirmation extends $pb.GeneratedMessage {
 
   /// An existing user was found with the provided identity.
   @$pb.TagNumber(1)
-  $5.User get linkExistingUser => $_getN(0);
+  $0.User get linkExistingUser => $_getN(0);
   @$pb.TagNumber(1)
-  set linkExistingUser($5.User v) {
+  set linkExistingUser($0.User v) {
     setField(1, v);
   }
 
@@ -1429,13 +1429,13 @@ class AuthenticationPendingConfirmation extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearLinkExistingUser() => clearField(1);
   @$pb.TagNumber(1)
-  $5.User ensureLinkExistingUser() => $_ensure(0);
+  $0.User ensureLinkExistingUser() => $_ensure(0);
 
   /// The user to be registered.
   @$pb.TagNumber(2)
-  $5.User get registerUser => $_getN(1);
+  $0.User get registerUser => $_getN(1);
   @$pb.TagNumber(2)
-  set registerUser($5.User v) {
+  set registerUser($0.User v) {
     setField(2, v);
   }
 
@@ -1444,7 +1444,7 @@ class AuthenticationPendingConfirmation extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearRegisterUser() => clearField(2);
   @$pb.TagNumber(2)
-  $5.User ensureRegisterUser() => $_ensure(1);
+  $0.User ensureRegisterUser() => $_ensure(1);
 }
 
 /// Request message for `EndSession` method.
@@ -1679,7 +1679,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
     $core.String? locale,
     $core.String? phoneNumber,
     $core.bool? phoneNumberVerified,
-    $22.Value? address,
+    $10.Value? address,
     $core.int? updatedAt,
   }) {
     final $result = create();
@@ -1776,8 +1776,8 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
     ..aOS(16, _omitFieldNames ? '' : 'locale')
     ..aOS(17, _omitFieldNames ? '' : 'phone_number')
     ..aOB(18, _omitFieldNames ? '' : 'phone_number_verified')
-    ..aOM<$22.Value>(19, _omitFieldNames ? '' : 'address',
-        subBuilder: $22.Value.create)
+    ..aOM<$10.Value>(19, _omitFieldNames ? '' : 'address',
+        subBuilder: $10.Value.create)
     ..a<$core.int>(20, _omitFieldNames ? '' : 'updated_at', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
@@ -2115,9 +2115,9 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   ///  }
   ///  ```
   @$pb.TagNumber(19)
-  $22.Value get address => $_getN(18);
+  $10.Value get address => $_getN(18);
   @$pb.TagNumber(19)
-  set address($22.Value v) {
+  set address($10.Value v) {
     setField(19, v);
   }
 
@@ -2126,7 +2126,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(19)
   void clearAddress() => clearField(19);
   @$pb.TagNumber(19)
-  $22.Value ensureAddress() => $_ensure(18);
+  $10.Value ensureAddress() => $_ensure(18);
 
   ///  Optional. Time the End-User's information was last updated.
   ///

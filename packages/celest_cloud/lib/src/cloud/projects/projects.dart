@@ -5,6 +5,7 @@ import 'package:celest_cloud/src/cloud/projects/projects_protocol.dart';
 import 'package:celest_cloud/src/proto.dart' hide OperationState;
 import 'package:celest_cloud/src/util/operations.dart';
 import 'package:celest_core/celest_core.dart';
+import 'package:celest_core/src/util/let.dart';
 import 'package:logging/logging.dart';
 
 final class Projects with BaseService {
@@ -37,11 +38,18 @@ final class Projects with BaseService {
     final request = CreateProjectRequest(
       parent: parent,
       projectId: projectId,
-      project: Project(
-        displayName: displayName,
-        regions: regions,
-        annotations: annotations,
-      ),
+      project: Project().let((prj) {
+        if (displayName != null) {
+          prj.displayName = displayName;
+        }
+        if (regions != null) {
+          prj.regions.addAll(regions);
+        }
+        if (annotations != null) {
+          prj.annotations.addAll(annotations);
+        }
+        return prj;
+      }),
       validateOnly: validateOnly,
     );
     final operation = await run(

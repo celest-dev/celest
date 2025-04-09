@@ -13,7 +13,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/struct.pb.dart' as $22;
+import '../../../google/protobuf/struct.pb.dart' as $0;
 import 'sdks.pbenum.dart';
 
 export 'sdks.pbenum.dart';
@@ -118,8 +118,8 @@ class Version extends $pb.GeneratedMessage {
     $core.int? major,
     $core.int? minor,
     $core.int? patch,
-    $core.Iterable<$22.Value>? preRelease,
-    $core.Iterable<$22.Value>? build,
+    $core.Iterable<$0.Value>? preRelease,
+    $core.Iterable<$0.Value>? build,
     $core.String? canonicalizedVersion,
   }) {
     final $result = create();
@@ -158,10 +158,10 @@ class Version extends $pb.GeneratedMessage {
     ..a<$core.int>(1, _omitFieldNames ? '' : 'major', $pb.PbFieldType.O3)
     ..a<$core.int>(2, _omitFieldNames ? '' : 'minor', $pb.PbFieldType.O3)
     ..a<$core.int>(3, _omitFieldNames ? '' : 'patch', $pb.PbFieldType.O3)
-    ..pc<$22.Value>(4, _omitFieldNames ? '' : 'preRelease', $pb.PbFieldType.PM,
-        subBuilder: $22.Value.create)
-    ..pc<$22.Value>(5, _omitFieldNames ? '' : 'build', $pb.PbFieldType.PM,
-        subBuilder: $22.Value.create)
+    ..pc<$0.Value>(4, _omitFieldNames ? '' : 'preRelease', $pb.PbFieldType.PM,
+        subBuilder: $0.Value.create)
+    ..pc<$0.Value>(5, _omitFieldNames ? '' : 'build', $pb.PbFieldType.PM,
+        subBuilder: $0.Value.create)
     ..aOS(6, _omitFieldNames ? '' : 'canonicalizedVersion')
     ..hasRequiredFields = false;
 
@@ -231,7 +231,7 @@ class Version extends $pb.GeneratedMessage {
   ///  string or a non-negative integer. It may also be empty, indicating that
   ///  this version has no pre-release identifier.
   @$pb.TagNumber(4)
-  $core.List<$22.Value> get preRelease => $_getList(3);
+  $core.List<$0.Value> get preRelease => $_getList(3);
 
   ///  The build identifier: "foo" in "1.2.3+foo".
   ///
@@ -239,7 +239,7 @@ class Version extends $pb.GeneratedMessage {
   ///  string or a non-negative integer. It may also be empty, indicating that
   ///  this version has no build identifier.
   @$pb.TagNumber(5)
-  $core.List<$22.Value> get build => $_getList(4);
+  $core.List<$0.Value> get build => $_getList(4);
 
   /// The canonicalized version string.
   @$pb.TagNumber(6)

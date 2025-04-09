@@ -1,0 +1,13 @@
+---
+# Configuration for the AIP linter: https://linter.aip.dev/configuration
+- included_paths:
+    - "celest/**/*.proto"
+  disabled_rules:
+    # Core AIP rules related to Java which don't apply to us
+    - "core::0191::java-multiple-files"
+    - "core::0191::java-outer-classname"
+    - "core::0191::java-package"
+    # To avoid issues with longrunning operations
+    - "core::0203::field-behavior-required"
+    # Okay
+    - "core::0215::foreign-type-reference"

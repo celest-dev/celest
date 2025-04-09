@@ -1,0 +1,416 @@
+syntax = "proto3";
+
+package celest.cloud.v1alpha1;
+
+import "buf/validate/validate.proto";
+import "celest/ast/v1/resolved_ast.proto";
+import "celest/cloud/v1alpha1/common.proto";
+import "celest/cloud/v1alpha1/operations.proto";
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/api/field_info.proto";
+import "google/api/resource.proto";
+import "google/longrunning/operations.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "celest/cloud/v1alpha1;cloudv1alpha1";
+
+// A service for managing the different environments of Celest projects in the cloud.
+service ProjectEnvironments {
+  option (google.api.default_host) = "cloud.celest.dev";
+
+  // Creates a new environment.
+  rpc CreateProjectEnvironment(CreateProjectEnvironmentRequest) returns (google.longrunning.Operation) {
+    option (google.api.http) = {
+      post: "/v1alpha1/{parent=projects/*}/environments"
+      body: "project_environment"
+    };
+    option (google.api.method_signature) = "parent,project_environment,project_environment_id";
+    option (google.longrunning.operation_info) = {
+      response_type: "ProjectEnvironment"
+      metadata_type: "OperationMetadata"
+    };
+  }
+
+  // Retrieves an environment.
+  rpc GetProjectEnvironment(GetProjectEnvironmentRequest) returns (ProjectEnvironment) {
+    option (google.api.http) = { get: "/v1alpha1/{name=projects/*/environments/*}" };
+    option (google.api.method_signature) = "name";
+  }
+
+  // Updates an environment.
+  rpc UpdateProjectEnvironment(UpdateProjectEnvironmentRequest) returns (google.longrunning.Operation) {
+    option (google.api.http) = {
+      patch: "/v1alpha1/{project_environment.name=projects/*/environments/*}"
+      body: "project_environment"
+    };
+    option (google.api.method_signature) = "project_environment,update_mask";
+    option (google.longrunning.operation_info) = {
+      response_type: "ProjectEnvironment"
+      metadata_type: "OperationMetadata"
+    };
+  }
+
+  // Lists environments.
+  rpc ListProjectEnvironments(ListProjectEnvironmentsRequest) returns (ListProjectEnvironmentsResponse) {
+    option (google.api.http) = { get: "/v1alpha1/{parent=projects/*}/environments" };
+    option (google.api.method_signature) = "parent";
+  }
+
+  // Deletes an environment.
+  rpc DeleteProjectEnvironment(DeleteProjectEnvironmentRequest) returns (google.longrunning.Operation) {
+    option (google.api.http) = { delete: "/v1alpha1/{name=projects/*/environments/*}" };
+    option (google.api.method_signature) = "name";
+    option (google.longrunning.operation_info) = {
+      response_type: "google.protobuf.Empty"
+      metadata_type: "OperationMetadata"
+    };
+  }
+
+  // Imperative only. Deploys a project's environment.
+  rpc DeployProjectEnvironment(DeployProjectEnvironmentRequest) returns (google.longrunning.Operation) {
+    option (google.api.http) = {
+      post: "/v1alpha1/{name=projects/*/environments/*}:deploy"
+      body: "*"
+    };
+    option (google.api.method_signature) = "name,resolved_project_ast,assets";
+    option (google.longrunning.operation_info) = {
+      response_type: "DeployProjectEnvironmentResponse"
+      metadata_type: "OperationMetadata"
+    };
+  }
+}
+
+// An environment for a Celest project.
+message ProjectEnvironment {
+  option (google.api.resource) = {
+    type: "cloud.celest.dev/ProjectEnvironment"
+    pattern: "projects/{project}/environments/{environment}"
+    plural: "projectEnvironments"
+    singular: "projectEnvironment"
+    style: DECLARATIVE_FRIENDLY
+  };
+
+  // Identifier. The resource name of the environment.
+  // Format: `projects/{project}/environments/{environment}`
+  string name = 1 [(google.api.field_behavior) = IDENTIFIER];
+
+  // Output only. A system-generated unique identifier for the environment.
+  string uid = 2 [
+    (google.api.field_behavior) = OUTPUT_ONLY,
+    (google.api.field_info).format = UUID4
+  ];
+
+  // Required. The parent of the environment.
+  string parent = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/Project" }
+  ];
+
+  // Immutable. The ID of the environment, typically the git branch associated with
+  // the environment.
+  string project_environment_id = 4 [
+    (google.api.field_behavior) = IMMUTABLE,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
+
+  // Optional. The display name of the environment.
+  string display_name = 5 [(google.api.field_behavior) = OPTIONAL];
+
+  // Output only. The time the environment was created.
+  google.protobuf.Timestamp create_time = 6 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. The time the environment was last updated.
+  google.protobuf.Timestamp update_time = 7 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. The time the environment was deleted.
+  google.protobuf.Timestamp delete_time = 8 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. A checksum computed by the server based on the current value
+  // of the ProjectEnvironment resource. This may be sent on update and delete requests to
+  // ensure the client has an up-to-date value before proceeding.
+  string etag = 9 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Optional. Client-provided key-value pairs that are not directly used by the system.
+  map<string, string> annotations = 10 [
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).map = {
+      max_pairs: 64,
+      keys: {
+        cel: {
+          id: "valid_annotation_key",
+          message: "keys must be 1-63 characters and have only lowercase letters, numerics, underscores, and dashes, and must start with a lowercase letter",
+          expression: "this.matches('^[a-z][a-z0-9_-]{0,62}$')"
+        }
+      },
+      values: {
+        cel: {
+          id: "valid_annotation_value",
+          message: "values must be 0-63 characters and have only lowercase letters, numerics, underscores, and dashes",
+          expression: "this.matches('^[a-z0-9_-]{0,63}$')"
+        }
+      },
+    }
+  ];
+
+  // Output only. Indicates whether the environment is currently being reconciled.
+  bool reconciling = 11 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. The current state of the environment.
+  LifecycleState state = 12 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+// Request message for the `CreateProjectEnvironment` method.
+message CreateProjectEnvironmentRequest {
+  // Required. The parent of the environment.
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/Project" },
+    (buf.validate.field).cel = {
+      id: "valid_project",
+      message: "parent must be a valid project resource name",
+      expression: "this.matches('projects/[^/]+$')"
+    }
+  ];
+
+  // Required. The environment to create.
+  ProjectEnvironment project_environment = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Required. The identifier to use for the environment.
+  //
+  // It must be 3 to 30 lowercase ASCII letters, digits, or hyphens.
+  string project_environment_id = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).cel = {
+      id: "valid_environment_alias",
+      message: "project_environment_id must be a valid alias",
+      expression: "this.matches('^[a-z][a-z0-9-]{2,29}$')"
+    }
+  ];
+
+  // Optional. The request ID to use for the create request. If provided, ensures this
+  // request is idempotent.
+  string request_id = 4 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.field_info).format = UUID4
+  ];
+
+  // Optional. If set to true, the request will not create the environment, but will
+  // validate the request.
+  bool validate_only = 5 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Request message for the `GetProjectEnvironment` method.
+message GetProjectEnvironmentRequest {
+  // Required. The name of the environment to retrieve.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/ProjectEnvironment" },
+    (buf.validate.field).cel = {
+      id: "valid_project_environment",
+      message: "name must be a valid project environment name",
+      expression: "this.matches('projects/[^/]+/environments/[^/]+$')"
+    }
+  ];
+}
+
+// Request message for the `UpdateProjectEnvironment` method.
+message UpdateProjectEnvironmentRequest {
+  option (buf.validate.message).cel = {
+    id: "valid_options",
+    message: "cannot set both allow_missing and update_mask",
+    expression: "this.allow_missing ? !has(this.update_mask) : true"
+  };
+
+  // Doesn't work at the field level for some reason.
+  option (buf.validate.message).cel = {
+    id: "valid_update_mask",
+    message: "update_mask may only include: 'display_name', 'annotations'",
+    // Must include `name` since the update mask is set to `all` by default and `name` is a required field.
+    expression: "this.update_mask.paths.all(path, path in ['name', 'display_name', 'annotations'])",
+  };
+
+  // Required. The environment to update.
+  ProjectEnvironment project_environment = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. The update mask to apply to the environment.
+  google.protobuf.FieldMask update_mask = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The request ID to use for the update request. If provided, ensures this
+  // request is idempotent.
+  string request_id = 3 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.field_info).format = UUID4
+  ];
+
+  // If set to true, and the environment is not found, a new environment will be created.
+  // In this situation, `update_mask` is ignored.
+  bool allow_missing = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. If set to true, the request will not update the environment, but will
+  // validate the request.
+  bool validate_only = 5 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Request message for `ListProjectEnvironments`.
+message ListProjectEnvironmentsRequest {
+  // Required. The parent of the environment.
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/Project" },
+    (buf.validate.field).cel = {
+      id: "valid_parent",
+      message: "parent must be a valid project resource name",
+      expression: "this.matches('projects/[^/]+$')"
+    }
+  ];
+
+  // The maximum number of environments to return. The service may return fewer
+  // than this value. If unspecified, at most 100 environments will be returned.
+  int32 page_size = 2 [
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).int32.gte = 0
+  ];
+
+  // A page token, received from a previous `ListProjectEnvironments` call. Provide this
+  // to retrieve the subsequent page. When paginating, all other parameters
+  // provided to `ListProjectEnvironments` must match the call that provided the page
+  // token.
+  string page_token = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // The filter expression.
+  string filter = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // The order by expression.
+  string order_by = 5 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Response message for `ListProjectEnvironments`.
+message ListProjectEnvironmentsResponse {
+  // The list of environments.
+  repeated ProjectEnvironment project_environments = 1;
+
+  // A token to retrieve the next page of results. Pass this value in the
+  // `page_token` field in the subsequent call to `ListProjectEnvironments` method to
+  // retrieve the next page of results.
+  string next_page_token = 2;
+}
+
+// Request message for the `DeleteProjectEnvironment` method.
+message DeleteProjectEnvironmentRequest {
+  // Required. The name of the environment to delete.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/ProjectEnvironment" },
+    (buf.validate.field).cel = {
+      id: "valid_project_environment",
+      message: "name must be a valid project environment resource name",
+      expression: "this.matches('projects/[^/]+/environments/[^/]+$')"
+    }
+  ];
+
+  // Optional. The request ID to use for the delete request. If provided, ensures this
+  // request is idempotent.
+  string request_id = 2 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.field_info).format = UUID4
+  ];
+
+  // Optional. The etag of the environment.
+  // If this is provided, it must match the server's etag.
+  string etag = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // If set to true, and the environment is not found, the request will succeed
+  // but no action will be taken on the server.
+  bool allow_missing = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // If set to true, the request is validated but not actually executed.
+  bool validate_only = 5 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// An asset of a deployed Celest project.
+message ProjectAsset {
+  // The type of project asset.
+  enum Type {
+    // The type is not specified.
+    TYPE_UNSPECIFIED = 0;
+
+    // The asset is a Dart kernel file.
+    DART_KERNEL = 1;
+  }
+
+  // The type of the asset.
+  Type type = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The file name of the asset.
+  string filename = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The asset.
+  oneof asset {
+    // Inline asset context.
+    bytes inline = 3;
+  }
+
+  // A checksum of the asset's content, computed by the client and 
+  // verified by the server upon retrieval.
+  string etag = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for the `DeployProjectEnvironment` operation.
+message DeployProjectEnvironmentRequest {
+  // Required. The name of the environment to deploy.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "cloud.celest.dev/ProjectEnvironment" },
+    (buf.validate.field).cel = {
+      id: "valid_project_environment",
+      message: "name must be a valid project environment resource name",
+      expression: "this.matches('projects/[^/]+/environments/[^/]+$')"
+    }
+  ];
+
+  // Optional. The request ID to use for the delete request. If provided, ensures this
+  // request is idempotent.
+  string request_id = 2 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.field_info).format = UUID4
+  ];
+
+  // If set to true, the request is validated but not actually executed.
+  bool validate_only = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The etag of the environment.
+  //
+  // If provided, it must match the server's etag.
+  string etag = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // Input only. The environment's project AST.
+  celest.ast.v1.ResolvedProject resolved_project_ast = 5 [(google.api.field_behavior) = REQUIRED];
+
+  // Input only. The assets of the environment.
+  repeated ProjectAsset assets = 6 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).repeated = {
+      min_items: 1,
+      max_items: 1,
+      items: {
+        cel: {
+          id: "valid_asset",
+          message: "only Dart kernel assets are supported currently",
+          expression: "this.type == 1"
+        }
+      }
+    }
+  ];
+}
+
+// Response message for the `DeployProjectEnvironment` operation.
+message DeployProjectEnvironmentResponse {
+  // The URI of the deployed environment.
+  string uri = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The resolved project of the deployed environment, with any missing values filled in.
+  celest.ast.v1.ResolvedProject project = 2 [(google.api.field_behavior) = REQUIRED];
+}

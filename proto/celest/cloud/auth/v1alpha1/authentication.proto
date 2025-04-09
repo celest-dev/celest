@@ -1,0 +1,630 @@
+syntax = "proto3";
+
+package celest.cloud.auth.v1alpha1;
+
+import "buf/validate/validate.proto";
+import "celest/cloud/auth/v1alpha1/users.proto";
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "google/rpc/status.proto";
+import "google/type/phone_number.proto";
+
+option go_package = "celest/cloud/auth/v1alpha1;authv1alpha1";
+
+// The authentication service.
+service Authentication {
+  option (google.api.default_host) = "cloud.celest.dev";
+
+  // Starts an authentication session.
+  //
+  // Upon completion, if the identified user does not exist, a new user will be created
+  // unless that user can be linked to an existing identity.
+  //
+  // See the docs [here](https://cloud.google.com/identity-platform/docs/concepts-manage-users#verified_email_addresses)
+  // for when linking is possible.
+  //
+  // (-- api-linter: core::0136::response-message-name=disabled
+  //     api-linter: core::0136::http-uri-suffix=disabled
+  //     api-linter: core::0134::request-required-fields
+  //     aip.dev/not-precedent: State machine RPC. --)
+  rpc StartSession(StartSessionRequest) returns (Session) {
+    option (google.api.http) = {
+      post: "/v1alpha1/auth/sessions:startSession",
+      body: "*",
+      additional_bindings: {
+        post: "/v1alpha1/{parent=organizations/*}/auth/sessions:startSession"
+        body: "*"
+      }
+      additional_bindings: {
+        post: "/v1alpha1/{parent=organizations/*/projects/*}/auth/sessions:startSession"
+        body: "*"
+      }
+    };
+  }
+
+  // Continues an authentication session.
+  //
+  // Upon completion, if the identified user does not exist, a new user will be created
+  // unless that user can be linked to an existing identity.
+  //
+  // See the docs [here](https://cloud.google.com/identity-platform/docs/concepts-manage-users#verified_email_addresses)
+  // for when linking is possible.
+  //
+  // (-- api-linter: core::0136::response-message-name=disabled
+  //     api-linter: core::0136::http-uri-suffix=disabled
+  //     aip.dev/not-precedent: State machine RPC. --)
+  rpc ContinueSession(ContinueSessionRequest) returns (Session) {
+    option (google.api.http) = {
+      post: "/v1alpha1/auth/sessions:continueSession",
+      body: "*"
+    };
+  }
+
+  // Cancels an in-progress authentication session.
+  //
+  // (-- api-linter: core::0136::response-message-name=disabled
+  //     api-linter: core::0136::http-uri-suffix=disabled
+  //     aip.dev/not-precedent: State machine RPC. --)
+  rpc EndSession(EndSessionRequest) returns (EndSessionResponse) {
+    option (google.api.http) = {
+      post: "/v1alpha1/auth/sessions:endSession",
+      body: "*"
+    };
+  }
+
+  // Retrieves the current user's userinfo.
+  //
+  // This API follows the OIDC `/userinfo` endpoint:
+  // https://openid.net/specs/openid-connect-core-1_0.html#UserInfo
+  // (-- api-linter: core::0131::method-signature=disabled
+  //     api-linter: core::0131::http-uri-name=disabled
+  //     api-linter: core::0131::http-method=disabled
+  //     api-linter: core::0131::request-message-name=disabled
+  //     aip.dev/not-precedent: Conformance to OIDC --)
+  rpc GetOpenIdUserinfo(google.protobuf.Empty) returns (OpenIdUserinfo) {
+    option (google.api.http) = {
+      get: "/v1alpha1/auth/userinfo",
+      additional_bindings: { post: "/auth/v1alpha1/userinfo" }
+    };
+  }
+}
+
+// Response message for `StartSession` and `ContinueSession` methods.
+message Session {
+  // Required. The parent resource in which the authentication session was created.
+  string parent = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Required. The ID of the authentication session.
+  string session_id = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.field_behavior) = IMMUTABLE
+  ];
+
+  // A token to continue the authentication operation.
+  //
+  // This token is valid for a limited time and must be passed to `ContinueSession`.
+  string session_token = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
+
+  // Required. The time the flow will expire.
+  google.protobuf.Timestamp expire_time = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
+
+  // Required. The state of the authentication operation.
+  oneof state {
+    // The authentication operation was successful.
+    AuthenticationSuccess success = 5;
+
+    // Further action is needed to complete the authentication.
+    //
+    // Fill in the required fields and call `ContinueSession` with the same `session_id`.
+    AuthenticationStep next_step = 6;
+  }
+
+  // Required. The client who initiated the session.
+  SessionClient client = 7 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.field_behavior) = INPUT_ONLY
+  ];
+}
+
+// A description of the client creating the session.
+message SessionClient {
+  // Required. The ID of the client.
+  string client_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Required. The platform of the client.
+  ClientType client_type = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Required. If the client is able to receive callbacks.
+  SessionCallbacks callbacks = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Callback URIs for the client.
+message SessionCallbacks {
+  // Required. The URI to redirect to upon successful authentication.
+  string success_uri = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).cel = {
+      id: "valid_uri",
+      message: "uri must be a valid URI",
+      // `isUri` validates that a string is an absolute URI.
+      // This expression validates that the uri field is an absolute URI.
+      // Note: to allow relative URI, use `isUriRef`.
+      expression: "this.isUri()"
+    }
+  ];
+
+  // Optional. The URI to redirect to upon an error.
+  //
+  // If not provided, the user will be redirected to the success URL with an error query parameter.
+  string error_uri = 2 [
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).cel = {
+      id: "valid_uri",
+      message: "uri must be a valid URI",
+      // `isUri` validates that a string is an absolute URI.
+      // This expression validates that the uri field is an absolute URI.
+      // Note: to allow relative URI, use `isUriRef`.
+      expression: "this.isUri()"
+    }
+  ];
+}
+
+// Request message for `StartSession` method.
+message StartSessionRequest {
+  // Optional. The parent resource in which the authentication session will be created.
+  //
+  // If not provided, the session will be created in the root service context.
+  //
+  // Format: `organizations/{organization}` or `organizations/{organization}/projects/{project}`.
+  string parent = 1 [
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).cel = {
+      id: "valid_parent",
+      message: "parent must be a valid parent",
+      expression: "this == '' || this.matches('^organizations/[^/]+$|^organizations/[^/]+/projects/[^/]+$')"
+    }
+  ];
+
+  // Required. The factor of authentication.
+  oneof factor {
+    option (buf.validate.oneof).required = true;
+
+    // Authenticate using an email address and OTP.
+    AuthenticationFactorEmailOtp email_otp = 2;
+
+    // Authenticate using a phone number and OTP.
+    AuthenticationFactorSmsOtp sms_otp = 3;
+
+    // Authenticate using a third-party identity provider like Google or Apple.
+    AuthenticationFactorIdp idp = 4;
+  }
+
+  // Required. The client initiating the session.
+  SessionClient client = 5 [(google.api.field_behavior) = REQUIRED];
+}
+
+// More information is needed to complete the authentication.
+message AuthenticationStep {
+  // The missing information for the authentication operation.
+  //
+  // This will be the same method in `StartSessionRequest`.
+  oneof step {
+    option (buf.validate.oneof).required = true;
+
+    // Further proof of an authentication factor is required.
+    AuthenticationFactor needs_proof = 3;
+
+    // The authentication operation needs confirmation.
+    //
+    // Typically this happens when no user exists with the provided identity or when the
+    // provided identity matches an existing one but they are not yet linked.
+    AuthenticationPendingConfirmation pending_confirmation = 7;
+  }
+}
+
+// An authentication method which sends a one-time passcode (OTP) to a user's
+// email address.
+message AuthenticationFactorEmailOtp {
+  // Required. The email address to send the OTP to.
+  string email = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).cel = {
+      id: "valid_email",
+      message: "email must be a valid email",
+      expression: "this.isEmail()"
+    }
+  ];
+
+  // Optional. The OTP code sent to the provided `email`.
+  //
+  // Leave this field empty to send the OTP.
+  optional string code = 2 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.field_behavior) = INPUT_ONLY,
+    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).cel = {
+      id: "valid_otp",
+      message: "code must be a valid OTP",
+      expression: "this.matches('^[0-9]{6}$')"
+    }
+  ];
+}
+
+// An authentication method which sends a one-time passcode (OTP) to a user's
+// phone number.
+message AuthenticationFactorSmsOtp {
+  // Required. The phone number to send the OTP to.
+  string phone_number = 1 [
+    (google.api.field_behavior) = REQUIRED,
+
+    // Perform a quick validation to ensure a properly formatted phone number.
+    (buf.validate.field).cel = {
+      id: "valid_phone_number",
+      message: "phone_number must include a country code",
+      expression: "this.startsWith('+')"
+    }
+  ];
+
+  // Optional. The OTP code sent to the provided `phone_number`.
+  //
+  // Leave this field empty to send the OTP.
+  optional string code = 2 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.field_behavior) = INPUT_ONLY,
+    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).cel = {
+      id: "valid_otp",
+      message: "code must be a valid OTP",
+      expression: "this.matches('^[0-9]{6}$')"
+    }
+  ];
+}
+
+// An authentication method which uses a social provider like Google or Apple.
+message AuthenticationFactorIdp {
+  // Required. The social provider to authenticate with.
+  IdentityProviderType provider = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. The URI the client was redirected to.
+  optional string redirect_uri = 2 [
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).cel = {
+      id: "valid_uri",
+      message: "uri must be a valid URI",
+      // `isUri` validates that a string is an absolute URI.
+      // This expression validates that the uri field is an absolute URI.
+      // Note: to allow relative URI, use `isUriRef`.
+      expression: "this.isUri()"
+    }
+  ];
+}
+
+// A factor for authenticating a user.
+message AuthenticationFactor {
+  oneof factor {
+    option (buf.validate.oneof).required = true;
+
+    // Continuation handler for the email OTP authentication session.
+    AuthenticationFactorEmailOtp email_otp = 3;
+
+    // Continuation handler for the SMS OTP authentication session.
+    AuthenticationFactorSmsOtp sms_otp = 4;
+
+    // Continuation handler for the social authentication session.
+    AuthenticationFactorIdp idp = 5;
+  }
+}
+
+// Request message for `ContinueSession` method.
+message ContinueSessionRequest {
+  // Required. The ID of the authentication session.
+  string session_id = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).cel = {
+      id: "valid_session_id",
+      message: "session_id must be a valid session ID",
+      expression: "this.matches('^sess_[A-Za-z0-9]{26}$')"
+    }
+  ];
+
+  // Required. The continuation token returned from a previous `StartSession`
+  // or `ContinueSession` call.
+  string session_token = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Required. The method to continue authentication.
+  //
+  // This must be the same method started in `StartSession`.
+  oneof update {
+    option (buf.validate.oneof).required = true;
+
+    // Proof for an authentication factor.
+    AuthenticationFactor proof = 3;
+
+    // Confirmation of a pending session creation.
+    AuthenticationPendingConfirmation confirmation = 4;
+
+    // Resend an OTP code.
+    AuthenticationFactor resend = 5;
+  }
+}
+
+// The authentication session was successful.
+message AuthenticationSuccess {
+  // The ID token for the user.
+  string identity_token = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The user's information.
+  User user = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Whether a new user was created or not.
+  bool is_new_user = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// The authentication operation needs confirmation from the user.
+message AuthenticationPendingConfirmation {
+  oneof pending {
+    option (buf.validate.oneof).required = true;
+
+    // An existing user was found with the provided identity.
+    User link_existing_user = 1;
+
+    // The user to be registered.
+    User register_user = 2;
+  }
+}
+
+// Request message for `EndSession` method.
+message EndSessionRequest {
+  // Optional. The ID of the authentication session.
+  //
+  // If not provided, the session will be ended for the current authenticated user.
+  optional string session_id = 1 [
+    (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).cel = {
+      id: "valid_session_id",
+      message: "session_id must be a valid session ID",
+      expression: "this.matches('^sess_[A-Za-z0-9]{26}$')"
+    }
+  ];
+
+  // Optional. The session token returned from a previous `StartSession`
+  // or `ContinueSession` call.
+  //
+  // If not provided, the session will be ended for the current authenticated user.
+  optional string session_token = 2 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Response message for `EndSession` method.
+message EndSessionResponse {
+  // The ID of the authentication session that was ended.
+  string session_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  oneof result {
+    // The authentication session was successfully ended.
+    google.protobuf.Empty success = 2;
+
+    // A final redirect URI to send the user to.
+    //
+    // Used to clear cookies in social login flows.
+    string redirect_uri = 3 [
+      (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+      (buf.validate.field).cel = {
+        id: "valid_uri",
+        message: "uri must be a valid URI",
+        // `isUri` validates that a string is an absolute URI.
+        // This expression validates that the uri field is an absolute URI.
+        // Note: to allow relative URI, use `isUriRef`.
+        expression: "this.isUri()"
+      }
+    ];
+  }
+}
+
+// The user info of the current user.
+//
+// Structured to match the return value of the OIDC `/userinfo` endpoint:
+// https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse
+//
+// (-- api-linter: core::0123::resource-annotation=disabled
+//     aip.dev/not-precedent: Not a resource. --)
+message OpenIdUserinfo {
+  // Required. The identifier for the End-User at the Issuer.
+  string sub = 1;
+
+  // Optional. End-User's full name in displayable form including all name parts, possibly
+  // including titles and suffixes, ordered according to the End-User's locale and preferences.
+  optional string name = 2;
+
+  // Optional. Given name(s) or first name(s) of the End-User.
+  //
+  // Note that in some cultures, people can have multiple given names; all can be present, with
+  // the names being separated by space characters.
+  optional string given_name = 3 [json_name = "given_name"];
+
+  // Optional. 	Surname(s) or last name(s) of the End-User.
+  //
+  // Note that in some cultures, people can have multiple family names or no family name;
+  // all can be present, with the names being separated by space characters.
+  optional string family_name = 4 [json_name = "family_name"];
+
+  // Optional. Middle name(s) of the End-User.
+  //
+  // Note that in some cultures, people can have multiple middle names; all can be present,
+  // with the names being separated by space characters. Also note that in some cultures, middle
+  // names are not used.
+  // (-- api-linter: core::0122::name-suffix=disabled --)
+  optional string middle_name = 5 [json_name = "middle_name"];
+
+  // Optional. Casual name of the End-User that may or may not be the same as the given_name.
+  //
+  // For instance, a nickname value of Mike might be returned alongside a given_name value of Michael.
+  optional string nickname = 6;
+
+  // Optional. Shorthand name by which the End-User wishes to be referred to at the RP, such as
+  // janedoe or j.doe.
+  //
+  // This value MAY be any valid JSON string including special characters such as @, /, or whitespace.
+  // The RP MUST NOT rely upon this value being unique, as discussed in Section 5.7.
+  optional string preferred_username = 7 [json_name = "preferred_username"];
+
+  // Optional. URL of the End-User's profile page.
+  //
+  // The contents of this Web page SHOULD be about the End-User.
+  optional string profile = 8;
+
+  // Optional. URL of the End-User's profile picture.
+  //
+  // This URL MUST refer to an image file (for example, a PNG, JPEG, or GIF image file), rather than
+  // to a Web page containing an image. Note that this URL SHOULD specifically reference a profile photo
+  // of the End-User suitable for displaying when describing the End-User, rather than an arbitrary
+  // photo taken by the End-User.
+  optional string picture = 9;
+
+  // Optional. URL of the End-User's Web page or blog.
+  //
+  // This Web page SHOULD contain information published by the End-User or an organization that the
+  // End-User is affiliated with.
+  optional string website = 10;
+
+  // Optional. End-User's preferred e-mail address.
+  //
+  // Its value MUST conform to the RFC 5322 [RFC5322] addr-spec syntax. The RP MUST NOT rely upon this
+  // value being unique, as discussed in Section 5.7.
+  optional string email = 11;
+
+  // Optional. True if the End-User's e-mail address has been verified; otherwise false.
+  //
+  // When this Claim Value is true, this means that the OP took affirmative steps to ensure that this
+  // e-mail address was controlled by the End-User at the time the verification was performed. The means
+  // by which an e-mail address is verified is context specific, and dependent upon the trust framework
+  // or contractual agreements within which the parties are operating.
+  optional bool email_verified = 12 [json_name = "email_verified"];
+
+  // Optional. End-User's gender.
+  //
+  // Values defined by this specification are female and male. Other values MAY be used when neither
+  // of the defined values are applicable.
+  optional string gender = 13;
+
+  // Optional. End-User's birthday, represented as an ISO 8601-1 [ISO8601‑1] YYYY-MM-DD format.
+  //
+  // The year MAY be 0000, indicating that it is omitted. To represent only the year, YYYY format is
+  // allowed. Note that depending on the underlying platform's date related function, providing just
+  // year can result in varying month and day, so the implementers need to take this factor into account
+  // to correctly process the dates.
+  optional string birthdate = 14;
+
+  // Optional. String from IANA Time Zone Database [IANA.time‑zones] representing the End-User's time zone.
+  //
+  // For example, Europe/Paris or America/Los_Angeles.
+  optional string zoneinfo = 15;
+
+  // Optional. End-User's locale, represented as a BCP47 [RFC5646] language tag.
+  //
+  // This is typically an ISO 639 Alpha-2 [ISO639] language code in lowercase and an ISO 3166-1 Alpha-2
+  // [ISO3166‑1] country code in uppercase, separated by a dash. For example, en-US or fr-CA. As a
+  // compatibility note, some implementations have used an underscore as the separator rather than a dash,
+  // for example, en_US; Relying Parties MAY choose to accept this locale syntax as well.
+  optional string locale = 16;
+
+  // Optional. End-User's preferred telephone number.
+  //
+  // E.164 [E.164] is RECOMMENDED as the format of this Claim, for example, +1 (425) 555-1212 or
+  // +56 (2) 687 2400. If the phone number contains an extension, it is RECOMMENDED that the extension be
+  // represented using the RFC 3966 [RFC3966] extension syntax, for example, +1 (604) 555-1234;ext=5678.
+  optional string phone_number = 17 [json_name = "phone_number"];
+
+  // Optional. True if the End-User's phone number has been verified; otherwise false.
+  //
+  // When this Claim Value is true, this means that the OP took affirmative steps to ensure that this
+  // phone number was controlled by the End-User at the time the verification was performed. The means
+  // by which a phone number is verified is context specific, and dependent upon the trust framework or
+  // contractual agreements within which the parties are operating. When true, the phone_number Claim MUST
+  // be in E.164 format and any extensions MUST be represented in RFC 3966 format.
+  optional bool phone_number_verified = 18 [json_name = "phone_number_verified"];
+
+  // Optional. End-User's preferred postal address.
+  //
+  // The value of the address member is a JSON [RFC8259] structure containing some or all of the members
+  // defined in Section 5.1.1, for example:
+  //
+  // ```
+  // {
+  //   "formatted": "Mr. John Doe, 123 Main Street, Springfield, IL 62701",
+  //   "street_address": "123 Main Street",
+  //   "locality": "Springfield",
+  //   "region": "IL",
+  //   "postal_code": "62701",
+  //   "country": "US"
+  // }
+  // ```
+  optional google.protobuf.Value address = 19;
+
+  // Optional. Time the End-User's information was last updated.
+  //
+  // Its value is a JSON number representing the number of seconds from 1970-01-01T00:00:00Z as measured
+  // in UTC until the date/time.
+  // (-- api-linter: core::0140::prepositions=disabled --)
+  optional int32 updated_at = 20 [json_name = "updated_at"];
+}
+
+// End-User's preferred postal address.
+message OpenIdAddress {
+  // Optional. Full mailing address, formatted for display or use on a mailing label.
+  optional string formatted = 1;
+
+  // Optional. Full street address component, which MAY include house number, street name, P.O. Box, and multi-line extended street address information.
+  optional string street_address = 2 [json_name = "street_address"];
+
+  // Optional. City or locality component.
+  optional string locality = 3;
+
+  // Optional. State, province, prefecture, or region component.
+  optional string region = 4;
+
+  // Optional. Zip code or postal code component.
+  optional string postal_code = 5 [json_name = "postal_code"];
+
+  // Optional. Country name component.
+  // (-- api-linter: core::0143::standardized-codes=disabled --)
+  optional string country = 6;
+}
+
+// The type of client initiating a session.
+enum ClientType {
+  // Unspecified client type.
+  CLIENT_TYPE_UNSPECIFIED = 0;
+
+  // The client is a web browser.
+  WEB = 1;
+
+  // The client is an Android device.
+  ANDROID = 2;
+
+  // The client is an iOS device.
+  IOS = 3;
+
+  // The client is a macOS application with a GUI.
+  MACOS = 4;
+
+  // The client is a Windows application with a GUI.
+  WINDOWS = 5;
+
+  // The client is a Linux application with a GUI.
+  LINUX = 6;
+
+  // The client is a headless application.
+  HEADLESS = 7;
+}

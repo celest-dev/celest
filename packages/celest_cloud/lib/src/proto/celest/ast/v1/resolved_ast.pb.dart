@@ -13,12 +13,12 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../cedar/v3/policy.pb.dart' as $52;
-import '../../../google/protobuf/struct.pb.dart' as $22;
-import 'features.pbenum.dart' as $54;
+import '../../../cedar/v3/policy.pb.dart' as $1;
+import '../../../google/protobuf/struct.pb.dart' as $0;
+import 'features.pbenum.dart' as $3;
 import 'resolved_ast.pbenum.dart';
-import 'sdks.pb.dart' as $53;
-import 'sdks.pbenum.dart' as $53;
+import 'sdks.pb.dart' as $2;
+import 'sdks.pbenum.dart' as $2;
 
 export 'resolved_ast.pbenum.dart';
 
@@ -202,7 +202,7 @@ class ResolvedApi extends $pb.GeneratedMessage {
   factory ResolvedApi({
     $core.String? apiId,
     $core.Map<$core.String, ResolvedFunction>? functions,
-    $52.PolicySet? policySet,
+    $1.PolicySet? policySet,
   }) {
     final $result = create();
     if (apiId != null) {
@@ -236,8 +236,8 @@ class ResolvedApi extends $pb.GeneratedMessage {
         valueCreator: ResolvedFunction.create,
         valueDefaultOrMaker: ResolvedFunction.getDefault,
         packageName: const $pb.PackageName('celest.ast.v1'))
-    ..aOM<$52.PolicySet>(3, _omitFieldNames ? '' : 'policySet',
-        subBuilder: $52.PolicySet.create)
+    ..aOM<$1.PolicySet>(3, _omitFieldNames ? '' : 'policySet',
+        subBuilder: $1.PolicySet.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -286,9 +286,9 @@ class ResolvedApi extends $pb.GeneratedMessage {
   ///
   ///  This policy set is applied to all functions within the API.
   @$pb.TagNumber(3)
-  $52.PolicySet get policySet => $_getN(2);
+  $1.PolicySet get policySet => $_getN(2);
   @$pb.TagNumber(3)
-  set policySet($52.PolicySet v) {
+  set policySet($1.PolicySet v) {
     setField(3, v);
   }
 
@@ -297,7 +297,7 @@ class ResolvedApi extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearPolicySet() => clearField(3);
   @$pb.TagNumber(3)
-  $52.PolicySet ensurePolicySet() => $_ensure(2);
+  $1.PolicySet ensurePolicySet() => $_ensure(2);
 }
 
 /// The resolved AST of a Celest function.
@@ -309,7 +309,7 @@ class ResolvedFunction extends $pb.GeneratedMessage {
     ResolvedStreamConfig? streamConfig,
     $core.Iterable<$core.String>? variables,
     $core.Iterable<$core.String>? secrets,
-    $52.PolicySet? policySet,
+    $1.PolicySet? policySet,
   }) {
     final $result = create();
     if (functionId != null) {
@@ -355,8 +355,8 @@ class ResolvedFunction extends $pb.GeneratedMessage {
         subBuilder: ResolvedStreamConfig.create)
     ..pPS(5, _omitFieldNames ? '' : 'variables')
     ..pPS(6, _omitFieldNames ? '' : 'secrets')
-    ..aOM<$52.PolicySet>(7, _omitFieldNames ? '' : 'policySet',
-        subBuilder: $52.PolicySet.create)
+    ..aOM<$1.PolicySet>(7, _omitFieldNames ? '' : 'policySet',
+        subBuilder: $1.PolicySet.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -451,9 +451,9 @@ class ResolvedFunction extends $pb.GeneratedMessage {
 
   /// The policy set declared by the function.
   @$pb.TagNumber(7)
-  $52.PolicySet get policySet => $_getN(6);
+  $1.PolicySet get policySet => $_getN(6);
   @$pb.TagNumber(7)
-  set policySet($52.PolicySet v) {
+  set policySet($1.PolicySet v) {
     setField(7, v);
   }
 
@@ -462,7 +462,7 @@ class ResolvedFunction extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   void clearPolicySet() => clearField(7);
   @$pb.TagNumber(7)
-  $52.PolicySet ensurePolicySet() => $_ensure(6);
+  $1.PolicySet ensurePolicySet() => $_ensure(6);
 }
 
 /// The HTTP configuration of a [ResolvedFunction][].
@@ -2253,7 +2253,7 @@ class ResolvedDatabaseSchema extends $pb.GeneratedMessage {
 class ResolvedDriftDatabaseSchema extends $pb.GeneratedMessage {
   factory ResolvedDriftDatabaseSchema({
     $core.int? version,
-    $22.Struct? schemaJson,
+    $0.Struct? schemaJson,
   }) {
     final $result = create();
     if (version != null) {
@@ -2277,8 +2277,8 @@ class ResolvedDriftDatabaseSchema extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
     ..a<$core.int>(1, _omitFieldNames ? '' : 'version', $pb.PbFieldType.O3)
-    ..aOM<$22.Struct>(2, _omitFieldNames ? '' : 'schemaJson',
-        subBuilder: $22.Struct.create)
+    ..aOM<$0.Struct>(2, _omitFieldNames ? '' : 'schemaJson',
+        subBuilder: $0.Struct.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -2323,9 +2323,9 @@ class ResolvedDriftDatabaseSchema extends $pb.GeneratedMessage {
 
   /// Required. The Drift schema JSON.
   @$pb.TagNumber(2)
-  $22.Struct get schemaJson => $_getN(1);
+  $0.Struct get schemaJson => $_getN(1);
   @$pb.TagNumber(2)
-  set schemaJson($22.Struct v) {
+  set schemaJson($0.Struct v) {
     setField(2, v);
   }
 
@@ -2334,17 +2334,17 @@ class ResolvedDriftDatabaseSchema extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearSchemaJson() => clearField(2);
   @$pb.TagNumber(2)
-  $22.Struct ensureSchemaJson() => $_ensure(1);
+  $0.Struct ensureSchemaJson() => $_ensure(1);
 }
 
 /// Configuration of the SDKs used to deploy the project.
 class SdkConfiguration extends $pb.GeneratedMessage {
   factory SdkConfiguration({
-    $53.Version? celest,
-    $53.Sdk? dart,
-    $53.Sdk? flutter,
-    $53.SdkType? targetSdk,
-    $core.Iterable<$54.FeatureFlag>? featureFlags,
+    $2.Version? celest,
+    $2.Sdk? dart,
+    $2.Sdk? flutter,
+    $2.SdkType? targetSdk,
+    $core.Iterable<$3.FeatureFlag>? featureFlags,
   }) {
     final $result = create();
     if (celest != null) {
@@ -2376,20 +2376,20 @@ class SdkConfiguration extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'SdkConfiguration',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
-    ..aOM<$53.Version>(1, _omitFieldNames ? '' : 'celest',
-        subBuilder: $53.Version.create)
-    ..aOM<$53.Sdk>(2, _omitFieldNames ? '' : 'dart', subBuilder: $53.Sdk.create)
-    ..aOM<$53.Sdk>(3, _omitFieldNames ? '' : 'flutter',
-        subBuilder: $53.Sdk.create)
-    ..e<$53.SdkType>(4, _omitFieldNames ? '' : 'targetSdk', $pb.PbFieldType.OE,
-        defaultOrMaker: $53.SdkType.SDK_TYPE_UNSPECIFIED,
-        valueOf: $53.SdkType.valueOf,
-        enumValues: $53.SdkType.values)
-    ..pc<$54.FeatureFlag>(
+    ..aOM<$2.Version>(1, _omitFieldNames ? '' : 'celest',
+        subBuilder: $2.Version.create)
+    ..aOM<$2.Sdk>(2, _omitFieldNames ? '' : 'dart', subBuilder: $2.Sdk.create)
+    ..aOM<$2.Sdk>(3, _omitFieldNames ? '' : 'flutter',
+        subBuilder: $2.Sdk.create)
+    ..e<$2.SdkType>(4, _omitFieldNames ? '' : 'targetSdk', $pb.PbFieldType.OE,
+        defaultOrMaker: $2.SdkType.SDK_TYPE_UNSPECIFIED,
+        valueOf: $2.SdkType.valueOf,
+        enumValues: $2.SdkType.values)
+    ..pc<$3.FeatureFlag>(
         5, _omitFieldNames ? '' : 'featureFlags', $pb.PbFieldType.KE,
-        valueOf: $54.FeatureFlag.valueOf,
-        enumValues: $54.FeatureFlag.values,
-        defaultEnumValue: $54.FeatureFlag.FEATURE_FLAG_UNSPECIFIED)
+        valueOf: $3.FeatureFlag.valueOf,
+        enumValues: $3.FeatureFlag.values,
+        defaultEnumValue: $3.FeatureFlag.FEATURE_FLAG_UNSPECIFIED)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -2417,9 +2417,9 @@ class SdkConfiguration extends $pb.GeneratedMessage {
 
   /// The Celest version used to deploy the project.
   @$pb.TagNumber(1)
-  $53.Version get celest => $_getN(0);
+  $2.Version get celest => $_getN(0);
   @$pb.TagNumber(1)
-  set celest($53.Version v) {
+  set celest($2.Version v) {
     setField(1, v);
   }
 
@@ -2428,13 +2428,13 @@ class SdkConfiguration extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearCelest() => clearField(1);
   @$pb.TagNumber(1)
-  $53.Version ensureCelest() => $_ensure(0);
+  $2.Version ensureCelest() => $_ensure(0);
 
   /// The Dart SDK used to deploy the project.
   @$pb.TagNumber(2)
-  $53.Sdk get dart => $_getN(1);
+  $2.Sdk get dart => $_getN(1);
   @$pb.TagNumber(2)
-  set dart($53.Sdk v) {
+  set dart($2.Sdk v) {
     setField(2, v);
   }
 
@@ -2443,13 +2443,13 @@ class SdkConfiguration extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearDart() => clearField(2);
   @$pb.TagNumber(2)
-  $53.Sdk ensureDart() => $_ensure(1);
+  $2.Sdk ensureDart() => $_ensure(1);
 
   /// The Flutter SDK used to deploy the project, if any.
   @$pb.TagNumber(3)
-  $53.Sdk get flutter => $_getN(2);
+  $2.Sdk get flutter => $_getN(2);
   @$pb.TagNumber(3)
-  set flutter($53.Sdk v) {
+  set flutter($2.Sdk v) {
     setField(3, v);
   }
 
@@ -2458,13 +2458,13 @@ class SdkConfiguration extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearFlutter() => clearField(3);
   @$pb.TagNumber(3)
-  $53.Sdk ensureFlutter() => $_ensure(2);
+  $2.Sdk ensureFlutter() => $_ensure(2);
 
   /// The target SDK for deployment.
   @$pb.TagNumber(4)
-  $53.SdkType get targetSdk => $_getN(3);
+  $2.SdkType get targetSdk => $_getN(3);
   @$pb.TagNumber(4)
-  set targetSdk($53.SdkType v) {
+  set targetSdk($2.SdkType v) {
     setField(4, v);
   }
 
@@ -2475,7 +2475,7 @@ class SdkConfiguration extends $pb.GeneratedMessage {
 
   /// The feature flags enabled by the project.
   @$pb.TagNumber(5)
-  $core.List<$54.FeatureFlag> get featureFlags => $_getList(4);
+  $core.List<$3.FeatureFlag> get featureFlags => $_getList(4);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
