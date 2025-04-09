@@ -126,7 +126,7 @@ final class Projects with BaseService {
     );
   }
 
-  Stream<OperationState<OperationMetadata, Empty>> delete(
+  Stream<OperationState<OperationMetadata, Project>> delete(
     String name, {
     String? etag,
     bool allowMissing = false,
@@ -148,8 +148,31 @@ final class Projects with BaseService {
     yield* operation.stream(
       operations: _operations,
       logger: logger,
-      response: Empty(),
+      response: Project(),
       metadata: OperationMetadata(),
+    );
+  }
+
+  Stream<OperationState<OperationMetadata, Project>> undelete(
+    String name, {
+    String? etag,
+    bool validateOnly = false,
+  }) async* {
+    final request = UndeleteProjectRequest(
+      name: name,
+      etag: etag,
+      validateOnly: validateOnly,
+    );
+    final operation = await run(
+      'Projects.Undelete',
+      request: request,
+      action: _protocol.undelete,
+    );
+    yield* operation.stream(
+      operations: _operations,
+      logger: logger,
+      metadata: OperationMetadata(),
+      response: Project(),
     );
   }
 

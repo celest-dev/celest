@@ -7,6 +7,7 @@ abstract interface class ProjectsProtocol {
   Future<ListProjectsResponse> list(ListProjectsRequest request);
   Future<Operation> update(UpdateProjectRequest request);
   Future<Operation> delete(DeleteProjectRequest request);
+  Future<Operation> undelete(UndeleteProjectRequest request);
   Future<Operation> rename(RenameProjectRequest request);
 
   ProjectEnvironmentsProtocol get environments;
