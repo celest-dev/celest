@@ -1,4 +1,3 @@
-import 'package:cedar/ast.dart' hide Value;
 import 'package:cedar/cedar.dart' hide Value;
 // ignore: invalid_use_of_internal_member
 import 'package:celest/src/runtime/http/cloud_middleware.dart';
@@ -120,18 +119,13 @@ extension type UsersService._(_Deps _deps) implements Object {
       ),
     },
     policySet: PolicySet(
-      policies: {
-        apiId: Policy(
-          effect: Effect.permit,
-          principal: const PrincipalIs('Celest::User'),
-          action: const ActionEquals(CelestAction.invoke),
-          annotations: Annotations({
-            'id': apiId,
-          }),
-          resource: const ResourceIn(apiUid),
-          conditions: [],
+      templateLinks: [
+        TemplateLink(
+          templateId: 'cloud.functions.anonymous',
+          newId: apiId,
+          values: {SlotId.resource: apiUid},
         ),
-      },
+      ],
     ),
   );
 
@@ -165,16 +159,22 @@ extension type UsersService._(_Deps _deps) implements Object {
 
   Future<Response> handleGetUser(Request request) async {
     final principal = context.get(ContextKey.principal);
-    // TODO: Handle users/me
+    final user = await getUser(
+      userId: switch (context.routeParameters['name']!.split('/')) {
+        ['users', 'me'] when principal != null => principal.id,
+        ['users', final userId] => userId,
+        final badName => throw BadRequestException(
+            'Invalid user: $badName. Expected users/{user_id}',
+          ),
+      },
+    );
 
-    final resource = _getResource(request);
     await _authorizer.expectAuthorized(
       principal: principal?.uid,
-      resource: resource,
+      resource: EntityUid.of('Celest::User', user.id),
       action: CelestAction.get,
     );
-    final response = await getUser(userId: principal!.userId);
-    return response.toProto().jsonResponse();
+    return user.toProto().jsonResponse();
   }
 
   @visibleForTesting

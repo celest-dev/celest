@@ -36,14 +36,14 @@ void main() {
         );
 
         await tester.httpTest(cork: cork, {
-          // Passes authorization but fails authentication since we have no
-          // record of the user in the DB.
-          route: expectStatus(403),
+          // Passes authorization since we have a valid cork but fails since we
+          // have no record of the user in the DB.
+          route: expectStatus(404),
         });
 
         final cloud = tester.cloud(cork: cork);
         await check(cloud.users.get('users/$userId'))
-            .throws<PermissionDeniedException>();
+            .throws<NotFoundException>();
       });
 
       test('authenticated', () async {
@@ -67,8 +67,11 @@ void main() {
         });
 
         final cloud = tester.cloud(cork: cork);
+        final me = await cloud.users.get('users/me');
+
         await check(cloud.users.get('users/$userId')).completes(
           (it) => it
+            ..equals(me)
             ..has((it) => it.userId, 'userId').equals(userId)
             ..has((it) => it.emails, 'emails').isNotEmpty(),
         );
@@ -103,8 +106,11 @@ void main() {
         });
 
         final cloud = tester.cloud(cork: cork);
+        final me = await cloud.users.get('users/me');
+
         await check(cloud.users.get('users/$userId')).completes(
           (it) => it
+            ..equals(me)
             ..has((it) => it.userId, 'userId').equals(userId)
             ..has((it) => it.emails, 'emails').isNotEmpty(),
         );

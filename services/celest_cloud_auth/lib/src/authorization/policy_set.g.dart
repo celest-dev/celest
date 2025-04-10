@@ -83,6 +83,14 @@ permit (
     resource in ?resource
 );
 
+// Anonymous functions and APIs.
+@id("cloud.functions.anonymous")
+permit (
+    principal in Celest::Role::"anonymous",
+    action == Celest::Action::"invoke",
+    resource in ?resource
+);
+
 // Public functions and APIs.
 @id("cloud.functions.public")
 permit (
