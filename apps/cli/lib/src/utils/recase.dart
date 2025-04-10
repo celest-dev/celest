@@ -51,6 +51,9 @@ extension StringRecase on String {
   WordGroup groupIntoWords() {
     var result = this;
 
+    // remove all apostrophes: dillon's -> dillons
+    result = result.replaceAll("'", '');
+
     // all non-alphanumeric characters: "acm-success"-> "acm success"
     result = result.replaceAll(_nonAlphaNumericChars, ' ');
 

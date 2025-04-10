@@ -253,9 +253,12 @@ final class _GetOperationGatewayHandler extends GatewayHandler {
     : super(requestType: GetOperationRequest(), responseType: pb.Operation());
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = GetOperationRequest();
-    if (request.url.queryParameters['name'] case final name?) {
+    if (routeParameters['name'] case final name?) {
       req.name = name;
     }
     return req;
@@ -270,9 +273,12 @@ final class _ListOperationsGatewayHandler extends GatewayHandler {
       );
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = ListOperationsRequest();
-    if (request.url.queryParameters['name'] case final name?) {
+    if (routeParameters['name'] case final name?) {
       req.name = name;
     }
     if (request.url.queryParameters['filter'] case final filter?) {

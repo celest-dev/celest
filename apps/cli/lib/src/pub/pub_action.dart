@@ -67,6 +67,9 @@ Future<void> runPub({
   // TODO(dnys1): Remove when fixed in pub https://github.com/dart-lang/sdk/issues/55289
   // and we can rely on the exit code taking a reasonable amount of time.
 
+  // TODO(dnys1): Add timeout which can happen when device is connected
+  // to internet but not reachable.
+
   // Must be sync so that completer only completes once before `finally` block
   // cancels subscription.
   final completer = Completer<void>.sync();

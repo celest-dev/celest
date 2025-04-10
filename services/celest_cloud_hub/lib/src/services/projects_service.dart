@@ -617,9 +617,12 @@ final class _GetProjectGatewayHandler extends GatewayHandler {
     : super(requestType: GetProjectRequest(), responseType: Project());
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = GetProjectRequest();
-    if (request.url.queryParameters['name'] case final name?) {
+    if (routeParameters['name'] case final name?) {
       req.name = name;
     }
     return req;
@@ -634,7 +637,10 @@ final class _ListProjectsGatewayHandler extends GatewayHandler {
       );
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = ListProjectsRequest();
     if (request.url.queryParameters['parent'] case final parent?) {
       req.parent = parent;
@@ -663,7 +669,10 @@ final class _UpdateProjectGatewayHandler extends GatewayHandler {
     : super(requestType: UpdateProjectRequest(), responseType: Operation());
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = UpdateProjectRequest();
     if (request.url.queryParameters['allowMissing'] case final allowMissing?) {
       req.allowMissing = allowMissing.toLowerCase() == 'true';
@@ -675,8 +684,10 @@ final class _UpdateProjectGatewayHandler extends GatewayHandler {
       req.validateOnly = validateOnly.toLowerCase() == 'true';
     }
     final body = await JsonUtf8.decodeStream(request.read());
-    req.project =
-        Project()..mergeFromProto3Json(body, typeRegistry: typeRegistry);
+    req.project.mergeFromProto3Json(body, typeRegistry: typeRegistry);
+    if (routeParameters['name'] case final name?) {
+      req.project.name = name;
+    }
     return req;
   }
 }
@@ -686,9 +697,12 @@ final class _DeleteProjectGatewayHandler extends GatewayHandler {
     : super(requestType: DeleteProjectRequest(), responseType: Operation());
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = DeleteProjectRequest();
-    if (request.url.queryParameters['name'] case final name?) {
+    if (routeParameters['name'] case final name?) {
       req.name = name;
     }
     if (request.url.queryParameters['force'] case final force?) {
@@ -712,9 +726,12 @@ final class _UndeleteProjectGatewayHandler extends GatewayHandler {
     : super(requestType: UndeleteProjectRequest(), responseType: Operation());
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = UndeleteProjectRequest();
-    if (request.url.queryParameters['name'] case final name?) {
+    if (routeParameters['name'] case final name?) {
       req.name = name;
     }
     if (request.url.queryParameters['validateOnly'] case final validateOnly?) {
@@ -732,9 +749,12 @@ final class _RenameProjectGatewayHandler extends GatewayHandler {
     : super(requestType: RenameProjectRequest(), responseType: Operation());
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = RenameProjectRequest();
-    if (request.url.queryParameters['name'] case final name?) {
+    if (routeParameters['name'] case final name?) {
       req.name = name;
     }
     if (request.url.queryParameters['projectId'] case final projectId?) {
@@ -755,7 +775,10 @@ final class _CreateProjectGatewayHandler extends GatewayHandler {
     : super(requestType: CreateProjectRequest(), responseType: Operation());
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = CreateProjectRequest();
     if (request.url.queryParameters['parent'] case final parent?) {
       req.parent = parent;

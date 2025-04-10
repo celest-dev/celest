@@ -26,8 +26,8 @@ enum CelestEnvironment {
 
   Uri get baseUri => switch (this) {
         local => _$celest.kIsWeb || !Platform.isAndroid
-            ? Uri.parse('http://localhost:7777')
-            : Uri.parse('http://10.0.2.2:7777'),
+            ? Uri.parse('http://localhost:51506')
+            : Uri.parse('http://10.0.2.2:51506'),
       };
 }
 
@@ -67,11 +67,16 @@ class Celest with _$celest.CelestBase {
     CelestEnvironment environment = CelestEnvironment.local,
     _$celest.Serializers? serializers,
   }) {
+    if (_initialized) {
+      _reset();
+    }
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
-    if (!_initialized) {
-      initSerializers(serializers: serializers);
-    }
+    initSerializers(serializers: serializers);
     _initialized = true;
+  }
+
+  void _reset() {
+    _initialized = false;
   }
 }

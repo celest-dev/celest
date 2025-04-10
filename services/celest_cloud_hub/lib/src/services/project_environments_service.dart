@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cedar/cedar.dart';
 import 'package:celest/http.dart';
 import 'package:celest_ast/celest_ast.dart';
+import 'package:celest_cloud/celest_cloud.dart' as pb;
 import 'package:celest_cloud/src/grpc.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/model/order_by.dart';
@@ -14,9 +15,11 @@ import 'package:celest_cloud_hub/src/model/interop.dart';
 import 'package:celest_cloud_hub/src/model/protobuf.dart';
 import 'package:celest_cloud_hub/src/model/type_registry.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
+import 'package:celest_core/celest_core.dart';
 import 'package:drift/drift.dart' show OrderBy, OrderingMode, OrderingTerm;
 import 'package:grpc/grpc.dart';
 import 'package:logging/logging.dart';
+import 'package:shelf/src/request.dart';
 
 final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     with ServiceMixin {
@@ -38,6 +41,57 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
           ),
         ),
       ),
+      'GetProjectEnvironment': ResolvedCloudFunction(
+        apiId: apiId,
+        functionId: 'GetProjectEnvironment',
+        httpConfig: ResolvedHttpConfig(
+          route: ResolvedHttpRoute(
+            method: HttpMethod.get,
+            path: '/v1alpha1/{name=projects/*/environments/*}',
+          ),
+        ),
+      ),
+      'ListProjectEnvironments': ResolvedCloudFunction(
+        apiId: apiId,
+        functionId: 'ListProjectEnvironments',
+        httpConfig: ResolvedHttpConfig(
+          route: ResolvedHttpRoute(
+            method: HttpMethod.get,
+            path: '/v1alpha1/{parent=projects/*}/environments',
+          ),
+        ),
+      ),
+      'UpdateProjectEnvironment': ResolvedCloudFunction(
+        apiId: apiId,
+        functionId: 'UpdateProjectEnvironment',
+        httpConfig: ResolvedHttpConfig(
+          route: ResolvedHttpRoute(
+            method: HttpMethod.patch,
+            path:
+                '/v1alpha1/{project_environment.name=projects/*/environments/*}',
+          ),
+        ),
+      ),
+      'DeleteProjectEnvironment': ResolvedCloudFunction(
+        apiId: apiId,
+        functionId: 'DeleteProjectEnvironment',
+        httpConfig: ResolvedHttpConfig(
+          route: ResolvedHttpRoute(
+            method: HttpMethod.delete,
+            path: '/v1alpha1/{name=projects/*/environments/*}',
+          ),
+        ),
+      ),
+      'DeployProjectEnvironment': ResolvedCloudFunction(
+        apiId: apiId,
+        functionId: 'DeployProjectEnvironment',
+        httpConfig: ResolvedHttpConfig(
+          route: ResolvedHttpRoute(
+            method: HttpMethod.post,
+            path: '/v1alpha1/{name=projects/*/environments/*}:deploy',
+          ),
+        ),
+      ),
     },
     policySet: PolicySet(
       templateLinks: [
@@ -50,7 +104,14 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     ),
   );
 
-  static final Map<String, GatewayHandler> $handlers = {};
+  static final Map<String, GatewayHandler> $handlers = {
+    'CreateProjectEnvironment': _CreateProjectEnvironmentGatewayHandler(),
+    'GetProjectEnvironment': _GetProjectEnvironmentGatewayHandler(),
+    'ListProjectEnvironments': _ListProjectEnvironmentsGatewayHandler(),
+    'UpdateProjectEnvironment': _UpdateProjectEnvironmentGatewayHandler(),
+    'DeleteProjectEnvironment': _DeleteProjectEnvironmentGatewayHandler(),
+    'DeployProjectEnvironment': _DeployProjectEnvironmentGatewayHandler(),
+  };
 
   @override
   final Logger logger = Logger(apiId);
@@ -502,5 +563,172 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         )).first;
 
     return operation.toProto();
+  }
+}
+
+final class _GetProjectEnvironmentGatewayHandler extends GatewayHandler {
+  _GetProjectEnvironmentGatewayHandler()
+    : super(
+        requestType: GetProjectEnvironmentRequest(),
+        responseType: ProjectEnvironment(),
+      );
+
+  @override
+  Future<GetProjectEnvironmentRequest> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
+    final req = GetProjectEnvironmentRequest();
+    if (routeParameters['name'] case final name?) {
+      req.name = name;
+    }
+    return req;
+  }
+}
+
+final class _ListProjectEnvironmentsGatewayHandler extends GatewayHandler {
+  _ListProjectEnvironmentsGatewayHandler()
+    : super(
+        requestType: ListProjectEnvironmentsRequest(),
+        responseType: ListProjectEnvironmentsResponse(),
+      );
+
+  @override
+  Future<ListProjectEnvironmentsRequest> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
+    final req = ListProjectEnvironmentsRequest();
+    if (request.url.queryParameters['parent'] case final parent?) {
+      req.parent = parent;
+    }
+    if (request.url.queryParameters['pageSize'] case final pageSize?) {
+      req.pageSize = int.parse(pageSize);
+    }
+    if (request.url.queryParameters['pageToken'] case final pageToken?) {
+      req.pageToken = pageToken;
+    }
+    if (request.url.queryParameters['filter'] case final filter?) {
+      req.filter = filter;
+    }
+    if (request.url.queryParameters['orderBy'] case final orderBy?) {
+      req.orderBy = orderBy;
+    }
+    return req;
+  }
+}
+
+final class _UpdateProjectEnvironmentGatewayHandler extends GatewayHandler {
+  _UpdateProjectEnvironmentGatewayHandler()
+    : super(
+        requestType: UpdateProjectEnvironmentRequest(),
+        responseType: Operation(),
+      );
+
+  @override
+  Future<UpdateProjectEnvironmentRequest> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
+    final req = UpdateProjectEnvironmentRequest();
+    if (request.url.queryParameters['allowMissing'] case final allowMissing?) {
+      req.allowMissing = allowMissing.toLowerCase() == 'true';
+    }
+    if (request.url.queryParameters['updateMask'] case final updateMask?) {
+      req.updateMask = pb.FieldMask(paths: updateMask.split(','));
+    }
+    if (request.url.queryParameters['validateOnly'] case final validateOnly?) {
+      req.validateOnly = validateOnly.toLowerCase() == 'true';
+    }
+    final json = await JsonUtf8.decodeStream(request.read());
+    req.projectEnvironment =
+        pb.ProjectEnvironment()
+          ..mergeFromProto3Json(json, typeRegistry: typeRegistry);
+    if (routeParameters['name'] case final name?) {
+      req.projectEnvironment.name = name;
+    }
+    return req;
+  }
+}
+
+final class _DeleteProjectEnvironmentGatewayHandler extends GatewayHandler {
+  _DeleteProjectEnvironmentGatewayHandler()
+    : super(
+        requestType: DeleteProjectEnvironmentRequest(),
+        responseType: Operation(),
+      );
+
+  @override
+  Future<DeleteProjectEnvironmentRequest> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
+    final req = DeleteProjectEnvironmentRequest();
+    if (routeParameters['name'] case final name?) {
+      req.name = name;
+    }
+    if (request.url.queryParameters['etag'] case final etag?) {
+      req.etag = etag;
+    }
+    if (request.url.queryParameters['allowMissing'] case final allowMissing?) {
+      req.allowMissing = allowMissing.toLowerCase() == 'true';
+    }
+    if (request.url.queryParameters['validateOnly'] case final validateOnly?) {
+      req.validateOnly = validateOnly.toLowerCase() == 'true';
+    }
+    return req;
+  }
+}
+
+final class _DeployProjectEnvironmentGatewayHandler extends GatewayHandler {
+  _DeployProjectEnvironmentGatewayHandler()
+    : super(
+        requestType: DeployProjectEnvironmentRequest(),
+        responseType: Operation(),
+      );
+
+  @override
+  Future<DeployProjectEnvironmentRequest> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
+    final req = DeployProjectEnvironmentRequest();
+    final json = await JsonUtf8.decodeStream(request.read());
+    req.mergeFromProto3Json(json, typeRegistry: typeRegistry);
+    if (routeParameters['name'] case final name?) {
+      req.name = name;
+    }
+    return req;
+  }
+}
+
+final class _CreateProjectEnvironmentGatewayHandler extends GatewayHandler {
+  _CreateProjectEnvironmentGatewayHandler()
+    : super(
+        requestType: CreateProjectEnvironmentRequest(),
+        responseType: Operation(),
+      );
+
+  @override
+  Future<CreateProjectEnvironmentRequest> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
+    final req = CreateProjectEnvironmentRequest();
+    if (request.url.queryParameters['parent'] case final parent?) {
+      req.parent = parent;
+    }
+    if (request.url.queryParameters['projectEnvironmentId']
+        case final projectEnvironmentId?) {
+      req.projectEnvironmentId = projectEnvironmentId;
+    }
+    if (request.url.queryParameters['validateOnly'] case final validateOnly?) {
+      req.validateOnly = validateOnly.toLowerCase() == 'true';
+    }
+    final json = await JsonUtf8.decodeStream(request.read());
+    req.projectEnvironment =
+        pb.ProjectEnvironment()
+          ..mergeFromProto3Json(json, typeRegistry: typeRegistry);
+    return req;
   }
 }

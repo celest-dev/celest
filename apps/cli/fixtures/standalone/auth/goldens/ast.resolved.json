@@ -83,7 +83,12 @@
               "method": "POST",
               "path": "/lib/stream-hello-authenticated"
             },
-            "additionalRoutes": [],
+            "additionalRoutes": [
+              {
+                "method": "GET",
+                "path": "/lib/stream-hello-authenticated"
+              }
+            ],
             "status": 200,
             "statusMappings": {}
           },
@@ -184,7 +189,12 @@
               "method": "POST",
               "path": "/lib/stream-hello-public"
             },
-            "additionalRoutes": [],
+            "additionalRoutes": [
+              {
+                "method": "GET",
+                "path": "/lib/stream-hello-public"
+              }
+            ],
             "status": 200,
             "statusMappings": {}
           },
@@ -231,7 +241,12 @@
               "method": "POST",
               "path": "/lib/stream-hello"
             },
-            "additionalRoutes": [],
+            "additionalRoutes": [
+              {
+                "method": "GET",
+                "path": "/lib/stream-hello"
+              }
+            ],
             "status": 200,
             "statusMappings": {}
           },
@@ -270,7 +285,12 @@
               "method": "POST",
               "path": "/authenticated-lib/stream-hello"
             },
-            "additionalRoutes": [],
+            "additionalRoutes": [
+              {
+                "method": "GET",
+                "path": "/authenticated-lib/stream-hello"
+              }
+            ],
             "status": 200,
             "statusMappings": {}
           },
@@ -363,7 +383,12 @@
               "method": "POST",
               "path": "/public-lib/stream-hello"
             },
-            "additionalRoutes": [],
+            "additionalRoutes": [
+              {
+                "method": "GET",
+                "path": "/public-lib/stream-hello"
+              }
+            ],
             "status": 200,
             "statusMappings": {}
           },

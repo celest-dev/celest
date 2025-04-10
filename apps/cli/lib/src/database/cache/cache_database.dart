@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:analyzer/src/dart/analysis/byte_store.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/database/cache/cache.drift.dart';
-import 'package:celest_cli/src/database/cache/cache.migrations.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/run.dart';
@@ -128,9 +127,6 @@ final class CacheDatabase extends $CacheDatabase {
       }),
       onCreate: (m) => _lock.withResource(() async {
         await m.createAll();
-      }),
-      onUpgrade: (m, from, to) => _lock.withResource(() async {
-        return stepByStep()(m, from, to);
       }),
     );
   }

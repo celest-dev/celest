@@ -1,6 +1,5 @@
 import 'package:celest_cloud_auth/src/context.dart' show context;
 import 'package:collection/collection.dart';
-import 'package:petitparser/debug.dart';
 import 'package:petitparser/petitparser.dart';
 
 /// {@template celest_cloud_auth.model.route}
@@ -102,28 +101,25 @@ final class Route extends Parser<Map<String, String>> {
   /// Returns a map of variables to values captured from the [path] if it
   /// matches this route.
   Map<String, String>? match(String path, {bool debug = false}) {
-    Parser<Map<String, String>> parser = this;
-    if (debug) {
-      parser = trace(profile(parser));
-    }
-
-    final result = parser.parse(path);
+    final result = parse(path);
     switch (result) {
       case Success(:final value):
         return value;
       case Failure(:final message, :final position):
-        final error = FormatException(message, path, position);
-        context.logger.finest(
-          'Failed to parse route "$path" (pattern=$this)',
-          error,
-        );
+        if (debug) {
+          final error = FormatException(message, path, position);
+          context.logger.finest(
+            'Failed to parse route "$path" (pattern=$this)',
+            error,
+          );
+        }
         return null;
     }
   }
 
   /// Returns `true` if the [path] matches this route.
-  bool matches(String path) {
-    return match(path) != null;
+  bool matches(String path, {bool debug = false}) {
+    return match(path, debug: debug) != null;
   }
 
   @override
@@ -145,7 +141,7 @@ final class Route extends Parser<Map<String, String>> {
   Parser<Map<String, String>> copy() {
     return Route(
       template: template,
-      segments: segments,
+      segments: List.of(segments.map((it) => it.copy())),
     );
   }
 
@@ -154,7 +150,10 @@ final class Route extends Parser<Map<String, String>> {
 }
 
 /// A segment of a route.
-sealed class RouteSegment extends Parser<String> {}
+sealed class RouteSegment extends Parser<String> {
+  @override
+  RouteSegment copy();
+}
 
 /// {@template celest_cloud_auth.model.route_literal}
 /// A literal segment of a route.
@@ -283,7 +282,7 @@ final class RouteParameter extends RouteSegment {
   RouteParameter copy() {
     return RouteParameter(
       variable: variable,
-      segments: segments,
+      segments: List.of(segments.map((it) => it.copy())),
     );
   }
 

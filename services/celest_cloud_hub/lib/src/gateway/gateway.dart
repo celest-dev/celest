@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:celest/http.dart';
+// ignore: invalid_use_of_internal_member
+import 'package:celest/src/runtime/http/cloud_middleware.dart';
 import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_auth/src/model/route_map.dart';
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
@@ -8,9 +11,11 @@ import 'package:celest_cloud_hub/src/project.dart';
 import 'package:celest_cloud_hub/src/services/health_service.dart';
 import 'package:celest_cloud_hub/src/services/operations_service.dart';
 import 'package:celest_cloud_hub/src/services/organizations_service.dart';
+import 'package:celest_cloud_hub/src/services/project_environments_service.dart';
 import 'package:celest_cloud_hub/src/services/projects_service.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:grpc/grpc.dart' as grpc;
+import 'package:grpc/src/shared/status.dart' show grpcErrorDetailsFromTrailers;
 import 'package:protobuf/protobuf.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as shelf;
@@ -44,6 +49,8 @@ final class Gateway {
 
     return Gateway._(
       const shelf.Pipeline()
+          .addMiddleware(const RootMiddleware().call)
+          .addMiddleware(const CloudExceptionMiddleware().call)
           .addMiddleware(cloudAuth.middleware.call)
           .addHandler(router.call),
       clientChannel,
@@ -76,6 +83,10 @@ final class _GrpcHandler {
     addTypes(OperationsService.apiId, OperationsService.$handlers);
     addTypes(OrganizationsService.apiId, OrganizationsService.$handlers);
     addTypes(ProjectsService.apiId, ProjectsService.$handlers);
+    addTypes(
+      ProjectEnvironmentsService.apiId,
+      ProjectEnvironmentsService.$handlers,
+    );
     addTypes(HealthService.apiId, HealthService.$handlers);
   }
 
@@ -92,14 +103,18 @@ final class _GrpcHandler {
 
   Future<shelf.Response> handle(shelf.Request request) async {
     final path = request.requestedUri.path;
-    final route = routeMap.lookupRoute(path);
-    if (route == null) {
+    final result = routeMap.lookupRoute(request.method as HttpMethod, path);
+    if (result == null) {
       return shelf.Response.notFound('Not found');
     }
+    final (route, routeParameters) = result;
 
     final [serviceName, methodName] = route.id.split('/');
     final handler = _handlers[route]!;
-    final grpcRequest = await handler.deserializeRequest(request);
+    final grpcRequest = await handler.deserializeRequest(
+      request,
+      routeParameters,
+    );
 
     final clientMethod = grpc.ClientMethod<GeneratedMessage, GeneratedMessage>(
       '/$serviceName/$methodName',
@@ -121,17 +136,18 @@ final class _GrpcHandler {
         ...await grpcCall.headers,
         ...await grpcCall.trailers,
       };
-      final grpcStatus = grpcHeaders.remove(':status') ?? '200';
+      final grpcError = grpcErrorDetailsFromTrailers(grpcHeaders);
+      if (grpcError != null) {
+        throw grpcError;
+      }
       final headers = {
         ...grpcHeaders,
         'Content-Type': 'application/json',
         'Content-Length': responseBody.length.toString(),
       };
-      return shelf.Response(
-        int.parse(grpcStatus),
-        body: responseBody,
-        headers: headers,
-      );
+      // Remove HTTP2 headers
+      headers.remove(':status');
+      return shelf.Response.ok(responseBody, headers: headers);
     } on grpc.GrpcError catch (error) {
       final exception = CloudException.fromGrpcError(error);
       final serialized = JsonUtf8.encode(

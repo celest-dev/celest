@@ -13,7 +13,12 @@
               "method": "POST",
               "path": "/server-side/hello"
             },
-            "additionalRoutes": [],
+            "additionalRoutes": [
+              {
+                "method": "GET",
+                "path": "/server-side/hello"
+              }
+            ],
             "status": 200,
             "statusMappings": {}
           },
@@ -31,7 +36,12 @@
               "method": "POST",
               "path": "/server-side/stock-ticker"
             },
-            "additionalRoutes": [],
+            "additionalRoutes": [
+              {
+                "method": "GET",
+                "path": "/server-side/stock-ticker"
+              }
+            ],
             "status": 200,
             "statusMappings": {}
           },
@@ -49,7 +59,12 @@
               "method": "POST",
               "path": "/server-side/json-values"
             },
-            "additionalRoutes": [],
+            "additionalRoutes": [
+              {
+                "method": "GET",
+                "path": "/server-side/json-values"
+              }
+            ],
             "status": 200,
             "statusMappings": {}
           },

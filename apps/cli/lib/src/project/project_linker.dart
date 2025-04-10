@@ -156,6 +156,14 @@ final class ProjectLinker extends AstVisitorWithArg<Node?, AstNode> {
         ..httpConfig.route.path = function.route
         ..streamConfig.type = function.streamType;
 
+      // Add an additional route for the GET request required to connect via
+      // websockets.
+      if (function.streamType != null) {
+        resolvedFunction.httpConfig.additionalRoutes.add(
+          ResolvedHttpRoute(method: 'GET', path: function.route),
+        );
+      }
+
       final funcHttpMetadata = [
         ...context.metadata.whereType<ApiHttpMetadata>(),
         ...function.metadata.whereType<ApiHttpMetadata>(),

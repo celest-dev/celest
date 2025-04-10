@@ -23,6 +23,7 @@ import 'package:celest_cloud_hub/src/services/projects_service.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:logging/logging.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 Future<void> main() async {
   context.logger.level = Level.ALL;
@@ -105,7 +106,9 @@ Future<void> main() async {
     },
   );
 
-  await runZonedGuarded(
+  await Chain.capture(
+    when: kDebugMode,
+    errorZone: true,
     () async {
       context.logger.config('Starting gRPC server on $grpcAddress');
       await server.serve(
@@ -116,7 +119,7 @@ Future<void> main() async {
       context.logger.config('Starting gateway server');
       await gateway.start();
     },
-    (error, stackTrace) {
+    onError: (error, stackTrace) {
       context.logger.severe('Unexpected error', error, stackTrace);
       exit(1);
     },

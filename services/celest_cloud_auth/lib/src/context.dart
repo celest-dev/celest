@@ -32,8 +32,30 @@ extension type Context._(celest.Context _context) implements celest.Context {
     }
     return const EmailOtpProvider();
   }
+
+  Map<String, String>? get routeParameters =>
+      _context.get(contextKeyRouteParameters);
 }
 
 const celest.ContextKey<CedarCork> contextKeyCork = celest.ContextKey('cork');
 const celest.ContextKey<EmailOtpProvider> contextKeyEmailOtpProvider =
     celest.ContextKey('EmailOtpProvider');
+
+/// The context key for the current request's route parameters.
+const celest.ContextKey<Map<String, String>> contextKeyRouteParameters =
+    _RouteParametersContextKey();
+
+final class _RouteParametersContextKey
+    implements celest.ContextKey<Map<String, String>> {
+  const _RouteParametersContextKey();
+
+  @override
+  Map<String, String>? read(celest.Context context) {
+    return context[this] as Map<String, String>?;
+  }
+
+  @override
+  void set(celest.Context context, Map<String, String>? value) {
+    context[this] = value;
+  }
+}

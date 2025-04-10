@@ -184,7 +184,7 @@ final class ProjectEnvironmentsProtocolHttp
   Future<Operation> deploy(DeployProjectEnvironmentRequest request) async {
     final path = '/v1alpha1/${request.name}:deploy';
     final uri = _baseUri.replace(path: path);
-    final req = http.Request('PATCH', uri)
+    final req = http.Request('POST', uri)
       ..body = jsonEncode(
         request.toProto3Json(
           typeRegistry: CelestCloud.typeRegistry,

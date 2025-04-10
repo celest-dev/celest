@@ -1,3 +1,4 @@
+import 'package:celest_cli/src/commands/authenticate.dart';
 import 'package:celest_cli/src/commands/celest_command.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/frontend/celest_frontend.dart';
@@ -5,7 +6,8 @@ import 'package:celest_cli/src/init/project_init.dart';
 import 'package:celest_cli/src/init/project_migrate.dart';
 import 'package:mason_logger/src/mason_logger.dart';
 
-final class BuildCommand extends CelestCommand with Configure, Migrate {
+final class BuildCommand extends CelestCommand
+    with Configure, Migrate, Authenticate {
   @override
   String get name => 'build';
 

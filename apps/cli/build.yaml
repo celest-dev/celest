@@ -34,6 +34,12 @@ targets:
         generate_for:
            - "lib/src/database/**"
         options: &options
+          databases:
+            cache: lib/src/database/cache/cache_database.dart
+            project: lib/src/database/project/project_database.dart
+          schema_dir: lib/src/database/schema/
+          test_dir: test/database/
+
           sql:
             dialect: sqlite
             options:

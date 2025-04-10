@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:io' as io show Platform;
 import 'dart:io';
+import 'dart:math';
 
 import 'package:async/async.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_ast/celest_ast.dart';
+import 'package:celest_ast/src/proto/celest/ast/v1/resolved_ast.pb.dart'
+    as astpb;
 import 'package:celest_cli/src/analyzer/analysis_error.dart';
 import 'package:celest_cli/src/analyzer/analysis_result.dart';
 import 'package:celest_cli/src/analyzer/celest_analyzer.dart';
@@ -12,6 +15,7 @@ import 'package:celest_cli/src/ast/project_diff.dart';
 import 'package:celest_cli/src/codegen/api/dockerfile_generator.dart';
 import 'package:celest_cli/src/codegen/client_code_generator.dart';
 import 'package:celest_cli/src/codegen/cloud_code_generator.dart';
+import 'package:celest_cli/src/commands/cloud_command.dart';
 import 'package:celest_cli/src/compiler/api/entrypoint_compiler.dart';
 import 'package:celest_cli/src/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/src/context.dart';
@@ -20,7 +24,14 @@ import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/frontend/child_process.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/project/project_linker.dart';
+import 'package:celest_cli/src/repositories/organization_repository.dart';
+import 'package:celest_cli/src/repositories/project_environment_repository.dart';
+import 'package:celest_cli/src/repositories/project_repository.dart';
 import 'package:celest_cli/src/utils/json.dart';
+import 'package:celest_cli/src/utils/recase.dart';
+import 'package:celest_cloud/src/proto.dart' as pb;
+import 'package:celest_core/_internal.dart';
+import 'package:dcli/dcli.dart' as dcli;
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:stream_transform/stream_transform.dart';
@@ -238,6 +249,13 @@ final class CelestFrontend {
   /// analyzed yet.
   ast.Project? currentProject;
 
+  ProjectRepository get projects => ProjectRepository(cloud);
+
+  ProjectEnvironmentRepository get projectEnvironments =>
+      ProjectEnvironmentRepository(cloud);
+
+  OrganizationRepository get organizations => OrganizationRepository(cloud);
+
   Future<int> run({
     required bool migrateProject,
     required Progress? currentProgress,
@@ -392,6 +410,114 @@ final class CelestFrontend {
     }
   }
 
+  Future<pb.Organization?> _getOrCreateOrganization({
+    required ast.Project project,
+  }) async {
+    var organization = await organizations.primary;
+    // TODO(dnys1): Handle all lifecycle states.
+    if (organization?.state != pb.LifecycleState.ACTIVE) {
+      var organizationId = organization?.organizationId;
+      var organizationDisplayName = organization?.displayName;
+      if (organizationId == null) {
+        organizationDisplayName = dcli.ask(
+          'What should we call your organization?',
+        );
+        if (organizationDisplayName.isEmpty) {
+          return null;
+        }
+        organizationId = organizationDisplayName.paramCase;
+      }
+      // First, create the organization.
+      final progress = cliLogger.progress(
+        'Creating organization $organizationId',
+      );
+      try {
+        final operation = cloud.organizations.create(
+          organizationId: organizationId,
+          organization: pb.Organization(
+            displayName: organizationDisplayName,
+            primaryRegion: switch (project.primaryRegion) {
+              Region.europe => pb.Region.EUROPE,
+              Region.asiaPacific => pb.Region.ASIA_PACIFIC,
+              Region.northAmerica => pb.Region.NORTH_AMERICA,
+              _ => pb.Region.REGION_UNSPECIFIED,
+            },
+          ),
+        );
+        final waiter = CloudCliOperation(
+          operation,
+          resourceType: 'organization',
+          logger: logger,
+        );
+        organization = await waiter.run(
+          verbs: const (
+            run: 'create',
+            running: 'Creating',
+            completed: 'created',
+          ),
+          cancelTrigger: _stopSignal.future,
+          resource: pb.Organization(),
+        );
+        logger.fine('Created organization: $organization');
+        progress.complete('Created organization $organizationId');
+      } on Object catch (e, st) {
+        logger.fine('Failed to create organization', e, st);
+        progress.fail('Failed to create organization');
+        rethrow;
+      }
+    }
+    return organization;
+  }
+
+  /// Gets or creates a project with the given [projectName] in the authenticated
+  /// user's organization.
+  Future<String?> _createProject({
+    required ast.Project projectDefinition,
+    required String projectName,
+  }) async {
+    final organization = await _getOrCreateOrganization(
+      project: projectDefinition,
+    );
+    if (organization == null) {
+      return null;
+    }
+    final progress = cliLogger.progress('Creating project $projectName');
+    try {
+      final operation = cloud.projects.create(
+        parent: organization.name,
+        projectId: projectName.paramCase,
+        displayName: projectDefinition.displayName,
+        regions: switch (projectDefinition.primaryRegion) {
+          ast.Region.europe => const [pb.Region.EUROPE],
+          ast.Region.asiaPacific => const [pb.Region.ASIA_PACIFIC],
+          ast.Region.northAmerica ||
+          // TODO(dnys1): Get closest region on backend.
+          _ =>
+            const [pb.Region.NORTH_AMERICA],
+        },
+      );
+      final waiter = CloudCliOperation(
+        operation,
+        resourceType: 'project',
+        logger: logger,
+      );
+      final project = await waiter.run(
+        verbs: const (run: 'create', running: 'Creating', completed: 'created'),
+        cancelTrigger: _stopSignal.future,
+        resource: pb.Project(),
+      );
+      logger.fine('Created project: $project');
+      progress.complete(
+        'Your project has been created! Starting deployment...',
+      );
+      return project.name.split('/').last;
+    } on Object catch (e, st) {
+      logger.fine('Failed to create project', e, st);
+      progress.fail('Failed to create project');
+      rethrow;
+    }
+  }
+
   /// Builds the current project for deployment to the cloud.
   Future<int> build({
     required bool migrateProject,
@@ -456,6 +582,108 @@ final class CelestFrontend {
       return 0;
     } finally {
       currentProgress.cancel();
+      await close();
+    }
+  }
+
+  /// Deploys the current project to Celest Cloud.
+  Future<int> deploy({required bool migrateProject}) async {
+    Progress? currentProgress;
+    var projectId = await _loadProjectId();
+    try {
+      while (!stopped) {
+        if (projectId != null) {
+          currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
+        }
+
+        void fail(List<CelestAnalysisError> errors) {
+          currentProgress!.fail(
+            'Project has errors. Please fix them and save the '
+            'corresponding files, then run `celest deploy` again.',
+          );
+          currentProgress = null;
+          _logErrors(errors);
+        }
+
+        final analysisResult = await _analyzeProject(
+          migrateProject: migrateProject,
+        );
+        migrateProject = false;
+
+        _logWarnings(analysisResult.warnings);
+        switch (analysisResult) {
+          case AnalysisFailureResult(:final errors):
+          case AnalysisSuccessResult(:final errors) when errors.isNotEmpty:
+            fail(errors);
+            await _nextChangeSet();
+          case AnalysisSuccessResult(:final project):
+            projectId ??= await _createProject(
+              projectDefinition: project,
+              projectName: project.name,
+            );
+            if (projectId == null) {
+              // CX declined creation or can't create more.
+              return 0;
+            }
+
+            currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
+
+            final environment = await _getOrCreateEnvironment(projectId);
+            final resolvedProject = await _resolveProject(
+              project,
+              environmentId: environment.projectEnvironmentId,
+            );
+            await _generateBackendCode(
+              project: project,
+              resolvedProject: resolvedProject,
+            );
+
+            var iteration = 0;
+            final timer = Timer.periodic(const Duration(seconds: 10), (_) {
+              const messages = [
+                '✨ Contacting the Celestials',
+                '🚀 Deploying to Celest Cloud',
+              ];
+              final index = min(iteration, messages.length - 1);
+              final message = messages[index];
+              if (iteration < messages.length) {
+                currentProgress!.complete();
+                currentProgress = cliLogger.progress(message);
+              }
+              iteration++;
+            });
+            final (deployedProject, baseUri) = await _deployProject(
+              projectId: projectId,
+              environmentId: environment.projectEnvironmentId,
+              resolvedProject: resolvedProject,
+            );
+            await _generateClientCode(
+              project: project,
+              resolvedProject: resolvedProject,
+              projectUris: (
+                localUri: await isolatedSecureStorage.getLocalUri(project.name),
+                productionUri: await isolatedSecureStorage.setProductionUri(
+                  project.name,
+                  baseUri,
+                ),
+              ),
+            );
+
+            timer.cancel();
+            currentProgress!.complete();
+            cliLogger.success('💙 Your Celest project has been deployed!');
+            cliLogger.info(baseUri.toString());
+            return 0;
+        }
+      }
+      return 0;
+    } on CancellationException {
+      currentProgress?.fail('Canceled deployment');
+      return 0;
+    } on Object {
+      currentProgress?.cancel();
+      rethrow;
+    } finally {
       await close();
     }
   }
@@ -619,6 +847,130 @@ final class CelestFrontend {
     return Uri.parse('http://localhost:${_localApiRunner!.port}');
   }
 
+  Future<String?> _loadProjectId() async {
+    logger.finer('Loading project ID');
+    final projectData = await projects.get(celestProject.projectName.paramCase);
+    if (projectData == null) {
+      logger.finer('No project ID found in cache');
+      return null;
+    }
+    logger.finer('Loaded project ID from cache: $projectData');
+    return projectData.name.split('/').last;
+  }
+
+  Future<pb.ProjectEnvironment> _getOrCreateEnvironment(
+      String projectId) async {
+    final environment = await projectEnvironments.get(
+      'production',
+      projectId: projectId,
+    );
+    if (environment != null) {
+      return environment;
+    }
+    final operation = cloud.projects.environments.create(
+      projectEnvironmentId: 'production',
+      parent: 'projects/$projectId',
+      displayName: 'Production',
+    );
+    final waiter = CloudCliOperation(
+      operation,
+      resourceType: 'environment',
+      logger: logger,
+    );
+    final cloudEnvironment = await waiter.run(
+      verbs: const (run: 'create', running: 'Creating', completed: 'created'),
+      cancelTrigger: _stopSignal.future,
+      resource: pb.ProjectEnvironment(),
+    );
+    logger.fine('Created production environment: $cloudEnvironment');
+    return cloudEnvironment;
+  }
+
+  Future<(ast.ResolvedProject, Uri)> _deployProject({
+    required String projectId,
+    required String environmentId,
+    required ast.ResolvedProject resolvedProject,
+  }) =>
+      performance.trace('CelestFrontend', 'deployProject', () async {
+        final deploymentId = Uuid.v7().hexValue;
+        try {
+          final entrypointCompiler = EntrypointCompiler(
+            logger: logger,
+            verbose: verbose,
+            enabledExperiments:
+                celestProject.analysisOptions.enabledExperiments,
+          );
+          final kernel = await entrypointCompiler.compile(
+            resolvedProject: resolvedProject,
+            entrypointPath: projectPaths.localApiEntrypoint,
+          );
+          final operation = cloud.projects.environments.deploy(
+            'projects/$projectId/environments/$environmentId',
+            // HACK(dnys1): celest_ast and celest_cloud don't share types.
+            resolvedProject: pb.ResolvedProject.fromBuffer(
+              resolvedProject.toProto().writeToBuffer(),
+            ),
+            assets: [
+              pb.ProjectAsset(
+                type: pb.ProjectAsset_Type.DART_KERNEL,
+                etag: kernel.outputDillDigest.toString(),
+                filename: p.basename(kernel.outputDillPath),
+                inline: kernel.outputDill,
+              ),
+            ],
+            requestId: deploymentId,
+          );
+          final waiter = CloudCliOperation(
+            operation,
+            resourceType: 'project',
+            logger: logger,
+          );
+          final deployment = await waiter.run(
+            verbs: const (
+              run: 'deploy',
+              running: 'Deploying',
+              completed: 'deployed',
+            ),
+            cancelTrigger: _stopSignal.future,
+            resource: pb.DeployProjectEnvironmentResponse(),
+          );
+          logger.fine('Deployed project: $deployment');
+          return (
+            ast.ResolvedProject.fromProto(
+              astpb.ResolvedProject.fromBuffer(
+                deployment.project.writeToBuffer(),
+              ),
+            ),
+            Uri.parse(deployment.uri),
+          );
+        } on Exception catch (e, st) {
+          if (e case CancellationException() || CliException()) {
+            analytics.capture(
+              'cancel_deployment',
+              properties: {
+                'deployment_id': deploymentId,
+                'project_id': projectId,
+                'environment_id': environmentId,
+              },
+            );
+            rethrow;
+          }
+          Error.throwWithStackTrace(
+            CliException(
+              'Failed to deploy project. Please contact the Celest team and '
+              'reference deployment ID: $deploymentId',
+              additionalContext: {
+                'deploymentId': deploymentId,
+                'project_id': projectId,
+                'environment_id': environmentId,
+                'error': '$e',
+              },
+            ),
+            st,
+          );
+        }
+      });
+
   Future<void> _generateClientCode({
     required ast.Project project,
     required ast.ResolvedProject resolvedProject,
@@ -632,32 +984,6 @@ final class CelestFrontend {
           projectUris: projectUris,
         );
         await generator.generate().write();
-        if (celestProject.parentProject
-            case ParentProject(
-              type: ast.SdkType.flutter,
-              :final path,
-            ) when project.databases.isNotEmpty) {
-          final webDir = fileSystem.directory(path).childDirectory('web');
-          if (webDir.existsSync()) {
-            final sqliteWasm = webDir.childFile('sqlite3.wasm');
-            if (!sqliteWasm.existsSync()) {
-              final downloadedSqliteWasm =
-                  celestProject.config.configDir.childFile(
-                'sqlite3.wasm',
-              );
-              if (downloadedSqliteWasm.existsSync()) {
-                await downloadedSqliteWasm.copy(sqliteWasm.path);
-              } else {
-                cliLogger.warn('''
-To use Celest Data in your Flutter Web project, follow the steps in the Drift
-documentation to add the SQLite3 WASM file to your project:
-
-https://drift.simonbinder.eu/web/
-''');
-              }
-            }
-          }
-        }
       });
 
   Future<void> close() =>
