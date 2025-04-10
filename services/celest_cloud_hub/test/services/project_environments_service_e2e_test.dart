@@ -357,8 +357,8 @@ void main() {
       });
     });
 
-    group('unimplemented', () {
-      test('deployProjectEnvironment', () async {
+    group('deployProjectEnvironment', () {
+      test('not found', () async {
         await expectLater(
           tester.service.projects.environments
               .deploy(
@@ -367,7 +367,7 @@ void main() {
                 resolvedProject: ResolvedProject(),
               )
               .first,
-          throwsA(isA<UnimplementedError>()),
+          throwsA(isA<NotFoundException>()),
         );
       });
     });

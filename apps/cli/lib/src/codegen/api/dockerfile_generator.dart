@@ -7,7 +7,7 @@ import 'package:mustache_template/mustache_template.dart';
 final class DockerfileGenerator {
   DockerfileGenerator({required this.project});
 
-  final ast.Project project;
+  final ast.ResolvedProject project;
 
   static final Template _dartTemplate = Template(r'''
 # syntax=docker/dockerfile:1

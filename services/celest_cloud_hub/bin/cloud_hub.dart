@@ -26,7 +26,7 @@ import 'package:logging/logging.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 Future<void> main() async {
-  context.logger.level = Level.ALL;
+  context.logger.level = Level.INFO;
   context.logger.onRecord.listen((record) {
     print('${record.level.name}: ${record.time}: ${record.message}');
     if (record.error != null) {

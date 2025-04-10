@@ -1,8 +1,13 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cedar/cedar.dart';
 import 'package:celest/http.dart';
 import 'package:celest_ast/celest_ast.dart';
+import 'package:celest_ast/src/proto/celest/ast/v1/resolved_ast.pb.dart'
+    as astpb;
 import 'package:celest_cloud/celest_cloud.dart' as pb;
 import 'package:celest_cloud/src/grpc.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
@@ -10,13 +15,16 @@ import 'package:celest_cloud_auth/src/model/order_by.dart';
 import 'package:celest_cloud_auth/src/model/page_token.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
+import 'package:celest_cloud_hub/src/deploy/fly/fly_deployment_engine.dart';
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
 import 'package:celest_cloud_hub/src/model/interop.dart';
 import 'package:celest_cloud_hub/src/model/protobuf.dart';
 import 'package:celest_cloud_hub/src/model/type_registry.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
 import 'package:celest_core/celest_core.dart';
+import 'package:collection/collection.dart';
 import 'package:drift/drift.dart' show OrderBy, OrderingMode, OrderingTerm;
+import 'package:drift/isolate.dart';
 import 'package:grpc/grpc.dart';
 import 'package:logging/logging.dart';
 import 'package:shelf/src/request.dart';
@@ -306,9 +314,91 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     ServiceCall call,
     DeployProjectEnvironmentRequest request,
   ) async {
-    throw GrpcError.unimplemented(
-      'DeployProjectEnvironment is not implemented',
+    final (projectId, environmentId) = switch (request.name.split('/')) {
+      ['projects', final projectId, 'environments', final environmentId] => (
+        projectId,
+        environmentId,
+      ),
+      _ =>
+        throw GrpcError.invalidArgument(
+          'Invalid name format. Expected "projects/{project_id}/environments/{environment_id}".',
+        ),
+    };
+
+    final environment =
+        await _db.projectEnvironmentsDrift
+            .lookupProjectEnvironment(
+              projectId: projectId,
+              projectEnvironmentId: environmentId,
+            )
+            .getSingleOrNull();
+    if (environment == null) {
+      throw GrpcError.notFound(
+        'No environment found with ID $environmentId for project $projectId',
+      );
+    }
+
+    final principal = call.expectPrincipal();
+    final membership =
+        await _db.userMembershipsDrift
+            .findUserMembership(
+              userId: principal.uid.id,
+              parentType: 'Celest::Project::Environment',
+              parentId: environment.id,
+            )
+            .getSingleOrNull();
+
+    await authorize(
+      principal: switch (membership?.membershipId) {
+        final membershipId? => EntityUid.of(
+          'Celest::Project::Environment::Member',
+          membershipId,
+        ),
+        _ => principal,
+      },
+      action: ProjectEnvironmentAction.deploy,
+      resource: EntityUid.of('Celest::Project::Environment', environment.id),
     );
+
+    final kernelAsset = request.assets.firstWhereOrNull(
+      (asset) => asset.type == pb.ProjectAsset_Type.DART_KERNEL,
+    );
+    if (kernelAsset == null) {
+      throw GrpcError.invalidArgument('Missing Dart kernel asset');
+    }
+
+    final operationId = typeId('op');
+    final operation =
+        (await _db.operationsDrift.createOperation(
+          id: operationId,
+          ownerType: principal.uid.type,
+          ownerId: principal.uid.id,
+          resourceType: 'Celest::Project::Environment',
+          resourceId: environment.id,
+        )).first;
+    final deployment = FlyDeploymentEngine.deployIsolated(
+      operationId: operationId,
+      dbConnection: await _db.serializableConnection(),
+      flyApiToken: Platform.environment['FLY_API_TOKEN']!,
+      projectAst: ResolvedProject.fromProto(
+        astpb.ResolvedProject.fromBuffer(
+          request.resolvedProjectAst.writeToBuffer(),
+        ),
+      ),
+      kernelAsset: Uint8List.fromList(kernelAsset.inline).asUnmodifiableView(),
+      environment: environment,
+    );
+    unawaited(
+      deployment.onError((error, stackTrace) {
+        logger.shout(
+          'Unexpected error deploying environment ${environment.id}',
+          error,
+          stackTrace,
+        );
+      }),
+    );
+
+    return operation.toProto();
   }
 
   @override

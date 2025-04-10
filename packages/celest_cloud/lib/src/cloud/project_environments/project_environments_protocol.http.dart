@@ -28,7 +28,7 @@ final class ProjectEnvironmentsProtocolHttp
       queryParameters: {
         if (request.hasParent()) 'parent': request.parent,
         if (request.hasProjectEnvironmentId())
-          'project_environment_id': request.projectEnvironmentId,
+          'projectEnvironmentId': request.projectEnvironmentId,
         if (request.hasValidateOnly())
           'validateOnly': request.validateOnly.toString(),
       },

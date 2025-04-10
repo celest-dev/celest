@@ -177,11 +177,11 @@ CREATE TABLE IF NOT EXISTS project_environment_states (
     -- The ID of the linked project environment.
     project_environment_id TEXT NOT NULL PRIMARY KEY,
 
-    -- The ID of the project environment's Fly app.
-    fly_app_id TEXT,
+    -- The name of the project environment's Fly app.
+    fly_app_name TEXT,
 
-    -- The ID of the project environment's database.
-    turso_database_id TEXT,
+    -- The name of the project environment's Fly volume.
+    fly_volume_name TEXT,
 
     -- The domain name of the project environment.
     domain_name TEXT,
@@ -292,29 +292,26 @@ getProjectEnvironmentState:
     SELECT * FROM project_environment_states
     WHERE project_environment_id = :projectEnvironmentId;
 
-createProjectEnvironmentState:
+upsertProjectEnvironmentState(
+    :projectEnvironmentId AS TEXT,
+    :flyAppName AS TEXT OR NULL,
+    :flyVolumeName AS TEXT OR NULL,
+    :domainName AS TEXT OR NULL
+):
     INSERT INTO project_environment_states (
         project_environment_id,
-        fly_app_id,
-        turso_database_id,
+        fly_app_name,
+        fly_volume_name,
         domain_name
     ) VALUES (
         :projectEnvironmentId,
-        :flyAppId,
-        :tursoDatabaseId,
+        :flyAppName,
+        :flyVolumeName,
         :domainName
     )
-    RETURNING *;
-
-updateProjectEnvironmentState(
-    :flyAppId AS TEXT OR NULL,
-    :tursoDatabaseId AS TEXT OR NULL,
-    :domainName AS TEXT OR NULL
-):
-    UPDATE project_environment_states
+    ON CONFLICT (project_environment_id) DO UPDATE
     SET
-        fly_app_id = coalesce(:flyAppId, fly_app_id),
-        turso_database_id = coalesce(:tursoDatabaseId, turso_database_id),
+        fly_app_name = coalesce(:flyAppName, fly_app_name),
+        fly_volume_name = coalesce(:flyVolumeName, fly_volume_name),
         domain_name = coalesce(:domainName, domain_name)
-    WHERE project_environment_id = :projectEnvironmentId
     RETURNING *;

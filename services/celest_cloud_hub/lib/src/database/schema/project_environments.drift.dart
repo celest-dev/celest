@@ -793,15 +793,15 @@ typedef $ProjectEnvironmentAssetsProcessedTableManager =
 typedef $ProjectEnvironmentStatesCreateCompanionBuilder =
     i1.ProjectEnvironmentStatesCompanion Function({
       required String projectEnvironmentId,
-      i0.Value<String?> flyAppId,
-      i0.Value<String?> tursoDatabaseId,
+      i0.Value<String?> flyAppName,
+      i0.Value<String?> flyVolumeName,
       i0.Value<String?> domainName,
     });
 typedef $ProjectEnvironmentStatesUpdateCompanionBuilder =
     i1.ProjectEnvironmentStatesCompanion Function({
       i0.Value<String> projectEnvironmentId,
-      i0.Value<String?> flyAppId,
-      i0.Value<String?> tursoDatabaseId,
+      i0.Value<String?> flyAppName,
+      i0.Value<String?> flyVolumeName,
       i0.Value<String?> domainName,
     });
 
@@ -819,13 +819,13 @@ class $ProjectEnvironmentStatesFilterComposer
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnFilters<String> get flyAppId => $composableBuilder(
-    column: $table.flyAppId,
+  i0.ColumnFilters<String> get flyAppName => $composableBuilder(
+    column: $table.flyAppName,
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnFilters<String> get tursoDatabaseId => $composableBuilder(
-    column: $table.tursoDatabaseId,
+  i0.ColumnFilters<String> get flyVolumeName => $composableBuilder(
+    column: $table.flyVolumeName,
     builder: (column) => i0.ColumnFilters(column),
   );
 
@@ -849,13 +849,13 @@ class $ProjectEnvironmentStatesOrderingComposer
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<String> get flyAppId => $composableBuilder(
-    column: $table.flyAppId,
+  i0.ColumnOrderings<String> get flyAppName => $composableBuilder(
+    column: $table.flyAppName,
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<String> get tursoDatabaseId => $composableBuilder(
-    column: $table.tursoDatabaseId,
+  i0.ColumnOrderings<String> get flyVolumeName => $composableBuilder(
+    column: $table.flyVolumeName,
     builder: (column) => i0.ColumnOrderings(column),
   );
 
@@ -879,11 +879,13 @@ class $ProjectEnvironmentStatesAnnotationComposer
     builder: (column) => column,
   );
 
-  i0.GeneratedColumn<String> get flyAppId =>
-      $composableBuilder(column: $table.flyAppId, builder: (column) => column);
+  i0.GeneratedColumn<String> get flyAppName => $composableBuilder(
+    column: $table.flyAppName,
+    builder: (column) => column,
+  );
 
-  i0.GeneratedColumn<String> get tursoDatabaseId => $composableBuilder(
-    column: $table.tursoDatabaseId,
+  i0.GeneratedColumn<String> get flyVolumeName => $composableBuilder(
+    column: $table.flyVolumeName,
     builder: (column) => column,
   );
 
@@ -940,25 +942,25 @@ class $ProjectEnvironmentStatesTableManager
           updateCompanionCallback:
               ({
                 i0.Value<String> projectEnvironmentId = const i0.Value.absent(),
-                i0.Value<String?> flyAppId = const i0.Value.absent(),
-                i0.Value<String?> tursoDatabaseId = const i0.Value.absent(),
+                i0.Value<String?> flyAppName = const i0.Value.absent(),
+                i0.Value<String?> flyVolumeName = const i0.Value.absent(),
                 i0.Value<String?> domainName = const i0.Value.absent(),
               }) => i1.ProjectEnvironmentStatesCompanion(
                 projectEnvironmentId: projectEnvironmentId,
-                flyAppId: flyAppId,
-                tursoDatabaseId: tursoDatabaseId,
+                flyAppName: flyAppName,
+                flyVolumeName: flyVolumeName,
                 domainName: domainName,
               ),
           createCompanionCallback:
               ({
                 required String projectEnvironmentId,
-                i0.Value<String?> flyAppId = const i0.Value.absent(),
-                i0.Value<String?> tursoDatabaseId = const i0.Value.absent(),
+                i0.Value<String?> flyAppName = const i0.Value.absent(),
+                i0.Value<String?> flyVolumeName = const i0.Value.absent(),
                 i0.Value<String?> domainName = const i0.Value.absent(),
               }) => i1.ProjectEnvironmentStatesCompanion.insert(
                 projectEnvironmentId: projectEnvironmentId,
-                flyAppId: flyAppId,
-                tursoDatabaseId: tursoDatabaseId,
+                flyAppName: flyAppName,
+                flyVolumeName: flyVolumeName,
                 domainName: domainName,
               ),
           withReferenceMapper:
@@ -2509,22 +2511,22 @@ class ProjectEnvironmentStates extends i0.Table
         requiredDuringInsert: true,
         $customConstraints: 'NOT NULL PRIMARY KEY',
       );
-  static const i0.VerificationMeta _flyAppIdMeta = const i0.VerificationMeta(
-    'flyAppId',
+  static const i0.VerificationMeta _flyAppNameMeta = const i0.VerificationMeta(
+    'flyAppName',
   );
-  late final i0.GeneratedColumn<String> flyAppId = i0.GeneratedColumn<String>(
-    'fly_app_id',
+  late final i0.GeneratedColumn<String> flyAppName = i0.GeneratedColumn<String>(
+    'fly_app_name',
     aliasedName,
     true,
     type: i0.DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: '',
   );
-  static const i0.VerificationMeta _tursoDatabaseIdMeta =
-      const i0.VerificationMeta('tursoDatabaseId');
-  late final i0.GeneratedColumn<String> tursoDatabaseId =
+  static const i0.VerificationMeta _flyVolumeNameMeta =
+      const i0.VerificationMeta('flyVolumeName');
+  late final i0.GeneratedColumn<String> flyVolumeName =
       i0.GeneratedColumn<String>(
-        'turso_database_id',
+        'fly_volume_name',
         aliasedName,
         true,
         type: i0.DriftSqlType.string,
@@ -2545,8 +2547,8 @@ class ProjectEnvironmentStates extends i0.Table
   @override
   List<i0.GeneratedColumn> get $columns => [
     projectEnvironmentId,
-    flyAppId,
-    tursoDatabaseId,
+    flyAppName,
+    flyVolumeName,
     domainName,
   ];
   @override
@@ -2572,18 +2574,21 @@ class ProjectEnvironmentStates extends i0.Table
     } else if (isInserting) {
       context.missing(_projectEnvironmentIdMeta);
     }
-    if (data.containsKey('fly_app_id')) {
+    if (data.containsKey('fly_app_name')) {
       context.handle(
-        _flyAppIdMeta,
-        flyAppId.isAcceptableOrUnknown(data['fly_app_id']!, _flyAppIdMeta),
+        _flyAppNameMeta,
+        flyAppName.isAcceptableOrUnknown(
+          data['fly_app_name']!,
+          _flyAppNameMeta,
+        ),
       );
     }
-    if (data.containsKey('turso_database_id')) {
+    if (data.containsKey('fly_volume_name')) {
       context.handle(
-        _tursoDatabaseIdMeta,
-        tursoDatabaseId.isAcceptableOrUnknown(
-          data['turso_database_id']!,
-          _tursoDatabaseIdMeta,
+        _flyVolumeNameMeta,
+        flyVolumeName.isAcceptableOrUnknown(
+          data['fly_volume_name']!,
+          _flyVolumeNameMeta,
         ),
       );
     }
@@ -2610,13 +2615,13 @@ class ProjectEnvironmentStates extends i0.Table
             i0.DriftSqlType.string,
             data['${effectivePrefix}project_environment_id'],
           )!,
-      flyAppId: attachedDatabase.typeMapping.read(
+      flyAppName: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
-        data['${effectivePrefix}fly_app_id'],
+        data['${effectivePrefix}fly_app_name'],
       ),
-      tursoDatabaseId: attachedDatabase.typeMapping.read(
+      flyVolumeName: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
-        data['${effectivePrefix}turso_database_id'],
+        data['${effectivePrefix}fly_volume_name'],
       ),
       domainName: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
@@ -2645,29 +2650,29 @@ class ProjectEnvironmentState extends i0.DataClass
   /// The ID of the linked project environment.
   final String projectEnvironmentId;
 
-  /// The ID of the project environment's Fly app.
-  final String? flyAppId;
+  /// The name of the project environment's Fly app.
+  final String? flyAppName;
 
-  /// The ID of the project environment's database.
-  final String? tursoDatabaseId;
+  /// The name of the project environment's Fly volume.
+  final String? flyVolumeName;
 
   /// The domain name of the project environment.
   final String? domainName;
   const ProjectEnvironmentState({
     required this.projectEnvironmentId,
-    this.flyAppId,
-    this.tursoDatabaseId,
+    this.flyAppName,
+    this.flyVolumeName,
     this.domainName,
   });
   @override
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
     final map = <String, i0.Expression>{};
     map['project_environment_id'] = i0.Variable<String>(projectEnvironmentId);
-    if (!nullToAbsent || flyAppId != null) {
-      map['fly_app_id'] = i0.Variable<String>(flyAppId);
+    if (!nullToAbsent || flyAppName != null) {
+      map['fly_app_name'] = i0.Variable<String>(flyAppName);
     }
-    if (!nullToAbsent || tursoDatabaseId != null) {
-      map['turso_database_id'] = i0.Variable<String>(tursoDatabaseId);
+    if (!nullToAbsent || flyVolumeName != null) {
+      map['fly_volume_name'] = i0.Variable<String>(flyVolumeName);
     }
     if (!nullToAbsent || domainName != null) {
       map['domain_name'] = i0.Variable<String>(domainName);
@@ -2678,14 +2683,14 @@ class ProjectEnvironmentState extends i0.DataClass
   i1.ProjectEnvironmentStatesCompanion toCompanion(bool nullToAbsent) {
     return i1.ProjectEnvironmentStatesCompanion(
       projectEnvironmentId: i0.Value(projectEnvironmentId),
-      flyAppId:
-          flyAppId == null && nullToAbsent
+      flyAppName:
+          flyAppName == null && nullToAbsent
               ? const i0.Value.absent()
-              : i0.Value(flyAppId),
-      tursoDatabaseId:
-          tursoDatabaseId == null && nullToAbsent
+              : i0.Value(flyAppName),
+      flyVolumeName:
+          flyVolumeName == null && nullToAbsent
               ? const i0.Value.absent()
-              : i0.Value(tursoDatabaseId),
+              : i0.Value(flyVolumeName),
       domainName:
           domainName == null && nullToAbsent
               ? const i0.Value.absent()
@@ -2702,8 +2707,8 @@ class ProjectEnvironmentState extends i0.DataClass
       projectEnvironmentId: serializer.fromJson<String>(
         json['project_environment_id'],
       ),
-      flyAppId: serializer.fromJson<String?>(json['fly_app_id']),
-      tursoDatabaseId: serializer.fromJson<String?>(json['turso_database_id']),
+      flyAppName: serializer.fromJson<String?>(json['fly_app_name']),
+      flyVolumeName: serializer.fromJson<String?>(json['fly_volume_name']),
       domainName: serializer.fromJson<String?>(json['domain_name']),
     );
   }
@@ -2712,22 +2717,22 @@ class ProjectEnvironmentState extends i0.DataClass
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'project_environment_id': serializer.toJson<String>(projectEnvironmentId),
-      'fly_app_id': serializer.toJson<String?>(flyAppId),
-      'turso_database_id': serializer.toJson<String?>(tursoDatabaseId),
+      'fly_app_name': serializer.toJson<String?>(flyAppName),
+      'fly_volume_name': serializer.toJson<String?>(flyVolumeName),
       'domain_name': serializer.toJson<String?>(domainName),
     };
   }
 
   i1.ProjectEnvironmentState copyWith({
     String? projectEnvironmentId,
-    i0.Value<String?> flyAppId = const i0.Value.absent(),
-    i0.Value<String?> tursoDatabaseId = const i0.Value.absent(),
+    i0.Value<String?> flyAppName = const i0.Value.absent(),
+    i0.Value<String?> flyVolumeName = const i0.Value.absent(),
     i0.Value<String?> domainName = const i0.Value.absent(),
   }) => i1.ProjectEnvironmentState(
     projectEnvironmentId: projectEnvironmentId ?? this.projectEnvironmentId,
-    flyAppId: flyAppId.present ? flyAppId.value : this.flyAppId,
-    tursoDatabaseId:
-        tursoDatabaseId.present ? tursoDatabaseId.value : this.tursoDatabaseId,
+    flyAppName: flyAppName.present ? flyAppName.value : this.flyAppName,
+    flyVolumeName:
+        flyVolumeName.present ? flyVolumeName.value : this.flyVolumeName,
     domainName: domainName.present ? domainName.value : this.domainName,
   );
   ProjectEnvironmentState copyWithCompanion(
@@ -2738,11 +2743,12 @@ class ProjectEnvironmentState extends i0.DataClass
           data.projectEnvironmentId.present
               ? data.projectEnvironmentId.value
               : this.projectEnvironmentId,
-      flyAppId: data.flyAppId.present ? data.flyAppId.value : this.flyAppId,
-      tursoDatabaseId:
-          data.tursoDatabaseId.present
-              ? data.tursoDatabaseId.value
-              : this.tursoDatabaseId,
+      flyAppName:
+          data.flyAppName.present ? data.flyAppName.value : this.flyAppName,
+      flyVolumeName:
+          data.flyVolumeName.present
+              ? data.flyVolumeName.value
+              : this.flyVolumeName,
       domainName:
           data.domainName.present ? data.domainName.value : this.domainName,
     );
@@ -2752,8 +2758,8 @@ class ProjectEnvironmentState extends i0.DataClass
   String toString() {
     return (StringBuffer('ProjectEnvironmentState(')
           ..write('projectEnvironmentId: $projectEnvironmentId, ')
-          ..write('flyAppId: $flyAppId, ')
-          ..write('tursoDatabaseId: $tursoDatabaseId, ')
+          ..write('flyAppName: $flyAppName, ')
+          ..write('flyVolumeName: $flyVolumeName, ')
           ..write('domainName: $domainName')
           ..write(')'))
         .toString();
@@ -2761,60 +2767,60 @@ class ProjectEnvironmentState extends i0.DataClass
 
   @override
   int get hashCode =>
-      Object.hash(projectEnvironmentId, flyAppId, tursoDatabaseId, domainName);
+      Object.hash(projectEnvironmentId, flyAppName, flyVolumeName, domainName);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is i1.ProjectEnvironmentState &&
           other.projectEnvironmentId == this.projectEnvironmentId &&
-          other.flyAppId == this.flyAppId &&
-          other.tursoDatabaseId == this.tursoDatabaseId &&
+          other.flyAppName == this.flyAppName &&
+          other.flyVolumeName == this.flyVolumeName &&
           other.domainName == this.domainName);
 }
 
 class ProjectEnvironmentStatesCompanion
     extends i0.UpdateCompanion<i1.ProjectEnvironmentState> {
   final i0.Value<String> projectEnvironmentId;
-  final i0.Value<String?> flyAppId;
-  final i0.Value<String?> tursoDatabaseId;
+  final i0.Value<String?> flyAppName;
+  final i0.Value<String?> flyVolumeName;
   final i0.Value<String?> domainName;
   const ProjectEnvironmentStatesCompanion({
     this.projectEnvironmentId = const i0.Value.absent(),
-    this.flyAppId = const i0.Value.absent(),
-    this.tursoDatabaseId = const i0.Value.absent(),
+    this.flyAppName = const i0.Value.absent(),
+    this.flyVolumeName = const i0.Value.absent(),
     this.domainName = const i0.Value.absent(),
   });
   ProjectEnvironmentStatesCompanion.insert({
     required String projectEnvironmentId,
-    this.flyAppId = const i0.Value.absent(),
-    this.tursoDatabaseId = const i0.Value.absent(),
+    this.flyAppName = const i0.Value.absent(),
+    this.flyVolumeName = const i0.Value.absent(),
     this.domainName = const i0.Value.absent(),
   }) : projectEnvironmentId = i0.Value(projectEnvironmentId);
   static i0.Insertable<i1.ProjectEnvironmentState> custom({
     i0.Expression<String>? projectEnvironmentId,
-    i0.Expression<String>? flyAppId,
-    i0.Expression<String>? tursoDatabaseId,
+    i0.Expression<String>? flyAppName,
+    i0.Expression<String>? flyVolumeName,
     i0.Expression<String>? domainName,
   }) {
     return i0.RawValuesInsertable({
       if (projectEnvironmentId != null)
         'project_environment_id': projectEnvironmentId,
-      if (flyAppId != null) 'fly_app_id': flyAppId,
-      if (tursoDatabaseId != null) 'turso_database_id': tursoDatabaseId,
+      if (flyAppName != null) 'fly_app_name': flyAppName,
+      if (flyVolumeName != null) 'fly_volume_name': flyVolumeName,
       if (domainName != null) 'domain_name': domainName,
     });
   }
 
   i1.ProjectEnvironmentStatesCompanion copyWith({
     i0.Value<String>? projectEnvironmentId,
-    i0.Value<String?>? flyAppId,
-    i0.Value<String?>? tursoDatabaseId,
+    i0.Value<String?>? flyAppName,
+    i0.Value<String?>? flyVolumeName,
     i0.Value<String?>? domainName,
   }) {
     return i1.ProjectEnvironmentStatesCompanion(
       projectEnvironmentId: projectEnvironmentId ?? this.projectEnvironmentId,
-      flyAppId: flyAppId ?? this.flyAppId,
-      tursoDatabaseId: tursoDatabaseId ?? this.tursoDatabaseId,
+      flyAppName: flyAppName ?? this.flyAppName,
+      flyVolumeName: flyVolumeName ?? this.flyVolumeName,
       domainName: domainName ?? this.domainName,
     );
   }
@@ -2827,11 +2833,11 @@ class ProjectEnvironmentStatesCompanion
         projectEnvironmentId.value,
       );
     }
-    if (flyAppId.present) {
-      map['fly_app_id'] = i0.Variable<String>(flyAppId.value);
+    if (flyAppName.present) {
+      map['fly_app_name'] = i0.Variable<String>(flyAppName.value);
     }
-    if (tursoDatabaseId.present) {
-      map['turso_database_id'] = i0.Variable<String>(tursoDatabaseId.value);
+    if (flyVolumeName.present) {
+      map['fly_volume_name'] = i0.Variable<String>(flyVolumeName.value);
     }
     if (domainName.present) {
       map['domain_name'] = i0.Variable<String>(domainName.value);
@@ -2843,8 +2849,8 @@ class ProjectEnvironmentStatesCompanion
   String toString() {
     return (StringBuffer('ProjectEnvironmentStatesCompanion(')
           ..write('projectEnvironmentId: $projectEnvironmentId, ')
-          ..write('flyAppId: $flyAppId, ')
-          ..write('tursoDatabaseId: $tursoDatabaseId, ')
+          ..write('flyAppName: $flyAppName, ')
+          ..write('flyVolumeName: $flyVolumeName, ')
           ..write('domainName: $domainName')
           ..write(')'))
         .toString();
@@ -2996,42 +3002,21 @@ class ProjectEnvironmentsDrift extends i3.ModularAccessor {
     ).asyncMap(projectEnvironmentStates.mapFromRow);
   }
 
-  i4.Future<List<i1.ProjectEnvironmentState>> createProjectEnvironmentState({
+  i4.Future<List<i1.ProjectEnvironmentState>> upsertProjectEnvironmentState({
     required String projectEnvironmentId,
-    String? flyAppId,
-    String? tursoDatabaseId,
+    String? flyAppName,
+    String? flyVolumeName,
     String? domainName,
   }) {
     return customWriteReturning(
-      'INSERT INTO project_environment_states (project_environment_id, fly_app_id, turso_database_id, domain_name) VALUES (?1, ?2, ?3, ?4) RETURNING *',
+      'INSERT INTO project_environment_states (project_environment_id, fly_app_name, fly_volume_name, domain_name) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (project_environment_id) DO UPDATE SET fly_app_name = coalesce(?2, fly_app_name), fly_volume_name = coalesce(?3, fly_volume_name), domain_name = coalesce(?4, domain_name) RETURNING *',
       variables: [
         i0.Variable<String>(projectEnvironmentId),
-        i0.Variable<String>(flyAppId),
-        i0.Variable<String>(tursoDatabaseId),
+        i0.Variable<String>(flyAppName),
+        i0.Variable<String>(flyVolumeName),
         i0.Variable<String>(domainName),
       ],
       updates: {projectEnvironmentStates},
-    ).then(
-      (rows) => Future.wait(rows.map(projectEnvironmentStates.mapFromRow)),
-    );
-  }
-
-  i4.Future<List<i1.ProjectEnvironmentState>> updateProjectEnvironmentState({
-    String? flyAppId,
-    String? tursoDatabaseId,
-    String? domainName,
-    required String projectEnvironmentId,
-  }) {
-    return customWriteReturning(
-      'UPDATE project_environment_states SET fly_app_id = coalesce(?1, fly_app_id), turso_database_id = coalesce(?2, turso_database_id), domain_name = coalesce(?3, domain_name) WHERE project_environment_id = ?4 RETURNING *',
-      variables: [
-        i0.Variable<String>(flyAppId),
-        i0.Variable<String>(tursoDatabaseId),
-        i0.Variable<String>(domainName),
-        i0.Variable<String>(projectEnvironmentId),
-      ],
-      updates: {projectEnvironmentStates},
-      updateKind: i0.UpdateKind.update,
     ).then(
       (rows) => Future.wait(rows.map(projectEnvironmentStates.mapFromRow)),
     );
