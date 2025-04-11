@@ -91,7 +91,7 @@
   ],
   "databases": {},
   "sdkConfig": {
-    "celest": "1.0.8",
+    "celest": "1.0.9",
     "dart": {
       "type": "dart",
       "version": "3.7.2",

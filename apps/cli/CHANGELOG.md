@@ -1,7 +1,9 @@
-## 1.0.9-wip
+## 1.0.9
 
-- chore: Remove unused native assets code
 - feat: Re-implement `celest upgrade`
+- feat: Add Celest Cloud commands
+- chore: Remove unused native assets code
+- chore: Run build_runner daemon with `celest start`
 
 ## 1.0.8
 
