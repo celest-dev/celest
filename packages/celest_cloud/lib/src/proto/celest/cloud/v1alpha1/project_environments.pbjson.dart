@@ -379,7 +379,7 @@ const DeployProjectEnvironmentRequest$json = {
       '3': 5,
       '4': 1,
       '5': 11,
-      '6': '.celest.ast.v1.ResolvedProject',
+      '6': '.google.protobuf.Any',
       '8': {},
       '10': 'resolvedProjectAst'
     },
@@ -403,11 +403,11 @@ final $typed_data.Uint8List deployProjectEnvironmentRequestDescriptor = $convert
     '5tZW50IHJlc291cmNlIG5hbWUaMnRoaXMubWF0Y2hlcygncHJvamVjdHMvW14vXSsvZW52aXJv'
     'bm1lbnRzL1teL10rJCcpUgRuYW1lEioKCnJlcXVlc3RfaWQYAiABKAlCC+BBAeKMz9cIAggBUg'
     'lyZXF1ZXN0SWQSKAoNdmFsaWRhdGVfb25seRgDIAEoCEID4EEBUgx2YWxpZGF0ZU9ubHkSFwoE'
-    'ZXRhZxgEIAEoCUID4EEBUgRldGFnElUKFHJlc29sdmVkX3Byb2plY3RfYXN0GAUgASgLMh4uY2'
-    'VsZXN0LmFzdC52MS5SZXNvbHZlZFByb2plY3RCA+BBAlIScmVzb2x2ZWRQcm9qZWN0QXN0Ep0B'
-    'CgZhc3NldHMYBiADKAsyIy5jZWxlc3QuY2xvdWQudjFhbHBoYTEuUHJvamVjdEFzc2V0QmDgQQ'
-    'K6SFqSAVcIARABIlG6AU4KC3ZhbGlkX2Fzc2V0Ei9vbmx5IERhcnQga2VybmVsIGFzc2V0cyBh'
-    'cmUgc3VwcG9ydGVkIGN1cnJlbnRseRoOdGhpcy50eXBlID09IDFSBmFzc2V0cw==');
+    'ZXRhZxgEIAEoCUID4EEBUgRldGFnEksKFHJlc29sdmVkX3Byb2plY3RfYXN0GAUgASgLMhQuZ2'
+    '9vZ2xlLnByb3RvYnVmLkFueUID4EECUhJyZXNvbHZlZFByb2plY3RBc3QSnQEKBmFzc2V0cxgG'
+    'IAMoCzIjLmNlbGVzdC5jbG91ZC52MWFscGhhMS5Qcm9qZWN0QXNzZXRCYOBBArpIWpIBVwgBEA'
+    'EiUboBTgoLdmFsaWRfYXNzZXQSL29ubHkgRGFydCBrZXJuZWwgYXNzZXRzIGFyZSBzdXBwb3J0'
+    'ZWQgY3VycmVudGx5Gg50aGlzLnR5cGUgPT0gMVIGYXNzZXRz');
 
 @$core.Deprecated('Use deployProjectEnvironmentResponseDescriptor instead')
 const DeployProjectEnvironmentResponse$json = {
@@ -419,7 +419,7 @@ const DeployProjectEnvironmentResponse$json = {
       '3': 2,
       '4': 1,
       '5': 11,
-      '6': '.celest.ast.v1.ResolvedProject',
+      '6': '.google.protobuf.Any',
       '8': {},
       '10': 'project'
     },
@@ -430,5 +430,4 @@ const DeployProjectEnvironmentResponse$json = {
 final $typed_data.Uint8List deployProjectEnvironmentResponseDescriptor =
     $convert.base64Decode(
         'CiBEZXBsb3lQcm9qZWN0RW52aXJvbm1lbnRSZXNwb25zZRIVCgN1cmkYASABKAlCA+BBAlIDdX'
-        'JpEj0KB3Byb2plY3QYAiABKAsyHi5jZWxlc3QuYXN0LnYxLlJlc29sdmVkUHJvamVjdEID4EEC'
-        'Ugdwcm9qZWN0');
+        'JpEjMKB3Byb2plY3QYAiABKAsyFC5nb29nbGUucHJvdG9idWYuQW55QgPgQQJSB3Byb2plY3Q=');

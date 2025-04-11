@@ -149,7 +149,7 @@ final class ProjectEnvironments with BaseService {
     final request = DeployProjectEnvironmentRequest(
       name: environment,
       assets: assets,
-      resolvedProjectAst: resolvedProject,
+      resolvedProjectAst: Any.pack(resolvedProject),
       requestId: requestId,
       etag: etag,
       validateOnly: validateOnly,

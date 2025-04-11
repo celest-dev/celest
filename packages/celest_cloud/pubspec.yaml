@@ -9,6 +9,7 @@ resolution: workspace
 
 dependencies:
   async: ^2.11.0
+  celest_ast: ^0.1.6-0
   celest_core: ^1.0.0
   code_builder: ^4.10.0
   collection: ^1.18.0

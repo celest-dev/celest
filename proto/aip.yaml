@@ -9,5 +9,3 @@
     - "core::0191::java-package"
     # To avoid issues with longrunning operations
     - "core::0203::field-behavior-required"
-    # Okay
-    - "core::0215::foreign-type-reference"

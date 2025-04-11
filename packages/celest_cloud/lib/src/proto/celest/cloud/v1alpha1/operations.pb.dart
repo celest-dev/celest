@@ -13,8 +13,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/any.pb.dart' as $11;
-import '../../../google/protobuf/timestamp.pb.dart' as $8;
+import '../../../google/protobuf/any.pb.dart' as $14;
+import '../../../google/protobuf/timestamp.pb.dart' as $9;
 import 'operations.pbenum.dart';
 
 export 'operations.pbenum.dart';
@@ -23,12 +23,12 @@ export 'operations.pbenum.dart';
 class OperationMetadata extends $pb.GeneratedMessage {
   factory OperationMetadata({
     $core.String? parent,
-    $11.Any? resource,
+    $14.Any? resource,
     OperationState? state,
     $core.String? requestId,
-    $8.Timestamp? createTime,
-    $8.Timestamp? startTime,
-    $8.Timestamp? endTime,
+    $9.Timestamp? createTime,
+    $9.Timestamp? startTime,
+    $9.Timestamp? endTime,
     $core.int? progress,
   }) {
     final $result = create();
@@ -72,19 +72,19 @@ class OperationMetadata extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'parent')
-    ..aOM<$11.Any>(2, _omitFieldNames ? '' : 'resource',
-        subBuilder: $11.Any.create)
+    ..aOM<$14.Any>(2, _omitFieldNames ? '' : 'resource',
+        subBuilder: $14.Any.create)
     ..e<OperationState>(3, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
         defaultOrMaker: OperationState.OPERATION_STATE_UNSPECIFIED,
         valueOf: OperationState.valueOf,
         enumValues: OperationState.values)
     ..aOS(4, _omitFieldNames ? '' : 'requestId')
-    ..aOM<$8.Timestamp>(5, _omitFieldNames ? '' : 'createTime',
-        subBuilder: $8.Timestamp.create)
-    ..aOM<$8.Timestamp>(6, _omitFieldNames ? '' : 'startTime',
-        subBuilder: $8.Timestamp.create)
-    ..aOM<$8.Timestamp>(7, _omitFieldNames ? '' : 'endTime',
-        subBuilder: $8.Timestamp.create)
+    ..aOM<$9.Timestamp>(5, _omitFieldNames ? '' : 'createTime',
+        subBuilder: $9.Timestamp.create)
+    ..aOM<$9.Timestamp>(6, _omitFieldNames ? '' : 'startTime',
+        subBuilder: $9.Timestamp.create)
+    ..aOM<$9.Timestamp>(7, _omitFieldNames ? '' : 'endTime',
+        subBuilder: $9.Timestamp.create)
     ..a<$core.int>(8, _omitFieldNames ? '' : 'progress', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
@@ -128,9 +128,9 @@ class OperationMetadata extends $pb.GeneratedMessage {
   ///
   ///  (-- api-linter: core::0146::any=disabled --)
   @$pb.TagNumber(2)
-  $11.Any get resource => $_getN(1);
+  $14.Any get resource => $_getN(1);
   @$pb.TagNumber(2)
-  set resource($11.Any v) {
+  set resource($14.Any v) {
     setField(2, v);
   }
 
@@ -139,7 +139,7 @@ class OperationMetadata extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearResource() => clearField(2);
   @$pb.TagNumber(2)
-  $11.Any ensureResource() => $_ensure(1);
+  $14.Any ensureResource() => $_ensure(1);
 
   /// The state of the operation.
   @$pb.TagNumber(3)
@@ -169,9 +169,9 @@ class OperationMetadata extends $pb.GeneratedMessage {
 
   /// The time the operation was created.
   @$pb.TagNumber(5)
-  $8.Timestamp get createTime => $_getN(4);
+  $9.Timestamp get createTime => $_getN(4);
   @$pb.TagNumber(5)
-  set createTime($8.Timestamp v) {
+  set createTime($9.Timestamp v) {
     setField(5, v);
   }
 
@@ -180,13 +180,13 @@ class OperationMetadata extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   void clearCreateTime() => clearField(5);
   @$pb.TagNumber(5)
-  $8.Timestamp ensureCreateTime() => $_ensure(4);
+  $9.Timestamp ensureCreateTime() => $_ensure(4);
 
   /// The time the operation was started.
   @$pb.TagNumber(6)
-  $8.Timestamp get startTime => $_getN(5);
+  $9.Timestamp get startTime => $_getN(5);
   @$pb.TagNumber(6)
-  set startTime($8.Timestamp v) {
+  set startTime($9.Timestamp v) {
     setField(6, v);
   }
 
@@ -195,13 +195,13 @@ class OperationMetadata extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   void clearStartTime() => clearField(6);
   @$pb.TagNumber(6)
-  $8.Timestamp ensureStartTime() => $_ensure(5);
+  $9.Timestamp ensureStartTime() => $_ensure(5);
 
   /// The time the operation was completed.
   @$pb.TagNumber(7)
-  $8.Timestamp get endTime => $_getN(6);
+  $9.Timestamp get endTime => $_getN(6);
   @$pb.TagNumber(7)
-  set endTime($8.Timestamp v) {
+  set endTime($9.Timestamp v) {
     setField(7, v);
   }
 
@@ -210,7 +210,7 @@ class OperationMetadata extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   void clearEndTime() => clearField(7);
   @$pb.TagNumber(7)
-  $8.Timestamp ensureEndTime() => $_ensure(6);
+  $9.Timestamp ensureEndTime() => $_ensure(6);
 
   ///  If available, the progress of the operation.
   ///

@@ -11,7 +11,7 @@ import 'package:celest_cli/src/codegen/api/dockerfile_generator.dart';
 import 'package:celest_cli/src/utils/process.dart';
 import 'package:celest_cloud/celest_cloud.dart'
     as pb
-    show DeployProjectEnvironmentResponse, LifecycleState, ResolvedProject;
+    show DeployProjectEnvironmentResponse, LifecycleState;
 import 'package:celest_cloud/src/proto/google/rpc/status.pb.dart' as pb;
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/schema/project_environments.drift.dart';
@@ -84,9 +84,7 @@ final class FlyDeploymentEngine {
       try {
         final state = await engine.deploy();
         final response = pb.DeployProjectEnvironmentResponse(
-          project: pb.ResolvedProject.fromBuffer(
-            projectAst.toProto().writeToBuffer(),
-          ),
+          project: projectAst.toProto().packIntoAny(),
           uri: 'https://${state.domainName}',
         );
         await db.operationsDrift.updateOperation(

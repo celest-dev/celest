@@ -70,6 +70,14 @@ const CommonLanguageSettings$json = {
       '6': '.google.api.ClientLibraryDestination',
       '10': 'destinations'
     },
+    {
+      '1': 'selective_gapic_generation',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.google.api.SelectiveGapicGeneration',
+      '10': 'selectiveGapicGeneration'
+    },
   ],
 };
 
@@ -77,7 +85,9 @@ const CommonLanguageSettings$json = {
 final $typed_data.Uint8List commonLanguageSettingsDescriptor = $convert.base64Decode(
     'ChZDb21tb25MYW5ndWFnZVNldHRpbmdzEjAKEnJlZmVyZW5jZV9kb2NzX3VyaRgBIAEoCUICGA'
     'FSEHJlZmVyZW5jZURvY3NVcmkSSAoMZGVzdGluYXRpb25zGAIgAygOMiQuZ29vZ2xlLmFwaS5D'
-    'bGllbnRMaWJyYXJ5RGVzdGluYXRpb25SDGRlc3RpbmF0aW9ucw==');
+    'bGllbnRMaWJyYXJ5RGVzdGluYXRpb25SDGRlc3RpbmF0aW9ucxJiChpzZWxlY3RpdmVfZ2FwaW'
+    'NfZ2VuZXJhdGlvbhgDIAEoCzIkLmdvb2dsZS5hcGkuU2VsZWN0aXZlR2FwaWNHZW5lcmF0aW9u'
+    'UhhzZWxlY3RpdmVHYXBpY0dlbmVyYXRpb24=');
 
 @$core.Deprecated('Use clientLibrarySettingsDescriptor instead')
 const ClientLibrarySettings$json = {
@@ -355,13 +365,56 @@ const PythonSettings$json = {
       '6': '.google.api.CommonLanguageSettings',
       '10': 'common'
     },
+    {
+      '1': 'experimental_features',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.google.api.PythonSettings.ExperimentalFeatures',
+      '10': 'experimentalFeatures'
+    },
+  ],
+  '3': [PythonSettings_ExperimentalFeatures$json],
+};
+
+@$core.Deprecated('Use pythonSettingsDescriptor instead')
+const PythonSettings_ExperimentalFeatures$json = {
+  '1': 'ExperimentalFeatures',
+  '2': [
+    {
+      '1': 'rest_async_io_enabled',
+      '3': 1,
+      '4': 1,
+      '5': 8,
+      '10': 'restAsyncIoEnabled'
+    },
+    {
+      '1': 'protobuf_pythonic_types_enabled',
+      '3': 2,
+      '4': 1,
+      '5': 8,
+      '10': 'protobufPythonicTypesEnabled'
+    },
+    {
+      '1': 'unversioned_package_disabled',
+      '3': 3,
+      '4': 1,
+      '5': 8,
+      '10': 'unversionedPackageDisabled'
+    },
   ],
 };
 
 /// Descriptor for `PythonSettings`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List pythonSettingsDescriptor = $convert.base64Decode(
     'Cg5QeXRob25TZXR0aW5ncxI6CgZjb21tb24YASABKAsyIi5nb29nbGUuYXBpLkNvbW1vbkxhbm'
-    'd1YWdlU2V0dGluZ3NSBmNvbW1vbg==');
+    'd1YWdlU2V0dGluZ3NSBmNvbW1vbhJkChVleHBlcmltZW50YWxfZmVhdHVyZXMYAiABKAsyLy5n'
+    'b29nbGUuYXBpLlB5dGhvblNldHRpbmdzLkV4cGVyaW1lbnRhbEZlYXR1cmVzUhRleHBlcmltZW'
+    '50YWxGZWF0dXJlcxrSAQoURXhwZXJpbWVudGFsRmVhdHVyZXMSMQoVcmVzdF9hc3luY19pb19l'
+    'bmFibGVkGAEgASgIUhJyZXN0QXN5bmNJb0VuYWJsZWQSRQofcHJvdG9idWZfcHl0aG9uaWNfdH'
+    'lwZXNfZW5hYmxlZBgCIAEoCFIccHJvdG9idWZQeXRob25pY1R5cGVzRW5hYmxlZBJAChx1bnZl'
+    'cnNpb25lZF9wYWNrYWdlX2Rpc2FibGVkGAMgASgIUhp1bnZlcnNpb25lZFBhY2thZ2VEaXNhYm'
+    'xlZA==');
 
 @$core.Deprecated('Use nodeSettingsDescriptor instead')
 const NodeSettings$json = {
@@ -505,13 +558,35 @@ const GoSettings$json = {
       '6': '.google.api.CommonLanguageSettings',
       '10': 'common'
     },
+    {
+      '1': 'renamed_services',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.google.api.GoSettings.RenamedServicesEntry',
+      '10': 'renamedServices'
+    },
   ],
+  '3': [GoSettings_RenamedServicesEntry$json],
+};
+
+@$core.Deprecated('Use goSettingsDescriptor instead')
+const GoSettings_RenamedServicesEntry$json = {
+  '1': 'RenamedServicesEntry',
+  '2': [
+    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
+  ],
+  '7': {'7': true},
 };
 
 /// Descriptor for `GoSettings`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List goSettingsDescriptor = $convert.base64Decode(
     'CgpHb1NldHRpbmdzEjoKBmNvbW1vbhgBIAEoCzIiLmdvb2dsZS5hcGkuQ29tbW9uTGFuZ3VhZ2'
-    'VTZXR0aW5nc1IGY29tbW9u');
+    'VTZXR0aW5nc1IGY29tbW9uElYKEHJlbmFtZWRfc2VydmljZXMYAiADKAsyKy5nb29nbGUuYXBp'
+    'LkdvU2V0dGluZ3MuUmVuYW1lZFNlcnZpY2VzRW50cnlSD3JlbmFtZWRTZXJ2aWNlcxpCChRSZW'
+    '5hbWVkU2VydmljZXNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFs'
+    'dWU6AjgB');
 
 @$core.Deprecated('Use methodSettingsDescriptor instead')
 const MethodSettings$json = {
@@ -586,3 +661,24 @@ final $typed_data.Uint8List methodSettingsDescriptor = $convert.base64Decode(
     'ASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uUgxtYXhQb2xsRGVsYXkSRwoSdG90YWxfcG'
     '9sbF90aW1lb3V0GAQgASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uUhB0b3RhbFBvbGxU'
     'aW1lb3V0');
+
+@$core.Deprecated('Use selectiveGapicGenerationDescriptor instead')
+const SelectiveGapicGeneration$json = {
+  '1': 'SelectiveGapicGeneration',
+  '2': [
+    {'1': 'methods', '3': 1, '4': 3, '5': 9, '10': 'methods'},
+    {
+      '1': 'generate_omitted_as_internal',
+      '3': 2,
+      '4': 1,
+      '5': 8,
+      '10': 'generateOmittedAsInternal'
+    },
+  ],
+};
+
+/// Descriptor for `SelectiveGapicGeneration`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List selectiveGapicGenerationDescriptor = $convert.base64Decode(
+    'ChhTZWxlY3RpdmVHYXBpY0dlbmVyYXRpb24SGAoHbWV0aG9kcxgBIAMoCVIHbWV0aG9kcxI/Ch'
+    'xnZW5lcmF0ZV9vbWl0dGVkX2FzX2ludGVybmFsGAIgASgIUhlnZW5lcmF0ZU9taXR0ZWRBc0lu'
+    'dGVybmFs');
