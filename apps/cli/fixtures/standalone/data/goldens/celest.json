@@ -142,37 +142,18 @@
         }
       },
       "policySet": {
-        "policies": {
-          "celest.cloud.auth.v1alpha1.Users": {
-            "effect": "EFFECT_PERMIT",
-            "principal": {
-              "is": {
-                "entityType": "Celest::User"
-              }
-            },
-            "action": {
-              "equals": {
-                "entity": {
-                  "type": "Celest::Action",
-                  "id": "invoke"
-                }
-              }
-            },
-            "resource": {
-              "in": {
-                "entity": {
-                  "type": "Celest::Api",
-                  "id": "celest.cloud.auth.v1alpha1.Users"
-                }
-              }
-            },
-            "annotations": {
-              "annotations": {
+        "templateLinks": [
+          {
+            "templateId": "cloud.functions.anonymous",
+            "newId": "celest.cloud.auth.v1alpha1.Users",
+            "values": {
+              "?resource": {
+                "type": "Celest::Api",
                 "id": "celest.cloud.auth.v1alpha1.Users"
               }
             }
           }
-        }
+        ]
       }
     }
   },

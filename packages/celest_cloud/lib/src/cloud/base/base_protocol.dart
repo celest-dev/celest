@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:celest_core/celest_core.dart';
 
 mixin BaseProtocol {
@@ -5,7 +7,14 @@ mixin BaseProtocol {
     required int statusCode,
     required List<int> bodyBytes,
   }) {
-    final jsonBody = JsonUtf8.decodeMap(bodyBytes);
-    throw CloudException.fromJson(jsonBody, code: statusCode);
+    try {
+      final jsonBody = JsonUtf8.decodeMap(bodyBytes);
+      throw CloudException.fromJson(jsonBody, code: statusCode);
+    } on FormatException {
+      throw CloudException.http(
+        code: statusCode,
+        message: utf8.decode(bodyBytes),
+      );
+    }
   }
 }

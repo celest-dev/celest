@@ -33,8 +33,8 @@ extension type Context._(celest.Context _context) implements celest.Context {
     return const EmailOtpProvider();
   }
 
-  Map<String, String>? get routeParameters =>
-      _context.get(contextKeyRouteParameters);
+  Map<String, String> get routeParameters =>
+      _context.expect(contextKeyRouteParameters);
 }
 
 const celest.ContextKey<CedarCork> contextKeyCork = celest.ContextKey('cork');
