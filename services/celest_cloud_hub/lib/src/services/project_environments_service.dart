@@ -6,8 +6,6 @@ import 'dart:typed_data';
 import 'package:cedar/cedar.dart';
 import 'package:celest/http.dart';
 import 'package:celest_ast/celest_ast.dart';
-import 'package:celest_ast/src/proto/celest/ast/v1/resolved_ast.pb.dart'
-    as astpb;
 import 'package:celest_cloud/celest_cloud.dart' as pb;
 import 'package:celest_cloud/src/grpc.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
@@ -381,9 +379,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       dbConnection: await _db.serializableConnection(),
       flyApiToken: Platform.environment['FLY_API_TOKEN']!,
       projectAst: ResolvedProject.fromProto(
-        astpb.ResolvedProject.fromBuffer(
-          request.resolvedProjectAst.writeToBuffer(),
-        ),
+        pb.ResolvedProject().unpackAny(request.resolvedProjectAst),
       ),
       kernelAsset: Uint8List.fromList(kernelAsset.inline).asUnmodifiableView(),
       environment: environment,

@@ -3,7 +3,6 @@ syntax = "proto3";
 package celest.cloud.v1alpha1;
 
 import "buf/validate/validate.proto";
-import "celest/ast/v1/resolved_ast.proto";
 import "celest/cloud/v1alpha1/common.proto";
 import "celest/cloud/v1alpha1/operations.proto";
 import "google/api/annotations.proto";
@@ -12,8 +11,10 @@ import "google/api/field_behavior.proto";
 import "google/api/field_info.proto";
 import "google/api/resource.proto";
 import "google/longrunning/operations.proto";
+import "google/protobuf/any.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 option go_package = "celest/cloud/v1alpha1;cloudv1alpha1";
 
@@ -389,7 +390,14 @@ message DeployProjectEnvironmentRequest {
   string etag = 4 [(google.api.field_behavior) = OPTIONAL];
 
   // Input only. The environment's project AST.
-  celest.ast.v1.ResolvedProject resolved_project_ast = 5 [(google.api.field_behavior) = REQUIRED];
+  //
+  // Supported types:
+  // - [celest.ast.v1.ResolvedProject]
+  //
+  // (-- api-linter: core::0146::any=disabled
+  //     aip.dev/not-precedent: Since AST protos are maintained separately, this allows 
+  //                            independent versioning and publishing of protobuf/Dart code. --)
+  google.protobuf.Any resolved_project_ast = 5 [(google.api.field_behavior) = REQUIRED];
 
   // Input only. The assets of the environment.
   repeated ProjectAsset assets = 6 [
@@ -414,5 +422,11 @@ message DeployProjectEnvironmentResponse {
   string uri = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The resolved project of the deployed environment, with any missing values filled in.
-  celest.ast.v1.ResolvedProject project = 2 [(google.api.field_behavior) = REQUIRED];
+  //
+  // Will be the same type passed in via [celest.cloud.v1alpha1.ProjectEnvironments.DeployProjectEnvironment].
+  //
+  // (-- api-linter: core::0146::any=disabled
+  //     aip.dev/not-precedent: Since AST protos are maintained separately, this allows 
+  //                            independent versioning and publishing of protobuf/Dart code. --)
+  google.protobuf.Any project = 2 [(google.api.field_behavior) = REQUIRED];
 }

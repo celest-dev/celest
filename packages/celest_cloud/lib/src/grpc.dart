@@ -10,7 +10,6 @@ export 'proto/celest/cloud/v1alpha1/projects.pbgrpc.dart';
 export 'proto/celest/cloud/v1alpha1/subscriptions.pbgrpc.dart';
 
 /// GCP
-export 'proto/google/logging/v2/logging.pbgrpc.dart';
 export 'proto/google/longrunning/operations.pb.dart';
 export 'proto/google/longrunning/operations.pbgrpc.dart' show OperationsClient;
 

@@ -13,9 +13,9 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../protobuf/duration.pb.dart' as $17;
+import '../protobuf/duration.pb.dart' as $8;
 import 'client.pbenum.dart';
-import 'launch_stage.pbenum.dart' as $18;
+import 'launch_stage.pbenum.dart' as $12;
 
 export 'client.pbenum.dart';
 
@@ -25,6 +25,7 @@ class CommonLanguageSettings extends $pb.GeneratedMessage {
     @$core.Deprecated('This field is deprecated.')
     $core.String? referenceDocsUri,
     $core.Iterable<ClientLibraryDestination>? destinations,
+    SelectiveGapicGeneration? selectiveGapicGeneration,
   }) {
     final $result = create();
     if (referenceDocsUri != null) {
@@ -33,6 +34,9 @@ class CommonLanguageSettings extends $pb.GeneratedMessage {
     }
     if (destinations != null) {
       $result.destinations.addAll(destinations);
+    }
+    if (selectiveGapicGeneration != null) {
+      $result.selectiveGapicGeneration = selectiveGapicGeneration;
     }
     return $result;
   }
@@ -55,6 +59,9 @@ class CommonLanguageSettings extends $pb.GeneratedMessage {
         enumValues: ClientLibraryDestination.values,
         defaultEnumValue:
             ClientLibraryDestination.CLIENT_LIBRARY_DESTINATION_UNSPECIFIED)
+    ..aOM<SelectiveGapicGeneration>(
+        3, _omitFieldNames ? '' : 'selectiveGapicGeneration',
+        subBuilder: SelectiveGapicGeneration.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -103,13 +110,28 @@ class CommonLanguageSettings extends $pb.GeneratedMessage {
   /// The destination where API teams want this client library to be published.
   @$pb.TagNumber(2)
   $core.List<ClientLibraryDestination> get destinations => $_getList(1);
+
+  /// Configuration for which RPCs should be generated in the GAPIC client.
+  @$pb.TagNumber(3)
+  SelectiveGapicGeneration get selectiveGapicGeneration => $_getN(2);
+  @$pb.TagNumber(3)
+  set selectiveGapicGeneration(SelectiveGapicGeneration v) {
+    setField(3, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasSelectiveGapicGeneration() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSelectiveGapicGeneration() => clearField(3);
+  @$pb.TagNumber(3)
+  SelectiveGapicGeneration ensureSelectiveGapicGeneration() => $_ensure(2);
 }
 
 /// Details about how and where to publish client libraries.
 class ClientLibrarySettings extends $pb.GeneratedMessage {
   factory ClientLibrarySettings({
     $core.String? version,
-    $18.LaunchStage? launchStage,
+    $12.LaunchStage? launchStage,
     $core.bool? restNumericEnums,
     JavaSettings? javaSettings,
     CppSettings? cppSettings,
@@ -169,11 +191,11 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'version')
-    ..e<$18.LaunchStage>(
+    ..e<$12.LaunchStage>(
         2, _omitFieldNames ? '' : 'launchStage', $pb.PbFieldType.OE,
-        defaultOrMaker: $18.LaunchStage.LAUNCH_STAGE_UNSPECIFIED,
-        valueOf: $18.LaunchStage.valueOf,
-        enumValues: $18.LaunchStage.values)
+        defaultOrMaker: $12.LaunchStage.LAUNCH_STAGE_UNSPECIFIED,
+        valueOf: $12.LaunchStage.valueOf,
+        enumValues: $12.LaunchStage.values)
     ..aOB(3, _omitFieldNames ? '' : 'restNumericEnums')
     ..aOM<JavaSettings>(21, _omitFieldNames ? '' : 'javaSettings',
         subBuilder: JavaSettings.create)
@@ -235,9 +257,9 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
 
   /// Launch stage of this version of the API.
   @$pb.TagNumber(2)
-  $18.LaunchStage get launchStage => $_getN(1);
+  $12.LaunchStage get launchStage => $_getN(1);
   @$pb.TagNumber(2)
-  set launchStage($18.LaunchStage v) {
+  set launchStage($12.LaunchStage v) {
     setField(2, v);
   }
 
@@ -868,14 +890,134 @@ class PhpSettings extends $pb.GeneratedMessage {
   CommonLanguageSettings ensureCommon() => $_ensure(0);
 }
 
+/// Experimental features to be included during client library generation.
+/// These fields will be deprecated once the feature graduates and is enabled
+/// by default.
+class PythonSettings_ExperimentalFeatures extends $pb.GeneratedMessage {
+  factory PythonSettings_ExperimentalFeatures({
+    $core.bool? restAsyncIoEnabled,
+    $core.bool? protobufPythonicTypesEnabled,
+    $core.bool? unversionedPackageDisabled,
+  }) {
+    final $result = create();
+    if (restAsyncIoEnabled != null) {
+      $result.restAsyncIoEnabled = restAsyncIoEnabled;
+    }
+    if (protobufPythonicTypesEnabled != null) {
+      $result.protobufPythonicTypesEnabled = protobufPythonicTypesEnabled;
+    }
+    if (unversionedPackageDisabled != null) {
+      $result.unversionedPackageDisabled = unversionedPackageDisabled;
+    }
+    return $result;
+  }
+  PythonSettings_ExperimentalFeatures._() : super();
+  factory PythonSettings_ExperimentalFeatures.fromBuffer(
+          $core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory PythonSettings_ExperimentalFeatures.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'PythonSettings.ExperimentalFeatures',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
+      createEmptyInstance: create)
+    ..aOB(1, _omitFieldNames ? '' : 'restAsyncIoEnabled')
+    ..aOB(2, _omitFieldNames ? '' : 'protobufPythonicTypesEnabled')
+    ..aOB(3, _omitFieldNames ? '' : 'unversionedPackageDisabled')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  PythonSettings_ExperimentalFeatures clone() =>
+      PythonSettings_ExperimentalFeatures()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  PythonSettings_ExperimentalFeatures copyWith(
+          void Function(PythonSettings_ExperimentalFeatures) updates) =>
+      super.copyWith((message) =>
+              updates(message as PythonSettings_ExperimentalFeatures))
+          as PythonSettings_ExperimentalFeatures;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static PythonSettings_ExperimentalFeatures create() =>
+      PythonSettings_ExperimentalFeatures._();
+  PythonSettings_ExperimentalFeatures createEmptyInstance() => create();
+  static $pb.PbList<PythonSettings_ExperimentalFeatures> createRepeated() =>
+      $pb.PbList<PythonSettings_ExperimentalFeatures>();
+  @$core.pragma('dart2js:noInline')
+  static PythonSettings_ExperimentalFeatures getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
+          PythonSettings_ExperimentalFeatures>(create);
+  static PythonSettings_ExperimentalFeatures? _defaultInstance;
+
+  /// Enables generation of asynchronous REST clients if `rest` transport is
+  /// enabled. By default, asynchronous REST clients will not be generated.
+  /// This feature will be enabled by default 1 month after launching the
+  /// feature in preview packages.
+  @$pb.TagNumber(1)
+  $core.bool get restAsyncIoEnabled => $_getBF(0);
+  @$pb.TagNumber(1)
+  set restAsyncIoEnabled($core.bool v) {
+    $_setBool(0, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasRestAsyncIoEnabled() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRestAsyncIoEnabled() => clearField(1);
+
+  /// Enables generation of protobuf code using new types that are more
+  /// Pythonic which are included in `protobuf>=5.29.x`. This feature will be
+  /// enabled by default 1 month after launching the feature in preview
+  /// packages.
+  @$pb.TagNumber(2)
+  $core.bool get protobufPythonicTypesEnabled => $_getBF(1);
+  @$pb.TagNumber(2)
+  set protobufPythonicTypesEnabled($core.bool v) {
+    $_setBool(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasProtobufPythonicTypesEnabled() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearProtobufPythonicTypesEnabled() => clearField(2);
+
+  /// Disables generation of an unversioned Python package for this client
+  /// library. This means that the module names will need to be versioned in
+  /// import statements. For example `import google.cloud.library_v2` instead
+  /// of `import google.cloud.library`.
+  @$pb.TagNumber(3)
+  $core.bool get unversionedPackageDisabled => $_getBF(2);
+  @$pb.TagNumber(3)
+  set unversionedPackageDisabled($core.bool v) {
+    $_setBool(2, v);
+  }
+
+  @$pb.TagNumber(3)
+  $core.bool hasUnversionedPackageDisabled() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUnversionedPackageDisabled() => clearField(3);
+}
+
 /// Settings for Python client libraries.
 class PythonSettings extends $pb.GeneratedMessage {
   factory PythonSettings({
     CommonLanguageSettings? common,
+    PythonSettings_ExperimentalFeatures? experimentalFeatures,
   }) {
     final $result = create();
     if (common != null) {
       $result.common = common;
+    }
+    if (experimentalFeatures != null) {
+      $result.experimentalFeatures = experimentalFeatures;
     }
     return $result;
   }
@@ -893,6 +1035,9 @@ class PythonSettings extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<CommonLanguageSettings>(1, _omitFieldNames ? '' : 'common',
         subBuilder: CommonLanguageSettings.create)
+    ..aOM<PythonSettings_ExperimentalFeatures>(
+        2, _omitFieldNames ? '' : 'experimentalFeatures',
+        subBuilder: PythonSettings_ExperimentalFeatures.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -932,6 +1077,22 @@ class PythonSettings extends $pb.GeneratedMessage {
   void clearCommon() => clearField(1);
   @$pb.TagNumber(1)
   CommonLanguageSettings ensureCommon() => $_ensure(0);
+
+  /// Experimental features to be included during client library generation.
+  @$pb.TagNumber(2)
+  PythonSettings_ExperimentalFeatures get experimentalFeatures => $_getN(1);
+  @$pb.TagNumber(2)
+  set experimentalFeatures(PythonSettings_ExperimentalFeatures v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasExperimentalFeatures() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearExperimentalFeatures() => clearField(2);
+  @$pb.TagNumber(2)
+  PythonSettings_ExperimentalFeatures ensureExperimentalFeatures() =>
+      $_ensure(1);
 }
 
 /// Settings for Node client libraries.
@@ -1205,10 +1366,14 @@ class RubySettings extends $pb.GeneratedMessage {
 class GoSettings extends $pb.GeneratedMessage {
   factory GoSettings({
     CommonLanguageSettings? common,
+    $core.Map<$core.String, $core.String>? renamedServices,
   }) {
     final $result = create();
     if (common != null) {
       $result.common = common;
+    }
+    if (renamedServices != null) {
+      $result.renamedServices.addAll(renamedServices);
     }
     return $result;
   }
@@ -1226,6 +1391,11 @@ class GoSettings extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<CommonLanguageSettings>(1, _omitFieldNames ? '' : 'common',
         subBuilder: CommonLanguageSettings.create)
+    ..m<$core.String, $core.String>(2, _omitFieldNames ? '' : 'renamedServices',
+        entryClassName: 'GoSettings.RenamedServicesEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.OS,
+        packageName: const $pb.PackageName('google.api'))
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1263,6 +1433,17 @@ class GoSettings extends $pb.GeneratedMessage {
   void clearCommon() => clearField(1);
   @$pb.TagNumber(1)
   CommonLanguageSettings ensureCommon() => $_ensure(0);
+
+  ///  Map of service names to renamed services. Keys are the package relative
+  ///  service names and values are the name to be used for the service client
+  ///  and call options.
+  ///
+  ///  publishing:
+  ///    go_settings:
+  ///      renamed_services:
+  ///        Publisher: TopicAdmin
+  @$pb.TagNumber(2)
+  $core.Map<$core.String, $core.String> get renamedServices => $_getMap(1);
 }
 
 /// Describes settings to use when generating API methods that use the
@@ -1272,10 +1453,10 @@ class GoSettings extends $pb.GeneratedMessage {
 /// [Java](https://github.com/googleapis/gapic-generator-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
 class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   factory MethodSettings_LongRunning({
-    $17.Duration? initialPollDelay,
+    $8.Duration? initialPollDelay,
     $core.double? pollDelayMultiplier,
-    $17.Duration? maxPollDelay,
-    $17.Duration? totalPollTimeout,
+    $8.Duration? maxPollDelay,
+    $8.Duration? totalPollTimeout,
   }) {
     final $result = create();
     if (initialPollDelay != null) {
@@ -1304,14 +1485,14 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'MethodSettings.LongRunning',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
-    ..aOM<$17.Duration>(1, _omitFieldNames ? '' : 'initialPollDelay',
-        subBuilder: $17.Duration.create)
+    ..aOM<$8.Duration>(1, _omitFieldNames ? '' : 'initialPollDelay',
+        subBuilder: $8.Duration.create)
     ..a<$core.double>(
         2, _omitFieldNames ? '' : 'pollDelayMultiplier', $pb.PbFieldType.OF)
-    ..aOM<$17.Duration>(3, _omitFieldNames ? '' : 'maxPollDelay',
-        subBuilder: $17.Duration.create)
-    ..aOM<$17.Duration>(4, _omitFieldNames ? '' : 'totalPollTimeout',
-        subBuilder: $17.Duration.create)
+    ..aOM<$8.Duration>(3, _omitFieldNames ? '' : 'maxPollDelay',
+        subBuilder: $8.Duration.create)
+    ..aOM<$8.Duration>(4, _omitFieldNames ? '' : 'totalPollTimeout',
+        subBuilder: $8.Duration.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1343,9 +1524,9 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   /// Initial delay after which the first poll request will be made.
   /// Default value: 5 seconds.
   @$pb.TagNumber(1)
-  $17.Duration get initialPollDelay => $_getN(0);
+  $8.Duration get initialPollDelay => $_getN(0);
   @$pb.TagNumber(1)
-  set initialPollDelay($17.Duration v) {
+  set initialPollDelay($8.Duration v) {
     setField(1, v);
   }
 
@@ -1354,7 +1535,7 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearInitialPollDelay() => clearField(1);
   @$pb.TagNumber(1)
-  $17.Duration ensureInitialPollDelay() => $_ensure(0);
+  $8.Duration ensureInitialPollDelay() => $_ensure(0);
 
   /// Multiplier to gradually increase delay between subsequent polls until it
   /// reaches max_poll_delay.
@@ -1374,9 +1555,9 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   /// Maximum time between two subsequent poll requests.
   /// Default value: 45 seconds.
   @$pb.TagNumber(3)
-  $17.Duration get maxPollDelay => $_getN(2);
+  $8.Duration get maxPollDelay => $_getN(2);
   @$pb.TagNumber(3)
-  set maxPollDelay($17.Duration v) {
+  set maxPollDelay($8.Duration v) {
     setField(3, v);
   }
 
@@ -1385,14 +1566,14 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearMaxPollDelay() => clearField(3);
   @$pb.TagNumber(3)
-  $17.Duration ensureMaxPollDelay() => $_ensure(2);
+  $8.Duration ensureMaxPollDelay() => $_ensure(2);
 
   /// Total polling timeout.
   /// Default value: 5 minutes.
   @$pb.TagNumber(4)
-  $17.Duration get totalPollTimeout => $_getN(3);
+  $8.Duration get totalPollTimeout => $_getN(3);
   @$pb.TagNumber(4)
-  set totalPollTimeout($17.Duration v) {
+  set totalPollTimeout($8.Duration v) {
     setField(4, v);
   }
 
@@ -1401,7 +1582,7 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearTotalPollTimeout() => clearField(4);
   @$pb.TagNumber(4)
-  $17.Duration ensureTotalPollTimeout() => $_ensure(3);
+  $8.Duration ensureTotalPollTimeout() => $_ensure(3);
 }
 
 /// Describes the generator configuration for a method.
@@ -1526,6 +1707,87 @@ class MethodSettings extends $pb.GeneratedMessage {
   ///         - request_id
   @$pb.TagNumber(3)
   $core.List<$core.String> get autoPopulatedFields => $_getList(2);
+}
+
+/// This message is used to configure the generation of a subset of the RPCs in
+/// a service for client libraries.
+class SelectiveGapicGeneration extends $pb.GeneratedMessage {
+  factory SelectiveGapicGeneration({
+    $core.Iterable<$core.String>? methods,
+    $core.bool? generateOmittedAsInternal,
+  }) {
+    final $result = create();
+    if (methods != null) {
+      $result.methods.addAll(methods);
+    }
+    if (generateOmittedAsInternal != null) {
+      $result.generateOmittedAsInternal = generateOmittedAsInternal;
+    }
+    return $result;
+  }
+  SelectiveGapicGeneration._() : super();
+  factory SelectiveGapicGeneration.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory SelectiveGapicGeneration.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SelectiveGapicGeneration',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
+      createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'methods')
+    ..aOB(2, _omitFieldNames ? '' : 'generateOmittedAsInternal')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  SelectiveGapicGeneration clone() =>
+      SelectiveGapicGeneration()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  SelectiveGapicGeneration copyWith(
+          void Function(SelectiveGapicGeneration) updates) =>
+      super.copyWith((message) => updates(message as SelectiveGapicGeneration))
+          as SelectiveGapicGeneration;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SelectiveGapicGeneration create() => SelectiveGapicGeneration._();
+  SelectiveGapicGeneration createEmptyInstance() => create();
+  static $pb.PbList<SelectiveGapicGeneration> createRepeated() =>
+      $pb.PbList<SelectiveGapicGeneration>();
+  @$core.pragma('dart2js:noInline')
+  static SelectiveGapicGeneration getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SelectiveGapicGeneration>(create);
+  static SelectiveGapicGeneration? _defaultInstance;
+
+  /// An allowlist of the fully qualified names of RPCs that should be included
+  /// on public client surfaces.
+  @$pb.TagNumber(1)
+  $core.List<$core.String> get methods => $_getList(0);
+
+  /// Setting this to true indicates to the client generators that methods
+  /// that would be excluded from the generation should instead be generated
+  /// in a way that indicates these methods should not be consumed by
+  /// end users. How this is expressed is up to individual language
+  /// implementations to decide. Some examples may be: added annotations,
+  /// obfuscated identifiers, or other language idiomatic patterns.
+  @$pb.TagNumber(2)
+  $core.bool get generateOmittedAsInternal => $_getBF(1);
+  @$pb.TagNumber(2)
+  set generateOmittedAsInternal($core.bool v) {
+    $_setBool(1, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasGenerateOmittedAsInternal() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearGenerateOmittedAsInternal() => clearField(2);
 }
 
 class Client {

@@ -6,8 +6,6 @@ import 'dart:math';
 import 'package:async/async.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_ast/celest_ast.dart';
-import 'package:celest_ast/src/proto/celest/ast/v1/resolved_ast.pb.dart'
-    as astpb;
 import 'package:celest_cli/src/analyzer/analysis_error.dart';
 import 'package:celest_cli/src/analyzer/analysis_result.dart';
 import 'package:celest_cli/src/analyzer/celest_analyzer.dart';
@@ -900,10 +898,7 @@ final class CelestFrontend {
           );
           final operation = cloud.projects.environments.deploy(
             environmentName,
-            // HACK(dnys1): celest_ast and celest_cloud don't share types.
-            resolvedProject: pb.ResolvedProject.fromBuffer(
-              resolvedProject.toProto().writeToBuffer(),
-            ),
+            resolvedProject: resolvedProject.toProto(),
             assets: [
               pb.ProjectAsset(
                 type: pb.ProjectAsset_Type.DART_KERNEL,
@@ -930,7 +925,7 @@ final class CelestFrontend {
           logger.fine('Deployed project: $deployment');
           return (
             ast.ResolvedProject.fromProto(
-              astpb.ResolvedProject.fromBuffer(
+              pb.ResolvedProject.fromBuffer(
                 deployment.project.writeToBuffer(),
               ),
             ),
