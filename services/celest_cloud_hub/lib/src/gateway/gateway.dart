@@ -158,12 +158,10 @@ final class _GrpcHandler {
         ...await grpcCall.headers,
         ...await grpcCall.trailers,
       };
-      final grpcStatus = switch (grpcHeaders.remove(':status')) {
-        final status? => int.parse(status),
-        _ => exception.code,
-      };
+      // Remove HTTP2 headers
+      grpcHeaders.remove(':status');
       return shelf.Response(
-        grpcStatus,
+        exception.httpStatus,
         body: serialized,
         headers: {
           ...grpcHeaders,

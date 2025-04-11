@@ -72,9 +72,11 @@ final class ProjectLinker extends AstVisitorWithArg<Node?, AstNode> {
     required Map<String, String> configValues,
     required String environmentId,
     this.driftSchemas = const {},
-  }) : configValues = {...configValues, 'CELEST_ENVIRONMENT': environmentId};
+  })  : configValues = {...configValues, 'CELEST_ENVIRONMENT': environmentId},
+        _resolvedProject = ResolvedProjectBuilder()
+          ..environmentId = environmentId;
 
-  final _resolvedProject = ResolvedProjectBuilder();
+  final ResolvedProjectBuilder _resolvedProject;
   late final ResolvedProject resolvedProject = run(() {
     final celestConfigValues = configValues.keys.toSet().difference(
           _seenConfigValues,

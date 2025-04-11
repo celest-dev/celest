@@ -453,18 +453,20 @@ void main() {
       });
     });
 
-    group('unimplemented methods', () {
-      test('deployProjectEnvironment', () async {
+    group('deployProjectEnvironment', () {
+      test('not found', () async {
         await expectLater(
           service.deployProjectEnvironment(
             FakeServiceCall(),
-            DeployProjectEnvironmentRequest(),
+            DeployProjectEnvironmentRequest(
+              name: 'projects/$projectId/environments/test-env',
+            ),
           ),
           throwsA(
             isA<GrpcError>().having(
               (it) => it.code,
               'code',
-              grpc.StatusCode.unimplemented,
+              grpc.StatusCode.notFound,
             ),
           ),
         );

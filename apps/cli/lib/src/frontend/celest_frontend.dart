@@ -30,7 +30,6 @@ import 'package:celest_cli/src/repositories/project_repository.dart';
 import 'package:celest_cli/src/utils/json.dart';
 import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cloud/src/proto.dart' as pb;
-import 'package:celest_core/_internal.dart';
 import 'package:dcli/dcli.dart' as dcli;
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
@@ -555,7 +554,6 @@ final class CelestFrontend {
           );
           try {
             await _writeProjectOutputs(
-              project: project,
               resolvedProject: resolvedProject,
               environmentId: environmentId,
             );
@@ -653,8 +651,7 @@ final class CelestFrontend {
               iteration++;
             });
             final (deployedProject, baseUri) = await _deployProject(
-              projectId: projectId,
-              environmentId: environment.projectEnvironmentId,
+              environmentName: environment.name,
               resolvedProject: resolvedProject,
             );
             await _generateClientCode(
@@ -745,7 +742,6 @@ final class CelestFrontend {
       });
 
   Future<void> _writeProjectOutputs({
-    required Project project,
     required ResolvedProject resolvedProject,
     required String environmentId,
   }) async {
@@ -788,7 +784,7 @@ final class CelestFrontend {
         }
     }
 
-    final dockerfile = DockerfileGenerator(project: project);
+    final dockerfile = DockerfileGenerator(project: resolvedProject);
     await buildOutputs
         .childFile('Dockerfile')
         .writeAsString(dockerfile.generate());
@@ -887,12 +883,10 @@ final class CelestFrontend {
   }
 
   Future<(ast.ResolvedProject, Uri)> _deployProject({
-    required String projectId,
-    required String environmentId,
+    required String environmentName,
     required ast.ResolvedProject resolvedProject,
   }) =>
       performance.trace('CelestFrontend', 'deployProject', () async {
-        final deploymentId = Uuid.v7().hexValue;
         try {
           final entrypointCompiler = EntrypointCompiler(
             logger: logger,
@@ -905,7 +899,7 @@ final class CelestFrontend {
             entrypointPath: projectPaths.localApiEntrypoint,
           );
           final operation = cloud.projects.environments.deploy(
-            'projects/$projectId/environments/$environmentId',
+            environmentName,
             // HACK(dnys1): celest_ast and celest_cloud don't share types.
             resolvedProject: pb.ResolvedProject.fromBuffer(
               resolvedProject.toProto().writeToBuffer(),
@@ -918,7 +912,6 @@ final class CelestFrontend {
                 inline: kernel.outputDill,
               ),
             ],
-            requestId: deploymentId,
           );
           final waiter = CloudCliOperation(
             operation,
@@ -945,24 +938,14 @@ final class CelestFrontend {
           );
         } on Exception catch (e, st) {
           if (e case CancellationException() || CliException()) {
-            analytics.capture(
-              'cancel_deployment',
-              properties: {
-                'deployment_id': deploymentId,
-                'project_id': projectId,
-                'environment_id': environmentId,
-              },
-            );
             rethrow;
           }
           Error.throwWithStackTrace(
             CliException(
               'Failed to deploy project. Please contact the Celest team and '
-              'reference deployment ID: $deploymentId',
+              'reference environment: $environmentName',
               additionalContext: {
-                'deploymentId': deploymentId,
-                'project_id': projectId,
-                'environment_id': environmentId,
+                'environment_name': environmentName,
                 'error': '$e',
               },
             ),

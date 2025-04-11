@@ -19,7 +19,7 @@ final class ProjectRepository {
         return null;
       }
       final cloudPrj = await _cloud.projects.get(
-        '${organization.name}projects/$projectIdOrAlias',
+        '${organization.name}/projects/$projectIdOrAlias',
       );
       return cloudPrj;
     } on Object catch (e, st) {

@@ -11,6 +11,14 @@ import 'package:celest_cloud/src/cloud/projects/projects.dart';
 import 'package:celest_cloud/src/cloud/subscriptions/subscriptions.dart';
 import 'package:celest_cloud/src/cloud/users/users.dart';
 import 'package:celest_cloud/src/proto.dart';
+import 'package:celest_cloud/src/proto/google/protobuf/duration.pb.dart' as pb;
+import 'package:celest_cloud/src/proto/google/protobuf/empty.pb.dart' as pb;
+import 'package:celest_cloud/src/proto/google/protobuf/field_mask.pb.dart'
+    as pb;
+import 'package:celest_cloud/src/proto/google/protobuf/struct.pb.dart' as pb;
+import 'package:celest_cloud/src/proto/google/protobuf/timestamp.pb.dart' as pb;
+import 'package:celest_cloud/src/proto/google/protobuf/wrappers.pb.dart' as pb;
+import 'package:celest_cloud/src/proto/google/rpc/status.pb.dart' as pb;
 import 'package:celest_core/_internal.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
@@ -117,11 +125,32 @@ class CelestCloud {
                           : ClientType.CLIENT_TYPE_UNSPECIFIED;
 
   static final typeRegistry = TypeRegistry([
-    Empty(),
+    // Cloud
     OperationMetadata(),
+    Operation(),
     Organization(),
     Project(),
     ProjectEnvironment(),
+    DeployProjectEnvironmentResponse(),
+
+    // RPC
+    pb.Status(),
+
+    // Well-known types
+    pb.BoolValue(),
+    pb.StringValue(),
+    pb.Int32Value(),
+    pb.Int64Value(),
+    pb.FloatValue(),
+    pb.DoubleValue(),
+    pb.Timestamp(),
+    pb.BytesValue(),
+    pb.Duration(),
+    pb.FieldMask(),
+    pb.Empty(),
+    pb.Struct(),
+    pb.ListValue(),
+    pb.Value(),
   ]);
 
   final Uri? _baseUri;
