@@ -193,6 +193,11 @@ final class CelestProject {
   Pubspec get pubspec => _cachedPubspec.pubspec;
   String get pubspecYaml => _cachedPubspec.pubspecYaml;
 
+  /// Whether the project uses `package:build_runner`.
+  bool get usesBuildRunner {
+    return pubspec.devDependencies.containsKey('build_runner');
+  }
+
   late final _cachedClientPubspec = CachedPubspec(
     fileSystem.directory(projectPaths.clientRoot).childFile('pubspec.yaml'),
   );

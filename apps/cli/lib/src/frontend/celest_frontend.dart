@@ -5,7 +5,7 @@ import 'dart:math';
 
 import 'package:async/async.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
-import 'package:celest_ast/celest_ast.dart';
+import 'package:celest_ast/celest_ast.dart' hide Sdk;
 import 'package:celest_cli/src/analyzer/analysis_error.dart';
 import 'package:celest_cli/src/analyzer/analysis_result.dart';
 import 'package:celest_cli/src/analyzer/celest_analyzer.dart';
@@ -25,8 +25,11 @@ import 'package:celest_cli/src/project/project_linker.dart';
 import 'package:celest_cli/src/repositories/organization_repository.dart';
 import 'package:celest_cli/src/repositories/project_environment_repository.dart';
 import 'package:celest_cli/src/repositories/project_repository.dart';
+import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/utils/json.dart';
+import 'package:celest_cli/src/utils/process.dart';
 import 'package:celest_cli/src/utils/recase.dart';
+import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cloud/src/proto.dart' as pb;
 import 'package:dcli/dcli.dart' as dcli;
 import 'package:logging/logging.dart';
@@ -90,6 +93,15 @@ final class CelestFrontend {
   /// Queues changes detected by [_watcher].
   StreamQueue<List<WatchEvent>>? _watcherSub;
 
+  /// Queues changes made by build_runner.
+  ///
+  /// When a Celest project also uses build_runner, we want to defer any codegen
+  /// or analysis work until after build_runner completes its changes.
+  ///
+  /// This is important for correctly analyzing code which would depend on
+  /// build_runner outputs like drift or json_serializable.
+  Stream<void>? _buildRunner;
+
   /// The list of paths changed since the last frontend pass.
   Set<String>? _changedPaths;
 
@@ -106,6 +118,65 @@ final class CelestFrontend {
   // TODO(dnys1): If pubspec.yaml changes, we should run pub get and create
   // a new analysis context.
 
+  /// Starts a `build_runner watch` daemon and monitors reloads via stdout.
+  Future<Stream<void>> _buildRunnerWatch() async {
+    final process = await processManager.start(
+      [Sdk.current.dart, 'run', 'build_runner', 'watch', '-d'],
+      workingDirectory: projectPaths.projectRoot,
+    );
+
+    final output = StreamController<String>(sync: true);
+    process
+      ..captureStdout(sink: logger.finest, prefix: 'build_runner: ')
+      ..captureStdout(sink: output.add)
+      ..captureStderr(sink: logger.finest, prefix: 'build_runner: ')
+      ..captureStderr(sink: output.add);
+    unawaited(process.exitCode.then((_) => output.close()));
+
+    final queue = StreamQueue(
+      output.stream.where((line) {
+        // Two possibile end states (success/failure):
+        // https://github.com/dart-lang/build/blob/7bb331e97238b3ec0167768d26a9d8398a32988a/build_runner_core/lib/src/generate/build.dart#L161-L169
+        if (line.contains('Succeeded after')) {
+          return true;
+        }
+        if (line.contains('Failed after')) {
+          throw CliException(
+            'Error running `build_runner`. '
+            'Run `dart run build_runner build` from ${projectPaths.projectRoot} and try again.',
+          );
+        }
+        return false;
+      }),
+    );
+    await Future.any([
+      process.exitCode.then((code) {
+        throw CliException('Error running `build_runner`: exited with $code');
+      }),
+      queue.next,
+    ]);
+
+    return queue.rest;
+  }
+
+  /// Runs `build_runner` build from the project root.
+  Future<void> _buildRunnerBuild() async {
+    final process = await processManager.start(
+      [Sdk.current.dart, 'run', 'build_runner', 'build', '-d'],
+      workingDirectory: projectPaths.projectRoot,
+    );
+    process
+      ..captureStdout(sink: logger.finest, prefix: 'build_runner: ')
+      ..captureStderr(sink: logger.finest, prefix: 'build_runner: ');
+
+    final exitCode = await process.exitCode;
+    if (exitCode != 0) {
+      logger.warning(
+        'Failed to run build_runner. Project may fail to compile.',
+      );
+    }
+  }
+
   /// Notifies the watcher that we're listening for filesystem changes.
   Future<void> _nextChangeSet() async {
     logger.finer('Waiting for changes...');
@@ -115,19 +186,29 @@ final class CelestFrontend {
     _watcher ??= DirectoryWatcher(projectPaths.projectRoot);
     _watcherSub ??= StreamQueue(
       _watcher!.events
-          // Ignore creation of new directories and files (they'll be empty)
           .tap(
-            (event) =>
-                logger.finest('Watcher event (${event.type}): ${event.path}'),
+            (event) => logger.finest(
+              'Watcher event (${event.type}): ${event.path}',
+            ),
           )
+          .let((s) {
+            // Buffer build runner passes, e.g. wait for build_runner to
+            // react to watcher events before opening the flood gates to Celest.
+            if (_buildRunner case final buildRunner?) {
+              return s.buffer(buildRunner).expand((it) => it);
+            }
+            return s;
+          })
+          // Ignore creation of new directories and files (they'll be empty)
           .where((event) => event.type != ChangeType.ADD)
           .where((event) {
-        final isReloadable = _isReloadablePath(event.path);
-        if (!isReloadable) {
-          logger.finest('Ignoring non-reloadable path: ${event.path}');
-        }
-        return isReloadable;
-      }).buffer(_readyForChanges.stream),
+            final isReloadable = _isReloadablePath(event.path);
+            if (!isReloadable) {
+              logger.finest('Ignoring non-reloadable path: ${event.path}');
+            }
+            return isReloadable;
+          })
+          .buffer(_readyForChanges.stream),
     );
     _readyForChanges.add(null);
 
@@ -260,6 +341,9 @@ final class CelestFrontend {
   }) async {
     try {
       while (!stopped) {
+        if (celestProject.usesBuildRunner) {
+          _buildRunner ??= await _buildRunnerWatch();
+        }
         currentProgress ??= cliLogger.progress('Reloading Celest');
 
         void fail(List<CelestAnalysisError> errors) {
@@ -522,6 +606,10 @@ final class CelestFrontend {
     required String environmentId,
   }) async {
     try {
+      if (celestProject.usesBuildRunner) {
+        await _buildRunnerBuild();
+      }
+
       int fail(List<CelestAnalysisError> errors) {
         currentProgress.fail(
           'Project has errors. Please fix them and save the '
@@ -590,6 +678,10 @@ final class CelestFrontend {
       while (!stopped) {
         if (projectId != null) {
           currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
+        }
+
+        if (celestProject.usesBuildRunner) {
+          await _buildRunnerBuild();
         }
 
         void fail(List<CelestAnalysisError> errors) {
