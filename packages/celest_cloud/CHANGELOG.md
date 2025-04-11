@@ -1,4 +1,4 @@
-# 0.1.5-wip
+# 0.1.5
 
 - feat: Add `Operations.waitOperation`
 - chore: Update license

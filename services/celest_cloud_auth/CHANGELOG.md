@@ -1,4 +1,4 @@
-## 0.3.0-wip
+## 0.3.0
 
 - feat!: Make database modular
 - refactor!: Rename `AuthDatabase` to `CloudAuthDatabase`
