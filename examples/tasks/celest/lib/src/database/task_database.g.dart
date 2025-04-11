@@ -25,8 +25,6 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
           GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 100),
       type: DriftSqlType.string,
       requiredDuringInsert: true);
-  static const VerificationMeta _priorityMeta =
-      const VerificationMeta('priority');
   @override
   late final GeneratedColumnWithTypeConverter<Priority, String> priority =
       GeneratedColumn<String>('priority', aliasedName, false,
@@ -63,7 +61,6 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
-    context.handle(_priorityMeta, const VerificationResult.success());
     if (data.containsKey('completed')) {
       context.handle(_completedMeta,
           completed.isAcceptableOrUnknown(data['completed']!, _completedMeta));
