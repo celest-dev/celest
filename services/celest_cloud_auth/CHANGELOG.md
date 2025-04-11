@@ -4,6 +4,7 @@
 - refactor!: Rename `AuthDatabase` to `CloudAuthDatabase`
 - refactor!: Rename all entities with `cloud_auth_` prefix
 - fix: Correctly route `users/me`
+- fix: Verification code email rendering
 - chore: Make `Authorizer` a class
 - chore: Update dependencies
 
