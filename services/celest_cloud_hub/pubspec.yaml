@@ -31,6 +31,8 @@ dependencies:
   process: ^5.0.3
   protobuf: ^3.1.0
   pub_semver: ^2.2.0
+  sentry: ^8.14.1
+  sentry_logging: ^8.14.1
   shelf: ^1.4.0
   shelf_router: ^1.1.0
   sqlite3: ^2.7.5

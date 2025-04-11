@@ -22,12 +22,14 @@ export 'package:celest_backend/src/functions/tasks.dart' show ServerException;
 final Celest celest = Celest();
 
 enum CelestEnvironment {
-  local;
+  local,
+  production;
 
   Uri get baseUri => switch (this) {
         local => _$celest.kIsWeb || !Platform.isAndroid
-            ? Uri.parse('http://localhost:53358')
-            : Uri.parse('http://10.0.2.2:53358'),
+            ? Uri.parse('http://localhost:7777')
+            : Uri.parse('http://10.0.2.2:7777'),
+        production => Uri.parse('https://tasks-694b15.fly.dev'),
       };
 }
 
@@ -67,11 +69,16 @@ class Celest with _$celest.CelestBase {
     CelestEnvironment environment = CelestEnvironment.local,
     _$celest.Serializers? serializers,
   }) {
+    if (_initialized) {
+      _reset();
+    }
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
-    if (!_initialized) {
-      initSerializers(serializers: serializers);
-    }
+    initSerializers(serializers: serializers);
     _initialized = true;
+  }
+
+  void _reset() {
+    _initialized = false;
   }
 }

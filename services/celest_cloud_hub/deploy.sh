@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # This script deploys the Celest Cloud Hub to Fly.io
 #
 # Usage:

@@ -5,6 +5,8 @@
 # Usage:
 #   ./build.sh [--push]
 
+set -e
+
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
 docker build \

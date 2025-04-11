@@ -15,6 +15,7 @@ import 'package:celest_cli/src/project/project_paths.dart';
 import 'package:celest_cli/src/serialization/json_generator.dart';
 import 'package:celest_cli/src/storage/storage.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
+import 'package:celest_cli/src/version.dart';
 import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:file/file.dart';
@@ -169,10 +170,11 @@ bool kCelestTest = false;
 http.Client httpClient = http.RetryClient(
   http.IOClient(
     HttpClient()
-      ..userAgent = 'Celest/CLI'
+      ..userAgent = 'Celest-CLI/$packageVersion'
+      ..idleTimeout = const Duration(seconds: 60)
       ..connectionTimeout = const Duration(seconds: 4),
   ),
-  whenError: (e, _) => e is SocketException,
+  whenError: (e, _) => e is SocketException || e is http.ClientException,
 );
 
 /// Global analytics instance.

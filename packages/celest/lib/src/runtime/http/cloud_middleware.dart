@@ -75,7 +75,15 @@ final class CorsMiddleware implements Middleware {
 /// {@endtemplate}
 final class CloudExceptionMiddleware implements Middleware {
   /// {@macro celest.runtime.cloud_exception_middleware}
-  const CloudExceptionMiddleware();
+  const CloudExceptionMiddleware({
+    this.onException,
+  });
+
+  /// Optional function to be called when an exception occurs.
+  ///
+  /// This can be used to react to exceptions but does not affect the default
+  /// handling for responses.
+  final void Function(Object, StackTrace)? onException;
 
   @override
   Handler call(Handler inner) {
@@ -83,6 +91,7 @@ final class CloudExceptionMiddleware implements Middleware {
       try {
         return await inner(request);
       } on CloudException catch (e, st) {
+        onException?.call(e, st);
         context.logger.severe(e.message, e, st);
         return Response(
           e.code,
@@ -109,6 +118,7 @@ final class CloudExceptionMiddleware implements Middleware {
         );
       } on Exception catch (e, st) {
         if (e is HijackException) rethrow;
+        onException?.call(e, st);
         context.logger.severe('An unexpected exception occurred', e, st);
         return Response.badRequest(
           headers: const {
@@ -133,6 +143,7 @@ final class CloudExceptionMiddleware implements Middleware {
           }),
         );
       } on Error catch (e, st) {
+        onException?.call(e, st);
         context.logger.shout('An unexpected error occurred', e, st);
         return Response.internalServerError(
           headers: const {

@@ -10,17 +10,23 @@ build:
   image: celestdev/cloud-hub:latest
 
 env:
-  CLOUD_HUB_DATABASE_HOST: "file::memory:"
+  CLOUD_HUB_DATABASE_HOST: "file:///db/CloudHubDatabase.db"
+  LOG_LEVEL: ALL
+  SENTRY_DSN: https://dee57feed8364d2768bdcc8c856ac6ba@o4506345201532928.ingest.us.sentry.io/4509136061988864
 
 http_service:
   internal_port: 8080
   force_https: true
   auto_stop_machines: true
   auto_start_machines: true
-  min_machines_running: 0
+  min_machines_running: 1
 
   processes:
     - app
+
+mounts:
+  - source: db
+    destination: /db
 
 vm:
   - size: performance-8x

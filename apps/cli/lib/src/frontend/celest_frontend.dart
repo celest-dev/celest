@@ -856,7 +856,7 @@ final class CelestFrontend {
       case ast.SdkType.flutter:
         final bundleRes = await processManager.run(
           [
-            'flutter',
+            Sdk.current.flutter ?? 'flutter',
             'build',
             'bundle',
             '--packages=${projectPaths.packagesConfig}',
@@ -977,68 +977,48 @@ final class CelestFrontend {
     required ast.ResolvedProject resolvedProject,
   }) =>
       performance.trace('CelestFrontend', 'deployProject', () async {
-        try {
-          final entrypointCompiler = EntrypointCompiler(
-            logger: logger,
-            verbose: verbose,
-            enabledExperiments:
-                celestProject.analysisOptions.enabledExperiments,
-          );
-          final kernel = await entrypointCompiler.compile(
-            resolvedProject: resolvedProject,
-            entrypointPath: projectPaths.localApiEntrypoint,
-          );
-          final operation = cloud.projects.environments.deploy(
-            environmentName,
-            resolvedProject: resolvedProject.toProto(),
-            assets: [
-              pb.ProjectAsset(
-                type: pb.ProjectAsset_Type.DART_KERNEL,
-                etag: kernel.outputDillDigest.toString(),
-                filename: p.basename(kernel.outputDillPath),
-                inline: kernel.outputDill,
-              ),
-            ],
-          );
-          final waiter = CloudCliOperation(
-            operation,
-            resourceType: 'project',
-            logger: logger,
-          );
-          final deployment = await waiter.run(
-            verbs: const (
-              run: 'deploy',
-              running: 'Deploying',
-              completed: 'deployed',
+        final entrypointCompiler = EntrypointCompiler(
+          logger: logger,
+          verbose: verbose,
+          enabledExperiments: celestProject.analysisOptions.enabledExperiments,
+        );
+        final kernel = await entrypointCompiler.compile(
+          resolvedProject: resolvedProject,
+          entrypointPath: projectPaths.localApiEntrypoint,
+        );
+        final operation = cloud.projects.environments.deploy(
+          environmentName,
+          resolvedProject: resolvedProject.toProto(),
+          assets: [
+            pb.ProjectAsset(
+              type: pb.ProjectAsset_Type.DART_KERNEL,
+              etag: kernel.outputDillDigest.toString(),
+              filename: p.basename(kernel.outputDillPath),
+              inline: kernel.outputDill,
             ),
-            cancelTrigger: _stopSignal.future,
-            resource: pb.DeployProjectEnvironmentResponse(),
-          );
-          logger.fine('Deployed project: $deployment');
-          return (
-            ast.ResolvedProject.fromProto(
-              pb.ResolvedProject.fromBuffer(
-                deployment.project.writeToBuffer(),
-              ),
-            ),
-            Uri.parse(deployment.uri),
-          );
-        } on Exception catch (e, st) {
-          if (e case CancellationException() || CliException()) {
-            rethrow;
-          }
-          Error.throwWithStackTrace(
-            CliException(
-              'Failed to deploy project. Please contact the Celest team and '
-              'reference environment: $environmentName',
-              additionalContext: {
-                'environment_name': environmentName,
-                'error': '$e',
-              },
-            ),
-            st,
-          );
-        }
+          ],
+        );
+        final waiter = CloudCliOperation(
+          operation,
+          resourceType: 'project',
+          logger: logger,
+        );
+        final deployment = await waiter.run(
+          verbs: const (
+            run: 'deploy',
+            running: 'Deploying',
+            completed: 'deployed',
+          ),
+          cancelTrigger: _stopSignal.future,
+          resource: pb.DeployProjectEnvironmentResponse(),
+        );
+        final deployedProject =
+            deployment.project.unpackInto(pb.ResolvedProject());
+        logger.fine('Deployed project to ${deployment.uri}: $deployedProject');
+        return (
+          ast.ResolvedProject.fromProto(deployedProject),
+          Uri.parse(deployment.uri),
+        );
       });
 
   Future<void> _generateClientCode({
