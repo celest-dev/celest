@@ -1,3 +1,35 @@
+# Builds SQLite from Source
+#
+# The version shipped with apt is very outdated (3.40.1). This is the only way
+# it seems to get anything newer.
+FROM debian:bookworm-slim AS sqlite
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    tcl-dev \
+    libreadline-dev \
+    wget \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set up build directory
+WORKDIR /sqlite_build
+
+# Download the latest SQLite source
+ARG SQLITE_VERSION=3490100
+RUN wget https://www.sqlite.org/2025/sqlite-autoconf-${SQLITE_VERSION}.tar.gz \
+    && tar xzf sqlite-autoconf-${SQLITE_VERSION}.tar.gz \
+    && cd sqlite-autoconf-${SQLITE_VERSION}
+
+# Build SQLite with default options
+WORKDIR /sqlite_build/sqlite-autoconf-${SQLITE_VERSION}
+RUN CFLAGS='-DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_JSON1' \
+    ./configure --prefix=/usr \
+    --enable-threadsafe \
+    && make -j$(nproc) \
+    && make install DESTDIR=/sqlite_install
+
 FROM dart:stable AS build
 
 # Set the dependency versions
@@ -21,11 +53,6 @@ RUN arch=$(uname -m) && \
     chmod +x /usr/local/bin/flyctl && \
     chmod +x /usr/local/bin/yq && \
     rm -rf flyctl.tar.gz /tmp/flyctl
-
-# Install sqlite3
-WORKDIR /app
-RUN apt update && apt install -y libsqlite3-0
-RUN cp $(find / -name libsqlite3.so* -type f | head -n1) /app/libsqlite3.so
 
 # Fix pub cache
 WORKDIR /app
@@ -52,11 +79,24 @@ WORKDIR /app/services/celest_cloud_hub
 RUN dart pub get
 RUN dart compile exe bin/cloud_hub.dart -o /app/cloud_hub
 
-FROM scratch
-COPY --from=build /runtime/ /
-COPY --from=build /app/cloud_hub /app/cloud_hub
-COPY --from=build /app/libsqlite3.so /app/libsqlite3.so
+FROM debian:bookworm-slim
+
+# Configure SQLite
+COPY --from=sqlite /sqlite_install /
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    libreadline8 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Verify SQLite installation
+RUN sqlite3 --version && \
+    ldconfig && \
+    ldd $(which sqlite3)
+
 COPY --from=build /usr/local/bin/flyctl /usr/local/bin/flyctl
+COPY --from=build /app/cloud_hub /app/cloud_hub
 
 ENV PORT=8080
 EXPOSE $PORT

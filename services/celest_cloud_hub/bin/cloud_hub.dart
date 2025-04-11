@@ -23,10 +23,18 @@ import 'package:celest_cloud_hub/src/services/projects_service.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:logging/logging.dart';
+import 'package:sentry/sentry.dart';
+import 'package:sentry_logging/sentry_logging.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 Future<void> main() async {
-  context.logger.level = Level.INFO;
+  context.logger.level = switch (Platform.environment['LOG_LEVEL']) {
+    final level? => Level.LEVELS.firstWhere(
+      (l) => l.name.toLowerCase() == level.toLowerCase(),
+      orElse: () => throw StateError('Invalid log level: $level'),
+    ),
+    _ => Level.INFO,
+  };
   context.logger.onRecord.listen((record) {
     print('${record.level.name}: ${record.time}: ${record.message}');
     if (record.error != null) {
@@ -44,6 +52,40 @@ Future<void> main() async {
 
   context.logger.config('Starting Cloud Hub');
 
+  final sentryDsn = Platform.environment['SENTRY_DSN'];
+  if (sentryDsn == null) {
+    return _run();
+  }
+  return Sentry.init(
+    (options) {
+      options
+        ..dsn = sentryDsn
+        ..environment = kDebugMode ? 'dev' : 'prod'
+        ..debug = context.logger.level > Level.INFO
+        ..tracesSampleRate = 1
+        ..sampleRate = 1
+        ..attachStacktrace = true
+        ..sendDefaultPii = true
+        ..attachThreads = true
+        ..captureFailedRequests = true
+        ..httpClient = context.httpClient
+        ..markAutomaticallyCollectedErrorsAsFatal = true
+        ..enableDeduplication = true
+        ..addIntegration(
+          // Only using for breadcrumbs.
+          LoggingIntegration(
+            minBreadcrumbLevel: Level.ALL,
+            minEventLevel: const Level('EVENT', 1500),
+          ),
+        );
+    },
+    appRunner: _run,
+    // ignore: invalid_use_of_internal_member
+    callAppRunnerInRunZonedGuarded: false,
+  );
+}
+
+Future<void> _run() async {
   context.logger.config('Configuring Cloud Hub database');
   final db = await connect(
     Context.current,
@@ -120,8 +162,10 @@ Future<void> main() async {
       await gateway.start();
     },
     onError: (error, stackTrace) {
-      context.logger.severe('Unexpected error', error, stackTrace);
-      exit(1);
+      context.logger.shout('Unexpected error', error, stackTrace);
+      if (Sentry.isEnabled) {
+        Sentry.captureException(error, stackTrace: stackTrace);
+      }
     },
   );
 

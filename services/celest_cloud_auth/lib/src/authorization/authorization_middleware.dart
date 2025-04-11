@@ -72,7 +72,7 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
       requestPath,
     );
     if (result == null) {
-      throw core.InternalServerError(
+      throw core.NotFoundException(
         'Route not found: ${request.method} $requestPath',
       );
     }

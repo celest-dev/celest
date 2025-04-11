@@ -286,6 +286,8 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       throw GrpcError.failedPrecondition('Etag mismatch');
     }
 
+    // TODO(dnys1): Delete deployment if available.
+
     final deletedEnvironment =
         (await _db.projectEnvironmentsDrift.deleteProjectEnvironment(
           id: environment.id,

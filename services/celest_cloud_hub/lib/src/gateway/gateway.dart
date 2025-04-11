@@ -17,6 +17,7 @@ import 'package:celest_core/celest_core.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:grpc/src/shared/status.dart' show grpcErrorDetailsFromTrailers;
 import 'package:protobuf/protobuf.dart';
+import 'package:sentry/sentry.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as shelf;
 import 'package:shelf_router/shelf_router.dart';
@@ -33,7 +34,16 @@ final class Gateway {
       grpcAddress,
       options: grpc.ChannelOptions(
         credentials: grpc.ChannelCredentials.insecure(),
+        keepAlive: grpc.ClientKeepAliveOptions(
+          pingInterval: const Duration(seconds: 5),
+          permitWithoutCalls: true,
+        ),
       ),
+      channelShutdownHandler: () {
+        if (Sentry.isEnabled) {
+          Sentry.captureException('Channel shutdown');
+        }
+      },
     );
     final router = Router();
 
@@ -50,7 +60,12 @@ final class Gateway {
     return Gateway._(
       const shelf.Pipeline()
           .addMiddleware(const RootMiddleware().call)
-          .addMiddleware(const CloudExceptionMiddleware().call)
+          .addMiddleware(
+            CloudExceptionMiddleware(
+              onException:
+                  (e, st) => Sentry.captureException(e, stackTrace: st),
+            ).call,
+          )
           .addMiddleware(cloudAuth.middleware.call)
           .addHandler(router.call),
       clientChannel,
@@ -140,11 +155,7 @@ final class _GrpcHandler {
       if (grpcError != null) {
         throw grpcError;
       }
-      final headers = {
-        ...grpcHeaders,
-        'Content-Type': 'application/json',
-        'Content-Length': responseBody.length.toString(),
-      };
+      final headers = {...grpcHeaders, 'Content-Type': 'application/json'};
       // Remove HTTP2 headers
       headers.remove(':status');
       return shelf.Response.ok(responseBody, headers: headers);
@@ -163,11 +174,7 @@ final class _GrpcHandler {
       return shelf.Response(
         exception.httpStatus,
         body: serialized,
-        headers: {
-          ...grpcHeaders,
-          'Content-Type': 'application/json',
-          'Content-Length': serialized.length.toString(),
-        },
+        headers: {...grpcHeaders, 'Content-Type': 'application/json'},
       );
     }
   }

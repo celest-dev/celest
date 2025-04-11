@@ -1,6 +1,8 @@
 /// @docImport 'dart:io';
 library;
 
+import 'package:celest_ast/src/proto/celest/ast/v1/resolved_ast.pb.dart'
+    as astpb;
 import 'package:celest_cloud/src/cloud/authentication/authentication.dart';
 import 'package:celest_cloud/src/cloud/cloud_protocol.dart';
 import 'package:celest_cloud/src/cloud/cloud_protocol.grpc.dart';
@@ -132,6 +134,9 @@ class CelestCloud {
     Project(),
     ProjectEnvironment(),
     DeployProjectEnvironmentResponse(),
+
+    // AST
+    astpb.ResolvedProject(),
 
     // RPC
     pb.Status(),

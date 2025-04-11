@@ -8,6 +8,7 @@ import 'package:celest_cloud_hub/src/services/service_mixin.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:logging/logging.dart';
 
 import 'cloud_hub_database.drift.dart';
 
@@ -49,6 +50,8 @@ final class CloudHubDatabase extends $CloudHubDatabase
     uid: const EntityUid.of('Celest::Organization', 'celest-dev'),
   );
 
+  static final Logger _logger = Logger('CloudHubDatabase');
+
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) async {
@@ -58,6 +61,11 @@ final class CloudHubDatabase extends $CloudHubDatabase
       await cloudAuth.onUpgrade(m);
     },
     beforeOpen: (details) async {
+      final versionRow =
+          await customSelect('SELECT sqlite_version() as version;').getSingle();
+      final version = versionRow.read<String>('version');
+      _logger.config('Using SQLite v$version');
+
       await withoutForeignKeys(() async {
         if (details.wasCreated) {
           await cloudAuth.seed(
