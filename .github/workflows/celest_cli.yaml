@@ -5,6 +5,8 @@ on:
       - ".github/workflows/celest_cli.yaml"
       - "apps/cli/**"
   push:
+    branches:
+      - main
     paths:
       - "packages/**"
       - "services/celest_cloud_auth/**"
