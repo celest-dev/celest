@@ -317,6 +317,32 @@ final _testCases = <_TestCase>[
     ],
   ),
   (
+    route: '/v1alpha1/{name=projects/*/environments/*}:deploy',
+    expectedSegments: [
+      RouteLiteral('v1alpha1'),
+      RouteParameter(
+        variable: 'name',
+        segments: [
+          RouteLiteral('projects'),
+          RouteWildcard(greedy: false),
+          RouteLiteral('environments'),
+          RouteWildcard(greedy: false),
+        ],
+      ),
+    ],
+    expectedVerb: RouteVerb('deploy'),
+    matchTests: [
+      (
+        route:
+            '/v1alpha1/projects/prj_01jree4tjseatvbwcbg3s0526r/environments/env_01jree4tqqeefsyvr67fxmp87a:deploy',
+        expected: {
+          'name':
+              'projects/prj_01jree4tjseatvbwcbg3s0526r/environments/env_01jree4tqqeefsyvr67fxmp87a',
+        },
+      ),
+    ],
+  ),
+  (
     route: '/test/say-hello',
     expectedSegments: [
       RouteLiteral('test'),

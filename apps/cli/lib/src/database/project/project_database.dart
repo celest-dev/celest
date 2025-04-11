@@ -1,6 +1,5 @@
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/database/project/project.drift.dart';
-import 'package:celest_cli/src/database/project/project.migrations.dart';
 import 'package:celest_cli/src/utils/typeid.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -37,9 +36,6 @@ final class ProjectDatabase extends $ProjectDatabase {
       }),
       onCreate: (m) => _lock.withResource(() async {
         await m.createAll();
-      }),
-      onUpgrade: (m, from, to) => _lock.withResource(() async {
-        return stepByStep()(m, from, to);
       }),
     );
   }

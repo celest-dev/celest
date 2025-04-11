@@ -1,11 +1,12 @@
 import 'package:cedar/cedar.dart';
+import 'package:celest/http.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud_auth/src/authorization/cedar_interop.dart';
 import 'package:celest_cloud_auth/src/model/route.dart';
 import 'package:collection/collection.dart';
 
 /// A map of routes to their respective [EntityUid]s.
-class RouteMap extends DelegatingMap<EntityUid, Route> {
+class RouteMap extends DelegatingMap<EntityUid, List<(HttpMethod, Route)>> {
   RouteMap(super.base);
 
   /// Computes the route map for the given [project].
@@ -24,24 +25,41 @@ class RouteMap extends DelegatingMap<EntityUid, Route> {
   }
 
   /// Lookup index for finding a route ID by path.
-  final Map<String, EntityUid?> _lookupIndex = {};
+  final Map<(HttpMethod, String), (EntityUid, Route)?> _lookupIndex = {};
 
   /// Finds a route by [path].
-  EntityUid? lookupRoute(String path) {
-    if (_lookupIndex.containsKey(path)) {
-      return _lookupIndex[path];
+  ///
+  /// Returns the entity ID of the route and any parameters parsed from the
+  /// route.
+  (EntityUid uid, Map<String, String> params)? lookupRoute(
+    HttpMethod method,
+    String path,
+  ) {
+    if (_lookupIndex.containsKey((method, path))) {
+      final cached = _lookupIndex[(method, path)];
+      if (cached == null) {
+        return null;
+      }
+      final (uid, route) = cached;
+      return (uid, route.match(path)!);
     }
-    for (final MapEntry(key: uid, value: route) in entries) {
-      if (route.matches(path)) {
-        return _lookupIndex[path] = uid;
+    for (final MapEntry(key: uid, value: routes) in entries) {
+      for (final (thisMethod, route) in routes) {
+        if (method != thisMethod) {
+          continue;
+        }
+        if (route.match(path) case final params?) {
+          _lookupIndex[(method, path)] = (uid, route);
+          return (uid, params);
+        }
       }
     }
-    return _lookupIndex[path] = null;
+    return _lookupIndex[(method, path)] = null;
   }
 }
 
 final class _RouteCollector extends ResolvedAstVisitor<void> {
-  final Map<EntityUid, Route> _routes = {};
+  final Map<EntityUid, List<(HttpMethod, Route)>> _routes = {};
 
   @override
   void visitProject(ResolvedProject project) {
@@ -64,7 +82,16 @@ final class _RouteCollector extends ResolvedAstVisitor<void> {
 
   @override
   void visitFunction(ResolvedCloudFunction function) {
-    _routes[function.uid] = Route.parse(function.httpConfig.route.path);
+    _routes[function.uid] = [
+      for (final route in [
+        function.httpConfig.route,
+        ...function.httpConfig.additionalRoutes
+      ])
+        (
+          route.method as HttpMethod,
+          Route.parse(route.path),
+        )
+    ];
   }
 
   @override

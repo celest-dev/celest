@@ -4,6 +4,7 @@ import 'package:analyzer/src/dart/analysis/byte_store.dart';
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
 import 'package:celest_cli/src/analytics/interface.dart';
 import 'package:celest_cli/src/analytics/noop.dart';
+import 'package:celest_cli/src/commands/auth/cli_auth.dart';
 import 'package:celest_cli/src/database/cache/cache_database.dart';
 import 'package:celest_cli/src/database/project/project_database.dart';
 import 'package:celest_cli/src/logging/cli_logger.dart';
@@ -14,6 +15,7 @@ import 'package:celest_cli/src/project/project_paths.dart';
 import 'package:celest_cli/src/serialization/json_generator.dart';
 import 'package:celest_cli/src/storage/storage.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
+import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
@@ -79,6 +81,17 @@ InheritanceManager3 get inheritanceManager => InheritanceManager3();
 final TypeHelper typeHelper = TypeHelper();
 final JsonGenerator jsonGenerator = JsonGenerator();
 
+final Logger _cloudLogger = Logger('Celest.Cloud');
+final CelestCloud cloud = CelestCloud.http(
+  baseUri,
+  authenticator: authenticator,
+  httpClient: httpClient,
+  logger: Logger.detached('')
+    ..onRecord.listen((record) {
+      _cloudLogger.finest(record.message, record.error, record.stackTrace);
+    }),
+);
+
 String? _celestLocalPath;
 
 @visibleForTesting
@@ -127,7 +140,7 @@ bool get ansiColorsEnabled {
 
 /// The base URL for the Celest control plane.
 Uri baseUri = Uri.parse(
-  platform.environment['CELEST_API_URI'] ?? 'https://cloud.celest.dev',
+  platform.environment['CELEST_API_URI'] ?? 'https://cloud-hub.fly.dev',
 );
 
 /// Global CLI (mason) logger.

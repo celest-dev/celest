@@ -165,6 +165,8 @@ extension type UsersService._(_Deps _deps) implements Object {
 
   Future<Response> handleGetUser(Request request) async {
     final principal = context.get(ContextKey.principal);
+    // TODO: Handle users/me
+
     final resource = _getResource(request);
     await _authorizer.expectAuthorized(
       principal: principal?.uid,

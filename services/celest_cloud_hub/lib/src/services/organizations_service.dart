@@ -212,7 +212,7 @@ final class OrganizationsService extends OrganizationsServiceBase
   ) async {
     final organizationId = switch (request.name.split('/')) {
       ['organizations', final organizationId] => organizationId,
-      _ => throw GrpcError.invalidArgument('Invalid name'),
+      _ => throw GrpcError.invalidArgument('Invalid name: "${request.name}"'),
     };
     final organization =
         await _db.organizationsDrift
@@ -443,9 +443,12 @@ final class _GetOrganizationGatewayHandler extends GatewayHandler {
       );
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = GetOrganizationRequest();
-    if (request.url.queryParameters['name'] case final name?) {
+    if (routeParameters['name'] case final name?) {
       req.name = name;
     }
     return req;
@@ -460,7 +463,10 @@ final class _ListOrganizationsGatewayHandler extends GatewayHandler {
       );
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = ListOrganizationsRequest();
     if (request.url.queryParameters['parent'] case final parent?) {
       req.parent = parent;
@@ -492,7 +498,10 @@ final class _UpdateOrganizationGatewayHandler extends GatewayHandler {
       );
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = UpdateOrganizationRequest();
     if (request.url.queryParameters['allowMissing'] case final allowMissing?) {
       req.allowMissing = allowMissing.toLowerCase() == 'true';
@@ -506,6 +515,9 @@ final class _UpdateOrganizationGatewayHandler extends GatewayHandler {
     final body = await JsonUtf8.decodeStream(request.read());
     req.organization =
         Organization()..mergeFromProto3Json(body, typeRegistry: typeRegistry);
+    if (routeParameters['name'] case final name?) {
+      req.organization.name = name;
+    }
     return req;
   }
 }
@@ -518,9 +530,12 @@ final class _DeleteOrganizationGatewayHandler extends GatewayHandler {
       );
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = DeleteOrganizationRequest();
-    if (request.url.queryParameters['name'] case final name?) {
+    if (routeParameters['name'] case final name?) {
       req.name = name;
     }
     if (request.url.queryParameters['force'] case final force?) {
@@ -547,9 +562,12 @@ final class _UndeleteOrganizationGatewayHandler extends GatewayHandler {
       );
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = UndeleteOrganizationRequest();
-    if (request.url.queryParameters['name'] case final name?) {
+    if (routeParameters['name'] case final name?) {
       req.name = name;
     }
     if (request.url.queryParameters['validateOnly'] case final validateOnly?) {
@@ -570,9 +588,12 @@ final class _RenameOrganizationGatewayHandler extends GatewayHandler {
       );
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = RenameOrganizationRequest();
-    if (request.url.queryParameters['name'] case final name?) {
+    if (routeParameters['name'] case final name?) {
       req.name = name;
     }
     if (request.url.queryParameters['organizationId']
@@ -597,7 +618,10 @@ final class _CreateOrganizationGatewayHandler extends GatewayHandler {
       );
 
   @override
-  Future<pb.GeneratedMessage> deserializeRequest(Request request) async {
+  Future<pb.GeneratedMessage> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = CreateOrganizationRequest();
     if (request.url.queryParameters['parent'] case final parent?) {
       req.parent = parent;

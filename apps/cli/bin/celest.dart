@@ -1,4 +1,9 @@
 import 'package:celest_cli/celest_cli.dart';
+import 'package:celest_cli/src/commands/auth_command.dart';
+import 'package:celest_cli/src/commands/deploy_command.dart';
+import 'package:celest_cli/src/commands/organizations/organizations_command.dart';
+import 'package:celest_cli/src/commands/project_environments/project_environments_command.dart';
+import 'package:celest_cli/src/commands/projects/projects_command.dart';
 
 void main(List<String> args) async {
   final cli = Cli(
@@ -12,7 +17,15 @@ void main(List<String> args) async {
     ..addCommand(AnalysisServerCommand())
     ..addCommand(UpgradeCommand())
     ..addCommand(UninstallCommand())
-    ..addCommand(PrecacheCommand());
+    ..addCommand(PrecacheCommand())
+    ..addCommand(DeployCommand())
+    ..addCommand(AuthCommand());
+
+  // Cloud API commands
+  cli
+    ..addCommand(OrganizationsCommand())
+    ..addCommand(ProjectsCommand())
+    ..addCommand(ProjectEnvironmentsCommand());
 
   await cli.run(args);
 }

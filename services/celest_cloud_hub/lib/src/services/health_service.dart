@@ -63,7 +63,10 @@ final class _CheckHandler extends GatewayHandler {
       );
 
   @override
-  Future<HealthCheckRequest> deserializeRequest(Request request) async {
+  Future<HealthCheckRequest> deserializeRequest(
+    Request request,
+    Map<String, String> routeParameters,
+  ) async {
     final req = HealthCheckRequest();
     if (request.url.queryParameters['service'] case final service?) {
       req.service = service;

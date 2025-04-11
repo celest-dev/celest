@@ -1,4 +1,5 @@
 import 'package:cedar/cedar.dart';
+import 'package:celest/http.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
@@ -66,10 +67,17 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
   @visibleForTesting
   Future<core.User?> authenticate(Request request) async {
     final requestPath = request.requestedUri.path;
-    final route = _routeMap.lookupRoute(requestPath);
-    if (route == null) {
-      throw core.InternalServerError('Route not found: $requestPath');
+    final result = _routeMap.lookupRoute(
+      request.method as HttpMethod,
+      requestPath,
+    );
+    if (result == null) {
+      throw core.InternalServerError(
+        'Route not found: ${request.method} $requestPath',
+      );
     }
+    final (route, routeParameters) = result;
+    context.put(contextKeyRouteParameters, routeParameters);
 
     final (user, principal) = await extractPrincipal(request);
 

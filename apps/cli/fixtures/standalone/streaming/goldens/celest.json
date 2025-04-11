@@ -14,6 +14,12 @@
               "method": "POST",
               "path": "/server-side/hello"
             },
+            "additionalRoutes": [
+              {
+                "method": "GET",
+                "path": "/server-side/hello"
+              }
+            ],
             "statusMappings": {}
           },
           "streamConfig": {
@@ -29,6 +35,12 @@
               "method": "POST",
               "path": "/server-side/stock-ticker"
             },
+            "additionalRoutes": [
+              {
+                "method": "GET",
+                "path": "/server-side/stock-ticker"
+              }
+            ],
             "statusMappings": {}
           },
           "streamConfig": {
@@ -44,6 +56,12 @@
               "method": "POST",
               "path": "/server-side/json-values"
             },
+            "additionalRoutes": [
+              {
+                "method": "GET",
+                "path": "/server-side/json-values"
+              }
+            ],
             "statusMappings": {}
           },
           "streamConfig": {
