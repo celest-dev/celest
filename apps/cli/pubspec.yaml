@@ -32,6 +32,7 @@ dependencies:
   convert: ^3.1.1
   corks_cedar: ^0.2.1
   crypto: ^3.0.3
+  dart_console: ^4.1.1
   dart_style: ^3.0.0
   dcli: ^7.0.1
   dcli_terminal: ^7.0.1

@@ -8,6 +8,7 @@ import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
+import 'package:analyzer/src/error/codes.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/src/analyzer/analysis_error.dart';
 import 'package:celest_cli/src/analyzer/analysis_result.dart';
@@ -111,6 +112,29 @@ const project = Project(name: 'cache_warmup');
   late ast.ProjectBuilder _project;
   CelestProjectResolver? _resolver;
   CelestProjectResolver get resolver => _resolver!;
+
+  /// Whether [code] and [message] represent a possible false-positive for
+  /// missing code generation.
+  bool _missingCodegenError(AnalysisError error) {
+    switch (error.errorCode) {
+      case CompileTimeErrorCode.URI_DOES_NOT_EXIST:
+        final regex = RegExp(r'''Target of URI doesn't exist: '(.+?)'\.''');
+        final match = regex.firstMatch(error.message);
+        final uri = match?.group(1);
+        if (uri == null) {
+          return false;
+        }
+        final path =
+            context.currentSession.uriConverter.uriToPath(Uri.parse(uri));
+        if (path == null) {
+          _logger.fine('Failed to convert URI to path: $uri');
+          return false;
+        }
+        return p.isWithin(projectPaths.generatedDir, path);
+    }
+
+    return false;
+  }
 
   @override
   void reportError(
@@ -497,7 +521,15 @@ const project = Project(name: 'cache_warmup');
           .expand((unit) => unit.errors)
           .where((error) => error.severity == Severity.error)
           .toList();
-      if (apiErrors.isNotEmpty) {
+
+      // If there's a false positive from missing generated code, which can
+      // happen for example when starting from a template proejct, then skip
+      // reporting errors since they may be resolved through generation, and if
+      // not, they'll be caught by the frontend compiler.
+      final falsePositiveForGeneratedCode =
+          apiErrors.isNotEmpty && apiErrors.any(_missingCodegenError);
+
+      if (apiErrors.isNotEmpty && !falsePositiveForGeneratedCode) {
         for (final apiError in apiErrors) {
           reportError(
             apiError.message,

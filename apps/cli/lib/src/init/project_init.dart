@@ -8,6 +8,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/init/project_generator.dart';
 import 'package:celest_cli/src/init/project_migrate.dart';
+import 'package:celest_cli/src/init/templates/project_template.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/pub/pub_action.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
@@ -18,8 +19,12 @@ import 'package:dcli/dcli.dart' as dcli;
 import 'package:mason_logger/mason_logger.dart';
 
 base mixin ProjectCreator on Configure {
+  /// The project template to use when creating a project.
+  String get template;
+
   Future<String> createProject({
     required String projectName,
+    required String projectDisplayName,
     required ParentProject? parentProject,
   }) async {
     logger.finest(
@@ -31,6 +36,12 @@ base mixin ProjectCreator on Configure {
         parentProject: parentProject,
         projectRoot: projectPaths.projectRoot,
         projectName: projectName,
+        projectDisplayName: projectDisplayName,
+        projectTemplate: switch (template) {
+          'hello' => HelloProject.new,
+          'data' => DataProject.new,
+          _ => unreachable('Invalid project template: $template'),
+        },
       ).generate();
       logger.fine('Project generated successfully');
     });
@@ -74,13 +85,15 @@ base mixin Configure on CelestCommand {
         'To create a new project, run `celest init`.',
       );
 
-  String newProjectName({String? defaultName}) {
+  ({
+    String projectNameInput,
+    String projectName,
+  }) newProjectName({String? defaultName}) {
     if (defaultName != null && defaultName.startsWith('celest')) {
       defaultName = null;
     }
-    defaultName ??= 'my_project';
-    String? projectName;
-    while (projectName == null) {
+    defaultName ??= 'My Project';
+    for (;;) {
       final input = dcli
           .ask('Enter a name for your project', defaultValue: defaultName)
           .trim();
@@ -90,13 +103,12 @@ base mixin Configure on CelestCommand {
       }
       final words = input.groupIntoWords();
       for (final (index, word) in List.of(words).indexed) {
-        if (word == 'celest') {
+        if (word.toLowerCase() == 'celest') {
           words.removeAt(index);
         }
       }
-      projectName = words.snakeCase;
+      return (projectNameInput: input, projectName: words.snakeCase);
     }
-    return projectName;
   }
 
   Future<bool> configure() async {
@@ -128,8 +140,13 @@ base mixin Configure on CelestCommand {
 
   /// Returns true if the project needs to be migrated.
   Stream<ConfigureState> _configure() async* {
-    final (projectName, projectRoot, isExistingProject, parentProject) =
-        await _locateProject();
+    final (
+      projectNameInput,
+      projectName,
+      projectRoot,
+      isExistingProject,
+      parentProject
+    ) = await _locateProject();
 
     yield const Initializing();
     await init(projectRoot: projectRoot, parentProject: parentProject);
@@ -141,6 +158,7 @@ base mixin Configure on CelestCommand {
         yield const CreatingProject();
         await projectCreator.createProject(
           projectName: projectName!,
+          projectDisplayName: projectNameInput!,
           parentProject: parentProject,
         );
         yield const CreatedProject();
@@ -169,7 +187,7 @@ base mixin Configure on CelestCommand {
     yield Initialized(needsAnalyzerMigration: needsAnalyzerMigration);
   }
 
-  Future<(String? name, String root, bool, ParentProject?)>
+  Future<(String? nameInput, String? name, String root, bool, ParentProject?)>
       _locateProject() async {
     var currentDir = fileSystem.currentDirectory;
     final currentDirIsEmpty = await currentDir.list().isEmpty;
@@ -228,6 +246,7 @@ base mixin Configure on CelestCommand {
 
     String projectRoot;
     String? projectName;
+    String? projectNameInput;
     if (isExistingProject) {
       if (this is InitCommand) {
         cliLogger.success(
@@ -259,7 +278,8 @@ base mixin Configure on CelestCommand {
       if (currentDirIsEmpty) {
         defaultProjectName ??= p.basename(currentDir.path);
       }
-      projectName = newProjectName(defaultName: defaultProjectName);
+      (:projectNameInput, :projectName) =
+          newProjectName(defaultName: defaultProjectName);
 
       // Choose where to store the project based on the current directory.
       projectRoot = switch (celestDir) {
@@ -269,11 +289,12 @@ base mixin Configure on CelestCommand {
         // for the project which is unattached to any parent project, named
         // after the project.
         null when !currentDirIsEmpty => await run(() async {
-            final projectRoot = p.join(currentDir.path, projectName);
+            final directoryName = projectName!.snakeCase;
+            final projectRoot = p.join(currentDir.path, directoryName);
             final projectDir = fileSystem.directory(projectRoot);
             if (projectDir.existsSync() && !await projectDir.list().isEmpty) {
               throw CliException(
-                'A directory named "$projectName" already exists. '
+                'A directory named "$directoryName" already exists. '
                 'Please choose a different name, or run this command from a '
                 'different directory.',
               );
@@ -286,7 +307,13 @@ base mixin Configure on CelestCommand {
       };
     }
 
-    return (projectName, projectRoot, isExistingProject, parentProject);
+    return (
+      projectNameInput,
+      projectName,
+      projectRoot,
+      isExistingProject,
+      parentProject
+    );
   }
 
   // TODO(dnys1): Improve logic here so that we don't run pub upgrade if

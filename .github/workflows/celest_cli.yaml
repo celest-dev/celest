@@ -46,7 +46,7 @@ jobs:
         run: tool/setup-ci.sh
       - name: Get Packages
         working-directory: apps/cli
-        run: dart pub upgrade
+        run: dart pub upgrade --verbose
       - name: Test
         working-directory: apps/cli
         run: dart test -x e2e --fail-fast -j 1

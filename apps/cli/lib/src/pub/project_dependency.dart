@@ -111,6 +111,19 @@ final class ProjectDependency {
     ),
   );
 
+  static final ProjectDependency drift = ProjectDependency._(
+    'drift',
+    DependencyType.dependency,
+    HostedDependency(
+      version: VersionRange(
+        min: Version.parse('2.26.0'),
+        max: Version.parse('2.27.0'),
+        includeMin: true,
+        includeMax: false,
+      ),
+    ),
+  );
+
   static final ProjectDependency driftHrana = ProjectDependency._(
     'drift_hrana',
     DependencyType.dependency,

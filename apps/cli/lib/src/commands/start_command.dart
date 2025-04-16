@@ -8,7 +8,20 @@ import 'package:mason_logger/mason_logger.dart';
 
 final class StartCommand extends CelestCommand
     with Configure, Migrate, ProjectCreator {
-  StartCommand();
+  StartCommand() {
+    argParser.addOption(
+      'template',
+      abbr: 't',
+      help: 'The project template to use.',
+      allowed: ['hello', 'data'],
+      allowedHelp: {
+        'hello': 'A simple greeting API.',
+        'data': 'A project with a database and cloud functions.',
+      },
+      defaultsTo: 'hello',
+      hide: true,
+    );
+  }
 
   @override
   String get description => 'Starts a local Celest environment.';
@@ -21,6 +34,9 @@ final class StartCommand extends CelestCommand
 
   @override
   Progress? currentProgress;
+
+  @override
+  late final String template = argResults!.option('template')!;
 
   @override
   Future<int> run() async {
