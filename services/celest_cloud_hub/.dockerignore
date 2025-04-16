@@ -2,6 +2,8 @@
 Dockerfile
 build/
 example/
+examples/
+fixtures/
 .dart_tool/
 .git/
 .github/

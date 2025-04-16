@@ -76,6 +76,7 @@ const ProjectEnvironment$json = {
       '8': {},
       '10': 'state'
     },
+    {'1': 'uri', '3': 13, '4': 1, '5': 9, '8': {}, '10': 'uri'},
   ],
   '3': [ProjectEnvironment_AnnotationsEntry$json],
   '7': {},
@@ -111,11 +112,11 @@ final $typed_data.Uint8List projectEnvironmentDescriptor = $convert.base64Decode
     'BoYXZlIG9ubHkgbG93ZXJjYXNlIGxldHRlcnMsIG51bWVyaWNzLCB1bmRlcnNjb3JlcywgYW5k'
     'IGRhc2hlcxoidGhpcy5tYXRjaGVzKCdeW2EtejAtOV8tXXswLDYzfSQnKVILYW5ub3RhdGlvbn'
     'MSJQoLcmVjb25jaWxpbmcYCyABKAhCA+BBA1ILcmVjb25jaWxpbmcSQAoFc3RhdGUYDCABKA4y'
-    'JS5jZWxlc3QuY2xvdWQudjFhbHBoYTEuTGlmZWN5Y2xlU3RhdGVCA+BBA1IFc3RhdGUaPgoQQW'
-    '5ub3RhdGlvbnNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6'
-    'AjgBOoQB6kGAAQojY2xvdWQuY2VsZXN0LmRldi9Qcm9qZWN0RW52aXJvbm1lbnQSLXByb2plY3'
-    'RzL3twcm9qZWN0fS9lbnZpcm9ubWVudHMve2Vudmlyb25tZW50fSoTcHJvamVjdEVudmlyb25t'
-    'ZW50czIScHJvamVjdEVudmlyb25tZW50UgEB');
+    'JS5jZWxlc3QuY2xvdWQudjFhbHBoYTEuTGlmZWN5Y2xlU3RhdGVCA+BBA1IFc3RhdGUSFQoDdX'
+    'JpGA0gASgJQgPgQQNSA3VyaRo+ChBBbm5vdGF0aW9uc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5'
+    'EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAE6hAHqQYABCiNjbG91ZC5jZWxlc3QuZGV2L1Byb2'
+    'plY3RFbnZpcm9ubWVudBItcHJvamVjdHMve3Byb2plY3R9L2Vudmlyb25tZW50cy97ZW52aXJv'
+    'bm1lbnR9KhNwcm9qZWN0RW52aXJvbm1lbnRzMhJwcm9qZWN0RW52aXJvbm1lbnRSAQE=');
 
 @$core.Deprecated('Use createProjectEnvironmentRequestDescriptor instead')
 const CreateProjectEnvironmentRequest$json = {

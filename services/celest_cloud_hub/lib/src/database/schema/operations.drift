@@ -166,11 +166,6 @@ END;
 -------------- /Cedar Triggers ---------------
 ----------------------------------------------
 
-getOperation:
-    SELECT * FROM operations 
-    WHERE id = :id
-    LIMIT 1;
-
 createOperation:
     INSERT INTO operations (
         id,
@@ -194,6 +189,25 @@ createOperation:
         :resource_id
     )
     RETURNING *;
+
+getOperation:
+    SELECT * FROM operations 
+    WHERE id = :id
+    LIMIT 1;
+
+findOperationsByOwner:
+    SELECT * FROM operations 
+    WHERE owner_type = :owner_type
+    AND owner_id = :owner_id
+    ORDER BY $orderBy
+    LIMIT :limit;
+
+findOperationsByResource:
+    SELECT * FROM operations 
+    WHERE resource_type = :resource_type
+    AND resource_id = :resource_id
+    ORDER BY $orderBy
+    LIMIT :limit;
 
 listOperations(
     :owner_type AS TEXT OR NULL,
