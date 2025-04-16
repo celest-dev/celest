@@ -1,3 +1,7 @@
+## 1.0.5-wip
+
+- chore: Remove GCP mentions
+
 ## 1.0.4
 
 - chore: Remove `@internal` from `set Context.root`

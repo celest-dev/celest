@@ -31,17 +31,11 @@ class Project implements CloudWidget {
 /// The Celest cloud region to deploy to.
 enum Region {
   /// The North America region.
-  ///
-  /// Includes the `us-east1`, `us-south1` and `us-west1` GCP regions.
   northAmerica,
 
   /// The Europe region.
-  ///
-  /// Includes the `europe-west4` and `europe-west9` GCP regions.
   europe,
 
   /// The Asia-Pacific region.
-  ///
-  /// Includes the `asia-south1` GCP region.
   asiaPacific,
 }
