@@ -13,6 +13,9 @@ final class GetProjectCommand extends CloudGetCommand<Project> {
   String get resourceType => 'Project';
 
   @override
+  Project createEmptyResource() => Project();
+
+  @override
   Future<Project?> callService() {
     return cloud.projects.get(options.resourceId);
   }

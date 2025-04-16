@@ -14,6 +14,9 @@ final class GetProjectEnvironmentCommand
   String get resourceType => 'ProjectEnvironment';
 
   @override
+  ProjectEnvironment createEmptyResource() => ProjectEnvironment();
+
+  @override
   Future<ProjectEnvironment?> callService() {
     return cloud.projects.environments.get(options.resourceId);
   }

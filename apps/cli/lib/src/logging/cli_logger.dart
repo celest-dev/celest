@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:celest_cli/src/context.dart';
 import 'package:cli_util/cli_logging.dart' as cli_logging;
-import 'package:dcli/dcli.dart';
+import 'package:dart_console/dart_console.dart';
 import 'package:mason_logger/mason_logger.dart' as mason_logger;
 
 /// An interface which conforms to the [mason_logger.Logger] interface, but
@@ -13,6 +12,8 @@ class CliLogger implements mason_logger.Logger {
     this.theme = const mason_logger.LogTheme(),
     this.progressOptions = const mason_logger.ProgressOptions(),
   });
+
+  static final Console console = Console();
 
   @override
   final mason_logger.LogTheme theme;
@@ -85,14 +86,7 @@ class CliLogger implements mason_logger.Logger {
     final suffix = ' ${defaultValue.toYesNo()}';
     final resolvedMessage = '$message$suffix ';
     stdout.write(resolvedMessage);
-    String? input;
-    try {
-      input = stdin.readLineSync();
-    } on FormatException catch (_) {
-      // FormatExceptions can occur due to utf8 decoding errors
-      // so we treat them as the user pressing enter (e.g. use `defaultValue`).
-      stdout.writeln();
-    }
+    final input = console.readLine(cancelOnBreak: true);
     return input == null || input.isEmpty
         ? defaultValue
         : input.toBoolean() ?? defaultValue;
@@ -153,20 +147,15 @@ class CliLogger implements mason_logger.Logger {
 
   @override
   String prompt(String? message, {Object? defaultValue, bool hidden = false}) {
-    if (ansiColorsEnabled) {
-      return ask(
-        message.toString(),
-        defaultValue: defaultValue?.toString(),
-        hidden: hidden,
-      );
-    }
     final resolvedDefaultValue = switch (defaultValue) {
       final defaultValue? when '$defaultValue'.isNotEmpty => ' ($defaultValue)',
       _ => ':',
     };
     final resolvedMessage = '$message$resolvedDefaultValue ';
     stdout.write(resolvedMessage);
-    final input = hidden ? _readLineHiddenSync() : stdin.readLineSync()?.trim();
+    final input = hidden
+        ? _readLineHiddenSync()
+        : console.readLine(cancelOnBreak: true)?.trim();
     return input == null || input.isEmpty ? resolvedDefaultValue : input;
   }
 
@@ -203,20 +192,23 @@ class CliLogger implements mason_logger.Logger {
   }
 
   String _readLineHiddenSync() {
-    const lineFeed = 10;
-    const carriageReturn = 13;
-    const delete = 127;
-    final value = <int>[];
+    const lineFeed = '\n';
+    const carriageReturn = '\r';
+    final value = <String>[];
 
     try {
       stdin
         ..echoMode = false
         ..lineMode = false;
-      int char;
+      Key key;
+      String char;
       do {
-        char = stdin.readByteSync();
+        key = console.readKey();
+        char = key.char;
         if (char != lineFeed && char != carriageReturn) {
-          final shouldDelete = char == delete && value.isNotEmpty;
+          final shouldDelete = key.isControl &&
+              key.controlChar == ControlCharacter.delete &&
+              value.isNotEmpty;
           shouldDelete ? value.removeLast() : value.add(char);
         }
       } while (char != lineFeed && char != carriageReturn);
@@ -226,7 +218,7 @@ class CliLogger implements mason_logger.Logger {
         ..echoMode = true;
     }
     stdout.writeln();
-    return utf8.decode(value);
+    return value.join();
   }
 }
 

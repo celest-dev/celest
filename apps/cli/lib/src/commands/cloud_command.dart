@@ -9,7 +9,9 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cloud/celest_cloud.dart';
+import 'package:celest_cloud/src/proto/google/protobuf/timestamp.pb.dart' as pb;
 import 'package:celest_core/celest_core.dart';
+import 'package:dart_console/dart_console.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:protobuf/protobuf.dart';
@@ -24,6 +26,9 @@ abstract base class BaseCloudCommand<R extends GeneratedMessage>
   /// The resource type of the service, e.g. `Project`.
   String get resourceType;
 
+  /// Creates an empty [Resource] protobuf message.
+  R createEmptyResource();
+
   /// The parsed arguments of the command.
   CloudCommandOptions get options => CloudCommandOptions(argResults!);
 }
@@ -32,9 +37,6 @@ base mixin CloudOperationCommand<R extends GeneratedMessage>
     on BaseCloudCommand<R> {
   /// Starts the operation in Celest Cloud.
   CloudOperation<R> callService();
-
-  /// Creates an empty [Resource] protobuf message.
-  R createEmptyResource();
 
   CloudVerbs get verbs;
 
@@ -287,6 +289,11 @@ typedef CloudListResult<R extends GeneratedMessage> = ({
   String? nextPageToken
 });
 
+enum CloudListMode {
+  raw,
+  table,
+}
+
 abstract base class CloudListCommand<R extends GeneratedMessage>
     extends BaseCloudCommand<R> {
   Future<CloudListResult<R>> callService();
@@ -326,6 +333,13 @@ abstract base class CloudListCommand<R extends GeneratedMessage>
         'show-deleted',
         negatable: false,
         help: 'If set, the command will show deleted ${resource}s',
+      )
+      ..addOption(
+        'display',
+        abbr: 'd',
+        allowed: CloudListMode.values.map((it) => it.name),
+        defaultsTo: CloudListMode.table.name,
+        help: 'The display mode for results',
       );
   }();
 
@@ -343,14 +357,49 @@ abstract base class CloudListCommand<R extends GeneratedMessage>
       if (result.items.isEmpty) {
         cliLogger.info('No ${resourceType.toLowerCase()}s found');
       } else {
-        for (final item in result.items) {
-          stdout.writeln(item);
+        switch (options.mode) {
+          case CloudListMode.raw:
+            _showRawResult(result);
+          case CloudListMode.table:
+            _showTableResult(result);
         }
       }
       return 0;
     } on CloudException catch (e) {
       throw CliException(e.message);
     }
+  }
+
+  void _showRawResult(CloudListResult<R> result) {
+    for (final item in result.items) {
+      stdout.writeln(item);
+    }
+  }
+
+  void _showTableResult(CloudListResult<R> result) {
+    final table = Table();
+    final columns = createEmptyResource().info_.byName.keys;
+    for (final column in columns) {
+      table.insertColumn(header: column);
+    }
+    for (final item in result.items) {
+      final row = <Object>[];
+      for (final column in columns) {
+        final tag = item.getTagNumber(column)!;
+        if (!item.hasField(tag)) {
+          row.add('<not set>');
+        } else {
+          final value = item.getField(tag) as Object;
+          row.add(switch (value) {
+            final pb.Timestamp ts => ts.toDateTime().toLocal(),
+            final ProtobufEnum enum_ when enum_.value == 0 => '<not set>',
+            final value => value,
+          });
+        }
+      }
+      table.insertRow(row);
+    }
+    stdout.writeln(table);
   }
 }
 
@@ -524,4 +573,6 @@ extension type ListCommandArgResults(ArgResults argResults)
   String? get orderBy => option('order-by');
 
   bool get showDeleted => flag('show-deleted');
+
+  CloudListMode get mode => CloudListMode.values.byName(option('display')!);
 }

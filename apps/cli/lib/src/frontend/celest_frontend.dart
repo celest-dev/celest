@@ -31,7 +31,6 @@ import 'package:celest_cli/src/utils/process.dart';
 import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cloud/src/proto.dart' as pb;
-import 'package:dcli/dcli.dart' as dcli;
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:stream_transform/stream_transform.dart';
@@ -500,7 +499,7 @@ final class CelestFrontend {
       var organizationId = organization?.organizationId;
       var organizationDisplayName = organization?.displayName;
       if (organizationId == null) {
-        organizationDisplayName = dcli.ask(
+        organizationDisplayName = cliLogger.prompt(
           'What should we call your organization?',
         );
         if (organizationDisplayName.isEmpty) {

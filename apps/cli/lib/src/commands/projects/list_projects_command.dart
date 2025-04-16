@@ -16,6 +16,9 @@ final class ListProjectsCommand extends CloudListCommand<Project> {
   String? get parentResourceType => 'Organization';
 
   @override
+  Project createEmptyResource() => Project();
+
+  @override
   Future<CloudListResult<Project>> callService() async {
     final result = await cloud.projects.list(
       parent: options.parentResourceId,
