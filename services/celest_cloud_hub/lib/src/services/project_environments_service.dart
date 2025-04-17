@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cedar/cedar.dart';
 import 'package:celest/http.dart';
@@ -13,6 +12,9 @@ import 'package:celest_cloud_auth/src/model/order_by.dart';
 import 'package:celest_cloud_auth/src/model/page_token.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
+import 'package:celest_cloud_hub/src/database/schema/project_environments.drift.dart'
+    as dto;
+import 'package:celest_cloud_hub/src/deploy/fly/fly_api.dart';
 import 'package:celest_cloud_hub/src/deploy/fly/fly_deployment_engine.dart';
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
 import 'package:celest_cloud_hub/src/model/interop.dart';
@@ -21,7 +23,7 @@ import 'package:celest_cloud_hub/src/model/type_registry.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:collection/collection.dart';
-import 'package:drift/drift.dart' show OrderBy, OrderingMode, OrderingTerm;
+import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:grpc/grpc.dart';
 import 'package:logging/logging.dart';
@@ -148,7 +150,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     final existingEnvironment =
         await _db.projectEnvironmentsDrift
             .lookupProjectEnvironment(
-              projectId: projectId,
+              projectId: project.id,
               projectEnvironmentId: request.projectEnvironmentId,
             )
             .getSingleOrNull();
@@ -245,17 +247,25 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         ),
     };
 
+    final project =
+        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+    if (project == null) {
+      throw GrpcError.notFound('Project with ID $projectId not found.');
+    }
+
     final environment =
         await _db.projectEnvironmentsDrift
             .lookupProjectEnvironment(
-              projectId: projectId,
+              projectId: project.id,
               projectEnvironmentId: environmentId,
             )
             .getSingleOrNull();
     if (environment == null) {
       if (request.allowMissing) {
-        // TODO(dnys1): How to represent this on the client?
-        return Operation(done: true);
+        return Operation(
+          done: true,
+          response: pb.ProjectEnvironment().packIntoAny(),
+        );
       }
       throw GrpcError.notFound('No environment found with ID $environmentId');
     }
@@ -282,18 +292,72 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       resource: EntityUid.of('Celest::Project::Environment', environment.id),
     );
 
+    final projectEnvironmentState =
+        await _db.projectEnvironmentsDrift
+            .getProjectEnvironmentState(projectEnvironmentId: environment.id)
+            .getSingleOrNull();
+
+    final state = pb.LifecycleState.values.firstWhere(
+      (state) => state.name == environment.state,
+    );
+    switch (state) {
+      case pb.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED:
+        logger.shout('Invalid lifecycle state: $environment');
+      case pb.LifecycleState.ACTIVE:
+      case pb.LifecycleState.CREATION_FAILED:
+      case pb.LifecycleState.DELETION_FAILED:
+      case pb.LifecycleState.UPDATE_FAILED:
+        break;
+      case pb.LifecycleState.CREATING:
+      case pb.LifecycleState.UPDATING:
+        // TODO(dnys1): Cancel ongoing operation and allow.
+        throw GrpcError.failedPrecondition(
+          'Environment is still being created or updated',
+        );
+      case pb.LifecycleState.DELETING:
+      case pb.LifecycleState.DELETED:
+        // Find the operation that is deleting or did delete the environment.
+        //
+        // Should be the last operation for this environment since no operations
+        // are performed on deleted resources.
+        final query = _db.operationsDrift.findOperationsByResource(
+          resourceType: 'Celest::Project::Environment',
+          resourceId: environment.id,
+          orderBy: (op) => OrderBy([OrderingTerm.desc(op.createTime)]),
+          limit: 1,
+        );
+        final operation = await query.getSingleOrNull();
+        return operation?.toProto() ??
+            pb.Operation(
+              done: true,
+              response:
+                  environment
+                      .toProto(state: projectEnvironmentState)
+                      .packIntoAny(),
+            );
+    }
+
     if (request.etag.isNotEmpty && request.etag != environment.etag) {
       throw GrpcError.failedPrecondition('Etag mismatch');
     }
 
-    // TODO(dnys1): Delete deployment if available.
+    if (projectEnvironmentState != null) {
+      await _tearDownEnvironment(projectEnvironmentState);
+    } else {
+      logger.warning(
+        'No environment state found for environment: ${environment.toJson()}',
+      );
+    }
 
     final deletedEnvironment =
         (await _db.projectEnvironmentsDrift.deleteProjectEnvironment(
           id: environment.id,
         )).first;
 
-    final operationResponse = deletedEnvironment.toProto().packIntoAny();
+    final operationResponse =
+        deletedEnvironment
+            .toProto(state: projectEnvironmentState)
+            .packIntoAny();
     final operation =
         (await _db.operationsDrift.createOperation(
           id: typeId('op'),
@@ -307,6 +371,25 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         )).first;
 
     return operation.toProto();
+  }
+
+  Future<void> _tearDownEnvironment(dto.ProjectEnvironmentState state) async {
+    final appName = state.flyAppName;
+    if (appName == null) {
+      logger.finest(
+        'No Fly deployment found for environment ${state.projectEnvironmentId}',
+      );
+      return;
+    }
+    final api = FlyMachinesApiClient(
+      authToken: Platform.environment['FLY_API_TOKEN']!,
+    );
+    try {
+      await api.apps.delete(appName: appName);
+    } on Object catch (e, st) {
+      logger.severe('Failed to delete Fly environment', e, st);
+      throw GrpcError.internal('Failed to delete project environment');
+    }
   }
 
   @override
@@ -325,10 +408,16 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         ),
     };
 
+    final project =
+        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+    if (project == null) {
+      throw GrpcError.notFound('Project with ID $projectId not found.');
+    }
+
     final environment =
         await _db.projectEnvironmentsDrift
             .lookupProjectEnvironment(
-              projectId: projectId,
+              projectId: project.id,
               projectEnvironmentId: environmentId,
             )
             .getSingleOrNull();
@@ -415,10 +504,16 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         ),
     };
 
+    final project =
+        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+    if (project == null) {
+      throw GrpcError.notFound('No project found with ID $projectId');
+    }
+
     final environment =
         await _db.projectEnvironmentsDrift
             .lookupProjectEnvironment(
-              projectId: projectId,
+              projectId: project.id,
               projectEnvironmentId: environmentId,
             )
             .getSingleOrNull();
@@ -450,7 +545,18 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       resource: EntityUid.of('Celest::Project::Environment', environment.id),
     );
 
-    return environment.toProto();
+    if (environment.state == pb.LifecycleState.DELETED.name) {
+      throw GrpcError.notFound(
+        'Environment with ID $environmentId has been deleted',
+      );
+    }
+
+    final environmentState =
+        await _db.projectEnvironmentsDrift
+            .getProjectEnvironmentState(projectEnvironmentId: environment.id)
+            .getSingleOrNull();
+
+    return environment.toProto(state: environmentState);
   }
 
   @override
@@ -528,7 +634,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         await _db.projectEnvironmentsDrift
             .listProjectEnvironments(
               userId: principal.uid.id,
-              parentId: projectId,
+              parentId: project.id,
               offset: pageOffset,
               limit: pageSize,
               startTime: startTime,
@@ -578,10 +684,16 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         ),
     };
 
+    final project =
+        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+    if (project == null) {
+      throw GrpcError.notFound('Project with ID $projectId not found.');
+    }
+
     var environment =
         await _db.projectEnvironmentsDrift
             .lookupProjectEnvironment(
-              projectId: projectId,
+              projectId: project.id,
               projectEnvironmentId: environmentId,
             )
             .getSingleOrNull();

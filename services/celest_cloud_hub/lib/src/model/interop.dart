@@ -108,7 +108,7 @@ extension ProjectToProto on dto.Project {
 }
 
 extension ProjectEnvironmentToProto on dto.ProjectEnvironment {
-  pb.ProjectEnvironment toProto() {
+  pb.ProjectEnvironment toProto({dto.ProjectEnvironmentState? state}) {
     return pb.ProjectEnvironment(
       name: 'projects/$parentId/environments/$id',
       parent: 'projects/$parentId',
@@ -117,13 +117,17 @@ extension ProjectEnvironmentToProto on dto.ProjectEnvironment {
       displayName: displayName,
       etag: etag,
       reconciling: reconciling,
-      state: pb.LifecycleState.values.firstWhere((s) => s.name == state),
+      state: pb.LifecycleState.values.firstWhere((s) => s.name == this.state),
       createTime: createTime.toProto(),
       updateTime: updateTime.toProto(),
       deleteTime: deleteTime?.toProto(),
       annotations: switch (annotations) {
         final annotations? =>
           (jsonDecode(annotations) as Map<String, Object?>).cast(),
+        _ => null,
+      },
+      uri: switch (state?.domainName) {
+        final domainName? => 'https://$domainName',
         _ => null,
       },
     );

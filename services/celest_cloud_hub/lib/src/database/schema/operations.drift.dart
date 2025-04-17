@@ -1091,14 +1091,6 @@ i0.Trigger get operationsTriggerDelete => i0.Trigger(
 
 class OperationsDrift extends i2.ModularAccessor {
   OperationsDrift(i0.GeneratedDatabase db) : super(db);
-  i0.Selectable<i1.Operation> getOperation({required String id}) {
-    return customSelect(
-      'SELECT * FROM operations WHERE id = ?1 LIMIT 1',
-      variables: [i0.Variable<String>(id)],
-      readsFrom: {operations},
-    ).asyncMap(operations.mapFromRow);
-  }
-
   i3.Future<List<i1.Operation>> createOperation({
     required String id,
     String? metadata,
@@ -1125,6 +1117,62 @@ class OperationsDrift extends i2.ModularAccessor {
       ],
       updates: {operations},
     ).then((rows) => Future.wait(rows.map(operations.mapFromRow)));
+  }
+
+  i0.Selectable<i1.Operation> getOperation({required String id}) {
+    return customSelect(
+      'SELECT * FROM operations WHERE id = ?1 LIMIT 1',
+      variables: [i0.Variable<String>(id)],
+      readsFrom: {operations},
+    ).asyncMap(operations.mapFromRow);
+  }
+
+  i0.Selectable<i1.Operation> findOperationsByOwner({
+    String? ownerType,
+    String? ownerId,
+    FindOperationsByOwner$orderBy? orderBy,
+    required int limit,
+  }) {
+    var $arrayStartIndex = 4;
+    final generatedorderBy = $write(
+      orderBy?.call(this.operations) ?? const i0.OrderBy.nothing(),
+      startIndex: $arrayStartIndex,
+    );
+    $arrayStartIndex += generatedorderBy.amountOfVariables;
+    return customSelect(
+      'SELECT * FROM operations WHERE owner_type = ?1 AND owner_id = ?2 ${generatedorderBy.sql} LIMIT ?3',
+      variables: [
+        i0.Variable<String>(ownerType),
+        i0.Variable<String>(ownerId),
+        i0.Variable<int>(limit),
+        ...generatedorderBy.introducedVariables,
+      ],
+      readsFrom: {operations, ...generatedorderBy.watchedTables},
+    ).asyncMap(operations.mapFromRow);
+  }
+
+  i0.Selectable<i1.Operation> findOperationsByResource({
+    String? resourceType,
+    String? resourceId,
+    FindOperationsByResource$orderBy? orderBy,
+    required int limit,
+  }) {
+    var $arrayStartIndex = 4;
+    final generatedorderBy = $write(
+      orderBy?.call(this.operations) ?? const i0.OrderBy.nothing(),
+      startIndex: $arrayStartIndex,
+    );
+    $arrayStartIndex += generatedorderBy.amountOfVariables;
+    return customSelect(
+      'SELECT * FROM operations WHERE resource_type = ?1 AND resource_id = ?2 ${generatedorderBy.sql} LIMIT ?3',
+      variables: [
+        i0.Variable<String>(resourceType),
+        i0.Variable<String>(resourceId),
+        i0.Variable<int>(limit),
+        ...generatedorderBy.introducedVariables,
+      ],
+      readsFrom: {operations, ...generatedorderBy.watchedTables},
+    ).asyncMap(operations.mapFromRow);
   }
 
   i0.Selectable<ListOperationsResult> listOperations({
@@ -1199,6 +1247,11 @@ class OperationsDrift extends i2.ModularAccessor {
   ).resultSet<i1.Operations>('operations');
   i4.CedarDrift get cedarDrift => this.accessor(i4.CedarDrift.new);
 }
+
+typedef FindOperationsByOwner$orderBy =
+    i0.OrderBy Function(i1.Operations operations);
+typedef FindOperationsByResource$orderBy =
+    i0.OrderBy Function(i1.Operations operations);
 
 class ListOperationsResult {
   final int rowNum;

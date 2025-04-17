@@ -163,6 +163,11 @@ message ProjectEnvironment {
 
   // Output only. The current state of the environment.
   LifecycleState state = 12 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. The hosted URI of the environment.
+  //
+  // Will be empty if the environment is not yet deployed.
+  string uri = 13 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 // Request message for the `CreateProjectEnvironment` method.

@@ -36,6 +36,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
     $core.Map<$core.String, $core.String>? annotations,
     $core.bool? reconciling,
     $17.LifecycleState? state,
+    $core.String? uri,
   }) {
     final $result = create();
     if (name != null) {
@@ -73,6 +74,9 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
     }
     if (state != null) {
       $result.state = state;
+    }
+    if (uri != null) {
+      $result.uri = uri;
     }
     return $result;
   }
@@ -112,6 +116,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
         defaultOrMaker: $17.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
         valueOf: $17.LifecycleState.valueOf,
         enumValues: $17.LifecycleState.values)
+    ..aOS(13, _omitFieldNames ? '' : 'uri')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -293,6 +298,21 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   $core.bool hasState() => $_has(11);
   @$pb.TagNumber(12)
   void clearState() => clearField(12);
+
+  ///  Output only. The hosted URI of the environment.
+  ///
+  ///  Will be empty if the environment is not yet deployed.
+  @$pb.TagNumber(13)
+  $core.String get uri => $_getSZ(12);
+  @$pb.TagNumber(13)
+  set uri($core.String v) {
+    $_setString(12, v);
+  }
+
+  @$pb.TagNumber(13)
+  $core.bool hasUri() => $_has(12);
+  @$pb.TagNumber(13)
+  void clearUri() => clearField(13);
 }
 
 /// Request message for the `CreateProjectEnvironment` method.
