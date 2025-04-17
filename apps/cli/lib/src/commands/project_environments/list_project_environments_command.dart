@@ -17,6 +17,9 @@ final class ListProjectEnvironmentsCommand
   String? get parentResourceType => 'Project';
 
   @override
+  ProjectEnvironment createEmptyResource() => ProjectEnvironment();
+
+  @override
   Future<CloudListResult<ProjectEnvironment>> callService() async {
     final result = await cloud.projects.environments.list(
       parent: options.parentResourceId,

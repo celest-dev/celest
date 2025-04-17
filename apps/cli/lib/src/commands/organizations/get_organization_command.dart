@@ -13,6 +13,9 @@ final class GetOrganizationCommand extends CloudGetCommand<Organization> {
   String get resourceType => 'Organization';
 
   @override
+  Organization createEmptyResource() => Organization();
+
+  @override
   Future<Organization?> callService() {
     return cloud.organizations.get(options.resourceId);
   }
