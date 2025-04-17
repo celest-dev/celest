@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:analyzer/dart/element/type_visitor.dart' as ast;
 import 'package:celest_cli/src/context.dart';
@@ -369,7 +369,7 @@ final class SerializerGenerator {
                 final subtypeRef = typeHelper.toReference(subtype.type);
                 b.statements.addAll([
                   Code.scope((alloc) => '${alloc(subtypeRef)}() => '),
-                  literalString(subtype.type.element!.name!, raw: true).code,
+                  literalString(subtype.type.element3!.name3!, raw: true).code,
                   const Code(','),
                 ]);
               }
@@ -394,7 +394,7 @@ final class SerializerGenerator {
             final serialized = literalMap({
               literalSpread(): subtypeCase,
               literalString(r'$type', raw: true): literalString(
-                subtype.type.element!.name!,
+                subtype.type.element3!.name3!,
                 raw: true,
               ),
             });
@@ -407,7 +407,7 @@ final class SerializerGenerator {
               DartTypes.core.stringBuffer
                   .newInstance([literalString('Unknown subtype of ')])
                   .cascade('write')
-                  .call([literalString(type.element!.name!, raw: true)])
+                  .call([literalString(type.element3!.name3!, raw: true)])
                   .cascade('write')
                   .call([literalString(r': ')])
                   .cascade('write')
@@ -522,12 +522,12 @@ final class SerializerGenerator {
       return Block((b) {
         final type = ref.index(literalString(r'$type', raw: true));
         for (final subtype in serializationSpec.subtypes) {
-          final subtypeName = subtype.type.element!.name;
+          final subtypeName = subtype.type.element3!.name3!;
           final subtypeRef = typeHelper.toReference(subtype.type).noBound;
           final subtypeCase = deserialize([ref], {}, [subtypeRef]);
           b.statements.add(
             subtypeCase.returned.wrapWithBlockIf(
-              type.equalTo(literalString(subtypeName!, raw: true)),
+              type.equalTo(literalString(subtypeName, raw: true)),
             ),
           );
         }
@@ -536,7 +536,7 @@ final class SerializerGenerator {
             DartTypes.core.stringBuffer
                 .newInstance([literalString('Unknown subtype of ')])
                 .cascade('write')
-                .call([literalString(this.type.element!.name!, raw: true)])
+                .call([literalString(this.type.element3!.name3!, raw: true)])
                 .cascade('write')
                 .call([literalString(r': ')])
                 .cascade('write')
@@ -616,8 +616,8 @@ final class SerializerGenerator {
           var constructor = typeReference;
           var cast = false;
           if (_isOverridden) {
-            if (serializationSpec.wireConstructor!.enclosingElement3 !=
-                type.element) {
+            if (serializationSpec.wireConstructor!.enclosingElement2 !=
+                type.element3) {
               constructor = representationTypeRef;
               cast = true;
             }
@@ -702,8 +702,8 @@ final class _GenericsCollector extends ast.TypeVisitor<void> {
 extension on ast.DartType {
   String get classNamePrefix {
     return switch (this) {
-      ast.InterfaceType(:final typeArguments, :final element) => () {
-          final name = StringBuffer(element.name);
+      ast.InterfaceType(:final typeArguments, element3: final element) => () {
+          final name = StringBuffer(element.name3!);
           if (typeArguments.isNotEmpty) {
             name
               ..write('_')
@@ -712,9 +712,10 @@ extension on ast.DartType {
           return name.toString();
         }(),
       final ast.RecordType recordType => recordType.symbol,
-      ast.TypeParameterType(:final element, :final bound) => StringBuffer().let(
+      ast.TypeParameterType(element3: final element, :final bound) =>
+        StringBuffer().let(
           (buf) {
-            buf.write(element.name);
+            buf.write(element.name3);
             if (bound.classNamePrefix case final boundPrefix
                 when boundPrefix.isNotEmpty) {
               buf
@@ -733,7 +734,7 @@ List<_Reference> _subtypes(Reference typeParameter) {
   final typeParameterType =
       typeHelper.fromReference(typeParameter) as ast.TypeParameterType;
   final typeParameterBound =
-      typeParameterType.bound.element as InterfaceElement;
+      typeParameterType.bound.element3 as InterfaceElement2;
   final subtypes = <_Reference>{
     _BoundReference(typeHelper.toReference(typeParameterType.bound)),
   };

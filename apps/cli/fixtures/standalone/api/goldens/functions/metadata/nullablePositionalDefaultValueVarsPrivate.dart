@@ -57,7 +57,7 @@ final class NullablePositionalDefaultValueVarsPrivateTarget
             const (a: 'a', b: 'b', c: 'c'),
         (_i4.Serializers.instance
                 .deserialize<_i5.Exportable?>(request[r'exportable'])) ??
-            const _i5.Exportable(),
+            const _i5.Exportable.new(),
         (_i4.Serializers.instance
                 .deserialize<_i5.Serializable?>(request[r'serializable'])) ??
             const _i5.Serializable.forType('String'),

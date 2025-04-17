@@ -64,7 +64,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -80,7 +80,7 @@
                 "url": "package:celest/src/functions/http/http.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {
                 "statusCode": {
@@ -169,7 +169,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -185,7 +185,7 @@
                 "url": "package:celest/src/functions/http/http.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {
                 "statusCode": {
@@ -274,7 +274,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -290,7 +290,7 @@
                 "url": "package:celest/src/functions/http/http.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {
                 "statusCode": {
@@ -379,7 +379,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -395,7 +395,7 @@
                 "url": "package:celest/src/functions/http/http.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {
                 "statusCode": {
@@ -484,7 +484,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -500,7 +500,7 @@
                 "url": "package:celest/src/functions/http/http.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {
                 "statusCode": {
@@ -829,7 +829,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -845,7 +845,7 @@
                 "url": "package:celest/src/functions/http/http.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {
                 "method": {
@@ -934,7 +934,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -950,7 +950,7 @@
                 "url": "package:celest/src/functions/http/http.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {
                 "method": {
@@ -1039,7 +1039,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -1055,7 +1055,7 @@
                 "url": "package:celest/src/functions/http/http.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {
                 "method": {
@@ -1144,7 +1144,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -1160,7 +1160,7 @@
                 "url": "package:celest/src/functions/http/http.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {
                 "method": {
@@ -1249,7 +1249,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -1265,7 +1265,7 @@
                 "url": "package:celest/src/functions/http/http.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {
                 "method": {
@@ -1564,7 +1564,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -1621,7 +1621,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -1678,7 +1678,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -1735,7 +1735,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -1792,7 +1792,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -1848,7 +1848,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -1905,7 +1905,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -1962,7 +1962,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2019,7 +2019,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2076,7 +2076,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2133,7 +2133,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2190,7 +2190,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2255,7 +2255,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2320,7 +2320,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2385,7 +2385,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2450,7 +2450,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2515,7 +2515,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2579,7 +2579,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2644,7 +2644,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2709,7 +2709,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2774,7 +2774,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2839,7 +2839,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2904,7 +2904,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -2968,7 +2968,7 @@
                     "url": "package:celest/src/functions/http/http_query.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -3037,7 +3037,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -3485,7 +3485,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -3501,7 +3501,7 @@
                 "url": "package:celest_core/src/http/http_error.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {
                 "statusCode": {
                   "$": "DartInt",
@@ -3539,7 +3539,7 @@
                 "url": "package:celest_core/src/http/http_error.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {
                 "statusCode": {
                   "$": "DartInt",
@@ -3577,7 +3577,7 @@
                 "url": "package:celest_core/src/http/http_error.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {
                 "statusCode": {
                   "$": "DartInt",
@@ -3615,7 +3615,7 @@
                 "url": "package:celest_core/src/http/http_error.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {
                 "statusCode": {
                   "$": "DartInt",
@@ -3970,7 +3970,7 @@
                     "url": "package:celest/src/functions/http/http_header.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -4027,7 +4027,7 @@
                     "url": "package:celest/src/functions/http/http_header.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -4084,7 +4084,7 @@
                     "url": "package:celest/src/functions/http/http_header.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -4141,7 +4141,7 @@
                     "url": "package:celest/src/functions/http/http_header.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -4198,7 +4198,7 @@
                     "url": "package:celest/src/functions/http/http_header.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -4254,7 +4254,7 @@
                     "url": "package:celest/src/functions/http/http_header.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -4311,7 +4311,7 @@
                     "url": "package:celest/src/functions/http/http_header.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -4368,7 +4368,7 @@
                     "url": "package:celest/src/functions/http/http_header.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -4425,7 +4425,7 @@
                     "url": "package:celest/src/functions/http/http_header.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -4482,7 +4482,7 @@
                     "url": "package:celest/src/functions/http/http_header.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -4539,7 +4539,7 @@
                     "url": "package:celest/src/functions/http/http_header.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -4596,7 +4596,7 @@
                     "url": "package:celest/src/functions/http/http_header.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {
                     "name": {
                       "$": "DartString",
@@ -4665,7 +4665,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -4945,7 +4945,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.29.2",
+      "version": "3.29.3",
       "enabledExperiments": []
     }
   },

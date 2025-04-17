@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:analyzer/dart/element/element.dart' as dart_ast;
+import 'package:analyzer/dart/element/element2.dart' as dart_ast;
 import 'package:analyzer/dart/element/type.dart' as dart_ast;
 import 'package:analyzer/dart/element/type.dart' hide RecordType;
 import 'package:celest_ast/celest_ast.dart' as ast;
@@ -264,8 +264,8 @@ if ($event is Map<String, Object?> && $event.containsKey('@status')) {
             for (final typeParameter in function.typeParameters) {
               final typeParameterType = typeHelper.fromReference(typeParameter)
                   as dart_ast.TypeParameterType;
-              final typeParameterBound =
-                  typeParameterType.bound.element as dart_ast.InterfaceElement;
+              final typeParameterBound = typeParameterType.bound.element3
+                  as dart_ast.InterfaceElement2;
               final typeMap = <Expression, Expression>{};
               final bound = typeHelper.toReference(typeParameterType.bound);
               typeMap[bound] = literalString(bound.symbol!, raw: true);

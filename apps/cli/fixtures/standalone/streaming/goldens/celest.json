@@ -99,8 +99,8 @@
       "version": {
         "major": 3,
         "minor": 29,
-        "patch": 2,
-        "canonicalizedVersion": "3.29.2"
+        "patch": 3,
+        "canonicalizedVersion": "3.29.3"
       }
     },
     "targetSdk": "DART",

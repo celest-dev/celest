@@ -75,12 +75,12 @@
       "value": "https://dillonnys.com"
     },
     {
-      "name": "CELEST_ENVIRONMENT",
-      "value": "local"
-    },
-    {
       "name": "MY_WEIGHT",
       "value": "130"
+    },
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
     }
   ],
   "secrets": [
@@ -103,7 +103,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.29.2",
+      "version": "3.29.3",
       "enabledExperiments": []
     }
   }

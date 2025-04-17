@@ -4,7 +4,7 @@ import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/src/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
@@ -67,7 +67,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
   });
 
   final AnalysisContext context;
-  final InterfaceElement configValueElement;
+  final InterfaceElement2 configValueElement;
   final CelestErrorReporter errorReporter;
   final ConfigValueFactory<T> factory;
 
@@ -79,14 +79,14 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
     for (final reference in references) {
       _logger.finest(
         'Reference: kind=${reference.kind}, '
-        'elementKind=${reference.enclosingElement.kind}, '
-        'location=${reference.enclosingElement.sourceLocation}',
+        'elementKind=${reference.enclosingFragment.element.kind}, '
+        'location=${reference.enclosingFragment.element.sourceLocation}',
       );
     }
 
     final topLevelDefinitions = references
-        .map((ref) => ref.enclosingElement)
-        .whereType<TopLevelVariableElement>();
+        .map((ref) => ref.enclosingFragment.element)
+        .whereType<TopLevelVariableElement2>();
     final topLevelResolutions = <(
       String dartName,
       Iterable<String> docs,
@@ -94,7 +94,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
     )>[];
     for (final variable in topLevelDefinitions) {
       topLevelResolutions.add((
-        variable.name,
+        variable.name3!,
         variable.docLines,
         resolveVariable(
           variable: variable,
@@ -121,19 +121,19 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
     );
 
     final parameters = references
-        .map((ref) => ref.enclosingElement)
-        .whereType<ParameterElement>();
+        .map((ref) => ref.enclosingFragment.element)
+        .whereType<FormalParameterElement>();
     final parameterResolutions = <Future<(String, String?, FileSpan?)?>>[];
     for (final parameter in parameters) {
-      for (final metadata in parameter.metadata) {
+      for (final metadata in parameter.metadata2.annotations) {
         _logger.finer(
-          'Resolving parameter: name=${parameter.name}, '
-          'type=${metadata.element?.runtimeType}',
+          'Resolving parameter: name=${parameter.name3}, '
+          'type=${metadata.element2?.runtimeType}',
         );
-        final element = metadata.element;
+        final element = metadata.element2;
         final location = parameter.sourceLocation;
         switch (element) {
-          case ConstructorElement(enclosingElement3: final enclosingElement)
+          case ConstructorElement2(enclosingElement2: final enclosingElement)
               when enclosingElement == configValueElement:
             parameterResolutions.add(
               resolveVariable(
@@ -142,7 +142,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
                 location: location,
               ),
             );
-          case PropertyAccessorElement(:final returnType)
+          case PropertyAccessorElement2(:final returnType)
               when returnType == configValueElement.thisType:
             parameterResolutions.add(
               resolveVariable(
@@ -196,7 +196,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
 
   Future<(String name, String? staticValue, FileSpan? location)?>
       resolveVariable({
-    required Element variable,
+    required Element2 variable,
     required DartObject? value,
     required FileSpan? location,
   }) async {
@@ -211,9 +211,9 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
               value.getField('(super)')?.getField('value'))
           ?.toStringValue();
       _logger.finest('Resolved name: $name ($staticValue)');
-    } else if (variable.library case final libraryElement?) {
+    } else if (variable.library2 case final libraryElement?) {
       // Only resolve variables in the project backend
-      if (libraryElement.source.uri
+      if (libraryElement.firstFragment.source.uri
           case Uri(
             scheme: 'package',
             pathSegments: [!= 'celest_backend', ...],
@@ -221,17 +221,17 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
         _logger.finest('Skipping: $variable');
         return null;
       }
-      final library = await context.currentSession.getResolvedLibraryByElement(
+      final library = await context.currentSession.getResolvedLibraryByElement2(
         libraryElement,
       );
-      ElementDeclarationResult? declaration;
+      FragmentDeclarationResult? declaration;
       if (library is ResolvedLibraryResult) {
-        declaration = library.getElementDeclaration(variable);
+        declaration = library.getFragmentDeclaration(variable.firstFragment);
       } else {
         performance.captureError(
           StateError('Failed to resolve library'),
           extra: {
-            'uri': libraryElement.source.uri,
+            'uri': libraryElement.firstFragment.source.uri,
             'variable': variable.toString(),
           },
         );

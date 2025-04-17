@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:analyzer/dart/analysis/results.dart';
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/diagnostic/diagnostic.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
@@ -203,10 +203,8 @@ const project = Project(name: 'cache_warmup');
       errorReporter: this,
       context: context,
     );
-    await Future.wait([
-      _initFuture ??= _init(),
-      _resolver!.resolveCustomTypes(),
-    ]);
+    await (_initFuture ??= _init());
+    await _resolver!.resolveCustomTypes();
   }
 
   Future<void>? _initFuture;
@@ -266,7 +264,7 @@ const project = Project(name: 'cache_warmup');
     final secretElement = celestConfigValues.getClassElement('secret');
     typeHelper
       ..coreTypes = CoreTypes(
-        typeProvider: dartCore.element.typeProvider,
+        typeProvider: dartCore.element2.typeProvider,
         coreExceptionType: dartCore.getClassType('Exception'),
         coreErrorType: dartCore.getClassType('Error'),
         coreBigIntType: dartCore.getClassType('BigInt'),
@@ -291,16 +289,18 @@ const project = Project(name: 'cache_warmup');
         celestSecretElement: secretElement,
         jsonKeyElement: jsonAnnotationLib?.getClassElement('JsonKey'),
       )
-      ..typeSystem = dartCore.element.typeSystem
-      ..typeProvider = dartCore.element.typeProvider;
+      ..typeSystem = dartCore.element2.typeSystem
+      ..typeProvider = dartCore.element2.typeProvider;
+
+    typeHelper.init();
   }
 
   @override
-  Set<InterfaceElement> get customModelTypes =>
+  Set<InterfaceElement2> get customModelTypes =>
       _resolver?.customModelTypes ?? const {};
 
   @override
-  Set<InterfaceElement> get customExceptionTypes =>
+  Set<InterfaceElement2> get customExceptionTypes =>
       _resolver?.customExceptionTypes ?? const {};
 
   Future<CelestAnalysisResult> analyzeProject({

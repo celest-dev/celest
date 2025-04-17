@@ -148,7 +148,8 @@ class TestRunner {
           exe: Platform.resolvedExecutable,
           action: PubAction.upgrade,
           workingDirectory: projectRoot,
-        ).timeout(const Duration(seconds: 10));
+          verbose: Platform.environment.containsKey('CI'),
+        ).timeout(const Duration(seconds: 30));
         if (updateGoldens) {
           if (goldensDir.existsSync()) {
             goldensDir.deleteSync(recursive: true);

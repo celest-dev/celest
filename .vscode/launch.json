@@ -22,5 +22,17 @@
             "request": "launch",
             "type": "dart"
         },
+        {
+          "name": "CLI / E2E (--update-goldens)",
+          "request": "launch",
+          "type": "dart",
+          "cwd": "apps/cli",
+          "program": "fixtures/fixtures_test.dart",
+          "env": {
+            "UPDATE_GOLDENS": "true",
+            "INCLUDE_TESTS": "marcelo"
+          },
+          "args": ["--timeout=none"]
+        },
     ]
 }

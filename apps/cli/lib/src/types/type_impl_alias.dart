@@ -25,12 +25,13 @@ final class _TypeImplAliasVisitor
     FunctionType type,
     InstantiatedTypeAliasElement? alias,
   ) {
-    return FunctionTypeImpl(
-      typeFormals: type.typeFormals,
-      parameters: type.parameters,
+    type as FunctionTypeImpl;
+    return FunctionTypeImpl.v2(
+      typeParameters: type.typeParameters,
+      formalParameters: type.formalParameters,
       returnType: type.returnType,
       nullabilitySuffix: type.nullabilitySuffix,
-      alias: alias,
+      alias: alias as InstantiatedTypeAliasElementImpl?,
     );
   }
 
@@ -41,9 +42,9 @@ final class _TypeImplAliasVisitor
   ) {
     return InterfaceTypeImpl(
       element: type.element3 as InterfaceElementImpl2,
-      typeArguments: type.typeArguments,
+      typeArguments: type.typeArguments.cast(),
       nullabilitySuffix: type.nullabilitySuffix,
-      alias: alias,
+      alias: alias as InstantiatedTypeAliasElementImpl?,
     );
   }
 
@@ -69,7 +70,7 @@ final class _TypeImplAliasVisitor
       positionalFields: type.positionalFields.cast(),
       namedFields: type.namedFields.cast(),
       nullabilitySuffix: type.nullabilitySuffix,
-      alias: alias,
+      alias: alias as InstantiatedTypeAliasElementImpl?,
     );
   }
 
@@ -79,9 +80,9 @@ final class _TypeImplAliasVisitor
     InstantiatedTypeAliasElement? alias,
   ) {
     return TypeParameterTypeImpl(
-      element: type.element,
+      element3: type.element3 as TypeParameterElementImpl2,
       nullabilitySuffix: type.nullabilitySuffix,
-      alias: alias,
+      alias: alias as InstantiatedTypeAliasElementImpl?,
     );
   }
 

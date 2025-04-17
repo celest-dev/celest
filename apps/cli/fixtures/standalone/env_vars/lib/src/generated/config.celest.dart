@@ -61,13 +61,13 @@ class CelestVariables {
   String get myWebsite =>
       _$celest.context.expect(const _$celest.env('MY_WEBSITE'));
 
-  /// The value of the `CELEST_ENVIRONMENT` environment variable.
-  String get celestEnvironment =>
-      _$celest.context.expect(const _$celest.env('CELEST_ENVIRONMENT'));
-
   /// The value of the `MY_WEIGHT` environment variable.
   String get myWeight =>
       _$celest.context.expect(const _$celest.env('MY_WEIGHT'));
+
+  /// The value of the `CELEST_ENVIRONMENT` environment variable.
+  String get celestEnvironment =>
+      _$celest.context.expect(const _$celest.env('CELEST_ENVIRONMENT'));
 }
 
 /// The secrets for the Celest service.

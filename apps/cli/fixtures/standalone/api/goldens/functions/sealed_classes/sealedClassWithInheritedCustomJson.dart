@@ -1547,10 +1547,10 @@ final class SealedClassWithInheritedCustomJsonTarget
       serialize: ($value) => {
         ...$value.toJson(),
         r'$type': switch ($value) {
-          _i5.CircleWithInheritedCustomJson() =>
-            r'CircleWithInheritedCustomJson',
           _i5.RectangleWithInheritedCustomJson() =>
             r'RectangleWithInheritedCustomJson',
+          _i5.CircleWithInheritedCustomJson() =>
+            r'CircleWithInheritedCustomJson',
         },
       },
       deserialize: ($serialized) {

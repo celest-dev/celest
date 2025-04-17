@@ -49,7 +49,7 @@ final class PositionalDefaultValuesTarget extends _i1.CloudFunctionHttpTarget {
             const {'map': 'map'},
         (_i4.Serializers.instance
                 .deserialize<_i5.Exportable?>(request[r'exportable'])) ??
-            const _i5.Exportable(),
+            const _i5.Exportable.new(),
         (_i4.Serializers.instance
                 .deserialize<_i5.Serializable?>(request[r'serializable'])) ??
             const _i5.Serializable.forType('String'),

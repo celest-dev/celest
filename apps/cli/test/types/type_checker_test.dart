@@ -2,9 +2,13 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+// ignore_for_file: deprecated_member_use
+
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:build_test/build_test.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
@@ -158,7 +162,7 @@ void main() {
       () {
         test('should equal MapMixin class', () {
           expect(checkMapMixin().isExactlyType(staticMapMixin), isTrue);
-          expect(checkMapMixin().isExactly(staticMapMixin.element), isTrue);
+          expect(checkMapMixin().isExactly(staticMapMixin.element3), isTrue);
         });
       },
       onPlatform: const {
@@ -262,7 +266,7 @@ void main() {
       @depracated // Intentionally mispelled.
       class X {}
     ''', (resolver) async => (await resolver.findLibraryByName('_test'))!);
-    final classX = library.getClass('X')!;
+    final classX = library.getClass('X')!.element2;
     const $deprecated = TypeChecker.fromUrl('dart:core#deprecated');
 
     expect(
@@ -290,10 +294,10 @@ void main() {
     late TypeChecker $B;
     late TypeChecker $C;
 
-    late ClassElement $ExampleOfA;
-    late ClassElement $ExampleOfMultiA;
-    late ClassElement $ExampleOfAPlusB;
-    late ClassElement $ExampleOfBPlusC;
+    late ClassElement2 $ExampleOfA;
+    late ClassElement2 $ExampleOfMultiA;
+    late ClassElement2 $ExampleOfAPlusB;
+    late ClassElement2 $ExampleOfBPlusC;
 
     setUpAll(() async {
       final library = await resolveSource(r'''
@@ -345,10 +349,10 @@ void main() {
           nullabilitySuffix: NullabilitySuffix.none,
         ),
       );
-      $ExampleOfA = library.getClass('ExampleOfA')!;
-      $ExampleOfMultiA = library.getClass('ExampleOfMultiA')!;
-      $ExampleOfAPlusB = library.getClass('ExampleOfAPlusB')!;
-      $ExampleOfBPlusC = library.getClass('ExampleOfBPlusC')!;
+      $ExampleOfA = library.getClass('ExampleOfA')!.element2;
+      $ExampleOfMultiA = library.getClass('ExampleOfMultiA')!.element2;
+      $ExampleOfAPlusB = library.getClass('ExampleOfAPlusB')!.element2;
+      $ExampleOfBPlusC = library.getClass('ExampleOfBPlusC')!.element2;
     });
 
     test('of a single @A', () {
@@ -387,8 +391,8 @@ void main() {
 
   group('unresolved annotations', () {
     late TypeChecker $A;
-    late ClassElement $ExampleOfA;
-    late ParameterElement $annotatedParameter;
+    late ClassElement2 $ExampleOfA;
+    late FormalParameterElement $annotatedParameter;
 
     setUpAll(() async {
       final library = await resolveSource(r'''
@@ -411,12 +415,13 @@ void main() {
           nullabilitySuffix: NullabilitySuffix.none,
         ),
       );
-      $ExampleOfA = library.getClass('ExampleOfA')!;
+      $ExampleOfA = library.getClass('ExampleOfA')!.element2;
       $annotatedParameter = library.topLevelElements
           .whereType<FunctionElement>()
           .firstWhere((f) => f.name == 'annotatedParameter')
           .parameters
-          .single;
+          .single
+          .element2;
     });
 
     test('should throw by default', () {
@@ -506,3 +511,11 @@ mixin MyEnumMixin on Enum {
 }
 
 enum MyEnumWithMixin with MyEnumMixin { foo, bar }
+
+extension on ClassElement {
+  ClassElementImpl2 get element2 => (this as ClassElementImpl).element;
+}
+
+extension on ParameterElement {
+  FormalParameterElement get element2 => (this as ParameterElementImpl).element;
+}
