@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:analyzer/dart/element/element.dart' as ast;
+import 'package:analyzer/dart/element/element2.dart' as ast;
 import 'package:analyzer/dart/element/type.dart' as ast;
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/ast/ast.dart';
@@ -346,13 +346,13 @@ final class EntrypointGenerator {
 
             // Check if the type or one of its supertypes is annotated with an
             // `@httpError` config.
-            final exceptionElement = dartExceptionType.element;
+            final exceptionElement = dartExceptionType.element3;
             if (statusCode == null &&
-                exceptionElement is ast.InterfaceElement) {
+                exceptionElement is ast.InterfaceElement2) {
               final errorConfig = [
-                ...exceptionElement.metadata,
+                ...exceptionElement.metadata2.annotations,
                 ...exceptionElement.allSupertypes.expand(
-                  (it) => it.element.metadata,
+                  (it) => it.element3.metadata2.annotations,
                 ),
               ].where((m) => m.isHttpError).firstOrNull;
               if (errorConfig?.computeConstantValue() case final value?) {
@@ -384,9 +384,11 @@ final class EntrypointGenerator {
               ast.DartType(isCloudExceptionType: true) => refer(
                   'e',
                 ).property('message'),
-              ast.DartType(element: ast.InterfaceElement(:final fields))
+              ast.DartType(
+                element3: ast.InterfaceElement2(fields2: final fields)
+              )
                   when fields.any(
-                    (f) => f.name == 'message' && f.type.isDartCoreString,
+                    (f) => f.name3 == 'message' && f.type.isDartCoreString,
                   ) =>
                 refer('e').property('message'),
               _ => null,
@@ -797,7 +799,7 @@ List<_Reference> _subtypes(Reference typeParameter) {
   final typeParameterType =
       typeHelper.fromReference(typeParameter) as ast.TypeParameterType;
   final typeParameterBound =
-      typeParameterType.bound.element as ast.InterfaceElement;
+      typeParameterType.bound.element3 as ast.InterfaceElement2;
   final subtypes = <_Reference>{
     _BoundReference(typeHelper.toReference(typeParameterType.bound)),
   };

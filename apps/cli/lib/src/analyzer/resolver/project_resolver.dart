@@ -5,7 +5,6 @@ import 'package:analyzer/dart/ast/ast.dart' as dart_ast;
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
-import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -64,10 +63,10 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
   final DriverBasedAnalysisContext context;
 
   @override
-  Set<InterfaceElement> customModelTypes = {};
+  Set<InterfaceElement2> customModelTypes = {};
 
   @override
-  Set<InterfaceElement> customExceptionTypes = {};
+  Set<InterfaceElement2> customExceptionTypes = {};
 
   late final _envVariableResolver = ConfigValueResolver(
     context: context,
@@ -99,17 +98,17 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     _errorReporter.reportError(error, severity: severity, location: location);
   }
 
-  Future<Set<InterfaceElement>> _collectCustomTypes(CustomType type) async {
+  Future<Set<InterfaceElement2>> _collectCustomTypes(CustomType type) async {
     final files = <File>[];
     final dir = fileSystem.directory(type.dir);
     if (dir.existsSync()) {
       files.addAll(await dir.list(recursive: true).whereType<File>().toList());
     }
-    final customTypes = <InterfaceElement>{};
+    final customTypes = <InterfaceElement2>{};
     await Future.wait([
       for (final file in files)
         resolveLibrary(file.path).then((library) {
-          final types = namespaceForLibrary(library.element);
+          final types = namespaceForLibrary(library.element2);
           customTypes.addAll(types);
         }),
     ]);
@@ -125,18 +124,19 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     this.customExceptionTypes = customExceptionTypes;
     typeHelper.overrides.clear();
     for (final element in customExceptionTypes.followedBy(customModelTypes)) {
-      final overrideAnnotation = element.metadata.firstWhereOrNull(
+      final overrideAnnotation = element.metadata2.annotations.firstWhereOrNull(
         (annotation) => annotation.isOverride,
       );
       final isOverride = overrideAnnotation != null;
-      final customOverrideAnnotation = element.metadata.firstWhereOrNull(
+      final customOverrideAnnotation =
+          element.metadata2.annotations.firstWhereOrNull(
         (annotation) => annotation.isCustomOverride,
       );
       final isCustomOverride = customOverrideAnnotation != null;
       if (!isOverride && !isCustomOverride) {
         continue;
       }
-      if (element is! ExtensionTypeElement) {
+      if (element is! ExtensionTypeElement2) {
         reportError(
           'Only extension types may be marked as overrides',
           location: element.sourceLocation,
@@ -144,12 +144,13 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
         continue;
       }
       final elementUri = context.currentSession.uriConverter.uriToPath(
-            element.librarySource.uri,
+            element.library2.firstFragment.source.uri,
           ) ??
-          p.fromUri(element.librarySource.uri);
+          p.fromUri(element.library2.firstFragment.source.uri);
       if (isOverride && migrateProject) {
         // `@override` -> `@customImplementation`
-        final location = overrideAnnotation.sourceLocation(element.source);
+        final location = overrideAnnotation
+            .sourceLocation(element.library2.firstFragment.source);
         final overlay = pendingEdits[elementUri] ??= {};
         const editText = '@customOverride';
         _logger.finest(
@@ -167,14 +168,15 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
         );
         continue;
       }
-      if (typeErasure.element is ExtensionTypeElement) {
+      if (typeErasure.element3 is ExtensionTypeElement2) {
         reportError(
           'Extension types may not be overridden',
           location: element.sourceLocation,
         );
         continue;
       }
-      final erasureSource = typeErasure.element.library.source.uri;
+      final erasureSource =
+          typeErasure.element3.library2.firstFragment.source.uri;
       if (erasureSource case Uri(scheme: 'dart', path: 'core')) {
         reportError(
           'Overriding types from `dart:core` is not allowed',
@@ -196,8 +198,8 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       }
       if (typeHelper.overrides[typeErasure] case final existing?) {
         reportError(
-          'The type ${typeErasure.element.name} is already overridden by '
-          '${existing.element.name} (${existing.element.library.source.uri}).',
+          'The type ${typeErasure.element3.name3} is already overridden by '
+          '${existing.element3.name3} (${existing.element3.library2.firstFragment.source.uri}).',
           location: element.sourceLocation,
         );
         continue;
@@ -355,7 +357,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     required ResolvedLibraryResult authLibrary,
   }) async {
     final (topLevelConstants, hasErrors) =
-        authLibrary.element.topLevelConstants(errorReporter: _errorReporter);
+        authLibrary.element2.topLevelConstants(errorReporter: _errorReporter);
     if (hasErrors) {
       return null;
     }
@@ -456,7 +458,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       }
       if (provider != null) {
         provider
-          ..name = authProvider.variable?.name
+          ..name = authProvider.variable2?.name3
           ..location = authDefinitionLocation;
         final astAuthProvider = provider.build();
         if (!uniqueAuthProviders.add(astAuthProvider)) {
@@ -467,7 +469,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
         }
       } else {
         externalProvider!
-          ..name = authProvider.variable?.name
+          ..name = authProvider.variable2?.name3
           ..location = authDefinitionLocation;
         final astExternalAuthProvider = externalProvider.build();
         if (!uniqueExternalAuthProviders.add(astExternalAuthProvider)) {
@@ -486,14 +488,18 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
   }
 
   (List<ast.ApiMetadata>, bool isCloud) _collectApiMetadata(
-    Element element, {
+    Element2 element, {
     required bool hasAuth,
   }) {
     var hasAuthMetadata = false;
     var isCloud = false;
-    final metadata =
-        element.metadata.expand<ast.ApiMetadata>((annotation) sync* {
-      final location = annotation.sourceLocation(element.source!);
+    final annotations = switch (element) {
+      final Annotatable annotatable => annotatable.metadata2.annotations,
+      _ => const <ElementAnnotation>[],
+    };
+    final metadata = annotations.expand<ast.ApiMetadata>((annotation) sync* {
+      final location =
+          annotation.sourceLocation(element.library2!.firstFragment.source);
       final value = annotation.computeConstantValue();
       final type = value?.type;
       if (value == null || type == null) {
@@ -644,13 +650,13 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       );
 
   ast.NodeReference? _parameterReference(
-    ParameterElement parameter, {
+    FormalParameterElement parameter, {
     required Iterable<ast.Variable> variables,
     required Iterable<ast.Secret> secrets,
     required ast.ApiAuth? applicableAuth,
     required ast.StreamType? streamType,
   }) {
-    final annotations = parameter.metadata;
+    final annotations = parameter.metadata2.annotations;
     if (annotations.isEmpty) {
       return null;
     }
@@ -659,9 +665,13 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
         'Only one annotation may be specified on a parameter',
         location: parameter.sourceLocation?.safeExpand(
           annotations.fold<FileSpan>(
-            annotations[0].sourceLocation(parameter.source!),
+            annotations[0].sourceLocation(
+              parameter.library2!.firstFragment.source,
+            ),
             (span, el) {
-              return span.safeExpand(el.sourceLocation(parameter.source!));
+              return span.safeExpand(
+                el.sourceLocation(parameter.library2!.firstFragment.source),
+              );
             },
           ),
         ),
@@ -669,7 +679,9 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       return null;
     }
     final annotation = annotations.first;
-    final location = annotation.sourceLocation(parameter.source!);
+    final location = annotation.sourceLocation(
+      parameter.library2!.firstFragment.source,
+    );
     final value = annotation.computeConstantValue();
     final annotationType = value?.type;
     if (value == null || annotationType == null) {
@@ -682,15 +694,15 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
         // Check for migration
         // TODO(dnys1): Update for V1
         if (migrateProject) {
-          switch ((annotation.element, annotation.library)) {
+          switch ((annotation.element2, annotation.library2)) {
             case (
-                PropertyAccessorElement(
-                  enclosingElement3: ClassElement(name: 'Env'),
-                  :final name,
+                PropertyAccessorElement2(
+                  enclosingElement2: ClassElement2(name3: 'Env'),
+                  name3: final name,
                 ),
                 final library?,
               ):
-              final libraryPath = p.fromUri(library.source.uri);
+              final libraryPath = p.fromUri(library.firstFragment.source.uri);
               assert(p.isWithin(projectPaths.projectRoot, libraryPath));
               final overlay = pendingEdits[libraryPath] ??= {};
               final editText = '@env.$name';
@@ -724,7 +736,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
         }
         final reservedCelestVariableOutsideCelest =
             name.toUpperCase().startsWith('CELEST_') &&
-                !(annotation.element?.library?.isCelestSdk ?? false);
+                !(annotation.element2?.library2?.isCelestSdk ?? false);
         if (reservedEnvVars.contains(name) ||
             reservedCelestVariableOutsideCelest) {
           reportError(
@@ -762,7 +774,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
         }
         final reservedCelestVariableOutsideCelest =
             name.toUpperCase().startsWith('CELEST_') &&
-                !(annotation.element?.library?.isCelestSdk ?? false);
+                !(annotation.element2?.library2?.isCelestSdk ?? false);
         if (reservedEnvVars.contains(name) ||
             reservedCelestVariableOutsideCelest) {
           reportError(
@@ -788,10 +800,11 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
         }
         // Check for migration
         if (migrateProject) {
-          switch ((annotation.element, annotation.library)) {
-            case (PropertyAccessorElement(name: 'user'), final library?):
+          switch ((annotation.element2, annotation.library2)) {
+            case (PropertyAccessorElement2(name3: 'user'), final library?):
               final overlay =
-                  pendingEdits[p.fromUri(library.source.uri)] ??= {};
+                  pendingEdits[p.fromUri(library.firstFragment.source.uri)] ??=
+                      {};
               const editText = '@principal';
               _logger.finest(
                 'Proposing edit: ${location.text} -> $editText '
@@ -825,7 +838,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
         }
 
         var name = value.getField('name')?.toStringValue();
-        name ??= parameter.name;
+        name ??= parameter.name3!;
 
         final validHeaderType = switch (parameter.type) {
           final InterfaceType type => _validHeaderQueryTypes.isExactlyType(
@@ -882,7 +895,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
         return ast.NodeReference(type: ast.NodeType.httpHeader, name: name);
       case DartType(isHttpQuery: true):
         var name = value.getField('name')?.toStringValue();
-        name ??= parameter.name;
+        name ??= parameter.name3!;
 
         final validQueryType = switch (parameter.type) {
           InterfaceType(isDartCoreList: true, typeArguments: [final type]) =>
@@ -928,13 +941,11 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     required Iterable<ast.Secret> secrets,
     required bool hasAuth,
   }) async {
-    final library = apiLibrary.element;
+    final library = apiLibrary.element2;
     final (libraryMetdata, _) = _collectApiMetadata(library, hasAuth: hasAuth);
     final apiExceptionTypes = await collectExceptionTypes(library);
     final functions = Map.fromEntries(
-      (await library.topLevelElements.whereType<FunctionElement>().asyncMap((
-        func,
-      ) async {
+      (await library.topLevelFunctions.asyncMap((func) async {
         if (func.isPrivate) {
           return null;
         }
@@ -949,17 +960,19 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
             return null;
           }
           _warnForNoCloud();
-          final overlay = pendingEdits[p.fromUri(library.source.uri)] ??= {};
+          final overlay =
+              pendingEdits[p.fromUri(library.firstFragment.source.uri)] ??= {};
 
-          final declaration = apiLibrary.getElementDeclaration(func)!.node
-              as FunctionDeclaration;
+          final declaration = apiLibrary
+              .getFragmentDeclaration(func.firstFragment)!
+              .node as FunctionDeclaration;
           // Put the `@cloud` before the first annotation, or directly
           // before the return type if there is no metadata.
           final offset = declaration.metadata.firstOrNull?.offset ??
               declaration.returnType!.offset;
           const editText = '@cloud\n';
           _logger.finest(
-            'Proposing edit: $editText for ${func.name} '
+            'Proposing edit: $editText for ${func.name3} '
             '($apiFilepath)',
           );
           overlay.add(SourceEdit(offset, 0, editText));
@@ -1010,9 +1023,9 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
         };
 
         final function = ast.CloudFunction(
-          name: func.name,
+          name: func.name3!,
           apiName: apiName,
-          typeParameters: await func.typeParameters.asyncMap((type) async {
+          typeParameters: await func.typeParameters2.asyncMap((type) async {
             final typeRef = typeHelper.toReference(
               type.instantiate(nullabilitySuffix: NullabilitySuffix.none),
             );
@@ -1025,7 +1038,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
             final hasAllowedSubtypes = await bound.hasAllowedSubtypes();
             if (!hasAllowedSubtypes.allowed) {
               final disallowedTypes = hasAllowedSubtypes.disallowedTypes
-                  .map((type) => type.element.name)
+                  .map((type) => type.element3.name3)
                   .join(', ');
               reportError(
                 'Classes with subtypes (which are not sealed classes) are not '
@@ -1036,11 +1049,11 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
             }
             return typeRef;
           }),
-          parameters: await func.parameters.asyncMap((param) async {
+          parameters: await func.formalParameters.asyncMap((param) async {
             final paramType = param.type;
             final paramTypeRef = typeHelper.toReference(paramType);
             final paramLoc = param.sourceLocation!;
-            if (paramType.element case final InterfaceElement interface) {
+            if (paramType.element3 case final InterfaceElement2 interface) {
               ensureClientReferenceable(
                 interface,
                 paramLoc,
@@ -1048,7 +1061,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
               );
             }
             final parameter = ast.CloudFunctionParameter(
-              name: param.name,
+              name: param.name3!,
               type: paramTypeRef,
               required: param.isRequired,
               named: param.isNamed,
@@ -1060,11 +1073,11 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
                 secrets: secrets,
                 streamType: streamType,
               ),
-              annotations: param.metadata
+              annotations: param.metadata2.annotations
                   .map((annotation) => annotation.toDartValue)
                   .nonNulls
                   .toList(),
-              annotationExpressions: param.metadata
+              annotationExpressions: param.metadata2.annotations
                   .map((annotation) => annotation.toCodeBuilder)
                   .nonNulls
                   .toList(),
@@ -1092,7 +1105,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
             final hasAllowedSubtypes = await param.type.hasAllowedSubtypes();
             if (!hasAllowedSubtypes.allowed) {
               final disallowedTypes = hasAllowedSubtypes.disallowedTypes
-                  .map((type) => type.element.name)
+                  .map((type) => type.element3.name3)
                   .join(', ');
               reportError(
                 'Classes with subtypes (which are not sealed classes) are not '
@@ -1122,18 +1135,19 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
           streamType: streamType,
           location: func.sourceLocation!,
           metadata: functionMetadata,
-          annotations: func.metadata
+          annotations: func.metadata2.annotations
               .map((annotation) => annotation.toDartValue)
               .nonNulls
               .toList(),
-          annotationExpressions: func.metadata
+          annotationExpressions: func.metadata2.annotations
               .map((annotation) => annotation.toCodeBuilder)
               .nonNulls
               .toList(),
           docs: func.docLines,
         );
 
-        if (flattenedReturnType.element case final InterfaceElement interface) {
+        if (flattenedReturnType.element3
+            case final InterfaceElement2 interface) {
           ensureClientReferenceable(
             interface,
             func.sourceLocation!,
@@ -1146,7 +1160,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
             await flattenedReturnType.hasAllowedSubtypes();
         if (!hasAllowedSubtypes.allowed) {
           final disallowedTypes = hasAllowedSubtypes.disallowedTypes
-              .map((type) => type.element.name)
+              .map((type) => type.element3.name3)
               .join(', ');
           reportError(
             'Classes with subtypes (which are not sealed classes) are not '
@@ -1177,8 +1191,8 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     return ast.Api(
       name: apiName,
       location: SourceFile.fromString(
-        library.source.contents.data,
-        url: library.source.uri,
+        library.firstFragment.source.contents.data,
+        url: library.firstFragment.source.uri,
       ).span(0, 0),
       metadata: libraryMetdata,
       functions: functions,
@@ -1201,7 +1215,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
 
   Future<void> _migrateDatabase(ClassElement2 databaseClass) async {
     final declaration =
-        await helper.getElementDeclaration(databaseClass.firstFragment);
+        await helper.getFragmentDeclaration(databaseClass.firstFragment);
     if (declaration == null) {
       throw StateError('Failed to resolve declaration for $databaseClass');
     }
@@ -1353,7 +1367,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     required ResolvedLibraryResult databaseLibrary,
     required bool hasCloudAuth,
   }) async {
-    final (topLevelConstants, hasErrors) = databaseLibrary.element
+    final (topLevelConstants, hasErrors) = databaseLibrary.element2
         .topLevelConstants(errorReporter: _errorReporter);
     if (hasErrors) {
       return null;
@@ -1414,10 +1428,14 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     }
 
     // Find a constructor we can use
-    final constructor = driftDatabaseType.element.constructors.firstWhereOrNull(
+    final constructor =
+        driftDatabaseType.element3.constructors2.firstWhereOrNull(
       (ctor) =>
-          ctor.name.isEmpty &&
-          (ctor.parameters.elementAtOrNull(0)?.type.isDriftQueryExecutor ??
+          ctor.name3 == 'new' &&
+          (ctor.formalParameters
+                  .elementAtOrNull(0)
+                  ?.type
+                  .isDriftQueryExecutor ??
               false),
     );
     if (constructor == null) {
@@ -1438,7 +1456,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     final databaseName = schemaTypeReference.symbol!;
     return ast.Database(
       name: databaseName,
-      dartName: databaseDefinitionElement.name,
+      dartName: databaseDefinitionElement.name3!,
       docs: databaseDefinitionElement.docLines,
       schema: ast.DriftDatabaseSchema(
         version: await resolveSchemaVersion(databaseClass),

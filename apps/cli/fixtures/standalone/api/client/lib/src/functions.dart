@@ -5125,7 +5125,7 @@ class CelestFunctionsMetadata {
     return;
   }
 
-  @Deprecated('Do not use this function.')
+  @Deprecated.new('Do not use this function.')
   @_$celest.CloudFunction(
     api: 'metadata',
     function: 'hasConstructedDeprecatedAnnotation',
@@ -5174,7 +5174,7 @@ class CelestFunctionsMetadata {
     return;
   }
 
-  @Literals(
+  @Literals.new(
     string: 'string',
     intValue: 1,
     doubleValue: 1.0,
@@ -5189,7 +5189,7 @@ class CelestFunctionsMetadata {
     function: 'hasLiteralsAnnotation',
   )
   Future<void> hasLiteralsAnnotation(
-    @Literals(
+    @Literals.new(
       string: 'string',
       intValue: 1,
       doubleValue: 1.0,
@@ -5200,7 +5200,7 @@ class CelestFunctionsMetadata {
       recordValue: const (a: 'a', b: 'b', c: 'c'),
     )
     String value, {
-    @Literals(
+    @Literals.new(
       string: 'string',
       intValue: 1,
       doubleValue: 1.0,
@@ -5263,14 +5263,14 @@ class CelestFunctionsMetadata {
     return;
   }
 
-  @Exportable()
+  @Exportable.new()
   @_$celest.CloudFunction(
     api: 'metadata',
     function: 'hasExportableConstructedAnnotation',
   )
   Future<void> hasExportableConstructedAnnotation(
-    @Exportable() String value, {
-    @Exportable() String named = 'named',
+    @Exportable.new() String value, {
+    @Exportable.new() String named = 'named',
   }) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/metadata/has-exportable-constructed-annotation'),
@@ -5334,7 +5334,7 @@ class CelestFunctionsMetadata {
     bool boolValue = true,
     List<String> list = const ['list'],
     Map<String, String> map = const {'map': 'map'},
-    Exportable exportable = const Exportable(),
+    Exportable exportable = const Exportable.new(),
     Serializable serializable = const Serializable.forType('String'),
     LiteralEnum enumValue = LiteralEnum.a,
     ({
@@ -5387,7 +5387,7 @@ class CelestFunctionsMetadata {
     bool? boolValue = true,
     List<String>? list = const ['list'],
     Map<String, String>? map = const {'map': 'map'},
-    Exportable? exportable = const Exportable(),
+    Exportable? exportable = const Exportable.new(),
     Serializable? serializable = const Serializable.forType('String'),
     LiteralEnum? enumValue = LiteralEnum.a,
     ({
@@ -5440,7 +5440,7 @@ class CelestFunctionsMetadata {
     bool boolValue = true,
     List<String> list = const ['list'],
     Map<String, String> map = const {'map': 'map'},
-    Exportable exportable = const Exportable(),
+    Exportable exportable = const Exportable.new(),
     Serializable serializable = const Serializable.forType('String'),
     LiteralEnum enumValue = LiteralEnum.a,
     ({
@@ -5493,7 +5493,7 @@ class CelestFunctionsMetadata {
     bool? boolValue = true,
     List<String>? list = const ['list'],
     Map<String, String>? map = const {'map': 'map'},
-    Exportable? exportable = const Exportable(),
+    Exportable? exportable = const Exportable.new(),
     Serializable? serializable = const Serializable.forType('String'),
     LiteralEnum? enumValue = LiteralEnum.a,
     ({
@@ -5749,7 +5749,7 @@ class CelestFunctionsMetadata {
       String b,
       String c
     }) recordValue = const (a: 'a', b: 'b', c: 'c'),
-    Exportable exportable = const Exportable(),
+    Exportable exportable = const Exportable.new(),
     Serializable serializable = const Serializable.forType('String'),
   ]) async {
     final $response = await celest.httpClient.post(
@@ -5802,7 +5802,7 @@ class CelestFunctionsMetadata {
       String b,
       String c
     })? recordValue = const (a: 'a', b: 'b', c: 'c'),
-    Exportable? exportable = const Exportable(),
+    Exportable? exportable = const Exportable.new(),
     Serializable? serializable = const Serializable.forType('String'),
   ]) async {
     final $response = await celest.httpClient.post(
@@ -5856,7 +5856,7 @@ class CelestFunctionsMetadata {
       String b,
       String c
     }) recordValue = const (a: 'a', b: 'b', c: 'c'),
-    Exportable exportable = const Exportable(),
+    Exportable exportable = const Exportable.new(),
     Serializable serializable = const Serializable.forType('String'),
   }) async {
     final $response = await celest.httpClient.post(
@@ -5909,7 +5909,7 @@ class CelestFunctionsMetadata {
       String b,
       String c
     })? recordValue = const (a: 'a', b: 'b', c: 'c'),
-    Exportable? exportable = const Exportable(),
+    Exportable? exportable = const Exportable.new(),
     Serializable? serializable = const Serializable.forType('String'),
   }) async {
     final $response = await celest.httpClient.post(

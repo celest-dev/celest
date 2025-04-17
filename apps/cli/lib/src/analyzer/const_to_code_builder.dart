@@ -1,5 +1,5 @@
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/src/dart/constant/value.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
@@ -91,7 +91,7 @@ abstract base class DartObjectVisitor<R> {
 
   R visitTypeValue(DartType value);
 
-  R visitVariableReference(VariableElement variable);
+  R visitVariableReference(VariableElement2 variable);
 }
 
 final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
@@ -99,9 +99,9 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
 
   @override
   Expression? visit(DartObjectImpl node) {
-    if (node.variable
-        case VariableElement(:final library?, isPrivate: false) &&
-            final variable?
+    if (node.variable2
+        case VariableElement2(library2: final library?, isPrivate: false) &&
+            final variable
         // Private variable references cannot be copied to the generated code, so
         // we use the raw value instead.
         //
@@ -126,7 +126,7 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
 
   @override
   Expression visitInstanceCreation(ConstructorInvocation invocation) {
-    final constructorEl = invocation.constructor;
+    final constructorEl = invocation.constructor2;
     final expressionType = constructorEl.returnType;
     final namedParameters = invocation.namedArguments.map((name, value) {
       return MapEntry(name, value.toCodeBuilder ?? literalNull);
@@ -134,9 +134,9 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
     final positionalParameters = invocation.positionalArguments.map(
       (el) => el.toCodeBuilder ?? literalNull,
     );
-    if (constructorEl.name.isNotEmpty) {
+    if (constructorEl.name3!.isNotEmpty) {
       return typeHelper.toReference(expressionType).constInstanceNamed(
-            constructorEl.name,
+            constructorEl.name3!,
             positionalParameters,
             namedParameters,
           );
@@ -192,16 +192,16 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
   Expression visitTypeValue(DartType value) => typeHelper.toReference(value);
 
   @override
-  Expression visitVariableReference(VariableElement variable) {
+  Expression visitVariableReference(VariableElement2 variable) {
     return switch (variable) {
-      TopLevelVariableElement() => refer(
-          variable.name,
-          variable.library.source.uri.toString(),
+      TopLevelVariableElement2() => refer(
+          variable.name3!,
+          variable.library2.firstFragment.source.uri.toString(),
         ),
-      FieldElement(enclosingElement3: final enclosingElement) => refer(
+      FieldElement2(enclosingElement2: final enclosingElement) => refer(
           enclosingElement.displayName,
-          enclosingElement.library!.source.uri.toString(),
-        ).property(variable.name),
+          enclosingElement.library2.firstFragment.source.uri.toString(),
+        ).property(variable.name3!),
       _ => unreachable('Invalid variable element: $variable'),
     };
   }
@@ -227,29 +227,25 @@ final class _ConstToDartValue extends DartObjectVisitor<ast.DartValue> {
 
   @override
   ast.DartValue visitInstanceCreation(ConstructorInvocation invocation) {
-    final constructorEl = invocation.constructor;
+    final constructorEl = invocation.constructor2;
     final namedParameters = invocation.namedArguments.map((name, value) {
       return MapEntry(name, value.accept(this));
     });
-    final positionalParameterNames = constructorEl.parameters
+    final positionalParameterNames = constructorEl.formalParameters
         .where((it) => it.isPositional)
-        .map((it) => it.name)
+        .map((it) => it.name3!)
         .toList();
     final positionalParameterValues =
         invocation.positionalArguments.map((el) => el.accept(this)).toList();
-    final className = constructorEl.enclosingElement3.displayName;
+    final className = constructorEl.enclosingElement2.displayName;
     final classRef = typeHelper
-        .toReference(constructorEl.enclosingElement3.thisType)
+        .toReference(constructorEl.enclosingElement2.thisType)
         .toTypeReference;
     assert(() {
       if (positionalParameterNames.length < positionalParameterValues.length) {
-        final constructorName = switch (constructorEl.name) {
-          final name when name.isEmpty => 'new',
-          final name => name,
-        };
         throw StateError(
           'Mismatched positional parameters for type $classRef '
-          '("$className.$constructorName"): '
+          '("$className.${constructorEl.name3}"): '
           'names $positionalParameterNames, '
           'values $positionalParameterValues.',
         );
@@ -258,7 +254,7 @@ final class _ConstToDartValue extends DartObjectVisitor<ast.DartValue> {
     }());
     return ast.DartInstance(
       classRef: classRef,
-      constructor: constructorEl.name,
+      constructor: constructorEl.name3!,
       positionalArguments: Map.fromEntries(
         positionalParameterValues.mapIndexed((index, value) {
           return MapEntry(positionalParameterNames[index], value);
@@ -333,7 +329,7 @@ final class _ConstToDartValue extends DartObjectVisitor<ast.DartValue> {
   }
 
   @override
-  ast.DartValue visitVariableReference(VariableElement variable) {
+  ast.DartValue visitVariableReference(VariableElement2 variable) {
     unreachable('Should use the raw value instead.');
   }
 }

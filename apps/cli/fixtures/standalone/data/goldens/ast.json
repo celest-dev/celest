@@ -114,7 +114,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -752,7 +752,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.29.2",
+      "version": "3.29.3",
       "enabledExperiments": []
     }
   },

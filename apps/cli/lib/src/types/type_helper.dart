@@ -64,10 +64,10 @@ final class CoreTypes implements TypeProvider {
   final DartType userType;
   final DartType cloudExceptionType;
   final InterfaceType celestEnvType;
-  final ClassElement celestEnvElement;
+  final ClassElement2 celestEnvElement;
   final InterfaceType celestSecretType;
-  final ClassElement celestSecretElement;
-  final ClassElement? jsonKeyElement;
+  final ClassElement2 celestSecretElement;
+  final ClassElement2? jsonKeyElement;
 
   @override
   ClassElement get boolElement => _typeProvider.boolElement;
@@ -359,7 +359,6 @@ final class TypeHelper {
 
   set coreTypes(CoreTypes coreTypes) {
     _coreTypes = coreTypes;
-    _init();
   }
 
   // TODO(dnys1): File ticket with Dart team around hashcode/equality of DartType
@@ -417,8 +416,8 @@ final class TypeHelper {
     return dartType;
   }
 
-  String? toUri(DartType type) => switch (type.element) {
-        final element? => urlOfElement(element),
+  String? toUri(DartType type) => switch (type.element3) {
+        final element? => urlOfElement2(element),
         _ => null,
       };
 
@@ -501,7 +500,7 @@ final class TypeHelper {
     return const Iterable.empty();
   }
 
-  final Map<InterfaceElement, List<InterfaceType>> subtypes = Map.identity();
+  final Map<InterfaceElement2, List<InterfaceType>> subtypes = Map.identity();
 
   /// Maps 3p types to their extension type overrides.
   final Map<InterfaceType, InterfaceType> overrides = HashMap(
@@ -510,7 +509,7 @@ final class TypeHelper {
   );
 
   /// Hydrate the caches with built-in types.
-  void _init() {
+  void init() {
     for (final builtInType in builtInTypeToReference.keys) {
       final reference = toReference(builtInType);
       fromReference(reference);
@@ -525,7 +524,6 @@ final class TypeHelper {
     serializationVerdicts.clear();
     subtypes.clear();
     overrides.clear();
-    _init();
   }
 }
 
@@ -542,34 +540,34 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
       (b) => b
         ..returnType = typeHelper.toReference(type.returnType)
         ..optionalParameters.addAll([
-          for (final parameter in type.parameters.where(
+          for (final parameter in type.formalParameters.where(
             (p) => p.isOptionalPositional,
           ))
             typeHelper.toReference(parameter.type),
         ])
         ..requiredParameters.addAll([
-          for (final parameter in type.parameters.where(
+          for (final parameter in type.formalParameters.where(
             (p) => p.isRequiredPositional,
           ))
             typeHelper.toReference(parameter.type),
         ])
         ..namedParameters.addAll({
-          for (final parameter in type.parameters.where(
+          for (final parameter in type.formalParameters.where(
             (p) => p.isOptionalNamed,
           ))
-            parameter.name: typeHelper.toReference(parameter.type),
+            parameter.name3!: typeHelper.toReference(parameter.type),
         })
         ..namedRequiredParameters.addAll({
-          for (final parameter in type.parameters.where(
+          for (final parameter in type.formalParameters.where(
             (p) => p.isRequiredNamed,
           ))
-            parameter.name: typeHelper.toReference(parameter.type),
+            parameter.name3!: typeHelper.toReference(parameter.type),
         })
         ..types.addAll([
-          for (final formal in type.typeFormals)
+          for (final formal in type.typeParameters)
             codegen.TypeReference(
               (t) => t
-                ..symbol = formal.name
+                ..symbol = formal.name3
                 ..bound = switch (formal.bound) {
                   final bound? => typeHelper.toReference(bound),
                   _ => null,
@@ -584,7 +582,7 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
     final typeArguments = type.typeArguments.map(typeHelper.toReference);
     final ref = codegen.TypeReference(
       (t) => t
-        ..symbol = type.element.name
+        ..symbol = type.element3.name3
         ..url = type.uri.toString()
         ..types.addAll(typeArguments)
         ..isNullable = type.nullabilitySuffix != NullabilitySuffix.none,
@@ -604,9 +602,9 @@ final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {
     if (type.alias case final alias?) {
       return codegen.TypeReference(
         (b) => b
-          ..symbol = alias.element.displayName
+          ..symbol = alias.element2.displayName
           ..url = projectPaths
-              .normalizeUri(alias.element.sourceLocation!.sourceUrl!)
+              .normalizeUri(alias.element2.sourceLocation!.sourceUrl!)
               .toString()
           // TODO(dnys1): https://github.com/dart-lang/sdk/issues/54346
           // ..isNullable = alias.element.nullabilitySuffix != NullabilitySuffix.none,

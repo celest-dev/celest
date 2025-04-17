@@ -100,7 +100,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -400,7 +400,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -768,25 +768,6 @@
     {
       "location": {
         "start": {
-          "offset": 629,
-          "uri": "package:celest_backend/src/functions/injected.dart",
-          "line": 24,
-          "column": 35
-        },
-        "end": {
-          "offset": 647,
-          "uri": "package:celest_backend/src/functions/injected.dart",
-          "line": 24,
-          "column": 53
-        },
-        "text": "currentEnvironment"
-      },
-      "name": "CELEST_ENVIRONMENT",
-      "docs": []
-    },
-    {
-      "location": {
-        "start": {
           "offset": 445,
           "uri": "package:celest_backend/src/functions/injected.dart",
           "line": 20,
@@ -801,6 +782,25 @@
         "text": "weight"
       },
       "name": "MY_WEIGHT",
+      "docs": []
+    },
+    {
+      "location": {
+        "start": {
+          "offset": 629,
+          "uri": "package:celest_backend/src/functions/injected.dart",
+          "line": 24,
+          "column": 35
+        },
+        "end": {
+          "offset": 647,
+          "uri": "package:celest_backend/src/functions/injected.dart",
+          "line": 24,
+          "column": 53
+        },
+        "text": "currentEnvironment"
+      },
+      "name": "CELEST_ENVIRONMENT",
       "docs": []
     }
   ],
@@ -839,7 +839,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.29.2",
+      "version": "3.29.3",
       "enabledExperiments": []
     }
   },

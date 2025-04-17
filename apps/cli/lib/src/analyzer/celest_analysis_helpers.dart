@@ -2,7 +2,6 @@ import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/src/dart/analysis/session_helper.dart';
@@ -30,8 +29,8 @@ enum CustomType {
 
 mixin CelestAnalysisHelpers implements CelestErrorReporter {
   AnalysisContext get context;
-  Set<InterfaceElement> get customExceptionTypes;
-  Set<InterfaceElement> get customModelTypes;
+  Set<InterfaceElement2> get customExceptionTypes;
+  Set<InterfaceElement2> get customModelTypes;
 
   static final Expando<AnalysisSessionHelper> _sessionHelpers = Expando();
   AnalysisSessionHelper get helper =>
@@ -47,21 +46,21 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     pendingEdits.clear();
   }
 
-  Set<InterfaceElement> namespaceForLibrary(
-    LibraryElement library, {
+  Set<InterfaceElement2> namespaceForLibrary(
+    LibraryElement2 library, {
     bool recursive = false,
   }) {
-    final visited = Set<LibraryElement>.identity();
+    final visited = Set<LibraryElement2>.identity();
 
-    Iterable<InterfaceElement> forNamespace(Namespace namespace) sync* {
-      yield* namespace.definedNames.values.whereType();
-      yield* namespace.definedNames.values
-          .whereType<TypeAliasElement>()
-          .map((el) => el.aliasedElement ?? el.aliasedType.element)
+    Iterable<InterfaceElement2> forNamespace(Namespace namespace) sync* {
+      yield* namespace.definedNames2.values.whereType();
+      yield* namespace.definedNames2.values
+          .whereType<TypeAliasElement2>()
+          .map((el) => el.aliasedElement2 ?? el.aliasedType.element3)
           .whereType();
     }
 
-    Iterable<InterfaceElement> search(LibraryElement library) sync* {
+    Iterable<InterfaceElement2> search(LibraryElement2 library) sync* {
       if (!visited.add(library)) {
         return;
       }
@@ -69,7 +68,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       if (!recursive) {
         return;
       }
-      for (final importedLibrary in library.importedLibraries) {
+      for (final importedLibrary
+          in library.fragments.expand((lib) => lib.importedLibraries2)) {
         yield* search(importedLibrary).toList();
       }
     }
@@ -98,11 +98,11 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     }
   }
 
-  Future<LibraryElement> resolveLibraryByUri(String uri) async {
+  Future<LibraryElement2> resolveLibraryByUri(String uri) async {
     final library = await context.currentSession.getLibraryByUri(uri);
     switch (library) {
-      case LibraryElementResult(:final element):
-        return element;
+      case LibraryElementResult(:final element2):
+        return element2;
       default:
         throw StateError(
           'Could not resolve library by URI "$uri": ${library.runtimeType}',
@@ -112,9 +112,9 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
 
   Future<ResolvedLibraryResult> _resolvePartFile(String path) async {
     final unit = await context.currentSession.getResolvedUnit(path);
-    if (unit case ResolvedUnitResult(:final libraryElement)) {
+    if (unit case ResolvedUnitResult(:final libraryElement2)) {
       final resolvedLibrary = await context.currentSession
-          .getResolvedLibraryByElement(libraryElement);
+          .getResolvedLibraryByElement2(libraryElement2);
       if (resolvedLibrary is! ResolvedLibraryResult) {
         throw StateError(
           'Could not resolve library for part file at "$path": ${unit.runtimeType}',
@@ -128,7 +128,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
   }
 
   /// Collects exception types from project and imported libraries.
-  Future<Set<DartType>> collectExceptionTypes(LibraryElement apiLibrary) async {
+  Future<Set<DartType>> collectExceptionTypes(
+      LibraryElement2 apiLibrary) async {
     final exceptionTypes = <DartType>{};
 
     final apiNamespace = namespaceForLibrary(apiLibrary, recursive: true);
@@ -140,9 +141,9 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     return exceptionTypes;
   }
 
-  InterfaceType? _validateExceptionType(InterfaceElement interfaceElement) {
+  InterfaceType? _validateExceptionType(InterfaceElement2 interfaceElement) {
     final definitionPath = context.currentSession.uriConverter.uriToPath(
-      interfaceElement.library.source.uri,
+      interfaceElement.library2.firstFragment.source.uri,
     );
     final errorSeverity = switch (definitionPath) {
       // We only care to report warnings for types defined within the project.
@@ -158,17 +159,17 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     // graph, we need to either: a) choose to add it, or b) skip the type.
 
     final typeUri =
-        '${interfaceElement.library.source.uri}#${interfaceElement.name}';
+        '${interfaceElement.library2.firstFragment.source.uri}#${interfaceElement.name3}';
     final overriddenBy = typeHelper.overrides[interfaceElement.thisType];
     final isOverriden = overriddenBy != null;
     if (isOverriden) {
-      interfaceElement = overriddenBy.element;
+      interfaceElement = overriddenBy.element3;
     }
     final interfaceType = interfaceElement.thisType;
-    final interfaceUri = interfaceElement.library.source.uri;
+    final interfaceUri = interfaceElement.library2.firstFragment.source.uri;
     final isExceptionType = identical(
           interfaceElement,
-          typeHelper.coreTypes.coreExceptionType.element,
+          typeHelper.coreTypes.coreExceptionType.element3,
         ) ||
         typeHelper.typeSystem.isSubtypeOf(
           interfaceType.extensionTypeErasure,
@@ -176,7 +177,7 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
         );
     final isErrorType = identical(
           interfaceElement,
-          typeHelper.coreTypes.coreErrorType.element,
+          typeHelper.coreTypes.coreErrorType.element3,
         ) ||
         typeHelper.typeSystem.isSubtypeOf(
           interfaceType.extensionTypeErasure,
@@ -208,9 +209,9 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       return null;
     }
     final isInstantiable = switch (interfaceElement) {
-      final ClassElement classElement => classElement.isConstructable ||
-          classElement.constructors.any((ctor) => ctor.isFactory),
-      ExtensionTypeElement() || EnumElement() => true,
+      final ClassElement2 classElement => classElement.isConstructable ||
+          classElement.constructors2.any((ctor) => ctor.isFactory),
+      ExtensionTypeElement2() || EnumElement2() => true,
       _ => false,
     };
     if (!isInstantiable) {
@@ -227,7 +228,7 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
         for (final reason in isSerializable.reasons) {
           // TODO(dnys1): Add a helpful link/description for this error.
           reportError(
-            'The exception type "${interfaceElement.name}" cannot be serialized '
+            'The exception type "${interfaceElement.name3}" cannot be serialized '
             'as JSON. Hide this type from the API or make it serializable: '
             '$reason',
             location: interfaceElement.sourceLocation,
@@ -242,7 +243,7 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       // it's not included instead of reporting in console. (put behind a
       // --debug flag or something).
       reportError(
-        'Cannot serialize the exception type "${interfaceElement.name}": '
+        'Cannot serialize the exception type "${interfaceElement.name3}": '
         '${isSerializable.reasons.join('\n')}',
         location: interfaceElement.sourceLocation,
         severity: errorSeverity,
@@ -256,13 +257,13 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
   /// Ensures that a referenced type which will be surfaced in the client
   /// is defined in the `lib/` directory.
   void ensureClientReferenceable(
-    InterfaceElement modelType,
+    InterfaceElement2 modelType,
     SourceSpan location, {
     required CustomType type,
   }) {
     final (isCustomType, isDefinedInLib) = switch (context
         .currentSession.uriConverter
-        .uriToPath(modelType.library.source.uri)) {
+        .uriToPath(modelType.library2.firstFragment.source.uri)) {
       final path? => (
           p.isWithin(projectPaths.projectRoot, path),
           p.isWithin(projectPaths.projectLib, path),
@@ -290,7 +291,7 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       );
       return -1;
     }
-    final declaration = await helper.getElementDeclaration(
+    final declaration = await helper.getFragmentDeclaration(
       schemaVersionMethod.isSynthetic
           ? schemaVersionMethod.getter2!.firstFragment
           : schemaVersionMethod.firstFragment,
@@ -303,10 +304,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
           return version;
 
         // int get schemaVersion => someConstVariable;
-        case Identifier(
-            staticElement: PropertyAccessorElement(:final variable2?)
-          ):
-          if (variable2.computeConstantValue()?.toIntValue()
+        case Identifier(element: PropertyAccessorElement2(:final variable3?)):
+          if (variable3.computeConstantValue()?.toIntValue()
               case final version?) {
             return version;
           }
@@ -357,7 +356,7 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
   }
 }
 
-extension TopLevelConstants on LibraryElement {
+extension TopLevelConstants on LibraryElement2 {
   static final _logger = Logger('TopLevelConstants');
 
   (List<TopLevelConstant>, bool hasErrors) topLevelConstants({
@@ -365,9 +364,8 @@ extension TopLevelConstants on LibraryElement {
   }) {
     var hasConstantEvalErrors = false;
     final topLevelConstants = <TopLevelConstant>[];
-    final topLevelVariables = topLevelElements
-        .whereType<TopLevelVariableElement>()
-        .where((variable) => !variable.isPrivate);
+    final topLevelVariables =
+        this.topLevelVariables.where((variable) => !variable.isPrivate);
     for (final topLevelVariable in topLevelVariables) {
       if (!topLevelVariable.isConst) {
         errorReporter.reportError(
@@ -396,13 +394,13 @@ extension TopLevelConstants on LibraryElement {
         'hasConstantEvalErrors': '$hasConstantEvalErrors',
         'constants': {
           for (final constant in topLevelConstants)
-            constant.element.name: {
+            constant.element.name3!: {
               'type': constant.element.type.toString(),
               'value': constant.value.toString(),
             },
         },
       };
-      return 'Resolved top-level constants in ${source.uri}: '
+      return 'Resolved top-level constants in ${firstFragment.source.uri}: '
           '${prettyPrintJson(constantInfo)}';
     });
     return (topLevelConstants, hasConstantEvalErrors);
@@ -410,18 +408,18 @@ extension TopLevelConstants on LibraryElement {
 }
 
 typedef TopLevelConstant = ({
-  TopLevelVariableElement element,
+  TopLevelVariableElement2 element,
   DartObject value
 });
 
 extension GetClassType on LibraryElementResult {
-  ClassElement getClassElement(String name) =>
-      element.exportNamespace.get(name) as ClassElement;
+  ClassElement2 getClassElement(String name) =>
+      element2.exportNamespace.get2(name) as ClassElement2;
 
   DartType getClassType(String name) => getClassElement(name).thisType;
 
-  ExtensionTypeElement getExtensionTypeElement(String name) =>
-      element.exportNamespace.get(name) as ExtensionTypeElement;
+  ExtensionTypeElement2 getExtensionTypeElement(String name) =>
+      element2.exportNamespace.get2(name) as ExtensionTypeElement2;
 
   DartType getExtensionType(String name) =>
       getExtensionTypeElement(name).thisType;

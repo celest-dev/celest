@@ -127,7 +127,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -243,7 +243,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -634,7 +634,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -716,7 +716,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -732,7 +732,7 @@
                 "url": "package:celest/src/functions/http/http.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {
                 "method": {
@@ -1117,7 +1117,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.29.2",
+      "version": "3.29.3",
       "enabledExperiments": []
     }
   },

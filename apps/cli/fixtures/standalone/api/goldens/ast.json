@@ -101,7 +101,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -226,7 +226,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -307,7 +307,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -408,7 +408,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -576,7 +576,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -752,7 +752,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -833,7 +833,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -922,7 +922,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -1003,7 +1003,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -1092,7 +1092,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -1416,7 +1416,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -1521,7 +1521,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -1602,7 +1602,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -1683,7 +1683,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -1788,7 +1788,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -1893,7 +1893,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -2052,7 +2052,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -2133,7 +2133,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -2214,7 +2214,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -2335,7 +2335,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -2456,7 +2456,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -2589,7 +2589,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -2722,7 +2722,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -2855,7 +2855,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -2988,7 +2988,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -3111,7 +3111,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -3231,7 +3231,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -3428,7 +3428,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -3509,7 +3509,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -5326,7 +5326,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -6881,7 +6881,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -8653,7 +8653,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -8946,7 +8946,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -9025,7 +9025,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -9226,7 +9226,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -9307,7 +9307,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -9634,7 +9634,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -9723,7 +9723,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -9812,7 +9812,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -9893,7 +9893,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -9974,7 +9974,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -10055,7 +10055,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -10136,7 +10136,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -10217,7 +10217,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -10298,7 +10298,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -10379,7 +10379,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -10460,7 +10460,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -10541,7 +10541,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -10622,7 +10622,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -10703,7 +10703,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -10784,7 +10784,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -10865,7 +10865,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -10946,7 +10946,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11027,7 +11027,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11108,7 +11108,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11189,7 +11189,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11270,7 +11270,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11351,7 +11351,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11432,7 +11432,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11513,7 +11513,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11594,7 +11594,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11675,7 +11675,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11756,7 +11756,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11837,7 +11837,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11918,7 +11918,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -11999,7 +11999,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -12080,7 +12080,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -12161,7 +12161,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -12242,7 +12242,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -12323,7 +12323,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -12404,7 +12404,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -12485,7 +12485,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -12566,7 +12566,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -12647,7 +12647,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -12728,7 +12728,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -12809,7 +12809,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -13140,7 +13140,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -13268,7 +13268,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -13396,7 +13396,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -13524,7 +13524,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -13825,7 +13825,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -13886,7 +13886,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -13947,7 +13947,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14008,7 +14008,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14069,7 +14069,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14146,7 +14146,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14223,7 +14223,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14312,7 +14312,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14373,7 +14373,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14434,7 +14434,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14495,7 +14495,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14556,7 +14556,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14617,7 +14617,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14678,7 +14678,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14737,7 +14737,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14798,7 +14798,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14859,7 +14859,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14920,7 +14920,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -14981,7 +14981,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15058,7 +15058,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15135,7 +15135,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15224,7 +15224,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15285,7 +15285,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15346,7 +15346,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15405,7 +15405,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15466,7 +15466,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15527,7 +15527,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15588,7 +15588,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15649,7 +15649,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15726,7 +15726,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15803,7 +15803,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15892,7 +15892,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -15953,7 +15953,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16014,7 +16014,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16075,7 +16075,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16136,7 +16136,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16187,7 +16187,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16240,7 +16240,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16293,7 +16293,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16346,7 +16346,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16399,7 +16399,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16468,7 +16468,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16537,7 +16537,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16618,7 +16618,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16671,7 +16671,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16724,7 +16724,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16777,7 +16777,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16830,7 +16830,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16883,7 +16883,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16936,7 +16936,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -16989,7 +16989,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -17042,7 +17042,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -17111,7 +17111,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -17180,7 +17180,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -17261,7 +17261,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -17314,7 +17314,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -17367,7 +17367,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -17420,7 +17420,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -17473,7 +17473,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -17796,7 +17796,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -17877,7 +17877,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -17958,7 +17958,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -18039,7 +18039,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -18120,7 +18120,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -18171,7 +18171,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -18222,7 +18222,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -18273,7 +18273,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -18324,7 +18324,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -18666,7 +18666,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -18755,7 +18755,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -18836,7 +18836,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -18925,7 +18925,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -19006,7 +19006,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -19095,7 +19095,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -19176,7 +19176,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -19265,7 +19265,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -19346,7 +19346,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -19435,7 +19435,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -19516,7 +19516,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -19605,7 +19605,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -19686,7 +19686,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -19775,7 +19775,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -19856,7 +19856,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -19945,7 +19945,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -20026,7 +20026,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -20115,7 +20115,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -20196,7 +20196,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -20285,7 +20285,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -20366,7 +20366,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -20455,7 +20455,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -20536,7 +20536,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -20625,7 +20625,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -20706,7 +20706,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -20795,7 +20795,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -20876,7 +20876,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -20965,7 +20965,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -21046,7 +21046,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -21368,7 +21368,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -21447,7 +21447,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -21498,7 +21498,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -21549,7 +21549,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -21600,7 +21600,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -21651,7 +21651,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -21702,7 +21702,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -22023,7 +22023,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -22089,7 +22089,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -22105,7 +22105,7 @@
                 "url": "dart:core",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {
                 "message": {
                   "$": "DartString",
@@ -22165,7 +22165,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -22181,7 +22181,7 @@
                 "url": "dart:core",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {
                 "message": {
                   "$": "DartString",
@@ -22241,7 +22241,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -22325,7 +22325,7 @@
                     "url": "package:celest_backend/models/metadata.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {},
                   "namedArguments": {
                     "string": {
@@ -22508,7 +22508,7 @@
                     "url": "package:celest_backend/models/metadata.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {},
                   "namedArguments": {
                     "string": {
@@ -22693,7 +22693,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -22709,7 +22709,7 @@
                 "url": "package:celest_backend/models/metadata.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {
                 "string": {
@@ -22898,7 +22898,7 @@
                     "url": "package:celest_backend/models/metadata.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {},
                   "namedArguments": {},
                   "staticType": {
@@ -22942,7 +22942,7 @@
                     "url": "package:celest_backend/models/metadata.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {},
                   "namedArguments": {},
                   "staticType": {
@@ -22996,7 +22996,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -23012,7 +23012,7 @@
                 "url": "package:celest_backend/models/metadata.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -23062,7 +23062,7 @@
                     "url": "package:celest_backend/models/metadata.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {},
                   "namedArguments": {},
                   "staticType": {
@@ -23106,7 +23106,7 @@
                     "url": "package:celest_backend/models/metadata.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {},
                   "namedArguments": {},
                   "staticType": {
@@ -23160,7 +23160,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -23176,7 +23176,7 @@
                 "url": "package:celest_backend/models/metadata.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -23226,7 +23226,7 @@
                     "url": "package:celest_backend/models/metadata.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {},
                   "namedArguments": {},
                   "staticType": {
@@ -23270,7 +23270,7 @@
                     "url": "package:celest_backend/models/metadata.dart",
                     "isNullable": false
                   },
-                  "constructor": "",
+                  "constructor": "new",
                   "positionalArguments": {},
                   "namedArguments": {},
                   "staticType": {
@@ -23324,7 +23324,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -23340,7 +23340,7 @@
                 "url": "package:celest_backend/models/metadata.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -23679,7 +23679,7 @@
                   "url": "package:celest_backend/models/metadata.dart",
                   "isNullable": false
                 },
-                "constructor": "",
+                "constructor": "new",
                 "positionalArguments": {},
                 "namedArguments": {},
                 "staticType": {
@@ -23881,7 +23881,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -24220,7 +24220,7 @@
                   "url": "package:celest_backend/models/metadata.dart",
                   "isNullable": false
                 },
-                "constructor": "",
+                "constructor": "new",
                 "positionalArguments": {},
                 "namedArguments": {},
                 "staticType": {
@@ -24422,7 +24422,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -24761,7 +24761,7 @@
                   "url": "package:celest_backend/models/metadata.dart",
                   "isNullable": false
                 },
-                "constructor": "",
+                "constructor": "new",
                 "positionalArguments": {},
                 "namedArguments": {},
                 "staticType": {
@@ -24963,7 +24963,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -25302,7 +25302,7 @@
                   "url": "package:celest_backend/models/metadata.dart",
                   "isNullable": false
                 },
-                "constructor": "",
+                "constructor": "new",
                 "positionalArguments": {},
                 "namedArguments": {},
                 "staticType": {
@@ -25504,7 +25504,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -25963,7 +25963,7 @@
                   "url": "package:celest_backend/models/metadata.dart",
                   "isNullable": false
                 },
-                "constructor": "",
+                "constructor": "new",
                 "positionalArguments": {},
                 "namedArguments": {},
                 "staticType": {
@@ -26045,7 +26045,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -26504,7 +26504,7 @@
                   "url": "package:celest_backend/models/metadata.dart",
                   "isNullable": false
                 },
-                "constructor": "",
+                "constructor": "new",
                 "positionalArguments": {},
                 "namedArguments": {},
                 "staticType": {
@@ -26586,7 +26586,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -27045,7 +27045,7 @@
                   "url": "package:celest_backend/models/metadata.dart",
                   "isNullable": false
                 },
-                "constructor": "",
+                "constructor": "new",
                 "positionalArguments": {},
                 "namedArguments": {},
                 "staticType": {
@@ -27127,7 +27127,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -27586,7 +27586,7 @@
                   "url": "package:celest_backend/models/metadata.dart",
                   "isNullable": false
                 },
-                "constructor": "",
+                "constructor": "new",
                 "positionalArguments": {},
                 "namedArguments": {},
                 "staticType": {
@@ -27668,7 +27668,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -28127,7 +28127,7 @@
                   "url": "package:celest_backend/models/metadata.dart",
                   "isNullable": false
                 },
-                "constructor": "",
+                "constructor": "new",
                 "positionalArguments": {},
                 "namedArguments": {},
                 "staticType": {
@@ -28209,7 +28209,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -28668,7 +28668,7 @@
                   "url": "package:celest_backend/models/metadata.dart",
                   "isNullable": false
                 },
-                "constructor": "",
+                "constructor": "new",
                 "positionalArguments": {},
                 "namedArguments": {},
                 "staticType": {
@@ -28750,7 +28750,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -29209,7 +29209,7 @@
                   "url": "package:celest_backend/models/metadata.dart",
                   "isNullable": false
                 },
-                "constructor": "",
+                "constructor": "new",
                 "positionalArguments": {},
                 "namedArguments": {},
                 "staticType": {
@@ -29291,7 +29291,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -29750,7 +29750,7 @@
                   "url": "package:celest_backend/models/metadata.dart",
                   "isNullable": false
                 },
-                "constructor": "",
+                "constructor": "new",
                 "positionalArguments": {},
                 "namedArguments": {},
                 "staticType": {
@@ -29832,7 +29832,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -30203,7 +30203,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -30331,7 +30331,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -30445,7 +30445,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -30559,7 +30559,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -30912,7 +30912,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -31025,7 +31025,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -31156,7 +31156,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -31284,7 +31284,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -31415,7 +31415,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -31546,7 +31546,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -31677,7 +31677,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -32001,7 +32001,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -32090,7 +32090,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -32808,7 +32808,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -33142,7 +33142,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -33443,7 +33443,7 @@
                 "url": "package:celest/src/core/annotations.dart",
                 "isNullable": false
               },
-              "constructor": "",
+              "constructor": "new",
               "positionalArguments": {},
               "namedArguments": {},
               "staticType": {
@@ -33725,7 +33725,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.29.2",
+      "version": "3.29.3",
       "enabledExperiments": []
     }
   },

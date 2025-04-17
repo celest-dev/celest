@@ -1540,10 +1540,10 @@ final class CircleWithOverriddenCustomJsonTarget
       serialize: ($value) => {
         ...$value.toJson(),
         r'$type': switch ($value) {
-          _i5.CircleWithOverriddenCustomJson() =>
-            r'CircleWithOverriddenCustomJson',
           _i5.RectangleWithOverriddenCustomJson() =>
             r'RectangleWithOverriddenCustomJson',
+          _i5.CircleWithOverriddenCustomJson() =>
+            r'CircleWithOverriddenCustomJson',
         },
       },
       deserialize: ($serialized) {

@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
@@ -36,7 +36,7 @@ final class SerializationSpec {
 
   final List<FieldSpec> fields;
 
-  final ConstructorElement? wireConstructor;
+  final ConstructorElement2? wireConstructor;
   final List<ParameterSpec> constructorParameters;
   final List<ParameterSpec> fromJsonParameters;
 

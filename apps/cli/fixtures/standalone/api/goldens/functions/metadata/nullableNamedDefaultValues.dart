@@ -50,7 +50,7 @@ final class NullableNamedDefaultValuesTarget
             const {'map': 'map'},
         exportable: (_i4.Serializers.instance
                 .deserialize<_i5.Exportable?>(request[r'exportable'])) ??
-            const _i5.Exportable(),
+            const _i5.Exportable.new(),
         serializable: (_i4.Serializers.instance
                 .deserialize<_i5.Serializable?>(request[r'serializable'])) ??
             const _i5.Serializable.forType('String'),

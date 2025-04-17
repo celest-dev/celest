@@ -2284,12 +2284,12 @@ final class Result_E_ShapeException_T_ShapeSerializer<
   @override
   _i3.Result<E, T> deserialize(Object? $value) {
     final $serialized = assertWireType<Map<String, Object?>>($value);
+    if ($serialized[r'$type'] == r'OkResult') {
+      return _i5.Serializers.instance.deserialize<_i3.OkResult<E>>($serialized);
+    }
     if ($serialized[r'$type'] == r'SwappedResult') {
       return _i5.Serializers.instance
           .deserialize<_i3.SwappedResult<T, E>>($serialized);
-    }
-    if ($serialized[r'$type'] == r'OkResult') {
-      return _i5.Serializers.instance.deserialize<_i3.OkResult<E>>($serialized);
     }
     if ($serialized[r'$type'] == r'ErrResult') {
       return _i5.Serializers.instance
@@ -2304,18 +2304,18 @@ final class Result_E_ShapeException_T_ShapeSerializer<
 
   @override
   Object? serialize(_i3.Result<E, T> $value) {
-    if ($value is _i3.SwappedResult<T, E>) {
-      return {
-        ...(_i5.Serializers.instance.serialize<_i3.SwappedResult<T, E>>($value)
-            as Map<String, Object?>),
-        r'$type': r'SwappedResult',
-      };
-    }
     if ($value is _i3.OkResult<E>) {
       return {
         ...(_i5.Serializers.instance.serialize<_i3.OkResult<E>>($value)
             as Map<String, Object?>),
         r'$type': r'OkResult',
+      };
+    }
+    if ($value is _i3.SwappedResult<T, E>) {
+      return {
+        ...(_i5.Serializers.instance.serialize<_i3.SwappedResult<T, E>>($value)
+            as Map<String, Object?>),
+        r'$type': r'SwappedResult',
       };
     }
     if ($value is _i3.ErrResult<T>) {
@@ -2340,12 +2340,12 @@ final class Result_T_Shape_E_ShapeExceptionSerializer<T extends _i3.Shape,
   @override
   _i3.Result<T, E> deserialize(Object? $value) {
     final $serialized = assertWireType<Map<String, Object?>>($value);
+    if ($serialized[r'$type'] == r'OkResult') {
+      return _i5.Serializers.instance.deserialize<_i3.OkResult<T>>($serialized);
+    }
     if ($serialized[r'$type'] == r'SwappedResult') {
       return _i5.Serializers.instance
           .deserialize<_i3.SwappedResult<E, T>>($serialized);
-    }
-    if ($serialized[r'$type'] == r'OkResult') {
-      return _i5.Serializers.instance.deserialize<_i3.OkResult<T>>($serialized);
     }
     if ($serialized[r'$type'] == r'ErrResult') {
       return _i5.Serializers.instance
@@ -2360,18 +2360,18 @@ final class Result_T_Shape_E_ShapeExceptionSerializer<T extends _i3.Shape,
 
   @override
   Object? serialize(_i3.Result<T, E> $value) {
-    if ($value is _i3.SwappedResult<E, T>) {
-      return {
-        ...(_i5.Serializers.instance.serialize<_i3.SwappedResult<E, T>>($value)
-            as Map<String, Object?>),
-        r'$type': r'SwappedResult',
-      };
-    }
     if ($value is _i3.OkResult<T>) {
       return {
         ...(_i5.Serializers.instance.serialize<_i3.OkResult<T>>($value)
             as Map<String, Object?>),
         r'$type': r'OkResult',
+      };
+    }
+    if ($value is _i3.SwappedResult<E, T>) {
+      return {
+        ...(_i5.Serializers.instance.serialize<_i3.SwappedResult<E, T>>($value)
+            as Map<String, Object?>),
+        r'$type': r'SwappedResult',
       };
     }
     if ($value is _i3.ErrResult<E>) {

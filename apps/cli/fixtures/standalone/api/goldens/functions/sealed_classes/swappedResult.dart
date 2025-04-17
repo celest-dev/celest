@@ -1577,20 +1577,20 @@ final class SwappedResultTarget extends _i1.CloudFunctionHttpTarget {
     _i4.Serializers.instance.put(_i4.Serializer.define<
         _i5.Result<_i5.Shape, String>, Map<String, Object?>>(
       serialize: ($value) {
-        if ($value is _i5.SwappedResult<String, _i5.Shape>) {
-          return {
-            ...(_i4.Serializers.instance
-                    .serialize<_i5.SwappedResult<String, _i5.Shape>>($value)
-                as Map<String, Object?>),
-            r'$type': r'SwappedResult',
-          };
-        }
         if ($value is _i5.OkResult<_i5.Shape>) {
           return {
             ...(_i4.Serializers.instance
                     .serialize<_i5.OkResult<_i5.Shape>>($value)
                 as Map<String, Object?>),
             r'$type': r'OkResult',
+          };
+        }
+        if ($value is _i5.SwappedResult<String, _i5.Shape>) {
+          return {
+            ...(_i4.Serializers.instance
+                    .serialize<_i5.SwappedResult<String, _i5.Shape>>($value)
+                as Map<String, Object?>),
+            r'$type': r'SwappedResult',
           };
         }
         if ($value is _i5.ErrResult<String>) {
@@ -1608,13 +1608,13 @@ final class SwappedResultTarget extends _i1.CloudFunctionHttpTarget {
             .toString());
       },
       deserialize: ($serialized) {
-        if ($serialized[r'$type'] == r'SwappedResult') {
-          return _i4.Serializers.instance
-              .deserialize<_i5.SwappedResult<String, _i5.Shape>>($serialized);
-        }
         if ($serialized[r'$type'] == r'OkResult') {
           return _i4.Serializers.instance
               .deserialize<_i5.OkResult<_i5.Shape>>($serialized);
+        }
+        if ($serialized[r'$type'] == r'SwappedResult') {
+          return _i4.Serializers.instance
+              .deserialize<_i5.SwappedResult<String, _i5.Shape>>($serialized);
         }
         if ($serialized[r'$type'] == r'ErrResult') {
           return _i4.Serializers.instance
@@ -1630,19 +1630,19 @@ final class SwappedResultTarget extends _i1.CloudFunctionHttpTarget {
     _i4.Serializers.instance.put(_i4.Serializer.define<
         _i5.Result<String, _i5.Shape>, Map<String, Object?>>(
       serialize: ($value) {
+        if ($value is _i5.OkResult<String>) {
+          return {
+            ...(_i4.Serializers.instance.serialize<_i5.OkResult<String>>($value)
+                as Map<String, Object?>),
+            r'$type': r'OkResult',
+          };
+        }
         if ($value is _i5.SwappedResult<_i5.Shape, String>) {
           return {
             ...(_i4.Serializers.instance
                     .serialize<_i5.SwappedResult<_i5.Shape, String>>($value)
                 as Map<String, Object?>),
             r'$type': r'SwappedResult',
-          };
-        }
-        if ($value is _i5.OkResult<String>) {
-          return {
-            ...(_i4.Serializers.instance.serialize<_i5.OkResult<String>>($value)
-                as Map<String, Object?>),
-            r'$type': r'OkResult',
           };
         }
         if ($value is _i5.ErrResult<_i5.Shape>) {
@@ -1660,13 +1660,13 @@ final class SwappedResultTarget extends _i1.CloudFunctionHttpTarget {
             .toString());
       },
       deserialize: ($serialized) {
-        if ($serialized[r'$type'] == r'SwappedResult') {
-          return _i4.Serializers.instance
-              .deserialize<_i5.SwappedResult<_i5.Shape, String>>($serialized);
-        }
         if ($serialized[r'$type'] == r'OkResult') {
           return _i4.Serializers.instance
               .deserialize<_i5.OkResult<String>>($serialized);
+        }
+        if ($serialized[r'$type'] == r'SwappedResult') {
+          return _i4.Serializers.instance
+              .deserialize<_i5.SwappedResult<_i5.Shape, String>>($serialized);
         }
         if ($serialized[r'$type'] == r'ErrResult') {
           return _i4.Serializers.instance

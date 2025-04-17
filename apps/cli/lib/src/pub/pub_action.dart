@@ -7,6 +7,7 @@ import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:cli_script/cli_script.dart';
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 
 enum PubAction {
   get,
@@ -47,12 +48,13 @@ Future<void> runPub({
   String? exe,
   required PubAction action,
   required String workingDirectory,
+  @visibleForTesting bool verbose = false,
 }) async {
   exe ??= kDebugMode
       ? Sdk.current.dart
       : (await celestProject.determineProjectType()).executable;
 
-  final command = <String>[exe, 'pub', action.name];
+  final command = <String>[exe, 'pub', action.name, if (verbose) '--verbose'];
   final logger = Logger(command.join(' '));
   logger.fine('Running `${command.join(' ')}` in "$workingDirectory"...');
   final process = await processManager.start(
@@ -86,6 +88,9 @@ Future<void> runPub({
   final stderr = process.stderr.lines.listen((line) {
     logger.finest('stderr: $line');
     if (line.trim().startsWith('Waiting for another flutter command')) {
+      return;
+    }
+    if (verbose) {
       return;
     }
     if (!completer.isCompleted) {

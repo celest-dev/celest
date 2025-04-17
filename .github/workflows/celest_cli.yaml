@@ -40,13 +40,13 @@ jobs:
           cache: true
           # Because many golden tests encode the precise Dart/Flutter SDKs used to generate
           # them, these values must be consistently used when running tests locally and in CI.
-          flutter-version: 3.29.2
+          flutter-version: 3.29.3
       - name: Setup Libsecret
         if: runner.os == 'Linux'
         run: tool/setup-ci.sh
       - name: Get Packages
         working-directory: apps/cli
-        run: dart pub upgrade --verbose
+        run: dart pub upgrade
       - name: Test
         working-directory: apps/cli
         run: dart test -x e2e --fail-fast -j 1
