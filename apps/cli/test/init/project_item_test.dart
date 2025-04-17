@@ -200,8 +200,9 @@ environment:
       await tempDir.childFile('pubspec.yaml').writeAsString(pubspecYaml);
       await PubspecFile(
         p.join(tempDir.path, 'celest'),
-        'barebones',
-        ParentProject(
+        projectName: 'barebones',
+        projectDisplayName: 'Barebones',
+        parentProject: ParentProject(
           name: 'barebones',
           path: tempDir.path,
           pubspec: Pubspec.parse(pubspecYaml),
@@ -255,8 +256,9 @@ dev_dependencies:
       await tempDir.childFile('pubspec.yaml').writeAsString(pubspecYaml);
       await PubspecFile(
         p.join(tempDir.path, 'celest'),
-        'empty',
-        ParentProject(
+        projectName: 'empty',
+        projectDisplayName: 'Empty',
+        parentProject: ParentProject(
           name: 'empty',
           path: tempDir.path,
           pubspec: Pubspec.parse(pubspecYaml),
@@ -293,6 +295,25 @@ dev_dependencies:
       expect(updatedPubspec.dependencies, contains('empty_client'));
     });
 
+    test('non-existent dart project', () async {
+      await PubspecFile(
+        tempDir.path,
+        projectName: 'my_project',
+        projectDisplayName: 'My Project',
+      ).create();
+
+      final pubspecFile =
+          await tempDir.childFile('pubspec.yaml').readAsString();
+      expect(
+        pubspecFile,
+        startsWith('''
+name: celest_backend
+description: The Celest backend for My Project.
+'''),
+        reason: 'The given name is included as-is for the description.',
+      );
+    });
+
     test('existing dart project', () async {
       const pubspecYaml = '''
 name: existing
@@ -314,8 +335,9 @@ dev_dependencies:
       await tempDir.childFile('pubspec.yaml').writeAsString(pubspecYaml);
       await PubspecFile(
         p.join(tempDir.path, 'celest'),
-        'existing',
-        ParentProject(
+        projectName: 'existing',
+        projectDisplayName: 'Existing',
+        parentProject: ParentProject(
           name: 'existing',
           path: tempDir.path,
           pubspec: Pubspec.parse(pubspecYaml),
@@ -375,8 +397,9 @@ dev_dependencies:
       await tempDir.childFile('pubspec.yaml').writeAsString(pubspecYaml);
       await PubspecFile(
         p.join(tempDir.path, 'celest'),
-        'existing',
-        ParentProject(
+        projectName: 'existing',
+        projectDisplayName: 'Existing',
+        parentProject: ParentProject(
           name: 'existing',
           path: tempDir.path,
           pubspec: Pubspec.parse(pubspecYaml),

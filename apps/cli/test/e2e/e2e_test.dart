@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, flutter_style_todos
+// ignore_for_file: unused_import
 
 import 'dart:io';
 
@@ -12,10 +12,11 @@ import 'features/create/create_project_in_dart_app.dart';
 import 'features/create/create_project_in_dart_app_no_deps.dart';
 import 'features/create/create_project_in_flutter_app.dart';
 import 'features/create/create_project_isolated.dart';
-import 'features/hello_project.dart';
 import 'features/hot_reload/hot_reload_add_auth.dart';
 import 'features/hot_reload/hot_reload_add_model_after_error.dart';
 import 'features/package_support/supports_supabase.dart';
+import 'features/templates/data_project.dart';
+import 'features/templates/hello_project.dart';
 import 'targets/installed_target.dart';
 import 'targets/local_aot_target.dart';
 import 'targets/local_target.dart';
@@ -30,6 +31,7 @@ void main() {
   final tests = <E2ETest Function(TestTarget)>[
     // Example projects
     HelloProjectTest.new,
+    DataProjectTest.new,
 
     // Project creation
     CreateProjectInFlutterAppTest.new,

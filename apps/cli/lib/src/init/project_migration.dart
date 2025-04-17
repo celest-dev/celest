@@ -1,5 +1,4 @@
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/init/migrations/add_generated_folder.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/pub/project_dependency.dart';
 import 'package:celest_cli/src/pub/pub_action.dart';
@@ -11,6 +10,7 @@ import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yaml_edit/yaml_edit.dart';
@@ -112,6 +112,13 @@ abstract class ProjectMigration {
 
   /// Creates the item in the given [projectRoot].
   Future<ProjectMigrationResult> create();
+
+  @protected
+  Future<void> createFile(String path, String contents) async {
+    final file = fileSystem.file(path);
+    await file.create(recursive: true);
+    await file.writeAsString(contents);
+  }
 }
 
 sealed class ProjectFile extends ProjectMigration {
@@ -123,10 +130,12 @@ sealed class ProjectFile extends ProjectMigration {
       _AnalysisOptions;
 
   const factory ProjectFile.pubspec(
-    String projectRoot,
-    String projectName,
+    String projectRoot, {
+    required String projectName,
+    required String projectDisplayName,
     ParentProject? parentProject,
-  ) = PubspecFile;
+    List<ProjectDependency> additionalDependencies,
+  }) = PubspecFile;
 
   factory ProjectFile.client(String projectRoot, String projectName) =
       ProjectClient;
@@ -157,7 +166,7 @@ final class _GitIgnore extends ProjectFile {
 
   @override
   Future<ProjectMigrationResult> create() async {
-    await _createFile(p.join(projectRoot, relativePath), '''
+    await createFile(p.join(projectRoot, relativePath), '''
 # Dart
 .dart_tool/
 pubspec.lock
@@ -179,7 +188,7 @@ final class _AnalysisOptions extends ProjectFile {
 
   @override
   Future<ProjectMigrationResult> create() async {
-    await _createFile(p.join(projectRoot, relativePath), '''
+    await createFile(p.join(projectRoot, relativePath), '''
 include: package:lints/recommended.yaml
 
 analyzer:
@@ -191,12 +200,20 @@ analyzer:
 }
 
 final class PubspecFile extends ProjectFile {
-  const PubspecFile(super.projectRoot, this.projectName, this.parentProject);
+  const PubspecFile(
+    super.projectRoot, {
+    required this.projectName,
+    required this.projectDisplayName,
+    this.parentProject,
+    this.additionalDependencies = const [],
+  });
 
   final String projectName;
+  final String projectDisplayName;
   final ParentProject? parentProject;
+  final List<ProjectDependency> additionalDependencies;
 
-  static final logger = Logger('PubspecUpdater');
+  static final logger = Logger('PubspecFile');
 
   @override
   String get relativePath => 'pubspec.yaml';
@@ -266,10 +283,16 @@ final class PubspecFile extends ProjectFile {
     final pubspec = Pubspec(
       'celest_backend',
       // '${projectName.snakeCase}_backend',
-      description: 'The Celest backend for $projectName.',
+      description: 'The Celest backend for $projectDisplayName.',
       publishTo: 'none',
       environment: {'sdk': PubEnvironment.dartSdkConstraint},
-      dependencies: ProjectDependency.backendDependencies.toPub(),
+      dependencies: {
+        ...ProjectDependency.backendDependencies,
+        ...{
+          for (final dependency in additionalDependencies)
+            dependency.name: dependency,
+        },
+      }.toPub(),
       devDependencies: ProjectDependency.devDependencies.toPub(),
       dependencyOverrides: ProjectDependency.localDependencyOverrides(
         projectRoot: projectRoot,
@@ -351,110 +374,4 @@ final class ProjectClient extends ProjectFile {
     await Future.wait(_operations);
     return const ProjectMigrationSuccess();
   }
-}
-
-sealed class ProjectTemplate extends ProjectMigration {
-  const ProjectTemplate(super.projectRoot);
-
-  factory ProjectTemplate.hello(String projectRoot, String projectName) =
-      _HelloProject;
-}
-
-final class _HelloProject extends ProjectTemplate {
-  _HelloProject(super.projectRoot, this.projectName);
-
-  @override
-  String get name => 'core.template.hello';
-
-  @override
-  bool get needsMigration => true;
-
-  final String projectName;
-
-  @override
-  Future<ProjectMigrationResult> create() async {
-    await Future.wait([
-      _createFile(projectPaths.projectDart, '''
-import 'package:celest/celest.dart';
-
-const project = Project(
-  name: '$projectName',
-);
-'''),
-      _createFile(p.join(projectPaths.apisDir, 'greeting.dart'), r'''
-// Cloud functions are top-level Dart functions defined in the `functions/`
-// folder of your Celest project.
-
-import 'package:celest/celest.dart';
-
-/// Says hello to a [person].
-@cloud
-Future<String> sayHello({required Person person}) async {
-  if (person.name.isEmpty) {
-    // Throw a custom exception and catch it on the frontend.
-    throw BadNameException('Name cannot be empty');
-  }
-
-  // Logging is handled automatically when you print to the console.
-  print('Saying hello to ${person.name}');
-
-  return 'Hello, ${person.name}!';
-}
-
-/// A person who can be greeted.
-class Person {
-  const Person({required this.name});
-
-  final String name;
-}
-
-/// Thrown when a [Person] has an invalid name.
-class BadNameException implements Exception {
-  const BadNameException(this.message);
-
-  final String message;
-
-  @override
-  String toString() => 'BadNameException: $message';
-}
-'''),
-      _createFile(
-        p.join(projectRoot, 'test', 'functions', 'greeting_test.dart'),
-        '''
-import 'package:celest_backend/src/functions/greeting.dart';
-import 'package:test/test.dart';
-
-void main() {
-  group('greeting', () {
-    test('sayHello', () async {
-      expect(await sayHello(person: Person(name: 'Celest')), 'Hello, Celest!');
-    });
-    test('sayHello (empty name)', () async {
-      expect(
-        sayHello(person: Person(name: '')),
-        throwsA(isA<BadNameException>()),
-      );
-    });
-  });
-}
-''',
-      ),
-
-      // Generated
-      _createFile(
-        p.join(projectPaths.generatedDir, 'README.md'),
-        generated_README,
-      ),
-
-      // Client
-      ProjectFile.client(projectRoot, projectName).create(),
-    ]);
-    return const ProjectMigrationSuccess();
-  }
-}
-
-Future<void> _createFile(String path, String contents) async {
-  final file = fileSystem.file(path);
-  await file.create(recursive: true);
-  await file.writeAsString(contents);
 }

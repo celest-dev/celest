@@ -15,6 +15,17 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
       hide: true,
       defaultsTo: true,
     );
+    argParser.addOption(
+      'template',
+      abbr: 't',
+      help: 'The project template to use.',
+      allowed: ['hello', 'data'],
+      allowedHelp: {
+        'hello': 'A simple greeting API.',
+        'data': 'A project with a database and cloud functions.',
+      },
+      defaultsTo: 'hello',
+    );
   }
 
   @override
@@ -28,6 +39,9 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
 
   @override
   Progress? currentProgress;
+
+  @override
+  late final String template = argResults!.option('template')!;
 
   /// Precache assets in the background.
   Future<void> _precacheInBackground() async {
@@ -97,9 +111,9 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
     stdout.writeln();
     cliLogger.success('🚀 To start a local development server, run:');
     cliLogger
-      ..info(Platform.lineTerminator)
-      ..info('      $command${Platform.lineTerminator}')
-      ..info(Platform.lineTerminator);
+      ..info('')
+      ..info('      $command')
+      ..info('');
 
     return 0;
   }
