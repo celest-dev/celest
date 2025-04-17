@@ -1,0 +1,122 @@
+diff --git a/engine/src/flutter/shell/testing/tester_main.cc b/engine/src/flutter/shell/testing/tester_main.cc
+index c29fe2e609..f724a49547 100644
+--- a/engine/src/flutter/shell/testing/tester_main.cc
++++ b/engine/src/flutter/shell/testing/tester_main.cc
+@@ -13,6 +13,9 @@
+ #include "flutter/flow/embedded_views.h"
+ #include "flutter/fml/build_config.h"
+ #include "flutter/fml/file.h"
++#include "flutter/fml/log_level.h"
++#include "flutter/fml/log_settings.h"
++#include "flutter/fml/logging.h"
+ #include "flutter/fml/make_copyable.h"
+ #include "flutter/fml/message_loop.h"
+ #include "flutter/fml/paths.h"
+@@ -20,6 +23,7 @@
+ #include "flutter/fml/task_runner.h"
+ #include "flutter/shell/common/platform_view.h"
+ #include "flutter/shell/common/rasterizer.h"
++#include "flutter/shell/common/run_configuration.h"
+ #include "flutter/shell/common/shell.h"
+ #include "flutter/shell/common/switches.h"
+ #include "flutter/shell/common/thread_host.h"
+@@ -412,10 +416,17 @@ int RunTester(const flutter::Settings& settings,
+     return EXIT_FAILURE;
+   }
+ 
+-  if (settings.application_kernel_asset.empty()) {
+-    FML_LOG(ERROR) << "Dart kernel file not specified.";
+-    return EXIT_FAILURE;
+-  }
++  #if (FLUTTER_RUNTIME_MODE == FLUTTER_RUNTIME_MODE_RELEASE)
++    if (settings.application_library_path.empty()) {
++      FML_LOG(ERROR) << "Dart snapshot file not specified.";
++      return EXIT_FAILURE;
++    }
++  #else
++    if (settings.application_kernel_asset.empty()) {
++      FML_LOG(ERROR) << "Dart kernel file not specified.";
++      return EXIT_FAILURE;
++    }
++  #endif
+ 
+   shell->GetPlatformView()->NotifyCreated();
+ 
+@@ -432,32 +443,8 @@ int RunTester(const flutter::Settings& settings,
+       std::make_unique<flutter::PlatformMessage>(
+           "flutter/localization", std::move(locale_bytes), response));
+ 
+-  std::initializer_list<fml::FileMapping::Protection> protection = {
+-      fml::FileMapping::Protection::kRead};
+-  auto main_dart_file_mapping = std::make_unique<fml::FileMapping>(
+-      fml::OpenFile(
+-          fml::paths::AbsolutePath(settings.application_kernel_asset).c_str(),
+-          false, fml::FilePermission::kRead),
+-      protection);
+-
+-  auto isolate_configuration =
+-      IsolateConfiguration::CreateForKernel(std::move(main_dart_file_mapping));
+-
+-  if (!isolate_configuration) {
+-    FML_LOG(ERROR) << "Could create isolate configuration.";
+-    return EXIT_FAILURE;
+-  }
+-
+-  auto asset_manager = std::make_shared<flutter::AssetManager>();
+-  asset_manager->PushBack(std::make_unique<flutter::DirectoryAssetBundle>(
+-      fml::Duplicate(settings.assets_dir), true));
+-  asset_manager->PushBack(std::make_unique<flutter::DirectoryAssetBundle>(
+-      fml::OpenDirectory(settings.assets_path.c_str(), false,
+-                         fml::FilePermission::kRead),
+-      true));
+-
+-  RunConfiguration run_configuration(std::move(isolate_configuration),
+-                                     std::move(asset_manager));
++  RunConfiguration run_configuration = RunConfiguration::InferFromSettings(
++        settings, io_task_runner, IsolateLaunchType::kNewGroup);
+ 
+   // The script completion task observer that will be installed on the UI thread
+   // that watched if the engine has any live ports.
+@@ -627,20 +614,34 @@ int main(int argc, char* argv[]) {
+   auto command_line = fml::CommandLineFromPlatformOrArgcArgv(argc, argv);
+ 
+   if (command_line.HasOption(flutter::FlagForSwitch(flutter::Switch::Help))) {
+-    flutter::PrintUsage("flutter_tester");
++    flutter::PrintUsage("flutter_runner");
+     return EXIT_SUCCESS;
+   }
+ 
+   auto settings = flutter::SettingsFromCommandLine(command_line);
+-  if (!command_line.positional_args().empty()) {
+-    // The tester may not use the switch for the main dart file path. Specifying
+-    // it as a positional argument instead.
+-    settings.application_kernel_asset = command_line.positional_args()[0];
++  if (settings.verbose_logging) {
++      // Enable all logs, including verbose logs which are logged at negative levels.
++      fml::SetLogSettings(fml::LogSettings{-fml::kLogFatal});
+   }
+ 
+-  if (settings.application_kernel_asset.empty()) {
+-    FML_LOG(ERROR) << "Dart kernel file not specified.";
+-    return EXIT_FAILURE;
++  const char* flutter_modes[] = {"debug", "profile", "release", "jit_release"};
++  auto is_precompiled = flutter::DartVM::IsRunningPrecompiledCode();
++  FML_VLOG(1) << "Flutter mode: " << flutter_modes[FLUTTER_RUNTIME_MODE-1];
++  FML_VLOG(1) << "Precompiled: " << is_precompiled;
++
++  if (is_precompiled) {
++    auto snapshot_path = command_line.positional_args()[0];
++    if (snapshot_path.empty()) {
++      FML_LOG(ERROR) << "Dart snapshot not specified.";
++      return EXIT_FAILURE;
++    }
++    settings.application_library_path.emplace_back(snapshot_path);
++  } else {
++    settings.application_kernel_asset = command_line.positional_args()[0];
++    if (settings.application_kernel_asset.empty()) {
++        FML_LOG(ERROR) << "Dart kernel file not specified.";
++        return EXIT_FAILURE;
++    }
+   }
+ 
+   settings.leak_vm = false;
