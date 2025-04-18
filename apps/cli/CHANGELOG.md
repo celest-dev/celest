@@ -1,3 +1,10 @@
+## 1.0.10
+
+- feat: Add templates to `celest init`
+- feat: Add `celest status` command
+- chore: Update to analyzer model v2
+- chore: Use distroless Docker base images
+
 ## 1.0.9
 
 - feat: Re-implement `celest upgrade`
