@@ -36,7 +36,7 @@ RUN sed -i 's/libdart_jit/libdart_aotruntime_product/g' shell/testing/BUILD.gn
 WORKDIR /flutter/engine/src
 RUN ./flutter/bin/et build --no-rbe --config=host_release
 
-FROM gcr.io/distroless/cc-debian${DEBIAN_VERSION}:nonroot AS engine
+FROM gcr.io/distroless/cc-debian${DEBIAN_VERSION} AS engine
 
 COPY --from=build-engine /flutter/engine/src/out/host_release /engine
 ENV DART_SDK="/flutter/engine/dart-sdk"
@@ -44,7 +44,7 @@ ENV DART_SDK="/flutter/engine/dart-sdk"
 WORKDIR /engine
 ENV LD_LIBRARY_PATH="/engine"
 
-FROM gcr.io/distroless/cc-debian${DEBIAN_VERSION}:nonroot AS builder
+FROM gcr.io/distroless/cc-debian${DEBIAN_VERSION} AS builder
 
 COPY --from=engine /engine/dart-sdk/bin/utils/gen_snapshot /usr/lib/dart/bin/utils/gen_snapshot
 COPY --from=engine /engine/dart-sdk/bin/utils/gen_snapshot.sym /usr/lib/dart/bin/utils/gen_snapshot.sym

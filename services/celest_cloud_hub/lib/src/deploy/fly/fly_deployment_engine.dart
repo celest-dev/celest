@@ -188,12 +188,18 @@ final class FlyDeploymentEngine {
   }
 
   String _generateFlyAppName() {
-    var projectId = projectAst.projectId;
-    // Restricted to 30 characters total.
-    if (projectId.length > 24) {
-      projectId = projectId.substring(0, 24);
+    var projectId = projectAst.projectId.toLowerCase();
+
+    // Only lowercase letters, numbers, and dashes are allowed.
+    projectId = projectId.replaceAll(RegExp(r'[^a-z0-9]'), '-');
+
+    // Restricted to 63 characters total.
+    final suffix = _randomSuffix;
+    final maxLength = 63 - suffix.length;
+    if (projectId.length > maxLength) {
+      projectId = projectId.substring(0, maxLength);
     }
-    return '$projectId-$_randomSuffix';
+    return '$projectId-$suffix';
   }
 
   Future<ProjectEnvironmentState> _deployProjectEnvironment() async {
@@ -244,7 +250,7 @@ final class FlyDeploymentEngine {
     // Deploy using `flyctl deploy`
     await _withTempDirectory((dir) async {
       // Write the kernel file to disk
-      final kernelFile = dir.childFile('celest.aot.dill');
+      final kernelFile = dir.childFile('main.aot.dill');
       await kernelFile.writeAsBytes(kernelAsset);
 
       // Write celest.json to disk
