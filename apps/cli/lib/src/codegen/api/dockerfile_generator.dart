@@ -11,87 +11,51 @@ final class DockerfileGenerator {
 
   static final Template _dartTemplate = Template(r'''
 # syntax=docker/dockerfile:1
-FROM dart:{{version}} AS build
+FROM celestdev/dart-builder:{{version}} AS build
 
 WORKDIR /app
-{{ #includes_data }}
-# Add SQLite3
-RUN apt update && apt install -y libsqlite3-0
-RUN cp $(find / -name libsqlite3.so* -type f | head -n1) /app/libsqlite3.so
-{{ /includes_data }}
-COPY celest.aot.dill main.aot.dill
+COPY main.aot.dill .
 
 RUN [ "/usr/lib/dart/bin/utils/gen_snapshot", "--snapshot_kind=app-aot-elf", "--elf=/app/main.aot", "/app/main.aot.dill" ]
 
-FROM scratch
-
-COPY --from=build /runtime /
+FROM celestdev/dart-runtime:{{version}}
 
 WORKDIR /app
-COPY --from=build /usr/lib/dart/bin/dartaotruntime .
-COPY --from=build /app ./
+COPY --from=build /app/main.aot main.aot
 COPY celest.json .
 
 ENV PORT=8080
-EXPOSE 8080
-
-ENTRYPOINT [ "/app/dartaotruntime" ]
-CMD [ "/app/main.aot" ]
+EXPOSE $PORT
 ''');
 
+  // TODO(dnys1): Remove `--platform=linux/amd64` when Celest supports arm64.
   static final Template _flutterTemplate = Template(r'''
 # syntax=docker/dockerfile:1
-ARG DEBIAN_VERSION=12
-
-FROM debian:${DEBIAN_VERSION}-slim
-
-ARG TARGETARCH
-
-# Set up fonts for the Flutter engine
-RUN apt update && apt install -y \
-    fontconfig \
-    fonts-cantarell \
-    fonts-liberation2
-RUN fc-cache -f
-
-# Add CA certificates
-RUN apt install -y ca-certificates
-
-WORKDIR /celest
-{{ #includes_data }}
-# Add SQLite3
-RUN apt install -y libsqlite3-0
-RUN cp $(find / -name libsqlite3.so* -type f | head -n1) /celest/libsqlite3.so
-{{ /includes_data }}
-COPY --from=ghcr.io/cirruslabs/flutter:{{version}} /sdks/flutter/bin/cache/artifacts/engine/linux-${TARGETARCH/amd64/x64}/icudtl.dat .
-COPY --from=ghcr.io/cirruslabs/flutter:{{version}} /sdks/flutter/bin/cache/artifacts/engine/linux-${TARGETARCH/amd64/x64}/*.so ./
-COPY --from=ghcr.io/cirruslabs/flutter:{{version}} /sdks/flutter/bin/cache/artifacts/engine/linux-${TARGETARCH/amd64/x64}/*.so* ./
-COPY --from=ghcr.io/cirruslabs/flutter:{{version}} /sdks/flutter/bin/cache/artifacts/engine/linux-${TARGETARCH/amd64/x64}/flutter_tester flutter_runner
-
-# Clean up
-RUN apt-get clean
+FROM --platform=linux/amd64 celestdev/flutter-builder:{{version}} AS build
 
 WORKDIR /app
-COPY flutter_assets/ ./
+COPY main.aot.dill .
+
+RUN [ "/usr/lib/dart/bin/utils/gen_snapshot", "--snapshot_kind=app-aot-elf", "--elf=/app/main.aot", "/app/main.aot.dill" ]
+
+FROM --platform=linux/amd64 celestdev/flutter-runtime:{{version}}
+
+WORKDIR /app
+COPY --from=build /app/main.aot main.aot
+COPY flutter_assets/ ./flutter_assets/
 COPY celest.json .
 
-ENV LD_LIBRARY_PATH="/app:/celest:${LD_LIBRARY_PATH}"
 ENV PORT=8080
-EXPOSE 8080
-
-ENTRYPOINT [ "/celest/flutter_runner", "--non-interactive", "--run-forever", "--disable-vm-service", "--icu-data-file-path=/celest/icudtl.dat", "--verbose-logging", "--enable-platform-isolates", "--force-multithreading", "--cache-dir-path=/tmp", "--flutter-assets-dir=/app", "--snapshot-asset-path=/app" ]
-CMD [ "/app/kernel_blob.bin" ]
+EXPOSE $PORT
 ''');
 
   String generate() {
     return switch (project.sdkConfig.targetSdk) {
       SdkType.flutter => _flutterTemplate.renderString({
           'version': project.sdkConfig.flutter!.version.canonicalizedVersion,
-          'includes_data': project.databases.isNotEmpty,
         }),
       SdkType.dart => _dartTemplate.renderString({
           'version': project.sdkConfig.dart.version.canonicalizedVersion,
-          'includes_data': project.databases.isNotEmpty,
         }),
       final unknown => unreachable('Unknown SDK: $unknown'),
     };

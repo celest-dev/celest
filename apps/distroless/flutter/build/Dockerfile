@@ -111,5 +111,5 @@ COPY --from=build-engine /flutter/engine/src/out/host_release/flutter_tester flu
 WORKDIR /app
 COPY flutter_assets .
 
-ENTRYPOINT [ "/celest/flutter_runner", "--non-interactive", "--run-forever", "--disable-vm-service", "--icu-data-file-path=/celest/icudtl.dat", "--verbose-logging", "--enable-platform-isolates", "--force-multithreading", "--cache-dir-path=/tmp", "--flutter-assets-dir=/app/flutter_assets" ]
+ENTRYPOINT [ "/celest/flutter_runner", "--non-interactive", "--run-forever", "--disable-vm-service", "--icu-data-file-path=/celest/icudtl.dat", "--enable-platform-isolates", "--force-multithreading", "--cache-dir-path=/tmp", "--flutter-assets-dir=/app/flutter_assets" ]
 CMD [ "/app/main.aot" ]

@@ -838,26 +838,28 @@ final class CelestFrontend {
     if (!buildOutputs.existsSync()) {
       await buildOutputs.create(recursive: true);
     }
-    switch (resolvedProject.sdkConfig.targetSdk) {
-      case ast.SdkType.dart:
-        final entrypointCompiler = EntrypointCompiler(
-          logger: logger,
-          verbose: verbose,
-          enabledExperiments: celestProject.analysisOptions.enabledExperiments,
-        );
-        final kernel = await entrypointCompiler.compile(
-          resolvedProject: resolvedProject,
-          entrypointPath: projectPaths.localApiEntrypoint,
-        );
-        await buildOutputs
-            .childFile('celest.aot.dill')
-            .writeAsBytes(kernel.outputDill);
-      case ast.SdkType.flutter:
-        final bundleRes = await processManager.run(
+    final entrypointCompiler = EntrypointCompiler(
+      logger: logger,
+      verbose: verbose,
+      enabledExperiments: celestProject.analysisOptions.enabledExperiments,
+    );
+    final kernel = await entrypointCompiler.compile(
+      resolvedProject: resolvedProject,
+      entrypointPath: projectPaths.localApiEntrypoint,
+    );
+    await buildOutputs
+        .childFile('main.aot.dill')
+        .writeAsBytes(kernel.outputDill);
+
+    // Generate `flutter_assets` for the Flutter app.
+    if (resolvedProject.sdkConfig.targetSdk == ast.SdkType.flutter) {
+      Future<ProcessResult> createBundle() async {
+        return processManager.run(
           [
             Sdk.current.flutter ?? 'flutter',
             'build',
             'bundle',
+            '--release',
             '--packages=${projectPaths.packagesConfig}',
             '--asset-dir=${p.join(buildOutputs.path, 'flutter_assets')}',
             '--target=${projectPaths.localApiEntrypoint}',
@@ -865,12 +867,33 @@ final class CelestFrontend {
           ],
           workingDirectory: projectPaths.projectRoot,
         );
-        if (bundleRes.exitCode != 0) {
-          throw CliException(
-            'Failed to build project:\n'
-            '${bundleRes.stdout}\n${bundleRes.stderr}',
-          );
+      }
+
+      var bundleRes = await createBundle();
+
+      // Check if failed due to missing native assets JSON.
+      // TODO(dnys1): https://github.com/flutter/flutter/issues/164149
+      if (bundleRes.exitCode != 0) {
+        final stderr = bundleRes.stderr as String;
+        final errMatcher =
+            RegExp("Cannot copy file to '([^']*)', path = '([^']*)'");
+        if (errMatcher.firstMatch(stderr) case final match?) {
+          // Add missing native assets JSON
+          final missingManifestPath = match.group(2)!; // absolute path
+          await fileSystem.file(missingManifestPath).writeAsString('{}');
+          logger.finest('Added missing manifest file: $missingManifestPath');
+
+          // Try the build again.
+          bundleRes = await createBundle();
         }
+      }
+
+      if (bundleRes.exitCode != 0) {
+        throw CliException(
+          'Failed to build project:\n'
+          '${bundleRes.stdout}\n${bundleRes.stderr}',
+        );
+      }
     }
 
     final dockerfile = DockerfileGenerator(project: resolvedProject);
