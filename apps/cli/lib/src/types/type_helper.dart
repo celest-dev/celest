@@ -524,6 +524,7 @@ final class TypeHelper {
     serializationVerdicts.clear();
     subtypes.clear();
     overrides.clear();
+    init();
   }
 }
 
