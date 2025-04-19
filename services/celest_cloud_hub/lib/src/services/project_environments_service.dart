@@ -22,7 +22,6 @@ import 'package:celest_cloud_hub/src/model/protobuf.dart';
 import 'package:celest_cloud_hub/src/model/type_registry.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
 import 'package:celest_core/celest_core.dart';
-import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:grpc/grpc.dart';
@@ -449,12 +448,12 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       resource: EntityUid.of('Celest::Project::Environment', environment.id),
     );
 
-    final kernelAsset = request.assets.firstWhereOrNull(
-      (asset) => asset.type == pb.ProjectAsset_Type.DART_KERNEL,
-    );
+    final assets = {for (final asset in request.assets) asset.type: asset};
+    final kernelAsset = assets[pb.ProjectAsset_Type.DART_KERNEL];
     if (kernelAsset == null) {
       throw GrpcError.invalidArgument('Missing Dart kernel asset');
     }
+    final flutterAssetsBundle = assets[pb.ProjectAsset_Type.FLUTTER_ASSETS];
 
     final operationId = typeId('op');
     final operation =
@@ -473,6 +472,12 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         pb.ResolvedProject().unpackAny(request.resolvedProjectAst),
       ),
       kernelAsset: Uint8List.fromList(kernelAsset.inline).asUnmodifiableView(),
+      flutterAssetsBundle:
+          flutterAssetsBundle != null
+              ? Uint8List.fromList(
+                flutterAssetsBundle.inline,
+              ).asUnmodifiableView()
+              : null,
       environment: environment,
     );
     unawaited(

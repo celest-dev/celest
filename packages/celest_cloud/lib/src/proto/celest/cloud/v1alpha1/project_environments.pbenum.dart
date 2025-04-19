@@ -19,10 +19,13 @@ class ProjectAsset_Type extends $pb.ProtobufEnum {
       ProjectAsset_Type._(0, _omitEnumNames ? '' : 'TYPE_UNSPECIFIED');
   static const ProjectAsset_Type DART_KERNEL =
       ProjectAsset_Type._(1, _omitEnumNames ? '' : 'DART_KERNEL');
+  static const ProjectAsset_Type FLUTTER_ASSETS =
+      ProjectAsset_Type._(2, _omitEnumNames ? '' : 'FLUTTER_ASSETS');
 
   static const $core.List<ProjectAsset_Type> values = <ProjectAsset_Type>[
     TYPE_UNSPECIFIED,
     DART_KERNEL,
+    FLUTTER_ASSETS,
   ];
 
   static final $core.Map<$core.int, ProjectAsset_Type> _byValue =

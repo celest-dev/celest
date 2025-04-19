@@ -347,6 +347,9 @@ message ProjectAsset {
 
     // The asset is a Dart kernel file.
     DART_KERNEL = 1;
+
+    // The asset is a flutter_assets bundle.
+    FLUTTER_ASSETS = 2;
   }
 
   // The type of the asset.
