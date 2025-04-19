@@ -84,10 +84,10 @@ final class Cli {
         (sentryDsn == null
             ? ctx.httpClient
             : SentryHttpClient(client: ctx.httpClient));
-    ctx.performance = (sentryDsn == null ||
-            io.Platform.environment.containsKey('CELEST_NO_ANALYTICS'))
-        ? const CelestPerformance()
-        : const SentryPerformance();
+    ctx.performance = sentryDsn != null &&
+            !io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
+        ? const SentryPerformance()
+        : const CelestPerformance();
     ctx.storage = storage ?? Storage();
 
     try {
@@ -114,18 +114,14 @@ final class Cli {
       ctx.secureStorage = NativeMemoryStorage(namespace: Storage.cliNamespace);
     }
 
-    ctx.analytics = postHogConfig == null ||
-            io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
-        ? const NoopAnalytics()
-        : PostHog(
+    ctx.analytics = postHogConfig != null &&
+            !io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
+        ? PostHog(
             config: postHogConfig,
             client: ctx.httpClient,
             storage: ctx.secureStorage,
-          );
-
-    if (kReleaseMode) {
-      ctx.analytics.identifyUser(setOnce: {'local_iterations_mvp': true});
-    }
+          )
+        : const NoopAnalytics();
 
     final sdkFinder = DartSdkFinder(
       platform: ctx.platform,
@@ -225,6 +221,8 @@ final class Cli {
             );
         },
         appRunner: () => _run(argResults),
+        // We use our own error handling, so we don't want to use the default
+        // `runZonedGuarded` behavior.
         // ignore: invalid_use_of_internal_member
         callAppRunnerInRunZonedGuarded: false,
       );
@@ -359,6 +357,13 @@ final class Cli {
   }
 
   Future<void> _handleError(Object error, StackTrace stackTrace) async {
+    Future<void> recordError() async {
+      await ctx.performance
+          .innerCaptureError(error, stackTrace: stackTrace)
+          .timeout(const Duration(seconds: 3))
+          .catchError((_) => '');
+    }
+
     switch (error) {
       case UsageException():
         stderr.writeln(error);
@@ -374,6 +379,7 @@ final class Cli {
             ..writeln(stackTrace);
         }
         exitCode = 1;
+        await recordError();
       default:
         _logFile
           ?..writeln(error)
@@ -381,6 +387,7 @@ final class Cli {
         ctx.cliLogger
           ..err(error.toString())
           ..detail(stackTrace.toString());
+        await recordError();
     }
   }
 
@@ -393,6 +400,7 @@ final class Cli {
     await _loggerSub?.cancel();
     await _logFile?.flush();
     await _logFile?.close();
+    await ctx.performance.close();
     ctx.httpClient.close();
     exit(exitCode);
   }
