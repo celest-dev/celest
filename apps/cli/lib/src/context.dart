@@ -4,6 +4,7 @@ import 'package:analyzer/src/dart/analysis/byte_store.dart';
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
 import 'package:celest_cli/src/analytics/interface.dart';
 import 'package:celest_cli/src/analytics/noop.dart';
+import 'package:celest_cli/src/cli/cli_runtime.dart';
 import 'package:celest_cli/src/commands/auth/cli_auth.dart';
 import 'package:celest_cli/src/database/cache/cache_database.dart';
 import 'package:celest_cli/src/database/project/project_database.dart';
@@ -17,7 +18,6 @@ import 'package:celest_cli/src/storage/storage.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/version.dart';
 import 'package:celest_cloud/celest_cloud.dart';
-import 'package:celest_core/_internal.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:http/http.dart' as http;
@@ -124,7 +124,10 @@ String? get celestLocalPath {
 /// The identifier for the current CLI environment.
 ///
 /// This should be used in Sentry/PostHog to identify events.
-const String kCliEnvironment = kReleaseMode ? 'release' : 'debug';
+final String kCliEnvironment = switch (CliRuntime.current) {
+  CliRuntime.aot || CliRuntime.pubGlobal => 'release',
+  CliRuntime.local => 'debug',
+};
 
 /// Whether the current terminal supports ANSI output.
 ///
