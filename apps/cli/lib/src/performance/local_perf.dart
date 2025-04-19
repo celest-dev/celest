@@ -39,4 +39,8 @@ base class CelestPerformance {
     );
     return result;
   }
+
+  Future<void> close() async {
+    // No-op
+  }
 }

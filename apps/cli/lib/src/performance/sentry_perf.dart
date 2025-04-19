@@ -54,4 +54,11 @@ base class SentryPerformance extends CelestPerformance {
       await transaction.finish();
     }
   }
+
+  @override
+  Future<void> close() async {
+    if (Sentry.isEnabled) {
+      await Sentry.close();
+    }
+  }
 }
