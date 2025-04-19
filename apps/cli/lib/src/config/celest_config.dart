@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:celest_cli/src/config/find_application_home.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:file/file.dart';
@@ -9,42 +7,26 @@ import 'package:native_storage/native_storage.dart';
 final class CelestConfig {
   CelestConfig._(this.configDir);
 
-  static final Logger logger = Logger('CelestConfig');
-
-  static Future<CelestConfig> load({Directory? configHome}) async {
+  factory CelestConfig({Directory? configHome}) {
     configHome ??= fileSystem.directory(applicationConfigHome('Celest'));
-    logger.finest('Loading configuration from $configHome');
-    if (!await configHome.exists()) {
-      await configHome.create(recursive: true);
-    }
-
-    // Migrate the old config JSON to local storage if it exists.
-    final configJson = configHome.childFile('config.json');
-    if (configJson.existsSync()) {
-      logger.finest('Migrating configuration to local storage');
-      final config =
-          jsonDecode(await configJson.readAsString()) as Map<String, Object?>;
-      await Future.wait(
-        config.entries.map(
-          (entry) => _settings.write(entry.key, entry.value.toString()),
-        ),
-      );
-      await configJson.delete();
-      logger.finest('Successfully migrated configuration to local storage');
-    } else {
-      logger.finest('Configuration already migrated to local storage');
+    if (!configHome.existsSync()) {
+      configHome.createSync(recursive: true);
     }
     return CelestConfig._(configHome);
   }
 
-  static CelestConfigValues get _settings =>
-      CelestConfigValues(storage.isolated);
+  static final Logger logger = Logger('CelestConfig');
+
   final Directory configDir;
-  CelestConfigValues get settings => _settings;
+
+  CelestSettings get settings => CelestSettings(storage);
+  CelestSecureSettings get secureSettings =>
+      CelestSecureSettings(storage.isolated);
 
   Future<void> delete() async {
-    await _settings.clear();
-    if (await configDir.exists()) {
+    settings.clear();
+    await secureSettings.clear();
+    if (configDir.existsSync()) {
       logger.fine('Removing Celest config dir: $configDir');
       await configDir.delete(recursive: true);
     }
@@ -54,7 +36,7 @@ final class CelestConfig {
   String toString() => 'CelestConfig: $configDir';
 }
 
-extension type CelestConfigValues(IsolatedNativeStorage settings)
+extension type CelestSecureSettings(IsolatedNativeStorage settings)
     implements IsolatedNativeStorage {
   Future<String?> getOrganizationId() async {
     return settings.read('organization_id');
@@ -65,6 +47,20 @@ extension type CelestConfigValues(IsolatedNativeStorage settings)
       await settings.delete('organization_id');
     } else {
       await settings.write('organization_id', value);
+    }
+  }
+}
+
+extension type CelestSettings(NativeStorage settings) implements NativeStorage {
+  String? get pubCacheFixDigest {
+    return settings.read('pub_cache_fix_digest');
+  }
+
+  set pubCacheFixDigest(String? value) {
+    if (value == null) {
+      settings.delete('pub_cache_fix_digest');
+    } else {
+      settings.write('pub_cache_fix_digest', value);
     }
   }
 }

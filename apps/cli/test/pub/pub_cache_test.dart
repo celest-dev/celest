@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/pub/pub_cache.dart';
 import 'package:test/test.dart';
@@ -13,15 +14,7 @@ void main() {
     });
 
     test('hydrates packages', timeout: Timeout.none, () async {
-      final packages = PubCache.packagesToFix.entries
-          .map((e) => '${e.key}:${e.value}')
-          .toList();
-      final results = await pubCache.hydrate();
-      for (final (index, (exitCode, output)) in results.indexed) {
-        if (exitCode != 0) {
-          fail('Failed to hydrate ${packages[index]}:\n$output');
-        }
-      }
+      await Result.release(pubCache.hydrate());
     });
 
     test(
