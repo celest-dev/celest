@@ -1,8 +1,9 @@
-## NEXT
+## 1.0.10+3
 
 - fix: Pass `flutter_assets` to backend when using `celest deploy`
 - fix: Sentry integration
 - fix: Ensure pub cache is fixed during startup
+- fix: Fix project name in status command
 
 ## 1.0.10+2
 

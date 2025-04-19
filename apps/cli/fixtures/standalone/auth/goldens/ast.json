@@ -2067,7 +2067,7 @@
           "url": "package:celest_cloud_auth/src/database/auth_database.dart",
           "isNullable": false
         },
-        "version": 4,
+        "version": 5,
         "location": {
           "start": {
             "offset": 423,
@@ -2143,7 +2143,7 @@
     }
   },
   "sdkConfig": {
-    "celest": "1.0.10+2",
+    "celest": "1.0.10+3",
     "dart": {
       "type": "dart",
       "version": "3.7.2",
