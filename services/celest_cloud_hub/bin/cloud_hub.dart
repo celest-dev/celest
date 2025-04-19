@@ -10,6 +10,8 @@ import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
+import 'package:celest_cloud_auth/src/sessions/sessions_repository.dart';
+import 'package:celest_cloud_auth/src/users/users_repository.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/db_functions.dart';
@@ -103,6 +105,12 @@ Future<void> _run() async {
 
   final authMiddleware = AuthorizationMiddleware(
     corks: CorksRepository(issuer: issuer, db: db, cryptoKeys: cryptoKeys),
+    sessions: SessionsRepository(
+      corks: CorksRepository(issuer: issuer, db: db, cryptoKeys: cryptoKeys),
+      cryptoKeys: cryptoKeys,
+      db: db,
+      users: UsersRepository(db: db),
+    ),
     db: db.cloudAuth,
   );
 

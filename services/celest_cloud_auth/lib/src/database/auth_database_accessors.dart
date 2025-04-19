@@ -2,7 +2,6 @@ import 'package:async/async.dart';
 import 'package:cedar/ast.dart';
 import 'package:cedar/cedar.dart';
 import 'package:celest_ast/celest_ast.dart';
-import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:celest_cloud_auth/src/authorization/cedar_interop.dart';
 import 'package:celest_cloud_auth/src/authorization/celest_action.dart';
 import 'package:celest_cloud_auth/src/authorization/celest_role.dart';
@@ -324,6 +323,9 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
           await m.createTrigger(trigger);
         }
       });
+    },
+    from4To5: (m, schema) async {
+      await m.alterTable(TableMigration(schema.cloudAuthSessions));
     },
   );
 
@@ -818,14 +820,6 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
       }
       return getUser(userId: user.userId);
     });
-  }
-
-  Future<Session?> getSession({
-    required String sessionId,
-  }) async {
-    return cloudAuthCoreDrift
-        .getSession(sessionId: sessionId)
-        .getSingleOrNull();
   }
 }
 

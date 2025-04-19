@@ -57,7 +57,7 @@ class CloudAuthDatabase extends $CloudAuthDatabase with CloudAuthDatabaseMixin {
   final ResolvedProject? _project;
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration {

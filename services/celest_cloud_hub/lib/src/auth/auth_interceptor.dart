@@ -3,6 +3,8 @@ import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/model/cookie.dart';
 import 'package:celest_cloud_auth/src/model/interop.dart';
+import 'package:celest_cloud_auth/src/sessions/sessions_repository.dart';
+import 'package:celest_cloud_hub/src/services/service_mixin.dart';
 import 'package:celest_core/celest_core.dart' as core;
 import 'package:celest_core/celest_core.dart';
 import 'package:collection/collection.dart';
@@ -10,7 +12,12 @@ import 'package:corks_cedar/corks_cedar.dart';
 import 'package:grpc/grpc.dart';
 import 'package:meta/meta.dart';
 
-typedef _Deps = ({CorksRepository corks, CloudAuthDatabaseAccessors db});
+typedef _Deps =
+    ({
+      CorksRepository corks,
+      SessionsRepository sessions,
+      CloudAuthDatabaseAccessors db,
+    });
 
 /// {@template celest_cloud_auth.request_authorizer}
 /// A middleware that authorizes requests based on the current policy set.
@@ -19,11 +26,13 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
   /// {@macro celest_cloud_auth.request_authorizer}
   AuthorizationMiddleware({
     required CorksRepository corks,
+    required SessionsRepository sessions,
     required CloudAuthDatabaseAccessors db,
-  }) : this._((corks: corks, db: db));
+  }) : this._((corks: corks, sessions: sessions, db: db));
 
   CorksRepository get _corks => _deps.corks;
   CloudAuthDatabaseAccessors get _db => _deps.db;
+  SessionsRepository get _sessions => _deps.sessions;
 
   /// Authenticates the request and returns the user if the request is
   /// authorized.
@@ -73,13 +82,18 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
     request.cork = cork;
     switch (cork.bearer) {
       case EntityUid(type: 'Celest::Session', id: final sessionId):
-        final session = await _db.getSession(sessionId: sessionId);
+        final sessionTid = TypeId.tryDecode<Session>(sessionId);
+        if (sessionTid == null) {
+          context.logger.severe('Invalid session ID: $sessionId');
+          throw const UnauthorizedException('Invalid session ID');
+        }
+        final session = await _sessions.getSession(sessionId: sessionTid);
         if (session == null) {
-          throw const UnauthorizedException('Invalid session');
+          throw UnauthorizedException('Invalid session: $sessionId');
         }
         final user = await _db.getUser(userId: session.userId);
         if (user == null) {
-          throw const UnauthorizedException('Invalid user');
+          throw UnauthorizedException('Invalid user: ${session.userId}');
         }
         context.logger.finest('Found user for cork: $user');
         return (user, user.toEntity());

@@ -5,6 +5,7 @@ import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud/src/proto.dart' as pb;
 import 'package:celest_cloud_auth/src/authorization/authorization_middleware.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
+import 'package:celest_cloud_auth/src/authorization/celest_role.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
@@ -16,6 +17,7 @@ import 'package:celest_cloud_auth/src/sessions/sessions_repository.dart';
 import 'package:celest_cloud_auth/src/users/users_repository.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
 import 'package:celest_core/celest_core.dart';
+import 'package:clock/clock.dart';
 import 'package:corks_cedar/corks_cedar.dart';
 import 'package:meta/meta.dart';
 import 'package:shelf/shelf.dart';
@@ -137,6 +139,8 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
     final requestAuthorizer = AuthorizationMiddleware(
       routeMap: _deps.routeMap,
       corks: _deps.corks,
+      cryptoKeys: _deps.cryptoKeys,
+      users: _deps.users,
       db: _deps.db,
       authorizer: _deps.authorizer,
       issuer: _deps.issuer,
@@ -275,19 +279,19 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
       throw InternalServerError('Unknown user: ${session.userId}');
     }
 
-    final isNewUser = user.roles.contains(
-      const EntityUid.of('Celest::Role', 'anonymous'),
-    );
+    final isNewUser = user.roles.contains(CelestRole.anonymous);
     if (isNewUser) {
       user = await _users.updateUser(
         userId: session.userId,
         factor: factor,
-        roles: const [EntityUid.of('Celest::Role', 'authenticated')],
+        roles: const [CelestRole.authenticated],
       );
     }
     final cork = await _corks.createCork(
+      session: session.copyWith(
+        expireTime: clock.now().add(SessionsRepository.postAuthSessionDuration),
+      ),
       user: user,
-      session: session,
     );
     return SessionStateSuccess(
       cork: cork,
@@ -317,7 +321,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
               'Failed to send OTP. Please restart the authentication flow.',
             );
           }
-          final resendIn = nextResend.difference(DateTime.timestamp());
+          final resendIn = nextResend.difference(clock.now());
           throw ResourceExhaustedException(
             'Failed to send OTP. Try again in ${resendIn.inSeconds} seconds',
           );
@@ -334,7 +338,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
         //       'Failed to send OTP. Please restart the authentication flow.',
         //     );
         //   }
-        //   final resendIn = nextResend.difference(DateTime.timestamp());
+        //   final resendIn = nextResend.difference(clock.now());
         //   throw ResourceExhaustedException(
         //     'Failed to send OTP. Try again in ${resendIn.inSeconds} seconds',
         //   );
@@ -358,7 +362,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
     SessionStatePendingConfirmation? confirmation,
     AuthenticationFactor? resend,
   }) async {
-    var session = await _db.cloudAuthCoreDrift
+    final session = await _db.cloudAuthCoreDrift
         .getSession(sessionId: sessionId.encoded)
         .getSingleOrNull();
     if (session == null) {
@@ -386,11 +390,14 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
       null => throw StateError('Unexpected state'),
     };
 
-    session = await _sessions.updateSession(
+    return _sessions.updateSession(
       session: session,
       state: updatedState,
+      sessionDuration: switch (updatedState) {
+        SessionStateSuccess() => SessionsRepository.postAuthSessionDuration,
+        _ => SessionsRepository.preAuthSessionDuration,
+      },
     );
-    return session.copyWith(sessionToken: sessionToken);
   }
 
   Future<Response> handleContinueSession(Request request) async {

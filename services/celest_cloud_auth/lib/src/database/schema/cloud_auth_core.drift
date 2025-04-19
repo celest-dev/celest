@@ -73,7 +73,6 @@ CREATE TABLE IF NOT EXISTS cloud_auth_sessions (
     create_time `const TimestampType()` NOT NULL DEFAULT (unixepoch('now', 'subsec')),
     update_time `const TimestampType()`,
     expire_time `const TimestampType()` NOT NULL,
-    cancel_time `const TimestampType()`,
 
     CONSTRAINT cloud_auth_sessions_user_fk FOREIGN KEY (user_id) REFERENCES cloud_auth_users(user_id)
         ON UPDATE CASCADE ON DELETE CASCADE
@@ -240,7 +239,6 @@ createSession:
         state, 
         ip_address, 
         expire_time, 
-        cancel_time, 
         external_session_id
     )
     VALUES (
@@ -252,7 +250,6 @@ createSession:
         :state, 
         :ip_address, 
         :expire_time, 
-        :cancel_time, 
         :external_session_id
     )
     RETURNING *;
@@ -260,20 +257,16 @@ createSession:
 -- Retrieves the auth session for the given ID.
 getSession: 
     SELECT * FROM cloud_auth_sessions
-    WHERE 
-    (
-           cloud_auth_sessions.session_id = :session_id
-        OR cloud_auth_sessions.external_session_id = :session_id
-    )
-    AND cloud_auth_sessions.expire_time > unixepoch('now', 'subsec')
-    AND cloud_auth_sessions.cancel_time IS NULL;
+    WHERE cloud_auth_sessions.session_id = :session_id
+    OR    cloud_auth_sessions.external_session_id = :session_id;
 
 -- Updates the state of the auth session for the given ID.
 updateSession:
     UPDATE cloud_auth_sessions
     SET 
         state = :state,
-        user_id = :user_id
+        user_id = :user_id,
+        expire_time = :expire_time
     WHERE 
         session_id = :session_id
     OR  external_session_id = :session_id
@@ -283,14 +276,6 @@ updateSession:
 deleteSession:
     DELETE FROM cloud_auth_sessions
     WHERE 
-        session_id = :session_id
-    OR  external_session_id = :session_id;
-
--- Cancels the auth session for the given ID.
-cancelSession:
-    UPDATE cloud_auth_sessions
-    SET cancel_time = unixepoch('now', 'subsec')
-    WHERE
         session_id = :session_id
     OR  external_session_id = :session_id;
 

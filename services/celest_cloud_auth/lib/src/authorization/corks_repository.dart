@@ -8,6 +8,7 @@ import 'package:celest_cloud_auth/src/database/schema/cloud_auth_core.drift.dart
     as drift;
 import 'package:celest_cloud_auth/src/model/interop.dart';
 import 'package:celest_core/celest_core.dart';
+import 'package:clock/clock.dart';
 import 'package:corks_cedar/corks_cedar.dart';
 import 'package:drift/drift.dart' as drift;
 
@@ -41,7 +42,7 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
   }
 
   /// Creates a new cork for the given [user].
-  Future<Cork> createCork({
+  Future<CedarCork> createCork({
     required Session session,
     required User user,
     EntityUid? audience,
@@ -88,7 +89,7 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
         expireTime: expireTime,
       );
     });
-    return cork;
+    return CedarCork(cork);
   }
 
   /// Verifies the given [cork].
@@ -115,7 +116,7 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
         ..where((tbl) => tbl.corkId.equals(cork.id));
       await query.write(
         drift.CloudAuthCorksCompanion(
-          lastUseTime: drift.Value(DateTime.timestamp()),
+          lastUseTime: drift.Value(clock.now()),
         ),
       );
     } on Object catch (e, st) {

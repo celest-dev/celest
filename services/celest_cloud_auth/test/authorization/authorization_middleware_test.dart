@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 import '../tester.dart';
 
 void main() {
-  final tester = AuthorizationTester(persistData: true);
+  final tester = AuthorizationTester(persistData: false);
 
   group('AuthorizationMiddleware', () {
     tester.setUp();

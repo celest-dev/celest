@@ -4,6 +4,7 @@ import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
 import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
 import 'package:celest_cloud_auth/src/users/users_repository.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
+import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 
 typedef _Deps = ({
@@ -31,15 +32,18 @@ extension type SessionsRepository._(_Deps _deps) {
   CryptoKeyRepository get _cryptoKeys => _deps.cryptoKeys;
   UsersRepository get _users => _deps.users;
 
+  static const Duration preAuthSessionDuration = Duration(minutes: 15);
+  static const Duration postAuthSessionDuration = Duration(days: 30);
+
   Future<Session> createSession({
     required String? userId,
     required AuthenticationFactor factor,
     SessionClient? clientInfo,
-    DateTime? expireTime,
     String? ipAddress,
+    Duration sessionDuration = preAuthSessionDuration,
   }) {
     final sessionId = TypeId<Session>();
-    expireTime ??= DateTime.timestamp().add(const Duration(minutes: 15));
+    final expireTime = clock.now().add(sessionDuration);
     return _db.transaction(() async {
       final keyData = await _cryptoKeys.mintHmacKey(
         cryptoKeyId: sessionId.uuid.value,
@@ -61,7 +65,7 @@ extension type SessionsRepository._(_Deps _deps) {
         sessionId: sessionId.encoded,
         cryptoKeyId: keyData.cryptoKeyId,
         userId: userId!,
-        expireTime: expireTime!,
+        expireTime: expireTime,
         authenticationFactor: factor,
         clientInfo: clientInfo,
         ipAddress: ipAddress,
@@ -75,20 +79,44 @@ extension type SessionsRepository._(_Deps _deps) {
     });
   }
 
+  Future<Session?> getSession({
+    required TypeId<Session> sessionId,
+  }) async {
+    final session = await _db.cloudAuthCoreDrift
+        .getSession(sessionId: sessionId.encoded)
+        .getSingleOrNull();
+    if (session == null) {
+      return null;
+    }
+    if (session.expireTime.isBefore(clock.now())) {
+      return null;
+    }
+    return session;
+  }
+
   Future<Session> updateSession({
     required Session session,
     SessionState? state,
     String? userId,
+    Duration sessionDuration = preAuthSessionDuration,
   }) {
     return _db.transaction(() async {
-      final sessionToken = session.sessionToken;
       session = (await _db.cloudAuthCoreDrift.updateSession(
         sessionId: session.sessionId.encoded,
         state: state ?? session.state,
         userId: userId ?? session.userId,
+        expireTime: clock.now().add(sessionDuration),
       ))
           .first;
-      return session.copyWith(sessionToken: sessionToken);
+      final user = await _users.getUser(userId: session.userId);
+      if (user == null) {
+        throw InternalServerError('User not found: ${session.userId}');
+      }
+      final sessionToken = await _corks.createCork(
+        session: session,
+        user: user,
+      );
+      return session.copyWith(sessionToken: sessionToken.toString());
     });
   }
 

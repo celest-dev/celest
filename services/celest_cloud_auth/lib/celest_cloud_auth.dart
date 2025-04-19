@@ -104,6 +104,8 @@ final class CelestCloudAuth {
         issuer: context.rootEntity,
         routeMap: routeMap,
         corks: corks,
+        cryptoKeys: cryptoKeys,
+        users: users,
         db: db,
         authorizer: authorizer,
       );
@@ -162,6 +164,8 @@ final class CelestCloudAuth {
     routeMap: routeMap,
     authorizer: authorizer,
     corks: corks,
+    cryptoKeys: cryptoKeys,
+    users: users,
     db: db,
   );
 
