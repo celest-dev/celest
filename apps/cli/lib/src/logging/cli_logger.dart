@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/exceptions.dart';
 import 'package:cli_util/cli_logging.dart' as cli_logging;
 import 'package:dart_console/dart_console.dart';
 import 'package:mason_logger/mason_logger.dart' as mason_logger;
@@ -192,33 +193,41 @@ class CliLogger implements mason_logger.Logger {
   }
 
   String _readLineHiddenSync() {
-    const lineFeed = '\n';
-    const carriageReturn = '\r';
-    final value = <String>[];
-
     try {
       stdin
         ..echoMode = false
         ..lineMode = false;
-      Key key;
-      String char;
-      do {
-        key = console.readKey();
-        char = key.char;
-        if (char != lineFeed && char != carriageReturn) {
-          final shouldDelete = key.isControl &&
-              key.controlChar == ControlCharacter.delete &&
-              value.isNotEmpty;
-          shouldDelete ? value.removeLast() : value.add(char);
+
+      final value = <String>[];
+      while (true) {
+        final key = console.readKey();
+        final char = key.char;
+        if (key.isControl) {
+          switch (key.controlChar) {
+            case ControlCharacter.backspace:
+              if (value.isNotEmpty) {
+                value.removeLast();
+                stdout.write('\b \b');
+              }
+            case ControlCharacter.enter:
+              return value.join();
+            case ControlCharacter.escape:
+              return '';
+            case ControlCharacter.ctrlC || ControlCharacter.ctrlD:
+              throw const CancellationException('Cancelled input');
+            default:
+              break;
+          }
+        } else {
+          stdout.write('*');
+          value.add(char);
         }
-      } while (char != lineFeed && char != carriageReturn);
+      }
     } finally {
       stdin
         ..lineMode = true
         ..echoMode = true;
     }
-    stdout.writeln();
-    return value.join();
   }
 }
 

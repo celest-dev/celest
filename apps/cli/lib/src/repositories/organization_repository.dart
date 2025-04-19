@@ -1,11 +1,7 @@
 import 'package:celest_cloud/celest_cloud.dart' as cloud;
 import 'package:logging/logging.dart';
 
-final class OrganizationRepository {
-  OrganizationRepository(this._cloud);
-
-  final cloud.CelestCloud _cloud;
-
+extension type OrganizationRepository(cloud.CelestCloud _cloud) {
   static final _logger = Logger('OrganizationRepository');
 
   Future<cloud.Organization?> get(String organizationIdOrAlias) async {
