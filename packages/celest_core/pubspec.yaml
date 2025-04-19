@@ -1,6 +1,6 @@
 name: celest_core
 description: Celest types and utilities shared between the client and the cloud.
-version: 1.0.2
+version: 1.0.3-wip
 homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/packages/celest_core
 
@@ -25,7 +25,7 @@ dependencies:
   protobuf: ^3.0.0
   stream_channel: ^2.1.2
   web: ^1.0.0
-  web_socket: ^0.1.0
+  web_socket: '>=0.1.6 <2.0.0'
   web_socket_channel: ^3.0.0
 
 dev_dependencies:
