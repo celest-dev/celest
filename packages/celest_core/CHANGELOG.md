@@ -1,3 +1,7 @@
+## 1.0.3-wip
+
+- chore: Update dependencies
+
 ## 1.0.2
 
 - chore: Update license
