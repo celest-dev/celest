@@ -247,6 +247,30 @@ final _testCases = <_TestCase>[
     ],
   ),
   (
+    route: '/v1alpha1/{name=organizations/*/projects/*}',
+    expectedSegments: [
+      RouteLiteral('v1alpha1'),
+      RouteParameter(
+        variable: 'name',
+        segments: [
+          RouteLiteral('organizations'),
+          RouteWildcard(greedy: false),
+          RouteLiteral('projects'),
+          RouteWildcard(greedy: false),
+        ],
+      ),
+    ],
+    expectedVerb: null,
+    matchTests: [
+      (
+        route: '/v1alpha1/organizations/org_1234/projects/my-project',
+        expected: {
+          'name': 'organizations/org_1234/projects/my-project',
+        },
+      ),
+    ],
+  ),
+  (
     route: '/v1alpha1/auth/{name=organizations/*/users/*}',
     expectedSegments: [
       RouteLiteral('v1alpha1'),
