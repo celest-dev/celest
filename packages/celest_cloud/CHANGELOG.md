@@ -1,4 +1,4 @@
-# 0.1.7-wip
+# 0.1.7
 
 - feat: Add `ProjectAsset.FLUTTER_ASSETS`
 
