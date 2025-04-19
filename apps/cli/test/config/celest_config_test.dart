@@ -9,21 +9,41 @@ void main() {
   group('CelestConfig', () {
     setUp(initTests);
 
-    test('migrates to local storage', () async {
+    test('delete clears all storage interfaces', () async {
       ctx.fileSystem = MemoryFileSystem.test();
-      final configHome = ctx.fileSystem.systemTempDirectory.childDirectory(
-        'config',
-      )..createSync(recursive: true);
-
-      final configJson = configHome.childFile('config.json');
-      configJson.writeAsStringSync('{"organization_id": "org-id"}');
       await init(
         projectRoot: ctx.fileSystem.systemTempDirectory.path,
-        configHome: configHome.path,
       );
 
-      expect(await celestProject.config.settings.getOrganizationId(), 'org-id');
-      expect(await configJson.exists(), isFalse);
+      expect(
+        await celestProject.config.secureSettings.getOrganizationId(),
+        isNull,
+      );
+      await celestProject.config.secureSettings.setOrganizationId('org-id');
+      expect(
+        await celestProject.config.secureSettings.getOrganizationId(),
+        'org-id',
+      );
+
+      expect(
+        celestProject.config.settings.pubCacheFixDigest,
+        isNull,
+      );
+      celestProject.config.settings.pubCacheFixDigest = 'digest';
+      expect(
+        celestProject.config.settings.pubCacheFixDigest,
+        'digest',
+      );
+
+      await celestProject.config.delete();
+      expect(
+        await celestProject.config.secureSettings.getOrganizationId(),
+        isNull,
+      );
+      expect(
+        celestProject.config.settings.pubCacheFixDigest,
+        isNull,
+      );
     });
   });
 }

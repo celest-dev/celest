@@ -31,13 +31,15 @@ void main() {
       ctx.fileSystem = MemoryFileSystem.test();
       await init(projectRoot: ctx.fileSystem.systemTempDirectory.path);
 
-      await celestProject.config.settings.setOrganizationId('org-id');
+      await celestProject.config.secureSettings.setOrganizationId('org-id');
 
-      expect(await celestProject.config.settings.getOrganizationId(), 'org-id');
+      expect(await celestProject.config.secureSettings.getOrganizationId(),
+          'org-id');
 
       await const CelestUninstaller().uninstall();
 
-      expect(await celestProject.config.settings.getOrganizationId(), isNull);
+      expect(await celestProject.config.secureSettings.getOrganizationId(),
+          isNull);
     });
 
     group('uninstall AOT', () {

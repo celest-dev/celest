@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:async/async.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/pub/project_dependency.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/utils/process.dart';
 import 'package:collection/collection.dart';
+import 'package:crypto/crypto.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
@@ -22,12 +25,19 @@ final class PubCache {
     // This is the only syntax that reliably works with both dart/flutter
     'native_storage': '>=0.2.2 <1.0.0',
     'native_authentication': '>=0.1.0 <1.0.0',
-    'jni': '>=0.11.0 <1.0.0',
+    'jni': '>=0.14.0 <0.15.0',
     'celest_auth': '>=$currentMinorVersion <2.0.0',
     'celest': '>=$currentMinorVersion <2.0.0',
     'celest_core': '>=$currentMinorVersion <2.0.0',
-    'objective_c': '>=2.0.0 <8.0.0',
+    'objective_c': '>=7.0.0 <8.0.0',
   };
+
+  /// MD5 hash of the [packagesToFix] map.
+  static final String packagesToFixDigest = () {
+    final pubCacheFixJson = JsonUtf8Encoder().convert(PubCache.packagesToFix);
+    return md5.convert(pubCacheFixJson).toString();
+  }();
+
   static final _logger = Logger('PubCache');
 
   String? _cachePath;
@@ -96,44 +106,66 @@ final class PubCache {
   /// Runs `pub cache add` for each package in [packagesToFix].
   ///
   /// Returns the exit codes and output for each package.
-  Future<List<(int, String)>> hydrate() async {
-    final results = <(int, String)>[];
-    for (final package in packagesToFix.entries) {
-      // Run serially to avoid flutter lock
-      final result = await processManager.start(runInShell: true, [
-        Sdk.current.sdkType.name,
+  Future<Result<void>> hydrate() async {
+    Future<void> hydratePackage(String name, String constraint) async {
+      final command = [
+        Sdk.current.dart,
         'pub',
         'cache',
         'add',
-        package.key,
+        name,
         '--version',
-        package.value,
+        constraint,
         '--all',
-      ]).then((process) async {
-        final combinedOutput = StringBuffer();
-        process.captureStdout(
-          sink: (line) {
-            _logger.finest(line);
-            combinedOutput.writeln(line);
-          },
+      ];
+      final process = await processManager.start(command, runInShell: true);
+      final combinedOutput = StringBuffer();
+      process.captureStdout(
+        sink: (line) {
+          _logger.finest(line);
+          combinedOutput.writeln(line);
+        },
+      );
+      process.captureStderr(
+        sink: (line) {
+          _logger.finest(line);
+          combinedOutput.writeln(line);
+        },
+      );
+      if (await process.exitCode case final exitCode && != 0) {
+        throw ProcessException(
+          command.first,
+          command.sublist(1),
+          combinedOutput.toString(),
+          exitCode,
         );
-        process.captureStderr(
-          sink: (line) {
-            _logger.finest(line);
-            combinedOutput.writeln(line);
-          },
-        );
-        return (await process.exitCode, combinedOutput.toString());
-      });
-      results.add(result);
+      }
     }
-    return results;
+
+    final hydrations = <Future<void>>[];
+    for (final package in packagesToFix.entries) {
+      hydrations.add(hydratePackage(package.key, package.value));
+    }
+    final results = await Result.captureAll(hydrations);
+
+    var failed = false;
+    final errors = <Object>[];
+    for (final result in results) {
+      if (result.isError) {
+        failed = true;
+        errors.add(result.asError!.error);
+      }
+    }
+    if (failed) {
+      return Result.error(ParallelWaitError(<Object?>[], errors));
+    }
+    return Result.value(null);
   }
 
   /// Fixes the pubspec for each package in [packagesToFix].
   ///
   /// Returns the number of packages fixed.
-  Future<int> fix({@visibleForTesting bool throwOnError = false}) async {
+  Future<int> fix({bool throwOnError = false}) async {
     final cachePath = _cachePath ??= findCachePath();
     if (cachePath == null) {
       if (throwOnError) {
