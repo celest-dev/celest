@@ -230,7 +230,7 @@
   "secrets": [],
   "databases": {},
   "sdkConfig": {
-    "celest": "1.0.10+1",
+    "celest": "1.0.10+2",
     "dart": {
       "type": "dart",
       "version": "3.7.2",

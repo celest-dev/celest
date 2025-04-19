@@ -5,12 +5,17 @@ import 'package:celest_cli/src/commands/organizations/organizations_command.dart
 import 'package:celest_cli/src/commands/project_environments/project_environments_command.dart';
 import 'package:celest_cli/src/commands/projects/projects_command.dart';
 import 'package:celest_cli/src/commands/status_command.dart';
+import 'package:celest_cli/src/performance/sentry_perf.dart';
 
 void main(List<String> args) async {
   final cli = Cli(
     'celest',
     'A command-line interface for Celest, the Flutter cloud platform.',
     version: packageVersion,
+    sentryConfig: SentryConfig(
+      dsn:
+          'https://aa63419b83419820da1454809c0025db@o4506345201532928.ingest.us.sentry.io/4506496721158144',
+    ),
   )
     ..addCommand(InitCommand())
     ..addCommand(StartCommand())

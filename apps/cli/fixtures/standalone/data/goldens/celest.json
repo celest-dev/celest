@@ -204,7 +204,7 @@
       "build": [
         1.0
       ],
-      "canonicalizedVersion": "1.0.10+1"
+      "canonicalizedVersion": "1.0.10+2"
     },
     "dart": {
       "type": "DART",

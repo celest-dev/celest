@@ -1,3 +1,7 @@
+## 1.0.10+2
+
+- chore: Add back Sentry integration
+
 ## 1.0.10+1
 
 - fix: Handle control characters when prompting for secrets
