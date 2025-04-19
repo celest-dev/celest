@@ -1,3 +1,7 @@
+## 0.3.1
+
+- fix: Allow dashes in routes
+
 ## 0.3.0
 
 - feat!: Make database modular

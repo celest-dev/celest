@@ -210,14 +210,19 @@ final class RouteWildcard extends RouteSegment {
   /// Not a standard, but a generally accepted upper bound on reasonable URLs.
   static const int _maxUrlLength = 2048;
 
+  /// Allowed characters in a URL path segment.
+  // TODO(dnys1): Handle percent-encoded characters.
+  // https://github.com/googleapis/googleapis/blob/master/google/api/http.proto#L241
+  static final Parser<String> _validChar = pattern('-_.~0-9a-zA-Z');
+
   late final Parser<String> _parser = greedy
       // The syntax `**` matches zero or more URL path segments
-      ? (word() | char('/'))
+      ? (_validChar | char('/'))
           .repeatLazy(endOfInput(), 0, _maxUrlLength)
           .flatten('**')
 
       // The syntax `*` matches a single URL path segment.
-      : word().plus().flatten('*');
+      : _validChar.plus().flatten('*');
 
   @override
   Result<String> parseOn(Context context) {
