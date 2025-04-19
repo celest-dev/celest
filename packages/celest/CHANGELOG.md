@@ -1,6 +1,7 @@
-## 1.0.5-wip
+## 1.0.5
 
 - chore: Remove GCP mentions
+- chore: Update analyzer plugin to v2 model
 
 ## 1.0.4
 
