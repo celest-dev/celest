@@ -5,6 +5,7 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:archive/archive_io.dart';
 import 'package:celest_ast/celest_ast.dart'
     show ResolvedCelestDatabaseConfig, ResolvedProject;
 import 'package:celest_cli/src/codegen/api/dockerfile_generator.dart';
@@ -33,6 +34,7 @@ final class FlyDeploymentEngine {
     required String flyApiToken,
     required this.projectAst,
     required this.kernelAsset,
+    required this.flutterAssetsBundle,
     required this.environment,
   }) : flyApi = FlyMachinesApiClient(authToken: flyApiToken),
        _flyApiToken = flyApiToken;
@@ -44,6 +46,7 @@ final class FlyDeploymentEngine {
   final ProjectEnvironment environment;
   final ResolvedProject projectAst;
   final Uint8List kernelAsset;
+  final Uint8List? flutterAssetsBundle;
 
   static Future<void> deployIsolated({
     required String operationId,
@@ -52,6 +55,7 @@ final class FlyDeploymentEngine {
     required ResolvedProject projectAst,
     required ProjectEnvironment environment,
     required Uint8List kernelAsset,
+    required Uint8List? flutterAssetsBundle,
   }) async {
     await Isolate.run(() async {
       Logger.root.level = Level.ALL;
@@ -79,6 +83,7 @@ final class FlyDeploymentEngine {
         flyApiToken: flyApiToken,
         projectAst: projectAst,
         kernelAsset: kernelAsset,
+        flutterAssetsBundle: flutterAssetsBundle,
         environment: environment,
       );
       try {
@@ -252,6 +257,16 @@ final class FlyDeploymentEngine {
       // Write the kernel file to disk
       final kernelFile = dir.childFile('main.aot.dill');
       await kernelFile.writeAsBytes(kernelAsset);
+
+      if (flutterAssetsBundle != null) {
+        // Write the Flutter assets bundle to disk
+        final flutterAssetsFile = dir.childFile('flutter_assets.tar.gz');
+        await flutterAssetsFile.writeAsBytes(flutterAssetsBundle!);
+        await extractFileToDisk(
+          flutterAssetsFile.path,
+          dir.childDirectory('flutter_assets').path,
+        );
+      }
 
       // Write celest.json to disk
       final celestJsonFile = dir.childFile('celest.json');

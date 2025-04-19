@@ -111,6 +111,7 @@ Future<void> main() async {
       ),
     ),
     kernelAsset: bytes,
+    flutterAssetsBundle: null,
     environment: environment,
   );
 

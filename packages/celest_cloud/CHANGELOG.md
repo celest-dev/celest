@@ -1,3 +1,7 @@
+# 0.1.7-wip
+
+- feat: Add `ProjectAsset.FLUTTER_ASSETS`
+
 # 0.1.6
 
 - feat: Add `ProjectEnvironment.uri` field
