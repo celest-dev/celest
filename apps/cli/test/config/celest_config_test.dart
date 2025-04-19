@@ -22,7 +22,8 @@ void main() {
         configHome: configHome.path,
       );
 
-      expect(await celestProject.config.settings.getOrganizationId(), 'org-id');
+      expect(await celestProject.config.secureSettings.getOrganizationId(),
+          'org-id');
       expect(await configJson.exists(), isFalse);
     });
   });

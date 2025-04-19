@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:async/async.dart';
 import 'package:celest_cli/src/commands/celest_command.dart';
 import 'package:celest_cli/src/commands/init_command.dart';
 import 'package:celest_cli/src/commands/start_command.dart';
@@ -11,6 +12,7 @@ import 'package:celest_cli/src/init/project_migrate.dart';
 import 'package:celest_cli/src/init/templates/project_template.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/pub/pub_action.dart';
+import 'package:celest_cli/src/pub/pub_cache.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/recase.dart';
@@ -150,6 +152,8 @@ base mixin Configure on CelestCommand {
 
     yield const Initializing();
     await init(projectRoot: projectRoot, parentProject: parentProject);
+    await _fixPubCacheIfNeeded();
+    logger.finest('Celest project initialized');
 
     var needsAnalyzerMigration = false;
     Future<void>? upgradePackages;
@@ -314,6 +318,33 @@ base mixin Configure on CelestCommand {
       isExistingProject,
       parentProject
     );
+  }
+
+  /// Fixes the pub cache if needed.
+  Future<void> _fixPubCacheIfNeeded() async {
+    final pubCacheFixDigest = PubCache.packagesToFixDigest;
+    final previousDigest = celestProject.config.settings.pubCacheFixDigest;
+    if (pubCacheFixDigest != previousDigest) {
+      logger.finest('Hydrating pub cache...');
+      final result = await pubCache.hydrate();
+      if (result case ErrorResult(:final error)) {
+        logger.finest('Failed to hydrate pub cache', error);
+        performance.captureError(error, stackTrace: StackTrace.current);
+        return;
+      }
+      logger.finest('Fixing pub cache...');
+      try {
+        await pubCache.fix(throwOnError: true);
+      } on Object catch (e, st) {
+        logger.finest('Failed to fix pub cache', e, st);
+        performance.captureError(e, stackTrace: st);
+        return;
+      }
+      logger.finest('Pub cache fixed.');
+      celestProject.config.settings.pubCacheFixDigest = pubCacheFixDigest;
+    } else {
+      logger.finest('Skipping pub cache fix, already up-to-date.');
+    }
   }
 
   // TODO(dnys1): Improve logic here so that we don't run pub upgrade if
