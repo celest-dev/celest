@@ -117,7 +117,7 @@ RUN CFLAGS='-DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_JSON1' \
     && make install DESTDIR=/sqlite_install
 
 # Copy just the parts of the Dart SDK we need to build an AOT snapshot
-FROM gcr.io/distroless/static-debian${DEBIAN_VERSION}:nonroot AS builder
+FROM gcr.io/distroless/static-debian${DEBIAN_VERSION} AS builder
 
 COPY --from=sdk /runtime/ /
 COPY --from=sdk /usr/lib/dart/bin/utils/gen_snapshot /usr/lib/dart/bin/utils/gen_snapshot
@@ -127,7 +127,7 @@ ENTRYPOINT ["/usr/lib/dart/bin/utils/gen_snapshot", "--snapshot_kind=app-aot-elf
 CMD ["--elf=/app/main.aot", "/app/main.aot.dill"]
 
 # Copy the Dart runtime and AOT runtime into a minimal runtime image
-FROM gcr.io/distroless/static-debian${DEBIAN_VERSION}:nonroot AS runtime
+FROM gcr.io/distroless/base-debian${DEBIAN_VERSION} AS runtime
 
 COPY --from=dart /runtime/ /
 COPY --from=dart /usr/lib/dart/bin/dartaotruntime /usr/lib/dart/bin/dartaotruntime

@@ -182,4 +182,5 @@ Future<void> _run() async {
   await gateway.close();
   await db.close();
   context.logger.fine('Server stopped');
+  exit(0);
 }

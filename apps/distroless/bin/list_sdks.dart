@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:distroless/src/sdk/sdk_manager.dart';
 import 'package:pub_semver/pub_semver.dart';
 
-final Version minDartSdkVersion = Version(3, 5, 0);
+final Version minDartSdkVersion = Version(3, 7, 0);
 final Version minFlutterSdkVersion = Version(3, 29, 0);
 
 /// The last version of Flutter published under the old engine repo.
