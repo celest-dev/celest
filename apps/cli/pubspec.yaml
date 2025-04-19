@@ -1,6 +1,6 @@
 name: celest_cli
 description: The command-line interface for Celest.
-version: 1.0.10
+version: 1.0.10+1
 homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/apps/cli
 

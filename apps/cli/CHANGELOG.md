@@ -1,7 +1,6 @@
-## 1.0.11-wip
+## 1.0.10+1
 
 - fix: Handle control characters when prompting for secrets
-- 
 
 ## 1.0.10
 

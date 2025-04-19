@@ -220,7 +220,7 @@
       "major": 1,
       "minor": 0,
       "patch": 9,
-      "canonicalizedVersion": "1.0.10"
+      "canonicalizedVersion": "1.0.10+1"
     },
     "dart": {
       "type": "DART",
