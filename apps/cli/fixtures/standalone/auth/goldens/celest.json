@@ -593,7 +593,7 @@
         "databaseSchemaId": "CloudAuthDatabase",
         "type": "DRIFT",
         "drift": {
-          "version": 4,
+          "version": 5,
           "schemaJson": {}
         }
       },
@@ -613,8 +613,11 @@
     "celest": {
       "major": 1,
       "minor": 0,
-      "patch": 9,
-      "canonicalizedVersion": "1.0.10+2"
+      "patch": 10,
+      "build": [
+        3.0
+      ],
+      "canonicalizedVersion": "1.0.10+3"
     },
     "dart": {
       "type": "DART",

@@ -202,9 +202,9 @@
       "minor": 0,
       "patch": 10,
       "build": [
-        1.0
+        3.0
       ],
-      "canonicalizedVersion": "1.0.10+2"
+      "canonicalizedVersion": "1.0.10+3"
     },
     "dart": {
       "type": "DART",
