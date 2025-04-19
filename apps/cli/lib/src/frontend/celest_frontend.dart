@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:io' as io show Platform;
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
+import 'package:archive/archive_io.dart';
 import 'package:async/async.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_ast/celest_ast.dart' hide Sdk;
@@ -741,6 +743,7 @@ final class CelestFrontend {
             });
             final (deployedProject, baseUri) = await _deployProject(
               environmentName: environment.name,
+              environmentId: environment.projectEnvironmentId,
               resolvedProject: resolvedProject,
             );
             await _generateClientCode(
@@ -994,31 +997,59 @@ final class CelestFrontend {
     return cloudEnvironment;
   }
 
+  Future<Uint8List> _tarGzDirectory(String path) async {
+    final encoder = TarFileEncoder();
+    final tarFile = fileSystem.file(
+      p.join(projectPaths.projectCacheDir, '${p.basename(path)}.tar'),
+    );
+    await encoder.tarDirectory(
+      fileSystem.directory(path),
+      followLinks: false,
+      filename: tarFile.path,
+    );
+    final tarStream = tarFile.openRead();
+    return collectBytes(tarStream.transform(gzip.encoder));
+  }
+
   Future<(ast.ResolvedProject, Uri)> _deployProject({
     required String environmentName,
+    required String environmentId,
     required ast.ResolvedProject resolvedProject,
   }) =>
       performance.trace('CelestFrontend', 'deployProject', () async {
-        final entrypointCompiler = EntrypointCompiler(
-          logger: logger,
-          verbose: verbose,
-          enabledExperiments: celestProject.analysisOptions.enabledExperiments,
-        );
-        final kernel = await entrypointCompiler.compile(
+        await _writeProjectOutputs(
           resolvedProject: resolvedProject,
-          entrypointPath: projectPaths.localApiEntrypoint,
+          environmentId: environmentId,
         );
+        final (kernelBytes, flutterAssetBytes) = await (
+          fileSystem
+              .directory(projectPaths.buildDir)
+              .childFile('main.aot.dill')
+              .readAsBytes(),
+          switch (resolvedProject.sdkConfig.targetSdk) {
+            ast.SdkType.flutter => _tarGzDirectory(
+                p.join(projectPaths.buildDir, 'flutter_assets'),
+              ),
+            _ => Future.value(Uint8List(0)),
+          },
+        ).wait;
+        final assets = [
+          pb.ProjectAsset(
+            type: pb.ProjectAsset_Type.DART_KERNEL,
+            filename: 'main.aot.dill',
+            inline: kernelBytes,
+          ),
+          if (resolvedProject.sdkConfig.targetSdk == ast.SdkType.flutter)
+            pb.ProjectAsset(
+              type: pb.ProjectAsset_Type.FLUTTER_ASSETS,
+              filename: 'flutter_assets.tar.gz',
+              inline: flutterAssetBytes,
+            ),
+        ];
         final operation = cloud.projects.environments.deploy(
           environmentName,
           resolvedProject: resolvedProject.toProto(),
-          assets: [
-            pb.ProjectAsset(
-              type: pb.ProjectAsset_Type.DART_KERNEL,
-              etag: kernel.outputDillDigest.toString(),
-              filename: p.basename(kernel.outputDillPath),
-              inline: kernel.outputDill,
-            ),
-          ],
+          assets: assets,
         );
         final waiter = CloudCliOperation(
           operation,

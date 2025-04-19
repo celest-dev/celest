@@ -27,7 +27,7 @@ enum CelestEnvironment {
         local => _$celest.kIsWeb || !Platform.isAndroid
             ? Uri.parse('http://localhost:7777')
             : Uri.parse('http://10.0.2.2:7777'),
-        production => Uri.parse('https://example.celest.run'),
+        production => Uri.parse('https://flutter-7a0b5b.fly.dev'),
       };
 }
 

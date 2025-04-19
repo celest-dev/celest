@@ -8,6 +8,7 @@ environment:
 resolution: workspace
 
 dependencies:
+  archive: ^4.0.6
   async: ^2.13.0
   cedar: ^0.2.4
   celest: ^1.0.0

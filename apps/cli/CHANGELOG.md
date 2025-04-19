@@ -1,3 +1,7 @@
+## NEXT
+
+- fix: Pass `flutter_assets` to backend when using `celest deploy`
+
 ## 1.0.10+2
 
 - chore: Add back Sentry integration
