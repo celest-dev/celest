@@ -40,7 +40,7 @@ extension ResponseHelpers on Response {
   }
 
   /// Adds a `Set-Cookie` header with the given [cork].
-  Response setCork(Cork cork) {
+  Response setCork(CedarCork cork) {
     return setCookie(Corkie.set(cork));
   }
 

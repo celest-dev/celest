@@ -1904,10 +1904,493 @@ final class Schema4 extends i0.VersionedSchema {
       alias: null);
 }
 
+final class Schema5 extends i0.VersionedSchema {
+  Schema5({required super.database}) : super(version: 5);
+  @override
+  late final List<i1.DatabaseSchemaEntity> entities = [
+    cloudAuthUsers,
+    cedarTypes,
+    cedarEntities,
+    cloudAuthUsersCreateTrg,
+    cedarRelationships,
+    cloudAuthUsersDeleteTrg,
+    cloudAuthUserEmails,
+    cloudAuthUserPhoneNumbers,
+    cloudAuthProjects,
+    cloudAuthApis,
+    cloudAuthApisProjectIdx,
+    cloudAuthApisCreateTrg,
+    cloudAuthApisDeleteTrg,
+    cloudAuthFunctions,
+    cloudAuthFunctionsApiIdx,
+    cloudAuthFunctionsCreateTrg,
+    cloudAuthFunctionsDeleteTrg,
+    cloudAuthMeta,
+    cloudAuthCryptoKeys,
+    cloudAuthCryptoKeysExternalCryptoKeyIdIdx,
+    cloudAuthSessions,
+    cloudAuthSessionsUserIdx,
+    cloudAuthSessionsCryptoKeyIdx,
+    cloudAuthSessionsExternalSessionIdIdx,
+    cloudAuthSessionsUpdateTimeTrg,
+    cloudAuthOtpCodes,
+    cloudAuthOtpCodesSessionIdIdx,
+    cloudAuthCorks,
+    cloudAuthCorksCryptoKeyIdx,
+    cloudAuthCorksBearerIdx,
+    cloudAuthCorksAudienceIdx,
+    cloudAuthCorksIssuerIdx,
+    cedarRelationshipsFkEntityIdx,
+    cedarRelationshipsFkParentIdx,
+    cedarPolicies,
+    cedarPolicyTemplates,
+    cedarPolicyTemplateLinks,
+    cedarPolicyTemplateLinksFkTemplateIdIdx,
+    cedarPolicyTemplateLinksFkPrincipalIdx,
+    cedarPolicyTemplateLinksFkResourceIdx,
+    cedarAuthorizationLogs,
+  ];
+  late final Shape0 cloudAuthUsers = Shape0(
+      source: i0.VersionedTable(
+        entityName: 'cloud_auth_users',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_1,
+          _column_2,
+          _column_3,
+          _column_4,
+          _column_5,
+          _column_6,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape1 cedarTypes = Shape1(
+      source: i0.VersionedTable(
+        entityName: 'cedar_types',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_7,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape2 cedarEntities = Shape2(
+      source: i0.VersionedTable(
+        entityName: 'cedar_entities',
+        withoutRowId: true,
+        isStrict: false,
+        tableConstraints: [
+          'CONSTRAINT cedar_entities_pk PRIMARY KEY(entity_type, entity_id)ON CONFLICT IGNORE',
+        ],
+        columns: [
+          _column_8,
+          _column_9,
+          _column_10,
+          _column_11,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  final i1.Trigger cloudAuthUsersCreateTrg = i1.Trigger(
+      'CREATE TRIGGER IF NOT EXISTS cloud_auth_users_create_trg BEFORE INSERT ON cloud_auth_users BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::User\', NEW.user_id);END',
+      'cloud_auth_users_create_trg');
+  late final Shape3 cedarRelationships = Shape3(
+      source: i0.VersionedTable(
+        entityName: 'cedar_relationships',
+        withoutRowId: true,
+        isStrict: false,
+        tableConstraints: [
+          'CONSTRAINT cedar_relationships_pk PRIMARY KEY(entity_type, entity_id, parent_type, parent_id)ON CONFLICT IGNORE',
+          'CONSTRAINT cedar_relationships_fk_entity FOREIGN KEY(entity_type, entity_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE',
+          'CONSTRAINT cedar_relationships_fk_parent FOREIGN KEY(parent_type, parent_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE',
+        ],
+        columns: [
+          _column_12,
+          _column_9,
+          _column_11,
+          _column_13,
+          _column_14,
+          _column_15,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  final i1.Trigger cloudAuthUsersDeleteTrg = i1.Trigger(
+      'CREATE TRIGGER IF NOT EXISTS cloud_auth_users_delete_trg AFTER DELETE ON cloud_auth_users BEGIN DELETE FROM cedar_relationships WHERE(entity_type = \'Celest::User\' AND entity_id = OLD.user_id)OR(parent_type = \'Celest::User\' AND parent_id = OLD.user_id);DELETE FROM cedar_entities WHERE entity_id = OLD.user_id AND entity_type = \'Celest::User\';END',
+      'cloud_auth_users_delete_trg');
+  late final Shape4 cloudAuthUserEmails = Shape4(
+      source: i0.VersionedTable(
+        entityName: 'cloud_auth_user_emails',
+        withoutRowId: true,
+        isStrict: false,
+        tableConstraints: [
+          'CONSTRAINT cloud_auth_user_emails_pk PRIMARY KEY(user_id, email)',
+          'CONSTRAINT cloud_auth_user_emails_user_fk FOREIGN KEY(user_id)REFERENCES cloud_auth_users(user_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+        ],
+        columns: [
+          _column_16,
+          _column_17,
+          _column_18,
+          _column_19,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape5 cloudAuthUserPhoneNumbers = Shape5(
+      source: i0.VersionedTable(
+        entityName: 'cloud_auth_user_phone_numbers',
+        withoutRowId: true,
+        isStrict: false,
+        tableConstraints: [
+          'CONSTRAINT cloud_auth_user_phone_numbers_pk PRIMARY KEY(user_id, phone_number)',
+          'CONSTRAINT cloud_auth_user_phone_numbers_user_fk FOREIGN KEY(user_id)REFERENCES cloud_auth_users(user_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+        ],
+        columns: [
+          _column_16,
+          _column_20,
+          _column_18,
+          _column_19,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape6 cloudAuthProjects = Shape6(
+      source: i0.VersionedTable(
+        entityName: 'cloud_auth_projects',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_21,
+          _column_22,
+          _column_23,
+          _column_24,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape7 cloudAuthApis = Shape7(
+      source: i0.VersionedTable(
+        entityName: 'cloud_auth_apis',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [
+          'CONSTRAINT cloud_auth_apis_project_fk FOREIGN KEY(project_id)REFERENCES cloud_auth_projects(project_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+        ],
+        columns: [
+          _column_25,
+          _column_26,
+          _column_23,
+          _column_24,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  final i1.Index cloudAuthApisProjectIdx = i1.Index(
+      'cloud_auth_apis_project_idx',
+      'CREATE INDEX IF NOT EXISTS cloud_auth_apis_project_idx ON cloud_auth_apis (project_id)');
+  final i1.Trigger cloudAuthApisCreateTrg = i1.Trigger(
+      'CREATE TRIGGER IF NOT EXISTS cloud_auth_apis_create_trg BEFORE INSERT ON cloud_auth_apis BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::Api\', NEW.api_id);END',
+      'cloud_auth_apis_create_trg');
+  final i1.Trigger cloudAuthApisDeleteTrg = i1.Trigger(
+      'CREATE TRIGGER IF NOT EXISTS cloud_auth_apis_delete_trg AFTER DELETE ON cloud_auth_apis BEGIN DELETE FROM cedar_relationships WHERE entity_type = \'Celest::Api\' AND entity_id = OLD.api_id;DELETE FROM cedar_relationships WHERE parent_type = \'Celest::Api\' AND parent_id = OLD.api_id;DELETE FROM cedar_entities WHERE entity_type = \'Celest::Api\' AND entity_id = OLD.api_id;END',
+      'cloud_auth_apis_delete_trg');
+  late final Shape8 cloudAuthFunctions = Shape8(
+      source: i0.VersionedTable(
+        entityName: 'cloud_auth_functions',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [
+          'CONSTRAINT cloud_auth_functions_api_fk FOREIGN KEY(api_id)REFERENCES cloud_auth_apis(api_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+        ],
+        columns: [
+          _column_27,
+          _column_28,
+          _column_23,
+          _column_24,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  final i1.Index cloudAuthFunctionsApiIdx = i1.Index(
+      'cloud_auth_functions_api_idx',
+      'CREATE INDEX IF NOT EXISTS cloud_auth_functions_api_idx ON cloud_auth_functions (api_id)');
+  final i1.Trigger cloudAuthFunctionsCreateTrg = i1.Trigger(
+      'CREATE TRIGGER IF NOT EXISTS cloud_auth_functions_create_trg BEFORE INSERT ON cloud_auth_functions BEGIN INSERT INTO cedar_entities (entity_type, entity_id) VALUES (\'Celest::Function\', NEW.function_id);INSERT INTO cedar_relationships (entity_type, entity_id, parent_type, parent_id) VALUES (\'Celest::Function\', NEW.function_id, \'Celest::Api\', NEW.api_id);END',
+      'cloud_auth_functions_create_trg');
+  final i1.Trigger cloudAuthFunctionsDeleteTrg = i1.Trigger(
+      'CREATE TRIGGER IF NOT EXISTS cloud_auth_functions_delete_trg AFTER DELETE ON cloud_auth_functions BEGIN DELETE FROM cedar_relationships WHERE entity_type = \'Celest::Function\' AND entity_id = OLD.function_id;DELETE FROM cedar_relationships WHERE parent_type = \'Celest::Function\' AND parent_id = OLD.function_id;DELETE FROM cedar_entities WHERE entity_type = \'Celest::Function\' AND entity_id = OLD.function_id;END',
+      'cloud_auth_functions_delete_trg');
+  late final Shape17 cloudAuthMeta = Shape17(
+      source: i0.VersionedTable(
+        entityName: 'cloud_auth_meta',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_75,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape13 cloudAuthCryptoKeys = Shape13(
+      source: i0.VersionedTable(
+        entityName: 'cloud_auth_crypto_keys',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [
+          'CHECK(key_material IS NOT NULL OR external_crypto_key_id IS NOT NULL)',
+        ],
+        columns: [
+          _column_49,
+          _column_50,
+          _column_51,
+          _column_52,
+          _column_53,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  final i1.Index cloudAuthCryptoKeysExternalCryptoKeyIdIdx = i1.Index(
+      'cloud_auth_crypto_keys_external_crypto_key_id_idx',
+      'CREATE INDEX IF NOT EXISTS cloud_auth_crypto_keys_external_crypto_key_id_idx ON cloud_auth_crypto_keys (external_crypto_key_id)');
+  late final Shape18 cloudAuthSessions = Shape18(
+      source: i0.VersionedTable(
+        entityName: 'cloud_auth_sessions',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [
+          'CONSTRAINT cloud_auth_sessions_user_fk FOREIGN KEY(user_id)REFERENCES cloud_auth_users(user_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+          'CONSTRAINT cloud_auth_sessions_key_fk FOREIGN KEY(crypto_key_id)REFERENCES cloud_auth_crypto_keys(crypto_key_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+        ],
+        columns: [
+          _column_40,
+          _column_54,
+          _column_55,
+          _column_16,
+          _column_56,
+          _column_57,
+          _column_58,
+          _column_59,
+          _column_60,
+          _column_5,
+          _column_6,
+          _column_61,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  final i1.Index cloudAuthSessionsUserIdx = i1.Index(
+      'cloud_auth_sessions_user_idx',
+      'CREATE INDEX IF NOT EXISTS cloud_auth_sessions_user_idx ON cloud_auth_sessions (user_id)');
+  final i1.Index cloudAuthSessionsCryptoKeyIdx = i1.Index(
+      'cloud_auth_sessions_crypto_key_idx',
+      'CREATE INDEX IF NOT EXISTS cloud_auth_sessions_crypto_key_idx ON cloud_auth_sessions (crypto_key_id)');
+  final i1.Index cloudAuthSessionsExternalSessionIdIdx = i1.Index(
+      'cloud_auth_sessions_external_session_id_idx',
+      'CREATE INDEX IF NOT EXISTS cloud_auth_sessions_external_session_id_idx ON cloud_auth_sessions (external_session_id)');
+  final i1.Trigger cloudAuthSessionsUpdateTimeTrg = i1.Trigger(
+      'CREATE TRIGGER IF NOT EXISTS cloud_auth_sessions_update_time_trg AFTER UPDATE ON cloud_auth_sessions BEGIN UPDATE cloud_auth_sessions SET update_time = unixepoch(\'now\', \'subsec\') WHERE "rowid" = OLD."rowid";END',
+      'cloud_auth_sessions_update_time_trg');
+  late final Shape15 cloudAuthOtpCodes = Shape15(
+      source: i0.VersionedTable(
+        entityName: 'cloud_auth_otp_codes',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [
+          'CONSTRAINT cloud_auth_otp_codes_session_id_fk FOREIGN KEY(session_id)REFERENCES cloud_auth_sessions(session_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+        ],
+        columns: [
+          _column_40,
+          _column_54,
+          _column_63,
+          _column_64,
+          _column_65,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  final i1.Index cloudAuthOtpCodesSessionIdIdx = i1.Index(
+      'cloud_auth_otp_codes_session_id_idx',
+      'CREATE INDEX IF NOT EXISTS cloud_auth_otp_codes_session_id_idx ON cloud_auth_otp_codes (session_id)');
+  late final Shape16 cloudAuthCorks = Shape16(
+      source: i0.VersionedTable(
+        entityName: 'cloud_auth_corks',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [
+          'CONSTRAINT cloud_auth_corks_crypto_key_fk FOREIGN KEY(crypto_key_id)REFERENCES cloud_auth_crypto_keys(crypto_key_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+          'CONSTRAINT cloud_auth_corks_bearer_fk FOREIGN KEY(bearer_type, bearer_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+          'CONSTRAINT cloud_auth_corks_audience_fk FOREIGN KEY(audience_type, audience_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+          'CONSTRAINT cloud_auth_corks_issuer_fk FOREIGN KEY(issuer_type, issuer_id)REFERENCES cedar_entities(entity_type, entity_id)ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED',
+        ],
+        columns: [
+          _column_66,
+          _column_55,
+          _column_67,
+          _column_68,
+          _column_69,
+          _column_70,
+          _column_71,
+          _column_72,
+          _column_5,
+          _column_73,
+          _column_74,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  final i1.Index cloudAuthCorksCryptoKeyIdx = i1.Index(
+      'cloud_auth_corks_crypto_key_idx',
+      'CREATE INDEX IF NOT EXISTS cloud_auth_corks_crypto_key_idx ON cloud_auth_corks (crypto_key_id)');
+  final i1.Index cloudAuthCorksBearerIdx = i1.Index(
+      'cloud_auth_corks_bearer_idx',
+      'CREATE INDEX IF NOT EXISTS cloud_auth_corks_bearer_idx ON cloud_auth_corks (bearer_type, bearer_id)');
+  final i1.Index cloudAuthCorksAudienceIdx = i1.Index(
+      'cloud_auth_corks_audience_idx',
+      'CREATE INDEX IF NOT EXISTS cloud_auth_corks_audience_idx ON cloud_auth_corks (audience_type, audience_id)');
+  final i1.Index cloudAuthCorksIssuerIdx = i1.Index(
+      'cloud_auth_corks_issuer_idx',
+      'CREATE INDEX IF NOT EXISTS cloud_auth_corks_issuer_idx ON cloud_auth_corks (issuer_type, issuer_id)');
+  final i1.Index cedarRelationshipsFkEntityIdx = i1.Index(
+      'cedar_relationships_fk_entity_idx',
+      'CREATE INDEX IF NOT EXISTS cedar_relationships_fk_entity_idx ON cedar_relationships (entity_type, entity_id)');
+  final i1.Index cedarRelationshipsFkParentIdx = i1.Index(
+      'cedar_relationships_fk_parent_idx',
+      'CREATE INDEX IF NOT EXISTS cedar_relationships_fk_parent_idx ON cedar_relationships (parent_type, parent_id)');
+  late final Shape9 cedarPolicies = Shape9(
+      source: i0.VersionedTable(
+        entityName: 'cedar_policies',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [
+          'CHECK(enforcement_level IN (0, 1))',
+        ],
+        columns: [
+          _column_29,
+          _column_30,
+          _column_31,
+          _column_32,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape10 cedarPolicyTemplates = Shape10(
+      source: i0.VersionedTable(
+        entityName: 'cedar_policy_templates',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [
+          'CHECK(template IS NOT NULL OR template IS NOT NULL)',
+        ],
+        columns: [
+          _column_29,
+          _column_33,
+          _column_34,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape11 cedarPolicyTemplateLinks = Shape11(
+      source: i0.VersionedTable(
+        entityName: 'cedar_policy_template_links',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [
+          'CHECK(principal_type IS NOT NULL AND principal_id IS NOT NULL OR resource_type IS NOT NULL AND resource_id IS NOT NULL)',
+          'CHECK(enforcement_level IN (0, 1))',
+          'CONSTRAINT cedar_policy_template_links_fk_template_id FOREIGN KEY(template_id)REFERENCES cedar_policy_templates(template_id)ON UPDATE CASCADE ON DELETE CASCADE',
+          'CONSTRAINT cedar_policy_template_links_fk_principal FOREIGN KEY(principal_type, principal_id)REFERENCES cedar_entities(entity_type, entity_id)ON DELETE CASCADE',
+          'CONSTRAINT cedar_policy_template_links_fk_resource FOREIGN KEY(resource_type, resource_id)REFERENCES cedar_entities(entity_type, entity_id)ON DELETE CASCADE',
+        ],
+        columns: [
+          _column_29,
+          _column_30,
+          _column_35,
+          _column_36,
+          _column_37,
+          _column_38,
+          _column_39,
+          _column_32,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  final i1.Index cedarPolicyTemplateLinksFkTemplateIdIdx = i1.Index(
+      'cedar_policy_template_links_fk_template_id_idx',
+      'CREATE INDEX IF NOT EXISTS cedar_policy_template_links_fk_template_id_idx ON cedar_policy_template_links (template_id)');
+  final i1.Index cedarPolicyTemplateLinksFkPrincipalIdx = i1.Index(
+      'cedar_policy_template_links_fk_principal_idx',
+      'CREATE INDEX IF NOT EXISTS cedar_policy_template_links_fk_principal_idx ON cedar_policy_template_links (principal_type, principal_id)');
+  final i1.Index cedarPolicyTemplateLinksFkResourceIdx = i1.Index(
+      'cedar_policy_template_links_fk_resource_idx',
+      'CREATE INDEX IF NOT EXISTS cedar_policy_template_links_fk_resource_idx ON cedar_policy_template_links (resource_type, resource_id)');
+  late final Shape12 cedarAuthorizationLogs = Shape12(
+      source: i0.VersionedTable(
+        entityName: 'cedar_authorization_logs',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_40,
+          _column_41,
+          _column_42,
+          _column_36,
+          _column_37,
+          _column_43,
+          _column_44,
+          _column_38,
+          _column_39,
+          _column_45,
+          _column_46,
+          _column_47,
+          _column_48,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+}
+
+class Shape18 extends i0.VersionedTable {
+  Shape18({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<int> get rowid =>
+      columnsByName['rowid']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get sessionId =>
+      columnsByName['session_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<i2.Uint8List> get cryptoKeyId =>
+      columnsByName['crypto_key_id']! as i1.GeneratedColumn<i2.Uint8List>;
+  i1.GeneratedColumn<String> get userId =>
+      columnsByName['user_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<i2.Uint8List> get clientInfo =>
+      columnsByName['client_info']! as i1.GeneratedColumn<i2.Uint8List>;
+  i1.GeneratedColumn<i2.Uint8List> get authenticationFactor =>
+      columnsByName['authentication_factor']!
+          as i1.GeneratedColumn<i2.Uint8List>;
+  i1.GeneratedColumn<i2.Uint8List> get state =>
+      columnsByName['state']! as i1.GeneratedColumn<i2.Uint8List>;
+  i1.GeneratedColumn<String> get ipAddress =>
+      columnsByName['ip_address']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get externalSessionId =>
+      columnsByName['external_session_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get createTime =>
+      columnsByName['create_time']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get updateTime =>
+      columnsByName['update_time']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get expireTime =>
+      columnsByName['expire_time']! as i1.GeneratedColumn<double>;
+}
+
 i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema2 schema) from1To2,
   required Future<void> Function(i1.Migrator m, Schema3 schema) from2To3,
   required Future<void> Function(i1.Migrator m, Schema4 schema) from3To4,
+  required Future<void> Function(i1.Migrator m, Schema5 schema) from4To5,
 }) {
   return (currentVersion, database) async {
     switch (currentVersion) {
@@ -1926,6 +2409,11 @@ i0.MigrationStepWithVersion migrationSteps({
         final migrator = i1.Migrator(database, schema);
         await from3To4(migrator, schema);
         return 4;
+      case 4:
+        final schema = Schema5(database: database);
+        final migrator = i1.Migrator(database, schema);
+        await from4To5(migrator, schema);
+        return 5;
       default:
         throw ArgumentError.value('Unknown migration from $currentVersion');
     }
@@ -1936,10 +2424,12 @@ i1.OnUpgrade stepByStep({
   required Future<void> Function(i1.Migrator m, Schema2 schema) from1To2,
   required Future<void> Function(i1.Migrator m, Schema3 schema) from2To3,
   required Future<void> Function(i1.Migrator m, Schema4 schema) from3To4,
+  required Future<void> Function(i1.Migrator m, Schema5 schema) from4To5,
 }) =>
     i0.VersionedSchema.stepByStepHelper(
         step: migrationSteps(
       from1To2: from1To2,
       from2To3: from2To3,
       from3To4: from3To4,
+      from4To5: from4To5,
     ));

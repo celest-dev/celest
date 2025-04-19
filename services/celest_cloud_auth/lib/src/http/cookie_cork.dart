@@ -1,15 +1,21 @@
 import 'dart:io';
 
+import 'package:cedar/ast.dart';
 import 'package:celest_cloud_auth/src/context.dart';
+import 'package:celest_cloud_auth/src/sessions/sessions_repository.dart';
 import 'package:clock/clock.dart';
 import 'package:corks_cedar/corks_cedar.dart';
 
 /// A wrapper over a [Cookie] for corks.
 extension type Corkie._(Cookie cookie) implements Cookie {
-  Corkie.set(Cork cork)
+  Corkie.set(CedarCork cork)
       : this._create(
           cork.toString(),
-          expiration: clock.now().add(const Duration(days: 30)),
+          expiration: switch (cork.claims?.attributes['expireTime']) {
+            LongValue(:final value) =>
+              DateTime.fromMillisecondsSinceEpoch(value.toInt()),
+            _ => clock.now().add(SessionsRepository.postAuthSessionDuration),
+          },
         );
 
   Corkie.clear() : this._create('', expiration: clock.now());

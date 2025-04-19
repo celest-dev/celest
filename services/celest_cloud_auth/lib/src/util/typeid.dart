@@ -30,6 +30,14 @@ extension type TypeId<T extends Object>._(TypeIdData _data) implements Id<T> {
   }
 
   factory TypeId.decode(String encoded) {
+    final typeId = tryDecode<T>(encoded);
+    if (typeId == null) {
+      throw FormatException('Invalid TypeId: $encoded');
+    }
+    return typeId;
+  }
+
+  static TypeId<T>? tryDecode<T extends Object>(String encoded) {
     final codeUnits = encoded.codeUnits;
     for (var i = 0; i < codeUnits.length; i++) {
       const divider = 0x5f; // `_`
@@ -43,7 +51,7 @@ extension type TypeId<T extends Object>._(TypeIdData _data) implements Id<T> {
         );
       }
     }
-    throw FormatException('Invalid TypeId: $encoded');
+    return null;
   }
 
   static const Map<Type, String> _knownTypes = {

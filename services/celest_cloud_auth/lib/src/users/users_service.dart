@@ -8,6 +8,7 @@ import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/authorization/celest_action.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
 import 'package:celest_cloud_auth/src/context.dart';
+import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
 import 'package:celest_cloud_auth/src/database/auth_database_accessors.dart';
 import 'package:celest_cloud_auth/src/database/schema/cloud_auth_users.drift.dart';
 import 'package:celest_cloud_auth/src/http/http_helpers.dart';
@@ -15,7 +16,9 @@ import 'package:celest_cloud_auth/src/model/interop.dart';
 import 'package:celest_cloud_auth/src/model/order_by.dart';
 import 'package:celest_cloud_auth/src/model/page_token.dart';
 import 'package:celest_cloud_auth/src/model/route_map.dart';
+import 'package:celest_cloud_auth/src/users/users_repository.dart';
 import 'package:celest_core/celest_core.dart';
+import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 import 'package:meta/meta.dart';
 import 'package:shelf/shelf.dart';
@@ -25,6 +28,8 @@ typedef _Deps = ({
   EntityUid issuer,
   RouteMap routeMap,
   CorksRepository corks,
+  CryptoKeyRepository cryptoKeys,
+  UsersRepository users,
   CloudAuthDatabaseMixin db,
   Authorizer authorizer,
 });
@@ -34,6 +39,8 @@ extension type UsersService._(_Deps _deps) implements Object {
     required EntityUid issuer,
     required RouteMap routeMap,
     required CorksRepository corks,
+    required CryptoKeyRepository cryptoKeys,
+    required UsersRepository users,
     required CloudAuthDatabaseMixin db,
     required Authorizer authorizer,
   }) : this._(
@@ -41,6 +48,8 @@ extension type UsersService._(_Deps _deps) implements Object {
             issuer: issuer,
             routeMap: routeMap,
             corks: corks,
+            cryptoKeys: cryptoKeys,
+            users: users,
             db: db,
             authorizer: authorizer,
           ),
@@ -61,6 +70,8 @@ extension type UsersService._(_Deps _deps) implements Object {
     final requestAuthorizer = AuthorizationMiddleware(
       routeMap: _deps.routeMap,
       corks: _deps.corks,
+      cryptoKeys: _deps.cryptoKeys,
+      users: _deps.users,
       db: _deps.db,
       authorizer: _deps.authorizer,
       issuer: _deps.issuer,
@@ -189,8 +200,8 @@ extension type UsersService._(_Deps _deps) implements Object {
     final pageOffset = pageData?.offset ?? 0;
     const defaultPageSize = 10;
     pageSize ??= defaultPageSize;
-    final startTime = pageData?.startTime ??
-        DateTime.timestamp().add(const Duration(seconds: 1));
+    final startTime =
+        pageData?.startTime ?? clock.now().add(const Duration(seconds: 1));
 
     OrderByClause? orderByClause;
     if (orderBy != null) {
@@ -273,7 +284,7 @@ extension type UsersService._(_Deps _deps) implements Object {
       familyName: mask('family_name', familyName),
       timeZone: mask('time_zone', timeZone),
       languageCode: mask('language_code', languageCode),
-      updateTime: Value(DateTime.timestamp()),
+      updateTime: Value(clock.now()),
     );
 
     await (_db.update(_db.cloudAuthUsers)

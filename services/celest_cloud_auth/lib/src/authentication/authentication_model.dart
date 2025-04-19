@@ -177,13 +177,13 @@ final class SessionStateSuccess extends SessionState {
 
   factory SessionStateSuccess.fromProto(pb.AuthenticationSuccess success) {
     return SessionStateSuccess(
-      cork: Cork.parse(success.identityToken),
+      cork: CedarCork.parse(success.identityToken),
       user: success.user.toModel(),
       isNewUser: success.isNewUser,
     );
   }
 
-  final Cork cork;
+  final CedarCork cork;
   String get identityToken => cork.toString();
 
   final User user;

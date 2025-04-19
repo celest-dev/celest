@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:cedar/cedar.dart' show EntityUid;
+import 'package:cedar/ast.dart';
 import 'package:celest_cloud/celest_cloud.dart' as pb;
 import 'package:celest_cloud_auth/src/authentication/authentication_model.dart';
 import 'package:celest_cloud_auth/src/model/interop.dart';
@@ -76,6 +76,11 @@ void main() {
       );
 
       check(session.sessionToken).isNotNull();
+      final sessionCork = CedarCork.parse(session.sessionToken!);
+      final expireTime =
+          (sessionCork.claims!.attributes['expireTime'] as LongValue)
+              .value
+              .toInt();
       check(session.state)
           .isA<SessionStateNeedsProof>()
           .has((s) => s.factor, 'factor')
@@ -83,6 +88,7 @@ void main() {
 
       final (to: _, :code) = tester.lastSentCode!;
 
+      await Future<void>.delayed(const Duration(seconds: 1));
       final result = await tester.authenticationService.continueSession(
         sessionId: session.sessionId,
         sessionToken: session.sessionToken!,
@@ -106,7 +112,19 @@ void main() {
               ?.parents
               .contains(EntityUid.of('Celest::User', s.user.userId)),
           'cork <: user',
-        ).isNotNull().isTrue();
+        ).isNotNull().isTrue()
+        ..has((s) => s.cork.toString(), 'cork != original sessionToken').not(
+          (it) => it.equals(session.sessionToken!),
+        );
+
+      check(result.sessionToken).isNotNull();
+      check(result.sessionToken).not((it) => it.equals(session.sessionToken));
+      final updatedCork = CedarCork.parse(result.sessionToken!);
+      check(updatedCork.claims!.attributes['expireTime'])
+          .isNotNull()
+          .isA<LongValue>()
+          .has((it) => it.value.toInt(), 'expireTime')
+          .not((it) => it.equals(expireTime));
     });
 
     test('re-authenticate', () async {

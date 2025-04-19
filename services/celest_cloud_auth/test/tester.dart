@@ -306,6 +306,7 @@ final class AuthorizationTester {
     final session = await sessions.createSession(
       userId: userId,
       factor: AuthenticationFactorEmailOtp(email: email),
+      sessionDuration: SessionsRepository.postAuthSessionDuration,
     );
     final cork = await corks.createCork(
       user: user,

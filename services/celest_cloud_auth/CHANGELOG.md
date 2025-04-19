@@ -1,3 +1,7 @@
+## 0.3.2
+
+- fix: Properly set/check session duration
+
 ## 0.3.1
 
 - fix: Allow dashes in routes

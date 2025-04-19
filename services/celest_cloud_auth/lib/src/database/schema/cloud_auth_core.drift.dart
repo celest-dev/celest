@@ -215,7 +215,6 @@ typedef $CloudAuthSessionsCreateCompanionBuilder = i3.CloudAuthSessionsCompanion
   i0.Value<DateTime> createTime,
   i0.Value<DateTime?> updateTime,
   required DateTime expireTime,
-  i0.Value<DateTime?> cancelTime,
 });
 typedef $CloudAuthSessionsUpdateCompanionBuilder = i3.CloudAuthSessionsCompanion
     Function({
@@ -231,7 +230,6 @@ typedef $CloudAuthSessionsUpdateCompanionBuilder = i3.CloudAuthSessionsCompanion
   i0.Value<DateTime> createTime,
   i0.Value<DateTime?> updateTime,
   i0.Value<DateTime> expireTime,
-  i0.Value<DateTime?> cancelTime,
 });
 
 class $CloudAuthSessionsFilterComposer
@@ -289,9 +287,6 @@ class $CloudAuthSessionsFilterComposer
 
   i0.ColumnFilters<DateTime> get expireTime => $composableBuilder(
       column: $table.expireTime, builder: (column) => i0.ColumnFilters(column));
-
-  i0.ColumnFilters<DateTime> get cancelTime => $composableBuilder(
-      column: $table.cancelTime, builder: (column) => i0.ColumnFilters(column));
 }
 
 class $CloudAuthSessionsOrderingComposer
@@ -348,10 +343,6 @@ class $CloudAuthSessionsOrderingComposer
   i0.ColumnOrderings<DateTime> get expireTime => $composableBuilder(
       column: $table.expireTime,
       builder: (column) => i0.ColumnOrderings(column));
-
-  i0.ColumnOrderings<DateTime> get cancelTime => $composableBuilder(
-      column: $table.cancelTime,
-      builder: (column) => i0.ColumnOrderings(column));
 }
 
 class $CloudAuthSessionsAnnotationComposer
@@ -401,9 +392,6 @@ class $CloudAuthSessionsAnnotationComposer
 
   i0.GeneratedColumn<DateTime> get expireTime => $composableBuilder(
       column: $table.expireTime, builder: (column) => column);
-
-  i0.GeneratedColumn<DateTime> get cancelTime => $composableBuilder(
-      column: $table.cancelTime, builder: (column) => column);
 }
 
 class $CloudAuthSessionsTableManager extends i0.RootTableManager<
@@ -446,7 +434,6 @@ class $CloudAuthSessionsTableManager extends i0.RootTableManager<
             i0.Value<DateTime> createTime = const i0.Value.absent(),
             i0.Value<DateTime?> updateTime = const i0.Value.absent(),
             i0.Value<DateTime> expireTime = const i0.Value.absent(),
-            i0.Value<DateTime?> cancelTime = const i0.Value.absent(),
           }) =>
               i3.CloudAuthSessionsCompanion(
             rowid: rowid,
@@ -461,7 +448,6 @@ class $CloudAuthSessionsTableManager extends i0.RootTableManager<
             createTime: createTime,
             updateTime: updateTime,
             expireTime: expireTime,
-            cancelTime: cancelTime,
           ),
           createCompanionCallback: ({
             i0.Value<int> rowid = const i0.Value.absent(),
@@ -476,7 +462,6 @@ class $CloudAuthSessionsTableManager extends i0.RootTableManager<
             i0.Value<DateTime> createTime = const i0.Value.absent(),
             i0.Value<DateTime?> updateTime = const i0.Value.absent(),
             required DateTime expireTime,
-            i0.Value<DateTime?> cancelTime = const i0.Value.absent(),
           }) =>
               i3.CloudAuthSessionsCompanion.insert(
             rowid: rowid,
@@ -491,7 +476,6 @@ class $CloudAuthSessionsTableManager extends i0.RootTableManager<
             createTime: createTime,
             updateTime: updateTime,
             expireTime: expireTime,
-            cancelTime: cancelTime,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
@@ -1225,11 +1209,6 @@ class CloudAuthSessions extends i0.Table
           type: const i5.TimestampType(),
           requiredDuringInsert: true,
           $customConstraints: 'NOT NULL');
-  late final i0.GeneratedColumn<DateTime> cancelTime =
-      i0.GeneratedColumn<DateTime>('cancel_time', aliasedName, true,
-          type: const i5.TimestampType(),
-          requiredDuringInsert: false,
-          $customConstraints: '');
   @override
   List<i0.GeneratedColumn> get $columns => [
         rowid,
@@ -1243,8 +1222,7 @@ class CloudAuthSessions extends i0.Table
         externalSessionId,
         createTime,
         updateTime,
-        expireTime,
-        cancelTime
+        expireTime
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1320,7 +1298,6 @@ class CloudAuthSessionsCompanion extends i0.UpdateCompanion<i4.Session> {
   final i0.Value<DateTime> createTime;
   final i0.Value<DateTime?> updateTime;
   final i0.Value<DateTime> expireTime;
-  final i0.Value<DateTime?> cancelTime;
   const CloudAuthSessionsCompanion({
     this.rowid = const i0.Value.absent(),
     this.sessionId = const i0.Value.absent(),
@@ -1334,7 +1311,6 @@ class CloudAuthSessionsCompanion extends i0.UpdateCompanion<i4.Session> {
     this.createTime = const i0.Value.absent(),
     this.updateTime = const i0.Value.absent(),
     this.expireTime = const i0.Value.absent(),
-    this.cancelTime = const i0.Value.absent(),
   });
   CloudAuthSessionsCompanion.insert({
     this.rowid = const i0.Value.absent(),
@@ -1349,7 +1325,6 @@ class CloudAuthSessionsCompanion extends i0.UpdateCompanion<i4.Session> {
     this.createTime = const i0.Value.absent(),
     this.updateTime = const i0.Value.absent(),
     required DateTime expireTime,
-    this.cancelTime = const i0.Value.absent(),
   })  : sessionId = i0.Value(sessionId),
         cryptoKeyId = i0.Value(cryptoKeyId),
         userId = i0.Value(userId),
@@ -1368,7 +1343,6 @@ class CloudAuthSessionsCompanion extends i0.UpdateCompanion<i4.Session> {
     i0.Expression<DateTime>? createTime,
     i0.Expression<DateTime>? updateTime,
     i0.Expression<DateTime>? expireTime,
-    i0.Expression<DateTime>? cancelTime,
   }) {
     return i0.RawValuesInsertable({
       if (rowid != null) 'rowid': rowid,
@@ -1384,7 +1358,6 @@ class CloudAuthSessionsCompanion extends i0.UpdateCompanion<i4.Session> {
       if (createTime != null) 'create_time': createTime,
       if (updateTime != null) 'update_time': updateTime,
       if (expireTime != null) 'expire_time': expireTime,
-      if (cancelTime != null) 'cancel_time': cancelTime,
     });
   }
 
@@ -1400,8 +1373,7 @@ class CloudAuthSessionsCompanion extends i0.UpdateCompanion<i4.Session> {
       i0.Value<String?>? externalSessionId,
       i0.Value<DateTime>? createTime,
       i0.Value<DateTime?>? updateTime,
-      i0.Value<DateTime>? expireTime,
-      i0.Value<DateTime?>? cancelTime}) {
+      i0.Value<DateTime>? expireTime}) {
     return i3.CloudAuthSessionsCompanion(
       rowid: rowid ?? this.rowid,
       sessionId: sessionId ?? this.sessionId,
@@ -1415,7 +1387,6 @@ class CloudAuthSessionsCompanion extends i0.UpdateCompanion<i4.Session> {
       createTime: createTime ?? this.createTime,
       updateTime: updateTime ?? this.updateTime,
       expireTime: expireTime ?? this.expireTime,
-      cancelTime: cancelTime ?? this.cancelTime,
     );
   }
 
@@ -1465,10 +1436,6 @@ class CloudAuthSessionsCompanion extends i0.UpdateCompanion<i4.Session> {
       map['expire_time'] =
           i0.Variable<DateTime>(expireTime.value, const i5.TimestampType());
     }
-    if (cancelTime.present) {
-      map['cancel_time'] =
-          i0.Variable<DateTime>(cancelTime.value, const i5.TimestampType());
-    }
     return map;
   }
 
@@ -1486,8 +1453,7 @@ class CloudAuthSessionsCompanion extends i0.UpdateCompanion<i4.Session> {
           ..write('externalSessionId: $externalSessionId, ')
           ..write('createTime: $createTime, ')
           ..write('updateTime: $updateTime, ')
-          ..write('expireTime: $expireTime, ')
-          ..write('cancelTime: $cancelTime')
+          ..write('expireTime: $expireTime')
           ..write(')'))
         .toString();
   }
@@ -2395,10 +2361,9 @@ class CloudAuthCoreDrift extends i7.ModularAccessor {
       i4.SessionState? state,
       String? ipAddress,
       required DateTime expireTime,
-      DateTime? cancelTime,
       String? externalSessionId}) {
     return customWriteReturning(
-        'INSERT INTO cloud_auth_sessions (session_id, crypto_key_id, user_id, client_info, authentication_factor, state, ip_address, expire_time, cancel_time, external_session_id) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10) RETURNING *',
+        'INSERT INTO cloud_auth_sessions (session_id, crypto_key_id, user_id, client_info, authentication_factor, state, ip_address, expire_time, external_session_id) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) RETURNING *',
         variables: [
           i0.Variable<String>(sessionId),
           i0.Variable<i2.Uint8List>(cryptoKeyId),
@@ -2412,7 +2377,6 @@ class CloudAuthCoreDrift extends i7.ModularAccessor {
               i3.CloudAuthSessions.$converterstaten.toSql(state)),
           i0.Variable<String>(ipAddress),
           i0.Variable<DateTime>(expireTime, const i5.TimestampType()),
-          i0.Variable<DateTime>(cancelTime, const i5.TimestampType()),
           i0.Variable<String>(externalSessionId)
         ],
         updates: {
@@ -2422,7 +2386,7 @@ class CloudAuthCoreDrift extends i7.ModularAccessor {
 
   i0.Selectable<i4.Session> getSession({String? sessionId}) {
     return customSelect(
-        'SELECT * FROM cloud_auth_sessions WHERE(cloud_auth_sessions.session_id = ?1 OR cloud_auth_sessions.external_session_id = ?1)AND cloud_auth_sessions.expire_time > unixepoch(\'now\', \'subsec\') AND cloud_auth_sessions.cancel_time IS NULL',
+        'SELECT * FROM cloud_auth_sessions WHERE cloud_auth_sessions.session_id = ?1 OR cloud_auth_sessions.external_session_id = ?1',
         variables: [
           i0.Variable<String>(sessionId)
         ],
@@ -2432,13 +2396,17 @@ class CloudAuthCoreDrift extends i7.ModularAccessor {
   }
 
   i8.Future<List<i4.Session>> updateSession(
-      {i4.SessionState? state, required String userId, String? sessionId}) {
+      {i4.SessionState? state,
+      required String userId,
+      required DateTime expireTime,
+      String? sessionId}) {
     return customWriteReturning(
-            'UPDATE cloud_auth_sessions SET state = ?1, user_id = ?2 WHERE session_id = ?3 OR external_session_id = ?3 RETURNING *',
+            'UPDATE cloud_auth_sessions SET state = ?1, user_id = ?2, expire_time = ?3 WHERE session_id = ?4 OR external_session_id = ?4 RETURNING *',
             variables: [
               i0.Variable<i2.Uint8List>(
                   i3.CloudAuthSessions.$converterstaten.toSql(state)),
               i0.Variable<String>(userId),
+              i0.Variable<DateTime>(expireTime, const i5.TimestampType()),
               i0.Variable<String>(sessionId)
             ],
             updates: {cloudAuthSessions},
@@ -2452,15 +2420,6 @@ class CloudAuthCoreDrift extends i7.ModularAccessor {
       variables: [i0.Variable<String>(sessionId)],
       updates: {cloudAuthSessions},
       updateKind: i0.UpdateKind.delete,
-    );
-  }
-
-  Future<int> cancelSession({String? sessionId}) {
-    return customUpdate(
-      'UPDATE cloud_auth_sessions SET cancel_time = unixepoch(\'now\', \'subsec\') WHERE session_id = ?1 OR external_session_id = ?1',
-      variables: [i0.Variable<String>(sessionId)],
-      updates: {cloudAuthSessions},
-      updateKind: i0.UpdateKind.update,
     );
   }
 
