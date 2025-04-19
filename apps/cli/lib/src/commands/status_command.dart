@@ -2,6 +2,7 @@ import 'package:celest_cli/src/commands/authenticate.dart';
 import 'package:celest_cli/src/commands/celest_command.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/init/project_init.dart';
+import 'package:celest_cli/src/utils/recase.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 final class StatusCommand extends CelestCommand with Configure, Authenticate {
@@ -26,7 +27,7 @@ final class StatusCommand extends CelestCommand with Configure, Authenticate {
     await assertAuthenticated();
     await configure();
 
-    final projectName = celestProject.projectName;
+    final projectName = celestProject.projectName.paramCase;
     final projectEnvironment = await cloud.projects.environments
         .get('projects/$projectName/environments/production');
     if (projectEnvironment == null) {
