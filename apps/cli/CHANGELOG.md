@@ -1,3 +1,8 @@
+## 1.0.11-wip
+
+- fix: Handle control characters when prompting for secrets
+- 
+
 ## 1.0.10
 
 - feat: Add templates to `celest init`

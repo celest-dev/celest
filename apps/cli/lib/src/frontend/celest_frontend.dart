@@ -672,8 +672,8 @@ final class CelestFrontend {
   /// Deploys the current project to Celest Cloud.
   Future<int> deploy({required bool migrateProject}) async {
     Progress? currentProgress;
-    var projectId = await _loadProjectId();
     try {
+      var projectId = await _loadProjectId();
       while (!stopped) {
         if (projectId != null) {
           currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
