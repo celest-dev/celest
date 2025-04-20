@@ -1,3 +1,9 @@
+## 1.0.11
+
+- feat: Add `celest auth token` command
+- feat: Add `celest auth whoami` command
+- feat: Add `--token` parameter to `auth login`
+
 ## 1.0.10+3
 
 - fix: Pass `flutter_assets` to backend when using `celest deploy`
