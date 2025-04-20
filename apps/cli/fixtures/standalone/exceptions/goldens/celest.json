@@ -179,11 +179,8 @@
     "celest": {
       "major": 1,
       "minor": 0,
-      "patch": 10,
-      "build": [
-        3.0
-      ],
-      "canonicalizedVersion": "1.0.10+3"
+      "patch": 11,
+      "canonicalizedVersion": "1.0.11"
     },
     "dart": {
       "type": "DART",
