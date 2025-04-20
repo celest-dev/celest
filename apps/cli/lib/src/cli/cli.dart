@@ -145,8 +145,6 @@ final class Cli {
   }
 
   Future<void> run(List<String> args) async {
-    var verbose = ctx.platform.environment.containsKey('CELEST_VERBOSE');
-    var jsonOutput = false;
     _runner.argParser
       ..addFlag(
         'verbose',
@@ -154,14 +152,12 @@ final class Cli {
         help: 'Enable verbose logging',
         negatable: false,
         defaultsTo: false,
-        callback: (v) => verbose = v,
       )
       ..addFlag(
         'json',
         negatable: false,
         help: 'Run CLI with JSON input/output',
         hide: true,
-        callback: (j) => jsonOutput = j,
       )
       ..addFlag(
         'version',
@@ -169,6 +165,10 @@ final class Cli {
         help: 'Print the version of Celest',
       );
     final argResults = _runner.parse(args);
+
+    final verbose = ctx.platform.environment.containsKey('CELEST_VERBOSE') ||
+        argResults.flag('verbose');
+    final jsonOutput = argResults.flag('json');
 
     await configure(
       verbose: verbose,

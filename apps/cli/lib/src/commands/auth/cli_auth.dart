@@ -1,4 +1,3 @@
-import 'package:celest_auth/celest_auth.dart';
 import 'package:celest_auth/src/auth_impl.dart';
 import 'package:celest_cli/src/context.dart' as ctx;
 import 'package:celest_cli/src/context.dart';
@@ -29,7 +28,7 @@ final class _CliClient with CelestBase {
   NativeSecureStorage get nativeStorage => ctx.secureStorage;
 }
 
-extension type CliAuth._(AuthImpl _hub) implements Auth {
+extension type CliAuth._(AuthImpl _hub) implements AuthImpl {
   CliAuth()
       : _hub = AuthImpl(
           _CliClient(),

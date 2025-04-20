@@ -1,4 +1,4 @@
-import 'package:celest_cli/src/commands/authenticate.dart';
+import 'package:celest_cli/src/commands/auth/authenticate.dart';
 import 'package:celest_cli/src/commands/celest_command.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/init/project_init.dart';

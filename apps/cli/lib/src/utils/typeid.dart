@@ -13,6 +13,14 @@ extension type TypeId<T extends Object>._(String _encoded) implements String {
     return TypeId._('${type}_${_encode(id)}');
   }
 
+  factory TypeId.fromUuid(Uuid uuid, [String type = '']) {
+    final encoded = _encode(uuid);
+    if (type.isEmpty) {
+      return TypeId._(encoded);
+    }
+    return TypeId._('${type}_$encoded');
+  }
+
   String get type => split('_').first;
 
   TypeIdData get decoded {
