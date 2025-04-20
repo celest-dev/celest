@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:celest_cli/src/cli/cli_runtime.dart';
+import 'package:celest_cli/src/commands/auth/auth_command.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/models.dart';
 import 'package:celest_cli/src/releases/celest_release_info.dart';
@@ -124,7 +125,8 @@ abstract base class CelestCommand extends Command<int> {
       'cli',
       properties: {
         'command': name,
-        'args': argResults!.arguments.join(' '),
+        // Don't record args for auth commands, which may contain tokens.
+        if (parent is! AuthCommand) 'args': argResults!.arguments.join(' '),
         'environment': kCliEnvironment,
         'version': version,
         'sdk_version': Sdk.current.version.toString(),
