@@ -1,4 +1,4 @@
-import 'package:celest_cli/src/commands/cloud_command.dart';
+import 'package:celest_cli/src/commands/cloud/cloud_command.dart';
 import 'package:celest_cli/src/context.dart' show cloud;
 import 'package:celest_cloud/celest_cloud.dart';
 

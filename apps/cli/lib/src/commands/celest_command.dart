@@ -24,7 +24,10 @@ abstract base class CelestCommand extends Command<int> {
   late final String version;
 
   /// Whether verbose logging is enabled.
-  bool get verbose => globalResults?['verbose'] as bool? ?? false;
+  bool get verbose => globalResults?.flag('verbose') ?? false;
+
+  /// Whether JSON output is enabled.
+  bool get jsonOutput => globalResults?.flag('json') ?? false;
 
   /// Resolves the latest version information from `pub.dev`.
   Future<PubVersionInfo?> resolveVersionInfo(String package) async {

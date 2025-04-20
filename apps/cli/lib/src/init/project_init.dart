@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:celest_cli/src/commands/celest_command.dart';
-import 'package:celest_cli/src/commands/init_command.dart';
-import 'package:celest_cli/src/commands/start_command.dart';
+import 'package:celest_cli/src/commands/project/init_command.dart';
+import 'package:celest_cli/src/commands/project/start_command.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/init/project_generator.dart';

@@ -1,6 +1,6 @@
 import 'package:celest_auth/celest_auth.dart';
+import 'package:celest_cli/src/commands/auth/authenticate.dart';
 import 'package:celest_cli/src/commands/auth/cli_auth.dart';
-import 'package:celest_cli/src/commands/authenticate.dart';
 import 'package:celest_cli/src/commands/celest_command.dart';
 import 'package:celest_cli/src/context.dart';
 

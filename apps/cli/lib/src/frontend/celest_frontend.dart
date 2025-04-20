@@ -15,7 +15,7 @@ import 'package:celest_cli/src/ast/project_diff.dart';
 import 'package:celest_cli/src/codegen/api/dockerfile_generator.dart';
 import 'package:celest_cli/src/codegen/client_code_generator.dart';
 import 'package:celest_cli/src/codegen/cloud_code_generator.dart';
-import 'package:celest_cli/src/commands/cloud_command.dart';
+import 'package:celest_cli/src/commands/cloud/cloud_command.dart';
 import 'package:celest_cli/src/compiler/api/entrypoint_compiler.dart';
 import 'package:celest_cli/src/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/src/context.dart';

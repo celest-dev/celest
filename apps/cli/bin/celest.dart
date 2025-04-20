@@ -1,10 +1,10 @@
 import 'package:celest_cli/celest_cli.dart';
-import 'package:celest_cli/src/commands/auth_command.dart';
-import 'package:celest_cli/src/commands/deploy_command.dart';
-import 'package:celest_cli/src/commands/organizations/organizations_command.dart';
-import 'package:celest_cli/src/commands/project_environments/project_environments_command.dart';
-import 'package:celest_cli/src/commands/projects/projects_command.dart';
-import 'package:celest_cli/src/commands/status_command.dart';
+import 'package:celest_cli/src/commands/auth/auth_command.dart';
+import 'package:celest_cli/src/commands/cloud/organizations/organizations_command.dart';
+import 'package:celest_cli/src/commands/cloud/project_environments/project_environments_command.dart';
+import 'package:celest_cli/src/commands/cloud/projects/projects_command.dart';
+import 'package:celest_cli/src/commands/project/deploy_command.dart';
+import 'package:celest_cli/src/commands/project/status_command.dart';
 import 'package:celest_cli/src/performance/sentry_perf.dart';
 
 void main(List<String> args) async {

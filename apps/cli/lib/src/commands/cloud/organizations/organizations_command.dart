@@ -1,9 +1,9 @@
 import 'package:celest_cli/src/commands/celest_command.dart';
-import 'package:celest_cli/src/commands/organizations/create_organization_command.dart';
-import 'package:celest_cli/src/commands/organizations/delete_organization_command.dart';
-import 'package:celest_cli/src/commands/organizations/get_organization_command.dart';
-import 'package:celest_cli/src/commands/organizations/list_organizations_command.dart';
-import 'package:celest_cli/src/commands/organizations/update_organization_command.dart';
+import 'package:celest_cli/src/commands/cloud/organizations/create_organization_command.dart';
+import 'package:celest_cli/src/commands/cloud/organizations/delete_organization_command.dart';
+import 'package:celest_cli/src/commands/cloud/organizations/get_organization_command.dart';
+import 'package:celest_cli/src/commands/cloud/organizations/list_organizations_command.dart';
+import 'package:celest_cli/src/commands/cloud/organizations/update_organization_command.dart';
 
 final class OrganizationsCommand extends CelestCommand {
   OrganizationsCommand() {
