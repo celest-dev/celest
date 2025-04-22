@@ -9,6 +9,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/json.dart';
+import 'package:celest_cloud/src/proto.dart' as proto;
 import 'package:crypto/crypto.dart';
 import 'package:logging/logging.dart';
 
@@ -31,17 +32,20 @@ final class EntrypointDefinition {
 
 final class EntrypointResult {
   const EntrypointResult({
+    required this.type,
     required this.outputDillPath,
     required this.outputDill,
     required this.outputDillDigest,
   });
 
+  final proto.ProjectAsset_Type type;
   final String outputDillPath;
   final Uint8List outputDill;
   final Digest outputDillDigest;
 
   @override
   String toString() => prettyPrintJson({
+        'type': type.name,
         'outputDillPath': outputDillPath,
         'outputDillSha256': outputDillDigest.toString(),
       });
@@ -58,6 +62,51 @@ final class EntrypointCompiler {
   final bool verbose;
   final List<String> enabledExperiments;
 
+  Future<EntrypointResult> _crossCompile({
+    required String entrypointPath,
+  }) async {
+    logger.fine('Cross-compiling entrypoint: $entrypointPath');
+    final outputPath = p.join(p.dirname(entrypointPath), 'main.exe');
+    final command = <String>[
+      Sdk.current.dart,
+      'compile',
+      'exe',
+      '--target-os=linux',
+      '--target-arch=x64',
+      '--experimental-cross-compilation',
+      '-o',
+      outputPath,
+      entrypointPath,
+    ];
+    final result = await processManager.run(
+      command,
+      workingDirectory: projectPaths.outputsDir,
+      includeParentEnvironment: true,
+      stdoutEncoding: utf8,
+      stderrEncoding: utf8,
+    );
+    final ProcessResult(:exitCode, :stdout as String, :stderr as String) =
+        result;
+    logger.fine('Cross-compilation finished with status $exitCode');
+    if (exitCode != 0) {
+      throw ProcessException(
+        Sdk.current.dart,
+        command.sublist(1),
+        'Cross-compilation failed:\n$stdout\n$stderr',
+        exitCode,
+      );
+    }
+
+    final outputDill = await fileSystem.file(outputPath).readAsBytes();
+    final outputDillDigest = await _computeMd5(outputDill.asUnmodifiableView());
+    return EntrypointResult(
+      type: proto.ProjectAsset_Type.DART_EXECUTABLE,
+      outputDillPath: outputPath,
+      outputDill: outputDill,
+      outputDillDigest: outputDillDigest,
+    );
+  }
+
   Future<EntrypointResult> compile({
     required ast.ResolvedProject resolvedProject,
     required String entrypointPath,
@@ -69,16 +118,20 @@ final class EntrypointCompiler {
         '$entrypointPath',
       );
     }
-    final pathWithoutDart = entrypointPath.substring(
-      0,
-      entrypointPath.length - 5,
-    );
+
+    if (resolvedProject.sdkConfig.targetSdk == SdkType.dart &&
+        Sdk.current.supportsCrossCompilation) {
+      return _crossCompile(
+        entrypointPath: entrypointPath,
+      );
+    }
+
     final packageConfig = await transformPackageConfig(
       packageConfigPath: projectPaths.packagesConfig,
       fromRoot: projectPaths.projectRoot,
       toRoot: projectPaths.outputsDir,
     );
-    final outputPath = '$pathWithoutDart.dill';
+    final outputPath = p.join(p.dirname(entrypointPath), 'main.aot.dill');
     final (target, platformDill, sdkRoot) =
         switch (resolvedProject.sdkConfig.targetSdk) {
       SdkType.flutter => (
@@ -136,6 +189,7 @@ final class EntrypointCompiler {
     final outputDill = await fileSystem.file(outputPath).readAsBytes();
     final outputDillDigest = await _computeMd5(outputDill.asUnmodifiableView());
     return EntrypointResult(
+      type: proto.ProjectAsset_Type.DART_KERNEL,
       outputDillPath: outputPath,
       outputDill: outputDill,
       outputDillDigest: outputDillDigest,

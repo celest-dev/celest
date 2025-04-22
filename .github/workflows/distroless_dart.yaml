@@ -7,9 +7,6 @@ on:
       - 'apps/distroless/bin/list_sdks.dart'
       - 'apps/distroless/dart/**'
       - '.github/workflows/distroless_dart.yaml'
-  schedule:
-    # Every day at midnight UTC
-    - cron: '0 0 * * *'
 
 # Prevent duplicate runs due to Graphite
 # https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
