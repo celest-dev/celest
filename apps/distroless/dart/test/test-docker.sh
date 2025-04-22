@@ -3,19 +3,22 @@
 set -e
 
 if [ -n "$FLUTTER_ROOT" ]; then
-  DART_SDK="$FLUTTER_ROOT/bin/cache/dart-sdk"
+  DART_HOME="$FLUTTER_ROOT/bin/cache/dart-sdk"
 fi
-if [ -z "$DART_SDK" ]; then
-  echo "DART_SDK is not set"
+if [ -z "$DART_HOME" ]; then
+  echo "DART_HOME is not set"
   exit 1
 fi
 if [ -z "$DART_VERSION" ]; then
-  DART_VERSION=$(cat $DART_SDK/version)
+  DART_VERSION=$(cat $DART_HOME/version)
 fi
 
-DART="$DART_SDK/bin/dartaotruntime"
-FE_SNAPSHOT="$DART_SDK/bin/snapshots/frontend_server_aot.dart.snapshot"
-VM_PLATFORM="$DART_SDK/lib/_internal/vm_platform_strong_product.dill"
+echo "DART_HOME: $DART_HOME"
+echo "DART_VERSION: $DART_VERSION"
+
+DART="$DART_HOME/bin/dartaotruntime"
+FE_SNAPSHOT="$DART_HOME/bin/snapshots/frontend_server_aot.dart.snapshot"
+VM_PLATFORM="$DART_HOME/lib/_internal/vm_platform_strong_product.dill"
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
@@ -26,7 +29,7 @@ trap "cd $SCRIPT_DIR" EXIT
 OUT_DIR=$SCRIPT_DIR/out
 
 $DART $FE_SNAPSHOT \
-    --sdk-root $DART_SDK \
+    --sdk-root $DART_HOME \
     --platform $VM_PLATFORM \
     --aot \
     --tfa \
