@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:celest_cli/src/context.dart' show cliLogger, storage;
@@ -68,6 +69,7 @@ final class DartSdkFinder implements SdkFinder {
   const DartSdkFinder({
     this.platform = const LocalPlatform(),
     this.fileSystem = const LocalFileSystem(),
+    this.projectRoot,
   });
 
   static final Logger _logger = Logger('Sdk');
@@ -96,6 +98,7 @@ final class DartSdkFinder implements SdkFinder {
 
   final Platform platform;
   final FileSystem fileSystem;
+  final String? projectRoot;
 
   Future<SdkFinderResult> _findFlutterExe() async {
     late String flutterPath;
@@ -215,6 +218,25 @@ final class DartSdkFinder implements SdkFinder {
       } else {
         _logger.finest('Invalid preferred Dart SDK path: $preferredDartPath');
         storage.delete('sdk.dart.preferred');
+      }
+    }
+
+    // Check for FVM configuration.
+    if (projectRoot != null) {
+      final fvmRcFile = fileSystem.directory(projectRoot).childFile('.fvmrc');
+      if (fvmRcFile.existsSync()) {
+        final fvmRc = jsonDecode(await fvmRcFile.readAsString());
+        if (fvmRc case {'flutter': final String flutterVersion}) {
+          final fvmPath = _resolveLinks(p.join(
+            projectRoot!,
+            '.fvm',
+            'versions',
+            flutterVersion,
+          ));
+          if (fileSystem.isDirectorySync(fvmPath)) {
+            return SdkFound(await _found(SdkType.flutter, fvmPath));
+          }
+        }
       }
     }
 

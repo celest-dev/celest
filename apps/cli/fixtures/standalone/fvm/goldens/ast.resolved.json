@@ -1,0 +1,52 @@
+{
+  "projectId": "fvm",
+  "environmentId": "local",
+  "apis": {
+    "greeting": {
+      "apiId": "greeting",
+      "functions": {
+        "sayHello": {
+          "functionId": "sayHello",
+          "apiId": "greeting",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/greeting/say-hello"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": [],
+          "streamConfig": {}
+        }
+      }
+    }
+  },
+  "variables": [
+    {
+      "name": "CELEST_ENVIRONMENT",
+      "value": "local"
+    }
+  ],
+  "secrets": [],
+  "databases": {},
+  "sdkConfig": {
+    "celest": "1.0.11",
+    "dart": {
+      "type": "dart",
+      "version": "3.8.0-278.1.beta",
+      "enabledExperiments": []
+    },
+    "targetSdk": "dart",
+    "featureFlags": [
+      "streaming"
+    ],
+    "flutter": {
+      "type": "flutter",
+      "version": "3.32.0-0.2.pre",
+      "enabledExperiments": []
+    }
+  }
+}
