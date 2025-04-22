@@ -1,6 +1,10 @@
+# 0.1.8
+
+- feat: Add `ProjectAsset_Type.DART_EXECUTABLE`
+
 # 0.1.7
 
-- feat: Add `ProjectAsset.FLUTTER_ASSETS`
+- feat: Add `ProjectAsset_Type.FLUTTER_ASSETS`
 
 # 0.1.6
 

@@ -350,6 +350,7 @@ const ProjectAsset_Type$json = {
   '2': [
     {'1': 'TYPE_UNSPECIFIED', '2': 0},
     {'1': 'DART_KERNEL', '2': 1},
+    {'1': 'DART_EXECUTABLE', '2': 3},
     {'1': 'FLUTTER_ASSETS', '2': 2},
   ],
 };
@@ -358,9 +359,9 @@ const ProjectAsset_Type$json = {
 final $typed_data.Uint8List projectAssetDescriptor = $convert.base64Decode(
     'CgxQcm9qZWN0QXNzZXQSQQoEdHlwZRgBIAEoDjIoLmNlbGVzdC5jbG91ZC52MWFscGhhMS5Qcm'
     '9qZWN0QXNzZXQuVHlwZUID4EECUgR0eXBlEh8KCGZpbGVuYW1lGAIgASgJQgPgQQJSCGZpbGVu'
-    'YW1lEhgKBmlubGluZRgDIAEoDEgAUgZpbmxpbmUSFwoEZXRhZxgEIAEoCUID4EECUgRldGFnIk'
-    'EKBFR5cGUSFAoQVFlQRV9VTlNQRUNJRklFRBAAEg8KC0RBUlRfS0VSTkVMEAESEgoORkxVVFRF'
-    'Ul9BU1NFVFMQAkIHCgVhc3NldA==');
+    'YW1lEhgKBmlubGluZRgDIAEoDEgAUgZpbmxpbmUSFwoEZXRhZxgEIAEoCUID4EECUgRldGFnIl'
+    'YKBFR5cGUSFAoQVFlQRV9VTlNQRUNJRklFRBAAEg8KC0RBUlRfS0VSTkVMEAESEwoPREFSVF9F'
+    'WEVDVVRBQkxFEAMSEgoORkxVVFRFUl9BU1NFVFMQAkIHCgVhc3NldA==');
 
 @$core.Deprecated('Use deployProjectEnvironmentRequestDescriptor instead')
 const DeployProjectEnvironmentRequest$json = {
