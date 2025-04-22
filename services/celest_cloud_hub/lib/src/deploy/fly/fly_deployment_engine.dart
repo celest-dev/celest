@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io' show ProcessException;
+import 'dart:io' show ProcessException, gzip;
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
@@ -12,7 +12,7 @@ import 'package:celest_cli/src/codegen/api/dockerfile_generator.dart';
 import 'package:celest_cli/src/utils/process.dart';
 import 'package:celest_cloud/celest_cloud.dart'
     as pb
-    show DeployProjectEnvironmentResponse, LifecycleState;
+    show DeployProjectEnvironmentResponse, LifecycleState, ProjectAsset_Type;
 import 'package:celest_cloud/src/proto/google/rpc/status.pb.dart' as pb;
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/schema/project_environments.drift.dart';
@@ -21,12 +21,21 @@ import 'package:celest_cloud_hub/src/deploy/fly/fly_app_config.dart';
 import 'package:celest_cloud_hub/src/model/protobuf.dart';
 import 'package:celest_cloud_hub/src/model/type_registry.dart';
 import 'package:convert/convert.dart';
+import 'package:crypto/crypto.dart';
 import 'package:drift/isolate.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
 import 'package:logging/logging.dart';
 import 'package:process/process.dart';
+
+typedef ProjectAsset =
+    ({
+      pb.ProjectAsset_Type type,
+      String filename,
+      Uint8List inline,
+      String etag,
+    });
 
 final class FlyDeploymentEngine {
   FlyDeploymentEngine({
@@ -45,8 +54,8 @@ final class FlyDeploymentEngine {
 
   final ProjectEnvironment environment;
   final ResolvedProject projectAst;
-  final Uint8List kernelAsset;
-  final Uint8List? flutterAssetsBundle;
+  final ProjectAsset kernelAsset;
+  final ProjectAsset? flutterAssetsBundle;
 
   static Future<void> deployIsolated({
     required String operationId,
@@ -54,8 +63,8 @@ final class FlyDeploymentEngine {
     required String flyApiToken,
     required ResolvedProject projectAst,
     required ProjectEnvironment environment,
-    required Uint8List kernelAsset,
-    required Uint8List? flutterAssetsBundle,
+    required ProjectAsset kernelAsset,
+    required ProjectAsset? flutterAssetsBundle,
   }) async {
     await Isolate.run(() async {
       Logger.root.level = Level.ALL;
@@ -254,14 +263,33 @@ final class FlyDeploymentEngine {
 
     // Deploy using `flyctl deploy`
     await _withTempDirectory((dir) async {
-      // Write the kernel file to disk
-      final kernelFile = dir.childFile('main.aot.dill');
-      await kernelFile.writeAsBytes(kernelAsset);
+      if (kernelAsset.etag != md5.convert(kernelAsset.inline).toString()) {
+        throw GrpcError.failedPrecondition('Kernel asset has been modified');
+      }
 
-      if (flutterAssetsBundle != null) {
+      // Write the kernel file to disk
+      var kernelAssetData = kernelAsset.inline;
+      var kernelAssetFilename = kernelAsset.filename;
+      if (kernelAssetFilename.endsWith('.gz')) {
+        kernelAssetData = gzip.decode(kernelAssetData) as Uint8List;
+        kernelAssetFilename = kernelAssetFilename.substring(
+          0,
+          kernelAssetFilename.length - '.gz'.length,
+        );
+      }
+      final kernelFile = dir.childFile(kernelAssetFilename);
+      await kernelFile.writeAsBytes(kernelAssetData);
+
+      if (flutterAssetsBundle case final flutterAssetsBundle?) {
+        if (flutterAssetsBundle.etag !=
+            md5.convert(flutterAssetsBundle.inline).toString()) {
+          throw GrpcError.failedPrecondition(
+            'Flutter assets bundle has been modified',
+          );
+        }
         // Write the Flutter assets bundle to disk
-        final flutterAssetsFile = dir.childFile('flutter_assets.tar.gz');
-        await flutterAssetsFile.writeAsBytes(flutterAssetsBundle!);
+        final flutterAssetsFile = dir.childFile(flutterAssetsBundle.filename);
+        await flutterAssetsFile.writeAsBytes(flutterAssetsBundle.inline);
         await extractFileToDisk(
           flutterAssetsFile.path,
           dir.childDirectory('flutter_assets').path,
@@ -275,7 +303,10 @@ final class FlyDeploymentEngine {
       );
 
       // Generate the dockerfile for the project.
-      final generator = DockerfileGenerator(project: projectAst);
+      final generator = DockerfileGenerator(
+        project: projectAst,
+        assetType: kernelAsset.type,
+      );
       final dockerfile = generator.generate();
       final dockerfileFile = dir.childFile('Dockerfile');
       await dockerfileFile.writeAsString(dockerfile);

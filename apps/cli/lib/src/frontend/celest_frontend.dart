@@ -833,7 +833,7 @@ final class CelestFrontend {
         return projectResolver.resolvedProject;
       });
 
-  Future<void> _writeProjectOutputs({
+  Future<EntrypointResult> _writeProjectOutputs({
     required ResolvedProject resolvedProject,
     required String environmentId,
   }) async {
@@ -846,13 +846,13 @@ final class CelestFrontend {
       verbose: verbose,
       enabledExperiments: celestProject.analysisOptions.enabledExperiments,
     );
-    final kernel = await entrypointCompiler.compile(
+    final output = await entrypointCompiler.compile(
       resolvedProject: resolvedProject,
       entrypointPath: projectPaths.localApiEntrypoint,
     );
     await buildOutputs
-        .childFile('main.aot.dill')
-        .writeAsBytes(kernel.outputDill);
+        .childFile(p.basename(output.outputDillPath))
+        .writeAsBytes(output.outputDill);
 
     // Generate `flutter_assets` for the Flutter app.
     if (resolvedProject.sdkConfig.targetSdk == ast.SdkType.flutter) {
@@ -899,7 +899,10 @@ final class CelestFrontend {
       }
     }
 
-    final dockerfile = DockerfileGenerator(project: resolvedProject);
+    final dockerfile = DockerfileGenerator(
+      project: resolvedProject,
+      assetType: output.type,
+    );
     await buildOutputs
         .childFile('Dockerfile')
         .writeAsString(dockerfile.generate());
@@ -907,6 +910,8 @@ final class CelestFrontend {
     await buildOutputs.childFile('celest.json').writeAsString(
           prettyPrintJson(resolvedProject.toProto().toProto3Json()),
         );
+
+    return output;
   }
 
   Future<Uri> _startLocalApi(
@@ -1017,27 +1022,24 @@ final class CelestFrontend {
     required ast.ResolvedProject resolvedProject,
   }) =>
       performance.trace('CelestFrontend', 'deployProject', () async {
-        await _writeProjectOutputs(
+        final output = await _writeProjectOutputs(
           resolvedProject: resolvedProject,
           environmentId: environmentId,
         );
-        final (kernelBytes, flutterAssetBytes) = await (
-          fileSystem
-              .directory(projectPaths.buildDir)
-              .childFile('main.aot.dill')
-              .readAsBytes(),
-          switch (resolvedProject.sdkConfig.targetSdk) {
+        final (kernelBytes, flutterAssetBytes) = (
+          output.outputDill,
+          await switch (resolvedProject.sdkConfig.targetSdk) {
             ast.SdkType.flutter => _tarGzDirectory(
                 p.join(projectPaths.buildDir, 'flutter_assets'),
               ),
             _ => Future.value(Uint8List(0)),
           },
-        ).wait;
+        );
         final assets = [
           pb.ProjectAsset(
-            type: pb.ProjectAsset_Type.DART_KERNEL,
-            filename: 'main.aot.dill',
-            inline: kernelBytes,
+            type: output.type,
+            filename: '${p.basenameWithoutExtension(output.outputDillPath)}.gz',
+            inline: gzip.encode(kernelBytes),
           ),
           if (resolvedProject.sdkConfig.targetSdk == ast.SdkType.flutter)
             pb.ProjectAsset(

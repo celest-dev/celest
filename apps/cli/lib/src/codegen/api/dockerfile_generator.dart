@@ -1,12 +1,17 @@
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cloud/src/proto.dart' as proto;
 import 'package:mustache_template/mustache_template.dart';
 
 /// Generates a `Dockerfile` for the user's project so they can self-host it.
 final class DockerfileGenerator {
-  DockerfileGenerator({required this.project});
+  DockerfileGenerator({
+    required this.assetType,
+    required this.project,
+  });
 
+  final proto.ProjectAsset_Type assetType;
   final ast.ResolvedProject project;
 
   static final Template _dartTemplate = Template(r'''
@@ -27,6 +32,19 @@ COPY celest.json .
 ENV PORT=8080
 EXPOSE $PORT
 ''');
+
+  // TODO(dnys1): Remove `--platform=linux/amd64` when Celest supports arm64.
+  static const String _dartExeTemplate = r'''
+# syntax=docker/dockerfile:1.2
+FROM --platform=linux/amd64 celestdev/core-runtime:latest
+
+WORKDIR /app
+COPY --chmod=755 main.exe .
+COPY celest.json .
+
+ENV PORT=8080
+EXPOSE $PORT
+''';
 
   // TODO(dnys1): Remove `--platform=linux/amd64` when Celest supports arm64.
   static final Template _flutterTemplate = Template(r'''
@@ -50,6 +68,9 @@ EXPOSE $PORT
 ''');
 
   String generate() {
+    if (assetType == proto.ProjectAsset_Type.DART_EXECUTABLE) {
+      return _dartExeTemplate;
+    }
     return switch (project.sdkConfig.targetSdk) {
       SdkType.flutter => _flutterTemplate.renderString({
           'version': project.sdkConfig.flutter!.version.canonicalizedVersion,

@@ -160,7 +160,8 @@ class TestRunner {
           exe: Platform.resolvedExecutable,
           action: PubAction.upgrade,
           workingDirectory: projectRoot,
-          verbose: Platform.environment.containsKey('CI'),
+          // verbose: Platform.environment.containsKey('CI'),
+          verbose: false,
         ).timeout(const Duration(seconds: 30));
         if (updateGoldens) {
           if (goldensDir.existsSync()) {

@@ -222,19 +222,13 @@ class Sdk {
         'vm_platform_strong_product.dill',
       );
 
-  /// The version when the new bytecode format and compiler was [introduced](https://github.com/dart-lang/sdk/commit/3abf78212c480cbbbfd43f6382ff262532c90e4d).
-  ///
-  /// Currently, the SDK does not bundle the `dart2bytecode` tool, so this
-  /// version just signifies the runtime version that supports the new bytecode
-  /// format.
-  static final bytecodeVersion = Version.parse('3.6.0-133.0.dev');
+  /// The version when cross-compilation was introduced.
+  static final Version _crossCompilationVersion =
+      Version.parse('3.8.0-262.0.dev');
 
-  /// Whether or not the current SDK supports the new bytecode format.
-  ///
-  /// Trying to use the `dart2bytecode` tool on an SDK that does not support
-  /// the new bytecode format will result in an error.
-  bool get supportsBytecode {
-    return version >= bytecodeVersion;
+  /// Whether or not the current SDK supports cross-compilation.
+  bool get supportsCrossCompilation {
+    return version >= _crossCompilationVersion;
   }
 }
 

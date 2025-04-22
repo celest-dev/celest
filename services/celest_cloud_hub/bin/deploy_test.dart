@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/src/sdk/sdk_finder.dart';
+import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/deploy/fly/fly_deployment_engine.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
+import 'package:crypto/crypto.dart';
 import 'package:file/local.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
@@ -110,7 +112,12 @@ Future<void> main() async {
         dart: ast.Sdk(type: ast.SdkType.dart, version: sdk.version),
       ),
     ),
-    kernelAsset: bytes,
+    kernelAsset: (
+      type: ProjectAsset_Type.DART_KERNEL,
+      inline: bytes,
+      filename: 'main.aot.dill',
+      etag: md5.convert(bytes).toString(),
+    ),
     flutterAssetsBundle: null,
     environment: environment,
   );
