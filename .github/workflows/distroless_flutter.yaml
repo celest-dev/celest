@@ -117,7 +117,8 @@ jobs:
 
       - name: Build and Push Image (engine)
         id: build-push-engine
-        if: steps.is_needed.outputs.engine == 'true'  # Only run if the engine image is needed
+        # Only run if the engine image is needed or if the workflow is triggered manually
+        if: steps.is_needed.outputs.engine == 'true' || github.event_name == 'workflow_dispatch'
         uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # 6.15.0
         with:
           context: apps/distroless/flutter/build
@@ -133,7 +134,8 @@ jobs:
 
       - name: Build and Push Image (builder)
         id: build-push-builder
-        if: steps.is_needed.outputs.builder == 'true' # Only run if the builder image is needed
+        # Only run if the builder image is needed or if the workflow is triggered manually
+        if: steps.is_needed.outputs.builder == 'true' || github.event_name == 'workflow_dispatch'
         uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # 6.15.0
         with:
           context: apps/distroless/flutter/build
@@ -149,7 +151,8 @@ jobs:
 
       - name: Build and Push Image (runtime)
         id: build-push-runtime
-        if: steps.is_needed.outputs.runtime == 'true' # Only run if the runtime image is needed
+        # Only run if the runtime image is needed or if the workflow is triggered manually
+        if: steps.is_needed.outputs.runtime == 'true' || github.event_name == 'workflow_dispatch'
         uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # 6.15.0
         with:
           context: apps/distroless/flutter/build
