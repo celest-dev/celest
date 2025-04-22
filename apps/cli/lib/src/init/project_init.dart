@@ -14,6 +14,7 @@ import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/pub/pub_action.dart';
 import 'package:celest_cli/src/pub/pub_cache.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
+import 'package:celest_cli/src/sdk/sdk_finder.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/run.dart';
@@ -151,6 +152,16 @@ base mixin Configure on CelestCommand {
     ) = await _locateProject();
 
     yield const Initializing();
+    final sdkFinder = DartSdkFinder(
+      fileSystem: fileSystem,
+      platform: platform,
+      projectRoot: projectRoot,
+    );
+    Sdk.current = (await sdkFinder.findSdk()).sdk;
+    logger.finest(
+      '${Sdk.current.sdkType.name.capitalized} SDK found: ${Sdk.current.sdkPath}',
+    );
+
     await init(projectRoot: projectRoot, parentProject: parentProject);
     await _fixPubCacheIfNeeded();
     logger.finest('Celest project initialized');

@@ -7,5 +7,6 @@ build/
 
 tool/debug
 **/*.dill
+**/*.exe
 **/*.pkg
 vm_service_info.json

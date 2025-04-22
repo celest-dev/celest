@@ -129,8 +129,8 @@ CMD ["--elf=/app/main.aot", "/app/main.aot.dill"]
 # Copy the Dart runtime and AOT runtime into a minimal runtime image
 FROM gcr.io/distroless/base-debian${DEBIAN_VERSION} AS runtime
 
-COPY --from=dart /runtime/ /
-COPY --from=dart /usr/lib/dart/bin/dartaotruntime /usr/lib/dart/bin/dartaotruntime
+COPY --from=sdk /runtime/ /
+COPY --from=sdk /usr/lib/dart/bin/dartaotruntime /usr/lib/dart/bin/dartaotruntime
 COPY --from=sqlite /sqlite_install /
 
 ENTRYPOINT ["/usr/lib/dart/bin/dartaotruntime"]

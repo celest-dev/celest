@@ -1,0 +1,11 @@
+# Dart
+.dart_tool/
+pubspec.lock
+
+# Celest
+build/
+.env
+.env.*
+
+# FVM Version Cache
+.fvm/

@@ -133,7 +133,9 @@ class TestRunner {
 
   static Future<void> _warmUp(String projectRoot) {
     return Isolate.run(() async {
-      final sdkResult = await const DartSdkFinder().findSdk();
+      final sdkResult = await DartSdkFinder(
+        projectRoot: projectRoot,
+      ).findSdk();
       Sdk.current = sdkResult.sdk;
       return CelestAnalyzer.warmUp(projectRoot);
     });
@@ -142,7 +144,17 @@ class TestRunner {
   void run() {
     group(testName, () {
       setUpAll(() async {
-        final sdkResult = await const DartSdkFinder().findSdk();
+        if (fileSystem.file(p.join(projectRoot, '.fvmrc')).existsSync()) {
+          final res = Process.runSync(
+            'fvm',
+            ['use'],
+            workingDirectory: projectRoot,
+          );
+          expect(res.exitCode, 0, reason: '${res.stdout}\n${res.stderr}');
+        }
+        final sdkResult = await DartSdkFinder(
+          projectRoot: projectRoot,
+        ).findSdk();
         Sdk.current = sdkResult.sdk;
         await runPub(
           exe: Platform.resolvedExecutable,
@@ -394,6 +406,10 @@ class TestRunner {
       expect(project, isNotNull);
 
       final frontend = CelestFrontend();
+      final buildDir = fileSystem.directory(projectPaths.buildDir);
+      if (buildDir.existsSync()) {
+        buildDir.deleteSync(recursive: true);
+      }
       final result = await frontend.build(
         migrateProject: false,
         currentProgress: cliLogger.progress('Building project...'),
@@ -404,7 +420,14 @@ class TestRunner {
       final outputDir = projectPaths.buildDir;
       final imageName = '$testName-${Random().nextInt(1000000)}';
       final dockerBuild = await processManager.run(
-        ['docker', 'build', '-t', imageName, '.'],
+        [
+          'docker',
+          'build',
+          '-t',
+          imageName,
+          if (testName case 'fvm' || 'flutter') '--platform=linux/amd64',
+          '.',
+        ],
         workingDirectory: outputDir,
       );
       expect(
@@ -427,6 +450,7 @@ class TestRunner {
           '--rm',
           '-p',
           '$openPort:8080',
+          if (testName case 'fvm' || 'flutter') '--platform=linux/amd64',
           for (final database in project!.databases.values)
             if (database.config case ast.CelestDatabaseConfig(:final hostname))
               '--env=${hostname.name}=file::memory:',
