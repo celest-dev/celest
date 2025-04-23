@@ -34,7 +34,7 @@ typedef ProjectAsset =
       pb.ProjectAsset_Type type,
       String filename,
       Uint8List inline,
-      String etag,
+      String? etag,
     });
 
 final class FlyDeploymentEngine {
@@ -263,8 +263,10 @@ final class FlyDeploymentEngine {
 
     // Deploy using `flyctl deploy`
     await _withTempDirectory((dir) async {
-      if (kernelAsset.etag != md5.convert(kernelAsset.inline).toString()) {
-        throw GrpcError.failedPrecondition('Kernel asset has been modified');
+      if (kernelAsset.etag case final etag?) {
+        if (etag != md5.convert(kernelAsset.inline).toString()) {
+          throw GrpcError.failedPrecondition('Kernel asset has been modified');
+        }
       }
 
       // Write the kernel file to disk
@@ -281,11 +283,12 @@ final class FlyDeploymentEngine {
       await kernelFile.writeAsBytes(kernelAssetData);
 
       if (flutterAssetsBundle case final flutterAssetsBundle?) {
-        if (flutterAssetsBundle.etag !=
-            md5.convert(flutterAssetsBundle.inline).toString()) {
-          throw GrpcError.failedPrecondition(
-            'Flutter assets bundle has been modified',
-          );
+        if (flutterAssetsBundle.etag case final etag?) {
+          if (etag != md5.convert(flutterAssetsBundle.inline).toString()) {
+            throw GrpcError.failedPrecondition(
+              'Flutter assets bundle has been modified',
+            );
+          }
         }
         // Write the Flutter assets bundle to disk
         final flutterAssetsFile = dir.childFile(flutterAssetsBundle.filename);

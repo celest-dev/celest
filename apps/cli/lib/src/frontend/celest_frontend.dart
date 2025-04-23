@@ -33,6 +33,7 @@ import 'package:celest_cli/src/utils/process.dart';
 import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cloud/src/proto.dart' as pb;
+import 'package:crypto/crypto.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:stream_transform/stream_transform.dart';
@@ -1002,7 +1003,7 @@ final class CelestFrontend {
     return cloudEnvironment;
   }
 
-  Future<Uint8List> _tarGzDirectory(String path) async {
+  Future<(Uint8List, String)> _tarGzDirectory(String path) async {
     final encoder = TarFileEncoder();
     final tarFile = fileSystem.file(
       p.join(projectPaths.projectCacheDir, '${p.basename(path)}.tar'),
@@ -1013,7 +1014,8 @@ final class CelestFrontend {
       filename: tarFile.path,
     );
     final tarStream = tarFile.openRead();
-    return collectBytes(tarStream.transform(gzip.encoder));
+    final bytes = await collectBytes(tarStream.transform(gzip.encoder));
+    return (bytes, md5.convert(bytes).toString());
   }
 
   Future<(ast.ResolvedProject, Uri)> _deployProject({
@@ -1026,26 +1028,26 @@ final class CelestFrontend {
           resolvedProject: resolvedProject,
           environmentId: environmentId,
         );
-        final (kernelBytes, flutterAssetBytes) = (
-          output.outputDill,
-          await switch (resolvedProject.sdkConfig.targetSdk) {
-            ast.SdkType.flutter => _tarGzDirectory(
-                p.join(projectPaths.buildDir, 'flutter_assets'),
-              ),
-            _ => Future.value(Uint8List(0)),
-          },
-        );
+        final (flutterAssetBytes, flutterAssetsEtag) =
+            switch (resolvedProject.sdkConfig.targetSdk) {
+          ast.SdkType.flutter => await _tarGzDirectory(
+              p.join(projectPaths.buildDir, 'flutter_assets'),
+            ),
+          _ => (Uint8List(0), ''),
+        };
         final assets = [
           pb.ProjectAsset(
             type: output.type,
             filename: '${p.basenameWithoutExtension(output.outputDillPath)}.gz',
-            inline: gzip.encode(kernelBytes),
+            inline: gzip.encode(output.outputDill),
+            etag: output.outputDillDigest.toString(),
           ),
           if (resolvedProject.sdkConfig.targetSdk == ast.SdkType.flutter)
             pb.ProjectAsset(
               type: pb.ProjectAsset_Type.FLUTTER_ASSETS,
               filename: 'flutter_assets.tar.gz',
               inline: flutterAssetBytes,
+              etag: flutterAssetsEtag,
             ),
         ];
         final operation = cloud.projects.environments.deploy(
