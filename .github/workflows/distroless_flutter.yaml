@@ -63,12 +63,6 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046 # 2.19.0
-        with:
-          channel: stable
-          cache: true
-
       # Set up Docker Buildx, the builder engine for multi-platform builds
       - name: Set up Docker Buildx
         id: buildx
@@ -166,8 +160,16 @@ jobs:
           cache-from: type=gha # Pull cache from GitHub Actions cache
           cache-to: type=gha,mode=max # Push cache to GitHub Actions cache (mode=max includes all layers)
 
+      - name: Setup Flutter
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046 # 2.19.0
+        with:
+          channel: ${{ matrix.sdk.channel }}
+          flutter-version: ${{ matrix.sdk.version }}
+
       - name: Test Container
         working-directory: apps/distroless/flutter/test
+        env:
+          FLUTTER_VERSION: ${{ matrix.sdk.version }}
         run: |
           dart pub get
           ./test-docker.sh

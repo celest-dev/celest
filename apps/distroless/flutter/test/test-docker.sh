@@ -4,16 +4,17 @@ set -e
 
 if [ -n "$FLUTTER_ROOT" ]; then
   FLUTTER_SDK="$FLUTTER_ROOT"
-  FLUTTER_VERSION=$(cat $FLUTTER_SDK/version)
 fi
 if [ -z "$FLUTTER_VERSION" ]; then
-  echo "FLUTTER_VERSION is not set"
-  echo "Defaulting to 3.29.3"
-  FLUTTER_VERSION=3.29.3
+  FLUTTER_VERSION=$(cat $FLUTTER_SDK/version)
 fi
+
+echo "FLUTTER_SDK: $FLUTTER_SDK"
+echo "FLUTTER_VERSION: $FLUTTER_VERSION"
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
+rm -rf out/release
 mkdir -p out/release
 cd out/release
 trap "cd $SCRIPT_DIR" EXIT

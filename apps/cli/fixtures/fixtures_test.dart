@@ -160,6 +160,7 @@ class TestRunner {
           exe: Platform.resolvedExecutable,
           action: PubAction.upgrade,
           workingDirectory: projectRoot,
+          //
           // verbose: Platform.environment.containsKey('CI'),
           verbose: false,
         ).timeout(const Duration(seconds: 30));
