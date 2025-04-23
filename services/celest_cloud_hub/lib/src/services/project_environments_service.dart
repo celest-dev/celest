@@ -453,13 +453,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     if (kernelAsset == null) {
       throw GrpcError.invalidArgument('Missing Dart kernel asset');
     }
-    if (!kernelAsset.hasEtag()) {
-      throw GrpcError.invalidArgument('Missing ETag for kernel asset');
-    }
     final flutterAssetsBundle = assets[pb.ProjectAsset_Type.FLUTTER_ASSETS];
-    if (flutterAssetsBundle != null && !flutterAssetsBundle.hasEtag()) {
-      throw GrpcError.invalidArgument('Missing ETag for Flutter asset');
-    }
 
     final operationId = typeId('op');
     final operation =
@@ -481,14 +475,14 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         filename: kernelAsset.filename,
         inline: Uint8List.fromList(kernelAsset.inline).asUnmodifiableView(),
         type: kernelAsset.type,
-        etag: kernelAsset.etag,
+        etag: kernelAsset.hasEtag() ? kernelAsset.etag : null,
       ),
       flutterAssetsBundle: switch (flutterAssetsBundle) {
         final asset? => (
           filename: asset.filename,
           inline: Uint8List.fromList(asset.inline).asUnmodifiableView(),
           type: asset.type,
-          etag: asset.etag,
+          etag: asset.hasEtag() ? asset.etag : null,
         ),
         _ => null,
       },
