@@ -36,7 +36,7 @@ EXPOSE $PORT
   // TODO(dnys1): Remove `--platform=linux/amd64` when Celest supports arm64.
   static const String _dartExeTemplate = r'''
 # syntax=docker/dockerfile:1.2
-FROM --platform=linux/amd64 celestdev/core-runtime:latest
+FROM --platform=linux/amd64 celestdev/runtime:latest
 
 WORKDIR /app
 COPY --chmod=755 main.exe .

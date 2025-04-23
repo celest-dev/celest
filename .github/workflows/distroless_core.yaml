@@ -51,7 +51,7 @@ jobs:
           file: apps/distroless/core/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
-          tags: celestdev/core-builder:latest
+          tags: celestdev/runtime:latest
           cache-from: type=gha # Pull cache from GitHub Actions cache
           cache-to: type=gha,mode=max # Push cache to GitHub Actions cache (mode=max includes all layers)
 
