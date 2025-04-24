@@ -33,7 +33,6 @@ import 'package:celest_cli/src/utils/process.dart';
 import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:celest_cloud/src/proto.dart' as pb;
-import 'package:crypto/crypto.dart';
 import 'package:logging/logging.dart';
 import 'package:mason_logger/mason_logger.dart' show Progress;
 import 'package:stream_transform/stream_transform.dart';
@@ -1015,7 +1014,8 @@ final class CelestFrontend {
     );
     final tarStream = tarFile.openRead();
     final bytes = await collectBytes(tarStream.transform(gzip.encoder));
-    return (bytes, md5.convert(bytes).toString());
+    final digest = await computeMd5(bytes.asUnmodifiableView());
+    return (bytes, digest.toString());
   }
 
   Future<(ast.ResolvedProject, Uri)> _deployProject({
@@ -1035,12 +1035,16 @@ final class CelestFrontend {
             ),
           _ => (Uint8List(0), ''),
         };
+        final gzippedOutput = gzip.encode(output.outputDill) as Uint8List;
+        final gzippedDigest = await computeMd5(
+          gzippedOutput.asUnmodifiableView(),
+        );
         final assets = [
           pb.ProjectAsset(
             type: output.type,
-            filename: '${p.basenameWithoutExtension(output.outputDillPath)}.gz',
-            inline: gzip.encode(output.outputDill),
-            etag: output.outputDillDigest.toString(),
+            filename: '${p.basename(output.outputDillPath)}.gz',
+            inline: gzippedOutput,
+            etag: gzippedDigest.toString(),
           ),
           if (resolvedProject.sdkConfig.targetSdk == ast.SdkType.flutter)
             pb.ProjectAsset(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
@@ -62,18 +63,20 @@ final class EntrypointCompiler {
   final bool verbose;
   final List<String> enabledExperiments;
 
-  Future<EntrypointResult> _crossCompile({
+  Future<EntrypointResult> _compileExecutable({
     required String entrypointPath,
   }) async {
-    logger.fine('Cross-compiling entrypoint: $entrypointPath');
+    logger.fine('Compiling entrypoint to exe: $entrypointPath');
     final outputPath = p.join(p.dirname(entrypointPath), 'main.exe');
     final command = <String>[
       Sdk.current.dart,
       'compile',
       'exe',
-      '--target-os=linux',
-      '--target-arch=x64',
-      '--experimental-cross-compilation',
+      if (Abi.current() != Abi.linuxX64) ...[
+        '--target-os=linux',
+        '--target-arch=x64',
+        '--experimental-cross-compilation',
+      ],
       '-o',
       outputPath,
       entrypointPath,
@@ -87,18 +90,18 @@ final class EntrypointCompiler {
     );
     final ProcessResult(:exitCode, :stdout as String, :stderr as String) =
         result;
-    logger.fine('Cross-compilation finished with status $exitCode');
+    logger.fine('Exe compilation finished with status $exitCode');
     if (exitCode != 0) {
       throw ProcessException(
         Sdk.current.dart,
         command.sublist(1),
-        'Cross-compilation failed:\n$stdout\n$stderr',
+        'Exe compilation failed:\n$stdout\n$stderr',
         exitCode,
       );
     }
 
     final outputDill = await fileSystem.file(outputPath).readAsBytes();
-    final outputDillDigest = await _computeMd5(outputDill.asUnmodifiableView());
+    final outputDillDigest = await computeMd5(outputDill.asUnmodifiableView());
     return EntrypointResult(
       type: proto.ProjectAsset_Type.DART_EXECUTABLE,
       outputDillPath: outputPath,
@@ -120,8 +123,9 @@ final class EntrypointCompiler {
     }
 
     if (resolvedProject.sdkConfig.targetSdk == SdkType.dart &&
-        Sdk.current.supportsCrossCompilation) {
-      return _crossCompile(
+        (Abi.current() == Abi.linuxX64 ||
+            Sdk.current.supportsCrossCompilation)) {
+      return _compileExecutable(
         entrypointPath: entrypointPath,
       );
     }
@@ -187,7 +191,7 @@ final class EntrypointCompiler {
     logger.finer('Compilation succeeded');
 
     final outputDill = await fileSystem.file(outputPath).readAsBytes();
-    final outputDillDigest = await _computeMd5(outputDill.asUnmodifiableView());
+    final outputDillDigest = await computeMd5(outputDill.asUnmodifiableView());
     return EntrypointResult(
       type: proto.ProjectAsset_Type.DART_KERNEL,
       outputDillPath: outputPath,
@@ -197,6 +201,6 @@ final class EntrypointCompiler {
   }
 }
 
-Future<Digest> _computeMd5(Uint8List data) async {
+Future<Digest> computeMd5(Uint8List data) async {
   return Isolate.run(() => md5.convert(data));
 }
