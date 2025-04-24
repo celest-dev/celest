@@ -41,11 +41,6 @@ jobs:
           # Because many golden tests encode the precise Dart/Flutter SDKs used to generate
           # them, these values must be consistently used when running tests locally and in CI.
           flutter-version: 3.29.3
-      # Needed for testing FVM integration and cross-compilation.
-      - name: Install FVM
-        run: |
-          dart pub global activate fvm
-          dart pub global run fvm:main install 3.32.0-0.2.pre
       - name: Setup Libsecret
         if: runner.os == 'Linux'
         run: tool/setup-ci.sh
