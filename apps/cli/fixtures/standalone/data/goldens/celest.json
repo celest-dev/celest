@@ -207,18 +207,28 @@
       "type": "DART",
       "version": {
         "major": 3,
-        "minor": 7,
-        "patch": 2,
-        "canonicalizedVersion": "3.7.2"
+        "minor": 8,
+        "patch": 0,
+        "preRelease": [
+          278.0,
+          1.0,
+          "beta"
+        ],
+        "canonicalizedVersion": "3.8.0-278.1.beta"
       }
     },
     "flutter": {
       "type": "FLUTTER",
       "version": {
         "major": 3,
-        "minor": 29,
-        "patch": 3,
-        "canonicalizedVersion": "3.29.3"
+        "minor": 32,
+        "patch": 0,
+        "preRelease": [
+          0.0,
+          1.0,
+          "pre"
+        ],
+        "canonicalizedVersion": "3.32.0-0.1.pre"
       }
     },
     "targetSdk": "DART",
