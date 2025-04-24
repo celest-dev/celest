@@ -449,7 +449,9 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     );
 
     final assets = {for (final asset in request.assets) asset.type: asset};
-    final kernelAsset = assets[pb.ProjectAsset_Type.DART_KERNEL];
+    final kernelAsset =
+        assets[pb.ProjectAsset_Type.DART_KERNEL] ??
+        assets[pb.ProjectAsset_Type.DART_EXECUTABLE];
     if (kernelAsset == null) {
       throw GrpcError.invalidArgument('Missing Dart kernel asset');
     }
