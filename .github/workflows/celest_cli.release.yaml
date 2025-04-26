@@ -1,0 +1,66 @@
+name: celest_cli (Release)
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'celest_cli-v*.*.*'
+
+env:
+  CELEST_NO_ANALYTICS: true
+
+permissions:
+  contents: write
+
+# Prevent duplicate runs due to Graphite
+# https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
+  cancel-in-progress: true
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046 # 2.19.0
+        with:
+          cache: true
+          channel: beta # Needed for cross-compilation
+
+      - name: Fix pub cache
+        run: |
+          dart pub get
+          dart run fix_pub_cache.dart
+        working-directory: tool
+
+      - name: Get Packages
+        run: dart pub get
+        working-directory: apps/cli
+
+      - name: Create Bundle
+        id: bundle
+        run: dart run tool/release.dart --target-os=linux --target-arch=x64 --target-arch=arm64
+        working-directory: apps/cli
+
+      # # Test the new CLI before releasing
+      # - name: Install Bundle
+      #   uses: celest-dev/setup-celest@main
+      #   with:
+      #     installer: ${{ steps.bundle.outputs.installer }}
+      #   env:
+      #     CELEST_VERBOSE: true
+      # - name: Test
+      #   working-directory: apps/cli
+      #   run: dart test -t e2e-installed --fail-fast
+
+      - name: Create Release
+        id: create-release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631 # 2.2.2
+        with:
+          release_name: v${{ steps.bundle.outputs.version }}
+          files: ${{ join(fromJson(steps.bundle.outputs.artifacts), '\n') }}
