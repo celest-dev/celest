@@ -62,5 +62,5 @@ jobs:
         if: github.ref_type == 'tag'
         uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631 # 2.2.2
         with:
-          release_name: v${{ steps.bundle.outputs.version }}
-          files: ${{ join(fromJson(steps.bundle.outputs.artifacts), '\n') }}
+          name: v${{ steps.bundle.outputs.version }}
+          files: ${{ steps.bundle.outputs.artifacts }}
