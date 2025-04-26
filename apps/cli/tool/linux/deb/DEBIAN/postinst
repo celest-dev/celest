@@ -1,0 +1,4 @@
+#!/bin/sh
+
+chmod +x /opt/celest/celest
+ln -sf /opt/celest/celest /usr/local/bin/celest

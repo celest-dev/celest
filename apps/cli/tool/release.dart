@@ -5,7 +5,6 @@ import 'dart:io' show ProcessException, stderr, stdout;
 import 'package:archive/archive_io.dart';
 import 'package:args/args.dart';
 import 'package:celest_cli/src/context.dart';
-import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/version.dart';
 import 'package:file/file.dart';
 import 'package:mustache_template/mustache.dart';
@@ -23,11 +22,6 @@ final Directory buildDir = fileSystem.directory(
 /// The directory to use for bundled files.
 final Directory outputsDir = toolDir.parent.childDirectory('releases')
   ..createSync();
-
-/// The directory to use for temporary (non-bundled) files.
-final Directory tempDir = fileSystem.systemTempDirectory.createTempSync(
-  'celest_build_',
-);
 
 /// The current ABI which identifies the OS and architecture.
 final Abi osArch = Abi.current();
@@ -158,6 +152,11 @@ abstract class Bundler {
         'celest_cli-$os-$arch.$extension',
       );
 
+  /// The directory to use for temporary (non-bundled) files.
+  final Directory tempDir = fileSystem.systemTempDirectory.createTempSync(
+    'celest_build_',
+  );
+
   /// Bundles the CLI and its dependencies into a single file, performing
   /// code signing and notarization as needed.
   Future<void> bundle();
@@ -205,6 +204,8 @@ final class LinuxDebBundler extends Bundler {
     ///
     /// DEBIAN/
     ///  control
+    ///  postinst
+    ///  postrm
     /// opt/
     ///  celest/
     ///   celest
@@ -224,11 +225,7 @@ final class LinuxDebBundler extends Bundler {
         final outputControl = Template(
           controlFile.readAsStringSync(),
         ).renderString({
-          'arch': switch (osArch) {
-            Abi.linuxArm64 => 'arm64',
-            Abi.linuxX64 => 'amd64',
-            _ => unreachable(),
-          },
+          'arch': arch,
           'version': version,
         });
         print('Writing control contents:\n\n$outputControl\n');
