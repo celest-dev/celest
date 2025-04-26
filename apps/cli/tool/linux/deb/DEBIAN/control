@@ -1,0 +1,6 @@
+Package: Celest
+Depends: gnome-keyring, libsecret-1-0, libsqlite3-dev
+Version: {{ version }}
+Maintainer: Celest
+Architecture: {{ arch }}
+Description: The CLI for Celest, the Flutter cloud platform
