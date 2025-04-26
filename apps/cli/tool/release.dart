@@ -82,8 +82,12 @@ Future<void> main(List<String> args) async {
 
   if (platform.environment['GITHUB_OUTPUT'] case final ciOutput?) {
     fileSystem.file(ciOutput).writeAsStringSync(
-          'version=$version\n'
-          'artifacts=${jsonEncode(artifacts)}\n',
+          [
+            'version=$version',
+            'artifacts<<EOF',
+            ...artifacts,
+            'EOF',
+          ].join('\n'),
           mode: FileMode.append,
           flush: true,
         );
