@@ -95,12 +95,11 @@ final class Cli {
       await ctx.secureStorage.init();
     } on Object catch (e, st) {
       _logger.fine('Failed to initialize storage', e, st);
-      // TODO(dnys1): Need glib/gio linked on Linux.
       if (kReleaseMode) {
         if (ctx.platform.isLinux) {
           throw const CliException(
-            'libsecret is not installed. Please run `apt-get install libsecret-1-dev` '
-            'or equivalent before running Celest.',
+            'libsecret is not installed. Please run `apt-get install gnome-keyring libsecret-1-0` '
+            'or equivalent and ensure gnome-keyring-daemon is running before running Celest.',
           );
         }
         // This shouldn't happen in release mode, since permissioning should

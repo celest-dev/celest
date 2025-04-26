@@ -225,7 +225,11 @@ final class LinuxDebBundler extends Bundler {
         final outputControl = Template(
           controlFile.readAsStringSync(),
         ).renderString({
-          'arch': arch,
+          'arch': switch (arch) {
+            'arm64' => 'arm64',
+            'x64' => 'amd64',
+            _ => throw UnsupportedError('Unsupported arch: $arch'),
+          },
           'version': version,
         });
         print('Writing control contents:\n\n$outputControl\n');

@@ -1,5 +1,5 @@
 Package: Celest
-Depends: gnome-keyring, libsecret-1-0, libsqlite3-dev
+Depends: gnome-keyring, libsecret-1-0, libsqlite3-0
 Version: {{ version }}
 Maintainer: Celest
 Architecture: {{ arch }}

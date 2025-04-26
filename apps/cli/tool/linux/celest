@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# A helper script for running Celest in headless Linux environments.
+# 
+# This script configures the environment for running Celest and then executes the Celest binary.
+
+set -e
+
+OS=`uname -s`
+if test $OS = "Linux"; then
+    test -e /etc/os-release && os_release='/etc/os-release' || os_release='/usr/lib/os-release'
+    . "${os_release}"
+
+    if [ "${ID:-linux}" != "debian" ] && [ "${ID_LIKE#*debian*}" != "${ID_LIKE}" ]; then
+        >&2 echo "Unsupported distribution: ${ID:-linux}"
+        exit 1
+    fi
+
+    # If running in headless mode, re-run script in dbus session.
+    if ! dbus-send --session --dest=org.freedesktop.DBus / org.freedesktop.DBus.Peer.Ping > /dev/null 2>&1; then
+        exec dbus-run-session -- "$0" "$@"
+    fi
+
+    echo 'password' | gnome-keyring-daemon --start --replace --components=secrets --unlock --daemonize > /dev/null 2>&1
+fi
+
+celest $@
