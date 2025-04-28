@@ -28,6 +28,7 @@ Future<Database> connect<Database extends GeneratedDatabase>(
   required secret tokenSecret,
   void Function(sqlite3.CommonDatabase)? setup,
   String? path,
+  bool logStatements = false,
 }) async {
   final host = context.get(hostnameVariable);
   if (host == null) {
@@ -36,6 +37,7 @@ Future<Database> connect<Database extends GeneratedDatabase>(
         name: name,
         path: path,
         setup: setup,
+        logStatements: logStatements,
       );
       return _checkConnection(factory(executor));
     }
@@ -54,9 +56,17 @@ Future<Database> connect<Database extends GeneratedDatabase>(
   final QueryExecutor connector;
   switch (hostUri) {
     case Uri(scheme: 'file', path: '/:memory:'):
-      connector = await inMemoryExecutor(setup: setup);
+      connector = await inMemoryExecutor(
+        setup: setup,
+        logStatements: logStatements,
+      );
     case Uri(scheme: 'file', :final path):
-      connector = await localExecutor(name: name, path: path, setup: setup);
+      connector = await localExecutor(
+        name: name,
+        path: path,
+        setup: setup,
+        logStatements: logStatements,
+      );
     case Uri(scheme: 'ws' || 'wss' || 'http' || 'https' || 'libsql'):
       final token = context.get(tokenSecret);
       if (token == null) {
