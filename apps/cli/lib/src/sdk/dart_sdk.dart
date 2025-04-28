@@ -223,8 +223,7 @@ class Sdk {
       );
 
   /// The version when cross-compilation was introduced.
-  static final Version _crossCompilationVersion =
-      Version.parse('3.8.0-262.0.dev');
+  static final Version _crossCompilationVersion = Version.parse('3.8.0');
 
   /// Whether or not the current SDK supports cross-compilation.
   bool get supportsCrossCompilation {
