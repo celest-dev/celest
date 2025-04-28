@@ -23,6 +23,8 @@ dependency_overrides:
     path: ../../../../../packages/celest_cloud
   celest_cloud_auth:
     path: ../../../../../services/celest_cloud_auth
+  celest_cloud_core:
+    path: ../../../../../services/celest_cloud_core
   celest_core:
     path: ../../../../../packages/celest_core
 

@@ -26,7 +26,7 @@ final class BuildCommand extends CelestCommand
 
     final needsMigration = await configure();
 
-    return CelestFrontend().build(
+    return CelestFrontend(stopSignal: stopSignal).build(
       migrateProject: needsMigration,
       currentProgress: cliLogger.progress('Building project'),
       environmentId: 'production', // TODO(dnys1): Allow setting environment

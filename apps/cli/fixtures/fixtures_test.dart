@@ -14,6 +14,7 @@ import 'package:celest/src/runtime/serve.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/src/analyzer/analysis_result.dart';
 import 'package:celest_cli/src/analyzer/celest_analyzer.dart';
+import 'package:celest_cli/src/cli/stop_signal.dart';
 import 'package:celest_cli/src/codegen/client_code_generator.dart';
 import 'package:celest_cli/src/codegen/cloud_code_generator.dart';
 import 'package:celest_cli/src/compiler/api/local_api_runner.dart';
@@ -407,7 +408,7 @@ class TestRunner {
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
-      final frontend = CelestFrontend();
+      final frontend = CelestFrontend(stopSignal: StopSignal());
       final buildDir = fileSystem.directory(projectPaths.buildDir);
       if (buildDir.existsSync()) {
         buildDir.deleteSync(recursive: true);

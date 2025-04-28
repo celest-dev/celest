@@ -12,6 +12,7 @@ import 'package:celest_cli/src/analyzer/analysis_error.dart';
 import 'package:celest_cli/src/analyzer/analysis_result.dart';
 import 'package:celest_cli/src/analyzer/celest_analyzer.dart';
 import 'package:celest_cli/src/ast/project_diff.dart';
+import 'package:celest_cli/src/cli/stop_signal.dart';
 import 'package:celest_cli/src/codegen/api/dockerfile_generator.dart';
 import 'package:celest_cli/src/codegen/client_code_generator.dart';
 import 'package:celest_cli/src/codegen/cloud_code_generator.dart';
@@ -24,9 +25,7 @@ import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/frontend/child_process.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/project/project_linker.dart';
-import 'package:celest_cli/src/repositories/organization_repository.dart';
-import 'package:celest_cli/src/repositories/project_environment_repository.dart';
-import 'package:celest_cli/src/repositories/project_repository.dart';
+import 'package:celest_cli/src/repositories/cloud_repository.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/utils/json.dart';
 import 'package:celest_cli/src/utils/process.dart';
@@ -40,21 +39,10 @@ import 'package:watcher/watcher.dart';
 
 enum RestartMode { hotReload, fullRestart }
 
-final class CelestFrontend {
-  CelestFrontend() {
-    // Initialize immediately instead of lazily since _stopSub is never accessed
-    // directly until `close`.
-    _stopSub = StreamGroup.merge([
-      ProcessSignal.sigint.watch(),
-      // SIGTERM is not supported on Windows. Attempting to register a SIGTERM
-      // handler raises an exception.
-      if (!io.Platform.isWindows) ProcessSignal.sigterm.watch(),
-    ]).listen((signal) {
-      logger.fine('Got exit signal: $signal');
-      if (!_stopSignal.isCompleted) {
-        _stopSignal.complete(signal);
-      }
-    });
+final class CelestFrontend with CloudRepository {
+  CelestFrontend({
+    required this.stopSignal,
+  }) {
     // Windows doesn't support listening for SIGUSR1 and SIGUSR2 signals.
     if (!platform.isWindows) {
       _reloadStream = StreamQueue(
@@ -67,7 +55,8 @@ final class CelestFrontend {
   }
 
   static CelestFrontend? instance;
-  static final Logger logger = Logger('CelestFrontend');
+  @override
+  final Logger logger = Logger('CelestFrontend');
   final CelestAnalyzer analyzer = CelestAnalyzer();
 
   int _logErrors(List<CelestAnalysisError> errors) {
@@ -82,6 +71,10 @@ final class CelestFrontend {
       logger.warning(warning.toString());
     }
   }
+
+  /// {@macro celest.cli.stop_signal}
+  @override
+  final StopSignal stopSignal;
 
   /// Signals that Celest is ready for the next batch of [_watcherSub] changes.
   ///
@@ -264,7 +257,7 @@ final class CelestFrontend {
       );
     }
 
-    await Future.any([reloadComplete.future, _stopSignal.future]);
+    await Future.any([reloadComplete.future, stopSignal.future]);
     await _cancelPendingOperations();
   }
 
@@ -300,18 +293,6 @@ final class CelestFrontend {
     return p.isWithin(projectPaths.projectLib, path);
   }
 
-  /// Signals that a SIGINT or SIGTERM event has fired and the CLI needs to
-  /// shutdown.
-  final _stopSignal = Completer<ProcessSignal>.sync();
-
-  /// Whether a SIGINT or SIGTERM signal has been received and the frontend
-  /// is no longer operational.
-  bool get stopped => _stopSignal.isCompleted;
-
-  /// Subscription to [ProcessSignal.sigint] and [ProcessSignal.sigterm] which
-  /// forwards to [_stopSignal] when triggered.
-  late final StreamSubscription<ProcessSignal> _stopSub;
-
   /// A broadcast stream of [ProcessSignal.sigusr1] and [ProcessSignal.sigusr2]
   /// signals which triggers a hot reload.
   ///
@@ -328,20 +309,13 @@ final class CelestFrontend {
   /// analyzed yet.
   ast.Project? currentProject;
 
-  ProjectRepository get projects => ProjectRepository(cloud);
-
-  ProjectEnvironmentRepository get projectEnvironments =>
-      ProjectEnvironmentRepository(cloud);
-
-  OrganizationRepository get organizations => OrganizationRepository(cloud);
-
   Future<int> run({
     required bool migrateProject,
     required Progress? currentProgress,
     ChildProcess? childProcess,
   }) async {
     try {
-      while (!stopped) {
+      while (!stopSignal.isStopped) {
         if (celestProject.usesBuildRunner) {
           _buildRunner ??= await _buildRunnerWatch();
         }
@@ -467,7 +441,7 @@ final class CelestFrontend {
                 },
               );
               unawaited(
-                _stopSignal.future.then(childProcess.stop),
+                stopSignal.future.then(childProcess.stop),
               );
             }
         }
@@ -537,7 +511,7 @@ final class CelestFrontend {
             running: 'Creating',
             completed: 'created',
           ),
-          cancelTrigger: _stopSignal.future,
+          cancelTrigger: stopSignal.future,
           resource: pb.Organization(),
         );
         logger.fine('Created organization: $organization');
@@ -585,7 +559,7 @@ final class CelestFrontend {
       );
       final project = await waiter.run(
         verbs: const (run: 'create', running: 'Creating', completed: 'created'),
-        cancelTrigger: _stopSignal.future,
+        cancelTrigger: stopSignal.future,
         resource: pb.Project(),
       );
       logger.fine('Created project: $project');
@@ -676,7 +650,7 @@ final class CelestFrontend {
     Progress? currentProgress;
     try {
       var projectId = await _loadProjectId();
-      while (!stopped) {
+      while (!stopSignal.isStopped) {
         if (projectId != null) {
           currentProgress ??= cliLogger.progress('🔥 Warming up the engines');
         }
@@ -786,9 +760,7 @@ final class CelestFrontend {
         final result = await analyzer.analyzeProject(
           migrateProject: migrateProject,
         );
-        if (stopped) {
-          throw const CancellationException('Celest was stopped');
-        }
+        stopSignal.check();
         return result;
       });
 
@@ -807,9 +779,7 @@ final class CelestFrontend {
         );
         final outputs = codeGenerator.generate();
         await (outputs.write(), celestProject.invalidate(outputs.keys)).wait;
-        if (stopped) {
-          throw const CancellationException('Celest was stopped');
-        }
+        stopSignal.check();
         return codeGenerator.fileOutputs.keys.toList();
       });
 
@@ -957,9 +927,7 @@ final class CelestFrontend {
           });
       }
     }
-    if (stopped) {
-      throw const CancellationException('Celest was stopped');
-    }
+    stopSignal.check();
     return Uri.parse('http://localhost:${_localApiRunner!.port}');
   }
 
@@ -995,7 +963,7 @@ final class CelestFrontend {
     );
     final cloudEnvironment = await waiter.run(
       verbs: const (run: 'create', running: 'Creating', completed: 'created'),
-      cancelTrigger: _stopSignal.future,
+      cancelTrigger: stopSignal.future,
       resource: pb.ProjectEnvironment(),
     );
     logger.fine('Created production environment: $cloudEnvironment');
@@ -1070,7 +1038,7 @@ final class CelestFrontend {
             running: 'Deploying',
             completed: 'deployed',
           ),
-          cancelTrigger: _stopSignal.future,
+          cancelTrigger: stopSignal.future,
           resource: pb.DeployProjectEnvironmentResponse(),
         );
         final deployedProject =
@@ -1109,7 +1077,6 @@ final class CelestFrontend {
         // Cancel subscriptions in order of dependencies
         await _readyForChanges.close();
         await Future.wait([
-          _stopSub.cancel(),
           Future.value(_reloadStream?.cancel()),
           Future.value(_watcherSub?.cancel()),
           Future.value(_localApiRunner?.close()),

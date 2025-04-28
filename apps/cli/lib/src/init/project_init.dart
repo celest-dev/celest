@@ -7,9 +7,8 @@ import 'package:celest_cli/src/commands/project/init_command.dart';
 import 'package:celest_cli/src/commands/project/start_command.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
-import 'package:celest_cli/src/init/project_generator.dart';
+import 'package:celest_cli/src/init/project_creator.dart';
 import 'package:celest_cli/src/init/project_migrate.dart';
-import 'package:celest_cli/src/init/templates/project_template.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/pub/pub_action.dart';
 import 'package:celest_cli/src/pub/pub_cache.dart';
@@ -20,37 +19,6 @@ import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:dcli/dcli.dart' as dcli;
 import 'package:mason_logger/mason_logger.dart';
-
-base mixin ProjectCreator on Configure {
-  /// The project template to use when creating a project.
-  String get template;
-
-  Future<String> createProject({
-    required String projectName,
-    required String projectDisplayName,
-    required ParentProject? parentProject,
-  }) async {
-    logger.finest(
-      'Generating project for "$projectName" at '
-      '"${projectPaths.projectRoot}"...',
-    );
-    await performance.trace('ProjectCreator', 'createProject', () async {
-      await ProjectGenerator(
-        parentProject: parentProject,
-        projectRoot: projectPaths.projectRoot,
-        projectName: projectName,
-        projectDisplayName: projectDisplayName,
-        projectTemplate: switch (template) {
-          'hello' => HelloProject.new,
-          'data' => DataProject.new,
-          _ => unreachable('Invalid project template: $template'),
-        },
-      ).generate();
-      logger.fine('Project generated successfully');
-    });
-    return projectName;
-  }
-}
 
 sealed class ConfigureState {}
 
@@ -88,10 +56,7 @@ base mixin Configure on CelestCommand {
         'To create a new project, run `celest init`.',
       );
 
-  ({
-    String projectNameInput,
-    String projectName,
-  }) newProjectName({String? defaultName}) {
+  String newProjectName({String? defaultName}) {
     if (defaultName != null && defaultName.startsWith('celest')) {
       defaultName = null;
     }
@@ -104,14 +69,18 @@ base mixin Configure on CelestCommand {
         cliLogger.err('Project name cannot be empty.');
         continue;
       }
-      final words = input.groupIntoWords();
-      for (final (index, word) in List.of(words).indexed) {
-        if (word.toLowerCase() == 'celest') {
-          words.removeAt(index);
-        }
-      }
-      return (projectNameInput: input, projectName: words.snakeCase);
+      return input;
     }
+  }
+
+  String _sanitizeProjectName(String name) {
+    final words = name.groupIntoWords();
+    for (final (index, word) in List.of(words).indexed) {
+      if (word.toLowerCase() == 'celest') {
+        words.removeAt(index);
+      }
+    }
+    return words.snakeCase;
   }
 
   Future<bool> configure() async {
@@ -289,12 +258,16 @@ base mixin Configure on CelestCommand {
           _throwNoProject();
       }
 
-      var defaultProjectName = parentProject?.name;
-      if (currentDirIsEmpty) {
-        defaultProjectName ??= p.basename(currentDir.path);
+      if (this case ProjectCreator(:final projectName)) {
+        projectNameInput = projectName;
+      } else {
+        var defaultProjectName = parentProject?.name;
+        if (currentDirIsEmpty) {
+          defaultProjectName ??= p.basename(currentDir.path);
+        }
+        projectNameInput = newProjectName(defaultName: defaultProjectName);
       }
-      (:projectNameInput, :projectName) =
-          newProjectName(defaultName: defaultProjectName);
+      projectName = _sanitizeProjectName(projectNameInput!);
 
       // Choose where to store the project based on the current directory.
       projectRoot = switch (celestDir) {

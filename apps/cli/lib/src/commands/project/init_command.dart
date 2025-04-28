@@ -1,20 +1,16 @@
 import 'dart:io';
 
-import 'package:celest_cli/src/cli/cli_runtime.dart';
+import 'package:celest_cli/src/commands/auth/authenticate.dart';
 import 'package:celest_cli/src/commands/celest_command.dart';
 import 'package:celest_cli/src/context.dart';
+import 'package:celest_cli/src/init/project_creator.dart';
 import 'package:celest_cli/src/init/project_init.dart';
+import 'package:celest_cli/src/repositories/cloud_repository.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-final class InitCommand extends CelestCommand with Configure, ProjectCreator {
+final class InitCommand extends CelestCommand
+    with Configure, ProjectCreator, Authenticate, CloudRepository {
   InitCommand() {
-    argParser.addFlag(
-      'precache',
-      help: 'Precache assets and warm up analyzer in the background.',
-      negatable: true,
-      hide: true,
-      defaultsTo: true,
-    );
     argParser.addOption(
       'template',
       abbr: 't',
@@ -25,6 +21,10 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
         'data': 'A project with a database and cloud functions.',
       },
       defaultsTo: 'hello',
+    );
+    argParser.addOption(
+      'name',
+      help: 'The project name.',
     );
   }
 
@@ -43,47 +43,8 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
   @override
   late final String template = argResults!.option('template')!;
 
-  /// Precache assets in the background.
-  Future<void> _precacheInBackground() async {
-    final command = switch (CliRuntime.current) {
-      CliRuntime.pubGlobal => <String>[
-          platform.resolvedExecutable,
-          'pub',
-          'global',
-          'run',
-          'celest_cli:celest',
-          'precache',
-          projectPaths.projectRoot,
-          if (verbose) '--verbose',
-        ],
-      CliRuntime.local => <String>[
-          platform.resolvedExecutable,
-          platform.script.toFilePath(),
-          'precache',
-          projectPaths.projectRoot,
-          if (verbose) '--verbose',
-        ],
-      CliRuntime.aot => <String>[
-          platform.resolvedExecutable,
-          'precache',
-          projectPaths.projectRoot,
-          if (verbose) '--verbose',
-        ],
-    };
-    try {
-      logger.fine('Precaching assets in background...');
-      await processManager.start(
-        command,
-        mode: ProcessStartMode.detached,
-        workingDirectory: projectPaths.projectRoot,
-      );
-    } on Object catch (e, st) {
-      logger.fine('Failed to precache assets', e, st);
-      performance.captureError(e, stackTrace: st, extra: {'command': command});
-    }
-  }
-
-  bool get precache => argResults!.flag('precache');
+  @override
+  String? get projectName => argResults!.option('name');
 
   @override
   Future<int> run() async {
@@ -91,9 +52,6 @@ final class InitCommand extends CelestCommand with Configure, ProjectCreator {
 
     await checkForLatestVersion();
     await configure();
-    if (precache) {
-      await _precacheInBackground();
-    }
 
     final projectRoot = projectPaths.projectRoot;
 

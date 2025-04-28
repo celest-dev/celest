@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:async/async.dart';
 import 'package:celest_cli/src/cli/cli_runtime.dart';
+import 'package:celest_cli/src/cli/stop_signal.dart';
 import 'package:celest_cli/src/commands/auth/auth_command.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/models.dart';
@@ -19,6 +21,22 @@ import 'package:pub_semver/pub_semver.dart';
 
 /// Base class for all commands in this package providing common functionality.
 abstract base class CelestCommand extends Command<int> {
+  CelestCommand() {
+    // Initialize immediately instead of lazily since _stopSub is never accessed
+    // directly until `close`.
+    _stopSub = StreamGroup.merge([
+      ProcessSignal.sigint.watch(),
+      // SIGTERM is not supported on Windows. Attempting to register a SIGTERM
+      // handler raises an exception.
+      if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
+    ]).listen((signal) {
+      logger.fine('Got exit signal: $signal');
+      if (!stopSignal.isStopped) {
+        stopSignal.complete(signal);
+      }
+    });
+  }
+
   late final Logger logger = Logger(name);
 
   /// The version of the CLI.
@@ -115,6 +133,13 @@ abstract base class CelestCommand extends Command<int> {
     )!;
   }
 
+  /// {@macro celest.cli.stop_signal}
+  final stopSignal = StopSignal();
+
+  /// Subscription to [ProcessSignal.sigint] and [ProcessSignal.sigterm] which
+  /// forwards to [stopSignal] when triggered.
+  late final StreamSubscription<ProcessSignal> _stopSub;
+
   @override
   @mustCallSuper
   Future<int> run() async {
@@ -147,6 +172,7 @@ abstract base class CelestCommand extends Command<int> {
   @mustCallSuper
   Future<void> close() async {
     await Future.wait([
+      _stopSub.cancel(),
       for (final deferred in _deferred) Future.value(deferred()),
     ]);
   }
