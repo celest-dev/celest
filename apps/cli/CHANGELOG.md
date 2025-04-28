@@ -1,3 +1,9 @@
+## 1.0.12
+
+- feat: Support cross-compilation with Dart 3.8
+- feat: Ensure primary org creation on login
+- feat: Add Linux installer
+
 ## 1.0.11
 
 - feat: Add `celest auth token` command
