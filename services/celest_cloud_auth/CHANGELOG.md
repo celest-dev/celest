@@ -1,3 +1,7 @@
+## 0.3.2+1
+
+- fix: Session duration on Web
+
 ## 0.3.2
 
 - fix: Properly set/check session duration

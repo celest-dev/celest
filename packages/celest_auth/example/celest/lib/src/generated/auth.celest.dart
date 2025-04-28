@@ -4,9 +4,8 @@
 
 library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:celest/celest.dart' as _$celest;
 import 'package:celest/src/core/context.dart' as _$celest;
-import 'package:celest/src/runtime/data/connect.dart' as _$celest;
+import 'package:celest_backend/src/generated/cloud.celest.dart';
 import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _$celest;
 
 /// The auth service for the Celest backend.
@@ -18,14 +17,8 @@ class CelestAuth {
 
   /// Initializes the Celest Auth service in the given [context].
   static Future<void> init(_$celest.Context context) async {
-    final database = await _$celest.connect(
-      context,
-      name: 'CelestAuthDatabase',
-      factory: _$celest.AuthDatabase.new,
-      hostnameVariable: const _$celest.env('CELEST_AUTH_DATABASE_HOST'),
-      tokenSecret: const _$celest.secret('CELEST_AUTH_DATABASE_TOKEN'),
-    );
-    final service = await _$celest.CelestCloudAuth.create(database: database);
+    final service =
+        await _$celest.CelestCloudAuth.create(database: celest.data.cloudAuth);
     context.router.mount(
       '/v1alpha1/auth/',
       service.handler,

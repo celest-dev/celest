@@ -4,6 +4,7 @@ on:
     paths:
       - ".github/workflows/celest_auth.yaml"
       - "packages/celest_auth/**"
+      - "services/celest_cloud_auth/**"
 
 # Prevent duplicate runs due to Graphite
 # https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
