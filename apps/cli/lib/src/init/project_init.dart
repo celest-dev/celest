@@ -258,7 +258,7 @@ base mixin Configure on CelestCommand {
           _throwNoProject();
       }
 
-      if (this case ProjectCreator(:final projectName)) {
+      if (this case ProjectCreator(:final projectName?)) {
         projectNameInput = projectName;
       } else {
         var defaultProjectName = parentProject?.name;
@@ -267,7 +267,7 @@ base mixin Configure on CelestCommand {
         }
         projectNameInput = newProjectName(defaultName: defaultProjectName);
       }
-      projectName = _sanitizeProjectName(projectNameInput!);
+      projectName = _sanitizeProjectName(projectNameInput);
 
       // Choose where to store the project based on the current directory.
       projectRoot = switch (celestDir) {

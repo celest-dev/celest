@@ -129,8 +129,13 @@ mixin TestHelpers {
         },
       );
 
-  Command celestCommand(String command,
-          [String? arg0, String? arg1, String? arg2]) =>
+  Command celestCommand(
+    String command, [
+    String? arg0,
+    String? arg1,
+    String? arg2,
+    String? arg3,
+  ]) =>
       Command([
         ...target.executable,
         command,
@@ -138,6 +143,7 @@ mixin TestHelpers {
         if (arg0 != null) arg0,
         if (arg1 != null) arg1,
         if (arg2 != null) arg2,
+        if (arg3 != null) arg3,
       ]).environment({
         if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
         ...defaultCliEnvironment,
