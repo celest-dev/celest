@@ -1,7 +1,8 @@
-## 1.0.5
+## 1.0.5-wip
 
 - chore: Remove GCP mentions
 - chore: Update analyzer plugin to v2 model
+- chore: Add `logStatements` parameter to `connect` method
 
 ## 1.0.4
 
