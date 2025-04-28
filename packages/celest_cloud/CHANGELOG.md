@@ -1,4 +1,4 @@
-# 0.1.8-wip
+# 0.1.8
 
 - feat: Add `ProjectAsset_Type.DART_EXECUTABLE`
 - fix: Incorrect route for `Operations.listOperations`
