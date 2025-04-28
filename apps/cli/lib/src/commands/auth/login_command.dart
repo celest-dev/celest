@@ -5,9 +5,11 @@ import 'package:celest_cli/src/commands/auth/cli_auth.dart';
 import 'package:celest_cli/src/commands/celest_command.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
+import 'package:celest_cli/src/repositories/cloud_repository.dart';
 import 'package:corks_cedar/corks_cedar.dart';
 
-final class LoginCommand extends CelestCommand with Authenticate {
+final class LoginCommand extends CelestCommand
+    with Authenticate, CloudRepository {
   LoginCommand() {
     argParser.addOption(
       'token',
@@ -47,6 +49,16 @@ final class LoginCommand extends CelestCommand with Authenticate {
     throw CliException('Failed to authenticate with token.');
   }
 
+  Future<void> _ensurePrimaryOrg() async {
+    final primaryOrg = await primaryOrganization;
+    if (primaryOrg != null) {
+      logger.finest('Primary organization: ${primaryOrg.displayName}');
+      return;
+    }
+    cliLogger.success('Welcome to Celest Cloud!');
+    await createPrimaryOrg();
+  }
+
   @override
   Future<int> run() async {
     await super.run();
@@ -68,6 +80,7 @@ final class LoginCommand extends CelestCommand with Authenticate {
         if (res != 0) {
           return res;
         }
+        await _ensurePrimaryOrg();
         cliLogger.success('You have been logged in!');
     }
 
