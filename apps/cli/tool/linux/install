@@ -7,7 +7,7 @@ set -e
 install_package() {
     if [ "$(id -u)" -ne 0 ]; then
         if ! command -v sudo &> /dev/null; then
-            echo "Script requires sudo to install gnome-keyring. Please install it manually."
+            >&2 echo "Script requires sudo to install '${@}'. Please install it manually."
             exit 1
         fi
 

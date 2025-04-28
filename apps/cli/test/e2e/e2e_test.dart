@@ -31,25 +31,25 @@ void main() {
 
   final tests = <E2ETest Function(TestTarget)>[
     // Project templates
-    // HelloProjectTest.new,
-    // DataProjectTest.new,
+    HelloProjectTest.new,
+    DataProjectTest.new,
 
     // Project initialization
     InitProjectNameTest.new,
 
     // Project creation
-    // CreateProjectInFlutterAppTest.new,
-    // CreateProjectInDartAppTest.new,
-    // CreateProjectInDartAppNoDepsTest.new,
-    // CreateProjectIsolatedTest.new,
+    CreateProjectInFlutterAppTest.new,
+    CreateProjectInDartAppTest.new,
+    CreateProjectInDartAppNoDepsTest.new,
+    CreateProjectIsolatedTest.new,
 
-    // // Hot reload
-    // AddRemoveFieldsTest.new,
-    // HotReloadAddAuthTest.new,
-    // HotReloadNonExistentModel.new,
+    // Hot reload
+    AddRemoveFieldsTest.new,
+    HotReloadAddAuthTest.new,
+    HotReloadNonExistentModel.new,
 
-    // // Package support
-    // SupportsSupabase.new,
+    // Package support
+    SupportsSupabase.new,
   ];
 
   for (final target in targets) {
