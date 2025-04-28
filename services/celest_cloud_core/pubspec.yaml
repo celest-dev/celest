@@ -1,6 +1,8 @@
 name: celest_cloud_core
 description: Core types and utilities for Celest Cloud services.
 version: 0.1.0
+homepage: https://celest.dev
+repository: https://github.com/celest-dev/celest/tree/main/services/celest_cloud_core
 
 environment:
   sdk: ^3.5.0
@@ -8,7 +10,7 @@ resolution: workspace
 
 dependencies:
   cedar: ^0.2.5
-  celest_cloud: ^0.1.8-0
+  celest_cloud: ^0.1.8
   celest_core: ^1.0.0
   collection: ^1.18.0
   drift: '>=2.26.0 <2.27.0'
