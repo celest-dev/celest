@@ -47,3 +47,9 @@ jobs:
       - name: Test
         working-directory: services/celest_cloud_auth
         run: dart test
+      - name: Test (Web/JS)
+        working-directory: services/celest_cloud_auth
+        run: dart test -p chrome test/web
+      - name: Test (Web/WASM)
+        working-directory: services/celest_cloud_auth
+        run: dart test -p chrome -c dart2wasm test/web

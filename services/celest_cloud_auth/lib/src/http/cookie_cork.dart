@@ -13,7 +13,7 @@ extension type Corkie._(Cookie cookie) implements Cookie {
           cork.toString(),
           expiration: switch (cork.claims?.attributes['expireTime']) {
             LongValue(:final value) =>
-              DateTime.fromMillisecondsSinceEpoch(value.toInt()),
+              DateTime.fromMillisecondsSinceEpoch(value.toInt() * 1000),
             _ => clock.now().add(SessionsRepository.postAuthSessionDuration),
           },
         );

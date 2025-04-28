@@ -24,6 +24,8 @@ import 'package:logging/logging.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:test/test.dart' as t;
 
+export 'checks.dart';
+
 // Roles
 const roleAdmin = EntityUid.of('Celest::Role', 'admin');
 const roleAuthenticated = EntityUid.of('Celest::Role', 'authenticated');
@@ -172,7 +174,8 @@ final class AuthorizationTester {
   UsersRepository get users => _authService.users;
 
   late CelestService _service;
-  Uri get address => Uri.http('localhost:${_service.port}');
+  int get port => _service.port;
+  Uri get address => Uri.http('localhost:$port');
 
   CelestCloud cloud({Cork? cork}) => CelestCloud(
         uri: address,
@@ -208,59 +211,61 @@ final class AuthorizationTester {
 
   Otp? lastSentCode;
 
-  void setUp() {
-    t.tearDown(() {
-      lastSentCode = null;
-    });
+  Future<void> start() async {
+    final initCompleter = Completer<void>();
+    _service = await serve(
+      targets: {},
+      config: project,
+      port: 0,
+      setup: (context) async {
+        context.put(env.environment, 'local');
+        context.put(
+          contextKeyEmailOtpProvider,
+          EmailOtpProvider((otp) async => lastSentCode = otp),
+        );
+        context.put(ContextKey.project, project);
 
-    t.setUp(() async {
-      final initCompleter = Completer<void>();
-      _service = await serve(
-        targets: {},
-        config: project,
-        port: 0,
-        setup: (context) async {
-          context.put(env.environment, 'local');
-          context.put(
-            contextKeyEmailOtpProvider,
-            EmailOtpProvider((otp) async => lastSentCode = otp),
+        CloudAuthDatabase db;
+        if (persistData) {
+          final directory = context.fileSystem.currentDirectory
+              .childDirectory('.dart_tool')
+              .childDirectory('celest');
+          if (directory.existsSync()) {
+            directory.deleteSync(recursive: true);
+          }
+          directory.createSync();
+          db = CloudAuthDatabase.localDir(
+            directory,
+            verbose: true,
           );
-          context.put(ContextKey.project, project);
+        } else {
+          db = CloudAuthDatabase.memory(
+            verbose: true,
+          );
+        }
+        _authService = await CelestCloudAuth.test(db: db);
 
-          CloudAuthDatabase db;
-          if (persistData) {
-            final directory = context.fileSystem.currentDirectory
-                .childDirectory('.dart_tool')
-                .childDirectory('celest');
-            if (directory.existsSync()) {
-              directory.deleteSync(recursive: true);
-            }
-            directory.createSync();
-            db = CloudAuthDatabase.localDir(
-              directory,
-              verbose: true,
-            );
-          } else {
-            db = CloudAuthDatabase.memory(
-              verbose: true,
-            );
-          }
-          _authService = await CelestCloudAuth.test(db: db);
-          t.addTearDown(_authService.close);
+        await _createEntities();
+        for (final target in _targets.entries) {
+          target.value.apply(context.router, target.key);
+        }
+        context.router.mount('/v1alpha1/auth/', _authService.handler);
 
-          await _createEntities();
-          for (final target in _targets.entries) {
-            target.value.apply(context.router, target.key);
-          }
-          context.router.mount('/v1alpha1/auth/', _authService.handler);
+        initCompleter.complete();
+      },
+    );
 
-          initCompleter.complete();
-        },
-      );
+    await initCompleter.future;
+  }
 
-      await initCompleter.future;
-      t.addTearDown(_service.close);
+  void setUp() {
+    t.tearDown(() async {
+      lastSentCode = null;
+      await _service.close();
+      await _authService.close();
     });
+
+    t.setUp(start);
   }
 
   Future<void> httpTest(
@@ -317,54 +322,6 @@ final class AuthorizationTester {
       await users.deleteUser(userId: userId!);
     });
     return (user, cork);
-  }
-}
-
-void Function(Subject<http.Response>) expectAll(
-  List<void Function(Subject<http.Response>)> checks,
-) {
-  return (res) {
-    for (final check in checks) {
-      check(res);
-    }
-  };
-}
-
-void Function(Subject<http.Response>) expectStatus(int statusCode) {
-  return (res) => res.hasStatus(statusCode);
-}
-
-void Function(Subject<http.Response>) expectBody(Map<String, Object?>? o) {
-  return (res) => res.hasJsonBody(o);
-}
-
-void Function(Subject<http.Response>) expectBodyHas(
-  List<void Function(Subject<Map<String, Object?>>)> conditions,
-) {
-  return (res) {
-    res
-        .has((it) => jsonDecode(it.body), 'body')
-        .isA<Map<String, Object?>>()
-        .which((it) {
-      for (final condition in conditions) {
-        condition(it);
-      }
-    });
-  };
-}
-
-extension ResponseChecks on Subject<http.Response> {
-  void hasStatus(int statusCode) {
-    has((res) => res.statusCode, 'statusCode').equals(statusCode);
-  }
-
-  void hasJsonBody(Map<String, Object?>? o) {
-    if (o == null) {
-      return has((res) => res.body, 'body').equals('');
-    }
-    has((res) => jsonDecode(res.body), 'json')
-        .isA<Map<String, Object?>>()
-        .deepEquals(o);
   }
 }
 
