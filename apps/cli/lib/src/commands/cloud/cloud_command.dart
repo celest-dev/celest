@@ -484,6 +484,8 @@ abstract base class CloudDeleteCommand<R extends GeneratedMessage>
 
 extension type CloudCommandOptions(ArgResults argResults)
     implements ArgResults {
+  String? get maybeResourceId => rest.elementAtOrNull(0);
+
   String get resourceId {
     final id = rest.elementAtOrNull(0);
     if (id == null) {

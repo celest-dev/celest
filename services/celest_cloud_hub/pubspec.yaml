@@ -16,6 +16,7 @@ dependencies:
   celest_cli: ^1.0.0
   celest_cloud: ^0.1.0
   celest_cloud_auth: ^0.3.0-0
+  celest_cloud_core: ^0.1.0
   celest_core: ^1.0.0
   collection: ^1.19.1
   convert: ^3.1.2

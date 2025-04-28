@@ -23,6 +23,7 @@ import 'package:celest_cloud_hub/src/services/organizations_service.dart';
 import 'package:celest_cloud_hub/src/services/project_environments_service.dart';
 import 'package:celest_cloud_hub/src/services/projects_service.dart';
 import 'package:celest_core/_internal.dart';
+import 'package:drift/drift.dart' show driftRuntimeOptions;
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:logging/logging.dart';
 import 'package:sentry/sentry.dart';
@@ -46,6 +47,10 @@ Future<void> main() async {
       print(record.stackTrace);
     }
   });
+  driftRuntimeOptions.debugPrint = (message) {
+    context.logger.finest(message);
+  };
+
   context.put(ContextKey.project, project);
   context.put(
     env.environment,
@@ -96,6 +101,7 @@ Future<void> _run() async {
     hostnameVariable: const env('CLOUD_HUB_DATABASE_HOST'),
     tokenSecret: const secret('CLOUD_HUB_DATABASE_TOKEN'),
     setup: (db) => db.addHelperFunctions(),
+    logStatements: context.logger.level <= Level.FINEST,
   );
   await db.ping();
 

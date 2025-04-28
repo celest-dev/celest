@@ -28,7 +28,7 @@ sealed class Filter {
     String filter, {
     AnyDriftTable? table,
   }) {
-    final parser = _createParser(table: table);
+    final parser = _parserCache[table] ??= _createParser(table: table);
     final result = parser.parse(filter);
     switch (result) {
       case Success(:final value):
@@ -303,6 +303,8 @@ sealed class Filter {
 
     return expression.end();
   }
+
+  static final Map<AnyDriftTable?, Parser<Filter>> _parserCache = {};
 
   /// Converts this filter to a [DriftFilter] function.
   DriftFilter<Tbl> toDrift<Tbl extends ResultSetImplementation<Tbl, Object?>>();
