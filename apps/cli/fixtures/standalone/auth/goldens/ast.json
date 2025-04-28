@@ -2143,7 +2143,7 @@
     }
   },
   "sdkConfig": {
-    "celest": "1.0.11",
+    "celest": "1.0.12",
     "dart": {
       "type": "dart",
       "version": "3.8.0-278.1.beta",
