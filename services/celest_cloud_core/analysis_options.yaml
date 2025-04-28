@@ -1,0 +1,5 @@
+include: package:celest_lints/library.yaml
+
+analyzer:
+  errors:
+    implementation_imports: ignore

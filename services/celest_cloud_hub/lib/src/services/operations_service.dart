@@ -7,7 +7,7 @@ import 'package:celest_cloud/src/proto.dart' as pb;
 import 'package:celest_cloud/src/proto/google/longrunning/operations.pbgrpc.dart';
 import 'package:celest_cloud/src/proto/google/protobuf/empty.pb.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
-import 'package:celest_cloud_auth/src/model/page_token.dart';
+import 'package:celest_cloud_core/celest_cloud_core.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/schema/operations.drift.dart'
