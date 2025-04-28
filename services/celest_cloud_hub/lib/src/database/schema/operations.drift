@@ -210,11 +210,7 @@ findOperationsByResource:
     LIMIT :limit;
 
 listOperations(
-    :owner_type AS TEXT OR NULL,
-    :owner_id AS TEXT OR NULL,
-    :resource_type AS TEXT OR NULL,
-    :resource_id AS TEXT OR NULL,
-    :start_time AS DATETIME OR NULL,
+    :startTime AS DATETIME OR NULL,
     :offset AS INTEGER,
     :limit AS INTEGER
 ):
@@ -222,13 +218,10 @@ listOperations(
         SELECT 
             ROW_NUMBER() OVER (ORDER BY create_time DESC) AS row_num,
             id
-        FROM operations
+        FROM operations ops
         WHERE
-            (operations.owner_type IS NULL AND :owner_type IS NULL OR operations.owner_type = :owner_type) AND
-            (operations.owner_id IS NULL AND :owner_id IS NULL OR operations.owner_id = :owner_id) AND
-            (operations.resource_type IS NULL AND :resource_type IS NULL OR operations.resource_type = :resource_type) AND
-            (operations.resource_id IS NULL AND :resource_id IS NULL OR operations.resource_id = :resource_id) AND
-            operations.create_time < coalesce(:start_time, unixepoch('now', '+1 second', 'subsec'))
+            $filter AND
+            ops.create_time < coalesce(:startTime, unixepoch('now', '+1 second', 'subsec'))
     )
     SELECT
         row_num,

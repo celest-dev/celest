@@ -1176,26 +1176,27 @@ class OperationsDrift extends i2.ModularAccessor {
   }
 
   i0.Selectable<ListOperationsResult> listOperations({
-    String? ownerType,
-    String? ownerId,
-    String? resourceType,
-    String? resourceId,
+    required ListOperations$filter filter,
     DateTime? startTime,
     required int offset,
     required int limit,
   }) {
+    var $arrayStartIndex = 4;
+    final generatedfilter = $write(
+      filter(this.operations, alias(this.operations, 'ops')),
+      hasMultipleTables: true,
+      startIndex: $arrayStartIndex,
+    );
+    $arrayStartIndex += generatedfilter.amountOfVariables;
     return customSelect(
-      'WITH rowed AS (SELECT ROW_NUMBER()OVER (ORDER BY create_time DESC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS row_num, id FROM operations WHERE(operations.owner_type IS NULL AND ?1 IS NULL OR operations.owner_type = ?1)AND(operations.owner_id IS NULL AND ?2 IS NULL OR operations.owner_id = ?2)AND(operations.resource_type IS NULL AND ?3 IS NULL OR operations.resource_type = ?3)AND(operations.resource_id IS NULL AND ?4 IS NULL OR operations.resource_id = ?4)AND operations.create_time < coalesce(?5, unixepoch(\'now\', \'+1 second\', \'subsec\'))) SELECT row_num,"operations"."id" AS "nested_0.id", "operations"."metadata" AS "nested_0.metadata", "operations"."response" AS "nested_0.response", "operations"."error" AS "nested_0.error", "operations"."done" AS "nested_0.done", "operations"."create_time" AS "nested_0.create_time", "operations"."full_resource_name" AS "nested_0.full_resource_name", "operations"."owner_type" AS "nested_0.owner_type", "operations"."owner_id" AS "nested_0.owner_id", "operations"."resource_type" AS "nested_0.resource_type", "operations"."resource_id" AS "nested_0.resource_id" FROM operations INNER JOIN rowed ON operations.id = rowed.id WHERE row_num > ?6 ORDER BY create_time DESC LIMIT ?7',
+      'WITH rowed AS (SELECT ROW_NUMBER()OVER (ORDER BY create_time DESC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS row_num, id FROM operations AS ops WHERE ${generatedfilter.sql} AND ops.create_time < coalesce(?1, unixepoch(\'now\', \'+1 second\', \'subsec\'))) SELECT row_num,"operations"."id" AS "nested_0.id", "operations"."metadata" AS "nested_0.metadata", "operations"."response" AS "nested_0.response", "operations"."error" AS "nested_0.error", "operations"."done" AS "nested_0.done", "operations"."create_time" AS "nested_0.create_time", "operations"."full_resource_name" AS "nested_0.full_resource_name", "operations"."owner_type" AS "nested_0.owner_type", "operations"."owner_id" AS "nested_0.owner_id", "operations"."resource_type" AS "nested_0.resource_type", "operations"."resource_id" AS "nested_0.resource_id" FROM operations INNER JOIN rowed ON operations.id = rowed.id WHERE row_num > ?2 ORDER BY create_time DESC LIMIT ?3',
       variables: [
-        i0.Variable<String>(ownerType),
-        i0.Variable<String>(ownerId),
-        i0.Variable<String>(resourceType),
-        i0.Variable<String>(resourceId),
         i0.Variable<DateTime>(startTime),
         i0.Variable<int>(offset),
         i0.Variable<int>(limit),
+        ...generatedfilter.introducedVariables,
       ],
-      readsFrom: {operations},
+      readsFrom: {operations, ...generatedfilter.watchedTables},
     ).asyncMap(
       (i0.QueryRow row) async => ListOperationsResult(
         rowNum: row.read<int>('row_num'),
@@ -1258,3 +1259,6 @@ class ListOperationsResult {
   final i1.Operation operations;
   ListOperationsResult({required this.rowNum, required this.operations});
 }
+
+typedef ListOperations$filter =
+    i0.Expression<bool> Function(i1.Operations operations, i1.Operations ops);

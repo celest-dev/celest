@@ -1,5 +1,6 @@
 import 'package:celest_cli/celest_cli.dart';
 import 'package:celest_cli/src/commands/auth/auth_command.dart';
+import 'package:celest_cli/src/commands/cloud/operations/operations_command.dart';
 import 'package:celest_cli/src/commands/cloud/organizations/organizations_command.dart';
 import 'package:celest_cli/src/commands/cloud/project_environments/project_environments_command.dart';
 import 'package:celest_cli/src/commands/cloud/projects/projects_command.dart';
@@ -32,7 +33,8 @@ void main(List<String> args) async {
   cli
     ..addCommand(OrganizationsCommand())
     ..addCommand(ProjectsCommand())
-    ..addCommand(ProjectEnvironmentsCommand());
+    ..addCommand(ProjectEnvironmentsCommand())
+    ..addCommand(OperationsCommand());
 
   await cli.run(args);
 }

@@ -218,6 +218,60 @@ void main() {
           ].reversed, // Most recent first
         );
       });
+
+      test('filtered', () async {
+        final resource = EntityUid.of('Celest::Project', 'test');
+        await database.cedarDrift.createEntity(
+          entityType: resource.type,
+          entityId: resource.id,
+          attributeJson: {},
+        );
+        for (var i = 0; i < 9; i++) {
+          await database.operationsDrift.createOperation(
+            id: 'test$i',
+            ownerType: user.type,
+            ownerId: user.id,
+            resourceType: i == 0 ? resource.type : null,
+            resourceId: i == 0 ? resource.id : null,
+            response:
+                i == 0
+                    ? jsonEncode(
+                      pb.ProjectEnvironment(
+                        name: 'projects/test/environments/test',
+                        createTime: pb.Timestamp.fromDateTime(
+                          DateTime.timestamp(),
+                        ),
+                      ).packIntoAny().toProto3Json(typeRegistry: typeRegistry),
+                    )
+                    : null,
+          );
+        }
+        final unfiltered = await service.listOperations(
+          FakeServiceCall(),
+          ListOperationsRequest(pageSize: 10),
+        );
+        expect(unfiltered.operations, hasLength(9));
+
+        final byResource = await service.listOperations(
+          FakeServiceCall(),
+          ListOperationsRequest(
+            pageSize: 10,
+            filter:
+                'resource_type = "Celest::Project" AND resource_id = "test"',
+          ),
+        );
+        expect(byResource.operations, hasLength(1));
+        expect(byResource.operations.first.name, 'operations/test0');
+        expect(byResource.hasNextPageToken(), isFalse);
+
+        final byDone = await service.listOperations(
+          FakeServiceCall(),
+          ListOperationsRequest(pageSize: 10, filter: 'done = true'),
+        );
+        expect(byDone.operations, hasLength(1));
+        expect(byDone.operations.first.name, 'operations/test0');
+        expect(byDone.hasNextPageToken(), isFalse);
+      });
     });
 
     group('waitOperation', () {

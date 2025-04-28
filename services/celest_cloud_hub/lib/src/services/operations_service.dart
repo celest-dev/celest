@@ -15,8 +15,10 @@ import 'package:celest_cloud_hub/src/database/schema/operations.drift.dart'
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
 import 'package:celest_cloud_hub/src/model/interop.dart';
 import 'package:celest_core/celest_core.dart';
+import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:grpc/grpc.dart';
+import 'package:logging/logging.dart';
 import 'package:protobuf/protobuf.dart' as pb;
 import 'package:shelf/src/request.dart';
 
@@ -25,6 +27,7 @@ final class OperationsService extends OperationsServiceBase {
 
   final CloudHubDatabase _db;
   final Authorizer _authorizer;
+  final Logger logger = Logger('OperationsService');
 
   static const String apiId = 'google.longrunning.Operations';
   static const EntityUid apiUid = EntityUid.of('Celest::Api', apiId);
@@ -94,6 +97,10 @@ permit (
     ),
   };
 
+  late final ResourceTable<dto.Operations> _resourceType = ResourceTable(
+    table: _db.operations,
+  );
+
   @override
   Future<Operation> getOperation(
     ServiceCall call,
@@ -144,12 +151,8 @@ permit (
 
     var ListOperationsRequest(:name, :pageSize, :pageToken, :filter) = request;
 
-    // TODO(dnys1): Support listing operations by resource.
     if (name.isNotEmpty && name != 'operations') {
       throw GrpcError.invalidArgument('Invalid name');
-    }
-    if (filter.isNotEmpty) {
-      throw GrpcError.invalidArgument('Filter is not supported');
     }
 
     PageToken? pageData;
@@ -167,11 +170,34 @@ permit (
         pageData?.startTime ??
         DateTime.timestamp().add(const Duration(seconds: 1));
 
+    ResourceTableFilter<dto.Operations>? parsedFilter;
+    if (filter.isNotEmpty) {
+      try {
+        parsedFilter = _resourceType.parseFilter(filter);
+      } on Object catch (e, st) {
+        logger.warning('Failed to parse filter', e, st);
+        throw GrpcError.invalidArgument('Invalid filter');
+      }
+    }
+
+    // TODO(dnys1): These should be all operations the user has access to,
+    // not necessarily those they are the owner of.
+    Expression<bool> baseFilter(dto.Operations operations) {
+      return operations.ownerType.equals(principal.uid.type) &
+          operations.ownerId.equals(principal.uid.id);
+    }
+
+    var queryFilter = baseFilter;
+    if (parsedFilter != null) {
+      queryFilter = (tbl) {
+        return baseFilter(tbl) & parsedFilter!.toDrift()(tbl);
+      };
+    }
+
     final rows =
         await _db.operationsDrift
             .listOperations(
-              ownerType: principal.uid.type,
-              ownerId: principal.uid.id,
+              filter: (_, operations) => queryFilter(operations),
               startTime: startTime,
               offset: pageOffset,
               limit: pageSize,

@@ -65,10 +65,14 @@ final class OperationsProtocolHttp
 
   @override
   Future<ListOperationsResponse> list(ListOperationsRequest request) async {
-    if (request.name == '') {
-      throw ArgumentError.value(request.name, 'name', 'must not be empty');
+    if (request.name.isNotEmpty) {
+      throw ArgumentError.value(
+        request.name,
+        'name',
+        'only empty name is allowed',
+      );
     }
-    final path = '/v1alpha1/${request.name}/operations';
+    const path = '/v1alpha1/operations';
     final url = _baseUri.replace(
       path: path,
       queryParameters: {
