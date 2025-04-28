@@ -75,7 +75,6 @@ final class EntrypointCompiler {
       if (Abi.current() != Abi.linuxX64) ...[
         '--target-os=linux',
         '--target-arch=x64',
-        '--experimental-cross-compilation',
       ],
       '-o',
       outputPath,
