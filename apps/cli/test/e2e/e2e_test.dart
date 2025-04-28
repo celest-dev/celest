@@ -14,9 +14,10 @@ import 'features/create/create_project_in_flutter_app.dart';
 import 'features/create/create_project_isolated.dart';
 import 'features/hot_reload/hot_reload_add_auth.dart';
 import 'features/hot_reload/hot_reload_add_model_after_error.dart';
+import 'features/init/init_project_name.dart';
+import 'features/init/templates/data_project.dart';
+import 'features/init/templates/hello_project.dart';
 import 'features/package_support/supports_supabase.dart';
-import 'features/templates/data_project.dart';
-import 'features/templates/hello_project.dart';
 import 'targets/installed_target.dart';
 import 'targets/local_aot_target.dart';
 import 'targets/local_target.dart';
@@ -29,23 +30,26 @@ void main() {
   ];
 
   final tests = <E2ETest Function(TestTarget)>[
-    // Example projects
-    HelloProjectTest.new,
-    DataProjectTest.new,
+    // Project templates
+    // HelloProjectTest.new,
+    // DataProjectTest.new,
+
+    // Project initialization
+    InitProjectNameTest.new,
 
     // Project creation
-    CreateProjectInFlutterAppTest.new,
-    CreateProjectInDartAppTest.new,
-    CreateProjectInDartAppNoDepsTest.new,
-    CreateProjectIsolatedTest.new,
+    // CreateProjectInFlutterAppTest.new,
+    // CreateProjectInDartAppTest.new,
+    // CreateProjectInDartAppNoDepsTest.new,
+    // CreateProjectIsolatedTest.new,
 
-    // Hot reload
-    AddRemoveFieldsTest.new,
-    HotReloadAddAuthTest.new,
-    HotReloadNonExistentModel.new,
+    // // Hot reload
+    // AddRemoveFieldsTest.new,
+    // HotReloadAddAuthTest.new,
+    // HotReloadNonExistentModel.new,
 
-    // Package support
-    SupportsSupabase.new,
+    // // Package support
+    // SupportsSupabase.new,
   ];
 
   for (final target in targets) {

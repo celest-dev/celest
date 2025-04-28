@@ -51,7 +51,7 @@ final class ProjectDependency {
       );
     }
 
-    const services = ['celest_cloud_auth'];
+    const services = ['celest_cloud_auth', 'celest_cloud_core'];
 
     return {
       for (final packageName in packages)

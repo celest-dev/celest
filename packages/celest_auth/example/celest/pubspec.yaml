@@ -11,6 +11,8 @@ dependencies:
   celest_auth: 'any'
   celest_cloud_auth:
     path: ../../../../services/celest_cloud_auth
+  celest_cloud_core:
+    path: ../../../../services/celest_cloud_core
   celest_core: ^1.0.0
   drift_hrana: ^1.0.2
   http: '>=0.13.0 <2.0.0'
@@ -27,6 +29,8 @@ dependency_overrides:
     path: ../../../celest_cloud
   celest_cloud_auth:
     path: ../../../../services/celest_cloud_auth
+  celest_cloud_core:
+    path: ../../../../services/celest_cloud_core
   celest_core:
     path: ../../../celest_core
 
