@@ -15,6 +15,7 @@ workspace:
   - packages/celest_lints
   - packages/celest_test
   - services/celest_cloud_auth
+  - services/celest_cloud_core
   - services/celest_cloud_hub
 
 dependencies:

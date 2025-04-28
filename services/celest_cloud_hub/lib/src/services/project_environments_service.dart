@@ -8,8 +8,7 @@ import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud/celest_cloud.dart' as pb;
 import 'package:celest_cloud/src/grpc.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
-import 'package:celest_cloud_auth/src/model/order_by.dart';
-import 'package:celest_cloud_auth/src/model/page_token.dart';
+import 'package:celest_cloud_core/celest_cloud_core.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/schema/project_environments.drift.dart'

@@ -1,8 +1,8 @@
 import 'package:celest_cloud/celest_cloud.dart' as pb;
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/model/interop.dart';
-import 'package:celest_cloud_auth/src/model/page_token.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
+import 'package:celest_cloud_core/celest_cloud_core.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:checks/checks.dart';
 import 'package:collection/collection.dart';

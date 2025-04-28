@@ -3,15 +3,24 @@
 import 'package:celest_core/celest_core.dart';
 import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
+import 'package:meta/meta.dart';
 import 'package:petitparser/petitparser.dart';
 
+/// {@template celest_cloud_core.order_by_field}
+/// An ordering over a field of a resource.
+/// {@endtemplate}
+@immutable
 final class OrderByField {
+  /// {@macro celest_cloud_core.order_by_field}
   const OrderByField(
     this.path, {
     this.mode = OrderingMode.asc,
   });
 
+  /// The path to the field to order by. This is a list of identifiers.
   final List<String> path;
+
+  /// The ordering mode, e.g. ascending or descending.
   final OrderingMode mode;
 
   @override
@@ -32,8 +41,18 @@ final class OrderByField {
   }
 }
 
+/// {@template celest_cloud_core.order_by_clause}
+/// A list of ordering fields for a resource.
+///
+/// This is used to specify the order in which results should be returned.
+///
+/// Example: `name, -age`
+/// {@endtemplate}
 extension type const OrderByClause(List<OrderByField> fields)
     implements List<OrderByField> {
+  /// Parses a string into an [OrderByClause].
+  ///
+  /// Example: `name, -age`
   factory OrderByClause.parse(String orderBy) {
     final result = switch (_parser.parse(orderBy)) {
       Success(:final value) => value,
@@ -46,6 +65,8 @@ extension type const OrderByClause(List<OrderByField> fields)
     return OrderByClause(result);
   }
 
+  /// Converts this [OrderByClause] to a list of [OrderingTerm]s for use in
+  /// Drift.
   Iterable<OrderingTerm>
       toOrderingTerms<Tbl extends ResultSetImplementation<Tbl, Object?>>(
     Tbl table,
