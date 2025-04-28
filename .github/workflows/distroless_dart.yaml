@@ -106,7 +106,7 @@ jobs:
         id: build-push-builder
         # Only run if the builder image is needed or if the workflow is manually triggered
         if: steps.is_needed.outputs.builder == 'true' || github.event_name == 'workflow_dispatch'
-        uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # 6.15.0
+        uses: docker/build-push-action@14487ce63c7a62a4a324b0bfb37086795e31c6c1 # 6.16.0
         with:
           context: apps/distroless/dart/build
           file: apps/distroless/dart/build/Dockerfile
@@ -124,7 +124,7 @@ jobs:
         id: build-push-runtime
         # Only run if the runtime image is needed or if the workflow is manually triggered
         if: steps.is_needed.outputs.runtime == 'true' || github.event_name == 'workflow_dispatch'
-        uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # 6.15.0
+        uses: docker/build-push-action@14487ce63c7a62a4a324b0bfb37086795e31c6c1 # 6.16.0
         with:
           context: apps/distroless/dart/build
           file: apps/distroless/dart/build/Dockerfile
