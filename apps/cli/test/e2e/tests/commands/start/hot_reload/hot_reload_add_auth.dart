@@ -2,8 +2,8 @@ import 'dart:io' show FileMode;
 
 import 'package:celest_cli/src/context.dart';
 
-import '../../common/common.dart';
-import '../../common/test_projects.dart';
+import '../../../../common/common.dart';
+import '../../../../common/test_projects.dart';
 
 final class HotReloadAddAuthTest extends E2ETest with TestDartProject {
   HotReloadAddAuthTest(super.target);

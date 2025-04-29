@@ -5,7 +5,7 @@ import 'package:celest_cli/src/pub/pub_environment.dart';
 import 'package:checks/checks.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 
-import '../../common/common.dart';
+import '../../../common/common.dart';
 
 final class CreateProjectInDartAppNoDepsTest extends E2ETest {
   CreateProjectInDartAppNoDepsTest(super.target);

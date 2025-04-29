@@ -1,7 +1,7 @@
 import 'package:celest_cli/src/context.dart';
 
-import '../../common/common.dart';
-import '../../common/test_projects.dart';
+import '../../../../common/common.dart';
+import '../../../../common/test_projects.dart';
 
 // Tests that saving a file with an error and then fixing the error correctly
 // reloads the project.

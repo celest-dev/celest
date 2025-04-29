@@ -1,5 +1,5 @@
-import '../../common/common.dart';
-import '../../common/test_projects.dart';
+import '../../../common/common.dart';
+import '../../../common/test_projects.dart';
 
 final class CreateProjectInFlutterAppTest extends E2ETest
     with TestFlutterProject {

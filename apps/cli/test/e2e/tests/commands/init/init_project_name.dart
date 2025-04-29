@@ -1,6 +1,6 @@
 import 'package:celest_cli/src/context.dart';
 
-import '../../common/common.dart';
+import '../../../common/common.dart';
 
 final class InitProjectNameTest extends E2ETest {
   InitProjectNameTest(super.target);

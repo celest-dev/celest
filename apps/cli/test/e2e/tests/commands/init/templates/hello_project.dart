@@ -1,16 +1,16 @@
 import 'package:celest_cli/src/context.dart';
 
-import '../../../common/common.dart';
+import '../../../../common/common.dart';
 
-final class DataProjectTest extends E2ETest {
-  DataProjectTest(super.target);
+final class HelloProjectTest extends E2ETest {
+  HelloProjectTest(super.target);
 
   @override
-  String get name => 'init (data template)';
+  String get name => 'init (hello template)';
 
   @override
   Future<void> run() async {
-    await celestCommand('init', '-t', 'data')
+    await celestCommand('init', '-t', 'hello')
         .workingDirectory(tempDir.path)
         .start()
         .expectLater('🚀 To start a local development server')
@@ -19,7 +19,7 @@ final class DataProjectTest extends E2ETest {
         .workingDirectory(p.join(tempDir.path, 'my_project'))
         .start()
         .expectLater('Starting local environment')
-        .expectLater('Celest is running')
+        .expectNext('Celest is running')
         .run();
   }
 }
