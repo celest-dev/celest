@@ -4,9 +4,15 @@
 
 set -e
 
+OS=`uname -s`
+if test $OS != "Linux"; then
+    >&2 echo "This script is intended for Linux systems only."
+    exit 1
+fi
+
 install_package() {
     if [ "$(id -u)" -ne 0 ]; then
-        if ! command -v sudo &> /dev/null; then
+        if ! command -v sudo > /dev/null 2>&1; then
             >&2 echo "Script requires sudo to install '${@}'. Please install it manually."
             exit 1
         fi
@@ -19,7 +25,6 @@ install_package() {
     fi
 }
 
-OS=`uname -s`
 case `uname -m` in
     x86_64|amd64|AMD64)
         ARCH="x64"
@@ -33,36 +38,32 @@ case `uname -m` in
         ;;
 esac
 
-if test $OS = "Linux"; then
-    test -e /etc/os-release && os_release='/etc/os-release' || os_release='/usr/lib/os-release'
-    . "${os_release}"
+test -e /etc/os-release && os_release='/etc/os-release' || os_release='/usr/lib/os-release'
+. "${os_release}"
 
-    if [ "${ID:-linux}" = "debian" ] || [ "${ID_LIKE#*debian*}" != "${ID_LIKE}" ]; then
-        echo "Detected Debian-based system: ${ID:-linux}"
-    else
-        >&2 echo "Unsupported distribution: ${ID:-linux}"
-        exit 1
+if [ "${ID:-linux}" != "debian" ] && [ "${ID:-linux}" != "ubuntu" ] && [ "${ID_LIKE#*debian*}" != "${ID_LIKE}" ]; then
+    >&2 echo "Unsupported distribution: ${ID:-linux}"
+    exit 1
+fi
+
+# Check if Celest is installed
+if ! command -v celest > /dev/null 2>&1; then
+    if ! command -v curl > /dev/null 2>&1; then
+        echo "Installing curl..."
+        install_package -y curl
     fi
 
-    # Check if Celest is installed
-    if ! command -v celest &> /dev/null; then
-        if ! command -v curl &> /dev/null; then
-            echo "Installing curl..."
-            install_package -y curl
-        fi
+    echo "Installing Celest..."
+    CURRENT_DIR=$(pwd)
+    cd $(mktemp -d)
+    trap 'cd "$CURRENT_DIR"; rm -rf "$TMP_DIR"' EXIT
 
-        echo "Installing Celest..."
-        CURRENT_DIR=$(pwd)
-        cd $(mktemp -d)
-        trap 'cd "$CURRENT_DIR"; rm -rf "$TMP_DIR"' EXIT
+    ARTIFACT_NAME="celest_cli-linux-${ARCH}.deb"
+    DOWNLOAD_URL="https://github.com/celest-dev/celest/releases/latest/download/$ARTIFACT_NAME"
 
-        ARTIFACT_NAME="celest_cli-linux-${ARCH}.deb"
-        DOWNLOAD_URL="https://github.com/celest-dev/celest/releases/latest/download/$ARTIFACT_NAME"
-
-        echo "Downloading Celest from $DOWNLOAD_URL"
-        curl -sSLo "$ARTIFACT_NAME" "$DOWNLOAD_URL"
-        install_package -y --fix-broken "./$ARTIFACT_NAME"
-    fi
+    echo "Downloading Celest from $DOWNLOAD_URL"
+    curl -sSLo "$ARTIFACT_NAME" "$DOWNLOAD_URL"
+    install_package -y --fix-broken "./$ARTIFACT_NAME"
 fi
 
 echo "Celest is installed and ready to use."

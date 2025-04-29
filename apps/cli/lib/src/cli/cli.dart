@@ -304,7 +304,7 @@ final class Cli {
       }
 
       if (argResults.wasParsed('version') && argResults['version'] as bool) {
-        stdout.write(ctx.verbose ? sdkInfo : version);
+        stdout.writeln(ctx.verbose ? sdkInfo : version);
         return;
       }
 
