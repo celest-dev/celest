@@ -16,6 +16,7 @@ import 'package:celest_cli/src/project/project_paths.dart';
 import 'package:celest_cli/src/serialization/json_generator.dart';
 import 'package:celest_cli/src/storage/storage.dart';
 import 'package:celest_cli/src/types/type_helper.dart';
+import 'package:celest_cli/src/utils/connection_monitor.dart';
 import 'package:celest_cli/src/version.dart';
 import 'package:celest_cloud/celest_cloud.dart';
 import 'package:file/file.dart';
@@ -223,3 +224,5 @@ NativeSecureStorage secureStorage = storage.secure;
 
 /// The isolated [secureStorage] interface.
 IsolatedNativeStorage get isolatedSecureStorage => secureStorage.isolated;
+
+ConnectionMonitor connectionMonitor = ConnectionMonitor();
