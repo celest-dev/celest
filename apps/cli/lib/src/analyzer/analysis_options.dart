@@ -16,7 +16,7 @@ final class AnalysisOptions {
         ? path
         : p.canonicalize(p.join(projectPaths.projectRoot, path));
     final analysisOptionsFile = fileSystem.file(path);
-    if (!await analysisOptionsFile.exists()) {
+    if (!analysisOptionsFile.existsSync()) {
       _logger.finest('No analysis options file detected at $path');
       return empty;
     }

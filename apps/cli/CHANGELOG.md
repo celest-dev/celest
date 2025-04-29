@@ -1,3 +1,7 @@
+## NEXT
+
+- fix: Don't throw if analysis_options.yaml is missing
+
 ## 1.0.12
 
 - feat: Support cross-compilation with Dart 3.8
