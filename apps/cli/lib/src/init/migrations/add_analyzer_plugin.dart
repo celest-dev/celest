@@ -7,21 +7,22 @@ final class AddAnalyzerPlugin extends ProjectMigration {
   AddAnalyzerPlugin(super.projectRoot, this.appRoot);
 
   final String appRoot;
+  late final parentAnalysisOptionsFile =
+      fileSystem.directory(appRoot).childFile('analysis_options.yaml');
 
   @override
-  bool get needsMigration => !fileSystem
-      .directory(appRoot)
-      .childFile('analysis_options.yaml')
-      .readAsStringSync()
-      .contains('celest');
+  bool get needsMigration {
+    if (!parentAnalysisOptionsFile.existsSync()) {
+      return true;
+    }
+    return !parentAnalysisOptionsFile.readAsStringSync().contains('- celest');
+  }
 
   @override
   String get name => 'core.project.add_analyzer_plugin';
 
   @override
   Future<ProjectMigrationResult> create() async {
-    final parentAnalysisOptionsFile =
-        fileSystem.directory(appRoot).childFile('analysis_options.yaml');
     if (parentAnalysisOptionsFile.existsSync()) {
       final editor = YamlEditor(await parentAnalysisOptionsFile.readAsString());
 
