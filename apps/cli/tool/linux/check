@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# This script verifies the functionality of the `install` and `celest` wrapper scripts.
+
+# Check that `celest` is installed
+if ! command -v celest; then
+    echo "Celest is not installed."
+    exit 1
+fi
+
+# Check that `celest` without the wrapper fails
+if celest --version; then
+    echo "Celest should not be executable without the wrapper."
+    exit 1
+fi
+
+# Check that `celest` with the wrapper works
+if ! $SHELL ./celest --version; then
+    echo "Celest should be executable with the wrapper."
+    exit 1
+fi
+
+echo "All checks passed."
