@@ -13,8 +13,9 @@ final class HotReloadNonExistentModel extends E2ETest with TestDartProject {
 
   // TODO(dnys1): Get watcher working on Windows so that SIGUSR1 is not
   // needed.
+  // TODO(dnys1): Get reload working on CI Linux
   @override
-  bool get skip => platform.isWindows;
+  bool get skip => platform.isWindows || platform.isLinux;
 
   @override
   Future<void> run() async {

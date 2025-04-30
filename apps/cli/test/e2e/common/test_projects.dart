@@ -21,6 +21,8 @@ base mixin TestFlutterProject on E2ETest {
       'flutter',
       'create',
       '.',
+      '--platforms=${platform.operatingSystem}',
+      '--no-pub',
     ], workingDirectory: projectDir.path);
     print('Running test in ${projectDir.path}');
   }

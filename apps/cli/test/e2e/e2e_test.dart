@@ -22,6 +22,7 @@ import 'tests/commands/init/templates/hello_project.dart';
 import 'tests/commands/start/hot_reload/hot_reload_add_auth.dart';
 import 'tests/commands/start/hot_reload/hot_reload_add_model_after_error.dart';
 import 'tests/commands/start/start_child_process.dart';
+import 'tests/commands/start/start_flutter_child_process.dart';
 import 'tests/package_support/supports_supabase.dart';
 
 void main() {
@@ -47,6 +48,7 @@ void main() {
 
     // Start options
     StartChildProcessTest.new,
+    StartFlutterChildProcessTest.new,
 
     // Auth commands
     LoginCommandTest.new,

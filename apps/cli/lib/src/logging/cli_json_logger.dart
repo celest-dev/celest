@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:celest_cli/src/logging/cli_logger.dart';
 import 'package:celest_cli/src/logging/log_message.dart';
 import 'package:mason_logger/mason_logger.dart' as mason_logger;
 
@@ -10,13 +11,13 @@ void _writeLog(LogMessage log) {
 
 /// An interface which conforms to the [mason_logger.Logger] interface, but
 /// which uses JSON input and output.
-class CliJsonLogger implements mason_logger.Logger {
-  @override
-  mason_logger.Level level = mason_logger.Level.verbose;
-
-  @override
-  mason_logger.ProgressOptions progressOptions =
-      const mason_logger.ProgressOptions();
+class CliJsonLogger extends CliLogger {
+  CliJsonLogger()
+      : super(
+          progressOptions: const mason_logger.ProgressOptions(),
+        ) {
+    level = mason_logger.Level.verbose;
+  }
 
   final _queue = <String?>[];
 
@@ -270,6 +271,14 @@ class CliJsonLogger implements mason_logger.Logger {
 
   @override
   void write(String? message) {
+    if (message == null) {
+      return;
+    }
+    _writeLog(LogMessage.info(message: message));
+  }
+
+  @override
+  void writeln(String? message) {
     if (message == null) {
       return;
     }

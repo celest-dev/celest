@@ -26,7 +26,6 @@ import 'package:http/io_client.dart' as http;
 import 'package:http/retry.dart' as http;
 import 'package:io/ansi.dart' show ansiOutputEnabled;
 import 'package:logging/logging.dart';
-import 'package:mason_logger/mason_logger.dart' as mason_logger;
 import 'package:meta/meta.dart';
 import 'package:native_storage/native_storage.dart';
 import 'package:path/path.dart' as path;
@@ -151,7 +150,7 @@ Uri baseUri = Uri.parse(
 /// Global CLI (mason) logger.
 ///
 /// Set by [Cli.configure].
-mason_logger.Logger cliLogger = CliLogger();
+CliLogger cliLogger = CliLogger();
 
 /// Global CLI log level.
 ///

@@ -139,6 +139,11 @@ mixin TestHelpers {
     String? arg1,
     String? arg2,
     String? arg3,
+    String? arg4,
+    String? arg5,
+    String? arg6,
+    String? arg7,
+    String? arg8,
   ]) =>
       Command([
         ...target.executable,
@@ -148,10 +153,28 @@ mixin TestHelpers {
         if (arg1 != null) arg1,
         if (arg2 != null) arg2,
         if (arg3 != null) arg3,
+        if (arg4 != null) arg4,
+        if (arg5 != null) arg5,
+        if (arg6 != null) arg6,
+        if (arg7 != null) arg7,
+        if (arg8 != null) arg8,
       ]).environment({
         if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
         ...defaultCliEnvironment,
         ...target.environment,
         ...environment,
       }).runInShell();
+
+  Future<String> findGitRoot() async {
+    if (celestLocalPath case final localPath?) {
+      return localPath;
+    }
+    final gitRootRes = await processManager.run(
+      ['git', 'rev-parse', '--show-toplevel'],
+    );
+    if (gitRootRes.exitCode != 0) {
+      throw Exception('Failed to get git root directory: ${gitRootRes.stderr}');
+    }
+    return (gitRootRes.stdout as String).trim();
+  }
 }

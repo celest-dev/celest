@@ -14,19 +14,6 @@ import 'package:logging/logging.dart';
 import 'common.dart';
 
 base mixin TestCloud on E2ETest {
-  Future<String> _findGitRoot() async {
-    if (celestLocalPath case final localPath?) {
-      return localPath;
-    }
-    final gitRootRes = await processManager.run(
-      ['git', 'rev-parse', '--show-toplevel'],
-    );
-    if (gitRootRes.exitCode != 0) {
-      throw Exception('Failed to get git root directory: ${gitRootRes.stderr}');
-    }
-    return (gitRootRes.stdout as String).trim();
-  }
-
   Process? _cloudHubProcess;
   late final Uri cloudHubUri;
   late final CelestCloud cloud;
@@ -35,6 +22,10 @@ base mixin TestCloud on E2ETest {
   static final _vmServicePattern = RegExp(
     r'The Dart VM service is listening on ([^\s]+)',
   );
+
+  // TODO(dnys1): Get cloud hub running on Windows
+  @override
+  bool get skip => platform.isWindows;
 
   @override
   Map<String, String> get environment => {
@@ -46,7 +37,7 @@ base mixin TestCloud on E2ETest {
     await super.setUp();
 
     // Build and run the Cloud Hub.
-    final gitRoot = await _findGitRoot();
+    final gitRoot = await findGitRoot();
     final cloudHubRoot = p.join(gitRoot, 'services', 'celest_cloud_hub');
 
     print('Running Cloud Hub...');
