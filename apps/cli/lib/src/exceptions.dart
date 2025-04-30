@@ -19,11 +19,6 @@ final class CliException implements Exception {
   }
 }
 
-final class CancellationException implements Exception {
-  const CancellationException([this.message = '']);
-
-  final String message;
-
-  @override
-  String toString() => 'CancellationException: $message';
+final class CancellationException extends CliException {
+  const CancellationException([super.message = '']);
 }

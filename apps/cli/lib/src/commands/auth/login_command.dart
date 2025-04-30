@@ -49,16 +49,6 @@ final class LoginCommand extends CelestCommand
     throw CliException('Failed to authenticate with token.');
   }
 
-  Future<void> _ensurePrimaryOrg() async {
-    final primaryOrg = await primaryOrganization;
-    if (primaryOrg != null) {
-      logger.finest('Primary organization: ${primaryOrg.displayName}');
-      return;
-    }
-    cliLogger.success('Welcome to Celest Cloud!');
-    await createPrimaryOrg();
-  }
-
   @override
   Future<int> run() async {
     await super.run();
@@ -80,7 +70,7 @@ final class LoginCommand extends CelestCommand
         if (res != 0) {
           return res;
         }
-        await _ensurePrimaryOrg();
+        await ensurePrimaryOrg();
         cliLogger.success('You have been logged in!');
     }
 

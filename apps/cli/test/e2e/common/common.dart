@@ -26,6 +26,7 @@ abstract base class TestTarget with TestHelpers {
 
   String get name;
   List<String> get executable;
+  @override
   Map<String, String> get environment => const {};
   Future<void> setUpAll() async {}
   Future<void> tearDownAll() async {}
@@ -72,6 +73,8 @@ mixin TestHelpers {
   TestTarget get target;
   bool get skip => false;
   File? get logFile;
+
+  Map<String, String> get environment => const {};
 
   void log(Object? object) => print(object);
 
@@ -125,6 +128,7 @@ mixin TestHelpers {
           if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
           ...defaultCliEnvironment,
           ...target.environment,
+          ...this.environment,
           ...?environment,
         },
       );
@@ -148,5 +152,6 @@ mixin TestHelpers {
         if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
         ...defaultCliEnvironment,
         ...target.environment,
+        ...environment,
       }).runInShell();
 }
