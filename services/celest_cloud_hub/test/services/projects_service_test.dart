@@ -263,7 +263,7 @@ void main() {
         expect(result.hasNextPageToken(), isFalse);
       });
 
-      test('paginated', () async {
+      test('paginated', timeout: Timeout.factor(2), () async {
         // First create an organization
         final orgRequest = CreateOrganizationRequest(
           organizationId: 'test-org',

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_hub/src/auth/policy_set.g.dart';
+import 'package:celest_cloud_hub/src/database/cloud_hub_database.steps.dart';
 import 'package:celest_cloud_hub/src/database/db_functions.dart';
 import 'package:celest_cloud_hub/src/project.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
@@ -44,7 +45,7 @@ final class CloudHubDatabase extends $CloudHubDatabase
   }
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   static final Entity rootOrg = Entity(
     uid: const EntityUid.of('Celest::Organization', 'celest-dev'),
@@ -53,44 +54,39 @@ final class CloudHubDatabase extends $CloudHubDatabase
   static final Logger _logger = Logger('CloudHubDatabase');
 
   @override
-  MigrationStrategy get migration => MigrationStrategy(
-    onCreate: (m) async {
-      await m.createAll();
-    },
-    onUpgrade: (m, from, to) async {
-      await cloudAuth.onUpgrade(m);
-    },
+  MigrationStrategy get migration => createMigration(
+    onUpgrade: stepByStep(
+      from1To2: (m, schema) async {
+        await m.addColumn(
+          schema.projectEnvironmentStates,
+          schema.projectEnvironmentStates.flyVolumeId,
+        );
+      },
+    ),
     beforeOpen: (details) async {
       final versionRow =
           await customSelect('SELECT sqlite_version() as version;').getSingle();
       final version = versionRow.read<String>('version');
       _logger.config('Using SQLite v$version');
-
-      await withoutForeignKeys(() async {
-        if (details.wasCreated) {
-          await cloudAuth.seed(
-            additionalCedarTypes: {
-              'Celest::Operation',
-              'Celest::Organization',
-              'Celest::Organization::Member',
-              'Celest::Project',
-              'Celest::Project::Member',
-              'Celest::Project::Environment',
-              'Celest::Project::Environment::Member',
-            },
-            additionalCedarEntities: {
-              rootOrg.uid: rootOrg,
-              ProjectEnvironmentAction.deploy: Entity(
-                uid: ProjectEnvironmentAction.deploy,
-                parents: [CelestAction.owner],
-              ),
-            },
-            additionalCedarPolicies: corePolicySet,
-          );
-        }
-        await cloudAuth.upsertProject(project: project);
-      });
     },
+    project: project,
+    additionalCedarTypes: {
+      'Celest::Operation',
+      'Celest::Organization',
+      'Celest::Organization::Member',
+      'Celest::Project',
+      'Celest::Project::Member',
+      'Celest::Project::Environment',
+      'Celest::Project::Environment::Member',
+    },
+    additionalCedarEntities: {
+      rootOrg.uid: rootOrg,
+      ProjectEnvironmentAction.deploy: Entity(
+        uid: ProjectEnvironmentAction.deploy,
+        parents: [CelestAction.owner],
+      ),
+    },
+    additionalCedarPolicies: corePolicySet,
   );
 
   /// Runs [action] in a context without foreign keys enabled.

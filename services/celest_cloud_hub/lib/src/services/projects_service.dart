@@ -24,9 +24,10 @@ import 'package:protobuf/protobuf.dart' as pb;
 import 'package:shelf/src/request.dart';
 
 final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
-  ProjectsService(this._db, this.authorizer);
+  ProjectsService(this.db, this.authorizer);
 
-  final CloudHubDatabase _db;
+  @override
+  final CloudHubDatabase db;
 
   @override
   final Authorizer authorizer;
@@ -138,13 +139,14 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     CreateProjectRequest request,
   ) async {
     final principal = call.expectPrincipal();
-    final organizationId = switch (request.parent.split('/')) {
-      ['organizations', final organizationId] => organizationId,
-      _ => throw GrpcError.invalidArgument('Invalid parent'),
-    };
+    final parent = ResourceName.tryParse(request.parent);
+    if (parent == null || parent.type != ResourceType.organization) {
+      throw GrpcError.invalidArgument('Invalid parent');
+    }
+    final organizationId = parent.id;
 
     final organization =
-        await _db.organizationsDrift
+        await db.organizationsDrift
             .getOrganization(id: organizationId)
             .getSingleOrNull();
     if (organization == null) {
@@ -152,7 +154,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     }
 
     final project =
-        await _db.projectsDrift
+        await db.projectsDrift
             .getProject(id: request.projectId)
             .getSingleOrNull();
     if (project != null) {
@@ -162,7 +164,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     }
 
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Organization',
@@ -186,10 +188,10 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
       resource: resource,
     );
 
-    return _db.withoutForeignKeys(() async {
+    return db.withoutForeignKeys(() async {
       final projectId = TypeId('prj');
       final project =
-          (await _db.projectsDrift.createProject(
+          (await db.projectsDrift.createProject(
             id: projectId.encoded,
             parentType: 'Celest::Organization',
             parentId: organization.id,
@@ -206,7 +208,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
           )).first;
 
       // Add the user as the owner of the project
-      await _db.userMembershipsDrift.createUserMembership(
+      await db.userMembershipsDrift.createUserMembership(
         membershipId: typeId('mbr'),
         userId: principal.uid.id,
         parentType: 'Celest::Project',
@@ -217,7 +219,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
       final operationId = TypeId('op');
       final operationResponse = project.toProto().packIntoAny();
       final operation =
-          (await _db.operationsDrift.createOperation(
+          (await db.operationsDrift.createOperation(
             id: operationId.encoded,
             ownerType: principal.uid.type,
             ownerId: principal.uid.id,
@@ -243,14 +245,14 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     };
 
     final project =
-        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('No project found with ID $projectId');
     }
 
     final principal = call.expectPrincipal();
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Project',
@@ -294,7 +296,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     };
 
     final organization =
-        await _db.organizationsDrift
+        await db.organizationsDrift
             .getOrganization(id: organizationId)
             .getSingleOrNull();
     if (organization == null) {
@@ -302,7 +304,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     }
 
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Organization',
@@ -349,7 +351,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     }
 
     final rows =
-        await _db.projectsDrift
+        await db.projectsDrift
             .listProjects(
               userId: principal.uid.id,
               parentId: organization.id,
@@ -397,14 +399,14 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     };
 
     var project =
-        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('No project found with ID $projectId');
     }
 
     final principal = call.expectPrincipal();
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Project',
@@ -434,7 +436,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     }
 
     project =
-        (await _db.projectsDrift.updateProject(
+        (await db.projectsDrift.updateProject(
           id: project.id,
           displayName: mask<String?>(
             'display_name',
@@ -453,7 +455,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     final operationId = TypeId('op');
     final operationResponse = project.toProto().packIntoAny();
     final operation =
-        (await _db.operationsDrift.createOperation(
+        (await db.operationsDrift.createOperation(
           id: operationId.encoded,
           ownerType: principal.uid.type,
           ownerId: principal.uid.id,
@@ -478,7 +480,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     };
 
     final project =
-        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
     if (project == null) {
       if (request.allowMissing) {
         return Operation();
@@ -488,7 +490,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
 
     final principal = call.expectPrincipal();
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Project',
@@ -513,7 +515,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     }
 
     final deletedProject =
-        (await _db.projectsDrift.deleteProject(
+        (await db.projectsDrift.deleteProject(
           id: project.id,
           state: 'DELETED',
           deleteTime: DateTime.timestamp(),
@@ -523,7 +525,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     final operationId = TypeId('op');
     final operationResponse = deletedProject.toProto().packIntoAny();
     final operation =
-        (await _db.operationsDrift.createOperation(
+        (await db.operationsDrift.createOperation(
           id: operationId.encoded,
           ownerType: principal.uid.type,
           ownerId: principal.uid.id,
@@ -548,14 +550,14 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     };
 
     final project =
-        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('No project found with ID $projectId');
     }
 
     final principal = call.expectPrincipal();
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Project',
@@ -580,7 +582,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     }
 
     final undeletedProject =
-        (await _db.projectsDrift.undeleteProject(
+        (await db.projectsDrift.undeleteProject(
           id: project.id,
           state: 'ACTIVE',
         )).first;
@@ -588,7 +590,7 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     final operationId = TypeId('op');
     final operationResponse = undeletedProject.toProto().packIntoAny();
     final operation =
-        (await _db.operationsDrift.createOperation(
+        (await db.operationsDrift.createOperation(
           id: operationId.encoded,
           ownerType: principal.uid.type,
           ownerId: principal.uid.id,

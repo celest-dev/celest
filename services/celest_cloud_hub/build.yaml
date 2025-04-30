@@ -13,6 +13,11 @@ targets:
           - lib/src/database/**
           - lib/src/model/**
         options: &options
+          databases:
+            cloud_hub_database: lib/src/database/cloud_hub_database.dart
+          schema_dir: drift_schema/
+          test_dir: test/database/
+
           sql:
             dialect: sqlite
             options:

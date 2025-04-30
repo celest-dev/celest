@@ -25,9 +25,10 @@ import 'package:shelf/src/request.dart';
 
 final class OrganizationsService extends OrganizationsServiceBase
     with ServiceMixin {
-  OrganizationsService(this._db, this.authorizer);
+  OrganizationsService(this.db, this.authorizer);
 
-  final CloudHubDatabase _db;
+  @override
+  final CloudHubDatabase db;
 
   @override
   final Authorizer authorizer;
@@ -140,7 +141,7 @@ final class OrganizationsService extends OrganizationsServiceBase
   ) async {
     final principal = call.expectPrincipal();
     final organization =
-        await _db.organizationsDrift
+        await db.organizationsDrift
             .getOrganization(id: request.organizationId)
             .getSingleOrNull();
     if (organization != null) {
@@ -160,10 +161,10 @@ final class OrganizationsService extends OrganizationsServiceBase
       resource: resource,
     );
 
-    return _db.withoutForeignKeys(() async {
+    return db.withoutForeignKeys(() async {
       final organizationId = TypeId('org');
       final organization =
-          (await _db.organizationsDrift.createOrganization(
+          (await db.organizationsDrift.createOrganization(
             id: organizationId.encoded,
             organizationId: request.organizationId,
             parentType: parent.uid.type,
@@ -178,7 +179,7 @@ final class OrganizationsService extends OrganizationsServiceBase
           )).first;
 
       // Add the user as the owner of the organization
-      await _db.userMembershipsDrift.createUserMembership(
+      await db.userMembershipsDrift.createUserMembership(
         membershipId: typeId('mbr'),
         userId: principal.uid.id,
         parentType: 'Celest::Organization',
@@ -189,7 +190,7 @@ final class OrganizationsService extends OrganizationsServiceBase
       final operationId = TypeId('op');
       final operationResponse = organization.toProto().packIntoAny();
       final operation =
-          (await _db.operationsDrift.createOperation(
+          (await db.operationsDrift.createOperation(
             id: operationId.encoded,
             ownerType: principal.uid.type,
             ownerId: principal.uid.id,
@@ -214,7 +215,7 @@ final class OrganizationsService extends OrganizationsServiceBase
       _ => throw GrpcError.invalidArgument('Invalid name: "${request.name}"'),
     };
     final organization =
-        await _db.organizationsDrift
+        await db.organizationsDrift
             .getOrganization(id: organizationId)
             .getSingleOrNull();
     if (organization == null) {
@@ -224,7 +225,7 @@ final class OrganizationsService extends OrganizationsServiceBase
     // Get membership of user in org
     final principal = call.expectPrincipal();
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Organization',
@@ -289,7 +290,7 @@ final class OrganizationsService extends OrganizationsServiceBase
     }
 
     final rows =
-        await _db.organizationsDrift
+        await db.organizationsDrift
             .listOrganizations(
               userId: principal.uid.id,
               showDeleted: showDeleted,
@@ -336,7 +337,7 @@ final class OrganizationsService extends OrganizationsServiceBase
       _ => throw GrpcError.invalidArgument('Invalid name'),
     };
     var organization =
-        await _db.organizationsDrift
+        await db.organizationsDrift
             .getOrganization(id: organizationId)
             .getSingleOrNull();
     if (organization == null) {
@@ -346,7 +347,7 @@ final class OrganizationsService extends OrganizationsServiceBase
     // Get membership of user in org
     final principal = call.expectPrincipal();
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Organization',
@@ -376,7 +377,7 @@ final class OrganizationsService extends OrganizationsServiceBase
     }
 
     organization =
-        (await _db.organizationsDrift.updateOrganization(
+        (await db.organizationsDrift.updateOrganization(
           id: organization.id,
           primaryRegion: mask<String?>(
             'primary_region',
@@ -395,7 +396,7 @@ final class OrganizationsService extends OrganizationsServiceBase
     final operationId = TypeId('op');
     final operationResponse = organization.toProto().packIntoAny();
     final operation =
-        (await _db.operationsDrift.createOperation(
+        (await db.operationsDrift.createOperation(
           id: operationId.encoded,
           ownerType: principal.uid.type,
           ownerId: principal.uid.id,
