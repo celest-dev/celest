@@ -1,3 +1,7 @@
+## 0.3.2+2
+
+- fix: Migration of Cloud Auth tables
+
 ## 0.3.2+1
 
 - fix: Session duration on Web
