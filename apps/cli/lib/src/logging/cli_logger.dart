@@ -190,6 +190,13 @@ class CliLogger implements mason_logger.Logger {
     stdout.write(message);
   }
 
+  void writeln(String? message) {
+    if (ansiColorsEnabled) {
+      return _logger.write('$message${Platform.lineTerminator}');
+    }
+    stdout.writeln(message);
+  }
+
   String _readLineHiddenSync() {
     try {
       stdin

@@ -66,8 +66,14 @@ final class ChildProcess {
 
     // Capture stdout/stderr
     final commandName = command.first;
-    process.captureStdout(prefix: '[$commandName] ');
-    process.captureStderr(prefix: '[$commandName] ');
+    process.captureStdout(
+      sink: cliLogger.writeln,
+      prefix: '[$commandName] ',
+    );
+    process.captureStderr(
+      sink: cliLogger.writeln,
+      prefix: '[$commandName] ',
+    );
 
     // TODO(dnys1): Handle stdin?
   }
