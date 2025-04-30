@@ -24,15 +24,15 @@ abstract base class CelestCommand extends Command<int> {
   CelestCommand() {
     // Initialize immediately instead of lazily since _stopSub is never accessed
     // directly until `close`.
-    _stopSub = StreamGroup.merge([
+    _stopSub ??= StreamGroup.merge([
       ProcessSignal.sigint.watch(),
       // SIGTERM is not supported on Windows. Attempting to register a SIGTERM
       // handler raises an exception.
       if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
     ]).listen((signal) {
-      logger.fine('Got exit signal: $signal');
-      if (!stopSignal.isStopped) {
-        stopSignal.complete(signal);
+      Logger.root.fine('Got exit signal: $signal');
+      if (!_stopSignal.isStopped) {
+        _stopSignal.complete(signal);
       }
     });
   }
@@ -134,11 +134,14 @@ abstract base class CelestCommand extends Command<int> {
   }
 
   /// {@macro celest.cli.stop_signal}
-  final stopSignal = StopSignal();
+  StopSignal get stopSignal => _stopSignal;
+
+  /// {@macro celest.cli.stop_signal}
+  static final StopSignal _stopSignal = StopSignal();
 
   /// Subscription to [ProcessSignal.sigint] and [ProcessSignal.sigterm] which
   /// forwards to [stopSignal] when triggered.
-  late final StreamSubscription<ProcessSignal> _stopSub;
+  static StreamSubscription<ProcessSignal>? _stopSub;
 
   @override
   @mustCallSuper
@@ -172,7 +175,7 @@ abstract base class CelestCommand extends Command<int> {
   @mustCallSuper
   Future<void> close() async {
     await Future.wait([
-      _stopSub.cancel(),
+      Future.value(_stopSub?.cancel()),
       for (final deferred in _deferred) Future.value(deferred()),
     ]);
   }
