@@ -42,6 +42,17 @@ extension type ResourceName(_ResourceNameInfo _info) {
     ));
   }
 
+  /// Tries to parse a resource name string into a [ResourceName] object.
+  ///
+  /// Returns `null` if the parsing fails for any reason.
+  static ResourceName? tryParse(String name) {
+    try {
+      return ResourceName.parse(name);
+    } on Object {
+      return null;
+    }
+  }
+
   /// A map of resource pattern types to their Cedar entity types.
   static const Map<String, EntityTypeName> entityTypes = {
     'operations': EntityTypeName('Celest::Operation'),
@@ -54,6 +65,9 @@ extension type ResourceName(_ResourceNameInfo _info) {
 
   /// The resource type for this resource.
   ResourceType get type => _info.type;
+
+  /// The identifier of this resource.
+  String get id => uid.id;
 
   /// The unique identifier for this resource.
   EntityUid get uid => _info.uid;

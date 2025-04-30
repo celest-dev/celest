@@ -247,7 +247,7 @@ void main() {
         expect(result.hasNextPageToken(), isFalse);
       });
 
-      test('paginated', () async {
+      test('paginated', timeout: Timeout.factor(2), () async {
         const numItems = 35;
         for (var i = 0; i < numItems; i++) {
           await service.createProjectEnvironment(

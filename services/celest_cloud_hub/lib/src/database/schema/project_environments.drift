@@ -177,14 +177,23 @@ CREATE TABLE IF NOT EXISTS project_environment_states (
     -- The ID of the linked project environment.
     project_environment_id TEXT NOT NULL PRIMARY KEY,
 
+    -- The domain name of the project environment.
+    domain_name TEXT,
+
     -- The name of the project environment's Fly app.
     fly_app_name TEXT,
 
     -- The name of the project environment's Fly volume.
+    --
+    -- Different Fly commands require the use of the name of the ID,
+    -- thus we store both.
     fly_volume_name TEXT,
 
-    -- The domain name of the project environment.
-    domain_name TEXT,
+    -- The ID of the project environment's Fly volume.
+    --
+    -- Different Fly commands require the use of the name of the ID,
+    -- thus we store both.
+    fly_volume_id TEXT,
 
     CONSTRAINT fk_project_environment_state_project_environment_id FOREIGN KEY (project_environment_id) REFERENCES project_environments(id)
         ON UPDATE CASCADE ON DELETE CASCADE
@@ -294,24 +303,28 @@ getProjectEnvironmentState:
 
 upsertProjectEnvironmentState(
     :projectEnvironmentId AS TEXT,
+    :domainName AS TEXT OR NULL,
     :flyAppName AS TEXT OR NULL,
     :flyVolumeName AS TEXT OR NULL,
-    :domainName AS TEXT OR NULL
+    :flyVolumeId AS TEXT OR NULL
 ):
     INSERT INTO project_environment_states (
         project_environment_id,
+        domain_name,
         fly_app_name,
         fly_volume_name,
-        domain_name
+        fly_volume_id
     ) VALUES (
         :projectEnvironmentId,
+        :domainName,
         :flyAppName,
         :flyVolumeName,
-        :domainName
+        :flyVolumeId
     )
     ON CONFLICT (project_environment_id) DO UPDATE
     SET
+        domain_name = coalesce(:domainName, domain_name),
         fly_app_name = coalesce(:flyAppName, fly_app_name),
         fly_volume_name = coalesce(:flyVolumeName, fly_volume_name),
-        domain_name = coalesce(:domainName, domain_name)
+        fly_volume_id = coalesce(:flyVolumeId, fly_volume_id)
     RETURNING *;

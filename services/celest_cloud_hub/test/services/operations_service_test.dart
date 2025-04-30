@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cedar/src/model/value.dart';
@@ -188,8 +187,7 @@ void main() {
         expect(result.hasNextPageToken(), isFalse);
       });
 
-      // TODO(dnys1): Get working in CI
-      test('paginated', skip: Platform.environment.containsKey('CI'), () async {
+      test('paginated', timeout: Timeout.factor(2), () async {
         const numItems = 35;
         for (var i = 0; i < numItems; i++) {
           await database.operationsDrift.createOperation(

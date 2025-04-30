@@ -14,6 +14,7 @@ import 'package:celest_cloud/celest_cloud.dart'
     as pb
     show DeployProjectEnvironmentResponse, LifecycleState, ProjectAsset_Type;
 import 'package:celest_cloud/src/proto/google/rpc/status.pb.dart' as pb;
+import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/schema/project_environments.drift.dart';
 import 'package:celest_cloud_hub/src/deploy/fly/fly_api.dart';
@@ -40,17 +41,13 @@ typedef ProjectAsset =
 final class FlyDeploymentEngine {
   FlyDeploymentEngine({
     required this.db,
-    required String flyApiToken,
     required this.projectAst,
     required this.kernelAsset,
     required this.flutterAssetsBundle,
     required this.environment,
-  }) : flyApi = FlyMachinesApiClient(authToken: flyApiToken),
-       _flyApiToken = flyApiToken;
+  });
 
   final CloudHubDatabase db;
-  final String _flyApiToken;
-  final FlyMachinesApiClient flyApi;
 
   final ProjectEnvironment environment;
   final ResolvedProject projectAst;
@@ -60,7 +57,6 @@ final class FlyDeploymentEngine {
   static Future<void> deployIsolated({
     required String operationId,
     required DriftIsolate dbConnection,
-    required String flyApiToken,
     required ResolvedProject projectAst,
     required ProjectEnvironment environment,
     required ProjectAsset kernelAsset,
@@ -89,7 +85,6 @@ final class FlyDeploymentEngine {
       final db = CloudHubDatabase(connection);
       final engine = FlyDeploymentEngine(
         db: db,
-        flyApiToken: flyApiToken,
         projectAst: projectAst,
         kernelAsset: kernelAsset,
         flutterAssetsBundle: flutterAssetsBundle,
@@ -121,20 +116,15 @@ final class FlyDeploymentEngine {
           error: jsonEncode(error.toProto3Json(typeRegistry: typeRegistry)),
         );
       } finally {
-        engine.close();
+        context.httpClient.close();
         await db.close();
       }
     });
   }
 
-  static const String _flyOrgSlug = 'celest-809';
   static const FileSystem _fileSystem = LocalFileSystem();
   static const ProcessManager _processManager = LocalProcessManager();
   late final Logger _logger = Logger('FlyDeploymentEngine.${environment.id}');
-
-  void close() {
-    flyApi.close();
-  }
 
   Future<ProjectEnvironmentState> deploy() async {
     final pb.LifecycleState next, onFailure;
@@ -201,8 +191,8 @@ final class FlyDeploymentEngine {
     }
   }
 
-  String _generateFlyAppName() {
-    var projectId = projectAst.projectId.toLowerCase();
+  static String generateFlyAppName(String projectId) {
+    projectId = projectId.toLowerCase();
 
     // Only lowercase letters, numbers, and dashes are allowed.
     projectId = projectId.replaceAll(RegExp(r'[^a-z0-9]'), '-');
@@ -228,22 +218,28 @@ final class FlyDeploymentEngine {
       _logger.fine('Using Fly app: $flyAppName');
     } else {
       // Create a new Fly app
-      flyAppName = _generateFlyAppName();
+      flyAppName = generateFlyAppName(projectAst.projectId);
       _logger.fine('Creating Fly app: $flyAppName');
-      await flyApi.apps.create(
-        request: CreateAppRequest(appName: flyAppName, orgSlug: _flyOrgSlug),
+      await context.fly.apps.create(
+        request: CreateAppRequest(
+          appName: flyAppName,
+          orgSlug: context.flyOrgSlug,
+        ),
       );
       _logger.fine('Fly app created');
     }
 
     final String flyVolumeName;
+    final String flyVolumeId;
     if (currentState?.flyVolumeName case final volumeName?) {
       flyVolumeName = volumeName;
-      _logger.fine('Using Fly volume: $flyVolumeName');
+      final flyVolumes = await context.fly.volumes.list(appName: flyAppName);
+      _logger.fine('Using Fly volume: $flyVolumes');
+      flyVolumeId = flyVolumes.single.id!;
     } else {
       _logger.fine('Creating Fly volume');
       flyVolumeName = environment.id;
-      final volume = await flyApi.volumes.create(
+      final volume = await context.fly.volumes.create(
         appName: flyAppName,
         request: CreateVolumeRequest(
           name: flyVolumeName,
@@ -252,12 +248,14 @@ final class FlyDeploymentEngine {
         ),
       );
       _logger.fine('Created Fly volume: ${volume.toJson()}');
+      flyVolumeId = volume.id!;
     }
     currentState =
         (await db.projectEnvironmentsDrift.upsertProjectEnvironmentState(
           projectEnvironmentId: environment.id,
           flyAppName: flyAppName,
           flyVolumeName: flyVolumeName,
+          flyVolumeId: flyVolumeId,
           domainName: '$flyAppName.fly.dev',
         )).first;
 
@@ -351,7 +349,7 @@ final class FlyDeploymentEngine {
       ], workingDirectory: dir.path);
     });
 
-    final app = await flyApi.apps.show(appName: flyAppName);
+    final app = await context.fly.apps.show(appName: flyAppName);
     _logger.fine('App successfully deployed: ${app.toJson()}');
 
     return currentState;
@@ -362,9 +360,9 @@ final class FlyDeploymentEngine {
     String? workingDirectory,
   }) async {
     final process = await _processManager.start(
-      ['flyctl', ...args, '--access-token', _flyApiToken],
+      <String>['flyctl', ...args],
       workingDirectory: workingDirectory,
-      environment: {'NO_COLOR': '1'},
+      environment: {'NO_COLOR': '1', 'FLY_API_TOKEN': context.flyAuthToken},
     );
     final stdout = StringBuffer();
     final stderr = StringBuffer();

@@ -10,7 +10,10 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:http/http.dart' as http;
+import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
+
+final Logger _logger = Logger('FlyApi');
 
 /// Base class for exceptions specific to the Fly Machines API client.
 class FlyMachinesApiException implements Exception {
@@ -122,7 +125,7 @@ class FlyMachinesApiClient {
         // Expecting no content (e.g., 204)
         if (responseBody.isNotEmpty) {
           // Unexpected content
-          print(
+          _logger.finest(
             'Warning: Received unexpected response body for status $statusCode: $responseBody',
           );
         }
@@ -3843,7 +3846,7 @@ class FlyDuration {
       return FlyDuration(seconds: durationValue);
     }
     // If neither matches, return with null. Consider logging a warning.
-    print('Warning: Could not parse FlyDuration from JSON: $json');
+    _logger.severe('Warning: Could not parse FlyDuration from JSON: $json');
     return const FlyDuration();
   }
   const FlyDuration({this.seconds});

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:cedar/cedar.dart';
 import 'package:celest/http.dart';
@@ -10,6 +9,7 @@ import 'package:celest_cloud/src/grpc.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_core/celest_cloud_core.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
+import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/schema/project_environments.drift.dart'
     as dto;
@@ -29,7 +29,7 @@ import 'package:shelf/src/request.dart';
 
 final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     with ServiceMixin {
-  ProjectEnvironmentsService(this._db, this.authorizer);
+  ProjectEnvironmentsService(this.db, this.authorizer);
 
   static const String apiId = 'celest.cloud.v1alpha1.ProjectEnvironments';
   static const EntityUid apiUid = EntityUid.of('Celest::Api', apiId);
@@ -122,7 +122,8 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
   @override
   final Logger logger = Logger(apiId);
 
-  final CloudHubDatabase _db;
+  @override
+  final CloudHubDatabase db;
   @override
   final Authorizer authorizer;
 
@@ -139,14 +140,14 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         ),
     };
     final project =
-        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('Project with ID $projectId not found.');
     }
 
     logger.info('Checking for existing environment');
     final existingEnvironment =
-        await _db.projectEnvironmentsDrift
+        await db.projectEnvironmentsDrift
             .lookupProjectEnvironment(
               projectId: project.id,
               projectEnvironmentId: request.projectEnvironmentId,
@@ -158,11 +159,10 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       );
     }
 
-    final environmentId = TypeId('env');
     final principal = call.expectPrincipal();
 
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Project',
@@ -171,7 +171,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
             .getSingleOrNull();
 
     final resource = Entity(
-      uid: EntityUid.of('Celest::Project::Environment', environmentId.encoded),
+      uid: EntityUid.of('Celest::Project::Environment', 'new'),
       parents: [EntityUid.of('Celest::Project', project.id)],
     );
 
@@ -188,9 +188,10 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     );
 
     logger.info('Creating project environment');
-    return _db.withoutForeignKeys(() async {
+    return db.withoutForeignKeys(() async {
+      final environmentId = TypeId('env');
       final environment =
-          (await _db.projectEnvironmentsDrift.createProjectEnvironment(
+          (await db.projectEnvironmentsDrift.createProjectEnvironment(
             id: environmentId.encoded,
             parentType: 'Celest::Project',
             parentId: project.id,
@@ -204,7 +205,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
           )).first;
 
       // Add the user as the owner of the project
-      await _db.userMembershipsDrift.createUserMembership(
+      await db.userMembershipsDrift.createUserMembership(
         membershipId: typeId('mbr'),
         userId: principal.uid.id,
         parentType: 'Celest::Project::Environment',
@@ -212,9 +213,36 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         role: 'owner',
       );
 
-      final operationResponse = environment.toProto().packIntoAny();
+      // Reserve the project name in Fly.
+      //
+      // This allows us to know the URL of the deployed app ahead of time so
+      // that apps can be concurrently built and deployed to Celest by the end
+      // user.
+      final flyAppName = FlyDeploymentEngine.generateFlyAppName(
+        project.projectId,
+      );
+      try {
+        await context.fly.apps.create(
+          request: CreateAppRequest(
+            appName: flyAppName,
+            orgSlug: context.flyOrgSlug,
+          ),
+        );
+      } on Object catch (e, st) {
+        logger.severe('Failed to create Fly app', e, st);
+        throw GrpcError.internal('Failed to create project');
+      }
+
+      final state =
+          (await db.projectEnvironmentsDrift.upsertProjectEnvironmentState(
+            projectEnvironmentId: environment.id,
+            flyAppName: flyAppName,
+            domainName: '$flyAppName.fly.dev',
+          )).first;
+
+      final operationResponse = environment.toProto(state: state).packIntoAny();
       final createOperation =
-          (await _db.operationsDrift.createOperation(
+          (await db.operationsDrift.createOperation(
             id: typeId('op'),
             ownerType: principal.uid.type,
             ownerId: principal.uid.id,
@@ -246,13 +274,13 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     };
 
     final project =
-        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('Project with ID $projectId not found.');
     }
 
     final environment =
-        await _db.projectEnvironmentsDrift
+        await db.projectEnvironmentsDrift
             .lookupProjectEnvironment(
               projectId: project.id,
               projectEnvironmentId: environmentId,
@@ -270,7 +298,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
 
     final principal = call.expectPrincipal();
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Project::Environment',
@@ -291,7 +319,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     );
 
     final projectEnvironmentState =
-        await _db.projectEnvironmentsDrift
+        await db.projectEnvironmentsDrift
             .getProjectEnvironmentState(projectEnvironmentId: environment.id)
             .getSingleOrNull();
 
@@ -318,7 +346,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         //
         // Should be the last operation for this environment since no operations
         // are performed on deleted resources.
-        final query = _db.operationsDrift.findOperationsByResource(
+        final query = db.operationsDrift.findOperationsByResource(
           resourceType: 'Celest::Project::Environment',
           resourceId: environment.id,
           orderBy: (op) => OrderBy([OrderingTerm.desc(op.createTime)]),
@@ -348,7 +376,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     }
 
     final deletedEnvironment =
-        (await _db.projectEnvironmentsDrift.deleteProjectEnvironment(
+        (await db.projectEnvironmentsDrift.deleteProjectEnvironment(
           id: environment.id,
         )).first;
 
@@ -357,7 +385,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
             .toProto(state: projectEnvironmentState)
             .packIntoAny();
     final operation =
-        (await _db.operationsDrift.createOperation(
+        (await db.operationsDrift.createOperation(
           id: typeId('op'),
           ownerType: principal.uid.type,
           ownerId: principal.uid.id,
@@ -379,11 +407,8 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       );
       return;
     }
-    final api = FlyMachinesApiClient(
-      authToken: Platform.environment['FLY_API_TOKEN']!,
-    );
     try {
-      await api.apps.delete(appName: appName);
+      await context.fly.apps.delete(appName: appName);
     } on Object catch (e, st) {
       logger.severe('Failed to delete Fly environment', e, st);
       throw GrpcError.internal('Failed to delete project environment');
@@ -407,13 +432,13 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     };
 
     final project =
-        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('Project with ID $projectId not found.');
     }
 
     final environment =
-        await _db.projectEnvironmentsDrift
+        await db.projectEnvironmentsDrift
             .lookupProjectEnvironment(
               projectId: project.id,
               projectEnvironmentId: environmentId,
@@ -427,7 +452,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
 
     final principal = call.expectPrincipal();
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Project::Environment',
@@ -458,7 +483,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
 
     final operationId = typeId('op');
     final operation =
-        (await _db.operationsDrift.createOperation(
+        (await db.operationsDrift.createOperation(
           id: operationId,
           ownerType: principal.uid.type,
           ownerId: principal.uid.id,
@@ -467,8 +492,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         )).first;
     final deployment = FlyDeploymentEngine.deployIsolated(
       operationId: operationId,
-      dbConnection: await _db.serializableConnection(),
-      flyApiToken: Platform.environment['FLY_API_TOKEN']!,
+      dbConnection: await db.serializableConnection(),
       projectAst: ResolvedProject.fromProto(
         pb.ResolvedProject().unpackAny(request.resolvedProjectAst),
       ),
@@ -519,13 +543,13 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     };
 
     final project =
-        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('No project found with ID $projectId');
     }
 
     final environment =
-        await _db.projectEnvironmentsDrift
+        await db.projectEnvironmentsDrift
             .lookupProjectEnvironment(
               projectId: project.id,
               projectEnvironmentId: environmentId,
@@ -539,7 +563,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
 
     final principal = call.expectPrincipal();
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Project::Environment',
@@ -566,7 +590,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     }
 
     final environmentState =
-        await _db.projectEnvironmentsDrift
+        await db.projectEnvironmentsDrift
             .getProjectEnvironmentState(projectEnvironmentId: environment.id)
             .getSingleOrNull();
 
@@ -587,14 +611,14 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     };
 
     final project =
-        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('No project found with ID $projectId');
     }
 
     final principal = call.expectPrincipal();
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Project',
@@ -645,7 +669,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     }
 
     final rows =
-        await _db.projectEnvironmentsDrift
+        await db.projectEnvironmentsDrift
             .listProjectEnvironments(
               userId: principal.uid.id,
               parentId: project.id,
@@ -699,13 +723,13 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     };
 
     final project =
-        await _db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('Project with ID $projectId not found.');
     }
 
     var environment =
-        await _db.projectEnvironmentsDrift
+        await db.projectEnvironmentsDrift
             .lookupProjectEnvironment(
               projectId: project.id,
               projectEnvironmentId: environmentId,
@@ -717,7 +741,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
 
     final principal = call.expectPrincipal();
     final membership =
-        await _db.userMembershipsDrift
+        await db.userMembershipsDrift
             .findUserMembership(
               userId: principal.uid.id,
               parentType: 'Celest::Project::Environment',
@@ -747,7 +771,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     }
 
     environment =
-        (await _db.projectEnvironmentsDrift.updateProjectEnvironment(
+        (await db.projectEnvironmentsDrift.updateProjectEnvironment(
           id: environment.id,
           displayName: mask<String?>(
             'display_name',
@@ -765,7 +789,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
 
     final operationResponse = environment.toProto().packIntoAny();
     final operation =
-        (await _db.operationsDrift.createOperation(
+        (await db.operationsDrift.createOperation(
           id: typeId('op'),
           ownerType: principal.uid.type,
           ownerId: principal.uid.id,
