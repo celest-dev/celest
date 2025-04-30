@@ -89,6 +89,8 @@ final class Cli {
         ? const SentryPerformance()
         : const CelestPerformance();
     ctx.storage = storage ?? Storage();
+    ctx.connectionMonitor.init();
+    await ctx.connectionMonitor.stream.first;
 
     try {
       _logger.finest('Initializing secure storage');
@@ -401,6 +403,7 @@ final class Cli {
     await _logFile?.close();
     await ctx.performance.close();
     ctx.httpClient.close();
+    ctx.connectionMonitor.close();
     exit(exitCode);
   }
 }

@@ -54,7 +54,13 @@ Future<void> runPub({
       ? Sdk.current.dart
       : (await celestProject.determineProjectType()).executable;
 
-  final command = <String>[exe, 'pub', action.name, if (verbose) '--verbose'];
+  final command = <String>[
+    exe,
+    'pub',
+    action.name,
+    if (verbose) '--verbose',
+    if (!connectionMonitor.isConnected) '--offline',
+  ];
   final logger = Logger(command.join(' '));
   logger.fine('Running `${command.join(' ')}` in "$workingDirectory"...');
   final process = await processManager.start(
