@@ -1,0 +1,38 @@
+import 'package:celest_cli/src/context.dart';
+
+import '../../../common/common.dart';
+
+final class StartChildProcessTest extends E2ETest {
+  StartChildProcessTest(super.target);
+
+  @override
+  String get name => 'start (w/ child process)';
+
+  @override
+  Future<void> run() async {
+    // The child process succeeds
+    {
+      await celestCommand('start', '--', 'echo', 'hello')
+          .workingDirectory(tempDir.path)
+          .start()
+          .expectLater('Generating project')
+          .expectLater('Starting local environment')
+          .expectNext('Celest is running')
+          .expectLater('hello')
+          // Expect the CLI exits after the child process exits
+          .expectSuccess();
+    }
+
+    // The child process fails
+    {
+      await celestCommand('start', '--', '/bin/sh', '-c', 'exit 123')
+          // Use the already created project
+          .workingDirectory(p.join(tempDir.path, 'my_project'))
+          .start()
+          .expectLater('Starting local environment')
+          .expectNext('Celest is running')
+          // Expect the CLI exits with the child process exit code
+          .expectError(123);
+    }
+  }
+}

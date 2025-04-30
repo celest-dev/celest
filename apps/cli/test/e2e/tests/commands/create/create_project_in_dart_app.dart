@@ -1,11 +1,12 @@
-import '../../common/common.dart';
-import '../../common/test_projects.dart';
+import '../../../common/common.dart';
+import '../../../common/test_projects.dart';
 
 final class CreateProjectInDartAppTest extends E2ETest with TestDartProject {
   CreateProjectInDartAppTest(super.target);
 
   @override
   String get name => 'start (w/ Dart parent)';
+
   @override
   Future<void> run() async {
     await celestCommand('start')

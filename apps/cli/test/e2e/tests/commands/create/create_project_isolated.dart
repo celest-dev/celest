@@ -1,6 +1,6 @@
 import 'package:checks/checks.dart';
 
-import '../../common/common.dart';
+import '../../../common/common.dart';
 
 final class CreateProjectIsolatedTest extends E2ETest {
   CreateProjectIsolatedTest(super.target);

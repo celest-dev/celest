@@ -302,6 +302,23 @@ final class InteractiveCommand {
     await [stdout.flush(), stderr.flush()].wait;
   }
 
+  Future<void> expectError([int? exitCode]) async {
+    try {
+      await flush().trace('expectError');
+      await check(_process.exitCode).completes((it) {
+        if (exitCode case final exitCode?) {
+          it.equals(exitCode);
+        } else {
+          it.not((it) => it.equals(0));
+        }
+      });
+    } finally {
+      _process.kill();
+      await _logs.cancel();
+      await [stdout.flush(), stderr.flush()].wait;
+    }
+  }
+
   Future<void> expectSuccess() async {
     try {
       await flush().trace('expectSuccess');

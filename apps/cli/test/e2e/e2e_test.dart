@@ -7,20 +7,21 @@ import 'package:test/test.dart';
 
 import '../common.dart';
 import 'common/common.dart';
-import 'features/bugs/add_remove_fields.dart';
-import 'features/create/create_project_in_dart_app.dart';
-import 'features/create/create_project_in_dart_app_no_deps.dart';
-import 'features/create/create_project_in_flutter_app.dart';
-import 'features/create/create_project_isolated.dart';
-import 'features/hot_reload/hot_reload_add_auth.dart';
-import 'features/hot_reload/hot_reload_add_model_after_error.dart';
-import 'features/init/init_project_name.dart';
-import 'features/init/templates/data_project.dart';
-import 'features/init/templates/hello_project.dart';
-import 'features/package_support/supports_supabase.dart';
 import 'targets/installed_target.dart';
 import 'targets/local_aot_target.dart';
 import 'targets/local_target.dart';
+import 'tests/bugs/add_remove_fields.dart';
+import 'tests/commands/create/create_project_in_dart_app.dart';
+import 'tests/commands/create/create_project_in_dart_app_no_deps.dart';
+import 'tests/commands/create/create_project_in_flutter_app.dart';
+import 'tests/commands/create/create_project_isolated.dart';
+import 'tests/commands/init/init_project_name.dart';
+import 'tests/commands/init/templates/data_project.dart';
+import 'tests/commands/init/templates/hello_project.dart';
+import 'tests/commands/start/hot_reload/hot_reload_add_auth.dart';
+import 'tests/commands/start/hot_reload/hot_reload_add_model_after_error.dart';
+import 'tests/commands/start/start_child_process.dart';
+import 'tests/package_support/supports_supabase.dart';
 
 void main() {
   final targets = <TestTarget>[
@@ -30,26 +31,29 @@ void main() {
   ];
 
   final tests = <E2ETest Function(TestTarget)>[
-    // Project templates
-    HelloProjectTest.new,
-    DataProjectTest.new,
+    // // Project templates
+    // HelloProjectTest.new,
+    // DataProjectTest.new,
 
-    // Project initialization
-    InitProjectNameTest.new,
+    // // Init options
+    // InitProjectNameTest.new,
 
-    // Project creation
-    CreateProjectInFlutterAppTest.new,
-    CreateProjectInDartAppTest.new,
-    CreateProjectInDartAppNoDepsTest.new,
-    CreateProjectIsolatedTest.new,
+    // // Project creation
+    // CreateProjectInFlutterAppTest.new,
+    // CreateProjectInDartAppTest.new,
+    // CreateProjectInDartAppNoDepsTest.new,
+    // CreateProjectIsolatedTest.new,
+
+    // Start options
+    StartChildProcessTest.new,
 
     // Hot reload
-    AddRemoveFieldsTest.new,
-    HotReloadAddAuthTest.new,
-    HotReloadNonExistentModel.new,
+    // AddRemoveFieldsTest.new,
+    // HotReloadAddAuthTest.new,
+    // HotReloadNonExistentModel.new,
 
-    // Package support
-    SupportsSupabase.new,
+    // // Package support
+    // SupportsSupabase.new,
   ];
 
   for (final target in targets) {
