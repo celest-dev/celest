@@ -93,6 +93,7 @@ dev_dependencies:
   built_value_generator: ^8.9.4
   celest_lints:
     path: ../../packages/celest_lints
+  celest_test: ^0.1.0
   checks: ^0.3.0
   dart_jsonwebtoken: ^3.1.1
   drift_dev: '>=2.26.0 <2.27.0'

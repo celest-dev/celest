@@ -97,4 +97,15 @@ mixin CloudRepository {
       rethrow;
     }
   }
+
+  /// Ensures the creation of the current user's primary organization.
+  Future<pb.Organization> ensurePrimaryOrg() async {
+    final primaryOrg = await primaryOrganization;
+    if (primaryOrg != null) {
+      logger.finest('Primary organization: ${primaryOrg.name}');
+      return primaryOrg;
+    }
+    cliLogger.success('Welcome to Celest Cloud!');
+    return createPrimaryOrg();
+  }
 }

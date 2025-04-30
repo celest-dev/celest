@@ -148,16 +148,14 @@ class CliLogger implements mason_logger.Logger {
 
   @override
   String prompt(String? message, {Object? defaultValue, bool hidden = false}) {
-    final resolvedDefaultValue = switch (defaultValue) {
-      final defaultValue? when '$defaultValue'.isNotEmpty => ' ($defaultValue)',
-      _ => ':',
-    };
-    final resolvedMessage = '$message$resolvedDefaultValue ';
-    stdout.write(resolvedMessage);
+    stdout.write('$message ');
     final input = hidden
         ? _readLineHiddenSync()
         : console.readLine(cancelOnBreak: true)?.trim();
-    return input == null || input.isEmpty ? resolvedDefaultValue : input;
+    if (input == null) {
+      throw const CancellationException();
+    }
+    return input.isEmpty ? defaultValue?.toString() ?? '' : input;
   }
 
   @override
@@ -214,7 +212,7 @@ class CliLogger implements mason_logger.Logger {
             case ControlCharacter.escape:
               return '';
             case ControlCharacter.ctrlC || ControlCharacter.ctrlD:
-              throw const CancellationException('Cancelled input');
+              throw const CancellationException();
             default:
               break;
           }

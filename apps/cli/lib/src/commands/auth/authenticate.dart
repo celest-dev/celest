@@ -4,20 +4,24 @@ import 'package:celest_cli/src/commands/celest_command.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_core/celest_core.dart';
-import 'package:dcli/dcli.dart';
 import 'package:email_validator/email_validator.dart';
 
 base mixin Authenticate on CelestCommand {
+  static final RegExp _validOtp = RegExp(r'^\d{6}$');
+
   Future<int> signUp() async {
     cliLogger.success(
       "Welcome! To get started with Celest Cloud, we'll need to verify your "
       'email.',
     );
-    final email = ask(
-      'What is your email?',
-      required: true,
-      validator: const AskEmailValidator(),
-    );
+    String email;
+    for (;;) {
+      email = cliLogger.prompt('What is your email?');
+      if (EmailValidator.validate(email.trim(), true)) {
+        break;
+      }
+      cliLogger.warn('Invalid email address.');
+    }
     analytics.identifyUser(set: {'email': email});
     analytics.capture('sign_up_started');
     try {
@@ -26,11 +30,14 @@ base mixin Authenticate on CelestCommand {
         'We have sent you an email with a verification code. '
         'Please enter it below to verify your account.',
       );
-      final verificationCode = ask(
-        'Verification Code:',
-        required: true,
-        validator: const AskOtpValidator(),
-      );
+      String verificationCode;
+      for (;;) {
+        verificationCode = cliLogger.prompt('Verification Code:');
+        if (_validOtp.hasMatch(verificationCode.trim())) {
+          break;
+        }
+        cliLogger.warn('Invalid code. It should be 6 digits.');
+      }
       final user = await flow.verify(otpCode: verificationCode);
 
       analytics.capture(
@@ -50,6 +57,11 @@ base mixin Authenticate on CelestCommand {
       return user;
     }
     return null;
+  }
+
+  Future<bool> get isAuthenticated async {
+    final state = await auth.init();
+    return state is Authenticated;
   }
 
   /// Retrieves the authenticated user or signs up a new user.
@@ -75,35 +87,5 @@ base mixin Authenticate on CelestCommand {
       'You must be logged in to run this command. '
       'Run `celest auth login` to log in or create an account.',
     );
-  }
-}
-
-final class AskEmailValidator implements AskValidator {
-  const AskEmailValidator();
-
-  @override
-  String validate(String line, {String? customErrorMessage}) {
-    if (!EmailValidator.validate(line.trim(), true)) {
-      throw AskValidatorException(
-        customErrorMessage ?? 'Invalid email address',
-      );
-    }
-    return line;
-  }
-}
-
-final class AskOtpValidator implements AskValidator {
-  const AskOtpValidator();
-
-  static final _validOtp = RegExp(r'^\d{6}$');
-
-  @override
-  String validate(String line, {String? customErrorMessage}) {
-    if (!_validOtp.hasMatch(line.trim())) {
-      throw AskValidatorException(
-        customErrorMessage ?? 'Invalid code. It should be 6 digits.',
-      );
-    }
-    return line;
   }
 }
