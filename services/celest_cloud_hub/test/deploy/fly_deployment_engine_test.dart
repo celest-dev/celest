@@ -145,6 +145,11 @@ Future<void> main() async {
     print('Deploying');
     final state = await deploymentEngine.deploy();
 
+    final volumeId = await context.flyGql.getVolumeId(
+      appName: state.flyAppName!,
+      volumeName: state.flyVolumeName!,
+    );
+
     await expectLater(
       context.fly.apps.show(appName: state.flyAppName!),
       completion(isA<App>()),
@@ -152,7 +157,7 @@ Future<void> main() async {
     await expectLater(
       context.fly.volumes.getById(
         appName: state.flyAppName!,
-        volumeId: state.flyVolumeId!,
+        volumeId: volumeId,
       ),
       completion(isA<Volume>()),
     );
@@ -174,7 +179,7 @@ Future<void> main() async {
     await expectLater(
       context.fly.volumes.getById(
         appName: state.flyAppName!,
-        volumeId: state.flyVolumeId!,
+        volumeId: volumeId,
       ),
       throwsA(isA<Exception>()),
     );
