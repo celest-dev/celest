@@ -53,20 +53,37 @@ mixin CloudAuthDatabaseMixin on GeneratedDatabase {
   MigrationStrategy createMigration({
     OnCreate? onCreate,
     OnUpgrade? onUpgrade,
-    OnBeforeOpen? onBeforeOpen,
+    OnBeforeOpen? beforeOpen,
+    ResolvedProject? project,
+    Iterable<String> additionalCedarTypes = const {},
+    Map<EntityUid, Entity> additionalCedarEntities = const {},
+    PolicySet? additionalCedarPolicies,
   }) {
     final defaultStrategy = MigrationStrategy();
     onCreate ??= defaultStrategy.onCreate;
     onUpgrade ??= defaultStrategy.onUpgrade;
     return MigrationStrategy(
       onCreate: onCreate,
-      onUpgrade: (m, from, to) async {
-        await onUpgrade!(m, from, to);
-        await cloudAuth.onUpgrade(m);
-      },
+      onUpgrade: onUpgrade,
       beforeOpen: (details) async {
-        await onBeforeOpen?.call(details);
-        await cloudAuth.onBeforeOpen(details);
+        // First ensure that the cloud auth tables are up-to-date.
+        //
+        // This must be run here since the cloud auth tables may be updated
+        // out-of-sync with the wrapper database, meaning onUpgrade may miss
+        // updates related to the cloud auth tables.
+        await cloudAuth.onUpgrade(Migrator(this));
+
+        // Then seed the database with core types, entities, and relationships.
+        await cloudAuth.onBeforeOpen(
+          details,
+          project: project,
+          additionalCedarTypes: additionalCedarTypes,
+          additionalCedarEntities: additionalCedarEntities,
+          additionalCedarPolicies: additionalCedarPolicies,
+        );
+
+        // Then call beforeOpen, which may reference cloud auth tables.
+        await beforeOpen?.call(details);
       },
     );
   }
@@ -336,12 +353,26 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
     @internal int? to,
   }) async {
     try {
-      from ??= await cloudAuthMetaDrift.getSchemaVersion().getSingle();
+      from ??= await cloudAuthMetaDrift.getSchemaVersion().getSingleOrNull();
     } on Object catch (e, st) {
       _logger.finest('Error getting latest schema version', e, st);
+      if (from == null) {
+        // We're mising the meta tables for some reason.
+        //
+        // This should never happen.
+        throw StateError('Invalid schema detected');
+      }
     }
 
-    from ??= 1;
+    // If the table is empty, then the database was just created and thus
+    // the schema version is current.
+    if (from == null) {
+      await cloudAuthMetaDrift.setSchemaVersion(
+        schemaVersion: schemaVersion,
+      );
+      from = schemaVersion;
+    }
+
     to ??= schemaVersion;
     if (from < to) {
       _logger.fine('Migrating from version $from to version $to');
@@ -359,10 +390,17 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   Future<void> onBeforeOpen(
     OpeningDetails details, {
     ResolvedProject? project,
+    Iterable<String> additionalCedarTypes = const {},
+    Map<EntityUid, Entity> additionalCedarEntities = const {},
+    PolicySet? additionalCedarPolicies,
   }) async {
     await _withoutForeignKeys(() async {
       if (details.wasCreated) {
-        await seed();
+        await seed(
+          additionalCedarTypes: additionalCedarTypes,
+          additionalCedarEntities: additionalCedarEntities,
+          additionalCedarPolicies: additionalCedarPolicies,
+        );
       }
       await upsertProject(project: project);
     });

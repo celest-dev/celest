@@ -8,9 +8,11 @@ targets:
         enabled: true
         generate_for:
           - lib/src/database/**
+          - test/database/wrapper/**
         options: &options
           databases:
             auth_database: lib/src/database/auth_database.dart
+            test_database: test/database/wrapper/wrapper_database.dart
           schema_dir: drift_schema/
           test_dir: test/database/
 
@@ -32,4 +34,5 @@ targets:
         enabled: true
         generate_for:
           - lib/src/database/**
+          - test/database/wrapper/**
         options: *options

@@ -1,0 +1,13 @@
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_core.drift';
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_users.drift';
+
+CREATE TABLE IF NOT EXISTS test (
+    -- Ensure we can reference Cloud Auth tables.
+    user_id TEXT NOT NULL,
+
+    -- Added in schema version 2
+    session_id TEXT NOT NULL,
+
+    FOREIGN KEY (user_id) REFERENCES cloud_auth_users(user_id),
+    FOREIGN KEY (session_id) REFERENCES cloud_auth_sessions(session_id)
+);
