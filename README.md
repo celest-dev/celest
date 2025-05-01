@@ -11,7 +11,7 @@
 
 Celest is the Flutter cloud platform. We enable Flutter and Dart developers to declaratively define their backend infrastructure in Dart.
 
-And to stay up-to-date on the future of Celest, including full server-side rendered Flutter apps, join our newsletter at [celest.dev](https://www.celest.dev/#stay-up-to-date). You can also explore a comprehensive wiki about the project architecture at [deepWiki](https://deepwiki.com/celest-dev/celest/1-overview).
+And to stay up-to-date on the future of Celest, including full server-side rendered Flutter apps, join our newsletter at [celest.dev](https://www.celest.dev/#stay-up-to-date).
 
 ## Getting Started
 
