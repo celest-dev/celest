@@ -88,7 +88,7 @@ class FlyMachinesApiClient {
     String path, {
     Map<String, String?>? queryParams,
     Object? body,
-    T Function(Map<String, Object?>)? parseResponse,
+    T Function(Object?)? parseResponse,
     Map<String, String>? headers,
   }) async {
     final uri = _baseUrl.replace(
@@ -132,22 +132,14 @@ class FlyMachinesApiClient {
         // We need to cast carefully because T could be void
         return null as T;
       }
-      try {
-        // Handle empty body for success codes where content is expected
-        if (responseBody.isEmpty) {
-          // This might happen for 200 OK with an optional body.
-          // The parse function needs to handle null appropriately.
-          return parseResponse(const {});
-        }
-        final jsonResponse = jsonDecode(responseBody);
-        return parseResponse(jsonResponse as Map<String, Object?>);
-      } catch (e) {
-        throw FlyMachinesApiException(
-          'Failed to parse successful response: ${e.toString()}',
-          statusCode,
-          responseBody, // Include raw body on parsing failure
-        );
+      // Handle empty body for success codes where content is expected
+      if (responseBody.isEmpty) {
+        // This might happen for 200 OK with an optional body.
+        // The parse function needs to handle null appropriately.
+        return parseResponse(const {});
       }
+      final jsonResponse = jsonDecode(responseBody);
+      return parseResponse(jsonResponse);
     } else {
       // Handle error responses
       ErrorResponse? error;
@@ -194,7 +186,8 @@ class AppsApi {
       'GET',
       '/apps',
       queryParams: {'org_slug': orgSlug},
-      parseResponse: ListAppsResponse.fromJson,
+      parseResponse:
+          (json) => ListAppsResponse.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -202,12 +195,12 @@ class AppsApi {
   ///
   /// Create an app with the specified details in the request body.
   /// [request]: App body
-  Future<void> create({required CreateAppRequest request}) async {
-    await _client._sendRequest<void>(
+  Future<CreateAppResponse> create({required CreateAppRequest request}) async {
+    return _client._sendRequest<CreateAppResponse>(
       'POST',
       '/apps',
       body: request.toJson(),
-      parseResponse: null, // Expecting 201 Created with no body
+      parseResponse: (resp) => (id: (resp as Map)['id'] as String),
     );
   }
 
@@ -219,7 +212,7 @@ class AppsApi {
     return _client._sendRequest<App>(
       'GET',
       '/apps/$appName',
-      parseResponse: App.fromJson,
+      parseResponse: (json) => App.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -290,7 +283,7 @@ class MachinesApi {
       'POST',
       '/apps/$appName/machines',
       body: request.toJson(),
-      parseResponse: Machine.fromJson,
+      parseResponse: (json) => Machine.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -306,7 +299,7 @@ class MachinesApi {
     return _client._sendRequest<Machine>(
       'GET',
       '/apps/$appName/machines/$machineId',
-      parseResponse: Machine.fromJson,
+      parseResponse: (json) => Machine.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -325,7 +318,7 @@ class MachinesApi {
       'POST', // Note: The spec uses POST for update here
       '/apps/$appName/machines/$machineId',
       body: request.toJson(),
-      parseResponse: Machine.fromJson,
+      parseResponse: (json) => Machine.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -421,7 +414,8 @@ class MachinesApi {
       body: request.toJson(),
       // Force Accept header to application/json
       headers: {'Accept': 'application/json'},
-      parseResponse: Flydv1ExecResponse.fromJson,
+      parseResponse:
+          (json) => Flydv1ExecResponse.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -437,7 +431,7 @@ class MachinesApi {
     return _client._sendRequest<Lease>(
       'GET',
       '/apps/$appName/machines/$machineId/lease',
-      parseResponse: Lease.fromJson,
+      parseResponse: (json) => Lease.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -462,7 +456,7 @@ class MachinesApi {
           flyMachineLeaseNonce != null
               ? {'fly-machine-lease-nonce': flyMachineLeaseNonce}
               : null,
-      parseResponse: Lease.fromJson,
+      parseResponse: (json) => Lease.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -497,7 +491,7 @@ class MachinesApi {
     return _client._sendRequest<Map<String, String>>(
       'GET',
       '/apps/$appName/machines/$machineId/metadata',
-      parseResponse: Map<String, String>.from,
+      parseResponse: (json) => (json as Map<String, Object?>).cast(),
     );
   }
 
@@ -750,7 +744,7 @@ class VolumesApi {
       'POST',
       '/apps/$appName/volumes',
       body: request.toJson(),
-      parseResponse: Volume.fromJson,
+      parseResponse: (json) => Volume.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -766,7 +760,7 @@ class VolumesApi {
     return _client._sendRequest<Volume>(
       'GET',
       '/apps/$appName/volumes/$volumeId',
-      parseResponse: Volume.fromJson,
+      parseResponse: (json) => Volume.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -785,7 +779,7 @@ class VolumesApi {
       'PUT',
       '/apps/$appName/volumes/$volumeId',
       body: request.toJson(),
-      parseResponse: Volume.fromJson,
+      parseResponse: (json) => Volume.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -802,7 +796,7 @@ class VolumesApi {
     return _client._sendRequest<Volume>(
       'DELETE',
       '/apps/$appName/volumes/$volumeId',
-      parseResponse: Volume.fromJson,
+      parseResponse: (json) => Volume.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -821,7 +815,8 @@ class VolumesApi {
       'PUT',
       '/apps/$appName/volumes/$volumeId/extend',
       body: request.toJson(),
-      parseResponse: ExtendVolumeResponse.fromJson,
+      parseResponse:
+          (resp) => ExtendVolumeResponse.fromJson(resp as Map<String, Object?>),
     );
   }
 
@@ -1162,6 +1157,8 @@ class CreateAppRequest {
     );
   }
 }
+
+typedef CreateAppResponse = ({String id});
 
 /// Request body for creating a machine lease.
 @immutable
@@ -1840,10 +1837,7 @@ class ListApp {
       id: json['id'] as String?,
       machineCount: json['machine_count'] as int?,
       name: json['name'] as String?,
-      network:
-          json['network'] == null
-              ? null
-              : Map<String, dynamic>.from(json['network'] as Map),
+      network: json['network'] as String?,
     );
   }
   const ListApp({this.id, this.machineCount, this.name, this.network});
@@ -1851,7 +1845,7 @@ class ListApp {
   final String? id;
   final int? machineCount;
   final String? name;
-  final Map<String, dynamic>? network;
+  final String? network;
 
   Map<String, dynamic> toJson() {
     return {
@@ -1888,7 +1882,7 @@ class ListApp {
     String? id,
     int? machineCount,
     String? name,
-    Map<String, dynamic>? network,
+    String? network,
   }) {
     return ListApp(
       id: id ?? this.id,

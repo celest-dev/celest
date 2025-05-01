@@ -12,6 +12,7 @@ build:
 env:
   CLOUD_HUB_DATABASE_HOST: "file:///db/CloudHubDatabase.db"
   LOG_LEVEL: ALL
+  CELEST_ENVIRONMENT: production
   SENTRY_DSN: https://dee57feed8364d2768bdcc8c856ac6ba@o4506345201532928.ingest.us.sentry.io/4509136061988864
 
 http_service:

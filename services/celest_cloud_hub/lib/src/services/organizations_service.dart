@@ -9,6 +9,7 @@ import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/organizations.pbgrp
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_core/celest_cloud_core.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
+import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
 import 'package:celest_cloud_hub/src/model/interop.dart';
@@ -150,7 +151,7 @@ final class OrganizationsService extends OrganizationsServiceBase
       );
     }
 
-    final parent = CloudHubDatabase.rootOrg;
+    final parent = context.rootOrg;
     final resource = Entity(
       uid: EntityUid.of('Celest::Organization', request.organizationId),
       parents: [parent.uid],
@@ -296,7 +297,7 @@ final class OrganizationsService extends OrganizationsServiceBase
               showDeleted: showDeleted,
               offset: pageOffset,
               limit: pageSize,
-              parentId: CloudHubDatabase.rootOrg.uid.id,
+              parentId: context.rootOrg.uid.id,
               startTime: startTime,
               order_by: switch (orderByClause) {
                 final orderBy? =>

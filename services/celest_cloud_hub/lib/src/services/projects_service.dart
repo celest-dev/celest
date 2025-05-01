@@ -9,6 +9,7 @@ import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/projects.pbgrpc.dar
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_core/celest_cloud_core.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
+import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
 import 'package:celest_cloud_hub/src/model/interop.dart';
@@ -133,6 +134,24 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
     'RenameProject': _RenameProjectGatewayHandler(),
   };
 
+  /// Whether the authenticated principal is an admin of the root organization.
+  Future<bool> _isRootPrincipalAdmin(EntityUid uid) async {
+    try {
+      final rootMembership =
+          await db.userMembershipsDrift
+              .findUserMembership(
+                userId: uid.id,
+                parentType: context.rootOrg.uid.type,
+                parentId: context.rootOrg.uid.id,
+              )
+              .getSingleOrNull();
+      return rootMembership?.role == 'admin' || rootMembership?.role == 'owner';
+    } on Object catch (e, st) {
+      logger.severe('Failed to check root principal admin', e, st);
+      return false;
+    }
+  }
+
   @override
   Future<Operation> createProject(
     ServiceCall call,
@@ -161,6 +180,15 @@ final class ProjectsService extends ProjectsServiceBase with ServiceMixin {
       throw GrpcError.alreadyExists(
         'Project with ID ${request.projectId} already exists',
       );
+    }
+
+    if (request.projectId.contains('celest')) {
+      final isRootAdmin = await _isRootPrincipalAdmin(principal.uid);
+      if (!isRootAdmin) {
+        throw GrpcError.permissionDenied(
+          'Cannot create a project with ID containing "celest"',
+        );
+      }
     }
 
     final membership =

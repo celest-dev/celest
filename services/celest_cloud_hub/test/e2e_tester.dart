@@ -14,7 +14,11 @@ import 'package:grpc/grpc.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
+import 'common.dart';
+
 class E2ETester {
+  E2ETester();
+
   late String databasePath;
   late CelestCloudAuth cloudAuth;
   late CloudHubDatabase database;
@@ -74,6 +78,8 @@ class E2ETester {
       environment: {
         'PORT': '0',
         'CLOUD_HUB_DATABASE_HOST': Uri.file(databasePath).toString(),
+        'CELEST_ENVIRONMENT': 'test',
+        'CELEST_ORGANIZATION_ID': kRootOrgId,
       },
     );
     addTearDown(() async {

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_hub/src/auth/policy_set.g.dart';
+import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.steps.dart';
 import 'package:celest_cloud_hub/src/database/db_functions.dart';
 import 'package:celest_cloud_hub/src/project.dart';
@@ -47,10 +48,6 @@ final class CloudHubDatabase extends $CloudHubDatabase
   @override
   int get schemaVersion => 1;
 
-  static final Entity rootOrg = Entity(
-    uid: const EntityUid.of('Celest::Organization', 'celest-dev'),
-  );
-
   static final Logger _logger = Logger('CloudHubDatabase');
 
   @override
@@ -68,6 +65,21 @@ final class CloudHubDatabase extends $CloudHubDatabase
           await customSelect('SELECT sqlite_version() as version;').getSingle();
       final version = versionRow.read<String>('version');
       _logger.config('Using SQLite v$version');
+
+      final rootOrg =
+          await organizationsDrift
+              .getOrganization(id: context.rootOrg.uid.id)
+              .getSingleOrNull();
+      if (rootOrg == null) {
+        _logger.config('Creating root organization');
+        await organizationsDrift.createOrganization(
+          id: context.rootOrg.uid.id,
+          displayName: 'Celest',
+          organizationId: context.rootOrg.uid.id,
+          state: 'ACTIVE',
+          primaryRegion: 'NORTH_AMERICA',
+        );
+      }
     },
     project: project,
     additionalCedarTypes: {
@@ -80,7 +92,7 @@ final class CloudHubDatabase extends $CloudHubDatabase
       'Celest::Project::Environment::Member',
     },
     additionalCedarEntities: {
-      rootOrg.uid: rootOrg,
+      context.rootOrg.uid: context.rootOrg,
       ProjectEnvironmentAction.deploy: Entity(
         uid: ProjectEnvironmentAction.deploy,
         parents: [CelestAction.owner],

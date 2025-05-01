@@ -13,7 +13,6 @@ import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/schema/project_environments.drift.dart'
     as dto;
-import 'package:celest_cloud_hub/src/deploy/fly/fly_api.dart';
 import 'package:celest_cloud_hub/src/deploy/fly/fly_deployment_engine.dart';
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
 import 'package:celest_cloud_hub/src/model/interop.dart';
@@ -222,12 +221,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         project.projectId,
       );
       try {
-        await context.fly.apps.create(
-          request: CreateAppRequest(
-            appName: flyAppName,
-            orgSlug: context.flyOrgSlug,
-          ),
-        );
+        await context.fly.createApp(appName: flyAppName);
       } on Object catch (e, st) {
         logger.severe('Failed to create Fly app', e, st);
         throw GrpcError.internal('Failed to create project');
@@ -408,7 +402,7 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       return;
     }
     try {
-      await context.fly.apps.delete(appName: appName);
+      await context.fly.deleteApp(appName: appName);
     } on Object catch (e, st) {
       logger.severe('Failed to delete Fly environment', e, st);
       throw GrpcError.internal('Failed to delete project environment');

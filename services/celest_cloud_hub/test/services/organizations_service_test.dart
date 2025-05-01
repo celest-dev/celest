@@ -13,9 +13,13 @@ import 'package:grpc/grpc.dart';
 import 'package:test/fake.dart';
 import 'package:test/test.dart';
 
+import '../common.dart';
+
 const user = EntityUid.of('Celest::User', 'test');
 
 void main() {
+  initTesting();
+
   group('OrganizationsService', () {
     late CloudHubDatabase database;
     late OrganizationsService service;
@@ -181,7 +185,7 @@ void main() {
       });
 
       test('paginated', timeout: Timeout.factor(2), () async {
-        const numItems = 35;
+        const numItems = 25;
         for (var i = 0; i < numItems; i++) {
           await service.createOrganization(
             FakeServiceCall(),

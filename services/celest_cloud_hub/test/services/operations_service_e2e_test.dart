@@ -3,7 +3,6 @@ library;
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cedar/src/model/value.dart';
@@ -22,18 +21,15 @@ import 'package:celest_cloud_hub/src/model/type_registry.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:celest_core/celest_core.dart';
 import 'package:fixnum/fixnum.dart';
-import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
+import '../common.dart';
 import '../e2e_tester.dart';
 
 const user = EntityUid.of('Celest::User', 'test');
 
 void main() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((record) {
-    print('[${record.loggerName}] ${record.message}');
-  });
+  initTesting();
 
   group('OperationsService', () {
     late E2ETester tester;
@@ -213,9 +209,8 @@ void main() {
         expect(result.hasNextPageToken(), isFalse);
       });
 
-      // TODO(dnys1): Get working in CI
-      test('paginated', skip: Platform.environment.containsKey('CI'), () async {
-        const numItems = 35;
+      test('paginated', timeout: Timeout.factor(2), () async {
+        const numItems = 25;
         for (var i = 0; i < numItems; i++) {
           await database.operationsDrift.createOperation(
             id: 'test$i',

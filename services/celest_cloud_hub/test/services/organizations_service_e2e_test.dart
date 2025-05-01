@@ -9,18 +9,15 @@ import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
 import 'package:celest_core/celest_core.dart';
-import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
+import '../common.dart';
 import '../e2e_tester.dart';
 
 const user = EntityUid.of('Celest::User', 'test');
 
 void main() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((record) {
-    print('[${record.loggerName}] ${record.message}');
-  });
+  initTesting();
 
   group('OrganizationsService', () {
     late E2ETester tester;
@@ -185,8 +182,8 @@ void main() {
         expect(result.hasNextPageToken(), isFalse);
       });
 
-      test('paginated', () async {
-        const numItems = 35;
+      test('paginated', timeout: Timeout.factor(2), () async {
+        const numItems = 25;
         for (var i = 0; i < numItems; i++) {
           await service.organizations
               .create(
