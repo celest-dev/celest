@@ -45,7 +45,7 @@ final class CloudHubDatabase extends $CloudHubDatabase
   }
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 1;
 
   static final Entity rootOrg = Entity(
     uid: const EntityUid.of('Celest::Organization', 'celest-dev'),

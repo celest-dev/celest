@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io' show ProcessException, gzip;
+import 'dart:io' show gzip;
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
@@ -9,7 +9,6 @@ import 'package:archive/archive_io.dart';
 import 'package:celest_ast/celest_ast.dart'
     show ResolvedCelestDatabaseConfig, ResolvedProject;
 import 'package:celest_cli/src/codegen/api/dockerfile_generator.dart';
-import 'package:celest_cli/src/utils/process.dart';
 import 'package:celest_cloud/celest_cloud.dart'
     as pb
     show DeployProjectEnvironmentResponse, LifecycleState, ProjectAsset_Type;
@@ -28,7 +27,6 @@ import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
 import 'package:logging/logging.dart';
-import 'package:process/process.dart';
 
 typedef ProjectAsset =
     ({
@@ -123,7 +121,6 @@ final class FlyDeploymentEngine {
   }
 
   static const FileSystem _fileSystem = LocalFileSystem();
-  static const ProcessManager _processManager = LocalProcessManager();
   late final Logger _logger = Logger('FlyDeploymentEngine.${environment.id}');
 
   Future<ProjectEnvironmentState> deploy() async {
@@ -230,12 +227,9 @@ final class FlyDeploymentEngine {
     }
 
     final String flyVolumeName;
-    final String flyVolumeId;
     if (currentState?.flyVolumeName case final volumeName?) {
       flyVolumeName = volumeName;
-      final flyVolumes = await context.fly.volumes.list(appName: flyAppName);
-      _logger.fine('Using Fly volume: $flyVolumes');
-      flyVolumeId = flyVolumes.single.id!;
+      _logger.fine('Using Fly volume: $flyVolumeName');
     } else {
       _logger.fine('Creating Fly volume');
       flyVolumeName = environment.id;
@@ -248,14 +242,12 @@ final class FlyDeploymentEngine {
         ),
       );
       _logger.fine('Created Fly volume: ${volume.toJson()}');
-      flyVolumeId = volume.id!;
     }
     currentState =
         (await db.projectEnvironmentsDrift.upsertProjectEnvironmentState(
           projectEnvironmentId: environment.id,
           flyAppName: flyAppName,
           flyVolumeName: flyVolumeName,
-          flyVolumeId: flyVolumeId,
           domainName: '$flyAppName.fly.dev',
         )).first;
 
@@ -341,49 +333,13 @@ final class FlyDeploymentEngine {
       await flyConfigFile.writeAsString(jsonEncode(flyConfig.toJson()));
 
       _logger.fine('Running fly deploy...');
-      await _flyctl([
-        'deploy',
-        '--config',
-        'fly.json',
-        '--remote-only',
-      ], workingDirectory: dir.path);
+      await context.flyCtl.deploy(flyConfigJsonPath: flyConfigFile.path);
     });
 
     final app = await context.fly.apps.show(appName: flyAppName);
     _logger.fine('App successfully deployed: ${app.toJson()}');
 
     return currentState;
-  }
-
-  Future<Map<String, Object?>> _flyctl(
-    List<String> args, {
-    String? workingDirectory,
-  }) async {
-    final process = await _processManager.start(
-      <String>['flyctl', ...args],
-      workingDirectory: workingDirectory,
-      environment: {'NO_COLOR': '1', 'FLY_API_TOKEN': context.flyAuthToken},
-    );
-    final stdout = StringBuffer();
-    final stderr = StringBuffer();
-    process
-      ..captureStdout(sink: _logger.finer)
-      ..captureStdout(sink: stdout.writeln)
-      ..captureStderr(sink: _logger.finer)
-      ..captureStderr(sink: stderr.writeln);
-
-    final exitCode = await process.exitCode;
-    if (exitCode != 0) {
-      final exception = ProcessException('flyctl', args, '$stderr', exitCode);
-      _logger.severe('Failed to deploy', exception);
-      throw GrpcError.internal('Failed to deploy app');
-    }
-
-    if (args.contains('--json')) {
-      final output = stdout.toString();
-      return jsonDecode(output) as Map<String, Object?>;
-    }
-    return const {};
   }
 
   Future<void> _withTempDirectory(
