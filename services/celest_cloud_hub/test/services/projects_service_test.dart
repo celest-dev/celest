@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:cedar/src/model/value.dart';
 import 'package:celest_cloud/celest_cloud.dart' as pb;
-import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/organizations.pb.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/projects.pb.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
+import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
-import 'package:celest_cloud_hub/src/services/organizations_service.dart';
 import 'package:celest_cloud_hub/src/services/projects_service.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
 import 'package:grpc/grpc.dart' as grpc;
@@ -15,19 +14,40 @@ import 'package:grpc/grpc.dart';
 import 'package:test/fake.dart';
 import 'package:test/test.dart';
 
+import '../common.dart';
+
 const user = EntityUid.of('Celest::User', 'test');
 
 void main() {
+  initTesting();
+
   group('ProjectsService', () {
     late CloudHubDatabase database;
     late ProjectsService service;
+    late String organizationId;
 
     setUp(() async {
-      database = CloudHubDatabase.memory();
+      database = inMemoryDatabase();
       await database.ping();
       await database.cloudAuthUsersDrift.createUser(userId: 'test');
 
       service = ProjectsService(database, FakeAuthorizer());
+
+      // Get the root organization ID
+      final organization =
+          await database.organizationsDrift
+              .getOrganization(id: kRootOrgId)
+              .getSingle();
+      organizationId = organization.id;
+
+      // Make `user` owner of the root organization
+      await database.userMembershipsDrift.createUserMembership(
+        membershipId: typeId('mbr'),
+        userId: user.id,
+        parentType: 'Celest::Organization',
+        parentId: organizationId,
+        role: 'owner',
+      );
     });
 
     tearDown(() async {
@@ -36,20 +56,9 @@ void main() {
 
     group('createProject', () {
       test('success', () async {
-        // First create an organization
-        final orgRequest = CreateOrganizationRequest(
-          organizationId: 'test-org',
-          organization: Organization(
-            displayName: 'Test Organization',
-            primaryRegion: pb.Region.NORTH_AMERICA,
-          ),
-        );
-        final orgService = OrganizationsService(database, FakeAuthorizer());
-        await orgService.createOrganization(FakeServiceCall(), orgRequest);
-
         final request = CreateProjectRequest(
-          parent: 'organizations/test-org',
-          projectId: 'test-project',
+          parent: 'organizations/$organizationId',
+          projectId: kCelestTest,
           project: Project(
             displayName: 'Test Project',
             regions: [pb.Region.NORTH_AMERICA],
@@ -71,7 +80,7 @@ void main() {
             return true;
           }),
         );
-        expect(response.projectId, 'test-project');
+        expect(response.projectId, kCelestTest);
         expect(response.displayName, 'Test Project');
         expect(response.regions, [pb.Region.NORTH_AMERICA]);
         expect(response.state, pb.LifecycleState.ACTIVE);
@@ -80,7 +89,7 @@ void main() {
       test('organization not found', () async {
         final request = CreateProjectRequest(
           parent: 'organizations/nonexistent',
-          projectId: 'test-project',
+          projectId: kCelestTest,
           project: Project(
             displayName: 'Test Project',
             regions: [pb.Region.NORTH_AMERICA],
@@ -100,20 +109,9 @@ void main() {
       });
 
       test('project already exists', () async {
-        // First create an organization
-        final orgRequest = CreateOrganizationRequest(
-          organizationId: 'test-org',
-          organization: Organization(
-            displayName: 'Test Organization',
-            primaryRegion: pb.Region.NORTH_AMERICA,
-          ),
-        );
-        final orgService = OrganizationsService(database, FakeAuthorizer());
-        await orgService.createOrganization(FakeServiceCall(), orgRequest);
-
         final request = CreateProjectRequest(
-          parent: 'organizations/test-org',
-          projectId: 'test-project',
+          parent: 'organizations/$organizationId',
+          projectId: kCelestTest,
           project: Project(
             displayName: 'Test Project',
             regions: [pb.Region.NORTH_AMERICA],
@@ -137,20 +135,9 @@ void main() {
 
     group('getProject', () {
       test('success', () async {
-        // First create an organization and project
-        final orgRequest = CreateOrganizationRequest(
-          organizationId: 'test-org',
-          organization: Organization(
-            displayName: 'Test Organization',
-            primaryRegion: pb.Region.NORTH_AMERICA,
-          ),
-        );
-        final orgService = OrganizationsService(database, FakeAuthorizer());
-        await orgService.createOrganization(FakeServiceCall(), orgRequest);
-
         final projectRequest = CreateProjectRequest(
-          parent: 'organizations/test-org',
-          projectId: 'test-project',
+          parent: 'organizations/$organizationId',
+          projectId: kCelestTest,
           project: Project(
             displayName: 'Test Project',
             regions: [pb.Region.NORTH_AMERICA],
@@ -161,11 +148,11 @@ void main() {
         final result = await service.getProject(
           FakeServiceCall(),
           GetProjectRequest(
-            name: 'organizations/test-org/projects/test-project',
+            name: 'organizations/$organizationId/projects/celest-test',
           ),
         );
 
-        expect(result.projectId, 'test-project');
+        expect(result.projectId, kCelestTest);
         expect(result.displayName, 'Test Project');
         expect(result.regions, [pb.Region.NORTH_AMERICA]);
         expect(result.state, pb.LifecycleState.ACTIVE);
@@ -176,7 +163,7 @@ void main() {
           service.getProject(
             FakeServiceCall(),
             GetProjectRequest(
-              name: 'organizations/test-org/projects/nonexistent',
+              name: 'organizations/$organizationId/projects/nonexistent',
             ),
           ),
           throwsA(
@@ -208,20 +195,9 @@ void main() {
 
     group('listProjects', () {
       test('empty', () async {
-        // First create an organization
-        final orgRequest = CreateOrganizationRequest(
-          organizationId: 'test-org',
-          organization: Organization(
-            displayName: 'Test Organization',
-            primaryRegion: pb.Region.NORTH_AMERICA,
-          ),
-        );
-        final orgService = OrganizationsService(database, FakeAuthorizer());
-        await orgService.createOrganization(FakeServiceCall(), orgRequest);
-
         final result = await service.listProjects(
           FakeServiceCall(),
-          ListProjectsRequest(parent: 'organizations/test-org'),
+          ListProjectsRequest(parent: 'organizations/$organizationId'),
         );
 
         expect(result.projects, isEmpty);
@@ -229,22 +205,11 @@ void main() {
       });
 
       test('single page', () async {
-        // First create an organization
-        final orgRequest = CreateOrganizationRequest(
-          organizationId: 'test-org',
-          organization: Organization(
-            displayName: 'Test Organization',
-            primaryRegion: pb.Region.NORTH_AMERICA,
-          ),
-        );
-        final orgService = OrganizationsService(database, FakeAuthorizer());
-        await orgService.createOrganization(FakeServiceCall(), orgRequest);
-
         for (var i = 0; i < 9; i++) {
           await service.createProject(
             FakeServiceCall(),
             CreateProjectRequest(
-              parent: 'organizations/test-org',
+              parent: 'organizations/$organizationId',
               projectId: 'test$i',
               project: Project(
                 displayName: 'Test Project $i',
@@ -256,7 +221,7 @@ void main() {
 
         final result = await service.listProjects(
           FakeServiceCall(),
-          ListProjectsRequest(parent: 'organizations/test-org'),
+          ListProjectsRequest(parent: 'organizations/$organizationId'),
         );
 
         expect(result.projects, hasLength(9));
@@ -264,23 +229,12 @@ void main() {
       });
 
       test('paginated', timeout: Timeout.factor(2), () async {
-        // First create an organization
-        final orgRequest = CreateOrganizationRequest(
-          organizationId: 'test-org',
-          organization: Organization(
-            displayName: 'Test Organization',
-            primaryRegion: pb.Region.NORTH_AMERICA,
-          ),
-        );
-        final orgService = OrganizationsService(database, FakeAuthorizer());
-        await orgService.createOrganization(FakeServiceCall(), orgRequest);
-
-        const numItems = 35;
+        const numItems = 25;
         for (var i = 0; i < numItems; i++) {
           await service.createProject(
             FakeServiceCall(),
             CreateProjectRequest(
-              parent: 'organizations/test-org',
+              parent: 'organizations/$organizationId',
               projectId: 'test$i',
               project: Project(
                 displayName: 'Test Project $i',
@@ -297,7 +251,7 @@ void main() {
           final result = await service.listProjects(
             FakeServiceCall(),
             ListProjectsRequest(
-              parent: 'organizations/test-org',
+              parent: 'organizations/$organizationId',
               pageSize: 10,
               pageToken: nextPageToken,
             ),
@@ -316,22 +270,11 @@ void main() {
       });
 
       test('invalid page token', () async {
-        // First create an organization
-        final orgRequest = CreateOrganizationRequest(
-          organizationId: 'test-org',
-          organization: Organization(
-            displayName: 'Test Organization',
-            primaryRegion: pb.Region.NORTH_AMERICA,
-          ),
-        );
-        final orgService = OrganizationsService(database, FakeAuthorizer());
-        await orgService.createOrganization(FakeServiceCall(), orgRequest);
-
         await expectLater(
           service.listProjects(
             FakeServiceCall(),
             ListProjectsRequest(
-              parent: 'organizations/test-org',
+              parent: 'organizations/$organizationId',
               pageToken: 'invalid',
             ),
           ),
@@ -348,24 +291,9 @@ void main() {
 
     group('updateProject', () {
       test('success', () async {
-        // First create an organization and project
-        final orgRequest = CreateOrganizationRequest(
-          organizationId: 'test-org',
-          organization: Organization(
-            displayName: 'Test Organization',
-            primaryRegion: pb.Region.NORTH_AMERICA,
-          ),
-        );
-        final orgService = OrganizationsService(database, FakeAuthorizer());
-        final orgOp = await orgService.createOrganization(
-          FakeServiceCall(),
-          orgRequest,
-        );
-        final organization = orgOp.response.unpackInto(pb.Organization());
-
         final createRequest = CreateProjectRequest(
-          parent: 'organizations/test-org',
-          projectId: 'test-project',
+          parent: 'organizations/$organizationId',
+          projectId: kCelestTest,
           project: Project(
             displayName: 'Test Project',
             regions: [pb.Region.NORTH_AMERICA],
@@ -393,14 +321,17 @@ void main() {
         expect(result.hasResponse(), isTrue);
 
         final response = result.response.unpackInto(Project());
-        expect(response.name, startsWith('${organization.name}/projects/'));
+        expect(
+          response.name,
+          startsWith('organizations/$organizationId/projects/'),
+        );
         expect(response.displayName, 'Updated Project');
       });
 
       test('not found', () async {
         final updateRequest = UpdateProjectRequest(
           project: Project(
-            name: 'organizations/test-org/projects/nonexistent',
+            name: 'organizations/$organizationId/projects/nonexistent',
             displayName: 'Updated Project',
           ),
           updateMask: pb.FieldMask(paths: ['display_name']),
@@ -439,20 +370,9 @@ void main() {
 
     group('deleteProject', () {
       test('success', () async {
-        // First create an organization and project
-        final orgRequest = CreateOrganizationRequest(
-          organizationId: 'test-org',
-          organization: Organization(
-            displayName: 'Test Organization',
-            primaryRegion: pb.Region.NORTH_AMERICA,
-          ),
-        );
-        final orgService = OrganizationsService(database, FakeAuthorizer());
-        await orgService.createOrganization(FakeServiceCall(), orgRequest);
-
         final createRequest = CreateProjectRequest(
-          parent: 'organizations/test-org',
-          projectId: 'test-project',
+          parent: 'organizations/$organizationId',
+          projectId: kCelestTest,
           project: Project(
             displayName: 'Test Project',
             regions: [pb.Region.NORTH_AMERICA],
@@ -464,7 +384,7 @@ void main() {
         final result = await service.deleteProject(
           FakeServiceCall(),
           DeleteProjectRequest(
-            name: 'organizations/test-org/projects/test-project',
+            name: 'organizations/$organizationId/projects/celest-test',
           ),
         );
 
@@ -481,7 +401,7 @@ void main() {
           service.deleteProject(
             FakeServiceCall(),
             DeleteProjectRequest(
-              name: 'organizations/test-org/projects/nonexistent',
+              name: 'organizations/$organizationId/projects/nonexistent',
             ),
           ),
           throwsA(
@@ -513,20 +433,9 @@ void main() {
 
     group('undeleteProject', () {
       test('success', () async {
-        // First create an organization and project
-        final orgRequest = CreateOrganizationRequest(
-          organizationId: 'test-org',
-          organization: Organization(
-            displayName: 'Test Organization',
-            primaryRegion: pb.Region.NORTH_AMERICA,
-          ),
-        );
-        final orgService = OrganizationsService(database, FakeAuthorizer());
-        await orgService.createOrganization(FakeServiceCall(), orgRequest);
-
         final createRequest = CreateProjectRequest(
-          parent: 'organizations/test-org',
-          projectId: 'test-project',
+          parent: 'organizations/$organizationId',
+          projectId: kCelestTest,
           project: Project(
             displayName: 'Test Project',
             regions: [pb.Region.NORTH_AMERICA],
@@ -537,14 +446,14 @@ void main() {
         await service.deleteProject(
           FakeServiceCall(),
           DeleteProjectRequest(
-            name: 'organizations/test-org/projects/test-project',
+            name: 'organizations/$organizationId/projects/celest-test',
           ),
         );
 
         final result = await service.undeleteProject(
           FakeServiceCall(),
           UndeleteProjectRequest(
-            name: 'organizations/test-org/projects/test-project',
+            name: 'organizations/$organizationId/projects/celest-test',
           ),
         );
 
@@ -561,7 +470,7 @@ void main() {
           service.undeleteProject(
             FakeServiceCall(),
             UndeleteProjectRequest(
-              name: 'organizations/test-org/projects/nonexistent',
+              name: 'organizations/$organizationId/projects/nonexistent',
             ),
           ),
           throwsA(

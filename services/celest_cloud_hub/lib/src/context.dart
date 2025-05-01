@@ -1,6 +1,7 @@
-import 'package:celest/src/config/config_values.dart';
+import 'package:celest/celest.dart' show env, Environment;
 import 'package:celest/src/core/context.dart' as core;
-import 'package:celest_cloud_hub/src/deploy/fly/fly_api.dart';
+import 'package:celest_cloud_auth/celest_cloud_auth.dart';
+import 'package:celest_cloud_hub/src/deploy/fly/fly_api_client.dart';
 import 'package:celest_cloud_hub/src/deploy/fly/fly_ctl.dart';
 import 'package:celest_cloud_hub/src/deploy/fly/fly_gql.dart';
 import 'package:graphql/client.dart';
@@ -10,21 +11,25 @@ export 'package:celest/src/core/context.dart' show ContextKey;
 Context get context => Context._(core.Context.current);
 
 extension type Context._(core.Context _ctx) implements core.Context {
-  static const core.ContextKey<FlyMachinesApiClient> _flyContextKey =
-      core.ContextKey<FlyMachinesApiClient>('FlyMachinesApiClient');
+  static Context get root => Context._(core.Context.root);
 
-  String get flyAuthToken => _ctx.expect(const env('FLY_API_TOKEN'));
+  String? get flyAuthToken {
+    final token = _ctx.get(const env('FLY_API_TOKEN'));
+    if (token == null && _ctx.get(env.environment) == Environment.production) {
+      throw StateError('Missing FLY_API_TOKEN');
+    }
+    return token;
+  }
+
   String get flyOrgSlug => 'celest-809';
 
-  FlyMachinesApiClient get fly {
-    if (_ctx.get(_flyContextKey) case final flyApi?) {
+  FlyApiClient get fly {
+    const contextKey = core.ContextKey<FlyApiClient>('FlyMachinesApiClient');
+    if (_ctx.get(contextKey) case final flyApi?) {
       return flyApi;
     }
-    final flyApi = FlyMachinesApiClient(
-      authToken: flyAuthToken,
-      client: _ctx.httpClient,
-    );
-    return _ctx.put(_flyContextKey, flyApi);
+    final flyApi = FlyApiClient(authToken: flyAuthToken, orgSlug: flyOrgSlug);
+    return _ctx.put(contextKey, flyApi);
   }
 
   FlyGql get flyGql {
@@ -50,4 +55,18 @@ extension type Context._(core.Context _ctx) implements core.Context {
     final flyCtl = FlyCtl(flyAuthToken: flyAuthToken);
     return _ctx.put(contextKey, flyCtl);
   }
+
+  Entity get rootOrg {
+    final rootOrgId =
+        _ctx.get(const env('CELEST_ORGANIZATION_ID')) ?? 'celest-dev';
+    return Entity(uid: EntityUid.of('Celest::Organization', rootOrgId));
+  }
 }
+
+/// Prefix used for test resources.
+///
+/// This is used to identify test resources in Fly.
+///
+/// This is safe because customer resources cannot contain
+/// `celest` in their names.
+const kCelestTest = 'celest-test';

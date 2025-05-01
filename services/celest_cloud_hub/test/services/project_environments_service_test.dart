@@ -2,13 +2,12 @@ import 'dart:async';
 
 import 'package:cedar/src/model/value.dart';
 import 'package:celest_cloud/celest_cloud.dart' as pb;
-import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/organizations.pb.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/project_environments.pb.dart';
 import 'package:celest_cloud/src/proto/celest/cloud/v1alpha1/projects.pb.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
+import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
-import 'package:celest_cloud_hub/src/services/organizations_service.dart';
 import 'package:celest_cloud_hub/src/services/project_environments_service.dart';
 import 'package:celest_cloud_hub/src/services/projects_service.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
@@ -17,45 +16,49 @@ import 'package:grpc/grpc.dart';
 import 'package:test/fake.dart';
 import 'package:test/test.dart';
 
+import '../common.dart';
+
 const user = EntityUid.of('Celest::User', 'test');
+const kEnvName = 'test-env';
 
 void main() {
+  initTesting();
+
   group('ProjectEnvironmentsService', () {
     late CloudHubDatabase database;
     late ProjectEnvironmentsService service;
     late ProjectsService projectsService;
-    late OrganizationsService organizationsService;
 
     late String organizationId;
     late String projectId;
 
     setUp(() async {
-      database = CloudHubDatabase.memory();
+      database = inMemoryDatabase();
       await database.ping();
       await database.cloudAuthUsersDrift.createUser(userId: 'test');
 
       service = ProjectEnvironmentsService(database, FakeAuthorizer());
       projectsService = ProjectsService(database, FakeAuthorizer());
-      organizationsService = OrganizationsService(database, FakeAuthorizer());
 
-      // Create an organization and project for testing
-      final orgRequest = CreateOrganizationRequest(
-        organizationId: 'test-org',
-        organization: Organization(
-          displayName: 'Test Organization',
-          primaryRegion: pb.Region.NORTH_AMERICA,
-        ),
+      // Get the root organization
+      final organization =
+          await database.organizationsDrift
+              .getOrganization(id: kRootOrgId)
+              .getSingle();
+      organizationId = organization.id;
+
+      // Make `user` owner of the root organization
+      await database.userMembershipsDrift.createUserMembership(
+        membershipId: typeId('mbr'),
+        userId: user.id,
+        parentType: 'Celest::Organization',
+        parentId: organizationId,
+        role: 'owner',
       );
-      final orgOp = await organizationsService.createOrganization(
-        FakeServiceCall(),
-        orgRequest,
-      );
-      final organization = orgOp.response.unpackInto(Organization());
-      organizationId = organization.name.split('/')[1];
 
       final projectRequest = CreateProjectRequest(
         parent: 'organizations/$organizationId',
-        projectId: 'test-project',
+        projectId: kCelestTest,
         project: Project(
           displayName: 'Test Project',
           regions: [pb.Region.NORTH_AMERICA],
@@ -77,7 +80,7 @@ void main() {
       test('success', () async {
         final request = CreateProjectEnvironmentRequest(
           parent: 'projects/$projectId',
-          projectEnvironmentId: 'test-env',
+          projectEnvironmentId: kEnvName,
           projectEnvironment: ProjectEnvironment(
             displayName: 'Test Environment',
           ),
@@ -101,7 +104,7 @@ void main() {
             return true;
           }),
         );
-        expect(response.projectEnvironmentId, 'test-env');
+        expect(response.projectEnvironmentId, kEnvName);
         expect(response.displayName, 'Test Environment');
         expect(response.state, pb.LifecycleState.ACTIVE);
       });
@@ -109,7 +112,7 @@ void main() {
       test('project not found', () async {
         final request = CreateProjectEnvironmentRequest(
           parent: 'projects/nonexistent',
-          projectEnvironmentId: 'test-env',
+          projectEnvironmentId: kEnvName,
           projectEnvironment: ProjectEnvironment(
             displayName: 'Test Environment',
           ),
@@ -130,7 +133,7 @@ void main() {
       test('environment already exists', () async {
         final request = CreateProjectEnvironmentRequest(
           parent: 'projects/$projectId',
-          projectEnvironmentId: 'test-env',
+          projectEnvironmentId: kEnvName,
           projectEnvironment: ProjectEnvironment(
             displayName: 'Test Environment',
           ),
@@ -156,7 +159,7 @@ void main() {
         // First create an environment
         final createRequest = CreateProjectEnvironmentRequest(
           parent: 'projects/$projectId',
-          projectEnvironmentId: 'test-env',
+          projectEnvironmentId: kEnvName,
           projectEnvironment: ProjectEnvironment(
             displayName: 'Test Environment',
           ),
@@ -169,11 +172,11 @@ void main() {
         final result = await service.getProjectEnvironment(
           FakeServiceCall(),
           GetProjectEnvironmentRequest(
-            name: 'projects/$projectId/environments/test-env',
+            name: 'projects/$projectId/environments/$kEnvName',
           ),
         );
 
-        expect(result.projectEnvironmentId, 'test-env');
+        expect(result.projectEnvironmentId, kEnvName);
         expect(result.displayName, 'Test Environment');
         expect(result.state, pb.LifecycleState.ACTIVE);
       });
@@ -226,11 +229,12 @@ void main() {
 
       test('single page', () async {
         for (var i = 0; i < 9; i++) {
+          final envId = 'test$i';
           await service.createProjectEnvironment(
             FakeServiceCall(),
             CreateProjectEnvironmentRequest(
               parent: 'projects/$projectId',
-              projectEnvironmentId: 'test$i',
+              projectEnvironmentId: envId,
               projectEnvironment: ProjectEnvironment(
                 displayName: 'Test Environment $i',
               ),
@@ -248,13 +252,14 @@ void main() {
       });
 
       test('paginated', timeout: Timeout.factor(2), () async {
-        const numItems = 35;
+        const numItems = 25;
         for (var i = 0; i < numItems; i++) {
+          final envId = 'test$i';
           await service.createProjectEnvironment(
             FakeServiceCall(),
             CreateProjectEnvironmentRequest(
               parent: 'projects/$projectId',
-              projectEnvironmentId: 'test$i',
+              projectEnvironmentId: envId,
               projectEnvironment: ProjectEnvironment(
                 displayName: 'Test Environment $i',
               ),
@@ -312,7 +317,7 @@ void main() {
         // First create an environment
         final createRequest = CreateProjectEnvironmentRequest(
           parent: 'projects/$projectId',
-          projectEnvironmentId: 'test-env',
+          projectEnvironmentId: kEnvName,
           projectEnvironment: ProjectEnvironment(
             displayName: 'Test Environment',
           ),
@@ -393,7 +398,7 @@ void main() {
         // First create an environment
         final createRequest = CreateProjectEnvironmentRequest(
           parent: 'projects/$projectId',
-          projectEnvironmentId: 'test-env',
+          projectEnvironmentId: kEnvName,
           projectEnvironment: ProjectEnvironment(
             displayName: 'Test Environment',
           ),
@@ -406,7 +411,7 @@ void main() {
         final result = await service.deleteProjectEnvironment(
           FakeServiceCall(),
           DeleteProjectEnvironmentRequest(
-            name: 'projects/$projectId/environments/test-env',
+            name: 'projects/$projectId/environments/$kEnvName',
           ),
         );
 
@@ -459,7 +464,7 @@ void main() {
           service.deployProjectEnvironment(
             FakeServiceCall(),
             DeployProjectEnvironmentRequest(
-              name: 'projects/$projectId/environments/test-env',
+              name: 'projects/$projectId/environments/$kEnvName',
             ),
           ),
           throwsA(

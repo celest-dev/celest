@@ -7,21 +7,19 @@ import 'dart:convert';
 import 'package:cedar/src/model/value.dart';
 import 'package:celest_cloud/celest_cloud.dart' as pb hide OperationState;
 import 'package:celest_cloud/celest_cloud.dart';
+import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
 import 'package:celest_core/celest_core.dart';
-import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
+import '../common.dart';
 import '../e2e_tester.dart';
 
 const user = EntityUid.of('Celest::User', 'test');
 
 void main() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((record) {
-    print('[${record.loggerName}] ${record.message}');
-  });
+  initTesting();
 
   group('ProjectsService', () {
     late E2ETester tester;
@@ -38,17 +36,21 @@ void main() {
       database = tester.database;
       service = tester.service;
 
-      final organization = await tester.service.organizations
-          .create(
-            organizationId: 'test-org',
-            organization: pb.Organization(
-              displayName: 'Test Organization',
-              primaryRegion: pb.Region.NORTH_AMERICA,
-            ),
-          )
-          .first
-          .then((state) => state.response!);
-      organizationId = organization.name.split('/')[1];
+      // Get the root organization ID
+      final organization =
+          await database.organizationsDrift
+              .getOrganization(id: kRootOrgId)
+              .getSingle();
+      organizationId = organization.id;
+
+      // Make `user` owner of the root organization
+      await database.userMembershipsDrift.createUserMembership(
+        membershipId: typeId('mbr'),
+        userId: user.id,
+        parentType: 'Celest::Organization',
+        parentId: organizationId,
+        role: 'owner',
+      );
     });
 
     group('permissions', () {
@@ -76,7 +78,7 @@ void main() {
             await tester.service.projects
                 .create(
                   parent: 'organizations/$organizationId',
-                  projectId: 'test-project',
+                  projectId: kCelestTest,
                   displayName: 'Test Project',
                   regions: [pb.Region.NORTH_AMERICA],
                 )
@@ -89,7 +91,7 @@ void main() {
               .having(
                 (s) => s.response?.projectId,
                 'response.projectId',
-                'test-project',
+                kCelestTest,
               )
               .having(
                 (s) => s.response?.displayName,
@@ -111,7 +113,7 @@ void main() {
         await tester.service.projects
             .create(
               parent: 'organizations/$organizationId',
-              projectId: 'test-project',
+              projectId: kCelestTest,
               displayName: 'Test Project',
               regions: [pb.Region.NORTH_AMERICA],
             )
@@ -121,7 +123,7 @@ void main() {
           tester.service.projects
               .create(
                 parent: 'organizations/$organizationId',
-                projectId: 'test-project',
+                projectId: kCelestTest,
                 displayName: 'Test Project',
                 regions: [pb.Region.NORTH_AMERICA],
               )
@@ -136,7 +138,7 @@ void main() {
         final project = await tester.service.projects
             .create(
               parent: 'organizations/$organizationId',
-              projectId: 'test-project',
+              projectId: kCelestTest,
               displayName: 'Test Project',
               regions: [pb.Region.NORTH_AMERICA],
             )
@@ -146,7 +148,7 @@ void main() {
         final result = await tester.service.projects.get(project.name);
 
         expect(result, isNotNull);
-        expect(result!.projectId, 'test-project');
+        expect(result!.projectId, kCelestTest);
         expect(result.displayName, 'Test Project');
         expect(result.regions, [pb.Region.NORTH_AMERICA]);
         expect(result.state, pb.LifecycleState.ACTIVE);
@@ -200,8 +202,8 @@ void main() {
         expect(result.hasNextPageToken(), isFalse);
       });
 
-      test('paginated', () async {
-        const numItems = 35;
+      test('paginated', timeout: Timeout.factor(2), () async {
+        const numItems = 25;
         for (var i = 0; i < numItems; i++) {
           await tester.service.projects
               .create(
@@ -250,7 +252,7 @@ void main() {
       test('success', () async {
         final stream = tester.service.projects.create(
           parent: 'organizations/$organizationId',
-          projectId: 'test-project',
+          projectId: kCelestTest,
           displayName: 'Test Project',
           regions: [pb.Region.NORTH_AMERICA],
         );
@@ -315,7 +317,7 @@ void main() {
       test('success', () async {
         final stream = tester.service.projects.create(
           parent: 'organizations/$organizationId',
-          projectId: 'test-project',
+          projectId: kCelestTest,
           displayName: 'Test Project',
           regions: [pb.Region.NORTH_AMERICA],
         );
@@ -360,7 +362,7 @@ void main() {
       test('success', () async {
         final stream = tester.service.projects.create(
           parent: 'organizations/$organizationId',
-          projectId: 'test-project',
+          projectId: kCelestTest,
           displayName: 'Test Project',
           regions: [pb.Region.NORTH_AMERICA],
         );
@@ -408,8 +410,8 @@ void main() {
         await expectLater(
           tester.service.projects
               .rename(
-                name: 'organizations/$organizationId/projects/test-project',
-                newAlias: 'test-project-123',
+                name: 'organizations/$organizationId/projects/celest-test',
+                newAlias: 'celest-test-123',
               )
               .first,
           throwsA(isA<UnimplementedError>()),

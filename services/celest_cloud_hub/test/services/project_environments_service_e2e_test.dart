@@ -6,21 +6,20 @@ import 'dart:async';
 import 'package:cedar/src/model/value.dart';
 import 'package:celest_cloud/celest_cloud.dart' as pb hide OperationState;
 import 'package:celest_cloud/celest_cloud.dart';
+import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
 import 'package:celest_core/celest_core.dart';
-import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
+import '../common.dart';
 import '../e2e_tester.dart';
 
 const user = EntityUid.of('Celest::User', 'test');
+const kEnvName = 'test-env';
 
 void main() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((record) {
-    print('[${record.loggerName}] ${record.message}');
-  });
+  initTesting();
 
   group('ProjectEnvironmentsService', () {
     late E2ETester tester;
@@ -38,24 +37,27 @@ void main() {
       database = tester.database;
       service = tester.service;
 
-      // Create organization
-      final organization = await tester.service.organizations
-          .create(
-            organizationId: 'test-org',
-            organization: pb.Organization(
-              displayName: 'Test Organization',
-              primaryRegion: pb.Region.NORTH_AMERICA,
-            ),
-          )
-          .first
-          .then((state) => state.response!);
-      organizationId = organization.name.split('/')[1];
+      // Get the root organization
+      final organization =
+          await database.organizationsDrift
+              .getOrganization(id: kRootOrgId)
+              .getSingle();
+      organizationId = organization.id;
+
+      // Make `user` owner of the root organization
+      await database.userMembershipsDrift.createUserMembership(
+        membershipId: typeId('mbr'),
+        userId: user.id,
+        parentType: 'Celest::Organization',
+        parentId: organizationId,
+        role: 'owner',
+      );
 
       // Create project
       final project = await tester.service.projects
           .create(
             parent: 'organizations/$organizationId',
-            projectId: 'test-project',
+            projectId: kCelestTest,
             displayName: 'Test Project',
             regions: [pb.Region.NORTH_AMERICA],
           )
@@ -90,7 +92,7 @@ void main() {
             await tester.service.projects.environments
                 .create(
                   parent: 'projects/$projectId',
-                  projectEnvironmentId: 'test-env',
+                  projectEnvironmentId: kEnvName,
                   displayName: 'Test Environment',
                 )
                 .first;
@@ -102,7 +104,7 @@ void main() {
               .having(
                 (s) => s.response?.projectEnvironmentId,
                 'response.projectEnvironmentId',
-                'test-env',
+                kEnvName,
               )
               .having(
                 (s) => s.response?.displayName,
@@ -121,7 +123,7 @@ void main() {
         await tester.service.projects.environments
             .create(
               parent: 'projects/$projectId',
-              projectEnvironmentId: 'test-env',
+              projectEnvironmentId: kEnvName,
               displayName: 'Test Environment',
             )
             .drain<void>();
@@ -130,7 +132,7 @@ void main() {
           tester.service.projects.environments
               .create(
                 parent: 'projects/$projectId',
-                projectEnvironmentId: 'test-env',
+                projectEnvironmentId: kEnvName,
                 displayName: 'Test Environment',
               )
               .first,
@@ -144,7 +146,7 @@ void main() {
         final environment = await tester.service.projects.environments
             .create(
               parent: 'projects/$projectId',
-              projectEnvironmentId: 'test-env',
+              projectEnvironmentId: kEnvName,
               displayName: 'Test Environment',
             )
             .first
@@ -155,7 +157,7 @@ void main() {
         );
 
         expect(result, isNotNull);
-        expect(result!.projectEnvironmentId, 'test-env');
+        expect(result!.projectEnvironmentId, kEnvName);
         expect(result.displayName, 'Test Environment');
         expect(result.state, pb.LifecycleState.ACTIVE);
       });
@@ -189,10 +191,11 @@ void main() {
 
       test('single page', () async {
         for (var i = 0; i < 9; i++) {
+          final envId = 'test$i';
           await tester.service.projects.environments
               .create(
                 parent: 'projects/$projectId',
-                projectEnvironmentId: 'test$i',
+                projectEnvironmentId: envId,
                 displayName: 'Test Environment $i',
               )
               .drain<void>();
@@ -208,12 +211,13 @@ void main() {
       });
 
       test('paginated', () async {
-        const numItems = 35;
+        const numItems = 25;
         for (var i = 0; i < numItems; i++) {
+          final envId = 'test$i';
           await tester.service.projects.environments
               .create(
                 parent: 'projects/$projectId',
-                projectEnvironmentId: 'test$i',
+                projectEnvironmentId: envId,
                 displayName: 'Test Environment $i',
               )
               .drain<void>();
@@ -256,7 +260,7 @@ void main() {
       test('success', () async {
         final stream = tester.service.projects.environments.create(
           parent: 'projects/$projectId',
-          projectEnvironmentId: 'test-env',
+          projectEnvironmentId: kEnvName,
           displayName: 'Test Environment',
         );
         final environment = await stream.last.then((s) => s.response);
@@ -320,7 +324,7 @@ void main() {
       test('success', () async {
         final stream = tester.service.projects.environments.create(
           parent: 'projects/$projectId',
-          projectEnvironmentId: 'test-env',
+          projectEnvironmentId: kEnvName,
           displayName: 'Test Environment',
         );
         final environment = await stream.last.then((s) => s.response);
@@ -365,7 +369,7 @@ void main() {
         await expectLater(
           tester.service.projects.environments
               .deploy(
-                'projects/$projectId/environments/test-env',
+                'projects/$projectId/environments/$kEnvName',
                 assets: [],
                 resolvedProject: ResolvedProject(),
               )

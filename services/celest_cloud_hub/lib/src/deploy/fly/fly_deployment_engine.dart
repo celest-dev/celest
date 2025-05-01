@@ -16,7 +16,6 @@ import 'package:celest_cloud/src/proto/google/rpc/status.pb.dart' as pb;
 import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/schema/project_environments.drift.dart';
-import 'package:celest_cloud_hub/src/deploy/fly/fly_api.dart';
 import 'package:celest_cloud_hub/src/deploy/fly/fly_app_config.dart';
 import 'package:celest_cloud_hub/src/model/protobuf.dart';
 import 'package:celest_cloud_hub/src/model/type_registry.dart';
@@ -217,12 +216,7 @@ final class FlyDeploymentEngine {
       // Create a new Fly app
       flyAppName = generateFlyAppName(projectAst.projectId);
       _logger.fine('Creating Fly app: $flyAppName');
-      await context.fly.apps.create(
-        request: CreateAppRequest(
-          appName: flyAppName,
-          orgSlug: context.flyOrgSlug,
-        ),
-      );
+      await context.fly.createApp(appName: flyAppName);
       _logger.fine('Fly app created');
     }
 
@@ -233,13 +227,11 @@ final class FlyDeploymentEngine {
     } else {
       _logger.fine('Creating Fly volume');
       flyVolumeName = environment.id;
-      final volume = await context.fly.volumes.create(
+      final volume = await context.fly.createVolume(
         appName: flyAppName,
-        request: CreateVolumeRequest(
-          name: flyVolumeName,
-          region: 'lax', // TODO
-          sizeGb: 1,
-        ),
+        volumeName: flyVolumeName,
+        region: 'lax', // TODO
+        sizeGb: 1,
       );
       _logger.fine('Created Fly volume: ${volume.toJson()}');
     }
@@ -336,7 +328,7 @@ final class FlyDeploymentEngine {
       await context.flyCtl.deploy(flyConfigJsonPath: flyConfigFile.path);
     });
 
-    final app = await context.fly.apps.show(appName: flyAppName);
+    final app = await context.fly.getApp(appName: flyAppName);
     _logger.fine('App successfully deployed: ${app.toJson()}');
 
     return currentState;
