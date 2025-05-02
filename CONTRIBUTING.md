@@ -22,6 +22,12 @@ Ensure that any changes made to a package have accompanying tests. To run tests 
 $ dart test
 ```
 
-Pull request titles should follow [convential commit](https://www.conventionalcommits.org/en/v1.0.0/) format `type(scope): Title` where `type` is the type of change being made (e.g. `feat`, `chore`, `refactor`, etc) and `scope` is the scope of the change (e.g. `auth`, `core`, or `repo` for repo-wide changes). 
+Pull request titles should follow [convential commit](https://www.conventionalcommits.org/en/v1.0.0/) format `type(scope): Title` where `type` is the type of change being made (e.g. `feat`, `chore`, `refactor`, etc) and `scope` is the scope of the change (e.g. `auth`, `core`, or `repo` for repo-wide changes).
 
 For example, a pull request that adds a new feature to Celest Auth should have a title like `feat(auth): Passkey management`.
+
+### Want to Learn More?
+
+An AI-generated overview of the project architecture is available at [deepWiki](https://deepwiki.com/celest-dev/celest/1-overview).
+The site includes an interactive chat assistant to help answer your questions.
+_Disclaimer: This tool is community-generated and not officially maintained by the Celest team._
