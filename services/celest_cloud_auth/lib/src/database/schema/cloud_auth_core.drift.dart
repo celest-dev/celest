@@ -2496,7 +2496,7 @@ class CloudAuthCoreDrift extends i7.ModularAccessor {
     );
   }
 
-  i8.Future<List<i2.Uint8List>> deletecloud_auth_corksForEntity(
+  i8.Future<List<i2.Uint8List>> deleteCorksForEntity(
       {String? bearerType,
       String? bearerId,
       String? audienceType,

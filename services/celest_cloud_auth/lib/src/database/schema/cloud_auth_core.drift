@@ -348,7 +348,7 @@ deleteCork:
     WHERE cork_id = :cork_id;
 
 -- Revokes all cloud_auth_corks under the given entity.
-deletecloud_auth_corksForEntity(
+deleteCorksForEntity(
     :bearer_type AS TEXT OR NULL,
     :bearer_id AS TEXT OR NULL,
     :audience_type AS TEXT OR NULL,

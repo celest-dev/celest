@@ -1,6 +1,7 @@
 ## 0.3.2+2
 
 - fix: Migration of Cloud Auth tables
+- perf: Use batches for migrations
 
 ## 0.3.2+1
 
