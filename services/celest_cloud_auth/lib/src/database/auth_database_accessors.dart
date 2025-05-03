@@ -10,6 +10,7 @@ import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/database/auth_database.steps.dart';
 import 'package:celest_cloud_auth/src/database/auth_database_accessors.drift.dart';
 import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart';
+import 'package:celest_cloud_auth/src/database/schema/cloud_auth_projects.drift.dart';
 import 'package:celest_cloud_auth/src/database/schema/cloud_auth_users.drift.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
 import 'package:celest_core/_internal.dart' show kDebugMode;
@@ -207,27 +208,24 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
           for (final type in allCedarTypes)
             CedarTypesCompanion.insert(fqn: type),
         ]);
-        for (final entity in allCedarEntities.values) {
-          b.insert(
-            cedarEntities,
+        b.insertAllOnConflictUpdate(cedarEntities, [
+          for (final entity in allCedarEntities.values)
             CedarEntitiesCompanion.insert(
               entityType: entity.uid.type,
               entityId: entity.uid.id,
               attributeJson: drift.Value(entity.attributes),
             ),
-          );
-          for (final parent in entity.parents) {
-            b.insert(
-              cedarRelationships,
+        ]);
+        b.insertAllOnConflictUpdate(cedarRelationships, [
+          for (final entity in allCedarEntities.values)
+            for (final parent in entity.parents)
               CedarRelationshipsCompanion.insert(
                 entityType: entity.uid.type,
                 entityId: entity.uid.id,
                 parentType: parent.type,
                 parentId: parent.id,
               ),
-            );
-          }
-        }
+        ]);
       });
       await upsertPolicySet(corePolicySet.merge(additionalCedarPolicies));
     });
@@ -395,7 +393,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
     PolicySet? additionalCedarPolicies,
   }) async {
     await _withoutForeignKeys(() async {
-      if (details.wasCreated) {
+      if (details.wasCreated || details.hadUpgrade) {
         await seed(
           additionalCedarTypes: additionalCedarTypes,
           additionalCedarEntities: additionalCedarEntities,
@@ -535,7 +533,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   /// Returns the new, effective policy set for the project.
   Future<void> upsertProject({
     ResolvedProject? project,
-  }) {
+  }) async {
     project ??= context.project;
     _logger.finer('Upserting project: ${project.projectId}');
 
@@ -554,82 +552,160 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
         _logger.finer('Project AST is up-to-date. Skipping AST upsert.');
         return;
       }
-      await createEntity(Entity(uid: project.uid));
-      for (final api in project.apis.values) {
-        _logger.finer('Upserting API: ${api.apiId}');
-        await cloudAuthProjectsDrift.upsertApi(
-          projectId: project.projectId,
-          apiId: api.apiId,
-          resolvedAst: api,
-          etag: _etag(api.toProto()),
-        );
-        await createEntity(Entity(uid: api.uid, parents: [project.uid]));
-        for (final function in api.functions.values) {
-          _logger.finer('Upserting function: ${function.functionId}');
-          await cloudAuthProjectsDrift.upsertFunction(
-            apiId: api.apiId,
-            functionId: function.functionId,
-            resolvedAst: function,
-            etag: _etag(function.toProto()),
-          );
-          await createEntity(Entity(uid: function.uid, parents: [api.uid]));
-        }
-      }
 
-      final differ = _ProjectAuthDiff();
-      project.acceptWithArg(differ, oldProject?.resolvedAst);
-      for (final linkId in differ.removedTemplateLinks) {
-        _logger.finer('Deleting policy template link: $linkId');
-        await cedarDrift.deletePolicyTemplateLink(policyId: linkId);
-      }
-      for (final templateId in differ.removedTemplateIds) {
-        _logger.finer('Deleting policy template: $templateId');
-        await cedarDrift.deletePolicyTemplate(templateId: templateId);
-      }
-      for (final policyId in differ.removedPolicyIds) {
-        _logger.finer('Deleting policy: $policyId');
-        await cedarDrift.deletePolicy(policyId: policyId);
-      }
-      await upsertPolicySet(corePolicySet.merge(differ.newPolicySet));
+      await batch((b) async {
+        await createEntity(Entity(uid: project!.uid), b);
+        for (final api in project.apis.values) {
+          _logger.finer('Upserting API: ${api.apiId}');
+          b.insert<CloudAuthApis, CloudAuthApi>(
+            cloudAuthApis,
+            CloudAuthApisCompanion.insert(
+              projectId: project.projectId,
+              apiId: api.apiId,
+              resolvedAst: api,
+              etag: _etag(api.toProto()),
+            ),
+            onConflict: DoUpdate.withExcluded(
+              (_, excluded) => CloudAuthApisCompanion.custom(
+                projectId: excluded.projectId,
+                resolvedAst: excluded.resolvedAst,
+                etag: excluded.etag,
+              ),
+              target: [cloudAuthApis.apiId],
+            ),
+          );
+          await createEntity(Entity(uid: api.uid, parents: [project.uid]), b);
+          for (final function in api.functions.values) {
+            _logger.finer('Upserting function: ${function.functionId}');
+            b.insert<CloudAuthFunctions, CloudAuthFunction>(
+              cloudAuthFunctions,
+              CloudAuthFunctionsCompanion.insert(
+                apiId: api.apiId,
+                functionId: function.functionId,
+                resolvedAst: function,
+                etag: _etag(function.toProto()),
+              ),
+              onConflict: DoUpdate.withExcluded(
+                (_, excluded) => CloudAuthFunctionsCompanion.custom(
+                  apiId: excluded.apiId,
+                  resolvedAst: excluded.resolvedAst,
+                  etag: excluded.etag,
+                ),
+                target: [cloudAuthFunctions.functionId],
+              ),
+            );
+            await createEntity(
+              Entity(uid: function.uid, parents: [api.uid]),
+              b,
+            );
+          }
+        }
+
+        final differ = _ProjectAuthDiff();
+        project.acceptWithArg(differ, oldProject?.resolvedAst);
+        for (final linkId in differ.removedTemplateLinks) {
+          _logger.finer('Deleting policy template link: $linkId');
+          b.deleteWhere(
+            cedarDrift.cedarPolicyTemplateLinks,
+            (link) => link.id.equals(linkId),
+          );
+        }
+        for (final templateId in differ.removedTemplateIds) {
+          _logger.finer('Deleting policy template: $templateId');
+          b.deleteWhere(
+            cedarDrift.cedarPolicyTemplates,
+            (template) => template.templateId.equals(templateId),
+          );
+        }
+        for (final policyId in differ.removedPolicyIds) {
+          _logger.finer('Deleting policy: $policyId');
+          b.deleteWhere(
+            cedarDrift.cedarPolicies,
+            (policy) => policy.id.equals(policyId),
+          );
+        }
+        await upsertPolicySet(corePolicySet.merge(differ.newPolicySet), b);
+      });
     });
   }
 
   /// Upserts a Cedar [PolicySet] into the database.
   ///
   /// Returns the new, effective [PolicySet].
-  Future<void> upsertPolicySet(PolicySet policySet) async {
-    await transaction(() async {
+  Future<void> upsertPolicySet(PolicySet policySet, [Batch? batch]) async {
+    await _withBatch(batch, (b) async {
       for (final policy in policySet.policies.entries) {
         _logger.finer('Upserting policy: ${policy.key}');
-        await cedarDrift.upsertPolicy(
-          id: typeId('pol'),
-          policyId: policy.key,
-          policy: policy.value,
-          enforcementLevel: 1,
+        b.insert<CedarPolicies, CedarPolicy>(
+          cedarDrift.cedarPolicies,
+          CedarPoliciesCompanion.insert(
+            id: typeId('pol'),
+            policyId: policy.key,
+            policy: policy.value,
+            enforcementLevel: drift.Value(1),
+          ),
+          onConflict: DoUpdate.withExcluded(
+            (_, excluded) => CedarPoliciesCompanion.custom(
+              policy: excluded.policy,
+              enforcementLevel: excluded.enforcementLevel,
+            ),
+            target: [cedarPolicies.policyId],
+          ),
         );
       }
+
       for (final template in policySet.templates.entries) {
         _logger.finer('Upserting policy template: ${template.key}');
-        await cedarDrift.upsertPolicyTemplate(
-          id: typeId('polt'),
-          templateId: template.key,
-          template: template.value,
+        b.insert<CedarPolicyTemplates, CedarPolicyTemplate>(
+          cedarDrift.cedarPolicyTemplates,
+          CedarPolicyTemplatesCompanion.insert(
+            id: typeId('polt'),
+            templateId: template.key,
+            template: template.value,
+          ),
+          onConflict: DoUpdate.withExcluded(
+            (_, excluded) => CedarPolicyTemplatesCompanion.custom(
+              template: excluded.template,
+            ),
+            target: [cedarPolicyTemplates.templateId],
+          ),
         );
       }
+
       for (final link in policySet.templateLinks) {
         _logger.finer(
           'Upserting policy template link: ${link.shortDisplayString}',
         );
-
-        await cedarDrift.upsertPolicyTemplateLink(
-          id: typeId('polk'),
-          policyId: link.newId,
-          templateId: link.templateId,
-          principalType: link.values[SlotId.principal]?.type,
-          principalId: link.values[SlotId.principal]?.id,
-          resourceType: link.values[SlotId.resource]?.type,
-          resourceId: link.values[SlotId.resource]?.id,
-          enforcementLevel: 1,
+        b.insert<CedarPolicyTemplateLinks, CedarPolicyTemplateLink>(
+          cedarDrift.cedarPolicyTemplateLinks,
+          CedarPolicyTemplateLinksCompanion.insert(
+            id: typeId('polk'),
+            policyId: link.newId,
+            templateId: link.templateId,
+            principalType: drift.Value.absentIfNull(
+              link.values[SlotId.principal]?.type,
+            ),
+            principalId: drift.Value.absentIfNull(
+              link.values[SlotId.principal]?.id,
+            ),
+            resourceType: drift.Value.absentIfNull(
+              link.values[SlotId.resource]?.type,
+            ),
+            resourceId: drift.Value.absentIfNull(
+              link.values[SlotId.resource]?.id,
+            ),
+            enforcementLevel: drift.Value(1),
+          ),
+          onConflict: DoUpdate.withExcluded(
+            (_, excluded) => CedarPolicyTemplateLinksCompanion.custom(
+              principalType: excluded.principalType,
+              principalId: excluded.principalId,
+              resourceType: excluded.resourceType,
+              resourceId: excluded.resourceId,
+              enforcementLevel: excluded.enforcementLevel,
+            ),
+            target: [cedarPolicyTemplateLinks.policyId],
+          ),
         );
       }
     });
@@ -637,26 +713,45 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   }
 
   /// Creates a new [entity] in the database.
-  Future<void> createEntity(Entity entity) async {
+  Future<void> createEntity(Entity entity, [Batch? batch]) async {
     _logger.finer(
       'Creating entity: ${entity.uid} with parents: ${entity.parents}',
     );
-    await cedarDrift.createType(
-      fqn: entity.uid.type,
-    );
-    await cedarDrift.createEntity(
-      entityType: entity.uid.type,
-      entityId: entity.uid.id,
-      attributeJson: entity.attributes,
-    );
-    for (final parent in entity.parents) {
-      await cedarDrift.createRelationship(
-        entityType: entity.uid.type,
-        entityId: entity.uid.id,
-        parentType: parent.type,
-        parentId: parent.id,
+    await _withBatch(batch, (b) async {
+      b.insertAllOnConflictUpdate(
+        cedarTypes,
+        [CedarTypesCompanion.insert(fqn: entity.uid.type)],
       );
+      b.insertAllOnConflictUpdate(cedarEntities, [
+        CedarEntitiesCompanion.insert(
+          entityType: entity.uid.type,
+          entityId: entity.uid.id,
+          attributeJson: drift.Value(entity.attributes),
+        ),
+      ]);
+      b.insertAllOnConflictUpdate(cedarRelationships, [
+        for (final parent in entity.parents)
+          CedarRelationshipsCompanion.insert(
+            entityType: entity.uid.type,
+            entityId: entity.uid.id,
+            parentType: parent.type,
+            parentId: parent.id,
+          ),
+      ]);
+    });
+  }
+
+  Future<void> _withBatch(
+    Batch? batch,
+    Future<void> Function(Batch) action,
+  ) async {
+    if (batch != null) {
+      await action(batch);
+      return;
     }
+    await db.batch((b) async {
+      await action(b);
+    });
   }
 
   /// Computes the transitive closure for an [AuthorizationRequest].
