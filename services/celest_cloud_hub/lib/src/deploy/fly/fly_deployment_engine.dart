@@ -181,7 +181,17 @@ final class FlyDeploymentEngine {
         appName: flyAppName,
         primaryRegion: region.flyRegion,
         build: FlyAppBuildConfig(dockerfile: 'Dockerfile'),
-        httpService: FlyAppHttpServiceConfig(),
+        httpService: FlyAppHttpServiceConfig(
+          checks: [
+            FlyAppHttpServiceCheckConfig(
+              method: 'GET',
+              path: '/v1/healthz',
+              gracePeriod: '5s',
+              interval: '1s',
+              timeout: '2s',
+            ),
+          ],
+        ),
         vms: [FlyAppVmConfig(size: 'shared-cpu-1x')],
         env: {
           for (final variable in projectAst.variables)

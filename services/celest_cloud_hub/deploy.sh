@@ -11,6 +11,4 @@ if [[ "$1" == "--build" ]]; then
     ./build.sh --push
 fi
 
-fly deploy \
-    --update-only \
-    --config ./fly.yaml
+fly deploy --config ./fly.yaml
