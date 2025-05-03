@@ -183,12 +183,38 @@ CREATE TABLE IF NOT EXISTS project_environment_states (
     -- The name of the project environment's Fly volume.
     fly_volume_name TEXT,
 
+    -- The attenuated macaroon token for use with Fly.io.
+    fly_macaroon_token TEXT,
+
     -- The domain name of the project environment.
     domain_name TEXT,
 
+    -- The name of the turso database.
+    turso_database_name TEXT,
+
     CONSTRAINT fk_project_environment_state_project_environment_id FOREIGN KEY (project_environment_id) REFERENCES project_environments(id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+
+    CONSTRAINT fk_project_environment_state_turso_database FOREIGN KEY (turso_database_name) REFERENCES turso_databases(database_name)
         ON UPDATE CASCADE ON DELETE CASCADE
 ) WITHOUT ROWID;
+
+CREATE INDEX IF NOT EXISTS idx_project_environment_turso_database ON project_environment_states(turso_database_name);
+
+-- Stores state for Turso databases.
+CREATE TABLE IF NOT EXISTS turso_databases (
+    -- The name of the database.
+    database_name TEXT NOT NULL PRIMARY KEY,
+
+    -- The database's group.
+    database_group TEXT NOT NULL,
+
+    -- The URL of the database.
+    database_url TEXT NOT NULL,
+
+    -- The database token.
+    database_token TEXT NOT NULL
+);
 
 createProjectEnvironment:
     INSERT INTO project_environments (
@@ -289,29 +315,51 @@ purgeProjectEnvironment:
     WHERE id = :id;
 
 getProjectEnvironmentState:
-    SELECT * FROM project_environment_states
-    WHERE project_environment_id = :projectEnvironmentId;
+    SELECT
+        project_environment_states.**,
+        turso_databases.**
+    FROM project_environment_states
+    LEFT JOIN turso_databases ON project_environment_states.turso_database_name = turso_databases.database_name
+    WHERE project_environment_states.project_environment_id = :projectEnvironmentId;
 
 upsertProjectEnvironmentState(
     :projectEnvironmentId AS TEXT,
     :flyAppName AS TEXT OR NULL,
-    :flyVolumeName AS TEXT OR NULL,
-    :domainName AS TEXT OR NULL
+    :flyMacaroonToken AS TEXT OR NULL,
+    :domainName AS TEXT OR NULL,
+    :tursoDatabaseName AS TEXT OR NULL
 ):
     INSERT INTO project_environment_states (
         project_environment_id,
         fly_app_name,
-        fly_volume_name,
-        domain_name
+        fly_macaroon_token,
+        domain_name,
+        turso_database_name
     ) VALUES (
         :projectEnvironmentId,
         :flyAppName,
-        :flyVolumeName,
-        :domainName
+        :flyMacaroonToken,
+        :domainName,
+        :tursoDatabaseName
     )
     ON CONFLICT (project_environment_id) DO UPDATE
     SET
         fly_app_name = coalesce(:flyAppName, fly_app_name),
-        fly_volume_name = coalesce(:flyVolumeName, fly_volume_name),
-        domain_name = coalesce(:domainName, domain_name)
+        fly_macaroon_token = coalesce(:flyMacaroonToken, fly_macaroon_token),
+        domain_name = coalesce(:domainName, domain_name),
+        turso_database_name = coalesce(:tursoDatabaseName, turso_database_name)
+    RETURNING *;
+
+createTursoDatabase:
+    INSERT INTO turso_databases (
+        database_group,
+        database_name,
+        database_url,
+        database_token
+    ) VALUES (
+        :databaseGroup,
+        :databaseName,
+        :databaseUrl,
+        :databaseToken
+    )
     RETURNING *;

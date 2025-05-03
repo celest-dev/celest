@@ -68,7 +68,9 @@ final class Schema2 extends i0.VersionedSchema {
     projectEnvironmentsDeleteTrg,
     projectEnvironmentAsts,
     projectEnvironmentAssets,
+    tursoDatabases,
     projectEnvironmentStates,
+    idxProjectEnvironmentTursoDatabase,
     projectsFkParentIdx,
     projectsUpdateTimeTrg,
     projectsCreateTrg,
@@ -666,18 +668,41 @@ final class Schema2 extends i0.VersionedSchema {
     ),
     alias: null,
   );
-  late final Shape24 projectEnvironmentStates = Shape24(
+  late final Shape24 tursoDatabases = Shape24(
+    source: i0.VersionedTable(
+      entityName: 'turso_databases',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [],
+      columns: [_column_102, _column_103, _column_104, _column_105],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape25 projectEnvironmentStates = Shape25(
     source: i0.VersionedTable(
       entityName: 'project_environment_states',
       withoutRowId: true,
       isStrict: false,
       tableConstraints: [
         'CONSTRAINT fk_project_environment_state_project_environment_id FOREIGN KEY(project_environment_id)REFERENCES project_environments(id)ON UPDATE CASCADE ON DELETE CASCADE',
+        'CONSTRAINT fk_project_environment_state_turso_database FOREIGN KEY(turso_database_name)REFERENCES turso_databases(database_name)ON UPDATE CASCADE ON DELETE CASCADE',
       ],
-      columns: [_column_95, _column_102, _column_103, _column_104, _column_105],
+      columns: [
+        _column_95,
+        _column_106,
+        _column_107,
+        _column_108,
+        _column_109,
+        _column_110,
+      ],
       attachedDatabase: database,
     ),
     alias: null,
+  );
+  final i1.Index idxProjectEnvironmentTursoDatabase = i1.Index(
+    'idx_project_environment_turso_database',
+    'CREATE INDEX IF NOT EXISTS idx_project_environment_turso_database ON project_environment_states (turso_database_name)',
   );
   final i1.Index projectsFkParentIdx = i1.Index(
     'projects_fk_parent_idx',
@@ -731,7 +756,7 @@ final class Schema2 extends i0.VersionedSchema {
     'CREATE TRIGGER IF NOT EXISTS organizations_delete AFTER DELETE ON organizations BEGIN DELETE FROM cedar_relationships WHERE entity_type = \'Celest::Organization\' AND entity_id = OLD.id;DELETE FROM cedar_relationships WHERE parent_type = \'Celest::Organization\' AND parent_id = OLD.id;DELETE FROM cedar_entities WHERE entity_type = \'Celest::Organization\' AND entity_id = OLD.id;END',
     'organizations_delete',
   );
-  late final Shape25 operations = Shape25(
+  late final Shape26 operations = Shape26(
     source: i0.VersionedTable(
       entityName: 'operations',
       withoutRowId: false,
@@ -739,14 +764,14 @@ final class Schema2 extends i0.VersionedSchema {
       tableConstraints: [],
       columns: [
         _column_56,
-        _column_106,
-        _column_107,
-        _column_108,
-        _column_109,
-        _column_67,
-        _column_110,
         _column_111,
         _column_112,
+        _column_113,
+        _column_114,
+        _column_67,
+        _column_115,
+        _column_116,
+        _column_117,
         _column_65,
         _column_66,
       ],
@@ -2075,27 +2100,66 @@ i1.GeneratedColumn<String> _column_101(String aliasedName) =>
 
 class Shape24 extends i0.VersionedTable {
   Shape24({required super.source, required super.alias}) : super.aliased();
-  i1.GeneratedColumn<String> get projectEnvironmentId =>
-      columnsByName['project_environment_id']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<String> get domainName =>
-      columnsByName['domain_name']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<String> get flyAppName =>
-      columnsByName['fly_app_name']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<String> get flyVolumeName =>
-      columnsByName['fly_volume_name']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<String> get flyVolumeId =>
-      columnsByName['fly_volume_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get databaseName =>
+      columnsByName['database_name']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get databaseGroup =>
+      columnsByName['database_group']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get databaseUrl =>
+      columnsByName['database_url']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get databaseToken =>
+      columnsByName['database_token']! as i1.GeneratedColumn<String>;
 }
 
 i1.GeneratedColumn<String> _column_102(String aliasedName) =>
     i1.GeneratedColumn<String>(
-      'domain_name',
+      'database_name',
       aliasedName,
-      true,
+      false,
       type: i1.DriftSqlType.string,
-      $customConstraints: '',
+      $customConstraints: 'NOT NULL PRIMARY KEY',
     );
 i1.GeneratedColumn<String> _column_103(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'database_group',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL',
+    );
+i1.GeneratedColumn<String> _column_104(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'database_url',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL',
+    );
+i1.GeneratedColumn<String> _column_105(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'database_token',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL',
+    );
+
+class Shape25 extends i0.VersionedTable {
+  Shape25({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<String> get projectEnvironmentId =>
+      columnsByName['project_environment_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get flyAppName =>
+      columnsByName['fly_app_name']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get flyVolumeName =>
+      columnsByName['fly_volume_name']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get flyMacaroonToken =>
+      columnsByName['fly_macaroon_token']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get domainName =>
+      columnsByName['domain_name']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get tursoDatabaseName =>
+      columnsByName['turso_database_name']! as i1.GeneratedColumn<String>;
+}
+
+i1.GeneratedColumn<String> _column_106(String aliasedName) =>
     i1.GeneratedColumn<String>(
       'fly_app_name',
       aliasedName,
@@ -2103,7 +2167,7 @@ i1.GeneratedColumn<String> _column_103(String aliasedName) =>
       type: i1.DriftSqlType.string,
       $customConstraints: '',
     );
-i1.GeneratedColumn<String> _column_104(String aliasedName) =>
+i1.GeneratedColumn<String> _column_107(String aliasedName) =>
     i1.GeneratedColumn<String>(
       'fly_volume_name',
       aliasedName,
@@ -2111,17 +2175,33 @@ i1.GeneratedColumn<String> _column_104(String aliasedName) =>
       type: i1.DriftSqlType.string,
       $customConstraints: '',
     );
-i1.GeneratedColumn<String> _column_105(String aliasedName) =>
+i1.GeneratedColumn<String> _column_108(String aliasedName) =>
     i1.GeneratedColumn<String>(
-      'fly_volume_id',
+      'fly_macaroon_token',
+      aliasedName,
+      true,
+      type: i1.DriftSqlType.string,
+      $customConstraints: '',
+    );
+i1.GeneratedColumn<String> _column_109(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'domain_name',
+      aliasedName,
+      true,
+      type: i1.DriftSqlType.string,
+      $customConstraints: '',
+    );
+i1.GeneratedColumn<String> _column_110(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'turso_database_name',
       aliasedName,
       true,
       type: i1.DriftSqlType.string,
       $customConstraints: '',
     );
 
-class Shape25 extends i0.VersionedTable {
-  Shape25({required super.source, required super.alias}) : super.aliased();
+class Shape26 extends i0.VersionedTable {
+  Shape26({required super.source, required super.alias}) : super.aliased();
   i1.GeneratedColumn<String> get id =>
       columnsByName['id']! as i1.GeneratedColumn<String>;
   i1.GeneratedColumn<String> get metadata =>
@@ -2146,7 +2226,7 @@ class Shape25 extends i0.VersionedTable {
       columnsByName['resource_id']! as i1.GeneratedColumn<String>;
 }
 
-i1.GeneratedColumn<String> _column_106(String aliasedName) =>
+i1.GeneratedColumn<String> _column_111(String aliasedName) =>
     i1.GeneratedColumn<String>(
       'metadata',
       aliasedName,
@@ -2154,7 +2234,7 @@ i1.GeneratedColumn<String> _column_106(String aliasedName) =>
       type: i1.DriftSqlType.string,
       $customConstraints: '',
     );
-i1.GeneratedColumn<String> _column_107(String aliasedName) =>
+i1.GeneratedColumn<String> _column_112(String aliasedName) =>
     i1.GeneratedColumn<String>(
       'response',
       aliasedName,
@@ -2162,7 +2242,7 @@ i1.GeneratedColumn<String> _column_107(String aliasedName) =>
       type: i1.DriftSqlType.string,
       $customConstraints: '',
     );
-i1.GeneratedColumn<String> _column_108(String aliasedName) =>
+i1.GeneratedColumn<String> _column_113(String aliasedName) =>
     i1.GeneratedColumn<String>(
       'error',
       aliasedName,
@@ -2170,7 +2250,7 @@ i1.GeneratedColumn<String> _column_108(String aliasedName) =>
       type: i1.DriftSqlType.string,
       $customConstraints: '',
     );
-i1.GeneratedColumn<bool> _column_109(
+i1.GeneratedColumn<bool> _column_114(
   String aliasedName,
 ) => i1.GeneratedColumn<bool>(
   'done',
@@ -2180,7 +2260,7 @@ i1.GeneratedColumn<bool> _column_109(
   $customConstraints:
       'NOT NULL GENERATED ALWAYS AS (response IS NOT NULL OR error IS NOT NULL) VIRTUAL',
 );
-i1.GeneratedColumn<String> _column_110(String aliasedName) =>
+i1.GeneratedColumn<String> _column_115(String aliasedName) =>
     i1.GeneratedColumn<String>(
       'full_resource_name',
       aliasedName,
@@ -2188,7 +2268,7 @@ i1.GeneratedColumn<String> _column_110(String aliasedName) =>
       type: i1.DriftSqlType.string,
       $customConstraints: '',
     );
-i1.GeneratedColumn<String> _column_111(String aliasedName) =>
+i1.GeneratedColumn<String> _column_116(String aliasedName) =>
     i1.GeneratedColumn<String>(
       'owner_type',
       aliasedName,
@@ -2196,7 +2276,7 @@ i1.GeneratedColumn<String> _column_111(String aliasedName) =>
       type: i1.DriftSqlType.string,
       $customConstraints: '',
     );
-i1.GeneratedColumn<String> _column_112(String aliasedName) =>
+i1.GeneratedColumn<String> _column_117(String aliasedName) =>
     i1.GeneratedColumn<String>(
       'owner_id',
       aliasedName,

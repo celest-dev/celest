@@ -625,12 +625,6 @@
           "symbol": "ConnectionClosed",
           "url": "package:hrana/src/exception.dart",
           "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "ServerException",
-          "url": "package:hrana/src/exception.dart",
-          "isNullable": false
         }
       ],
       "location": {

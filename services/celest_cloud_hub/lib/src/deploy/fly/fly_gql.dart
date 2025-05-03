@@ -82,4 +82,70 @@ query FetchAppInternalNumericId($appName: String!) {
         ),
     };
   }
+
+  static final _setSecrets = gql(r'''
+mutation SetSecrets($input: SetSecretsInput!) { 
+  setSecrets(input: $input) {}
+}
+''');
+
+  /// Sets secrets for an app.
+  Future<void> setSecrets({
+    required String appName,
+    required Map<String, String> secrets,
+  }) async {
+    final result = await client.mutate(
+      MutationOptions(
+        document: _setSecrets,
+        operationName: 'SetSecrets',
+        variables: {
+          'input': {
+            'appId': appName,
+            'secrets': [
+              for (final entry in secrets.entries)
+                {'key': entry.key, 'value': entry.value},
+            ],
+          },
+        },
+      ),
+    );
+    if (result.exception case final exception?) {
+      throw GrpcError.internal('Failed to set secrets: $exception');
+    }
+  }
+
+  static final _listSecrets = gql(r'''
+query ListSecrets($appName: String!) {
+  app(name: $appName) {
+    secrets {
+      name
+    }
+  }
+}
+''');
+
+  /// Lists secrets for an app.
+  Future<List<String>> listSecrets({required String appName}) async {
+    final result = await client.query(
+      QueryOptions(
+        document: _listSecrets,
+        operationName: 'ListSecrets',
+        variables: {'appName': appName},
+      ),
+    );
+    if (result.exception case final exception?) {
+      throw GrpcError.internal('Failed to list secrets: $exception');
+    }
+    return switch (result.data) {
+      {'app': {'secrets': final List<Object?> secrets}} =>
+        secrets
+            .cast<Map<Object?, Object?>>()
+            .map((secret) => secret['name'] as String)
+            .toList(),
+      _ =>
+        throw GrpcError.internal(
+          'Failed to list secrets: ${jsonEncode(result.data)}',
+        ),
+    };
+  }
 }

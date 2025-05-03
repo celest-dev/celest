@@ -8,9 +8,12 @@ import 'package:celest_cloud_hub/src/database/db_functions.dart';
 import 'package:celest_cloud_hub/src/project.dart';
 import 'package:celest_cloud_hub/src/services/service_mixin.dart';
 import 'package:celest_core/_internal.dart';
+import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
+import 'package:drift/internal/versioned_schema.dart';
 import 'package:drift/native.dart';
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 
 import 'cloud_hub_database.drift.dart';
 
@@ -46,19 +49,62 @@ final class CloudHubDatabase extends $CloudHubDatabase
   }
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   static final Logger _logger = Logger('CloudHubDatabase');
 
+  @visibleForTesting
+  static const Set<String> coreTypes = {
+    'Celest::Operation',
+    'Celest::Organization',
+    'Celest::Organization::Member',
+    'Celest::Project',
+    'Celest::Project::Member',
+    'Celest::Project::Environment',
+    'Celest::Project::Environment::Member',
+  };
+
+  @visibleForTesting
+  static final Map<EntityUid, Entity> coreEntities = {
+    context.rootOrg.uid: context.rootOrg,
+    ProjectEnvironmentAction.deploy: Entity(
+      uid: ProjectEnvironmentAction.deploy,
+      parents: [CelestAction.owner],
+    ),
+  };
+
+  // Workaround for https://github.com/simolus3/hrana.dart/pull/9#issuecomment-2848112821
+  static OnUpgrade stepByStepHelper({required MigrationStepWithVersion step}) {
+    return (m, from, to) async {
+      final database = m.database;
+
+      for (var target = from; target < to;) {
+        final newVersion = await step(target, database);
+        assert(newVersion > target);
+
+        target = newVersion;
+      }
+    };
+  }
+
   @override
   MigrationStrategy get migration => createMigration(
-    onUpgrade: stepByStep(
-      from1To2: (m, schema) async {
-        await m.addColumn(
-          schema.projectEnvironmentStates,
-          schema.projectEnvironmentStates.flyVolumeId,
-        );
-      },
+    onUpgrade: stepByStepHelper(
+      step: migrationSteps(
+        from1To2: (m, schema) async {
+          await m.createTable(schema.tursoDatabases);
+          await m.alterTable(
+            TableMigration(
+              schema.projectEnvironmentStates,
+              newColumns: [
+                schema.projectEnvironmentStates.flyMacaroonToken,
+                schema.projectEnvironmentStates.tursoDatabaseName,
+              ],
+            ),
+          );
+          await m.createIndex(schema.idxProjectEnvironmentTursoDatabase);
+        },
+      ),
     ),
     beforeOpen: (details) async {
       final versionRow =
@@ -82,22 +128,8 @@ final class CloudHubDatabase extends $CloudHubDatabase
       }
     },
     project: project,
-    additionalCedarTypes: {
-      'Celest::Operation',
-      'Celest::Organization',
-      'Celest::Organization::Member',
-      'Celest::Project',
-      'Celest::Project::Member',
-      'Celest::Project::Environment',
-      'Celest::Project::Environment::Member',
-    },
-    additionalCedarEntities: {
-      context.rootOrg.uid: context.rootOrg,
-      ProjectEnvironmentAction.deploy: Entity(
-        uid: ProjectEnvironmentAction.deploy,
-        parents: [CelestAction.owner],
-      ),
-    },
+    additionalCedarTypes: coreTypes,
+    additionalCedarEntities: coreEntities,
     additionalCedarPolicies: corePolicySet,
   );
 
@@ -125,11 +157,21 @@ final class CloudHubDatabase extends $CloudHubDatabase
 
   // ignore: unused_element
   Future<void> _dumpBrokenCedarForeignKeys() async {
+    final allCedarTypes = await cedarTypes.select().get();
     final allEntitiesRaw = await cedarEntities.select().get();
     final allEntities = {
       for (final entity in allEntitiesRaw)
         EntityUid.of(entity.entityType, entity.entityId),
     };
+    for (final entity in allEntities) {
+      final type = allCedarTypes.firstWhereOrNull(
+        (typ) => typ.fqn == entity.type,
+      );
+      if (type == null) {
+        print('Entity has bad type: ${entity.type}');
+        print('  $entity');
+      }
+    }
     final allRelationships = await cedarRelationships.select().get();
     for (final relationship in allRelationships) {
       final entityId = EntityUid.of(

@@ -1,39 +1,27 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show gzip;
-import 'dart:isolate';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:archive/archive_io.dart';
 import 'package:celest_ast/celest_ast.dart'
     show ResolvedCelestDatabaseConfig, ResolvedProject;
 import 'package:celest_cli/src/codegen/api/dockerfile_generator.dart';
-import 'package:celest_cloud/celest_cloud.dart'
-    as pb
-    show DeployProjectEnvironmentResponse, LifecycleState, ProjectAsset_Type;
-import 'package:celest_cloud/src/proto/google/rpc/status.pb.dart' as pb;
+import 'package:celest_cloud/celest_cloud.dart' as pb show Region;
 import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/schema/project_environments.drift.dart';
+import 'package:celest_cloud_hub/src/deploy/deployment_engine.dart'
+    show ProjectAsset;
 import 'package:celest_cloud_hub/src/deploy/fly/fly_app_config.dart';
-import 'package:celest_cloud_hub/src/model/protobuf.dart';
-import 'package:celest_cloud_hub/src/model/type_registry.dart';
+import 'package:celest_cloud_hub/src/model/regions.dart';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
-import 'package:drift/isolate.dart';
+import 'package:drift/drift.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
 import 'package:logging/logging.dart';
-
-typedef ProjectAsset =
-    ({
-      pb.ProjectAsset_Type type,
-      String filename,
-      Uint8List inline,
-      String? etag,
-    });
 
 final class FlyDeploymentEngine {
   FlyDeploymentEngine({
@@ -41,151 +29,21 @@ final class FlyDeploymentEngine {
     required this.projectAst,
     required this.kernelAsset,
     required this.flutterAssetsBundle,
+    required this.region,
     required this.environment,
   });
 
   final CloudHubDatabase db;
 
+  /// The region to deploy to.
+  final pb.Region region;
   final ProjectEnvironment environment;
   final ResolvedProject projectAst;
   final ProjectAsset kernelAsset;
   final ProjectAsset? flutterAssetsBundle;
 
-  static Future<void> deployIsolated({
-    required String operationId,
-    required DriftIsolate dbConnection,
-    required ResolvedProject projectAst,
-    required ProjectEnvironment environment,
-    required ProjectAsset kernelAsset,
-    required ProjectAsset? flutterAssetsBundle,
-  }) async {
-    await Isolate.run(() async {
-      Logger.root.level = Level.ALL;
-      Logger.root.onRecord.listen((record) {
-        final loggerName = record.loggerName.split('.').last;
-        print(
-          '${record.time} [$loggerName] ${record.level.name}: '
-          '${record.message}',
-        );
-        if (record.error != null) {
-          print(record.error);
-        }
-        if (record.stackTrace != null) {
-          print(record.stackTrace);
-        }
-      });
-
-      final connection = await dbConnection.connect(
-        isolateDebugLog: false,
-        singleClientMode: true,
-      );
-      final db = CloudHubDatabase(connection);
-      final engine = FlyDeploymentEngine(
-        db: db,
-        projectAst: projectAst,
-        kernelAsset: kernelAsset,
-        flutterAssetsBundle: flutterAssetsBundle,
-        environment: environment,
-      );
-      try {
-        final state = await engine.deploy();
-        final response = pb.DeployProjectEnvironmentResponse(
-          project: projectAst.toProto().packIntoAny(),
-          uri: 'https://${state.domainName}',
-        );
-        await db.operationsDrift.updateOperation(
-          id: operationId,
-          response: jsonEncode(
-            response.packIntoAny().toProto3Json(typeRegistry: typeRegistry),
-          ),
-        );
-        engine._logger.info('Successfully deployed environment');
-      } on Object catch (e, st) {
-        final grpcError = e is GrpcError ? e : GrpcError.unknown(e.toString());
-        engine._logger.severe('Failed to deploy environment', e, st);
-        final error = pb.Status(
-          code: grpcError.code,
-          message: grpcError.message,
-          details: grpcError.details?.map((it) => it.packIntoAny()),
-        );
-        await db.operationsDrift.updateOperation(
-          id: operationId,
-          error: jsonEncode(error.toProto3Json(typeRegistry: typeRegistry)),
-        );
-      } finally {
-        context.httpClient.close();
-        await db.close();
-      }
-    });
-  }
-
   static const FileSystem _fileSystem = LocalFileSystem();
   late final Logger _logger = Logger('FlyDeploymentEngine.${environment.id}');
-
-  Future<ProjectEnvironmentState> deploy() async {
-    final pb.LifecycleState next, onFailure;
-    final current = pb.LifecycleState.values.firstWhere(
-      (state) => state.name == environment.state,
-    );
-    switch (current) {
-      case pb.LifecycleState.ACTIVE:
-        next = pb.LifecycleState.UPDATING;
-        onFailure = pb.LifecycleState.UPDATE_FAILED;
-      case pb.LifecycleState.CREATION_FAILED:
-        next = pb.LifecycleState.CREATING;
-        onFailure = pb.LifecycleState.CREATION_FAILED;
-      case pb.LifecycleState.DELETION_FAILED:
-        next = pb.LifecycleState.DELETING;
-        onFailure = pb.LifecycleState.DELETION_FAILED;
-      case pb.LifecycleState.UPDATE_FAILED:
-        next = pb.LifecycleState.UPDATING;
-        onFailure = pb.LifecycleState.UPDATE_FAILED;
-      case pb.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED ||
-          pb.LifecycleState.CREATING:
-        next = pb.LifecycleState.CREATING;
-        onFailure = pb.LifecycleState.CREATION_FAILED;
-      case pb.LifecycleState.DELETED:
-        throw GrpcError.failedPrecondition(
-          'Project environment has been deleted.',
-        );
-      case pb.LifecycleState.DELETING:
-        throw GrpcError.failedPrecondition(
-          'Project environment is being deleted.',
-        );
-      case pb.LifecycleState.UPDATING:
-        throw GrpcError.failedPrecondition(
-          'Project environment is being updated.',
-        );
-      default:
-        throw GrpcError.failedPrecondition(
-          'Project environment is in an unknown state: ${current.name}',
-        );
-    }
-
-    _logger.fine(
-      'Deploying project environment: '
-      '${environment.state} -> ${next.name}',
-    );
-    await db.projectEnvironmentsDrift.updateProjectEnvironment(
-      id: environment.id,
-      state: next.name,
-    );
-    try {
-      final state = await _deployProjectEnvironment();
-      await db.projectEnvironmentsDrift.updateProjectEnvironment(
-        id: environment.id,
-        state: 'ACTIVE',
-      );
-      return state;
-    } on Object catch (e, st) {
-      _logger.severe('Failed to deploy project environment', e, st);
-      await db.projectEnvironmentsDrift.updateProjectEnvironment(
-        id: environment.id,
-        state: onFailure.name,
-      );
-      rethrow;
-    }
-  }
 
   static String generateFlyAppName(String projectId) {
     projectId = projectId.toLowerCase();
@@ -202,14 +60,12 @@ final class FlyDeploymentEngine {
     return '$projectId-$suffix';
   }
 
-  Future<ProjectEnvironmentState> _deployProjectEnvironment() async {
-    var currentState =
-        await db.projectEnvironmentsDrift
-            .getProjectEnvironmentState(projectEnvironmentId: environment.id)
-            .getSingleOrNull();
-
+  Future<ProjectEnvironmentState> deploy(
+    ProjectEnvironmentState currentState,
+    TursoDatabase? database,
+  ) async {
     final String flyAppName;
-    if (currentState?.flyAppName case final appName?) {
+    if (currentState.flyAppName case final appName?) {
       flyAppName = appName;
       _logger.fine('Using Fly app: $flyAppName');
     } else {
@@ -220,26 +76,10 @@ final class FlyDeploymentEngine {
       _logger.fine('Fly app created');
     }
 
-    final String flyVolumeName;
-    if (currentState?.flyVolumeName case final volumeName?) {
-      flyVolumeName = volumeName;
-      _logger.fine('Using Fly volume: $flyVolumeName');
-    } else {
-      _logger.fine('Creating Fly volume');
-      flyVolumeName = environment.id;
-      final volume = await context.fly.createVolume(
-        appName: flyAppName,
-        volumeName: flyVolumeName,
-        region: 'lax', // TODO
-        sizeGb: 1,
-      );
-      _logger.fine('Created Fly volume: ${volume.toJson()}');
-    }
     currentState =
         (await db.projectEnvironmentsDrift.upsertProjectEnvironmentState(
           projectEnvironmentId: environment.id,
           flyAppName: flyAppName,
-          flyVolumeName: flyVolumeName,
           domainName: '$flyAppName.fly.dev',
         )).first;
 
@@ -302,31 +142,60 @@ final class FlyDeploymentEngine {
       // Write the app config.
       final flyConfig = FlyAppConfig(
         appName: flyAppName,
-        primaryRegion: 'lax', // TODO
+        primaryRegion: region.flyRegion,
         build: FlyAppBuildConfig(dockerfile: 'Dockerfile'),
-        mounts: [FlyAppMountConfig(source: flyVolumeName, destination: '/db')],
         httpService: FlyAppHttpServiceConfig(),
         vms: [FlyAppVmConfig(size: 'shared-cpu-1x')],
         env: {
           for (final variable in projectAst.variables)
             if (variable.value.isNotEmpty) variable.name: variable.value,
-          for (final secret in projectAst.secrets)
-            if (secret.value.isNotEmpty) secret.name: secret.value,
-          for (final database in projectAst.databases.values)
-            ...switch (database.config) {
-              ResolvedCelestDatabaseConfig(:final hostname) => {
-                hostname.name:
-                    Uri.file('/db/${database.databaseId}.db').toString(),
+
+          if (database != null)
+            for (final projectDatabase in projectAst.databases.values)
+              ...switch (projectDatabase.config) {
+                ResolvedCelestDatabaseConfig(:final hostname) => {
+                  hostname.name: database.databaseUrl,
+                },
               },
-            },
         },
       );
+
+      final secrets = {
+        for (final secret in projectAst.secrets)
+          if (secret.value.isNotEmpty) secret.name: secret.value,
+        for (final projectDatabase in projectAst.databases.values)
+          if (database != null)
+            ...switch (projectDatabase.config) {
+              ResolvedCelestDatabaseConfig(:final token) => {
+                token.name: database.databaseToken,
+              },
+            },
+      };
+      await context.fly.setSecrets(appName: flyAppName, secrets: secrets);
+
       final flyConfigFile = dir.childFile('fly.json');
       await flyConfigFile.writeAsString(jsonEncode(flyConfig.toJson()));
 
       _logger.fine('Running fly deploy...');
       await context.flyCtl.deploy(flyConfigJsonPath: flyConfigFile.path);
     });
+
+    if (currentState.flyVolumeName case final volumeName?) {
+      _logger.fine('Deleting Fly volume: $volumeName');
+      final volumeId = await context.fly.getVolumeId(
+        appName: flyAppName,
+        volumeName: volumeName,
+      );
+      await context.fly.deleteVolume(volumeId: volumeId, appName: flyAppName);
+      _logger.fine('Fly volume deleted');
+
+      final results = await (db.projectEnvironmentStates.update()
+            ..where((tbl) => tbl.projectEnvironmentId.equals(environment.id)))
+          .writeReturning(
+            ProjectEnvironmentStatesCompanion(flyVolumeName: Value(null)),
+          );
+      currentState = results.first;
+    }
 
     final app = await context.fly.getApp(appName: flyAppName);
     _logger.fine('App successfully deployed: ${app.toJson()}');

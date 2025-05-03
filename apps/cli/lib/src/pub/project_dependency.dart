@@ -116,7 +116,7 @@ final class ProjectDependency {
     DependencyType.dependency,
     HostedDependency(
       version: VersionRange(
-        min: Version.parse('2.26.0'),
+        min: Version.parse('2.26.1'),
         max: Version.parse('2.27.0'),
         includeMin: true,
         includeMax: false,
@@ -128,7 +128,7 @@ final class ProjectDependency {
     'drift_hrana',
     DependencyType.dependency,
     HostedDependency(
-      version: VersionConstraint.compatibleWith(Version.parse('1.0.2')),
+      version: VersionConstraint.compatibleWith(Version.parse('1.0.5')),
     ),
   );
 

@@ -51,3 +51,4 @@ jobs:
         run: dart test --fail-fast -j1
         env:
           TEST_FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          TEST_TURSO_API_TOKEN: ${{ secrets.TURSO_API_TOKEN }}

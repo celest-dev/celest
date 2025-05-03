@@ -10,10 +10,16 @@ build:
   image: celestdev/cloud-hub:latest
 
 env:
-  CLOUD_HUB_DATABASE_HOST: "file:///db/CloudHubDatabase.db"
-  LOG_LEVEL: ALL
   CELEST_ENVIRONMENT: production
+  CLOUD_HUB_DATABASE_HOST: libsql://cloud-hub-celest-dev.aws-us-east-1.turso.io
+  LOG_LEVEL: ALL
   SENTRY_DSN: https://dee57feed8364d2768bdcc8c856ac6ba@o4506345201532928.ingest.us.sentry.io/4509136061988864
+
+  # Managed as secrets:
+  # - CLOUD_HUB_DATABASE_TOKEN
+  # - FLY_API_TOKEN
+  # - RESEND_API_KEY
+  # - TURSO_API_TOKEN
 
 http_service:
   internal_port: 8080

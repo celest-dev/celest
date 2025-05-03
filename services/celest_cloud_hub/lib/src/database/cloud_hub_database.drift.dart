@@ -67,6 +67,7 @@ abstract class $CloudHubDatabase extends i0.GeneratedDatabase {
       i9.ProjectEnvironmentAsts(this);
   late final i9.ProjectEnvironmentAssets projectEnvironmentAssets =
       i9.ProjectEnvironmentAssets(this);
+  late final i9.TursoDatabases tursoDatabases = i9.TursoDatabases(this);
   late final i9.ProjectEnvironmentStates projectEnvironmentStates =
       i9.ProjectEnvironmentStates(this);
   late final i10.Operations operations = i10.Operations(this);
@@ -166,7 +167,9 @@ abstract class $CloudHubDatabase extends i0.GeneratedDatabase {
     i9.projectEnvironmentsDeleteTrg,
     projectEnvironmentAsts,
     projectEnvironmentAssets,
+    tursoDatabases,
     projectEnvironmentStates,
+    i9.idxProjectEnvironmentTursoDatabase,
     i8.projectsFkParentIdx,
     i8.projectsUpdateTimeTrg,
     i8.projectsCreateTrg,
@@ -775,6 +778,30 @@ abstract class $CloudHubDatabase extends i0.GeneratedDatabase {
     ),
     i0.WritePropagation(
       on: i0.TableUpdateQuery.onTableName(
+        'turso_databases',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate(
+          'project_environment_states',
+          kind: i0.UpdateKind.delete,
+        ),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'turso_databases',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate(
+          'project_environment_states',
+          kind: i0.UpdateKind.update,
+        ),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
         'projects',
         limitUpdateKind: i0.UpdateKind.update,
       ),
@@ -997,6 +1024,8 @@ class $CloudHubDatabaseManager {
       i9.$ProjectEnvironmentAstsTableManager(_db, _db.projectEnvironmentAsts);
   i9.$ProjectEnvironmentAssetsTableManager get projectEnvironmentAssets => i9
       .$ProjectEnvironmentAssetsTableManager(_db, _db.projectEnvironmentAssets);
+  i9.$TursoDatabasesTableManager get tursoDatabases =>
+      i9.$TursoDatabasesTableManager(_db, _db.tursoDatabases);
   i9.$ProjectEnvironmentStatesTableManager get projectEnvironmentStates => i9
       .$ProjectEnvironmentStatesTableManager(_db, _db.projectEnvironmentStates);
   i10.$OperationsTableManager get operations =>
