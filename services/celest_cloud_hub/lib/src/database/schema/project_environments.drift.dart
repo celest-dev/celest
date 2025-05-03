@@ -795,14 +795,18 @@ typedef $ProjectEnvironmentStatesCreateCompanionBuilder =
       required String projectEnvironmentId,
       i0.Value<String?> flyAppName,
       i0.Value<String?> flyVolumeName,
+      i0.Value<String?> flyMacaroonToken,
       i0.Value<String?> domainName,
+      i0.Value<String?> tursoDatabaseName,
     });
 typedef $ProjectEnvironmentStatesUpdateCompanionBuilder =
     i1.ProjectEnvironmentStatesCompanion Function({
       i0.Value<String> projectEnvironmentId,
       i0.Value<String?> flyAppName,
       i0.Value<String?> flyVolumeName,
+      i0.Value<String?> flyMacaroonToken,
       i0.Value<String?> domainName,
+      i0.Value<String?> tursoDatabaseName,
     });
 
 class $ProjectEnvironmentStatesFilterComposer
@@ -829,8 +833,18 @@ class $ProjectEnvironmentStatesFilterComposer
     builder: (column) => i0.ColumnFilters(column),
   );
 
+  i0.ColumnFilters<String> get flyMacaroonToken => $composableBuilder(
+    column: $table.flyMacaroonToken,
+    builder: (column) => i0.ColumnFilters(column),
+  );
+
   i0.ColumnFilters<String> get domainName => $composableBuilder(
     column: $table.domainName,
+    builder: (column) => i0.ColumnFilters(column),
+  );
+
+  i0.ColumnFilters<String> get tursoDatabaseName => $composableBuilder(
+    column: $table.tursoDatabaseName,
     builder: (column) => i0.ColumnFilters(column),
   );
 }
@@ -859,8 +873,18 @@ class $ProjectEnvironmentStatesOrderingComposer
     builder: (column) => i0.ColumnOrderings(column),
   );
 
+  i0.ColumnOrderings<String> get flyMacaroonToken => $composableBuilder(
+    column: $table.flyMacaroonToken,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
+
   i0.ColumnOrderings<String> get domainName => $composableBuilder(
     column: $table.domainName,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
+
+  i0.ColumnOrderings<String> get tursoDatabaseName => $composableBuilder(
+    column: $table.tursoDatabaseName,
     builder: (column) => i0.ColumnOrderings(column),
   );
 }
@@ -889,8 +913,18 @@ class $ProjectEnvironmentStatesAnnotationComposer
     builder: (column) => column,
   );
 
+  i0.GeneratedColumn<String> get flyMacaroonToken => $composableBuilder(
+    column: $table.flyMacaroonToken,
+    builder: (column) => column,
+  );
+
   i0.GeneratedColumn<String> get domainName => $composableBuilder(
     column: $table.domainName,
+    builder: (column) => column,
+  );
+
+  i0.GeneratedColumn<String> get tursoDatabaseName => $composableBuilder(
+    column: $table.tursoDatabaseName,
     builder: (column) => column,
   );
 }
@@ -944,24 +978,32 @@ class $ProjectEnvironmentStatesTableManager
                 i0.Value<String> projectEnvironmentId = const i0.Value.absent(),
                 i0.Value<String?> flyAppName = const i0.Value.absent(),
                 i0.Value<String?> flyVolumeName = const i0.Value.absent(),
+                i0.Value<String?> flyMacaroonToken = const i0.Value.absent(),
                 i0.Value<String?> domainName = const i0.Value.absent(),
+                i0.Value<String?> tursoDatabaseName = const i0.Value.absent(),
               }) => i1.ProjectEnvironmentStatesCompanion(
                 projectEnvironmentId: projectEnvironmentId,
                 flyAppName: flyAppName,
                 flyVolumeName: flyVolumeName,
+                flyMacaroonToken: flyMacaroonToken,
                 domainName: domainName,
+                tursoDatabaseName: tursoDatabaseName,
               ),
           createCompanionCallback:
               ({
                 required String projectEnvironmentId,
                 i0.Value<String?> flyAppName = const i0.Value.absent(),
                 i0.Value<String?> flyVolumeName = const i0.Value.absent(),
+                i0.Value<String?> flyMacaroonToken = const i0.Value.absent(),
                 i0.Value<String?> domainName = const i0.Value.absent(),
+                i0.Value<String?> tursoDatabaseName = const i0.Value.absent(),
               }) => i1.ProjectEnvironmentStatesCompanion.insert(
                 projectEnvironmentId: projectEnvironmentId,
                 flyAppName: flyAppName,
                 flyVolumeName: flyVolumeName,
+                flyMacaroonToken: flyMacaroonToken,
                 domainName: domainName,
+                tursoDatabaseName: tursoDatabaseName,
               ),
           withReferenceMapper:
               (p0) =>
@@ -997,6 +1039,211 @@ typedef $ProjectEnvironmentStatesProcessedTableManager =
         >,
       ),
       i1.ProjectEnvironmentState,
+      i0.PrefetchHooks Function()
+    >;
+typedef $TursoDatabasesCreateCompanionBuilder =
+    i1.TursoDatabasesCompanion Function({
+      required String databaseName,
+      required String databaseGroup,
+      required String databaseUrl,
+      required String databaseToken,
+      i0.Value<int> rowid,
+    });
+typedef $TursoDatabasesUpdateCompanionBuilder =
+    i1.TursoDatabasesCompanion Function({
+      i0.Value<String> databaseName,
+      i0.Value<String> databaseGroup,
+      i0.Value<String> databaseUrl,
+      i0.Value<String> databaseToken,
+      i0.Value<int> rowid,
+    });
+
+class $TursoDatabasesFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.TursoDatabases> {
+  $TursoDatabasesFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnFilters<String> get databaseName => $composableBuilder(
+    column: $table.databaseName,
+    builder: (column) => i0.ColumnFilters(column),
+  );
+
+  i0.ColumnFilters<String> get databaseGroup => $composableBuilder(
+    column: $table.databaseGroup,
+    builder: (column) => i0.ColumnFilters(column),
+  );
+
+  i0.ColumnFilters<String> get databaseUrl => $composableBuilder(
+    column: $table.databaseUrl,
+    builder: (column) => i0.ColumnFilters(column),
+  );
+
+  i0.ColumnFilters<String> get databaseToken => $composableBuilder(
+    column: $table.databaseToken,
+    builder: (column) => i0.ColumnFilters(column),
+  );
+}
+
+class $TursoDatabasesOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.TursoDatabases> {
+  $TursoDatabasesOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.ColumnOrderings<String> get databaseName => $composableBuilder(
+    column: $table.databaseName,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
+
+  i0.ColumnOrderings<String> get databaseGroup => $composableBuilder(
+    column: $table.databaseGroup,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
+
+  i0.ColumnOrderings<String> get databaseUrl => $composableBuilder(
+    column: $table.databaseUrl,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
+
+  i0.ColumnOrderings<String> get databaseToken => $composableBuilder(
+    column: $table.databaseToken,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
+}
+
+class $TursoDatabasesAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i1.TursoDatabases> {
+  $TursoDatabasesAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  i0.GeneratedColumn<String> get databaseName => $composableBuilder(
+    column: $table.databaseName,
+    builder: (column) => column,
+  );
+
+  i0.GeneratedColumn<String> get databaseGroup => $composableBuilder(
+    column: $table.databaseGroup,
+    builder: (column) => column,
+  );
+
+  i0.GeneratedColumn<String> get databaseUrl => $composableBuilder(
+    column: $table.databaseUrl,
+    builder: (column) => column,
+  );
+
+  i0.GeneratedColumn<String> get databaseToken => $composableBuilder(
+    column: $table.databaseToken,
+    builder: (column) => column,
+  );
+}
+
+class $TursoDatabasesTableManager
+    extends
+        i0.RootTableManager<
+          i0.GeneratedDatabase,
+          i1.TursoDatabases,
+          i1.TursoDatabase,
+          i1.$TursoDatabasesFilterComposer,
+          i1.$TursoDatabasesOrderingComposer,
+          i1.$TursoDatabasesAnnotationComposer,
+          $TursoDatabasesCreateCompanionBuilder,
+          $TursoDatabasesUpdateCompanionBuilder,
+          (
+            i1.TursoDatabase,
+            i0.BaseReferences<
+              i0.GeneratedDatabase,
+              i1.TursoDatabases,
+              i1.TursoDatabase
+            >,
+          ),
+          i1.TursoDatabase,
+          i0.PrefetchHooks Function()
+        > {
+  $TursoDatabasesTableManager(i0.GeneratedDatabase db, i1.TursoDatabases table)
+    : super(
+        i0.TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer:
+              () => i1.$TursoDatabasesFilterComposer($db: db, $table: table),
+          createOrderingComposer:
+              () => i1.$TursoDatabasesOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer:
+              () =>
+                  i1.$TursoDatabasesAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                i0.Value<String> databaseName = const i0.Value.absent(),
+                i0.Value<String> databaseGroup = const i0.Value.absent(),
+                i0.Value<String> databaseUrl = const i0.Value.absent(),
+                i0.Value<String> databaseToken = const i0.Value.absent(),
+                i0.Value<int> rowid = const i0.Value.absent(),
+              }) => i1.TursoDatabasesCompanion(
+                databaseName: databaseName,
+                databaseGroup: databaseGroup,
+                databaseUrl: databaseUrl,
+                databaseToken: databaseToken,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String databaseName,
+                required String databaseGroup,
+                required String databaseUrl,
+                required String databaseToken,
+                i0.Value<int> rowid = const i0.Value.absent(),
+              }) => i1.TursoDatabasesCompanion.insert(
+                databaseName: databaseName,
+                databaseGroup: databaseGroup,
+                databaseUrl: databaseUrl,
+                databaseToken: databaseToken,
+                rowid: rowid,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          i0.BaseReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $TursoDatabasesProcessedTableManager =
+    i0.ProcessedTableManager<
+      i0.GeneratedDatabase,
+      i1.TursoDatabases,
+      i1.TursoDatabase,
+      i1.$TursoDatabasesFilterComposer,
+      i1.$TursoDatabasesOrderingComposer,
+      i1.$TursoDatabasesAnnotationComposer,
+      $TursoDatabasesCreateCompanionBuilder,
+      $TursoDatabasesUpdateCompanionBuilder,
+      (
+        i1.TursoDatabase,
+        i0.BaseReferences<
+          i0.GeneratedDatabase,
+          i1.TursoDatabases,
+          i1.TursoDatabase
+        >,
+      ),
+      i1.TursoDatabase,
       i0.PrefetchHooks Function()
     >;
 
@@ -2533,6 +2780,17 @@ class ProjectEnvironmentStates extends i0.Table
         requiredDuringInsert: false,
         $customConstraints: '',
       );
+  static const i0.VerificationMeta _flyMacaroonTokenMeta =
+      const i0.VerificationMeta('flyMacaroonToken');
+  late final i0.GeneratedColumn<String> flyMacaroonToken =
+      i0.GeneratedColumn<String>(
+        'fly_macaroon_token',
+        aliasedName,
+        true,
+        type: i0.DriftSqlType.string,
+        requiredDuringInsert: false,
+        $customConstraints: '',
+      );
   static const i0.VerificationMeta _domainNameMeta = const i0.VerificationMeta(
     'domainName',
   );
@@ -2544,12 +2802,25 @@ class ProjectEnvironmentStates extends i0.Table
     requiredDuringInsert: false,
     $customConstraints: '',
   );
+  static const i0.VerificationMeta _tursoDatabaseNameMeta =
+      const i0.VerificationMeta('tursoDatabaseName');
+  late final i0.GeneratedColumn<String> tursoDatabaseName =
+      i0.GeneratedColumn<String>(
+        'turso_database_name',
+        aliasedName,
+        true,
+        type: i0.DriftSqlType.string,
+        requiredDuringInsert: false,
+        $customConstraints: '',
+      );
   @override
   List<i0.GeneratedColumn> get $columns => [
     projectEnvironmentId,
     flyAppName,
     flyVolumeName,
+    flyMacaroonToken,
     domainName,
+    tursoDatabaseName,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -2592,10 +2863,28 @@ class ProjectEnvironmentStates extends i0.Table
         ),
       );
     }
+    if (data.containsKey('fly_macaroon_token')) {
+      context.handle(
+        _flyMacaroonTokenMeta,
+        flyMacaroonToken.isAcceptableOrUnknown(
+          data['fly_macaroon_token']!,
+          _flyMacaroonTokenMeta,
+        ),
+      );
+    }
     if (data.containsKey('domain_name')) {
       context.handle(
         _domainNameMeta,
         domainName.isAcceptableOrUnknown(data['domain_name']!, _domainNameMeta),
+      );
+    }
+    if (data.containsKey('turso_database_name')) {
+      context.handle(
+        _tursoDatabaseNameMeta,
+        tursoDatabaseName.isAcceptableOrUnknown(
+          data['turso_database_name']!,
+          _tursoDatabaseNameMeta,
+        ),
       );
     }
     return context;
@@ -2623,9 +2912,17 @@ class ProjectEnvironmentStates extends i0.Table
         i0.DriftSqlType.string,
         data['${effectivePrefix}fly_volume_name'],
       ),
+      flyMacaroonToken: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}fly_macaroon_token'],
+      ),
       domainName: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
         data['${effectivePrefix}domain_name'],
+      ),
+      tursoDatabaseName: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}turso_database_name'],
       ),
     );
   }
@@ -2640,6 +2937,7 @@ class ProjectEnvironmentStates extends i0.Table
   @override
   List<String> get customConstraints => const [
     'CONSTRAINT fk_project_environment_state_project_environment_id FOREIGN KEY(project_environment_id)REFERENCES project_environments(id)ON UPDATE CASCADE ON DELETE CASCADE',
+    'CONSTRAINT fk_project_environment_state_turso_database FOREIGN KEY(turso_database_name)REFERENCES turso_databases(database_name)ON UPDATE CASCADE ON DELETE CASCADE',
   ];
   @override
   bool get dontWriteConstraints => true;
@@ -2656,13 +2954,21 @@ class ProjectEnvironmentState extends i0.DataClass
   /// The name of the project environment's Fly volume.
   final String? flyVolumeName;
 
+  /// The attenuated macaroon token for use with Fly.io.
+  final String? flyMacaroonToken;
+
   /// The domain name of the project environment.
   final String? domainName;
+
+  /// The name of the turso database.
+  final String? tursoDatabaseName;
   const ProjectEnvironmentState({
     required this.projectEnvironmentId,
     this.flyAppName,
     this.flyVolumeName,
+    this.flyMacaroonToken,
     this.domainName,
+    this.tursoDatabaseName,
   });
   @override
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
@@ -2674,8 +2980,14 @@ class ProjectEnvironmentState extends i0.DataClass
     if (!nullToAbsent || flyVolumeName != null) {
       map['fly_volume_name'] = i0.Variable<String>(flyVolumeName);
     }
+    if (!nullToAbsent || flyMacaroonToken != null) {
+      map['fly_macaroon_token'] = i0.Variable<String>(flyMacaroonToken);
+    }
     if (!nullToAbsent || domainName != null) {
       map['domain_name'] = i0.Variable<String>(domainName);
+    }
+    if (!nullToAbsent || tursoDatabaseName != null) {
+      map['turso_database_name'] = i0.Variable<String>(tursoDatabaseName);
     }
     return map;
   }
@@ -2691,10 +3003,18 @@ class ProjectEnvironmentState extends i0.DataClass
           flyVolumeName == null && nullToAbsent
               ? const i0.Value.absent()
               : i0.Value(flyVolumeName),
+      flyMacaroonToken:
+          flyMacaroonToken == null && nullToAbsent
+              ? const i0.Value.absent()
+              : i0.Value(flyMacaroonToken),
       domainName:
           domainName == null && nullToAbsent
               ? const i0.Value.absent()
               : i0.Value(domainName),
+      tursoDatabaseName:
+          tursoDatabaseName == null && nullToAbsent
+              ? const i0.Value.absent()
+              : i0.Value(tursoDatabaseName),
     );
   }
 
@@ -2709,7 +3029,13 @@ class ProjectEnvironmentState extends i0.DataClass
       ),
       flyAppName: serializer.fromJson<String?>(json['fly_app_name']),
       flyVolumeName: serializer.fromJson<String?>(json['fly_volume_name']),
+      flyMacaroonToken: serializer.fromJson<String?>(
+        json['fly_macaroon_token'],
+      ),
       domainName: serializer.fromJson<String?>(json['domain_name']),
+      tursoDatabaseName: serializer.fromJson<String?>(
+        json['turso_database_name'],
+      ),
     );
   }
   @override
@@ -2719,7 +3045,9 @@ class ProjectEnvironmentState extends i0.DataClass
       'project_environment_id': serializer.toJson<String>(projectEnvironmentId),
       'fly_app_name': serializer.toJson<String?>(flyAppName),
       'fly_volume_name': serializer.toJson<String?>(flyVolumeName),
+      'fly_macaroon_token': serializer.toJson<String?>(flyMacaroonToken),
       'domain_name': serializer.toJson<String?>(domainName),
+      'turso_database_name': serializer.toJson<String?>(tursoDatabaseName),
     };
   }
 
@@ -2727,13 +3055,23 @@ class ProjectEnvironmentState extends i0.DataClass
     String? projectEnvironmentId,
     i0.Value<String?> flyAppName = const i0.Value.absent(),
     i0.Value<String?> flyVolumeName = const i0.Value.absent(),
+    i0.Value<String?> flyMacaroonToken = const i0.Value.absent(),
     i0.Value<String?> domainName = const i0.Value.absent(),
+    i0.Value<String?> tursoDatabaseName = const i0.Value.absent(),
   }) => i1.ProjectEnvironmentState(
     projectEnvironmentId: projectEnvironmentId ?? this.projectEnvironmentId,
     flyAppName: flyAppName.present ? flyAppName.value : this.flyAppName,
     flyVolumeName:
         flyVolumeName.present ? flyVolumeName.value : this.flyVolumeName,
+    flyMacaroonToken:
+        flyMacaroonToken.present
+            ? flyMacaroonToken.value
+            : this.flyMacaroonToken,
     domainName: domainName.present ? domainName.value : this.domainName,
+    tursoDatabaseName:
+        tursoDatabaseName.present
+            ? tursoDatabaseName.value
+            : this.tursoDatabaseName,
   );
   ProjectEnvironmentState copyWithCompanion(
     i1.ProjectEnvironmentStatesCompanion data,
@@ -2749,8 +3087,16 @@ class ProjectEnvironmentState extends i0.DataClass
           data.flyVolumeName.present
               ? data.flyVolumeName.value
               : this.flyVolumeName,
+      flyMacaroonToken:
+          data.flyMacaroonToken.present
+              ? data.flyMacaroonToken.value
+              : this.flyMacaroonToken,
       domainName:
           data.domainName.present ? data.domainName.value : this.domainName,
+      tursoDatabaseName:
+          data.tursoDatabaseName.present
+              ? data.tursoDatabaseName.value
+              : this.tursoDatabaseName,
     );
   }
 
@@ -2760,14 +3106,22 @@ class ProjectEnvironmentState extends i0.DataClass
           ..write('projectEnvironmentId: $projectEnvironmentId, ')
           ..write('flyAppName: $flyAppName, ')
           ..write('flyVolumeName: $flyVolumeName, ')
-          ..write('domainName: $domainName')
+          ..write('flyMacaroonToken: $flyMacaroonToken, ')
+          ..write('domainName: $domainName, ')
+          ..write('tursoDatabaseName: $tursoDatabaseName')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(projectEnvironmentId, flyAppName, flyVolumeName, domainName);
+  int get hashCode => Object.hash(
+    projectEnvironmentId,
+    flyAppName,
+    flyVolumeName,
+    flyMacaroonToken,
+    domainName,
+    tursoDatabaseName,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2775,7 +3129,9 @@ class ProjectEnvironmentState extends i0.DataClass
           other.projectEnvironmentId == this.projectEnvironmentId &&
           other.flyAppName == this.flyAppName &&
           other.flyVolumeName == this.flyVolumeName &&
-          other.domainName == this.domainName);
+          other.flyMacaroonToken == this.flyMacaroonToken &&
+          other.domainName == this.domainName &&
+          other.tursoDatabaseName == this.tursoDatabaseName);
 }
 
 class ProjectEnvironmentStatesCompanion
@@ -2783,31 +3139,41 @@ class ProjectEnvironmentStatesCompanion
   final i0.Value<String> projectEnvironmentId;
   final i0.Value<String?> flyAppName;
   final i0.Value<String?> flyVolumeName;
+  final i0.Value<String?> flyMacaroonToken;
   final i0.Value<String?> domainName;
+  final i0.Value<String?> tursoDatabaseName;
   const ProjectEnvironmentStatesCompanion({
     this.projectEnvironmentId = const i0.Value.absent(),
     this.flyAppName = const i0.Value.absent(),
     this.flyVolumeName = const i0.Value.absent(),
+    this.flyMacaroonToken = const i0.Value.absent(),
     this.domainName = const i0.Value.absent(),
+    this.tursoDatabaseName = const i0.Value.absent(),
   });
   ProjectEnvironmentStatesCompanion.insert({
     required String projectEnvironmentId,
     this.flyAppName = const i0.Value.absent(),
     this.flyVolumeName = const i0.Value.absent(),
+    this.flyMacaroonToken = const i0.Value.absent(),
     this.domainName = const i0.Value.absent(),
+    this.tursoDatabaseName = const i0.Value.absent(),
   }) : projectEnvironmentId = i0.Value(projectEnvironmentId);
   static i0.Insertable<i1.ProjectEnvironmentState> custom({
     i0.Expression<String>? projectEnvironmentId,
     i0.Expression<String>? flyAppName,
     i0.Expression<String>? flyVolumeName,
+    i0.Expression<String>? flyMacaroonToken,
     i0.Expression<String>? domainName,
+    i0.Expression<String>? tursoDatabaseName,
   }) {
     return i0.RawValuesInsertable({
       if (projectEnvironmentId != null)
         'project_environment_id': projectEnvironmentId,
       if (flyAppName != null) 'fly_app_name': flyAppName,
       if (flyVolumeName != null) 'fly_volume_name': flyVolumeName,
+      if (flyMacaroonToken != null) 'fly_macaroon_token': flyMacaroonToken,
       if (domainName != null) 'domain_name': domainName,
+      if (tursoDatabaseName != null) 'turso_database_name': tursoDatabaseName,
     });
   }
 
@@ -2815,13 +3181,17 @@ class ProjectEnvironmentStatesCompanion
     i0.Value<String>? projectEnvironmentId,
     i0.Value<String?>? flyAppName,
     i0.Value<String?>? flyVolumeName,
+    i0.Value<String?>? flyMacaroonToken,
     i0.Value<String?>? domainName,
+    i0.Value<String?>? tursoDatabaseName,
   }) {
     return i1.ProjectEnvironmentStatesCompanion(
       projectEnvironmentId: projectEnvironmentId ?? this.projectEnvironmentId,
       flyAppName: flyAppName ?? this.flyAppName,
       flyVolumeName: flyVolumeName ?? this.flyVolumeName,
+      flyMacaroonToken: flyMacaroonToken ?? this.flyMacaroonToken,
       domainName: domainName ?? this.domainName,
+      tursoDatabaseName: tursoDatabaseName ?? this.tursoDatabaseName,
     );
   }
 
@@ -2839,8 +3209,14 @@ class ProjectEnvironmentStatesCompanion
     if (flyVolumeName.present) {
       map['fly_volume_name'] = i0.Variable<String>(flyVolumeName.value);
     }
+    if (flyMacaroonToken.present) {
+      map['fly_macaroon_token'] = i0.Variable<String>(flyMacaroonToken.value);
+    }
     if (domainName.present) {
       map['domain_name'] = i0.Variable<String>(domainName.value);
+    }
+    if (tursoDatabaseName.present) {
+      map['turso_database_name'] = i0.Variable<String>(tursoDatabaseName.value);
     }
     return map;
   }
@@ -2851,11 +3227,377 @@ class ProjectEnvironmentStatesCompanion
           ..write('projectEnvironmentId: $projectEnvironmentId, ')
           ..write('flyAppName: $flyAppName, ')
           ..write('flyVolumeName: $flyVolumeName, ')
-          ..write('domainName: $domainName')
+          ..write('flyMacaroonToken: $flyMacaroonToken, ')
+          ..write('domainName: $domainName, ')
+          ..write('tursoDatabaseName: $tursoDatabaseName')
           ..write(')'))
         .toString();
   }
 }
+
+class TursoDatabases extends i0.Table
+    with i0.TableInfo<TursoDatabases, i1.TursoDatabase> {
+  @override
+  final i0.GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  TursoDatabases(this.attachedDatabase, [this._alias]);
+  static const i0.VerificationMeta _databaseNameMeta =
+      const i0.VerificationMeta('databaseName');
+  late final i0.GeneratedColumn<String> databaseName =
+      i0.GeneratedColumn<String>(
+        'database_name',
+        aliasedName,
+        false,
+        type: i0.DriftSqlType.string,
+        requiredDuringInsert: true,
+        $customConstraints: 'NOT NULL PRIMARY KEY',
+      );
+  static const i0.VerificationMeta _databaseGroupMeta =
+      const i0.VerificationMeta('databaseGroup');
+  late final i0.GeneratedColumn<String> databaseGroup =
+      i0.GeneratedColumn<String>(
+        'database_group',
+        aliasedName,
+        false,
+        type: i0.DriftSqlType.string,
+        requiredDuringInsert: true,
+        $customConstraints: 'NOT NULL',
+      );
+  static const i0.VerificationMeta _databaseUrlMeta = const i0.VerificationMeta(
+    'databaseUrl',
+  );
+  late final i0.GeneratedColumn<String> databaseUrl =
+      i0.GeneratedColumn<String>(
+        'database_url',
+        aliasedName,
+        false,
+        type: i0.DriftSqlType.string,
+        requiredDuringInsert: true,
+        $customConstraints: 'NOT NULL',
+      );
+  static const i0.VerificationMeta _databaseTokenMeta =
+      const i0.VerificationMeta('databaseToken');
+  late final i0.GeneratedColumn<String> databaseToken =
+      i0.GeneratedColumn<String>(
+        'database_token',
+        aliasedName,
+        false,
+        type: i0.DriftSqlType.string,
+        requiredDuringInsert: true,
+        $customConstraints: 'NOT NULL',
+      );
+  @override
+  List<i0.GeneratedColumn> get $columns => [
+    databaseName,
+    databaseGroup,
+    databaseUrl,
+    databaseToken,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'turso_databases';
+  @override
+  i0.VerificationContext validateIntegrity(
+    i0.Insertable<i1.TursoDatabase> instance, {
+    bool isInserting = false,
+  }) {
+    final context = i0.VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('database_name')) {
+      context.handle(
+        _databaseNameMeta,
+        databaseName.isAcceptableOrUnknown(
+          data['database_name']!,
+          _databaseNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_databaseNameMeta);
+    }
+    if (data.containsKey('database_group')) {
+      context.handle(
+        _databaseGroupMeta,
+        databaseGroup.isAcceptableOrUnknown(
+          data['database_group']!,
+          _databaseGroupMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_databaseGroupMeta);
+    }
+    if (data.containsKey('database_url')) {
+      context.handle(
+        _databaseUrlMeta,
+        databaseUrl.isAcceptableOrUnknown(
+          data['database_url']!,
+          _databaseUrlMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_databaseUrlMeta);
+    }
+    if (data.containsKey('database_token')) {
+      context.handle(
+        _databaseTokenMeta,
+        databaseToken.isAcceptableOrUnknown(
+          data['database_token']!,
+          _databaseTokenMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_databaseTokenMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<i0.GeneratedColumn> get $primaryKey => {databaseName};
+  @override
+  i1.TursoDatabase map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return i1.TursoDatabase(
+      databaseName:
+          attachedDatabase.typeMapping.read(
+            i0.DriftSqlType.string,
+            data['${effectivePrefix}database_name'],
+          )!,
+      databaseGroup:
+          attachedDatabase.typeMapping.read(
+            i0.DriftSqlType.string,
+            data['${effectivePrefix}database_group'],
+          )!,
+      databaseUrl:
+          attachedDatabase.typeMapping.read(
+            i0.DriftSqlType.string,
+            data['${effectivePrefix}database_url'],
+          )!,
+      databaseToken:
+          attachedDatabase.typeMapping.read(
+            i0.DriftSqlType.string,
+            data['${effectivePrefix}database_token'],
+          )!,
+    );
+  }
+
+  @override
+  TursoDatabases createAlias(String alias) {
+    return TursoDatabases(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class TursoDatabase extends i0.DataClass
+    implements i0.Insertable<i1.TursoDatabase> {
+  /// The name of the database.
+  final String databaseName;
+
+  /// The database's group.
+  final String databaseGroup;
+
+  /// The URL of the database.
+  final String databaseUrl;
+
+  /// The database token.
+  final String databaseToken;
+  const TursoDatabase({
+    required this.databaseName,
+    required this.databaseGroup,
+    required this.databaseUrl,
+    required this.databaseToken,
+  });
+  @override
+  Map<String, i0.Expression> toColumns(bool nullToAbsent) {
+    final map = <String, i0.Expression>{};
+    map['database_name'] = i0.Variable<String>(databaseName);
+    map['database_group'] = i0.Variable<String>(databaseGroup);
+    map['database_url'] = i0.Variable<String>(databaseUrl);
+    map['database_token'] = i0.Variable<String>(databaseToken);
+    return map;
+  }
+
+  i1.TursoDatabasesCompanion toCompanion(bool nullToAbsent) {
+    return i1.TursoDatabasesCompanion(
+      databaseName: i0.Value(databaseName),
+      databaseGroup: i0.Value(databaseGroup),
+      databaseUrl: i0.Value(databaseUrl),
+      databaseToken: i0.Value(databaseToken),
+    );
+  }
+
+  factory TursoDatabase.fromJson(
+    Map<String, dynamic> json, {
+    i0.ValueSerializer? serializer,
+  }) {
+    serializer ??= i0.driftRuntimeOptions.defaultSerializer;
+    return TursoDatabase(
+      databaseName: serializer.fromJson<String>(json['database_name']),
+      databaseGroup: serializer.fromJson<String>(json['database_group']),
+      databaseUrl: serializer.fromJson<String>(json['database_url']),
+      databaseToken: serializer.fromJson<String>(json['database_token']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({i0.ValueSerializer? serializer}) {
+    serializer ??= i0.driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'database_name': serializer.toJson<String>(databaseName),
+      'database_group': serializer.toJson<String>(databaseGroup),
+      'database_url': serializer.toJson<String>(databaseUrl),
+      'database_token': serializer.toJson<String>(databaseToken),
+    };
+  }
+
+  i1.TursoDatabase copyWith({
+    String? databaseName,
+    String? databaseGroup,
+    String? databaseUrl,
+    String? databaseToken,
+  }) => i1.TursoDatabase(
+    databaseName: databaseName ?? this.databaseName,
+    databaseGroup: databaseGroup ?? this.databaseGroup,
+    databaseUrl: databaseUrl ?? this.databaseUrl,
+    databaseToken: databaseToken ?? this.databaseToken,
+  );
+  TursoDatabase copyWithCompanion(i1.TursoDatabasesCompanion data) {
+    return TursoDatabase(
+      databaseName:
+          data.databaseName.present
+              ? data.databaseName.value
+              : this.databaseName,
+      databaseGroup:
+          data.databaseGroup.present
+              ? data.databaseGroup.value
+              : this.databaseGroup,
+      databaseUrl:
+          data.databaseUrl.present ? data.databaseUrl.value : this.databaseUrl,
+      databaseToken:
+          data.databaseToken.present
+              ? data.databaseToken.value
+              : this.databaseToken,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TursoDatabase(')
+          ..write('databaseName: $databaseName, ')
+          ..write('databaseGroup: $databaseGroup, ')
+          ..write('databaseUrl: $databaseUrl, ')
+          ..write('databaseToken: $databaseToken')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(databaseName, databaseGroup, databaseUrl, databaseToken);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is i1.TursoDatabase &&
+          other.databaseName == this.databaseName &&
+          other.databaseGroup == this.databaseGroup &&
+          other.databaseUrl == this.databaseUrl &&
+          other.databaseToken == this.databaseToken);
+}
+
+class TursoDatabasesCompanion extends i0.UpdateCompanion<i1.TursoDatabase> {
+  final i0.Value<String> databaseName;
+  final i0.Value<String> databaseGroup;
+  final i0.Value<String> databaseUrl;
+  final i0.Value<String> databaseToken;
+  final i0.Value<int> rowid;
+  const TursoDatabasesCompanion({
+    this.databaseName = const i0.Value.absent(),
+    this.databaseGroup = const i0.Value.absent(),
+    this.databaseUrl = const i0.Value.absent(),
+    this.databaseToken = const i0.Value.absent(),
+    this.rowid = const i0.Value.absent(),
+  });
+  TursoDatabasesCompanion.insert({
+    required String databaseName,
+    required String databaseGroup,
+    required String databaseUrl,
+    required String databaseToken,
+    this.rowid = const i0.Value.absent(),
+  }) : databaseName = i0.Value(databaseName),
+       databaseGroup = i0.Value(databaseGroup),
+       databaseUrl = i0.Value(databaseUrl),
+       databaseToken = i0.Value(databaseToken);
+  static i0.Insertable<i1.TursoDatabase> custom({
+    i0.Expression<String>? databaseName,
+    i0.Expression<String>? databaseGroup,
+    i0.Expression<String>? databaseUrl,
+    i0.Expression<String>? databaseToken,
+    i0.Expression<int>? rowid,
+  }) {
+    return i0.RawValuesInsertable({
+      if (databaseName != null) 'database_name': databaseName,
+      if (databaseGroup != null) 'database_group': databaseGroup,
+      if (databaseUrl != null) 'database_url': databaseUrl,
+      if (databaseToken != null) 'database_token': databaseToken,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  i1.TursoDatabasesCompanion copyWith({
+    i0.Value<String>? databaseName,
+    i0.Value<String>? databaseGroup,
+    i0.Value<String>? databaseUrl,
+    i0.Value<String>? databaseToken,
+    i0.Value<int>? rowid,
+  }) {
+    return i1.TursoDatabasesCompanion(
+      databaseName: databaseName ?? this.databaseName,
+      databaseGroup: databaseGroup ?? this.databaseGroup,
+      databaseUrl: databaseUrl ?? this.databaseUrl,
+      databaseToken: databaseToken ?? this.databaseToken,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, i0.Expression> toColumns(bool nullToAbsent) {
+    final map = <String, i0.Expression>{};
+    if (databaseName.present) {
+      map['database_name'] = i0.Variable<String>(databaseName.value);
+    }
+    if (databaseGroup.present) {
+      map['database_group'] = i0.Variable<String>(databaseGroup.value);
+    }
+    if (databaseUrl.present) {
+      map['database_url'] = i0.Variable<String>(databaseUrl.value);
+    }
+    if (databaseToken.present) {
+      map['database_token'] = i0.Variable<String>(databaseToken.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = i0.Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TursoDatabasesCompanion(')
+          ..write('databaseName: $databaseName, ')
+          ..write('databaseGroup: $databaseGroup, ')
+          ..write('databaseUrl: $databaseUrl, ')
+          ..write('databaseToken: $databaseToken, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+i0.Index get idxProjectEnvironmentTursoDatabase => i0.Index(
+  'idx_project_environment_turso_database',
+  'CREATE INDEX IF NOT EXISTS idx_project_environment_turso_database ON project_environment_states (turso_database_name)',
+);
 
 class ProjectEnvironmentsDrift extends i3.ModularAccessor {
   ProjectEnvironmentsDrift(i0.GeneratedDatabase db) : super(db);
@@ -2992,34 +3734,65 @@ class ProjectEnvironmentsDrift extends i3.ModularAccessor {
     );
   }
 
-  i0.Selectable<i1.ProjectEnvironmentState> getProjectEnvironmentState({
+  i0.Selectable<GetProjectEnvironmentStateResult> getProjectEnvironmentState({
     required String projectEnvironmentId,
   }) {
     return customSelect(
-      'SELECT * FROM project_environment_states WHERE project_environment_id = ?1',
+      'SELECT"project_environment_states"."project_environment_id" AS "nested_0.project_environment_id", "project_environment_states"."fly_app_name" AS "nested_0.fly_app_name", "project_environment_states"."fly_volume_name" AS "nested_0.fly_volume_name", "project_environment_states"."fly_macaroon_token" AS "nested_0.fly_macaroon_token", "project_environment_states"."domain_name" AS "nested_0.domain_name", "project_environment_states"."turso_database_name" AS "nested_0.turso_database_name","turso_databases"."database_name" AS "nested_1.database_name", "turso_databases"."database_group" AS "nested_1.database_group", "turso_databases"."database_url" AS "nested_1.database_url", "turso_databases"."database_token" AS "nested_1.database_token" FROM project_environment_states LEFT JOIN turso_databases ON project_environment_states.turso_database_name = turso_databases.database_name WHERE project_environment_states.project_environment_id = ?1',
       variables: [i0.Variable<String>(projectEnvironmentId)],
-      readsFrom: {projectEnvironmentStates},
-    ).asyncMap(projectEnvironmentStates.mapFromRow);
+      readsFrom: {projectEnvironmentStates, tursoDatabases},
+    ).asyncMap(
+      (i0.QueryRow row) async => GetProjectEnvironmentStateResult(
+        projectEnvironmentStates: await projectEnvironmentStates.mapFromRow(
+          row,
+          tablePrefix: 'nested_0',
+        ),
+        tursoDatabases: await tursoDatabases.mapFromRowOrNull(
+          row,
+          tablePrefix: 'nested_1',
+        ),
+      ),
+    );
   }
 
   i4.Future<List<i1.ProjectEnvironmentState>> upsertProjectEnvironmentState({
     required String projectEnvironmentId,
     String? flyAppName,
-    String? flyVolumeName,
+    String? flyMacaroonToken,
     String? domainName,
+    String? tursoDatabaseName,
   }) {
     return customWriteReturning(
-      'INSERT INTO project_environment_states (project_environment_id, fly_app_name, fly_volume_name, domain_name) VALUES (?1, ?2, ?3, ?4) ON CONFLICT (project_environment_id) DO UPDATE SET fly_app_name = coalesce(?2, fly_app_name), fly_volume_name = coalesce(?3, fly_volume_name), domain_name = coalesce(?4, domain_name) RETURNING *',
+      'INSERT INTO project_environment_states (project_environment_id, fly_app_name, fly_macaroon_token, domain_name, turso_database_name) VALUES (?1, ?2, ?3, ?4, ?5) ON CONFLICT (project_environment_id) DO UPDATE SET fly_app_name = coalesce(?2, fly_app_name), fly_macaroon_token = coalesce(?3, fly_macaroon_token), domain_name = coalesce(?4, domain_name), turso_database_name = coalesce(?5, turso_database_name) RETURNING *',
       variables: [
         i0.Variable<String>(projectEnvironmentId),
         i0.Variable<String>(flyAppName),
-        i0.Variable<String>(flyVolumeName),
+        i0.Variable<String>(flyMacaroonToken),
         i0.Variable<String>(domainName),
+        i0.Variable<String>(tursoDatabaseName),
       ],
       updates: {projectEnvironmentStates},
     ).then(
       (rows) => Future.wait(rows.map(projectEnvironmentStates.mapFromRow)),
     );
+  }
+
+  i4.Future<List<i1.TursoDatabase>> createTursoDatabase({
+    required String databaseGroup,
+    required String databaseName,
+    required String databaseUrl,
+    required String databaseToken,
+  }) {
+    return customWriteReturning(
+      'INSERT INTO turso_databases (database_group, database_name, database_url, database_token) VALUES (?1, ?2, ?3, ?4) RETURNING *',
+      variables: [
+        i0.Variable<String>(databaseGroup),
+        i0.Variable<String>(databaseName),
+        i0.Variable<String>(databaseUrl),
+        i0.Variable<String>(databaseToken),
+      ],
+      updates: {tursoDatabases},
+    ).then((rows) => Future.wait(rows.map(tursoDatabases.mapFromRow)));
   }
 
   i1.ProjectEnvironments get projectEnvironments => i3.ReadDatabaseContainer(
@@ -3032,6 +3805,9 @@ class ProjectEnvironmentsDrift extends i3.ModularAccessor {
       i3.ReadDatabaseContainer(
         attachedDatabase,
       ).resultSet<i1.ProjectEnvironmentStates>('project_environment_states');
+  i1.TursoDatabases get tursoDatabases => i3.ReadDatabaseContainer(
+    attachedDatabase,
+  ).resultSet<i1.TursoDatabases>('turso_databases');
   i6.ProjectsDrift get projectsDrift => this.accessor(i6.ProjectsDrift.new);
 }
 
@@ -3046,3 +3822,12 @@ class ListProjectEnvironmentsResult {
 
 typedef ListProjectEnvironments$orderBy =
     i0.OrderBy Function(i1.ProjectEnvironments project_environments);
+
+class GetProjectEnvironmentStateResult {
+  final i1.ProjectEnvironmentState projectEnvironmentStates;
+  final i1.TursoDatabase? tursoDatabases;
+  GetProjectEnvironmentStateResult({
+    required this.projectEnvironmentStates,
+    this.tursoDatabases,
+  });
+}

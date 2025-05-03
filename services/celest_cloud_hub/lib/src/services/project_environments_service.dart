@@ -13,6 +13,7 @@ import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/schema/project_environments.drift.dart'
     as dto;
+import 'package:celest_cloud_hub/src/deploy/deployment_engine.dart';
 import 'package:celest_cloud_hub/src/deploy/fly/fly_deployment_engine.dart';
 import 'package:celest_cloud_hub/src/gateway/gateway_handler.dart';
 import 'package:celest_cloud_hub/src/model/interop.dart';
@@ -312,10 +313,12 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       resource: EntityUid.of('Celest::Project::Environment', environment.id),
     );
 
-    final projectEnvironmentState =
+    final projectEnvironmentStateResult =
         await db.projectEnvironmentsDrift
             .getProjectEnvironmentState(projectEnvironmentId: environment.id)
             .getSingleOrNull();
+    final projectEnvironmentState =
+        projectEnvironmentStateResult?.projectEnvironmentStates;
 
     final state = pb.LifecycleState.values.firstWhere(
       (state) => state.name == environment.state,
@@ -484,9 +487,18 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
           resourceType: 'Celest::Project::Environment',
           resourceId: environment.id,
         )).first;
-    final deployment = FlyDeploymentEngine.deployIsolated(
+
+    final regions = (jsonDecode(project.regions) as List).cast<String>().map(
+      (region) => pb.Region.values.firstWhere((r) => r.name == region),
+    );
+    final region = switch (regions.firstOrNull) {
+      pb.Region.REGION_UNSPECIFIED || null => pb.Region.NORTH_AMERICA,
+      final region => region,
+    };
+    final deployment = DeploymentEngine.deployIsolated(
       operationId: operationId,
       dbConnection: await db.serializableConnection(),
+      region: region,
       projectAst: ResolvedProject.fromProto(
         pb.ResolvedProject().unpackAny(request.resolvedProjectAst),
       ),
@@ -588,7 +600,9 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
             .getProjectEnvironmentState(projectEnvironmentId: environment.id)
             .getSingleOrNull();
 
-    return environment.toProto(state: environmentState);
+    return environment.toProto(
+      state: environmentState?.projectEnvironmentStates,
+    );
   }
 
   @override

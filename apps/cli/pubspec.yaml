@@ -36,7 +36,7 @@ dependencies:
   dart_style: ^3.0.0
   dcli: ^7.0.1
   dcli_terminal: ^7.0.1
-  drift: '>=2.26.0 <2.27.0'
+  drift: '>=2.26.1 <2.27.0'
   email_validator: ^3.0.0
   ffi: ^2.1.4
   file: ^7.0.0
@@ -96,7 +96,7 @@ dev_dependencies:
   celest_test: ^0.1.0
   checks: ^0.3.0
   dart_jsonwebtoken: ^3.1.1
-  drift_dev: '>=2.26.0 <2.27.0'
+  drift_dev: '>=2.26.1 <2.27.0'
   gcloud: ^0.8.13
   googleapis: ^13.2.0
   googleapis_auth: ^1.4.1

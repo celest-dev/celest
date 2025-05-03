@@ -14,4 +14,17 @@ Future<void> main() async {
       print('Skipping app: $appName');
     }
   }
+
+  final allDatabases = await context.turso.listDatabases();
+  for (final database in allDatabases) {
+    if (database.name.startsWith(kCelestTest)) {
+      try {
+        await context.turso.deleteDatabase(databaseName: database.name);
+      } on Object catch (e) {
+        print('Failed to delete database: ${database.name}, error: $e');
+      }
+    } else {
+      print('Skipping database: ${database.name}');
+    }
+  }
 }

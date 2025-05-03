@@ -1620,36 +1620,6 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i17.ServerException catch (e, st) {
-      const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
-      final status = {
-        '@status': {
-          'code': statusCode,
-          'message': e.message,
-          'details': [
-            {
-              '@type': 'hrana.ServerException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i17.ServerException>(e),
-            },
-            if (_i8.context.environment != _i9.Environment.production)
-              {
-                '@type': 'dart.core.StackTrace',
-                'value': _i4.Serializers.instance.serialize<StackTrace>(st),
-              },
-          ],
-        }
-      };
-      return _i2.Response(
-        statusCode,
-        headers: const {'Content-Type': 'application/json'},
-        body: _i4.JsonUtf8.encode(status),
-      );
     } on _i15.SignalException catch (e, st) {
       const statusCode = 400;
       _i8.context.logger.severe(
@@ -3556,19 +3526,6 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       serialize: ($value) => const <String, Object?>{},
       deserialize: ($serialized) {
         return _i17.ConnectionClosed();
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i17.ServerException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if ($value.code case final code?) r'code': code,
-      },
-      deserialize: ($serialized) {
-        return _i17.ServerException(
-          message: ($serialized[r'message'] as String),
-          code: ($serialized[r'code'] as String?),
-        );
       },
     ));
     _i4.Serializers.instance

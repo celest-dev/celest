@@ -17,6 +17,15 @@ void initTesting() {
       print(record.stackTrace);
     }
   });
+
+  // Sets the root context for the tests.
+  //
+  // Even when calling `Context.current` in `main` - it does not represent
+  // the root context. This makes it difficult to set values on the root context
+  // since it is disconnected from the Zones/contexts created by the tests.
+  Context.root = context;
+
+  tearDownAll(context.httpClient.close);
 }
 
 CloudHubDatabase inMemoryDatabase() {

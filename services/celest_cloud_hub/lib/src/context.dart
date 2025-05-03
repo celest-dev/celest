@@ -4,14 +4,21 @@ import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_hub/src/deploy/fly/fly_api_client.dart';
 import 'package:celest_cloud_hub/src/deploy/fly/fly_ctl.dart';
 import 'package:celest_cloud_hub/src/deploy/fly/fly_gql.dart';
+import 'package:celest_cloud_hub/src/deploy/turso/turso_api_client.dart';
 import 'package:graphql/client.dart';
 
 export 'package:celest/src/core/context.dart' show ContextKey;
 
-Context get context => Context._(core.Context.current);
+Context get context => Context.current;
 
 extension type Context._(core.Context _ctx) implements core.Context {
   static Context get root => Context._(core.Context.root);
+
+  static set root(core.Context ctx) {
+    core.Context.root = ctx;
+  }
+
+  static Context get current => Context._(core.Context.current);
 
   String? get flyAuthToken {
     final token = _ctx.get(const env('FLY_API_TOKEN'));
@@ -54,6 +61,28 @@ extension type Context._(core.Context _ctx) implements core.Context {
     }
     final flyCtl = FlyCtl(flyAuthToken: flyAuthToken);
     return _ctx.put(contextKey, flyCtl);
+  }
+
+  String? get tursoApiToken {
+    final token = _ctx.get(const env('TURSO_API_TOKEN'));
+    if (token == null && _ctx.get(env.environment) == Environment.production) {
+      throw StateError('Missing TURSO_API_TOKEN');
+    }
+    return token;
+  }
+
+  String get tursoOrgSlug => 'celest-dev';
+
+  TursoApiClient get turso {
+    const contextKey = core.ContextKey<TursoApiClient>('TursoApiClient');
+    if (_ctx.get(contextKey) case final tursoApi?) {
+      return tursoApi;
+    }
+    final tursoApi = TursoApiClient(
+      authToken: tursoApiToken,
+      orgSlug: tursoOrgSlug,
+    );
+    return _ctx.put(contextKey, tursoApi);
   }
 
   Entity get rootOrg {

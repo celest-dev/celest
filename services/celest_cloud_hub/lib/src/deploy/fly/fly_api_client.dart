@@ -2,23 +2,35 @@ import 'dart:math';
 
 import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/deploy/fly/fly_api.dart';
+import 'package:celest_cloud_hub/src/deploy/fly/fly_gql.dart';
+import 'package:graphql/client.dart';
 import 'package:logging/logging.dart';
 
 /// A wrapper over the Fly API client which allows handling
 /// cases where we don't have an auth token (like in testing).
 final class FlyApiClient {
-  FlyApiClient({String? authToken, required this.orgSlug})
-    : _client = switch (authToken) {
-        final token? => FlyMachinesApiClient(
-          authToken: token,
-          client: context.httpClient,
+  FlyApiClient({String? authToken, required this.orgSlug}) {
+    final (client, gqlClient) = switch (authToken) {
+      final token? => (
+        FlyMachinesApiClient(authToken: token, client: context.httpClient),
+        FlyGql(
+          GraphQLClient(
+            cache: GraphQLCache(store: InMemoryStore()),
+            link: AuthLink(
+              getToken: () => 'FlyV1 $token',
+            ).concat(HttpLink('https://api.fly.io/graphql')),
+          ),
         ),
-        _ => null,
-      };
-
+      ),
+      _ => (null, null),
+    };
+    _client = client;
+    _gqlClient = gqlClient;
+  }
   static final Logger _logger = Logger('FlyApiClient');
 
-  final FlyMachinesApiClient? _client;
+  late final FlyMachinesApiClient? _client;
+  late final FlyGql? _gqlClient;
   final String orgSlug;
 
   Future<void> createApp({required String appName}) async {
@@ -90,5 +102,50 @@ final class FlyApiClient {
       return Volume(id: volumeId, name: 'vol_${Random().nextInt(10000)}');
     }
     return client.volumes.getById(appName: appName, volumeId: volumeId);
+  }
+
+  Future<String> getVolumeId({
+    required String appName,
+    required String volumeName,
+  }) async {
+    final client = _gqlClient;
+    if (client == null) {
+      _logger.warning('Skipping volume retrieval');
+      return 'vol_${Random().nextInt(10000)}';
+    }
+    return client.getVolumeId(appName: appName, volumeName: volumeName);
+  }
+
+  Future<void> deleteVolume({
+    required String appName,
+    required String volumeId,
+  }) async {
+    final client = _client;
+    if (client == null) {
+      _logger.warning('Skipping volume deletion');
+      return;
+    }
+    await client.volumes.delete(appName: appName, volumeId: volumeId);
+  }
+
+  Future<void> setSecrets({
+    required String appName,
+    required Map<String, String> secrets,
+  }) async {
+    final client = _gqlClient;
+    if (client == null) {
+      _logger.warning('Skipping secret setting');
+      return;
+    }
+    await client.setSecrets(appName: appName, secrets: secrets);
+  }
+
+  Future<List<String>> listSecrets({required String appName}) async {
+    final client = _gqlClient;
+    if (client == null) {
+      _logger.warning('Skipping secret listing');
+      return [];
+    }
+    return client.listSecrets(appName: appName);
   }
 }

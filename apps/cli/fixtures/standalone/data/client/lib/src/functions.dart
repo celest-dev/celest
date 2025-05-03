@@ -561,12 +561,6 @@ class CelestFunctionsTasks {
               .deserialize<_$hrana_exception.ConnectionClosed>(errorValue),
           stackTrace,
         );
-      case 'hrana.ServerException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$hrana_exception.ServerException>(errorValue),
-          stackTrace,
-        );
       default:
         Error.throwWithStackTrace(
           _$celest.CloudException.http(
