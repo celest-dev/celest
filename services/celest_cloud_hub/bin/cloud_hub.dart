@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:async/async.dart';
 import 'package:cedar/cedar.dart';
 import 'package:celest/celest.dart';
-import 'package:celest/src/core/context.dart';
 import 'package:celest/src/runtime/data/connect.dart';
 import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
@@ -13,6 +12,7 @@ import 'package:celest_cloud_auth/src/crypto/crypto_key_repository.dart';
 import 'package:celest_cloud_auth/src/sessions/sessions_repository.dart';
 import 'package:celest_cloud_auth/src/users/users_repository.dart';
 import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
+import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/db_functions.dart';
 import 'package:celest_cloud_hub/src/gateway/gateway.dart';
@@ -54,12 +54,18 @@ Future<void> main() async {
   context.put(ContextKey.project, project);
   context.put(
     env.environment,
-    kDebugMode ? Environment.local : Environment.production,
+    kDebugMode ? Environment.local : context.environment,
   );
 
   context.logger.config('Starting Cloud Hub');
+  context.logger.config('Environment: ${context.environment}');
 
-  final sentryDsn = Platform.environment['SENTRY_DSN'];
+  final environmentVariables = Platform.environment.keys.toList()..sort();
+  context.logger.config(
+    'Environment Variables: ${environmentVariables.join(', ')}',
+  );
+
+  final sentryDsn = context.sentryDsn;
   if (sentryDsn == null) {
     return _run();
   }

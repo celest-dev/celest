@@ -2057,7 +2057,7 @@ class Machine {
           json['host_status'] == null
               ? null
               : MachineHostStatus.fromJson(json['host_status'] as String),
-      id: json['id'] as String?,
+      id: json['id'] as String,
       imageRef:
           json['image_ref'] == null
               ? null
@@ -2078,12 +2078,12 @@ class Machine {
     );
   }
   const Machine({
+    required this.id,
     this.checks,
     this.config,
     this.createdAt,
     this.events,
     this.hostStatus,
-    this.id,
     this.imageRef,
     this.incompleteConfig,
     this.instanceId,
@@ -2100,7 +2100,7 @@ class Machine {
   final String? createdAt;
   final List<MachineEvent>? events;
   final MachineHostStatus? hostStatus;
-  final String? id;
+  final String id;
   final ImageRef? imageRef;
   final FlyMachineConfig? incompleteConfig;
 

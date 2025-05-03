@@ -27,10 +27,11 @@ final class FlyApiClient {
     _client = client;
     _gqlClient = gqlClient;
   }
+
   static final Logger _logger = Logger('FlyApiClient');
 
-  late final FlyMachinesApiClient? _client;
-  late final FlyGql? _gqlClient;
+  FlyMachinesApiClient? _client;
+  FlyGql? _gqlClient;
   final String orgSlug;
 
   Future<void> createApp({required String appName}) async {
@@ -69,6 +70,32 @@ final class FlyApiClient {
       return;
     }
     await client.apps.delete(appName: appName);
+  }
+
+  Future<Machine?> getMachine({required String appName}) async {
+    final client = _client;
+    if (client == null) {
+      _logger.warning('Skipping machine retrieval');
+      return null;
+    }
+    final machines = await client.machines.list(appName: appName);
+    return machines.firstOrNull;
+  }
+
+  Future<void> detachVolume({
+    required String appName,
+    required String machineId,
+    required String volumeId,
+  }) async {
+    final client = _client;
+    if (client == null) {
+      _logger.warning('Skipping volume detachment');
+      return;
+    }
+
+    await client.machines.stop(appName: appName, machineId: machineId);
+    await client.machines.delete(appName: appName, machineId: machineId);
+    await client.volumes.delete(appName: appName, volumeId: volumeId);
   }
 
   Future<Volume> createVolume({
