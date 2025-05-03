@@ -114,6 +114,14 @@ FlyAppHttpServiceConfig _$FlyAppHttpServiceConfigFromJson(Map json) =>
               ?.map((e) => e as String)
               .toList() ??
           const ['app'],
+      checks:
+          (json['checks'] as List<dynamic>?)
+              ?.map(
+                (e) => FlyAppHttpServiceCheckConfig.fromJson(
+                  Map<String, Object?>.from(e as Map),
+                ),
+              )
+              .toList(),
     );
 
 Map<String, dynamic> _$FlyAppHttpServiceConfigToJson(
@@ -128,12 +136,32 @@ Map<String, dynamic> _$FlyAppHttpServiceConfigToJson(
   if (instance.minMachinesRunning case final value?)
     'min_machines_running': value,
   'processes': instance.processes,
+  if (instance.checks case final value?) 'checks': value,
 };
 
 const _$FlyMachineAutostopEnumMap = {
   FlyMachineAutostop.off: 'off',
   FlyMachineAutostop.stop: 'stop',
   FlyMachineAutostop.suspend: 'suspend',
+};
+
+FlyAppHttpServiceCheckConfig _$FlyAppHttpServiceCheckConfigFromJson(Map json) =>
+    FlyAppHttpServiceCheckConfig(
+      method: json['method'] as String? ?? 'GET',
+      path: json['path'] as String,
+      interval: json['interval'] as String,
+      timeout: json['timeout'] as String,
+      gracePeriod: json['grace_period'] as String,
+    );
+
+Map<String, dynamic> _$FlyAppHttpServiceCheckConfigToJson(
+  FlyAppHttpServiceCheckConfig instance,
+) => <String, dynamic>{
+  'method': instance.method,
+  'path': instance.path,
+  'interval': instance.interval,
+  'timeout': instance.timeout,
+  'grace_period': instance.gracePeriod,
 };
 
 FlyAppVmConfig _$FlyAppVmConfigFromJson(Map json) => FlyAppVmConfig(

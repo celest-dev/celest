@@ -60,6 +60,7 @@ final class FlyCtl {
       '--config',
       p.basename(flyConfigJsonPath),
       '--remote-only',
+      '--ha=false',
     ], workingDirectory: p.dirname(flyConfigJsonPath));
   }
 

@@ -4310,38 +4310,13 @@ class FlyHTTPResponseOptions {
 class FlyMachineCheck {
   factory FlyMachineCheck.fromJson(Map<String, dynamic> json) {
     return FlyMachineCheck(
-      gracePeriod:
-          json['grace_period'] == null
-              ? null
-              : FlyDuration.fromJson(
-                Map<String, dynamic>.from(json['grace_period'] as Map),
-              ),
-      headers:
-          (json['headers'] as List<dynamic>?)
-              ?.map(
-                (e) => FlyMachineHTTPHeader.fromJson(e as Map<String, dynamic>),
-              )
-              .toList(),
-      interval:
-          json['interval'] == null
-              ? null
-              : FlyDuration.fromJson(
-                Map<String, dynamic>.from(json['interval'] as Map),
-              ),
-      kind:
-          json['kind'] == null
-              ? null
-              : FlyMachineCheckKind.fromJson(json['kind'] as String),
+      gracePeriod: json['grace_period'] as String?,
+      interval: json['interval'] as String?,
       method: json['method'] as String?,
       path: json['path'] as String?,
       port: json['port'] as int?,
       protocol: json['protocol'] as String?,
-      timeout:
-          json['timeout'] == null
-              ? null
-              : FlyDuration.fromJson(
-                Map<String, dynamic>.from(json['timeout'] as Map),
-              ),
+      timeout: json['timeout'] as String?,
       tlsServerName: json['tls_server_name'] as String?,
       tlsSkipVerify: json['tls_skip_verify'] as bool?,
       type: json['type'] as String?,
@@ -4349,9 +4324,7 @@ class FlyMachineCheck {
   }
   const FlyMachineCheck({
     this.gracePeriod,
-    this.headers,
     this.interval,
-    this.kind,
     this.method,
     this.path,
     this.port,
@@ -4363,14 +4336,10 @@ class FlyMachineCheck {
   });
 
   /// The time to wait after a VM starts before checking its health
-  final FlyDuration? gracePeriod;
-  final List<FlyMachineHTTPHeader>? headers;
+  final String? gracePeriod;
 
   /// The time between connectivity checks
-  final FlyDuration? interval;
-
-  /// Kind of the check (informational, readiness)
-  final FlyMachineCheckKind? kind;
+  final String? interval;
 
   /// For http checks, the HTTP method to use to when making the request
   final String? method;
@@ -4385,7 +4354,7 @@ class FlyMachineCheck {
   final String? protocol;
 
   /// The maximum time a connection can take before being reported as failing its health check
-  final FlyDuration? timeout;
+  final String? timeout;
 
   /// If the protocol is https, the hostname to use for TLS certificate validation
   final String? tlsServerName;
@@ -4398,15 +4367,13 @@ class FlyMachineCheck {
 
   Map<String, dynamic> toJson() {
     return {
-      'grace_period': gracePeriod?.toJson(),
-      'headers': headers?.map((e) => e.toJson()).toList(),
-      'interval': interval?.toJson(),
-      'kind': kind?.toJson(),
+      'grace_period': gracePeriod,
+      'interval': interval,
       'method': method,
       'path': path,
       'port': port,
       'protocol': protocol,
-      'timeout': timeout?.toJson(),
+      'timeout': timeout,
       'tls_server_name': tlsServerName,
       'tls_skip_verify': tlsSkipVerify,
       'type': type,
@@ -4419,9 +4386,7 @@ class FlyMachineCheck {
       other is FlyMachineCheck &&
           runtimeType == other.runtimeType &&
           gracePeriod == other.gracePeriod &&
-          const DeepCollectionEquality().equals(headers, other.headers) &&
           interval == other.interval &&
-          kind == other.kind &&
           method == other.method &&
           path == other.path &&
           port == other.port &&
@@ -4434,9 +4399,7 @@ class FlyMachineCheck {
   @override
   int get hashCode =>
       gracePeriod.hashCode ^
-      const DeepCollectionEquality().hash(headers) ^
       interval.hashCode ^
-      kind.hashCode ^
       method.hashCode ^
       path.hashCode ^
       port.hashCode ^
@@ -4448,27 +4411,23 @@ class FlyMachineCheck {
 
   @override
   String toString() =>
-      'FlyMachineCheck(gracePeriod: $gracePeriod, headers: $headers, interval: $interval, kind: $kind, method: $method, path: $path, port: $port, protocol: $protocol, timeout: $timeout, tlsServerName: $tlsServerName, tlsSkipVerify: $tlsSkipVerify, type: $type)';
+      'FlyMachineCheck(gracePeriod: $gracePeriod, interval: $interval, method: $method, path: $path, port: $port, protocol: $protocol, timeout: $timeout, tlsServerName: $tlsServerName, tlsSkipVerify: $tlsSkipVerify, type: $type)';
 
   FlyMachineCheck copyWith({
-    FlyDuration? gracePeriod,
-    List<FlyMachineHTTPHeader>? headers,
-    FlyDuration? interval,
-    FlyMachineCheckKind? kind,
+    String? gracePeriod,
+    String? interval,
     String? method,
     String? path,
     int? port,
     String? protocol,
-    FlyDuration? timeout,
+    String? timeout,
     String? tlsServerName,
     bool? tlsSkipVerify,
     String? type,
   }) {
     return FlyMachineCheck(
       gracePeriod: gracePeriod ?? this.gracePeriod,
-      headers: headers ?? this.headers,
       interval: interval ?? this.interval,
-      kind: kind ?? this.kind,
       method: method ?? this.method,
       path: path ?? this.path,
       port: port ?? this.port,

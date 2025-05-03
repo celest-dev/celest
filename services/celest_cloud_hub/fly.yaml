@@ -4,7 +4,7 @@
 #
 
 app: cloud-hub
-primary_region: lax
+primary_region: ewr
 
 build:
   image: celestdev/cloud-hub:latest
@@ -27,13 +27,15 @@ http_service:
   auto_stop_machines: true
   auto_start_machines: true
   min_machines_running: 1
+  checks:
+    - method: GET
+      path: /v1/healthz
+      grace_period: 10s
+      interval: 10s
+      timeout: 2s
 
   processes:
     - app
-
-mounts:
-  - source: db
-    destination: /db
 
 vm:
   - size: performance-8x

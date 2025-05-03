@@ -101,6 +101,7 @@ final class FlyAppHttpServiceConfig {
     this.autoStartMachines = true,
     this.minMachinesRunning = 0,
     this.processes = const ['app'],
+    this.checks,
   });
 
   factory FlyAppHttpServiceConfig.fromJson(Map<String, Object?> json) =>
@@ -112,8 +113,31 @@ final class FlyAppHttpServiceConfig {
   final bool? autoStartMachines;
   final int? minMachinesRunning;
   final List<String> processes;
+  final List<FlyAppHttpServiceCheckConfig>? checks;
 
   Map<String, Object?> toJson() => _$FlyAppHttpServiceConfigToJson(this);
+}
+
+@_serializable
+final class FlyAppHttpServiceCheckConfig {
+  const FlyAppHttpServiceCheckConfig({
+    this.method = 'GET',
+    required this.path,
+    required this.interval,
+    required this.timeout,
+    required this.gracePeriod,
+  });
+
+  factory FlyAppHttpServiceCheckConfig.fromJson(Map<String, Object?> json) =>
+      _$FlyAppHttpServiceCheckConfigFromJson(json);
+
+  final String method;
+  final String path;
+  final String interval;
+  final String timeout;
+  final String gracePeriod;
+
+  Map<String, Object?> toJson() => _$FlyAppHttpServiceCheckConfigToJson(this);
 }
 
 enum FlyMachineAutostop { off, stop, suspend }
