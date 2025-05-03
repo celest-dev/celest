@@ -18,12 +18,14 @@ import 'package:native_storage/native_storage.dart'
 final Celest celest = Celest();
 
 enum CelestEnvironment {
-  local;
+  local,
+  production;
 
   Uri get baseUri => switch (this) {
         local => _$celest.kIsWeb || !Platform.isAndroid
-            ? Uri.parse('http://localhost:50877')
-            : Uri.parse('http://10.0.2.2:50877'),
+            ? Uri.parse('http://localhost:7777')
+            : Uri.parse('http://10.0.2.2:7777'),
+        production => Uri.parse('https://gemini-example-ce3e79.fly.dev'),
       };
 }
 
@@ -63,11 +65,16 @@ class Celest with _$celest.CelestBase {
     CelestEnvironment environment = CelestEnvironment.local,
     _$celest.Serializers? serializers,
   }) {
+    if (_initialized) {
+      _reset();
+    }
     _currentEnvironment = environment;
     _baseUri = environment.baseUri;
-    if (!_initialized) {
-      initSerializers(serializers: serializers);
-    }
+    initSerializers(serializers: serializers);
     _initialized = true;
+  }
+
+  void _reset() {
+    _initialized = false;
   }
 }

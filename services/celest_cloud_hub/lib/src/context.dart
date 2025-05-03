@@ -20,10 +20,26 @@ extension type Context._(core.Context _ctx) implements core.Context {
 
   static Context get current => Context._(core.Context.current);
 
+  void _failInProd(String message) {
+    if (current.get(env.environment) == Environment.production) {
+      throw StateError(message);
+    } else {
+      logger.warning(message);
+    }
+  }
+
+  String? get sentryDsn {
+    final dsn = _ctx.get(const env('SENTRY_DSN'));
+    if (dsn == null) {
+      _failInProd('Missing SENTRY_DSN');
+    }
+    return dsn;
+  }
+
   String? get flyAuthToken {
     final token = _ctx.get(const env('FLY_API_TOKEN'));
-    if (token == null && _ctx.get(env.environment) == Environment.production) {
-      throw StateError('Missing FLY_API_TOKEN');
+    if (token == null) {
+      _failInProd('Missing FLY_API_TOKEN');
     }
     return token;
   }
@@ -65,8 +81,8 @@ extension type Context._(core.Context _ctx) implements core.Context {
 
   String? get tursoApiToken {
     final token = _ctx.get(const env('TURSO_API_TOKEN'));
-    if (token == null && _ctx.get(env.environment) == Environment.production) {
-      throw StateError('Missing TURSO_API_TOKEN');
+    if (token == null) {
+      _failInProd('Missing TURSO_API_TOKEN');
     }
     return token;
   }

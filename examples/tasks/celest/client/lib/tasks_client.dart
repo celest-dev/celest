@@ -29,7 +29,7 @@ enum CelestEnvironment {
         local => _$celest.kIsWeb || !Platform.isAndroid
             ? Uri.parse('http://localhost:7777')
             : Uri.parse('http://10.0.2.2:7777'),
-        production => Uri.parse('https://tasks-694b15.fly.dev'),
+        production => Uri.parse('https://tasks-942444.fly.dev'),
       };
 }
 

@@ -961,19 +961,6 @@ void initSerializers({_$celest.Serializers? serializers}) {
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
-          _$hrana_exception.ServerException, Map<String, Object?>>(
-        serialize: ($value) => <String, Object?>{
-          r'message': $value.message,
-          if ($value.code case final code?) r'code': code,
-        },
-        deserialize: ($serialized) {
-          return _$hrana_exception.ServerException(
-            message: ($serialized[r'message'] as String),
-            code: ($serialized[r'code'] as String?),
-          );
-        },
-      ));
-      _$celest.Serializers.instance.put(_$celest.Serializer.define<
           _$http_exception.ClientException, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{
           r'message': $value.message,

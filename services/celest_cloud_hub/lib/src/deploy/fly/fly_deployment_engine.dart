@@ -64,6 +64,8 @@ final class FlyDeploymentEngine {
     ProjectEnvironmentState currentState,
     TursoDatabase? database,
   ) async {
+    ProjectEnvironmentStatesCompanion? updates;
+
     final String flyAppName;
     if (currentState.flyAppName case final appName?) {
       flyAppName = appName;
@@ -74,14 +76,49 @@ final class FlyDeploymentEngine {
       _logger.fine('Creating Fly app: $flyAppName');
       await context.fly.createApp(appName: flyAppName);
       _logger.fine('Fly app created');
+
+      updates = ProjectEnvironmentStatesCompanion(
+        flyAppName: Value(flyAppName),
+        domainName: Value('$flyAppName.fly.dev'),
+      );
     }
 
-    currentState =
-        (await db.projectEnvironmentsDrift.upsertProjectEnvironmentState(
-          projectEnvironmentId: environment.id,
-          flyAppName: flyAppName,
-          domainName: '$flyAppName.fly.dev',
-        )).first;
+    if (currentState.flyVolumeName case final volumeName?) {
+      final volumeId = await context.fly.getVolumeId(
+        appName: flyAppName,
+        volumeName: volumeName,
+      );
+      _logger.fine('Deleting Fly volume: $volumeName (id=$volumeId)');
+
+      // First, detach the volume from the app
+      final machine = await context.fly.getMachine(appName: flyAppName);
+      _logger.fine('Machine: ${machine?.toJson()}');
+      if (machine != null) {
+        _logger.fine('Detaching Fly volume from app: $flyAppName');
+        await context.fly.detachVolume(
+          appName: flyAppName,
+          machineId: machine.id,
+          volumeId: volumeId,
+        );
+        _logger.fine('Fly volume detached from app');
+      } else {
+        _logger.warning('No machine ID found for app $flyAppName');
+      }
+
+      await context.fly.deleteVolume(volumeId: volumeId, appName: flyAppName);
+      _logger.fine('Fly volume deleted');
+
+      updates = (updates?.copyWith ?? ProjectEnvironmentStatesCompanion.new)(
+        flyVolumeName: const Value(null),
+      );
+    }
+
+    if (updates != null) {
+      final result = await (db.projectEnvironmentStates.update()
+            ..where((tbl) => tbl.projectEnvironmentId.equals(environment.id)))
+          .writeReturning(updates);
+      currentState = result.first;
+    }
 
     // Deploy using `flyctl deploy`
     await _withTempDirectory((dir) async {
@@ -179,23 +216,6 @@ final class FlyDeploymentEngine {
       _logger.fine('Running fly deploy...');
       await context.flyCtl.deploy(flyConfigJsonPath: flyConfigFile.path);
     });
-
-    if (currentState.flyVolumeName case final volumeName?) {
-      _logger.fine('Deleting Fly volume: $volumeName');
-      final volumeId = await context.fly.getVolumeId(
-        appName: flyAppName,
-        volumeName: volumeName,
-      );
-      await context.fly.deleteVolume(volumeId: volumeId, appName: flyAppName);
-      _logger.fine('Fly volume deleted');
-
-      final results = await (db.projectEnvironmentStates.update()
-            ..where((tbl) => tbl.projectEnvironmentId.equals(environment.id)))
-          .writeReturning(
-            ProjectEnvironmentStatesCompanion(flyVolumeName: Value(null)),
-          );
-      currentState = results.first;
-    }
 
     final app = await context.fly.getApp(appName: flyAppName);
     _logger.fine('App successfully deployed: ${app.toJson()}');

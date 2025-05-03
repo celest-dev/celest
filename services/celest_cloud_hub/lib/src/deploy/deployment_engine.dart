@@ -160,7 +160,8 @@ final class DeploymentEngine {
         onFailure = pb.LifecycleState.CREATION_FAILED;
       case pb.LifecycleState.DELETED:
         throw GrpcError.failedPrecondition(
-          'Project environment has been deleted.',
+          'Project environment has been deleted. You must first undelete it '
+          'before deploying.',
         );
       case pb.LifecycleState.DELETING:
         throw GrpcError.failedPrecondition(
