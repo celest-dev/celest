@@ -392,7 +392,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
     Map<EntityUid, Entity> additionalCedarEntities = const {},
     PolicySet? additionalCedarPolicies,
   }) async {
-    await _withoutForeignKeys(() async {
+    await withoutForeignKeys(() async {
       if (details.wasCreated || details.hadUpgrade) {
         await seed(
           additionalCedarTypes: additionalCedarTypes,
@@ -426,12 +426,15 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
       ];
 
   /// Runs [action] in a context without foreign keys enabled.
-  Future<R> _withoutForeignKeys<R>(Future<R> Function() action) async {
+  @visibleForTesting
+  Future<R> withoutForeignKeys<R>(Future<R> Function() action) async {
     await customStatement('pragma foreign_keys = OFF');
     R result;
     try {
       result = await action();
     } finally {
+      await customStatement('pragma foreign_keys = ON');
+
       if (kDebugMode) {
         // Fail if the action broke foreign keys
         final wrongForeignKeysAll =
@@ -440,13 +443,18 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
             _cloudAuthTables.map((it) => it.actualTableName).toList();
         final wrongForeignKeys = [
           for (final foreignKey in wrongForeignKeysAll)
-            if (cloudAuthTables
-                .contains(foreignKey.data['table_name'] as String))
+            if (foreignKey.data
+                case {
+                      'table': final String table,
+                      'parent': final String parent
+                    } ||
+                    {'TABLE': final String table, 'PARENT': final String parent}
+                when cloudAuthTables.contains(table) ||
+                    cloudAuthTables.contains(parent))
               foreignKey.data,
         ];
         assert(wrongForeignKeys.isEmpty, '$wrongForeignKeys');
       }
-      await customStatement('pragma foreign_keys = ON');
     }
     return result;
   }
