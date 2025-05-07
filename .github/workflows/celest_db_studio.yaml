@@ -1,0 +1,35 @@
+name: celest_db_studio
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/celest_db_studio.yaml"
+      - "packages/celest_db_studio/**"
+
+# Prevent duplicate runs due to Graphite
+# https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046 # 2.19.0
+        with:
+          cache: true
+      - name: Get Packages
+        working-directory: packages/celest_db_studio
+        run: dart pub upgrade
+      - name: Setup Chromedriver
+        uses: nanasess/setup-chromedriver@e93e57b843c0c92788f22483f1a31af8ee48db25 # 2.3.0
+      - name: Test
+        working-directory: packages/celest_db_studio
+        run: dart test --fail-fast
