@@ -135,8 +135,8 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
       ..post('/sessions%3AendSession', handleEndSession);
   }
 
-  Handler get handler {
-    final requestAuthorizer = AuthorizationMiddleware(
+  AuthorizationMiddleware get middleware {
+    return AuthorizationMiddleware(
       routeMap: _deps.routeMap,
       corks: _deps.corks,
       cryptoKeys: _deps.cryptoKeys,
@@ -145,9 +145,12 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
       authorizer: _deps.authorizer,
       issuer: _deps.issuer,
     );
+  }
+
+  Handler get handler {
     return const Pipeline()
         .addMiddleware(const CloudExceptionMiddleware().call)
-        .addMiddleware(requestAuthorizer.call)
+        .addMiddleware(middleware.call)
         .addHandler(_router.call);
   }
 

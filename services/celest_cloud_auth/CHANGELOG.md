@@ -1,3 +1,7 @@
+## NEXT
+
+- chore: Simplify `middleware` getter
+
 ## 0.3.3
 
 - fix: Migration of Cloud Auth tables

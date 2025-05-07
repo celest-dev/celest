@@ -100,15 +100,7 @@ final class CelestCloudAuth {
   }
 
   /// An authorization middleware which can be added to a Shelf pipeline.
-  AuthorizationMiddleware get middleware => AuthorizationMiddleware(
-        issuer: context.rootEntity,
-        routeMap: routeMap,
-        corks: corks,
-        cryptoKeys: cryptoKeys,
-        users: users,
-        db: db,
-        authorizer: authorizer,
-      );
+  AuthorizationMiddleware get middleware => authenticationService.middleware;
 
   @visibleForTesting
   final CloudAuthDatabaseMixin db;
