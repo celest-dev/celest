@@ -1,25 +1,15 @@
 import 'package:celest/src/config/config_values.dart';
 import 'package:celest/src/core/context.dart';
-import 'package:celest/src/core/environment.dart';
-import 'package:celest/src/runtime/data/connect.io.dart'
-    if (dart.library.js_interop) 'package:celest/src/runtime/data/connect.web.dart';
+import 'package:celest/src/runtime/data/celest_database.dart';
+import 'package:celest/src/runtime/http/middleware.dart';
+import 'package:celest_db_studio/celest_db_studio.dart';
 import 'package:drift/drift.dart';
-import 'package:drift_hrana/drift_hrana.dart';
-import 'package:logging/logging.dart';
+import 'package:shelf/shelf.dart' show Pipeline;
 import 'package:sqlite3/common.dart' as sqlite3;
-
-final Logger _logger = Logger('Celest.Data');
-
-/// Checks the connection to the database by running a simple query.
-Future<Database> _checkConnection<Database extends GeneratedDatabase>(
-  Database db,
-) async {
-  await db.customSelect('SELECT 1').get();
-  return db;
-}
 
 /// Constructs a new [Database] and connects to it using the provided
 /// [hostnameVariable] and [tokenSecret] configuration values.
+@Deprecated('Use CelestDatabase.connect instead')
 Future<Database> connect<Database extends GeneratedDatabase>(
   Context context, {
   required String name,
@@ -30,61 +20,45 @@ Future<Database> connect<Database extends GeneratedDatabase>(
   String? path,
   bool logStatements = false,
 }) async {
-  final host = context.get(hostnameVariable);
-  if (host == null) {
-    if (context.environment == Environment.local) {
-      final executor = await localExecutor(
-        name: name,
-        path: path,
-        setup: setup,
-        logStatements: logStatements,
-      );
-      return _checkConnection(factory(executor));
-    }
-    throw StateError(
-      'Missing database hostname for $name. '
-      'Set the `$hostnameVariable` value in the environment or Celest '
-      'configuration file to connect.',
-    );
-  }
-  final hostUri = Uri.tryParse(host);
-  if (hostUri == null) {
-    throw StateError(
-      'Invalid or empty host URI set for $hostnameVariable: $host',
-    );
-  }
-  final QueryExecutor connector;
-  switch (hostUri) {
-    case Uri(scheme: 'file', path: '/:memory:'):
-      connector = await inMemoryExecutor(
-        setup: setup,
-        logStatements: logStatements,
-      );
-    case Uri(scheme: 'file', :final path):
-      connector = await localExecutor(
-        name: name,
-        path: path,
-        setup: setup,
-        logStatements: logStatements,
-      );
-    case Uri(scheme: 'ws' || 'wss' || 'http' || 'https' || 'libsql'):
-      final token = context.get(tokenSecret);
-      if (token == null) {
-        if (context.environment != Environment.local) {
-          _logger.warning(
-            'Missing database token for $name. It\'s recommended to configure '
-            '`$tokenSecret` in the environment or Celest configuration file.',
-          );
-        }
-        _logger.config('Connecting to $hostUri without a token.');
-      }
-      connector = HranaDatabase(hostUri, jwtToken: token);
-    default:
-      throw StateError(
-        'Invalid host URI set for $hostnameVariable: $host. '
-        "Expected a scheme of 'file', 'ws', 'wss', 'http', 'https', or 'libsql'.",
-      );
-  }
+  final celestDb = await CelestDatabase.create(
+    context,
+    name: name,
+    factory: factory,
+    hostnameVariable: hostnameVariable,
+    tokenSecret: tokenSecret,
+    path: path,
+  );
+  return celestDb.connect(
+    setup: setup,
+    logStatements: logStatements,
+  );
+}
 
-  return _checkConnection(factory(connector));
+/// Registers a [CelestDbStudio] instance with the given [context].
+///
+/// The [hostnameVariable] and [tokenSecret] are used to connect to the
+/// database. The [basePath] is the path at which the studio will be
+/// mounted.
+///
+/// The [middlewares], if provided, are applied to the request handler.
+Future<CelestDbStudio> registerDbStudio(
+  Context context, {
+  required env hostnameVariable,
+  required secret tokenSecret,
+  required String basePath,
+  List<Middleware> middlewares = const [],
+}) async {
+  final hostname = context.expect(hostnameVariable);
+  final authToken = context.get(tokenSecret);
+  final dbStudio = await CelestDbStudio.create(
+    databaseUri: Uri.parse(hostname),
+    authToken: authToken,
+  );
+  var pipeline = const Pipeline();
+  for (final middleware in middlewares) {
+    pipeline = pipeline.addMiddleware(middleware.call);
+  }
+  final handler = pipeline.addHandler(dbStudio.call);
+  context.router.mount(basePath, handler);
+  return dbStudio;
 }

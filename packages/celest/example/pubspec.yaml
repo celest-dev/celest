@@ -22,6 +22,8 @@ dependency_overrides:
     path: ../../celest_cloud
   celest_core:
     path: ../../celest_core
+  celest_db_studio:
+    path: ../../celest_db_studio
 
 dev_dependencies:
   flutter_test:

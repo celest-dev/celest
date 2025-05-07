@@ -29,6 +29,12 @@ jobs:
         with:
           channel: stable
           cache: true
+      - name: Install Turso CLI
+        run: |
+          curl -sSfL https://get.tur.so/install.sh | bash
+          echo "PATH=$PATH:/home/runner/.turso" >> $GITHUB_ENV
+        env:
+          TURSO_INSTALL_SKIP_SIGNUP: 1
       - name: Get Packages
         working-directory: packages/celest
         run: |
@@ -46,6 +52,8 @@ jobs:
       - name: Test
         working-directory: packages/celest
         run: dart test
+        env:
+          TURSO_API_TOKEN: ${{ secrets.TURSO_API_TOKEN }}
       - name: Test (dart2js)
         working-directory: packages/celest
         run: dart test -p chrome

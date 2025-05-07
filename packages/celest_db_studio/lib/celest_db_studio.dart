@@ -22,23 +22,7 @@ final class CelestDbStudio {
     required Uri databaseUri,
     String? authToken,
   }) async {
-    final Driver driver;
-    switch (databaseUri) {
-      case Uri(scheme: 'libsql' || 'https' || 'http'):
-        driver = await HranaDriver.connect(databaseUri, jwtToken: authToken);
-      case Uri(scheme: 'file', path: '/:memory:'):
-        driver = NativeDriver.memory();
-      case Uri(scheme: 'file'):
-        driver = NativeDriver.file(databaseUri.toFilePath());
-      default:
-        throw ArgumentError.value(
-          databaseUri.toString(),
-          'databaseUri',
-          'Unsupported database URI scheme: ${databaseUri.scheme}. '
-              'Supported schemes are: libsql, https, http, file',
-        );
-    }
-
+    final driver = await Driver.connect(databaseUri, authToken: authToken);
     return CelestDbStudio.from(pageTitle: pageTitle, driver: driver);
   }
 

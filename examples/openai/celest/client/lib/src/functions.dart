@@ -302,7 +302,7 @@ class CelestFunctionsOpenAi {
   Stream<String> openAiRequest({
     required String model,
     required String prompt,
-    ModelParameters parameters = const ModelParameters(),
+    ModelParameters parameters = const ModelParameters.new(),
   }) {
     final $channel = celest.eventClient
         .connect(celest.baseUri.resolve('/open-ai/open-a-i-request'));
@@ -313,7 +313,7 @@ class CelestFunctionsOpenAi {
           _$celest.Serializers.instance.serialize<ModelParameters>(parameters),
     });
     return $channel.stream.map(($event) {
-      if ($event is Map<String, Object?> && $event.containsKey('@error')) {
+      if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
       }
       return ($event as String);

@@ -32,7 +32,6 @@ import 'package:hrana/src/exception.dart' as _$hrana_exception;
 import 'package:http/src/exception.dart' as _$http_exception;
 import 'package:mustache_template/src/template_exception.dart'
     as _$mustache_template_template_exception;
-import 'package:path/src/path_exception.dart' as _$path_path_exception;
 import 'package:petitparser/src/core/exception.dart' as _$petitparser_exception;
 import 'package:shelf/src/hijack_exception.dart' as _$shelf_hijack_exception;
 import 'package:source_span/src/span_exception.dart'
@@ -547,12 +546,6 @@ class CelestFunctionsTasks {
           _$celest.Serializers.instance
               .deserialize<_$drift_communication.ConnectionClosedException>(
                   errorValue),
-          stackTrace,
-        );
-      case 'path.PathException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$path_path_exception.PathException>(errorValue),
           stackTrace,
         );
       case 'hrana.ConnectionClosed':
