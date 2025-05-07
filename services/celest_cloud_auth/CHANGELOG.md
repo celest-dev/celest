@@ -1,3 +1,7 @@
+## NEXT
+
+- fix: Database checks in debug mode
+
 ## 0.3.3
 
 - fix: Migration of Cloud Auth tables
