@@ -421,6 +421,11 @@ final class CelestFrontend with CloudRepository {
                 'Celest is running and watching for updates',
               );
               cliLogger.detail('Local API running at: $localUri');
+              if (project.databases.isNotEmpty) {
+                cliLogger.detail(
+                  'DB studio available at: $localUri/_admin/studio',
+                );
+              }
               if (verbose) {
                 cliLogger.detail(
                   'VM Service URI: ${_localApiRunner!.wsUri}',

@@ -2,11 +2,7 @@
 // it can be checked into version control.
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use, invalid_use_of_internal_member
 
-library; // ignore_for_file: no_leading_underscores_for_library_prefixes
-
-import 'package:celest/src/core/context.dart' as _$celest;
-import 'package:celest_backend/src/generated/cloud.celest.dart';
-import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _$celest;
+library;
 
 /// The auth service for the Celest backend.
 ///
@@ -14,18 +10,4 @@ import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _$celest;
 /// operations for the current [CelestEnvironment].
 class CelestAuth {
   const CelestAuth();
-
-  /// Initializes the Celest Auth service in the given [context].
-  static Future<void> init(_$celest.Context context) async {
-    final service =
-        await _$celest.CelestCloudAuth.create(database: celest.data.database);
-    context.router.mount(
-      '/v1alpha1/auth/',
-      service.handler,
-    );
-    context.put(
-      _$celest.CelestCloudAuth.contextKey,
-      service,
-    );
-  }
 }

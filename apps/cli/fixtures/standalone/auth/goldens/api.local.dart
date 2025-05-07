@@ -1,10 +1,14 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use, invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:celest/celest.dart' as _i15;
 import 'package:celest/src/core/context.dart' as _i12;
+import 'package:celest/src/runtime/data/celest_database.dart' as _i13;
 import 'package:celest/src/runtime/serve.dart' as _i1;
-import 'package:celest_backend/src/generated/auth.celest.dart' as _i14;
-import 'package:celest_backend/src/generated/data.celest.dart' as _i13;
+import 'package:celest_backend/src/generated/cloud.celest.dart' as _i18;
+import 'package:celest_backend/src/generated/data.celest.dart' as _i16;
+import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _i17;
+import 'package:celest_cloud_auth/src/database/auth_database.dart' as _i14;
 
 import 'functions/authenticated_lib/sayHello.dart' as _i2;
 import 'functions/authenticated_lib/streamHello.dart' as _i3;
@@ -36,8 +40,34 @@ Future<void> start() async {
       '/public-lib/stream-hello': _i11.StreamHelloTarget(),
     },
     setup: (_i12.Context context) async {
-      await _i13.CelestData.init(context);
-      await _i14.CelestAuth.init(context);
+      final cloudAuth = await _i13.CelestDatabase.create(
+        context,
+        name: 'CloudAuthDatabase',
+        factory: _i14.CloudAuthDatabase.new,
+        hostnameVariable: const _i15.env('CLOUD_AUTH_DATABASE_HOST'),
+        tokenSecret: const _i15.secret('CLOUD_AUTH_DATABASE_TOKEN'),
+      );
+      context.put(
+        _i16.CelestData.cloudAuth$Key,
+        await cloudAuth.connect(),
+      );
+      final $cloudAuth = await _i17.CelestCloudAuth.create(
+          database: _i18.celest.data.cloudAuth);
+      context.router.mount(
+        '/v1alpha1/auth/',
+        $cloudAuth.handler,
+      );
+      context.put(
+        _i17.CelestCloudAuth.contextKey,
+        $cloudAuth,
+      );
+      if (context.environment == _i15.Environment.local) {
+        final $studio = cloudAuth.createStudio();
+        context.router.mount(
+          '/_admin/studio',
+          $studio.call,
+        );
+      }
     },
   );
 }

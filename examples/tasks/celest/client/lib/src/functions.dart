@@ -390,6 +390,13 @@ class CelestFunctionsTasks {
                   errorValue),
           stackTrace,
         );
+      case 'chunked_stream.MaximumSizeExceeded':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<
+              _$chunked_stream_read_chunked_stream
+              .MaximumSizeExceeded>(errorValue),
+          stackTrace,
+        );
       case 'hrana.ConnectionClosed':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
@@ -420,13 +427,6 @@ class CelestFunctionsTasks {
           _$celest.Serializers.instance
               .deserialize<_$drift_communication.ConnectionClosedException>(
                   errorValue),
-          stackTrace,
-        );
-      case 'chunked_stream.MaximumSizeExceeded':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance.deserialize<
-              _$chunked_stream_read_chunked_stream
-              .MaximumSizeExceeded>(errorValue),
           stackTrace,
         );
       default:
