@@ -6,7 +6,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:celest/celest.dart' as _$celest;
 import 'package:celest/src/core/context.dart' as _$celest;
-import 'package:celest/src/runtime/data/connect.dart' as _$celest;
+import 'package:celest/src/runtime/data/celest_database.dart' as _$celest;
 import 'package:celest_cloud_auth/src/database/auth_database.dart' as _$celest;
 
 /// The data services for the Celest backend.
@@ -18,15 +18,16 @@ class CelestData {
 
   /// Initializes the databases attached to this project in the given [context].
   static Future<void> init(_$celest.Context context) async {
+    final cloudAuth = await _$celest.CelestDatabase.create(
+      context,
+      name: 'CloudAuthDatabase',
+      factory: _$celest.CloudAuthDatabase.new,
+      hostnameVariable: const _$celest.env('CLOUD_AUTH_DATABASE_HOST'),
+      tokenSecret: const _$celest.secret('CLOUD_AUTH_DATABASE_TOKEN'),
+    );
     context.put(
       _cloudAuthKey,
-      await _$celest.connect(
-        context,
-        name: 'CloudAuthDatabase',
-        factory: _$celest.CloudAuthDatabase.new,
-        hostnameVariable: const _$celest.env('CLOUD_AUTH_DATABASE_HOST'),
-        tokenSecret: const _$celest.secret('CLOUD_AUTH_DATABASE_TOKEN'),
-      ),
+      await cloudAuth.connect(),
     );
   }
 

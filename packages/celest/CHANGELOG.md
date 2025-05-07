@@ -1,3 +1,7 @@
+## 1.0.6-wip
+
+- refactor: Move `connect` method to `CelestDatabase` class
+
 ## 1.0.5
 
 - chore: Remove GCP mentions

@@ -13,13 +13,14 @@ import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
 import 'package:celest_core/src/serialization/json_value.dart' as _$celest;
+import 'package:chunked_stream/src/read_chunked_stream.dart'
+    as _$chunked_stream_read_chunked_stream;
 import 'package:drift/src/remote/communication.dart' as _$drift_communication;
 import 'package:drift/src/runtime/cancellation_zone.dart'
     as _$drift_cancellation_zone;
 import 'package:drift/src/runtime/exceptions.dart' as _$drift_exceptions;
 import 'package:hrana/src/exception.dart' as _$hrana_exception;
 import 'package:http/src/exception.dart' as _$http_exception;
-import 'package:path/src/path_exception.dart' as _$path_path_exception;
 import 'package:shelf/src/hijack_exception.dart' as _$shelf_hijack_exception;
 import 'package:sqlite3/src/exception.dart' as _$sqlite3_exception;
 import 'package:sqlite3/src/vfs.dart' as _$sqlite3_vfs;
@@ -903,6 +904,15 @@ void initSerializers({_$celest.Serializers? serializers}) {
         const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
       );
       _$celest.Serializers.instance.put(_$celest.Serializer.define<
+          _$chunked_stream_read_chunked_stream.MaximumSizeExceeded,
+          Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'maxSize': $value.maxSize},
+        deserialize: ($serialized) {
+          return _$chunked_stream_read_chunked_stream.MaximumSizeExceeded(
+              ($serialized[r'maxSize'] as num).toInt());
+        },
+      ));
+      _$celest.Serializers.instance.put(_$celest.Serializer.define<
           _$drift_communication.ConnectionClosedException,
           Map<String, Object?>?>(
         serialize: ($value) => const <String, Object?>{},
@@ -974,14 +984,6 @@ void initSerializers({_$celest.Serializers? serializers}) {
             _$celest.Serializers.instance
                 .deserialize<Uri?>($serialized[r'uri']),
           );
-        },
-      ));
-      _$celest.Serializers.instance.put(_$celest.Serializer.define<
-          _$path_path_exception.PathException, Map<String, Object?>>(
-        serialize: ($value) => <String, Object?>{r'message': $value.message},
-        deserialize: ($serialized) {
-          return _$path_path_exception.PathException(
-              ($serialized[r'message'] as String));
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<

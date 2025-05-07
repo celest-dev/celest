@@ -29,7 +29,6 @@ import 'package:hrana/src/exception.dart' as _$hrana_exception;
 import 'package:http/src/exception.dart' as _$http_exception;
 import 'package:mustache_template/src/template_exception.dart'
     as _$mustache_template_template_exception;
-import 'package:path/src/path_exception.dart' as _$path_path_exception;
 import 'package:petitparser/src/core/exception.dart' as _$petitparser_exception;
 import 'package:petitparser/src/core/result.dart' as _$petitparser_result;
 import 'package:shelf/src/hijack_exception.dart' as _$shelf_hijack_exception;
@@ -1170,14 +1169,6 @@ void initSerializers({_$celest.Serializers? serializers}) {
             ($serialized[r'source'] as String?),
             ($serialized[r'offset'] as num?)?.toInt(),
           );
-        },
-      ));
-      _$celest.Serializers.instance.put(_$celest.Serializer.define<
-          _$path_path_exception.PathException, Map<String, Object?>>(
-        serialize: ($value) => <String, Object?>{r'message': $value.message},
-        deserialize: ($serialized) {
-          return _$path_path_exception.PathException(
-              ($serialized[r'message'] as String));
         },
       ));
       _$celest.Serializers.instance.put(_$celest.Serializer.define<

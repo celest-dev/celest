@@ -1,6 +1,7 @@
 ## NEXT
 
 - fix: Don't throw if analysis_options.yaml is missing
+- refactor(celest): Move `connect` method to `CelestDatabase` class
 
 ## 1.0.12
 

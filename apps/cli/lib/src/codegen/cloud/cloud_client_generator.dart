@@ -367,31 +367,36 @@ final class CloudClientGenerator {
             ..body = Block((b) {
               for (final database in project.databases.values) {
                 final config = database.config as ast.CelestDatabaseConfig;
+                b.addExpression(declareFinal(database.dartName).assign(
+                  refer(
+                    'CelestDatabase',
+                    'package:celest/src/runtime/data/celest_database.dart',
+                  ).property('create').call(
+                    [refer('context')],
+                    {
+                      'name': literalString(
+                        database.name,
+                        raw: database.name.contains(r'$'),
+                      ),
+                      'factory': database.schema.declaration.property(
+                        'new',
+                      ),
+                      'hostnameVariable':
+                          DartTypes.celest.environmentVariable.constInstance([
+                        literalString(config.hostname.name),
+                      ]),
+                      'tokenSecret': DartTypes.celest.secret.constInstance([
+                        literalString(config.token.name),
+                      ]),
+                    },
+                  ).awaited,
+                ));
                 b.addExpression(
                   refer('context').property('put').call([
                     refer('_${database.dartName}Key'),
-                    refer(
-                      'connect',
-                      'package:celest/src/runtime/data/connect.dart',
-                    ).call(
-                      [refer('context')],
-                      {
-                        'name': literalString(
-                          database.name,
-                          raw: database.name.contains(r'$'),
-                        ),
-                        'factory': database.schema.declaration.property(
-                          'new',
-                        ),
-                        'hostnameVariable':
-                            DartTypes.celest.environmentVariable.constInstance([
-                          literalString(config.hostname.name),
-                        ]),
-                        'tokenSecret': DartTypes.celest.secret.constInstance([
-                          literalString(config.token.name),
-                        ]),
-                      },
-                    ).awaited,
+                    refer(database.dartName)
+                        .property('connect')
+                        .call([]).awaited,
                   ]),
                 );
               }

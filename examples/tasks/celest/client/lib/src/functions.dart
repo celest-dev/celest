@@ -16,13 +16,14 @@ import 'package:celest_core/celest_core.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
+import 'package:chunked_stream/src/read_chunked_stream.dart'
+    as _$chunked_stream_read_chunked_stream;
 import 'package:drift/src/remote/communication.dart' as _$drift_communication;
 import 'package:drift/src/runtime/cancellation_zone.dart'
     as _$drift_cancellation_zone;
 import 'package:drift/src/runtime/exceptions.dart' as _$drift_exceptions;
 import 'package:hrana/src/exception.dart' as _$hrana_exception;
 import 'package:http/src/exception.dart' as _$http_exception;
-import 'package:path/src/path_exception.dart' as _$path_path_exception;
 import 'package:shelf/src/hijack_exception.dart' as _$shelf_hijack_exception;
 import 'package:sqlite3/src/exception.dart' as _$sqlite3_exception;
 import 'package:sqlite3/src/vfs.dart' as _$sqlite3_vfs;
@@ -389,10 +390,22 @@ class CelestFunctionsTasks {
                   errorValue),
           stackTrace,
         );
+      case 'hrana.ConnectionClosed':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$hrana_exception.ConnectionClosed>(errorValue),
+          stackTrace,
+        );
       case 'sqlite3.SqliteException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
               .deserialize<_$sqlite3_exception.SqliteException>(errorValue),
+          stackTrace,
+        );
+      case 'sqlite3.VfsException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$sqlite3_vfs.VfsException>(errorValue),
           stackTrace,
         );
       case 'drift.CancellationException':
@@ -402,12 +415,6 @@ class CelestFunctionsTasks {
                   errorValue),
           stackTrace,
         );
-      case 'sqlite3.VfsException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$sqlite3_vfs.VfsException>(errorValue),
-          stackTrace,
-        );
       case 'drift.ConnectionClosedException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
@@ -415,16 +422,11 @@ class CelestFunctionsTasks {
                   errorValue),
           stackTrace,
         );
-      case 'path.PathException':
+      case 'chunked_stream.MaximumSizeExceeded':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$path_path_exception.PathException>(errorValue),
-          stackTrace,
-        );
-      case 'hrana.ConnectionClosed':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$hrana_exception.ConnectionClosed>(errorValue),
+          _$celest.Serializers.instance.deserialize<
+              _$chunked_stream_read_chunked_stream
+              .MaximumSizeExceeded>(errorValue),
           stackTrace,
         );
       default:

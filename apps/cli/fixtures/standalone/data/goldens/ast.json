@@ -616,12 +616,6 @@
         },
         {
           "$": "TypeReference",
-          "symbol": "PathException",
-          "url": "package:path/src/path_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
           "symbol": "ConnectionClosed",
           "url": "package:hrana/src/exception.dart",
           "isNullable": false

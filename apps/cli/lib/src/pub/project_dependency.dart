@@ -42,6 +42,7 @@ final class ProjectDependency {
       'celest_auth',
       'celest_core',
       'celest_cloud',
+      'celest_db_studio',
     ];
 
     String servicePath(String serviceName) {

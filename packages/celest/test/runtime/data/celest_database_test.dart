@@ -2,71 +2,29 @@
 @Tags(['e2e'])
 library;
 
-import 'dart:async';
-import 'dart:convert';
 import 'dart:io' as io;
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:celest/src/config/config_values.dart';
 import 'package:celest/src/core/context.dart';
-import 'package:celest/src/runtime/data/connect.dart';
+import 'package:celest/src/runtime/data/celest_database.dart';
 import 'package:drift/native.dart';
 import 'package:drift_hrana/drift_hrana.dart';
 import 'package:path/path.dart' as p;
 import 'package:platform/platform.dart';
-import 'package:process/process.dart';
 import 'package:test/test.dart';
 
 import 'test_database.dart';
-
-const processManager = LocalProcessManager();
-
-Future<int> _findOpenPort() async {
-  final server = await ServerSocket.bind(InternetAddress.loopbackIPv4, 0);
-  final port = server.port;
-  await server.close();
-  return port;
-}
-
-Future<Uri> _startSqld() async {
-  final port = await _findOpenPort();
-  final process = await processManager.start([
-    if (io.Platform.environment.containsKey('CI'))
-      '/home/runner/.turso/turso'
-    else
-      'turso',
-    'dev',
-    '--port',
-    '$port',
-  ]);
-  addTearDown(process.kill);
-  final running = Completer<void>();
-  process.stdout
-      .transform(utf8.decoder)
-      .transform(const LineSplitter())
-      .listen((event) {
-    if (event.contains('sqld listening on')) {
-      running.complete();
-    }
-  });
-  await running.future.timeout(
-    const Duration(seconds: 5),
-    onTimeout: () {
-      throw StateError('Failed to start sqld');
-    },
-  );
-  return Uri.parse('ws://localhost:$port');
-}
+import 'turso_utils.dart';
 
 void main() {
-  group('connect', () {
-    test(
-      'allows local sqld URIs',
-      // TODO(dnys1): Get Turso CLI working in CI
-      skip: io.Platform.environment.containsKey('CI'),
-      () async {
-        final host = await _startSqld();
+  group(
+    'LibsqlDatabase',
+    skip: !hasTursoCli ? 'Turso CLI not installed' : null,
+    timeout: const Timeout.factor(4),
+    () {
+      test('connects to local sqld URIs', () async {
+        final host = await startSqld();
         final platform = FakePlatform(
           environment: {
             'CELEST_DATABASE_HOST': host.toString(),
@@ -74,7 +32,7 @@ void main() {
         );
         Context.current.put(env.environment, 'production');
         Context.current.put(ContextKey.platform, platform);
-        final database = await connect(
+        final celestDb = await CelestDatabase.create(
           Context.current,
           name: 'test',
           factory: expectAsync1((executor) {
@@ -84,15 +42,46 @@ void main() {
           hostnameVariable: const env('CELEST_DATABASE_HOST'),
           tokenSecret: const secret('CELEST_DATABASE_TOKEN'),
         );
+        final database = await celestDb.connect();
         await database.close();
-      },
-    );
-  });
+      });
 
-  group('localExecutor', () {
+      test(
+        'connects to Turso URIs',
+        skip: !io.Platform.environment.containsKey('TURSO_API_TOKEN')
+            ? 'Missing TURSO_API_TOKEN'
+            : null,
+        () async {
+          final (host, token) = await createTursoDatabase();
+          final platform = FakePlatform(
+            environment: {
+              'CELEST_DATABASE_HOST': host.toString(),
+              'CELEST_DATABASE_TOKEN': token,
+            },
+          );
+          Context.current.put(env.environment, 'production');
+          Context.current.put(ContextKey.platform, platform);
+          final celestDb = await CelestDatabase.create(
+            Context.current,
+            name: 'test',
+            factory: expectAsync1((executor) {
+              expect(executor, isA<HranaDatabase>());
+              return TestDatabase(executor);
+            }),
+            hostnameVariable: const env('CELEST_DATABASE_HOST'),
+            tokenSecret: const secret('CELEST_DATABASE_TOKEN'),
+          );
+          final database = await celestDb.connect();
+          await database.close();
+        },
+      );
+    },
+  );
+
+  group('FileDatabase', () {
     test('uses package config when path=null', () async {
-      final packageConfig = await Isolate.packageConfig;
-      final file = File.fromUri(packageConfig!.resolve('./celest/test.db'));
+      final uri = await CelestDatabase.resolveDatabaseUri('test');
+      final file = File.fromUri(uri);
       if (file.existsSync()) {
         file.deleteSync();
       }
@@ -105,7 +94,7 @@ void main() {
       final platform = FakePlatform(environment: {});
       Context.current.put(env.environment, 'local');
       Context.current.put(ContextKey.platform, platform);
-      final database = await connect(
+      final celestDb = await CelestDatabase.create(
         Context.current,
         name: 'test',
         factory: expectAsync1((executor) {
@@ -115,6 +104,7 @@ void main() {
         hostnameVariable: const env('CELEST_DATABASE_HOST'),
         tokenSecret: const secret('CELEST_DATABASE_TOKEN'),
       );
+      final database = await celestDb.connect();
       addTearDown(database.close);
 
       expect(file.existsSync(), isTrue);
@@ -127,7 +117,7 @@ void main() {
       final platform = FakePlatform(environment: {});
       Context.current.put(env.environment, 'local');
       Context.current.put(ContextKey.platform, platform);
-      final database = await connect(
+      final celestDb = await CelestDatabase.create(
         Context.current,
         name: 'test',
         factory: expectAsync1((executor) {
@@ -138,6 +128,7 @@ void main() {
         tokenSecret: const secret('CELEST_DATABASE_TOKEN'),
         path: p.join(tmpDir.path, 'test.db'),
       );
+      final database = await celestDb.connect();
       addTearDown(database.close);
 
       final file = File.fromUri(tmpDir.uri.resolve('./test.db'));

@@ -32,3 +32,5 @@ dependency_overrides:
     path: ../../../../../services/celest_cloud_core
   celest_core:
     path: ../../../../celest_core
+  celest_db_studio:
+    path: ../../../../celest_db_studio

@@ -22,6 +22,8 @@ dependency_overrides:
     path: ../../packages/celest_cloud
   celest_core:
     path: ../../packages/celest_core
+  celest_db_studio:
+    path: ../../packages/celest_db_studio
 
 dev_dependencies:
   flutter_lints: ^5.0.0
