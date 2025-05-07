@@ -46,8 +46,11 @@ final class CelestDbStudio {
 
   late final Router _router =
       Router()
-        ..get('/', _index)
-        ..get('/index.html', _index)
+        ..get('/', (Request request) => _index(request, checkRedirect: true))
+        ..get(
+          '/index.html',
+          (Request request) => _index(request, checkRedirect: false),
+        )
         ..post('/query', _query);
 
   late final Handler _handler = (const Pipeline()
@@ -75,8 +78,25 @@ final class CelestDbStudio {
     return _handler(request);
   }
 
+  Response _redirectToTrailingSlash(Request request) {
+    return Response.movedPermanently(
+      request.requestedUri.replace(path: '${request.requestedUri.path}/'),
+    );
+  }
+
   /// Serves the studio HTML.
-  Future<Response> _index(Request request) async {
+  Future<Response> _index(
+    Request request, {
+    required bool checkRedirect,
+  }) async {
+    if (checkRedirect && !request.requestedUri.path.endsWith('/')) {
+      // Redirect to the trailing slash version of the URL so that
+      // relative paths work correctly.
+      //
+      // e.g. `./query` should resolve to `$basePath/query` instead of
+      // `$basePath/../query`.
+      return _redirectToTrailingSlash(request);
+    }
     return Response.ok(_indexHtml, headers: {'Content-Type': 'text/html'});
   }
 

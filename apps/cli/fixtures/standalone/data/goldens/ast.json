@@ -613,12 +613,6 @@
           "symbol": "ConnectionClosedException",
           "url": "package:drift/src/remote/communication.dart",
           "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "ConnectionClosed",
-          "url": "package:hrana/src/exception.dart",
-          "isNullable": false
         }
       ],
       "location": {

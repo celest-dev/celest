@@ -6,11 +6,13 @@ import 'dart:convert' as _i10;
 
 import 'package:celest/celest.dart' as _i8;
 import 'package:celest/src/core/context.dart' as _i3;
+import 'package:celest/src/runtime/data/celest_database.dart' as _i14;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/src/functions/lib.dart' as _i5;
-import 'package:celest_backend/src/generated/auth.celest.dart' as _i15;
-import 'package:celest_backend/src/generated/data.celest.dart' as _i14;
+import 'package:celest_backend/src/generated/cloud.celest.dart' as _i17;
+import 'package:celest_backend/src/generated/data.celest.dart' as _i16;
 import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _i2;
+import 'package:celest_cloud_auth/src/database/auth_database.dart' as _i15;
 import 'package:celest_core/celest_core.dart' as _i6;
 import 'package:celest_core/src/auth/user.dart' as _i12;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i7;
@@ -1748,8 +1750,34 @@ Future<void> start() async {
   await _i1.serve(
     targets: {'/': SayHelloAuthenticatedTarget()},
     setup: (_i3.Context context) async {
-      await _i14.CelestData.init(context);
-      await _i15.CelestAuth.init(context);
+      final cloudAuth = await _i14.CelestDatabase.create(
+        context,
+        name: 'CloudAuthDatabase',
+        factory: _i15.CloudAuthDatabase.new,
+        hostnameVariable: const _i8.env('CLOUD_AUTH_DATABASE_HOST'),
+        tokenSecret: const _i8.secret('CLOUD_AUTH_DATABASE_TOKEN'),
+      );
+      context.put(
+        _i16.CelestData.cloudAuth$Key,
+        await cloudAuth.connect(),
+      );
+      final $cloudAuth = await _i2.CelestCloudAuth.create(
+          database: _i17.celest.data.cloudAuth);
+      context.router.mount(
+        '/v1alpha1/auth/',
+        $cloudAuth.handler,
+      );
+      context.put(
+        _i2.CelestCloudAuth.contextKey,
+        $cloudAuth,
+      );
+      if (context.environment == _i8.Environment.local) {
+        final $studio = cloudAuth.createStudio();
+        context.router.mount(
+          '/_admin/studio',
+          $studio.call,
+        );
+      }
     },
   );
 }

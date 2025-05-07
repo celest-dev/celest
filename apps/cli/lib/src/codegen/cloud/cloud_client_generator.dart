@@ -348,60 +348,6 @@ final class CloudClientGenerator {
       ])
       ..constructors.add(Constructor((c) => c..constant = true))
       ..methods.addAll([
-        Method((m) {
-          m
-            ..static = true
-            ..name = 'init'
-            ..returns = DartTypes.core.future(DartTypes.core.void$)
-            ..requiredParameters.add(
-              Parameter(
-                (p) => p
-                  ..name = 'context'
-                  ..type = DartTypes.celest.context,
-              ),
-            )
-            ..modifier = MethodModifier.async
-            ..docs.addAll([
-              '/// Initializes the databases attached to this project in the given [context].',
-            ])
-            ..body = Block((b) {
-              for (final database in project.databases.values) {
-                final config = database.config as ast.CelestDatabaseConfig;
-                b.addExpression(declareFinal(database.dartName).assign(
-                  refer(
-                    'CelestDatabase',
-                    'package:celest/src/runtime/data/celest_database.dart',
-                  ).property('create').call(
-                    [refer('context')],
-                    {
-                      'name': literalString(
-                        database.name,
-                        raw: database.name.contains(r'$'),
-                      ),
-                      'factory': database.schema.declaration.property(
-                        'new',
-                      ),
-                      'hostnameVariable':
-                          DartTypes.celest.environmentVariable.constInstance([
-                        literalString(config.hostname.name),
-                      ]),
-                      'tokenSecret': DartTypes.celest.secret.constInstance([
-                        literalString(config.token.name),
-                      ]),
-                    },
-                  ).awaited,
-                ));
-                b.addExpression(
-                  refer('context').property('put').call([
-                    refer('_${database.dartName}Key'),
-                    refer(database.dartName)
-                        .property('connect')
-                        .call([]).awaited,
-                  ]),
-                );
-              }
-            });
-        }),
         for (final database in project.databases.values) ...[
           Method((m) {
             final schemaType = switch (database.schema) {
@@ -421,7 +367,7 @@ final class CloudClientGenerator {
               ..body = DartTypes.celest.context
                   .property('current')
                   .property('expect')
-                  .call([refer('_${database.dartName}Key')]).code;
+                  .call([refer('${database.dartName}\$Key')]).code;
           }),
           Method((m) {
             final schemaType = switch (database.schema) {
@@ -433,7 +379,7 @@ final class CloudClientGenerator {
               ..returns = DartTypes.celest.contextKey.toTypeReference.rebuild(
                 (t) => t.types.add(schemaType),
               )
-              ..name = '_${database.dartName}Key'
+              ..name = '${database.dartName}\$Key'
               ..docs.addAll(
                 database.docs.isNotEmpty
                     ? database.docs
@@ -453,8 +399,6 @@ final class CloudClientGenerator {
   });
 
   late final _authClass = Class((b) {
-    final hasCloudAuth = project.auth?.providers.isNotEmpty ?? false;
-
     b
       ..name = CloudClientTypes.authClass.name
       ..docs.addAll([
@@ -463,62 +407,7 @@ final class CloudClientGenerator {
         '/// This class provides access to authentication and authorization',
         '/// operations for the current [CelestEnvironment].',
       ])
-      ..constructors.add(Constructor((c) => c..constant = true))
-      ..methods.addAll([
-        Method((m) {
-          m
-            ..static = true
-            ..name = 'init'
-            ..returns = DartTypes.core.future(DartTypes.core.void$)
-            ..requiredParameters.add(
-              Parameter(
-                (p) => p
-                  ..name = 'context'
-                  ..type = DartTypes.celest.context,
-              ),
-            )
-            ..modifier = MethodModifier.async
-            ..docs.addAll([
-              '/// Initializes the Celest Auth service in the given [context].',
-            ])
-            ..body = Block((b) {
-              if (!hasCloudAuth) {
-                return;
-              }
-              assert(
-                project.databases.isNotEmpty,
-                'When using Cloud Auth, we should always have a database for it',
-              );
-              b.addExpression(
-                declareFinal('service').assign(
-                  refer(
-                    'CelestCloudAuth',
-                    'package:celest_cloud_auth/celest_cloud_auth.dart',
-                  ).property('create').call([], {
-                    'database': refer('celest', CloudPaths.client.toString())
-                        .property('data')
-                        .property(project.databases.values.single.dartName),
-                  }).awaited,
-                ),
-              );
-              b.addExpression(
-                refer('context').property('router').property('mount').call([
-                  literalString('/v1alpha1/auth/'),
-                  refer('service').property('handler'),
-                ]),
-              );
-              b.addExpression(
-                refer('context').property('put').call([
-                  refer(
-                    'CelestCloudAuth',
-                    'package:celest_cloud_auth/celest_cloud_auth.dart',
-                  ).property('contextKey'),
-                  refer('service'),
-                ]),
-              );
-            });
-        }),
-      ]);
+      ..constructors.add(Constructor((c) => c..constant = true));
   });
 
   Map<Uri, Library> generate() {

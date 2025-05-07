@@ -6,11 +6,13 @@ import 'dart:convert' as _i9;
 
 import 'package:celest/celest.dart' as _i7;
 import 'package:celest/src/core/context.dart' as _i3;
+import 'package:celest/src/runtime/data/celest_database.dart' as _i13;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/src/functions/public_lib.dart' as _i4;
-import 'package:celest_backend/src/generated/auth.celest.dart' as _i14;
-import 'package:celest_backend/src/generated/data.celest.dart' as _i13;
+import 'package:celest_backend/src/generated/cloud.celest.dart' as _i16;
+import 'package:celest_backend/src/generated/data.celest.dart' as _i15;
 import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _i2;
+import 'package:celest_cloud_auth/src/database/auth_database.dart' as _i14;
 import 'package:celest_core/celest_core.dart' as _i6;
 import 'package:celest_core/src/auth/user.dart' as _i11;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i5;
@@ -1600,8 +1602,34 @@ Future<void> start() async {
   await _i1.serve(
     targets: {'/': StreamHelloTarget()},
     setup: (_i3.Context context) async {
-      await _i13.CelestData.init(context);
-      await _i14.CelestAuth.init(context);
+      final cloudAuth = await _i13.CelestDatabase.create(
+        context,
+        name: 'CloudAuthDatabase',
+        factory: _i14.CloudAuthDatabase.new,
+        hostnameVariable: const _i7.env('CLOUD_AUTH_DATABASE_HOST'),
+        tokenSecret: const _i7.secret('CLOUD_AUTH_DATABASE_TOKEN'),
+      );
+      context.put(
+        _i15.CelestData.cloudAuth$Key,
+        await cloudAuth.connect(),
+      );
+      final $cloudAuth = await _i2.CelestCloudAuth.create(
+          database: _i16.celest.data.cloudAuth);
+      context.router.mount(
+        '/v1alpha1/auth/',
+        $cloudAuth.handler,
+      );
+      context.put(
+        _i2.CelestCloudAuth.contextKey,
+        $cloudAuth,
+      );
+      if (context.environment == _i7.Environment.local) {
+        final $studio = cloudAuth.createStudio();
+        context.router.mount(
+          '/_admin/studio',
+          $studio.call,
+        );
+      }
     },
   );
 }

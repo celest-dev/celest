@@ -333,8 +333,49 @@ final class ProjectLinker extends AstVisitorWithArg<Node?, AstNode> {
     return null;
   }
 
+  void _addDbStudio(ResolvedApiBuilder api) {
+    api.apiId = '_admin';
+    api.functions['studio'] = ResolvedCloudFunction(
+      apiId: '_admin',
+      functionId: 'studio',
+      httpConfig: ResolvedHttpConfig(
+        route: ResolvedHttpRoute(
+          method: 'GET',
+          path: '/_admin/studio',
+        ),
+      ),
+    );
+    api.functions['studio/query'] = ResolvedCloudFunction(
+      apiId: '_admin',
+      functionId: 'studio/query',
+      httpConfig: ResolvedHttpConfig(
+        route: ResolvedHttpRoute(
+          method: 'POST',
+          path: '/_admin/studio/query',
+        ),
+      ),
+    );
+    if (api.policySet.templateLinks.isEmpty) {
+      api.policySet.templateLinks.add(
+        TemplateLink(
+          templateId: 'cloud.functions.admin',
+          newId: 'celest.cloud._admin',
+          values: {
+            SlotId.resource: EntityUid.of('Celest::Api', '_admin'),
+          },
+        ),
+      );
+    }
+  }
+
   @override
   ResolvedDatabase visitDatabase(Database database, Project context) {
+    // Add a route for DB studio
+    _resolvedProject.apis.updateValue(
+      '_admin',
+      (api) => api.rebuild(_addDbStudio),
+      ifAbsent: () => ResolvedApi.build(_addDbStudio),
+    );
     return ResolvedDatabase.build((b) {
       b.databaseId = database.name;
       b.config = switch (database.config) {

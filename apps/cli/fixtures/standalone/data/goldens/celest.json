@@ -155,6 +155,49 @@
           }
         ]
       }
+    },
+    "_admin": {
+      "apiId": "_admin",
+      "functions": {
+        "studio": {
+          "functionId": "studio",
+          "parentId": "_admin",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "GET",
+              "path": "/_admin/studio"
+            },
+            "statusMappings": {}
+          }
+        },
+        "studio/query": {
+          "functionId": "studio/query",
+          "parentId": "_admin",
+          "httpConfig": {
+            "status": 200,
+            "route": {
+              "method": "POST",
+              "path": "/_admin/studio/query"
+            },
+            "statusMappings": {}
+          }
+        }
+      },
+      "policySet": {
+        "templateLinks": [
+          {
+            "templateId": "cloud.functions.admin",
+            "newId": "celest.cloud._admin",
+            "values": {
+              "?resource": {
+                "type": "Celest::Api",
+                "id": "_admin"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "variables": [

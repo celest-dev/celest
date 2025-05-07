@@ -178,6 +178,54 @@
           }
         ]
       }
+    },
+    "_admin": {
+      "apiId": "_admin",
+      "functions": {
+        "studio": {
+          "functionId": "studio",
+          "apiId": "_admin",
+          "httpConfig": {
+            "route": {
+              "method": "GET",
+              "path": "/_admin/studio"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        },
+        "studio/query": {
+          "functionId": "studio/query",
+          "apiId": "_admin",
+          "httpConfig": {
+            "route": {
+              "method": "POST",
+              "path": "/_admin/studio/query"
+            },
+            "additionalRoutes": [],
+            "status": 200,
+            "statusMappings": {}
+          },
+          "variables": [],
+          "secrets": []
+        }
+      },
+      "policySet": {
+        "policies": {},
+        "templates": {},
+        "templateLinks": [
+          {
+            "templateId": "cloud.functions.admin",
+            "newId": "celest.cloud._admin",
+            "values": {
+              "?resource": "Celest::Api::\"_admin\""
+            }
+          }
+        ]
+      }
     }
   },
   "variables": [

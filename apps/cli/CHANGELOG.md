@@ -1,7 +1,8 @@
 ## NEXT
 
-- fix: Don't throw if analysis_options.yaml is missing
-- refactor(celest): Move `connect` method to `CelestDatabase` class
+- feat: Serve DB studio when running locally
+- fix: Don't throw if `analysis_options.yaml` is missing
+- chore: Update codegen for database changes
 
 ## 1.0.12
 

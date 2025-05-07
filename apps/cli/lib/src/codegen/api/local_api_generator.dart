@@ -4,6 +4,7 @@ import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/codegen/cloud/cloud_client_types.dart';
 import 'package:celest_cli/src/types/dart_types.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:code_builder/code_builder.dart';
 
 class LocalApiGenerator {
@@ -62,22 +63,101 @@ return start();
           ),
         )
         ..modifier = MethodModifier.async
-        ..body = Block((b) {
-          if (project.databases.isNotEmpty) {
-            b.addExpression(
-              CloudClientTypes.dataClass.ref.property('init').call([
-                refer('context'),
-              ]).awaited,
-            );
-          }
-          if (project.auth?.providers.isNotEmpty ?? false) {
-            b.addExpression(
-              CloudClientTypes.authClass.ref.property('init').call([
-                refer('context'),
-              ]).awaited,
-            );
-          }
-        });
+        ..body = _init;
+    });
+  }
+
+  Block get _init {
+    return Block((b) {
+      final database = project.databases.values.singleOrNull;
+      if (database == null) {
+        return;
+      }
+
+      final config = database.config as CelestDatabaseConfig;
+      b.addExpression(declareFinal(database.dartName).assign(
+        refer(
+          'CelestDatabase',
+          'package:celest/src/runtime/data/celest_database.dart',
+        ).property('create').call(
+          [refer('context')],
+          {
+            'name': literalString(
+              database.name,
+              raw: database.name.contains(r'$'),
+            ),
+            'factory': database.schema.declaration.property(
+              'new',
+            ),
+            'hostnameVariable':
+                DartTypes.celest.environmentVariable.constInstance([
+              literalString(config.hostname.name),
+            ]),
+            'tokenSecret': DartTypes.celest.secret.constInstance([
+              literalString(config.token.name),
+            ]),
+          },
+        ).awaited,
+      ));
+      b.addExpression(
+        refer('context').property('put').call([
+          refer('CelestData', CloudPaths.data.toString())
+              .property('${database.dartName}\$Key'),
+          refer(database.dartName).property('connect').call([]).awaited,
+        ]),
+      );
+
+      final hasCloudAuth = project.auth?.providers.isNotEmpty ?? false;
+      if (hasCloudAuth) {
+        b.addExpression(
+          declareFinal(r'$cloudAuth').assign(
+            refer(
+              'CelestCloudAuth',
+              'package:celest_cloud_auth/celest_cloud_auth.dart',
+            ).property('create').call([], {
+              'database': refer('celest', CloudPaths.client.toString())
+                  .property('data')
+                  .property(database.dartName),
+            }).awaited,
+          ),
+        );
+        b.addExpression(
+          refer('context').property('router').property('mount').call([
+            literalString('/v1alpha1/auth/'),
+            refer(r'$cloudAuth').property('handler'),
+          ]),
+        );
+        b.addExpression(
+          refer('context').property('put').call([
+            refer(
+              'CelestCloudAuth',
+              'package:celest_cloud_auth/celest_cloud_auth.dart',
+            ).property('contextKey'),
+            refer(r'$cloudAuth'),
+          ]),
+        );
+      }
+
+      // Create the DB studio
+      // TODO(dnys1): Consider adding this production where it should work even
+      // without Cloud Auth.
+      b.statements.add(Block((b) {
+        b.addExpression(
+          declareFinal(r'$studio').assign(
+            refer(database.dartName).property('createStudio').call([]),
+          ),
+        );
+        b.addExpression(
+          refer('context').property('router').property('mount').call([
+            literalString('/_admin/studio'),
+            refer(r'$studio').property('call'),
+          ]),
+        );
+      }).wrapWithBlockIf(
+        refer('context').property('environment').equalTo(
+              DartTypes.celest.environment.property('local'),
+            ),
+      ));
     });
   }
 
