@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:async/async.dart';
 import 'package:cedar/cedar.dart';
 import 'package:celest/celest.dart';
-import 'package:celest/src/runtime/data/connect.dart';
+import 'package:celest/src/runtime/data/celest_database.dart';
 import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/authorization/corks_repository.dart';
@@ -100,12 +100,14 @@ Future<void> main() async {
 
 Future<void> _run() async {
   context.logger.config('Configuring Cloud Hub database');
-  final db = await connect(
+  final celestDb = await CelestDatabase.create(
     Context.current,
     name: 'CloudHubDatabase',
     factory: CloudHubDatabase.new,
     hostnameVariable: const env('CLOUD_HUB_DATABASE_HOST'),
     tokenSecret: const secret('CLOUD_HUB_DATABASE_TOKEN'),
+  );
+  final db = await celestDb.connect(
     setup: (db) => db.addHelperFunctions(),
     logStatements: context.logger.level <= Level.FINEST,
   );
