@@ -11,7 +11,7 @@ import 'package:celest_core/src/http/http_status.dart';
 import 'package:celest_core/src/proto/google/protobuf/struct.pb.dart';
 import 'package:celest_core/src/serialization/json_value.dart';
 import 'package:celest_core/src/util/json.dart';
-import 'package:grpc/grpc_or_grpcweb.dart' show StatusCode, GrpcError;
+import 'package:grpc/src/shared/status.dart' show StatusCode, GrpcError;
 import 'package:http/http.dart' as http show Response;
 import 'package:json_annotation/json_annotation.dart' show JsonKey;
 import 'package:meta/meta.dart' show protected;
