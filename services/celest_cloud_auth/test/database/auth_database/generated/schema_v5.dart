@@ -5288,6 +5288,8 @@ class DatabaseAtV5 extends GeneratedDatabase {
         cloudAuthFunctionsCreateTrg,
         cloudAuthFunctionsDeleteTrg,
         cloudAuthMeta,
+        OnCreateQuery(
+            'INSERT INTO cloud_auth_meta (schema_version) VALUES (5) ON CONFLICT DO NOTHING'),
         cloudAuthCryptoKeys,
         cloudAuthCryptoKeysExternalCryptoKeyIdIdx,
         cloudAuthSessions,

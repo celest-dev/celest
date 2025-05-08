@@ -1016,6 +1016,8 @@ final class Schema3 extends i0.VersionedSchema {
     celestFunctionsTriggerCreate,
     celestFunctionsTriggerDelete,
     celestCloudAuthMeta,
+    i1.OnCreateQuery(
+        'INSERT INTO _celest_cloud_auth_meta (schema_version) VALUES (3) ON CONFLICT DO NOTHING'),
     cedarRelationshipsFkEntityIdx,
     cedarRelationshipsFkParentIdx,
     cedarPolicies,
@@ -1471,6 +1473,8 @@ final class Schema4 extends i0.VersionedSchema {
     cloudAuthFunctionsCreateTrg,
     cloudAuthFunctionsDeleteTrg,
     cloudAuthMeta,
+    i1.OnCreateQuery(
+        'INSERT INTO cloud_auth_meta (schema_version) VALUES (4) ON CONFLICT DO NOTHING'),
     cloudAuthCryptoKeys,
     cloudAuthCryptoKeysExternalCryptoKeyIdIdx,
     cloudAuthSessions,
@@ -1925,6 +1929,8 @@ final class Schema5 extends i0.VersionedSchema {
     cloudAuthFunctionsCreateTrg,
     cloudAuthFunctionsDeleteTrg,
     cloudAuthMeta,
+    i1.OnCreateQuery(
+        'INSERT INTO cloud_auth_meta (schema_version) VALUES (5) ON CONFLICT DO NOTHING'),
     cloudAuthCryptoKeys,
     cloudAuthCryptoKeysExternalCryptoKeyIdIdx,
     cloudAuthSessions,
@@ -2414,6 +2420,8 @@ final class Schema6 extends i0.VersionedSchema {
     cloudAuthFunctionsCreateTrg,
     cloudAuthFunctionsDeleteTrg,
     cloudAuthMeta,
+    i1.OnCreateQuery(
+        'INSERT INTO cloud_auth_meta (schema_version) VALUES (6) ON CONFLICT DO NOTHING'),
     cloudAuthCryptoKeys,
     cloudAuthCryptoKeysExternalCryptoKeyIdIdx,
     cloudAuthSessions,

@@ -503,8 +503,12 @@ class CedarEntities extends Table
       defaultValue: const CustomExpression('\'{}\''));
   late final GeneratedColumn<String> entityJson = GeneratedColumn<String>(
       'entity_json', aliasedName, false,
+      generatedAs: GeneratedAs(
+          const CustomExpression(
+              'json_object(\'type\', entity_type, \'id\', entity_id)'),
+          false),
       type: DriftSqlType.string,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       $customConstraints:
           'NOT NULL GENERATED ALWAYS AS (json_object(\'type\', entity_type, \'id\', entity_id)) VIRTUAL');
   @override
@@ -564,7 +568,6 @@ class CedarEntitiesData extends DataClass
     map['entity_type'] = Variable<String>(entityType);
     map['entity_id'] = Variable<String>(entityId);
     map['attribute_json'] = Variable<String>(attributeJson);
-    map['entity_json'] = Variable<String>(entityJson);
     return map;
   }
 
@@ -600,19 +603,6 @@ class CedarEntitiesData extends DataClass
         attributeJson: attributeJson ?? this.attributeJson,
         entityJson: entityJson ?? this.entityJson,
       );
-  CedarEntitiesData copyWithCompanion(CedarEntitiesCompanion data) {
-    return CedarEntitiesData(
-      entityType:
-          data.entityType.present ? data.entityType.value : this.entityType,
-      entityId: data.entityId.present ? data.entityId.value : this.entityId,
-      attributeJson: data.attributeJson.present
-          ? data.attributeJson.value
-          : this.attributeJson,
-      entityJson:
-          data.entityJson.present ? data.entityJson.value : this.entityJson,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('CedarEntitiesData(')
@@ -641,45 +631,37 @@ class CedarEntitiesCompanion extends UpdateCompanion<CedarEntitiesData> {
   final Value<String> entityType;
   final Value<String> entityId;
   final Value<String> attributeJson;
-  final Value<String> entityJson;
   const CedarEntitiesCompanion({
     this.entityType = const Value.absent(),
     this.entityId = const Value.absent(),
     this.attributeJson = const Value.absent(),
-    this.entityJson = const Value.absent(),
   });
   CedarEntitiesCompanion.insert({
     required String entityType,
     required String entityId,
     this.attributeJson = const Value.absent(),
-    required String entityJson,
   })  : entityType = Value(entityType),
-        entityId = Value(entityId),
-        entityJson = Value(entityJson);
+        entityId = Value(entityId);
   static Insertable<CedarEntitiesData> custom({
     Expression<String>? entityType,
     Expression<String>? entityId,
     Expression<String>? attributeJson,
-    Expression<String>? entityJson,
   }) {
     return RawValuesInsertable({
       if (entityType != null) 'entity_type': entityType,
       if (entityId != null) 'entity_id': entityId,
       if (attributeJson != null) 'attribute_json': attributeJson,
-      if (entityJson != null) 'entity_json': entityJson,
     });
   }
 
   CedarEntitiesCompanion copyWith(
       {Value<String>? entityType,
       Value<String>? entityId,
-      Value<String>? attributeJson,
-      Value<String>? entityJson}) {
+      Value<String>? attributeJson}) {
     return CedarEntitiesCompanion(
       entityType: entityType ?? this.entityType,
       entityId: entityId ?? this.entityId,
       attributeJson: attributeJson ?? this.attributeJson,
-      entityJson: entityJson ?? this.entityJson,
     );
   }
 
@@ -695,9 +677,6 @@ class CedarEntitiesCompanion extends UpdateCompanion<CedarEntitiesData> {
     if (attributeJson.present) {
       map['attribute_json'] = Variable<String>(attributeJson.value);
     }
-    if (entityJson.present) {
-      map['entity_json'] = Variable<String>(entityJson.value);
-    }
     return map;
   }
 
@@ -706,8 +685,7 @@ class CedarEntitiesCompanion extends UpdateCompanion<CedarEntitiesData> {
     return (StringBuffer('CedarEntitiesCompanion(')
           ..write('entityType: $entityType, ')
           ..write('entityId: $entityId, ')
-          ..write('attributeJson: $attributeJson, ')
-          ..write('entityJson: $entityJson')
+          ..write('attributeJson: $attributeJson')
           ..write(')'))
         .toString();
   }
@@ -731,8 +709,12 @@ class CedarRelationships extends Table
       $customConstraints: 'NOT NULL');
   late final GeneratedColumn<String> entityJson = GeneratedColumn<String>(
       'entity_json', aliasedName, false,
+      generatedAs: GeneratedAs(
+          const CustomExpression(
+              'json_object(\'type\', entity_type, \'id\', entity_id)'),
+          false),
       type: DriftSqlType.string,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       $customConstraints:
           'NOT NULL GENERATED ALWAYS AS (json_object(\'type\', entity_type, \'id\', entity_id)) VIRTUAL');
   late final GeneratedColumn<String> parentType = GeneratedColumn<String>(
@@ -747,8 +729,12 @@ class CedarRelationships extends Table
       $customConstraints: 'NOT NULL');
   late final GeneratedColumn<String> parentJson = GeneratedColumn<String>(
       'parent_json', aliasedName, false,
+      generatedAs: GeneratedAs(
+          const CustomExpression(
+              'json_object(\'type\', parent_type, \'id\', parent_id)'),
+          false),
       type: DriftSqlType.string,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       $customConstraints:
           'NOT NULL GENERATED ALWAYS AS (json_object(\'type\', parent_type, \'id\', parent_id)) VIRTUAL');
   @override
@@ -818,10 +804,8 @@ class CedarRelationshipsData extends DataClass
     final map = <String, Expression>{};
     map['entity_type'] = Variable<String>(entityType);
     map['entity_id'] = Variable<String>(entityId);
-    map['entity_json'] = Variable<String>(entityJson);
     map['parent_type'] = Variable<String>(parentType);
     map['parent_id'] = Variable<String>(parentId);
-    map['parent_json'] = Variable<String>(parentJson);
     return map;
   }
 
@@ -865,21 +849,6 @@ class CedarRelationshipsData extends DataClass
         parentId: parentId ?? this.parentId,
         parentJson: parentJson ?? this.parentJson,
       );
-  CedarRelationshipsData copyWithCompanion(CedarRelationshipsCompanion data) {
-    return CedarRelationshipsData(
-      entityType:
-          data.entityType.present ? data.entityType.value : this.entityType,
-      entityId: data.entityId.present ? data.entityId.value : this.entityId,
-      entityJson:
-          data.entityJson.present ? data.entityJson.value : this.entityJson,
-      parentType:
-          data.parentType.present ? data.parentType.value : this.parentType,
-      parentId: data.parentId.present ? data.parentId.value : this.parentId,
-      parentJson:
-          data.parentJson.present ? data.parentJson.value : this.parentJson,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('CedarRelationshipsData(')
@@ -912,63 +881,47 @@ class CedarRelationshipsCompanion
     extends UpdateCompanion<CedarRelationshipsData> {
   final Value<String> entityType;
   final Value<String> entityId;
-  final Value<String> entityJson;
   final Value<String> parentType;
   final Value<String> parentId;
-  final Value<String> parentJson;
   const CedarRelationshipsCompanion({
     this.entityType = const Value.absent(),
     this.entityId = const Value.absent(),
-    this.entityJson = const Value.absent(),
     this.parentType = const Value.absent(),
     this.parentId = const Value.absent(),
-    this.parentJson = const Value.absent(),
   });
   CedarRelationshipsCompanion.insert({
     required String entityType,
     required String entityId,
-    required String entityJson,
     required String parentType,
     required String parentId,
-    required String parentJson,
   })  : entityType = Value(entityType),
         entityId = Value(entityId),
-        entityJson = Value(entityJson),
         parentType = Value(parentType),
-        parentId = Value(parentId),
-        parentJson = Value(parentJson);
+        parentId = Value(parentId);
   static Insertable<CedarRelationshipsData> custom({
     Expression<String>? entityType,
     Expression<String>? entityId,
-    Expression<String>? entityJson,
     Expression<String>? parentType,
     Expression<String>? parentId,
-    Expression<String>? parentJson,
   }) {
     return RawValuesInsertable({
       if (entityType != null) 'entity_type': entityType,
       if (entityId != null) 'entity_id': entityId,
-      if (entityJson != null) 'entity_json': entityJson,
       if (parentType != null) 'parent_type': parentType,
       if (parentId != null) 'parent_id': parentId,
-      if (parentJson != null) 'parent_json': parentJson,
     });
   }
 
   CedarRelationshipsCompanion copyWith(
       {Value<String>? entityType,
       Value<String>? entityId,
-      Value<String>? entityJson,
       Value<String>? parentType,
-      Value<String>? parentId,
-      Value<String>? parentJson}) {
+      Value<String>? parentId}) {
     return CedarRelationshipsCompanion(
       entityType: entityType ?? this.entityType,
       entityId: entityId ?? this.entityId,
-      entityJson: entityJson ?? this.entityJson,
       parentType: parentType ?? this.parentType,
       parentId: parentId ?? this.parentId,
-      parentJson: parentJson ?? this.parentJson,
     );
   }
 
@@ -981,17 +934,11 @@ class CedarRelationshipsCompanion
     if (entityId.present) {
       map['entity_id'] = Variable<String>(entityId.value);
     }
-    if (entityJson.present) {
-      map['entity_json'] = Variable<String>(entityJson.value);
-    }
     if (parentType.present) {
       map['parent_type'] = Variable<String>(parentType.value);
     }
     if (parentId.present) {
       map['parent_id'] = Variable<String>(parentId.value);
-    }
-    if (parentJson.present) {
-      map['parent_json'] = Variable<String>(parentJson.value);
     }
     return map;
   }
@@ -1001,10 +948,8 @@ class CedarRelationshipsCompanion
     return (StringBuffer('CedarRelationshipsCompanion(')
           ..write('entityType: $entityType, ')
           ..write('entityId: $entityId, ')
-          ..write('entityJson: $entityJson, ')
           ..write('parentType: $parentType, ')
-          ..write('parentId: $parentId, ')
-          ..write('parentJson: $parentJson')
+          ..write('parentId: $parentId')
           ..write(')'))
         .toString();
   }
@@ -1470,6 +1415,220 @@ class CloudAuthUserPhoneNumbersCompanion
           ..write(')'))
         .toString();
   }
+}
+
+class CloudAuthUsersViewData extends DataClass {
+  final String userId;
+  final String? givenName;
+  final String? familyName;
+  final String? timeZone;
+  final String? languageCode;
+  final DriftAny createTime;
+  final DriftAny? updateTime;
+  final String emails;
+  final String phoneNumbers;
+  final String roles;
+  const CloudAuthUsersViewData(
+      {required this.userId,
+      this.givenName,
+      this.familyName,
+      this.timeZone,
+      this.languageCode,
+      required this.createTime,
+      this.updateTime,
+      required this.emails,
+      required this.phoneNumbers,
+      required this.roles});
+  factory CloudAuthUsersViewData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CloudAuthUsersViewData(
+      userId: serializer.fromJson<String>(json['userId']),
+      givenName: serializer.fromJson<String?>(json['givenName']),
+      familyName: serializer.fromJson<String?>(json['familyName']),
+      timeZone: serializer.fromJson<String?>(json['timeZone']),
+      languageCode: serializer.fromJson<String?>(json['languageCode']),
+      createTime: serializer.fromJson<DriftAny>(json['createTime']),
+      updateTime: serializer.fromJson<DriftAny?>(json['updateTime']),
+      emails: serializer.fromJson<String>(json['emails']),
+      phoneNumbers: serializer.fromJson<String>(json['phoneNumbers']),
+      roles: serializer.fromJson<String>(json['roles']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'userId': serializer.toJson<String>(userId),
+      'givenName': serializer.toJson<String?>(givenName),
+      'familyName': serializer.toJson<String?>(familyName),
+      'timeZone': serializer.toJson<String?>(timeZone),
+      'languageCode': serializer.toJson<String?>(languageCode),
+      'createTime': serializer.toJson<DriftAny>(createTime),
+      'updateTime': serializer.toJson<DriftAny?>(updateTime),
+      'emails': serializer.toJson<String>(emails),
+      'phoneNumbers': serializer.toJson<String>(phoneNumbers),
+      'roles': serializer.toJson<String>(roles),
+    };
+  }
+
+  CloudAuthUsersViewData copyWith(
+          {String? userId,
+          Value<String?> givenName = const Value.absent(),
+          Value<String?> familyName = const Value.absent(),
+          Value<String?> timeZone = const Value.absent(),
+          Value<String?> languageCode = const Value.absent(),
+          DriftAny? createTime,
+          Value<DriftAny?> updateTime = const Value.absent(),
+          String? emails,
+          String? phoneNumbers,
+          String? roles}) =>
+      CloudAuthUsersViewData(
+        userId: userId ?? this.userId,
+        givenName: givenName.present ? givenName.value : this.givenName,
+        familyName: familyName.present ? familyName.value : this.familyName,
+        timeZone: timeZone.present ? timeZone.value : this.timeZone,
+        languageCode:
+            languageCode.present ? languageCode.value : this.languageCode,
+        createTime: createTime ?? this.createTime,
+        updateTime: updateTime.present ? updateTime.value : this.updateTime,
+        emails: emails ?? this.emails,
+        phoneNumbers: phoneNumbers ?? this.phoneNumbers,
+        roles: roles ?? this.roles,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CloudAuthUsersViewData(')
+          ..write('userId: $userId, ')
+          ..write('givenName: $givenName, ')
+          ..write('familyName: $familyName, ')
+          ..write('timeZone: $timeZone, ')
+          ..write('languageCode: $languageCode, ')
+          ..write('createTime: $createTime, ')
+          ..write('updateTime: $updateTime, ')
+          ..write('emails: $emails, ')
+          ..write('phoneNumbers: $phoneNumbers, ')
+          ..write('roles: $roles')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(userId, givenName, familyName, timeZone,
+      languageCode, createTime, updateTime, emails, phoneNumbers, roles);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CloudAuthUsersViewData &&
+          other.userId == this.userId &&
+          other.givenName == this.givenName &&
+          other.familyName == this.familyName &&
+          other.timeZone == this.timeZone &&
+          other.languageCode == this.languageCode &&
+          other.createTime == this.createTime &&
+          other.updateTime == this.updateTime &&
+          other.emails == this.emails &&
+          other.phoneNumbers == this.phoneNumbers &&
+          other.roles == this.roles);
+}
+
+class CloudAuthUsersView
+    extends ViewInfo<CloudAuthUsersView, CloudAuthUsersViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final DatabaseAtV2 attachedDatabase;
+  CloudAuthUsersView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [
+        userId,
+        givenName,
+        familyName,
+        timeZone,
+        languageCode,
+        createTime,
+        updateTime,
+        emails,
+        phoneNumbers,
+        roles
+      ];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'cloud_auth_users_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+        SqlDialect.sqlite:
+            'CREATE VIEW IF NOT EXISTS cloud_auth_users_view AS SELECT cloud_auth_users.*, (SELECT json_group_array(json_object(\'email\', email, \'isVerified\', iif(is_verified, json(\'true\'), json(\'false\')), \'isPrimary\', iif(is_primary, json(\'true\'), json(\'false\')))) FROM cloud_auth_user_emails WHERE user_id = cloud_auth_users.user_id) AS emails, (SELECT json_group_array(json_object(\'phoneNumber\', phone_number, \'isVerified\', iif(is_verified, json(\'true\'), json(\'false\')), \'isPrimary\', iif(is_primary, json(\'true\'), json(\'false\')))) FROM cloud_auth_user_phone_numbers WHERE user_id = cloud_auth_users.user_id) AS phone_numbers, (SELECT json_group_array(json_object(\'type\', \'Celest::Role\', \'id\', parent_id)) FROM cedar_relationships WHERE entity_type = \'Celest::User\' AND entity_id = cloud_auth_users.user_id AND parent_type = \'Celest::Role\') AS roles FROM cloud_auth_users;'
+      };
+  @override
+  CloudAuthUsersView get asDslTable => this;
+  @override
+  CloudAuthUsersViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CloudAuthUsersViewData(
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id'])!,
+      givenName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}given_name']),
+      familyName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}family_name']),
+      timeZone: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}time_zone']),
+      languageCode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}language_code']),
+      createTime: attachedDatabase.typeMapping
+          .read(DriftSqlType.any, data['${effectivePrefix}create_time'])!,
+      updateTime: attachedDatabase.typeMapping
+          .read(DriftSqlType.any, data['${effectivePrefix}update_time']),
+      emails: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}emails'])!,
+      phoneNumbers: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}phone_numbers'])!,
+      roles: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}roles'])!,
+    );
+  }
+
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, false,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<String> givenName = GeneratedColumn<String>(
+      'given_name', aliasedName, true,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<String> familyName = GeneratedColumn<String>(
+      'family_name', aliasedName, true,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<String> timeZone = GeneratedColumn<String>(
+      'time_zone', aliasedName, true,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
+      'language_code', aliasedName, true,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<DriftAny> createTime = GeneratedColumn<DriftAny>(
+      'create_time', aliasedName, false,
+      type: DriftSqlType.any);
+  late final GeneratedColumn<DriftAny> updateTime = GeneratedColumn<DriftAny>(
+      'update_time', aliasedName, true,
+      type: DriftSqlType.any);
+  late final GeneratedColumn<String> emails = GeneratedColumn<String>(
+      'emails', aliasedName, false,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<String> phoneNumbers = GeneratedColumn<String>(
+      'phone_numbers', aliasedName, false,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<String> roles = GeneratedColumn<String>(
+      'roles', aliasedName, false,
+      type: DriftSqlType.string);
+  @override
+  CloudAuthUsersView createAlias(String alias) {
+    return CloudAuthUsersView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {};
 }
 
 class CloudAuthProjects extends Table
@@ -5402,6 +5561,7 @@ class DatabaseAtV2 extends GeneratedDatabase {
       CloudAuthUserEmails(this);
   late final CloudAuthUserPhoneNumbers cloudAuthUserPhoneNumbers =
       CloudAuthUserPhoneNumbers(this);
+  late final CloudAuthUsersView cloudAuthUsersView = CloudAuthUsersView(this);
   late final CloudAuthProjects cloudAuthProjects = CloudAuthProjects(this);
   late final CloudAuthApis cloudAuthApis = CloudAuthApis(this);
   late final Index cloudAuthApisProjectIdx = Index(
@@ -5495,6 +5655,7 @@ class DatabaseAtV2 extends GeneratedDatabase {
         cloudAuthUsersDeleteTrg,
         cloudAuthUserEmails,
         cloudAuthUserPhoneNumbers,
+        cloudAuthUsersView,
         cloudAuthProjects,
         cloudAuthApis,
         cloudAuthApisProjectIdx,
@@ -5505,6 +5666,8 @@ class DatabaseAtV2 extends GeneratedDatabase {
         cloudAuthFunctionsCreateTrg,
         cloudAuthFunctionsDeleteTrg,
         cloudAuthMeta,
+        OnCreateQuery(
+            'INSERT INTO cloud_auth_meta (schema_version) VALUES (6) ON CONFLICT DO NOTHING'),
         cloudAuthCryptoKeys,
         cloudAuthSessions,
         cloudAuthCryptoKeysExternalCryptoKeyIdIdx,

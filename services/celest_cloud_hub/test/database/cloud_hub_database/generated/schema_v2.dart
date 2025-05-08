@@ -594,8 +594,14 @@ class CedarEntities extends Table
     'entity_json',
     aliasedName,
     false,
+    generatedAs: GeneratedAs(
+      const CustomExpression(
+        'json_object(\'type\', entity_type, \'id\', entity_id)',
+      ),
+      false,
+    ),
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints:
         'NOT NULL GENERATED ALWAYS AS (json_object(\'type\', entity_type, \'id\', entity_id)) VIRTUAL',
   );
@@ -673,7 +679,6 @@ class CedarEntitiesData extends DataClass
     map['entity_type'] = Variable<String>(entityType);
     map['entity_id'] = Variable<String>(entityId);
     map['attribute_json'] = Variable<String>(attributeJson);
-    map['entity_json'] = Variable<String>(entityJson);
     return map;
   }
 
@@ -682,7 +687,6 @@ class CedarEntitiesData extends DataClass
       entityType: Value(entityType),
       entityId: Value(entityId),
       attributeJson: Value(attributeJson),
-      entityJson: Value(entityJson),
     );
   }
 
@@ -720,20 +724,6 @@ class CedarEntitiesData extends DataClass
     attributeJson: attributeJson ?? this.attributeJson,
     entityJson: entityJson ?? this.entityJson,
   );
-  CedarEntitiesData copyWithCompanion(CedarEntitiesCompanion data) {
-    return CedarEntitiesData(
-      entityType:
-          data.entityType.present ? data.entityType.value : this.entityType,
-      entityId: data.entityId.present ? data.entityId.value : this.entityId,
-      attributeJson:
-          data.attributeJson.present
-              ? data.attributeJson.value
-              : this.attributeJson,
-      entityJson:
-          data.entityJson.present ? data.entityJson.value : this.entityJson,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('CedarEntitiesData(')
@@ -762,32 +752,26 @@ class CedarEntitiesCompanion extends UpdateCompanion<CedarEntitiesData> {
   final Value<String> entityType;
   final Value<String> entityId;
   final Value<String> attributeJson;
-  final Value<String> entityJson;
   const CedarEntitiesCompanion({
     this.entityType = const Value.absent(),
     this.entityId = const Value.absent(),
     this.attributeJson = const Value.absent(),
-    this.entityJson = const Value.absent(),
   });
   CedarEntitiesCompanion.insert({
     required String entityType,
     required String entityId,
     this.attributeJson = const Value.absent(),
-    required String entityJson,
   }) : entityType = Value(entityType),
-       entityId = Value(entityId),
-       entityJson = Value(entityJson);
+       entityId = Value(entityId);
   static Insertable<CedarEntitiesData> custom({
     Expression<String>? entityType,
     Expression<String>? entityId,
     Expression<String>? attributeJson,
-    Expression<String>? entityJson,
   }) {
     return RawValuesInsertable({
       if (entityType != null) 'entity_type': entityType,
       if (entityId != null) 'entity_id': entityId,
       if (attributeJson != null) 'attribute_json': attributeJson,
-      if (entityJson != null) 'entity_json': entityJson,
     });
   }
 
@@ -795,13 +779,11 @@ class CedarEntitiesCompanion extends UpdateCompanion<CedarEntitiesData> {
     Value<String>? entityType,
     Value<String>? entityId,
     Value<String>? attributeJson,
-    Value<String>? entityJson,
   }) {
     return CedarEntitiesCompanion(
       entityType: entityType ?? this.entityType,
       entityId: entityId ?? this.entityId,
       attributeJson: attributeJson ?? this.attributeJson,
-      entityJson: entityJson ?? this.entityJson,
     );
   }
 
@@ -817,9 +799,6 @@ class CedarEntitiesCompanion extends UpdateCompanion<CedarEntitiesData> {
     if (attributeJson.present) {
       map['attribute_json'] = Variable<String>(attributeJson.value);
     }
-    if (entityJson.present) {
-      map['entity_json'] = Variable<String>(entityJson.value);
-    }
     return map;
   }
 
@@ -828,8 +807,7 @@ class CedarEntitiesCompanion extends UpdateCompanion<CedarEntitiesData> {
     return (StringBuffer('CedarEntitiesCompanion(')
           ..write('entityType: $entityType, ')
           ..write('entityId: $entityId, ')
-          ..write('attributeJson: $attributeJson, ')
-          ..write('entityJson: $entityJson')
+          ..write('attributeJson: $attributeJson')
           ..write(')'))
         .toString();
   }
@@ -861,8 +839,14 @@ class CedarRelationships extends Table
     'entity_json',
     aliasedName,
     false,
+    generatedAs: GeneratedAs(
+      const CustomExpression(
+        'json_object(\'type\', entity_type, \'id\', entity_id)',
+      ),
+      false,
+    ),
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints:
         'NOT NULL GENERATED ALWAYS AS (json_object(\'type\', entity_type, \'id\', entity_id)) VIRTUAL',
   );
@@ -886,8 +870,14 @@ class CedarRelationships extends Table
     'parent_json',
     aliasedName,
     false,
+    generatedAs: GeneratedAs(
+      const CustomExpression(
+        'json_object(\'type\', parent_type, \'id\', parent_id)',
+      ),
+      false,
+    ),
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints:
         'NOT NULL GENERATED ALWAYS AS (json_object(\'type\', parent_type, \'id\', parent_id)) VIRTUAL',
   );
@@ -987,10 +977,8 @@ class CedarRelationshipsData extends DataClass
     final map = <String, Expression>{};
     map['entity_type'] = Variable<String>(entityType);
     map['entity_id'] = Variable<String>(entityId);
-    map['entity_json'] = Variable<String>(entityJson);
     map['parent_type'] = Variable<String>(parentType);
     map['parent_id'] = Variable<String>(parentId);
-    map['parent_json'] = Variable<String>(parentJson);
     return map;
   }
 
@@ -998,10 +986,8 @@ class CedarRelationshipsData extends DataClass
     return CedarRelationshipsCompanion(
       entityType: Value(entityType),
       entityId: Value(entityId),
-      entityJson: Value(entityJson),
       parentType: Value(parentType),
       parentId: Value(parentId),
-      parentJson: Value(parentJson),
     );
   }
 
@@ -1047,21 +1033,6 @@ class CedarRelationshipsData extends DataClass
     parentId: parentId ?? this.parentId,
     parentJson: parentJson ?? this.parentJson,
   );
-  CedarRelationshipsData copyWithCompanion(CedarRelationshipsCompanion data) {
-    return CedarRelationshipsData(
-      entityType:
-          data.entityType.present ? data.entityType.value : this.entityType,
-      entityId: data.entityId.present ? data.entityId.value : this.entityId,
-      entityJson:
-          data.entityJson.present ? data.entityJson.value : this.entityJson,
-      parentType:
-          data.parentType.present ? data.parentType.value : this.parentType,
-      parentId: data.parentId.present ? data.parentId.value : this.parentId,
-      parentJson:
-          data.parentJson.present ? data.parentJson.value : this.parentJson,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('CedarRelationshipsData(')
@@ -1100,64 +1071,48 @@ class CedarRelationshipsCompanion
     extends UpdateCompanion<CedarRelationshipsData> {
   final Value<String> entityType;
   final Value<String> entityId;
-  final Value<String> entityJson;
   final Value<String> parentType;
   final Value<String> parentId;
-  final Value<String> parentJson;
   const CedarRelationshipsCompanion({
     this.entityType = const Value.absent(),
     this.entityId = const Value.absent(),
-    this.entityJson = const Value.absent(),
     this.parentType = const Value.absent(),
     this.parentId = const Value.absent(),
-    this.parentJson = const Value.absent(),
   });
   CedarRelationshipsCompanion.insert({
     required String entityType,
     required String entityId,
-    required String entityJson,
     required String parentType,
     required String parentId,
-    required String parentJson,
   }) : entityType = Value(entityType),
        entityId = Value(entityId),
-       entityJson = Value(entityJson),
        parentType = Value(parentType),
-       parentId = Value(parentId),
-       parentJson = Value(parentJson);
+       parentId = Value(parentId);
   static Insertable<CedarRelationshipsData> custom({
     Expression<String>? entityType,
     Expression<String>? entityId,
-    Expression<String>? entityJson,
     Expression<String>? parentType,
     Expression<String>? parentId,
-    Expression<String>? parentJson,
   }) {
     return RawValuesInsertable({
       if (entityType != null) 'entity_type': entityType,
       if (entityId != null) 'entity_id': entityId,
-      if (entityJson != null) 'entity_json': entityJson,
       if (parentType != null) 'parent_type': parentType,
       if (parentId != null) 'parent_id': parentId,
-      if (parentJson != null) 'parent_json': parentJson,
     });
   }
 
   CedarRelationshipsCompanion copyWith({
     Value<String>? entityType,
     Value<String>? entityId,
-    Value<String>? entityJson,
     Value<String>? parentType,
     Value<String>? parentId,
-    Value<String>? parentJson,
   }) {
     return CedarRelationshipsCompanion(
       entityType: entityType ?? this.entityType,
       entityId: entityId ?? this.entityId,
-      entityJson: entityJson ?? this.entityJson,
       parentType: parentType ?? this.parentType,
       parentId: parentId ?? this.parentId,
-      parentJson: parentJson ?? this.parentJson,
     );
   }
 
@@ -1170,17 +1125,11 @@ class CedarRelationshipsCompanion
     if (entityId.present) {
       map['entity_id'] = Variable<String>(entityId.value);
     }
-    if (entityJson.present) {
-      map['entity_json'] = Variable<String>(entityJson.value);
-    }
     if (parentType.present) {
       map['parent_type'] = Variable<String>(parentType.value);
     }
     if (parentId.present) {
       map['parent_id'] = Variable<String>(parentId.value);
-    }
-    if (parentJson.present) {
-      map['parent_json'] = Variable<String>(parentJson.value);
     }
     return map;
   }
@@ -1190,10 +1139,8 @@ class CedarRelationshipsCompanion
     return (StringBuffer('CedarRelationshipsCompanion(')
           ..write('entityType: $entityType, ')
           ..write('entityId: $entityId, ')
-          ..write('entityJson: $entityJson, ')
           ..write('parentType: $parentType, ')
-          ..write('parentId: $parentId, ')
-          ..write('parentJson: $parentJson')
+          ..write('parentId: $parentId')
           ..write(')'))
         .toString();
   }
@@ -1745,6 +1692,287 @@ class CloudAuthUserPhoneNumbersCompanion
           ..write(')'))
         .toString();
   }
+}
+
+class CloudAuthUsersViewData extends DataClass {
+  final String userId;
+  final String? givenName;
+  final String? familyName;
+  final String? timeZone;
+  final String? languageCode;
+  final DriftAny createTime;
+  final DriftAny? updateTime;
+  final String emails;
+  final String phoneNumbers;
+  final String roles;
+  const CloudAuthUsersViewData({
+    required this.userId,
+    this.givenName,
+    this.familyName,
+    this.timeZone,
+    this.languageCode,
+    required this.createTime,
+    this.updateTime,
+    required this.emails,
+    required this.phoneNumbers,
+    required this.roles,
+  });
+  factory CloudAuthUsersViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CloudAuthUsersViewData(
+      userId: serializer.fromJson<String>(json['userId']),
+      givenName: serializer.fromJson<String?>(json['givenName']),
+      familyName: serializer.fromJson<String?>(json['familyName']),
+      timeZone: serializer.fromJson<String?>(json['timeZone']),
+      languageCode: serializer.fromJson<String?>(json['languageCode']),
+      createTime: serializer.fromJson<DriftAny>(json['createTime']),
+      updateTime: serializer.fromJson<DriftAny?>(json['updateTime']),
+      emails: serializer.fromJson<String>(json['emails']),
+      phoneNumbers: serializer.fromJson<String>(json['phoneNumbers']),
+      roles: serializer.fromJson<String>(json['roles']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'userId': serializer.toJson<String>(userId),
+      'givenName': serializer.toJson<String?>(givenName),
+      'familyName': serializer.toJson<String?>(familyName),
+      'timeZone': serializer.toJson<String?>(timeZone),
+      'languageCode': serializer.toJson<String?>(languageCode),
+      'createTime': serializer.toJson<DriftAny>(createTime),
+      'updateTime': serializer.toJson<DriftAny?>(updateTime),
+      'emails': serializer.toJson<String>(emails),
+      'phoneNumbers': serializer.toJson<String>(phoneNumbers),
+      'roles': serializer.toJson<String>(roles),
+    };
+  }
+
+  CloudAuthUsersViewData copyWith({
+    String? userId,
+    Value<String?> givenName = const Value.absent(),
+    Value<String?> familyName = const Value.absent(),
+    Value<String?> timeZone = const Value.absent(),
+    Value<String?> languageCode = const Value.absent(),
+    DriftAny? createTime,
+    Value<DriftAny?> updateTime = const Value.absent(),
+    String? emails,
+    String? phoneNumbers,
+    String? roles,
+  }) => CloudAuthUsersViewData(
+    userId: userId ?? this.userId,
+    givenName: givenName.present ? givenName.value : this.givenName,
+    familyName: familyName.present ? familyName.value : this.familyName,
+    timeZone: timeZone.present ? timeZone.value : this.timeZone,
+    languageCode: languageCode.present ? languageCode.value : this.languageCode,
+    createTime: createTime ?? this.createTime,
+    updateTime: updateTime.present ? updateTime.value : this.updateTime,
+    emails: emails ?? this.emails,
+    phoneNumbers: phoneNumbers ?? this.phoneNumbers,
+    roles: roles ?? this.roles,
+  );
+  @override
+  String toString() {
+    return (StringBuffer('CloudAuthUsersViewData(')
+          ..write('userId: $userId, ')
+          ..write('givenName: $givenName, ')
+          ..write('familyName: $familyName, ')
+          ..write('timeZone: $timeZone, ')
+          ..write('languageCode: $languageCode, ')
+          ..write('createTime: $createTime, ')
+          ..write('updateTime: $updateTime, ')
+          ..write('emails: $emails, ')
+          ..write('phoneNumbers: $phoneNumbers, ')
+          ..write('roles: $roles')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    userId,
+    givenName,
+    familyName,
+    timeZone,
+    languageCode,
+    createTime,
+    updateTime,
+    emails,
+    phoneNumbers,
+    roles,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CloudAuthUsersViewData &&
+          other.userId == this.userId &&
+          other.givenName == this.givenName &&
+          other.familyName == this.familyName &&
+          other.timeZone == this.timeZone &&
+          other.languageCode == this.languageCode &&
+          other.createTime == this.createTime &&
+          other.updateTime == this.updateTime &&
+          other.emails == this.emails &&
+          other.phoneNumbers == this.phoneNumbers &&
+          other.roles == this.roles);
+}
+
+class CloudAuthUsersView
+    extends ViewInfo<CloudAuthUsersView, CloudAuthUsersViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final DatabaseAtV2 attachedDatabase;
+  CloudAuthUsersView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [
+    userId,
+    givenName,
+    familyName,
+    timeZone,
+    languageCode,
+    createTime,
+    updateTime,
+    emails,
+    phoneNumbers,
+    roles,
+  ];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'cloud_auth_users_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW IF NOT EXISTS cloud_auth_users_view AS SELECT cloud_auth_users.*, (SELECT json_group_array(json_object(\'email\', email, \'isVerified\', iif(is_verified, json(\'true\'), json(\'false\')), \'isPrimary\', iif(is_primary, json(\'true\'), json(\'false\')))) FROM cloud_auth_user_emails WHERE user_id = cloud_auth_users.user_id) AS emails, (SELECT json_group_array(json_object(\'phoneNumber\', phone_number, \'isVerified\', iif(is_verified, json(\'true\'), json(\'false\')), \'isPrimary\', iif(is_primary, json(\'true\'), json(\'false\')))) FROM cloud_auth_user_phone_numbers WHERE user_id = cloud_auth_users.user_id) AS phone_numbers, (SELECT json_group_array(json_object(\'type\', \'Celest::Role\', \'id\', parent_id)) FROM cedar_relationships WHERE entity_type = \'Celest::User\' AND entity_id = cloud_auth_users.user_id AND parent_type = \'Celest::Role\') AS roles FROM cloud_auth_users;',
+  };
+  @override
+  CloudAuthUsersView get asDslTable => this;
+  @override
+  CloudAuthUsersViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CloudAuthUsersViewData(
+      userId:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}user_id'],
+          )!,
+      givenName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}given_name'],
+      ),
+      familyName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}family_name'],
+      ),
+      timeZone: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}time_zone'],
+      ),
+      languageCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language_code'],
+      ),
+      createTime:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.any,
+            data['${effectivePrefix}create_time'],
+          )!,
+      updateTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.any,
+        data['${effectivePrefix}update_time'],
+      ),
+      emails:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}emails'],
+          )!,
+      phoneNumbers:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}phone_numbers'],
+          )!,
+      roles:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}roles'],
+          )!,
+    );
+  }
+
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> givenName = GeneratedColumn<String>(
+    'given_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> familyName = GeneratedColumn<String>(
+    'family_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> timeZone = GeneratedColumn<String>(
+    'time_zone',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
+    'language_code',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<DriftAny> createTime = GeneratedColumn<DriftAny>(
+    'create_time',
+    aliasedName,
+    false,
+    type: DriftSqlType.any,
+  );
+  late final GeneratedColumn<DriftAny> updateTime = GeneratedColumn<DriftAny>(
+    'update_time',
+    aliasedName,
+    true,
+    type: DriftSqlType.any,
+  );
+  late final GeneratedColumn<String> emails = GeneratedColumn<String>(
+    'emails',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> phoneNumbers = GeneratedColumn<String>(
+    'phone_numbers',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> roles = GeneratedColumn<String>(
+    'roles',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  @override
+  CloudAuthUsersView createAlias(String alias) {
+    return CloudAuthUsersView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {};
 }
 
 class CloudAuthProjects extends Table
@@ -6761,8 +6989,14 @@ class Organizations extends Table
     'etag',
     aliasedName,
     false,
+    generatedAs: GeneratedAs(
+      const CustomExpression(
+        'hex(md5(json_array(id, parent_type, parent_id, organization_id, state, display_name, create_time, update_time, delete_time, purge_time, annotations, primary_region, reconciling)))',
+      ),
+      true,
+    ),
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints:
         'NOT NULL GENERATED ALWAYS AS (hex(md5(json_array(id, parent_type, parent_id, organization_id, state, display_name, create_time, update_time, delete_time, purge_time, annotations, primary_region, reconciling)))) STORED',
   );
@@ -6934,7 +7168,6 @@ class OrganizationsData extends DataClass
       map['primary_region'] = Variable<String>(primaryRegion);
     }
     map['reconciling'] = Variable<bool>(reconciling);
-    map['etag'] = Variable<String>(etag);
     return map;
   }
 
@@ -6971,7 +7204,6 @@ class OrganizationsData extends DataClass
               ? const Value.absent()
               : Value(primaryRegion),
       reconciling: Value(reconciling),
-      etag: Value(etag),
     );
   }
 
@@ -7050,38 +7282,6 @@ class OrganizationsData extends DataClass
     reconciling: reconciling ?? this.reconciling,
     etag: etag ?? this.etag,
   );
-  OrganizationsData copyWithCompanion(OrganizationsCompanion data) {
-    return OrganizationsData(
-      id: data.id.present ? data.id.value : this.id,
-      parentType:
-          data.parentType.present ? data.parentType.value : this.parentType,
-      parentId: data.parentId.present ? data.parentId.value : this.parentId,
-      organizationId:
-          data.organizationId.present
-              ? data.organizationId.value
-              : this.organizationId,
-      state: data.state.present ? data.state.value : this.state,
-      displayName:
-          data.displayName.present ? data.displayName.value : this.displayName,
-      createTime:
-          data.createTime.present ? data.createTime.value : this.createTime,
-      updateTime:
-          data.updateTime.present ? data.updateTime.value : this.updateTime,
-      deleteTime:
-          data.deleteTime.present ? data.deleteTime.value : this.deleteTime,
-      purgeTime: data.purgeTime.present ? data.purgeTime.value : this.purgeTime,
-      annotations:
-          data.annotations.present ? data.annotations.value : this.annotations,
-      primaryRegion:
-          data.primaryRegion.present
-              ? data.primaryRegion.value
-              : this.primaryRegion,
-      reconciling:
-          data.reconciling.present ? data.reconciling.value : this.reconciling,
-      etag: data.etag.present ? data.etag.value : this.etag,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('OrganizationsData(')
@@ -7154,7 +7354,6 @@ class OrganizationsCompanion extends UpdateCompanion<OrganizationsData> {
   final Value<String?> annotations;
   final Value<String?> primaryRegion;
   final Value<bool> reconciling;
-  final Value<String> etag;
   final Value<int> rowid;
   const OrganizationsCompanion({
     this.id = const Value.absent(),
@@ -7170,7 +7369,6 @@ class OrganizationsCompanion extends UpdateCompanion<OrganizationsData> {
     this.annotations = const Value.absent(),
     this.primaryRegion = const Value.absent(),
     this.reconciling = const Value.absent(),
-    this.etag = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   OrganizationsCompanion.insert({
@@ -7187,12 +7385,10 @@ class OrganizationsCompanion extends UpdateCompanion<OrganizationsData> {
     this.annotations = const Value.absent(),
     this.primaryRegion = const Value.absent(),
     this.reconciling = const Value.absent(),
-    required String etag,
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        organizationId = Value(organizationId),
-       displayName = Value(displayName),
-       etag = Value(etag);
+       displayName = Value(displayName);
   static Insertable<OrganizationsData> custom({
     Expression<String>? id,
     Expression<String>? parentType,
@@ -7207,7 +7403,6 @@ class OrganizationsCompanion extends UpdateCompanion<OrganizationsData> {
     Expression<String>? annotations,
     Expression<String>? primaryRegion,
     Expression<bool>? reconciling,
-    Expression<String>? etag,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -7224,7 +7419,6 @@ class OrganizationsCompanion extends UpdateCompanion<OrganizationsData> {
       if (annotations != null) 'annotations': annotations,
       if (primaryRegion != null) 'primary_region': primaryRegion,
       if (reconciling != null) 'reconciling': reconciling,
-      if (etag != null) 'etag': etag,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -7243,7 +7437,6 @@ class OrganizationsCompanion extends UpdateCompanion<OrganizationsData> {
     Value<String?>? annotations,
     Value<String?>? primaryRegion,
     Value<bool>? reconciling,
-    Value<String>? etag,
     Value<int>? rowid,
   }) {
     return OrganizationsCompanion(
@@ -7260,7 +7453,6 @@ class OrganizationsCompanion extends UpdateCompanion<OrganizationsData> {
       annotations: annotations ?? this.annotations,
       primaryRegion: primaryRegion ?? this.primaryRegion,
       reconciling: reconciling ?? this.reconciling,
-      etag: etag ?? this.etag,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -7307,9 +7499,6 @@ class OrganizationsCompanion extends UpdateCompanion<OrganizationsData> {
     if (reconciling.present) {
       map['reconciling'] = Variable<bool>(reconciling.value);
     }
-    if (etag.present) {
-      map['etag'] = Variable<String>(etag.value);
-    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -7332,7 +7521,6 @@ class OrganizationsCompanion extends UpdateCompanion<OrganizationsData> {
           ..write('annotations: $annotations, ')
           ..write('primaryRegion: $primaryRegion, ')
           ..write('reconciling: $reconciling, ')
-          ..write('etag: $etag, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -7456,8 +7644,14 @@ class Projects extends Table with TableInfo<Projects, ProjectsData> {
     'etag',
     aliasedName,
     false,
+    generatedAs: GeneratedAs(
+      const CustomExpression(
+        'hex(md5(json_array(id, parent_type, parent_id, project_id, state, display_name, create_time, update_time, delete_time, purge_time, annotations, regions, reconciling)))',
+      ),
+      true,
+    ),
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints:
         'NOT NULL GENERATED ALWAYS AS (hex(md5(json_array(id, parent_type, parent_id, project_id, state, display_name, create_time, update_time, delete_time, purge_time, annotations, regions, reconciling)))) STORED',
   );
@@ -7633,7 +7827,6 @@ class ProjectsData extends DataClass implements Insertable<ProjectsData> {
     }
     map['regions'] = Variable<String>(regions);
     map['reconciling'] = Variable<bool>(reconciling);
-    map['etag'] = Variable<String>(etag);
     return map;
   }
 
@@ -7664,7 +7857,6 @@ class ProjectsData extends DataClass implements Insertable<ProjectsData> {
               : Value(annotations),
       regions: Value(regions),
       reconciling: Value(reconciling),
-      etag: Value(etag),
     );
   }
 
@@ -7742,32 +7934,6 @@ class ProjectsData extends DataClass implements Insertable<ProjectsData> {
     reconciling: reconciling ?? this.reconciling,
     etag: etag ?? this.etag,
   );
-  ProjectsData copyWithCompanion(ProjectsCompanion data) {
-    return ProjectsData(
-      id: data.id.present ? data.id.value : this.id,
-      parentType:
-          data.parentType.present ? data.parentType.value : this.parentType,
-      parentId: data.parentId.present ? data.parentId.value : this.parentId,
-      projectId: data.projectId.present ? data.projectId.value : this.projectId,
-      state: data.state.present ? data.state.value : this.state,
-      displayName:
-          data.displayName.present ? data.displayName.value : this.displayName,
-      createTime:
-          data.createTime.present ? data.createTime.value : this.createTime,
-      updateTime:
-          data.updateTime.present ? data.updateTime.value : this.updateTime,
-      deleteTime:
-          data.deleteTime.present ? data.deleteTime.value : this.deleteTime,
-      purgeTime: data.purgeTime.present ? data.purgeTime.value : this.purgeTime,
-      annotations:
-          data.annotations.present ? data.annotations.value : this.annotations,
-      regions: data.regions.present ? data.regions.value : this.regions,
-      reconciling:
-          data.reconciling.present ? data.reconciling.value : this.reconciling,
-      etag: data.etag.present ? data.etag.value : this.etag,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('ProjectsData(')
@@ -7840,7 +8006,6 @@ class ProjectsCompanion extends UpdateCompanion<ProjectsData> {
   final Value<String?> annotations;
   final Value<String> regions;
   final Value<bool> reconciling;
-  final Value<String> etag;
   final Value<int> rowid;
   const ProjectsCompanion({
     this.id = const Value.absent(),
@@ -7856,7 +8021,6 @@ class ProjectsCompanion extends UpdateCompanion<ProjectsData> {
     this.annotations = const Value.absent(),
     this.regions = const Value.absent(),
     this.reconciling = const Value.absent(),
-    this.etag = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ProjectsCompanion.insert({
@@ -7873,14 +8037,12 @@ class ProjectsCompanion extends UpdateCompanion<ProjectsData> {
     this.annotations = const Value.absent(),
     required String regions,
     this.reconciling = const Value.absent(),
-    required String etag,
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        parentType = Value(parentType),
        parentId = Value(parentId),
        projectId = Value(projectId),
-       regions = Value(regions),
-       etag = Value(etag);
+       regions = Value(regions);
   static Insertable<ProjectsData> custom({
     Expression<String>? id,
     Expression<String>? parentType,
@@ -7895,7 +8057,6 @@ class ProjectsCompanion extends UpdateCompanion<ProjectsData> {
     Expression<String>? annotations,
     Expression<String>? regions,
     Expression<bool>? reconciling,
-    Expression<String>? etag,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -7912,7 +8073,6 @@ class ProjectsCompanion extends UpdateCompanion<ProjectsData> {
       if (annotations != null) 'annotations': annotations,
       if (regions != null) 'regions': regions,
       if (reconciling != null) 'reconciling': reconciling,
-      if (etag != null) 'etag': etag,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -7931,7 +8091,6 @@ class ProjectsCompanion extends UpdateCompanion<ProjectsData> {
     Value<String?>? annotations,
     Value<String>? regions,
     Value<bool>? reconciling,
-    Value<String>? etag,
     Value<int>? rowid,
   }) {
     return ProjectsCompanion(
@@ -7948,7 +8107,6 @@ class ProjectsCompanion extends UpdateCompanion<ProjectsData> {
       annotations: annotations ?? this.annotations,
       regions: regions ?? this.regions,
       reconciling: reconciling ?? this.reconciling,
-      etag: etag ?? this.etag,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -7995,9 +8153,6 @@ class ProjectsCompanion extends UpdateCompanion<ProjectsData> {
     if (reconciling.present) {
       map['reconciling'] = Variable<bool>(reconciling.value);
     }
-    if (etag.present) {
-      map['etag'] = Variable<String>(etag.value);
-    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -8020,7 +8175,6 @@ class ProjectsCompanion extends UpdateCompanion<ProjectsData> {
           ..write('annotations: $annotations, ')
           ..write('regions: $regions, ')
           ..write('reconciling: $reconciling, ')
-          ..write('etag: $etag, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -8121,8 +8275,14 @@ class ProjectEnvironments extends Table
     'reconciling',
     aliasedName,
     false,
+    generatedAs: GeneratedAs(
+      const CustomExpression(
+        'state IN (\'CREATING\', \'UPDATING\', \'DELETING\')',
+      ),
+      false,
+    ),
     type: DriftSqlType.bool,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints:
         'NOT NULL GENERATED ALWAYS AS (state IN (\'CREATING\', \'UPDATING\', \'DELETING\')) VIRTUAL',
   );
@@ -8130,8 +8290,14 @@ class ProjectEnvironments extends Table
     'etag',
     aliasedName,
     false,
+    generatedAs: GeneratedAs(
+      const CustomExpression(
+        'hex(md5(json_array(id, parent_type, parent_id, project_environment_id, state, display_name, create_time, update_time, delete_time, annotations, reconciling)))',
+      ),
+      true,
+    ),
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints:
         'NOT NULL GENERATED ALWAYS AS (hex(md5(json_array(id, parent_type, parent_id, project_environment_id, state, display_name, create_time, update_time, delete_time, annotations, reconciling)))) STORED',
   );
@@ -8291,8 +8457,6 @@ class ProjectEnvironmentsData extends DataClass
     if (!nullToAbsent || annotations != null) {
       map['annotations'] = Variable<String>(annotations);
     }
-    map['reconciling'] = Variable<bool>(reconciling);
-    map['etag'] = Variable<String>(etag);
     return map;
   }
 
@@ -8317,8 +8481,6 @@ class ProjectEnvironmentsData extends DataClass
           annotations == null && nullToAbsent
               ? const Value.absent()
               : Value(annotations),
-      reconciling: Value(reconciling),
-      etag: Value(etag),
     );
   }
 
@@ -8390,33 +8552,6 @@ class ProjectEnvironmentsData extends DataClass
     reconciling: reconciling ?? this.reconciling,
     etag: etag ?? this.etag,
   );
-  ProjectEnvironmentsData copyWithCompanion(ProjectEnvironmentsCompanion data) {
-    return ProjectEnvironmentsData(
-      id: data.id.present ? data.id.value : this.id,
-      parentType:
-          data.parentType.present ? data.parentType.value : this.parentType,
-      parentId: data.parentId.present ? data.parentId.value : this.parentId,
-      projectEnvironmentId:
-          data.projectEnvironmentId.present
-              ? data.projectEnvironmentId.value
-              : this.projectEnvironmentId,
-      state: data.state.present ? data.state.value : this.state,
-      displayName:
-          data.displayName.present ? data.displayName.value : this.displayName,
-      createTime:
-          data.createTime.present ? data.createTime.value : this.createTime,
-      updateTime:
-          data.updateTime.present ? data.updateTime.value : this.updateTime,
-      deleteTime:
-          data.deleteTime.present ? data.deleteTime.value : this.deleteTime,
-      annotations:
-          data.annotations.present ? data.annotations.value : this.annotations,
-      reconciling:
-          data.reconciling.present ? data.reconciling.value : this.reconciling,
-      etag: data.etag.present ? data.etag.value : this.etag,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('ProjectEnvironmentsData(')
@@ -8481,8 +8616,6 @@ class ProjectEnvironmentsCompanion
   final Value<DateTime> updateTime;
   final Value<DateTime?> deleteTime;
   final Value<String?> annotations;
-  final Value<bool> reconciling;
-  final Value<String> etag;
   final Value<int> rowid;
   const ProjectEnvironmentsCompanion({
     this.id = const Value.absent(),
@@ -8495,8 +8628,6 @@ class ProjectEnvironmentsCompanion
     this.updateTime = const Value.absent(),
     this.deleteTime = const Value.absent(),
     this.annotations = const Value.absent(),
-    this.reconciling = const Value.absent(),
-    this.etag = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ProjectEnvironmentsCompanion.insert({
@@ -8510,15 +8641,11 @@ class ProjectEnvironmentsCompanion
     this.updateTime = const Value.absent(),
     this.deleteTime = const Value.absent(),
     this.annotations = const Value.absent(),
-    required bool reconciling,
-    required String etag,
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        parentType = Value(parentType),
        parentId = Value(parentId),
-       projectEnvironmentId = Value(projectEnvironmentId),
-       reconciling = Value(reconciling),
-       etag = Value(etag);
+       projectEnvironmentId = Value(projectEnvironmentId);
   static Insertable<ProjectEnvironmentsData> custom({
     Expression<String>? id,
     Expression<String>? parentType,
@@ -8530,8 +8657,6 @@ class ProjectEnvironmentsCompanion
     Expression<DateTime>? updateTime,
     Expression<DateTime>? deleteTime,
     Expression<String>? annotations,
-    Expression<bool>? reconciling,
-    Expression<String>? etag,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -8546,8 +8671,6 @@ class ProjectEnvironmentsCompanion
       if (updateTime != null) 'update_time': updateTime,
       if (deleteTime != null) 'delete_time': deleteTime,
       if (annotations != null) 'annotations': annotations,
-      if (reconciling != null) 'reconciling': reconciling,
-      if (etag != null) 'etag': etag,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -8563,8 +8686,6 @@ class ProjectEnvironmentsCompanion
     Value<DateTime>? updateTime,
     Value<DateTime?>? deleteTime,
     Value<String?>? annotations,
-    Value<bool>? reconciling,
-    Value<String>? etag,
     Value<int>? rowid,
   }) {
     return ProjectEnvironmentsCompanion(
@@ -8578,8 +8699,6 @@ class ProjectEnvironmentsCompanion
       updateTime: updateTime ?? this.updateTime,
       deleteTime: deleteTime ?? this.deleteTime,
       annotations: annotations ?? this.annotations,
-      reconciling: reconciling ?? this.reconciling,
-      etag: etag ?? this.etag,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -8619,12 +8738,6 @@ class ProjectEnvironmentsCompanion
     if (annotations.present) {
       map['annotations'] = Variable<String>(annotations.value);
     }
-    if (reconciling.present) {
-      map['reconciling'] = Variable<bool>(reconciling.value);
-    }
-    if (etag.present) {
-      map['etag'] = Variable<String>(etag.value);
-    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -8644,8 +8757,6 @@ class ProjectEnvironmentsCompanion
           ..write('updateTime: $updateTime, ')
           ..write('deleteTime: $deleteTime, ')
           ..write('annotations: $annotations, ')
-          ..write('reconciling: $reconciling, ')
-          ..write('etag: $etag, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -8687,8 +8798,9 @@ class ProjectEnvironmentAsts extends Table
     'digest',
     aliasedName,
     false,
+    generatedAs: GeneratedAs(const CustomExpression('hex(md5(ast))'), true),
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints: 'NOT NULL GENERATED ALWAYS AS (hex(md5(ast))) STORED',
   );
   @override
@@ -8768,7 +8880,6 @@ class ProjectEnvironmentAstsData extends DataClass
     map['project_environment_id'] = Variable<String>(projectEnvironmentId);
     map['ast'] = Variable<Uint8List>(ast);
     map['version'] = Variable<int>(version);
-    map['digest'] = Variable<String>(digest);
     return map;
   }
 
@@ -8777,7 +8888,6 @@ class ProjectEnvironmentAstsData extends DataClass
       projectEnvironmentId: Value(projectEnvironmentId),
       ast: Value(ast),
       version: Value(version),
-      digest: Value(digest),
     );
   }
 
@@ -8817,20 +8927,6 @@ class ProjectEnvironmentAstsData extends DataClass
     version: version ?? this.version,
     digest: digest ?? this.digest,
   );
-  ProjectEnvironmentAstsData copyWithCompanion(
-    ProjectEnvironmentAstsCompanion data,
-  ) {
-    return ProjectEnvironmentAstsData(
-      projectEnvironmentId:
-          data.projectEnvironmentId.present
-              ? data.projectEnvironmentId.value
-              : this.projectEnvironmentId,
-      ast: data.ast.present ? data.ast.value : this.ast,
-      version: data.version.present ? data.version.value : this.version,
-      digest: data.digest.present ? data.digest.value : this.digest,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('ProjectEnvironmentAstsData(')
@@ -8864,34 +8960,28 @@ class ProjectEnvironmentAstsCompanion
   final Value<String> projectEnvironmentId;
   final Value<Uint8List> ast;
   final Value<int> version;
-  final Value<String> digest;
   const ProjectEnvironmentAstsCompanion({
     this.projectEnvironmentId = const Value.absent(),
     this.ast = const Value.absent(),
     this.version = const Value.absent(),
-    this.digest = const Value.absent(),
   });
   ProjectEnvironmentAstsCompanion.insert({
     required String projectEnvironmentId,
     required Uint8List ast,
     required int version,
-    required String digest,
   }) : projectEnvironmentId = Value(projectEnvironmentId),
        ast = Value(ast),
-       version = Value(version),
-       digest = Value(digest);
+       version = Value(version);
   static Insertable<ProjectEnvironmentAstsData> custom({
     Expression<String>? projectEnvironmentId,
     Expression<Uint8List>? ast,
     Expression<int>? version,
-    Expression<String>? digest,
   }) {
     return RawValuesInsertable({
       if (projectEnvironmentId != null)
         'project_environment_id': projectEnvironmentId,
       if (ast != null) 'ast': ast,
       if (version != null) 'version': version,
-      if (digest != null) 'digest': digest,
     });
   }
 
@@ -8899,13 +8989,11 @@ class ProjectEnvironmentAstsCompanion
     Value<String>? projectEnvironmentId,
     Value<Uint8List>? ast,
     Value<int>? version,
-    Value<String>? digest,
   }) {
     return ProjectEnvironmentAstsCompanion(
       projectEnvironmentId: projectEnvironmentId ?? this.projectEnvironmentId,
       ast: ast ?? this.ast,
       version: version ?? this.version,
-      digest: digest ?? this.digest,
     );
   }
 
@@ -8923,9 +9011,6 @@ class ProjectEnvironmentAstsCompanion
     if (version.present) {
       map['version'] = Variable<int>(version.value);
     }
-    if (digest.present) {
-      map['digest'] = Variable<String>(digest.value);
-    }
     return map;
   }
 
@@ -8934,8 +9019,7 @@ class ProjectEnvironmentAstsCompanion
     return (StringBuffer('ProjectEnvironmentAstsCompanion(')
           ..write('projectEnvironmentId: $projectEnvironmentId, ')
           ..write('ast: $ast, ')
-          ..write('version: $version, ')
-          ..write('digest: $digest')
+          ..write('version: $version')
           ..write(')'))
         .toString();
   }
@@ -9992,8 +10076,12 @@ class Operations extends Table with TableInfo<Operations, OperationsData> {
     'done',
     aliasedName,
     false,
+    generatedAs: GeneratedAs(
+      const CustomExpression('response IS NOT NULL OR error IS NOT NULL'),
+      false,
+    ),
     type: DriftSqlType.bool,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints:
         'NOT NULL GENERATED ALWAYS AS (response IS NOT NULL OR error IS NOT NULL) VIRTUAL',
   );
@@ -10168,7 +10256,6 @@ class OperationsData extends DataClass implements Insertable<OperationsData> {
     if (!nullToAbsent || error != null) {
       map['error'] = Variable<String>(error);
     }
-    map['done'] = Variable<bool>(done);
     map['create_time'] = Variable<DateTime>(createTime);
     if (!nullToAbsent || fullResourceName != null) {
       map['full_resource_name'] = Variable<String>(fullResourceName);
@@ -10201,7 +10288,6 @@ class OperationsData extends DataClass implements Insertable<OperationsData> {
               : Value(response),
       error:
           error == null && nullToAbsent ? const Value.absent() : Value(error),
-      done: Value(done),
       createTime: Value(createTime),
       fullResourceName:
           fullResourceName == null && nullToAbsent
@@ -10291,30 +10377,6 @@ class OperationsData extends DataClass implements Insertable<OperationsData> {
     resourceType: resourceType.present ? resourceType.value : this.resourceType,
     resourceId: resourceId.present ? resourceId.value : this.resourceId,
   );
-  OperationsData copyWithCompanion(OperationsCompanion data) {
-    return OperationsData(
-      id: data.id.present ? data.id.value : this.id,
-      metadata: data.metadata.present ? data.metadata.value : this.metadata,
-      response: data.response.present ? data.response.value : this.response,
-      error: data.error.present ? data.error.value : this.error,
-      done: data.done.present ? data.done.value : this.done,
-      createTime:
-          data.createTime.present ? data.createTime.value : this.createTime,
-      fullResourceName:
-          data.fullResourceName.present
-              ? data.fullResourceName.value
-              : this.fullResourceName,
-      ownerType: data.ownerType.present ? data.ownerType.value : this.ownerType,
-      ownerId: data.ownerId.present ? data.ownerId.value : this.ownerId,
-      resourceType:
-          data.resourceType.present
-              ? data.resourceType.value
-              : this.resourceType,
-      resourceId:
-          data.resourceId.present ? data.resourceId.value : this.resourceId,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('OperationsData(')
@@ -10369,7 +10431,6 @@ class OperationsCompanion extends UpdateCompanion<OperationsData> {
   final Value<String?> metadata;
   final Value<String?> response;
   final Value<String?> error;
-  final Value<bool> done;
   final Value<DateTime> createTime;
   final Value<String?> fullResourceName;
   final Value<String?> ownerType;
@@ -10382,7 +10443,6 @@ class OperationsCompanion extends UpdateCompanion<OperationsData> {
     this.metadata = const Value.absent(),
     this.response = const Value.absent(),
     this.error = const Value.absent(),
-    this.done = const Value.absent(),
     this.createTime = const Value.absent(),
     this.fullResourceName = const Value.absent(),
     this.ownerType = const Value.absent(),
@@ -10396,7 +10456,6 @@ class OperationsCompanion extends UpdateCompanion<OperationsData> {
     this.metadata = const Value.absent(),
     this.response = const Value.absent(),
     this.error = const Value.absent(),
-    required bool done,
     this.createTime = const Value.absent(),
     this.fullResourceName = const Value.absent(),
     this.ownerType = const Value.absent(),
@@ -10404,14 +10463,12 @@ class OperationsCompanion extends UpdateCompanion<OperationsData> {
     this.resourceType = const Value.absent(),
     this.resourceId = const Value.absent(),
     this.rowid = const Value.absent(),
-  }) : id = Value(id),
-       done = Value(done);
+  }) : id = Value(id);
   static Insertable<OperationsData> custom({
     Expression<String>? id,
     Expression<String>? metadata,
     Expression<String>? response,
     Expression<String>? error,
-    Expression<bool>? done,
     Expression<DateTime>? createTime,
     Expression<String>? fullResourceName,
     Expression<String>? ownerType,
@@ -10425,7 +10482,6 @@ class OperationsCompanion extends UpdateCompanion<OperationsData> {
       if (metadata != null) 'metadata': metadata,
       if (response != null) 'response': response,
       if (error != null) 'error': error,
-      if (done != null) 'done': done,
       if (createTime != null) 'create_time': createTime,
       if (fullResourceName != null) 'full_resource_name': fullResourceName,
       if (ownerType != null) 'owner_type': ownerType,
@@ -10441,7 +10497,6 @@ class OperationsCompanion extends UpdateCompanion<OperationsData> {
     Value<String?>? metadata,
     Value<String?>? response,
     Value<String?>? error,
-    Value<bool>? done,
     Value<DateTime>? createTime,
     Value<String?>? fullResourceName,
     Value<String?>? ownerType,
@@ -10455,7 +10510,6 @@ class OperationsCompanion extends UpdateCompanion<OperationsData> {
       metadata: metadata ?? this.metadata,
       response: response ?? this.response,
       error: error ?? this.error,
-      done: done ?? this.done,
       createTime: createTime ?? this.createTime,
       fullResourceName: fullResourceName ?? this.fullResourceName,
       ownerType: ownerType ?? this.ownerType,
@@ -10480,9 +10534,6 @@ class OperationsCompanion extends UpdateCompanion<OperationsData> {
     }
     if (error.present) {
       map['error'] = Variable<String>(error.value);
-    }
-    if (done.present) {
-      map['done'] = Variable<bool>(done.value);
     }
     if (createTime.present) {
       map['create_time'] = Variable<DateTime>(createTime.value);
@@ -10515,7 +10566,6 @@ class OperationsCompanion extends UpdateCompanion<OperationsData> {
           ..write('metadata: $metadata, ')
           ..write('response: $response, ')
           ..write('error: $error, ')
-          ..write('done: $done, ')
           ..write('createTime: $createTime, ')
           ..write('fullResourceName: $fullResourceName, ')
           ..write('ownerType: $ownerType, ')
@@ -10547,6 +10597,7 @@ class DatabaseAtV2 extends GeneratedDatabase {
   );
   late final CloudAuthUserPhoneNumbers cloudAuthUserPhoneNumbers =
       CloudAuthUserPhoneNumbers(this);
+  late final CloudAuthUsersView cloudAuthUsersView = CloudAuthUsersView(this);
   late final CloudAuthProjects cloudAuthProjects = CloudAuthProjects(this);
   late final CloudAuthApis cloudAuthApis = CloudAuthApis(this);
   late final Index cloudAuthApisProjectIdx = Index(
@@ -10820,6 +10871,7 @@ class DatabaseAtV2 extends GeneratedDatabase {
     cloudAuthUsersDeleteTrg,
     cloudAuthUserEmails,
     cloudAuthUserPhoneNumbers,
+    cloudAuthUsersView,
     cloudAuthProjects,
     cloudAuthApis,
     cloudAuthApisProjectIdx,
@@ -10830,6 +10882,9 @@ class DatabaseAtV2 extends GeneratedDatabase {
     cloudAuthFunctionsCreateTrg,
     cloudAuthFunctionsDeleteTrg,
     cloudAuthMeta,
+    OnCreateQuery(
+      'INSERT INTO cloud_auth_meta (schema_version) VALUES (6) ON CONFLICT DO NOTHING',
+    ),
     cloudAuthCryptoKeys,
     cloudAuthCryptoKeysExternalCryptoKeyIdIdx,
     cloudAuthSessions,
