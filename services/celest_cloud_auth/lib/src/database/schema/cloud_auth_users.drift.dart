@@ -5,9 +5,14 @@ import 'package:celest_core/src/auth/user.dart' as i1;
 import 'package:celest_cloud_auth/src/database/schema/cloud_auth_users.drift.dart'
     as i2;
 import 'package:celest_cloud_auth/src/database/database_model.dart' as i3;
-import 'package:drift/internal/modular.dart' as i4;
-import 'dart:async' as i5;
-import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i6;
+import 'package:cedar/src/model/value.dart' as i4;
+import 'package:celest_cloud_auth/src/database/schema/converters/celest_converters.dart'
+    as i5;
+import 'package:celest_cloud_auth/src/database/schema/converters/cedar_converters.dart'
+    as i6;
+import 'package:drift/internal/modular.dart' as i7;
+import 'dart:async' as i8;
+import 'package:celest_cloud_auth/src/database/schema/cedar.drift.dart' as i9;
 
 typedef $CloudAuthUsersCreateCompanionBuilder = i2.CloudAuthUsersCompanion
     Function({
@@ -1040,9 +1045,246 @@ class CloudAuthUserPhoneNumbersCompanion
   }
 }
 
-class CloudAuthUsersDrift extends i4.ModularAccessor {
+class CloudAuthUsersViewData extends i0.DataClass {
+  final String userId;
+  final String? givenName;
+  final String? familyName;
+  final String? timeZone;
+  final String? languageCode;
+  final DateTime createTime;
+  final DateTime? updateTime;
+  final List<i1.Email> emails;
+  final List<i1.PhoneNumber> phoneNumbers;
+  final List<i4.EntityUid> roles;
+  const CloudAuthUsersViewData(
+      {required this.userId,
+      this.givenName,
+      this.familyName,
+      this.timeZone,
+      this.languageCode,
+      required this.createTime,
+      this.updateTime,
+      required this.emails,
+      required this.phoneNumbers,
+      required this.roles});
+  factory CloudAuthUsersViewData.fromJson(Map<String, dynamic> json,
+      {i0.ValueSerializer? serializer}) {
+    serializer ??= i0.driftRuntimeOptions.defaultSerializer;
+    return CloudAuthUsersViewData(
+      userId: serializer.fromJson<String>(json['user_id']),
+      givenName: serializer.fromJson<String?>(json['given_name']),
+      familyName: serializer.fromJson<String?>(json['family_name']),
+      timeZone: serializer.fromJson<String?>(json['time_zone']),
+      languageCode: serializer.fromJson<String?>(json['language_code']),
+      createTime: serializer.fromJson<DateTime>(json['create_time']),
+      updateTime: serializer.fromJson<DateTime?>(json['update_time']),
+      emails: serializer.fromJson<List<i1.Email>>(json['emails']),
+      phoneNumbers:
+          serializer.fromJson<List<i1.PhoneNumber>>(json['phone_numbers']),
+      roles: serializer.fromJson<List<i4.EntityUid>>(json['roles']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({i0.ValueSerializer? serializer}) {
+    serializer ??= i0.driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'user_id': serializer.toJson<String>(userId),
+      'given_name': serializer.toJson<String?>(givenName),
+      'family_name': serializer.toJson<String?>(familyName),
+      'time_zone': serializer.toJson<String?>(timeZone),
+      'language_code': serializer.toJson<String?>(languageCode),
+      'create_time': serializer.toJson<DateTime>(createTime),
+      'update_time': serializer.toJson<DateTime?>(updateTime),
+      'emails': serializer.toJson<List<i1.Email>>(emails),
+      'phone_numbers': serializer.toJson<List<i1.PhoneNumber>>(phoneNumbers),
+      'roles': serializer.toJson<List<i4.EntityUid>>(roles),
+    };
+  }
+
+  i2.CloudAuthUsersViewData copyWith(
+          {String? userId,
+          i0.Value<String?> givenName = const i0.Value.absent(),
+          i0.Value<String?> familyName = const i0.Value.absent(),
+          i0.Value<String?> timeZone = const i0.Value.absent(),
+          i0.Value<String?> languageCode = const i0.Value.absent(),
+          DateTime? createTime,
+          i0.Value<DateTime?> updateTime = const i0.Value.absent(),
+          List<i1.Email>? emails,
+          List<i1.PhoneNumber>? phoneNumbers,
+          List<i4.EntityUid>? roles}) =>
+      i2.CloudAuthUsersViewData(
+        userId: userId ?? this.userId,
+        givenName: givenName.present ? givenName.value : this.givenName,
+        familyName: familyName.present ? familyName.value : this.familyName,
+        timeZone: timeZone.present ? timeZone.value : this.timeZone,
+        languageCode:
+            languageCode.present ? languageCode.value : this.languageCode,
+        createTime: createTime ?? this.createTime,
+        updateTime: updateTime.present ? updateTime.value : this.updateTime,
+        emails: emails ?? this.emails,
+        phoneNumbers: phoneNumbers ?? this.phoneNumbers,
+        roles: roles ?? this.roles,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CloudAuthUsersViewData(')
+          ..write('userId: $userId, ')
+          ..write('givenName: $givenName, ')
+          ..write('familyName: $familyName, ')
+          ..write('timeZone: $timeZone, ')
+          ..write('languageCode: $languageCode, ')
+          ..write('createTime: $createTime, ')
+          ..write('updateTime: $updateTime, ')
+          ..write('emails: $emails, ')
+          ..write('phoneNumbers: $phoneNumbers, ')
+          ..write('roles: $roles')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(userId, givenName, familyName, timeZone,
+      languageCode, createTime, updateTime, emails, phoneNumbers, roles);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is i2.CloudAuthUsersViewData &&
+          other.userId == this.userId &&
+          other.givenName == this.givenName &&
+          other.familyName == this.familyName &&
+          other.timeZone == this.timeZone &&
+          other.languageCode == this.languageCode &&
+          other.createTime == this.createTime &&
+          other.updateTime == this.updateTime &&
+          other.emails == this.emails &&
+          other.phoneNumbers == this.phoneNumbers &&
+          other.roles == this.roles);
+}
+
+class CloudAuthUsersView
+    extends i0.ViewInfo<i2.CloudAuthUsersView, i2.CloudAuthUsersViewData>
+    implements i0.HasResultSet {
+  final String? _alias;
+  @override
+  final i0.GeneratedDatabase attachedDatabase;
+  CloudAuthUsersView(this.attachedDatabase, [this._alias]);
+  @override
+  List<i0.GeneratedColumn> get $columns => [
+        userId,
+        givenName,
+        familyName,
+        timeZone,
+        languageCode,
+        createTime,
+        updateTime,
+        emails,
+        phoneNumbers,
+        roles
+      ];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'cloud_auth_users_view';
+  @override
+  Map<i0.SqlDialect, String> get createViewStatements => {
+        i0.SqlDialect.sqlite:
+            'CREATE VIEW IF NOT EXISTS cloud_auth_users_view AS SELECT cloud_auth_users.*, (SELECT json_group_array(json_object(\'email\', email, \'isVerified\', iif(is_verified, json(\'true\'), json(\'false\')), \'isPrimary\', iif(is_primary, json(\'true\'), json(\'false\')))) FROM cloud_auth_user_emails WHERE user_id = cloud_auth_users.user_id) AS emails, (SELECT json_group_array(json_object(\'phoneNumber\', phone_number, \'isVerified\', iif(is_verified, json(\'true\'), json(\'false\')), \'isPrimary\', iif(is_primary, json(\'true\'), json(\'false\')))) FROM cloud_auth_user_phone_numbers WHERE user_id = cloud_auth_users.user_id) AS phone_numbers, (SELECT json_group_array(json_object(\'type\', \'Celest::Role\', \'id\', parent_id)) FROM cedar_relationships WHERE entity_type = \'Celest::User\' AND entity_id = cloud_auth_users.user_id AND parent_type = \'Celest::Role\') AS roles FROM cloud_auth_users',
+      };
+  @override
+  CloudAuthUsersView get asDslTable => this;
+  @override
+  i2.CloudAuthUsersViewData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return i2.CloudAuthUsersViewData(
+      userId: attachedDatabase.typeMapping
+          .read(i0.DriftSqlType.string, data['${effectivePrefix}user_id'])!,
+      givenName: attachedDatabase.typeMapping
+          .read(i0.DriftSqlType.string, data['${effectivePrefix}given_name']),
+      familyName: attachedDatabase.typeMapping
+          .read(i0.DriftSqlType.string, data['${effectivePrefix}family_name']),
+      timeZone: attachedDatabase.typeMapping
+          .read(i0.DriftSqlType.string, data['${effectivePrefix}time_zone']),
+      languageCode: attachedDatabase.typeMapping.read(
+          i0.DriftSqlType.string, data['${effectivePrefix}language_code']),
+      createTime: attachedDatabase.typeMapping.read(
+          const i3.TimestampType(), data['${effectivePrefix}create_time'])!,
+      updateTime: attachedDatabase.typeMapping.read(
+          const i3.TimestampType(), data['${effectivePrefix}update_time']),
+      emails: i2.CloudAuthUsersView.$converteremails.fromSql(attachedDatabase
+          .typeMapping
+          .read(i0.DriftSqlType.string, data['${effectivePrefix}emails'])!),
+      phoneNumbers: i2.CloudAuthUsersView.$converterphoneNumbers.fromSql(
+          attachedDatabase.typeMapping.read(i0.DriftSqlType.string,
+              data['${effectivePrefix}phone_numbers'])!),
+      roles: i2.CloudAuthUsersView.$converterroles.fromSql(attachedDatabase
+          .typeMapping
+          .read(i0.DriftSqlType.string, data['${effectivePrefix}roles'])!),
+    );
+  }
+
+  late final i0.GeneratedColumn<String> userId = i0.GeneratedColumn<String>(
+      'user_id', aliasedName, false,
+      type: i0.DriftSqlType.string);
+  late final i0.GeneratedColumn<String> givenName = i0.GeneratedColumn<String>(
+      'given_name', aliasedName, true,
+      type: i0.DriftSqlType.string);
+  late final i0.GeneratedColumn<String> familyName = i0.GeneratedColumn<String>(
+      'family_name', aliasedName, true,
+      type: i0.DriftSqlType.string);
+  late final i0.GeneratedColumn<String> timeZone = i0.GeneratedColumn<String>(
+      'time_zone', aliasedName, true,
+      type: i0.DriftSqlType.string);
+  late final i0.GeneratedColumn<String> languageCode =
+      i0.GeneratedColumn<String>('language_code', aliasedName, true,
+          type: i0.DriftSqlType.string);
+  late final i0.GeneratedColumn<DateTime> createTime =
+      i0.GeneratedColumn<DateTime>('create_time', aliasedName, false,
+          type: const i3.TimestampType());
+  late final i0.GeneratedColumn<DateTime> updateTime =
+      i0.GeneratedColumn<DateTime>('update_time', aliasedName, true,
+          type: const i3.TimestampType());
+  late final i0.GeneratedColumnWithTypeConverter<List<i1.Email>, String>
+      emails = i0.GeneratedColumn<String>('emails', aliasedName, false,
+              type: i0.DriftSqlType.string)
+          .withConverter<List<i1.Email>>(
+              i2.CloudAuthUsersView.$converteremails);
+  late final i0.GeneratedColumnWithTypeConverter<List<i1.PhoneNumber>, String>
+      phoneNumbers = i0.GeneratedColumn<String>(
+              'phone_numbers', aliasedName, false, type: i0.DriftSqlType.string)
+          .withConverter<List<i1.PhoneNumber>>(
+              i2.CloudAuthUsersView.$converterphoneNumbers);
+  late final i0.GeneratedColumnWithTypeConverter<List<i4.EntityUid>, String>
+      roles = i0.GeneratedColumn<String>('roles', aliasedName, false,
+              type: i0.DriftSqlType.string)
+          .withConverter<List<i4.EntityUid>>(
+              i2.CloudAuthUsersView.$converterroles);
+  @override
+  CloudAuthUsersView createAlias(String alias) {
+    return CloudAuthUsersView(attachedDatabase, alias);
+  }
+
+  @override
+  i0.Query? get query => null;
+  @override
+  Set<String> get readTables => const {
+        'cloud_auth_users',
+        'cloud_auth_user_emails',
+        'cloud_auth_user_phone_numbers',
+        'cedar_relationships'
+      };
+
+  static i0.TypeConverter<List<i1.Email>, String> $converteremails =
+      const i5.EmailsConverter();
+  static i0.TypeConverter<List<i1.PhoneNumber>, String> $converterphoneNumbers =
+      const i5.PhoneNumbersConverter();
+  static i0.TypeConverter<List<i4.EntityUid>, String> $converterroles =
+      const i6.CedarEntityUidsConverter();
+}
+
+class CloudAuthUsersDrift extends i7.ModularAccessor {
   CloudAuthUsersDrift(i0.GeneratedDatabase db) : super(db);
-  i5.Future<List<i1.User>> createUser(
+  i8.Future<List<i1.User>> createUser(
       {required String userId,
       String? givenName,
       String? familyName,
@@ -1063,13 +1305,33 @@ class CloudAuthUsersDrift extends i4.ModularAccessor {
   }
 
   i0.Selectable<i1.User> getUser({required String userId}) {
-    return customSelect('SELECT * FROM cloud_auth_users WHERE user_id = ?1',
+    return customSelect(
+        'SELECT * FROM cloud_auth_users_view WHERE user_id = ?1',
         variables: [
           i0.Variable<String>(userId)
         ],
         readsFrom: {
           cloudAuthUsers,
-        }).asyncMap(cloudAuthUsers.mapFromRow);
+          cloudAuthUserEmails,
+          cloudAuthUserPhoneNumbers,
+          cedarRelationships,
+        }).map((i0.QueryRow row) => i1.User(
+          userId: row.read<String>('user_id'),
+          createTime: row.readWithType<DateTime>(
+              const i3.TimestampType(), 'create_time'),
+          updateTime: row.readNullableWithType<DateTime>(
+              const i3.TimestampType(), 'update_time'),
+          givenName: row.readNullable<String>('given_name'),
+          familyName: row.readNullable<String>('family_name'),
+          timeZone: row.readNullable<String>('time_zone'),
+          languageCode: row.readNullable<String>('language_code'),
+          emails: i2.CloudAuthUsersView.$converteremails
+              .fromSql(row.read<String>('emails')),
+          phoneNumbers: i2.CloudAuthUsersView.$converterphoneNumbers
+              .fromSql(row.read<String>('phone_numbers')),
+          roles: i2.CloudAuthUsersView.$converterroles
+              .fromSql(row.read<String>('roles')),
+        ));
   }
 
   i0.Selectable<ListUsersResult> listUsers(
@@ -1079,11 +1341,11 @@ class CloudAuthUsersDrift extends i4.ModularAccessor {
       required int limit}) {
     var $arrayStartIndex = 4;
     final generatedorder_by = $write(
-        order_by?.call(this.cloudAuthUsers) ?? const i0.OrderBy.nothing(),
+        order_by?.call(this.cloudAuthUsersView) ?? const i0.OrderBy.nothing(),
         startIndex: $arrayStartIndex);
     $arrayStartIndex += generatedorder_by.amountOfVariables;
     return customSelect(
-        'WITH rowed AS (SELECT ROW_NUMBER()OVER (ORDER BY create_time DESC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS row_num, user_id FROM cloud_auth_users WHERE cloud_auth_users.create_time < coalesce(?1, unixepoch(\'now\', \'+1 second\', \'subsec\'))) SELECT row_num,"cloud_auth_users"."user_id" AS "nested_0.user_id", "cloud_auth_users"."given_name" AS "nested_0.given_name", "cloud_auth_users"."family_name" AS "nested_0.family_name", "cloud_auth_users"."time_zone" AS "nested_0.time_zone", "cloud_auth_users"."language_code" AS "nested_0.language_code", "cloud_auth_users"."create_time" AS "nested_0.create_time", "cloud_auth_users"."update_time" AS "nested_0.update_time", rowed.user_id AS "\$n_0", rowed.user_id AS "\$n_1" FROM cloud_auth_users INNER JOIN rowed ON cloud_auth_users.user_id = rowed.user_id WHERE row_num > ?2 ${generatedorder_by.sql} LIMIT ?3',
+        'WITH rowed AS (SELECT ROW_NUMBER()OVER (ORDER BY create_time DESC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS row_num, user_id FROM cloud_auth_users WHERE cloud_auth_users.create_time < coalesce(?1, unixepoch(\'now\', \'+1 second\', \'subsec\'))) SELECT row_num,"cloud_auth_users_view"."user_id" AS "nested_0.user_id", "cloud_auth_users_view"."given_name" AS "nested_0.given_name", "cloud_auth_users_view"."family_name" AS "nested_0.family_name", "cloud_auth_users_view"."time_zone" AS "nested_0.time_zone", "cloud_auth_users_view"."language_code" AS "nested_0.language_code", "cloud_auth_users_view"."create_time" AS "nested_0.create_time", "cloud_auth_users_view"."update_time" AS "nested_0.update_time", "cloud_auth_users_view"."emails" AS "nested_0.emails", "cloud_auth_users_view"."phone_numbers" AS "nested_0.phone_numbers", "cloud_auth_users_view"."roles" AS "nested_0.roles" FROM cloud_auth_users_view INNER JOIN rowed ON cloud_auth_users_view.user_id = rowed.user_id WHERE row_num > ?2 ${generatedorder_by.sql} LIMIT ?3',
         variables: [
           i0.Variable<DateTime>(startTime),
           i0.Variable<int>(offset),
@@ -1094,27 +1356,12 @@ class CloudAuthUsersDrift extends i4.ModularAccessor {
           cloudAuthUsers,
           cloudAuthUserEmails,
           cloudAuthUserPhoneNumbers,
+          cedarRelationships,
           ...generatedorder_by.watchedTables,
         }).asyncMap((i0.QueryRow row) async => ListUsersResult(
           rowNum: row.read<int>('row_num'),
-          cloudAuthUsers:
-              await cloudAuthUsers.mapFromRow(row, tablePrefix: 'nested_0'),
-          emails: await customSelect(
-              'SELECT * FROM cloud_auth_user_emails WHERE user_id = ?1',
-              variables: [
-                i0.Variable<String>(row.read('\$n_0'))
-              ],
-              readsFrom: {
-                cloudAuthUserEmails,
-              }).asyncMap(cloudAuthUserEmails.mapFromRow).get(),
-          phoneNumbers: await customSelect(
-              'SELECT * FROM cloud_auth_user_phone_numbers WHERE user_id = ?1',
-              variables: [
-                i0.Variable<String>(row.read('\$n_1'))
-              ],
-              readsFrom: {
-                cloudAuthUserPhoneNumbers,
-              }).asyncMap(cloudAuthUserPhoneNumbers.mapFromRow).get(),
+          cloudAuthUsersView:
+              await cloudAuthUsersView.mapFromRow(row, tablePrefix: 'nested_0'),
         ));
   }
 
@@ -1127,13 +1374,13 @@ class CloudAuthUsersDrift extends i4.ModularAccessor {
     );
   }
 
-  i5.Future<List<i1.Email>> upsertUserEmail(
+  i8.Future<List<i1.Email>> upsertUserEmail(
       {required String userId,
       required String email,
       bool? isVerified,
       bool? isPrimary}) {
     return customWriteReturning(
-        'INSERT INTO cloud_auth_user_emails (user_id, email, is_verified, is_primary) VALUES (?1, ?2, coalesce(?3, FALSE), coalesce(?4, (SELECT count(*) = 0 FROM cloud_auth_user_emails WHERE user_id = ?1))) ON CONFLICT (user_id, email) DO UPDATE SET is_verified = coalesce(?3, is_verified), is_primary = coalesce(?4, is_primary) RETURNING *',
+        'INSERT INTO cloud_auth_user_emails (user_id, email, is_verified, is_primary) VALUES (?1, ?2, coalesce(?3, FALSE), coalesce(?4, (SELECT count(*) = 0 FROM cloud_auth_user_emails WHERE user_id = ?1))) ON CONFLICT (user_id, email) DO UPDATE SET is_verified = coalesce(?3, excluded.is_verified), is_primary = coalesce(?4, excluded.is_primary) RETURNING *',
         variables: [
           i0.Variable<String>(userId),
           i0.Variable<String>(email),
@@ -1157,21 +1404,33 @@ class CloudAuthUsersDrift extends i4.ModularAccessor {
         }).asyncMap(cloudAuthUserEmails.mapFromRow);
   }
 
-  i0.Selectable<LookupUserByEmailResult> lookupUserByEmail(
-      {required String email}) {
+  i0.Selectable<i1.User> lookupUserByEmail({required String email}) {
     return customSelect(
-        'SELECT"cloud_auth_users"."user_id" AS "nested_0.user_id", "cloud_auth_users"."given_name" AS "nested_0.given_name", "cloud_auth_users"."family_name" AS "nested_0.family_name", "cloud_auth_users"."time_zone" AS "nested_0.time_zone", "cloud_auth_users"."language_code" AS "nested_0.language_code", "cloud_auth_users"."create_time" AS "nested_0.create_time", "cloud_auth_users"."update_time" AS "nested_0.update_time","cloud_auth_user_emails"."user_id" AS "nested_1.user_id", "cloud_auth_user_emails"."email" AS "nested_1.email", "cloud_auth_user_emails"."is_verified" AS "nested_1.is_verified", "cloud_auth_user_emails"."is_primary" AS "nested_1.is_primary" FROM cloud_auth_users INNER JOIN cloud_auth_user_emails ON cloud_auth_users.user_id = cloud_auth_user_emails.user_id WHERE cloud_auth_user_emails.email = ?1 AND cloud_auth_user_emails.is_verified ORDER BY cloud_auth_user_emails.is_primary DESC',
+        'WITH user_data AS (SELECT cloud_auth_users.user_id FROM cloud_auth_users INNER JOIN cloud_auth_user_emails ON cloud_auth_users.user_id = cloud_auth_user_emails.user_id WHERE cloud_auth_user_emails.email = ?1 AND cloud_auth_user_emails.is_verified AND cloud_auth_user_emails.is_primary LIMIT 1) SELECT * FROM cloud_auth_users_view WHERE user_id = (SELECT user_id FROM user_data)',
         variables: [
           i0.Variable<String>(email)
         ],
         readsFrom: {
           cloudAuthUsers,
           cloudAuthUserEmails,
-        }).asyncMap((i0.QueryRow row) async => LookupUserByEmailResult(
-          cloudAuthUsers:
-              await cloudAuthUsers.mapFromRow(row, tablePrefix: 'nested_0'),
-          cloudAuthUserEmails: await cloudAuthUserEmails.mapFromRow(row,
-              tablePrefix: 'nested_1'),
+          cloudAuthUserPhoneNumbers,
+          cedarRelationships,
+        }).map((i0.QueryRow row) => i1.User(
+          userId: row.read<String>('user_id'),
+          createTime: row.readWithType<DateTime>(
+              const i3.TimestampType(), 'create_time'),
+          updateTime: row.readNullableWithType<DateTime>(
+              const i3.TimestampType(), 'update_time'),
+          givenName: row.readNullable<String>('given_name'),
+          familyName: row.readNullable<String>('family_name'),
+          timeZone: row.readNullable<String>('time_zone'),
+          languageCode: row.readNullable<String>('language_code'),
+          emails: i2.CloudAuthUsersView.$converteremails
+              .fromSql(row.read<String>('emails')),
+          phoneNumbers: i2.CloudAuthUsersView.$converterphoneNumbers
+              .fromSql(row.read<String>('phone_numbers')),
+          roles: i2.CloudAuthUsersView.$converterroles
+              .fromSql(row.read<String>('roles')),
         ));
   }
 
@@ -1184,13 +1443,13 @@ class CloudAuthUsersDrift extends i4.ModularAccessor {
     );
   }
 
-  i5.Future<List<i1.PhoneNumber>> upsertUserPhoneNumber(
+  i8.Future<List<i1.PhoneNumber>> upsertUserPhoneNumber(
       {required String userId,
       required String phoneNumber,
       bool? isVerified,
       bool? isPrimary}) {
     return customWriteReturning(
-        'INSERT INTO cloud_auth_user_phone_numbers (user_id, phone_number, is_verified, is_primary) VALUES (?1, ?2, coalesce(?3, FALSE), coalesce(?4, (SELECT count(*) = 0 FROM cloud_auth_user_phone_numbers WHERE user_id = ?1))) ON CONFLICT (user_id, phone_number) DO UPDATE SET is_verified = coalesce(?3, is_verified), is_primary = coalesce(?4, is_primary) RETURNING *',
+        'INSERT INTO cloud_auth_user_phone_numbers (user_id, phone_number, is_verified, is_primary) VALUES (?1, ?2, coalesce(?3, FALSE), coalesce(?4, (SELECT count(*) = 0 FROM cloud_auth_user_phone_numbers WHERE user_id = ?1))) ON CONFLICT (user_id, phone_number) DO UPDATE SET is_verified = coalesce(?3, excluded.is_verified), is_primary = coalesce(?4, excluded.is_primary) RETURNING *',
         variables: [
           i0.Variable<String>(userId),
           i0.Variable<String>(phoneNumber),
@@ -1214,21 +1473,33 @@ class CloudAuthUsersDrift extends i4.ModularAccessor {
         }).asyncMap(cloudAuthUserPhoneNumbers.mapFromRow);
   }
 
-  i0.Selectable<LookupUserByPhoneResult> lookupUserByPhone(
-      {required String phoneNumber}) {
+  i0.Selectable<i1.User> lookupUserByPhone({required String phoneNumber}) {
     return customSelect(
-        'SELECT"cloud_auth_users"."user_id" AS "nested_0.user_id", "cloud_auth_users"."given_name" AS "nested_0.given_name", "cloud_auth_users"."family_name" AS "nested_0.family_name", "cloud_auth_users"."time_zone" AS "nested_0.time_zone", "cloud_auth_users"."language_code" AS "nested_0.language_code", "cloud_auth_users"."create_time" AS "nested_0.create_time", "cloud_auth_users"."update_time" AS "nested_0.update_time","cloud_auth_user_phone_numbers"."user_id" AS "nested_1.user_id", "cloud_auth_user_phone_numbers"."phone_number" AS "nested_1.phone_number", "cloud_auth_user_phone_numbers"."is_verified" AS "nested_1.is_verified", "cloud_auth_user_phone_numbers"."is_primary" AS "nested_1.is_primary" FROM cloud_auth_users INNER JOIN cloud_auth_user_phone_numbers ON cloud_auth_users.user_id = cloud_auth_user_phone_numbers.user_id WHERE cloud_auth_user_phone_numbers.phone_number = ?1 AND cloud_auth_user_phone_numbers.is_verified ORDER BY cloud_auth_user_phone_numbers.is_primary DESC',
+        'WITH user_data AS (SELECT cloud_auth_users.user_id FROM cloud_auth_users INNER JOIN cloud_auth_user_phone_numbers ON cloud_auth_users.user_id = cloud_auth_user_phone_numbers.user_id WHERE cloud_auth_user_phone_numbers.phone_number = ?1 AND cloud_auth_user_phone_numbers.is_verified AND cloud_auth_user_phone_numbers.is_primary LIMIT 1) SELECT * FROM cloud_auth_users_view WHERE user_id = (SELECT user_id FROM user_data)',
         variables: [
           i0.Variable<String>(phoneNumber)
         ],
         readsFrom: {
           cloudAuthUsers,
           cloudAuthUserPhoneNumbers,
-        }).asyncMap((i0.QueryRow row) async => LookupUserByPhoneResult(
-          cloudAuthUsers:
-              await cloudAuthUsers.mapFromRow(row, tablePrefix: 'nested_0'),
-          cloudAuthUserPhoneNumbers: await cloudAuthUserPhoneNumbers
-              .mapFromRow(row, tablePrefix: 'nested_1'),
+          cloudAuthUserEmails,
+          cedarRelationships,
+        }).map((i0.QueryRow row) => i1.User(
+          userId: row.read<String>('user_id'),
+          createTime: row.readWithType<DateTime>(
+              const i3.TimestampType(), 'create_time'),
+          updateTime: row.readNullableWithType<DateTime>(
+              const i3.TimestampType(), 'update_time'),
+          givenName: row.readNullable<String>('given_name'),
+          familyName: row.readNullable<String>('family_name'),
+          timeZone: row.readNullable<String>('time_zone'),
+          languageCode: row.readNullable<String>('language_code'),
+          emails: i2.CloudAuthUsersView.$converteremails
+              .fromSql(row.read<String>('emails')),
+          phoneNumbers: i2.CloudAuthUsersView.$converterphoneNumbers
+              .fromSql(row.read<String>('phone_numbers')),
+          roles: i2.CloudAuthUsersView.$converterroles
+              .fromSql(row.read<String>('roles')),
         ));
   }
 
@@ -1246,48 +1517,32 @@ class CloudAuthUsersDrift extends i4.ModularAccessor {
   }
 
   i2.CloudAuthUsers get cloudAuthUsers =>
-      i4.ReadDatabaseContainer(attachedDatabase)
+      i7.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i2.CloudAuthUsers>('cloud_auth_users');
+  i2.CloudAuthUsersView get cloudAuthUsersView =>
+      i7.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i2.CloudAuthUsersView>('cloud_auth_users_view');
   i2.CloudAuthUserEmails get cloudAuthUserEmails =>
-      i4.ReadDatabaseContainer(attachedDatabase)
+      i7.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i2.CloudAuthUserEmails>('cloud_auth_user_emails');
   i2.CloudAuthUserPhoneNumbers get cloudAuthUserPhoneNumbers =>
-      i4.ReadDatabaseContainer(attachedDatabase)
+      i7.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i2.CloudAuthUserPhoneNumbers>(
               'cloud_auth_user_phone_numbers');
-  i6.CedarDrift get cedarDrift => this.accessor(i6.CedarDrift.new);
+  i9.CedarRelationships get cedarRelationships =>
+      i7.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i9.CedarRelationships>('cedar_relationships');
+  i9.CedarDrift get cedarDrift => this.accessor(i9.CedarDrift.new);
 }
 
 class ListUsersResult {
   final int rowNum;
-  final i1.User cloudAuthUsers;
-  final List<i1.Email> emails;
-  final List<i1.PhoneNumber> phoneNumbers;
+  final i2.CloudAuthUsersViewData cloudAuthUsersView;
   ListUsersResult({
     required this.rowNum,
-    required this.cloudAuthUsers,
-    required this.emails,
-    required this.phoneNumbers,
+    required this.cloudAuthUsersView,
   });
 }
 
 typedef ListUsers$orderBy = i0.OrderBy Function(
-    i2.CloudAuthUsers cloud_auth_users);
-
-class LookupUserByEmailResult {
-  final i1.User cloudAuthUsers;
-  final i1.Email cloudAuthUserEmails;
-  LookupUserByEmailResult({
-    required this.cloudAuthUsers,
-    required this.cloudAuthUserEmails,
-  });
-}
-
-class LookupUserByPhoneResult {
-  final i1.User cloudAuthUsers;
-  final i1.PhoneNumber cloudAuthUserPhoneNumbers;
-  LookupUserByPhoneResult({
-    required this.cloudAuthUsers,
-    required this.cloudAuthUserPhoneNumbers,
-  });
-}
+    i2.CloudAuthUsersView cloud_auth_users_view);

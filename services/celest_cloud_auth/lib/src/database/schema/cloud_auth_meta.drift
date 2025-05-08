@@ -3,6 +3,8 @@ CREATE TABLE IF NOT EXISTS cloud_auth_meta (
     schema_version INTEGER NOT NULL PRIMARY KEY
 );
 
+@create: INSERT INTO cloud_auth_meta(schema_version) VALUES (6) ON CONFLICT DO NOTHING;
+
 getSchemaVersion:
     SELECT max(schema_version) FROM cloud_auth_meta;
 

@@ -125,23 +125,28 @@ extension type SessionsRepository._(_Deps _deps) {
   /// in errors.
   Future<void> deleteSession({
     required TypeId<Session> sessionId,
-  }) {
-    return _db.transaction(() async {
-      final session = await _db.cloudAuthCoreDrift
-          .getSession(sessionId: sessionId.encoded)
-          .getSingleOrNull();
-      if (session == null) {
-        return;
-      }
+  }) async {
+    final session = await _db.cloudAuthCoreDrift
+        .getSession(sessionId: sessionId.encoded)
+        .getSingleOrNull();
+    if (session == null) {
+      return;
+    }
 
-      // Due to cascade statements, the session and associated cork
-      // will be deleted as well.
-      await _db.cloudAuthCryptoKeys.deleteWhere(
-        (key) => key.cryptoKeyId.equals(session.cryptoKeyId),
+    await _db.batch((b) {
+      b.deleteWhere(
+        _db.cedarEntities,
+        (c) =>
+            c.entityType.equals('Celest::Session') &
+            c.entityId.equals(sessionId.encoded),
       );
-      await _db.cedarDrift.deleteEntity(
-        entityType: 'Celest::Session',
-        entityId: sessionId.encoded,
+      b.deleteWhere(
+        _db.cloudAuthCryptoKeys,
+        (c) => c.cryptoKeyId.equals(session.cryptoKeyId),
+      );
+      b.deleteWhere(
+        _db.cloudAuthSessions,
+        (c) => c.sessionId.equals(sessionId.encoded),
       );
     });
   }

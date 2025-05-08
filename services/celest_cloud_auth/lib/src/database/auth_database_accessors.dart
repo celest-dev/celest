@@ -111,7 +111,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
 
   static final Logger _logger = Logger('Celest.CloudAuth.Database');
 
-  static const int schemaVersion = 4;
+  static const int schemaVersion = 6;
 
   /// Types from `authorization/cedar/schema.cedarschema`.
   @visibleForTesting
@@ -202,32 +202,29 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
       ...coreEntities,
       ...additionalCedarEntities,
     };
-    await transaction(() async {
-      await batch((b) {
-        b.insertAllOnConflictUpdate(cedarTypes, [
-          for (final type in allCedarTypes)
-            CedarTypesCompanion.insert(fqn: type),
-        ]);
-        b.insertAllOnConflictUpdate(cedarEntities, [
-          for (final entity in allCedarEntities.values)
-            CedarEntitiesCompanion.insert(
+    await batch((b) async {
+      b.insertAllOnConflictUpdate(cedarTypes, [
+        for (final type in allCedarTypes) CedarTypesCompanion.insert(fqn: type),
+      ]);
+      b.insertAllOnConflictUpdate(cedarEntities, [
+        for (final entity in allCedarEntities.values)
+          CedarEntitiesCompanion.insert(
+            entityType: entity.uid.type,
+            entityId: entity.uid.id,
+            attributeJson: drift.Value(entity.attributes),
+          ),
+      ]);
+      b.insertAllOnConflictUpdate(cedarRelationships, [
+        for (final entity in allCedarEntities.values)
+          for (final parent in entity.parents)
+            CedarRelationshipsCompanion.insert(
               entityType: entity.uid.type,
               entityId: entity.uid.id,
-              attributeJson: drift.Value(entity.attributes),
+              parentType: parent.type,
+              parentId: parent.id,
             ),
-        ]);
-        b.insertAllOnConflictUpdate(cedarRelationships, [
-          for (final entity in allCedarEntities.values)
-            for (final parent in entity.parents)
-              CedarRelationshipsCompanion.insert(
-                entityType: entity.uid.type,
-                entityId: entity.uid.id,
-                parentType: parent.type,
-                parentId: parent.id,
-              ),
-        ]);
-      });
-      await upsertPolicySet(corePolicySet.merge(additionalCedarPolicies));
+      ]);
+      await upsertPolicySet(corePolicySet.merge(additionalCedarPolicies), b);
     });
   }
 
@@ -342,6 +339,9 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
     from4To5: (m, schema) async {
       await m.alterTable(TableMigration(schema.cloudAuthSessions));
     },
+    from5To6: (m, schema) async {
+      await m.createView(schema.cloudAuthUsersView);
+    },
   );
 
   /// The default [MigrationStrategy.onUpgrade] for Cloud Auth.
@@ -351,7 +351,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
     @internal int? to,
   }) async {
     try {
-      from ??= await cloudAuthMetaDrift.getSchemaVersion().getSingleOrNull();
+      from ??= await cloudAuthMetaDrift.getSchemaVersion().getSingle();
     } on Object catch (e, st) {
       _logger.finest('Error getting latest schema version', e, st);
       if (from == null) {
@@ -460,7 +460,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   }
 
   final _effectivePolicySetCache =
-      AsyncCache<PolicySet>(const Duration(minutes: 5));
+      AsyncCache<PolicySet>(const Duration(hours: 1));
 
   /// The effective [PolicySet] for the project.
   Future<PolicySet> get effectivePolicySet {
@@ -818,149 +818,94 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
         timeZone: user.timeZone,
         languageCode: user.languageCode,
       );
-      for (final email in user.emails) {
-        await cloudAuthUsersDrift.upsertUserEmail(
-          userId: user.userId,
-          email: email.email,
-          isVerified: email.isVerified,
-          isPrimary: email.isPrimary,
+
+      await batch((b) async {
+        b.insertAllOnConflictUpdate(
+          cloudAuthUserEmails,
+          [
+            for (final email in user.emails)
+              CloudAuthUserEmailsCompanion.insert(
+                userId: newUser.first.id,
+                email: email.email,
+                isVerified: drift.Value(email.isVerified),
+                isPrimary: drift.Value(email.isPrimary),
+              ),
+          ],
         );
-      }
-      for (final phoneNumber in user.phoneNumbers) {
-        await cloudAuthUsersDrift.upsertUserPhoneNumber(
-          userId: user.userId,
-          phoneNumber: phoneNumber.phoneNumber,
-          isVerified: phoneNumber.isVerified,
-          isPrimary: phoneNumber.isPrimary,
+        b.insertAllOnConflictUpdate(
+          cloudAuthUserPhoneNumbers,
+          [
+            for (final phoneNumber in user.phoneNumbers)
+              CloudAuthUserPhoneNumbersCompanion.insert(
+                userId: newUser.first.id,
+                phoneNumber: phoneNumber.phoneNumber,
+                isVerified: drift.Value(phoneNumber.isVerified),
+                isPrimary: drift.Value(phoneNumber.isPrimary),
+              ),
+          ],
         );
-      }
-      final roles = await setUserRoles(
-        userId: newUser.first.id,
-        roles: user.roles,
-      );
+        await setUserRoles(
+          userId: newUser.first.id,
+          roles: user.roles,
+          batch: b,
+        );
+      });
+
       return newUser.first.copyWith(
         emails: user.emails,
         phoneNumbers: user.phoneNumbers,
-        roles: roles,
+        roles: user.roles,
       );
     });
   }
 
   /// Retrieves a user from the database.
-  Future<User?> getUser({required String userId}) {
-    return transaction(() async {
-      final user =
-          await cloudAuthUsersDrift.getUser(userId: userId).getSingleOrNull();
-      if (user == null) {
-        return null;
-      }
-      final (emails, phoneNumbers, roles) = await (
-        cloudAuthUsersDrift.getUserEmails(userId: userId).get(),
-        cloudAuthUsersDrift.getUserPhoneNumbers(userId: userId).get(),
-        cedarDrift
-            .getEntityRoles(entityType: 'Celest::User', entityId: userId)
-            .get(),
-      ).wait;
-      return user.copyWith(
-        emails: emails,
-        phoneNumbers: phoneNumbers,
-        roles: roles.map(EntityUid.parse).toList(),
-      );
-    });
+  Future<User?> getUser({required String userId}) async {
+    return cloudAuthUsersDrift.getUser(userId: userId).getSingleOrNull();
   }
 
   Future<List<EntityUid>> setUserRoles({
     required String userId,
     required List<EntityUid> roles,
+    Batch? batch,
   }) async {
-    return transaction(() async {
+    await _withBatch(batch, (b) async {
       // Remove existing roles
-      final removeExisting = delete(cedarRelationships)
-        ..where(
-          (rel) =>
-              rel.entityType.equals('Celest::User') &
-              rel.entityId.equals(userId) &
-              rel.parentType.equals('Celest::Role'),
-        );
-      await removeExisting.go();
+      b.deleteWhere(
+        cedarRelationships,
+        (rel) =>
+            rel.entityType.equals('Celest::User') &
+            rel.entityId.equals(userId) &
+            rel.parentType.equals('Celest::Role'),
+      );
 
       for (final role in roles) {
-        await cedarDrift.createRelationship(
-          entityType: 'Celest::User',
-          entityId: userId,
-          parentType: role.type,
-          parentId: role.id,
+        b.insert<CedarRelationships, CedarRelationship>(
+          cedarRelationships,
+          CedarRelationshipsCompanion.insert(
+            entityType: 'Celest::User',
+            entityId: userId,
+            parentType: role.type,
+            parentId: role.id,
+          ),
         );
       }
-
-      return roles;
     });
+    return roles;
   }
 
   /// Finds a user by email.
-  Future<User?> findUserByEmail({required String email}) {
-    return transaction(() async {
-      final results =
-          await cloudAuthUsersDrift.lookupUserByEmail(email: email).get();
-      if (results.isEmpty) {
-        return null;
-      }
-      final LookupUserByEmailResult(
-        cloudAuthUsers: user,
-        cloudAuthUserEmails: emailData,
-      ) = results.first;
-      if (!emailData.isPrimary) {
-        final formattedResults = results.map((it) {
-          final Email(:email, isVerified: verified, isPrimary: primary) =
-              it.cloudAuthUserEmails;
-          return (
-            it.cloudAuthUsers,
-            (email: email, verified: verified, primary: primary),
-          );
-        }).join(' | ');
-        context.logger.warning(
-          'No user found with primary, verified email "$email"\n'
-          'Found users with email: $formattedResults',
-        );
-        return null;
-      }
-      return getUser(userId: user.userId);
-    });
+  Future<User?> findUserByEmail({required String email}) async {
+    return cloudAuthUsersDrift
+        .lookupUserByEmail(email: email)
+        .getSingleOrNull();
   }
 
   /// Finds a user by phone number.
-  Future<User?> findUserByPhoneNumber({required String phoneNumber}) {
-    return transaction(() async {
-      final results = await cloudAuthUsersDrift
-          .lookupUserByPhone(phoneNumber: phoneNumber)
-          .get();
-      if (results.isEmpty) {
-        return null;
-      }
-      final LookupUserByPhoneResult(
-        cloudAuthUsers: user,
-        cloudAuthUserPhoneNumbers: phoneNumberData
-      ) = results.first;
-      if (!phoneNumberData.isPrimary) {
-        final formattedResults = results.map((it) {
-          final PhoneNumber(
-            :phoneNumber,
-            isVerified: verified,
-            isPrimary: primary
-          ) = it.cloudAuthUserPhoneNumbers;
-          return (
-            it.cloudAuthUsers,
-            (phoneNumber: phoneNumber, verified: verified, primary: primary),
-          );
-        }).join(' | ');
-        context.logger.warning(
-          'No user found with primary, verified phone number "$phoneNumber"\n'
-          'Found users with phone number: $formattedResults',
-        );
-        return null;
-      }
-      return getUser(userId: user.userId);
-    });
+  Future<User?> findUserByPhoneNumber({required String phoneNumber}) async {
+    return cloudAuthUsersDrift
+        .lookupUserByPhone(phoneNumber: phoneNumber)
+        .getSingleOrNull();
   }
 }
 

@@ -33,6 +33,9 @@ mixin $CloudAuthDatabaseAccessorsMixin
       i3.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i2.CloudAuthUserPhoneNumbers>(
               'cloud_auth_user_phone_numbers');
+  i2.CloudAuthUsersView get cloudAuthUsersView =>
+      i3.ReadDatabaseContainer(attachedDatabase)
+          .resultSet<i2.CloudAuthUsersView>('cloud_auth_users_view');
   i5.CloudAuthProjects get cloudAuthProjects =>
       i3.ReadDatabaseContainer(attachedDatabase)
           .resultSet<i5.CloudAuthProjects>('cloud_auth_projects');

@@ -155,7 +155,6 @@ final class CloudHubDatabase extends $CloudHubDatabase
     return result;
   }
 
-  // ignore: unused_element
   Future<void> _dumpBrokenCedarForeignKeys() async {
     final allCedarTypes = await cedarTypes.select().get();
     final allEntitiesRaw = await cedarEntities.select().get();

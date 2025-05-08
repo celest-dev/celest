@@ -1,6 +1,7 @@
 ## NEXT
 
 - fix: Database checks in debug mode
+- perf: Improve efficiency of several DB operations
 
 ## 0.3.3
 

@@ -74,19 +74,24 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
       ..issuer = issuer
       ..claims = sessionEntity;
     final cork = await corkBuilder.build().sign(cryptoKey.signer);
-    await _db.transaction(() async {
-      await _db.createEntity(userEntity);
-      await _db.createEntity(sessionEntity);
-      await _db.cloudAuthCoreDrift.upsertCork(
-        corkId: cork.id,
-        cryptoKeyId: cryptoKey.cryptoKeyId,
-        bearerType: sessionUid.type,
-        bearerId: sessionUid.id,
-        audienceType: audience!.type,
-        audienceId: audience.id,
-        issuerType: issuer.type,
-        issuerId: issuer.id,
-        expireTime: expireTime,
+    await _db.batch((b) async {
+      await _db.createEntity(userEntity, b);
+      await _db.createEntity(sessionEntity, b);
+      b.insertAllOnConflictUpdate(
+        _db.cloudAuthCorks,
+        [
+          drift.CloudAuthCorksCompanion(
+            corkId: drift.Value(cork.id),
+            cryptoKeyId: drift.Value(cryptoKey.cryptoKeyId),
+            bearerType: drift.Value(sessionUid.type),
+            bearerId: drift.Value(sessionUid.id),
+            audienceType: drift.Value(audience!.type),
+            audienceId: drift.Value(audience.id),
+            issuerType: drift.Value(issuer.type),
+            issuerId: drift.Value(issuer.id),
+            expireTime: drift.Value(expireTime),
+          )
+        ],
       );
     });
     return CedarCork(cork);

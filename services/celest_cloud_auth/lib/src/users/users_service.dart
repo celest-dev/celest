@@ -224,9 +224,20 @@ extension type UsersService._(_Deps _deps) implements Object {
         )
         .get();
     final users = rows
-        .map((row) => row.cloudAuthUsers
-            .copyWith(emails: row.emails, phoneNumbers: row.phoneNumbers)
-            .toProto())
+        .map(
+          (row) => User(
+            userId: row.cloudAuthUsersView.userId,
+            givenName: row.cloudAuthUsersView.givenName,
+            familyName: row.cloudAuthUsersView.familyName,
+            languageCode: row.cloudAuthUsersView.languageCode,
+            timeZone: row.cloudAuthUsersView.timeZone,
+            createTime: row.cloudAuthUsersView.createTime,
+            updateTime: row.cloudAuthUsersView.updateTime,
+            emails: row.cloudAuthUsersView.emails,
+            phoneNumbers: row.cloudAuthUsersView.phoneNumbers,
+            roles: row.cloudAuthUsersView.roles,
+          ).toProto(),
+        )
         .toList();
     final nextPageToken = rows.isEmpty || rows.length < pageSize
         ? null
@@ -321,22 +332,19 @@ extension type UsersService._(_Deps _deps) implements Object {
     required String userId,
     String? etag,
   }) async {
-    final deleteEntities = await _db.transaction(() async {
-      final user = await _db.getUser(userId: userId);
-      if (user == null) {
-        throw NotFoundException('User not found. id=$userId');
+    final user = await _db.getUser(userId: userId);
+    if (user == null) {
+      throw NotFoundException('User not found. id=$userId');
+    }
+    if (etag != null) {
+      assert(user.etag != null, 'Missing etag to compare against');
+      if (user.etag != etag) {
+        throw const FailedPreconditionException('Etag mismatch');
       }
-      if (etag != null) {
-        assert(user.etag != null, 'Missing etag to compare against');
-        if (user.etag != etag) {
-          throw const FailedPreconditionException('Etag mismatch');
-        }
-      }
-
-      return (_db.delete(_db.cloudAuthUsers)
-            ..where((t) => t.userId.equals(userId)))
-          .go();
-    });
+    }
+    final deleteEntities = await (_db.delete(_db.cloudAuthUsers)
+          ..where((t) => t.userId.equals(userId)))
+        .go();
     switch (deleteEntities) {
       case 0:
         throw NotFoundException('User not found. id=$userId');

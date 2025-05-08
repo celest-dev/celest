@@ -108,13 +108,51 @@ CREATE TABLE IF NOT EXISTS cloud_auth_user_phone_numbers (
         DEFERRABLE INITIALLY DEFERRED
 ) WITHOUT ROWID WITH PhoneNumber;
 
+CREATE VIEW IF NOT EXISTS cloud_auth_users_view AS
+    SELECT 
+        cloud_auth_users.*,
+        (
+            SELECT json_group_array(
+                json_object(
+                    'email', email,
+                    'isVerified', iif(is_verified, json('true'), json('false')),
+                    'isPrimary', iif(is_primary, json('true'), json('false'))
+                )
+            )
+            FROM cloud_auth_user_emails
+            WHERE user_id = cloud_auth_users.user_id
+        ) MAPPED BY `const EmailsConverter()` AS emails,
+        (
+            SELECT json_group_array(
+                json_object(
+                    'phoneNumber', phone_number,
+                    'isVerified', iif(is_verified, json('true'), json('false')),
+                    'isPrimary', iif(is_primary, json('true'), json('false'))
+                )
+            )
+            FROM cloud_auth_user_phone_numbers
+            WHERE user_id = cloud_auth_users.user_id
+        ) MAPPED BY `const PhoneNumbersConverter()` AS phone_numbers,
+        (
+            SELECT json_group_array(
+                json_object('type', 'Celest::Role', 'id', parent_id)
+            )
+            FROM
+                cedar_relationships
+            WHERE 
+                entity_type = 'Celest::User'
+            AND entity_id = cloud_auth_users.user_id
+            AND parent_type = 'Celest::Role'
+        ) MAPPED BY `const CedarEntityUidsConverter()` AS roles
+    FROM cloud_auth_users;
+
 createUser:
     INSERT INTO cloud_auth_users (user_id, given_name, family_name, time_zone, language_code)
     VALUES (:user_id, :given_name, :family_name, :time_zone, :language_code)
     RETURNING *;
 
-getUser: 
-    SELECT * FROM cloud_auth_users
+getUser WITH User:
+    SELECT * FROM cloud_auth_users_view
     WHERE user_id = :user_id;
 
 listUsers(
@@ -132,19 +170,9 @@ listUsers(
     )
     SELECT
         row_num,
-        cloud_auth_users.**,
-        LIST(
-            SELECT *
-            FROM cloud_auth_user_emails
-            WHERE user_id = rowed.user_id
-        ) AS emails,
-        LIST(
-            SELECT *
-            FROM cloud_auth_user_phone_numbers
-            WHERE user_id = rowed.user_id
-        ) AS phone_numbers
-    FROM cloud_auth_users
-    INNER JOIN rowed ON cloud_auth_users.user_id = rowed.user_id
+        cloud_auth_users_view.**
+    FROM cloud_auth_users_view
+    INNER JOIN rowed ON cloud_auth_users_view.user_id = rowed.user_id
     WHERE row_num > :offset
     ORDER BY $order_by
     LIMIT :limit;
@@ -168,21 +196,26 @@ upsertUserEmail(
         )
     )
     ON CONFLICT(user_id, email) DO UPDATE SET
-        is_verified = coalesce(:is_verified, is_verified),
-        is_primary = coalesce(:is_primary, is_primary)
+        is_verified = coalesce(:is_verified, excluded.is_verified),
+        is_primary = coalesce(:is_primary, excluded.is_primary)
     RETURNING *;
 
 getUserEmails:
     SELECT * FROM cloud_auth_user_emails
     WHERE user_id = :user_id;
 
-lookupUserByEmail:
-    SELECT cloud_auth_users.**, cloud_auth_user_emails.** FROM cloud_auth_users
-    INNER JOIN cloud_auth_user_emails ON cloud_auth_users.user_id = cloud_auth_user_emails.user_id
-    WHERE 
-        cloud_auth_user_emails.email = :email
-    AND cloud_auth_user_emails.is_verified
-    ORDER BY cloud_auth_user_emails.is_primary DESC;
+lookupUserByEmail WITH User:
+    WITH user_data AS (
+        SELECT cloud_auth_users.user_id FROM cloud_auth_users
+        INNER JOIN cloud_auth_user_emails ON cloud_auth_users.user_id = cloud_auth_user_emails.user_id
+        WHERE 
+            cloud_auth_user_emails.email = :email
+        AND cloud_auth_user_emails.is_verified
+        AND cloud_auth_user_emails.is_primary
+        LIMIT 1
+    )
+    SELECT * FROM cloud_auth_users_view
+    WHERE user_id = (SELECT user_id FROM user_data);
 
 deleteUserEmail:
     DELETE FROM cloud_auth_user_emails
@@ -203,21 +236,26 @@ upsertUserPhoneNumber(
         )
     )
     ON CONFLICT(user_id, phone_number) DO UPDATE SET
-        is_verified = coalesce(:is_verified, is_verified),
-        is_primary = coalesce(:is_primary, is_primary)
+        is_verified = coalesce(:is_verified, excluded.is_verified),
+        is_primary = coalesce(:is_primary, excluded.is_primary)
     RETURNING *;
 
 getUserPhoneNumbers:
     SELECT * FROM cloud_auth_user_phone_numbers
     WHERE user_id = :user_id;
 
-lookupUserByPhone:
-    SELECT cloud_auth_users.**, cloud_auth_user_phone_numbers.** FROM cloud_auth_users
-    INNER JOIN cloud_auth_user_phone_numbers ON cloud_auth_users.user_id = cloud_auth_user_phone_numbers.user_id
-    WHERE 
-        cloud_auth_user_phone_numbers.phone_number = :phone_number
-    AND cloud_auth_user_phone_numbers.is_verified
-    ORDER BY cloud_auth_user_phone_numbers.is_primary DESC;
+lookupUserByPhone WITH User:
+    WITH user_data AS (
+        SELECT cloud_auth_users.user_id FROM cloud_auth_users
+        INNER JOIN cloud_auth_user_phone_numbers ON cloud_auth_users.user_id = cloud_auth_user_phone_numbers.user_id
+        WHERE 
+            cloud_auth_user_phone_numbers.phone_number = :phone_number
+        AND cloud_auth_user_phone_numbers.is_verified
+        AND cloud_auth_user_phone_numbers.is_primary
+        LIMIT 1
+    )
+    SELECT * FROM cloud_auth_users_view
+    WHERE user_id = (SELECT user_id FROM user_data);
 
 deleteUserPhoneNumber:
     DELETE FROM cloud_auth_user_phone_numbers

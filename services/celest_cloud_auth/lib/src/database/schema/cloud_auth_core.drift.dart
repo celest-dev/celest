@@ -2384,9 +2384,9 @@ class CloudAuthCoreDrift extends i7.ModularAccessor {
         }).then((rows) => Future.wait(rows.map(cloudAuthSessions.mapFromRow)));
   }
 
-  i0.Selectable<i4.Session> getSession({String? sessionId}) {
+  i0.Selectable<i4.Session> getSession({required String sessionId}) {
     return customSelect(
-        'SELECT * FROM cloud_auth_sessions WHERE cloud_auth_sessions.session_id = ?1 OR cloud_auth_sessions.external_session_id = ?1',
+        'SELECT * FROM cloud_auth_sessions WHERE session_id = ?1 OR external_session_id = ?1',
         variables: [
           i0.Variable<String>(sessionId)
         ],
@@ -2399,7 +2399,7 @@ class CloudAuthCoreDrift extends i7.ModularAccessor {
       {i4.SessionState? state,
       required String userId,
       required DateTime expireTime,
-      String? sessionId}) {
+      required String sessionId}) {
     return customWriteReturning(
             'UPDATE cloud_auth_sessions SET state = ?1, user_id = ?2, expire_time = ?3 WHERE session_id = ?4 OR external_session_id = ?4 RETURNING *',
             variables: [
@@ -2414,7 +2414,7 @@ class CloudAuthCoreDrift extends i7.ModularAccessor {
         .then((rows) => Future.wait(rows.map(cloudAuthSessions.mapFromRow)));
   }
 
-  Future<int> deleteSession({String? sessionId}) {
+  Future<int> deleteSession({required String sessionId}) {
     return customUpdate(
       'DELETE FROM cloud_auth_sessions WHERE session_id = ?1 OR external_session_id = ?1',
       variables: [i0.Variable<String>(sessionId)],
