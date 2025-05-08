@@ -635,7 +635,7 @@
       "schema": {
         "$": "ResolvedDriftDatabaseSchema",
         "databaseSchemaId": "CloudAuthDatabase",
-        "version": 5,
+        "version": 6,
         "schemaJson": {},
         "type": "drift"
       },
