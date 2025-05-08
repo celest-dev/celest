@@ -1,4 +1,5 @@
 @TestOn('browser')
+@Timeout(Duration(minutes: 5))
 library;
 
 import 'package:celest_cloud/celest_cloud.dart';

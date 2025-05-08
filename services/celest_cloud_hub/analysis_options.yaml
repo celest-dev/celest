@@ -7,3 +7,4 @@ analyzer:
   exclude:
     - lib/src/proto/**
     - lib/src/**/*.g.dart
+    - test/database/*/generated/**

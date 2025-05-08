@@ -250,6 +250,9 @@ class CloudAuthMetaCompanion extends i0.UpdateCompanion<i1.CloudAuthMetaData> {
   }
 }
 
+i0.OnCreateQuery get $drift0 => i0.OnCreateQuery(
+    'INSERT INTO cloud_auth_meta (schema_version) VALUES (6) ON CONFLICT DO NOTHING');
+
 class CloudAuthMetaDrift extends i2.ModularAccessor {
   CloudAuthMetaDrift(i0.GeneratedDatabase db) : super(db);
   i0.Selectable<int?> getSchemaVersion() {

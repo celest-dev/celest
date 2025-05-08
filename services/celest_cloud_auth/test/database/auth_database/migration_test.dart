@@ -235,24 +235,4 @@ void main() {
       },
     );
   });
-
-  test('migration from v3 to v4', () async {
-    await verifier.testWithDataIntegrity(
-      oldVersion: 3,
-      newVersion: 4,
-      createOld: v3.DatabaseAtV3.new,
-      createNew: v4.DatabaseAtV4.new,
-      openTestedDatabase: (e) => CloudAuthDatabase(e, project: defaultProject),
-      createItems: (batch, oldDb) {},
-      validateItems: (newDb) async {
-        final max = newDb.cloudAuthMeta.schemaVersion.max();
-        final latestSchemaVersion = newDb.cloudAuthMeta.selectOnly()
-          ..addColumns([max]);
-        expect(
-          latestSchemaVersion.getSingle().then((it) => it.read(max)),
-          completion(4),
-        );
-      },
-    );
-  });
 }

@@ -255,13 +255,13 @@ createSession:
     RETURNING *;
 
 -- Retrieves the auth session for the given ID.
-getSession: 
+getSession(:session_id AS TEXT): 
     SELECT * FROM cloud_auth_sessions
-    WHERE cloud_auth_sessions.session_id = :session_id
-    OR    cloud_auth_sessions.external_session_id = :session_id;
+    WHERE session_id = :session_id
+    OR    external_session_id = :session_id;
 
 -- Updates the state of the auth session for the given ID.
-updateSession:
+updateSession(:session_id AS TEXT):
     UPDATE cloud_auth_sessions
     SET 
         state = :state,
@@ -273,7 +273,7 @@ updateSession:
     RETURNING *;
 
 -- Deletes the auth session for the given ID.
-deleteSession:
+deleteSession(:session_id AS TEXT):
     DELETE FROM cloud_auth_sessions
     WHERE 
         session_id = :session_id

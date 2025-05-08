@@ -46,6 +46,7 @@ extension type CryptoKeyRepository._(_Deps _deps) implements Object {
 
   Future<CryptoKey> insertKey({
     required CryptoKey cryptoKey,
+    Batch? batch,
   }) async {
     final result = await _db.cloudAuthCoreDrift.createCryptoKey(
       cryptoKeyId: cryptoKey.cryptoKeyId,

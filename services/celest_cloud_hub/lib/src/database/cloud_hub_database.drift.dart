@@ -34,6 +34,9 @@ abstract class $CloudHubDatabase extends i0.GeneratedDatabase {
       i1.CloudAuthUserEmails(this);
   late final i1.CloudAuthUserPhoneNumbers cloudAuthUserPhoneNumbers =
       i1.CloudAuthUserPhoneNumbers(this);
+  late final i1.CloudAuthUsersView cloudAuthUsersView = i1.CloudAuthUsersView(
+    this,
+  );
   late final i3.CloudAuthProjects cloudAuthProjects = i3.CloudAuthProjects(
     this,
   );
@@ -116,6 +119,7 @@ abstract class $CloudHubDatabase extends i0.GeneratedDatabase {
     i1.cloudAuthUsersDeleteTrg,
     cloudAuthUserEmails,
     cloudAuthUserPhoneNumbers,
+    cloudAuthUsersView,
     cloudAuthProjects,
     cloudAuthApis,
     i3.cloudAuthApisProjectIdx,
@@ -126,6 +130,7 @@ abstract class $CloudHubDatabase extends i0.GeneratedDatabase {
     i3.cloudAuthFunctionsCreateTrg,
     i3.cloudAuthFunctionsDeleteTrg,
     cloudAuthMeta,
+    i4.$drift0,
     cloudAuthCryptoKeys,
     i5.cloudAuthCryptoKeysExternalCryptoKeyIdIdx,
     cloudAuthSessions,

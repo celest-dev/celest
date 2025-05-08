@@ -35,6 +35,23 @@ final class CedarEntityUidConverter
   }
 }
 
+final class CedarEntityUidsConverter
+    implements TypeConverter<List<EntityUid>, String> {
+  const CedarEntityUidsConverter();
+
+  @override
+  List<EntityUid> fromSql(String fromDb) {
+    return (jsonDecode(fromDb) as List)
+        .map((json) => EntityUid.fromJson(json as Map<String, Object?>))
+        .toList();
+  }
+
+  @override
+  String toSql(List<EntityUid> value) {
+    return jsonEncode(value.map((it) => it.toJson()).toList());
+  }
+}
+
 final class CedarAttributesConverter
     implements TypeConverter<Map<String, CedarValue>, String> {
   const CedarAttributesConverter();

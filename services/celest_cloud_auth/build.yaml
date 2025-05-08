@@ -12,12 +12,12 @@ targets:
         options: &options
           databases:
             auth_database: lib/src/database/auth_database.dart
-            test_database: test/database/wrapper/wrapper_database.dart
           schema_dir: drift_schema/
           test_dir: test/database/
 
           named_parameters: true
           store_date_time_values_as_text: false
+          apply_converters_on_variables: true
 
           sql:
             dialect: sqlite

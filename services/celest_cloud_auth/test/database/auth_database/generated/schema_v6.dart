@@ -1417,6 +1417,220 @@ class CloudAuthUserPhoneNumbersCompanion
   }
 }
 
+class CloudAuthUsersViewData extends DataClass {
+  final String userId;
+  final String? givenName;
+  final String? familyName;
+  final String? timeZone;
+  final String? languageCode;
+  final DriftAny createTime;
+  final DriftAny? updateTime;
+  final String emails;
+  final String phoneNumbers;
+  final String roles;
+  const CloudAuthUsersViewData(
+      {required this.userId,
+      this.givenName,
+      this.familyName,
+      this.timeZone,
+      this.languageCode,
+      required this.createTime,
+      this.updateTime,
+      required this.emails,
+      required this.phoneNumbers,
+      required this.roles});
+  factory CloudAuthUsersViewData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CloudAuthUsersViewData(
+      userId: serializer.fromJson<String>(json['userId']),
+      givenName: serializer.fromJson<String?>(json['givenName']),
+      familyName: serializer.fromJson<String?>(json['familyName']),
+      timeZone: serializer.fromJson<String?>(json['timeZone']),
+      languageCode: serializer.fromJson<String?>(json['languageCode']),
+      createTime: serializer.fromJson<DriftAny>(json['createTime']),
+      updateTime: serializer.fromJson<DriftAny?>(json['updateTime']),
+      emails: serializer.fromJson<String>(json['emails']),
+      phoneNumbers: serializer.fromJson<String>(json['phoneNumbers']),
+      roles: serializer.fromJson<String>(json['roles']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'userId': serializer.toJson<String>(userId),
+      'givenName': serializer.toJson<String?>(givenName),
+      'familyName': serializer.toJson<String?>(familyName),
+      'timeZone': serializer.toJson<String?>(timeZone),
+      'languageCode': serializer.toJson<String?>(languageCode),
+      'createTime': serializer.toJson<DriftAny>(createTime),
+      'updateTime': serializer.toJson<DriftAny?>(updateTime),
+      'emails': serializer.toJson<String>(emails),
+      'phoneNumbers': serializer.toJson<String>(phoneNumbers),
+      'roles': serializer.toJson<String>(roles),
+    };
+  }
+
+  CloudAuthUsersViewData copyWith(
+          {String? userId,
+          Value<String?> givenName = const Value.absent(),
+          Value<String?> familyName = const Value.absent(),
+          Value<String?> timeZone = const Value.absent(),
+          Value<String?> languageCode = const Value.absent(),
+          DriftAny? createTime,
+          Value<DriftAny?> updateTime = const Value.absent(),
+          String? emails,
+          String? phoneNumbers,
+          String? roles}) =>
+      CloudAuthUsersViewData(
+        userId: userId ?? this.userId,
+        givenName: givenName.present ? givenName.value : this.givenName,
+        familyName: familyName.present ? familyName.value : this.familyName,
+        timeZone: timeZone.present ? timeZone.value : this.timeZone,
+        languageCode:
+            languageCode.present ? languageCode.value : this.languageCode,
+        createTime: createTime ?? this.createTime,
+        updateTime: updateTime.present ? updateTime.value : this.updateTime,
+        emails: emails ?? this.emails,
+        phoneNumbers: phoneNumbers ?? this.phoneNumbers,
+        roles: roles ?? this.roles,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CloudAuthUsersViewData(')
+          ..write('userId: $userId, ')
+          ..write('givenName: $givenName, ')
+          ..write('familyName: $familyName, ')
+          ..write('timeZone: $timeZone, ')
+          ..write('languageCode: $languageCode, ')
+          ..write('createTime: $createTime, ')
+          ..write('updateTime: $updateTime, ')
+          ..write('emails: $emails, ')
+          ..write('phoneNumbers: $phoneNumbers, ')
+          ..write('roles: $roles')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(userId, givenName, familyName, timeZone,
+      languageCode, createTime, updateTime, emails, phoneNumbers, roles);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CloudAuthUsersViewData &&
+          other.userId == this.userId &&
+          other.givenName == this.givenName &&
+          other.familyName == this.familyName &&
+          other.timeZone == this.timeZone &&
+          other.languageCode == this.languageCode &&
+          other.createTime == this.createTime &&
+          other.updateTime == this.updateTime &&
+          other.emails == this.emails &&
+          other.phoneNumbers == this.phoneNumbers &&
+          other.roles == this.roles);
+}
+
+class CloudAuthUsersView
+    extends ViewInfo<CloudAuthUsersView, CloudAuthUsersViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final DatabaseAtV6 attachedDatabase;
+  CloudAuthUsersView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [
+        userId,
+        givenName,
+        familyName,
+        timeZone,
+        languageCode,
+        createTime,
+        updateTime,
+        emails,
+        phoneNumbers,
+        roles
+      ];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'cloud_auth_users_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+        SqlDialect.sqlite:
+            'CREATE VIEW IF NOT EXISTS cloud_auth_users_view AS SELECT cloud_auth_users.*, (SELECT json_group_array(json_object(\'email\', email, \'isVerified\', iif(is_verified, json(\'true\'), json(\'false\')), \'isPrimary\', iif(is_primary, json(\'true\'), json(\'false\')))) FROM cloud_auth_user_emails WHERE user_id = cloud_auth_users.user_id) AS emails, (SELECT json_group_array(json_object(\'phoneNumber\', phone_number, \'isVerified\', iif(is_verified, json(\'true\'), json(\'false\')), \'isPrimary\', iif(is_primary, json(\'true\'), json(\'false\')))) FROM cloud_auth_user_phone_numbers WHERE user_id = cloud_auth_users.user_id) AS phone_numbers, (SELECT json_group_array(json_object(\'type\', \'Celest::Role\', \'id\', parent_id)) FROM cedar_relationships WHERE entity_type = \'Celest::User\' AND entity_id = cloud_auth_users.user_id AND parent_type = \'Celest::Role\') AS roles FROM cloud_auth_users;'
+      };
+  @override
+  CloudAuthUsersView get asDslTable => this;
+  @override
+  CloudAuthUsersViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CloudAuthUsersViewData(
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id'])!,
+      givenName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}given_name']),
+      familyName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}family_name']),
+      timeZone: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}time_zone']),
+      languageCode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}language_code']),
+      createTime: attachedDatabase.typeMapping
+          .read(DriftSqlType.any, data['${effectivePrefix}create_time'])!,
+      updateTime: attachedDatabase.typeMapping
+          .read(DriftSqlType.any, data['${effectivePrefix}update_time']),
+      emails: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}emails'])!,
+      phoneNumbers: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}phone_numbers'])!,
+      roles: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}roles'])!,
+    );
+  }
+
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, false,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<String> givenName = GeneratedColumn<String>(
+      'given_name', aliasedName, true,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<String> familyName = GeneratedColumn<String>(
+      'family_name', aliasedName, true,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<String> timeZone = GeneratedColumn<String>(
+      'time_zone', aliasedName, true,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
+      'language_code', aliasedName, true,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<DriftAny> createTime = GeneratedColumn<DriftAny>(
+      'create_time', aliasedName, false,
+      type: DriftSqlType.any);
+  late final GeneratedColumn<DriftAny> updateTime = GeneratedColumn<DriftAny>(
+      'update_time', aliasedName, true,
+      type: DriftSqlType.any);
+  late final GeneratedColumn<String> emails = GeneratedColumn<String>(
+      'emails', aliasedName, false,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<String> phoneNumbers = GeneratedColumn<String>(
+      'phone_numbers', aliasedName, false,
+      type: DriftSqlType.string);
+  late final GeneratedColumn<String> roles = GeneratedColumn<String>(
+      'roles', aliasedName, false,
+      type: DriftSqlType.string);
+  @override
+  CloudAuthUsersView createAlias(String alias) {
+    return CloudAuthUsersView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {};
+}
+
 class CloudAuthProjects extends Table
     with TableInfo<CloudAuthProjects, CloudAuthProjectsData> {
   @override
@@ -2617,11 +2831,6 @@ class CloudAuthSessions extends Table
       type: DriftSqlType.double,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
-  late final GeneratedColumn<double> cancelTime = GeneratedColumn<double>(
-      'cancel_time', aliasedName, true,
-      type: DriftSqlType.double,
-      requiredDuringInsert: false,
-      $customConstraints: '');
   @override
   List<GeneratedColumn> get $columns => [
         rowid,
@@ -2635,8 +2844,7 @@ class CloudAuthSessions extends Table
         externalSessionId,
         createTime,
         updateTime,
-        expireTime,
-        cancelTime
+        expireTime
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -2673,8 +2881,6 @@ class CloudAuthSessions extends Table
           .read(DriftSqlType.double, data['${effectivePrefix}update_time']),
       expireTime: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}expire_time'])!,
-      cancelTime: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}cancel_time']),
     );
   }
 
@@ -2706,7 +2912,6 @@ class CloudAuthSessionsData extends DataClass
   final double createTime;
   final double? updateTime;
   final double expireTime;
-  final double? cancelTime;
   const CloudAuthSessionsData(
       {required this.rowid,
       required this.sessionId,
@@ -2719,8 +2924,7 @@ class CloudAuthSessionsData extends DataClass
       this.externalSessionId,
       required this.createTime,
       this.updateTime,
-      required this.expireTime,
-      this.cancelTime});
+      required this.expireTime});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -2746,9 +2950,6 @@ class CloudAuthSessionsData extends DataClass
       map['update_time'] = Variable<double>(updateTime);
     }
     map['expire_time'] = Variable<double>(expireTime);
-    if (!nullToAbsent || cancelTime != null) {
-      map['cancel_time'] = Variable<double>(cancelTime);
-    }
     return map;
   }
 
@@ -2770,7 +2971,6 @@ class CloudAuthSessionsData extends DataClass
       createTime: serializer.fromJson<double>(json['createTime']),
       updateTime: serializer.fromJson<double?>(json['updateTime']),
       expireTime: serializer.fromJson<double>(json['expireTime']),
-      cancelTime: serializer.fromJson<double?>(json['cancelTime']),
     );
   }
   @override
@@ -2790,7 +2990,6 @@ class CloudAuthSessionsData extends DataClass
       'createTime': serializer.toJson<double>(createTime),
       'updateTime': serializer.toJson<double?>(updateTime),
       'expireTime': serializer.toJson<double>(expireTime),
-      'cancelTime': serializer.toJson<double?>(cancelTime),
     };
   }
 
@@ -2806,8 +3005,7 @@ class CloudAuthSessionsData extends DataClass
           Value<String?> externalSessionId = const Value.absent(),
           double? createTime,
           Value<double?> updateTime = const Value.absent(),
-          double? expireTime,
-          Value<double?> cancelTime = const Value.absent()}) =>
+          double? expireTime}) =>
       CloudAuthSessionsData(
         rowid: rowid ?? this.rowid,
         sessionId: sessionId ?? this.sessionId,
@@ -2823,7 +3021,6 @@ class CloudAuthSessionsData extends DataClass
         createTime: createTime ?? this.createTime,
         updateTime: updateTime.present ? updateTime.value : this.updateTime,
         expireTime: expireTime ?? this.expireTime,
-        cancelTime: cancelTime.present ? cancelTime.value : this.cancelTime,
       );
   CloudAuthSessionsData copyWithCompanion(CloudAuthSessionsCompanion data) {
     return CloudAuthSessionsData(
@@ -2848,8 +3045,6 @@ class CloudAuthSessionsData extends DataClass
           data.updateTime.present ? data.updateTime.value : this.updateTime,
       expireTime:
           data.expireTime.present ? data.expireTime.value : this.expireTime,
-      cancelTime:
-          data.cancelTime.present ? data.cancelTime.value : this.cancelTime,
     );
   }
 
@@ -2867,8 +3062,7 @@ class CloudAuthSessionsData extends DataClass
           ..write('externalSessionId: $externalSessionId, ')
           ..write('createTime: $createTime, ')
           ..write('updateTime: $updateTime, ')
-          ..write('expireTime: $expireTime, ')
-          ..write('cancelTime: $cancelTime')
+          ..write('expireTime: $expireTime')
           ..write(')'))
         .toString();
   }
@@ -2886,8 +3080,7 @@ class CloudAuthSessionsData extends DataClass
       externalSessionId,
       createTime,
       updateTime,
-      expireTime,
-      cancelTime);
+      expireTime);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2904,8 +3097,7 @@ class CloudAuthSessionsData extends DataClass
           other.externalSessionId == this.externalSessionId &&
           other.createTime == this.createTime &&
           other.updateTime == this.updateTime &&
-          other.expireTime == this.expireTime &&
-          other.cancelTime == this.cancelTime);
+          other.expireTime == this.expireTime);
 }
 
 class CloudAuthSessionsCompanion
@@ -2922,7 +3114,6 @@ class CloudAuthSessionsCompanion
   final Value<double> createTime;
   final Value<double?> updateTime;
   final Value<double> expireTime;
-  final Value<double?> cancelTime;
   const CloudAuthSessionsCompanion({
     this.rowid = const Value.absent(),
     this.sessionId = const Value.absent(),
@@ -2936,7 +3127,6 @@ class CloudAuthSessionsCompanion
     this.createTime = const Value.absent(),
     this.updateTime = const Value.absent(),
     this.expireTime = const Value.absent(),
-    this.cancelTime = const Value.absent(),
   });
   CloudAuthSessionsCompanion.insert({
     this.rowid = const Value.absent(),
@@ -2951,7 +3141,6 @@ class CloudAuthSessionsCompanion
     this.createTime = const Value.absent(),
     this.updateTime = const Value.absent(),
     required double expireTime,
-    this.cancelTime = const Value.absent(),
   })  : sessionId = Value(sessionId),
         cryptoKeyId = Value(cryptoKeyId),
         userId = Value(userId),
@@ -2970,7 +3159,6 @@ class CloudAuthSessionsCompanion
     Expression<double>? createTime,
     Expression<double>? updateTime,
     Expression<double>? expireTime,
-    Expression<double>? cancelTime,
   }) {
     return RawValuesInsertable({
       if (rowid != null) 'rowid': rowid,
@@ -2986,7 +3174,6 @@ class CloudAuthSessionsCompanion
       if (createTime != null) 'create_time': createTime,
       if (updateTime != null) 'update_time': updateTime,
       if (expireTime != null) 'expire_time': expireTime,
-      if (cancelTime != null) 'cancel_time': cancelTime,
     });
   }
 
@@ -3002,8 +3189,7 @@ class CloudAuthSessionsCompanion
       Value<String?>? externalSessionId,
       Value<double>? createTime,
       Value<double?>? updateTime,
-      Value<double>? expireTime,
-      Value<double?>? cancelTime}) {
+      Value<double>? expireTime}) {
     return CloudAuthSessionsCompanion(
       rowid: rowid ?? this.rowid,
       sessionId: sessionId ?? this.sessionId,
@@ -3017,7 +3203,6 @@ class CloudAuthSessionsCompanion
       createTime: createTime ?? this.createTime,
       updateTime: updateTime ?? this.updateTime,
       expireTime: expireTime ?? this.expireTime,
-      cancelTime: cancelTime ?? this.cancelTime,
     );
   }
 
@@ -3061,9 +3246,6 @@ class CloudAuthSessionsCompanion
     if (expireTime.present) {
       map['expire_time'] = Variable<double>(expireTime.value);
     }
-    if (cancelTime.present) {
-      map['cancel_time'] = Variable<double>(cancelTime.value);
-    }
     return map;
   }
 
@@ -3081,8 +3263,7 @@ class CloudAuthSessionsCompanion
           ..write('externalSessionId: $externalSessionId, ')
           ..write('createTime: $createTime, ')
           ..write('updateTime: $updateTime, ')
-          ..write('expireTime: $expireTime, ')
-          ..write('cancelTime: $cancelTime')
+          ..write('expireTime: $expireTime')
           ..write(')'))
         .toString();
   }
@@ -5194,8 +5375,8 @@ class CedarAuthorizationLogsCompanion
   }
 }
 
-class DatabaseAtV4 extends GeneratedDatabase {
-  DatabaseAtV4(QueryExecutor e) : super(e);
+class DatabaseAtV6 extends GeneratedDatabase {
+  DatabaseAtV6(QueryExecutor e) : super(e);
   late final CloudAuthUsers cloudAuthUsers = CloudAuthUsers(this);
   late final CedarTypes cedarTypes = CedarTypes(this);
   late final CedarEntities cedarEntities = CedarEntities(this);
@@ -5210,6 +5391,7 @@ class DatabaseAtV4 extends GeneratedDatabase {
       CloudAuthUserEmails(this);
   late final CloudAuthUserPhoneNumbers cloudAuthUserPhoneNumbers =
       CloudAuthUserPhoneNumbers(this);
+  late final CloudAuthUsersView cloudAuthUsersView = CloudAuthUsersView(this);
   late final CloudAuthProjects cloudAuthProjects = CloudAuthProjects(this);
   late final CloudAuthApis cloudAuthApis = CloudAuthApis(this);
   late final Index cloudAuthApisProjectIdx = Index(
@@ -5302,6 +5484,7 @@ class DatabaseAtV4 extends GeneratedDatabase {
         cloudAuthUsersDeleteTrg,
         cloudAuthUserEmails,
         cloudAuthUserPhoneNumbers,
+        cloudAuthUsersView,
         cloudAuthProjects,
         cloudAuthApis,
         cloudAuthApisProjectIdx,
@@ -5377,5 +5560,5 @@ class DatabaseAtV4 extends GeneratedDatabase {
         ],
       );
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 6;
 }

@@ -501,8 +501,12 @@ class CedarEntities extends Table
       defaultValue: const CustomExpression('\'{}\''));
   late final GeneratedColumn<String> entityJson = GeneratedColumn<String>(
       'entity_json', aliasedName, false,
+      generatedAs: GeneratedAs(
+          const CustomExpression(
+              'json_object(\'type\', entity_type, \'id\', entity_id)'),
+          false),
       type: DriftSqlType.string,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       $customConstraints:
           'NOT NULL GENERATED ALWAYS AS (json_object(\'type\', entity_type, \'id\', entity_id)) VIRTUAL');
   @override
@@ -562,7 +566,6 @@ class CedarEntitiesData extends DataClass
     map['entity_type'] = Variable<String>(entityType);
     map['entity_id'] = Variable<String>(entityId);
     map['attribute_json'] = Variable<String>(attributeJson);
-    map['entity_json'] = Variable<String>(entityJson);
     return map;
   }
 
@@ -598,19 +601,6 @@ class CedarEntitiesData extends DataClass
         attributeJson: attributeJson ?? this.attributeJson,
         entityJson: entityJson ?? this.entityJson,
       );
-  CedarEntitiesData copyWithCompanion(CedarEntitiesCompanion data) {
-    return CedarEntitiesData(
-      entityType:
-          data.entityType.present ? data.entityType.value : this.entityType,
-      entityId: data.entityId.present ? data.entityId.value : this.entityId,
-      attributeJson: data.attributeJson.present
-          ? data.attributeJson.value
-          : this.attributeJson,
-      entityJson:
-          data.entityJson.present ? data.entityJson.value : this.entityJson,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('CedarEntitiesData(')
@@ -639,45 +629,37 @@ class CedarEntitiesCompanion extends UpdateCompanion<CedarEntitiesData> {
   final Value<String> entityType;
   final Value<String> entityId;
   final Value<String> attributeJson;
-  final Value<String> entityJson;
   const CedarEntitiesCompanion({
     this.entityType = const Value.absent(),
     this.entityId = const Value.absent(),
     this.attributeJson = const Value.absent(),
-    this.entityJson = const Value.absent(),
   });
   CedarEntitiesCompanion.insert({
     required String entityType,
     required String entityId,
     this.attributeJson = const Value.absent(),
-    required String entityJson,
   })  : entityType = Value(entityType),
-        entityId = Value(entityId),
-        entityJson = Value(entityJson);
+        entityId = Value(entityId);
   static Insertable<CedarEntitiesData> custom({
     Expression<String>? entityType,
     Expression<String>? entityId,
     Expression<String>? attributeJson,
-    Expression<String>? entityJson,
   }) {
     return RawValuesInsertable({
       if (entityType != null) 'entity_type': entityType,
       if (entityId != null) 'entity_id': entityId,
       if (attributeJson != null) 'attribute_json': attributeJson,
-      if (entityJson != null) 'entity_json': entityJson,
     });
   }
 
   CedarEntitiesCompanion copyWith(
       {Value<String>? entityType,
       Value<String>? entityId,
-      Value<String>? attributeJson,
-      Value<String>? entityJson}) {
+      Value<String>? attributeJson}) {
     return CedarEntitiesCompanion(
       entityType: entityType ?? this.entityType,
       entityId: entityId ?? this.entityId,
       attributeJson: attributeJson ?? this.attributeJson,
-      entityJson: entityJson ?? this.entityJson,
     );
   }
 
@@ -693,9 +675,6 @@ class CedarEntitiesCompanion extends UpdateCompanion<CedarEntitiesData> {
     if (attributeJson.present) {
       map['attribute_json'] = Variable<String>(attributeJson.value);
     }
-    if (entityJson.present) {
-      map['entity_json'] = Variable<String>(entityJson.value);
-    }
     return map;
   }
 
@@ -704,8 +683,7 @@ class CedarEntitiesCompanion extends UpdateCompanion<CedarEntitiesData> {
     return (StringBuffer('CedarEntitiesCompanion(')
           ..write('entityType: $entityType, ')
           ..write('entityId: $entityId, ')
-          ..write('attributeJson: $attributeJson, ')
-          ..write('entityJson: $entityJson')
+          ..write('attributeJson: $attributeJson')
           ..write(')'))
         .toString();
   }
@@ -729,8 +707,12 @@ class CedarRelationships extends Table
       $customConstraints: 'NOT NULL');
   late final GeneratedColumn<String> entityJson = GeneratedColumn<String>(
       'entity_json', aliasedName, false,
+      generatedAs: GeneratedAs(
+          const CustomExpression(
+              'json_object(\'type\', entity_type, \'id\', entity_id)'),
+          false),
       type: DriftSqlType.string,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       $customConstraints:
           'NOT NULL GENERATED ALWAYS AS (json_object(\'type\', entity_type, \'id\', entity_id)) VIRTUAL');
   late final GeneratedColumn<String> parentType = GeneratedColumn<String>(
@@ -745,8 +727,12 @@ class CedarRelationships extends Table
       $customConstraints: 'NOT NULL');
   late final GeneratedColumn<String> parentJson = GeneratedColumn<String>(
       'parent_json', aliasedName, false,
+      generatedAs: GeneratedAs(
+          const CustomExpression(
+              'json_object(\'type\', parent_type, \'id\', parent_id)'),
+          false),
       type: DriftSqlType.string,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       $customConstraints:
           'NOT NULL GENERATED ALWAYS AS (json_object(\'type\', parent_type, \'id\', parent_id)) VIRTUAL');
   @override
@@ -816,10 +802,8 @@ class CedarRelationshipsData extends DataClass
     final map = <String, Expression>{};
     map['entity_type'] = Variable<String>(entityType);
     map['entity_id'] = Variable<String>(entityId);
-    map['entity_json'] = Variable<String>(entityJson);
     map['parent_type'] = Variable<String>(parentType);
     map['parent_id'] = Variable<String>(parentId);
-    map['parent_json'] = Variable<String>(parentJson);
     return map;
   }
 
@@ -863,21 +847,6 @@ class CedarRelationshipsData extends DataClass
         parentId: parentId ?? this.parentId,
         parentJson: parentJson ?? this.parentJson,
       );
-  CedarRelationshipsData copyWithCompanion(CedarRelationshipsCompanion data) {
-    return CedarRelationshipsData(
-      entityType:
-          data.entityType.present ? data.entityType.value : this.entityType,
-      entityId: data.entityId.present ? data.entityId.value : this.entityId,
-      entityJson:
-          data.entityJson.present ? data.entityJson.value : this.entityJson,
-      parentType:
-          data.parentType.present ? data.parentType.value : this.parentType,
-      parentId: data.parentId.present ? data.parentId.value : this.parentId,
-      parentJson:
-          data.parentJson.present ? data.parentJson.value : this.parentJson,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('CedarRelationshipsData(')
@@ -910,63 +879,47 @@ class CedarRelationshipsCompanion
     extends UpdateCompanion<CedarRelationshipsData> {
   final Value<String> entityType;
   final Value<String> entityId;
-  final Value<String> entityJson;
   final Value<String> parentType;
   final Value<String> parentId;
-  final Value<String> parentJson;
   const CedarRelationshipsCompanion({
     this.entityType = const Value.absent(),
     this.entityId = const Value.absent(),
-    this.entityJson = const Value.absent(),
     this.parentType = const Value.absent(),
     this.parentId = const Value.absent(),
-    this.parentJson = const Value.absent(),
   });
   CedarRelationshipsCompanion.insert({
     required String entityType,
     required String entityId,
-    required String entityJson,
     required String parentType,
     required String parentId,
-    required String parentJson,
   })  : entityType = Value(entityType),
         entityId = Value(entityId),
-        entityJson = Value(entityJson),
         parentType = Value(parentType),
-        parentId = Value(parentId),
-        parentJson = Value(parentJson);
+        parentId = Value(parentId);
   static Insertable<CedarRelationshipsData> custom({
     Expression<String>? entityType,
     Expression<String>? entityId,
-    Expression<String>? entityJson,
     Expression<String>? parentType,
     Expression<String>? parentId,
-    Expression<String>? parentJson,
   }) {
     return RawValuesInsertable({
       if (entityType != null) 'entity_type': entityType,
       if (entityId != null) 'entity_id': entityId,
-      if (entityJson != null) 'entity_json': entityJson,
       if (parentType != null) 'parent_type': parentType,
       if (parentId != null) 'parent_id': parentId,
-      if (parentJson != null) 'parent_json': parentJson,
     });
   }
 
   CedarRelationshipsCompanion copyWith(
       {Value<String>? entityType,
       Value<String>? entityId,
-      Value<String>? entityJson,
       Value<String>? parentType,
-      Value<String>? parentId,
-      Value<String>? parentJson}) {
+      Value<String>? parentId}) {
     return CedarRelationshipsCompanion(
       entityType: entityType ?? this.entityType,
       entityId: entityId ?? this.entityId,
-      entityJson: entityJson ?? this.entityJson,
       parentType: parentType ?? this.parentType,
       parentId: parentId ?? this.parentId,
-      parentJson: parentJson ?? this.parentJson,
     );
   }
 
@@ -979,17 +932,11 @@ class CedarRelationshipsCompanion
     if (entityId.present) {
       map['entity_id'] = Variable<String>(entityId.value);
     }
-    if (entityJson.present) {
-      map['entity_json'] = Variable<String>(entityJson.value);
-    }
     if (parentType.present) {
       map['parent_type'] = Variable<String>(parentType.value);
     }
     if (parentId.present) {
       map['parent_id'] = Variable<String>(parentId.value);
-    }
-    if (parentJson.present) {
-      map['parent_json'] = Variable<String>(parentJson.value);
     }
     return map;
   }
@@ -999,10 +946,8 @@ class CedarRelationshipsCompanion
     return (StringBuffer('CedarRelationshipsCompanion(')
           ..write('entityType: $entityType, ')
           ..write('entityId: $entityId, ')
-          ..write('entityJson: $entityJson, ')
           ..write('parentType: $parentType, ')
-          ..write('parentId: $parentId, ')
-          ..write('parentJson: $parentJson')
+          ..write('parentId: $parentId')
           ..write(')'))
         .toString();
   }
