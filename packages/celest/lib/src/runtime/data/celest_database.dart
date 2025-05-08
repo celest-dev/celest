@@ -90,6 +90,7 @@ sealed class CelestDatabase<Database extends GeneratedDatabase> {
             },
           ),
           jwtToken: token,
+          httpClient: context.httpClient,
         );
         return LibsqlDatabase(
           uri: uri,
