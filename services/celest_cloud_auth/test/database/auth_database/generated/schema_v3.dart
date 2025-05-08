@@ -5280,6 +5280,8 @@ class DatabaseAtV3 extends GeneratedDatabase {
         celestFunctionsTriggerCreate,
         celestFunctionsTriggerDelete,
         celestCloudAuthMeta,
+        OnCreateQuery(
+            'INSERT INTO _celest_cloud_auth_meta (schema_version) VALUES (3) ON CONFLICT DO NOTHING'),
         cedarRelationshipsFkEntityIdx,
         cedarRelationshipsFkParentIdx,
         cedarPolicies,

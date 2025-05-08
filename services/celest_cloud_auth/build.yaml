@@ -12,6 +12,7 @@ targets:
         options: &options
           databases:
             auth_database: lib/src/database/auth_database.dart
+            test_database: test/database/wrapper/wrapper_database.dart
           schema_dir: drift_schema/
           test_dir: test/database/
 
