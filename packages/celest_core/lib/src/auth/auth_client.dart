@@ -12,7 +12,7 @@ final class AuthClient with BaseProtocol implements AuthProtocol {
 
   @override
   Future<User> userInfo() async {
-    final response = await getJson('/_auth/userinfo');
+    final Map<String, Object?> response = await getJson('/_auth/userinfo');
     return User.fromJson(response);
   }
 
@@ -32,10 +32,8 @@ final class EmailClient with BaseProtocol implements EmailProtocol {
   final CelestBase celest;
 
   @override
-  Future<OtpParameters> sendOtp({
-    required OtpSendRequest request,
-  }) async {
-    final response = await postJson(
+  Future<OtpParameters> sendOtp({required OtpSendRequest request}) async {
+    final Map<String, Object?> response = await postJson(
       '/_auth/email/otp/send',
       request.toJson(),
     );
@@ -43,10 +41,8 @@ final class EmailClient with BaseProtocol implements EmailProtocol {
   }
 
   @override
-  Future<OtpParameters> resendOtp({
-    required OtpSendRequest request,
-  }) async {
-    final response = await postJson(
+  Future<OtpParameters> resendOtp({required OtpSendRequest request}) async {
+    final Map<String, Object?> response = await postJson(
       '/_auth/email/otp/resend',
       request.toJson(),
     );
@@ -57,7 +53,7 @@ final class EmailClient with BaseProtocol implements EmailProtocol {
   Future<AuthenticatedUser> verifyOtp({
     required OtpVerifyRequest verification,
   }) async {
-    final resp = await postJson(
+    final Map<String, Object?> resp = await postJson(
       '/_auth/email/otp/verify',
       verification.toJson(),
     );

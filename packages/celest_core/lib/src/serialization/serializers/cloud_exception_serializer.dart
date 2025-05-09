@@ -6,7 +6,9 @@ final class CloudExceptionSerializer extends Serializer<CloudException> {
 
   @override
   CloudException deserialize(Object? value) {
-    final json = assertWireType<Map<String, Object?>>(value);
+    final Map<String, Object?> json = assertWireType<Map<String, Object?>>(
+      value,
+    );
     return CloudException.fromJson(json);
   }
 

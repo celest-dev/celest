@@ -4,10 +4,7 @@ import 'package:collection/collection.dart'
 import 'package:meta/meta.dart';
 
 final class AuthenticatedUser {
-  const AuthenticatedUser({
-    required this.cork,
-    required this.user,
-  });
+  const AuthenticatedUser({required this.cork, required this.user});
 
   factory AuthenticatedUser.fromJson(Map<String, Object?> json) {
     return AuthenticatedUser(
@@ -19,10 +16,7 @@ final class AuthenticatedUser {
   final String cork;
   final User user;
 
-  Map<String, Object?> toJson() => {
-        'cork': cork,
-        'user': user.toJson(),
-      };
+  Map<String, Object?> toJson() => {'cork': cork, 'user': user.toJson()};
 
   @override
   String toString() {
@@ -44,29 +38,33 @@ final class User {
     List<PhoneNumber> phoneNumbers = const [],
     this.roles = const [EntityUid.of('Celest::Role', 'authenticated')],
     this.etag,
-  })  : emails = emails as Emails,
-        phoneNumbers = phoneNumbers as PhoneNumbers;
+  }) : emails = emails as Emails,
+       phoneNumbers = phoneNumbers as PhoneNumbers;
 
   factory User.fromJson(Map<String, Object?> json) {
     return User(
       userId: json['userId'] as String,
       createTime: DateTime.parse(json['createTime'] as String),
-      updateTime: json['updateTime'] == null
-          ? null
-          : DateTime.parse(json['updateTime'] as String),
+      updateTime:
+          json['updateTime'] == null
+              ? null
+              : DateTime.parse(json['updateTime'] as String),
       givenName: json['givenName'] as String?,
       familyName: json['familyName'] as String?,
       timeZone: json['timeZone'] as String?,
       languageCode: json['languageCode'] as String?,
-      emails: (json['emails'] as List<Object?>?)
+      emails:
+          (json['emails'] as List<Object?>?)
               ?.map((e) => Email.fromJson(e as Map<String, Object?>))
               .toList() ??
           const [],
-      phoneNumbers: (json['phoneNumbers'] as List<Object?>?)
+      phoneNumbers:
+          (json['phoneNumbers'] as List<Object?>?)
               ?.map((pn) => PhoneNumber.fromJson(pn as Map<String, Object?>))
               .toList() ??
           const [],
-      roles: (json['roles'] as List<Object?>?)
+      roles:
+          (json['roles'] as List<Object?>?)
               ?.cast<Map<String, Object?>>()
               .map(EntityUid.fromJson)
               .toList() ??
@@ -96,22 +94,22 @@ final class User {
   final String? etag;
 
   Map<String, Object?> toJson() => {
-        'userId': userId,
-        if (createTime case final createTime?)
-          'createTime': createTime.toIso8601String(),
-        if (updateTime case final updateTime?)
-          'updateTime': updateTime.toIso8601String(),
-        if (givenName != null) 'givenName': givenName,
-        if (familyName != null) 'familyName': familyName,
-        if (timeZone != null) 'timeZone': timeZone,
-        if (languageCode != null) 'languageCode': languageCode,
-        if (emails.isNotEmpty) 'emails': emails.map((e) => e.toJson()).toList(),
-        if (phoneNumbers.isNotEmpty)
-          'phoneNumbers': phoneNumbers.map((pn) => pn.toJson()).toList(),
-        if (roles.isNotEmpty)
-          'roles': roles.map((uid) => uid.normalized.toJson()).toList(),
-        if (etag != null) 'etag': etag,
-      };
+    'userId': userId,
+    if (createTime case final createTime?)
+      'createTime': createTime.toIso8601String(),
+    if (updateTime case final updateTime?)
+      'updateTime': updateTime.toIso8601String(),
+    if (givenName != null) 'givenName': givenName,
+    if (familyName != null) 'familyName': familyName,
+    if (timeZone != null) 'timeZone': timeZone,
+    if (languageCode != null) 'languageCode': languageCode,
+    if (emails.isNotEmpty) 'emails': emails.map((e) => e.toJson()).toList(),
+    if (phoneNumbers.isNotEmpty)
+      'phoneNumbers': phoneNumbers.map((pn) => pn.toJson()).toList(),
+    if (roles.isNotEmpty)
+      'roles': roles.map((uid) => uid.normalized.toJson()).toList(),
+    if (etag != null) 'etag': etag,
+  };
 
   User copyWith({
     DateTime? createTime,
@@ -159,18 +157,18 @@ final class User {
 
   @override
   int get hashCode => Object.hash(
-        userId,
-        createTime,
-        updateTime,
-        givenName,
-        familyName,
-        Object.hashAllUnordered(emails),
-        Object.hashAllUnordered(phoneNumbers),
-        timeZone,
-        languageCode,
-        Object.hashAllUnordered(roles),
-        etag,
-      );
+    userId,
+    createTime,
+    updateTime,
+    givenName,
+    familyName,
+    Object.hashAllUnordered(emails),
+    Object.hashAllUnordered(phoneNumbers),
+    timeZone,
+    languageCode,
+    Object.hashAllUnordered(roles),
+    etag,
+  );
 
   @override
   String toString() {
@@ -231,10 +229,10 @@ final class Email {
   final bool isPrimary;
 
   Map<String, Object?> toJson() => {
-        'email': email,
-        'isVerified': isVerified,
-        'isPrimary': isPrimary,
-      };
+    'email': email,
+    'isVerified': isVerified,
+    'isPrimary': isPrimary,
+  };
 
   @override
   bool operator ==(Object other) {
@@ -278,10 +276,10 @@ final class PhoneNumber {
   final bool isPrimary;
 
   Map<String, Object?> toJson() => {
-        'phoneNumber': phoneNumber,
-        'isVerified': isVerified,
-        'isPrimary': isPrimary,
-      };
+    'phoneNumber': phoneNumber,
+    'isVerified': isVerified,
+    'isPrimary': isPrimary,
+  };
 
   @override
   bool operator ==(Object other) {

@@ -25,19 +25,15 @@ void main() {
       );
       expect(
         JsonValue([1, 2, 3]),
-        isA<JsonList>().having(
-          (j) => j.value,
-          'value',
-          [1, 2, 3],
-        ),
+        isA<JsonList>().having((j) => j.value, 'value', [1, 2, 3]),
       );
       expect(
         JsonValue({'a': 1, 'b': 2, 'c': 3}),
-        isA<JsonMap>().having(
-          (j) => j.value,
-          'value',
-          {'a': 1, 'b': 2, 'c': 3},
-        ),
+        isA<JsonMap>().having((j) => j.value, 'value', {
+          'a': 1,
+          'b': 2,
+          'c': 3,
+        }),
       );
       expect(
         () => JsonValue(RegExp('unsupported')),
@@ -48,20 +44,10 @@ void main() {
     test('JsonList', () {
       expect(
         JsonValue([1, 2, 3]),
-        orderedEquals([
-          JsonInt(1),
-          JsonInt(2),
-          JsonInt(3),
-        ]),
+        orderedEquals([JsonInt(1), JsonInt(2), JsonInt(3)]),
       );
       expect(
-        JsonValue([
-          'a',
-          1,
-          1.23,
-          true,
-          null,
-        ]),
+        JsonValue(['a', 1, 1.23, true, null]),
         orderedEquals([
           JsonString('a'),
           JsonInt(1),
@@ -75,13 +61,9 @@ void main() {
     test('JsonMap', () {
       expect(
         JsonValue({'a': 1, 'b': 2, 'c': 3}),
-        equals({
-          'a': JsonInt(1),
-          'b': JsonInt(2),
-          'c': JsonInt(3),
-        }),
+        equals({'a': JsonInt(1), 'b': JsonInt(2), 'c': JsonInt(3)}),
       );
-      final allTypes = {
+      final Map<String, Object?> allTypes = {
         'a': 'a',
         'b': 1,
         'c': 1.23,
@@ -100,9 +82,7 @@ void main() {
           'd': JsonBool(true),
           'e': null,
           'f': JsonList([1, 2, 3]),
-          'g': JsonMap({
-            'a': 1,
-          }),
+          'g': JsonMap({'a': 1}),
         }),
       );
 
@@ -124,19 +104,11 @@ void main() {
       );
       expect(
         allTypesJson.optionalList('f'),
-        isA<JsonList>().having(
-          (j) => j.value,
-          'value',
-          [1, 2, 3],
-        ),
+        isA<JsonList>().having((j) => j.value, 'value', [1, 2, 3]),
       );
       expect(
         allTypesJson.optionalMap('g'),
-        isA<JsonMap>().having(
-          (j) => j.value,
-          'value',
-          {'a': 1},
-        ),
+        isA<JsonMap>().having((j) => j.value, 'value', {'a': 1}),
       );
 
       expect(
@@ -157,19 +129,11 @@ void main() {
       );
       expect(
         allTypesJson.requiredList('f'),
-        isA<JsonList>().having(
-          (j) => j.value,
-          'value',
-          [1, 2, 3],
-        ),
+        isA<JsonList>().having((j) => j.value, 'value', [1, 2, 3]),
       );
       expect(
         allTypesJson.requiredMap('g'),
-        isA<JsonMap>().having(
-          (j) => j.value,
-          'value',
-          {'a': 1},
-        ),
+        isA<JsonMap>().having((j) => j.value, 'value', {'a': 1}),
       );
 
       expect(
@@ -199,9 +163,7 @@ void main() {
 
       final nested = {
         'aMap': {
-          'aNestedMap': {
-            'aNestedKey': 'abc',
-          },
+          'aNestedMap': {'aNestedKey': 'abc'},
         },
       };
       final nestedJson = JsonMap(nested);

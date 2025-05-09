@@ -29,11 +29,7 @@ abstract base class Serializer<Dart extends Object?> {
   static Serializer<Dart> define<Dart extends Object?, Wire extends Object?>({
     required Object? Function(Dart value) serialize,
     required Dart Function(Wire value) deserialize,
-  }) =>
-      _Serializer<Dart, Wire>(
-        serialize: serialize,
-        deserialize: deserialize,
-      );
+  }) => _Serializer<Dart, Wire>(serialize: serialize, deserialize: deserialize);
 
   /// Serializes [value] to the wire type.
   Object? serialize(Dart value);
@@ -63,19 +59,20 @@ final class _Serializer<Dart extends Object?, Wire extends Object?>
   const _Serializer({
     required Object? Function(Dart value) serialize,
     required Dart Function(Wire value) deserialize,
-  })  : _serialize = serialize,
-        _deserialize = deserialize;
+  }) : _serialize = serialize,
+       _deserialize = deserialize;
 
+  // ignore: unsafe_variance
   final Object? Function(Dart value) _serialize;
+
+  // ignore: unsafe_variance
   final Dart Function(Wire value) _deserialize;
 
   @override
   Object? serialize(Dart value) => _serialize(value);
 
   @override
-  Dart deserialize(Object? value) => _deserialize(
-        assertWireType<Wire>(value),
-      );
+  Dart deserialize(Object? value) => _deserialize(assertWireType<Wire>(value));
 }
 
 typedef _Nullable<T> = T?;
@@ -96,7 +93,7 @@ abstract mixin class Serializers {
 
   /// Serializes [value] to the wire type.
   Object? serialize<T>(T value, [TypeToken<T>? typeToken]) {
-    final serializer = expect<T>(typeToken);
+    final Serializer<T> serializer = expect<T>(typeToken);
     return _isNullable<T>()
         ? value?.let(serializer.serialize)
         : serializer.serialize(value);
@@ -104,7 +101,7 @@ abstract mixin class Serializers {
 
   /// Deserializes [value] to [T].
   T deserialize<T>(Object? value, [TypeToken<T>? typeToken]) {
-    final serializer = expect<T>(typeToken);
+    final Serializer<T> serializer = expect<T>(typeToken);
     return _isNullable<T>()
         ? value?.let(serializer.deserialize) as T
         : serializer.deserialize(value);
@@ -145,7 +142,7 @@ final class _Serializers extends Serializers {
   @override
   Serializer<Dart> expect<Dart>([TypeToken<Dart>? typeToken]) {
     typeToken ??= TypeToken<Dart>();
-    final serializer = get<Dart>(typeToken);
+    final Serializer<Dart>? serializer = get<Dart>(typeToken);
     if (serializer == null) {
       throw SerializationException(
         'No serializer found for $typeToken. Did you forget to call '
@@ -165,7 +162,7 @@ final class _Serializers extends Serializers {
     TypeToken<Dart>? typeToken,
   ]) {
     typeToken ??= TypeToken<Dart>();
-    final existing = get<Dart>(typeToken);
+    final Serializer<Dart>? existing = get<Dart>(typeToken);
     _serializersByType[typeToken] = serializer;
     _serializersByType[typeToken.nullable] = serializer;
     return existing;

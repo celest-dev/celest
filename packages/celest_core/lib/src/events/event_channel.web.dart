@@ -19,9 +19,9 @@ final class EventChannelPlatform extends DelegatingStreamChannel<Object?>
     sseClient.onConnected
         .then((_) => completer.setChannel(sseClient))
         .onError<Object>((e, st) {
-      sseClient.close();
-      completer.setError(e, st);
-    });
+          sseClient.close();
+          completer.setError(e, st);
+        });
     return EventChannelPlatform._(sseClient);
   }
 

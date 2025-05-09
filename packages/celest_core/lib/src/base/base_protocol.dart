@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:celest_core/src/base/celest_base.dart';
+import 'package:celest_core/src/events/event_channel.dart';
 import 'package:celest_core/src/events/event_client.dart';
 import 'package:celest_core/src/exception/cloud_exception.dart';
 import 'package:celest_core/src/serialization/json_value.dart';
@@ -11,21 +12,16 @@ mixin BaseProtocol {
   CelestBase get celest;
 
   Future<Map<String, Object?>> getJson(String path) async {
-    final uri = celest.baseUri.resolve(path);
-    final resp = await celest.httpClient.get(
+    final Uri uri = celest.baseUri.resolve(path);
+    final http.Response resp = await celest.httpClient.get(
       uri,
-      headers: {
-        'accept': 'application/json',
-      },
+      headers: {'accept': 'application/json'},
     );
     if (resp.statusCode == 401) {
       throw const UnauthorizedException(null);
     }
     if (resp.statusCode != 200) {
-      throw http.ClientException(
-        '${resp.statusCode}: ${resp.body}',
-        uri,
-      );
+      throw http.ClientException('${resp.statusCode}: ${resp.body}', uri);
     }
     return jsonDecode(resp.body) as Map<String, Object?>;
   }
@@ -34,8 +30,8 @@ mixin BaseProtocol {
     String path,
     Map<String, Object?> json,
   ) async {
-    final uri = celest.baseUri.resolve(path);
-    final resp = await celest.httpClient.post(
+    final Uri uri = celest.baseUri.resolve(path);
+    final http.Response resp = await celest.httpClient.post(
       uri,
       body: jsonEncode(json),
       headers: {
@@ -48,10 +44,7 @@ mixin BaseProtocol {
       400 => _error(resp, BadRequestException.of),
       401 => _error(resp, UnauthorizedException.of),
       500 => _error(resp, InternalServerError.of),
-      _ => throw http.ClientException(
-          '${resp.statusCode}: ${resp.body}',
-          uri,
-        ),
+      _ => throw http.ClientException('${resp.statusCode}: ${resp.body}', uri),
     };
   }
 
@@ -59,7 +52,7 @@ mixin BaseProtocol {
     String path, {
     required Map<String, Object?> payload,
   }) {
-    final channel = celest.eventClient.connect(
+    final EventChannel channel = celest.eventClient.connect(
       celest.baseUri.resolve(path),
     );
     channel.sink.add(payload);
@@ -70,9 +63,10 @@ mixin BaseProtocol {
     http.Response response,
     T Function({String? message, JsonValue? details}) createError,
   ) {
-    final mediaType = switch (response.headers['content-type']) {
-      final contentType? => MediaType.parse(contentType),
-      _ => throw createError(
+    final MediaType mediaType = switch (response.headers['content-type']) {
+      final String contentType? => MediaType.parse(contentType),
+      _ =>
+        throw createError(
           message: 'Missing content type',
           details: JsonString(response.body),
         ),

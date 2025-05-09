@@ -1,6 +1,10 @@
 include: package:celest_lints/library.yaml
 
 analyzer:
+  exclude:
+    - '**/*.pb.dart'
+    - '**/*.pbenum.dart'
+    - '**/*.pbjson.dart'
   errors:
     avoid_unused_constructor_parameters: ignore
     camel_case_types: ignore

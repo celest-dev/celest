@@ -18,7 +18,7 @@ final class EventChannelPlatform extends EventChannel {
     Authenticator? authenticator,
     http.Client? httpClient,
   }) {
-    final ws = Future(
+    final Future<io.WebSocket> ws = Future(
       () async => io.WebSocket.connect(
         uri.replace(scheme: uri.isScheme('https') ? 'wss' : 'ws').toString(),
         headers: {

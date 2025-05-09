@@ -21,7 +21,8 @@ extension type const JsonValue._(Object value) {
   factory JsonValue(Object value) {
     return switch (value) {
       String() || num() || bool() || List() || Map() => value as JsonValue,
-      _ => throw FormatException(
+      _ =>
+        throw FormatException(
           'Unsupported JSON value: $value (${value.runtimeType})',
         ),
     };
@@ -59,9 +60,11 @@ extension type const JsonString(String value) implements JsonValue, String {}
 /// A [JsonValue] which represents a [num].
 extension type const JsonNum(num value) implements JsonValue, num {
   /// Converts this to a [JsonInt].
+  @redeclare
   JsonInt toInt() => JsonInt(value.toInt());
 
   /// Converts this to a [JsonDouble].
+  @redeclare
   JsonDouble toDouble() => JsonDouble(value.toDouble());
 }
 
