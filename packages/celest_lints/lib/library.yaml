@@ -12,6 +12,7 @@ linter:
   rules:
     - always_declare_return_types                      # To ensure that functions do not implicitly return dynamic.
     - always_use_package_imports                       # To ensure consistency and prevent issues when combining with relative imports.
+    - annotate_redeclares                              # To ensure redeclared methods on extension types are properly annotated.
     - avoid_catches_without_on_clauses                 # To encourage thoughtfulness when introducing catch clauses and to avoid catching Errors unless specifically required.
     - avoid_classes_with_only_static_members           # To embrace Dart idioms and prefer top-level functions.
     - avoid_dynamic_calls                              # To prevent unintentional dynamic dispatch which can lead to preventable runtime errors.
@@ -35,14 +36,15 @@ linter:
     - eol_at_end_of_file                               # To provide consistency across our repos/languages.
     - flutter_style_todos                              # To ensure traceability of TODOs.
     - invalid_case_patterns                            # To prevent invalid case statements.
+    - invalid_runtime_check_with_js_interop_types      # To prevent runtime issues when compiling to JS.
     - join_return_with_assignment                      # To improve code readability.
     # - lines_longer_than_80_chars                     # Too restrictive as a lint, but generally a good rule to follow nonetheless.
+    - missing_code_block_language_in_doc_comment       # To ensure generated dartdoc integrity.
     - missing_whitespace_between_adjacent_strings      # To prevent sentences which are smashedtogether.
     - no_runtimeType_toString                          # To avoid issues when compiling to Web and improve performance.
     - noop_primitive_operations                        # To prevent redundancy.
-    - omit_local_variable_types                        # To encourage conciseness and improve code readability.
+    - omit_obvious_local_variable_types                # To encourage conciseness and improve code readability.
     - only_throw_errors                                # To ensure downstream exception handling always works.
-    - package_api_docs                                 # To ensure public APIs have proper context and explanation.
     - prefer_asserts_in_initializer_lists              # To improve code readability.
     - prefer_asserts_with_message                      # To provide context to developers and users.
     - prefer_const_constructors                        # To allow for compile-time optimizations.
@@ -56,6 +58,7 @@ linter:
     - prefer_null_aware_method_calls                   # To improve code readability.
     - prefer_single_quotes                             # To encourage consistent styling.
     - public_member_api_docs                           # To provide users with ample context and explanation.
+    - specify_nonobvious_local_variable_types          # To improve code readability.
     - sort_constructors_first                          # To provide a consistent style for classes.
     - sort_unnamed_constructors_first                  # To provide organization and quick exploration.
     - sort_pub_dependencies                            # To simplify searching a large list.
@@ -67,6 +70,7 @@ linter:
     - unnecessary_breaks                               # To simplify switch statements.
     - unnecessary_lambdas                              # To make code more concise.
     - unnecessary_null_checks                          # To improve code readability.
+    - unsafe_variance                                  # To prevent runtime issues with type parameters.
     - use_enums                                        # To encourage use of the enhanced-enums language feature.
     - use_if_null_to_convert_nulls_to_bools            # To improve code readability.
     - use_late_for_private_fields_and_variables        # To improve code readability.
@@ -77,6 +81,7 @@ linter:
     - use_super_parameters                             # To improve code readability and prevent redundancy.
     - use_test_throws_matchers                         # To improve code readability.
     - use_to_and_as_if_applicable                      # To improve code readability.
+    - use_truncating_division                          # To improve code readability.
 
     # Flutter-specific linter rules
     - avoid_unnecessary_containers                     # To improve code readability.
