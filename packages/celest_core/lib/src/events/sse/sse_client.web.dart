@@ -37,9 +37,9 @@ final class SseClientPlatform extends SseClient {
     this.serverUri, {
     required this.clientId,
     http.Client? httpClient,
-  })  : _httpClient =
-            httpClient ?? (http.BrowserClient()..withCredentials = true),
-        super.base() {
+  }) : _httpClient =
+           httpClient ?? (http.BrowserClient()..withCredentials = true),
+       super.base() {
     _init();
   }
 
@@ -56,8 +56,9 @@ final class SseClientPlatform extends SseClient {
 
   var _lastMessageId = -1;
 
-  late final StreamController<Object?> _incomingController =
-      StreamController(onCancel: close);
+  late final StreamController<Object?> _incomingController = StreamController(
+    onCancel: close,
+  );
 
   @override
   Stream<Object?> get stream => _incomingController.stream;
@@ -92,16 +93,14 @@ final class SseClientPlatform extends SseClient {
       _outgoingController.stream.listen(_onOutgoingMessage, onDone: close);
     });
     _eventSource.onError.first.whenComplete(() {
-      _closeWithError(
-        StateError('Failed to connect to server'),
-      );
+      _closeWithError(StateError('Failed to connect to server'));
     });
     _eventSource.onMessage.listen(_onIncomingMessage);
     _eventSource.addEventListener('control', _onIncomingControlMessage.toJS);
   }
 
   void _onIncomingControlMessage(web.MessageEvent event) {
-    final data = event.data.dartify();
+    final Object? data = event.data.dartify();
     _logger.finest('Control event: $data');
     if (data == 'close') {
       return close();
@@ -112,40 +111,32 @@ final class SseClientPlatform extends SseClient {
   }
 
   void _onIncomingMessage(web.MessageEvent event) {
-    final data = (event.data as JSString).toDart;
+    final String data = (event.data as JSString).toDart;
     _logger.finest('Message event: $data');
     try {
-      final message = jsonDecode(data);
+      final Object? message = jsonDecode(data);
       _incomingController.add(message);
     } on Object catch (e, st) {
       _logger.severe('Invalid message: $data', e, st);
-      _closeWithError(
-        FormatException('[$clientId] Invalid JSON message'),
-        st,
-      );
+      _closeWithError(FormatException('[$clientId] Invalid JSON message'), st);
     }
   }
 
   Future<void> _onOutgoingMessage(Object? message) async {
-    final uri = serverUri.replace(
+    final Uri uri = serverUri.replace(
       queryParameters: {
         ...serverUri.queryParametersAll,
         'messageId': '${++_lastMessageId}',
       },
     );
-    final response = await _httpClient.post(
+    final http.Response response = await _httpClient.post(
       uri,
-      headers: {
-        'content-type': 'application/json',
-      },
+      headers: {'content-type': 'application/json'},
       body: jsonEncode(message),
     );
     if (response.statusCode != 202) {
       _closeWithError(
-        http.ClientException(
-          '${response.statusCode}: ${response.body}',
-          uri,
-        ),
+        http.ClientException('${response.statusCode}: ${response.body}', uri),
       );
     }
   }

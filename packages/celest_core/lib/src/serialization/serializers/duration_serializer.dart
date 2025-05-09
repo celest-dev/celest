@@ -8,15 +8,15 @@ final class DurationSerializer extends Serializer<Duration> {
 
   @override
   Duration deserialize(Object? value) {
-    final serialized = Map.of(
+    final Map<String, Object?> serialized = Map.of(
       assertWireType<Map<String, Object?>>(value),
     );
-    final days = serialized.remove('days') as int? ?? 0;
-    final hours = serialized.remove('hours') as int? ?? 0;
-    final minutes = serialized.remove('minutes') as int? ?? 0;
-    final seconds = serialized.remove('seconds') as int? ?? 0;
-    final milliseconds = serialized.remove('milliseconds') as int? ?? 0;
-    final microseconds = serialized.remove('microseconds') as int? ?? 0;
+    final int days = serialized.remove('days') as int? ?? 0;
+    final int hours = serialized.remove('hours') as int? ?? 0;
+    final int minutes = serialized.remove('minutes') as int? ?? 0;
+    final int seconds = serialized.remove('seconds') as int? ?? 0;
+    final int milliseconds = serialized.remove('milliseconds') as int? ?? 0;
+    final int microseconds = serialized.remove('microseconds') as int? ?? 0;
     if (serialized.isNotEmpty) {
       throw SerializationException(
         'DurationSerialization found unexpected keys: '
@@ -35,8 +35,6 @@ final class DurationSerializer extends Serializer<Duration> {
 
   @override
   Map<String, Object?> serialize(Duration value) {
-    return {
-      'microseconds': value.inMicroseconds,
-    };
+    return {'microseconds': value.inMicroseconds};
   }
 }

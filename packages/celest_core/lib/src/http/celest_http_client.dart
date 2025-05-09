@@ -11,13 +11,12 @@ final class CelestHttpClient extends http.BaseClient {
     Authenticator? authenticator,
     http.Client? baseClient,
     Logger? logger,
-  })  : _authenticator = authenticator ??
-            Authenticator(
-              secureStorage: secureStorage ?? NativeSecureStorage(),
-            ),
-        _ownsInner = baseClient == null,
-        _inner = baseClient ?? createHttpClient(),
-        _logger = logger;
+  }) : _authenticator =
+           authenticator ??
+           Authenticator(secureStorage: secureStorage ?? NativeSecureStorage()),
+       _ownsInner = baseClient == null,
+       _inner = baseClient ?? createHttpClient(),
+       _logger = logger;
 
   final Authenticator _authenticator;
   final bool _ownsInner;
@@ -26,7 +25,7 @@ final class CelestHttpClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    final token = await _authenticator.token;
+    final String? token = await _authenticator.token;
     if (token != null) {
       request.headers['authorization'] = 'Bearer $token';
     }

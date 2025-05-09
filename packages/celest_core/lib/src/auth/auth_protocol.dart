@@ -9,15 +9,9 @@ abstract interface class AuthProtocol {
 }
 
 abstract interface class EmailProtocol {
-  Future<OtpParameters> sendOtp({
-    required OtpSendRequest request,
-  });
+  Future<OtpParameters> sendOtp({required OtpSendRequest request});
 
-  Future<OtpParameters> resendOtp({
-    required OtpSendRequest request,
-  });
+  Future<OtpParameters> resendOtp({required OtpSendRequest request});
 
-  Future<AuthenticatedUser> verifyOtp({
-    required OtpVerifyRequest verification,
-  });
+  Future<AuthenticatedUser> verifyOtp({required OtpVerifyRequest verification});
 }

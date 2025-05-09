@@ -33,7 +33,7 @@ class _StripPaddingDecoder extends Converter<String, String> {
 
   @override
   String convert(String input) {
-    final len = input.length;
+    final int len = input.length;
     return input + '=' * ((4 - len % 4) % 4);
   }
 }

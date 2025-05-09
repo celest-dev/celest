@@ -62,7 +62,7 @@ Uint8List _uuidv7() {
 	*/
 
   final uuid = Uint8List(16);
-  final time = DateTime.now().millisecondsSinceEpoch;
+  final int time = DateTime.now().millisecondsSinceEpoch;
 
   // The most significant 48 bits of the timestamp.
   uuid[0] = time >> 40 & 0xff;

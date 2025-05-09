@@ -28,18 +28,17 @@ extension JsonUtf8 on Object {
   }
 
   static Never _invalidJson(Object? json) {
-    throw BadRequestException(
-      'Invalid JSON body (${json.runtimeType}): $json',
-    );
+    throw BadRequestException('Invalid JSON body (${json.runtimeType}): $json');
   }
 
   /// Decodes a JSON map [body] from a `List<int>` or [String].
   static Object? decodeAny(Object? body) {
     return switch (body) {
       List<int>() => body.isEmpty ? const {} : decode(body),
-      String() => body.isEmpty
-          ? const {}
-          : () {
+      String() =>
+        body.isEmpty
+            ? const {}
+            : () {
               try {
                 return jsonDecode(body);
               } on Object {

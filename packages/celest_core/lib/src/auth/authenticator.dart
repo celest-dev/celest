@@ -11,21 +11,17 @@ abstract class Authenticator {
     OnRevoke? onRevoke,
   }) = _Authenticator;
 
-  const factory Authenticator.static({
-    String? token,
-    OnRevoke? onRevoke,
-  }) = _StaticAuthenticator;
+  const factory Authenticator.static({String? token, OnRevoke? onRevoke}) =
+      _StaticAuthenticator;
 
   Future<String?> get token;
   Future<void> revoke();
 }
 
 final class _StaticAuthenticator implements Authenticator {
-  const _StaticAuthenticator({
-    String? token,
-    OnRevoke? onRevoke,
-  })  : _token = token,
-        _onRevoke = onRevoke;
+  const _StaticAuthenticator({String? token, OnRevoke? onRevoke})
+    : _token = token,
+      _onRevoke = onRevoke;
 
   final String? _token;
   final OnRevoke? _onRevoke;
@@ -43,8 +39,8 @@ final class _Authenticator implements Authenticator {
   _Authenticator({
     required NativeSecureStorage secureStorage,
     OnRevoke? onRevoke,
-  })  : _secureStorage = secureStorage.scoped('/celest/auth'),
-        _onRevoke = onRevoke;
+  }) : _secureStorage = secureStorage.scoped('/celest/auth'),
+       _onRevoke = onRevoke;
 
   final NativeSecureStorage _secureStorage;
   final OnRevoke? _onRevoke;
