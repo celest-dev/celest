@@ -1,0 +1,37 @@
+name: celest_test
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/celest_test.yaml"
+      - "packages/celest_test/**"
+
+# Prevent duplicate runs due to Graphite
+# https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  analyze_and_format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046 # 2.19.0
+        with:
+          channel: beta
+          cache: true
+      - name: Get Packages
+        working-directory: packages/celest_test
+        run: dart pub upgrade
+      - name: Analyze
+        working-directory: packages/celest_test
+        run: dart analyze
+      - name: Format
+        working-directory: packages/celest_test
+        run: dart format --language-version=latest --set-exit-if-changed .
