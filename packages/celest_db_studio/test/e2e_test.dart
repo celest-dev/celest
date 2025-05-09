@@ -18,7 +18,7 @@ void main() {
     late Process p;
 
     setUpAll(() async {
-      final sqldPort = await selectFreePort();
+      final int sqldPort = await selectFreePort();
       sqld = await startSqld(sqldPort);
 
       port = await selectFreePort();
@@ -83,7 +83,7 @@ void main() {
       await p.exitCode;
       try {
         await dbDir.delete(recursive: true);
-      } catch (e) {
+      } on Object {
         // OK
       }
     });
@@ -130,7 +130,7 @@ void main() {
         'E2E',
         skip: hasChromeDriver ? null : 'Chromedriver not installed',
         () async {
-          final chromedriver = await Process.start('chromedriver', [
+          final Process chromedriver = await Process.start('chromedriver', [
             '--port=4444',
             '--url-base=wd/hub',
           ]);
@@ -153,7 +153,7 @@ void main() {
                 .then(fail),
           ]);
 
-          final driver = await createDriver(
+          final WebDriver driver = await createDriver(
             spec: WebDriverSpec.JsonWire,
             desired: {
               ...Capabilities.chrome,
@@ -167,31 +167,31 @@ void main() {
           addTearDown(driver.quit);
 
           await driver.get('http://localhost:$port');
-          final iframe = await driver.waitForElement(
+          final WebElement iframe = await driver.waitForElement(
             const By.tagName('iframe'),
             timeout: const Duration(seconds: 10),
           );
-          final src = await iframe.attributes['src'];
+          final String? src = await iframe.attributes['src'];
           expect(src, 'https://studio.outerbase.com/embed/sqlite');
 
           // Ensure that sending `SELECT 1;` works and returns `1` in the result cell.
 
           await driver.switchTo.frame(iframe);
 
-          final input = await driver.waitForElement(
+          final WebElement input = await driver.waitForElement(
             const By.className('cm-content'),
           );
           await input.click();
           await input.sendKeys('SELECT 1;');
 
-          final runButton = await driver.findElement(
+          final WebElement runButton = await driver.findElement(
             const By.cssSelector(
               r'body > div.flex.h-screen.w-screen.flex-col > div > div:nth-child(3) > div.flex.h-full.w-full.flex-col > div.relative.grow > div > div > div:nth-child(1) > div > div.flex.border-b.bg-neutral-50.py-3.pr-1.pl-3.dark\:bg-neutral-950 > div.flex.gap-2 > div > button.inline-flex.items-center.justify-center.whitespace-nowrap.font-medium.transition-colors.focus-visible\:outline-hidden.focus-visible\:ring-1.focus-visible\:ring-ring.disabled\:pointer-events-none.disabled\:opacity-50.bg-primary.text-primary-foreground.shadow-sm.hover\:bg-primary\/90.h-8.rounded-md.px-3.text-sm.rounded-r-none',
             ),
           );
           await runButton.click();
 
-          final resultCell = await driver.waitForElement(
+          final WebElement resultCell = await driver.waitForElement(
             const By.cssSelector(
               r'body > div.flex.h-screen.w-screen.flex-col > div > div:nth-child(3) > div.flex.h-full.w-full.flex-col > div.relative.grow > div > div > div:nth-child(3) > div.flex.h-full.w-full.flex-col > div.relative.grow > div:nth-child(1) > div > div.grow.overflow-hidden > div > div > table > tbody > tr > td.overflow-hidden.border-r.border-b.box-border.hover\:bg-neutral-100.dark\:hover\:bg-neutral-800.bg-transparent',
             ),
@@ -207,7 +207,7 @@ bool get hasChromeDriver {
   try {
     Process.runSync('chromedriver', ['--version']);
     return true;
-  } catch (e) {
+  } on Object {
     return false;
   }
 }
@@ -221,10 +221,10 @@ extension on SearchContext {
     while (stopwatch.elapsed < timeout) {
       try {
         return await findElement(by);
-      } catch (e) {
+      } on Object {
         // Ignore and retry
       }
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
     }
     throw TimeoutException(null, 'Element not found within $timeout');
   }

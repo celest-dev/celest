@@ -11,23 +11,26 @@ export 'package:celest_db_studio/src/driver.dart';
 /// {@template celest_db_studio.celest_db_studio}
 /// A simple server which serves an instance of Outerbase Studio as an embedded
 /// iframe and responds to query requests from the iframe.
-///
-/// The server connects to a database using the provided [databaseUri] and
-/// proxies requests from the iframe to the database.
 /// {@endtemplate}
 final class CelestDbStudio {
+  CelestDbStudio.from({this.pageTitle = defaultTitle, required Driver driver})
+    : _driver = driver;
+
   /// {@macro celest_db_studio.celest_db_studio}
+  ///
+  /// The server connects to a database using the provided [databaseUri] and
+  /// proxies requests from the iframe to the database.
   static Future<CelestDbStudio> create({
     String pageTitle = defaultTitle,
     required Uri databaseUri,
     String? authToken,
   }) async {
-    final driver = await Driver.connect(databaseUri, authToken: authToken);
+    final Driver driver = await Driver.connect(
+      databaseUri,
+      authToken: authToken,
+    );
     return CelestDbStudio.from(pageTitle: pageTitle, driver: driver);
   }
-
-  CelestDbStudio.from({this.pageTitle = defaultTitle, required Driver driver})
-    : _driver = driver;
 
   /// The default title of the page.
   static const String defaultTitle = 'DB Studio';
@@ -68,7 +71,7 @@ final class CelestDbStudio {
       if (request.method == 'OPTIONS') {
         return Response.ok(null, headers: corsHeaders);
       }
-      final response = await innerHandler(request);
+      final Response response = await innerHandler(request);
       return response.change(headers: corsHeaders);
     };
   }
@@ -102,7 +105,7 @@ final class CelestDbStudio {
 
   /// Responds to query requests from the Outerbase Studio iframe.
   Future<Response> _query(Request request) async {
-    final json = await JsonUtf8.decodeStream(request.read());
+    final Object? json = await JsonUtf8.decodeStream(request.read());
     if (json
         case {
               'id': final int id,
@@ -115,7 +118,7 @@ final class CelestDbStudio {
               'statement': final String statement,
             }) {
       try {
-        final result = await _driver.execute(statement);
+        final DriverResultSet result = await _driver.execute(statement);
         return Response.ok(
           jsonEncode({
             'type': type,

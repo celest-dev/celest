@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:docker_process/docker_process.dart';
 
 Future<DockerProcess> startSqld(int port) async {
-  final process = await DockerProcess.start(
+  final DockerProcess process = await DockerProcess.start(
     image: 'ghcr.io/tursodatabase/libsql-server:latest',
     name: 'dart-hrana-test-$port',
     readySignal: (line) => line.contains('serving internal rpc server'),
@@ -14,8 +14,11 @@ Future<DockerProcess> startSqld(int port) async {
 }
 
 Future<int> selectFreePort() async {
-  final socket = await ServerSocket.bind(InternetAddress.anyIPv4, 0);
-  final port = socket.port;
+  final ServerSocket socket = await ServerSocket.bind(
+    InternetAddress.anyIPv4,
+    0,
+  );
+  final int port = socket.port;
   await socket.close();
   return port;
 }

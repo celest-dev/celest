@@ -5,27 +5,31 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 
 Future<void> main(List<String> args) async {
-  final databaseUrl = Platform.environment['DATABASE_URL'];
+  final String? databaseUrl = Platform.environment['DATABASE_URL'];
   if (databaseUrl == null) {
-    print('DATABASE_URL environment variable is not set.');
+    stderr.writeln('DATABASE_URL environment variable is not set.');
     exit(1);
   }
-  final authToken = Platform.environment['DATABASE_AUTH_TOKEN'];
+  final String? authToken = Platform.environment['DATABASE_AUTH_TOKEN'];
 
-  final dbStudio = await CelestDbStudio.create(
+  final CelestDbStudio dbStudio = await CelestDbStudio.create(
     databaseUri: Uri.parse(databaseUrl),
     authToken: authToken,
   );
-  final handler = Pipeline()
+  final Handler handler = const Pipeline()
       .addMiddleware(logRequests())
       .addHandler(dbStudio.call);
 
-  final port = int.parse(Platform.environment['PORT'] ?? '8080');
-  final server = await serve(handler, InternetAddress.loopbackIPv4, port);
-  print('Server listening on http://localhost:${server.port}');
+  final int port = int.parse(Platform.environment['PORT'] ?? '8080');
+  final HttpServer server = await serve(
+    handler,
+    InternetAddress.loopbackIPv4,
+    port,
+  );
+  stdout.writeln('Server listening on http://localhost:${server.port}');
 
   await ProcessSignal.sigint.watch().first;
 
-  print('Stopping server...');
+  stdout.writeln('Stopping server...');
   await server.close(force: true);
 }
