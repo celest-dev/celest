@@ -1,6 +1,8 @@
-## 0.1.1-wip
+## NEXT
 
 - chore: Update dependencies
+- chore: Re-format with Dart 3.8
+- chore: Update linter/style preferences
 
 ## 0.1.0
 

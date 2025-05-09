@@ -19,13 +19,13 @@ final class CelestTester {
   }) async {
     _logger.fine('Connecting to Celest service: $wsUri');
 
-    var uri = Uri.parse(wsUri);
+    Uri uri = Uri.parse(wsUri);
     if (uri.host case '127.0.0.1' || 'localhost'
         when !kIsWeb && Platform.isAndroid) {
       uri = uri.replace(host: '10.0.2.2');
     }
 
-    final vmService = await vmServiceConnect(uri);
+    final VmService vmService = await vmServiceConnect(uri);
     await vmService.streamListen(EventStreams.kExtension);
 
     final tester = CelestTester._(vmService);
@@ -57,15 +57,12 @@ final class CelestAuthTester {
 
   /// OTP codes sent to users during sign up/sign in.
   Stream<Otp> get onSentOtp async* {
-    await for (final event in _vmService.onExtensionEvent) {
+    await for (final Event event in _vmService.onExtensionEvent) {
       if (event.extensionKind != 'celest.cloud_auth.emailOtpSent') {
         continue;
       }
-      final data = event.extensionData!.data;
-      yield (
-        to: data['to'] as String,
-        code: data['code'] as String,
-      );
+      final Map<String, dynamic> data = event.extensionData!.data;
+      yield (to: data['to'] as String, code: data['code'] as String);
     }
   }
 }
