@@ -8,15 +8,18 @@ import 'package:test/test.dart';
 const processManager = LocalProcessManager();
 
 Future<int> _findOpenPort() async {
-  final server = await ServerSocket.bind(InternetAddress.loopbackIPv4, 0);
-  final port = server.port;
+  final ServerSocket server = await ServerSocket.bind(
+    InternetAddress.loopbackIPv4,
+    0,
+  );
+  final int port = server.port;
   await server.close();
   return port;
 }
 
 Future<Uri> startSqld() async {
-  final port = await _findOpenPort();
-  final process = await processManager.start([
+  final int port = await _findOpenPort();
+  final Process process = await processManager.start([
     'turso',
     'dev',
     '--port',
@@ -24,14 +27,13 @@ Future<Uri> startSqld() async {
   ]);
   addTearDown(process.kill);
   final running = Completer<void>();
-  process.stdout
-      .transform(utf8.decoder)
-      .transform(const LineSplitter())
-      .listen((event) {
-    if (event.contains('sqld listening on')) {
-      running.complete();
-    }
-  });
+  process.stdout.transform(utf8.decoder).transform(const LineSplitter()).listen(
+    (event) {
+      if (event.contains('sqld listening on')) {
+        running.complete();
+      }
+    },
+  );
   await running.future.timeout(
     const Duration(seconds: 5),
     onTimeout: () {
@@ -44,13 +46,13 @@ Future<Uri> startSqld() async {
 Future<(Uri, String)> createTursoDatabase() async {
   final databaseName = 'celest-test-${DateTime.now().millisecondsSinceEpoch}';
   await _runProcess('turso', ['db', 'create', databaseName, '--group=default']);
-  final databaseUrl = await _runProcess('turso', [
+  final String databaseUrl = await _runProcess('turso', [
     'db',
     'show',
     databaseName,
     '--url',
   ]);
-  final authToken = await _runProcess('turso', [
+  final String authToken = await _runProcess('turso', [
     'db',
     'tokens',
     'create',
@@ -74,7 +76,7 @@ bool get hasTursoCli {
 }
 
 Future<String> _runProcess(String command, List<String> args) async {
-  final process = await Process.run(
+  final ProcessResult process = await Process.run(
     command,
     args,
     stdoutEncoding: utf8,
@@ -83,7 +85,8 @@ Future<String> _runProcess(String command, List<String> args) async {
   );
   if (process.exitCode != 0) {
     throw Exception(
-        'Failed to run $command ${args.join(' ')}: ${process.stderr}');
+      'Failed to run $command ${args.join(' ')}: ${process.stderr}',
+    );
   }
   return (process.stdout as String).trim();
 }

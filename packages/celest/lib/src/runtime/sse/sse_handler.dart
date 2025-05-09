@@ -57,34 +57,34 @@ final class SseConnection with StreamChannelMixin<Object?> {
   int _lastProcessedId = -1;
 
   /// Incoming messages that have yet to be processed.
-  final _pendingMessages =
-      HeapPriorityQueue<_SseMessage>((a, b) => a.id.compareTo(b.id));
+  final _pendingMessages = HeapPriorityQueue<_SseMessage>(
+    (a, b) => a.id.compareTo(b.id),
+  );
 
   final _closedCompleter = Completer<void>();
   final _haltOutgoingQueue = Completer<void>();
 
   void _handleOutgoing() {
-    final subscription = _outgoingController.stream.listen(
-      (message) {
-        if (_haltOutgoingQueue.isCompleted) {
-          _logger.finest('Message queued after close: $message');
-          return;
-        }
-        _logger.finest('Sending message: $message');
-        _socket
-          ..add('data: '.codeUnits)
-          ..add(JsonUtf8.encode(message))
-          ..add('\n\n'.codeUnits);
-        _socket.flush().ignore();
-      },
-    );
+    final StreamSubscription<Object?> subscription = _outgoingController.stream
+        .listen((message) {
+          if (_haltOutgoingQueue.isCompleted) {
+            _logger.finest('Message queued after close: $message');
+            return;
+          }
+          _logger.finest('Sending message: $message');
+          _socket
+            ..add('data: '.codeUnits)
+            ..add(JsonUtf8.encode(message))
+            ..add('\n\n'.codeUnits);
+          _socket.flush().ignore();
+        });
     _haltOutgoingQueue.future.whenComplete(subscription.cancel);
   }
 
   void _handleIncoming(int id, Object? message) {
     _pendingMessages.add((id: id, message: message));
     while (_pendingMessages.isNotEmpty) {
-      final pendingMessage = _pendingMessages.first;
+      final _SseMessage pendingMessage = _pendingMessages.first;
       // Only process the next incremental message.
       if (pendingMessage.id - _lastProcessedId <= 1) {
         _logger.finest(
@@ -161,7 +161,8 @@ final class _SseHandler {
   final _connections = <String, SseConnection>{};
 
   // RFC 2616 requires carriage return delimiters.
-  static String _sseHeaders(Request request) => 'HTTP/1.1 200 OK\r\n'
+  static String _sseHeaders(Request request) =>
+      'HTTP/1.1 200 OK\r\n'
       'Content-Type: text/event-stream\r\n'
       'Cache-Control: no-cache\r\n'
       'Connection: keep-alive\r\n'
@@ -173,13 +174,13 @@ final class _SseHandler {
   );
 
   static Map<String, String> _corsHeaders(Request request) => {
-        'Access-Control-Allow-Credentials': 'true',
-        if (request.headers['origin'] case final origin?)
-          'Access-Control-Allow-Origin': origin,
-      };
+    'Access-Control-Allow-Credentials': 'true',
+    if (request.headers['origin'] case final origin?)
+      'Access-Control-Allow-Origin': origin,
+  };
 
   Response _createConnection(Request request) {
-    final clientId = request.url.queryParameters['sseClientId'];
+    final String? clientId = request.url.queryParameters['sseClientId'];
     if (clientId == null) {
       return Response.badRequest(
         body: 'sseClientId query parameter is required',
@@ -187,12 +188,13 @@ final class _SseHandler {
     }
     request.hijack((socket) {
       socket.sink.add(_sseHeaders(request).codeUnits);
-      final connection = _connections[clientId] ??= SseConnection(
-        socket.sink as Socket,
-        clientId: clientId,
-        headers: request.headersAll,
-        queryParameters: request.url.queryParametersAll,
-      );
+      final SseConnection connection =
+          _connections[clientId] ??= SseConnection(
+            socket.sink as Socket,
+            clientId: clientId,
+            headers: request.headersAll,
+            queryParameters: request.url.queryParametersAll,
+          );
       unawaited(
         connection._closedCompleter.future.whenComplete(() {
           connection._logger.finest('Removing connection');
@@ -210,23 +212,22 @@ final class _SseHandler {
       utf8.decoder.fuse(json.decoder).cast<Uint8List, Object?>();
 
   Future<Response> _handleIncomingMessage(Request request) async {
-    final clientId = request.url.queryParameters['sseClientId'];
+    final String? clientId = request.url.queryParameters['sseClientId'];
     if (clientId == null) {
       return Response.badRequest(
         body: 'sseClientId query parameter is required',
       );
     }
-    final connection = _connections[clientId];
+    final SseConnection? connection = _connections[clientId];
     if (connection == null) {
-      return Response.notFound(
-        'No connection found for clientId: $clientId',
-      );
+      return Response.notFound('No connection found for clientId: $clientId');
     }
-    final messageId = int.parse(
+    final int messageId = int.parse(
       request.url.queryParameters['messageId'] ?? '0',
     );
     try {
-      final message = await request.read().transform(_jsonUtf8Decoder).first;
+      final Object? message =
+          await request.read().transform(_jsonUtf8Decoder).first;
       connection._handleIncoming(messageId, message);
       return Response(HttpStatus.accepted);
     } on Object catch (e, st) {
@@ -237,12 +238,9 @@ final class _SseHandler {
 
   /// The shelf [Handler] for the SSE server.
   Future<Response> handle(Request request) async {
-    final response = await _innerHandle(request);
+    final Response response = await _innerHandle(request);
     return response.change(
-      headers: {
-        ..._corsHeaders(request),
-        ...response.headers,
-      },
+      headers: {..._corsHeaders(request), ...response.headers},
     );
   }
 

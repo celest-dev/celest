@@ -14,7 +14,7 @@ void main() {
     });
 
     test('get parent', () {
-      final root = Context.root;
+      final Context root = Context.root;
       runZoned(() {
         runZoned(() {
           runZoned(() {
@@ -30,7 +30,7 @@ void main() {
     });
 
     test('inherits from parent', () {
-      final parent = Context.root;
+      final Context parent = Context.root;
       runZoned(() {
         expect(
           context,
@@ -46,11 +46,7 @@ void main() {
           isNull,
           reason: 'operator [] does not search parent values',
         );
-        expect(
-          context.get(key),
-          'value',
-          reason: 'get searches parent values',
-        );
+        expect(context.get(key), 'value', reason: 'get searches parent values');
 
         context[key] = 'new value';
         expect(
@@ -58,11 +54,7 @@ void main() {
           'new value',
           reason: 'operator []= sets the value in the current context',
         );
-        expect(
-          parent[key],
-          'value',
-          reason: 'parent context is not modified',
-        );
+        expect(parent[key], 'value', reason: 'parent context is not modified');
         expect(
           context.get(key),
           'new value',
@@ -75,11 +67,7 @@ void main() {
           isNull,
           reason: 'remove removes the value from the current context',
         );
-        expect(
-          parent[key],
-          'value',
-          reason: 'parent context is not modified',
-        );
+        expect(parent[key], 'value', reason: 'parent context is not modified');
         expect(
           context.get(key),
           'value',
@@ -89,7 +77,7 @@ void main() {
     });
 
     test('cannot set values in root outside of root Zone', () {
-      final root = Context.root;
+      final Context root = Context.root;
       expect(
         () => root[key] = 'value',
         throwsA(

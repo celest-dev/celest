@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:celest/src/config/config_values.dart';
 import 'package:celest/src/core/context.dart';
 import 'package:celest/src/runtime/http/logging.dart';
@@ -5,10 +7,12 @@ import 'package:celest_ast/celest_ast.dart';
 // ignore: implementation_imports
 import 'package:celest_ast/src/proto/celest/ast/v1/resolved_ast.pb.dart' as pb;
 import 'package:celest_core/_internal.dart';
+import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 
 Map<String, Object?>? _loadJsonFromEnv(Context rootContext) {
-  final configJson = rootContext.platform.environment['CELEST_CONFIG_JSON'];
+  final String? configJson =
+      rootContext.platform.environment['CELEST_CONFIG_JSON'];
   if (configJson == null) {
     return null;
   }
@@ -22,19 +26,19 @@ Map<String, Object?>? _loadJsonFromEnv(Context rootContext) {
 Future<Map<String, Object?>?> _loadJsonFromFileSystem(
   Context rootContext,
 ) async {
-  var configPath = rootContext.platform.environment['CELEST_CONFIG'];
+  String? configPath = rootContext.platform.environment['CELEST_CONFIG'];
   if (configPath == null) {
-    final script = rootContext.platform.script;
+    final Uri script = rootContext.platform.script;
     configPath = script.resolve('./celest.json').toFilePath();
   }
   if (!rootContext.fileSystem.isFileSync(configPath)) {
     return null;
   }
 
-  final configFile = rootContext.fileSystem.file(configPath);
-  final configData = await configFile
-      .readAsBytes()
-      .onError((e, _) => throw StateError('Failed to load celest.json: $e'));
+  final File configFile = rootContext.fileSystem.file(configPath);
+  final Uint8List configData = await configFile.readAsBytes().onError(
+    (e, _) => throw StateError('Failed to load celest.json: $e'),
+  );
 
   try {
     return JsonUtf8.decodeMap(configData);
@@ -44,15 +48,14 @@ Future<Map<String, Object?>?> _loadJsonFromFileSystem(
 }
 
 /// Configures the environment in which Celest is running.
-Future<void> configure({
-  ResolvedProject? config,
-}) async {
+Future<void> configure({ResolvedProject? config}) async {
   configureLogging();
 
-  final rootContext = Context.root;
+  final Context rootContext = Context.root;
 
   if (config == null) {
-    final configJson = _loadJsonFromEnv(rootContext) ??
+    final Map<String, Object?>? configJson =
+        _loadJsonFromEnv(rootContext) ??
         await _loadJsonFromFileSystem(rootContext);
     if (configJson == null) {
       throw StateError(

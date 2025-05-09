@@ -3,9 +3,7 @@
 /// {@endtemplate}
 final class Database {
   /// {@macro celest.data.database}
-  const Database({
-    required this.schema,
-  });
+  const Database({required this.schema});
 
   /// The schema of the database.
   final Schema schema;

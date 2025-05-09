@@ -8,9 +8,7 @@ import 'package:celest/src/auth/auth_provider.dart';
 /// {@endtemplate}
 final class Auth {
   /// {@macro celest.auth.auth}
-  const Auth({
-    required this.providers,
-  });
+  const Auth({required this.providers});
 
   /// The authentication providers which can be used by your users when signing
   /// in.

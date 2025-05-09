@@ -14,20 +14,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Hello Celest'),
-        ),
+        appBar: AppBar(title: const Text('Hello Celest')),
         body: Center(
           child: FutureBuilder(
             future: celest.functions.greeting.sayHello(
               person: const Person(name: 'Celest'),
             ),
-            builder: (_, snapshot) => switch (snapshot) {
-              AsyncSnapshot(:final data?) => Text(data),
-              AsyncSnapshot(:final error?) =>
-                Text('${error.runtimeType}: $error'),
-              _ => const CircularProgressIndicator(),
-            },
+            builder:
+                (_, snapshot) => switch (snapshot) {
+                  AsyncSnapshot(:final data?) => Text(data),
+                  AsyncSnapshot(:final error?) => Text(
+                    '${error.runtimeType}: $error',
+                  ),
+                  _ => const CircularProgressIndicator(),
+                },
           ),
         ),
       ),

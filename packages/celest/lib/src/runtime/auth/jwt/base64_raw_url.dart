@@ -32,7 +32,7 @@ class _StripPaddingEncoder extends Converter<String, String> {
 
   @override
   String convert(String input) {
-    final paddingStart = input.indexOf('=');
+    final int paddingStart = input.indexOf('=');
     if (paddingStart == -1) {
       return input;
     }
@@ -46,8 +46,8 @@ class _StripPaddingDecoder extends Converter<String, String> {
 
   @override
   String convert(String input) {
-    final len = input.length;
-    final padding = '=' * ((4 - len % 4) % 4);
+    final int len = input.length;
+    final String padding = '=' * ((4 - len % 4) % 4);
     return '$input$padding';
   }
 }

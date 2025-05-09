@@ -8,10 +8,7 @@ import 'package:celest/src/functions/cloud_api.dart';
 /// {@endtemplate}
 final class CloudFunction {
   /// {@macro celest.functions.cloud_function}
-  const CloudFunction({
-    required this.api,
-    required this.function,
-  });
+  const CloudFunction({required this.api, required this.function});
 
   /// The name of the [CloudApi] to which this function belongs.
   final String api;

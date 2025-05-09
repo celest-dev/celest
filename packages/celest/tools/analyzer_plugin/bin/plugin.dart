@@ -27,8 +27,9 @@ Future<void> main(List<String> args, SendPort sendPort) async {
   Logger.root.level = withDebugging ? Level.ALL : Level.INFO;
   Logger.root.onRecord.listen((record) {
     final loggerName = record.loggerName.split('.').lastOrNull ?? '<root>';
-    final message =
-        StringBuffer('${record.time}: [$loggerName] ${record.message}');
+    final message = StringBuffer(
+      '${record.time}: [$loggerName] ${record.message}',
+    );
     if (record.error != null) {
       message
         ..writeln()

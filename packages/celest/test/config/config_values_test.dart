@@ -10,11 +10,7 @@ void main() {
     test('from platform', () {
       context.put(
         ContextKey.platform,
-        FakePlatform(
-          environment: {
-            'ENV_VAR': 'value',
-          },
-        ),
+        FakePlatform(environment: {'ENV_VAR': 'value'}),
       );
       expect(context.get(key), 'value');
       expect(key.rawValue(context), 'value');
@@ -30,11 +26,7 @@ void main() {
       test('plaintext', () {
         context.put(
           ContextKey.platform,
-          FakePlatform(
-            environment: {
-              'ENV_VAR': 'data:,Hello%20World',
-            },
-          ),
+          FakePlatform(environment: {'ENV_VAR': 'data:,Hello%20World'}),
         );
         expect(context.get(key), 'Hello World');
         expect(
@@ -48,9 +40,7 @@ void main() {
         context.put(
           ContextKey.platform,
           FakePlatform(
-            environment: {
-              'ENV_VAR': 'data:text/plain;base64,SGVsbG8gV29ybGQ=',
-            },
+            environment: {'ENV_VAR': 'data:text/plain;base64,SGVsbG8gV29ybGQ='},
           ),
         );
         expect(

@@ -7,7 +7,6 @@ environment:
 workspace:
   - apps/cli
   - packages/celest
-  - packages/celest/tools/analyzer_plugin
   - packages/celest_ast
   - packages/celest_auth
   - packages/celest_cloud

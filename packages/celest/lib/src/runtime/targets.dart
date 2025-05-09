@@ -29,7 +29,7 @@ abstract base class CloudFunctionTarget {
 /// {@endtemplate}
 abstract base class CloudFunctionHttpTarget extends CloudFunctionTarget {
   Future<Response> _handler(Request request) async {
-    final bodyJson = await request.decodeJson();
+    final Map<String, Object?> bodyJson = await request.decodeJson();
     return handle(
       bodyJson,
       headers: request.headersAll,
@@ -43,7 +43,7 @@ abstract base class CloudFunctionHttpTarget extends CloudFunctionTarget {
   @override
   void apply(Router router, String route) {
     var pipeline = const Pipeline();
-    for (final middleware in middlewares) {
+    for (final Middleware middleware in middlewares) {
       pipeline = pipeline.addMiddleware(middleware.call);
     }
     router.add(method, route, pipeline.addHandler(_handler));
@@ -65,7 +65,7 @@ abstract base class CloudEventSourceTarget extends CloudFunctionTarget {
   @override
   void apply(Router router, String route) {
     var pipeline = const Pipeline();
-    for (final middleware in middlewares) {
+    for (final Middleware middleware in middlewares) {
       pipeline = pipeline.addMiddleware(middleware.call);
     }
     router.add('GET', route, pipeline.addHandler(_handler));
@@ -73,48 +73,51 @@ abstract base class CloudEventSourceTarget extends CloudFunctionTarget {
   }
 
   late final Handler _sseHandler = sseHandler(_handleConnection);
-  late final Handler _wsHandler = webSocketHandler(
-    (WebSocketChannel webSocket, String? subProtocol) {
-      _handleConnection(
-        webSocket.transform(
-          StreamChannelTransformer(
-            StreamTransformer.fromHandlers(
-              handleData: (data, sink) {
-                sink.add(JsonUtf8.decodeAny(data));
-              },
-            ),
-            StreamSinkTransformer.fromHandlers(
-              handleData: (data, sink) {
-                sink.add(jsonEncode(data));
-              },
-            ),
+  late final Handler _wsHandler = webSocketHandler((
+    WebSocketChannel webSocket,
+    String? subProtocol,
+  ) {
+    _handleConnection(
+      webSocket.transform(
+        StreamChannelTransformer(
+          StreamTransformer.fromHandlers(
+            handleData: (data, sink) {
+              sink.add(JsonUtf8.decodeAny(data));
+            },
+          ),
+          StreamSinkTransformer.fromHandlers(
+            handleData: (data, sink) {
+              sink.add(jsonEncode(data));
+            },
           ),
         ),
-      );
-    },
-  );
+      ),
+    );
+  });
 
-  Future<void> _handleConnection(
-    StreamChannel<Object?> connection,
-  ) async {
+  Future<void> _handleConnection(StreamChannel<Object?> connection) async {
     await runZonedGuarded(
       () async {
-        final requests = StreamQueue(connection.stream);
+        final StreamQueue<Object?> requests = StreamQueue(connection.stream);
         var request = const <String, Object?>{};
         if (hasBody) {
           request = await requests.next as Map<String, Object?>;
         }
-        final (headers, queryParameters) = switch (connection) {
-          SseConnection(:final headers, :final queryParameters) => (
-              headers,
-              queryParameters
-            ),
+        final (
+          Map<String, List<String>> headers,
+          Map<String, List<String>> queryParameters,
+        ) = switch (connection) {
+          SseConnection(
+            :final Map<String, List<String>> headers,
+            :final Map<String, List<String>> queryParameters,
+          ) =>
+            (headers, queryParameters),
           _ => (
-              context.currentRequest.headersAll,
-              context.currentRequest.url.queryParametersAll,
-            ),
+            context.currentRequest.headersAll,
+            context.currentRequest.url.queryParametersAll,
+          ),
         };
-        final stream = handle(
+        final Stream<Object?> stream = handle(
           request,
           headers: headers,
           queryParameters: queryParameters,

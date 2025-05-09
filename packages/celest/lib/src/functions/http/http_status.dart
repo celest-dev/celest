@@ -4,10 +4,7 @@
 extension type const HttpStatus._(int code) implements int {
   /// {@macro celest.http.http_status}
   const HttpStatus(this.code)
-      : assert(
-          code >= 100 && code <= 999,
-          'code must be in the range 100-999',
-        );
+    : assert(code >= 100 && code <= 999, 'code must be in the range 100-999');
 
   /// `200 OK`
   ///

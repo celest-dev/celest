@@ -9,11 +9,7 @@ import 'package:celest/src/core/cloud_widget.dart';
 /// {@endtemplate}
 class Project implements CloudWidget {
   /// {@macro celest.core.project}
-  const Project({
-    required this.name,
-    this.displayName,
-    this.region,
-  });
+  const Project({required this.name, this.displayName, this.region});
 
   /// The name of the project as its identified in your Celest backend.
   final String name;

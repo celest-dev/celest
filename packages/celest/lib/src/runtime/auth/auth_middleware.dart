@@ -32,7 +32,7 @@ abstract base class AuthMiddleware implements Middleware {
   @override
   shelf.Handler call(shelf.Handler inner) {
     return (shelf.Request request) async {
-      final user = await authenticate(request);
+      final User? user = await authenticate(request);
       if (user == null && required) {
         throw const CloudException.unauthorized();
       }
@@ -49,10 +49,7 @@ abstract base class AuthMiddleware implements Middleware {
 final shelf.Middleware _ = const _OneOfAuthMiddleware([]).call;
 
 final class _OneOfAuthMiddleware extends AuthMiddleware {
-  const _OneOfAuthMiddleware(
-    this.middlewares, {
-    this.required = false,
-  });
+  const _OneOfAuthMiddleware(this.middlewares, {this.required = false});
 
   static final Logger _logger = Logger('AuthMiddleware');
 
@@ -64,9 +61,9 @@ final class _OneOfAuthMiddleware extends AuthMiddleware {
   @override
   Future<User?> authenticate(shelf.Request request) async {
     (Object, StackTrace)? internalError;
-    for (final middleware in middlewares) {
+    for (final AuthMiddleware middleware in middlewares) {
       try {
-        final user = await middleware.authenticate(request);
+        final User? user = await middleware.authenticate(request);
         if (user != null) {
           return user;
         }

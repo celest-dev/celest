@@ -17,9 +17,8 @@ import 'package:logging/logging.dart';
 import 'package:sqlite3/common.dart' as sqlite3;
 
 /// A function that creates a Drift [Database] instance.
-typedef DatabaseFactory<Database extends GeneratedDatabase> = Database Function(
-  QueryExecutor executor,
-);
+typedef DatabaseFactory<Database extends GeneratedDatabase> =
+    Database Function(QueryExecutor executor);
 
 final Logger _logger = Logger('CelestDatabase');
 
@@ -34,7 +33,7 @@ sealed class CelestDatabase<Database extends GeneratedDatabase> {
   /// Connects to a Celest database.
   /// {@endtemplate}
   static Future<CelestDatabase<Database>>
-      create<Database extends GeneratedDatabase>(
+  create<Database extends GeneratedDatabase>(
     Context context, {
     required String name,
     required DatabaseFactory<Database> factory,
@@ -43,7 +42,7 @@ sealed class CelestDatabase<Database extends GeneratedDatabase> {
     String? path,
   }) async {
     Uri? uri;
-    final host = context.get(hostnameVariable);
+    final String? host = context.get(hostnameVariable);
     if (path != null) {
       uri = Uri.file(path);
     } else if (host != null) {
@@ -71,7 +70,7 @@ sealed class CelestDatabase<Database extends GeneratedDatabase> {
       case Uri(scheme: 'file'):
         return FileDatabase(path: uri.toFilePath(), factory: factory);
       case Uri(scheme: 'ws' || 'wss' || 'http' || 'https' || 'libsql'):
-        final token = context.get(tokenSecret);
+        final String? token = context.get(tokenSecret);
         if (token == null) {
           if (context.environment != Environment.local) {
             _logger.warning(
@@ -81,7 +80,8 @@ sealed class CelestDatabase<Database extends GeneratedDatabase> {
           }
           _logger.config('Connecting to $uri without a token.');
         }
-        final client = await hrana.HranaHttpClient.connect(
+        final hrana.HranaHttpClient client = await hrana
+            .HranaHttpClient.connect(
           uri.replace(
             scheme: switch (uri.scheme) {
               'wss' || 'libsql' || 'https' => 'https',
@@ -233,8 +233,8 @@ final class LibsqlDatabase<Database extends GeneratedDatabase>
     this.token,
     required DatabaseFactory<Database> factory,
     required hrana.HranaClient client,
-  })  : _factory = factory,
-        _client = client;
+  }) : _factory = factory,
+       _client = client;
 
   /// The URI of the database.
   final Uri uri;

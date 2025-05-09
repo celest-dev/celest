@@ -55,9 +55,9 @@ final class CelestAnalyzerPlugin extends ServerPlugin
     this.withDebugging = false,
     @visibleForTesting ResourceProvider? resourceProvider,
   }) : super(
-          resourceProvider:
-              resourceProvider ?? PhysicalResourceProvider.INSTANCE,
-        );
+         resourceProvider:
+             resourceProvider ?? PhysicalResourceProvider.INSTANCE,
+       );
 
   static final Logger logger = Logger('Celest.AnalyzerPlugin');
 
@@ -132,12 +132,7 @@ final class CelestAnalyzerPlugin extends ServerPlugin
       offset = 0;
       length = result.content.length;
     }
-    return DartNavigationRequestImpl(
-      resourceProvider,
-      offset,
-      length,
-      result,
-    );
+    return DartNavigationRequestImpl(resourceProvider, offset, length, result);
   }
 
   @override
@@ -161,11 +156,7 @@ final class CelestAnalyzerPlugin extends ServerPlugin
       if (contextRoot.optionsFile case final options?) {
         final analysisOptions = loadYaml(await io.File(options).readAsString());
         final enabledPlugins = switch (analysisOptions) {
-          {
-            'analyzer': {
-              'plugins': final List<Object?> plugins,
-            }
-          } =>
+          {'analyzer': {'plugins': final List<Object?> plugins}} =>
             plugins.cast<String>(),
           _ => const [],
         };
@@ -265,8 +256,10 @@ final class CelestNavigationContributor implements NavigationContributor {
     _logger.info('computeNavigation Request: ${request.toDebugString()}');
     final offset = request.offset;
     final length = request.length ?? 0;
-    final targetNode =
-        NodeLocator(offset, offset + length).searchWithin(request.result.unit);
+    final targetNode = NodeLocator(
+      offset,
+      offset + length,
+    ).searchWithin(request.result.unit);
     if (targetNode == null || targetNode == request.result.unit) {
       _logger.warning('computeNavigation Target node not found');
       return;
@@ -322,12 +315,12 @@ final class NavigationVisitor extends RecursiveAstVisitor<void> {
       _logger.warning('CloudFunction annotation not found');
       return;
     }
-    final (api, function) =
-        switch (cloudFunctionAnnotation.computeConstantValue()) {
+    final (api, function) = switch (cloudFunctionAnnotation
+        .computeConstantValue()) {
       final DartObject obj => (
-          obj.getField('api')?.toStringValue(),
-          obj.getField('function')?.toStringValue(),
-        ),
+        obj.getField('api')?.toStringValue(),
+        obj.getField('function')?.toStringValue(),
+      ),
       _ => (null, null),
     };
     if (api == null || function == null) {
@@ -335,16 +328,18 @@ final class NavigationVisitor extends RecursiveAstVisitor<void> {
       return;
     }
 
-    final targetLibraryUri =
-        Uri.parse('package:celest_backend/src/functions/$api.dart');
+    final targetLibraryUri = Uri.parse(
+      'package:celest_backend/src/functions/$api.dart',
+    );
     final targetPath = _uriConverter.uriToPath(targetLibraryUri);
     if (targetPath == null) {
       _logger.severe('Target URI not found: $targetLibraryUri');
       return;
     }
     final targetContext = _projectRoots.contextFor(targetPath);
-    final targetResult =
-        targetContext.currentSession.getParsedLibrary(targetPath);
+    final targetResult = targetContext.currentSession.getParsedLibrary(
+      targetPath,
+    );
     if (targetResult is! ParsedLibraryResult) {
       _logger.shout(
         'Target library could not be parsed: $targetPath '

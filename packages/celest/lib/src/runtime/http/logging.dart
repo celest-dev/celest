@@ -32,8 +32,8 @@ void configureLogging() {
     }
     final context = Context.of(record.zone ?? Zone.current);
     if (context.isRunningInCloud) {
-      final trace = context.currentTrace;
-      final jsonRecord = record.logEntry(trace: trace);
+      final Traceparent? trace = context.currentTrace;
+      final String jsonRecord = record.logEntry(trace: trace);
       stdout.writeln(jsonRecord);
     } else {
       final message = StringBuffer(record.message);
@@ -54,24 +54,22 @@ void configureLogging() {
 
 extension on LogRecord {
   String get severity => switch (this) {
-        Level.FINE || Level.FINER || Level.FINEST => 'DEBUG',
-        Level.INFO => 'INFO',
-        Level.CONFIG => 'NOTICE',
-        Level.WARNING => 'WARNING',
-        Level.SEVERE => 'ERROR',
-        Level.SHOUT => 'CRITICAL',
-        _ => 'DEFAULT',
-      };
+    Level.FINE || Level.FINER || Level.FINEST => 'DEBUG',
+    Level.INFO => 'INFO',
+    Level.CONFIG => 'NOTICE',
+    Level.WARNING => 'WARNING',
+    Level.SEVERE => 'ERROR',
+    Level.SHOUT => 'CRITICAL',
+    _ => 'DEFAULT',
+  };
 
-  String logEntry({
-    Traceparent? trace,
-  }) {
+  String logEntry({Traceparent? trace}) {
     final message = StringBuffer(this.message);
 
     Chain? chain;
     if (error != null) {
       chain = switch (stackTrace) {
-        final stackTrace? when stackTrace != StackTrace.empty =>
+        final StackTrace stackTrace? when stackTrace != StackTrace.empty =>
           Chain.forTrace(stackTrace),
         _ => Chain.current(),
       };
@@ -86,12 +84,14 @@ extension on LogRecord {
     }
 
     // https://cloud.google.com/logging/docs/agent/logging/configuration#special-fields
-    final logContent = {
+    final Map<String, Object> logContent = {
       'message': message.toString().trim(),
       'severity': severity,
       'timestamp': time.toIso8601String(),
-      if ((trace, Context.root.googleProjectId)
-          case (final trace?, final googleProjectId?)) ...{
+      if ((trace, Context.root.googleProjectId) case (
+        final trace?,
+        final googleProjectId?,
+      )) ...{
         'logging.googleapis.com/trace':
             'projects/$googleProjectId/traces/${trace.parentId}',
         'logging.googleapis.com/spanId': trace.parentId,
@@ -105,12 +105,12 @@ extension on LogRecord {
 }
 
 extension on Frame {
-// https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogEntrySourceLocation
+  // https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogEntrySourceLocation
   Map<String, Object?> get sourceLocation => {
-        // TODO(dnys1): Will need to fix `package:` URIs to file paths when possible
-        // GoogleCloudPlatform/functions-framework-dart#40
-        'file': library,
-        if (line != null) 'line': line.toString(),
-        'function': member,
-      };
+    // TODO(dnys1): Will need to fix `package:` URIs to file paths when possible
+    // GoogleCloudPlatform/functions-framework-dart#40
+    'file': library,
+    if (line != null) 'line': line.toString(),
+    'function': member,
+  };
 }
