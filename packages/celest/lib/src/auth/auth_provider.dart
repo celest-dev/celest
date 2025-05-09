@@ -45,9 +45,8 @@ sealed class ExternalAuthProvider implements AuthProvider {
   /// If [jwtSecret] is provided, it will be used to verify the JWT token.
   /// Otherwise, a request will be made to the Supabase server to fetch the
   /// user's information.
-  const factory ExternalAuthProvider.supabase({
-    secret? jwtSecret,
-  }) = _SupabaseExternalAuthProvider;
+  const factory ExternalAuthProvider.supabase({secret? jwtSecret}) =
+      _SupabaseExternalAuthProvider;
 }
 
 final class _EmailAuthProvider extends AuthProvider {

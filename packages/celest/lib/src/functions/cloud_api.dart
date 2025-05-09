@@ -9,9 +9,7 @@ import 'package:celest/src/functions/cloud_function.dart';
 /// {@endtemplate}
 final class CloudApi {
   /// {@macro celest.function.cloud_api}
-  const CloudApi({
-    required this.name,
-  });
+  const CloudApi({required this.name});
 
   /// The name of the API.
   ///

@@ -62,17 +62,17 @@ Future<CelestService> serve({
   }
   router.get('/v1/healthz', (_) => Response.ok('OK'));
 
-  final pipeline = const Pipeline()
+  final Handler pipeline = const Pipeline()
       .addMiddleware(const RootMiddleware().call)
       .addMiddleware(const CorsMiddleware().call)
       .addMiddleware(const CloudExceptionMiddleware().call)
       .addHandler(router.call);
   port ??= switch (Platform.environment['PORT']) {
-    final port? =>
+    final String port? =>
       int.tryParse(port) ?? (throw StateError('Invalid PORT set: "$port"')),
     _ => defaultCelestPort,
   };
-  final server = await shelf_io.serve(
+  final HttpServer server = await shelf_io.serve(
     pipeline,
     InternetAddress.anyIPv4,
     port,
@@ -109,9 +109,7 @@ final class CelestService {
   int get port => _server.port;
 
   /// Closes the Celest service.
-  Future<void> close({
-    bool force = false,
-  }) {
+  Future<void> close({bool force = false}) {
     print('Shutting down...');
     return _server.close(force: force);
   }

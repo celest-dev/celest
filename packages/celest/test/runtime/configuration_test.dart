@@ -8,6 +8,7 @@ import 'package:celest/src/core/context.dart';
 import 'package:celest/src/runtime/configuration.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:file/memory.dart';
+import 'package:file/src/interface/file.dart';
 import 'package:platform/platform.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:test/test.dart';
@@ -47,18 +48,8 @@ final testProject = ResolvedProject(
       },
     ),
   },
-  variables: [
-    ResolvedVariable(
-      name: 'HELLO_WORLD',
-      value: 'hello',
-    ),
-  ],
-  secrets: [
-    ResolvedSecret(
-      name: 'HELLO_WORLD_SECRET',
-      value: 'world',
-    ),
-  ],
+  variables: [ResolvedVariable(name: 'HELLO_WORLD', value: 'hello')],
+  secrets: [ResolvedSecret(name: 'HELLO_WORLD_SECRET', value: 'world')],
 );
 
 void main() {
@@ -69,7 +60,7 @@ void main() {
         script: Uri.parse('file:///app/test.aot'),
       );
       final fileSystem = MemoryFileSystem.test();
-      final configFile = fileSystem.file('/app/celest.json');
+      final File configFile = fileSystem.file('/app/celest.json');
       configFile.parent.createSync();
       configFile.writeAsStringSync(
         jsonEncode(testProject.toProto().toProto3Json()),
@@ -88,13 +79,11 @@ void main() {
 
     test('loads CELEST_CONFIG', () async {
       final platform = FakePlatform(
-        environment: {
-          'CELEST_CONFIG': '/config/celest.json',
-        },
+        environment: {'CELEST_CONFIG': '/config/celest.json'},
         script: Uri.parse('file:///app/test.aot'),
       );
       final fileSystem = MemoryFileSystem.test();
-      final configFile = fileSystem.file('/config/celest.json');
+      final File configFile = fileSystem.file('/config/celest.json');
       configFile.parent.createSync();
       configFile.writeAsStringSync(
         jsonEncode(testProject.toProto().toProto3Json()),

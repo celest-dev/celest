@@ -1,6 +1,7 @@
 ## 1.0.6-wip
 
 - refactor: Move `connect` method to `CelestDatabase` class
+- fix: Analyzer plugin cannot be part of workspace
 
 ## 1.0.5
 

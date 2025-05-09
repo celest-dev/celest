@@ -43,7 +43,7 @@ final class CorsMiddleware implements Middleware {
   @override
   Handler call(Handler inner) {
     return (request) async {
-      final corsHeaders = {
+      final Map<String, String> corsHeaders = {
         // TODO(dnys1): Restrict these in production
         'Access-Control-Allow-Origin': request.headers['origin'] ?? '*',
         // Needed when `Access-Control-Allow-Origin` is a specific domain,
@@ -57,15 +57,10 @@ final class CorsMiddleware implements Middleware {
         'Access-Control-Allow-Credentials': 'true',
       };
       if (request.method == 'OPTIONS') {
-        return Response.ok(
-          null,
-          headers: corsHeaders,
-        );
+        return Response.ok(null, headers: corsHeaders);
       }
-      final response = await inner(request);
-      return response.change(
-        headers: corsHeaders,
-      );
+      final Response response = await inner(request);
+      return response.change(headers: corsHeaders);
     };
   }
 }
@@ -75,9 +70,7 @@ final class CorsMiddleware implements Middleware {
 /// {@endtemplate}
 final class CloudExceptionMiddleware implements Middleware {
   /// {@macro celest.runtime.cloud_exception_middleware}
-  const CloudExceptionMiddleware({
-    this.onException,
-  });
+  const CloudExceptionMiddleware({this.onException});
 
   /// Optional function to be called when an exception occurs.
   ///
@@ -95,23 +88,15 @@ final class CloudExceptionMiddleware implements Middleware {
         context.logger.severe(e.message, e, st);
         return Response(
           e.code,
-          headers: const {
-            contentTypeHeader: jsonContentType,
-          },
+          headers: const {contentTypeHeader: jsonContentType},
           body: JsonUtf8.encode({
             '@status': {
               'code': e.code,
               'message': e.message,
               'details': [
-                {
-                  '@type': e.type,
-                  'value': Serializers.instance.serialize(e),
-                },
+                {'@type': e.type, 'value': Serializers.instance.serialize(e)},
                 if (context.environment != Environment.production)
-                  {
-                    '@type': 'dart.core.StackTrace',
-                    'value': st.toString(),
-                  },
+                  {'@type': 'dart.core.StackTrace', 'value': st.toString()},
               ],
             },
           }),
@@ -121,9 +106,7 @@ final class CloudExceptionMiddleware implements Middleware {
         onException?.call(e, st);
         context.logger.severe('An unexpected exception occurred', e, st);
         return Response.badRequest(
-          headers: const {
-            contentTypeHeader: jsonContentType,
-          },
+          headers: const {contentTypeHeader: jsonContentType},
           body: JsonUtf8.encode({
             '@status': {
               'code': HttpStatus.badRequest,
@@ -134,10 +117,7 @@ final class CloudExceptionMiddleware implements Middleware {
                   'value': Serializers.instance.serialize<Exception>(e),
                 },
                 if (context.environment != Environment.production)
-                  {
-                    '@type': 'dart.core.StackTrace',
-                    'value': st.toString(),
-                  },
+                  {'@type': 'dart.core.StackTrace', 'value': st.toString()},
               ],
             },
           }),
@@ -146,9 +126,7 @@ final class CloudExceptionMiddleware implements Middleware {
         onException?.call(e, st);
         context.logger.shout('An unexpected error occurred', e, st);
         return Response.internalServerError(
-          headers: const {
-            contentTypeHeader: jsonContentType,
-          },
+          headers: const {contentTypeHeader: jsonContentType},
           body: JsonUtf8.encode({
             '@status': {
               'code': HttpStatus.internalServerError,
@@ -159,10 +137,7 @@ final class CloudExceptionMiddleware implements Middleware {
                   'value': Serializers.instance.serialize<Error>(e),
                 },
                 if (context.environment != Environment.production)
-                  {
-                    '@type': 'dart.core.StackTrace',
-                    'value': st.toString(),
-                  },
+                  {'@type': 'dart.core.StackTrace', 'value': st.toString()},
               ],
             },
           }),
@@ -187,7 +162,7 @@ final class RootMiddleware implements Middleware {
       final completer = Completer<Response>.sync();
 
       late Context requestContext;
-      final requestZone = Zone.current.fork(
+      final Zone requestZone = Zone.current.fork(
         specification: ZoneSpecification(
           handleUncaughtError: (self, parent, zone, error, stackTrace) {
             if (error is HijackException) {
@@ -205,25 +180,24 @@ final class RootMiddleware implements Middleware {
             completer.completeError(error, stackTrace);
           },
           print: (self, parent, zone, line) {
-            final route = request.url.path;
+            final String route = request.url.path;
             parent.print(zone, '[$route] $line');
           },
         ),
       );
-      requestZone.runGuarded(
-        () async {
-          requestContext = Context.current
-            ..put(ContextKey.currentRequest, request)
-            ..put(ContextKey.currentTrace, request.trace);
-          final response = await inner(request);
-          if (!completer.isCompleted) {
-            completer.complete(response);
-          }
-        },
-      );
+      requestZone.runGuarded(() async {
+        requestContext =
+            Context.current
+              ..put(ContextKey.currentRequest, request)
+              ..put(ContextKey.currentTrace, request.trace);
+        final Response response = await inner(request);
+        if (!completer.isCompleted) {
+          completer.complete(response);
+        }
+      });
 
       try {
-        final response = await completer.future;
+        final Response response = await completer.future;
         await _postRequest(requestContext, response);
         return response;
       } on Object catch (error, stackTrace) {
@@ -234,9 +208,11 @@ final class RootMiddleware implements Middleware {
   }
 
   Future<void> _postRequest(Context context, Response response) async {
-    final callbacks = context.get(const PostRequestCallbacks());
+    final List<PostRequestCallback>? callbacks = context.get(
+      const PostRequestCallbacks(),
+    );
     if (callbacks case final callbacks? when callbacks.isNotEmpty) {
-      for (final callback in callbacks.reversed) {
+      for (final PostRequestCallback callback in callbacks.reversed) {
         try {
           if (callback.onResponse(response) case final Future<void> future) {
             await future;
@@ -258,10 +234,13 @@ final class RootMiddleware implements Middleware {
     Object error,
     StackTrace stackTrace,
   ) async {
-    final callbacks = context.get(const PostRequestCallbacks());
+    final List<PostRequestCallback>? callbacks = context.get(
+      const PostRequestCallbacks(),
+    );
     if (callbacks case final callbacks? when callbacks.isNotEmpty) {
-      for (final callback in callbacks.reversed) {
-        final onError = callback.onError;
+      for (final PostRequestCallback callback in callbacks.reversed) {
+        final FutureOr<void> Function(Object e, StackTrace st)? onError =
+            callback.onError;
         if (onError == null) {
           continue;
         }
@@ -296,12 +275,12 @@ extension on Request {
       return traceparent;
     }
     if (headers[cloudTraceContextHeader] case final traceHeader?) {
-      final spanDelim = traceHeader.indexOf('/');
-      final optsDelim = traceHeader.indexOf(';');
+      final int spanDelim = traceHeader.indexOf('/');
+      final int optsDelim = traceHeader.indexOf(';');
       if (spanDelim != -1 && optsDelim != -1) {
-        final traceId = traceHeader.substring(0, spanDelim);
-        final spanId = traceHeader.substring(spanDelim + 1, optsDelim);
-        final flags = switch (traceHeader.substring(optsDelim + 1)) {
+        final String traceId = traceHeader.substring(0, spanDelim);
+        final String spanId = traceHeader.substring(spanDelim + 1, optsDelim);
+        final int flags = switch (traceHeader.substring(optsDelim + 1)) {
           'o=1' => 1,
           'o=0' => 0,
           _ => 0,
@@ -318,12 +297,8 @@ extension on Request {
     // generate traceparent headers for outbound requests, effectively
     // starting a new trace.
     return Traceparent.create(
-      traceId: hex.encode(
-        List<int>.generate(16, (_) => _random.nextInt(256)),
-      ),
-      parentId: hex.encode(
-        List<int>.generate(8, (_) => _random.nextInt(256)),
-      ),
+      traceId: hex.encode(List<int>.generate(16, (_) => _random.nextInt(256))),
+      parentId: hex.encode(List<int>.generate(8, (_) => _random.nextInt(256))),
       sampled: true,
       random: true,
     );

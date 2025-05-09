@@ -7,10 +7,7 @@ import 'package:meta/meta_meta.dart';
 @Target({TargetKind.library, TargetKind.function})
 final class http {
   /// {@macro celest.functions.http}
-  const http({
-    this.method = HttpMethod.post,
-    this.statusCode = HttpStatus.ok,
-  });
+  const http({this.method = HttpMethod.post, this.statusCode = HttpStatus.ok});
 
   /// The HTTP method this function supports.
   final HttpMethod method;

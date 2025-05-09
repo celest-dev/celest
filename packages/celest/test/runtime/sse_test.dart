@@ -6,6 +6,7 @@ import 'dart:js_interop';
 import 'package:async/async.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:logging/logging.dart';
+import 'package:stream_channel/stream_channel.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:test/test.dart';
 import 'package:web/web.dart' as web;
@@ -22,13 +23,11 @@ void main() {
     late Uri uri;
 
     setUpAll(() async {
-      final channel = spawnHybridUri('sse_server.dart');
-      final queue = StreamQueue(channel.stream);
-      final port = (await queue.next as num).toInt();
+      final StreamChannel<Object?> channel = spawnHybridUri('sse_server.dart');
+      final StreamQueue<Object?> queue = StreamQueue(channel.stream);
+      final int port = (await queue.next as num).toInt();
       uri = Uri.parse('http://localhost:$port');
-      queue.rest.listen(
-        (Object? log) => web.console.warn(log.toString().toJS),
-      );
+      queue.rest.listen((Object? log) => web.console.warn(log.toString().toJS));
     });
 
     test('ping pong', () async {

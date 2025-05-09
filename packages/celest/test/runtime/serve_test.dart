@@ -28,7 +28,7 @@ void main() {
       Context.root = Context.current;
 
       final setupCompleter = Completer<void>();
-      final service = await serve(
+      final CelestService service = await serve(
         config: config,
         targets: {},
         setup: setupCompleter.complete,
@@ -43,7 +43,7 @@ void main() {
     test('fails to start server if setup fails', () async {
       Context.root = Context.current;
 
-      final service = serve(
+      final Future<CelestService> service = serve(
         config: config,
         targets: {},
         setup: (_) => throw StateError('Failed to setup'),

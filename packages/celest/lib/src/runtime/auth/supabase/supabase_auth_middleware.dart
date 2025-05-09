@@ -26,8 +26,11 @@ final class SupabaseAuthMiddleware extends AuthMiddleware {
 
   @override
   Future<User?> authenticate(Request request) async {
-    final token = switch (request.headers['Authorization']?.split(' ')) {
-      [final type, final token] when equalsIgnoreAsciiCase(type, 'bearer') =>
+    final String? token = switch (request.headers['Authorization']?.split(
+      ' ',
+    )) {
+      [final String type, final String token]
+          when equalsIgnoreAsciiCase(type, 'bearer') =>
         token,
       _ => null,
     };

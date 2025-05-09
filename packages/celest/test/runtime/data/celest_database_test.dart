@@ -24,35 +24,35 @@ void main() {
     timeout: const Timeout.factor(4),
     () {
       test('connects to local sqld URIs', () async {
-        final host = await startSqld();
+        final Uri host = await startSqld();
         final platform = FakePlatform(
-          environment: {
-            'CELEST_DATABASE_HOST': host.toString(),
-          },
+          environment: {'CELEST_DATABASE_HOST': host.toString()},
         );
         Context.current.put(env.environment, 'production');
         Context.current.put(ContextKey.platform, platform);
-        final celestDb = await CelestDatabase.create(
-          Context.current,
-          name: 'test',
-          factory: expectAsync1((executor) {
-            expect(executor, isA<HranaDatabase>());
-            return TestDatabase(executor);
-          }),
-          hostnameVariable: const env('CELEST_DATABASE_HOST'),
-          tokenSecret: const secret('CELEST_DATABASE_TOKEN'),
-        );
-        final database = await celestDb.connect();
+        final CelestDatabase<TestDatabase> celestDb =
+            await CelestDatabase.create(
+              Context.current,
+              name: 'test',
+              factory: expectAsync1((executor) {
+                expect(executor, isA<HranaDatabase>());
+                return TestDatabase(executor);
+              }),
+              hostnameVariable: const env('CELEST_DATABASE_HOST'),
+              tokenSecret: const secret('CELEST_DATABASE_TOKEN'),
+            );
+        final TestDatabase database = await celestDb.connect();
         await database.close();
       });
 
       test(
         'connects to Turso URIs',
-        skip: !io.Platform.environment.containsKey('TURSO_API_TOKEN')
-            ? 'Missing TURSO_API_TOKEN'
-            : null,
+        skip:
+            !io.Platform.environment.containsKey('TURSO_API_TOKEN')
+                ? 'Missing TURSO_API_TOKEN'
+                : null,
         () async {
-          final (host, token) = await createTursoDatabase();
+          final (Uri host, String token) = await createTursoDatabase();
           final platform = FakePlatform(
             environment: {
               'CELEST_DATABASE_HOST': host.toString(),
@@ -61,17 +61,18 @@ void main() {
           );
           Context.current.put(env.environment, 'production');
           Context.current.put(ContextKey.platform, platform);
-          final celestDb = await CelestDatabase.create(
-            Context.current,
-            name: 'test',
-            factory: expectAsync1((executor) {
-              expect(executor, isA<HranaDatabase>());
-              return TestDatabase(executor);
-            }),
-            hostnameVariable: const env('CELEST_DATABASE_HOST'),
-            tokenSecret: const secret('CELEST_DATABASE_TOKEN'),
-          );
-          final database = await celestDb.connect();
+          final CelestDatabase<TestDatabase> celestDb =
+              await CelestDatabase.create(
+                Context.current,
+                name: 'test',
+                factory: expectAsync1((executor) {
+                  expect(executor, isA<HranaDatabase>());
+                  return TestDatabase(executor);
+                }),
+                hostnameVariable: const env('CELEST_DATABASE_HOST'),
+                tokenSecret: const secret('CELEST_DATABASE_TOKEN'),
+              );
+          final TestDatabase database = await celestDb.connect();
           await database.close();
         },
       );
@@ -80,7 +81,7 @@ void main() {
 
   group('FileDatabase', () {
     test('uses package config when path=null', () async {
-      final uri = await CelestDatabase.resolveDatabaseUri('test');
+      final Uri uri = await CelestDatabase.resolveDatabaseUri('test');
       final file = File.fromUri(uri);
       if (file.existsSync()) {
         file.deleteSync();
@@ -94,7 +95,7 @@ void main() {
       final platform = FakePlatform(environment: {});
       Context.current.put(env.environment, 'local');
       Context.current.put(ContextKey.platform, platform);
-      final celestDb = await CelestDatabase.create(
+      final CelestDatabase<TestDatabase> celestDb = await CelestDatabase.create(
         Context.current,
         name: 'test',
         factory: expectAsync1((executor) {
@@ -104,20 +105,22 @@ void main() {
         hostnameVariable: const env('CELEST_DATABASE_HOST'),
         tokenSecret: const secret('CELEST_DATABASE_TOKEN'),
       );
-      final database = await celestDb.connect();
+      final TestDatabase database = await celestDb.connect();
       addTearDown(database.close);
 
       expect(file.existsSync(), isTrue);
     });
 
     test('path != null', () async {
-      final tmpDir = await Directory.systemTemp.createTemp('celest_test');
+      final io.Directory tmpDir = await Directory.systemTemp.createTemp(
+        'celest_test',
+      );
       addTearDown(() => tmpDir.delete(recursive: true));
 
       final platform = FakePlatform(environment: {});
       Context.current.put(env.environment, 'local');
       Context.current.put(ContextKey.platform, platform);
-      final celestDb = await CelestDatabase.create(
+      final CelestDatabase<TestDatabase> celestDb = await CelestDatabase.create(
         Context.current,
         name: 'test',
         factory: expectAsync1((executor) {
@@ -128,7 +131,7 @@ void main() {
         tokenSecret: const secret('CELEST_DATABASE_TOKEN'),
         path: p.join(tmpDir.path, 'test.db'),
       );
-      final database = await celestDb.connect();
+      final TestDatabase database = await celestDb.connect();
       addTearDown(database.close);
 
       final file = File.fromUri(tmpDir.uri.resolve('./test.db'));

@@ -89,7 +89,7 @@ final class Context {
     if (identical(this, root)) {
       return null;
     }
-    var parent = _zone.parent;
+    Zone? parent = _zone.parent;
     while (parent != null) {
       if (_contexts[parent] case final parentContext?) {
         return parentContext;
@@ -144,8 +144,7 @@ final class Context {
         HttpStatus.gatewayTimeout ||
         HttpStatus.internalServerError ||
         HttpStatus.requestTimeout ||
-        HttpStatus.serviceUnavailable =>
-          true,
+        HttpStatus.serviceUnavailable => true,
         _ => false,
       };
     },
@@ -190,7 +189,7 @@ final class Context {
   ///
   /// Throws a [StateError] if the value is not present.
   V expect<V extends Object>(ContextKey<V> key) {
-    final value = get(key);
+    final V? value = get(key);
     if (value == null) {
       throw StateError('Expected value for key "$key" in context');
     }
@@ -215,8 +214,8 @@ final class Context {
     ContextKey<V> key,
     V Function(V? value) update,
   ) {
-    final (context, value) = _get(key) ?? (this, null);
-    final updated = update(value);
+    final (Context context, V? value) = _get(key) ?? (this, null);
+    final V updated = update(value);
     context.put(key, updated);
   }
 
@@ -239,12 +238,10 @@ final class Context {
     FutureOr<void> Function(shelf.Response) callback, {
     FutureOr<void> Function(Object e, StackTrace st)? onError,
   }) {
-    _postRequestCallbacks.add(
-      (
-        onResponse: _zone.bindUnaryCallback((response) => callback(response)),
-        onError: onError == null ? null : _zone.bindBinaryCallback(onError),
-      ),
-    );
+    _postRequestCallbacks.add((
+      onResponse: _zone.bindUnaryCallback((response) => callback(response)),
+      onError: onError == null ? null : _zone.bindBinaryCallback(onError),
+    ));
   }
 }
 
@@ -257,12 +254,14 @@ abstract interface class ContextKey<V extends Object> {
   const factory ContextKey([String? label]) = _ContextKey<V>;
 
   /// The context key for the current [shelf.Request].
-  static const ContextKey<shelf.Request> currentRequest =
-      ContextKey('current request');
+  static const ContextKey<shelf.Request> currentRequest = ContextKey(
+    'current request',
+  );
 
   /// The context key for the current [Traceparent].
-  static const ContextKey<Traceparent> currentTrace =
-      ContextKey('current trace');
+  static const ContextKey<Traceparent> currentTrace = ContextKey(
+    'current trace',
+  );
 
   /// The context key for the current [User].
   static const ContextKey<User> principal = _PrincipalContextKey();
@@ -336,10 +335,11 @@ final class _PrincipalContextKey extends _ContextKey<User> {
 }
 
 /// A callback to be run after the current context completes.
-typedef PostRequestCallback = ({
-  FutureOr<void> Function(shelf.Response) onResponse,
-  FutureOr<void> Function(Object e, StackTrace st)? onError,
-});
+typedef PostRequestCallback =
+    ({
+      FutureOr<void> Function(shelf.Response) onResponse,
+      FutureOr<void> Function(Object e, StackTrace st)? onError,
+    });
 
 /// {@template celest.runtime.post_request_callbacks}
 /// The context key for post-request callbacks.

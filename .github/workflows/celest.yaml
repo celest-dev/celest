@@ -27,7 +27,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046 # 2.19.0
         with:
-          channel: stable
+          channel: beta
           cache: true
       - name: Install Turso CLI
         run: |
@@ -48,7 +48,7 @@ jobs:
         run: dart analyze --fatal-infos --fatal-warnings
       - name: Format
         working-directory: packages/celest
-        run: dart format --set-exit-if-changed .
+        run: dart format --language-version=latest --set-exit-if-changed .
       - name: Test
         working-directory: packages/celest
         run: dart test

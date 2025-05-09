@@ -11,7 +11,7 @@ sealed class ConfigurationValue implements ContextKey<String> {
     if (!value.startsWith('data:')) {
       return value;
     }
-    final data = UriData.parse(value);
+    final UriData data = UriData.parse(value);
     if (data.isBase64) {
       return data.contentText;
     } else {
