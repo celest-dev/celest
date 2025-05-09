@@ -25,7 +25,8 @@ final class AuthImpl implements Auth {
     celest_cloud.CelestCloud? cloud,
     this.authProviders = const [],
   }) : _storage = (storage ?? celest.nativeStorage).scoped('/celest/auth') {
-    this.cloud = cloud ??
+    this.cloud =
+        cloud ??
         celest_cloud.CelestCloud(
           authenticator: Authenticator(
             secureStorage: _storage.secure,
@@ -41,7 +42,7 @@ final class AuthImpl implements Auth {
 
   @override
   Stream<AuthState> get authStateChanges {
-    final stream = _authStateController.stream;
+    final Stream<AuthState> stream = _authStateController.stream;
     if (_authState case final currentState?) {
       return stream.startWith(currentState);
     }
@@ -57,14 +58,14 @@ final class AuthImpl implements Auth {
   final Map<AuthProviderType, StreamSubscription<void>> _authProviderSubs = {};
 
   @override
-  Future<AuthState> init({
-    TokenSource? externalAuth,
-  }) {
+  Future<AuthState> init({TokenSource? externalAuth}) {
     return _init ??= Future.sync(() async {
-      _authStateSubscription =
-          _authStateController.stream.listen((state) => _authState = state);
-      final initialState = await _initialState(externalAuth: externalAuth)
-          .onError((e, st) => const Unauthenticated());
+      _authStateSubscription = _authStateController.stream.listen(
+        (state) => _authState = state,
+      );
+      final AuthState initialState = await _initialState(
+        externalAuth: externalAuth,
+      ).onError((e, st) => const Unauthenticated());
       _authStateController.add(initialState);
       return initialState;
     });
@@ -85,7 +86,7 @@ final class AuthImpl implements Auth {
         }
         await secureStorage.write('cork', token);
         if (_authState is! Authenticated) {
-          final user = await cloud.users.get('users/me');
+          final celest_cloud.User user = await cloud.users.get('users/me');
           _authStateController.add(Authenticated(user: user.toCelest()));
         }
       },
@@ -94,20 +95,18 @@ final class AuthImpl implements Auth {
     );
   }
 
-  Future<AuthState> _initialState({
-    TokenSource? externalAuth,
-  }) async {
+  Future<AuthState> _initialState({TokenSource? externalAuth}) async {
     if (externalAuth != null) {
       _subscribeToExternalAuth(externalAuth.provider, externalAuth);
     } else if (authProviders.isNotEmpty) {
-      final provider = authProviders.first;
+      final AuthProviderType provider = authProviders.first;
       throw StateError(
         'Celest Auth is configured to use external auth, but no token '
         'source was provided. Provide a token source by calling '
         '`celest.init(externalAuth: ExternalAuthProvider.${provider.name}(...))`.',
       );
     }
-    var initialState = await _hydrateSession();
+    AuthState? initialState = await _hydrateSession();
     if (initialState != null) {
       return initialState;
     }
@@ -116,7 +115,7 @@ final class AuthImpl implements Auth {
       return const Unauthenticated();
     }
     try {
-      final user = await cloud.users.get('users/me');
+      final celest_cloud.User user = await cloud.users.get('users/me');
       initialState = Authenticated(user: user.toCelest());
     } on UnauthorizedException {
       initialState = const Unauthenticated();
@@ -129,28 +128,29 @@ final class AuthImpl implements Auth {
   }
 
   Future<AuthState?> _hydrateSession() async {
-    final pendingSessionId = localStorage.read('pendingSessionId');
+    final String? pendingSessionId = localStorage.read('pendingSessionId');
     if (pendingSessionId == null) {
       return null;
     }
     try {
-      final pendingSessionStateJson =
-          await secureStorage.read('session/$pendingSessionId');
+      final String? pendingSessionStateJson = await secureStorage.read(
+        'session/$pendingSessionId',
+      );
       if (pendingSessionStateJson == null) {
         return null;
       }
       final pendingSessionState = celest_cloud.SessionState.fromJson(
         jsonDecode(pendingSessionStateJson) as Map<String, dynamic>,
       );
-      final callbackUri = initialUri;
+      final Uri? callbackUri = initialUri;
       if (callbackUri == null ||
           pendingSessionState is! celest_cloud.IdpSessionAuthorize) {
         return null;
       }
-      final result = await cloud.authentication.idp.postRedirect(
-        state: pendingSessionState,
-        redirectUri: callbackUri,
-      );
+      final celest_cloud.IdpSessionResult result = await cloud
+          .authentication
+          .idp
+          .postRedirect(state: pendingSessionState, redirectUri: callbackUri);
       return result.toCelest(hub: this, sink: _authStateController.sink);
     } finally {
       localStorage.delete('pendingSessionId');
@@ -161,7 +161,7 @@ final class AuthImpl implements Auth {
   Future<AuthState>? _init;
 
   Future<AuthFlowController> requestFlow() async {
-    final authState = _authState ?? await init();
+    final AuthState authState = _authState ?? await init();
     switch (authState) {
       case AuthFlowInProgress():
         throw Exception('Auth flow already in progress');
@@ -171,7 +171,7 @@ final class AuthImpl implements Auth {
         );
       case Unauthenticated():
         unawaited(_authFlowSubscription?.cancel());
-        final previousState = authState;
+        final Unauthenticated previousState = authState;
         final controller = StreamController<AuthState>(
           sync: true,
           onCancel: () => _authStateController.add(previousState),
@@ -220,7 +220,8 @@ final class AuthImpl implements Auth {
 
   @override
   Future<void> close() async {
-    for (final subscription in _authProviderSubs.values) {
+    for (final StreamSubscription<void> subscription
+        in _authProviderSubs.values) {
       subscription.cancel().ignore();
     }
     _authProviderSubs.clear();

@@ -15,12 +15,9 @@ extension type Idp(AuthImpl _hub) {
     required cloud.IdentityProviderType provider,
     required Uri callbackUri,
   }) async {
-    final flowController = await _hub.requestFlow();
+    final AuthFlowController flowController = await _hub.requestFlow();
     final flow = IdpFlow._(_hub, flowController);
-    return flow._authenticate(
-      provider: provider,
-      callbackUri: callbackUri,
-    );
+    return flow._authenticate(provider: provider, callbackUri: callbackUri);
   }
 }
 
@@ -35,30 +32,29 @@ final class IdpFlow implements AuthFlow {
     required Uri callbackUri,
   }) {
     return _flowController.capture(() async {
-      final startState = await _hub.cloud.authentication.idp.start(
-        provider: provider,
-        redirectUri: callbackUri,
-      );
-      final session = _hub.nativeAuth.startCallback(
+      final cloud.IdpSessionAuthorize startState = await _hub
+          .cloud
+          .authentication
+          .idp
+          .start(provider: provider, redirectUri: callbackUri);
+      final CallbackSession session = _hub.nativeAuth.startCallback(
         uri: startState.uri,
         type: switch (callbackUri) {
-          Uri(scheme: 'https', :final host, :final path) =>
+          Uri(scheme: 'https', :final String host, :final String path) =>
             CallbackType.https(host: host, path: path),
-          Uri(scheme: 'http', host: 'localhost', :final path) =>
+          Uri(scheme: 'http', host: 'localhost', :final String path) =>
             CallbackType.localhost(
               port: callbackUri.hasPort ? callbackUri.port : 0,
               path: path,
             ),
-          Uri(scheme: 'http') => throw ArgumentError.value(
+          Uri(scheme: 'http') =>
+            throw ArgumentError.value(
               callbackUri,
               'callbackUri',
               'Unsupported host. Only `localhost` is supported for http:// URIs.',
             ),
-          Uri(:final scheme, :final host, :final path) => CallbackType.custom(
-              scheme,
-              host: host,
-              path: path,
-            ),
+          Uri(:final String scheme, :final String host, :final String path) =>
+            CallbackType.custom(scheme, host: host, path: path),
         },
       );
       // TODO(dnys1): Session storage
@@ -67,12 +63,12 @@ final class IdpFlow implements AuthFlow {
         'session/${session.id}',
         jsonEncode(startState.toJson()),
       );
-      final redirect = await session.redirectUri.whenComplete(cleanUp);
-      final postRedirectState =
-          await _hub.cloud.authentication.idp.postRedirect(
-        state: startState,
-        redirectUri: redirect,
-      );
+      final Uri redirect = await session.redirectUri.whenComplete(cleanUp);
+      final cloud.IdpSessionResult postRedirectState = await _hub
+          .cloud
+          .authentication
+          .idp
+          .postRedirect(state: startState, redirectUri: redirect);
       switch (postRedirectState) {
         case cloud.IdpSessionSuccess(:final identityToken, :final user):
           await _hub.secureStorage.write('cork', identityToken);
@@ -97,14 +93,18 @@ final class IdpFlow implements AuthFlow {
   Future<Authenticated> _confirm({
     required cloud.IdpSessionNeedsConfirmation state,
   }) {
-    return _flowController.capture(() async {
-      final success = await _hub.cloud.authentication.idp.confirm(
-        state: state,
-      );
-      await _hub.secureStorage.write('cork', success.identityToken);
-      _hub.localStorage.write('userId', success.user.userId);
-      return Authenticated(user: success.user.toCelest());
-    }).whenComplete(cleanUp);
+    return _flowController
+        .capture(() async {
+          final cloud.IdpSessionSuccess success = await _hub
+              .cloud
+              .authentication
+              .idp
+              .confirm(state: state);
+          await _hub.secureStorage.write('cork', success.identityToken);
+          _hub.localStorage.write('userId', success.user.userId);
+          return Authenticated(user: success.user.toCelest());
+        })
+        .whenComplete(cleanUp);
   }
 
   @override
@@ -114,7 +114,7 @@ final class IdpFlow implements AuthFlow {
   }
 
   void cleanUp() {
-    final sessionId = _hub.localStorage.delete('pendingSessionId');
+    final String? sessionId = _hub.localStorage.delete('pendingSessionId');
     if (sessionId != null) {
       _hub.secureStorage.delete('session/$sessionId').ignore();
     }
@@ -135,20 +135,20 @@ extension SocialLoginResultToCelest on cloud.IdpSessionResult {
     }
     return switch (state) {
       cloud.IdpSessionLinkUser(:final user) => _IdpLinkUser(
-          user: user.toCelest(),
-          innerState: state,
-          flow: flow,
-        ),
+        user: user.toCelest(),
+        innerState: state,
+        flow: flow,
+      ),
       cloud.IdpSessionRegisterUser(:final user) => _IdpRegisterUser(
-          user: user.toCelest(),
-          innerState: state,
-          flow: flow,
-        ),
+        user: user.toCelest(),
+        innerState: state,
+        flow: flow,
+      ),
       cloud.IdpSessionSuccess(:final user, :final identityToken) => () {
-          hub.secureStorage.write('cork', identityToken);
-          hub.localStorage.write('userId', user.userId);
-          return Authenticated(user: user.toCelest());
-        }(),
+        hub.secureStorage.write('cork', identityToken);
+        hub.localStorage.write('userId', user.userId);
+        return Authenticated(user: user.toCelest());
+      }(),
     };
   }
 }
@@ -158,8 +158,8 @@ final class _IdpLinkUser extends AuthLinkUser {
     required super.user,
     required IdpFlow flow,
     required cloud.IdpSessionLinkUser innerState,
-  })  : _flow = flow,
-        _innerState = innerState;
+  }) : _flow = flow,
+       _innerState = innerState;
 
   final IdpFlow _flow;
   final cloud.IdpSessionLinkUser _innerState;
@@ -169,7 +169,9 @@ final class _IdpLinkUser extends AuthLinkUser {
 
   @override
   Future<User> confirm() async {
-    final authenticated = await _flow._confirm(state: _innerState);
+    final Authenticated authenticated = await _flow._confirm(
+      state: _innerState,
+    );
     return authenticated.user;
   }
 }
@@ -179,8 +181,8 @@ final class _IdpRegisterUser extends AuthRegisterUser {
     required super.user,
     required IdpFlow flow,
     required cloud.IdpSessionRegisterUser innerState,
-  })  : _flow = flow,
-        _innerState = innerState;
+  }) : _flow = flow,
+       _innerState = innerState;
 
   final IdpFlow _flow;
   final cloud.IdpSessionRegisterUser _innerState;
@@ -190,7 +192,9 @@ final class _IdpRegisterUser extends AuthRegisterUser {
 
   @override
   Future<User> confirm() async {
-    final authenticated = await _flow._confirm(state: _innerState);
+    final Authenticated authenticated = await _flow._confirm(
+      state: _innerState,
+    );
     return authenticated.user;
   }
 }

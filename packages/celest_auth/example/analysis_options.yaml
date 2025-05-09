@@ -1,4 +1,4 @@
-include: package:flutter_lints/flutter.yaml
+include: package:celest_lints/app.yaml
 
 analyzer:
   plugins:

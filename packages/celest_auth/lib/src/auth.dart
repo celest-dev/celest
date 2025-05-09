@@ -15,9 +15,7 @@ abstract interface class Auth {
   /// provided to configure the token sources for the external auth providers.
   /// The property only needs to be passed once, but passing it again will
   /// update the token sources.
-  Future<AuthState> init({
-    TokenSource? externalAuth,
-  });
+  Future<AuthState> init({TokenSource? externalAuth});
 
   /// Changes to the authentication state over time.
   ///

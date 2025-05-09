@@ -22,9 +22,7 @@ class _MainAppState extends State<MainApp> {
   Future<void> signIn() async {
     try {
       if (_emailController.text.isNotEmpty) {
-        await celest.auth.email.authenticate(
-          email: _emailController.text,
-        );
+        await celest.auth.email.authenticate(email: _emailController.text);
       } else {
         throw Exception('Email is required');
       }
@@ -41,7 +39,7 @@ class _MainAppState extends State<MainApp> {
       home: Scaffold(
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20),
             child: StreamBuilder(
               stream: celest.auth.authStateChanges,
               builder: (context, snapshot) {
@@ -62,10 +60,7 @@ class _MainAppState extends State<MainApp> {
                         key: TestKeys.txtSignedIn,
                       )
                     else
-                      Text(
-                        'Currently signed out',
-                        key: TestKeys.txtSignedOut,
-                      ),
+                      Text('Currently signed out', key: TestKeys.txtSignedOut),
                     const SizedBox(height: 16),
                     TextButton(
                       key: TestKeys.btnMakeRequest,
@@ -84,13 +79,16 @@ class _MainAppState extends State<MainApp> {
                           child: FutureBuilder(
                             key: TestKeys.wMakeRequestResponse,
                             future: request,
-                            builder: (context, snapshot) => switch (snapshot) {
-                              AsyncSnapshot(:final error?) =>
-                                Text('Error: $error'),
-                              AsyncSnapshot(data: final response?) =>
-                                Text('Response: $response'),
-                              _ => const CircularProgressIndicator(),
-                            },
+                            builder:
+                                (context, snapshot) => switch (snapshot) {
+                                  AsyncSnapshot(:final error?) => Text(
+                                    'Error: $error',
+                                  ),
+                                  AsyncSnapshot(data: final response?) => Text(
+                                    'Response: $response',
+                                  ),
+                                  _ => const CircularProgressIndicator(),
+                                },
                           ),
                         ),
                       ),
@@ -98,66 +96,57 @@ class _MainAppState extends State<MainApp> {
                     const SizedBox(height: 16),
                     ...switch (state) {
                       OtpNeedsVerification() => [
-                          TextField(
-                            key: TestKeys.inOtp,
-                            controller: _otpController,
-                            decoration: const InputDecoration(
-                              labelText: 'OTP',
-                            ),
-                            autofillHints: const [
-                              AutofillHints.oneTimeCode,
-                            ],
-                            keyboardType: TextInputType.number,
-                          ),
-                          const SizedBox(height: 16),
-                          TextButton(
-                            key: TestKeys.btnVerifyOtp,
-                            onPressed: () => state.verify(
-                              otpCode: _otpController.text,
-                            ),
-                            child: const Text('Verify OTP'),
-                          ),
-                        ],
+                        TextField(
+                          key: TestKeys.inOtp,
+                          controller: _otpController,
+                          decoration: const InputDecoration(labelText: 'OTP'),
+                          autofillHints: const [AutofillHints.oneTimeCode],
+                          keyboardType: TextInputType.number,
+                        ),
+                        const SizedBox(height: 16),
+                        TextButton(
+                          key: TestKeys.btnVerifyOtp,
+                          onPressed:
+                              () => state.verify(otpCode: _otpController.text),
+                          child: const Text('Verify OTP'),
+                        ),
+                      ],
                       Unauthenticated() => [
-                          TextField(
-                            key: TestKeys.inEmail,
-                            controller: _emailController,
-                            decoration: const InputDecoration(
-                              labelText: 'Email',
-                            ),
-                            autofillHints: const [
-                              AutofillHints.email,
-                            ],
-                            keyboardType: TextInputType.emailAddress,
-                          ),
-                          const SizedBox(height: 16),
-                          TextButton(
-                            key: TestKeys.btnSignIn,
-                            onPressed: signIn,
-                            child: const Text('Sign In'),
-                          ),
-                        ],
+                        TextField(
+                          key: TestKeys.inEmail,
+                          controller: _emailController,
+                          decoration: const InputDecoration(labelText: 'Email'),
+                          autofillHints: const [AutofillHints.email],
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        const SizedBox(height: 16),
+                        TextButton(
+                          key: TestKeys.btnSignIn,
+                          onPressed: signIn,
+                          child: const Text('Sign In'),
+                        ),
+                      ],
                       Authenticated() => [
-                          TextButton(
-                            key: TestKeys.btnSignOut,
-                            onPressed: celest.auth.signOut,
-                            child: const Text('Sign out'),
-                          ),
-                        ],
+                        TextButton(
+                          key: TestKeys.btnSignOut,
+                          onPressed: celest.auth.signOut,
+                          child: const Text('Sign out'),
+                        ),
+                      ],
                       AuthLinkUser() => [
-                          const Text('User already exists'),
-                          TextButton(
-                            onPressed: state.confirm,
-                            child: const Text('Link account'),
-                          ),
-                        ],
+                        const Text('User already exists'),
+                        TextButton(
+                          onPressed: state.confirm,
+                          child: const Text('Link account'),
+                        ),
+                      ],
                       AuthRegisterUser() => [
-                          const Text('User does not exist'),
-                          TextButton(
-                            onPressed: state.confirm,
-                            child: const Text('Create new account'),
-                          ),
-                        ],
+                        const Text('User does not exist'),
+                        TextButton(
+                          onPressed: state.confirm,
+                          child: const Text('Create new account'),
+                        ),
+                      ],
                     },
                   ],
                 );

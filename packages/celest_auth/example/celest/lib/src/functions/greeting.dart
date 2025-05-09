@@ -6,9 +6,7 @@ import 'package:celest/celest.dart';
 /// Says hello to the authenticated [user].
 @cloud
 @authenticated
-Future<String> sayHello({
-  @principal required User user,
-}) async {
+Future<String> sayHello({@principal required User user}) async {
   if (user.primaryEmail == null) {
     throw UnauthorizedException('Email not verified');
   }

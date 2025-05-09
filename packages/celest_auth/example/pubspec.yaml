@@ -32,8 +32,8 @@ dependency_overrides:
     path: ../../celest_test
 
 dev_dependencies:
+  celest_lints: ^1.1.0
   celest_test: ^0.1.0
-  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
   integration_test:

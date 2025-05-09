@@ -16,7 +16,7 @@ extension type Sms(AuthImpl _hub) {
   Future<SmsNeedsVerification> authenticate({
     required String phoneNumber,
   }) async {
-    final flowController = await _hub.requestFlow();
+    final AuthFlowController flowController = await _hub.requestFlow();
     final flow = SmsFlow._(_hub, flowController);
     return flow._authenticate(phoneNumber: phoneNumber);
   }
@@ -28,13 +28,10 @@ final class SmsFlow implements AuthFlow {
   final AuthImpl _hub;
   final AuthFlowController _flowController;
 
-  Future<SmsNeedsVerification> _authenticate({
-    required String phoneNumber,
-  }) {
+  Future<SmsNeedsVerification> _authenticate({required String phoneNumber}) {
     return _flowController.capture(() async {
-      final state = await _hub.cloud.authentication.sms.start(
-        phoneNumber: phoneNumber,
-      );
+      final cloud.SmsSessionState state = await _hub.cloud.authentication.sms
+          .start(phoneNumber: phoneNumber);
       switch (state) {
         case cloud.SmsSessionVerifyCode():
           return _SmsNeedsVerification(
@@ -53,10 +50,11 @@ final class SmsFlow implements AuthFlow {
     required String code,
   }) {
     return _flowController.capture(() async {
-      final success = await _hub.cloud.authentication.sms.verifyCode(
-        state: state,
-        code: code,
-      );
+      final cloud.SmsSessionSuccess success = await _hub
+          .cloud
+          .authentication
+          .sms
+          .verifyCode(state: state, code: code);
       await _hub.secureStorage.write('cork', success.identityToken);
       _hub.localStorage.write('userId', success.user.userId);
       return Authenticated(user: success.user.toCelest());
@@ -67,9 +65,7 @@ final class SmsFlow implements AuthFlow {
     required cloud.SmsSessionVerifyCode state,
   }) {
     return _flowController.capture(() async {
-      state = await _hub.cloud.authentication.sms.resendCode(
-        state: state,
-      );
+      state = await _hub.cloud.authentication.sms.resendCode(state: state);
       return _SmsNeedsVerification(
         flow: this,
         innerState: state,
@@ -78,13 +74,10 @@ final class SmsFlow implements AuthFlow {
     });
   }
 
-  Future<AuthState> _confirm({
-    required cloud.SmsSessionRegisterUser state,
-  }) {
+  Future<AuthState> _confirm({required cloud.SmsSessionRegisterUser state}) {
     return _flowController.capture(() async {
-      final newState = await _hub.cloud.authentication.sms.confirm(
-        state: state,
-      );
+      final cloud.SmsSessionState newState = await _hub.cloud.authentication.sms
+          .confirm(state: state);
       switch (newState) {
         case cloud.SmsSessionSuccess(:final identityToken, :final user):
           await _hub.secureStorage.write('cork', identityToken);
@@ -126,10 +119,8 @@ final class _SmsNeedsVerification extends SmsNeedsVerification {
   }
 
   @override
-  Future<User> verify({
-    required String otpCode,
-  }) async {
-    final authenticated = await _flow._verifyOtp(
+  Future<User> verify({required String otpCode}) async {
+    final Authenticated authenticated = await _flow._verifyOtp(
       state: innerState,
       code: otpCode,
     );
@@ -145,8 +136,8 @@ final class _SmsRegisterUser extends AuthRegisterUser {
     required super.user,
     required SmsFlow flow,
     required cloud.SmsSessionRegisterUser innerState,
-  })  : _flow = flow,
-        _innerState = innerState;
+  }) : _flow = flow,
+       _innerState = innerState;
 
   final SmsFlow _flow;
   final cloud.SmsSessionRegisterUser _innerState;
