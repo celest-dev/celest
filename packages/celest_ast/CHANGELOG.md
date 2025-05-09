@@ -1,3 +1,8 @@
+## NEXT
+
+- chore: Re-format with Dart 3.8
+- chore: Update linter/style preferences
+
 ## 0.1.6
 
 - chore: Add `version` field to `DatabaseSchema`

@@ -2,25 +2,24 @@ import 'package:celest_ast/celest_ast.dart';
 
 abstract class AstVisitor<T> {
   T visitNode(AstNode node) => switch (node) {
-        final Project project => visitProject(project),
-        final Api api => visitApi(api),
-        final CloudFunction function => visitFunction(function),
-        final CloudFunctionParameter parameter => visitParameter(parameter),
-        final ApiPublic apiPublic => visitApiPublic(apiPublic),
-        final ApiAuthenticated apiAuthenticated =>
-          visitApiAuthenticated(apiAuthenticated),
-        final ApiMiddleware apiMiddleware => visitApiMiddleware(apiMiddleware),
-        final ApiHttpMetadata httpMetadata =>
-          visitApiHttpMetadata(httpMetadata),
-        final Variable variable => visitVariable(variable),
-        final Secret secret => visitSecret(secret),
-        final Auth auth => visitAuth(auth),
-        final AuthProvider provider => visitAuthProvider(provider),
-        final ExternalAuthProvider provider =>
-          visitExternalAuthProvider(provider),
-        final Database database => visitDatabase(database),
-        final DatabaseSchema schema => visitDatabaseSchema(schema),
-      };
+    final Project project => visitProject(project),
+    final Api api => visitApi(api),
+    final CloudFunction function => visitFunction(function),
+    final CloudFunctionParameter parameter => visitParameter(parameter),
+    final ApiPublic apiPublic => visitApiPublic(apiPublic),
+    final ApiAuthenticated apiAuthenticated => visitApiAuthenticated(
+      apiAuthenticated,
+    ),
+    final ApiMiddleware apiMiddleware => visitApiMiddleware(apiMiddleware),
+    final ApiHttpMetadata httpMetadata => visitApiHttpMetadata(httpMetadata),
+    final Variable variable => visitVariable(variable),
+    final Secret secret => visitSecret(secret),
+    final Auth auth => visitAuth(auth),
+    final AuthProvider provider => visitAuthProvider(provider),
+    final ExternalAuthProvider provider => visitExternalAuthProvider(provider),
+    final Database database => visitDatabase(database),
+    final DatabaseSchema schema => visitDatabaseSchema(schema),
+  };
 
   T visitProject(Project project);
 
@@ -55,27 +54,37 @@ abstract class AstVisitor<T> {
 
 abstract class AstVisitorWithArg<T, A> {
   T visitNode(AstNode node, covariant A context) => switch (node) {
-        final Project project => visitProject(project, context),
-        final Api api => visitApi(api, context),
-        final CloudFunction function => visitFunction(function, context),
-        final CloudFunctionParameter parameter =>
-          visitParameter(parameter, context),
-        final ApiPublic apiPublic => visitApiPublic(apiPublic, context),
-        final ApiAuthenticated apiAuthenticated =>
-          visitApiAuthenticated(apiAuthenticated, context),
-        final ApiMiddleware apiMiddleware =>
-          visitApiMiddleware(apiMiddleware, context),
-        final ApiHttpMetadata httpMetadata =>
-          visitApiHttpMetadata(httpMetadata, context),
-        final Variable variable => visitVariable(variable, context),
-        final Secret secret => visitSecret(secret, context),
-        final Auth auth => visitAuth(auth, context),
-        final AuthProvider provider => visitAuthProvider(provider, context),
-        final ExternalAuthProvider provider =>
-          visitExternalAuthProvider(provider, context),
-        final Database database => visitDatabase(database, context),
-        final DatabaseSchema schema => visitDatabaseSchema(schema, context),
-      };
+    final Project project => visitProject(project, context),
+    final Api api => visitApi(api, context),
+    final CloudFunction function => visitFunction(function, context),
+    final CloudFunctionParameter parameter => visitParameter(
+      parameter,
+      context,
+    ),
+    final ApiPublic apiPublic => visitApiPublic(apiPublic, context),
+    final ApiAuthenticated apiAuthenticated => visitApiAuthenticated(
+      apiAuthenticated,
+      context,
+    ),
+    final ApiMiddleware apiMiddleware => visitApiMiddleware(
+      apiMiddleware,
+      context,
+    ),
+    final ApiHttpMetadata httpMetadata => visitApiHttpMetadata(
+      httpMetadata,
+      context,
+    ),
+    final Variable variable => visitVariable(variable, context),
+    final Secret secret => visitSecret(secret, context),
+    final Auth auth => visitAuth(auth, context),
+    final AuthProvider provider => visitAuthProvider(provider, context),
+    final ExternalAuthProvider provider => visitExternalAuthProvider(
+      provider,
+      context,
+    ),
+    final Database database => visitDatabase(database, context),
+    final DatabaseSchema schema => visitDatabaseSchema(schema, context),
+  };
 
   T visitProject(Project project, covariant A context);
 
@@ -113,18 +122,19 @@ abstract class AstVisitorWithArg<T, A> {
 
 abstract class ResolvedAstVisitor<T> {
   T visitNode(Node node) => switch (node) {
-        final ResolvedProject project => visitProject(project),
-        final ResolvedApi api => visitApi(api),
-        final ResolvedCloudFunction function => visitFunction(function),
-        final ResolvedVariable variable => visitVariable(variable),
-        final ResolvedSecret secret => visitSecret(secret),
-        final ResolvedAuth auth => visitAuth(auth),
-        final ResolvedAuthProvider provider => visitAuthProvider(provider),
-        final ResolvedExternalAuthProvider provider =>
-          visitExternalAuthProvider(provider),
-        final ResolvedDatabase database => visitDatabase(database),
-        final ResolvedDatabaseSchema schema => visitDatabaseSchema(schema),
-      };
+    final ResolvedProject project => visitProject(project),
+    final ResolvedApi api => visitApi(api),
+    final ResolvedCloudFunction function => visitFunction(function),
+    final ResolvedVariable variable => visitVariable(variable),
+    final ResolvedSecret secret => visitSecret(secret),
+    final ResolvedAuth auth => visitAuth(auth),
+    final ResolvedAuthProvider provider => visitAuthProvider(provider),
+    final ResolvedExternalAuthProvider provider => visitExternalAuthProvider(
+      provider,
+    ),
+    final ResolvedDatabase database => visitDatabase(database),
+    final ResolvedDatabaseSchema schema => visitDatabaseSchema(schema),
+  };
 
   T visitProject(ResolvedProject project);
 
@@ -149,21 +159,20 @@ abstract class ResolvedAstVisitor<T> {
 
 abstract class ResolvedAstVisitorWithArg<T, A> {
   T visitNode(Node node, covariant A context) => switch (node) {
-        final ResolvedProject project => visitProject(project, context),
-        final ResolvedApi api => visitApi(api, context),
-        final ResolvedCloudFunction function =>
-          visitFunction(function, context),
-        final ResolvedVariable variable => visitVariable(variable, context),
-        final ResolvedSecret secret => visitSecret(secret, context),
-        final ResolvedAuth auth => visitAuth(auth, context),
-        final ResolvedAuthProvider provider =>
-          visitAuthProvider(provider, context),
-        final ResolvedExternalAuthProvider provider =>
-          visitExternalAuthProvider(provider, context),
-        final ResolvedDatabase database => visitDatabase(database, context),
-        final ResolvedDatabaseSchema schema =>
-          visitDatabaseSchema(schema, context),
-      };
+    final ResolvedProject project => visitProject(project, context),
+    final ResolvedApi api => visitApi(api, context),
+    final ResolvedCloudFunction function => visitFunction(function, context),
+    final ResolvedVariable variable => visitVariable(variable, context),
+    final ResolvedSecret secret => visitSecret(secret, context),
+    final ResolvedAuth auth => visitAuth(auth, context),
+    final ResolvedAuthProvider provider => visitAuthProvider(provider, context),
+    final ResolvedExternalAuthProvider provider => visitExternalAuthProvider(
+      provider,
+      context,
+    ),
+    final ResolvedDatabase database => visitDatabase(database, context),
+    final ResolvedDatabaseSchema schema => visitDatabaseSchema(schema, context),
+  };
 
   T visitProject(ResolvedProject project, covariant A context);
 

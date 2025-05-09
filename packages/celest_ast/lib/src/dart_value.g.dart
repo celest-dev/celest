@@ -29,23 +29,33 @@ class _$DartStringSerializer implements StructuredSerializer<DartString> {
   final String wireName = 'DartString';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DartString object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DartString object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'value',
-      serializers.serialize(object.value,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.value,
+        specifiedType: const FullType(String),
+      ),
       'staticType',
-      serializers.serialize(object.staticType,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.staticType,
+        specifiedType: const FullType(TypeReference),
+      ),
     ];
 
     return result;
   }
 
   @override
-  DartString deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  DartString deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DartStringBuilder();
 
     final iterator = serialized.iterator;
@@ -55,12 +65,21 @@ class _$DartStringSerializer implements StructuredSerializer<DartString> {
       final Object? value = iterator.current;
       switch (key) {
         case 'value':
-          result.value = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.value =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'staticType':
-          result.staticType.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.staticType.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
       }
     }
@@ -76,22 +95,30 @@ class _$DartIntSerializer implements StructuredSerializer<DartInt> {
   final String wireName = 'DartInt';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DartInt object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DartInt object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'value',
       serializers.serialize(object.value, specifiedType: const FullType(int)),
       'staticType',
-      serializers.serialize(object.staticType,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.staticType,
+        specifiedType: const FullType(TypeReference),
+      ),
     ];
 
     return result;
   }
 
   @override
-  DartInt deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  DartInt deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DartIntBuilder();
 
     final iterator = serialized.iterator;
@@ -101,12 +128,21 @@ class _$DartIntSerializer implements StructuredSerializer<DartInt> {
       final Object? value = iterator.current;
       switch (key) {
         case 'value':
-          result.value = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.value =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'staticType':
-          result.staticType.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.staticType.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
       }
     }
@@ -122,23 +158,33 @@ class _$DartDoubleSerializer implements StructuredSerializer<DartDouble> {
   final String wireName = 'DartDouble';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DartDouble object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DartDouble object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'value',
-      serializers.serialize(object.value,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.value,
+        specifiedType: const FullType(double),
+      ),
       'staticType',
-      serializers.serialize(object.staticType,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.staticType,
+        specifiedType: const FullType(TypeReference),
+      ),
     ];
 
     return result;
   }
 
   @override
-  DartDouble deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  DartDouble deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DartDoubleBuilder();
 
     final iterator = serialized.iterator;
@@ -148,12 +194,21 @@ class _$DartDoubleSerializer implements StructuredSerializer<DartDouble> {
       final Object? value = iterator.current;
       switch (key) {
         case 'value':
-          result.value = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.value =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'staticType':
-          result.staticType.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.staticType.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
       }
     }
@@ -169,22 +224,30 @@ class _$DartBoolSerializer implements StructuredSerializer<DartBool> {
   final String wireName = 'DartBool';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DartBool object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DartBool object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'value',
       serializers.serialize(object.value, specifiedType: const FullType(bool)),
       'staticType',
-      serializers.serialize(object.staticType,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.staticType,
+        specifiedType: const FullType(TypeReference),
+      ),
     ];
 
     return result;
   }
 
   @override
-  DartBool deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  DartBool deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DartBoolBuilder();
 
     final iterator = serialized.iterator;
@@ -194,12 +257,21 @@ class _$DartBoolSerializer implements StructuredSerializer<DartBool> {
       final Object? value = iterator.current;
       switch (key) {
         case 'value':
-          result.value = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.value =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'staticType':
-          result.staticType.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.staticType.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
       }
     }
@@ -215,24 +287,35 @@ class _$DartListSerializer implements StructuredSerializer<DartList> {
   final String wireName = 'DartList';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DartList object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DartList object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'value',
-      serializers.serialize(object.value,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(DartValue)])),
+      serializers.serialize(
+        object.value,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(DartValue),
+        ]),
+      ),
       'staticType',
-      serializers.serialize(object.staticType,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.staticType,
+        specifiedType: const FullType(TypeReference),
+      ),
     ];
 
     return result;
   }
 
   @override
-  DartList deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  DartList deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DartListBuilder();
 
     final iterator = serialized.iterator;
@@ -242,14 +325,24 @@ class _$DartListSerializer implements StructuredSerializer<DartList> {
       final Object? value = iterator.current;
       switch (key) {
         case 'value':
-          result.value.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DartValue)]))!
-              as BuiltList<Object?>);
+          result.value.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DartValue),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'staticType':
-          result.staticType.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.staticType.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
       }
     }
@@ -265,24 +358,36 @@ class _$DartMapSerializer implements StructuredSerializer<DartMap> {
   final String wireName = 'DartMap';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DartMap object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DartMap object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'value',
-      serializers.serialize(object.value,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(DartValue), const FullType(DartValue)])),
+      serializers.serialize(
+        object.value,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(DartValue),
+          const FullType(DartValue),
+        ]),
+      ),
       'staticType',
-      serializers.serialize(object.staticType,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.staticType,
+        specifiedType: const FullType(TypeReference),
+      ),
     ];
 
     return result;
   }
 
   @override
-  DartMap deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  DartMap deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DartMapBuilder();
 
     final iterator = serialized.iterator;
@@ -292,15 +397,24 @@ class _$DartMapSerializer implements StructuredSerializer<DartMap> {
       final Object? value = iterator.current;
       switch (key) {
         case 'value':
-          result.value.replace(serializers.deserialize(value,
+          result.value.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(DartValue),
-                const FullType(DartValue)
-              ]))!);
+                const FullType(DartValue),
+              ]),
+            )!,
+          );
           break;
         case 'staticType':
-          result.staticType.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.staticType.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
       }
     }
@@ -316,20 +430,28 @@ class _$DartNullSerializer implements StructuredSerializer<DartNull> {
   final String wireName = 'DartNull';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DartNull object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DartNull object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'staticType',
-      serializers.serialize(object.staticType,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.staticType,
+        specifiedType: const FullType(TypeReference),
+      ),
     ];
 
     return result;
   }
 
   @override
-  DartNull deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  DartNull deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DartNullBuilder();
 
     final iterator = serialized.iterator;
@@ -339,8 +461,13 @@ class _$DartNullSerializer implements StructuredSerializer<DartNull> {
       final Object? value = iterator.current;
       switch (key) {
         case 'staticType':
-          result.staticType.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.staticType.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
       }
     }
@@ -356,28 +483,43 @@ class _$DartRecordSerializer implements StructuredSerializer<DartRecord> {
   final String wireName = 'DartRecord';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DartRecord object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DartRecord object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'positionalFields',
-      serializers.serialize(object.positionalFields,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(DartValue)])),
+      serializers.serialize(
+        object.positionalFields,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(DartValue),
+        ]),
+      ),
       'namedFields',
-      serializers.serialize(object.namedFields,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(DartValue)])),
+      serializers.serialize(
+        object.namedFields,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(DartValue),
+        ]),
+      ),
       'staticType',
-      serializers.serialize(object.staticType,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.staticType,
+        specifiedType: const FullType(TypeReference),
+      ),
     ];
 
     return result;
   }
 
   @override
-  DartRecord deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  DartRecord deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DartRecordBuilder();
 
     final iterator = serialized.iterator;
@@ -387,19 +529,35 @@ class _$DartRecordSerializer implements StructuredSerializer<DartRecord> {
       final Object? value = iterator.current;
       switch (key) {
         case 'positionalFields':
-          result.positionalFields.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DartValue)]))!
-              as BuiltList<Object?>);
+          result.positionalFields.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DartValue),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'namedFields':
-          result.namedFields.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(DartValue)]))!);
+          result.namedFields.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(DartValue),
+              ]),
+            )!,
+          );
           break;
         case 'staticType':
-          result.staticType.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.staticType.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
       }
     }
@@ -415,26 +573,38 @@ class _$DartEnumSerializer implements StructuredSerializer<DartEnum> {
   final String wireName = 'DartEnum';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DartEnum object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DartEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'enumRef',
-      serializers.serialize(object.enumRef,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.enumRef,
+        specifiedType: const FullType(TypeReference),
+      ),
       'value',
-      serializers.serialize(object.value,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.value,
+        specifiedType: const FullType(String),
+      ),
       'staticType',
-      serializers.serialize(object.staticType,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.staticType,
+        specifiedType: const FullType(TypeReference),
+      ),
     ];
 
     return result;
   }
 
   @override
-  DartEnum deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  DartEnum deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DartEnumBuilder();
 
     final iterator = serialized.iterator;
@@ -444,16 +614,30 @@ class _$DartEnumSerializer implements StructuredSerializer<DartEnum> {
       final Object? value = iterator.current;
       switch (key) {
         case 'enumRef':
-          result.enumRef.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.enumRef.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
         case 'value':
-          result.value = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.value =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'staticType':
-          result.staticType.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.staticType.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
       }
     }
@@ -469,26 +653,43 @@ class _$DartInstanceSerializer implements StructuredSerializer<DartInstance> {
   final String wireName = 'DartInstance';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DartInstance object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DartInstance object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'classRef',
-      serializers.serialize(object.classRef,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.classRef,
+        specifiedType: const FullType(TypeReference),
+      ),
       'constructor',
-      serializers.serialize(object.constructor,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.constructor,
+        specifiedType: const FullType(String),
+      ),
       'positionalArguments',
-      serializers.serialize(object.positionalArguments,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(DartValue)])),
+      serializers.serialize(
+        object.positionalArguments,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(DartValue),
+        ]),
+      ),
       'namedArguments',
-      serializers.serialize(object.namedArguments,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(DartValue)])),
+      serializers.serialize(
+        object.namedArguments,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(DartValue),
+        ]),
+      ),
       'staticType',
-      serializers.serialize(object.staticType,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.staticType,
+        specifiedType: const FullType(TypeReference),
+      ),
     ];
 
     return result;
@@ -496,8 +697,10 @@ class _$DartInstanceSerializer implements StructuredSerializer<DartInstance> {
 
   @override
   DartInstance deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DartInstanceBuilder();
 
     final iterator = serialized.iterator;
@@ -507,26 +710,52 @@ class _$DartInstanceSerializer implements StructuredSerializer<DartInstance> {
       final Object? value = iterator.current;
       switch (key) {
         case 'classRef':
-          result.classRef.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.classRef.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
         case 'constructor':
-          result.constructor = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.constructor =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'positionalArguments':
-          result.positionalArguments.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(DartValue)]))!);
+          result.positionalArguments.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(DartValue),
+              ]),
+            )!,
+          );
           break;
         case 'namedArguments':
-          result.namedArguments.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(DartValue)]))!);
+          result.namedArguments.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(DartValue),
+              ]),
+            )!,
+          );
           break;
         case 'staticType':
-          result.staticType.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.staticType.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
       }
     }
@@ -543,15 +772,22 @@ class _$DartTypeLiteralSerializer
   final String wireName = 'DartTypeLiteral';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DartTypeLiteral object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DartTypeLiteral object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(TypeReference),
+      ),
       'staticType',
-      serializers.serialize(object.staticType,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.staticType,
+        specifiedType: const FullType(TypeReference),
+      ),
     ];
 
     return result;
@@ -559,8 +795,10 @@ class _$DartTypeLiteralSerializer
 
   @override
   DartTypeLiteral deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DartTypeLiteralBuilder();
 
     final iterator = serialized.iterator;
@@ -570,12 +808,22 @@ class _$DartTypeLiteralSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'type':
-          result.type.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.type.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
         case 'staticType':
-          result.staticType.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.staticType.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
       }
     }
@@ -592,15 +840,22 @@ class _$DartSymbolLiteralSerializer
   final String wireName = 'DartSymbolLiteral';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DartSymbolLiteral object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DartSymbolLiteral object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'value',
-      serializers.serialize(object.value,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.value,
+        specifiedType: const FullType(String),
+      ),
       'staticType',
-      serializers.serialize(object.staticType,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.staticType,
+        specifiedType: const FullType(TypeReference),
+      ),
     ];
 
     return result;
@@ -608,8 +863,10 @@ class _$DartSymbolLiteralSerializer
 
   @override
   DartSymbolLiteral deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DartSymbolLiteralBuilder();
 
     final iterator = serialized.iterator;
@@ -619,12 +876,21 @@ class _$DartSymbolLiteralSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'value':
-          result.value = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.value =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'staticType':
-          result.staticType.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.staticType.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
       }
     }
@@ -645,7 +911,10 @@ class _$DartString extends DartString {
   _$DartString._({required this.value, required this.staticType}) : super._() {
     BuiltValueNullFieldError.checkNotNull(value, r'DartString', 'value');
     BuiltValueNullFieldError.checkNotNull(
-        staticType, r'DartString', 'staticType');
+      staticType,
+      r'DartString',
+      'staticType',
+    );
   }
 
   @override
@@ -723,10 +992,14 @@ class DartStringBuilder implements Builder<DartString, DartStringBuilder> {
   _$DartString _build() {
     _$DartString _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$DartString._(
             value: BuiltValueNullFieldError.checkNotNull(
-                value, r'DartString', 'value'),
+              value,
+              r'DartString',
+              'value',
+            ),
             staticType: staticType.build(),
           );
     } catch (_) {
@@ -736,7 +1009,10 @@ class DartStringBuilder implements Builder<DartString, DartStringBuilder> {
         staticType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DartString', _$failedField, e.toString());
+          r'DartString',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -834,10 +1110,14 @@ class DartIntBuilder implements Builder<DartInt, DartIntBuilder> {
   _$DartInt _build() {
     _$DartInt _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$DartInt._(
             value: BuiltValueNullFieldError.checkNotNull(
-                value, r'DartInt', 'value'),
+              value,
+              r'DartInt',
+              'value',
+            ),
             staticType: staticType.build(),
           );
     } catch (_) {
@@ -847,7 +1127,10 @@ class DartIntBuilder implements Builder<DartInt, DartIntBuilder> {
         staticType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DartInt', _$failedField, e.toString());
+          r'DartInt',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -868,7 +1151,10 @@ class _$DartDouble extends DartDouble {
   _$DartDouble._({required this.value, required this.staticType}) : super._() {
     BuiltValueNullFieldError.checkNotNull(value, r'DartDouble', 'value');
     BuiltValueNullFieldError.checkNotNull(
-        staticType, r'DartDouble', 'staticType');
+      staticType,
+      r'DartDouble',
+      'staticType',
+    );
   }
 
   @override
@@ -946,10 +1232,14 @@ class DartDoubleBuilder implements Builder<DartDouble, DartDoubleBuilder> {
   _$DartDouble _build() {
     _$DartDouble _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$DartDouble._(
             value: BuiltValueNullFieldError.checkNotNull(
-                value, r'DartDouble', 'value'),
+              value,
+              r'DartDouble',
+              'value',
+            ),
             staticType: staticType.build(),
           );
     } catch (_) {
@@ -959,7 +1249,10 @@ class DartDoubleBuilder implements Builder<DartDouble, DartDoubleBuilder> {
         staticType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DartDouble', _$failedField, e.toString());
+          r'DartDouble',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -980,7 +1273,10 @@ class _$DartBool extends DartBool {
   _$DartBool._({required this.value, required this.staticType}) : super._() {
     BuiltValueNullFieldError.checkNotNull(value, r'DartBool', 'value');
     BuiltValueNullFieldError.checkNotNull(
-        staticType, r'DartBool', 'staticType');
+      staticType,
+      r'DartBool',
+      'staticType',
+    );
   }
 
   @override
@@ -1058,10 +1354,14 @@ class DartBoolBuilder implements Builder<DartBool, DartBoolBuilder> {
   _$DartBool _build() {
     _$DartBool _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$DartBool._(
             value: BuiltValueNullFieldError.checkNotNull(
-                value, r'DartBool', 'value'),
+              value,
+              r'DartBool',
+              'value',
+            ),
             staticType: staticType.build(),
           );
     } catch (_) {
@@ -1071,7 +1371,10 @@ class DartBoolBuilder implements Builder<DartBool, DartBoolBuilder> {
         staticType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DartBool', _$failedField, e.toString());
+          r'DartBool',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1092,7 +1395,10 @@ class _$DartList extends DartList {
   _$DartList._({required this.value, required this.staticType}) : super._() {
     BuiltValueNullFieldError.checkNotNull(value, r'DartList', 'value');
     BuiltValueNullFieldError.checkNotNull(
-        staticType, r'DartList', 'staticType');
+      staticType,
+      r'DartList',
+      'staticType',
+    );
   }
 
   @override
@@ -1171,7 +1477,8 @@ class DartListBuilder implements Builder<DartList, DartListBuilder> {
   _$DartList _build() {
     _$DartList _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$DartList._(
             value: value.build(),
             staticType: staticType.build(),
@@ -1185,7 +1492,10 @@ class DartListBuilder implements Builder<DartList, DartListBuilder> {
         staticType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DartList', _$failedField, e.toString());
+          r'DartList',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1284,11 +1594,9 @@ class DartMapBuilder implements Builder<DartMap, DartMapBuilder> {
   _$DartMap _build() {
     _$DartMap _$result;
     try {
-      _$result = _$v ??
-          new _$DartMap._(
-            value: value.build(),
-            staticType: staticType.build(),
-          );
+      _$result =
+          _$v ??
+          new _$DartMap._(value: value.build(), staticType: staticType.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -1298,7 +1606,10 @@ class DartMapBuilder implements Builder<DartMap, DartMapBuilder> {
         staticType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DartMap', _$failedField, e.toString());
+          r'DartMap',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1316,7 +1627,10 @@ class _$DartNull extends DartNull {
 
   _$DartNull._({required this.staticType}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        staticType, r'DartNull', 'staticType');
+      staticType,
+      r'DartNull',
+      'staticType',
+    );
   }
 
   @override
@@ -1343,8 +1657,7 @@ class _$DartNull extends DartNull {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'DartNull')
-          ..add('staticType', staticType))
-        .toString();
+      ..add('staticType', staticType)).toString();
   }
 }
 
@@ -1385,10 +1698,7 @@ class DartNullBuilder implements Builder<DartNull, DartNullBuilder> {
   _$DartNull _build() {
     _$DartNull _$result;
     try {
-      _$result = _$v ??
-          new _$DartNull._(
-            staticType: staticType.build(),
-          );
+      _$result = _$v ?? new _$DartNull._(staticType: staticType.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -1396,7 +1706,10 @@ class DartNullBuilder implements Builder<DartNull, DartNullBuilder> {
         staticType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DartNull', _$failedField, e.toString());
+          r'DartNull',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1416,17 +1729,26 @@ class _$DartRecord extends DartRecord {
   factory _$DartRecord([void Function(DartRecordBuilder)? updates]) =>
       (new DartRecordBuilder()..update(updates))._build();
 
-  _$DartRecord._(
-      {required this.positionalFields,
-      required this.namedFields,
-      required this.staticType})
-      : super._() {
+  _$DartRecord._({
+    required this.positionalFields,
+    required this.namedFields,
+    required this.staticType,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        positionalFields, r'DartRecord', 'positionalFields');
+      positionalFields,
+      r'DartRecord',
+      'positionalFields',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        namedFields, r'DartRecord', 'namedFields');
+      namedFields,
+      r'DartRecord',
+      'namedFields',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        staticType, r'DartRecord', 'staticType');
+      staticType,
+      r'DartRecord',
+      'staticType',
+    );
   }
 
   @override
@@ -1516,7 +1838,8 @@ class DartRecordBuilder implements Builder<DartRecord, DartRecordBuilder> {
   _$DartRecord _build() {
     _$DartRecord _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$DartRecord._(
             positionalFields: positionalFields.build(),
             namedFields: namedFields.build(),
@@ -1533,7 +1856,10 @@ class DartRecordBuilder implements Builder<DartRecord, DartRecordBuilder> {
         staticType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DartRecord', _$failedField, e.toString());
+          r'DartRecord',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1553,13 +1879,18 @@ class _$DartEnum extends DartEnum {
   factory _$DartEnum([void Function(DartEnumBuilder)? updates]) =>
       (new DartEnumBuilder()..update(updates))._build();
 
-  _$DartEnum._(
-      {required this.enumRef, required this.value, required this.staticType})
-      : super._() {
+  _$DartEnum._({
+    required this.enumRef,
+    required this.value,
+    required this.staticType,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(enumRef, r'DartEnum', 'enumRef');
     BuiltValueNullFieldError.checkNotNull(value, r'DartEnum', 'value');
     BuiltValueNullFieldError.checkNotNull(
-        staticType, r'DartEnum', 'staticType');
+      staticType,
+      r'DartEnum',
+      'staticType',
+    );
   }
 
   @override
@@ -1646,11 +1977,15 @@ class DartEnumBuilder implements Builder<DartEnum, DartEnumBuilder> {
   _$DartEnum _build() {
     _$DartEnum _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$DartEnum._(
             enumRef: enumRef.build(),
             value: BuiltValueNullFieldError.checkNotNull(
-                value, r'DartEnum', 'value'),
+              value,
+              r'DartEnum',
+              'value',
+            ),
             staticType: staticType.build(),
           );
     } catch (_) {
@@ -1663,7 +1998,10 @@ class DartEnumBuilder implements Builder<DartEnum, DartEnumBuilder> {
         staticType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DartEnum', _$failedField, e.toString());
+          r'DartEnum',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1687,23 +2025,38 @@ class _$DartInstance extends DartInstance {
   factory _$DartInstance([void Function(DartInstanceBuilder)? updates]) =>
       (new DartInstanceBuilder()..update(updates))._build();
 
-  _$DartInstance._(
-      {required this.classRef,
-      required this.constructor,
-      required this.positionalArguments,
-      required this.namedArguments,
-      required this.staticType})
-      : super._() {
+  _$DartInstance._({
+    required this.classRef,
+    required this.constructor,
+    required this.positionalArguments,
+    required this.namedArguments,
+    required this.staticType,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        classRef, r'DartInstance', 'classRef');
+      classRef,
+      r'DartInstance',
+      'classRef',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        constructor, r'DartInstance', 'constructor');
+      constructor,
+      r'DartInstance',
+      'constructor',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        positionalArguments, r'DartInstance', 'positionalArguments');
+      positionalArguments,
+      r'DartInstance',
+      'positionalArguments',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        namedArguments, r'DartInstance', 'namedArguments');
+      namedArguments,
+      r'DartInstance',
+      'namedArguments',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        staticType, r'DartInstance', 'staticType');
+      staticType,
+      r'DartInstance',
+      'staticType',
+    );
   }
 
   @override
@@ -1811,11 +2164,15 @@ class DartInstanceBuilder
   _$DartInstance _build() {
     _$DartInstance _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$DartInstance._(
             classRef: classRef.build(),
             constructor: BuiltValueNullFieldError.checkNotNull(
-                constructor, r'DartInstance', 'constructor'),
+              constructor,
+              r'DartInstance',
+              'constructor',
+            ),
             positionalArguments: positionalArguments.build(),
             namedArguments: namedArguments.build(),
             staticType: staticType.build(),
@@ -1834,7 +2191,10 @@ class DartInstanceBuilder
         staticType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DartInstance', _$failedField, e.toString());
+          r'DartInstance',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1853,10 +2213,13 @@ class _$DartTypeLiteral extends DartTypeLiteral {
       (new DartTypeLiteralBuilder()..update(updates))._build();
 
   _$DartTypeLiteral._({required this.type, required this.staticType})
-      : super._() {
+    : super._() {
     BuiltValueNullFieldError.checkNotNull(type, r'DartTypeLiteral', 'type');
     BuiltValueNullFieldError.checkNotNull(
-        staticType, r'DartTypeLiteral', 'staticType');
+      staticType,
+      r'DartTypeLiteral',
+      'staticType',
+    );
   }
 
   @override
@@ -1936,7 +2299,8 @@ class DartTypeLiteralBuilder
   _$DartTypeLiteral _build() {
     _$DartTypeLiteral _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$DartTypeLiteral._(
             type: type.build(),
             staticType: staticType.build(),
@@ -1950,7 +2314,10 @@ class DartTypeLiteralBuilder
         staticType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DartTypeLiteral', _$failedField, e.toString());
+          r'DartTypeLiteral',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1965,15 +2332,18 @@ class _$DartSymbolLiteral extends DartSymbolLiteral {
   @override
   final TypeReference staticType;
 
-  factory _$DartSymbolLiteral(
-          [void Function(DartSymbolLiteralBuilder)? updates]) =>
-      (new DartSymbolLiteralBuilder()..update(updates))._build();
+  factory _$DartSymbolLiteral([
+    void Function(DartSymbolLiteralBuilder)? updates,
+  ]) => (new DartSymbolLiteralBuilder()..update(updates))._build();
 
   _$DartSymbolLiteral._({required this.value, required this.staticType})
-      : super._() {
+    : super._() {
     BuiltValueNullFieldError.checkNotNull(value, r'DartSymbolLiteral', 'value');
     BuiltValueNullFieldError.checkNotNull(
-        staticType, r'DartSymbolLiteral', 'staticType');
+      staticType,
+      r'DartSymbolLiteral',
+      'staticType',
+    );
   }
 
   @override
@@ -2053,10 +2423,14 @@ class DartSymbolLiteralBuilder
   _$DartSymbolLiteral _build() {
     _$DartSymbolLiteral _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$DartSymbolLiteral._(
             value: BuiltValueNullFieldError.checkNotNull(
-                value, r'DartSymbolLiteral', 'value'),
+              value,
+              r'DartSymbolLiteral',
+              'value',
+            ),
             staticType: staticType.build(),
           );
     } catch (_) {
@@ -2066,7 +2440,10 @@ class DartSymbolLiteralBuilder
         staticType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DartSymbolLiteral', _$failedField, e.toString());
+          r'DartSymbolLiteral',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

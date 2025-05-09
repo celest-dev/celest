@@ -14,13 +14,14 @@ sealed class DartValue {
 abstract class DartString
     implements Built<DartString, DartStringBuilder>, DartValue {
   factory DartString(String value) => _$DartString._(
-        value: value,
-        staticType: TypeReference(
-          (t) => t
+    value: value,
+    staticType: TypeReference(
+      (t) =>
+          t
             ..url = 'dart:core'
             ..symbol = 'String',
-        ),
-      );
+    ),
+  );
 
   factory DartString.build([void Function(DartStringBuilder) updates]) =
       _$DartString;
@@ -43,13 +44,14 @@ sealed class DartNum implements DartValue {}
 abstract class DartInt
     implements Built<DartInt, DartIntBuilder>, DartValue, DartNum {
   factory DartInt(int value) => _$DartInt._(
-        value: value,
-        staticType: TypeReference(
-          (t) => t
+    value: value,
+    staticType: TypeReference(
+      (t) =>
+          t
             ..url = 'dart:core'
             ..symbol = 'int',
-        ),
-      );
+    ),
+  );
   factory DartInt.build([void Function(DartIntBuilder) updates]) = _$DartInt;
   DartInt._();
 
@@ -67,13 +69,14 @@ abstract class DartInt
 abstract class DartDouble
     implements Built<DartDouble, DartDoubleBuilder>, DartValue, DartNum {
   factory DartDouble(double value) => _$DartDouble._(
-        value: value,
-        staticType: TypeReference(
-          (t) => t
+    value: value,
+    staticType: TypeReference(
+      (t) =>
+          t
             ..url = 'dart:core'
             ..symbol = 'double',
-        ),
-      );
+    ),
+  );
 
   factory DartDouble.build([void Function(DartDoubleBuilder) updates]) =
       _$DartDouble;
@@ -91,14 +94,16 @@ abstract class DartDouble
 }
 
 abstract class DartBool implements Built<DartBool, DartBoolBuilder>, DartValue {
+  // ignore: avoid_positional_boolean_parameters
   factory DartBool(bool value) => _$DartBool._(
-        value: value,
-        staticType: TypeReference(
-          (t) => t
+    value: value,
+    staticType: TypeReference(
+      (t) =>
+          t
             ..url = 'dart:core'
             ..symbol = 'bool',
-        ),
-      );
+    ),
+  );
 
   factory DartBool.build([void Function(DartBoolBuilder) updates]) = _$DartBool;
   DartBool._();
@@ -118,8 +123,7 @@ abstract class DartList implements Built<DartList, DartListBuilder>, DartValue {
   factory DartList(
     List<DartValue> value, {
     required TypeReference staticType,
-  }) =>
-      _$DartList._(value: value.toBuiltList(), staticType: staticType);
+  }) => _$DartList._(value: value.toBuiltList(), staticType: staticType);
   factory DartList.build([void Function(DartListBuilder) updates]) = _$DartList;
   DartList._();
 
@@ -138,11 +142,7 @@ abstract class DartMap implements Built<DartMap, DartMapBuilder>, DartValue {
   factory DartMap(
     Map<DartValue, DartValue> value, {
     required TypeReference staticType,
-  }) =>
-      _$DartMap._(
-        value: value.build(),
-        staticType: staticType,
-      );
+  }) => _$DartMap._(value: value.build(), staticType: staticType);
 
   factory DartMap.build([void Function(DartMapBuilder) updates]) = _$DartMap;
   DartMap._();
@@ -162,10 +162,13 @@ abstract class DartMap implements Built<DartMap, DartMapBuilder>, DartValue {
 
 abstract class DartNull implements Built<DartNull, DartNullBuilder>, DartValue {
   factory DartNull() => _$DartNull._(
-        staticType: TypeReference((t) => t
-          ..url = 'dart:core'
-          ..symbol = 'Null'),
-      );
+    staticType: TypeReference(
+      (t) =>
+          t
+            ..url = 'dart:core'
+            ..symbol = 'Null',
+    ),
+  );
 
   factory DartNull.build([void Function(DartNullBuilder) updates]) = _$DartNull;
   DartNull._();
@@ -205,25 +208,18 @@ abstract class DartRecord
 
   @override
   Map<String, Object?> toJson() => {
-        for (final (index, value) in positionalFields.indexed)
-          '\$$index': value.toJson(),
-        for (final MapEntry(:key, :value) in namedFields.entries)
-          key: value.toJson(),
-      };
+    for (final (index, value) in positionalFields.indexed)
+      '\$$index': value.toJson(),
+    for (final MapEntry(:key, :value) in namedFields.entries)
+      key: value.toJson(),
+  };
 
   static Serializer<DartRecord> get serializer => _$dartRecordSerializer;
 }
 
 abstract class DartEnum implements Built<DartEnum, DartEnumBuilder>, DartValue {
-  factory DartEnum(
-    TypeReference enumRef,
-    String value,
-  ) =>
-      _$DartEnum._(
-        enumRef: enumRef,
-        value: value,
-        staticType: enumRef,
-      );
+  factory DartEnum(TypeReference enumRef, String value) =>
+      _$DartEnum._(enumRef: enumRef, value: value, staticType: enumRef);
 
   factory DartEnum.build([void Function(DartEnumBuilder) updates]) = _$DartEnum;
   DartEnum._();
@@ -272,11 +268,11 @@ abstract class DartInstance
 
   @override
   Map<String, Object?> toJson() => {
-        for (final MapEntry(:key, :value) in positionalArguments.entries)
-          key: value.toJson(),
-        for (final MapEntry(:key, :value) in namedArguments.entries)
-          key: value.toJson(),
-      };
+    for (final MapEntry(:key, :value) in positionalArguments.entries)
+      key: value.toJson(),
+    for (final MapEntry(:key, :value) in namedArguments.entries)
+      key: value.toJson(),
+  };
 
   static Serializer<DartInstance> get serializer => _$dartInstanceSerializer;
 }
@@ -286,8 +282,9 @@ abstract class DartTypeLiteral
   factory DartTypeLiteral(TypeReference type) =>
       _$DartTypeLiteral._(type: type, staticType: type);
 
-  factory DartTypeLiteral.build(
-      [void Function(DartTypeLiteralBuilder) updates]) = _$DartTypeLiteral;
+  factory DartTypeLiteral.build([
+    void Function(DartTypeLiteralBuilder) updates,
+  ]) = _$DartTypeLiteral;
   DartTypeLiteral._();
 
   TypeReference get type;
@@ -305,16 +302,18 @@ abstract class DartTypeLiteral
 abstract class DartSymbolLiteral
     implements Built<DartSymbolLiteral, DartSymbolLiteralBuilder>, DartValue {
   factory DartSymbolLiteral(String value) => _$DartSymbolLiteral._(
-        value: value,
-        staticType: TypeReference(
-          (t) => t
+    value: value,
+    staticType: TypeReference(
+      (t) =>
+          t
             ..url = 'dart:core'
             ..symbol = 'Symbol',
-        ),
-      );
+    ),
+  );
 
-  factory DartSymbolLiteral.build(
-      [void Function(DartSymbolLiteralBuilder) updates]) = _$DartSymbolLiteral;
+  factory DartSymbolLiteral.build([
+    void Function(DartSymbolLiteralBuilder) updates,
+  ]) = _$DartSymbolLiteral;
   DartSymbolLiteral._();
 
   String get value;
