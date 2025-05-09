@@ -29,10 +29,12 @@ final BuiltSet<Region> _$RegionValues = new BuiltSet<Region>(const <Region>[
   _$asiaPacific,
 ]);
 
-const StreamType _$unidirectionalServer =
-    const StreamType._('unidirectionalServer');
-const StreamType _$unidirectionalClient =
-    const StreamType._('unidirectionalClient');
+const StreamType _$unidirectionalServer = const StreamType._(
+  'unidirectionalServer',
+);
+const StreamType _$unidirectionalClient = const StreamType._(
+  'unidirectionalClient',
+);
 const StreamType _$bidirectional = const StreamType._('bidirectional');
 
 StreamType _$StreamTypeValueOf(String name) {
@@ -48,12 +50,13 @@ StreamType _$StreamTypeValueOf(String name) {
   }
 }
 
-final BuiltSet<StreamType> _$StreamTypeValues =
-    new BuiltSet<StreamType>(const <StreamType>[
-  _$unidirectionalServer,
-  _$unidirectionalClient,
-  _$bidirectional,
-]);
+final BuiltSet<StreamType> _$StreamTypeValues = new BuiltSet<StreamType>(
+  const <StreamType>[
+    _$unidirectionalServer,
+    _$unidirectionalClient,
+    _$bidirectional,
+  ],
+);
 
 const AuthProviderType _$emailOtp = const AuthProviderType._('emailOtp');
 const AuthProviderType _$smsOtp = const AuthProviderType._('smsOtp');
@@ -86,14 +89,14 @@ AuthProviderType _$AuthProviderTypeValueOf(String name) {
 
 final BuiltSet<AuthProviderType> _$AuthProviderTypeValues =
     new BuiltSet<AuthProviderType>(const <AuthProviderType>[
-  _$emailOtp,
-  _$smsOtp,
-  _$google,
-  _$gitHub,
-  _$apple,
-  _$firebase,
-  _$supabase,
-]);
+      _$emailOtp,
+      _$smsOtp,
+      _$google,
+      _$gitHub,
+      _$apple,
+      _$firebase,
+      _$supabase,
+    ]);
 
 const NodeType _$project = const NodeType._('project');
 const NodeType _$api = const NodeType._('api');
@@ -101,8 +104,9 @@ const NodeType _$apiPublic = const NodeType._('apiPublic');
 const NodeType _$apiAuthenticated = const NodeType._('apiAuthenticated');
 const NodeType _$apiMiddleware = const NodeType._('apiMiddleware');
 const NodeType _$cloudFunction = const NodeType._('cloudFunction');
-const NodeType _$cloudFunctionParameter =
-    const NodeType._('cloudFunctionParameter');
+const NodeType _$cloudFunctionParameter = const NodeType._(
+  'cloudFunctionParameter',
+);
 const NodeType _$variable = const NodeType._('variable');
 const NodeType _$secret = const NodeType._('secret');
 const NodeType _$userContext = const NodeType._('userContext');
@@ -171,9 +175,7 @@ DatabaseSchemaType _$DatabaseSchemaTypeValueOf(String name) {
 }
 
 final BuiltSet<DatabaseSchemaType> _$DatabaseSchemaTypeValues =
-    new BuiltSet<DatabaseSchemaType>(const <DatabaseSchemaType>[
-  _$drift,
-]);
+    new BuiltSet<DatabaseSchemaType>(const <DatabaseSchemaType>[_$drift]);
 
 const DatabaseProviderType _$celest = const DatabaseProviderType._('celest');
 
@@ -187,9 +189,7 @@ DatabaseProviderType _$databaseProviderTypeValueOf(String name) {
 }
 
 final BuiltSet<DatabaseProviderType> _$databaseProviderType =
-    new BuiltSet<DatabaseProviderType>(const <DatabaseProviderType>[
-  _$celest,
-]);
+    new BuiltSet<DatabaseProviderType>(const <DatabaseProviderType>[_$celest]);
 
 Serializer<Region> _$regionSerializer = new _$RegionSerializer();
 Serializer<Project> _$projectSerializer = new _$ProjectSerializer();
@@ -224,10 +224,10 @@ Serializer<AppleAuthProvider> _$appleAuthProviderSerializer =
 Serializer<GitHubAuthProvider> _$gitHubAuthProviderSerializer =
     new _$GitHubAuthProviderSerializer();
 Serializer<FirebaseExternalAuthProvider>
-    _$firebaseExternalAuthProviderSerializer =
+_$firebaseExternalAuthProviderSerializer =
     new _$FirebaseExternalAuthProviderSerializer();
 Serializer<SupabaseExternalAuthProvider>
-    _$supabaseExternalAuthProviderSerializer =
+_$supabaseExternalAuthProviderSerializer =
     new _$SupabaseExternalAuthProviderSerializer();
 Serializer<NodeType> _$nodeTypeSerializer = new _$NodeTypeSerializer();
 Serializer<NodeReference> _$nodeReferenceSerializer =
@@ -247,14 +247,18 @@ class _$RegionSerializer implements PrimitiveSerializer<Region> {
   final String wireName = 'Region';
 
   @override
-  Object serialize(Serializers serializers, Region object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    Region object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  Region deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      Region.valueOf(serialized as String);
+  Region deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => Region.valueOf(serialized as String);
 }
 
 class _$ProjectSerializer implements StructuredSerializer<Project> {
@@ -264,68 +268,99 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
   final String wireName = 'Project';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Project object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    Project object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'environment',
-      serializers.serialize(object.environment,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.environment,
+        specifiedType: const FullType(String),
+      ),
       'reference',
-      serializers.serialize(object.reference,
-          specifiedType: const FullType(Reference)),
+      serializers.serialize(
+        object.reference,
+        specifiedType: const FullType(Reference),
+      ),
       'apis',
-      serializers.serialize(object.apis,
-          specifiedType: const FullType(
-              BuiltMap, const [const FullType(String), const FullType(Api)])),
+      serializers.serialize(
+        object.apis,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(Api),
+        ]),
+      ),
       'variables',
-      serializers.serialize(object.variables,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(Variable)])),
+      serializers.serialize(
+        object.variables,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(Variable),
+        ]),
+      ),
       'secrets',
-      serializers.serialize(object.secrets,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(Secret)])),
+      serializers.serialize(
+        object.secrets,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(Secret),
+        ]),
+      ),
       'databases',
-      serializers.serialize(object.databases,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(Database)])),
+      serializers.serialize(
+        object.databases,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(Database),
+        ]),
+      ),
       'sdkConfig',
-      serializers.serialize(object.sdkConfig,
-          specifiedType: const FullType(SdkConfiguration)),
+      serializers.serialize(
+        object.sdkConfig,
+        specifiedType: const FullType(SdkConfiguration),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
     Object? value;
     value = object.displayName;
     if (value != null) {
       result
         ..add('displayName')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.primaryRegion;
     if (value != null) {
       result
         ..add('primaryRegion')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(Region)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(Region)),
+        );
     }
     value = object.auth;
     if (value != null) {
       result
         ..add('auth')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(Auth)));
+          serializers.serialize(value, specifiedType: const FullType(Auth)),
+        );
     }
     return result;
   }
 
   @override
-  Project deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  Project deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new ProjectBuilder();
 
     final iterator = serialized.iterator;
@@ -335,59 +370,111 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'environment':
-          result.environment = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.environment =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'displayName':
-          result.displayName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.displayName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'primaryRegion':
-          result.primaryRegion = serializers.deserialize(value,
-              specifiedType: const FullType(Region)) as Region?;
+          result.primaryRegion =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(Region),
+                  )
+                  as Region?;
           break;
         case 'reference':
-          result.reference = serializers.deserialize(value,
-              specifiedType: const FullType(Reference))! as Reference;
+          result.reference =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(Reference),
+                  )!
+                  as Reference;
           break;
         case 'apis':
-          result.apis.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(Api)]))!);
+          result.apis.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(Api),
+              ]),
+            )!,
+          );
           break;
         case 'variables':
-          result.variables.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(Variable)]))!
-              as BuiltList<Object?>);
+          result.variables.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(Variable),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'secrets':
-          result.secrets.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(Secret)]))!
-              as BuiltList<Object?>);
+          result.secrets.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(Secret),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'auth':
-          result.auth.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Auth))! as Auth);
+          result.auth.replace(
+            serializers.deserialize(value, specifiedType: const FullType(Auth))!
+                as Auth,
+          );
           break;
         case 'databases':
-          result.databases.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(Database)]))!);
+          result.databases.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(Database),
+              ]),
+            )!,
+          );
           break;
         case 'sdkConfig':
-          result.sdkConfig.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SdkConfiguration))!
-              as SdkConfiguration);
+          result.sdkConfig.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(SdkConfiguration),
+                )!
+                as SdkConfiguration,
+          );
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -403,38 +490,59 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
   final String wireName = 'Api';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Api object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    Api object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'metadata',
-      serializers.serialize(object.metadata,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(ApiMetadata)])),
+      serializers.serialize(
+        object.metadata,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(ApiMetadata),
+        ]),
+      ),
       'functions',
-      serializers.serialize(object.functions,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(CloudFunction)])),
+      serializers.serialize(
+        object.functions,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(CloudFunction),
+        ]),
+      ),
       'docs',
-      serializers.serialize(object.docs,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.docs,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
       'exceptionTypes',
-      serializers.serialize(object.exceptionTypes,
-          specifiedType:
-              const FullType(BuiltSet, const [const FullType(Reference)])),
+      serializers.serialize(
+        object.exceptionTypes,
+        specifiedType: const FullType(BuiltSet, const [
+          const FullType(Reference),
+        ]),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
   }
 
   @override
-  Api deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  Api deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new ApiBuilder();
 
     final iterator = serialized.iterator;
@@ -444,37 +552,64 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'metadata':
-          result.metadata.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(ApiMetadata)]))!
-              as BuiltList<Object?>);
+          result.metadata.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(ApiMetadata),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'functions':
-          result.functions.replace(serializers.deserialize(value,
+          result.functions.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(CloudFunction)
-              ]))!);
+                const FullType(CloudFunction),
+              ]),
+            )!,
+          );
           break;
         case 'docs':
-          result.docs.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.docs.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'exceptionTypes':
-          result.exceptionTypes.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltSet, const [const FullType(Reference)]))!
-              as BuiltSet<Object?>);
+          result.exceptionTypes.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltSet, const [
+                    const FullType(Reference),
+                  ]),
+                )!
+                as BuiltSet<Object?>,
+          );
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -490,20 +625,28 @@ class _$ApiPublicSerializer implements StructuredSerializer<ApiPublic> {
   final String wireName = 'ApiPublic';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ApiPublic object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ApiPublic object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
   }
 
   @override
-  ApiPublic deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  ApiPublic deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new ApiPublicBuilder();
 
     final iterator = serialized.iterator;
@@ -513,8 +656,12 @@ class _$ApiPublicSerializer implements StructuredSerializer<ApiPublic> {
       final Object? value = iterator.current;
       switch (key) {
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -531,12 +678,17 @@ class _$ApiAuthenticatedSerializer
   final String wireName = 'ApiAuthenticated';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ApiAuthenticated object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ApiAuthenticated object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
@@ -544,8 +696,10 @@ class _$ApiAuthenticatedSerializer
 
   @override
   ApiAuthenticated deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new ApiAuthenticatedBuilder();
 
     final iterator = serialized.iterator;
@@ -555,8 +709,12 @@ class _$ApiAuthenticatedSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -572,15 +730,22 @@ class _$ApiMiddlewareSerializer implements StructuredSerializer<ApiMiddleware> {
   final String wireName = 'ApiMiddleware';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ApiMiddleware object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ApiMiddleware object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(Reference)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(Reference),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
@@ -588,8 +753,10 @@ class _$ApiMiddlewareSerializer implements StructuredSerializer<ApiMiddleware> {
 
   @override
   ApiMiddleware deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new ApiMiddlewareBuilder();
 
     final iterator = serialized.iterator;
@@ -599,12 +766,20 @@ class _$ApiMiddlewareSerializer implements StructuredSerializer<ApiMiddleware> {
       final Object? value = iterator.current;
       switch (key) {
         case 'type':
-          result.type = serializers.deserialize(value,
-              specifiedType: const FullType(Reference))! as Reference;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(Reference),
+                  )!
+                  as Reference;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -620,18 +795,27 @@ class _$ApiHttpConfigSerializer implements StructuredSerializer<ApiHttpConfig> {
   final String wireName = 'ApiHttpConfig';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ApiHttpConfig object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ApiHttpConfig object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'method',
-      serializers.serialize(object.method,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.method,
+        specifiedType: const FullType(String),
+      ),
       'statusCode',
-      serializers.serialize(object.statusCode,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.statusCode,
+        specifiedType: const FullType(int),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
@@ -639,8 +823,10 @@ class _$ApiHttpConfigSerializer implements StructuredSerializer<ApiHttpConfig> {
 
   @override
   ApiHttpConfig deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new ApiHttpConfigBuilder();
 
     final iterator = serialized.iterator;
@@ -650,16 +836,28 @@ class _$ApiHttpConfigSerializer implements StructuredSerializer<ApiHttpConfig> {
       final Object? value = iterator.current;
       switch (key) {
         case 'method':
-          result.method = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.method =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'statusCode':
-          result.statusCode = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.statusCode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -675,18 +873,27 @@ class _$ApiHttpErrorSerializer implements StructuredSerializer<ApiHttpError> {
   final String wireName = 'ApiHttpError';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ApiHttpError object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ApiHttpError object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(TypeReference),
+      ),
       'statusCode',
-      serializers.serialize(object.statusCode,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.statusCode,
+        specifiedType: const FullType(int),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
@@ -694,8 +901,10 @@ class _$ApiHttpErrorSerializer implements StructuredSerializer<ApiHttpError> {
 
   @override
   ApiHttpError deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new ApiHttpErrorBuilder();
 
     final iterator = serialized.iterator;
@@ -705,16 +914,29 @@ class _$ApiHttpErrorSerializer implements StructuredSerializer<ApiHttpError> {
       final Object? value = iterator.current;
       switch (key) {
         case 'type':
-          result.type.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.type.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
         case 'statusCode':
-          result.statusCode = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.statusCode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -728,56 +950,77 @@ class _$CloudFunctionParameterSerializer
   @override
   final Iterable<Type> types = const [
     CloudFunctionParameter,
-    _$CloudFunctionParameter
+    _$CloudFunctionParameter,
   ];
   @override
   final String wireName = 'CloudFunctionParameter';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, CloudFunctionParameter object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    CloudFunctionParameter object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(Reference)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(Reference),
+      ),
       'required',
-      serializers.serialize(object.required,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.required,
+        specifiedType: const FullType(bool),
+      ),
       'named',
       serializers.serialize(object.named, specifiedType: const FullType(bool)),
       'annotations',
-      serializers.serialize(object.annotations,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(DartValue)])),
+      serializers.serialize(
+        object.annotations,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(DartValue),
+        ]),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
     Object? value;
     value = object.references;
     if (value != null) {
       result
         ..add('references')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(NodeReference)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(NodeReference),
+          ),
+        );
     }
     value = object.defaultTo;
     if (value != null) {
       result
         ..add('defaultTo')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(DartValue)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(DartValue),
+          ),
+        );
     }
     return result;
   }
 
   @override
   CloudFunctionParameter deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new CloudFunctionParameterBuilder();
 
     final iterator = serialized.iterator;
@@ -787,38 +1030,72 @@ class _$CloudFunctionParameterSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'type':
-          result.type = serializers.deserialize(value,
-              specifiedType: const FullType(Reference))! as Reference;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(Reference),
+                  )!
+                  as Reference;
           break;
         case 'required':
-          result.required = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.required =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'named':
-          result.named = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.named =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'references':
-          result.references.replace(serializers.deserialize(value,
-              specifiedType: const FullType(NodeReference))! as NodeReference);
+          result.references.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(NodeReference),
+                )!
+                as NodeReference,
+          );
           break;
         case 'annotations':
-          result.annotations.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DartValue)]))!
-              as BuiltList<Object?>);
+          result.annotations.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DartValue),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'defaultTo':
-          result.defaultTo = serializers.deserialize(value,
-              specifiedType: const FullType(DartValue)) as DartValue?;
+          result.defaultTo =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DartValue),
+                  )
+                  as DartValue?;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -834,14 +1111,18 @@ class _$StreamTypeSerializer implements PrimitiveSerializer<StreamType> {
   final String wireName = 'StreamType';
 
   @override
-  Object serialize(Serializers serializers, StreamType object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    StreamType object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  StreamType deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      StreamType.valueOf(serialized as String);
+  StreamType deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => StreamType.valueOf(serialized as String);
 }
 
 class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
@@ -851,59 +1132,91 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
   final String wireName = 'CloudFunction';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, CloudFunction object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    CloudFunction object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'apiName',
-      serializers.serialize(object.apiName,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.apiName,
+        specifiedType: const FullType(String),
+      ),
       'typeParameters',
-      serializers.serialize(object.typeParameters,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(Reference)])),
+      serializers.serialize(
+        object.typeParameters,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(Reference),
+        ]),
+      ),
       'parameters',
-      serializers.serialize(object.parameters,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(CloudFunctionParameter)])),
+      serializers.serialize(
+        object.parameters,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(CloudFunctionParameter),
+        ]),
+      ),
       'returnType',
-      serializers.serialize(object.returnType,
-          specifiedType: const FullType(Reference)),
+      serializers.serialize(
+        object.returnType,
+        specifiedType: const FullType(Reference),
+      ),
       'flattenedReturnType',
-      serializers.serialize(object.flattenedReturnType,
-          specifiedType: const FullType(Reference)),
+      serializers.serialize(
+        object.flattenedReturnType,
+        specifiedType: const FullType(Reference),
+      ),
       'metadata',
-      serializers.serialize(object.metadata,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(ApiMetadata)])),
+      serializers.serialize(
+        object.metadata,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(ApiMetadata),
+        ]),
+      ),
       'annotations',
-      serializers.serialize(object.annotations,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(DartValue)])),
+      serializers.serialize(
+        object.annotations,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(DartValue),
+        ]),
+      ),
       'docs',
-      serializers.serialize(object.docs,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.docs,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
     Object? value;
     value = object.streamType;
     if (value != null) {
       result
         ..add('streamType')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(StreamType)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(StreamType),
+          ),
+        );
     }
     return result;
   }
 
   @override
   CloudFunction deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new CloudFunctionBuilder();
 
     final iterator = serialized.iterator;
@@ -913,58 +1226,107 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'apiName':
-          result.apiName = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.apiName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'typeParameters':
-          result.typeParameters.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(Reference)]))!
-              as BuiltList<Object?>);
+          result.typeParameters.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(Reference),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'parameters':
-          result.parameters.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(CloudFunctionParameter)
-              ]))! as BuiltList<Object?>);
+          result.parameters.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(CloudFunctionParameter),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'returnType':
-          result.returnType = serializers.deserialize(value,
-              specifiedType: const FullType(Reference))! as Reference;
+          result.returnType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(Reference),
+                  )!
+                  as Reference;
           break;
         case 'flattenedReturnType':
-          result.flattenedReturnType = serializers.deserialize(value,
-              specifiedType: const FullType(Reference))! as Reference;
+          result.flattenedReturnType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(Reference),
+                  )!
+                  as Reference;
           break;
         case 'streamType':
-          result.streamType = serializers.deserialize(value,
-              specifiedType: const FullType(StreamType)) as StreamType?;
+          result.streamType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(StreamType),
+                  )
+                  as StreamType?;
           break;
         case 'metadata':
-          result.metadata.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(ApiMetadata)]))!
-              as BuiltList<Object?>);
+          result.metadata.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(ApiMetadata),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'annotations':
-          result.annotations.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DartValue)]))!
-              as BuiltList<Object?>);
+          result.annotations.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DartValue),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'docs':
-          result.docs.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.docs.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -980,40 +1342,53 @@ class _$VariableSerializer implements StructuredSerializer<Variable> {
   final String wireName = 'Variable';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Variable object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    Variable object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'docs',
-      serializers.serialize(object.docs,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.docs,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
     Object? value;
     value = object.value;
     if (value != null) {
       result
         ..add('value')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.dartName;
     if (value != null) {
       result
         ..add('dartName')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
-  Variable deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  Variable deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new VariableBuilder();
 
     final iterator = serialized.iterator;
@@ -1023,26 +1398,47 @@ class _$VariableSerializer implements StructuredSerializer<Variable> {
       final Object? value = iterator.current;
       switch (key) {
         case 'value':
-          result.value = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.value =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'dartName':
-          result.dartName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.dartName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'docs':
-          result.docs.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.docs.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -1058,33 +1454,45 @@ class _$SecretSerializer implements StructuredSerializer<Secret> {
   final String wireName = 'Secret';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Secret object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    Secret object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'docs',
-      serializers.serialize(object.docs,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.docs,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
     Object? value;
     value = object.dartName;
     if (value != null) {
       result
         ..add('dartName')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
-  Secret deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  Secret deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new SecretBuilder();
 
     final iterator = serialized.iterator;
@@ -1094,22 +1502,39 @@ class _$SecretSerializer implements StructuredSerializer<Secret> {
       final Object? value = iterator.current;
       switch (key) {
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'dartName':
-          result.dartName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.dartName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'docs':
-          result.docs.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.docs.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -1125,28 +1550,42 @@ class _$AuthSerializer implements StructuredSerializer<Auth> {
   final String wireName = 'Auth';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Auth object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    Auth object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'providers',
-      serializers.serialize(object.providers,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(AuthProvider)])),
+      serializers.serialize(
+        object.providers,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(AuthProvider),
+        ]),
+      ),
       'externalProviders',
-      serializers.serialize(object.externalProviders,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(ExternalAuthProvider)])),
+      serializers.serialize(
+        object.externalProviders,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(ExternalAuthProvider),
+        ]),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
   }
 
   @override
-  Auth deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  Auth deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new AuthBuilder();
 
     final iterator = serialized.iterator;
@@ -1156,20 +1595,34 @@ class _$AuthSerializer implements StructuredSerializer<Auth> {
       final Object? value = iterator.current;
       switch (key) {
         case 'providers':
-          result.providers.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(AuthProvider)]))!
-              as BuiltList<Object?>);
+          result.providers.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(AuthProvider),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'externalProviders':
-          result.externalProviders.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(ExternalAuthProvider)]))!
-              as BuiltList<Object?>);
+          result.externalProviders.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(ExternalAuthProvider),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -1205,15 +1658,20 @@ class _$AuthProviderTypeSerializer
   final String wireName = 'AuthProviderType';
 
   @override
-  Object serialize(Serializers serializers, AuthProviderType object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      _toWire[object.name] ?? object.name;
+  Object serialize(
+    Serializers serializers,
+    AuthProviderType object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
 
   @override
-  AuthProviderType deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      AuthProviderType.valueOf(
-          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+  AuthProviderType deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => AuthProviderType.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
 }
 
 class _$EmailAuthProviderSerializer
@@ -1224,17 +1682,24 @@ class _$EmailAuthProviderSerializer
   final String wireName = 'EmailAuthProvider';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, EmailAuthProvider object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    EmailAuthProvider object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(AuthProviderType)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(AuthProviderType),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
@@ -1242,8 +1707,10 @@ class _$EmailAuthProviderSerializer
 
   @override
   EmailAuthProvider deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new EmailAuthProviderBuilder();
 
     final iterator = serialized.iterator;
@@ -1253,17 +1720,28 @@ class _$EmailAuthProviderSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'type':
-          result.type = serializers.deserialize(value,
-                  specifiedType: const FullType(AuthProviderType))!
-              as AuthProviderType;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(AuthProviderType),
+                  )!
+                  as AuthProviderType;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -1280,17 +1758,24 @@ class _$SmsAuthProviderSerializer
   final String wireName = 'SmsAuthProvider';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, SmsAuthProvider object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    SmsAuthProvider object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(AuthProviderType)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(AuthProviderType),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
@@ -1298,8 +1783,10 @@ class _$SmsAuthProviderSerializer
 
   @override
   SmsAuthProvider deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new SmsAuthProviderBuilder();
 
     final iterator = serialized.iterator;
@@ -1309,17 +1796,28 @@ class _$SmsAuthProviderSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'type':
-          result.type = serializers.deserialize(value,
-                  specifiedType: const FullType(AuthProviderType))!
-              as AuthProviderType;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(AuthProviderType),
+                  )!
+                  as AuthProviderType;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -1337,23 +1835,33 @@ class _$GoogleAuthProviderSerializer
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, GoogleAuthProvider object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    GoogleAuthProvider object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'clientId',
-      serializers.serialize(object.clientId,
-          specifiedType: const FullType(Secret)),
+      serializers.serialize(
+        object.clientId,
+        specifiedType: const FullType(Secret),
+      ),
       'clientSecret',
-      serializers.serialize(object.clientSecret,
-          specifiedType: const FullType(Secret)),
+      serializers.serialize(
+        object.clientSecret,
+        specifiedType: const FullType(Secret),
+      ),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(AuthProviderType)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(AuthProviderType),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
@@ -1361,8 +1869,10 @@ class _$GoogleAuthProviderSerializer
 
   @override
   GoogleAuthProvider deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new GoogleAuthProviderBuilder();
 
     final iterator = serialized.iterator;
@@ -1372,25 +1882,46 @@ class _$GoogleAuthProviderSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'clientId':
-          result.clientId.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Secret))! as Secret);
+          result.clientId.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Secret),
+                )!
+                as Secret,
+          );
           break;
         case 'clientSecret':
-          result.clientSecret.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Secret))! as Secret);
+          result.clientSecret.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Secret),
+                )!
+                as Secret,
+          );
           break;
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'type':
-          result.type = serializers.deserialize(value,
-                  specifiedType: const FullType(AuthProviderType))!
-              as AuthProviderType;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(AuthProviderType),
+                  )!
+                  as AuthProviderType;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -1407,29 +1938,44 @@ class _$AppleAuthProviderSerializer
   final String wireName = 'AppleAuthProvider';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, AppleAuthProvider object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    AppleAuthProvider object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'clientId',
-      serializers.serialize(object.clientId,
-          specifiedType: const FullType(Secret)),
+      serializers.serialize(
+        object.clientId,
+        specifiedType: const FullType(Secret),
+      ),
       'teamId',
-      serializers.serialize(object.teamId,
-          specifiedType: const FullType(Secret)),
+      serializers.serialize(
+        object.teamId,
+        specifiedType: const FullType(Secret),
+      ),
       'keyId',
-      serializers.serialize(object.keyId,
-          specifiedType: const FullType(Secret)),
+      serializers.serialize(
+        object.keyId,
+        specifiedType: const FullType(Secret),
+      ),
       'privateKey',
-      serializers.serialize(object.privateKey,
-          specifiedType: const FullType(Secret)),
+      serializers.serialize(
+        object.privateKey,
+        specifiedType: const FullType(Secret),
+      ),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(AuthProviderType)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(AuthProviderType),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
@@ -1437,8 +1983,10 @@ class _$AppleAuthProviderSerializer
 
   @override
   AppleAuthProvider deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new AppleAuthProviderBuilder();
 
     final iterator = serialized.iterator;
@@ -1448,33 +1996,64 @@ class _$AppleAuthProviderSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'clientId':
-          result.clientId.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Secret))! as Secret);
+          result.clientId.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Secret),
+                )!
+                as Secret,
+          );
           break;
         case 'teamId':
-          result.teamId.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Secret))! as Secret);
+          result.teamId.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Secret),
+                )!
+                as Secret,
+          );
           break;
         case 'keyId':
-          result.keyId.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Secret))! as Secret);
+          result.keyId.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Secret),
+                )!
+                as Secret,
+          );
           break;
         case 'privateKey':
-          result.privateKey.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Secret))! as Secret);
+          result.privateKey.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Secret),
+                )!
+                as Secret,
+          );
           break;
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'type':
-          result.type = serializers.deserialize(value,
-                  specifiedType: const FullType(AuthProviderType))!
-              as AuthProviderType;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(AuthProviderType),
+                  )!
+                  as AuthProviderType;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -1492,23 +2071,33 @@ class _$GitHubAuthProviderSerializer
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, GitHubAuthProvider object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    GitHubAuthProvider object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'clientId',
-      serializers.serialize(object.clientId,
-          specifiedType: const FullType(Secret)),
+      serializers.serialize(
+        object.clientId,
+        specifiedType: const FullType(Secret),
+      ),
       'clientSecret',
-      serializers.serialize(object.clientSecret,
-          specifiedType: const FullType(Secret)),
+      serializers.serialize(
+        object.clientSecret,
+        specifiedType: const FullType(Secret),
+      ),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(AuthProviderType)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(AuthProviderType),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
@@ -1516,8 +2105,10 @@ class _$GitHubAuthProviderSerializer
 
   @override
   GitHubAuthProvider deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new GitHubAuthProviderBuilder();
 
     final iterator = serialized.iterator;
@@ -1527,25 +2118,46 @@ class _$GitHubAuthProviderSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'clientId':
-          result.clientId.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Secret))! as Secret);
+          result.clientId.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Secret),
+                )!
+                as Secret,
+          );
           break;
         case 'clientSecret':
-          result.clientSecret.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Secret))! as Secret);
+          result.clientSecret.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Secret),
+                )!
+                as Secret,
+          );
           break;
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'type':
-          result.type = serializers.deserialize(value,
-                  specifiedType: const FullType(AuthProviderType))!
-              as AuthProviderType;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(AuthProviderType),
+                  )!
+                  as AuthProviderType;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -1559,27 +2171,35 @@ class _$FirebaseExternalAuthProviderSerializer
   @override
   final Iterable<Type> types = const [
     FirebaseExternalAuthProvider,
-    _$FirebaseExternalAuthProvider
+    _$FirebaseExternalAuthProvider,
   ];
   @override
   final String wireName = 'FirebaseExternalAuthProvider';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, FirebaseExternalAuthProvider object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    FirebaseExternalAuthProvider object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'projectId',
-      serializers.serialize(object.projectId,
-          specifiedType: const FullType(Variable)),
+      serializers.serialize(
+        object.projectId,
+        specifiedType: const FullType(Variable),
+      ),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(AuthProviderType)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(AuthProviderType),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
@@ -1587,8 +2207,10 @@ class _$FirebaseExternalAuthProviderSerializer
 
   @override
   FirebaseExternalAuthProvider deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new FirebaseExternalAuthProviderBuilder();
 
     final iterator = serialized.iterator;
@@ -1598,21 +2220,37 @@ class _$FirebaseExternalAuthProviderSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'projectId':
-          result.projectId.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Variable))! as Variable);
+          result.projectId.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Variable),
+                )!
+                as Variable,
+          );
           break;
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'type':
-          result.type = serializers.deserialize(value,
-                  specifiedType: const FullType(AuthProviderType))!
-              as AuthProviderType;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(AuthProviderType),
+                  )!
+                  as AuthProviderType;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -1626,43 +2264,54 @@ class _$SupabaseExternalAuthProviderSerializer
   @override
   final Iterable<Type> types = const [
     SupabaseExternalAuthProvider,
-    _$SupabaseExternalAuthProvider
+    _$SupabaseExternalAuthProvider,
   ];
   @override
   final String wireName = 'SupabaseExternalAuthProvider';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, SupabaseExternalAuthProvider object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    SupabaseExternalAuthProvider object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'projectUrl',
-      serializers.serialize(object.projectUrl,
-          specifiedType: const FullType(Variable)),
+      serializers.serialize(
+        object.projectUrl,
+        specifiedType: const FullType(Variable),
+      ),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(AuthProviderType)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(AuthProviderType),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
     Object? value;
     value = object.jwtSecret;
     if (value != null) {
       result
         ..add('jwtSecret')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(Secret)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(Secret)),
+        );
     }
     return result;
   }
 
   @override
   SupabaseExternalAuthProvider deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new SupabaseExternalAuthProviderBuilder();
 
     final iterator = serialized.iterator;
@@ -1672,25 +2321,46 @@ class _$SupabaseExternalAuthProviderSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'projectUrl':
-          result.projectUrl.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Variable))! as Variable);
+          result.projectUrl.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Variable),
+                )!
+                as Variable,
+          );
           break;
         case 'jwtSecret':
-          result.jwtSecret.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Secret))! as Secret);
+          result.jwtSecret.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Secret),
+                )!
+                as Secret,
+          );
           break;
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'type':
-          result.type = serializers.deserialize(value,
-                  specifiedType: const FullType(AuthProviderType))!
-              as AuthProviderType;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(AuthProviderType),
+                  )!
+                  as AuthProviderType;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -1706,14 +2376,18 @@ class _$NodeTypeSerializer implements PrimitiveSerializer<NodeType> {
   final String wireName = 'NodeType';
 
   @override
-  Object serialize(Serializers serializers, NodeType object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    NodeType object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  NodeType deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      NodeType.valueOf(serialized as String);
+  NodeType deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => NodeType.valueOf(serialized as String);
 }
 
 class _$NodeReferenceSerializer implements StructuredSerializer<NodeReference> {
@@ -1723,14 +2397,19 @@ class _$NodeReferenceSerializer implements StructuredSerializer<NodeReference> {
   final String wireName = 'NodeReference';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, NodeReference object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    NodeReference object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(NodeType)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(NodeType),
+      ),
     ];
 
     return result;
@@ -1738,8 +2417,10 @@ class _$NodeReferenceSerializer implements StructuredSerializer<NodeReference> {
 
   @override
   NodeReference deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new NodeReferenceBuilder();
 
     final iterator = serialized.iterator;
@@ -1749,12 +2430,20 @@ class _$NodeReferenceSerializer implements StructuredSerializer<NodeReference> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'type':
-          result.type = serializers.deserialize(value,
-              specifiedType: const FullType(NodeType))! as NodeType;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(NodeType),
+                  )!
+                  as NodeType;
           break;
       }
     }
@@ -1771,14 +2460,18 @@ class _$DatabaseSchemaTypeSerializer
   final String wireName = 'DatabaseSchemaType';
 
   @override
-  Object serialize(Serializers serializers, DatabaseSchemaType object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    DatabaseSchemaType object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  DatabaseSchemaType deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      DatabaseSchemaType.valueOf(serialized as String);
+  DatabaseSchemaType deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => DatabaseSchemaType.valueOf(serialized as String);
 }
 
 class _$DriftDatabaseSchemaSerializer
@@ -1786,24 +2479,30 @@ class _$DriftDatabaseSchemaSerializer
   @override
   final Iterable<Type> types = const [
     DriftDatabaseSchema,
-    _$DriftDatabaseSchema
+    _$DriftDatabaseSchema,
   ];
   @override
   final String wireName = 'DriftDatabaseSchema';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, DriftDatabaseSchema object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    DriftDatabaseSchema object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'declaration',
-      serializers.serialize(object.declaration,
-          specifiedType: const FullType(TypeReference)),
+      serializers.serialize(
+        object.declaration,
+        specifiedType: const FullType(TypeReference),
+      ),
       'version',
       serializers.serialize(object.version, specifiedType: const FullType(int)),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
@@ -1811,8 +2510,10 @@ class _$DriftDatabaseSchemaSerializer
 
   @override
   DriftDatabaseSchema deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DriftDatabaseSchemaBuilder();
 
     final iterator = serialized.iterator;
@@ -1822,16 +2523,29 @@ class _$DriftDatabaseSchemaSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'declaration':
-          result.declaration.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TypeReference))! as TypeReference);
+          result.declaration.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TypeReference),
+                )!
+                as TypeReference,
+          );
           break;
         case 'version':
-          result.version = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.version =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -1847,35 +2561,52 @@ class _$DatabaseSerializer implements StructuredSerializer<Database> {
   final String wireName = 'Database';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Database object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    Database object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'dartName',
-      serializers.serialize(object.dartName,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.dartName,
+        specifiedType: const FullType(String),
+      ),
       'docs',
-      serializers.serialize(object.docs,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.docs,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
       'schema',
-      serializers.serialize(object.schema,
-          specifiedType: const FullType(DatabaseSchema)),
+      serializers.serialize(
+        object.schema,
+        specifiedType: const FullType(DatabaseSchema),
+      ),
       'config',
-      serializers.serialize(object.config,
-          specifiedType: const FullType(DatabaseConfig)),
+      serializers.serialize(
+        object.config,
+        specifiedType: const FullType(DatabaseConfig),
+      ),
       'location',
-      serializers.serialize(object.location,
-          specifiedType: const FullType(FileSpan)),
+      serializers.serialize(
+        object.location,
+        specifiedType: const FullType(FileSpan),
+      ),
     ];
 
     return result;
   }
 
   @override
-  Database deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  Database deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new DatabaseBuilder();
 
     final iterator = serialized.iterator;
@@ -1885,30 +2616,55 @@ class _$DatabaseSerializer implements StructuredSerializer<Database> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'dartName':
-          result.dartName = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.dartName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'docs':
-          result.docs.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.docs.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'schema':
-          result.schema = serializers.deserialize(value,
-              specifiedType: const FullType(DatabaseSchema))! as DatabaseSchema;
+          result.schema =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DatabaseSchema),
+                  )!
+                  as DatabaseSchema;
           break;
         case 'config':
-          result.config = serializers.deserialize(value,
-              specifiedType: const FullType(DatabaseConfig))! as DatabaseConfig;
+          result.config =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DatabaseConfig),
+                  )!
+                  as DatabaseConfig;
           break;
         case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(FileSpan))! as FileSpan;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(FileSpan),
+                  )!
+                  as FileSpan;
           break;
       }
     }
@@ -1922,22 +2678,28 @@ class _$CelestDatabaseConfigSerializer
   @override
   final Iterable<Type> types = const [
     CelestDatabaseConfig,
-    _$CelestDatabaseConfig
+    _$CelestDatabaseConfig,
   ];
   @override
   final String wireName = 'CelestDatabaseConfig';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, CelestDatabaseConfig object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    CelestDatabaseConfig object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'hostname',
-      serializers.serialize(object.hostname,
-          specifiedType: const FullType(Variable)),
+      serializers.serialize(
+        object.hostname,
+        specifiedType: const FullType(Variable),
+      ),
       'token',
-      serializers.serialize(object.token,
-          specifiedType: const FullType(Secret)),
+      serializers.serialize(
+        object.token,
+        specifiedType: const FullType(Secret),
+      ),
     ];
 
     return result;
@@ -1945,8 +2707,10 @@ class _$CelestDatabaseConfigSerializer
 
   @override
   CelestDatabaseConfig deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new CelestDatabaseConfigBuilder();
 
     final iterator = serialized.iterator;
@@ -1956,12 +2720,22 @@ class _$CelestDatabaseConfigSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'hostname':
-          result.hostname.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Variable))! as Variable);
+          result.hostname.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Variable),
+                )!
+                as Variable,
+          );
           break;
         case 'token':
-          result.token.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Secret))! as Secret);
+          result.token.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(Secret),
+                )!
+                as Secret,
+          );
           break;
       }
     }
@@ -1999,23 +2773,26 @@ class _$Project extends Project {
   factory _$Project([void Function(ProjectBuilder)? updates]) =>
       (new ProjectBuilder()..update(updates))._build();
 
-  _$Project._(
-      {required this.name,
-      required this.environment,
-      this.displayName,
-      this.primaryRegion,
-      required this.reference,
-      required this.apis,
-      required this.variables,
-      required this.secrets,
-      this.auth,
-      required this.databases,
-      required this.sdkConfig,
-      required this.location})
-      : super._() {
+  _$Project._({
+    required this.name,
+    required this.environment,
+    this.displayName,
+    this.primaryRegion,
+    required this.reference,
+    required this.apis,
+    required this.variables,
+    required this.secrets,
+    this.auth,
+    required this.databases,
+    required this.sdkConfig,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'Project', 'name');
     BuiltValueNullFieldError.checkNotNull(
-        environment, r'Project', 'environment');
+      environment,
+      r'Project',
+      'environment',
+    );
     BuiltValueNullFieldError.checkNotNull(reference, r'Project', 'reference');
     BuiltValueNullFieldError.checkNotNull(apis, r'Project', 'apis');
     BuiltValueNullFieldError.checkNotNull(variables, r'Project', 'variables');
@@ -2187,16 +2964,26 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
   _$Project _build() {
     _$Project _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$Project._(
-            name:
-                BuiltValueNullFieldError.checkNotNull(name, r'Project', 'name'),
+            name: BuiltValueNullFieldError.checkNotNull(
+              name,
+              r'Project',
+              'name',
+            ),
             environment: BuiltValueNullFieldError.checkNotNull(
-                environment, r'Project', 'environment'),
+              environment,
+              r'Project',
+              'environment',
+            ),
             displayName: displayName,
             primaryRegion: primaryRegion,
             reference: BuiltValueNullFieldError.checkNotNull(
-                reference, r'Project', 'reference'),
+              reference,
+              r'Project',
+              'reference',
+            ),
             apis: apis.build(),
             variables: variables.build(),
             secrets: secrets.build(),
@@ -2204,7 +2991,10 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
             databases: databases.build(),
             sdkConfig: sdkConfig.build(),
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'Project', 'location'),
+              location,
+              r'Project',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -2223,7 +3013,10 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
         sdkConfig.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Project', _$failedField, e.toString());
+          r'Project',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -2249,20 +3042,23 @@ class _$Api extends Api {
   factory _$Api([void Function(ApiBuilder)? updates]) =>
       (new ApiBuilder()..update(updates))._build();
 
-  _$Api._(
-      {required this.name,
-      required this.metadata,
-      required this.functions,
-      required this.docs,
-      required this.exceptionTypes,
-      required this.location})
-      : super._() {
+  _$Api._({
+    required this.name,
+    required this.metadata,
+    required this.functions,
+    required this.docs,
+    required this.exceptionTypes,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name');
     BuiltValueNullFieldError.checkNotNull(metadata, r'Api', 'metadata');
     BuiltValueNullFieldError.checkNotNull(functions, r'Api', 'functions');
     BuiltValueNullFieldError.checkNotNull(docs, r'Api', 'docs');
     BuiltValueNullFieldError.checkNotNull(
-        exceptionTypes, r'Api', 'exceptionTypes');
+      exceptionTypes,
+      r'Api',
+      'exceptionTypes',
+    );
     BuiltValueNullFieldError.checkNotNull(location, r'Api', 'location');
   }
 
@@ -2377,7 +3173,8 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
   _$Api _build() {
     _$Api _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$Api._(
             name: BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name'),
             metadata: metadata.build(),
@@ -2385,7 +3182,10 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
             docs: docs.build(),
             exceptionTypes: exceptionTypes.build(),
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'Api', 'location'),
+              location,
+              r'Api',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -2400,7 +3200,10 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
         exceptionTypes.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Api', _$failedField, e.toString());
+          r'Api',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -2444,8 +3247,7 @@ class _$ApiPublic extends ApiPublic {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'ApiPublic')
-          ..add('location', location))
-        .toString();
+      ..add('location', location)).toString();
   }
 }
 
@@ -2482,10 +3284,14 @@ class ApiPublicBuilder implements Builder<ApiPublic, ApiPublicBuilder> {
   ApiPublic build() => _build();
 
   _$ApiPublic _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         new _$ApiPublic._(
           location: BuiltValueNullFieldError.checkNotNull(
-              location, r'ApiPublic', 'location'),
+            location,
+            r'ApiPublic',
+            'location',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -2496,13 +3302,16 @@ class _$ApiAuthenticated extends ApiAuthenticated {
   @override
   final FileSpan location;
 
-  factory _$ApiAuthenticated(
-          [void Function(ApiAuthenticatedBuilder)? updates]) =>
-      (new ApiAuthenticatedBuilder()..update(updates))._build();
+  factory _$ApiAuthenticated([
+    void Function(ApiAuthenticatedBuilder)? updates,
+  ]) => (new ApiAuthenticatedBuilder()..update(updates))._build();
 
   _$ApiAuthenticated._({required this.location}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        location, r'ApiAuthenticated', 'location');
+      location,
+      r'ApiAuthenticated',
+      'location',
+    );
   }
 
   @override
@@ -2530,8 +3339,7 @@ class _$ApiAuthenticated extends ApiAuthenticated {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'ApiAuthenticated')
-          ..add('location', location))
-        .toString();
+      ..add('location', location)).toString();
   }
 }
 
@@ -2569,10 +3377,14 @@ class ApiAuthenticatedBuilder
   ApiAuthenticated build() => _build();
 
   _$ApiAuthenticated _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         new _$ApiAuthenticated._(
           location: BuiltValueNullFieldError.checkNotNull(
-              location, r'ApiAuthenticated', 'location'),
+            location,
+            r'ApiAuthenticated',
+            'location',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -2591,7 +3403,10 @@ class _$ApiMiddleware extends ApiMiddleware {
   _$ApiMiddleware._({required this.type, required this.location}) : super._() {
     BuiltValueNullFieldError.checkNotNull(type, r'ApiMiddleware', 'type');
     BuiltValueNullFieldError.checkNotNull(
-        location, r'ApiMiddleware', 'location');
+      location,
+      r'ApiMiddleware',
+      'location',
+    );
   }
 
   @override
@@ -2666,12 +3481,19 @@ class ApiMiddlewareBuilder
   ApiMiddleware build() => _build();
 
   _$ApiMiddleware _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         new _$ApiMiddleware._(
           type: BuiltValueNullFieldError.checkNotNull(
-              type, r'ApiMiddleware', 'type'),
+            type,
+            r'ApiMiddleware',
+            'type',
+          ),
           location: BuiltValueNullFieldError.checkNotNull(
-              location, r'ApiMiddleware', 'location'),
+            location,
+            r'ApiMiddleware',
+            'location',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -2689,14 +3511,22 @@ class _$ApiHttpConfig extends ApiHttpConfig {
   factory _$ApiHttpConfig([void Function(ApiHttpConfigBuilder)? updates]) =>
       (new ApiHttpConfigBuilder()..update(updates))._build();
 
-  _$ApiHttpConfig._(
-      {required this.method, required this.statusCode, required this.location})
-      : super._() {
+  _$ApiHttpConfig._({
+    required this.method,
+    required this.statusCode,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(method, r'ApiHttpConfig', 'method');
     BuiltValueNullFieldError.checkNotNull(
-        statusCode, r'ApiHttpConfig', 'statusCode');
+      statusCode,
+      r'ApiHttpConfig',
+      'statusCode',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        location, r'ApiHttpConfig', 'location');
+      location,
+      r'ApiHttpConfig',
+      'location',
+    );
   }
 
   @override
@@ -2779,14 +3609,24 @@ class ApiHttpConfigBuilder
   ApiHttpConfig build() => _build();
 
   _$ApiHttpConfig _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         new _$ApiHttpConfig._(
           method: BuiltValueNullFieldError.checkNotNull(
-              method, r'ApiHttpConfig', 'method'),
+            method,
+            r'ApiHttpConfig',
+            'method',
+          ),
           statusCode: BuiltValueNullFieldError.checkNotNull(
-              statusCode, r'ApiHttpConfig', 'statusCode'),
+            statusCode,
+            r'ApiHttpConfig',
+            'statusCode',
+          ),
           location: BuiltValueNullFieldError.checkNotNull(
-              location, r'ApiHttpConfig', 'location'),
+            location,
+            r'ApiHttpConfig',
+            'location',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -2804,14 +3644,22 @@ class _$ApiHttpError extends ApiHttpError {
   factory _$ApiHttpError([void Function(ApiHttpErrorBuilder)? updates]) =>
       (new ApiHttpErrorBuilder()..update(updates))._build();
 
-  _$ApiHttpError._(
-      {required this.type, required this.statusCode, required this.location})
-      : super._() {
+  _$ApiHttpError._({
+    required this.type,
+    required this.statusCode,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(type, r'ApiHttpError', 'type');
     BuiltValueNullFieldError.checkNotNull(
-        statusCode, r'ApiHttpError', 'statusCode');
+      statusCode,
+      r'ApiHttpError',
+      'statusCode',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        location, r'ApiHttpError', 'location');
+      location,
+      r'ApiHttpError',
+      'location',
+    );
   }
 
   @override
@@ -2896,13 +3744,20 @@ class ApiHttpErrorBuilder
   _$ApiHttpError _build() {
     _$ApiHttpError _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$ApiHttpError._(
             type: type.build(),
             statusCode: BuiltValueNullFieldError.checkNotNull(
-                statusCode, r'ApiHttpError', 'statusCode'),
+              statusCode,
+              r'ApiHttpError',
+              'statusCode',
+            ),
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'ApiHttpError', 'location'),
+              location,
+              r'ApiHttpError',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -2911,7 +3766,10 @@ class ApiHttpErrorBuilder
         type.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'ApiHttpError', _$failedField, e.toString());
+          r'ApiHttpError',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -2942,42 +3800,63 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
   @override
   final FileSpan location;
 
-  factory _$CloudFunctionParameter(
-          [void Function(CloudFunctionParameterBuilder)? updates]) =>
-      (new CloudFunctionParameterBuilder()..update(updates))._build();
+  factory _$CloudFunctionParameter([
+    void Function(CloudFunctionParameterBuilder)? updates,
+  ]) => (new CloudFunctionParameterBuilder()..update(updates))._build();
 
-  _$CloudFunctionParameter._(
-      {required this.name,
-      required this.type,
-      required this.required,
-      required this.named,
-      this.references,
-      required this.annotationExpressions,
-      required this.annotations,
-      this.defaultToExpression,
-      this.defaultTo,
-      required this.location})
-      : super._() {
+  _$CloudFunctionParameter._({
+    required this.name,
+    required this.type,
+    required this.required,
+    required this.named,
+    this.references,
+    required this.annotationExpressions,
+    required this.annotations,
+    this.defaultToExpression,
+    this.defaultTo,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        name, r'CloudFunctionParameter', 'name');
+      name,
+      r'CloudFunctionParameter',
+      'name',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        type, r'CloudFunctionParameter', 'type');
+      type,
+      r'CloudFunctionParameter',
+      'type',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        required, r'CloudFunctionParameter', 'required');
+      required,
+      r'CloudFunctionParameter',
+      'required',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        named, r'CloudFunctionParameter', 'named');
-    BuiltValueNullFieldError.checkNotNull(annotationExpressions,
-        r'CloudFunctionParameter', 'annotationExpressions');
+      named,
+      r'CloudFunctionParameter',
+      'named',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        annotations, r'CloudFunctionParameter', 'annotations');
+      annotationExpressions,
+      r'CloudFunctionParameter',
+      'annotationExpressions',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        location, r'CloudFunctionParameter', 'location');
+      annotations,
+      r'CloudFunctionParameter',
+      'annotations',
+    );
+    BuiltValueNullFieldError.checkNotNull(
+      location,
+      r'CloudFunctionParameter',
+      'location',
+    );
   }
 
   @override
   CloudFunctionParameter rebuild(
-          void Function(CloudFunctionParameterBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(CloudFunctionParameterBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CloudFunctionParameterBuilder toBuilder() =>
@@ -3121,23 +4000,39 @@ class CloudFunctionParameterBuilder
   _$CloudFunctionParameter _build() {
     _$CloudFunctionParameter _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$CloudFunctionParameter._(
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'CloudFunctionParameter', 'name'),
+              name,
+              r'CloudFunctionParameter',
+              'name',
+            ),
             type: BuiltValueNullFieldError.checkNotNull(
-                type, r'CloudFunctionParameter', 'type'),
+              type,
+              r'CloudFunctionParameter',
+              'type',
+            ),
             required: BuiltValueNullFieldError.checkNotNull(
-                required, r'CloudFunctionParameter', 'required'),
+              required,
+              r'CloudFunctionParameter',
+              'required',
+            ),
             named: BuiltValueNullFieldError.checkNotNull(
-                named, r'CloudFunctionParameter', 'named'),
+              named,
+              r'CloudFunctionParameter',
+              'named',
+            ),
             references: _references?.build(),
             annotationExpressions: annotationExpressions.build(),
             annotations: annotations.build(),
             defaultToExpression: defaultToExpression,
             defaultTo: defaultTo,
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'CloudFunctionParameter', 'location'),
+              location,
+              r'CloudFunctionParameter',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -3150,7 +4045,10 @@ class CloudFunctionParameterBuilder
         annotations.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'CloudFunctionParameter', _$failedField, e.toString());
+          r'CloudFunctionParameter',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -3188,39 +4086,63 @@ class _$CloudFunction extends CloudFunction {
   factory _$CloudFunction([void Function(CloudFunctionBuilder)? updates]) =>
       (new CloudFunctionBuilder()..update(updates))._build();
 
-  _$CloudFunction._(
-      {required this.name,
-      required this.apiName,
-      required this.typeParameters,
-      required this.parameters,
-      required this.returnType,
-      required this.flattenedReturnType,
-      this.streamType,
-      required this.metadata,
-      required this.annotationExpressions,
-      required this.annotations,
-      required this.docs,
-      required this.location})
-      : super._() {
+  _$CloudFunction._({
+    required this.name,
+    required this.apiName,
+    required this.typeParameters,
+    required this.parameters,
+    required this.returnType,
+    required this.flattenedReturnType,
+    this.streamType,
+    required this.metadata,
+    required this.annotationExpressions,
+    required this.annotations,
+    required this.docs,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'CloudFunction', 'name');
     BuiltValueNullFieldError.checkNotNull(apiName, r'CloudFunction', 'apiName');
     BuiltValueNullFieldError.checkNotNull(
-        typeParameters, r'CloudFunction', 'typeParameters');
+      typeParameters,
+      r'CloudFunction',
+      'typeParameters',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        parameters, r'CloudFunction', 'parameters');
+      parameters,
+      r'CloudFunction',
+      'parameters',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        returnType, r'CloudFunction', 'returnType');
+      returnType,
+      r'CloudFunction',
+      'returnType',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        flattenedReturnType, r'CloudFunction', 'flattenedReturnType');
+      flattenedReturnType,
+      r'CloudFunction',
+      'flattenedReturnType',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        metadata, r'CloudFunction', 'metadata');
+      metadata,
+      r'CloudFunction',
+      'metadata',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        annotationExpressions, r'CloudFunction', 'annotationExpressions');
+      annotationExpressions,
+      r'CloudFunction',
+      'annotationExpressions',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        annotations, r'CloudFunction', 'annotations');
+      annotations,
+      r'CloudFunction',
+      'annotations',
+    );
     BuiltValueNullFieldError.checkNotNull(docs, r'CloudFunction', 'docs');
     BuiltValueNullFieldError.checkNotNull(
-        location, r'CloudFunction', 'location');
+      location,
+      r'CloudFunction',
+      'location',
+    );
   }
 
   @override
@@ -3388,25 +4310,41 @@ class CloudFunctionBuilder
   _$CloudFunction _build() {
     _$CloudFunction _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$CloudFunction._(
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'CloudFunction', 'name'),
+              name,
+              r'CloudFunction',
+              'name',
+            ),
             apiName: BuiltValueNullFieldError.checkNotNull(
-                apiName, r'CloudFunction', 'apiName'),
+              apiName,
+              r'CloudFunction',
+              'apiName',
+            ),
             typeParameters: typeParameters.build(),
             parameters: parameters.build(),
             returnType: BuiltValueNullFieldError.checkNotNull(
-                returnType, r'CloudFunction', 'returnType'),
+              returnType,
+              r'CloudFunction',
+              'returnType',
+            ),
             flattenedReturnType: BuiltValueNullFieldError.checkNotNull(
-                flattenedReturnType, r'CloudFunction', 'flattenedReturnType'),
+              flattenedReturnType,
+              r'CloudFunction',
+              'flattenedReturnType',
+            ),
             streamType: streamType,
             metadata: metadata.build(),
             annotationExpressions: annotationExpressions.build(),
             annotations: annotations.build(),
             docs: docs.build(),
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'CloudFunction', 'location'),
+              location,
+              r'CloudFunction',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -3426,7 +4364,10 @@ class CloudFunctionBuilder
         docs.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'CloudFunction', _$failedField, e.toString());
+          r'CloudFunction',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -3450,13 +4391,13 @@ class _$Variable extends Variable {
   factory _$Variable([void Function(VariableBuilder)? updates]) =>
       (new VariableBuilder()..update(updates))._build();
 
-  _$Variable._(
-      {this.value,
-      required this.location,
-      required this.name,
-      this.dartName,
-      required this.docs})
-      : super._() {
+  _$Variable._({
+    this.value,
+    required this.location,
+    required this.name,
+    this.dartName,
+    required this.docs,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(location, r'Variable', 'location');
     BuiltValueNullFieldError.checkNotNull(name, r'Variable', 'name');
     BuiltValueNullFieldError.checkNotNull(docs, r'Variable', 'docs');
@@ -3559,13 +4500,20 @@ class VariableBuilder implements Builder<Variable, VariableBuilder> {
   _$Variable _build() {
     _$Variable _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$Variable._(
             value: value,
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'Variable', 'location'),
+              location,
+              r'Variable',
+              'location',
+            ),
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'Variable', 'name'),
+              name,
+              r'Variable',
+              'name',
+            ),
             dartName: dartName,
             docs: docs.build(),
           );
@@ -3576,7 +4524,10 @@ class VariableBuilder implements Builder<Variable, VariableBuilder> {
         docs.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Variable', _$failedField, e.toString());
+          r'Variable',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -3598,12 +4549,12 @@ class _$Secret extends Secret {
   factory _$Secret([void Function(SecretBuilder)? updates]) =>
       (new SecretBuilder()..update(updates))._build();
 
-  _$Secret._(
-      {required this.location,
-      required this.name,
-      this.dartName,
-      required this.docs})
-      : super._() {
+  _$Secret._({
+    required this.location,
+    required this.name,
+    this.dartName,
+    required this.docs,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(location, r'Secret', 'location');
     BuiltValueNullFieldError.checkNotNull(name, r'Secret', 'name');
     BuiltValueNullFieldError.checkNotNull(docs, r'Secret', 'docs');
@@ -3698,12 +4649,19 @@ class SecretBuilder implements Builder<Secret, SecretBuilder> {
   _$Secret _build() {
     _$Secret _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$Secret._(
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'Secret', 'location'),
-            name:
-                BuiltValueNullFieldError.checkNotNull(name, r'Secret', 'name'),
+              location,
+              r'Secret',
+              'location',
+            ),
+            name: BuiltValueNullFieldError.checkNotNull(
+              name,
+              r'Secret',
+              'name',
+            ),
             dartName: dartName,
             docs: docs.build(),
           );
@@ -3714,7 +4672,10 @@ class SecretBuilder implements Builder<Secret, SecretBuilder> {
         docs.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Secret', _$failedField, e.toString());
+          r'Secret',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -3734,14 +4695,17 @@ class _$Auth extends Auth {
   factory _$Auth([void Function(AuthBuilder)? updates]) =>
       (new AuthBuilder()..update(updates))._build();
 
-  _$Auth._(
-      {required this.providers,
-      required this.externalProviders,
-      required this.location})
-      : super._() {
+  _$Auth._({
+    required this.providers,
+    required this.externalProviders,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(providers, r'Auth', 'providers');
     BuiltValueNullFieldError.checkNotNull(
-        externalProviders, r'Auth', 'externalProviders');
+      externalProviders,
+      r'Auth',
+      'externalProviders',
+    );
     BuiltValueNullFieldError.checkNotNull(location, r'Auth', 'location');
   }
 
@@ -3830,12 +4794,16 @@ class AuthBuilder implements Builder<Auth, AuthBuilder> {
   _$Auth _build() {
     _$Auth _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$Auth._(
             providers: providers.build(),
             externalProviders: externalProviders.build(),
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'Auth', 'location'),
+              location,
+              r'Auth',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -3846,7 +4814,10 @@ class AuthBuilder implements Builder<Auth, AuthBuilder> {
         externalProviders.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Auth', _$failedField, e.toString());
+          r'Auth',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -3889,17 +4860,22 @@ class _$EmailAuthProvider extends EmailAuthProvider {
   @override
   final FileSpan location;
 
-  factory _$EmailAuthProvider(
-          [void Function(EmailAuthProviderBuilder)? updates]) =>
-      (new EmailAuthProviderBuilder()..update(updates))._build();
+  factory _$EmailAuthProvider([
+    void Function(EmailAuthProviderBuilder)? updates,
+  ]) => (new EmailAuthProviderBuilder()..update(updates))._build();
 
-  _$EmailAuthProvider._(
-      {required this.name, required this.type, required this.location})
-      : super._() {
+  _$EmailAuthProvider._({
+    required this.name,
+    required this.type,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'EmailAuthProvider', 'name');
     BuiltValueNullFieldError.checkNotNull(type, r'EmailAuthProvider', 'type');
     BuiltValueNullFieldError.checkNotNull(
-        location, r'EmailAuthProvider', 'location');
+      location,
+      r'EmailAuthProvider',
+      'location',
+    );
   }
 
   @override
@@ -3986,14 +4962,24 @@ class EmailAuthProviderBuilder
 
   _$EmailAuthProvider _build() {
     EmailAuthProvider._finalize(this);
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         new _$EmailAuthProvider._(
           name: BuiltValueNullFieldError.checkNotNull(
-              name, r'EmailAuthProvider', 'name'),
+            name,
+            r'EmailAuthProvider',
+            'name',
+          ),
           type: BuiltValueNullFieldError.checkNotNull(
-              type, r'EmailAuthProvider', 'type'),
+            type,
+            r'EmailAuthProvider',
+            'type',
+          ),
           location: BuiltValueNullFieldError.checkNotNull(
-              location, r'EmailAuthProvider', 'location'),
+            location,
+            r'EmailAuthProvider',
+            'location',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -4011,13 +4997,18 @@ class _$SmsAuthProvider extends SmsAuthProvider {
   factory _$SmsAuthProvider([void Function(SmsAuthProviderBuilder)? updates]) =>
       (new SmsAuthProviderBuilder()..update(updates))._build();
 
-  _$SmsAuthProvider._(
-      {required this.name, required this.type, required this.location})
-      : super._() {
+  _$SmsAuthProvider._({
+    required this.name,
+    required this.type,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'SmsAuthProvider', 'name');
     BuiltValueNullFieldError.checkNotNull(type, r'SmsAuthProvider', 'type');
     BuiltValueNullFieldError.checkNotNull(
-        location, r'SmsAuthProvider', 'location');
+      location,
+      r'SmsAuthProvider',
+      'location',
+    );
   }
 
   @override
@@ -4104,14 +5095,24 @@ class SmsAuthProviderBuilder
 
   _$SmsAuthProvider _build() {
     SmsAuthProvider._finalize(this);
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         new _$SmsAuthProvider._(
           name: BuiltValueNullFieldError.checkNotNull(
-              name, r'SmsAuthProvider', 'name'),
+            name,
+            r'SmsAuthProvider',
+            'name',
+          ),
           type: BuiltValueNullFieldError.checkNotNull(
-              type, r'SmsAuthProvider', 'type'),
+            type,
+            r'SmsAuthProvider',
+            'type',
+          ),
           location: BuiltValueNullFieldError.checkNotNull(
-              location, r'SmsAuthProvider', 'location'),
+            location,
+            r'SmsAuthProvider',
+            'location',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -4130,31 +5131,40 @@ class _$GoogleAuthProvider extends GoogleAuthProvider {
   @override
   final FileSpan location;
 
-  factory _$GoogleAuthProvider(
-          [void Function(GoogleAuthProviderBuilder)? updates]) =>
-      (new GoogleAuthProviderBuilder()..update(updates))._build();
+  factory _$GoogleAuthProvider([
+    void Function(GoogleAuthProviderBuilder)? updates,
+  ]) => (new GoogleAuthProviderBuilder()..update(updates))._build();
 
-  _$GoogleAuthProvider._(
-      {required this.clientId,
-      required this.clientSecret,
-      required this.name,
-      required this.type,
-      required this.location})
-      : super._() {
+  _$GoogleAuthProvider._({
+    required this.clientId,
+    required this.clientSecret,
+    required this.name,
+    required this.type,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        clientId, r'GoogleAuthProvider', 'clientId');
+      clientId,
+      r'GoogleAuthProvider',
+      'clientId',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        clientSecret, r'GoogleAuthProvider', 'clientSecret');
+      clientSecret,
+      r'GoogleAuthProvider',
+      'clientSecret',
+    );
     BuiltValueNullFieldError.checkNotNull(name, r'GoogleAuthProvider', 'name');
     BuiltValueNullFieldError.checkNotNull(type, r'GoogleAuthProvider', 'type');
     BuiltValueNullFieldError.checkNotNull(
-        location, r'GoogleAuthProvider', 'location');
+      location,
+      r'GoogleAuthProvider',
+      'location',
+    );
   }
 
   @override
   GoogleAuthProvider rebuild(
-          void Function(GoogleAuthProviderBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(GoogleAuthProviderBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   GoogleAuthProviderBuilder toBuilder() =>
@@ -4257,16 +5267,26 @@ class GoogleAuthProviderBuilder
     GoogleAuthProvider._finalize(this);
     _$GoogleAuthProvider _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$GoogleAuthProvider._(
             clientId: clientId.build(),
             clientSecret: clientSecret.build(),
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'GoogleAuthProvider', 'name'),
+              name,
+              r'GoogleAuthProvider',
+              'name',
+            ),
             type: BuiltValueNullFieldError.checkNotNull(
-                type, r'GoogleAuthProvider', 'type'),
+              type,
+              r'GoogleAuthProvider',
+              'type',
+            ),
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'GoogleAuthProvider', 'location'),
+              location,
+              r'GoogleAuthProvider',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -4277,7 +5297,10 @@ class GoogleAuthProviderBuilder
         clientSecret.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'GoogleAuthProvider', _$failedField, e.toString());
+          r'GoogleAuthProvider',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -4302,30 +5325,42 @@ class _$AppleAuthProvider extends AppleAuthProvider {
   @override
   final FileSpan location;
 
-  factory _$AppleAuthProvider(
-          [void Function(AppleAuthProviderBuilder)? updates]) =>
-      (new AppleAuthProviderBuilder()..update(updates))._build();
+  factory _$AppleAuthProvider([
+    void Function(AppleAuthProviderBuilder)? updates,
+  ]) => (new AppleAuthProviderBuilder()..update(updates))._build();
 
-  _$AppleAuthProvider._(
-      {required this.clientId,
-      required this.teamId,
-      required this.keyId,
-      required this.privateKey,
-      required this.name,
-      required this.type,
-      required this.location})
-      : super._() {
+  _$AppleAuthProvider._({
+    required this.clientId,
+    required this.teamId,
+    required this.keyId,
+    required this.privateKey,
+    required this.name,
+    required this.type,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        clientId, r'AppleAuthProvider', 'clientId');
+      clientId,
+      r'AppleAuthProvider',
+      'clientId',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        teamId, r'AppleAuthProvider', 'teamId');
+      teamId,
+      r'AppleAuthProvider',
+      'teamId',
+    );
     BuiltValueNullFieldError.checkNotNull(keyId, r'AppleAuthProvider', 'keyId');
     BuiltValueNullFieldError.checkNotNull(
-        privateKey, r'AppleAuthProvider', 'privateKey');
+      privateKey,
+      r'AppleAuthProvider',
+      'privateKey',
+    );
     BuiltValueNullFieldError.checkNotNull(name, r'AppleAuthProvider', 'name');
     BuiltValueNullFieldError.checkNotNull(type, r'AppleAuthProvider', 'type');
     BuiltValueNullFieldError.checkNotNull(
-        location, r'AppleAuthProvider', 'location');
+      location,
+      r'AppleAuthProvider',
+      'location',
+    );
   }
 
   @override
@@ -4448,18 +5483,28 @@ class AppleAuthProviderBuilder
     AppleAuthProvider._finalize(this);
     _$AppleAuthProvider _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$AppleAuthProvider._(
             clientId: clientId.build(),
             teamId: teamId.build(),
             keyId: keyId.build(),
             privateKey: privateKey.build(),
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'AppleAuthProvider', 'name'),
+              name,
+              r'AppleAuthProvider',
+              'name',
+            ),
             type: BuiltValueNullFieldError.checkNotNull(
-                type, r'AppleAuthProvider', 'type'),
+              type,
+              r'AppleAuthProvider',
+              'type',
+            ),
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'AppleAuthProvider', 'location'),
+              location,
+              r'AppleAuthProvider',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -4474,7 +5519,10 @@ class AppleAuthProviderBuilder
         privateKey.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'AppleAuthProvider', _$failedField, e.toString());
+          r'AppleAuthProvider',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -4495,31 +5543,40 @@ class _$GitHubAuthProvider extends GitHubAuthProvider {
   @override
   final FileSpan location;
 
-  factory _$GitHubAuthProvider(
-          [void Function(GitHubAuthProviderBuilder)? updates]) =>
-      (new GitHubAuthProviderBuilder()..update(updates))._build();
+  factory _$GitHubAuthProvider([
+    void Function(GitHubAuthProviderBuilder)? updates,
+  ]) => (new GitHubAuthProviderBuilder()..update(updates))._build();
 
-  _$GitHubAuthProvider._(
-      {required this.clientId,
-      required this.clientSecret,
-      required this.name,
-      required this.type,
-      required this.location})
-      : super._() {
+  _$GitHubAuthProvider._({
+    required this.clientId,
+    required this.clientSecret,
+    required this.name,
+    required this.type,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        clientId, r'GitHubAuthProvider', 'clientId');
+      clientId,
+      r'GitHubAuthProvider',
+      'clientId',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        clientSecret, r'GitHubAuthProvider', 'clientSecret');
+      clientSecret,
+      r'GitHubAuthProvider',
+      'clientSecret',
+    );
     BuiltValueNullFieldError.checkNotNull(name, r'GitHubAuthProvider', 'name');
     BuiltValueNullFieldError.checkNotNull(type, r'GitHubAuthProvider', 'type');
     BuiltValueNullFieldError.checkNotNull(
-        location, r'GitHubAuthProvider', 'location');
+      location,
+      r'GitHubAuthProvider',
+      'location',
+    );
   }
 
   @override
   GitHubAuthProvider rebuild(
-          void Function(GitHubAuthProviderBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(GitHubAuthProviderBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   GitHubAuthProviderBuilder toBuilder() =>
@@ -4622,16 +5679,26 @@ class GitHubAuthProviderBuilder
     GitHubAuthProvider._finalize(this);
     _$GitHubAuthProvider _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$GitHubAuthProvider._(
             clientId: clientId.build(),
             clientSecret: clientSecret.build(),
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'GitHubAuthProvider', 'name'),
+              name,
+              r'GitHubAuthProvider',
+              'name',
+            ),
             type: BuiltValueNullFieldError.checkNotNull(
-                type, r'GitHubAuthProvider', 'type'),
+              type,
+              r'GitHubAuthProvider',
+              'type',
+            ),
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'GitHubAuthProvider', 'location'),
+              location,
+              r'GitHubAuthProvider',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -4642,7 +5709,10 @@ class GitHubAuthProviderBuilder
         clientSecret.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'GitHubAuthProvider', _$failedField, e.toString());
+          r'GitHubAuthProvider',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -4661,30 +5731,42 @@ class _$FirebaseExternalAuthProvider extends FirebaseExternalAuthProvider {
   @override
   final FileSpan location;
 
-  factory _$FirebaseExternalAuthProvider(
-          [void Function(FirebaseExternalAuthProviderBuilder)? updates]) =>
-      (new FirebaseExternalAuthProviderBuilder()..update(updates))._build();
+  factory _$FirebaseExternalAuthProvider([
+    void Function(FirebaseExternalAuthProviderBuilder)? updates,
+  ]) => (new FirebaseExternalAuthProviderBuilder()..update(updates))._build();
 
-  _$FirebaseExternalAuthProvider._(
-      {required this.projectId,
-      required this.name,
-      required this.type,
-      required this.location})
-      : super._() {
+  _$FirebaseExternalAuthProvider._({
+    required this.projectId,
+    required this.name,
+    required this.type,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        projectId, r'FirebaseExternalAuthProvider', 'projectId');
+      projectId,
+      r'FirebaseExternalAuthProvider',
+      'projectId',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        name, r'FirebaseExternalAuthProvider', 'name');
+      name,
+      r'FirebaseExternalAuthProvider',
+      'name',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        type, r'FirebaseExternalAuthProvider', 'type');
+      type,
+      r'FirebaseExternalAuthProvider',
+      'type',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        location, r'FirebaseExternalAuthProvider', 'location');
+      location,
+      r'FirebaseExternalAuthProvider',
+      'location',
+    );
   }
 
   @override
   FirebaseExternalAuthProvider rebuild(
-          void Function(FirebaseExternalAuthProviderBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(FirebaseExternalAuthProviderBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   FirebaseExternalAuthProviderBuilder toBuilder() =>
@@ -4724,8 +5806,10 @@ class _$FirebaseExternalAuthProvider extends FirebaseExternalAuthProvider {
 
 class FirebaseExternalAuthProviderBuilder
     implements
-        Builder<FirebaseExternalAuthProvider,
-            FirebaseExternalAuthProviderBuilder>,
+        Builder<
+          FirebaseExternalAuthProvider,
+          FirebaseExternalAuthProviderBuilder
+        >,
         ExternalAuthProviderBuilder {
   _$FirebaseExternalAuthProvider? _$v;
 
@@ -4778,15 +5862,25 @@ class FirebaseExternalAuthProviderBuilder
     FirebaseExternalAuthProvider._finalize(this);
     _$FirebaseExternalAuthProvider _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$FirebaseExternalAuthProvider._(
             projectId: projectId.build(),
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'FirebaseExternalAuthProvider', 'name'),
+              name,
+              r'FirebaseExternalAuthProvider',
+              'name',
+            ),
             type: BuiltValueNullFieldError.checkNotNull(
-                type, r'FirebaseExternalAuthProvider', 'type'),
+              type,
+              r'FirebaseExternalAuthProvider',
+              'type',
+            ),
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'FirebaseExternalAuthProvider', 'location'),
+              location,
+              r'FirebaseExternalAuthProvider',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -4795,7 +5889,10 @@ class FirebaseExternalAuthProviderBuilder
         projectId.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'FirebaseExternalAuthProvider', _$failedField, e.toString());
+          r'FirebaseExternalAuthProvider',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -4816,31 +5913,43 @@ class _$SupabaseExternalAuthProvider extends SupabaseExternalAuthProvider {
   @override
   final FileSpan location;
 
-  factory _$SupabaseExternalAuthProvider(
-          [void Function(SupabaseExternalAuthProviderBuilder)? updates]) =>
-      (new SupabaseExternalAuthProviderBuilder()..update(updates))._build();
+  factory _$SupabaseExternalAuthProvider([
+    void Function(SupabaseExternalAuthProviderBuilder)? updates,
+  ]) => (new SupabaseExternalAuthProviderBuilder()..update(updates))._build();
 
-  _$SupabaseExternalAuthProvider._(
-      {required this.projectUrl,
-      this.jwtSecret,
-      required this.name,
-      required this.type,
-      required this.location})
-      : super._() {
+  _$SupabaseExternalAuthProvider._({
+    required this.projectUrl,
+    this.jwtSecret,
+    required this.name,
+    required this.type,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        projectUrl, r'SupabaseExternalAuthProvider', 'projectUrl');
+      projectUrl,
+      r'SupabaseExternalAuthProvider',
+      'projectUrl',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        name, r'SupabaseExternalAuthProvider', 'name');
+      name,
+      r'SupabaseExternalAuthProvider',
+      'name',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        type, r'SupabaseExternalAuthProvider', 'type');
+      type,
+      r'SupabaseExternalAuthProvider',
+      'type',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        location, r'SupabaseExternalAuthProvider', 'location');
+      location,
+      r'SupabaseExternalAuthProvider',
+      'location',
+    );
   }
 
   @override
   SupabaseExternalAuthProvider rebuild(
-          void Function(SupabaseExternalAuthProviderBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(SupabaseExternalAuthProviderBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   SupabaseExternalAuthProviderBuilder toBuilder() =>
@@ -4883,8 +5992,10 @@ class _$SupabaseExternalAuthProvider extends SupabaseExternalAuthProvider {
 
 class SupabaseExternalAuthProviderBuilder
     implements
-        Builder<SupabaseExternalAuthProvider,
-            SupabaseExternalAuthProviderBuilder>,
+        Builder<
+          SupabaseExternalAuthProvider,
+          SupabaseExternalAuthProviderBuilder
+        >,
         ExternalAuthProviderBuilder {
   _$SupabaseExternalAuthProvider? _$v;
 
@@ -4944,16 +6055,26 @@ class SupabaseExternalAuthProviderBuilder
     SupabaseExternalAuthProvider._finalize(this);
     _$SupabaseExternalAuthProvider _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$SupabaseExternalAuthProvider._(
             projectUrl: projectUrl.build(),
             jwtSecret: _jwtSecret?.build(),
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'SupabaseExternalAuthProvider', 'name'),
+              name,
+              r'SupabaseExternalAuthProvider',
+              'name',
+            ),
             type: BuiltValueNullFieldError.checkNotNull(
-                type, r'SupabaseExternalAuthProvider', 'type'),
+              type,
+              r'SupabaseExternalAuthProvider',
+              'type',
+            ),
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'SupabaseExternalAuthProvider', 'location'),
+              location,
+              r'SupabaseExternalAuthProvider',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -4964,7 +6085,10 @@ class SupabaseExternalAuthProviderBuilder
         _jwtSecret?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'SupabaseExternalAuthProvider', _$failedField, e.toString());
+          r'SupabaseExternalAuthProvider',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -5057,12 +6181,19 @@ class NodeReferenceBuilder
   NodeReference build() => _build();
 
   _$NodeReference _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         new _$NodeReference._(
           name: BuiltValueNullFieldError.checkNotNull(
-              name, r'NodeReference', 'name'),
+            name,
+            r'NodeReference',
+            'name',
+          ),
           type: BuiltValueNullFieldError.checkNotNull(
-              type, r'NodeReference', 'type'),
+            type,
+            r'NodeReference',
+            'type',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -5077,27 +6208,36 @@ class _$DriftDatabaseSchema extends DriftDatabaseSchema {
   @override
   final FileSpan location;
 
-  factory _$DriftDatabaseSchema(
-          [void Function(DriftDatabaseSchemaBuilder)? updates]) =>
-      (new DriftDatabaseSchemaBuilder()..update(updates))._build();
+  factory _$DriftDatabaseSchema([
+    void Function(DriftDatabaseSchemaBuilder)? updates,
+  ]) => (new DriftDatabaseSchemaBuilder()..update(updates))._build();
 
-  _$DriftDatabaseSchema._(
-      {required this.declaration,
-      required this.version,
-      required this.location})
-      : super._() {
+  _$DriftDatabaseSchema._({
+    required this.declaration,
+    required this.version,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        declaration, r'DriftDatabaseSchema', 'declaration');
+      declaration,
+      r'DriftDatabaseSchema',
+      'declaration',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        version, r'DriftDatabaseSchema', 'version');
+      version,
+      r'DriftDatabaseSchema',
+      'version',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        location, r'DriftDatabaseSchema', 'location');
+      location,
+      r'DriftDatabaseSchema',
+      'location',
+    );
   }
 
   @override
   DriftDatabaseSchema rebuild(
-          void Function(DriftDatabaseSchemaBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(DriftDatabaseSchemaBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DriftDatabaseSchemaBuilder toBuilder() =>
@@ -5180,13 +6320,20 @@ class DriftDatabaseSchemaBuilder
   _$DriftDatabaseSchema _build() {
     _$DriftDatabaseSchema _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$DriftDatabaseSchema._(
             declaration: declaration.build(),
             version: BuiltValueNullFieldError.checkNotNull(
-                version, r'DriftDatabaseSchema', 'version'),
+              version,
+              r'DriftDatabaseSchema',
+              'version',
+            ),
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'DriftDatabaseSchema', 'location'),
+              location,
+              r'DriftDatabaseSchema',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -5195,7 +6342,10 @@ class DriftDatabaseSchemaBuilder
         declaration.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'DriftDatabaseSchema', _$failedField, e.toString());
+          r'DriftDatabaseSchema',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -5221,14 +6371,14 @@ class _$Database extends Database {
   factory _$Database([void Function(DatabaseBuilder)? updates]) =>
       (new DatabaseBuilder()..update(updates))._build();
 
-  _$Database._(
-      {required this.name,
-      required this.dartName,
-      required this.docs,
-      required this.schema,
-      required this.config,
-      required this.location})
-      : super._() {
+  _$Database._({
+    required this.name,
+    required this.dartName,
+    required this.docs,
+    required this.schema,
+    required this.config,
+    required this.location,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'Database', 'name');
     BuiltValueNullFieldError.checkNotNull(dartName, r'Database', 'dartName');
     BuiltValueNullFieldError.checkNotNull(docs, r'Database', 'docs');
@@ -5342,19 +6492,35 @@ class DatabaseBuilder implements Builder<Database, DatabaseBuilder> {
   _$Database _build() {
     _$Database _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$Database._(
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'Database', 'name'),
+              name,
+              r'Database',
+              'name',
+            ),
             dartName: BuiltValueNullFieldError.checkNotNull(
-                dartName, r'Database', 'dartName'),
+              dartName,
+              r'Database',
+              'dartName',
+            ),
             docs: docs.build(),
             schema: BuiltValueNullFieldError.checkNotNull(
-                schema, r'Database', 'schema'),
+              schema,
+              r'Database',
+              'schema',
+            ),
             config: BuiltValueNullFieldError.checkNotNull(
-                config, r'Database', 'config'),
+              config,
+              r'Database',
+              'config',
+            ),
             location: BuiltValueNullFieldError.checkNotNull(
-                location, r'Database', 'location'),
+              location,
+              r'Database',
+              'location',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -5363,7 +6529,10 @@ class DatabaseBuilder implements Builder<Database, DatabaseBuilder> {
         docs.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Database', _$failedField, e.toString());
+          r'Database',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -5378,22 +6547,28 @@ class _$CelestDatabaseConfig extends CelestDatabaseConfig {
   @override
   final Secret token;
 
-  factory _$CelestDatabaseConfig(
-          [void Function(CelestDatabaseConfigBuilder)? updates]) =>
-      (new CelestDatabaseConfigBuilder()..update(updates))._build();
+  factory _$CelestDatabaseConfig([
+    void Function(CelestDatabaseConfigBuilder)? updates,
+  ]) => (new CelestDatabaseConfigBuilder()..update(updates))._build();
 
   _$CelestDatabaseConfig._({required this.hostname, required this.token})
-      : super._() {
+    : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        hostname, r'CelestDatabaseConfig', 'hostname');
+      hostname,
+      r'CelestDatabaseConfig',
+      'hostname',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        token, r'CelestDatabaseConfig', 'token');
+      token,
+      r'CelestDatabaseConfig',
+      'token',
+    );
   }
 
   @override
   CelestDatabaseConfig rebuild(
-          void Function(CelestDatabaseConfigBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(CelestDatabaseConfigBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CelestDatabaseConfigBuilder toBuilder() =>
@@ -5466,7 +6641,8 @@ class CelestDatabaseConfigBuilder
   _$CelestDatabaseConfig _build() {
     _$CelestDatabaseConfig _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$CelestDatabaseConfig._(
             hostname: hostname.build(),
             token: token.build(),
@@ -5480,7 +6656,10 @@ class CelestDatabaseConfigBuilder
         token.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'CelestDatabaseConfig', _$failedField, e.toString());
+          r'CelestDatabaseConfig',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

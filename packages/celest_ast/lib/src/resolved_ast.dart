@@ -135,10 +135,12 @@ abstract class ResolvedApi
       functions: proto.functions.map(
         (key, value) => MapEntry(key, ResolvedCloudFunction.fromProto(value)),
       ),
-      policySet: proto.hasPolicySet()
-          ? cedar.PolicySet.fromProto(
-              cedarpb.PolicySet.fromBuffer(proto.policySet.writeToBuffer()))
-          : null,
+      policySet:
+          proto.hasPolicySet()
+              ? cedar.PolicySet.fromProto(
+                cedarpb.PolicySet.fromBuffer(proto.policySet.writeToBuffer()),
+              )
+              : null,
     );
   }
 
@@ -167,8 +169,9 @@ abstract class ResolvedApi
       functions:
           functions.map((key, value) => MapEntry(key, value.toProto())).toMap(),
       policySet: switch (policySet) {
-        final policySet? =>
-          pb.PolicySet.fromBuffer(policySet.toProto().writeToBuffer()),
+        final cedar.PolicySet policySet? => pb.PolicySet.fromBuffer(
+          policySet.toProto().writeToBuffer(),
+        ),
         _ => null,
       },
     );
@@ -211,15 +214,18 @@ abstract class ResolvedCloudFunction
       functionId: proto.functionId,
       apiId: proto.parentId,
       httpConfig: ResolvedHttpConfig.fromProto(proto.httpConfig),
-      streamConfig: proto.hasStreamConfig()
-          ? ResolvedStreamConfig.fromProto(proto.streamConfig)
-          : null,
+      streamConfig:
+          proto.hasStreamConfig()
+              ? ResolvedStreamConfig.fromProto(proto.streamConfig)
+              : null,
       variables: proto.variables.toBuiltSet(),
       secrets: proto.secrets.toBuiltSet(),
-      policySet: proto.hasPolicySet()
-          ? cedar.PolicySet.fromProto(
-              cedarpb.PolicySet.fromBuffer(proto.policySet.writeToBuffer()))
-          : null,
+      policySet:
+          proto.hasPolicySet()
+              ? cedar.PolicySet.fromProto(
+                cedarpb.PolicySet.fromBuffer(proto.policySet.writeToBuffer()),
+              )
+              : null,
     );
   }
 
@@ -256,8 +262,9 @@ abstract class ResolvedCloudFunction
       variables: variables,
       secrets: secrets,
       policySet: switch (policySet) {
-        final policySet? =>
-          pb.PolicySet.fromBuffer(policySet.toProto().writeToBuffer()),
+        final cedar.PolicySet policySet? => pb.PolicySet.fromBuffer(
+          policySet.toProto().writeToBuffer(),
+        ),
         _ => null,
       },
     );
@@ -335,12 +342,8 @@ abstract class ResolvedHttpConfig
 
 abstract class ResolvedStreamConfig
     implements Built<ResolvedStreamConfig, ResolvedStreamConfigBuilder> {
-  factory ResolvedStreamConfig({
-    required StreamType? type,
-  }) {
-    return _$ResolvedStreamConfig._(
-      type: type,
-    );
+  factory ResolvedStreamConfig({required StreamType? type}) {
+    return _$ResolvedStreamConfig._(type: type);
   }
 
   factory ResolvedStreamConfig.build([
@@ -360,11 +363,8 @@ abstract class ResolvedStreamConfig
         pb.ResolvedStreamConfig_Type.UNIDIRECTIONAL_SERVER =>
           StreamType.unidirectionalServer,
         pb.ResolvedStreamConfig_Type.STREAM_CONFIG_TYPE_UNSPECIFIED => null,
-        _ => throw ArgumentError.value(
-            proto.type,
-            'proto.type',
-            'Invalid type',
-          ),
+        _ =>
+          throw ArgumentError.value(proto.type, 'proto.type', 'Invalid type'),
       },
     );
   }
@@ -390,11 +390,7 @@ abstract class ResolvedStreamConfig
         StreamType.unidirectionalServer =>
           pb.ResolvedStreamConfig_Type.UNIDIRECTIONAL_SERVER,
         null => pb.ResolvedStreamConfig_Type.STREAM_CONFIG_TYPE_UNSPECIFIED,
-        _ => throw ArgumentError.value(
-            type,
-            'type',
-            'Invalid type',
-          ),
+        _ => throw ArgumentError.value(type, 'type', 'Invalid type'),
       },
     );
   }
@@ -402,15 +398,11 @@ abstract class ResolvedStreamConfig
 
 abstract class ResolvedHttpRoute
     implements Built<ResolvedHttpRoute, ResolvedHttpRouteBuilder> {
-  factory ResolvedHttpRoute({
-    String method = 'POST',
-    required String path,
-  }) {
-    return _$ResolvedHttpRoute._(
-      method: method,
-      path: path,
-    );
+  factory ResolvedHttpRoute({String method = 'POST', required String path}) {
+    return _$ResolvedHttpRoute._(method: method, path: path);
   }
+
+  ResolvedHttpRoute._();
 
   factory ResolvedHttpRoute.build([
     void Function(ResolvedHttpRouteBuilder) updates,
@@ -421,18 +413,13 @@ abstract class ResolvedHttpRoute
   }
 
   factory ResolvedHttpRoute.fromProto(pb.ResolvedHttpRoute proto) {
-    return ResolvedHttpRoute(
-      method: proto.method,
-      path: proto.path,
-    );
+    return ResolvedHttpRoute(method: proto.method, path: proto.path);
   }
 
   @BuiltValueHook(finalizeBuilder: true)
   static void _defaults(ResolvedHttpRouteBuilder b) {
     b.method ??= 'POST';
   }
-
-  ResolvedHttpRoute._();
 
   String get method;
   String get path;
@@ -443,10 +430,7 @@ abstract class ResolvedHttpRoute
   }
 
   pb.ResolvedHttpRoute toProto() {
-    return pb.ResolvedHttpRoute(
-      method: method,
-      path: path,
-    );
+    return pb.ResolvedHttpRoute(method: method, path: path);
   }
 
   static Serializer<ResolvedHttpRoute> get serializer =>
@@ -456,10 +440,13 @@ abstract class ResolvedHttpRoute
 extension _TypeReference on TypeReference {
   static TypeReference fromUriString(String uriString) {
     return switch (uriString.split('#')) {
-      [final url, final symbol] => TypeReference((b) => b
-        ..url = url
-        ..symbol = symbol),
-      [final symbol] => TypeReference((b) => b..symbol = symbol),
+      [final String url, final String symbol] => TypeReference(
+        (b) =>
+            b
+              ..url = url
+              ..symbol = symbol,
+      ),
+      [final String symbol] => TypeReference((b) => b..symbol = symbol),
       _ =>
         throw ArgumentError.value(uriString, 'uriString', 'Invalid URI string'),
     };
@@ -482,24 +469,14 @@ abstract class ResolvedVariable
     implements
         Built<ResolvedVariable, ResolvedVariableBuilder>,
         ResolvedConfigurationVariable {
-  factory ResolvedVariable({
-    required String name,
-    required String value,
-  }) = _$ResolvedVariable._;
+  factory ResolvedVariable({required String name, required String value}) =
+      _$ResolvedVariable._;
 
   factory ResolvedVariable.fromJson(Map<String, dynamic> json) =>
-      serializers.deserializeWith(
-        ResolvedVariable.serializer,
-        json,
-      )!;
+      serializers.deserializeWith(ResolvedVariable.serializer, json)!;
 
-  factory ResolvedVariable.fromProto(
-    pb.ResolvedVariable proto,
-  ) {
-    return ResolvedVariable(
-      name: proto.name,
-      value: proto.value,
-    );
+  factory ResolvedVariable.fromProto(pb.ResolvedVariable proto) {
+    return ResolvedVariable(name: proto.name, value: proto.value);
   }
 
   ResolvedVariable._();
@@ -525,10 +502,7 @@ abstract class ResolvedVariable
       _$resolvedVariableSerializer;
 
   pb.ResolvedVariable toProto() {
-    return pb.ResolvedVariable(
-      name: name,
-      value: value,
-    );
+    return pb.ResolvedVariable(name: name, value: value);
   }
 }
 
@@ -536,24 +510,14 @@ abstract class ResolvedSecret
     implements
         Built<ResolvedSecret, ResolvedSecretBuilder>,
         ResolvedConfigurationVariable {
-  factory ResolvedSecret({
-    required String name,
-    required String value,
-  }) = _$ResolvedSecret._;
+  factory ResolvedSecret({required String name, required String value}) =
+      _$ResolvedSecret._;
 
   factory ResolvedSecret.fromJson(Map<String, dynamic> json) =>
-      serializers.deserializeWith(
-        ResolvedSecret.serializer,
-        json,
-      )!;
+      serializers.deserializeWith(ResolvedSecret.serializer, json)!;
 
-  factory ResolvedSecret.fromProto(
-    pb.ResolvedSecret proto,
-  ) {
-    return ResolvedSecret(
-      name: proto.name,
-      value: proto.value,
-    );
+  factory ResolvedSecret.fromProto(pb.ResolvedSecret proto) {
+    return ResolvedSecret(name: proto.name, value: proto.value);
   }
 
   ResolvedSecret._();
@@ -579,10 +543,7 @@ abstract class ResolvedSecret
       _$resolvedSecretSerializer;
 
   pb.ResolvedSecret toProto() {
-    return pb.ResolvedSecret(
-      name: name,
-      value: value,
-    );
+    return pb.ResolvedSecret(name: name, value: value);
   }
 }
 
@@ -608,8 +569,9 @@ abstract class ResolvedAuth
   factory ResolvedAuth.fromProto(pb.ResolvedAuth proto) {
     return ResolvedAuth(
       providers: proto.providers.map(ResolvedAuthProvider.fromProto),
-      externalProviders:
-          proto.externalProviders.map(ResolvedExternalAuthProvider.fromProto),
+      externalProviders: proto.externalProviders.map(
+        ResolvedExternalAuthProvider.fromProto,
+      ),
     );
   }
 
@@ -645,12 +607,14 @@ sealed class ResolvedAuthProvider implements Node {
     return switch (proto.type) {
       pb.ResolvedAuthProvider_Type.EMAIL_OTP =>
         ResolvedEmailAuthProvider.fromProto(proto),
-      pb.ResolvedAuthProvider_Type.SMS_OTP =>
-        ResolvedSmsAuthProvider.fromProto(proto),
+      pb.ResolvedAuthProvider_Type.SMS_OTP => ResolvedSmsAuthProvider.fromProto(
+        proto,
+      ),
       pb.ResolvedAuthProvider_Type.GOOGLE =>
         ResolvedGoogleAuthProvider.fromProto(proto),
-      pb.ResolvedAuthProvider_Type.APPLE =>
-        ResolvedAppleAuthProvider.fromProto(proto),
+      pb.ResolvedAuthProvider_Type.APPLE => ResolvedAppleAuthProvider.fromProto(
+        proto,
+      ),
       pb.ResolvedAuthProvider_Type.GITHUB =>
         ResolvedGitHubAuthProvider.fromProto(proto),
       _ => throw ArgumentError.value(proto.type, 'proto.type', 'Invalid type'),
@@ -671,17 +635,15 @@ sealed class ResolvedAuthProvider implements Node {
 @BuiltValue(instantiable: false)
 sealed class ResolvedExternalAuthProvider implements Node {
   static ResolvedExternalAuthProvider fromProto(
-      pb.ResolvedExternalAuthProvider proto) {
+    pb.ResolvedExternalAuthProvider proto,
+  ) {
     return switch (proto.type) {
       pb.ResolvedExternalAuthProvider_Type.FIREBASE =>
         ResolvedFirebaseExternalAuthProvider.fromProto(proto),
       pb.ResolvedExternalAuthProvider_Type.SUPABASE =>
         ResolvedSupabaseExternalAuthProvider.fromProto(proto),
-      final unknown => throw ArgumentError.value(
-          unknown.name,
-          'proto.type',
-          'Invalid type',
-        ),
+      final pb.ResolvedExternalAuthProvider_Type unknown =>
+        throw ArgumentError.value(unknown.name, 'proto.type', 'Invalid type'),
     };
   }
 
@@ -700,25 +662,21 @@ abstract class ResolvedEmailAuthProvider
     implements
         ResolvedAuthProvider,
         Built<ResolvedEmailAuthProvider, ResolvedEmailAuthProviderBuilder> {
-  factory ResolvedEmailAuthProvider({
-    required String authProviderId,
-  }) {
+  factory ResolvedEmailAuthProvider({required String authProviderId}) {
     return _$ResolvedEmailAuthProvider._(
       authProviderId: authProviderId,
       type: $type,
     );
   }
-  factory ResolvedEmailAuthProvider.build(
-          [void Function(ResolvedEmailAuthProviderBuilder) updates]) =
-      _$ResolvedEmailAuthProvider;
+  factory ResolvedEmailAuthProvider.build([
+    void Function(ResolvedEmailAuthProviderBuilder) updates,
+  ]) = _$ResolvedEmailAuthProvider;
 
   factory ResolvedEmailAuthProvider.fromJson(Map<String, dynamic> json) =>
       serializers.deserializeWith(ResolvedEmailAuthProvider.serializer, json)!;
 
   factory ResolvedEmailAuthProvider.fromProto(pb.ResolvedAuthProvider proto) {
-    return ResolvedEmailAuthProvider(
-      authProviderId: proto.authProviderId,
-    );
+    return ResolvedEmailAuthProvider(authProviderId: proto.authProviderId);
   }
 
   ResolvedEmailAuthProvider._();
@@ -754,26 +712,22 @@ abstract class ResolvedSmsAuthProvider
     implements
         ResolvedAuthProvider,
         Built<ResolvedSmsAuthProvider, ResolvedSmsAuthProviderBuilder> {
-  factory ResolvedSmsAuthProvider({
-    required String authProviderId,
-  }) {
+  factory ResolvedSmsAuthProvider({required String authProviderId}) {
     return _$ResolvedSmsAuthProvider._(
       authProviderId: authProviderId,
       type: $type,
     );
   }
 
-  factory ResolvedSmsAuthProvider.build(
-          [void Function(ResolvedSmsAuthProviderBuilder) updates]) =
-      _$ResolvedSmsAuthProvider;
+  factory ResolvedSmsAuthProvider.build([
+    void Function(ResolvedSmsAuthProviderBuilder) updates,
+  ]) = _$ResolvedSmsAuthProvider;
 
   factory ResolvedSmsAuthProvider.fromJson(Map<String, dynamic> json) =>
       serializers.deserializeWith(ResolvedSmsAuthProvider.serializer, json)!;
 
   factory ResolvedSmsAuthProvider.fromProto(pb.ResolvedAuthProvider proto) {
-    return ResolvedSmsAuthProvider(
-      authProviderId: proto.authProviderId,
-    );
+    return ResolvedSmsAuthProvider(authProviderId: proto.authProviderId);
   }
 
   ResolvedSmsAuthProvider._();
@@ -822,9 +776,9 @@ abstract class ResolvedGoogleAuthProvider
     );
   }
 
-  factory ResolvedGoogleAuthProvider.build(
-          [void Function(ResolvedGoogleAuthProviderBuilder) updates]) =
-      _$ResolvedGoogleAuthProvider;
+  factory ResolvedGoogleAuthProvider.build([
+    void Function(ResolvedGoogleAuthProviderBuilder) updates,
+  ]) = _$ResolvedGoogleAuthProvider;
 
   factory ResolvedGoogleAuthProvider.fromJson(Map<String, dynamic> json) =>
       serializers.deserializeWith(ResolvedGoogleAuthProvider.serializer, json)!;
@@ -893,9 +847,9 @@ abstract class ResolvedAppleAuthProvider
     );
   }
 
-  factory ResolvedAppleAuthProvider.build(
-          [void Function(ResolvedAppleAuthProviderBuilder) updates]) =
-      _$ResolvedAppleAuthProvider;
+  factory ResolvedAppleAuthProvider.build([
+    void Function(ResolvedAppleAuthProviderBuilder) updates,
+  ]) = _$ResolvedAppleAuthProvider;
 
   factory ResolvedAppleAuthProvider.fromJson(Map<String, dynamic> json) =>
       serializers.deserializeWith(ResolvedAppleAuthProvider.serializer, json)!;
@@ -966,9 +920,9 @@ abstract class ResolvedGitHubAuthProvider
     );
   }
 
-  factory ResolvedGitHubAuthProvider.build(
-          [void Function(ResolvedGitHubAuthProviderBuilder) updates]) =
-      _$ResolvedGitHubAuthProvider;
+  factory ResolvedGitHubAuthProvider.build([
+    void Function(ResolvedGitHubAuthProviderBuilder) updates,
+  ]) = _$ResolvedGitHubAuthProvider;
 
   factory ResolvedGitHubAuthProvider.fromJson(Map<String, dynamic> json) =>
       serializers.deserializeWith(ResolvedGitHubAuthProvider.serializer, json)!;
@@ -1019,8 +973,10 @@ abstract class ResolvedGitHubAuthProvider
 abstract class ResolvedFirebaseExternalAuthProvider
     implements
         ResolvedExternalAuthProvider,
-        Built<ResolvedFirebaseExternalAuthProvider,
-            ResolvedFirebaseExternalAuthProviderBuilder> {
+        Built<
+          ResolvedFirebaseExternalAuthProvider,
+          ResolvedFirebaseExternalAuthProviderBuilder
+        > {
   factory ResolvedFirebaseExternalAuthProvider({
     required String authProviderId,
     required ResolvedVariable projectId,
@@ -1032,14 +988,17 @@ abstract class ResolvedFirebaseExternalAuthProvider
     );
   }
 
-  factory ResolvedFirebaseExternalAuthProvider.build(
-      [void Function(ResolvedFirebaseExternalAuthProviderBuilder)
-          updates]) = _$ResolvedFirebaseExternalAuthProvider;
+  factory ResolvedFirebaseExternalAuthProvider.build([
+    void Function(ResolvedFirebaseExternalAuthProviderBuilder) updates,
+  ]) = _$ResolvedFirebaseExternalAuthProvider;
 
   factory ResolvedFirebaseExternalAuthProvider.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return serializers.deserializeWith(
-        ResolvedFirebaseExternalAuthProvider.serializer, json)!;
+      ResolvedFirebaseExternalAuthProvider.serializer,
+      json,
+    )!;
   }
 
   factory ResolvedFirebaseExternalAuthProvider.fromProto(
@@ -1047,9 +1006,7 @@ abstract class ResolvedFirebaseExternalAuthProvider
   ) {
     return ResolvedFirebaseExternalAuthProvider(
       authProviderId: proto.authProviderId,
-      projectId: ResolvedVariable.fromProto(
-        proto.firebase.projectId,
-      ),
+      projectId: ResolvedVariable.fromProto(proto.firebase.projectId),
     );
   }
 
@@ -1092,8 +1049,10 @@ abstract class ResolvedFirebaseExternalAuthProvider
 abstract class ResolvedSupabaseExternalAuthProvider
     implements
         ResolvedExternalAuthProvider,
-        Built<ResolvedSupabaseExternalAuthProvider,
-            ResolvedSupabaseExternalAuthProviderBuilder> {
+        Built<
+          ResolvedSupabaseExternalAuthProvider,
+          ResolvedSupabaseExternalAuthProviderBuilder
+        > {
   factory ResolvedSupabaseExternalAuthProvider({
     required String authProviderId,
     required ResolvedVariable projectUrl,
@@ -1107,14 +1066,17 @@ abstract class ResolvedSupabaseExternalAuthProvider
     );
   }
 
-  factory ResolvedSupabaseExternalAuthProvider.build(
-      [void Function(ResolvedSupabaseExternalAuthProviderBuilder)
-          updates]) = _$ResolvedSupabaseExternalAuthProvider;
+  factory ResolvedSupabaseExternalAuthProvider.build([
+    void Function(ResolvedSupabaseExternalAuthProviderBuilder) updates,
+  ]) = _$ResolvedSupabaseExternalAuthProvider;
 
   factory ResolvedSupabaseExternalAuthProvider.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return serializers.deserializeWith(
-        ResolvedSupabaseExternalAuthProvider.serializer, json)!;
+      ResolvedSupabaseExternalAuthProvider.serializer,
+      json,
+    )!;
   }
 
   factory ResolvedSupabaseExternalAuthProvider.fromProto(
@@ -1122,12 +1084,11 @@ abstract class ResolvedSupabaseExternalAuthProvider
   ) {
     return ResolvedSupabaseExternalAuthProvider(
       authProviderId: proto.authProviderId,
-      projectUrl: ResolvedVariable.fromProto(
-        proto.supabase.projectUrl,
-      ),
-      jwtSecret: proto.supabase.hasJwtSecret()
-          ? ResolvedSecret.fromProto(proto.supabase.jwtSecret)
-          : null,
+      projectUrl: ResolvedVariable.fromProto(proto.supabase.projectUrl),
+      jwtSecret:
+          proto.supabase.hasJwtSecret()
+              ? ResolvedSecret.fromProto(proto.supabase.jwtSecret)
+              : null,
     );
   }
 
@@ -1175,7 +1136,8 @@ sealed class ResolvedDatabaseSchema implements Node {
     return switch (proto.type) {
       pb.ResolvedDatabaseSchema_Type.DRIFT =>
         ResolvedDriftDatabaseSchema.fromProto(proto),
-      _ => throw ArgumentError.value(
+      _ =>
+        throw ArgumentError.value(
           proto.type.name,
           'proto.type',
           'Invalid database schema type',
@@ -1211,17 +1173,20 @@ abstract class ResolvedDriftDatabaseSchema
     );
   }
 
-  factory ResolvedDriftDatabaseSchema.build(
-          [void Function(ResolvedDriftDatabaseSchemaBuilder) updates]) =
-      _$ResolvedDriftDatabaseSchema;
+  factory ResolvedDriftDatabaseSchema.build([
+    void Function(ResolvedDriftDatabaseSchemaBuilder) updates,
+  ]) = _$ResolvedDriftDatabaseSchema;
 
   factory ResolvedDriftDatabaseSchema.fromJson(Map<String, dynamic> json) {
     return serializers.deserializeWith(
-        ResolvedDriftDatabaseSchema.serializer, json)!;
+      ResolvedDriftDatabaseSchema.serializer,
+      json,
+    )!;
   }
 
   factory ResolvedDriftDatabaseSchema.fromProto(
-      pb.ResolvedDatabaseSchema proto) {
+    pb.ResolvedDatabaseSchema proto,
+  ) {
     return ResolvedDriftDatabaseSchema(
       databaseSchemaId: proto.databaseSchemaId,
       version: proto.drift.version,
@@ -1255,7 +1220,10 @@ abstract class ResolvedDriftDatabaseSchema
 
   Map<String, dynamic> toJson() {
     return serializers.serializeWith(
-        ResolvedDriftDatabaseSchema.serializer, this) as Map<String, dynamic>;
+          ResolvedDriftDatabaseSchema.serializer,
+          this,
+        )
+        as Map<String, dynamic>;
   }
 
   static Serializer<ResolvedDriftDatabaseSchema> get serializer =>
@@ -1288,8 +1256,9 @@ abstract class ResolvedDatabase
     );
   }
 
-  factory ResolvedDatabase.build(
-      [void Function(ResolvedDatabaseBuilder) updates]) = _$ResolvedDatabase;
+  factory ResolvedDatabase.build([
+    void Function(ResolvedDatabaseBuilder) updates,
+  ]) = _$ResolvedDatabase;
 
   factory ResolvedDatabase.fromJson(Map<String, dynamic> json) {
     return serializers.deserializeWith(ResolvedDatabase.serializer, json)!;
@@ -1297,17 +1266,19 @@ abstract class ResolvedDatabase
 
   factory ResolvedDatabase.fromProto(pb.ResolvedDatabase proto) {
     return ResolvedDatabase(
-        databaseId: proto.databaseId,
-        schema: ResolvedDatabaseSchema.fromProto(proto.schema),
-        config: switch (proto.whichConfig()) {
-          pb.ResolvedDatabase_Config.celest =>
-            ResolvedCelestDatabaseConfig.fromProto(proto.celest),
-          pb.ResolvedDatabase_Config.notSet => throw ArgumentError.value(
-              proto,
-              'ResolvedDatabase.proto',
-              'Config not set',
-            ),
-        });
+      databaseId: proto.databaseId,
+      schema: ResolvedDatabaseSchema.fromProto(proto.schema),
+      config: switch (proto.whichConfig()) {
+        pb.ResolvedDatabase_Config.celest =>
+          ResolvedCelestDatabaseConfig.fromProto(proto.celest),
+        pb.ResolvedDatabase_Config.notSet =>
+          throw ArgumentError.value(
+            proto,
+            'ResolvedDatabase.proto',
+            'Config not set',
+          ),
+      },
+    );
   }
 
   ResolvedDatabase._();
@@ -1343,8 +1314,8 @@ abstract class ResolvedDatabase
       },
     );
     return switch (config) {
-      final ResolvedCelestDatabaseConfig celest => message
-        ..celest = celest.toProto(),
+      final ResolvedCelestDatabaseConfig celest =>
+        message..celest = celest.toProto(),
     };
   }
 }
@@ -1356,29 +1327,31 @@ sealed class ResolvedDatabaseConfig {
 abstract class ResolvedCelestDatabaseConfig
     implements
         ResolvedDatabaseConfig,
-        Built<ResolvedCelestDatabaseConfig,
-            ResolvedCelestDatabaseConfigBuilder> {
+        Built<
+          ResolvedCelestDatabaseConfig,
+          ResolvedCelestDatabaseConfigBuilder
+        > {
   factory ResolvedCelestDatabaseConfig({
     required ResolvedVariable hostname,
     required ResolvedSecret token,
   }) {
-    return _$ResolvedCelestDatabaseConfig._(
-      hostname: hostname,
-      token: token,
-    );
+    return _$ResolvedCelestDatabaseConfig._(hostname: hostname, token: token);
   }
 
-  factory ResolvedCelestDatabaseConfig.build(
-          [void Function(ResolvedCelestDatabaseConfigBuilder) updates]) =
-      _$ResolvedCelestDatabaseConfig;
+  factory ResolvedCelestDatabaseConfig.build([
+    void Function(ResolvedCelestDatabaseConfigBuilder) updates,
+  ]) = _$ResolvedCelestDatabaseConfig;
 
   factory ResolvedCelestDatabaseConfig.fromJson(Map<String, Object?> json) {
     return serializers.deserializeWith(
-        ResolvedCelestDatabaseConfig.serializer, json)!;
+      ResolvedCelestDatabaseConfig.serializer,
+      json,
+    )!;
   }
 
   factory ResolvedCelestDatabaseConfig.fromProto(
-      pb.ResolvedCelestDatabaseConfig proto) {
+    pb.ResolvedCelestDatabaseConfig proto,
+  ) {
     return ResolvedCelestDatabaseConfig(
       hostname: ResolvedVariable.fromProto(proto.hostname),
       token: ResolvedSecret.fromProto(proto.token),
@@ -1395,7 +1368,10 @@ abstract class ResolvedCelestDatabaseConfig
 
   Map<String, Object?> toJson() {
     return serializers.serializeWith(
-        ResolvedCelestDatabaseConfig.serializer, this) as Map<String, Object?>;
+          ResolvedCelestDatabaseConfig.serializer,
+          this,
+        )
+        as Map<String, Object?>;
   }
 
   pb.ResolvedCelestDatabaseConfig toProto() {
@@ -1417,22 +1393,22 @@ extension _ProtoValue on ValueMixin {
       String() => pb.Value(stringValue: o),
       bool() => pb.Value(boolValue: o),
       List() => pb.Value(listValue: pb.ListValue(values: o.map(wrap).toList())),
-      Map() => pb.Value(
-          structValue:
-              pb.Struct(fields: o.map((k, v) => MapEntry(k, wrap(v))))),
+      Map<String, Object?>() => pb.Value(
+        structValue: pb.Struct(fields: o.map((k, v) => MapEntry(k, wrap(v)))),
+      ),
       _ => throw ArgumentError.value(o, 'o', 'Invalid value'),
     };
   }
 
   Object? get jsonValue => switch (this) {
-        _ when hasNullValue() => null,
-        _ when hasNumberValue() => numberValue,
-        _ when hasStringValue() => stringValue,
-        _ when hasBoolValue() => boolValue,
-        _ when hasStructValue() => structValue.jsonValue,
-        _ when hasListValue() => listValue.jsonValue,
-        final invalid => throw StateError('Invalid proto Value: $invalid'),
-      };
+    _ when hasNullValue() => null,
+    _ when hasNumberValue() => numberValue,
+    _ when hasStringValue() => stringValue,
+    _ when hasBoolValue() => boolValue,
+    _ when hasStructValue() => structValue.jsonValue,
+    _ when hasListValue() => listValue.jsonValue,
+    final invalid => throw StateError('Invalid proto Value: $invalid'),
+  };
 }
 
 extension on ListValueMixin {

@@ -16,11 +16,10 @@ sealed class AstNode {
 }
 
 class Region extends EnumClass {
+  const Region._(super.name);
   static const Region northAmerica = _$northAmerica;
   static const Region europe = _$europe;
   static const Region asiaPacific = _$asiaPacific;
-
-  const Region._(super.name);
 
   static BuiltSet<Region> get values => _$RegionValues;
   static Region valueOf(String name) => _$RegionValueOf(name);
@@ -150,9 +149,7 @@ sealed class ApiAuth implements ApiMetadata {}
 
 abstract class ApiPublic
     implements Built<ApiPublic, ApiPublicBuilder>, ApiAuth {
-  factory ApiPublic({
-    required FileSpan location,
-  }) = _$ApiPublic._;
+  factory ApiPublic({required FileSpan location}) = _$ApiPublic._;
 
   factory ApiPublic.build([void Function(ApiPublicBuilder) updates]) =
       _$ApiPublic;
@@ -178,9 +175,7 @@ abstract class ApiPublic
 
 abstract class ApiAuthenticated
     implements Built<ApiAuthenticated, ApiAuthenticatedBuilder>, ApiAuth {
-  factory ApiAuthenticated({
-    required FileSpan location,
-  }) = _$ApiAuthenticated._;
+  factory ApiAuthenticated({required FileSpan location}) = _$ApiAuthenticated._;
 
   factory ApiAuthenticated.build([
     void Function(ApiAuthenticatedBuilder) updates,
@@ -208,14 +203,11 @@ abstract class ApiAuthenticated
 
 abstract class ApiMiddleware
     implements Built<ApiMiddleware, ApiMiddlewareBuilder>, ApiMetadata {
-  factory ApiMiddleware({
-    required Reference type,
-    required FileSpan location,
-  }) = _$ApiMiddleware._;
+  factory ApiMiddleware({required Reference type, required FileSpan location}) =
+      _$ApiMiddleware._;
 
-  factory ApiMiddleware.build([
-    void Function(ApiMiddlewareBuilder) updates,
-  ]) = _$ApiMiddleware;
+  factory ApiMiddleware.build([void Function(ApiMiddlewareBuilder) updates]) =
+      _$ApiMiddleware;
 
   ApiMiddleware._();
 
@@ -459,7 +451,7 @@ abstract class CloudFunction
 
   @override
   int compareTo(CloudFunction other) {
-    final apiCompare = apiName.compareTo(other.apiName);
+    final int apiCompare = apiName.compareTo(other.apiName);
     if (apiCompare != 0) {
       return apiCompare;
     }
@@ -511,14 +503,13 @@ abstract class Variable
     String? value,
     Iterable<String> docs = const [],
     required FileSpan location,
-  }) =>
-      _$Variable._(
-        name: name,
-        dartName: dartName,
-        value: value,
-        docs: docs.toBuiltList(),
-        location: location,
-      );
+  }) => _$Variable._(
+    name: name,
+    dartName: dartName,
+    value: value,
+    docs: docs.toBuiltList(),
+    location: location,
+  );
 
   Variable._();
 
@@ -552,13 +543,12 @@ abstract class Secret
     String? dartName,
     Iterable<String> docs = const [],
     required FileSpan location,
-  }) =>
-      _$Secret._(
-        name: name,
-        dartName: dartName,
-        docs: docs.toBuiltList(),
-        location: location,
-      );
+  }) => _$Secret._(
+    name: name,
+    dartName: dartName,
+    docs: docs.toBuiltList(),
+    location: location,
+  );
 
   Secret._();
 
@@ -614,6 +604,8 @@ abstract class Auth implements Built<Auth, AuthBuilder>, AstNode {
 }
 
 class AuthProviderType extends EnumClass {
+  const AuthProviderType._(super.name);
+
   @BuiltValueEnumConst(wireName: 'EMAIL_OTP')
   static const AuthProviderType emailOtp = _$emailOtp;
 
@@ -634,8 +626,6 @@ class AuthProviderType extends EnumClass {
 
   @BuiltValueEnumConst(wireName: 'SUPABASE')
   static const AuthProviderType supabase = _$supabase;
-
-  const AuthProviderType._(super.name);
 
   static BuiltSet<AuthProviderType> get values => _$AuthProviderTypeValues;
   static AuthProviderType valueOf(String name) =>
@@ -659,9 +649,7 @@ sealed class AuthProvider implements AstNode {
   String get name;
   AuthProviderType get type;
 
-  AuthProvider rebuild(
-    void Function(AuthProviderBuilder) updates,
-  );
+  AuthProvider rebuild(void Function(AuthProviderBuilder) updates);
   AuthProviderBuilder toBuilder();
 }
 
@@ -705,18 +693,16 @@ abstract class EmailAuthProvider
     implements
         AuthProvider,
         Built<EmailAuthProvider, EmailAuthProviderBuilder> {
-  factory EmailAuthProvider({
-    String? name,
-    required FileSpan location,
-  }) {
+  factory EmailAuthProvider({String? name, required FileSpan location}) {
     return _$EmailAuthProvider._(
       name: name ?? $type.name,
       type: $type,
       location: location,
     );
   }
-  factory EmailAuthProvider.build(
-      [void Function(EmailAuthProviderBuilder) updates]) = _$EmailAuthProvider;
+  factory EmailAuthProvider.build([
+    void Function(EmailAuthProviderBuilder) updates,
+  ]) = _$EmailAuthProvider;
   EmailAuthProvider._();
 
   @BuiltValueHook(finalizeBuilder: true)
@@ -740,10 +726,7 @@ abstract class EmailAuthProvider
 
 abstract class SmsAuthProvider
     implements AuthProvider, Built<SmsAuthProvider, SmsAuthProviderBuilder> {
-  factory SmsAuthProvider({
-    String? name,
-    required FileSpan location,
-  }) {
+  factory SmsAuthProvider({String? name, required FileSpan location}) {
     return _$SmsAuthProvider._(
       name: name ?? $type.name,
       type: $type,
@@ -751,8 +734,9 @@ abstract class SmsAuthProvider
     );
   }
 
-  factory SmsAuthProvider.build(
-      [void Function(SmsAuthProviderBuilder) updates]) = _$SmsAuthProvider;
+  factory SmsAuthProvider.build([
+    void Function(SmsAuthProviderBuilder) updates,
+  ]) = _$SmsAuthProvider;
   SmsAuthProvider._();
 
   @BuiltValueHook(finalizeBuilder: true)
@@ -793,9 +777,9 @@ abstract class GoogleAuthProvider
     );
   }
 
-  factory GoogleAuthProvider.build(
-          [void Function(GoogleAuthProviderBuilder) updates]) =
-      _$GoogleAuthProvider;
+  factory GoogleAuthProvider.build([
+    void Function(GoogleAuthProviderBuilder) updates,
+  ]) = _$GoogleAuthProvider;
   GoogleAuthProvider._();
 
   @BuiltValueHook(finalizeBuilder: true)
@@ -843,8 +827,9 @@ abstract class AppleAuthProvider
     );
   }
 
-  factory AppleAuthProvider.build(
-      [void Function(AppleAuthProviderBuilder) updates]) = _$AppleAuthProvider;
+  factory AppleAuthProvider.build([
+    void Function(AppleAuthProviderBuilder) updates,
+  ]) = _$AppleAuthProvider;
   AppleAuthProvider._();
 
   @BuiltValueHook(finalizeBuilder: true)
@@ -890,9 +875,9 @@ abstract class GitHubAuthProvider
     );
   }
 
-  factory GitHubAuthProvider.build(
-          [void Function(GitHubAuthProviderBuilder) updates]) =
-      _$GitHubAuthProvider;
+  factory GitHubAuthProvider.build([
+    void Function(GitHubAuthProviderBuilder) updates,
+  ]) = _$GitHubAuthProvider;
   GitHubAuthProvider._();
 
   @BuiltValueHook(finalizeBuilder: true)
@@ -920,8 +905,10 @@ abstract class GitHubAuthProvider
 abstract class FirebaseExternalAuthProvider
     implements
         ExternalAuthProvider,
-        Built<FirebaseExternalAuthProvider,
-            FirebaseExternalAuthProviderBuilder> {
+        Built<
+          FirebaseExternalAuthProvider,
+          FirebaseExternalAuthProviderBuilder
+        > {
   factory FirebaseExternalAuthProvider({
     String? name,
     required FileSpan location,
@@ -935,9 +922,9 @@ abstract class FirebaseExternalAuthProvider
     );
   }
 
-  factory FirebaseExternalAuthProvider.build(
-          [void Function(FirebaseExternalAuthProviderBuilder) updates]) =
-      _$FirebaseExternalAuthProvider;
+  factory FirebaseExternalAuthProvider.build([
+    void Function(FirebaseExternalAuthProviderBuilder) updates,
+  ]) = _$FirebaseExternalAuthProvider;
   FirebaseExternalAuthProvider._();
 
   @BuiltValueHook(finalizeBuilder: true)
@@ -964,8 +951,10 @@ abstract class FirebaseExternalAuthProvider
 abstract class SupabaseExternalAuthProvider
     implements
         ExternalAuthProvider,
-        Built<SupabaseExternalAuthProvider,
-            SupabaseExternalAuthProviderBuilder> {
+        Built<
+          SupabaseExternalAuthProvider,
+          SupabaseExternalAuthProviderBuilder
+        > {
   factory SupabaseExternalAuthProvider({
     String? name,
     required FileSpan location,
@@ -981,9 +970,9 @@ abstract class SupabaseExternalAuthProvider
     );
   }
 
-  factory SupabaseExternalAuthProvider.build(
-          [void Function(SupabaseExternalAuthProviderBuilder) updates]) =
-      _$SupabaseExternalAuthProvider;
+  factory SupabaseExternalAuthProvider.build([
+    void Function(SupabaseExternalAuthProviderBuilder) updates,
+  ]) = _$SupabaseExternalAuthProvider;
   SupabaseExternalAuthProvider._();
 
   @BuiltValueHook(finalizeBuilder: true)
@@ -1033,14 +1022,8 @@ class NodeType extends EnumClass {
 
 abstract class NodeReference
     implements Built<NodeReference, NodeReferenceBuilder> {
-  factory NodeReference({
-    required String name,
-    required NodeType type,
-  }) {
-    return _$NodeReference._(
-      name: name,
-      type: type,
-    );
+  factory NodeReference({required String name, required NodeType type}) {
+    return _$NodeReference._(name: name, type: type);
   }
 
   factory NodeReference.build([void Function(NodeReferenceBuilder) updates]) =
@@ -1101,9 +1084,9 @@ abstract class DriftDatabaseSchema
     );
   }
 
-  factory DriftDatabaseSchema.build(
-          [void Function(DriftDatabaseSchemaBuilder) updates]) =
-      _$DriftDatabaseSchema;
+  factory DriftDatabaseSchema.build([
+    void Function(DriftDatabaseSchemaBuilder) updates,
+  ]) = _$DriftDatabaseSchema;
 
   DriftDatabaseSchema._();
 
@@ -1212,15 +1195,12 @@ abstract class CelestDatabaseConfig
     required Variable hostname,
     required Secret token,
   }) {
-    return _$CelestDatabaseConfig._(
-      hostname: hostname,
-      token: token,
-    );
+    return _$CelestDatabaseConfig._(hostname: hostname, token: token);
   }
 
-  factory CelestDatabaseConfig.build(
-          [void Function(CelestDatabaseConfigBuilder) updates]) =
-      _$CelestDatabaseConfig;
+  factory CelestDatabaseConfig.build([
+    void Function(CelestDatabaseConfigBuilder) updates,
+  ]) = _$CelestDatabaseConfig;
 
   CelestDatabaseConfig._();
 

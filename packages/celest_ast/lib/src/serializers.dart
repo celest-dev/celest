@@ -96,31 +96,36 @@ part 'serializers.g.dart';
   FeatureFlag,
 ])
 final Serializers serializers = () {
-  final builder = _$serializers.toBuilder()
-    ..addPlugin(_CustomJsonPlugin())
-    ..add(const ReferenceSerializer())
-    ..add(const TypeReferenceSerializer())
-    ..add(const RecordTypeSerializer())
-    ..add(const SourceLocationSerializer())
-    ..add(const SourceSpanSerializer())
-    ..add(const VersionSerializer())
-    ..add(const PolicySerializer())
-    ..add(const TemplateLinkSerializer())
-    ..add(const ProtoEnumSerializer<pb.ResolvedAuthProvider_Type>(
-      pb.ResolvedAuthProvider_Type.values,
-    ))
-    ..add(const ProtoEnumSerializer<pb.ResolvedExternalAuthProvider_Type>(
-      pb.ResolvedExternalAuthProvider_Type.values,
-    ))
-    ..addBuilderFactory(
-      const FullType(BuiltList, [FullType(Reference)]),
-      BuiltList<Reference>.new,
-    )
-    ..addBuilderFactory(
-      const FullType(BuiltMap, [FullType(String), FullType(Reference)]),
-      BuiltMap<String, Reference>.new,
-    )
-    ..addAll(cedarSerializers.serializers);
+  final SerializersBuilder builder =
+      _$serializers.toBuilder()
+        ..addPlugin(_CustomJsonPlugin())
+        ..add(const ReferenceSerializer())
+        ..add(const TypeReferenceSerializer())
+        ..add(const RecordTypeSerializer())
+        ..add(const SourceLocationSerializer())
+        ..add(const SourceSpanSerializer())
+        ..add(const VersionSerializer())
+        ..add(const PolicySerializer())
+        ..add(const TemplateLinkSerializer())
+        ..add(
+          const ProtoEnumSerializer<pb.ResolvedAuthProvider_Type>(
+            pb.ResolvedAuthProvider_Type.values,
+          ),
+        )
+        ..add(
+          const ProtoEnumSerializer<pb.ResolvedExternalAuthProvider_Type>(
+            pb.ResolvedExternalAuthProvider_Type.values,
+          ),
+        )
+        ..addBuilderFactory(
+          const FullType(BuiltList, [FullType(Reference)]),
+          BuiltList<Reference>.new,
+        )
+        ..addBuilderFactory(
+          const FullType(BuiltMap, [FullType(String), FullType(Reference)]),
+          BuiltMap<String, Reference>.new,
+        )
+        ..addAll(cedarSerializers.serializers);
 
   for (final MapEntry(key: type, value: factory)
       in cedarSerializers.builderFactories.entries) {
@@ -142,9 +147,7 @@ final class ProtoSerializer<T extends GeneratedMessage>
     FullType specifiedType = FullType.unspecified,
   }) {
     return (type.createEmptyInstance() as T)
-      ..mergeFromProto3Json(
-        serialized as Map<String, Object?>,
-      );
+      ..mergeFromProto3Json(serialized as Map<String, Object?>);
   }
 
   @override
@@ -205,7 +208,7 @@ final class ReferenceSerializer implements StructuredSerializer<Reference> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final serializedList = serialized.toList();
+    final List<Object?> serializedList = serialized.toList();
     assert(
       serializedList.length.isOdd && serializedList.first is String,
       'Serialized references should include their runtime time as '
@@ -225,7 +228,8 @@ final class ReferenceSerializer implements StructuredSerializer<Reference> {
             );
         }
       default:
-        final serializer = serializers.serializerForWireName(wireName);
+        final Serializer<Object?>? serializer = serializers
+            .serializerForWireName(wireName);
         if (serializer == null) {
           throw ArgumentError.value(
             wireName,
@@ -246,14 +250,12 @@ final class ReferenceSerializer implements StructuredSerializer<Reference> {
     if (_serializationCache[object] case final cached?) {
       return cached;
     }
-    final wireName = switch (object) {
+    final String wireName = switch (object) {
       TypeReference() => 'TypeReference',
       RecordType() => 'RecordType',
       _ => 'Reference',
     };
-    final result = <Object?>[
-      wireName,
-    ];
+    final result = <Object?>[wireName];
     switch (wireName) {
       case 'Reference':
         result
@@ -265,7 +267,8 @@ final class ReferenceSerializer implements StructuredSerializer<Reference> {
             ..add(url);
         }
       default:
-        final serializer = serializers.serializerForWireName(wireName);
+        final Serializer<Object?>? serializer = serializers
+            .serializerForWireName(wireName);
         if (serializer == null) {
           throw ArgumentError.value(
             wireName,
@@ -298,10 +301,10 @@ final class TypeReferenceSerializer
     FullType specifiedType = FullType.unspecified,
   }) {
     final builder = TypeReferenceBuilder();
-    final iterator = serialized.iterator;
+    final Iterator<Object?> iterator = serialized.iterator;
     while (iterator.moveNext()) {
       final name = iterator.current as String;
-      final value = iterator.moveNext() ? iterator.current : null;
+      final Object? value = iterator.moveNext() ? iterator.current : null;
       switch (name) {
         case 'symbol':
           builder.symbol = value as String;
@@ -309,20 +312,22 @@ final class TypeReferenceSerializer
           builder.url = value as String?;
         case 'bound':
           if (value != null) {
-            builder.bound = serializers.deserialize(
-              value as Map<String, dynamic>,
-              specifiedType: const FullType(Reference),
-            ) as Reference;
+            builder.bound =
+                serializers.deserialize(
+                      value as Map<String, dynamic>,
+                      specifiedType: const FullType(Reference),
+                    )
+                    as Reference;
           }
         case 'types':
           builder.types.replace(
             serializers.deserialize(
-              value as Iterable<Object?>,
-              specifiedType: const FullType(
-                BuiltList,
-                [FullType(Reference)],
-              ),
-            )! as BuiltList<Reference>,
+                  value as Iterable<Object?>,
+                  specifiedType: const FullType(BuiltList, [
+                    FullType(Reference),
+                  ]),
+                )!
+                as BuiltList<Reference>,
           );
         case 'isNullable':
           builder.isNullable = value as bool?;
@@ -337,10 +342,7 @@ final class TypeReferenceSerializer
     TypeReference object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = <Object?>[
-      'symbol',
-      object.symbol,
-    ];
+    final result = <Object?>['symbol', object.symbol];
     if (object.url case final url?) {
       result
         ..add('url')
@@ -362,10 +364,7 @@ final class TypeReferenceSerializer
         ..add(
           serializers.serialize(
             object.types,
-            specifiedType: const FullType(
-              BuiltList,
-              [FullType(Reference)],
-            ),
+            specifiedType: const FullType(BuiltList, [FullType(Reference)]),
           ),
         );
     }
@@ -394,10 +393,10 @@ final class RecordTypeSerializer implements StructuredSerializer<RecordType> {
     FullType specifiedType = FullType.unspecified,
   }) {
     final builder = RecordTypeBuilder();
-    final iterator = serialized.iterator;
+    final Iterator<Object?> iterator = serialized.iterator;
     while (iterator.moveNext()) {
       final name = iterator.current as String;
-      final value = iterator.moveNext() ? iterator.current : null;
+      final Object? value = iterator.moveNext() ? iterator.current : null;
       switch (name) {
         case 'symbol':
           builder.symbol = value as String?;
@@ -406,25 +405,23 @@ final class RecordTypeSerializer implements StructuredSerializer<RecordType> {
         case 'positionalFieldTypes':
           builder.positionalFieldTypes.replace(
             serializers.deserialize(
-              value as Iterable<Object?>,
-              specifiedType: const FullType(
-                BuiltList,
-                [FullType(Reference)],
-              ),
-            )! as BuiltList<Reference>,
+                  value as Iterable<Object?>,
+                  specifiedType: const FullType(BuiltList, [
+                    FullType(Reference),
+                  ]),
+                )!
+                as BuiltList<Reference>,
           );
         case 'namedFieldTypes':
           builder.namedFieldTypes.replace(
             serializers.deserialize(
-              value as Iterable<Object?>,
-              specifiedType: const FullType(
-                BuiltMap,
-                [
-                  FullType(String),
-                  FullType(Reference),
-                ],
-              ),
-            )! as BuiltMap<String, Reference>,
+                  value as Iterable<Object?>,
+                  specifiedType: const FullType(BuiltMap, [
+                    FullType(String),
+                    FullType(Reference),
+                  ]),
+                )!
+                as BuiltMap<String, Reference>,
           );
         case 'isNullable':
           builder.isNullable = value as bool?;
@@ -456,10 +453,7 @@ final class RecordTypeSerializer implements StructuredSerializer<RecordType> {
         ..add(
           serializers.serialize(
             object.positionalFieldTypes,
-            specifiedType: const FullType(
-              BuiltList,
-              [FullType(Reference)],
-            ),
+            specifiedType: const FullType(BuiltList, [FullType(Reference)]),
           ),
         );
     }
@@ -469,13 +463,10 @@ final class RecordTypeSerializer implements StructuredSerializer<RecordType> {
         ..add(
           serializers.serialize(
             object.namedFieldTypes,
-            specifiedType: const FullType(
-              BuiltMap,
-              [
-                FullType(String),
-                FullType(Reference),
-              ],
-            ),
+            specifiedType: const FullType(BuiltMap, [
+              FullType(String),
+              FullType(Reference),
+            ]),
           ),
         );
     }
@@ -519,10 +510,7 @@ final class SourceLocationSerializer
   const SourceLocationSerializer();
 
   @override
-  Iterable<Type> get types => const [
-        SourceLocation,
-        SourceLocationBase,
-      ];
+  Iterable<Type> get types => const [SourceLocation, SourceLocationBase];
 
   @override
   String get wireName => 'SourceLocation';
@@ -564,11 +552,7 @@ final class SourceSpanSerializer implements StructuredSerializer<SourceSpan> {
   const SourceSpanSerializer();
 
   @override
-  Iterable<Type> get types => const [
-        SourceSpan,
-        SourceSpanBase,
-        FileSpan,
-      ];
+  Iterable<Type> get types => const [SourceSpan, SourceSpanBase, FileSpan];
 
   @override
   String get wireName => 'SourceSpan';

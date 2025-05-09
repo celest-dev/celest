@@ -11,10 +11,10 @@ import 'package:pub_semver/pub_semver.dart';
 part 'sdk_configuration.g.dart';
 
 class SdkType extends EnumClass {
+  const SdkType._(super.name);
+
   static const SdkType dart = _$dart;
   static const SdkType flutter = _$flutter;
-
-  const SdkType._(super.name);
 
   static BuiltSet<SdkType> get values => _$SdkTypeValues;
   static SdkType valueOf(String name) => _$SdkTypeValueOf(name);
@@ -172,9 +172,9 @@ class FeatureFlag extends EnumClass {
   static Serializer<FeatureFlag> get serializer => _$featureFlagSerializer;
 
   pb.FeatureFlag toProto() => switch (this) {
-        streaming => pb.FeatureFlag.STREAMING,
-        _ => throw StateError('Unknown feature flag: $this'),
-      };
+    streaming => pb.FeatureFlag.STREAMING,
+    _ => throw StateError('Unknown feature flag: $this'),
+  };
 }
 
 extension _Version on Version {
@@ -208,8 +208,12 @@ extension _Object on Object {
     return switch (value.whichKind()) {
       pb.Value_Kind.stringValue => value.stringValue,
       pb.Value_Kind.numberValue => value.numberValue.toInt(),
-      final unsupported => throw ArgumentError.value(
-          value, 'value', 'Unsupported value: $unsupported'),
+      final pb.Value_Kind unsupported =>
+        throw ArgumentError.value(
+          value,
+          'value',
+          'Unsupported value: $unsupported',
+        ),
     };
   }
 
@@ -217,8 +221,12 @@ extension _Object on Object {
     return switch (this) {
       final String s => pb.Value(stringValue: s),
       final num i => pb.Value(numberValue: i.toDouble()),
-      final unsupported => throw ArgumentError.value(this, 'value',
-          'Unsupported value: $unsupported (${unsupported.runtimeType})'),
+      final unsupported =>
+        throw ArgumentError.value(
+          this,
+          'value',
+          'Unsupported value: $unsupported (${unsupported.runtimeType})',
+        ),
     };
   }
 }

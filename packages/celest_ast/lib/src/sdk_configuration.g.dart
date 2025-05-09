@@ -36,10 +36,9 @@ FeatureFlag _$FeatureFlagValueOf(String name) {
   }
 }
 
-final BuiltSet<FeatureFlag> _$FeatureFlagValues =
-    new BuiltSet<FeatureFlag>(const <FeatureFlag>[
-  _$streaming,
-]);
+final BuiltSet<FeatureFlag> _$FeatureFlagValues = new BuiltSet<FeatureFlag>(
+  const <FeatureFlag>[_$streaming],
+);
 
 Serializer<SdkType> _$sdkTypeSerializer = new _$SdkTypeSerializer();
 Serializer<SdkConfiguration> _$sdkConfigurationSerializer =
@@ -54,14 +53,18 @@ class _$SdkTypeSerializer implements PrimitiveSerializer<SdkType> {
   final String wireName = 'SdkType';
 
   @override
-  Object serialize(Serializers serializers, SdkType object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    SdkType object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  SdkType deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      SdkType.valueOf(serialized as String);
+  SdkType deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => SdkType.valueOf(serialized as String);
 }
 
 class _$SdkConfigurationSerializer
@@ -72,21 +75,31 @@ class _$SdkConfigurationSerializer
   final String wireName = 'SdkConfiguration';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, SdkConfiguration object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    SdkConfiguration object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'celest',
-      serializers.serialize(object.celest,
-          specifiedType: const FullType(Version)),
+      serializers.serialize(
+        object.celest,
+        specifiedType: const FullType(Version),
+      ),
       'dart',
       serializers.serialize(object.dart, specifiedType: const FullType(Sdk)),
       'targetSdk',
-      serializers.serialize(object.targetSdk,
-          specifiedType: const FullType(SdkType)),
+      serializers.serialize(
+        object.targetSdk,
+        specifiedType: const FullType(SdkType),
+      ),
       'featureFlags',
-      serializers.serialize(object.featureFlags,
-          specifiedType:
-              const FullType(BuiltSet, const [const FullType(FeatureFlag)])),
+      serializers.serialize(
+        object.featureFlags,
+        specifiedType: const FullType(BuiltSet, const [
+          const FullType(FeatureFlag),
+        ]),
+      ),
     ];
     Object? value;
     value = object.flutter;
@@ -100,8 +113,10 @@ class _$SdkConfigurationSerializer
 
   @override
   SdkConfiguration deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new SdkConfigurationBuilder();
 
     final iterator = serialized.iterator;
@@ -111,26 +126,43 @@ class _$SdkConfigurationSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'celest':
-          result.celest = serializers.deserialize(value,
-              specifiedType: const FullType(Version))! as Version;
+          result.celest =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(Version),
+                  )!
+                  as Version;
           break;
         case 'dart':
-          result.dart.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Sdk))! as Sdk);
+          result.dart.replace(
+            serializers.deserialize(value, specifiedType: const FullType(Sdk))!
+                as Sdk,
+          );
           break;
         case 'flutter':
-          result.flutter.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Sdk))! as Sdk);
+          result.flutter.replace(
+            serializers.deserialize(value, specifiedType: const FullType(Sdk))!
+                as Sdk,
+          );
           break;
         case 'targetSdk':
-          result.targetSdk = serializers.deserialize(value,
-              specifiedType: const FullType(SdkType))! as SdkType;
+          result.targetSdk =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(SdkType),
+                  )!
+                  as SdkType;
           break;
         case 'featureFlags':
-          result.featureFlags.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltSet, const [const FullType(FeatureFlag)]))!
-              as BuiltSet<Object?>);
+          result.featureFlags.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltSet, const [
+                    const FullType(FeatureFlag),
+                  ]),
+                )!
+                as BuiltSet<Object?>,
+          );
           break;
       }
     }
@@ -146,27 +178,38 @@ class _$SdkSerializer implements StructuredSerializer<Sdk> {
   final String wireName = 'Sdk';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Sdk object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    Sdk object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(SdkType)),
+      serializers.serialize(
+        object.type,
+        specifiedType: const FullType(SdkType),
+      ),
       'version',
-      serializers.serialize(object.version,
-          specifiedType: const FullType(Version)),
+      serializers.serialize(
+        object.version,
+        specifiedType: const FullType(Version),
+      ),
       'enabledExperiments',
-      serializers.serialize(object.enabledExperiments,
-          specifiedType:
-              const FullType(BuiltSet, const [const FullType(String)])),
+      serializers.serialize(
+        object.enabledExperiments,
+        specifiedType: const FullType(BuiltSet, const [const FullType(String)]),
+      ),
     ];
 
     return result;
   }
 
   @override
-  Sdk deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  Sdk deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new SdkBuilder();
 
     final iterator = serialized.iterator;
@@ -176,18 +219,31 @@ class _$SdkSerializer implements StructuredSerializer<Sdk> {
       final Object? value = iterator.current;
       switch (key) {
         case 'type':
-          result.type = serializers.deserialize(value,
-              specifiedType: const FullType(SdkType))! as SdkType;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(SdkType),
+                  )!
+                  as SdkType;
           break;
         case 'version':
-          result.version = serializers.deserialize(value,
-              specifiedType: const FullType(Version))! as Version;
+          result.version =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(Version),
+                  )!
+                  as Version;
           break;
         case 'enabledExperiments':
-          result.enabledExperiments.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltSet, const [const FullType(String)]))!
-              as BuiltSet<Object?>);
+          result.enabledExperiments.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltSet, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltSet<Object?>,
+          );
           break;
       }
     }
@@ -203,14 +259,18 @@ class _$FeatureFlagSerializer implements PrimitiveSerializer<FeatureFlag> {
   final String wireName = 'FeatureFlag';
 
   @override
-  Object serialize(Serializers serializers, FeatureFlag object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    FeatureFlag object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  FeatureFlag deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      FeatureFlag.valueOf(serialized as String);
+  FeatureFlag deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => FeatureFlag.valueOf(serialized as String);
 }
 
 class _$SdkConfiguration extends SdkConfiguration {
@@ -225,24 +285,33 @@ class _$SdkConfiguration extends SdkConfiguration {
   @override
   final BuiltSet<FeatureFlag> featureFlags;
 
-  factory _$SdkConfiguration(
-          [void Function(SdkConfigurationBuilder)? updates]) =>
-      (new SdkConfigurationBuilder()..update(updates))._build();
+  factory _$SdkConfiguration([
+    void Function(SdkConfigurationBuilder)? updates,
+  ]) => (new SdkConfigurationBuilder()..update(updates))._build();
 
-  _$SdkConfiguration._(
-      {required this.celest,
-      required this.dart,
-      this.flutter,
-      required this.targetSdk,
-      required this.featureFlags})
-      : super._() {
+  _$SdkConfiguration._({
+    required this.celest,
+    required this.dart,
+    this.flutter,
+    required this.targetSdk,
+    required this.featureFlags,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        celest, r'SdkConfiguration', 'celest');
+      celest,
+      r'SdkConfiguration',
+      'celest',
+    );
     BuiltValueNullFieldError.checkNotNull(dart, r'SdkConfiguration', 'dart');
     BuiltValueNullFieldError.checkNotNull(
-        targetSdk, r'SdkConfiguration', 'targetSdk');
+      targetSdk,
+      r'SdkConfiguration',
+      'targetSdk',
+    );
     BuiltValueNullFieldError.checkNotNull(
-        featureFlags, r'SdkConfiguration', 'featureFlags');
+      featureFlags,
+      r'SdkConfiguration',
+      'featureFlags',
+    );
   }
 
   @override
@@ -346,14 +415,21 @@ class SdkConfigurationBuilder
   _$SdkConfiguration _build() {
     _$SdkConfiguration _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$SdkConfiguration._(
             celest: BuiltValueNullFieldError.checkNotNull(
-                celest, r'SdkConfiguration', 'celest'),
+              celest,
+              r'SdkConfiguration',
+              'celest',
+            ),
             dart: dart.build(),
             flutter: _flutter?.build(),
             targetSdk: BuiltValueNullFieldError.checkNotNull(
-                targetSdk, r'SdkConfiguration', 'targetSdk'),
+              targetSdk,
+              r'SdkConfiguration',
+              'targetSdk',
+            ),
             featureFlags: featureFlags.build(),
           );
     } catch (_) {
@@ -368,7 +444,10 @@ class SdkConfigurationBuilder
         featureFlags.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'SdkConfiguration', _$failedField, e.toString());
+          r'SdkConfiguration',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -388,15 +467,18 @@ class _$Sdk extends Sdk {
   factory _$Sdk([void Function(SdkBuilder)? updates]) =>
       (new SdkBuilder()..update(updates))._build();
 
-  _$Sdk._(
-      {required this.type,
-      required this.version,
-      required this.enabledExperiments})
-      : super._() {
+  _$Sdk._({
+    required this.type,
+    required this.version,
+    required this.enabledExperiments,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(type, r'Sdk', 'type');
     BuiltValueNullFieldError.checkNotNull(version, r'Sdk', 'version');
     BuiltValueNullFieldError.checkNotNull(
-        enabledExperiments, r'Sdk', 'enabledExperiments');
+      enabledExperiments,
+      r'Sdk',
+      'enabledExperiments',
+    );
   }
 
   @override
@@ -482,11 +564,15 @@ class SdkBuilder implements Builder<Sdk, SdkBuilder> {
   _$Sdk _build() {
     _$Sdk _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$Sdk._(
             type: BuiltValueNullFieldError.checkNotNull(type, r'Sdk', 'type'),
             version: BuiltValueNullFieldError.checkNotNull(
-                version, r'Sdk', 'version'),
+              version,
+              r'Sdk',
+              'version',
+            ),
             enabledExperiments: enabledExperiments.build(),
           );
     } catch (_) {
@@ -496,7 +582,10 @@ class SdkBuilder implements Builder<Sdk, SdkBuilder> {
         enabledExperiments.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Sdk', _$failedField, e.toString());
+          r'Sdk',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
