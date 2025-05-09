@@ -8,8 +8,8 @@ import 'package:grpc/grpc.dart';
 import 'package:logging/logging.dart';
 import 'package:protobuf/protobuf.dart';
 
-typedef CloudOperation<R extends GeneratedMessage>
-    = Stream<OperationState<OperationMetadata, R>>;
+typedef CloudOperation<R extends GeneratedMessage> =
+    Stream<OperationState<OperationMetadata, R>>;
 
 extension WaitForOperation on Operation {
   Future<T> wait<T extends GeneratedMessage>({
@@ -30,8 +30,8 @@ extension WaitForOperation on Operation {
     return operation.response.unpackInto(response);
   }
 
-  Stream<OperationState<Metadata, Response>> stream<
-      Metadata extends GeneratedMessage, Response extends GeneratedMessage>({
+  Stream<OperationState<Metadata, Response>>
+  stream<Metadata extends GeneratedMessage, Response extends GeneratedMessage>({
     required OperationsProtocol operations,
     required Metadata metadata,
     required Response response,
@@ -54,11 +54,10 @@ extension WaitForOperation on Operation {
     });
   }
 
-  OperationState<Metadata, Response> state<Metadata extends GeneratedMessage,
-      Response extends GeneratedMessage>({
-    required Metadata metadata,
-    required Response response,
-  }) {
+  OperationState<Metadata, Response> state<
+    Metadata extends GeneratedMessage,
+    Response extends GeneratedMessage
+  >({required Metadata metadata, required Response response}) {
     if (done) {
       if (hasError()) {
         return OperationFailure<Metadata, Response>(
@@ -92,12 +91,11 @@ extension<T extends GeneratedMessage> on T {
   }
 }
 
-sealed class OperationState<Metadata extends GeneratedMessage,
-    Response extends GeneratedMessage> {
-  OperationState({
-    required this.id,
-    required this.metadata,
-  });
+sealed class OperationState<
+  Metadata extends GeneratedMessage,
+  Response extends GeneratedMessage
+> {
+  OperationState({required this.id, required this.metadata});
 
   final String id;
   final Metadata metadata;
@@ -107,13 +105,12 @@ sealed class OperationState<Metadata extends GeneratedMessage,
   GrpcError? get error => null;
 }
 
-final class OperationInProgress<Metadata extends GeneratedMessage,
-        Response extends GeneratedMessage>
+final class OperationInProgress<
+  Metadata extends GeneratedMessage,
+  Response extends GeneratedMessage
+>
     extends OperationState<Metadata, Response> {
-  OperationInProgress({
-    required super.id,
-    required super.metadata,
-  });
+  OperationInProgress({required super.id, required super.metadata});
 
   @override
   String toString() {
@@ -124,8 +121,10 @@ final class OperationInProgress<Metadata extends GeneratedMessage,
   }
 }
 
-final class OperationSuccess<Metadata extends GeneratedMessage,
-        Response extends GeneratedMessage>
+final class OperationSuccess<
+  Metadata extends GeneratedMessage,
+  Response extends GeneratedMessage
+>
     extends OperationState<Metadata, Response> {
   OperationSuccess({
     required super.id,
@@ -149,13 +148,12 @@ final class OperationSuccess<Metadata extends GeneratedMessage,
   }
 }
 
-final class OperationCancelled<Metadata extends GeneratedMessage,
-        Response extends GeneratedMessage>
+final class OperationCancelled<
+  Metadata extends GeneratedMessage,
+  Response extends GeneratedMessage
+>
     extends OperationState<Metadata, Response> {
-  OperationCancelled({
-    required super.id,
-    required super.metadata,
-  });
+  OperationCancelled({required super.id, required super.metadata});
 
   @override
   bool get done => true;
@@ -169,8 +167,10 @@ final class OperationCancelled<Metadata extends GeneratedMessage,
   }
 }
 
-final class OperationFailure<Metadata extends GeneratedMessage,
-        Response extends GeneratedMessage>
+final class OperationFailure<
+  Metadata extends GeneratedMessage,
+  Response extends GeneratedMessage
+>
     extends OperationState<Metadata, Response> {
   OperationFailure({
     required super.id,
@@ -199,9 +199,9 @@ final class OperationWaiter {
     Operation operation, {
     required OperationsProtocol protocol,
     Logger? logger,
-  })  : _operation = operation,
-        _client = protocol,
-        _logger = logger;
+  }) : _operation = operation,
+       _client = protocol,
+       _logger = logger;
 
   Operation _operation;
   final OperationsProtocol _client;
@@ -220,9 +220,10 @@ final class OperationWaiter {
         GetOperationRequest(name: _operation.name),
       );
       _logger?.fine(
-        () => _operation
-            .toProto3Json(typeRegistry: CelestCloud.typeRegistry)
-            .toString(),
+        () =>
+            _operation
+                .toProto3Json(typeRegistry: CelestCloud.typeRegistry)
+                .toString(),
       );
     }
     if (_operation.hasError()) {

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
 import 'package:celest_cloud/src/cloud/cloud.dart';
@@ -11,11 +12,9 @@ import 'package:http/http.dart' as http;
 final class OrganizationsProtocolHttp
     with BaseProtocol
     implements OrganizationsProtocol {
-  OrganizationsProtocolHttp({
-    required Uri uri,
-    http.Client? httpClient,
-  })  : _client = httpClient ?? http.Client(),
-        _baseUri = uri;
+  OrganizationsProtocolHttp({required Uri uri, http.Client? httpClient})
+    : _client = httpClient ?? http.Client(),
+      _baseUri = uri;
 
   final http.Client _client;
   final Uri _baseUri;
@@ -23,7 +22,7 @@ final class OrganizationsProtocolHttp
   @override
   Future<Operation> create(CreateOrganizationRequest request) async {
     const path = '/v1alpha1/organizations';
-    final uri = _baseUri.replace(
+    final Uri uri = _baseUri.replace(
       path: path,
       queryParameters: {
         if (request.hasParent()) 'parent': request.parent,
@@ -33,33 +32,30 @@ final class OrganizationsProtocolHttp
           'validateOnly': request.validateOnly.toString(),
       },
     );
-    final req = http.Request('POST', uri)
-      ..body = jsonEncode(
-        request.organization.toProto3Json(
-          typeRegistry: CelestCloud.typeRegistry,
-        ),
-      )
-      ..headers['content-type'] = 'application/json'
-      ..headers['accept'] = 'application/json';
-    final res = await _client.send(req);
-    final body = await res.stream.toBytes();
+    final req =
+        http.Request('POST', uri)
+          ..body = jsonEncode(
+            request.organization.toProto3Json(
+              typeRegistry: CelestCloud.typeRegistry,
+            ),
+          )
+          ..headers['content-type'] = 'application/json'
+          ..headers['accept'] = 'application/json';
+    final http.StreamedResponse res = await _client.send(req);
+    final Uint8List body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      throwError(
-        statusCode: res.statusCode,
-        bodyBytes: body,
-      );
+      throwError(statusCode: res.statusCode, bodyBytes: body);
     }
-    return Operation()
-      ..mergeFromProto3Json(
-        JsonUtf8.decode(body),
-        typeRegistry: CelestCloud.typeRegistry,
-      );
+    return Operation()..mergeFromProto3Json(
+      JsonUtf8.decode(body),
+      typeRegistry: CelestCloud.typeRegistry,
+    );
   }
 
   @override
   Future<Operation> delete(DeleteOrganizationRequest request) async {
     final path = '/v1alpha1/${request.name}';
-    final uri = _baseUri.replace(
+    final Uri uri = _baseUri.replace(
       path: path,
       queryParameters: {
         if (request.hasForce()) 'force': request.force.toString(),
@@ -70,45 +66,38 @@ final class OrganizationsProtocolHttp
           'validateOnly': request.validateOnly.toString(),
       },
     );
-    final req = http.Request('DELETE', uri)
-      ..headers['content-type'] = 'application/json'
-      ..headers['accept'] = 'application/json';
-    final res = await _client.send(req);
-    final body = await res.stream.toBytes();
+    final req =
+        http.Request('DELETE', uri)
+          ..headers['content-type'] = 'application/json'
+          ..headers['accept'] = 'application/json';
+    final http.StreamedResponse res = await _client.send(req);
+    final Uint8List body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      throwError(
-        statusCode: res.statusCode,
-        bodyBytes: body,
-      );
+      throwError(statusCode: res.statusCode, bodyBytes: body);
     }
-    return Operation()
-      ..mergeFromProto3Json(
-        JsonUtf8.decode(body),
-        typeRegistry: CelestCloud.typeRegistry,
-        // JSON for Empty has `value` field for some reason.
-        ignoreUnknownFields: true,
-      );
+    return Operation()..mergeFromProto3Json(
+      JsonUtf8.decode(body),
+      typeRegistry: CelestCloud.typeRegistry,
+      // JSON for Empty has `value` field for some reason.
+      ignoreUnknownFields: true,
+    );
   }
 
   @override
   Future<Organization> get(GetOrganizationRequest request) async {
     final path = '/v1alpha1/${request.name}';
-    final uri = _baseUri.replace(path: path);
+    final Uri uri = _baseUri.replace(path: path);
     final req = http.Request('GET', uri)
       ..headers['accept'] = 'application/json';
-    final res = await _client.send(req);
-    final body = await res.stream.toBytes();
+    final http.StreamedResponse res = await _client.send(req);
+    final Uint8List body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      throwError(
-        statusCode: res.statusCode,
-        bodyBytes: body,
-      );
+      throwError(statusCode: res.statusCode, bodyBytes: body);
     }
-    return Organization()
-      ..mergeFromProto3Json(
-        JsonUtf8.decode(body),
-        typeRegistry: CelestCloud.typeRegistry,
-      );
+    return Organization()..mergeFromProto3Json(
+      JsonUtf8.decode(body),
+      typeRegistry: CelestCloud.typeRegistry,
+    );
   }
 
   @override
@@ -116,7 +105,7 @@ final class OrganizationsProtocolHttp
     ListOrganizationsRequest request,
   ) async {
     const path = '/v1alpha1/organizations';
-    final uri = _baseUri.replace(
+    final Uri uri = _baseUri.replace(
       path: path,
       queryParameters: {
         if (request.hasPageSize()) 'pageSize': request.pageSize.toString(),
@@ -129,25 +118,21 @@ final class OrganizationsProtocolHttp
     );
     final req = http.Request('GET', uri)
       ..headers['accept'] = 'application/json';
-    final res = await _client.send(req);
-    final body = await res.stream.toBytes();
+    final http.StreamedResponse res = await _client.send(req);
+    final Uint8List body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      throwError(
-        statusCode: res.statusCode,
-        bodyBytes: body,
-      );
+      throwError(statusCode: res.statusCode, bodyBytes: body);
     }
-    return ListOrganizationsResponse()
-      ..mergeFromProto3Json(
-        JsonUtf8.decode(body),
-        typeRegistry: CelestCloud.typeRegistry,
-      );
+    return ListOrganizationsResponse()..mergeFromProto3Json(
+      JsonUtf8.decode(body),
+      typeRegistry: CelestCloud.typeRegistry,
+    );
   }
 
   @override
   Future<Operation> update(UpdateOrganizationRequest request) async {
     final path = '/v1alpha1/${request.organization.name}';
-    final uri = _baseUri.replace(
+    final Uri uri = _baseUri.replace(
       path: path,
       queryParameters: {
         if (request.hasUpdateMask())
@@ -158,53 +143,45 @@ final class OrganizationsProtocolHttp
           'validateOnly': request.validateOnly.toString(),
       },
     );
-    final req = http.Request('PATCH', uri)
-      ..body = jsonEncode(
-        request.organization.toProto3Json(
-          typeRegistry: CelestCloud.typeRegistry,
-        ),
-      )
-      ..headers['content-type'] = 'application/json'
-      ..headers['accept'] = 'application/json';
-    final res = await _client.send(req);
-    final body = await res.stream.toBytes();
+    final req =
+        http.Request('PATCH', uri)
+          ..body = jsonEncode(
+            request.organization.toProto3Json(
+              typeRegistry: CelestCloud.typeRegistry,
+            ),
+          )
+          ..headers['content-type'] = 'application/json'
+          ..headers['accept'] = 'application/json';
+    final http.StreamedResponse res = await _client.send(req);
+    final Uint8List body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      throwError(
-        statusCode: res.statusCode,
-        bodyBytes: body,
-      );
+      throwError(statusCode: res.statusCode, bodyBytes: body);
     }
-    return Operation()
-      ..mergeFromProto3Json(
-        JsonUtf8.decode(body),
-        typeRegistry: CelestCloud.typeRegistry,
-      );
+    return Operation()..mergeFromProto3Json(
+      JsonUtf8.decode(body),
+      typeRegistry: CelestCloud.typeRegistry,
+    );
   }
 
   @override
   Future<Operation> rename(RenameOrganizationRequest request) async {
     final path = '/v1alpha1/${request.name}:rename';
-    final uri = _baseUri.replace(path: path);
-    final req = http.Request('POST', uri)
-      ..body = jsonEncode(
-        request.toProto3Json(
-          typeRegistry: CelestCloud.typeRegistry,
-        ),
-      )
-      ..headers['content-type'] = 'application/json'
-      ..headers['accept'] = 'application/json';
-    final res = await _client.send(req);
-    final body = await res.stream.toBytes();
+    final Uri uri = _baseUri.replace(path: path);
+    final req =
+        http.Request('POST', uri)
+          ..body = jsonEncode(
+            request.toProto3Json(typeRegistry: CelestCloud.typeRegistry),
+          )
+          ..headers['content-type'] = 'application/json'
+          ..headers['accept'] = 'application/json';
+    final http.StreamedResponse res = await _client.send(req);
+    final Uint8List body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      throwError(
-        statusCode: res.statusCode,
-        bodyBytes: body,
-      );
+      throwError(statusCode: res.statusCode, bodyBytes: body);
     }
-    return Operation()
-      ..mergeFromProto3Json(
-        JsonUtf8.decode(body),
-        typeRegistry: CelestCloud.typeRegistry,
-      );
+    return Operation()..mergeFromProto3Json(
+      JsonUtf8.decode(body),
+      typeRegistry: CelestCloud.typeRegistry,
+    );
   }
 }

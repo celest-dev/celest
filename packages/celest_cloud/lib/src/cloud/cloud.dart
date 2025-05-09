@@ -38,20 +38,20 @@ class CelestCloud {
   }) {
     return kIsWeb
         ? CelestCloud.http(
-            uri,
-            authenticator: authenticator,
-            clientType: clientType,
-            logger: logger,
-            httpClient: httpClient,
-          )
+          uri,
+          authenticator: authenticator,
+          clientType: clientType,
+          logger: logger,
+          httpClient: httpClient,
+        )
         : CelestCloud.grpc(
-            uri,
-            authenticator: authenticator,
-            clientType: clientType,
-            logger: logger,
-            userAgent: userAgent,
-            httpClient: httpClient,
-          );
+          uri,
+          authenticator: authenticator,
+          clientType: clientType,
+          logger: logger,
+          userAgent: userAgent,
+          httpClient: httpClient,
+        );
   }
 
   CelestCloud._({
@@ -61,12 +61,12 @@ class CelestCloud {
     ClientType? clientType,
     Logger? logger,
     http.Client? httpClient,
-  })  : _protocol = protocol,
-        _baseUri = uri,
-        _httpClient = httpClient,
-        _authenticator = authenticator,
-        _clientType = clientType ?? _defaultClientType,
-        _logger = logger ?? Logger('Celest.Cloud');
+  }) : _protocol = protocol,
+       _baseUri = uri,
+       _httpClient = httpClient,
+       _authenticator = authenticator,
+       _clientType = clientType ?? _defaultClientType,
+       _logger = logger ?? Logger('Celest.Cloud');
 
   CelestCloud.http(
     Uri uri, {
@@ -75,18 +75,18 @@ class CelestCloud {
     Logger? logger,
     http.Client? httpClient,
   }) : this._(
-          uri: uri,
-          authenticator: authenticator,
-          protocol: CloudProtocolHttp(
-            uri: uri,
-            httpClient: httpClient,
-            authenticator: authenticator,
-            logger: logger,
-          ),
-          clientType: clientType,
-          logger: logger,
-          httpClient: httpClient,
-        );
+         uri: uri,
+         authenticator: authenticator,
+         protocol: CloudProtocolHttp(
+           uri: uri,
+           httpClient: httpClient,
+           authenticator: authenticator,
+           logger: logger,
+         ),
+         clientType: clientType,
+         logger: logger,
+         httpClient: httpClient,
+       );
 
   /// Creates a gRPC interface for Celest Cloud.
   ///
@@ -99,32 +99,33 @@ class CelestCloud {
     Logger? logger,
     http.Client? httpClient,
   }) : this._(
-          uri: address is Uri ? address : null,
-          authenticator: authenticator,
-          protocol: CloudProtocolGrpc(
-            host: address,
-            userAgent: userAgent,
-            authenticator: authenticator,
-            logger: logger,
-          ),
-          clientType: clientType,
-          logger: logger,
-          httpClient: httpClient,
-        );
+         uri: address is Uri ? address : null,
+         authenticator: authenticator,
+         protocol: CloudProtocolGrpc(
+           host: address,
+           userAgent: userAgent,
+           authenticator: authenticator,
+           logger: logger,
+         ),
+         clientType: clientType,
+         logger: logger,
+         httpClient: httpClient,
+       );
 
-  static final _defaultClientType = kIsWeb
-      ? ClientType.WEB
-      : os.isAndroid
+  static final _defaultClientType =
+      kIsWeb
+          ? ClientType.WEB
+          : os.isAndroid
           ? ClientType.ANDROID
           : os.isIOS
-              ? ClientType.IOS
-              : os.isMacOS
-                  ? ClientType.MACOS
-                  : os.isWindows
-                      ? ClientType.WINDOWS
-                      : os.isLinux
-                          ? ClientType.LINUX
-                          : ClientType.CLIENT_TYPE_UNSPECIFIED;
+          ? ClientType.IOS
+          : os.isMacOS
+          ? ClientType.MACOS
+          : os.isWindows
+          ? ClientType.WINDOWS
+          : os.isLinux
+          ? ClientType.LINUX
+          : ClientType.CLIENT_TYPE_UNSPECIFIED;
 
   static final typeRegistry = TypeRegistry([
     // Cloud

@@ -21,12 +21,12 @@ final class CloudProtocolHttp implements CloudProtocol {
     required Authenticator authenticator,
     http.Client? httpClient,
     Logger? logger,
-  })  : _client = CelestHttpClient(
-          baseClient: httpClient,
-          authenticator: authenticator,
-          logger: logger,
-        ),
-        _baseUri = uri;
+  }) : _client = CelestHttpClient(
+         baseClient: httpClient,
+         authenticator: authenticator,
+         logger: logger,
+       ),
+       _baseUri = uri;
 
   final http.Client _client;
   final Uri _baseUri;

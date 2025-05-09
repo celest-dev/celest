@@ -9,8 +9,8 @@ final class Authentication with BaseService {
     required AuthenticationProtocol protocol,
     ClientType clientType = ClientType.CLIENT_TYPE_UNSPECIFIED,
     this.logger,
-  })  : _clientType = clientType,
-        _protocol = protocol;
+  }) : _clientType = clientType,
+       _protocol = protocol;
 
   final AuthenticationProtocol _protocol;
   @override
@@ -40,7 +40,7 @@ final class Authentication with BaseService {
       sessionId: state?.sessionId,
       sessionToken: state?.sessionToken,
     );
-    final response = await run(
+    final EndSessionResponse response = await run(
       'Authentication.EndSession',
       request: request,
       action: _protocol.endSession,
@@ -61,18 +61,12 @@ final class EmailAuthentication with BaseService {
   final Logger? logger;
   final ClientType _clientType;
 
-  Future<EmailSessionState> start({
-    required String email,
-  }) async {
+  Future<EmailSessionState> start({required String email}) async {
     final request = StartSessionRequest(
-      emailOtp: AuthenticationFactorEmailOtp(
-        email: email,
-      ),
-      client: SessionClient(
-        clientType: _clientType,
-      ),
+      emailOtp: AuthenticationFactorEmailOtp(email: email),
+      client: SessionClient(clientType: _clientType),
     );
-    final response = await run(
+    final Session response = await run(
       'Email.StartSession',
       request: request,
       action: _client.startSession,
@@ -108,12 +102,10 @@ final class EmailAuthentication with BaseService {
       sessionId: state.sessionId,
       sessionToken: state.sessionToken,
       resend: AuthenticationFactor(
-        emailOtp: AuthenticationFactorEmailOtp(
-          email: state.email,
-        ),
+        emailOtp: AuthenticationFactorEmailOtp(email: state.email),
       ),
     );
-    final response = await run(
+    final Session response = await run(
       'Email.ContinueSession',
       request: request,
       action: _client.continueSession,
@@ -139,13 +131,10 @@ final class EmailAuthentication with BaseService {
       sessionId: state.sessionId,
       sessionToken: state.sessionToken,
       proof: AuthenticationFactor(
-        emailOtp: AuthenticationFactorEmailOtp(
-          email: state.email,
-          code: code,
-        ),
+        emailOtp: AuthenticationFactorEmailOtp(email: state.email, code: code),
       ),
     );
-    final response = await run(
+    final Session response = await run(
       'Email.ContinueSession',
       request: request,
       action: _client.continueSession,
@@ -170,35 +159,33 @@ final class EmailAuthentication with BaseService {
       sessionId: state.sessionId,
       sessionToken: state.sessionToken,
       confirmation: switch (state) {
-        EmailSessionRegisterUser(:final user) =>
-          AuthenticationPendingConfirmation(
-            registerUser: user,
-          ),
+        EmailSessionRegisterUser(:final User user) =>
+          AuthenticationPendingConfirmation(registerUser: user),
       },
     );
-    final response = await run(
+    final Session response = await run(
       'Email.ContinueSession',
       request: request,
       action: _client.continueSession,
     );
     return switch (response.whichState()) {
-      Session_State.nextStep when response.nextStep.hasNeedsProof() => switch (
-            response.nextStep.needsProof.whichFactor()) {
+      Session_State.nextStep when response.nextStep.hasNeedsProof() =>
+        switch (response.nextStep.needsProof.whichFactor()) {
           AuthenticationFactor_Factor.emailOtp => EmailSessionVerifyCode(
-              sessionId: response.sessionId,
-              sessionToken: response.sessionToken,
-              email: state.email,
-            ),
+            sessionId: response.sessionId,
+            sessionToken: response.sessionToken,
+            email: state.email,
+          ),
           _ => throw StateError('Unexpected response: $response'),
         },
       Session_State.success => EmailSessionSuccess(
-          sessionId: response.sessionId,
-          sessionToken: response.sessionToken,
-          identityToken: response.success.identityToken,
-          user: response.success.user,
-          isNewUser: response.success.isNewUser,
-          email: state.email,
-        ),
+        sessionId: response.sessionId,
+        sessionToken: response.sessionToken,
+        identityToken: response.success.identityToken,
+        user: response.success.user,
+        isNewUser: response.success.isNewUser,
+        email: state.email,
+      ),
       _ => throw StateError('Unexpected response: $response'),
     };
   }
@@ -212,18 +199,12 @@ final class SmsAuthentication with BaseService {
   final Logger? logger;
   final ClientType _clientType;
 
-  Future<SmsSessionState> start({
-    required String phoneNumber,
-  }) async {
+  Future<SmsSessionState> start({required String phoneNumber}) async {
     final request = StartSessionRequest(
-      smsOtp: AuthenticationFactorSmsOtp(
-        phoneNumber: phoneNumber,
-      ),
-      client: SessionClient(
-        clientType: _clientType,
-      ),
+      smsOtp: AuthenticationFactorSmsOtp(phoneNumber: phoneNumber),
+      client: SessionClient(clientType: _clientType),
     );
-    final response = await run(
+    final Session response = await run(
       'Sms.StartSession',
       request: request,
       action: _client.startSession,
@@ -259,12 +240,10 @@ final class SmsAuthentication with BaseService {
       sessionId: state.sessionId,
       sessionToken: state.sessionToken,
       resend: AuthenticationFactor(
-        smsOtp: AuthenticationFactorSmsOtp(
-          phoneNumber: state.phoneNumber,
-        ),
+        smsOtp: AuthenticationFactorSmsOtp(phoneNumber: state.phoneNumber),
       ),
     );
-    final response = await run(
+    final Session response = await run(
       'Sms.ContinueSession',
       request: request,
       action: _client.continueSession,
@@ -296,7 +275,7 @@ final class SmsAuthentication with BaseService {
         ),
       ),
     );
-    final response = await run(
+    final Session response = await run(
       'Sms.ContinueSession',
       request: request,
       action: _client.continueSession,
@@ -321,35 +300,33 @@ final class SmsAuthentication with BaseService {
       sessionId: state.sessionId,
       sessionToken: state.sessionToken,
       confirmation: switch (state) {
-        SmsSessionRegisterUser(:final user) =>
-          AuthenticationPendingConfirmation(
-            registerUser: user,
-          ),
+        SmsSessionRegisterUser(:final User user) =>
+          AuthenticationPendingConfirmation(registerUser: user),
       },
     );
-    final response = await run(
+    final Session response = await run(
       'Sms.ContinueSession',
       request: request,
       action: _client.continueSession,
     );
     return switch (response.whichState()) {
-      Session_State.nextStep when response.nextStep.hasNeedsProof() => switch (
-            response.nextStep.needsProof.whichFactor()) {
+      Session_State.nextStep when response.nextStep.hasNeedsProof() =>
+        switch (response.nextStep.needsProof.whichFactor()) {
           AuthenticationFactor_Factor.smsOtp => SmsSessionVerifyCode(
-              sessionId: response.sessionId,
-              sessionToken: response.sessionToken,
-              phoneNumber: state.phoneNumber,
-            ),
+            sessionId: response.sessionId,
+            sessionToken: response.sessionToken,
+            phoneNumber: state.phoneNumber,
+          ),
           _ => throw StateError('Unexpected response: $response'),
         },
       Session_State.success => SmsSessionSuccess(
-          sessionId: response.sessionId,
-          sessionToken: response.sessionToken,
-          identityToken: response.success.identityToken,
-          user: response.success.user,
-          isNewUser: response.success.isNewUser,
-          phoneNumber: state.phoneNumber,
-        ),
+        sessionId: response.sessionId,
+        sessionToken: response.sessionToken,
+        identityToken: response.success.identityToken,
+        user: response.success.user,
+        isNewUser: response.success.isNewUser,
+        phoneNumber: state.phoneNumber,
+      ),
       _ => throw StateError('Unexpected response: $response'),
     };
   }
@@ -368,17 +345,13 @@ final class IdpAuthentication with BaseService {
     required Uri redirectUri,
   }) async {
     final request = StartSessionRequest(
-      idp: AuthenticationFactorIdp(
-        provider: provider,
-      ),
+      idp: AuthenticationFactorIdp(provider: provider),
       client: SessionClient(
         clientType: _clientType,
-        callbacks: SessionCallbacks(
-          successUri: redirectUri.toString(),
-        ),
+        callbacks: SessionCallbacks(successUri: redirectUri.toString()),
       ),
     );
-    final response = await run(
+    final Session response = await run(
       'Idp.StartSession',
       request: request,
       action: _client.startSession,
@@ -391,9 +364,7 @@ final class IdpAuthentication with BaseService {
           sessionId: response.sessionId,
           sessionToken: response.sessionToken,
           provder: provider,
-          uri: Uri.parse(
-            response.nextStep.needsProof.idp.redirectUri,
-          ),
+          uri: Uri.parse(response.nextStep.needsProof.idp.redirectUri),
         ),
       _ => throw StateError('Unexpected response: $response'),
     };
@@ -413,7 +384,7 @@ final class IdpAuthentication with BaseService {
         ),
       ),
     );
-    final response = await run(
+    final Session response = await run(
       'Idp.ContinueSession',
       request: request,
       action: _client.continueSession,
@@ -436,12 +407,12 @@ final class IdpAuthentication with BaseService {
           _ => throw StateError('Unexpected response: $response'),
         },
       Session_State.success => IdpSessionSuccess(
-          sessionId: response.sessionId,
-          sessionToken: response.sessionToken,
-          identityToken: response.success.identityToken,
-          user: response.success.user,
-          isNewUser: response.success.isNewUser,
-        ),
+        sessionId: response.sessionId,
+        sessionToken: response.sessionToken,
+        identityToken: response.success.identityToken,
+        user: response.success.user,
+        isNewUser: response.success.isNewUser,
+      ),
       _ => throw StateError('Unexpected response: $response'),
     };
   }
@@ -453,16 +424,13 @@ final class IdpAuthentication with BaseService {
       sessionId: state.sessionId,
       sessionToken: state.sessionToken,
       confirmation: switch (state) {
-        IdpSessionLinkUser(:final user) => AuthenticationPendingConfirmation(
-            linkExistingUser: user,
-          ),
-        IdpSessionRegisterUser(:final user) =>
-          AuthenticationPendingConfirmation(
-            registerUser: user,
-          ),
+        IdpSessionLinkUser(:final User user) =>
+          AuthenticationPendingConfirmation(linkExistingUser: user),
+        IdpSessionRegisterUser(:final User user) =>
+          AuthenticationPendingConfirmation(registerUser: user),
       },
     );
-    final response = await run(
+    final Session response = await run(
       'Idp.ContinueSession',
       request: request,
       action: _client.continueSession,

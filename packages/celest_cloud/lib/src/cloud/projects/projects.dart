@@ -13,8 +13,8 @@ final class Projects with BaseService {
     required ProjectsProtocol protocol,
     required OperationsProtocol operations,
     this.logger,
-  })  : _protocol = protocol,
-        _operations = operations;
+  }) : _protocol = protocol,
+       _operations = operations;
 
   @override
   final Logger? logger;
@@ -52,7 +52,7 @@ final class Projects with BaseService {
       }),
       validateOnly: validateOnly,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'Projects.Create',
       request: request,
       action: _protocol.create,
@@ -68,11 +68,7 @@ final class Projects with BaseService {
   Future<Project?> get(String name) async {
     try {
       final request = GetProjectRequest(name: name);
-      return await run(
-        'Projects.Get',
-        request: request,
-        action: _protocol.get,
-      );
+      return await run('Projects.Get', request: request, action: _protocol.get);
     } on NotFoundException {
       return null;
     }
@@ -94,11 +90,7 @@ final class Projects with BaseService {
       orderBy: orderBy,
       showDeleted: showDeleted,
     );
-    return run(
-      'Projects.List',
-      request: request,
-      action: _protocol.list,
-    );
+    return run('Projects.List', request: request, action: _protocol.list);
   }
 
   Stream<OperationState<OperationMetadata, Project>> update({
@@ -113,7 +105,7 @@ final class Projects with BaseService {
       validateOnly: validateOnly,
       allowMissing: allowMissing,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'Projects.Update',
       request: request,
       action: _protocol.update,
@@ -140,7 +132,7 @@ final class Projects with BaseService {
       validateOnly: validateOnly,
       force: force,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'Projects.Delete',
       request: request,
       action: _protocol.delete,
@@ -163,7 +155,7 @@ final class Projects with BaseService {
       etag: etag,
       validateOnly: validateOnly,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'Projects.Undelete',
       request: request,
       action: _protocol.undelete,
@@ -188,7 +180,7 @@ final class Projects with BaseService {
       etag: etag,
       validateOnly: validateOnly,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'Projects.Rename',
       request: request,
       action: _protocol.rename,

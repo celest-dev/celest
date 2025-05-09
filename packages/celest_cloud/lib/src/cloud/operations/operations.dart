@@ -5,10 +5,8 @@ import 'package:celest_cloud/src/util/well_known.dart';
 import 'package:logging/logging.dart';
 
 final class Operations with BaseService {
-  Operations({
-    required OperationsProtocol protocol,
-    this.logger,
-  }) : _protocol = protocol;
+  Operations({required OperationsProtocol protocol, this.logger})
+    : _protocol = protocol;
 
   @override
   final Logger? logger;
@@ -39,10 +37,7 @@ final class Operations with BaseService {
     return run('Operations.Cancel', request: request, action: _protocol.cancel);
   }
 
-  Future<Operation> wait(
-    String name, {
-    Duration? timeout,
-  }) async {
+  Future<Operation> wait(String name, {Duration? timeout}) async {
     final request = WaitOperationRequest(
       name: name,
       timeout: timeout?.toProto(),

@@ -6,10 +6,8 @@ import 'package:celest_core/celest_core.dart';
 import 'package:logging/logging.dart';
 
 final class Subscriptions with BaseService {
-  Subscriptions({
-    required SubscriptionsProtocol protocol,
-    this.logger,
-  }) : _protocol = protocol;
+  Subscriptions({required SubscriptionsProtocol protocol, this.logger})
+    : _protocol = protocol;
 
   @override
   final Logger? logger;
@@ -64,10 +62,7 @@ final class Subscriptions with BaseService {
     required String name,
     CancelSubscriptionDetails? details,
   }) {
-    final request = CancelSubscriptionRequest(
-      name: name,
-      details: details,
-    );
+    final request = CancelSubscriptionRequest(name: name, details: details);
     return run(
       'Subscriptions.Cancel',
       request: request,

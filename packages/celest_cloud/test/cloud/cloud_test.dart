@@ -8,7 +8,7 @@ import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final logger = Logger.root;
+  final Logger logger = Logger.root;
   logger.level = Level.ALL;
   logger.onRecord.listen((log) {
     print('[${log.level.name}] ${log.message}');
@@ -28,7 +28,7 @@ void main() {
 
     group('IDP', () {
       test('get authorization url', () async {
-        final state = await celest.authentication.idp.start(
+        final IdpSessionAuthorize state = await celest.authentication.idp.start(
           provider: IdentityProviderType.GOOGLE,
           redirectUri: Uri.parse('http://localhost:7777/auth/callback'),
         );
@@ -41,9 +41,7 @@ void main() {
         await celest.organizations
             .create(
               organizationId: 'test-organization',
-              organization: Organization(
-                displayName: 'Test Organization',
-              ),
+              organization: Organization(displayName: 'Test Organization'),
               validateOnly: true,
             )
             .last;
@@ -54,14 +52,13 @@ void main() {
       });
 
       test('create organization', () async {
-        final organization = await celest.organizations
-            .create(
-              organizationId: 'test-organization',
-              organization: Organization(
-                displayName: 'Test Organization',
-              ),
-            )
-            .last;
+        final OperationState<OperationMetadata, Organization> organization =
+            await celest.organizations
+                .create(
+                  organizationId: 'test-organization',
+                  organization: Organization(displayName: 'Test Organization'),
+                )
+                .last;
         expect(
           organization,
           isA<Organization>()

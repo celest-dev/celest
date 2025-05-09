@@ -8,11 +8,11 @@ final class ProjectsProtocolGrpc implements ProjectsProtocol {
   ProjectsProtocolGrpc(
     ClientChannel channel, {
     List<ClientInterceptor>? interceptors,
-  })  : _client = ProjectsClient(channel, interceptors: interceptors),
-        environments = ProjectEnvironmentsProtocolGrpc(
-          channel,
-          interceptors: interceptors,
-        );
+  }) : _client = ProjectsClient(channel, interceptors: interceptors),
+       environments = ProjectEnvironmentsProtocolGrpc(
+         channel,
+         interceptors: interceptors,
+       );
 
   final ProjectsClient _client;
 

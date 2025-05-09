@@ -11,8 +11,8 @@ final class Organizations with BaseService {
     required OrganizationsProtocol protocol,
     required OperationsProtocol operations,
     this.logger,
-  })  : _protocol = protocol,
-        _operations = operations;
+  }) : _protocol = protocol,
+       _operations = operations;
 
   @override
   final Logger? logger;
@@ -31,7 +31,7 @@ final class Organizations with BaseService {
       organization: organization,
       validateOnly: validateOnly,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'Organizations.Create',
       request: request,
       action: _protocol.create,
@@ -73,11 +73,7 @@ final class Organizations with BaseService {
       orderBy: orderBy,
       showDeleted: showDeleted,
     );
-    return run(
-      'Organizations.List',
-      request: request,
-      action: _protocol.list,
-    );
+    return run('Organizations.List', request: request, action: _protocol.list);
   }
 
   CloudOperation<Organization> update({
@@ -92,7 +88,7 @@ final class Organizations with BaseService {
       validateOnly: validateOnly,
       allowMissing: allowMissing,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'Organizations.Update',
       request: request,
       action: _protocol.update,
@@ -119,7 +115,7 @@ final class Organizations with BaseService {
       allowMissing: allowMissing,
       validateOnly: validateOnly,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'Organizations.Delete',
       request: request,
       action: _protocol.delete,
@@ -144,7 +140,7 @@ final class Organizations with BaseService {
       etag: etag,
       validateOnly: validateOnly,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'Organizations.Rename',
       request: request,
       action: _protocol.rename,

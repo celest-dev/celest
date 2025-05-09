@@ -7,10 +7,7 @@ final class ProjectEnvironmentsProtocolGrpc
   ProjectEnvironmentsProtocolGrpc(
     ClientChannel channel, {
     List<ClientInterceptor>? interceptors,
-  }) : _client = ProjectEnvironmentsClient(
-          channel,
-          interceptors: interceptors,
-        );
+  }) : _client = ProjectEnvironmentsClient(channel, interceptors: interceptors);
 
   final ProjectEnvironmentsClient _client;
 

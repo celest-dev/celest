@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:celest_cloud/src/cloud/base/base_protocol.dart';
 import 'package:celest_cloud/src/cloud/cloud.dart';
@@ -10,11 +11,9 @@ import 'package:http/http.dart' as http;
 final class SubscriptionsProtocolHttp
     with BaseProtocol
     implements SubscriptionsProtocol {
-  SubscriptionsProtocolHttp({
-    required Uri uri,
-    http.Client? httpClient,
-  })  : _client = httpClient ?? http.Client(),
-        _baseUri = uri;
+  SubscriptionsProtocolHttp({required Uri uri, http.Client? httpClient})
+    : _client = httpClient ?? http.Client(),
+      _baseUri = uri;
 
   final http.Client _client;
   final Uri _baseUri;
@@ -24,74 +23,60 @@ final class SubscriptionsProtocolHttp
     CancelSubscriptionRequest request,
   ) async {
     final path = '/v1alpha1/${request.name}:cancel';
-    final uri = _baseUri.replace(path: path);
-    final req = http.Request('POST', uri)
-      ..headers['accept'] = 'application/json'
-      ..body = jsonEncode(
-        request.toProto3Json(
-          typeRegistry: CelestCloud.typeRegistry,
-        ),
-      );
-    final res = await _client.send(req);
-    final body = await res.stream.toBytes();
+    final Uri uri = _baseUri.replace(path: path);
+    final req =
+        http.Request('POST', uri)
+          ..headers['accept'] = 'application/json'
+          ..body = jsonEncode(
+            request.toProto3Json(typeRegistry: CelestCloud.typeRegistry),
+          );
+    final http.StreamedResponse res = await _client.send(req);
+    final Uint8List body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      throwError(
-        statusCode: res.statusCode,
-        bodyBytes: body,
-      );
+      throwError(statusCode: res.statusCode, bodyBytes: body);
     }
-    return CancelSubscriptionResponse()
-      ..mergeFromProto3Json(
-        JsonUtf8.decode(body),
-        typeRegistry: CelestCloud.typeRegistry,
-      );
+    return CancelSubscriptionResponse()..mergeFromProto3Json(
+      JsonUtf8.decode(body),
+      typeRegistry: CelestCloud.typeRegistry,
+    );
   }
 
   @override
   Future<ChangePlanResponse> changePlan(ChangePlanRequest request) async {
     final path = '/v1alpha1/${request.name}:changePlan';
-    final uri = _baseUri.replace(path: path);
-    final req = http.Request('POST', uri)
-      ..headers['accept'] = 'application/json'
-      ..body = jsonEncode(
-        request.toProto3Json(
-          typeRegistry: CelestCloud.typeRegistry,
-        ),
-      );
-    final res = await _client.send(req);
-    final body = await res.stream.toBytes();
+    final Uri uri = _baseUri.replace(path: path);
+    final req =
+        http.Request('POST', uri)
+          ..headers['accept'] = 'application/json'
+          ..body = jsonEncode(
+            request.toProto3Json(typeRegistry: CelestCloud.typeRegistry),
+          );
+    final http.StreamedResponse res = await _client.send(req);
+    final Uint8List body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      throwError(
-        statusCode: res.statusCode,
-        bodyBytes: body,
-      );
+      throwError(statusCode: res.statusCode, bodyBytes: body);
     }
-    return ChangePlanResponse()
-      ..mergeFromProto3Json(
-        JsonUtf8.decode(body),
-        typeRegistry: CelestCloud.typeRegistry,
-      );
+    return ChangePlanResponse()..mergeFromProto3Json(
+      JsonUtf8.decode(body),
+      typeRegistry: CelestCloud.typeRegistry,
+    );
   }
 
   @override
   Future<Subscription> get(GetSubscriptionRequest request) async {
     final path = '/v1alpha1/${request.name}';
-    final uri = _baseUri.replace(path: path);
+    final Uri uri = _baseUri.replace(path: path);
     final req = http.Request('GET', uri)
       ..headers['accept'] = 'application/json';
-    final res = await _client.send(req);
-    final body = await res.stream.toBytes();
+    final http.StreamedResponse res = await _client.send(req);
+    final Uint8List body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      throwError(
-        statusCode: res.statusCode,
-        bodyBytes: body,
-      );
+      throwError(statusCode: res.statusCode, bodyBytes: body);
     }
-    return Subscription()
-      ..mergeFromProto3Json(
-        JsonUtf8.decode(body),
-        typeRegistry: CelestCloud.typeRegistry,
-      );
+    return Subscription()..mergeFromProto3Json(
+      JsonUtf8.decode(body),
+      typeRegistry: CelestCloud.typeRegistry,
+    );
   }
 
   @override
@@ -99,27 +84,22 @@ final class SubscriptionsProtocolHttp
     PauseSubscriptionRequest request,
   ) async {
     final path = '/v1alpha1/${request.name}:pause';
-    final uri = _baseUri.replace(path: path);
-    final req = http.Request('POST', uri)
-      ..headers['accept'] = 'application/json'
-      ..body = jsonEncode(
-        request.toProto3Json(
-          typeRegistry: CelestCloud.typeRegistry,
-        ),
-      );
-    final res = await _client.send(req);
-    final body = await res.stream.toBytes();
+    final Uri uri = _baseUri.replace(path: path);
+    final req =
+        http.Request('POST', uri)
+          ..headers['accept'] = 'application/json'
+          ..body = jsonEncode(
+            request.toProto3Json(typeRegistry: CelestCloud.typeRegistry),
+          );
+    final http.StreamedResponse res = await _client.send(req);
+    final Uint8List body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      throwError(
-        statusCode: res.statusCode,
-        bodyBytes: body,
-      );
+      throwError(statusCode: res.statusCode, bodyBytes: body);
     }
-    return PauseSubscriptionResponse()
-      ..mergeFromProto3Json(
-        JsonUtf8.decode(body),
-        typeRegistry: CelestCloud.typeRegistry,
-      );
+    return PauseSubscriptionResponse()..mergeFromProto3Json(
+      JsonUtf8.decode(body),
+      typeRegistry: CelestCloud.typeRegistry,
+    );
   }
 
   @override
@@ -127,7 +107,7 @@ final class SubscriptionsProtocolHttp
     DescribePricingRequest request,
   ) async {
     const path = '/v1alpha1/subscriptions:describePricing';
-    final uri = _baseUri.replace(
+    final Uri uri = _baseUri.replace(
       path: path,
       queryParameters: {
         if (request.currencyCode.isNotEmpty)
@@ -137,18 +117,14 @@ final class SubscriptionsProtocolHttp
     );
     final req = http.Request('GET', uri)
       ..headers['accept'] = 'application/json';
-    final res = await _client.send(req);
-    final body = await res.stream.toBytes();
+    final http.StreamedResponse res = await _client.send(req);
+    final Uint8List body = await res.stream.toBytes();
     if (res.statusCode != 200) {
-      throwError(
-        statusCode: res.statusCode,
-        bodyBytes: body,
-      );
+      throwError(statusCode: res.statusCode, bodyBytes: body);
     }
-    return DescribePricingResponse()
-      ..mergeFromProto3Json(
-        JsonUtf8.decode(body),
-        typeRegistry: CelestCloud.typeRegistry,
-      );
+    return DescribePricingResponse()..mergeFromProto3Json(
+      JsonUtf8.decode(body),
+      typeRegistry: CelestCloud.typeRegistry,
+    );
   }
 }
