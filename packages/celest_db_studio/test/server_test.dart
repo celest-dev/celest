@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:celest_db_studio/celest_db_studio.dart';
 import 'package:http/http.dart' as http;
 import 'package:shelf/shelf_io.dart';
+import 'package:shelf/src/request.dart';
+import 'package:shelf/src/response.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:test/test.dart';
 
@@ -16,10 +18,10 @@ void main() {
         late http.Client client;
 
         setUpAll(() async {
-          final studio = await CelestDbStudio.create(
+          final CelestDbStudio studio = await CelestDbStudio.create(
             databaseUri: Uri.parse('file::memory:'),
           );
-          final handler =
+          final Future<Response> Function(Request request) handler =
               basePath.isEmpty
                   ? studio.call
                   : (Router()..mount(basePath, studio.call)).call;
@@ -37,7 +39,7 @@ void main() {
 
         for (final url in validUrls) {
           test('GET $url', () async {
-            final response = await client.send(
+            final http.StreamedResponse response = await client.send(
               http.Request('GET', Uri.parse('$uri$url'))
                 ..followRedirects = true,
             );
@@ -51,7 +53,7 @@ void main() {
         }
 
         test('POST /query', () async {
-          final response = await client.post(
+          final http.Response response = await client.post(
             Uri.parse('$uri/query'),
             body: jsonEncode({
               'id': 1,
@@ -72,7 +74,7 @@ void main() {
 
         for (final url in invalidUrls) {
           test('GET $url', () async {
-            final response = await client.get(uri.resolve(url));
+            final http.Response response = await client.get(uri.resolve(url));
             expect(response.statusCode, 404);
             expect(response.body, contains('Route not found'));
           });

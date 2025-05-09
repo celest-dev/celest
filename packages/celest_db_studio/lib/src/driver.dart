@@ -2,12 +2,13 @@
 import 'package:hrana/src/rpc_client.dart' as hrana;
 import 'package:hrana/src/rpc_http_client.dart' as hrana;
 import 'package:sqlite3/sqlite3.dart' show Database, sqlite3;
+import 'package:sqlite3/src/result_set.dart';
 
 sealed class Driver {
   static Future<Driver> connect(Uri uri, {String? authToken}) async {
     switch (uri) {
       case Uri(scheme: 'libsql' || 'https' || 'http'):
-        return await HranaDriver.connect(uri, jwtToken: authToken);
+        return HranaDriver.connect(uri, jwtToken: authToken);
       case Uri(scheme: 'file', path: '/:memory:'):
         return NativeDriver.memory();
       case Uri(scheme: 'file'):
@@ -34,8 +35,8 @@ final class NativeDriver extends Driver {
 
   @override
   Future<DriverResultSet> execute(String sql) async {
-    final result = _database.select(sql);
-    final headers = [
+    final ResultSet result = _database.select(sql);
+    final List<DriverResultHeader> headers = [
       for (final column in result.columnNames)
         DriverResultHeader(
           name: column,
@@ -56,7 +57,7 @@ final class HranaDriver extends Driver {
   HranaDriver(this._client);
 
   static Future<HranaDriver> connect(Uri uri, {String? jwtToken}) async {
-    final client = await hrana.HranaHttpClient.connect(
+    final hrana.HranaHttpClient client = await hrana.HranaHttpClient.connect(
       uri.replace(
         scheme: switch (uri.scheme) {
           'wss' || 'libsql' || 'https' => 'https',
@@ -73,12 +74,12 @@ final class HranaDriver extends Driver {
 
   @override
   Future<DriverResultSet> execute(String sql) async {
-    final session = await _client.openStream();
+    final hrana.HranaStream session = await _client.openStream();
     try {
-      final result = await session.executeStatement(
+      final hrana.StatementResult result = await session.executeStatement(
         hrana.SqlStatement(sql: sql, args: [], namedArgs: [], wantRows: true),
       );
-      final headers = [
+      final List<DriverResultHeader> headers = [
         for (final column in result.columns)
           DriverResultHeader(
             name: column.name ?? '',
