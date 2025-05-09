@@ -4,10 +4,7 @@ import 'package:celest_cloud/src/proto.dart';
 import 'package:logging/logging.dart';
 
 final class Users with BaseService {
-  Users({
-    required UsersProtocol protocol,
-    this.logger,
-  }) : _protocol = protocol;
+  Users({required UsersProtocol protocol, this.logger}) : _protocol = protocol;
 
   @override
   final Logger? logger;

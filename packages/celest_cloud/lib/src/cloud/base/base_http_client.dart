@@ -7,9 +7,9 @@ final class AuthenticatingHttpClient extends http.BaseClient {
     required Authenticator authenticator,
     required http.Client client,
     Logger? logger,
-  })  : _authenticator = authenticator,
-        _inner = client,
-        _logger = logger;
+  }) : _authenticator = authenticator,
+       _inner = client,
+       _logger = logger;
 
   final http.Client _inner;
   final Authenticator _authenticator;
@@ -17,7 +17,7 @@ final class AuthenticatingHttpClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    final token = await _authenticator.token;
+    final String? token = await _authenticator.token;
     if (token != null) {
       request.headers['authorization'] = 'Bearer $token';
     }

@@ -17,7 +17,7 @@ final class AuthenticatingGrpcChannel extends ClientChannel {
   final Authenticator _authenticator;
 
   Future<void> _provider(Map<String, String> metadata, String uri) async {
-    final token = await _authenticator.token;
+    final String? token = await _authenticator.token;
     if (token != null) {
       metadata['authorization'] = 'Bearer $token';
     }
@@ -29,18 +29,14 @@ final class AuthenticatingGrpcChannel extends ClientChannel {
     Stream<Q> requests,
     CallOptions options,
   ) {
-    options = options.mergedWith(
-      CallOptions(providers: [_provider]),
-    );
+    options = options.mergedWith(CallOptions(providers: [_provider]));
     return super.createCall(method, requests, options);
   }
 }
 
 final class RevokingGrpcInterceptor implements ClientInterceptor {
-  RevokingGrpcInterceptor({
-    required Authenticator authenticator,
-    this.logger,
-  }) : _authenticator = authenticator;
+  RevokingGrpcInterceptor({required Authenticator authenticator, this.logger})
+    : _authenticator = authenticator;
 
   final Logger? logger;
   final Authenticator _authenticator;
@@ -52,7 +48,7 @@ final class RevokingGrpcInterceptor implements ClientInterceptor {
     CallOptions options,
     ClientStreamingInvoker<Q, R> invoker,
   ) {
-    final response = invoker(method, requests, options);
+    final ResponseStream<R> response = invoker(method, requests, options);
     return _DelegatingResponseStream(
       response,
       response.handleError(
@@ -65,8 +61,9 @@ final class RevokingGrpcInterceptor implements ClientInterceptor {
           await _authenticator.revoke();
           Error.throwWithStackTrace(error, stackTrace);
         },
-        test: (error) =>
-            error is GrpcError && error.code == StatusCode.unauthenticated,
+        test:
+            (error) =>
+                error is GrpcError && error.code == StatusCode.unauthenticated,
       ),
     );
   }
@@ -78,21 +75,18 @@ final class RevokingGrpcInterceptor implements ClientInterceptor {
     CallOptions options,
     ClientUnaryInvoker<Q, R> invoker,
   ) {
-    final response = invoker(method, request, options);
+    final ResponseFuture<R> response = invoker(method, request, options);
     return _DelegatingResponseFuture(
       response,
-      response.onError<GrpcError>(
-        (error, stackTrace) async {
-          logger?.finer(
-            'Revoking authentication due to error',
-            error,
-            stackTrace,
-          );
-          await _authenticator.revoke();
-          Error.throwWithStackTrace(error, stackTrace);
-        },
-        test: (error) => error.code == StatusCode.unauthenticated,
-      ),
+      response.onError<GrpcError>((error, stackTrace) async {
+        logger?.finer(
+          'Revoking authentication due to error',
+          error,
+          stackTrace,
+        );
+        await _authenticator.revoke();
+        Error.throwWithStackTrace(error, stackTrace);
+      }, test: (error) => error.code == StatusCode.unauthenticated),
     );
   }
 }

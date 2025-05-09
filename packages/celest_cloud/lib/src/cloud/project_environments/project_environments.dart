@@ -12,8 +12,8 @@ final class ProjectEnvironments with BaseService {
     required ProjectEnvironmentsProtocol protocol,
     required OperationsProtocol operations,
     this.logger,
-  })  : _protocol = protocol,
-        _operations = operations;
+  }) : _protocol = protocol,
+       _operations = operations;
 
   @override
   final Logger? logger;
@@ -41,7 +41,7 @@ final class ProjectEnvironments with BaseService {
       }),
       validateOnly: validateOnly,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'ProjectEnvironments.Create',
       request: request,
       action: _protocol.create,
@@ -100,7 +100,7 @@ final class ProjectEnvironments with BaseService {
       validateOnly: validateOnly,
       allowMissing: allowMissing,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'ProjectEnvironments.Update',
       request: request,
       action: _protocol.update,
@@ -125,7 +125,7 @@ final class ProjectEnvironments with BaseService {
       allowMissing: allowMissing,
       validateOnly: validateOnly,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'ProjectEnvironments.Delete',
       request: request,
       action: _protocol.delete,
@@ -154,7 +154,7 @@ final class ProjectEnvironments with BaseService {
       etag: etag,
       validateOnly: validateOnly,
     );
-    final operation = await run(
+    final Operation operation = await run(
       'ProjectEnvironments.Deploy',
       request: request,
       action: _protocol.deploy,

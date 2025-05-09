@@ -19,16 +19,16 @@ abstract mixin class BaseService {
   }) async {
     logger?.fine('[$name] Request:\n$request');
     try {
-      final response = await action(request);
+      final Res response = await action(request);
       logger?.fine('[$name] Response:\n$response');
       return response;
     } on Object catch (e, st) {
-      final cloudEx = switch (e) {
+      final Object cloudEx = switch (e) {
         final CloudException ex => ex,
         final GrpcError ex => CloudException.fromGrpcError(ex),
         final Exception ex => CloudException.unknownError(
-            details: JsonString(ex.toString()),
-          ),
+          details: JsonString(ex.toString()),
+        ),
         _ => e,
       };
       logger?.severe('[$name] Error', cloudEx, st);
@@ -38,7 +38,9 @@ abstract mixin class BaseService {
 
   @protected
   Stream<OperationState<Metadata, Response>> streamOperation<
-      Metadata extends GeneratedMessage, Response extends GeneratedMessage>(
+    Metadata extends GeneratedMessage,
+    Response extends GeneratedMessage
+  >(
     String name, {
     required Operation operation,
     required OperationsProtocol operations,
@@ -46,7 +48,7 @@ abstract mixin class BaseService {
     required Response response,
     Logger? logger,
   }) async* {
-    final stream = operation.stream(
+    final Stream<OperationState<Metadata, Response>> stream = operation.stream(
       operations: operations,
       metadata: metadata,
       response: response,
@@ -54,18 +56,16 @@ abstract mixin class BaseService {
     );
     try {
       await for (final state in stream) {
-        logger?.fine(
-          '[$name.${operation.name}] Operation state:\n$state',
-        );
+        logger?.fine('[$name.${operation.name}] Operation state:\n$state');
         yield state;
       }
     } on Object catch (e, st) {
-      final cloudEx = switch (e) {
+      final Object cloudEx = switch (e) {
         final CloudException ex => ex,
         final GrpcError ex => CloudException.fromGrpcError(ex),
         final Exception ex => CloudException.unknownError(
-            details: JsonString(ex.toString()),
-          ),
+          details: JsonString(ex.toString()),
+        ),
         _ => e,
       };
       logger?.severe('[$name] Error in operation', cloudEx, st);

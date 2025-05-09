@@ -1,10 +1,7 @@
 import 'package:celest_cloud/celest_cloud.dart';
 
 sealed class SessionState {
-  SessionState({
-    required this.sessionId,
-    required this.sessionToken,
-  });
+  SessionState({required this.sessionId, required this.sessionToken});
 
   factory SessionState.fromJson(Map<String, Object?> json) {
     return switch (json['@type']) {
@@ -15,7 +12,7 @@ sealed class SessionState {
       'IdpSessionLinkUser' => IdpSessionLinkUser.fromJson(json),
       'IdpSessionRegisterUser' => IdpSessionRegisterUser.fromJson(json),
       'IdpSessionSuccess' => IdpSessionSuccess.fromJson(json),
-      final unknown =>
+      final Object? unknown =>
         throw StateError('Unknown session state "$unknown": $json'),
     };
   }
@@ -77,11 +74,11 @@ final class EmailSessionVerifyCode extends EmailSessionState {
 
   @override
   Map<String, Object?> toJson() => {
-        '@type': 'EmailSessionVerifyCode',
-        'sessionId': sessionId,
-        'sessionToken': sessionToken,
-        'email': email,
-      };
+    '@type': 'EmailSessionVerifyCode',
+    'sessionId': sessionId,
+    'sessionToken': sessionToken,
+    'email': email,
+  };
 }
 
 sealed class EmailSessionNeedsConfirmation
@@ -110,12 +107,12 @@ final class EmailSessionRegisterUser extends EmailSessionState
 
   @override
   Map<String, Object?> toJson() => {
-        '@type': 'EmailSessionRegisterUser',
-        'sessionId': sessionId,
-        'sessionToken': sessionToken,
-        'email': email,
-        'user': user.toProto3Json(),
-      };
+    '@type': 'EmailSessionRegisterUser',
+    'sessionId': sessionId,
+    'sessionToken': sessionToken,
+    'email': email,
+    'user': user.toProto3Json(),
+  };
 }
 
 final class EmailSessionSuccess extends SessionSuccess
@@ -145,14 +142,14 @@ final class EmailSessionSuccess extends SessionSuccess
 
   @override
   Map<String, Object?> toJson() => {
-        '@type': 'EmailSessionSuccess',
-        'sessionId': sessionId,
-        'sessionToken': sessionToken,
-        'isNewUser': isNewUser,
-        'identityToken': identityToken,
-        'user': user.toProto3Json(),
-        'email': email,
-      };
+    '@type': 'EmailSessionSuccess',
+    'sessionId': sessionId,
+    'sessionToken': sessionToken,
+    'isNewUser': isNewUser,
+    'identityToken': identityToken,
+    'user': user.toProto3Json(),
+    'email': email,
+  };
 }
 
 sealed class SmsSessionState extends SessionState {
@@ -182,11 +179,11 @@ final class SmsSessionVerifyCode extends SmsSessionState {
 
   @override
   Map<String, Object?> toJson() => {
-        '@type': 'SmsSessionVerifyCode',
-        'sessionId': sessionId,
-        'sessionToken': sessionToken,
-        'phoneNumber': phoneNumber,
-      };
+    '@type': 'SmsSessionVerifyCode',
+    'sessionId': sessionId,
+    'sessionToken': sessionToken,
+    'phoneNumber': phoneNumber,
+  };
 }
 
 sealed class SmsSessionNeedsConfirmation
@@ -215,12 +212,12 @@ final class SmsSessionRegisterUser extends SmsSessionState
 
   @override
   Map<String, Object?> toJson() => {
-        '@type': 'SmsSessionRegisterUser',
-        'sessionId': sessionId,
-        'sessionToken': sessionToken,
-        'phoneNumber': phoneNumber,
-        'user': user.toProto3Json(),
-      };
+    '@type': 'SmsSessionRegisterUser',
+    'sessionId': sessionId,
+    'sessionToken': sessionToken,
+    'phoneNumber': phoneNumber,
+    'user': user.toProto3Json(),
+  };
 }
 
 final class SmsSessionSuccess extends SessionSuccess
@@ -250,21 +247,18 @@ final class SmsSessionSuccess extends SessionSuccess
 
   @override
   Map<String, Object?> toJson() => {
-        '@type': 'SmsSessionSuccess',
-        'sessionId': sessionId,
-        'sessionToken': sessionToken,
-        'isNewUser': isNewUser,
-        'identityToken': identityToken,
-        'user': user.toProto3Json(),
-        'phoneNumber': phoneNumber,
-      };
+    '@type': 'SmsSessionSuccess',
+    'sessionId': sessionId,
+    'sessionToken': sessionToken,
+    'isNewUser': isNewUser,
+    'identityToken': identityToken,
+    'user': user.toProto3Json(),
+    'phoneNumber': phoneNumber,
+  };
 }
 
 sealed class IdpSessionState extends SessionState {
-  IdpSessionState({
-    required super.sessionId,
-    required super.sessionToken,
-  });
+  IdpSessionState({required super.sessionId, required super.sessionToken});
 }
 
 final class IdpSessionAuthorize extends IdpSessionState {
@@ -289,12 +283,12 @@ final class IdpSessionAuthorize extends IdpSessionState {
 
   @override
   Map<String, Object?> toJson() => {
-        '@type': 'IdpSessionAuthorize',
-        'sessionId': sessionId,
-        'sessionToken': sessionToken,
-        'provider': provder.value,
-        'uri': uri.toString(),
-      };
+    '@type': 'IdpSessionAuthorize',
+    'sessionId': sessionId,
+    'sessionToken': sessionToken,
+    'provider': provder.value,
+    'uri': uri.toString(),
+  };
 }
 
 sealed class IdpSessionResult implements IdpSessionState {}
@@ -323,11 +317,11 @@ final class IdpSessionLinkUser extends IdpSessionState
 
   @override
   Map<String, Object?> toJson() => {
-        '@type': 'IdpSessionLinkUser',
-        'sessionId': sessionId,
-        'sessionToken': sessionToken,
-        'user': user.toProto3Json(),
-      };
+    '@type': 'IdpSessionLinkUser',
+    'sessionId': sessionId,
+    'sessionToken': sessionToken,
+    'user': user.toProto3Json(),
+  };
 }
 
 final class IdpSessionRegisterUser extends IdpSessionState
@@ -351,11 +345,11 @@ final class IdpSessionRegisterUser extends IdpSessionState
 
   @override
   Map<String, Object?> toJson() => {
-        '@type': 'IdpSessionRegisterUser',
-        'sessionId': sessionId,
-        'sessionToken': sessionToken,
-        'user': user.toProto3Json(),
-      };
+    '@type': 'IdpSessionRegisterUser',
+    'sessionId': sessionId,
+    'sessionToken': sessionToken,
+    'user': user.toProto3Json(),
+  };
 }
 
 final class IdpSessionSuccess extends SessionSuccess
@@ -380,11 +374,11 @@ final class IdpSessionSuccess extends SessionSuccess
 
   @override
   Map<String, Object?> toJson() => {
-        '@type': 'IdpSessionSuccess',
-        'sessionId': sessionId,
-        'sessionToken': sessionToken,
-        'isNewUser': isNewUser,
-        'identityToken': identityToken,
-        'user': user.toProto3Json(),
-      };
+    '@type': 'IdpSessionSuccess',
+    'sessionId': sessionId,
+    'sessionToken': sessionToken,
+    'isNewUser': isNewUser,
+    'identityToken': identityToken,
+    'user': user.toProto3Json(),
+  };
 }
