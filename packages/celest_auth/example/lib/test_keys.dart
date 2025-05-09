@@ -4,8 +4,9 @@ extension type TestKeys._(Key _) implements Key {
   TestKeys(String key) : _ = Key(key);
 
   static final TestKeys btnMakeRequest = TestKeys('btn_make_request');
-  static final TestKeys wMakeRequestResponse =
-      TestKeys('w_make_request_response');
+  static final TestKeys wMakeRequestResponse = TestKeys(
+    'w_make_request_response',
+  );
   static final TestKeys inOtp = TestKeys('in_otp');
   static final TestKeys btnVerifyOtp = TestKeys('btn_verify_otp');
   static final TestKeys inEmail = TestKeys('in_email');

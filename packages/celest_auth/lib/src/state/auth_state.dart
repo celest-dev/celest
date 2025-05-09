@@ -46,9 +46,7 @@ abstract interface class OtpNeedsVerification implements AuthFlowInProgress {
 abstract class EmailNeedsVerification extends AuthFlowInProgress
     implements OtpNeedsVerification {
   /// {@macro celest_auth.email_needs_verification}
-  const EmailNeedsVerification({
-    required this.email,
-  });
+  const EmailNeedsVerification({required this.email});
 
   /// The email address to be verified.
   final String email;
@@ -60,9 +58,7 @@ abstract class EmailNeedsVerification extends AuthFlowInProgress
 abstract class SmsNeedsVerification extends AuthFlowInProgress
     implements OtpNeedsVerification {
   /// {@macro celest_auth.sms_needs_verification}
-  const SmsNeedsVerification({
-    required this.phoneNumber,
-  });
+  const SmsNeedsVerification({required this.phoneNumber});
 
   /// The phone number to be verified.
   final String phoneNumber;
@@ -75,9 +71,7 @@ abstract class SmsNeedsVerification extends AuthFlowInProgress
 /// {@endtemplate}
 abstract class AuthLinkUser extends AuthFlowInProgress {
   /// {@macro celest_auth.auth_link_user}
-  const AuthLinkUser({
-    required this.user,
-  });
+  const AuthLinkUser({required this.user});
 
   /// The existing user.
   final User user;
@@ -93,9 +87,7 @@ abstract class AuthLinkUser extends AuthFlowInProgress {
 /// {@endtemplate}
 abstract class AuthRegisterUser extends AuthFlowInProgress {
   /// {@macro celest_auth.auth_register_user}
-  const AuthRegisterUser({
-    required this.user,
-  });
+  const AuthRegisterUser({required this.user});
 
   /// The user to be created.
   final User user;
@@ -109,9 +101,7 @@ abstract class AuthRegisterUser extends AuthFlowInProgress {
 /// {@endtemplate}
 final class Authenticated extends AuthState {
   /// {@macro celest_auth.authenticated}
-  const Authenticated({
-    required this.user,
-  });
+  const Authenticated({required this.user});
 
   /// The authenticated user.
   final User user;

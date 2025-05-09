@@ -25,10 +25,7 @@ class CelestData {
       hostnameVariable: const _$celest.env('CLOUD_AUTH_DATABASE_HOST'),
       tokenSecret: const _$celest.secret('CLOUD_AUTH_DATABASE_TOKEN'),
     );
-    context.put(
-      _cloudAuthKey,
-      await cloudAuth.connect(),
-    );
+    context.put(_cloudAuthKey, await cloudAuth.connect());
   }
 
   /// The `CloudAuthDatabase` instance for this project.

@@ -17,11 +17,9 @@ final class AuthFlowController {
   final StreamSink<AuthState> _sink;
   var _isClosed = false;
 
-  Future<R> capture<R extends AuthState>(
-    Future<R> Function() action,
-  ) async {
+  Future<R> capture<R extends AuthState>(Future<R> Function() action) async {
     try {
-      final result = await action();
+      final R result = await action();
       if (!_isClosed) {
         _sink.add(result);
       }

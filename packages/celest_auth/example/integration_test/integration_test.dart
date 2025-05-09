@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:celest_auth_example/main.dart';
 import 'package:celest_auth_example/test_keys.dart';
 import 'package:celest_auth_example_client/celest_auth_example_client.dart';
@@ -39,14 +41,11 @@ void main() {
     expect(find.byKey(TestKeys.txtSignedOut), findsOne);
 
     // Sign in with email.
-    await tester.enterText(
-      find.byKey(TestKeys.inEmail),
-      'test@example.com',
-    );
-    expectLater(
-      celestTester.auth.onSentOtp,
-      emits(
-        isA<Otp>().having((it) => it.to, 'to', 'test@example.com'),
+    await tester.enterText(find.byKey(TestKeys.inEmail), 'test@example.com');
+    unawaited(
+      expectLater(
+        celestTester.auth.onSentOtp,
+        emits(isA<Otp>().having((it) => it.to, 'to', 'test@example.com')),
       ),
     );
 
@@ -73,10 +72,7 @@ void main() {
     expect(find.byKey(TestKeys.txtSignedOut), findsOne);
 
     // Sign in with email.
-    await tester.enterText(
-      find.byKey(TestKeys.inEmail),
-      'test@example.com',
-    );
+    await tester.enterText(find.byKey(TestKeys.inEmail), 'test@example.com');
     final otpCode = celestTester.auth.onSentOtp.first;
     await tester.tap(find.byKey(TestKeys.btnSignIn));
 

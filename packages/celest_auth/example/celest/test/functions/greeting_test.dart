@@ -24,12 +24,7 @@ void main() {
     });
     test('sayHello (no email)', () async {
       expect(
-        sayHello(
-          user: User(
-            userId: '123',
-            givenName: 'Celest',
-          ),
-        ),
+        sayHello(user: User(userId: '123', givenName: 'Celest')),
         throwsA(isA<UnauthorizedException>()),
       );
     });

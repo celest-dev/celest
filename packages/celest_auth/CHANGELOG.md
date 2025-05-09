@@ -1,3 +1,8 @@
+## NEXT
+
+- chore: Re-format with Dart 3.8
+- chore: Update linter/style preferences
+
 ## 1.0.2
 
 - chore: Make close part of the public API (#267)

@@ -8,7 +8,7 @@ enum AuthProviderType {
 
   /// A human-readable display name for the provider.
   String get displayName => switch (this) {
-        firebase => 'Firebase',
-        supabase => 'Supabase',
-      };
+    firebase => 'Firebase',
+    supabase => 'Supabase',
+  };
 }

@@ -13,10 +13,8 @@ extension type Email(AuthImpl _hub) {
   ///
   /// OTP codes are valid for 15 minutes and can be resent after 30 seconds
   /// by calling `resend` on the returned state object.
-  Future<EmailNeedsVerification> authenticate({
-    required String email,
-  }) async {
-    final flowController = await _hub.requestFlow();
+  Future<EmailNeedsVerification> authenticate({required String email}) async {
+    final AuthFlowController flowController = await _hub.requestFlow();
     final flow = EmailFlow._(_hub, flowController);
     return flow._authenticate(email: email);
   }
@@ -28,13 +26,13 @@ final class EmailFlow implements AuthFlow {
   final AuthImpl _hub;
   final AuthFlowController _flowController;
 
-  Future<EmailNeedsVerification> _authenticate({
-    required String email,
-  }) {
+  Future<EmailNeedsVerification> _authenticate({required String email}) {
     return _flowController.capture(() async {
-      final state = await _hub.cloud.authentication.email.start(
-        email: email,
-      );
+      final cloud.EmailSessionState state = await _hub
+          .cloud
+          .authentication
+          .email
+          .start(email: email);
       switch (state) {
         case cloud.EmailSessionVerifyCode():
           return _EmailNeedsVerification(
@@ -53,10 +51,11 @@ final class EmailFlow implements AuthFlow {
     required String code,
   }) {
     return _flowController.capture(() async {
-      final success = await _hub.cloud.authentication.email.verifyCode(
-        state: state,
-        code: code,
-      );
+      final cloud.EmailSessionSuccess success = await _hub
+          .cloud
+          .authentication
+          .email
+          .verifyCode(state: state, code: code);
       await _hub.secureStorage.write('cork', success.identityToken);
       _hub.localStorage.write('userId', success.user.userId);
       return Authenticated(user: success.user.toCelest());
@@ -67,9 +66,7 @@ final class EmailFlow implements AuthFlow {
     required cloud.EmailSessionVerifyCode state,
   }) {
     return _flowController.capture(() async {
-      state = await _hub.cloud.authentication.email.resendCode(
-        state: state,
-      );
+      state = await _hub.cloud.authentication.email.resendCode(state: state);
       return _EmailNeedsVerification(
         flow: this,
         innerState: state,
@@ -78,13 +75,13 @@ final class EmailFlow implements AuthFlow {
     });
   }
 
-  Future<AuthState> _confirm({
-    required cloud.EmailSessionRegisterUser state,
-  }) {
+  Future<AuthState> _confirm({required cloud.EmailSessionRegisterUser state}) {
     return _flowController.capture(() async {
-      final newState = await _hub.cloud.authentication.email.confirm(
-        state: state,
-      );
+      final cloud.EmailSessionState newState = await _hub
+          .cloud
+          .authentication
+          .email
+          .confirm(state: state);
       switch (newState) {
         case cloud.EmailSessionSuccess(:final identityToken, :final user):
           await _hub.secureStorage.write('cork', identityToken);
@@ -126,10 +123,8 @@ final class _EmailNeedsVerification extends EmailNeedsVerification {
   }
 
   @override
-  Future<User> verify({
-    required String otpCode,
-  }) async {
-    final authenticated = await _flow._verifyOtp(
+  Future<User> verify({required String otpCode}) async {
+    final Authenticated authenticated = await _flow._verifyOtp(
       state: innerState,
       code: otpCode,
     );
@@ -145,8 +140,8 @@ final class _EmailRegisterUser extends AuthRegisterUser {
     required super.user,
     required EmailFlow flow,
     required cloud.EmailSessionRegisterUser innerState,
-  })  : _flow = flow,
-        _innerState = innerState;
+  }) : _flow = flow,
+       _innerState = innerState;
 
   final EmailFlow _flow;
   final cloud.EmailSessionRegisterUser _innerState;
