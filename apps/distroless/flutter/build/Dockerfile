@@ -11,11 +11,15 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 
 # Install download dependencies
 RUN apt-get update && apt-get install -y apt-utils
-RUN apt-get install -y curl git python3 python3-pip pkg-config
+RUN apt-get install -y curl git python3 python3-pip pkg-config ninja-build
 
 # Install Chrome depot tools
 RUN git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-ENV PATH="${PWD}/depot_tools:${PATH}"
+ENV DEPOT_TOOLS_HOME="${PWD}/depot_tools"
+ENV PATH="${PATH}:${PWD}/depot_tools"
+
+# Copy custom CIPD wrapper which prevents errors on arm64
+COPY cipd /usr/local/bin/cipd
 
 ARG FLUTTER_VERSION
 
@@ -34,12 +38,13 @@ RUN sed -i 's/libdart_jit/libdart_aotruntime_product/g' shell/testing/BUILD.gn
 
 # Build a patched version of the Flutter engine
 WORKDIR /flutter/engine/src
-RUN ./flutter/bin/et build --no-rbe --config=host_release
+COPY build.sh .
+RUN ./build.sh
 
 FROM gcr.io/distroless/cc-debian${DEBIAN_VERSION} AS engine
 
 COPY --from=build-engine /flutter/engine/src/out/host_release /engine
-ENV DART_SDK="/flutter/engine/dart-sdk"
+ENV DART_SDK="/engine/dart-sdk"
 
 WORKDIR /engine
 ENV LD_LIBRARY_PATH="/engine"
@@ -47,7 +52,6 @@ ENV LD_LIBRARY_PATH="/engine"
 FROM gcr.io/distroless/cc-debian${DEBIAN_VERSION} AS builder
 
 COPY --from=engine /engine/dart-sdk/bin/utils/gen_snapshot /usr/lib/dart/bin/utils/gen_snapshot
-COPY --from=engine /engine/dart-sdk/bin/utils/gen_snapshot.sym /usr/lib/dart/bin/utils/gen_snapshot.sym
 
 ENTRYPOINT [ "/usr/lib/dart/bin/utils/gen_snapshot", "--snapshot_kind=app-aot-elf" ]
 CMD [ "--elf=/app/main.aot", "/app/main.aot.dill" ]
@@ -103,10 +107,10 @@ ENV LD_LIBRARY_PATH="/app:/celest:${LD_LIBRARY_PATH}"
 RUN apt-get clean
 
 COPY --from=sqlite /sqlite_install /
-COPY --from=build-engine /flutter/engine/src/out/host_release/icudtl.dat .
-COPY --from=build-engine /flutter/engine/src/out/host_release/*.so ./
-COPY --from=build-engine /flutter/engine/src/out/host_release/*.so* ./
-COPY --from=build-engine /flutter/engine/src/out/host_release/flutter_tester flutter_runner
+COPY --from=engine /engine/icudtl.dat .
+COPY --from=engine /engine/*.so ./
+COPY --from=engine /engine/*.so* ./
+COPY --from=engine /engine/flutter_tester flutter_runner
 
 WORKDIR /app
 COPY flutter_assets .
