@@ -14,10 +14,16 @@ concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   list_sdks:
     name: List SDKs
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
       - name: Git Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
@@ -43,10 +49,12 @@ jobs:
     name: Build and Push Docker Images
     runs-on: ubuntu-large
     needs: list_sdks
+    permissions:
+      contents: read
+      packages: write
 
     strategy:
       fail-fast: true
-      max-parallel: 4
       matrix:
         sdk: ${{ fromJSON(needs.list_sdks.outputs.sdks) }}
 
@@ -112,7 +120,7 @@ jobs:
           file: apps/distroless/dart/build/Dockerfile
           platforms: linux/amd64,linux/arm64
           target: builder
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: celestdev/dart-builder:${{ matrix.sdk.version }}
           build-args: |
             DART_VERSION=${{ matrix.sdk.version }}
@@ -130,13 +138,37 @@ jobs:
           file: apps/distroless/dart/build/Dockerfile
           platforms: linux/amd64,linux/arm64
           target: runtime
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: celestdev/dart-runtime:${{ matrix.sdk.version }}
           build-args: |
             DART_VERSION=${{ matrix.sdk.version }}
             DART_CHANNEL=${{ matrix.sdk.channel }}
           cache-from: type=gha # Pull cache from GitHub Actions cache
           cache-to: type=gha,mode=max # Push cache to GitHub Actions cache (mode=max includes all layers)
+
+    outputs:
+      # Output the digest of the pushed images
+      builder_image_digest: ${{ steps.build-push-builder.outputs.digest }}
+      runtime_image_digest: ${{ steps.build-push-runtime.outputs.digest }}
+  
+  test:
+    name: Test Docker Image
+    needs: [list_sdks, build_and_push]
+    permissions:
+      contents: read
+
+    strategy:
+      fail-fast: true
+      max-parallel: 8
+      matrix:
+        sdk: ${{ fromJSON(needs.list_sdks.outputs.sdks) }}
+        os:
+          - ubuntu-latest
+          - ubuntu-24.04-arm
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
 
       - name: Setup Dart
         uses: dart-lang/setup-dart@e51d8e571e22473a2ddebf0ef8a2123f0ab2c02c # 1.7.1
@@ -150,8 +182,3 @@ jobs:
         run: |
           dart pub get
           ./test-docker.sh
-
-    outputs:
-      # Output the digest of the pushed images
-      builder_image_digest: ${{ steps.build-push-builder.outputs.digest }}
-      runtime_image_digest: ${{ steps.build-push-runtime.outputs.digest }}

@@ -16,7 +16,8 @@ Future<void> testDatabase() async {
 }
 
 Future<void> startServer() async {
-  final server = await HttpServer.bind(InternetAddress.anyIPv4, 9000).timeout(
+  final port = int.parse(Platform.environment['PORT'] ?? '9000');
+  final server = await HttpServer.bind(InternetAddress.anyIPv4, port).timeout(
     const Duration(seconds: 1),
     onTimeout: () {
       print('Failed to bind to a port');

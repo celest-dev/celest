@@ -1,17 +1,30 @@
-#!/bin/bash
+#!/bin/sh
 
-set -e
+set -eu
 
-#!/bin/bash
-ENGINE_DIR="/engine/src"
-if [ "${TARGETPLATFORM}" == "linux/arm64" ]; then
-  PLATFORM="linux-arm64"
-  CONFIG="linux_release_arm64"
-else
-  PLATFORM="linux-x64"
-  CONFIG="host_release_desktop"
-fi
-DART_SDK_DIR="${ENGINE_DIR}/flutter/prebuilts/${PLATFORM}/dart-sdk"
-DART="${DART_SDK_DIR}/bin/dart"
-./flutter/tools/gn --no-goma --runtime-mode=release
-mv "${ENGINE_DIR}/out/${CONFIG}" /engine/out
+case `uname -m` in
+    x86_64|amd64|AMD64)
+        ADDITIONAL_ARGS=""
+        ;;
+    aarch64)
+        ADDITIONAL_ARGS="--linux --linux-cpu=arm64"
+        ;;
+    *)
+        >&2 echo "Unsupported architecture: $(uname -m)"
+        exit 1
+        ;;
+esac
+
+./flutter/tools/gn \
+    --runtime-mode=release \
+    --lto \
+    --no-goma \
+    --no-rbe \
+    --no-stripped \
+    --verbose \
+    --no-prebuilt-dart-sdk \
+    --no-enable-unittests \
+    --enable-fontconfig \
+    --target-dir=host_release \
+    ${ADDITIONAL_ARGS}
+ninja -C out/host_release -j$(nproc)

@@ -8,8 +8,7 @@ on:
       - 'apps/distroless/flutter/**'
       - '.github/workflows/distroless_flutter.yaml'
   schedule:
-    # Every day at midnight UTC
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * 0' # Every week on Sunday at midnight UTC
 
 # Prevent duplicate runs due to Graphite
 # https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
@@ -17,10 +16,16 @@ concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   list_sdks:
     name: List SDKs
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
       - name: Git Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
@@ -46,10 +51,13 @@ jobs:
     name: Build and Push Docker Images
     runs-on: ubuntu-large
     needs: list_sdks
+    permissions:
+      contents: read
+      packages: write
 
     strategy:
       fail-fast: true
-      max-parallel: 4
+      max-parallel: 5
       matrix:
         sdk: ${{ fromJSON(needs.list_sdks.outputs.sdks) }}
 
@@ -58,10 +66,15 @@ jobs:
         run: |
           echo "Version: ${{ matrix.sdk.version }}"
           echo "Channel: ${{ matrix.sdk.channel }}"
-          echo "Old Engine: ${{ matrix.sdk.oldEngine }}"
 
       - name: Git Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+
+      # Set up QEMU for multi-platform builds (needed for ARM on x86 runners)
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # 3.6.0
+        with:
+          platforms: arm64
 
       # Set up Docker Buildx, the builder engine for multi-platform builds
       - name: Set up Docker Buildx
@@ -116,15 +129,13 @@ jobs:
         uses: docker/build-push-action@14487ce63c7a62a4a324b0bfb37086795e31c6c1 # 6.16.0
         with:
           context: apps/distroless/flutter/build
-          file: ${{ matrix.sdk.oldEngine && 'apps/distroless/flutter/build/Dockerfile.old' || 'apps/distroless/flutter/build/Dockerfile' }}
-          platforms: linux/amd64
+          file: apps/distroless/flutter/build/Dockerfile
+          platforms: linux/amd64,linux/arm64
           target: engine
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: celestdev/flutter-engine:${{ matrix.sdk.version }}
           build-args: |
             FLUTTER_VERSION=${{ matrix.sdk.version }}
-          cache-from: type=gha # Pull cache from GitHub Actions cache
-          cache-to: type=gha,mode=max # Push cache to GitHub Actions cache (mode=max includes all layers)
 
       - name: Build and Push Image (builder)
         id: build-push-builder
@@ -133,15 +144,13 @@ jobs:
         uses: docker/build-push-action@14487ce63c7a62a4a324b0bfb37086795e31c6c1 # 6.16.0
         with:
           context: apps/distroless/flutter/build
-          file: ${{ matrix.sdk.oldEngine && 'apps/distroless/flutter/build/Dockerfile.old' || 'apps/distroless/flutter/build/Dockerfile' }}
-          platforms: linux/amd64
+          file: apps/distroless/flutter/build/Dockerfile
+          platforms: linux/amd64,linux/arm64
           target: builder
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: celestdev/flutter-builder:${{ matrix.sdk.version }}
           build-args: |
             FLUTTER_VERSION=${{ matrix.sdk.version }}
-          cache-from: type=gha # Pull cache from GitHub Actions cache
-          cache-to: type=gha,mode=max # Push cache to GitHub Actions cache (mode=max includes all layers)
 
       - name: Build and Push Image (runtime)
         id: build-push-runtime
@@ -150,15 +159,13 @@ jobs:
         uses: docker/build-push-action@14487ce63c7a62a4a324b0bfb37086795e31c6c1 # 6.16.0
         with:
           context: apps/distroless/flutter/build
-          file: ${{ matrix.sdk.oldEngine && 'apps/distroless/flutter/build/Dockerfile.old' || 'apps/distroless/flutter/build/Dockerfile' }}
-          platforms: linux/amd64
+          file: apps/distroless/flutter/build/Dockerfile
+          platforms: linux/amd64,linux/arm64
           target: runtime
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: celestdev/flutter-runtime:${{ matrix.sdk.version }}
           build-args: |
             FLUTTER_VERSION=${{ matrix.sdk.version }}
-          cache-from: type=gha # Pull cache from GitHub Actions cache
-          cache-to: type=gha,mode=max # Push cache to GitHub Actions cache (mode=max includes all layers)
 
       - name: Setup Flutter
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046 # 2.19.0

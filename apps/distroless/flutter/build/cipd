@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# A wrapper for CIPD to allow building on arm64 where openjdk is not available (but also not needed).
+# Copied from https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/compilers/flutter/engine/tools.nix
+
+params=$@
+
+if [ "$1" = "ensure" ]; then
+  shift 1
+  params="ensure"
+
+  while [ "$#" -ne 0 ]; do
+    if [ "$1" = "-ensure-file" ]; then
+      ensureFile="$2"
+      shift 2
+      params="$params -ensure-file $ensureFile"
+
+      if grep flutter/java/openjdk "$ensureFile" >/dev/null; then
+        sed -i '/src\/flutter\/third_party\/java\/openjdk/,+2 d' "$ensureFile"
+      fi
+    else
+      params="$params $1"
+      shift 1
+    fi
+  done
+fi
+
+exec ${DEPOT_TOOLS_HOME}/cipd $params

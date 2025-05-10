@@ -44,6 +44,7 @@ echo "Built $OUT_DIR/main.aot.dill"
 
 CURRENT_UID=$(id -u)
 CURRENT_GID=$(id -g)
+export PORT=9000
 
 docker run --rm \
     -v $OUT_DIR:/app \
@@ -54,7 +55,7 @@ run_container() {
   docker run --rm -d \
     -v $OUT_DIR:/app \
     --user "$CURRENT_UID:$CURRENT_GID" \
-    -p 9000:9000 \
+    -p $PORT:$PORT \
     celestdev/dart-runtime:${DART_VERSION}
 }
 SERVER_PID=$(run_container)

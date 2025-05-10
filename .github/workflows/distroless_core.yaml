@@ -13,10 +13,16 @@ concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build_and_push:
     name: Build and Push Docker Image
     runs-on: ubuntu-large
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Git Checkout
@@ -48,9 +54,9 @@ jobs:
         uses: docker/build-push-action@14487ce63c7a62a4a324b0bfb37086795e31c6c1 # 6.16.0
         with:
           context: apps/distroless/core
-          file: apps/distroless/core/Dockerfile
+          file: apps/distroless/core/build/Dockerfile
           platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: celestdev/runtime:latest
           cache-from: type=gha # Pull cache from GitHub Actions cache
           cache-to: type=gha,mode=max # Push cache to GitHub Actions cache (mode=max includes all layers)
@@ -58,3 +64,28 @@ jobs:
     outputs:
       # Output the digest of the pushed image
       image_digest: ${{ steps.build-push.outputs.digest }}
+
+  test:
+    name: Test Docker Image
+    needs: [build_and_push]
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+          - ubuntu-24.04-arm
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@e51d8e571e22473a2ddebf0ef8a2123f0ab2c02c # 1.7.1
+        with:
+          sdk: beta
+
+      - name: Test Container
+        working-directory: apps/distroless/core/test
+        run: ./test.sh
