@@ -28,6 +28,7 @@ solutions = [
       "download_esbuild": False,
       "download_android_deps": False,
       "download_fuchsia_deps": False,
+      "download_dart_sdk": True,
       "host_os": "linux",
       "host_cpu": "${ARCH}",
     }
