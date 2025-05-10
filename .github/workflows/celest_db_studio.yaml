@@ -34,7 +34,7 @@ jobs:
         run: dart analyze
       - name: Format
         working-directory: packages/celest_db_studio
-        run: dart format --language-version=latest --set-exit-if-changed .
+        run: dart format --set-exit-if-changed .
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
