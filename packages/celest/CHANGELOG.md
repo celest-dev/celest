@@ -1,7 +1,9 @@
-## 1.0.6-wip
+## 1.0.6
 
 - refactor: Move `connect` method to `CelestDatabase` class
 - fix: Analyzer plugin cannot be part of workspace
+- chore: Bump Dart SDK constraint to `^3.7.0`
+- chore: Reformat with Dart 3.7
 
 ## 1.0.5
 

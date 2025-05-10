@@ -55,9 +55,9 @@ final class CelestAnalyzerPlugin extends ServerPlugin
     this.withDebugging = false,
     @visibleForTesting ResourceProvider? resourceProvider,
   }) : super(
-         resourceProvider:
-             resourceProvider ?? PhysicalResourceProvider.INSTANCE,
-       );
+          resourceProvider:
+              resourceProvider ?? PhysicalResourceProvider.INSTANCE,
+        );
 
   static final Logger logger = Logger('Celest.AnalyzerPlugin');
 
@@ -315,12 +315,12 @@ final class NavigationVisitor extends RecursiveAstVisitor<void> {
       _logger.warning('CloudFunction annotation not found');
       return;
     }
-    final (api, function) = switch (cloudFunctionAnnotation
-        .computeConstantValue()) {
+    final (api, function) =
+        switch (cloudFunctionAnnotation.computeConstantValue()) {
       final DartObject obj => (
-        obj.getField('api')?.toStringValue(),
-        obj.getField('function')?.toStringValue(),
-      ),
+          obj.getField('api')?.toStringValue(),
+          obj.getField('function')?.toStringValue(),
+        ),
       _ => (null, null),
     };
     if (api == null || function == null) {
