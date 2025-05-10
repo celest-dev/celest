@@ -22,7 +22,7 @@ esac
     --no-rbe \
     --no-stripped \
     --verbose \
-    --no-prebuilt-dart-sdk \
+    --prebuilt-dart-sdk \
     --no-enable-unittests \
     --enable-fontconfig \
     --target-dir=host_release \
