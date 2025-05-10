@@ -41,10 +41,10 @@ class CelestFunctionsGreeting {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-        errorDetails['@type'],
-        errorDetails['value'],
-        StackTrace.empty,
-      ),
+          errorDetails['@type'],
+          errorDetails['value'],
+          StackTrace.empty,
+        ),
     };
 
     switch (errorType) {
