@@ -26,9 +26,9 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
+          - ubuntu-large
+          - macos-latest-xlarge
+          - windows-large
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30 # Windows is really slow
     steps:
@@ -40,7 +40,7 @@ jobs:
           cache: true
           # Because many golden tests encode the precise Dart/Flutter SDKs used to generate
           # them, these values must be consistently used when running tests locally and in CI.
-          flutter-version: 3.32.0-0.1.pre
+          flutter-version: 3.32.0-0.3.pre
           channel: beta
       - name: Setup Libsecret
         if: runner.os == 'Linux'

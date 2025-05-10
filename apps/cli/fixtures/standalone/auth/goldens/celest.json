@@ -611,10 +611,6 @@
   },
   "variables": [
     {
-      "name": "SUPABASE_URL",
-      "value": "https://vduqtbtlcxxozghvhdqu.supabase.co"
-    },
-    {
       "name": "CELEST_ENVIRONMENT",
       "value": "local"
     }
@@ -667,10 +663,10 @@
         "patch": 0,
         "preRelease": [
           278.0,
-          1.0,
+          2.0,
           "beta"
         ],
-        "canonicalizedVersion": "3.8.0-278.1.beta"
+        "canonicalizedVersion": "3.8.0-278.2.beta"
       }
     },
     "flutter": {
@@ -681,13 +677,13 @@
         "patch": 0,
         "preRelease": [
           0.0,
-          1.0,
+          3.0,
           "pre"
         ],
-        "canonicalizedVersion": "3.32.0-0.1.pre"
+        "canonicalizedVersion": "3.32.0-0.3.pre"
       }
     },
-    "targetSdk": "FLUTTER",
+    "targetSdk": "DART",
     "featureFlags": [
       "STREAMING"
     ]

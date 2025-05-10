@@ -6,14 +6,10 @@ environment:
 
 dependencies:
   celest: ^1.0.0
-  celest_cloud_auth: 'any'
+  celest_cloud_auth: ^0.3.0-0
   celest_core: ^1.0.0
   drift_hrana: ^1.0.5
-  firebase_auth: ^5.3.1
-  gotrue: ^2.9.0
   meta: ^1.12.0
-  shelf: ^1.4.1
-  stream_transform: ^2.1.0
 
 dependency_overrides:
   celest:
