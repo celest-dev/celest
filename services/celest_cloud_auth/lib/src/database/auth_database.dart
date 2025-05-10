@@ -9,10 +9,7 @@ typedef AuthDatabase = CloudAuthDatabase;
 
 @DriftDatabase(include: CloudAuthDatabaseMixin.includes)
 class CloudAuthDatabase extends $CloudAuthDatabase with CloudAuthDatabaseMixin {
-  CloudAuthDatabase(
-    super.e, {
-    ResolvedProject? project,
-  }) : _project = project;
+  CloudAuthDatabase(super.e, {ResolvedProject? project}) : _project = project;
 
   factory CloudAuthDatabase.localDir(
     Directory dir, {

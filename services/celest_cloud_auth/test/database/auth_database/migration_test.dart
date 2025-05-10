@@ -190,8 +190,9 @@ void main() {
       createItems: (batch, oldDb) {
         batch.insertAll(
           oldDb.cedarTypes,
-          CloudAuthDatabaseAccessors.coreTypes
-              .map((fqn) => v1.CedarTypesData(fqn: fqn)),
+          CloudAuthDatabaseAccessors.coreTypes.map(
+            (fqn) => v1.CedarTypesData(fqn: fqn),
+          ),
         );
         batch.insertAll(oldDb.cryptoKeys, oldCryptoKeys);
         batch.insertAll(oldDb.users, oldUsers);
@@ -200,38 +201,29 @@ void main() {
         batch.insertAll(oldDb.corks, oldCorks);
       },
       validateItems: (newDb) async {
+        expect(await newDb.select(newDb.cryptoKeys).get(), newCryptoKeys);
+        expect(await newDb.select(newDb.users).get(), newUsers);
+        expect(await newDb.select(newDb.sessions).get(), newSessions);
         expect(
-          await newDb.select(newDb.cryptoKeys).get(),
-          newCryptoKeys,
-        );
-        expect(
-          await newDb.select(newDb.users).get(),
-          newUsers,
-        );
-        expect(
-          await newDb.select(newDb.sessions).get(),
-          newSessions,
-        );
-        expect(
-          (await newDb.select(newDb.cedarEntities).get())
-              .map((it) => EntityUid.of(it.entityType, it.entityId)),
+          (await newDb.select(newDb.cedarEntities).get()).map(
+            (it) => EntityUid.of(it.entityType, it.entityId),
+          ),
           allOf([
             containsAll(
               newEntities.map(
                 (it) => EntityUid.of(it.entityType.value, it.entityId.value),
               ),
             ),
-            isNot(containsAll(
-              removedEntities.map(
-                (it) => EntityUid.of(it.entityType.value, it.entityId.value),
+            isNot(
+              containsAll(
+                removedEntities.map(
+                  (it) => EntityUid.of(it.entityType.value, it.entityId.value),
+                ),
               ),
-            )),
+            ),
           ]),
         );
-        expect(
-          await newDb.select(newDb.corks).get(),
-          newCorks,
-        );
+        expect(await newDb.select(newDb.corks).get(), newCorks);
       },
     );
   });

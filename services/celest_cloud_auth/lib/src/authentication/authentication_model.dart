@@ -18,7 +18,8 @@ sealed class AuthenticationFactor {
         AuthenticationFactorEmailOtp.fromProto(proto.emailOtp),
       pb.AuthenticationFactor_Factor.smsOtp =>
         AuthenticationFactorSmsOtp.fromProto(proto.smsOtp),
-      final unknown => throw ArgumentError.value(
+      final unknown =>
+        throw ArgumentError.value(
           unknown,
           'factor',
           'Invalid AuthenticationFactor. Expected one of: emailOtp, smsOtp',
@@ -27,13 +28,13 @@ sealed class AuthenticationFactor {
   }
 
   pb.AuthenticationFactor toProto() => switch (this) {
-        final AuthenticationFactorEmailOtp emailOtp => pb.AuthenticationFactor(
-            emailOtp: emailOtp.toValueProto(),
-          ),
-        final AuthenticationFactorSmsOtp smsOtp => pb.AuthenticationFactor(
-            smsOtp: smsOtp.toValueProto(),
-          ),
-      };
+    final AuthenticationFactorEmailOtp emailOtp => pb.AuthenticationFactor(
+      emailOtp: emailOtp.toValueProto(),
+    ),
+    final AuthenticationFactorSmsOtp smsOtp => pb.AuthenticationFactor(
+      smsOtp: smsOtp.toValueProto(),
+    ),
+  };
 
   GeneratedMessage toValueProto();
 
@@ -42,10 +43,7 @@ sealed class AuthenticationFactor {
 }
 
 final class AuthenticationFactorEmailOtp extends AuthenticationFactor {
-  const AuthenticationFactorEmailOtp({
-    required this.email,
-    this.code,
-  });
+  const AuthenticationFactorEmailOtp({required this.email, this.code});
 
   factory AuthenticationFactorEmailOtp.fromProto(
     pb.AuthenticationFactorEmailOtp emailOtp,
@@ -66,17 +64,11 @@ final class AuthenticationFactorEmailOtp extends AuthenticationFactor {
 
   @override
   pb.AuthenticationFactorEmailOtp toValueProto() =>
-      pb.AuthenticationFactorEmailOtp(
-        email: email,
-        code: code,
-      );
+      pb.AuthenticationFactorEmailOtp(email: email, code: code);
 }
 
 final class AuthenticationFactorSmsOtp extends AuthenticationFactor {
-  const AuthenticationFactorSmsOtp({
-    required this.phoneNumber,
-    this.code,
-  });
+  const AuthenticationFactorSmsOtp({required this.phoneNumber, this.code});
 
   factory AuthenticationFactorSmsOtp.fromProto(
     pb.AuthenticationFactorSmsOtp smsOtp,
@@ -96,10 +88,8 @@ final class AuthenticationFactorSmsOtp extends AuthenticationFactor {
   final String? code;
 
   @override
-  pb.AuthenticationFactorSmsOtp toValueProto() => pb.AuthenticationFactorSmsOtp(
-        phoneNumber: phoneNumber,
-        code: code,
-      );
+  pb.AuthenticationFactorSmsOtp toValueProto() =>
+      pb.AuthenticationFactorSmsOtp(phoneNumber: phoneNumber, code: code);
 }
 
 final class SessionClient {
@@ -122,20 +112,17 @@ final class SessionClient {
   final SessionCallbacks callbacks;
 
   pb.SessionClient toProto() => pb.SessionClient(
-        clientId: clientId,
-        clientType: clientType,
-        callbacks: callbacks.toProto(),
-      );
+    clientId: clientId,
+    clientType: clientType,
+    callbacks: callbacks.toProto(),
+  );
 
   @override
   String toString() => toProto().toString();
 }
 
 final class SessionCallbacks {
-  const SessionCallbacks({
-    required this.successUri,
-    this.errorUri,
-  });
+  const SessionCallbacks({required this.successUri, this.errorUri});
 
   factory SessionCallbacks.fromProto(pb.SessionCallbacks callbacks) {
     return SessionCallbacks(
@@ -149,9 +136,9 @@ final class SessionCallbacks {
   final Uri? errorUri;
 
   pb.SessionCallbacks toProto() => pb.SessionCallbacks(
-        successUri: successUri.toString(),
-        errorUri: errorUri?.toString(),
-      );
+    successUri: successUri.toString(),
+    errorUri: errorUri?.toString(),
+  );
 
   @override
   String toString() => toProto().toString();
@@ -196,10 +183,10 @@ final class SessionStateSuccess extends SessionState {
 
   @override
   pb.AuthenticationSuccess toProto() => pb.AuthenticationSuccess(
-        identityToken: cork.toString(),
-        user: user.toProto(),
-        isNewUser: isNewUser,
-      );
+    identityToken: cork.toString(),
+    user: user.toProto(),
+    isNewUser: isNewUser,
+  );
 }
 
 sealed class SessionStateNextStep extends SessionState {
@@ -207,11 +194,13 @@ sealed class SessionStateNextStep extends SessionState {
 
   factory SessionStateNextStep.fromProto(pb.AuthenticationStep proto) {
     return switch (proto.whichStep()) {
-      pb.AuthenticationStep_Step.needsProof =>
-        SessionStateNeedsProof.fromProto(proto.needsProof),
+      pb.AuthenticationStep_Step.needsProof => SessionStateNeedsProof.fromProto(
+        proto.needsProof,
+      ),
       pb.AuthenticationStep_Step.pendingConfirmation =>
         SessionStatePendingConfirmation.fromProto(proto.pendingConfirmation),
-      final unknown => throw ArgumentError.value(
+      final unknown =>
+        throw ArgumentError.value(
           unknown,
           'step',
           'Invalid AuthenticationStep. Expected one of: needsProof, pendingConfirmation',
@@ -221,14 +210,14 @@ sealed class SessionStateNextStep extends SessionState {
 
   @override
   pb.AuthenticationStep toProto() => switch (this) {
-        final SessionStateNeedsProof needsProof => pb.AuthenticationStep(
-            needsProof: needsProof.toValueProto(),
-          ),
-        final SessionStatePendingConfirmation pendingConfirmation =>
-          pb.AuthenticationStep(
-            pendingConfirmation: pendingConfirmation.toValueProto(),
-          ),
-      };
+    final SessionStateNeedsProof needsProof => pb.AuthenticationStep(
+      needsProof: needsProof.toValueProto(),
+    ),
+    final SessionStatePendingConfirmation pendingConfirmation =>
+      pb.AuthenticationStep(
+        pendingConfirmation: pendingConfirmation.toValueProto(),
+      ),
+  };
 
   @override
   void apply(pb.Session session) {
@@ -237,9 +226,7 @@ sealed class SessionStateNextStep extends SessionState {
 }
 
 final class SessionStateNeedsProof extends SessionStateNextStep {
-  const SessionStateNeedsProof({
-    required this.factor,
-  });
+  const SessionStateNeedsProof({required this.factor});
   factory SessionStateNeedsProof.fromProto(pb.AuthenticationFactor proto) {
     return SessionStateNeedsProof(
       factor: AuthenticationFactor.fromProto(proto),
@@ -291,8 +278,8 @@ final class Session {
     this.clientInfo,
     this.ipAddress,
     this.externalSessionId,
-  })  : parent = parent ?? context.rootEntity,
-        sessionId = TypeId<Session>.decode(sessionId);
+  }) : parent = parent ?? context.rootEntity,
+       sessionId = TypeId<Session>.decode(sessionId);
 
   const Session._({
     required this.parent,
@@ -323,9 +310,7 @@ final class Session {
   final String? ipAddress;
   final String? externalSessionId;
 
-  pb.Session toProto({
-    String? sessionToken,
-  }) {
+  pb.Session toProto({String? sessionToken}) {
     final session = pb.Session(
       parent: parent?.id,
       sessionId: sessionId.encoded,

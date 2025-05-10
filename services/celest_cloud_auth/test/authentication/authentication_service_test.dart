@@ -22,9 +22,7 @@ void main() {
       const route = ('GET', '/v1alpha1/auth/userinfo');
 
       test('unauthenticated', () async {
-        await tester.httpTest({
-          route: expectStatus(401),
-        });
+        await tester.httpTest({route: expectStatus(401)});
       });
 
       test('authenticated', () async {
@@ -78,8 +76,7 @@ void main() {
       check(session.sessionToken).isNotNull();
       final sessionCork = CedarCork.parse(session.sessionToken!);
       final expireTime =
-          (sessionCork.claims!.attributes['expireTime'] as LongValue)
-              .value
+          (sessionCork.claims!.attributes['expireTime'] as LongValue).value
               .toInt();
       check(session.state)
           .isA<SessionStateNeedsProof>()
@@ -97,9 +94,10 @@ void main() {
 
       check(result.state).isA<SessionStateSuccess>()
         ..has((s) => s.isNewUser, 'isNewUser').isTrue()
-        ..has((s) => s.user.primaryEmail, 'email').equals(
-          Email(email: email, isVerified: true, isPrimary: true),
-        )
+        ..has(
+          (s) => s.user.primaryEmail,
+          'email',
+        ).equals(Email(email: email, isVerified: true, isPrimary: true))
         ..has(
           (s) =>
               CedarCork(s.cork).bearer ==
@@ -107,15 +105,15 @@ void main() {
           'cork bearer == sessionId',
         ).isTrue()
         ..has(
-          (s) => CedarCork(s.cork)
-              .claims
-              ?.parents
-              .contains(EntityUid.of('Celest::User', s.user.userId)),
+          (s) => CedarCork(s.cork).claims?.parents.contains(
+            EntityUid.of('Celest::User', s.user.userId),
+          ),
           'cork <: user',
         ).isNotNull().isTrue()
-        ..has((s) => s.cork.toString(), 'cork != original sessionToken').not(
-          (it) => it.equals(session.sessionToken!),
-        );
+        ..has(
+          (s) => s.cork.toString(),
+          'cork != original sessionToken',
+        ).not((it) => it.equals(session.sessionToken!));
 
       check(result.sessionToken).isNotNull();
       check(result.sessionToken).not((it) => it.equals(session.sessionToken));
@@ -156,9 +154,10 @@ void main() {
 
       check(result.state).isA<SessionStateSuccess>()
         ..has((s) => s.isNewUser, 'isNewUser').isTrue()
-        ..has((s) => s.user.primaryEmail, 'email').equals(
-          Email(email: email, isVerified: true, isPrimary: true),
-        );
+        ..has(
+          (s) => s.user.primaryEmail,
+          'email',
+        ).equals(Email(email: email, isVerified: true, isPrimary: true));
 
       final session2 = await tester.authenticationService.startSession(
         factor: AuthenticationFactorEmailOtp(email: email),
@@ -186,8 +185,10 @@ void main() {
 
       check(result2.state).isA<SessionStateSuccess>()
         ..has((s) => s.isNewUser, 'isNewUser').isFalse()
-        ..has((s) => s.user, 'user')
-            .equals((result.state as SessionStateSuccess).user);
+        ..has(
+          (s) => s.user,
+          'user',
+        ).equals((result.state as SessionStateSuccess).user);
     });
 
     test('resend otp', () async {
@@ -233,9 +234,10 @@ void main() {
 
       check(result2.state).isA<SessionStateSuccess>()
         ..has((s) => s.isNewUser, 'isNewUser').isTrue()
-        ..has((s) => s.user.primaryEmail, 'email').equals(
-          Email(email: email, isVerified: true, isPrimary: true),
-        );
+        ..has(
+          (s) => s.user.primaryEmail,
+          'email',
+        ).equals(Email(email: email, isVerified: true, isPrimary: true));
     });
 
     group('startSession', () {
@@ -277,26 +279,27 @@ void main() {
               code: code,
             ),
           ).completes(
-            (result) => result.isA<pb.EmailSessionSuccess>()
-              ..has((it) => it.isNewUser, 'isNewUser').isTrue()
-              ..has((it) => it.user.toModel().primaryEmail, 'email').equals(
-                const Email(email: email, isVerified: true, isPrimary: true),
-              ),
+            (result) =>
+                result.isA<pb.EmailSessionSuccess>()
+                  ..has((it) => it.isNewUser, 'isNewUser').isTrue()
+                  ..has((it) => it.user.toModel().primaryEmail, 'email').equals(
+                    const Email(
+                      email: email,
+                      isVerified: true,
+                      isPrimary: true,
+                    ),
+                  ),
           );
         });
       });
 
       group('authorization', () {
         const request = {
-          'emailOtp': {
-            'email': 'test@celest.dev',
-          },
+          'emailOtp': {'email': 'test@celest.dev'},
           'client': {
             'clientId': 'test',
             'clientType': 'HEADLESS',
-            'callbacks': {
-              'successUri': 'https://celest.dev',
-            },
+            'callbacks': {'successUri': 'https://celest.dev'},
           },
         };
 
@@ -309,22 +312,19 @@ void main() {
                 (it) => it.containsKey('sessionToken'),
                 (it) => it.containsKey('expireTime'),
                 (it) => it
-                        .has((it) => it['nextStep'], 'nextStep')
-                        .isA<Map<String, Object?>>()
-                        .deepEquals({
+                    .has((it) => it['nextStep'], 'nextStep')
+                    .isA<Map<String, Object?>>()
+                    .deepEquals({
                       'needsProof': {
-                        'emailOtp': {
-                          'email': 'test@celest.dev',
-                        },
+                        'emailOtp': {'email': 'test@celest.dev'},
                       },
                     }),
               ]),
             ]),
           });
-          check(tester.lastSentCode)
-              .isNotNull()
-              .has((it) => it.to, 'to')
-              .equals('test@celest.dev');
+          check(
+            tester.lastSentCode,
+          ).isNotNull().has((it) => it.to, 'to').equals('test@celest.dev');
         });
 
         test('re-authenticate', () async {
@@ -340,22 +340,19 @@ void main() {
                 (it) => it.containsKey('sessionToken'),
                 (it) => it.containsKey('expireTime'),
                 (it) => it
-                        .has((it) => it['nextStep'], 'nextStep')
-                        .isA<Map<String, Object?>>()
-                        .deepEquals({
+                    .has((it) => it['nextStep'], 'nextStep')
+                    .isA<Map<String, Object?>>()
+                    .deepEquals({
                       'needsProof': {
-                        'emailOtp': {
-                          'email': 'test@celest.dev',
-                        },
+                        'emailOtp': {'email': 'test@celest.dev'},
                       },
                     }),
               ]),
             ]),
           });
-          check(tester.lastSentCode)
-              .isNotNull()
-              .has((it) => it.to, 'to')
-              .equals('test@celest.dev');
+          check(
+            tester.lastSentCode,
+          ).isNotNull().has((it) => it.to, 'to').equals('test@celest.dev');
         });
       });
     });

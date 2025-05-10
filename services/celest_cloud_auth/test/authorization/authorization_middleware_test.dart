@@ -34,9 +34,7 @@ void main() {
     });
 
     test('authenticated', () async {
-      final (_, cork) = await tester.createUser(
-        roles: [roleAuthenticated],
-      );
+      final (_, cork) = await tester.createUser(roles: [roleAuthenticated]);
       await tester.httpTest(cork: cork, {
         public: expectStatus(200),
         authenticated: expectStatus(200),
@@ -45,9 +43,7 @@ void main() {
     });
 
     test('admin', () async {
-      final (_, cork) = await tester.createUser(
-        roles: [roleAdmin],
-      );
+      final (_, cork) = await tester.createUser(roles: [roleAdmin]);
       await tester.httpTest(cork: cork, {
         public: expectStatus(200),
         authenticated: expectStatus(200),

@@ -18,8 +18,9 @@ void main() {
         factor: AuthenticationFactorEmailOtp(email: 'test@celest.dev'),
         sessionDuration: SessionsRepository.preAuthSessionDuration,
       );
-      await check(tester.sessions.getSession(sessionId: session.sessionId))
-          .completes((it) => it.isNotNull());
+      await check(
+        tester.sessions.getSession(sessionId: session.sessionId),
+      ).completes((it) => it.isNotNull());
       await withClock(
         Clock.fixed(
           clock
@@ -28,8 +29,9 @@ void main() {
               .add(const Duration(seconds: 1)),
         ),
         () async {
-          await check(tester.sessions.getSession(sessionId: session.sessionId))
-              .completes((it) => it.isNull());
+          await check(
+            tester.sessions.getSession(sessionId: session.sessionId),
+          ).completes((it) => it.isNull());
         },
       );
 
@@ -37,8 +39,9 @@ void main() {
         session: session,
         sessionDuration: SessionsRepository.preAuthSessionDuration,
       );
-      await check(tester.sessions.getSession(sessionId: session.sessionId))
-          .completes((it) => it.isNotNull());
+      await check(
+        tester.sessions.getSession(sessionId: session.sessionId),
+      ).completes((it) => it.isNotNull());
       await withClock(
         Clock.fixed(
           clock
@@ -47,8 +50,9 @@ void main() {
               .add(const Duration(seconds: 1)),
         ),
         () async {
-          await check(tester.sessions.getSession(sessionId: session.sessionId))
-              .completes((it) => it.isNull());
+          await check(
+            tester.sessions.getSession(sessionId: session.sessionId),
+          ).completes((it) => it.isNull());
         },
       );
     });

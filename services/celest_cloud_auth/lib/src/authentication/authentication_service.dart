@@ -23,17 +23,18 @@ import 'package:meta/meta.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-typedef _Deps = ({
-  EntityUid issuer,
-  RouteMap routeMap,
-  CloudAuthDatabaseMixin db,
-  OtpRepository otp,
-  CryptoKeyRepository cryptoKeys,
-  Authorizer authorizer,
-  CorksRepository corks,
-  SessionsRepository sessions,
-  UsersRepository users,
-});
+typedef _Deps =
+    ({
+      EntityUid issuer,
+      RouteMap routeMap,
+      CloudAuthDatabaseMixin db,
+      OtpRepository otp,
+      CryptoKeyRepository cryptoKeys,
+      Authorizer authorizer,
+      CorksRepository corks,
+      SessionsRepository sessions,
+      UsersRepository users,
+    });
 
 extension type AuthenticationService._(_Deps _deps) implements Object {
   AuthenticationService({
@@ -46,19 +47,17 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
     required CorksRepository corks,
     required SessionsRepository sessions,
     required UsersRepository users,
-  }) : this._(
-          (
-            issuer: issuer,
-            routeMap: routeMap,
-            db: db,
-            otp: otp,
-            cryptoKeys: cryptoKeys,
-            authorizer: authorizer,
-            corks: corks,
-            sessions: sessions,
-            users: users,
-          ),
-        );
+  }) : this._((
+         issuer: issuer,
+         routeMap: routeMap,
+         db: db,
+         otp: otp,
+         cryptoKeys: cryptoKeys,
+         authorizer: authorizer,
+         corks: corks,
+         sessions: sessions,
+         users: users,
+       ));
 
   CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
   OtpRepository get _otp => _deps.otp;
@@ -118,9 +117,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
         TemplateLink(
           templateId: 'cloud.functions.public',
           newId: apiId,
-          values: {
-            SlotId.resource: apiUid,
-          },
+          values: {SlotId.resource: apiUid},
         ),
       ],
     ),
@@ -209,17 +206,14 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
         factor: factor,
         resend: null,
       );
-      return _sessions.updateSession(
-        session: session,
-        state: nextStep,
-      );
+      return _sessions.updateSession(session: session, state: nextStep);
     });
   }
 
   Future<Response> handleStartSession(Request request) async {
     final jsonRequest = await JsonUtf8.decodeStream(request.read());
-    final pbRequest = pb.StartSessionRequest()
-      ..mergeFromProto3Json(jsonRequest);
+    final pbRequest =
+        pb.StartSessionRequest()..mergeFromProto3Json(jsonRequest);
     final factor = AuthenticationFactor.fromProto(
       pb.AuthenticationFactor(
         emailOtp: pbRequest.hasEmailOtp() ? pbRequest.emailOtp : null,
@@ -242,9 +236,9 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
   }) async {
     switch ((factor, proof)) {
       case (
-          AuthenticationFactorEmailOtp(),
-          AuthenticationFactorEmailOtp(:final code)
-        ):
+        AuthenticationFactorEmailOtp(),
+        AuthenticationFactorEmailOtp(:final code),
+      ):
         if (code == null) {
           throw const BadRequestException('Code is required');
         }
@@ -256,9 +250,9 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
           throw const BadRequestException('Invalid code');
         }
       case (
-          AuthenticationFactorSmsOtp(),
-          AuthenticationFactorSmsOtp(:final code)
-        ):
+        AuthenticationFactorSmsOtp(),
+        AuthenticationFactorSmsOtp(:final code),
+      ):
         if (code == null) {
           throw const BadRequestException('Code is required');
         }
@@ -293,11 +287,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
       ),
       user: user,
     );
-    return SessionStateSuccess(
-      cork: cork,
-      user: user,
-      isNewUser: isNewUser,
-    );
+    return SessionStateSuccess(cork: cork, user: user, isNewUser: isNewUser);
   }
 
   Future<SessionState> _sendOtp({
@@ -307,9 +297,9 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
   }) async {
     switch ((factor, resend)) {
       case (
-          final AuthenticationFactorEmailOtp factor,
-          AuthenticationFactorEmailOtp() || null
-        ):
+        final AuthenticationFactorEmailOtp factor,
+        AuthenticationFactorEmailOtp() || null,
+      ):
         final (ok, nextResend) = await _otp.send(
           sessionId: sessionId,
           to: factor.email,
@@ -349,9 +339,7 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
           'Invalid resend. Expected ${factor.runtimeType}',
         );
     }
-    return SessionStateNeedsProof(
-      factor: factor,
-    );
+    return SessionStateNeedsProof(factor: factor);
   }
 
   @visibleForTesting
@@ -362,9 +350,10 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
     SessionStatePendingConfirmation? confirmation,
     AuthenticationFactor? resend,
   }) async {
-    final session = await _db.cloudAuthCoreDrift
-        .getSession(sessionId: sessionId.encoded)
-        .getSingleOrNull();
+    final session =
+        await _db.cloudAuthCoreDrift
+            .getSession(sessionId: sessionId.encoded)
+            .getSingleOrNull();
     if (session == null) {
       throw const NotFoundException('Session not found');
     }
@@ -373,18 +362,18 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
 
     final updatedState = await switch (session.state) {
       SessionStateNeedsProof(:final factor) => switch ((proof, resend)) {
-          (final proof?, _) => _verifyOtp(
-              session: session,
-              factor: factor,
-              proof: proof,
-            ),
-          (_, final resend?) => _sendOtp(
-              sessionId: sessionId,
-              factor: factor,
-              resend: resend,
-            ),
-          _ => throw const BadRequestException('Proof is required'),
-        },
+        (final proof?, _) => _verifyOtp(
+          session: session,
+          factor: factor,
+          proof: proof,
+        ),
+        (_, final resend?) => _sendOtp(
+          sessionId: sessionId,
+          factor: factor,
+          resend: resend,
+        ),
+        _ => throw const BadRequestException('Proof is required'),
+      },
       SessionStatePendingConfirmation() => throw UnimplementedError(),
       SessionStateSuccess() => throw StateError('Session already completed'),
       null => throw StateError('Unexpected state'),
@@ -402,22 +391,25 @@ extension type AuthenticationService._(_Deps _deps) implements Object {
 
   Future<Response> handleContinueSession(Request request) async {
     final jsonRequest = await JsonUtf8.decodeStream(request.read());
-    final pbRequest = pb.ContinueSessionRequest()
-      ..mergeFromProto3Json(jsonRequest);
+    final pbRequest =
+        pb.ContinueSessionRequest()..mergeFromProto3Json(jsonRequest);
     final session = await continueSession(
       sessionId: TypeId.decode(pbRequest.sessionId),
       sessionToken: pbRequest.sessionToken,
-      proof: pbRequest.hasProof()
-          ? AuthenticationFactor.fromProto(pbRequest.proof)
-          : null,
-      confirmation: pbRequest.hasConfirmation()
-          ? SessionStatePendingConfirmation.fromProto(
-              pbRequest.confirmation,
-            )
-          : null,
-      resend: pbRequest.hasResend()
-          ? AuthenticationFactor.fromProto(pbRequest.resend)
-          : null,
+      proof:
+          pbRequest.hasProof()
+              ? AuthenticationFactor.fromProto(pbRequest.proof)
+              : null,
+      confirmation:
+          pbRequest.hasConfirmation()
+              ? SessionStatePendingConfirmation.fromProto(
+                pbRequest.confirmation,
+              )
+              : null,
+      resend:
+          pbRequest.hasResend()
+              ? AuthenticationFactor.fromProto(pbRequest.resend)
+              : null,
     );
     return session.toResponse();
   }

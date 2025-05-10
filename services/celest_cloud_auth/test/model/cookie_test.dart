@@ -20,18 +20,17 @@ void main() {
   group('parseCookies', () {
     for (final testCase in _testCases) {
       test(testCase.header, () {
-        final actual = parseCookies({
-          'cookie': testCase.header,
-        });
+        final actual = parseCookies({'cookie': testCase.header});
         expect(actual, equals(testCase.expected));
       });
     }
 
     test('parses cork', () async {
-      final cork = (CedarCork.builder()
-            ..issuer = EntityUid.of('Celest::Service', 'test')
-            ..bearer = EntityUid.of('Celest::User', 'user'))
-          .build();
+      final cork =
+          (CedarCork.builder()
+                ..issuer = EntityUid.of('Celest::Service', 'test')
+                ..bearer = EntityUid.of('Celest::User', 'user'))
+              .build();
 
       final signer = Signer(cork.id, secureRandomBytes(16));
       final signed = await cork.sign(signer);
@@ -44,42 +43,24 @@ void main() {
   });
 }
 
-typedef _TestCase = ({
-  List<String> header,
-  Map<String, String> expected,
-});
+typedef _TestCase = ({List<String> header, Map<String, String> expected});
 
 const _testCases = <_TestCase>[
   (
     header: [r'Cookie-1=v$1', 'c2=v2'],
-    expected: {
-      'Cookie-1': r'v$1',
-      'c2': 'v2',
-    },
+    expected: {'Cookie-1': r'v$1', 'c2': 'v2'},
   ),
   (
     header: [r'Cookie-1=v$1; c2=v2'],
-    expected: {
-      'Cookie-1': r'v$1',
-      'c2': 'v2',
-    },
+    expected: {'Cookie-1': r'v$1', 'c2': 'v2'},
   ),
   (
     header: [r'Cookie-1="v$1"; c2="v2"'],
-    expected: {
-      'Cookie-1': r'v$1',
-      'c2': 'v2',
-    },
+    expected: {'Cookie-1': r'v$1', 'c2': 'v2'},
   ),
   (
     header: [r'Cookie-1="v$1"; c2=v2;'],
-    expected: {
-      'Cookie-1': r'v$1',
-      'c2': 'v2',
-    },
+    expected: {'Cookie-1': r'v$1', 'c2': 'v2'},
   ),
-  (
-    header: [''],
-    expected: {},
-  ),
+  (header: [''], expected: {}),
 ];

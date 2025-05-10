@@ -8,22 +8,19 @@ void main() {
     test('Literal', () {
       const segment = '/v1alpha1/auth/users';
       final literal = RouteLiteral(segment);
-      check(literal.parse(segment))
-          .isA<Success<String>>()
-          .has((it) => it.value, 'value')
-          .equals(segment);
+      check(
+        literal.parse(segment),
+      ).isA<Success<String>>().has((it) => it.value, 'value').equals(segment);
     });
 
     test('Wildcard (greedy)', () {
       final wildcard = RouteWildcard(greedy: true);
-      check(wildcard.parse('123'))
-          .isA<Success<String>>()
-          .has((it) => it.value, 'value')
-          .equals('123');
-      check(wildcard.parse('123/456'))
-          .isA<Success<String>>()
-          .has((it) => it.value, 'value')
-          .equals('123/456');
+      check(
+        wildcard.parse('123'),
+      ).isA<Success<String>>().has((it) => it.value, 'value').equals('123');
+      check(
+        wildcard.parse('123/456'),
+      ).isA<Success<String>>().has((it) => it.value, 'value').equals('123/456');
     });
 
     test('Wildcard (greedy, >maxLength)', () {
@@ -34,14 +31,12 @@ void main() {
 
     test('Wildcard (non-greedy)', () {
       final wildcard = RouteWildcard(greedy: false);
-      check(wildcard.parse('123'))
-          .isA<Success<String>>()
-          .has((it) => it.value, 'value')
-          .equals('123');
-      check(wildcard.parse('123/456'))
-          .isA<Success<String>>()
-          .has((it) => it.value, 'value')
-          .equals('123');
+      check(
+        wildcard.parse('123'),
+      ).isA<Success<String>>().has((it) => it.value, 'value').equals('123');
+      check(
+        wildcard.parse('123/456'),
+      ).isA<Success<String>>().has((it) => it.value, 'value').equals('123');
     });
 
     test('Route', () {
@@ -52,10 +47,7 @@ void main() {
           RouteLiteral('auth'),
           RouteParameter(
             variable: 'name',
-            segments: [
-              RouteLiteral('users'),
-              RouteWildcard(greedy: false),
-            ],
+            segments: [RouteLiteral('users'), RouteWildcard(greedy: false)],
           ),
         ],
       );
@@ -72,9 +64,9 @@ void main() {
           check(actual)
               .has((it) => it.segments, 'segments')
               .deepEquals(testCase.expectedSegments);
-          check(actual)
-              .has((it) => it.verb, 'verb')
-              .equals(testCase.expectedVerb);
+          check(
+            actual,
+          ).has((it) => it.verb, 'verb').equals(testCase.expectedVerb);
           check(actual.toString()).equals(testCase.route);
         });
       }
@@ -99,17 +91,15 @@ void main() {
   });
 }
 
-typedef _TestCase = ({
-  String route,
-  List<RouteSegment> expectedSegments,
-  RouteVerb? expectedVerb,
-  List<_MatchTest> matchTests,
-});
+typedef _TestCase =
+    ({
+      String route,
+      List<RouteSegment> expectedSegments,
+      RouteVerb? expectedVerb,
+      List<_MatchTest> matchTests,
+    });
 
-typedef _MatchTest = ({
-  String route,
-  Map<String, String>? expected,
-});
+typedef _MatchTest = ({String route, Map<String, String>? expected});
 
 final _testCases = <_TestCase>[
   (
@@ -121,14 +111,8 @@ final _testCases = <_TestCase>[
     ],
     expectedVerb: null,
     matchTests: [
-      (
-        route: '/v1alpha1/auth/users',
-        expected: {},
-      ),
-      (
-        route: '/v1alpha1/auth',
-        expected: null,
-      ),
+      (route: '/v1alpha1/auth/users', expected: {}),
+      (route: '/v1alpha1/auth', expected: null),
     ],
   ),
   (
@@ -137,25 +121,13 @@ final _testCases = <_TestCase>[
       RouteLiteral('v1alpha1'),
       RouteLiteral('auth'),
       RouteLiteral('users'),
-      RouteParameter(
-        variable: 'id',
-        segments: [RouteWildcard(greedy: true)],
-      ),
+      RouteParameter(variable: 'id', segments: [RouteWildcard(greedy: true)]),
     ],
     expectedVerb: null,
     matchTests: [
-      (
-        route: '/v1alpha1/auth/users/123',
-        expected: {'id': '123'},
-      ),
-      (
-        route: '/v1alpha1/auth/users/123/456',
-        expected: {'id': '123/456'},
-      ),
-      (
-        route: '/v1alpha1/auth/users',
-        expected: null,
-      ),
+      (route: '/v1alpha1/auth/users/123', expected: {'id': '123'}),
+      (route: '/v1alpha1/auth/users/123/456', expected: {'id': '123/456'}),
+      (route: '/v1alpha1/auth/users', expected: null),
     ],
   ),
   (
@@ -165,26 +137,14 @@ final _testCases = <_TestCase>[
       RouteLiteral('auth'),
       RouteParameter(
         variable: 'name',
-        segments: [
-          RouteLiteral('users'),
-          RouteWildcard(greedy: false),
-        ],
+        segments: [RouteLiteral('users'), RouteWildcard(greedy: false)],
       ),
     ],
     expectedVerb: null,
     matchTests: [
-      (
-        route: '/v1alpha1/auth/users/123',
-        expected: {'name': 'users/123'},
-      ),
-      (
-        route: '/v1alpha1/auth/users/123/456',
-        expected: null,
-      ),
-      (
-        route: '/v1alpha1/auth',
-        expected: null,
-      ),
+      (route: '/v1alpha1/auth/users/123', expected: {'name': 'users/123'}),
+      (route: '/v1alpha1/auth/users/123/456', expected: null),
+      (route: '/v1alpha1/auth', expected: null),
     ],
   ),
   (
@@ -194,26 +154,17 @@ final _testCases = <_TestCase>[
       RouteLiteral('auth'),
       RouteParameter(
         variable: 'name',
-        segments: [
-          RouteLiteral('users'),
-          RouteWildcard(greedy: true),
-        ],
+        segments: [RouteLiteral('users'), RouteWildcard(greedy: true)],
       ),
     ],
     expectedVerb: null,
     matchTests: [
-      (
-        route: '/v1alpha1/auth/users/123',
-        expected: {'name': 'users/123'},
-      ),
+      (route: '/v1alpha1/auth/users/123', expected: {'name': 'users/123'}),
       (
         route: '/v1alpha1/auth/users/123/456',
         expected: {'name': 'users/123/456'},
       ),
-      (
-        route: '/v1alpha1/auth/users',
-        expected: null,
-      ),
+      (route: '/v1alpha1/auth/users', expected: null),
     ],
   ),
   (
@@ -223,10 +174,7 @@ final _testCases = <_TestCase>[
       RouteLiteral('auth'),
       RouteParameter(
         variable: 'name',
-        segments: [
-          RouteLiteral('users'),
-          RouteWildcard(greedy: false),
-        ],
+        segments: [RouteLiteral('users'), RouteWildcard(greedy: false)],
       ),
       RouteLiteral('email'),
     ],
@@ -236,14 +184,8 @@ final _testCases = <_TestCase>[
         route: '/v1alpha1/auth/users/123/email',
         expected: {'name': 'users/123'},
       ),
-      (
-        route: '/v1alpha1/auth/users/123/456/email',
-        expected: null,
-      ),
-      (
-        route: '/v1alpha1/auth/users/email',
-        expected: null,
-      ),
+      (route: '/v1alpha1/auth/users/123/456/email', expected: null),
+      (route: '/v1alpha1/auth/users/email', expected: null),
     ],
   ),
   (
@@ -264,9 +206,7 @@ final _testCases = <_TestCase>[
     matchTests: [
       (
         route: '/v1alpha1/organizations/org_1234/projects/my-project',
-        expected: {
-          'name': 'organizations/org_1234/projects/my-project',
-        },
+        expected: {'name': 'organizations/org_1234/projects/my-project'},
       ),
     ],
   ),
@@ -291,18 +231,9 @@ final _testCases = <_TestCase>[
         route: '/v1alpha1/auth/organizations/123/users/456',
         expected: {'name': 'organizations/123/users/456'},
       ),
-      (
-        route: '/v1alpha1/auth/organizations/123/users',
-        expected: null,
-      ),
-      (
-        route: '/v1alpha1/auth/organizations/users/123',
-        expected: null,
-      ),
-      (
-        route: '/v1alpha1/auth/organizations/123/users/456/789',
-        expected: null,
-      ),
+      (route: '/v1alpha1/auth/organizations/123/users', expected: null),
+      (route: '/v1alpha1/auth/organizations/users/123', expected: null),
+      (route: '/v1alpha1/auth/organizations/123/users/456/789', expected: null),
     ],
   ),
   (
@@ -368,24 +299,12 @@ final _testCases = <_TestCase>[
   ),
   (
     route: '/test/say-hello',
-    expectedSegments: [
-      RouteLiteral('test'),
-      RouteLiteral('say-hello'),
-    ],
+    expectedSegments: [RouteLiteral('test'), RouteLiteral('say-hello')],
     expectedVerb: null,
     matchTests: [
-      (
-        route: '/test/say-hello',
-        expected: {},
-      ),
-      (
-        route: '/test/say-hello/',
-        expected: null,
-      ),
-      (
-        route: '/test/say-hello/123',
-        expected: null,
-      ),
+      (route: '/test/say-hello', expected: {}),
+      (route: '/test/say-hello/', expected: null),
+      (route: '/test/say-hello/123', expected: null),
     ],
   ),
 ];

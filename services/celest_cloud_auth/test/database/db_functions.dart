@@ -12,7 +12,8 @@ extension DatabaseFunctions on Database {
         return switch (args.first) {
           final List<int> value => md5.convert(value).bytes,
           final String value => md5.convert(value.codeUnits).bytes,
-          final invalid => throw ArgumentError(
+          final invalid =>
+            throw ArgumentError(
               'Invalid argument type. Expected BLOB or TEXT, got: '
               '$invalid (${invalid.runtimeType}).',
             ),

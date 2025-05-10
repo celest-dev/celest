@@ -11,11 +11,7 @@ import 'package:petitparser/petitparser.dart';
 /// {@endtemplate}
 final class Route extends Parser<Map<String, String>> {
   /// {@macro celest_cloud_auth.model.route}
-  Route({
-    required this.template,
-    required this.segments,
-    this.verb,
-  });
+  Route({required this.template, required this.segments, this.verb});
 
   /// Parses a path [template] into a [Route].
   ///
@@ -43,15 +39,10 @@ final class Route extends Parser<Map<String, String>> {
     final segments = segment.plusSeparated(char('/'));
 
     // Variable = "{" FieldPath [ "=" Segments ] "}" ;
-    final variable = seq2(
-      fieldPath.flatten().skip(after: char('=')),
-      segments,
-    )
+    final variable = seq2(fieldPath.flatten().skip(after: char('=')), segments)
         .map2(
-          (variable, segments) => RouteParameter(
-            variable: variable,
-            segments: segments.elements,
-          ),
+          (variable, segments) =>
+              RouteParameter(variable: variable, segments: segments.elements),
         )
         .skip(before: char('{'), after: char('}'));
 
@@ -68,8 +59,11 @@ final class Route extends Parser<Map<String, String>> {
     );
 
     // Verb     = ":" LITERAL ;
-    final verb =
-        word().plus().flatten().map(RouteVerb.new).skip(before: char(':'));
+    final verb = word()
+        .plus()
+        .flatten()
+        .map(RouteVerb.new)
+        .skip(before: char(':'));
 
     // Template = "/" Segments [ Verb ] ;
     final parser =
@@ -92,11 +86,12 @@ final class Route extends Parser<Map<String, String>> {
   /// The verb of this route.
   final RouteVerb? verb;
 
-  late final Parser<void> _parser = segments
-      .map((segment) => segment.skip(before: char('/')))
-      .toSequenceParser()
-      .seq(verb ?? epsilon())
-      .end();
+  late final Parser<void> _parser =
+      segments
+          .map((segment) => segment.skip(before: char('/')))
+          .toSequenceParser()
+          .seq(verb ?? epsilon())
+          .end();
 
   /// Returns a map of variables to values captured from the [path] if it
   /// matches this route.
@@ -198,9 +193,7 @@ final class RouteLiteral extends RouteSegment {
 /// {@endtemplate}
 final class RouteWildcard extends RouteSegment {
   /// {@macro celest_cloud_auth.model.route_wildcard}
-  RouteWildcard({
-    required this.greedy,
-  });
+  RouteWildcard({required this.greedy});
 
   /// Whether the wildcard consumes all remaining path segments.
   final bool greedy;
@@ -215,14 +208,14 @@ final class RouteWildcard extends RouteSegment {
   // https://github.com/googleapis/googleapis/blob/master/google/api/http.proto#L241
   static final Parser<String> _validChar = pattern('-_.~0-9a-zA-Z');
 
-  late final Parser<String> _parser = greedy
-      // The syntax `**` matches zero or more URL path segments
-      ? (_validChar | char('/'))
-          .repeatLazy(endOfInput(), 0, _maxUrlLength)
-          .flatten('**')
-
-      // The syntax `*` matches a single URL path segment.
-      : _validChar.plus().flatten('*');
+  late final Parser<String> _parser =
+      greedy
+          // The syntax `**` matches zero or more URL path segments
+          ? (_validChar | char('/'))
+              .repeatLazy(endOfInput(), 0, _maxUrlLength)
+              .flatten('**')
+          // The syntax `*` matches a single URL path segment.
+          : _validChar.plus().flatten('*');
 
   @override
   Result<String> parseOn(Context context) {
@@ -253,10 +246,7 @@ final class RouteWildcard extends RouteSegment {
 /// {@endtemplate}
 final class RouteParameter extends RouteSegment {
   /// {@macro celest_cloud_auth.model.route_parameter}
-  RouteParameter({
-    required this.variable,
-    required this.segments,
-  });
+  RouteParameter({required this.variable, required this.segments});
 
   /// The variable name of this parameter.
   final String variable;
@@ -316,8 +306,10 @@ final class RouteVerb extends RouteSegment {
   /// The literal verb.
   final String verb;
 
-  late final _parser =
-      [char(':'), string(verb)].toSequenceParser().flatten(':$verb');
+  late final _parser = [
+    char(':'),
+    string(verb),
+  ].toSequenceParser().flatten(':$verb');
 
   @override
   Result<String> parseOn(Context context) {

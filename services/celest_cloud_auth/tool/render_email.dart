@@ -5,10 +5,7 @@ import 'package:async/async.dart';
 import 'package:celest_cloud_auth/src/email/templates/verification_code.dart';
 
 Future<void> main() async {
-  final server = await HttpServer.bind(
-    InternetAddress.anyIPv4,
-    9999,
-  );
+  final server = await HttpServer.bind(InternetAddress.anyIPv4, 9999);
   print('Listening on http://localhost:${server.port}');
   unawaited(_handleRequests(server));
 

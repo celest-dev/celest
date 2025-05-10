@@ -29,10 +29,10 @@ void Function(Subject<http.Response>) expectBodyHas(
         .has((it) => jsonDecode(it.body), 'body')
         .isA<Map<String, Object?>>()
         .which((it) {
-      for (final condition in conditions) {
-        condition(it);
-      }
-    });
+          for (final condition in conditions) {
+            condition(it);
+          }
+        });
   };
 }
 
@@ -45,8 +45,9 @@ extension ResponseChecks on Subject<http.Response> {
     if (o == null) {
       return has((res) => res.body, 'body').equals('');
     }
-    has((res) => jsonDecode(res.body), 'json')
-        .isA<Map<String, Object?>>()
-        .deepEquals(o);
+    has(
+      (res) => jsonDecode(res.body),
+      'json',
+    ).isA<Map<String, Object?>>().deepEquals(o);
   }
 }

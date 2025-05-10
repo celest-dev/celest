@@ -35,9 +35,7 @@ sealed class CryptoKey {
     Uint8List? keyMaterial,
     String? externalCryptoKeyId,
   }) {
-    final purpose = KeyPurpose.values.firstWhere(
-      (e) => e.name == keyPurpose,
-    );
+    final purpose = KeyPurpose.values.firstWhere((e) => e.name == keyPurpose);
     final algorithm = KeyAlgorithm.values.firstWhere(
       (e) => e.name == keyAlgorithm,
     );

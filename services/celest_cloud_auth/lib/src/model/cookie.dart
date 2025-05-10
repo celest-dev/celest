@@ -53,8 +53,10 @@ final Parser<(String, String)> _cookieParser = () {
 
   // cookie-value      = *cookie-octet / ( DQUOTE *cookie-octet DQUOTE )
   final dquote = char('"').optional();
-  final cookieValue =
-      cookieOctet.star().flatten().skip(before: dquote, after: dquote);
+  final cookieValue = cookieOctet.star().flatten().skip(
+    before: dquote,
+    after: dquote,
+  );
 
   // cookie-pair       = cookie-name "=" cookie-value
   final cookiePair = seq2(cookieName, cookieValue.skip(before: char('=')));

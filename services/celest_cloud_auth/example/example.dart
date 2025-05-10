@@ -16,9 +16,10 @@ Future<void> main() async {
   final database = CloudAuthDatabase.memory();
   final cloudAuth = await CelestCloudAuth.create(database: database);
 
-  final router = Router()
-    ..get('/test/hello', () => Response.ok('Hello, world!'))
-    ..mount('/v1alpha1/auth', cloudAuth.handler);
+  final router =
+      Router()
+        ..get('/test/hello', () => Response.ok('Hello, world!'))
+        ..mount('/v1alpha1/auth', cloudAuth.handler);
   final handler = const Pipeline()
       .addMiddleware(logRequests())
       .addMiddleware(cloudAuth.middleware.call)
@@ -37,10 +38,7 @@ final exampleProject = ResolvedProject(
   environmentId: 'production',
   sdkConfig: SdkConfiguration(
     celest: Version(1, 0, 0),
-    dart: Sdk(
-      type: SdkType.dart,
-      version: Version(3, 5, 0),
-    ),
+    dart: Sdk(type: SdkType.dart, version: Version(3, 5, 0)),
   ),
   apis: {
     AuthenticationService.api.apiId: AuthenticationService.api,

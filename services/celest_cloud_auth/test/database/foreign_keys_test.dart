@@ -18,7 +18,9 @@ void main() {
     final accessors = CloudAuthDatabaseAccessors(database);
     final failedInsert = accessors.withoutForeignKeys(() async {
       // Create a bad foreign key
-      await database.into(database.cedarEntities).insert(
+      await database
+          .into(database.cedarEntities)
+          .insert(
             CedarEntitiesCompanion.insert(
               entityType: 'Test::DoesNotExit',
               entityId: '123',

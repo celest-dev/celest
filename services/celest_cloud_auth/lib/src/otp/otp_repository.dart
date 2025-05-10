@@ -10,27 +10,16 @@ import 'package:clock/clock.dart';
 import 'package:corks_cedar/corks_cedar.dart';
 import 'package:meta/meta.dart';
 
-typedef OtpData = ({
-  CloudAuthOtpCode data,
-  String code,
-});
+typedef OtpData = ({CloudAuthOtpCode data, String code});
 
-typedef _Deps = ({
-  CryptoKeyRepository cryptoKeys,
-  CloudAuthDatabaseMixin db,
-});
+typedef _Deps = ({CryptoKeyRepository cryptoKeys, CloudAuthDatabaseMixin db});
 
 /// A provider for generating and verifying OTP codes.
 extension type OtpRepository._(_Deps _deps) implements Object {
   OtpRepository({
     required CryptoKeyRepository cryptoKeys,
     required CloudAuthDatabaseMixin db,
-  }) : this._(
-          (
-            cryptoKeys: cryptoKeys,
-            db: db,
-          ),
-        );
+  }) : this._((cryptoKeys: cryptoKeys, db: db));
 
   CryptoKeyRepository get _cryptoKeys => _deps.cryptoKeys;
   CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
@@ -50,20 +39,19 @@ extension type OtpRepository._(_Deps _deps) implements Object {
     required String to,
     required EmailOtpProvider provider,
   }) async {
-    final data = (await _db.cloudAuthCoreDrift
-            .upsertOtpCode(sessionId: sessionId.encoded))
-        .first;
+    final data =
+        (await _db.cloudAuthCoreDrift.upsertOtpCode(
+          sessionId: sessionId.encoded,
+        )).first;
     if (canResend(data) case (false, final nextResend)) {
       return (false, nextResend);
     }
-    final session = await _db.cloudAuthCoreDrift
-        .getSession(sessionId: sessionId.encoded)
-        .getSingle();
+    final session =
+        await _db.cloudAuthCoreDrift
+            .getSession(sessionId: sessionId.encoded)
+            .getSingle();
     final key = await _cryptoKeys.getKey(cryptoKeyId: session.cryptoKeyId);
-    final code = await generate(
-      counter: data.rowid,
-      signer: key.signer,
-    );
+    final code = await generate(counter: data.rowid, signer: key.signer);
     await provider.send((to: to, code: code));
     context.logger.fine('Sent OTP code to $to: $code');
     return (true, await _incrementResend(data));
@@ -74,21 +62,20 @@ extension type OtpRepository._(_Deps _deps) implements Object {
     required TypeId<Session> sessionId,
     required String code,
   }) async {
-    final data = await _db.cloudAuthCoreDrift
-        .getOtpCode(sessionId: sessionId.encoded)
-        .getSingle();
+    final data =
+        await _db.cloudAuthCoreDrift
+            .getOtpCode(sessionId: sessionId.encoded)
+            .getSingle();
     if (canVerify(data) case (false, final nextVerify)) {
       context.logger.warning('Cannot verify OTP code again until $nextVerify');
       return (false, nextVerify);
     }
-    final session = await _db.cloudAuthCoreDrift
-        .getSession(sessionId: sessionId.encoded)
-        .getSingle();
+    final session =
+        await _db.cloudAuthCoreDrift
+            .getSession(sessionId: sessionId.encoded)
+            .getSingle();
     final key = await _cryptoKeys.getKey(cryptoKeyId: session.cryptoKeyId);
-    final expected = await generate(
-      counter: data.rowid,
-      signer: key.signer,
-    );
+    final expected = await generate(counter: data.rowid, signer: key.signer);
     if (expected != code) {
       context.logger.warning('Invalid OTP code: $code');
       return (false, await _incrementVerify(data));

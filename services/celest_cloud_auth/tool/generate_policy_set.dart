@@ -8,9 +8,9 @@ final policyDir = Directory.fromUri(
 
 Future<void> main() async {
   final policyFiles = await policyDir.list(recursive: true).toList();
-  final policies = policyFiles
-      .whereType<File>()
-      .where((f) => p.extension(f.path) == '.cedar');
+  final policies = policyFiles.whereType<File>().where(
+    (f) => p.extension(f.path) == '.cedar',
+  );
   final policyOutput = StringBuffer('''
 /// The core policy set, in Cedar IDL.
 const corePolicySetCedar = \'\'\'

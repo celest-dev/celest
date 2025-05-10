@@ -25,9 +25,7 @@ final class ResolvedApiConverter
 
   @override
   ast.ResolvedApi fromSql(Uint8List fromDb) {
-    return ast.ResolvedApi.fromProto(
-      pb.ResolvedApi()..mergeFromBuffer(fromDb),
-    );
+    return ast.ResolvedApi.fromProto(pb.ResolvedApi()..mergeFromBuffer(fromDb));
   }
 
   @override
