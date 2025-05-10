@@ -234,8 +234,7 @@ class FrontendServerClient {
     required String klass,
     required String libraryUri,
     required List<String> typeDefinitions,
-  }) =>
-      throw UnimplementedError();
+  }) => throw UnimplementedError();
 
   Future<CompileResult> compileExpressionToJs({
     required String expression,
@@ -245,8 +244,7 @@ class FrontendServerClient {
     required String libraryUri,
     required int line,
     required String moduleName,
-  }) =>
-      throw UnimplementedError();
+  }) => throw UnimplementedError();
 
   /// Should be invoked when results of compilation are accepted by the client.
   ///

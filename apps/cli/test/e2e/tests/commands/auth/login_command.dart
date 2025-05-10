@@ -10,9 +10,10 @@ final class LoginCommandTest extends E2ETest with TestCloud {
   @override
   Future<void> run() async {
     final nextOtpCode = tester.auth.onSentOtp.first;
-    final command = celestCommand('auth', 'login')
-        .start()
-        .expectLater('What is your email?');
+    final command = celestCommand(
+      'auth',
+      'login',
+    ).start().expectLater('What is your email?');
     await command.flush();
 
     // Invalid email
@@ -55,9 +56,9 @@ final class LoginCommandTest extends E2ETest with TestCloud {
         .run();
 
     // Check that calling login again works.
-    await celestCommand('auth', 'login')
-        .start()
-        .expectLater('You are already logged in as')
-        .run();
+    await celestCommand(
+      'auth',
+      'login',
+    ).start().expectLater('You are already logged in as').run();
   }
 }

@@ -12,8 +12,7 @@ base class CelestPerformance {
     Object error, {
     StackTrace? stackTrace,
     Map<String, Object>? extra,
-  }) =>
-      innerCaptureError(error, stackTrace: stackTrace, extra: extra).ignore();
+  }) => innerCaptureError(error, stackTrace: stackTrace, extra: extra).ignore();
 
   @internal
   Future<String> innerCaptureError(

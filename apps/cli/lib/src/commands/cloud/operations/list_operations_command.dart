@@ -24,7 +24,8 @@ final class ListOperationsCommand extends CloudListCommand<Operation> {
     var filter = options.filter;
     if (options.maybeResourceId case final resourceId?) {
       final resourceName = ResourceName.parse(resourceId);
-      final resourceFilter = 'resource_type = "${resourceName.uid.type}" AND '
+      final resourceFilter =
+          'resource_type = "${resourceName.uid.type}" AND '
           'resource_id = "${resourceName.uid.id}"';
       if (filter == null || filter.isEmpty) {
         filter = resourceFilter;

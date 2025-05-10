@@ -135,7 +135,9 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
       (el) => el.toCodeBuilder ?? literalNull,
     );
     if (constructorEl.name3!.isNotEmpty) {
-      return typeHelper.toReference(expressionType).constInstanceNamed(
+      return typeHelper
+          .toReference(expressionType)
+          .constInstanceNamed(
             constructorEl.name3!,
             positionalParameters,
             namedParameters,
@@ -159,11 +161,10 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
   Expression visitMapValue(
     Map<DartObjectImpl, DartObjectImpl> mapValue,
     DartType staticType,
-  ) =>
-      literalConstMap({
-        for (final MapEntry(:key, :value) in mapValue.entries)
-          key.toCodeBuilder: value.toCodeBuilder ?? literalNull,
-      });
+  ) => literalConstMap({
+    for (final MapEntry(:key, :value) in mapValue.entries)
+      key.toCodeBuilder: value.toCodeBuilder ?? literalNull,
+  });
 
   @override
   Expression? visitNullValue() => null;
@@ -195,13 +196,13 @@ final class _ConstToCodeBuilder extends DartObjectVisitor<Expression?> {
   Expression visitVariableReference(VariableElement2 variable) {
     return switch (variable) {
       TopLevelVariableElement2() => refer(
-          variable.name3!,
-          variable.library2.firstFragment.source.uri.toString(),
-        ),
+        variable.name3!,
+        variable.library2.firstFragment.source.uri.toString(),
+      ),
       FieldElement2(enclosingElement2: final enclosingElement) => refer(
-          enclosingElement.displayName,
-          enclosingElement.library2.firstFragment.source.uri.toString(),
-        ).property(variable.name3!),
+        enclosingElement.displayName,
+        enclosingElement.library2.firstFragment.source.uri.toString(),
+      ).property(variable.name3!),
       _ => unreachable('Invalid variable element: $variable'),
     };
   }
@@ -231,16 +232,18 @@ final class _ConstToDartValue extends DartObjectVisitor<ast.DartValue> {
     final namedParameters = invocation.namedArguments.map((name, value) {
       return MapEntry(name, value.accept(this));
     });
-    final positionalParameterNames = constructorEl.formalParameters
-        .where((it) => it.isPositional)
-        .map((it) => it.name3!)
-        .toList();
+    final positionalParameterNames =
+        constructorEl.formalParameters
+            .where((it) => it.isPositional)
+            .map((it) => it.name3!)
+            .toList();
     final positionalParameterValues =
         invocation.positionalArguments.map((el) => el.accept(this)).toList();
     final className = constructorEl.enclosingElement2.displayName;
-    final classRef = typeHelper
-        .toReference(constructorEl.enclosingElement2.thisType)
-        .toTypeReference;
+    final classRef =
+        typeHelper
+            .toReference(constructorEl.enclosingElement2.thisType)
+            .toTypeReference;
     assert(() {
       if (positionalParameterNames.length < positionalParameterValues.length) {
         throw StateError(

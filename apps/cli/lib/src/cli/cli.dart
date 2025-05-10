@@ -80,14 +80,16 @@ final class Cli {
     ctx.processManager = processManager ?? const LoggingProcessManager();
     ctx.fileSystem = fileSystem ?? const LocalFileSystem();
     ctx.platform = platform ?? const LocalPlatform();
-    ctx.httpClient = httpClient ??
+    ctx.httpClient =
+        httpClient ??
         (sentryDsn == null
             ? ctx.httpClient
             : SentryHttpClient(client: ctx.httpClient));
-    ctx.performance = sentryDsn != null &&
-            !io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
-        ? const SentryPerformance()
-        : const CelestPerformance();
+    ctx.performance =
+        sentryDsn != null &&
+                !io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
+            ? const SentryPerformance()
+            : const CelestPerformance();
     ctx.storage = storage ?? Storage();
     ctx.connectionMonitor.init();
     await ctx.connectionMonitor.stream.first;
@@ -115,14 +117,15 @@ final class Cli {
       ctx.secureStorage = NativeMemoryStorage(namespace: Storage.cliNamespace);
     }
 
-    ctx.analytics = postHogConfig != null &&
-            !io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
-        ? PostHog(
-            config: postHogConfig,
-            client: ctx.httpClient,
-            storage: ctx.secureStorage,
-          )
-        : const NoopAnalytics();
+    ctx.analytics =
+        postHogConfig != null &&
+                !io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
+            ? PostHog(
+              config: postHogConfig,
+              client: ctx.httpClient,
+              storage: ctx.secureStorage,
+            )
+            : const NoopAnalytics();
 
     final sdkFinder = DartSdkFinder(
       platform: ctx.platform,
@@ -167,7 +170,8 @@ final class Cli {
       );
     final argResults = _runner.parse(args);
 
-    final verbose = ctx.platform.environment.containsKey('CELEST_VERBOSE') ||
+    final verbose =
+        ctx.platform.environment.containsKey('CELEST_VERBOSE') ||
         argResults.flag('verbose');
     final jsonOutput = argResults.flag('json');
 
@@ -193,10 +197,13 @@ final class Cli {
             ..release = '$name@$version'
             ..environment = ctx.kCliEnvironment
             ..debug = verbose
-            ..tracesSampleRate = 1 // TODO: Lower as needed
-            ..sampleRate = 1 // TODO: Lower as needed
+            ..tracesSampleRate =
+                1 // TODO: Lower as needed
+            ..sampleRate =
+                1 // TODO: Lower as needed
             ..attachStacktrace = true
-            ..sendDefaultPii = true // TODO: Turn off for compliance
+            ..sendDefaultPii =
+                true // TODO: Turn off for compliance
             ..attachThreads = true
             ..captureFailedRequests = true
             ..httpClient = ctx.httpClient
@@ -277,10 +284,10 @@ final class Cli {
             ctx.verbose ? verboseMessage.toString() : message.toString();
         switch (record.level) {
           case Level.FINEST ||
-                Level.FINER ||
-                Level.FINE ||
-                Level.CONFIG ||
-                LogEvent.level:
+              Level.FINER ||
+              Level.FINE ||
+              Level.CONFIG ||
+              LogEvent.level:
             ctx.cliLogger.detail(cliMessage);
           case Level.WARNING:
             ctx.cliLogger.warn(cliMessage);
@@ -294,14 +301,14 @@ final class Cli {
       });
 
       final sdk = Sdk.current;
-      final sdkInfo = StringBuffer()
-        ..writeln('Celest version: $version')
-        ..writeln('Dart SDK version: ${sdk.version} (${sdk.dart})');
-      if ((sdk.flutterVersion, sdk.flutterSdkRoot)
-          case (
-            final flutterVersion?,
-            final flutterRoot?,
-          )) {
+      final sdkInfo =
+          StringBuffer()
+            ..writeln('Celest version: $version')
+            ..writeln('Dart SDK version: ${sdk.version} (${sdk.dart})');
+      if ((sdk.flutterVersion, sdk.flutterSdkRoot) case (
+        final flutterVersion?,
+        final flutterRoot?,
+      )) {
         sdkInfo.writeln('Flutter SDK version: $flutterVersion ($flutterRoot)');
       }
 

@@ -46,10 +46,10 @@ final class EntrypointResult {
 
   @override
   String toString() => prettyPrintJson({
-        'type': type.name,
-        'outputDillPath': outputDillPath,
-        'outputDillSha256': outputDillDigest.toString(),
-      });
+    'type': type.name,
+    'outputDillPath': outputDillPath,
+    'outputDillSha256': outputDillDigest.toString(),
+  });
 }
 
 final class EntrypointCompiler {
@@ -124,9 +124,7 @@ final class EntrypointCompiler {
     if (resolvedProject.sdkConfig.targetSdk == SdkType.dart &&
         (Abi.current() == Abi.linuxX64 ||
             Sdk.current.supportsCrossCompilation)) {
-      return _compileExecutable(
-        entrypointPath: entrypointPath,
-      );
+      return _compileExecutable(entrypointPath: entrypointPath);
     }
 
     final packageConfig = await transformPackageConfig(
@@ -135,18 +133,19 @@ final class EntrypointCompiler {
       toRoot: projectPaths.outputsDir,
     );
     final outputPath = p.join(p.dirname(entrypointPath), 'main.aot.dill');
-    final (target, platformDill, sdkRoot) =
-        switch (resolvedProject.sdkConfig.targetSdk) {
+    final (target, platformDill, sdkRoot) = switch (resolvedProject
+        .sdkConfig
+        .targetSdk) {
       SdkType.flutter => (
-          'flutter',
-          Sdk.current.flutterPlatformDill!,
-          Sdk.current.flutterPatchedSdk!,
-        ),
+        'flutter',
+        Sdk.current.flutterPlatformDill!,
+        Sdk.current.flutterPatchedSdk!,
+      ),
       SdkType.dart => (
-          'vm',
-          Sdk.current.vmPlatformDill,
-          p.join(Sdk.current.sdkPath, 'lib', '_internal'),
-        ),
+        'vm',
+        Sdk.current.vmPlatformDill,
+        p.join(Sdk.current.sdkPath, 'lib', '_internal'),
+      ),
       final unknown => unreachable('Unknown SDK type: $unknown'),
     };
 

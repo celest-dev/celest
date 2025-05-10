@@ -36,12 +36,12 @@ void main() {
 ''');
 
     await celestCommand(
-      'start',
-      '--',
-      'flutter',
-      'test',
-      'test/celest_test.dart',
-    )
+          'start',
+          '--',
+          'flutter',
+          'test',
+          'test/celest_test.dart',
+        )
         .workingDirectory(projectDir.path)
         .start()
         .expectLater('Generating project')
@@ -78,21 +78,23 @@ void main() {
         p.join(projectDir.path, 'macos', 'Podfile'),
       );
       final podfileContent = await podfile.readAsString();
-      await podfile.writeAsString(podfileContent.replaceAll(
-        "platform :osx, '10.14'",
-        "platform :osx, '10.15'",
-      ));
+      await podfile.writeAsString(
+        podfileContent.replaceAll(
+          "platform :osx, '10.14'",
+          "platform :osx, '10.15'",
+        ),
+      );
     }
 
     await celestCommand(
-      'start',
-      '--',
-      'flutter',
-      'test',
-      '-d',
-      platform.operatingSystem,
-      'integration_test/integration_test.dart',
-    )
+          'start',
+          '--',
+          'flutter',
+          'test',
+          '-d',
+          platform.operatingSystem,
+          'integration_test/integration_test.dart',
+        )
         .workingDirectory(projectDir.path)
         .start()
         .expectLater('Starting local environment')

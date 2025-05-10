@@ -69,8 +69,11 @@ final class CloudCodeGenerator extends AstVisitor<void> {
         project: project,
         api: api,
         function: function,
-        httpConfig: resolvedProject
-            .apis[api.name]!.functions[function.name]!.httpConfig,
+        httpConfig:
+            resolvedProject
+                .apis[api.name]!
+                .functions[function.name]!
+                .httpConfig,
         outputDir: outputDir,
       );
       final entrypoint = generator.generate();

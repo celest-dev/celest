@@ -22,9 +22,9 @@ enum CustomType {
   exception;
 
   String get dir => switch (this) {
-        model => projectPaths.modelsDir,
-        exception => projectPaths.exceptionsDir,
-      };
+    model => projectPaths.modelsDir,
+    exception => projectPaths.exceptionsDir,
+  };
 }
 
 mixin CelestAnalysisHelpers implements CelestErrorReporter {
@@ -34,8 +34,9 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
 
   static final Expando<AnalysisSessionHelper> _sessionHelpers = Expando();
   AnalysisSessionHelper get helper =>
-      _sessionHelpers[context.currentSession] ??=
-          AnalysisSessionHelper(context.currentSession);
+      _sessionHelpers[context.currentSession] ??= AnalysisSessionHelper(
+        context.currentSession,
+      );
 
   final pendingEdits = <String, Set<SourceEdit>>{};
 
@@ -68,8 +69,9 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       if (!recursive) {
         return;
       }
-      for (final importedLibrary
-          in library.fragments.expand((lib) => lib.importedLibraries2)) {
+      for (final importedLibrary in library.fragments.expand(
+        (lib) => lib.importedLibraries2,
+      )) {
         yield* search(importedLibrary).toList();
       }
     }
@@ -129,7 +131,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
 
   /// Collects exception types from project and imported libraries.
   Future<Set<DartType>> collectExceptionTypes(
-      LibraryElement2 apiLibrary) async {
+    LibraryElement2 apiLibrary,
+  ) async {
     final exceptionTypes = <DartType>{};
 
     final apiNamespace = namespaceForLibrary(apiLibrary, recursive: true);
@@ -167,7 +170,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     }
     final interfaceType = interfaceElement.thisType;
     final interfaceUri = interfaceElement.library2.firstFragment.source.uri;
-    final isExceptionType = identical(
+    final isExceptionType =
+        identical(
           interfaceElement,
           typeHelper.coreTypes.coreExceptionType.element3,
         ) ||
@@ -175,7 +179,8 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
           interfaceType.extensionTypeErasure,
           typeHelper.coreTypes.coreExceptionType,
         );
-    final isErrorType = identical(
+    final isErrorType =
+        identical(
           interfaceElement,
           typeHelper.coreTypes.coreErrorType.element3,
         ) ||
@@ -194,9 +199,9 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       exportedFromExceptionsDart,
     ) = switch (context.currentSession.uriConverter.uriToPath(interfaceUri)) {
       final path? => (
-          p.isWithin(projectPaths.projectRoot, path),
-          p.isWithin(projectPaths.projectLib, path),
-        ),
+        p.isWithin(projectPaths.projectRoot, path),
+        p.isWithin(projectPaths.projectLib, path),
+      ),
       _ => (false, false),
     };
     if (!exportedFromExceptionsDart && mustBeExportedFromExceptionsDart) {
@@ -209,8 +214,9 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
       return null;
     }
     final isInstantiable = switch (interfaceElement) {
-      final ClassElement2 classElement => classElement.isConstructable ||
-          classElement.constructors2.any((ctor) => ctor.isFactory),
+      final ClassElement2 classElement =>
+        classElement.isConstructable ||
+            classElement.constructors2.any((ctor) => ctor.isFactory),
       ExtensionTypeElement2() || EnumElement2() => true,
       _ => false,
     };
@@ -262,12 +268,13 @@ mixin CelestAnalysisHelpers implements CelestErrorReporter {
     required CustomType type,
   }) {
     final (isCustomType, isDefinedInLib) = switch (context
-        .currentSession.uriConverter
+        .currentSession
+        .uriConverter
         .uriToPath(modelType.library2.firstFragment.source.uri)) {
       final path? => (
-          p.isWithin(projectPaths.projectRoot, path),
-          p.isWithin(projectPaths.projectLib, path),
-        ),
+        p.isWithin(projectPaths.projectRoot, path),
+        p.isWithin(projectPaths.projectLib, path),
+      ),
       _ => (false, false),
     };
     if (isCustomType && !isDefinedInLib) {
@@ -364,8 +371,9 @@ extension TopLevelConstants on LibraryElement2 {
   }) {
     var hasConstantEvalErrors = false;
     final topLevelConstants = <TopLevelConstant>[];
-    final topLevelVariables =
-        this.topLevelVariables.where((variable) => !variable.isPrivate);
+    final topLevelVariables = this.topLevelVariables.where(
+      (variable) => !variable.isPrivate,
+    );
     for (final topLevelVariable in topLevelVariables) {
       if (!topLevelVariable.isConst) {
         errorReporter.reportError(
@@ -407,10 +415,8 @@ extension TopLevelConstants on LibraryElement2 {
   }
 }
 
-typedef TopLevelConstant = ({
-  TopLevelVariableElement2 element,
-  DartObject value
-});
+typedef TopLevelConstant =
+    ({TopLevelVariableElement2 element, DartObject value});
 
 extension GetClassType on LibraryElementResult {
   ClassElement2 getClassElement(String name) =>

@@ -58,23 +58,22 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
     try {
       final response = await _i3.create(
         title: (request[r'title'] as String),
-        priority: (_i4.Serializers.instance
-                .deserialize<_i5.Priority?>(request[r'priority'])) ??
+        priority:
+            (_i4.Serializers.instance.deserialize<_i5.Priority?>(
+              request[r'priority'],
+            )) ??
             _i5.Priority.high,
       );
       return _i2.Response(
         200,
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(
-            _i4.Serializers.instance.serialize<_i6.Task>(response)),
+          _i4.Serializers.instance.serialize<_i6.Task>(response),
+        ),
       );
     } on _i7.AbortedException catch (e, st) {
       const statusCode = 409;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -82,8 +81,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'celest.core.v1.AbortedException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i7.AbortedException>(e),
+              'value': _i4.Serializers.instance.serialize<_i7.AbortedException>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -91,7 +91,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -100,11 +100,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.AlreadyExistsException catch (e, st) {
       const statusCode = 409;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -121,7 +117,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -130,11 +126,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i10.ArityException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -142,8 +134,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'cedar.ArityException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i10.ArityException>(e),
+              'value': _i4.Serializers.instance.serialize<_i10.ArityException>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -151,7 +144,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -160,11 +153,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on AssertionError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -180,7 +169,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -189,11 +178,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i11.AsyncError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -209,7 +194,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -218,11 +203,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i10.AttributeAccessException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -239,7 +220,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -248,11 +229,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i12.AuthorizationException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -269,7 +246,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -278,11 +255,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i13.BuiltValueMissingGenericsError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -299,7 +272,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -308,11 +281,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i13.BuiltValueNestedFieldError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -329,7 +298,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -338,11 +307,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i13.BuiltValueNullFieldError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -359,7 +324,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -368,11 +333,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i14.CancellationException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -389,7 +350,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -398,11 +359,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.CancelledException catch (e, st) {
       const statusCode = 499;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -410,8 +367,8 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'celest.core.v1.CancelledException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i7.CancelledException>(e),
+              'value': _i4.Serializers.instance
+                  .serialize<_i7.CancelledException>(e),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -419,7 +376,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -428,11 +385,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.CertificateException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -449,7 +402,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -458,11 +411,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i16.ClientException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -470,8 +419,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'http.ClientException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i16.ClientException>(e),
+              'value': _i4.Serializers.instance.serialize<_i16.ClientException>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -479,7 +429,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -488,11 +438,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on ConcurrentModificationError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -509,7 +455,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -518,11 +464,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i17.ConnectionClosedException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -539,7 +481,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -548,11 +490,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i18.CouldNotRollBackException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -569,7 +507,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -578,11 +516,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.DataLossError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -598,7 +532,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -607,11 +541,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.DeadlineExceededError catch (e, st) {
       const statusCode = 504;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -628,7 +558,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -637,11 +567,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i18.DriftWrappedException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -658,7 +584,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -667,11 +593,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i10.EntityNotFoundException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -688,7 +610,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -697,11 +619,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.FailedPreconditionException catch (e, st) {
       const statusCode = 412;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -718,7 +636,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -727,11 +645,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.HandshakeException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -748,7 +662,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -757,11 +671,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i19.HijackException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -769,8 +679,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'shelf.HijackException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i19.HijackException>(e),
+              'value': _i4.Serializers.instance.serialize<_i19.HijackException>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -778,7 +689,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -787,11 +698,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.HttpException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -799,8 +706,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'dart._http.HttpException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i15.HttpException>(e),
+              'value': _i4.Serializers.instance.serialize<_i15.HttpException>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -808,7 +716,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -817,11 +725,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on IndexError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -837,7 +741,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -846,11 +750,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on IntegerDivisionByZeroException catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -867,7 +767,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -876,11 +776,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.InternalServerError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -897,7 +793,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -906,11 +802,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i20.InvalidCorkException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -927,7 +819,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -936,11 +828,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i21.IsolateSpawnException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -957,7 +845,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -966,11 +854,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i22.JsonUnsupportedObjectError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -987,7 +871,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -996,11 +880,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i23.MaximumSizeExceeded catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1017,7 +897,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1026,11 +906,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i20.MissingSignatureError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1047,7 +923,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1056,11 +932,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.NotFoundException catch (e, st) {
       const statusCode = 404;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1068,8 +940,8 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'celest.core.v1.NotFoundException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i7.NotFoundException>(e),
+              'value': _i4.Serializers.instance
+                  .serialize<_i7.NotFoundException>(e),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -1077,7 +949,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1086,11 +958,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.OSError catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1106,7 +974,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1115,11 +983,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on OutOfMemoryError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1135,7 +999,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1144,11 +1008,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.OutOfRangeException catch (e, st) {
       const statusCode = 416;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1165,7 +1025,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1174,11 +1034,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i10.OverflowException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1186,8 +1042,8 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'cedar.OverflowException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i10.OverflowException>(e),
+              'value': _i4.Serializers.instance
+                  .serialize<_i10.OverflowException>(e),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -1195,7 +1051,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1204,11 +1060,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i24.ParserException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1216,8 +1068,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'petitparser.ParserException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i24.ParserException>(e),
+              'value': _i4.Serializers.instance.serialize<_i24.ParserException>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -1225,7 +1078,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1234,11 +1087,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.PathAccessException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1255,7 +1104,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1264,11 +1113,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.PathExistsException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1285,7 +1130,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1294,11 +1139,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.PathNotFoundException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1315,7 +1156,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1324,11 +1165,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.FileSystemException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1345,7 +1182,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1354,11 +1191,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.PermissionDeniedException catch (e, st) {
       const statusCode = 403;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1375,7 +1208,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1384,11 +1217,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.ProcessException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1396,8 +1225,8 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'dart.io.ProcessException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i15.ProcessException>(e),
+              'value': _i4.Serializers.instance
+                  .serialize<_i15.ProcessException>(e),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -1405,7 +1234,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1414,11 +1243,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on RangeError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1434,7 +1259,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1443,11 +1268,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on ArgumentError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1463,7 +1284,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1472,11 +1293,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.ResourceExhaustedException catch (e, st) {
       const statusCode = 429;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1493,7 +1310,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1502,11 +1319,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i25.SerializationException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1523,7 +1336,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1532,11 +1345,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.BadRequestException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1553,7 +1362,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1562,11 +1371,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.SignalException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1574,8 +1379,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'dart.io.SignalException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i15.SignalException>(e),
+              'value': _i4.Serializers.instance.serialize<_i15.SignalException>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -1583,7 +1389,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1592,11 +1398,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i26.SqliteException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1604,8 +1406,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'sqlite3.SqliteException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i26.SqliteException>(e),
+              'value': _i4.Serializers.instance.serialize<_i26.SqliteException>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -1613,7 +1416,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1622,11 +1425,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on StackOverflowError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1634,8 +1433,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'dart.core.StackOverflowError',
-              'value':
-                  _i4.Serializers.instance.serialize<StackOverflowError>(e),
+              'value': _i4.Serializers.instance.serialize<StackOverflowError>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -1643,7 +1443,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1652,11 +1452,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on StateError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1672,7 +1468,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1681,11 +1477,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.StdinException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1693,8 +1485,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'dart.io.StdinException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i15.StdinException>(e),
+              'value': _i4.Serializers.instance.serialize<_i15.StdinException>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -1702,7 +1495,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1711,11 +1504,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.StdoutException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1723,8 +1512,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'dart.io.StdoutException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i15.StdoutException>(e),
+              'value': _i4.Serializers.instance.serialize<_i15.StdoutException>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -1732,7 +1522,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1741,11 +1531,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i27.StringScannerException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1762,7 +1548,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1771,11 +1557,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i28.SourceSpanFormatException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1792,7 +1574,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1801,11 +1583,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on FormatException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1821,7 +1599,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1830,11 +1608,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i28.SourceSpanException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1851,7 +1625,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1860,11 +1634,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i29.TemplateException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1872,8 +1642,8 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'mustache_template.TemplateException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i29.TemplateException>(e),
+              'value': _i4.Serializers.instance
+                  .serialize<_i29.TemplateException>(e),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -1881,7 +1651,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1890,11 +1660,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i11.TimeoutException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1902,8 +1668,8 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'dart.async.TimeoutException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i11.TimeoutException>(e),
+              'value': _i4.Serializers.instance
+                  .serialize<_i11.TimeoutException>(e),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -1911,7 +1677,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1920,11 +1686,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.TlsException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1940,7 +1702,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1949,11 +1711,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on TypeError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1969,7 +1727,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -1978,11 +1736,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i10.TypeException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -1990,8 +1744,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'cedar.TypeException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i10.TypeException>(e),
+              'value': _i4.Serializers.instance.serialize<_i10.TypeException>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -1999,7 +1754,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2008,11 +1763,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.UnauthorizedException catch (e, st) {
       const statusCode = 401;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2029,7 +1780,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2038,11 +1789,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.UnavailableError catch (e, st) {
       const statusCode = 503;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2050,8 +1797,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'celest.core.v1.UnavailableError',
-              'value':
-                  _i4.Serializers.instance.serialize<_i7.UnavailableError>(e),
+              'value': _i4.Serializers.instance.serialize<_i7.UnavailableError>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -2059,7 +1807,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2068,11 +1816,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.UnimplementedError catch (e, st) {
       const statusCode = 501;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2080,8 +1824,8 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'celest.core.v1.UnimplementedError',
-              'value':
-                  _i4.Serializers.instance.serialize<_i7.UnimplementedError>(e),
+              'value': _i4.Serializers.instance
+                  .serialize<_i7.UnimplementedError>(e),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -2089,7 +1833,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2098,11 +1842,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on UnimplementedError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2110,8 +1850,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'dart.core.UnimplementedError',
-              'value':
-                  _i4.Serializers.instance.serialize<UnimplementedError>(e),
+              'value': _i4.Serializers.instance.serialize<UnimplementedError>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -2119,7 +1860,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2128,11 +1869,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.UnknownError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2148,7 +1885,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2157,11 +1894,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i7.CloudException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2169,8 +1902,9 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'celest.core.v1.CloudException',
-              'value':
-                  _i4.Serializers.instance.serialize<_i7.CloudException>(e),
+              'value': _i4.Serializers.instance.serialize<_i7.CloudException>(
+                e,
+              ),
             },
             if (_i8.context.environment != _i9.Environment.production)
               {
@@ -2178,7 +1912,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2187,11 +1921,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i10.UnknownExtensionException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2208,7 +1938,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2217,11 +1947,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i10.UnspecifiedEntityException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2238,7 +1964,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2247,11 +1973,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on UnsupportedError catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2267,7 +1989,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2276,11 +1998,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on Error catch (e, st) {
       const statusCode = 500;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2296,7 +2014,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2305,11 +2023,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i30.VfsException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2325,7 +2039,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2334,11 +2048,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on _i15.WebSocketException catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.message,
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.message, e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2355,7 +2065,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2364,11 +2074,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       );
     } on Exception catch (e, st) {
       const statusCode = 400;
-      _i8.context.logger.severe(
-        e.toString(),
-        e,
-        st,
-      );
+      _i8.context.logger.severe(e.toString(), e, st);
       final status = {
         '@status': {
           'code': statusCode,
@@ -2384,7 +2090,7 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
                 'value': _i4.Serializers.instance.serialize<StackTrace>(st),
               },
           ],
-        }
+        },
       };
       return _i2.Response(
         statusCode,
@@ -2396,986 +2102,1181 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
 
   @override
   void init() {
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i11.AsyncError, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'error': $value.error,
-        r'stackTrace':
-            _i4.Serializers.instance.serialize<StackTrace>($value.stackTrace),
-      },
-      deserialize: ($serialized) {
-        return _i11.AsyncError(
-          $serialized[r'error']!,
-          _i4.Serializers.instance
-              .deserialize<StackTrace?>($serialized[r'stackTrace']),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i11.TimeoutException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        if ($value.message case final message?) r'message': message,
-        if (_i4.Serializers.instance.serialize<Duration?>($value.duration)
-            case final duration?)
-          r'duration': duration,
-      },
-      deserialize: ($serialized) {
-        return _i11.TimeoutException(
-          ($serialized[r'message'] as String?),
-          _i4.Serializers.instance
-              .deserialize<Duration?>($serialized[r'duration']),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i22.JsonUnsupportedObjectError, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        if ($value.unsupportedObject case final unsupportedObject?)
-          r'unsupportedObject': unsupportedObject,
-        if ($value.cause case final cause?) r'cause': cause,
-        if ($value.partialResult case final partialResult?)
-          r'partialResult': partialResult,
-      },
-      deserialize: ($serialized) {
-        return _i22.JsonUnsupportedObjectError(
-          $serialized[r'unsupportedObject'],
-          cause: $serialized[r'cause'],
-          partialResult: ($serialized[r'partialResult'] as String?),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<ArgumentError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'invalidValue': $value.invalidValue,
-        if ($value.name case final name?) r'name': name,
-        r'message': $value.message,
-      },
-      deserialize: ($serialized) {
-        return ArgumentError(
-          $serialized?[r'message'],
-          ($serialized?[r'name'] as String?),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<AssertionError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        if ($value.message case final message?) r'message': message
-      },
-      deserialize: ($serialized) {
-        return AssertionError($serialized?[r'message']);
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        ConcurrentModificationError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        if ($value.modifiedObject case final modifiedObject?)
-          r'modifiedObject': modifiedObject
-      },
-      deserialize: ($serialized) {
-        return ConcurrentModificationError($serialized?[r'modifiedObject']);
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<Error, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        if (_i4.Serializers.instance.serialize<StackTrace?>($value.stackTrace)
-            case final stackTrace?)
-          r'stackTrace': stackTrace
-      },
-      deserialize: ($serialized) {
-        return Error();
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<Exception, Map<String, Object?>?>(
-      serialize: ($value) => const <String, Object?>{},
-      deserialize: ($serialized) {
-        return Exception($serialized?[r'message']);
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<FormatException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        r'source': $value.source,
-        if ($value.offset case final offset?) r'offset': offset,
-      },
-      deserialize: ($serialized) {
-        return FormatException(
-          (($serialized?[r'message'] as String?)) ?? '',
-          $serialized?[r'source'],
-          ($serialized?[r'offset'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<IndexError, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        if ($value.name case final name?) r'name': name,
-        r'message': $value.message,
-        if ($value.indexable case final indexable?) r'indexable': indexable,
-        r'length': $value.length,
-        r'invalidValue': $value.invalidValue,
-        r'start': $value.start,
-        r'end': $value.end,
-      },
-      deserialize: ($serialized) {
-        return IndexError(
-          ($serialized[r'invalidValue'] as num).toInt(),
-          $serialized[r'indexable'],
-          ($serialized[r'name'] as String?),
-          ($serialized[r'message'] as String?),
-          ($serialized[r'length'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        IntegerDivisionByZeroException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        if ($value.message case final message?) r'message': message
-      },
-      deserialize: ($serialized) {
-        return IntegerDivisionByZeroException();
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<OutOfMemoryError, Map<String, Object?>?>(
-      serialize: ($value) => const <String, Object?>{},
-      deserialize: ($serialized) {
-        return OutOfMemoryError();
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<RangeError, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        if ($value.name case final name?) r'name': name,
-        r'message': $value.message,
-        if ($value.start case final start?) r'start': start,
-        if ($value.end case final end?) r'end': end,
-        if ($value.invalidValue case final invalidValue?)
-          r'invalidValue': invalidValue,
-      },
-      deserialize: ($serialized) {
-        return RangeError($serialized[r'message']);
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<StackOverflowError, Map<String, Object?>?>(
-      serialize: ($value) => const <String, Object?>{},
-      deserialize: ($serialized) {
-        return StackOverflowError();
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<StateError, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
-      deserialize: ($serialized) {
-        return StateError(($serialized[r'message'] as String));
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<TypeError, Map<String, Object?>?>(
-      serialize: ($value) => const <String, Object?>{},
-      deserialize: ($serialized) {
-        return TypeError();
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<UnimplementedError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        if ($value.message case final message?) r'message': message
-      },
-      deserialize: ($serialized) {
-        return UnimplementedError(($serialized?[r'message'] as String?));
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<UnsupportedError, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        if ($value.message case final message?) r'message': message
-      },
-      deserialize: ($serialized) {
-        return UnsupportedError(($serialized[r'message'] as String));
-      },
-    ));
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i15.CertificateException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'type': $value.type,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i15.OSError?>($value.osError)
-            case final osError?)
-          r'osError': osError,
-      },
-      deserialize: ($serialized) {
-        return _i15.CertificateException(
-          (($serialized?[r'message'] as String?)) ?? '',
-          _i4.Serializers.instance
-              .deserialize<_i15.OSError?>($serialized?[r'osError']),
-        );
-      },
-    ));
+      _i4.Serializer.define<_i11.AsyncError, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'error': $value.error,
+              r'stackTrace': _i4.Serializers.instance.serialize<StackTrace>(
+                $value.stackTrace,
+              ),
+            },
+        deserialize: ($serialized) {
+          return _i11.AsyncError(
+            $serialized[r'error']!,
+            _i4.Serializers.instance.deserialize<StackTrace?>(
+              $serialized[r'stackTrace'],
+            ),
+          );
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i15.FileSystemException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if ($value.path case final path?) r'path': path,
-        if (_i4.Serializers.instance.serialize<_i15.OSError?>($value.osError)
-            case final osError?)
-          r'osError': osError,
-      },
-      deserialize: ($serialized) {
-        return _i15.FileSystemException(
-          (($serialized?[r'message'] as String?)) ?? '',
-          (($serialized?[r'path'] as String?)) ?? '',
-          _i4.Serializers.instance
-              .deserialize<_i15.OSError?>($serialized?[r'osError']),
-        );
-      },
-    ));
+      _i4.Serializer.define<_i11.TimeoutException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              if ($value.message case final message?) r'message': message,
+              if (_i4.Serializers.instance.serialize<Duration?>($value.duration)
+                  case final duration?)
+                r'duration': duration,
+            },
+        deserialize: ($serialized) {
+          return _i11.TimeoutException(
+            ($serialized[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<Duration?>(
+              $serialized[r'duration'],
+            ),
+          );
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i15.HandshakeException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'type': $value.type,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i15.OSError?>($value.osError)
-            case final osError?)
-          r'osError': osError,
-      },
-      deserialize: ($serialized) {
-        return _i15.HandshakeException(
-          (($serialized?[r'message'] as String?)) ?? '',
-          _i4.Serializers.instance
-              .deserialize<_i15.OSError?>($serialized?[r'osError']),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i15.HttpException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<Uri?>($value.uri)
-            case final uri?)
-          r'uri': uri,
-      },
-      deserialize: ($serialized) {
-        return _i15.HttpException(
-          ($serialized[r'message'] as String),
-          uri: _i4.Serializers.instance.deserialize<Uri?>($serialized[r'uri']),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i15.OSError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        r'errorCode': $value.errorCode,
-      },
-      deserialize: ($serialized) {
-        return _i15.OSError(
-          (($serialized?[r'message'] as String?)) ?? '',
-          (($serialized?[r'errorCode'] as num?)?.toInt()) ??
-              _i15.OSError.noErrorCode,
-        );
-      },
-    ));
+      _i4.Serializer.define<
+        _i22.JsonUnsupportedObjectError,
+        Map<String, Object?>
+      >(
+        serialize:
+            ($value) => <String, Object?>{
+              if ($value.unsupportedObject case final unsupportedObject?)
+                r'unsupportedObject': unsupportedObject,
+              if ($value.cause case final cause?) r'cause': cause,
+              if ($value.partialResult case final partialResult?)
+                r'partialResult': partialResult,
+            },
+        deserialize: ($serialized) {
+          return _i22.JsonUnsupportedObjectError(
+            $serialized[r'unsupportedObject'],
+            cause: $serialized[r'cause'],
+            partialResult: ($serialized[r'partialResult'] as String?),
+          );
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i15.PathAccessException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if ($value.path case final path?) r'path': path,
-        if (_i4.Serializers.instance.serialize<_i15.OSError?>($value.osError)
-            case final osError?)
-          r'osError': osError,
-      },
-      deserialize: ($serialized) {
-        return _i15.PathAccessException(
-          ($serialized[r'path'] as String),
-          _i4.Serializers.instance
-              .deserialize<_i15.OSError>($serialized[r'osError']),
-          (($serialized[r'message'] as String?)) ?? '',
-        );
-      },
-    ));
+      _i4.Serializer.define<ArgumentError, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'invalidValue': $value.invalidValue,
+              if ($value.name case final name?) r'name': name,
+              r'message': $value.message,
+            },
+        deserialize: ($serialized) {
+          return ArgumentError(
+            $serialized?[r'message'],
+            ($serialized?[r'name'] as String?),
+          );
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i15.PathExistsException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if ($value.path case final path?) r'path': path,
-        if (_i4.Serializers.instance.serialize<_i15.OSError?>($value.osError)
-            case final osError?)
-          r'osError': osError,
-      },
-      deserialize: ($serialized) {
-        return _i15.PathExistsException(
-          ($serialized[r'path'] as String),
-          _i4.Serializers.instance
-              .deserialize<_i15.OSError>($serialized[r'osError']),
-          (($serialized[r'message'] as String?)) ?? '',
-        );
-      },
-    ));
+      _i4.Serializer.define<AssertionError, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              if ($value.message case final message?) r'message': message,
+            },
+        deserialize: ($serialized) {
+          return AssertionError($serialized?[r'message']);
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i15.PathNotFoundException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if ($value.path case final path?) r'path': path,
-        if (_i4.Serializers.instance.serialize<_i15.OSError?>($value.osError)
-            case final osError?)
-          r'osError': osError,
-      },
-      deserialize: ($serialized) {
-        return _i15.PathNotFoundException(
-          ($serialized[r'path'] as String),
-          _i4.Serializers.instance
-              .deserialize<_i15.OSError>($serialized[r'osError']),
-          (($serialized[r'message'] as String?)) ?? '',
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i15.ProcessException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'executable': $value.executable,
-        r'arguments': $value.arguments,
-        r'message': $value.message,
-        r'errorCode': $value.errorCode,
-      },
-      deserialize: ($serialized) {
-        return _i15.ProcessException(
-          ($serialized[r'executable'] as String),
-          ($serialized[r'arguments'] as Iterable<Object?>)
-              .map((el) => (el as String))
-              .toList(),
-          (($serialized[r'message'] as String?)) ?? '',
-          (($serialized[r'errorCode'] as num?)?.toInt()) ?? 0,
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i15.SignalException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        r'osError': $value.osError,
-      },
-      deserialize: ($serialized) {
-        return _i15.SignalException(
-          ($serialized[r'message'] as String),
-          $serialized[r'osError'],
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i15.StdinException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i15.OSError?>($value.osError)
-            case final osError?)
-          r'osError': osError,
-      },
-      deserialize: ($serialized) {
-        return _i15.StdinException(
-          ($serialized[r'message'] as String),
-          _i4.Serializers.instance
-              .deserialize<_i15.OSError?>($serialized[r'osError']),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i15.StdoutException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i15.OSError?>($value.osError)
-            case final osError?)
-          r'osError': osError,
-      },
-      deserialize: ($serialized) {
-        return _i15.StdoutException(
-          ($serialized[r'message'] as String),
-          _i4.Serializers.instance
-              .deserialize<_i15.OSError?>($serialized[r'osError']),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i15.TlsException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'type': $value.type,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i15.OSError?>($value.osError)
-            case final osError?)
-          r'osError': osError,
-      },
-      deserialize: ($serialized) {
-        return _i15.TlsException(
-          (($serialized?[r'message'] as String?)) ?? '',
-          _i4.Serializers.instance
-              .deserialize<_i15.OSError?>($serialized?[r'osError']),
-        );
-      },
-    ));
+      _i4.Serializer.define<ConcurrentModificationError, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              if ($value.modifiedObject case final modifiedObject?)
+                r'modifiedObject': modifiedObject,
+            },
+        deserialize: ($serialized) {
+          return ConcurrentModificationError($serialized?[r'modifiedObject']);
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i15.WebSocketException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if ($value.httpStatusCode case final httpStatusCode?)
-          r'httpStatusCode': httpStatusCode,
-      },
-      deserialize: ($serialized) {
-        return _i15.WebSocketException(
-          (($serialized?[r'message'] as String?)) ?? '',
-          ($serialized?[r'httpStatusCode'] as num?)?.toInt(),
-        );
-      },
-    ));
+      _i4.Serializer.define<Error, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              if (_i4.Serializers.instance.serialize<StackTrace?>(
+                    $value.stackTrace,
+                  )
+                  case final stackTrace?)
+                r'stackTrace': stackTrace,
+            },
+        deserialize: ($serialized) {
+          return Error();
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i21.IsolateSpawnException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
-      deserialize: ($serialized) {
-        return _i21.IsolateSpawnException(($serialized[r'message'] as String));
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i13.BuiltValueMissingGenericsError, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'type': $value.type,
-        r'parameter': $value.parameter,
-      },
-      deserialize: ($serialized) {
-        return _i13.BuiltValueMissingGenericsError(
-          ($serialized[r'type'] as String),
-          ($serialized[r'parameter'] as String),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i13.BuiltValueNestedFieldError, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'type': $value.type,
-        r'field': $value.field,
-        r'error': $value.error,
-      },
-      deserialize: ($serialized) {
-        return _i13.BuiltValueNestedFieldError(
-          ($serialized[r'type'] as String),
-          ($serialized[r'field'] as String),
-          ($serialized[r'error'] as String),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i13.BuiltValueNullFieldError, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'type': $value.type,
-        r'field': $value.field,
-      },
-      deserialize: ($serialized) {
-        return _i13.BuiltValueNullFieldError(
-          ($serialized[r'type'] as String),
-          ($serialized[r'field'] as String),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i12.AuthorizationException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        if ($value.policyId case final policyId?) r'policyId': policyId,
-        r'message': $value.message,
-      },
-      deserialize: ($serialized) {
-        return _i12.AuthorizationException.fromJson($serialized);
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i10.ArityException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'name': $value.name,
-        r'expected': $value.expected,
-        r'actual': $value.actual,
-      },
-      deserialize: ($serialized) {
-        return _i10.ArityException(
-          ($serialized[r'name'] as String),
-          ($serialized[r'expected'] as num).toInt(),
-          ($serialized[r'actual'] as num).toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i10.AttributeAccessException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'type': $value.type,
-        r'attribute': $value.attribute,
-      },
-      deserialize: ($serialized) {
-        return _i10.AttributeAccessException(
-          ($serialized[r'type'] as String),
-          ($serialized[r'attribute'] as String),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i10.EntityNotFoundException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'entityId':
-            _i4.Serializers.instance.serialize<_i31.EntityUid>($value.entityId)
-      },
-      deserialize: ($serialized) {
-        return _i10.EntityNotFoundException(_i4.Serializers.instance
-            .deserialize<_i31.EntityUid>($serialized[r'entityId']));
-      },
-    ));
+      _i4.Serializer.define<Exception, Map<String, Object?>?>(
+        serialize: ($value) => const <String, Object?>{},
+        deserialize: ($serialized) {
+          return Exception($serialized?[r'message']);
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i10.OverflowException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
-      deserialize: ($serialized) {
-        return _i10.OverflowException(($serialized[r'message'] as String));
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i10.TypeException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
-      deserialize: ($serialized) {
-        return _i10.TypeException(($serialized[r'message'] as String));
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i10.UnknownExtensionException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{r'name': $value.name},
-      deserialize: ($serialized) {
-        return _i10.UnknownExtensionException(($serialized[r'name'] as String));
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i10.UnspecifiedEntityException, Map<String, Object?>?>(
-      serialize: ($value) => const <String, Object?>{},
-      deserialize: ($serialized) {
-        return _i10.UnspecifiedEntityException();
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i31.EntityUid, Map<String, Object?>>(
-      serialize: ($value) => $value.toJson(),
-      deserialize: ($serialized) {
-        return _i31.EntityUid.fromJson($serialized);
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<_i5.Priority, String>(
-      serialize: ($value) => $value.name,
-      deserialize: ($serialized) {
-        return _i5.Priority.values.byName($serialized);
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i6.Task, Map<String, dynamic>>(
-      serialize: ($value) => $value.toJson(),
-      deserialize: ($serialized) {
-        return _i6.Task.fromJson($serialized);
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i7.AbortedException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.AbortedException(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i7.AlreadyExistsException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.AlreadyExistsException(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
+      _i4.Serializer.define<FormatException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              r'source': $value.source,
+              if ($value.offset case final offset?) r'offset': offset,
+            },
+        deserialize: ($serialized) {
+          return FormatException(
+            (($serialized?[r'message'] as String?)) ?? '',
+            $serialized?[r'source'],
+            ($serialized?[r'offset'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i7.BadRequestException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.BadRequestException(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
+      _i4.Serializer.define<IndexError, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              if ($value.name case final name?) r'name': name,
+              r'message': $value.message,
+              if ($value.indexable case final indexable?)
+                r'indexable': indexable,
+              r'length': $value.length,
+              r'invalidValue': $value.invalidValue,
+              r'start': $value.start,
+              r'end': $value.end,
+            },
+        deserialize: ($serialized) {
+          return IndexError(
+            ($serialized[r'invalidValue'] as num).toInt(),
+            $serialized[r'indexable'],
+            ($serialized[r'name'] as String?),
+            ($serialized[r'message'] as String?),
+            ($serialized[r'length'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i7.CancelledException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.CancelledException(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i7.CloudException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.CloudException.fromJson($serialized);
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i7.DataLossError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.DataLossError(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
+      _i4.Serializer.define<
+        IntegerDivisionByZeroException,
+        Map<String, Object?>?
+      >(
+        serialize:
+            ($value) => <String, Object?>{
+              if ($value.message case final message?) r'message': message,
+            },
+        deserialize: ($serialized) {
+          return IntegerDivisionByZeroException();
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i7.DeadlineExceededError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.DeadlineExceededError(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i7.FailedPreconditionException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.FailedPreconditionException(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
+      _i4.Serializer.define<OutOfMemoryError, Map<String, Object?>?>(
+        serialize: ($value) => const <String, Object?>{},
+        deserialize: ($serialized) {
+          return OutOfMemoryError();
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i7.InternalServerError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.InternalServerError(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
+      _i4.Serializer.define<RangeError, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              if ($value.name case final name?) r'name': name,
+              r'message': $value.message,
+              if ($value.start case final start?) r'start': start,
+              if ($value.end case final end?) r'end': end,
+              if ($value.invalidValue case final invalidValue?)
+                r'invalidValue': invalidValue,
+            },
+        deserialize: ($serialized) {
+          return RangeError($serialized[r'message']);
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i7.NotFoundException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.NotFoundException(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
+      _i4.Serializer.define<StackOverflowError, Map<String, Object?>?>(
+        serialize: ($value) => const <String, Object?>{},
+        deserialize: ($serialized) {
+          return StackOverflowError();
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i7.OutOfRangeException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.OutOfRangeException(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i7.PermissionDeniedException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.PermissionDeniedException(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i7.ResourceExhaustedException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.ResourceExhaustedException(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
+      _i4.Serializer.define<StateError, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return StateError(($serialized[r'message'] as String));
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i7.UnauthorizedException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.UnauthorizedException(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i7.UnavailableError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.UnavailableError(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
+      _i4.Serializer.define<TypeError, Map<String, Object?>?>(
+        serialize: ($value) => const <String, Object?>{},
+        deserialize: ($serialized) {
+          return TypeError();
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i7.UnimplementedError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.UnimplementedError(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i7.UnknownError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i7.UnknownError(
-          ($serialized?[r'message'] as String?),
-          _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
-            $serialized?[r'details'],
-            const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-          ),
-          ($serialized?[r'code'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i25.SerializationException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'code': $value.code,
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
-          $value.details,
-          const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
-        )
-            case final details?)
-          r'details': details,
-      },
-      deserialize: ($serialized) {
-        return _i25.SerializationException(
-            ($serialized[r'message'] as String?));
-      },
-    ));
+      _i4.Serializer.define<UnimplementedError, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              if ($value.message case final message?) r'message': message,
+            },
+        deserialize: ($serialized) {
+          return UnimplementedError(($serialized?[r'message'] as String?));
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<UnsupportedError, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              if ($value.message case final message?) r'message': message,
+            },
+        deserialize: ($serialized) {
+          return UnsupportedError(($serialized[r'message'] as String));
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.CertificateException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'type': $value.type,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i15.OSError?>(
+                    $value.osError,
+                  )
+                  case final osError?)
+                r'osError': osError,
+            },
+        deserialize: ($serialized) {
+          return _i15.CertificateException(
+            (($serialized?[r'message'] as String?)) ?? '',
+            _i4.Serializers.instance.deserialize<_i15.OSError?>(
+              $serialized?[r'osError'],
+            ),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.FileSystemException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if ($value.path case final path?) r'path': path,
+              if (_i4.Serializers.instance.serialize<_i15.OSError?>(
+                    $value.osError,
+                  )
+                  case final osError?)
+                r'osError': osError,
+            },
+        deserialize: ($serialized) {
+          return _i15.FileSystemException(
+            (($serialized?[r'message'] as String?)) ?? '',
+            (($serialized?[r'path'] as String?)) ?? '',
+            _i4.Serializers.instance.deserialize<_i15.OSError?>(
+              $serialized?[r'osError'],
+            ),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.HandshakeException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'type': $value.type,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i15.OSError?>(
+                    $value.osError,
+                  )
+                  case final osError?)
+                r'osError': osError,
+            },
+        deserialize: ($serialized) {
+          return _i15.HandshakeException(
+            (($serialized?[r'message'] as String?)) ?? '',
+            _i4.Serializers.instance.deserialize<_i15.OSError?>(
+              $serialized?[r'osError'],
+            ),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.HttpException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<Uri?>($value.uri)
+                  case final uri?)
+                r'uri': uri,
+            },
+        deserialize: ($serialized) {
+          return _i15.HttpException(
+            ($serialized[r'message'] as String),
+            uri: _i4.Serializers.instance.deserialize<Uri?>(
+              $serialized[r'uri'],
+            ),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.OSError, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              r'errorCode': $value.errorCode,
+            },
+        deserialize: ($serialized) {
+          return _i15.OSError(
+            (($serialized?[r'message'] as String?)) ?? '',
+            (($serialized?[r'errorCode'] as num?)?.toInt()) ??
+                _i15.OSError.noErrorCode,
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.PathAccessException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if ($value.path case final path?) r'path': path,
+              if (_i4.Serializers.instance.serialize<_i15.OSError?>(
+                    $value.osError,
+                  )
+                  case final osError?)
+                r'osError': osError,
+            },
+        deserialize: ($serialized) {
+          return _i15.PathAccessException(
+            ($serialized[r'path'] as String),
+            _i4.Serializers.instance.deserialize<_i15.OSError>(
+              $serialized[r'osError'],
+            ),
+            (($serialized[r'message'] as String?)) ?? '',
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.PathExistsException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if ($value.path case final path?) r'path': path,
+              if (_i4.Serializers.instance.serialize<_i15.OSError?>(
+                    $value.osError,
+                  )
+                  case final osError?)
+                r'osError': osError,
+            },
+        deserialize: ($serialized) {
+          return _i15.PathExistsException(
+            ($serialized[r'path'] as String),
+            _i4.Serializers.instance.deserialize<_i15.OSError>(
+              $serialized[r'osError'],
+            ),
+            (($serialized[r'message'] as String?)) ?? '',
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.PathNotFoundException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if ($value.path case final path?) r'path': path,
+              if (_i4.Serializers.instance.serialize<_i15.OSError?>(
+                    $value.osError,
+                  )
+                  case final osError?)
+                r'osError': osError,
+            },
+        deserialize: ($serialized) {
+          return _i15.PathNotFoundException(
+            ($serialized[r'path'] as String),
+            _i4.Serializers.instance.deserialize<_i15.OSError>(
+              $serialized[r'osError'],
+            ),
+            (($serialized[r'message'] as String?)) ?? '',
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.ProcessException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'executable': $value.executable,
+              r'arguments': $value.arguments,
+              r'message': $value.message,
+              r'errorCode': $value.errorCode,
+            },
+        deserialize: ($serialized) {
+          return _i15.ProcessException(
+            ($serialized[r'executable'] as String),
+            ($serialized[r'arguments'] as Iterable<Object?>)
+                .map((el) => (el as String))
+                .toList(),
+            (($serialized[r'message'] as String?)) ?? '',
+            (($serialized[r'errorCode'] as num?)?.toInt()) ?? 0,
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.SignalException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              r'osError': $value.osError,
+            },
+        deserialize: ($serialized) {
+          return _i15.SignalException(
+            ($serialized[r'message'] as String),
+            $serialized[r'osError'],
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.StdinException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i15.OSError?>(
+                    $value.osError,
+                  )
+                  case final osError?)
+                r'osError': osError,
+            },
+        deserialize: ($serialized) {
+          return _i15.StdinException(
+            ($serialized[r'message'] as String),
+            _i4.Serializers.instance.deserialize<_i15.OSError?>(
+              $serialized[r'osError'],
+            ),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.StdoutException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i15.OSError?>(
+                    $value.osError,
+                  )
+                  case final osError?)
+                r'osError': osError,
+            },
+        deserialize: ($serialized) {
+          return _i15.StdoutException(
+            ($serialized[r'message'] as String),
+            _i4.Serializers.instance.deserialize<_i15.OSError?>(
+              $serialized[r'osError'],
+            ),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.TlsException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'type': $value.type,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i15.OSError?>(
+                    $value.osError,
+                  )
+                  case final osError?)
+                r'osError': osError,
+            },
+        deserialize: ($serialized) {
+          return _i15.TlsException(
+            (($serialized?[r'message'] as String?)) ?? '',
+            _i4.Serializers.instance.deserialize<_i15.OSError?>(
+              $serialized?[r'osError'],
+            ),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i15.WebSocketException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if ($value.httpStatusCode case final httpStatusCode?)
+                r'httpStatusCode': httpStatusCode,
+            },
+        deserialize: ($serialized) {
+          return _i15.WebSocketException(
+            (($serialized?[r'message'] as String?)) ?? '',
+            ($serialized?[r'httpStatusCode'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i21.IsolateSpawnException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return _i21.IsolateSpawnException(
+            ($serialized[r'message'] as String),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<
+        _i13.BuiltValueMissingGenericsError,
+        Map<String, Object?>
+      >(
+        serialize:
+            ($value) => <String, Object?>{
+              r'type': $value.type,
+              r'parameter': $value.parameter,
+            },
+        deserialize: ($serialized) {
+          return _i13.BuiltValueMissingGenericsError(
+            ($serialized[r'type'] as String),
+            ($serialized[r'parameter'] as String),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<
+        _i13.BuiltValueNestedFieldError,
+        Map<String, Object?>
+      >(
+        serialize:
+            ($value) => <String, Object?>{
+              r'type': $value.type,
+              r'field': $value.field,
+              r'error': $value.error,
+            },
+        deserialize: ($serialized) {
+          return _i13.BuiltValueNestedFieldError(
+            ($serialized[r'type'] as String),
+            ($serialized[r'field'] as String),
+            ($serialized[r'error'] as String),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<
+        _i13.BuiltValueNullFieldError,
+        Map<String, Object?>
+      >(
+        serialize:
+            ($value) => <String, Object?>{
+              r'type': $value.type,
+              r'field': $value.field,
+            },
+        deserialize: ($serialized) {
+          return _i13.BuiltValueNullFieldError(
+            ($serialized[r'type'] as String),
+            ($serialized[r'field'] as String),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i12.AuthorizationException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              if ($value.policyId case final policyId?) r'policyId': policyId,
+              r'message': $value.message,
+            },
+        deserialize: ($serialized) {
+          return _i12.AuthorizationException.fromJson($serialized);
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i10.ArityException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'name': $value.name,
+              r'expected': $value.expected,
+              r'actual': $value.actual,
+            },
+        deserialize: ($serialized) {
+          return _i10.ArityException(
+            ($serialized[r'name'] as String),
+            ($serialized[r'expected'] as num).toInt(),
+            ($serialized[r'actual'] as num).toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<
+        _i10.AttributeAccessException,
+        Map<String, Object?>
+      >(
+        serialize:
+            ($value) => <String, Object?>{
+              r'type': $value.type,
+              r'attribute': $value.attribute,
+            },
+        deserialize: ($serialized) {
+          return _i10.AttributeAccessException(
+            ($serialized[r'type'] as String),
+            ($serialized[r'attribute'] as String),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i10.EntityNotFoundException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'entityId': _i4.Serializers.instance.serialize<_i31.EntityUid>(
+                $value.entityId,
+              ),
+            },
+        deserialize: ($serialized) {
+          return _i10.EntityNotFoundException(
+            _i4.Serializers.instance.deserialize<_i31.EntityUid>(
+              $serialized[r'entityId'],
+            ),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i10.OverflowException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return _i10.OverflowException(($serialized[r'message'] as String));
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i10.TypeException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return _i10.TypeException(($serialized[r'message'] as String));
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<
+        _i10.UnknownExtensionException,
+        Map<String, Object?>
+      >(
+        serialize: ($value) => <String, Object?>{r'name': $value.name},
+        deserialize: ($serialized) {
+          return _i10.UnknownExtensionException(
+            ($serialized[r'name'] as String),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<
+        _i10.UnspecifiedEntityException,
+        Map<String, Object?>?
+      >(
+        serialize: ($value) => const <String, Object?>{},
+        deserialize: ($serialized) {
+          return _i10.UnspecifiedEntityException();
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i31.EntityUid, Map<String, Object?>>(
+        serialize: ($value) => $value.toJson(),
+        deserialize: ($serialized) {
+          return _i31.EntityUid.fromJson($serialized);
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i5.Priority, String>(
+        serialize: ($value) => $value.name,
+        deserialize: ($serialized) {
+          return _i5.Priority.values.byName($serialized);
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i6.Task, Map<String, dynamic>>(
+        serialize: ($value) => $value.toJson(),
+        deserialize: ($serialized) {
+          return _i6.Task.fromJson($serialized);
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.AbortedException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.AbortedException(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.AlreadyExistsException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.AlreadyExistsException(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.BadRequestException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.BadRequestException(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.CancelledException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.CancelledException(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.CloudException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.CloudException.fromJson($serialized);
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.DataLossError, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.DataLossError(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.DeadlineExceededError, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.DeadlineExceededError(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<
+        _i7.FailedPreconditionException,
+        Map<String, Object?>?
+      >(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.FailedPreconditionException(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.InternalServerError, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.InternalServerError(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.NotFoundException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.NotFoundException(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.OutOfRangeException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.OutOfRangeException(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<
+        _i7.PermissionDeniedException,
+        Map<String, Object?>?
+      >(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.PermissionDeniedException(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<
+        _i7.ResourceExhaustedException,
+        Map<String, Object?>?
+      >(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.ResourceExhaustedException(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.UnauthorizedException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.UnauthorizedException(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.UnavailableError, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.UnavailableError(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.UnimplementedError, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.UnimplementedError(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i7.UnknownError, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i7.UnknownError(
+            ($serialized?[r'message'] as String?),
+            _i4.Serializers.instance.deserialize<_i32.JsonValue?>(
+              $serialized?[r'details'],
+              const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+            ),
+            ($serialized?[r'code'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i25.SerializationException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'code': $value.code,
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i32.JsonValue?>(
+                    $value.details,
+                    const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
+                  )
+                  case final details?)
+                r'details': details,
+            },
+        deserialize: ($serialized) {
+          return _i25.SerializationException(
+            ($serialized[r'message'] as String?),
+          );
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i32.JsonValue, Object>(
         serialize: ($value) => $value.value,
@@ -3386,291 +3287,355 @@ final class CreateTarget extends _i1.CloudFunctionHttpTarget {
       const _i4.TypeToken<_i32.JsonValue?>('JsonValue'),
     );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i23.MaximumSizeExceeded, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{r'maxSize': $value.maxSize},
-      deserialize: ($serialized) {
-        return _i23.MaximumSizeExceeded(
-            ($serialized[r'maxSize'] as num).toInt());
-      },
-    ));
+      _i4.Serializer.define<_i23.MaximumSizeExceeded, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'maxSize': $value.maxSize},
+        deserialize: ($serialized) {
+          return _i23.MaximumSizeExceeded(
+            ($serialized[r'maxSize'] as num).toInt(),
+          );
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i20.InvalidCorkException, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        r'source': $value.source,
-        if ($value.offset case final offset?) r'offset': offset,
-      },
-      deserialize: ($serialized) {
-        return _i20.InvalidCorkException(
-            (($serialized?[r'message'] as String?)) ?? '');
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i20.MissingSignatureError, Map<String, Object?>?>(
-      serialize: ($value) => <String, Object?>{r'message': $value.message},
-      deserialize: ($serialized) {
-        return _i20.MissingSignatureError();
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i17.ConnectionClosedException, Map<String, Object?>?>(
-      serialize: ($value) => const <String, Object?>{},
-      deserialize: ($serialized) {
-        return _i17.ConnectionClosedException();
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i14.CancellationException, Map<String, Object?>?>(
-      serialize: ($value) => const <String, Object?>{},
-      deserialize: ($serialized) {
-        return _i14.CancellationException();
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i18.CouldNotRollBackException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'cause': $value.cause,
-        r'originalStackTrace': _i4.Serializers.instance
-            .serialize<StackTrace>($value.originalStackTrace),
-        r'exception': $value.exception,
-      },
-      deserialize: ($serialized) {
-        return _i18.CouldNotRollBackException(
-          $serialized[r'cause']!,
-          _i4.Serializers.instance
-              .deserialize<StackTrace>($serialized[r'originalStackTrace']),
-          $serialized[r'exception']!,
-        );
-      },
-    ));
+      _i4.Serializer.define<_i20.InvalidCorkException, Map<String, Object?>?>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              r'source': $value.source,
+              if ($value.offset case final offset?) r'offset': offset,
+            },
+        deserialize: ($serialized) {
+          return _i20.InvalidCorkException(
+            (($serialized?[r'message'] as String?)) ?? '',
+          );
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i18.DriftWrappedException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if ($value.cause case final cause?) r'cause': cause,
-        if (_i4.Serializers.instance.serialize<StackTrace?>($value.trace)
-            case final trace?)
-          r'trace': trace,
-      },
-      deserialize: ($serialized) {
-        return _i18.DriftWrappedException(
-          message: ($serialized[r'message'] as String),
-          cause: $serialized[r'cause'],
-          trace: _i4.Serializers.instance
-              .deserialize<StackTrace?>($serialized[r'trace']),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i16.ClientException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<Uri?>($value.uri)
-            case final uri?)
-          r'uri': uri,
-      },
-      deserialize: ($serialized) {
-        return _i16.ClientException(
-          ($serialized[r'message'] as String),
-          _i4.Serializers.instance.deserialize<Uri?>($serialized[r'uri']),
-        );
-      },
-    ));
+      _i4.Serializer.define<_i20.MissingSignatureError, Map<String, Object?>?>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return _i20.MissingSignatureError();
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i29.TemplateException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if ($value.templateName case final templateName?)
-          r'templateName': templateName,
-        if ($value.source case final source?) r'source': source,
-        if ($value.offset case final offset?) r'offset': offset,
-        r'line': $value.line,
-        r'column': $value.column,
-        r'context': $value.context,
-      },
-      deserialize: ($serialized) {
-        return _i29.TemplateException(
-          ($serialized[r'message'] as String),
-          ($serialized[r'templateName'] as String?),
-          ($serialized[r'source'] as String?),
-          ($serialized[r'offset'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i24.ParserException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'failure':
-            _i4.Serializers.instance.serialize<_i33.Failure>($value.failure),
-        r'message': $value.message,
-        r'offset': $value.offset,
-        r'source': $value.source,
-      },
-      deserialize: ($serialized) {
-        return _i24.ParserException(_i4.Serializers.instance
-            .deserialize<_i33.Failure>($serialized[r'failure']));
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i33.Failure, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'buffer': $value.buffer,
-        r'position': $value.position,
-        r'isSuccess': $value.isSuccess,
-        r'isFailure': $value.isFailure,
-        r'message': $value.message,
-      },
-      deserialize: ($serialized) {
-        return _i33.Failure(
-          ($serialized[r'buffer'] as String),
-          ($serialized[r'position'] as num).toInt(),
-          ($serialized[r'message'] as String),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i19.HijackException, Map<String, Object?>?>(
-      serialize: ($value) => const <String, Object?>{},
-      deserialize: ($serialized) {
-        return _i19.HijackException();
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i34.SourceLocation, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        if (_i4.Serializers.instance.serialize<Uri?>($value.sourceUrl)
-            case final sourceUrl?)
-          r'sourceUrl': sourceUrl,
-        r'offset': $value.offset,
-        r'line': $value.line,
-        r'column': $value.column,
-        r'toolString': $value.toolString,
-      },
-      deserialize: ($serialized) {
-        return _i34.SourceLocation(
-          ($serialized[r'offset'] as num).toInt(),
-          sourceUrl: $serialized[r'sourceUrl'],
-          line: ($serialized[r'line'] as num?)?.toInt(),
-          column: ($serialized[r'column'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i35.SourceSpan, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'start': _i4.Serializers.instance
-            .serialize<_i34.SourceLocation>($value.start),
-        r'end':
-            _i4.Serializers.instance.serialize<_i34.SourceLocation>($value.end),
-        r'text': $value.text,
-        if (_i4.Serializers.instance.serialize<Uri?>($value.sourceUrl)
-            case final sourceUrl?)
-          r'sourceUrl': sourceUrl,
-        r'length': $value.length,
-      },
-      deserialize: ($serialized) {
-        return _i35.SourceSpan(
-          _i4.Serializers.instance
-              .deserialize<_i34.SourceLocation>($serialized[r'start']),
-          _i4.Serializers.instance
-              .deserialize<_i34.SourceLocation>($serialized[r'end']),
-          ($serialized[r'text'] as String),
-        );
-      },
-    ));
+      _i4.Serializer.define<
+        _i17.ConnectionClosedException,
+        Map<String, Object?>?
+      >(
+        serialize: ($value) => const <String, Object?>{},
+        deserialize: ($serialized) {
+          return _i17.ConnectionClosedException();
+        },
+      ),
+    );
     _i4.Serializers.instance.put(
-        _i4.Serializer.define<_i28.SourceSpanException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i35.SourceSpan?>($value.span)
-            case final span?)
-          r'span': span,
-      },
-      deserialize: ($serialized) {
-        return _i28.SourceSpanException(
-          ($serialized[r'message'] as String),
-          _i4.Serializers.instance
-              .deserialize<_i35.SourceSpan?>($serialized[r'span']),
-        );
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i28.SourceSpanFormatException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i35.SourceSpan?>($value.span)
-            case final span?)
-          r'span': span,
-        r'source': $value.source,
-        if ($value.offset case final offset?) r'offset': offset,
-      },
-      deserialize: ($serialized) {
-        return _i28.SourceSpanFormatException(
-          ($serialized[r'message'] as String),
-          _i4.Serializers.instance
-              .deserialize<_i35.SourceSpan?>($serialized[r'span']),
-          $serialized[r'source'],
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i26.SqliteException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if ($value.explanation case final explanation?)
-          r'explanation': explanation,
-        r'extendedResultCode': $value.extendedResultCode,
-        r'resultCode': $value.resultCode,
-        if ($value.offset case final offset?) r'offset': offset,
-        if ($value.operation case final operation?) r'operation': operation,
-        if ($value.causingStatement case final causingStatement?)
-          r'causingStatement': causingStatement,
-        if ($value.parametersToStatement case final parametersToStatement?)
-          r'parametersToStatement': parametersToStatement,
-      },
-      deserialize: ($serialized) {
-        return _i26.SqliteException(
-          ($serialized[r'extendedResultCode'] as num).toInt(),
-          ($serialized[r'message'] as String),
-          ($serialized[r'explanation'] as String?),
-          ($serialized[r'causingStatement'] as String?),
-          ($serialized[r'parametersToStatement'] as Iterable<Object?>?)
-              ?.toList(),
-          ($serialized[r'operation'] as String?),
-          ($serialized[r'offset'] as num?)?.toInt(),
-        );
-      },
-    ));
-    _i4.Serializers.instance
-        .put(_i4.Serializer.define<_i30.VfsException, Map<String, Object?>>(
-      serialize: ($value) =>
-          <String, Object?>{r'returnCode': $value.returnCode},
-      deserialize: ($serialized) {
-        return _i30.VfsException(($serialized[r'returnCode'] as num).toInt());
-      },
-    ));
-    _i4.Serializers.instance.put(_i4.Serializer.define<
-        _i27.StringScannerException, Map<String, Object?>>(
-      serialize: ($value) => <String, Object?>{
-        r'message': $value.message,
-        if (_i4.Serializers.instance.serialize<_i35.SourceSpan?>($value.span)
-            case final span?)
-          r'span': span,
-        if ($value.offset case final offset?) r'offset': offset,
-        r'source': $value.source,
-        if (_i4.Serializers.instance.serialize<Uri?>($value.sourceUrl)
-            case final sourceUrl?)
-          r'sourceUrl': sourceUrl,
-      },
-      deserialize: ($serialized) {
-        return _i27.StringScannerException(
-          ($serialized[r'message'] as String),
-          _i4.Serializers.instance
-              .deserialize<_i35.SourceSpan>($serialized[r'span']),
-          ($serialized[r'source'] as String),
-        );
-      },
-    ));
+      _i4.Serializer.define<_i14.CancellationException, Map<String, Object?>?>(
+        serialize: ($value) => const <String, Object?>{},
+        deserialize: ($serialized) {
+          return _i14.CancellationException();
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<
+        _i18.CouldNotRollBackException,
+        Map<String, Object?>
+      >(
+        serialize:
+            ($value) => <String, Object?>{
+              r'cause': $value.cause,
+              r'originalStackTrace': _i4.Serializers.instance
+                  .serialize<StackTrace>($value.originalStackTrace),
+              r'exception': $value.exception,
+            },
+        deserialize: ($serialized) {
+          return _i18.CouldNotRollBackException(
+            $serialized[r'cause']!,
+            _i4.Serializers.instance.deserialize<StackTrace>(
+              $serialized[r'originalStackTrace'],
+            ),
+            $serialized[r'exception']!,
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i18.DriftWrappedException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if ($value.cause case final cause?) r'cause': cause,
+              if (_i4.Serializers.instance.serialize<StackTrace?>($value.trace)
+                  case final trace?)
+                r'trace': trace,
+            },
+        deserialize: ($serialized) {
+          return _i18.DriftWrappedException(
+            message: ($serialized[r'message'] as String),
+            cause: $serialized[r'cause'],
+            trace: _i4.Serializers.instance.deserialize<StackTrace?>(
+              $serialized[r'trace'],
+            ),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i16.ClientException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<Uri?>($value.uri)
+                  case final uri?)
+                r'uri': uri,
+            },
+        deserialize: ($serialized) {
+          return _i16.ClientException(
+            ($serialized[r'message'] as String),
+            _i4.Serializers.instance.deserialize<Uri?>($serialized[r'uri']),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i29.TemplateException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if ($value.templateName case final templateName?)
+                r'templateName': templateName,
+              if ($value.source case final source?) r'source': source,
+              if ($value.offset case final offset?) r'offset': offset,
+              r'line': $value.line,
+              r'column': $value.column,
+              r'context': $value.context,
+            },
+        deserialize: ($serialized) {
+          return _i29.TemplateException(
+            ($serialized[r'message'] as String),
+            ($serialized[r'templateName'] as String?),
+            ($serialized[r'source'] as String?),
+            ($serialized[r'offset'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i24.ParserException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'failure': _i4.Serializers.instance.serialize<_i33.Failure>(
+                $value.failure,
+              ),
+              r'message': $value.message,
+              r'offset': $value.offset,
+              r'source': $value.source,
+            },
+        deserialize: ($serialized) {
+          return _i24.ParserException(
+            _i4.Serializers.instance.deserialize<_i33.Failure>(
+              $serialized[r'failure'],
+            ),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i33.Failure, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'buffer': $value.buffer,
+              r'position': $value.position,
+              r'isSuccess': $value.isSuccess,
+              r'isFailure': $value.isFailure,
+              r'message': $value.message,
+            },
+        deserialize: ($serialized) {
+          return _i33.Failure(
+            ($serialized[r'buffer'] as String),
+            ($serialized[r'position'] as num).toInt(),
+            ($serialized[r'message'] as String),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i19.HijackException, Map<String, Object?>?>(
+        serialize: ($value) => const <String, Object?>{},
+        deserialize: ($serialized) {
+          return _i19.HijackException();
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i34.SourceLocation, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              if (_i4.Serializers.instance.serialize<Uri?>($value.sourceUrl)
+                  case final sourceUrl?)
+                r'sourceUrl': sourceUrl,
+              r'offset': $value.offset,
+              r'line': $value.line,
+              r'column': $value.column,
+              r'toolString': $value.toolString,
+            },
+        deserialize: ($serialized) {
+          return _i34.SourceLocation(
+            ($serialized[r'offset'] as num).toInt(),
+            sourceUrl: $serialized[r'sourceUrl'],
+            line: ($serialized[r'line'] as num?)?.toInt(),
+            column: ($serialized[r'column'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i35.SourceSpan, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'start': _i4.Serializers.instance.serialize<_i34.SourceLocation>(
+                $value.start,
+              ),
+              r'end': _i4.Serializers.instance.serialize<_i34.SourceLocation>(
+                $value.end,
+              ),
+              r'text': $value.text,
+              if (_i4.Serializers.instance.serialize<Uri?>($value.sourceUrl)
+                  case final sourceUrl?)
+                r'sourceUrl': sourceUrl,
+              r'length': $value.length,
+            },
+        deserialize: ($serialized) {
+          return _i35.SourceSpan(
+            _i4.Serializers.instance.deserialize<_i34.SourceLocation>(
+              $serialized[r'start'],
+            ),
+            _i4.Serializers.instance.deserialize<_i34.SourceLocation>(
+              $serialized[r'end'],
+            ),
+            ($serialized[r'text'] as String),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i28.SourceSpanException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i35.SourceSpan?>(
+                    $value.span,
+                  )
+                  case final span?)
+                r'span': span,
+            },
+        deserialize: ($serialized) {
+          return _i28.SourceSpanException(
+            ($serialized[r'message'] as String),
+            _i4.Serializers.instance.deserialize<_i35.SourceSpan?>(
+              $serialized[r'span'],
+            ),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<
+        _i28.SourceSpanFormatException,
+        Map<String, Object?>
+      >(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i35.SourceSpan?>(
+                    $value.span,
+                  )
+                  case final span?)
+                r'span': span,
+              r'source': $value.source,
+              if ($value.offset case final offset?) r'offset': offset,
+            },
+        deserialize: ($serialized) {
+          return _i28.SourceSpanFormatException(
+            ($serialized[r'message'] as String),
+            _i4.Serializers.instance.deserialize<_i35.SourceSpan?>(
+              $serialized[r'span'],
+            ),
+            $serialized[r'source'],
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i26.SqliteException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if ($value.explanation case final explanation?)
+                r'explanation': explanation,
+              r'extendedResultCode': $value.extendedResultCode,
+              r'resultCode': $value.resultCode,
+              if ($value.offset case final offset?) r'offset': offset,
+              if ($value.operation case final operation?)
+                r'operation': operation,
+              if ($value.causingStatement case final causingStatement?)
+                r'causingStatement': causingStatement,
+              if ($value.parametersToStatement
+                  case final parametersToStatement?)
+                r'parametersToStatement': parametersToStatement,
+            },
+        deserialize: ($serialized) {
+          return _i26.SqliteException(
+            ($serialized[r'extendedResultCode'] as num).toInt(),
+            ($serialized[r'message'] as String),
+            ($serialized[r'explanation'] as String?),
+            ($serialized[r'causingStatement'] as String?),
+            ($serialized[r'parametersToStatement'] as Iterable<Object?>?)
+                ?.toList(),
+            ($serialized[r'operation'] as String?),
+            ($serialized[r'offset'] as num?)?.toInt(),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i30.VfsException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{r'returnCode': $value.returnCode},
+        deserialize: ($serialized) {
+          return _i30.VfsException(($serialized[r'returnCode'] as num).toInt());
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i27.StringScannerException, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if (_i4.Serializers.instance.serialize<_i35.SourceSpan?>(
+                    $value.span,
+                  )
+                  case final span?)
+                r'span': span,
+              if ($value.offset case final offset?) r'offset': offset,
+              r'source': $value.source,
+              if (_i4.Serializers.instance.serialize<Uri?>($value.sourceUrl)
+                  case final sourceUrl?)
+                r'sourceUrl': sourceUrl,
+            },
+        deserialize: ($serialized) {
+          return _i27.StringScannerException(
+            ($serialized[r'message'] as String),
+            _i4.Serializers.instance.deserialize<_i35.SourceSpan>(
+              $serialized[r'span'],
+            ),
+            ($serialized[r'source'] as String),
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -3689,26 +3654,15 @@ Future<void> start() async {
         hostnameVariable: const _i9.env('TASK_DATABASE_HOST'),
         tokenSecret: const _i9.secret('TASK_DATABASE_TOKEN'),
       );
-      context.put(
-        _i37.CelestData.database$Key,
-        await database.connect(),
-      );
+      context.put(_i37.CelestData.database$Key, await database.connect());
       final $cloudAuth = await _i38.CelestCloudAuth.create(
-          database: _i39.celest.data.database);
-      context.router.mount(
-        '/v1alpha1/auth/',
-        $cloudAuth.handler,
+        database: _i39.celest.data.database,
       );
-      context.put(
-        _i38.CelestCloudAuth.contextKey,
-        $cloudAuth,
-      );
+      context.router.mount('/v1alpha1/auth/', $cloudAuth.handler);
+      context.put(_i38.CelestCloudAuth.contextKey, $cloudAuth);
       if (context.environment == _i9.Environment.local) {
         final $studio = database.createStudio();
-        context.router.mount(
-          '/_admin/studio',
-          $studio.call,
-        );
+        context.router.mount('/_admin/studio', $studio.call);
       }
     },
   );

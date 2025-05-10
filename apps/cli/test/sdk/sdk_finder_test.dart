@@ -226,9 +226,7 @@ void main() {
       final root = d.dir('home', [
         d.dir('project', [
           d.dir('.fvm', [
-            d.dir('versions', [
-              link('3.22.2', '/home/flutter'),
-            ]),
+            d.dir('versions', [link('3.22.2', '/home/flutter')]),
           ]),
           d.file('.fvmrc', '{"flutter": "3.22.2"}'),
         ]),
@@ -253,10 +251,7 @@ void main() {
       final platform = FakePlatform(
         operatingSystem: localPlatform.operatingSystem,
         version: localPlatform.version,
-        environment: {
-          'PATH': '/home/flutter/bin',
-          'HOME': '/home',
-        },
+        environment: {'PATH': '/home/flutter/bin', 'HOME': '/home'},
         // Fake the resolved exe since this is checked first and would
         // otherwise point to the Dart SDK running this test.
         resolvedExecutable: '/fake-dart',
@@ -268,14 +263,8 @@ void main() {
         projectRoot: '/home/project',
       );
       final result = await finder.findSdk();
-      expect(
-        result.sdk.sdkPath,
-        '/home/flutter/bin/cache/dart-sdk',
-      );
-      expect(
-        result.sdk.flutterSdkRoot,
-        '/home/flutter',
-      );
+      expect(result.sdk.sdkPath, '/home/flutter/bin/cache/dart-sdk');
+      expect(result.sdk.flutterSdkRoot, '/home/flutter');
       expect(result.sdk.version.toString(), '3.2.3');
       expect(result.sdk.flutterVersion?.toString(), '3.22.2');
     });

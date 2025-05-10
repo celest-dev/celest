@@ -8,8 +8,9 @@ import 'package:sqlite3/common.dart' as i3;
 abstract class $CacheDatabase extends i0.GeneratedDatabase {
   $CacheDatabase(i0.QueryExecutor e) : super(e);
   $CacheDatabaseManager get managers => $CacheDatabaseManager(this);
-  late final i1.AnalyzerByteStore analyzerByteStore =
-      i1.AnalyzerByteStore(this);
+  late final i1.AnalyzerByteStore analyzerByteStore = i1.AnalyzerByteStore(
+    this,
+  );
   late final i1.VersionInfo versionInfo = i1.VersionInfo(this);
   i1.CacheDrift get cacheDrift =>
       i2.ReadDatabaseContainer(this).accessor<i1.CacheDrift>(i1.CacheDrift.new);
@@ -17,8 +18,10 @@ abstract class $CacheDatabase extends i0.GeneratedDatabase {
   Iterable<i0.TableInfo<i0.Table, Object?>> get allTables =>
       allSchemaEntities.whereType<i0.TableInfo<i0.Table, Object?>>();
   @override
-  List<i0.DatabaseSchemaEntity> get allSchemaEntities =>
-      [analyzerByteStore, versionInfo];
+  List<i0.DatabaseSchemaEntity> get allSchemaEntities => [
+    analyzerByteStore,
+    versionInfo,
+  ];
 }
 
 class $CacheDatabaseManager {
@@ -31,9 +34,7 @@ class $CacheDatabaseManager {
 }
 
 extension DefineFunctions on i3.CommonDatabase {
-  void defineFunctions({
-    required String Function(String) typeid,
-  }) {
+  void defineFunctions({required String Function(String) typeid}) {
     createFunction(
       functionName: 'typeid',
       argumentCount: const i3.AllowedArgumentCount(1),

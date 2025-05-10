@@ -6,10 +6,7 @@ import 'package:mustache_template/mustache_template.dart';
 
 /// Generates a `Dockerfile` for the user's project so they can self-host it.
 final class DockerfileGenerator {
-  DockerfileGenerator({
-    required this.assetType,
-    required this.project,
-  });
+  DockerfileGenerator({required this.assetType, required this.project});
 
   final proto.ProjectAsset_Type assetType;
   final ast.ResolvedProject project;
@@ -71,11 +68,11 @@ EXPOSE $PORT
     }
     return switch (project.sdkConfig.targetSdk) {
       SdkType.flutter => _flutterTemplate.renderString({
-          'version': project.sdkConfig.flutter!.version.canonicalizedVersion,
-        }),
+        'version': project.sdkConfig.flutter!.version.canonicalizedVersion,
+      }),
       SdkType.dart => _dartTemplate.renderString({
-          'version': project.sdkConfig.dart.version.canonicalizedVersion,
-        }),
+        'version': project.sdkConfig.dart.version.canonicalizedVersion,
+      }),
       final unknown => unreachable('Unknown SDK: $unknown'),
     };
   }

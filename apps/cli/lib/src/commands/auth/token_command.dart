@@ -39,11 +39,11 @@ final class TokenCommand extends CelestCommand with Authenticate {
 
 extension on CedarCork {
   Map<String, Object?> toJson() => {
-        'id': TypeId.fromUuid(Uuid(id), 'cork'),
-        'issuer': issuer.toString(),
-        'bearer': bearer.toString(),
-        'audience': audience?.toString(),
-        'claims': claims?.toJson(),
-        'caveats': caveats.map((c) => c.toJson()).toList(),
-      };
+    'id': TypeId.fromUuid(Uuid(id), 'cork'),
+    'issuer': issuer.toString(),
+    'bearer': bearer.toString(),
+    'audience': audience?.toString(),
+    'claims': claims?.toJson(),
+    'caveats': caveats.map((c) => c.toJson()).toList(),
+  };
 }

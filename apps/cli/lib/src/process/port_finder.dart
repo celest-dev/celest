@@ -51,12 +51,12 @@ abstract base class PortFinder {
 final class DefaultPortFinder extends PortFinder {
   /// {@macro celest_cli.default_port_finder}
   const DefaultPortFinder(this.initialPort)
-      : assert(initialPort != 0, 'Use RandomPortFinder instead'),
-        assert(
-          initialPort > 0 && initialPort <= PortFinder.maxPort,
-          'Invalid port. Must be >=0 <=${PortFinder.maxPort}.',
-        ),
-        super._();
+    : assert(initialPort != 0, 'Use RandomPortFinder instead'),
+      assert(
+        initialPort > 0 && initialPort <= PortFinder.maxPort,
+        'Invalid port. Must be >=0 <=${PortFinder.maxPort}.',
+      ),
+      super._();
 
   /// The initial port to start searching from.
   final int initialPort;
@@ -64,9 +64,11 @@ final class DefaultPortFinder extends PortFinder {
   @override
   Future<int> findOpenPort([int? startingPort]) async {
     Future<int> findOpenPort() async {
-      for (var port = startingPort ?? initialPort;
-          port <= PortFinder.maxPort;
-          port++) {
+      for (
+        var port = startingPort ?? initialPort;
+        port <= PortFinder.maxPort;
+        port++
+      ) {
         if (await PortFinder.checkPort(port)) {
           return port;
         }

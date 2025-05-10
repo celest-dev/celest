@@ -15,8 +15,8 @@ final class DataProject extends ProjectTemplate {
 
   @override
   List<ProjectDependency> get additionalDependencies => [
-        ProjectDependency.drift,
-      ];
+    ProjectDependency.drift,
+  ];
 
   @override
   Future<ProjectMigrationResult> create() async {
@@ -39,12 +39,7 @@ const database = Database(
 
       // Database files
       createFile(
-        p.join(
-          projectPaths.projectLib,
-          'src',
-          'database',
-          'database.dart',
-        ),
+        p.join(projectPaths.projectLib, 'src', 'database', 'database.dart'),
         '''
 import 'package:drift/drift.dart';
 
@@ -66,13 +61,8 @@ class $databaseName extends _\$$databaseName {
 ''',
       ),
       createFile(
-          p.join(
-            projectPaths.projectLib,
-            'src',
-            'database',
-            'database.g.dart',
-          ),
-          '''
+        p.join(projectPaths.projectLib, 'src', 'database', 'database.g.dart'),
+        '''
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'database.dart';
@@ -500,7 +490,8 @@ class \$${databaseName}Manager {
   \$\$TasksTableTableManager get tasks =>
       \$\$TasksTableTableManager(_db, _db.tasks);
 }
-'''),
+''',
+      ),
 
       createFile(p.join(projectPaths.apisDir, 'tasks.dart'), '''
 import 'package:celest/celest.dart';

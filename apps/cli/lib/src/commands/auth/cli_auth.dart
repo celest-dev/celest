@@ -30,11 +30,7 @@ final class _CliClient with CelestBase {
 
 extension type CliAuth._(AuthImpl _hub) implements AuthImpl {
   CliAuth()
-      : _hub = AuthImpl(
-          _CliClient(),
-          cloud: cloud,
-          storage: ctx.secureStorage,
-        );
+    : _hub = AuthImpl(_CliClient(), cloud: cloud, storage: ctx.secureStorage);
 
   Email get email => Email(_hub);
 }

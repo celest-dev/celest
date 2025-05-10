@@ -105,8 +105,10 @@ abstract base class TypeChecker {
   ///
   /// Throws [UnresolvedAnnotationException] on unresolved annotations unless
   /// [throwOnUnresolved] is explicitly set to `false` (default is `true`).
-  bool hasAnnotationOfExact(Element2 element,
-          {bool throwOnUnresolved = true}) =>
+  bool hasAnnotationOfExact(
+    Element2 element, {
+    bool throwOnUnresolved = true,
+  }) =>
       firstAnnotationOfExact(element, throwOnUnresolved: throwOnUnresolved) !=
       null;
 
@@ -131,21 +133,22 @@ abstract base class TypeChecker {
   Iterable<DartObject> annotationsOf(
     Element2 element, {
     bool throwOnUnresolved = true,
-  }) =>
-      _annotationsWhere(
-        element,
-        isAssignableFromType,
-        throwOnUnresolved: throwOnUnresolved,
-      );
+  }) => _annotationsWhere(
+    element,
+    isAssignableFromType,
+    throwOnUnresolved: throwOnUnresolved,
+  );
 
   Iterable<DartObject> _annotationsWhere(
     Element2 element,
     bool Function(DartType) predicate, {
     bool throwOnUnresolved = true,
   }) sync* {
-    for (var i = 0;
-        i < (element as Annotatable).metadata2.annotations.length;
-        i++) {
+    for (
+      var i = 0;
+      i < (element as Annotatable).metadata2.annotations.length;
+      i++
+    ) {
       final value = _computeConstantValue(
         element,
         i,
@@ -164,12 +167,11 @@ abstract base class TypeChecker {
   Iterable<DartObject> annotationsOfExact(
     Element2 element, {
     bool throwOnUnresolved = true,
-  }) =>
-      _annotationsWhere(
-        element,
-        isExactlyType,
-        throwOnUnresolved: throwOnUnresolved,
-      );
+  }) => _annotationsWhere(
+    element,
+    isExactlyType,
+    throwOnUnresolved: throwOnUnresolved,
+  );
 
   /// Returns `true` if the type of [element] can be assigned to this type.
   bool isAssignableFrom(Element2 element) =>
@@ -186,9 +188,9 @@ abstract base class TypeChecker {
 
   /// Returns `true` if representing the exact same type as [staticType].
   bool isExactlyType(DartType staticType) => switch (staticType.element3) {
-        final element? => isExactly(element),
-        _ => false,
-      };
+    final element? => isExactly(element),
+    _ => false,
+  };
 
   /// Returns `true` if representing a super class of [element].
   ///
@@ -273,13 +275,14 @@ final class _AnyChecker extends TypeChecker {
 
 /// Returns a URL representing [element].
 String urlOfElement2(Element2 element) => switch (element.kind) {
-      ElementKind.DYNAMIC => 'dart:core#dynamic',
-      ElementKind.NEVER => 'dart:core#Never',
-      // using librarySource.uri – in case the element is in a part
-      _ => normalizeUrl(
-          element.library2!.firstFragment.source.uri,
-        ).replace(fragment: element.name3).toString(),
-    };
+  ElementKind.DYNAMIC => 'dart:core#dynamic',
+  ElementKind.NEVER => 'dart:core#Never',
+  // using librarySource.uri – in case the element is in a part
+  _ =>
+    normalizeUrl(
+      element.library2!.firstFragment.source.uri,
+    ).replace(fragment: element.name3).toString(),
+};
 
 Uri normalizeUrl(Uri url) {
   switch (url.scheme) {
@@ -300,9 +303,10 @@ Uri normalizeUrl(Uri url) {
 ///
 /// This isn't a user-knowable path, so we strip out extra path segments
 /// and only expose `dart:core`.
-Uri normalizeDartUrl(Uri url) => url.pathSegments.isNotEmpty
-    ? url.replace(pathSegments: url.pathSegments.take(1))
-    : url;
+Uri normalizeDartUrl(Uri url) =>
+    url.pathSegments.isNotEmpty
+        ? url.replace(pathSegments: url.pathSegments.take(1))
+        : url;
 
 Uri _fileToAssetUrl(Uri url) {
   if (!p.isWithin(p.url.current, url.path)) return url;
@@ -320,16 +324,17 @@ Uri _fileToAssetUrl(Uri url) {
 ///
 /// For example, this transforms `package:source_gen/source_gen.dart` into:
 /// `asset:source_gen/lib/source_gen.dart`.
-Uri _packageToAssetUrl(Uri url) => url.scheme == 'package'
-    ? url.replace(
-        scheme: 'asset',
-        pathSegments: <String>[
-          url.pathSegments.first,
-          'lib',
-          ...url.pathSegments.skip(1),
-        ],
-      )
-    : url;
+Uri _packageToAssetUrl(Uri url) =>
+    url.scheme == 'package'
+        ? url.replace(
+          scheme: 'asset',
+          pathSegments: <String>[
+            url.pathSegments.first,
+            'lib',
+            ...url.pathSegments.skip(1),
+          ],
+        )
+        : url;
 
 final String _rootPackageName = () {
   final name =
@@ -374,12 +379,17 @@ class UnresolvedAnnotationException implements Exception {
   final SourceSpan? annotationSource;
 
   static SourceSpan? _findSpan(
-      Element2 annotatedElement2, int annotationIndex) {
-    final parsedLibrary = annotatedElement2.session!.getParsedLibraryByElement2(
-      annotatedElement2.library2!,
-    ) as ParsedLibraryResult;
-    final declaration =
-        parsedLibrary.getFragmentDeclaration(annotatedElement2.firstFragment);
+    Element2 annotatedElement2,
+    int annotationIndex,
+  ) {
+    final parsedLibrary =
+        annotatedElement2.session!.getParsedLibraryByElement2(
+              annotatedElement2.library2!,
+            )
+            as ParsedLibraryResult;
+    final declaration = parsedLibrary.getFragmentDeclaration(
+      annotatedElement2.firstFragment,
+    );
     if (declaration == null) {
       return null;
     }

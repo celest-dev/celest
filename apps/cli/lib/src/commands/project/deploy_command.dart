@@ -29,7 +29,8 @@ final class DeployCommand extends CelestCommand
       return code;
     }
 
-    return CelestFrontend(stopSignal: stopSignal)
-        .deploy(migrateProject: needsMigration);
+    return CelestFrontend(
+      stopSignal: stopSignal,
+    ).deploy(migrateProject: needsMigration);
   }
 }

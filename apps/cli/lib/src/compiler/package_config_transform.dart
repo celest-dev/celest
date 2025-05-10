@@ -11,24 +11,25 @@ Future<String> transformPackageConfig({
   final packageConfig = await loadPackageConfig(
     fileSystem.file(packageConfigPath),
   );
-  final newPackages = packageConfig.packages.map((package) {
-    return Package(
-      package.name,
-      switch (package.root.scheme) {
-        '' => Uri(
-            path: p.relative(
-              p.join(fromRoot, '.dart_tool', package.root.path),
-              from: p.join(toRoot, '.dart_tool'),
+  final newPackages =
+      packageConfig.packages.map((package) {
+        return Package(
+          package.name,
+          switch (package.root.scheme) {
+            '' => Uri(
+              path: p.relative(
+                p.join(fromRoot, '.dart_tool', package.root.path),
+                from: p.join(toRoot, '.dart_tool'),
+              ),
             ),
-          ),
-        _ => package.root,
-      },
-      packageUriRoot: package.packageUriRoot,
-      languageVersion: package.languageVersion,
-      extraData: package.extraData,
-      relativeRoot: package.relativeRoot,
-    );
-  }).toList();
+            _ => package.root,
+          },
+          packageUriRoot: package.packageUriRoot,
+          languageVersion: package.languageVersion,
+          extraData: package.extraData,
+          relativeRoot: package.relativeRoot,
+        );
+      }).toList();
   final newPackageConfig = PackageConfig(
     newPackages,
     extraData: packageConfig.extraData,
@@ -36,8 +37,9 @@ Future<String> transformPackageConfig({
   final toRootDir = fileSystem.directory(toRoot);
   final newPackageConfigBuf = StringBuffer();
   PackageConfig.writeString(newPackageConfig, newPackageConfigBuf);
-  final newPackageConfigFile =
-      toRootDir.childDirectory('.dart_tool').childFile(packageConfigFileName);
+  final newPackageConfigFile = toRootDir
+      .childDirectory('.dart_tool')
+      .childFile(packageConfigFileName);
   await newPackageConfigFile.create(recursive: true);
   await newPackageConfigFile.writeAsString(newPackageConfigBuf.toString());
   return newPackageConfigFile.path;

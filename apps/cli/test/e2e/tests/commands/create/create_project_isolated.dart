@@ -22,7 +22,8 @@ final class CreateProjectIsolatedTest extends E2ETest {
       await celest.run();
 
       check(
-        because: 'The project should be created in the sub-directory '
+        because:
+            'The project should be created in the sub-directory '
             'with the name of the project (defaults to `my_project`)',
         tempDir
             .childDirectory('my_project')

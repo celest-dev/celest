@@ -183,8 +183,9 @@ final class PubCache {
       _logger.finest('No pub cache found at $cachePath. Skipping fix.');
       return 0;
     }
-    final hostedPubDevDir =
-        cacheDir.childDirectory('hosted').childDirectory('pub.dev');
+    final hostedPubDevDir = cacheDir
+        .childDirectory('hosted')
+        .childDirectory('pub.dev');
     if (!hostedPubDevDir.existsSync()) {
       if (throwOnError) {
         throw Exception('No pub cache found at ${hostedPubDevDir.path}.');

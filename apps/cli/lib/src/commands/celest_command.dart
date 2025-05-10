@@ -99,13 +99,14 @@ abstract base class CelestCommand extends Command<int> {
         'CelestCommand',
         'retrieveLatestRelease',
         () => switch (CliRuntime.current) {
-          CliRuntime.aot => retrieveLatestRelease(includeDev: includeDev!)
-              .then((release) => (release.version, release)),
+          CliRuntime.aot => retrieveLatestRelease(
+            includeDev: includeDev!,
+          ).then((release) => (release.version, release)),
           CliRuntime.local => Future.value((currentVersion, null)),
-          CliRuntime.pubGlobal => _latestVersionPub(includeDev: includeDev!)
-              .then((version) => (version, null)),
-        }
-            .timeout(const Duration(seconds: 3)),
+          CliRuntime.pubGlobal => _latestVersionPub(
+            includeDev: includeDev!,
+          ).then((version) => (version, null)),
+        }.timeout(const Duration(seconds: 3)),
       );
       return (latestVersion, releaseInfo);
     } on Object catch (e, st) {
@@ -114,14 +115,10 @@ abstract base class CelestCommand extends Command<int> {
     }
   }
 
-  Future<Version> _latestVersionPub({
-    bool includeDev = false,
-  }) async {
+  Future<Version> _latestVersionPub({bool includeDev = false}) async {
     final versionInfo = await resolveVersionInfo('celest_cli');
     if (versionInfo == null) {
-      throw Exception(
-        'Failed to resolve version information for celest_cli.',
-      );
+      throw Exception('Failed to resolve version information for celest_cli.');
     }
     return maxBy(
       [

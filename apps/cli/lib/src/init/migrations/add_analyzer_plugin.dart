@@ -7,8 +7,9 @@ final class AddAnalyzerPlugin extends ProjectMigration {
   AddAnalyzerPlugin(super.projectRoot, this.appRoot);
 
   final String appRoot;
-  late final parentAnalysisOptionsFile =
-      fileSystem.directory(appRoot).childFile('analysis_options.yaml');
+  late final parentAnalysisOptionsFile = fileSystem
+      .directory(appRoot)
+      .childFile('analysis_options.yaml');
 
   @override
   bool get needsMigration {
@@ -27,16 +28,19 @@ final class AddAnalyzerPlugin extends ProjectMigration {
       final editor = YamlEditor(await parentAnalysisOptionsFile.readAsString());
 
       var hasAnalyzer = true;
-      final analyzer = editor.parseAt(
-        ['analyzer'],
-        orElse: () {
-          hasAnalyzer = false;
-          return YamlMap();
-        },
-      ) as YamlMap;
-      final existingPlugins = analyzer.containsKey('plugins')
-          ? analyzer.nodes['plugins'] as YamlList
-          : null;
+      final analyzer =
+          editor.parseAt(
+                ['analyzer'],
+                orElse: () {
+                  hasAnalyzer = false;
+                  return YamlMap();
+                },
+              )
+              as YamlMap;
+      final existingPlugins =
+          analyzer.containsKey('plugins')
+              ? analyzer.nodes['plugins'] as YamlList
+              : null;
       final hasPlugins = existingPlugins != null;
       if ((existingPlugins ?? []).contains('celest')) {
         return const ProjectMigrationSuccess();

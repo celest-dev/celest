@@ -54,26 +54,21 @@ final class ChildProcess {
           command = [
             ...command,
             for (final MapEntry(:key, :value) in dartDefines.entries)
-              '--dart-define=$key=$value'
+              '--dart-define=$key=$value',
           ];
       }
     }
 
-    final process = _process = await processManager.start(
-      command,
-      environment: environment,
-    );
+    final process =
+        _process = await processManager.start(
+          command,
+          environment: environment,
+        );
 
     // Capture stdout/stderr
     final commandName = command.first;
-    process.captureStdout(
-      sink: cliLogger.writeln,
-      prefix: '[$commandName] ',
-    );
-    process.captureStderr(
-      sink: cliLogger.writeln,
-      prefix: '[$commandName] ',
-    );
+    process.captureStdout(sink: cliLogger.writeln, prefix: '[$commandName] ');
+    process.captureStderr(sink: cliLogger.writeln, prefix: '[$commandName] ');
 
     // TODO(dnys1): Handle stdin?
   }

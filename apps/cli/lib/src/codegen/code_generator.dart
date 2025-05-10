@@ -36,16 +36,15 @@ abstract final class CodeGenerator {
     required String forFile,
     PrefixingStrategy prefixingStrategy = PrefixingStrategy.indexed,
     required PathStrategy pathStrategy,
-  }) =>
-      DartEmitter(
-        allocator: CelestAllocator(
-          prefixingStrategy: prefixingStrategy,
-          pathStrategy: pathStrategy,
-          forFile: forFile,
-        ),
-        useNullSafetySyntax: true,
-        orderDirectives: true,
-      );
+  }) => DartEmitter(
+    allocator: CelestAllocator(
+      prefixingStrategy: prefixingStrategy,
+      pathStrategy: pathStrategy,
+      forFile: forFile,
+    ),
+    useNullSafetySyntax: true,
+    orderDirectives: true,
+  );
 
   static String rawEmit(
     Spec spec, {

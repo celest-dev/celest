@@ -87,8 +87,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
       return switch (valueType) {
         // This is the only case where `Object`/`dynamic` are allowed.
         InterfaceType(isDartCoreObject: true) ||
-        DynamicType() =>
-          const Verdict.yes(),
+        DynamicType() => const Verdict.yes(),
         _ => _isJson(valueType),
       };
     }
@@ -130,12 +129,14 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     // `Object Function(T) fromJsonT`.
     fromJsonCtor = fromJsonCtor.baseElement;
 
-    final positionalParameters = fromJsonCtor.formalParameters
-        .where((parameter) => parameter.isPositional)
-        .toList();
-    final namedParameters = fromJsonCtor.formalParameters
-        .where((parameter) => parameter.isNamed)
-        .toList();
+    final positionalParameters =
+        fromJsonCtor.formalParameters
+            .where((parameter) => parameter.isPositional)
+            .toList();
+    final namedParameters =
+        fromJsonCtor.formalParameters
+            .where((parameter) => parameter.isNamed)
+            .toList();
     if (positionalParameters.isEmpty) {
       final functionSignature =
           'factory $typeName.fromJson(${wireType.getDisplayString()} json)';
@@ -189,15 +190,15 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     for (final parameter in parameters.where((p) => p.isPositional)) {
       switch (parameter.type) {
         case FunctionType(
-            returnType: final TypeParameterType funcReturnType,
-            normalParameterTypes: [
-              DynamicType() ||
-                  DartType(
-                    isDartCoreObject: true,
-                    nullabilitySuffix: NullabilitySuffix.question,
-                  ),
-            ],
-          ):
+          returnType: final TypeParameterType funcReturnType,
+          normalParameterTypes: [
+            DynamicType() ||
+                DartType(
+                  isDartCoreObject: true,
+                  nullabilitySuffix: NullabilitySuffix.question,
+                ),
+          ],
+        ):
           final expectedCtorParamName = fromJsonForName(
             funcReturnType.element3.name3!,
           );
@@ -242,9 +243,9 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     for (final parameter in toJsonMethod.formalParameters) {
       switch (parameter.type) {
         case FunctionType(
-            returnType: DartType(isDartCoreObject: true) || DynamicType(),
-            normalParameterTypes: [final TypeParameterType funcParameterType],
-          ):
+          returnType: DartType(isDartCoreObject: true) || DynamicType(),
+          normalParameterTypes: [final TypeParameterType funcParameterType],
+        ):
           final expectedFuncParamName = toJsonForName(
             funcParameterType.element3.name3!,
           );
@@ -269,10 +270,10 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     verdict &= switch (_isJson(returnType)) {
       VerdictYes() => const Verdict.yes(),
       _ => Verdict.no(
-          'Invalid return type of $typeName\'s toJson method: '
-          '$returnType. Only simple JSON types are allowed.',
-          location: toJsonMethod.sourceLocation,
-        ),
+        'Invalid return type of $typeName\'s toJson method: '
+        '$returnType. Only simple JSON types are allowed.',
+        location: toJsonMethod.sourceLocation,
+      ),
     };
     return verdict;
   }
@@ -310,8 +311,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             // ignore: unnecessary_null_checks
             VerdictYes(:final primarySpec!, :final additionalSpecs) =>
               Verdict.yes(
-                primarySpec: primarySpec
-                  ..representationType = erasurePrimaySpec.erased,
+                primarySpec:
+                    primarySpec..representationType = erasurePrimaySpec.erased,
                 additionalSpecs: {
                   // Create a representation type spec which has no fromJson/toJson
                   // methods but which carries the correct wire type.
@@ -353,7 +354,8 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             type.interfaceMembers;
         // The representation type is either a built-in or a primitive at
         // this point.
-        final wireType = builtInTypeToReference[erasureType] ??
+        final wireType =
+            builtInTypeToReference[erasureType] ??
             typeHelper.toReference(erasureType);
         return erasureVerdict.withPrimarySpec(
           SerializationSpec(
@@ -370,8 +372,9 @@ final class IsSerializable extends TypeVisitor<Verdict> {
             constructorParameters: constructor.parameterSpecs,
             fromJsonParameters: fromJsonCtor.parameterSpecs,
             fromJsonType: fromJsonCtor?.returnType as InterfaceType?,
-            toJsonType: (toJsonMethod?.enclosingElement2 as InterfaceElement2?)
-                ?.thisType,
+            toJsonType:
+                (toJsonMethod?.enclosingElement2 as InterfaceElement2?)
+                    ?.thisType,
             representationType: SerializationSpec(
               type: erasureType,
               wireType: wireType,
@@ -439,8 +442,9 @@ final class IsSerializable extends TypeVisitor<Verdict> {
     final spec = SerializationSpec(
       type: type,
       wireType: typeHelper.toReference(wireType),
-      castType:
-          fromJsonCtor?.formalParameters.first.type.let(typeHelper.toReference),
+      castType: fromJsonCtor?.formalParameters.first.type.let(
+        typeHelper.toReference,
+      ),
       fields: type.fieldSpecs,
       wireConstructor: wireConstructor,
       constructorParameters: wireConstructor.parameterSpecs,
@@ -560,8 +564,7 @@ final class IsSerializable extends TypeVisitor<Verdict> {
         // and others allow Map<String, Object?> and this allows for a cleaner
         // migration path from using those types with Celest.
         InterfaceType(isDartCoreObject: true) ||
-        DynamicType() =>
-          const Verdict.yes(),
+        DynamicType() => const Verdict.yes(),
         _ => typeHelper.isSerializable(valueType),
       };
     }
@@ -833,19 +836,20 @@ final class _IsSerializableClass extends TypeVisitor<Verdict> {
   Verdict visitVoidType(VoidType type) => unreachable('Not a class type');
 }
 
-typedef InterfaceMembers = ({
-  MethodElement2? toJsonMethod,
-  ExecutableElement2? fromJsonCtor,
-  DartType wireType,
-});
+typedef InterfaceMembers =
+    ({
+      MethodElement2? toJsonMethod,
+      ExecutableElement2? fromJsonCtor,
+      DartType wireType,
+    });
 
 extension on InterfaceType {
   MethodElement2? get toJsonMethod => switch (element3) {
-        // Extension types always reset the toJson method to the representation
-        // type.
-        ExtensionTypeElement2() => getMethod2('toJson'),
-        _ => lookUpMethod3('toJson', element3.library2),
-      };
+    // Extension types always reset the toJson method to the representation
+    // type.
+    ExtensionTypeElement2() => getMethod2('toJson'),
+    _ => lookUpMethod3('toJson', element3.library2),
+  };
 
   ExecutableElement2? get fromJsonCtor =>
       lookUpConstructor2('fromJson', element3.library2) ??
@@ -925,9 +929,9 @@ extension on InterfaceType {
       }
       final isJsonKey = switch (value.type) {
         final type? => identical(
-            type,
-            typeHelper.coreTypes.jsonKeyElement?.thisType,
-          ),
+          type,
+          typeHelper.coreTypes.jsonKeyElement?.thisType,
+        ),
         _ => false,
       };
       if (!isJsonKey) {
@@ -949,24 +953,23 @@ extension on InterfaceType {
   }
 
   List<FieldSpec> get fieldSpecs => switch (element3) {
-        final ClassElement2 element => [
-            for (final field in element.sortedFields(this))
-              run(() {
-                final (:ignoreToJson, :ignoreFromJson) =
-                    _ignoredByJsonKey(field);
-                return FieldSpec(
-                  name: field.displayName,
-                  type: field.type,
-                  ignore: ignoreToJson || field.type.isDartCoreNull,
-                );
-              }),
-          ],
-        EnumElement2() => const [],
-        ExtensionTypeElement2(representation2: final representation) => [
-            FieldSpec(name: representation.name3!, type: representation.type),
-          ],
-        _ => unreachable(),
-      };
+    final ClassElement2 element => [
+      for (final field in element.sortedFields(this))
+        run(() {
+          final (:ignoreToJson, :ignoreFromJson) = _ignoredByJsonKey(field);
+          return FieldSpec(
+            name: field.displayName,
+            type: field.type,
+            ignore: ignoreToJson || field.type.isDartCoreNull,
+          );
+        }),
+    ],
+    EnumElement2() => const [],
+    ExtensionTypeElement2(representation2: final representation) => [
+      FieldSpec(name: representation.name3!, type: representation.type),
+    ],
+    _ => unreachable(),
+  };
 
   InterfaceMembers get interfaceMembers {
     switch (element3) {
@@ -1104,19 +1107,20 @@ extension on ClassElement2 {
 
     // Get the list of all fields for `element`
     final allFields = elementInstanceFields.keys.toSet().union(
-          inheritedFields.keys.toSet(),
-        );
+      inheritedFields.keys.toSet(),
+    );
 
-    final fields = allFields
-        .map(
-          (e) => _FieldSet(
-            overriddenFields[e],
-            elementInstanceFields[e],
-            inheritedFields[e],
-          ),
-        )
-        .toList()
-      ..sort();
+    final fields =
+        allFields
+            .map(
+              (e) => _FieldSet(
+                overriddenFields[e],
+                elementInstanceFields[e],
+                inheritedFields[e],
+              ),
+            )
+            .toList()
+          ..sort();
 
     // Remove fields which are synthetic and not serializable.
     final filtered = <FieldElement2>[];
@@ -1212,7 +1216,7 @@ extension on FormalParameterElement {
     return switch (this) {
       FieldFormalParameterElement2(field2: final field?) => field,
       SuperFormalParameterElement2(
-        superConstructorParameter2: final superConstructorParameter?
+        superConstructorParameter2: final superConstructorParameter?,
       ) =>
         superConstructorParameter.fieldFormal(fields),
       _ => fields.firstWhereOrNull((field) => field.name3 == name3),

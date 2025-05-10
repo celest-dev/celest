@@ -176,7 +176,8 @@ final class PubspecUpdater extends ProjectMigration {
         pubspecFile: pubspecFile,
       );
       // await _updateProjectName();
-      needsAnalyzerMigration |= upgradeFromVersion != null &&
+      needsAnalyzerMigration |=
+          upgradeFromVersion != null &&
           upgradeFromVersion! < Version(1, 0, 0).firstPreRelease;
       if (needsAnalyzerMigration) {
         operations.add(

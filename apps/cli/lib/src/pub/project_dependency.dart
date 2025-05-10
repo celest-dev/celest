@@ -227,14 +227,14 @@ final class ProjectDependency {
   bool upToDate(Pubspec pubspec) {
     final (expected, actual) = switch (type) {
       DependencyType.dependency when pubspec.name == 'celest_backend' => (
-          backendDependencies,
-          pubspec.dependencies,
-        ),
+        backendDependencies,
+        pubspec.dependencies,
+      ),
       DependencyType.dependency => (clientDependencies, pubspec.dependencies),
       DependencyType.devDependency => (
-          devDependencies,
-          pubspec.devDependencies,
-        ),
+        devDependencies,
+        pubspec.devDependencies,
+      ),
       _ => unreachable(),
     };
     final expectedVersion = expected[name]!.pubDependency.version;

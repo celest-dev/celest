@@ -28,8 +28,9 @@ final class StatusCommand extends CelestCommand with Configure, Authenticate {
     await configure();
 
     final projectName = celestProject.projectName.paramCase;
-    final projectEnvironment = await cloud.projects.environments
-        .get('projects/$projectName/environments/production');
+    final projectEnvironment = await cloud.projects.environments.get(
+      'projects/$projectName/environments/production',
+    );
     if (projectEnvironment == null) {
       cliLogger.warn(
         'This project has not been deployed yet. '

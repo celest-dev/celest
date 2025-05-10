@@ -24,10 +24,7 @@ class CelestFunctions {
 
 /// Tests the ability to use server-side streaming.
 class CelestFunctionsServerSide {
-  Never _throwError({
-    int? code,
-    required Map<String, Object?> body,
-  }) {
+  Never _throwError({int? code, required Map<String, Object?> body}) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -37,9 +34,9 @@ class CelestFunctionsServerSide {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String
+          'value': final stackTraceValue as String,
         },
-        ...
+        ...,
       ] =>
         (
           errorDetails['@type'],
@@ -47,10 +44,10 @@ class CelestFunctionsServerSide {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-          errorDetails['@type'],
-          errorDetails['value'],
-          StackTrace.empty,
-        ),
+        errorDetails['@type'],
+        errorDetails['value'],
+        StackTrace.empty,
+      ),
     };
 
     switch (errorType) {
@@ -86,14 +83,16 @@ class CelestFunctionsServerSide {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<UnsupportedError>(errorValue),
+          _$celest.Serializers.instance.deserialize<UnsupportedError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<UnimplementedError>(errorValue),
+          _$celest.Serializers.instance.deserialize<UnimplementedError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -109,14 +108,16 @@ class CelestFunctionsServerSide {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<OutOfMemoryError>(errorValue),
+          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<StackOverflowError>(errorValue),
+          _$celest.Serializers.instance.deserialize<StackOverflowError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -126,8 +127,9 @@ class CelestFunctionsServerSide {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<FormatException>(errorValue),
+          _$celest.Serializers.instance.deserialize<FormatException>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -143,20 +145,23 @@ class CelestFunctionsServerSide {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<TimeoutException>(errorValue),
+          _$celest.Serializers.instance.deserialize<TimeoutException>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<JsonUnsupportedObjectError>(errorValue),
+          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.CloudException>(errorValue),
+          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -167,8 +172,9 @@ class CelestFunctionsServerSide {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.UnknownError>(errorValue),
+          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -185,8 +191,9 @@ class CelestFunctionsServerSide {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.NotFoundException>(errorValue),
+          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -215,8 +222,9 @@ class CelestFunctionsServerSide {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.AbortedException>(errorValue),
+          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -239,14 +247,16 @@ class CelestFunctionsServerSide {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.UnavailableError>(errorValue),
+          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.DataLossError>(errorValue),
+          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -273,13 +283,11 @@ class CelestFunctionsServerSide {
     }
   }
 
-  @_$celest.CloudFunction(
-    api: 'server_side',
-    function: 'hello',
-  )
+  @_$celest.CloudFunction(api: 'server_side', function: 'hello')
   Stream<String> hello(List<String> names) {
-    final $channel = celest.eventClient
-        .connect(celest.baseUri.resolve('/server-side/hello'));
+    final $channel = celest.eventClient.connect(
+      celest.baseUri.resolve('/server-side/hello'),
+    );
     $channel.sink.add({r'names': names});
     return $channel.stream.map(($event) {
       if ($event is Map<String, Object?> && $event.containsKey('@status')) {
@@ -289,14 +297,13 @@ class CelestFunctionsServerSide {
     });
   }
 
-  @_$celest.CloudFunction(
-    api: 'server_side',
-    function: 'stockTicker',
-  )
+  @_$celest.CloudFunction(api: 'server_side', function: 'stockTicker')
   Stream<_$_common_available_stock.AvailableStock> stockTicker(String symbol) {
-    final $channel = celest.eventClient.connect(celest.baseUri
-        .resolve('/server-side/stock-ticker')
-        .replace(queryParameters: {r'symbol': symbol}));
+    final $channel = celest.eventClient.connect(
+      celest.baseUri
+          .resolve('/server-side/stock-ticker')
+          .replace(queryParameters: {r'symbol': symbol}),
+    );
     return $channel.stream.map(($event) {
       if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
@@ -306,13 +313,11 @@ class CelestFunctionsServerSide {
     });
   }
 
-  @_$celest.CloudFunction(
-    api: 'server_side',
-    function: 'jsonValues',
-  )
+  @_$celest.CloudFunction(api: 'server_side', function: 'jsonValues')
   Stream<_$celest.JsonValue> jsonValues() {
-    final $channel = celest.eventClient
-        .connect(celest.baseUri.resolve('/server-side/json-values'));
+    final $channel = celest.eventClient.connect(
+      celest.baseUri.resolve('/server-side/json-values'),
+    );
     return $channel.stream.map(($event) {
       if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);

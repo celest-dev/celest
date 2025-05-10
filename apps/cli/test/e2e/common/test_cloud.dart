@@ -29,8 +29,8 @@ base mixin TestCloud on E2ETest {
 
   @override
   Map<String, String> get environment => {
-        'CELEST_API_URI': cloudHubUri.toString(),
-      };
+    'CELEST_API_URI': cloudHubUri.toString(),
+  };
 
   @override
   Future<void> setUp() async {
@@ -61,8 +61,7 @@ base mixin TestCloud on E2ETest {
       ..captureStdout(sink: log, prefix: '[CloudHub] ')
       ..captureStderr(sink: log, prefix: '[CloudHub] ');
 
-    final line = await ProcessUtil(_cloudHubProcess!)
-        .stdout
+    final line = await ProcessUtil(_cloudHubProcess!).stdout
         .transform(utf8.decoder)
         .transform(const LineSplitter())
         .firstWhere(
@@ -74,8 +73,7 @@ base mixin TestCloud on E2ETest {
     tester = await CelestTester.connect(wsUri: observatoryUri);
 
     // Wait for server to tart
-    await ProcessUtil(_cloudHubProcess!)
-        .stdout
+    await ProcessUtil(_cloudHubProcess!).stdout
         .transform(utf8.decoder)
         .transform(const LineSplitter())
         .firstWhere((line) => line.startsWith('Serving on'));

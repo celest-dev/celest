@@ -47,26 +47,15 @@ Future<void> start() async {
         hostnameVariable: const _i15.env('CLOUD_AUTH_DATABASE_HOST'),
         tokenSecret: const _i15.secret('CLOUD_AUTH_DATABASE_TOKEN'),
       );
-      context.put(
-        _i16.CelestData.cloudAuth$Key,
-        await cloudAuth.connect(),
-      );
+      context.put(_i16.CelestData.cloudAuth$Key, await cloudAuth.connect());
       final $cloudAuth = await _i17.CelestCloudAuth.create(
-          database: _i18.celest.data.cloudAuth);
-      context.router.mount(
-        '/v1alpha1/auth/',
-        $cloudAuth.handler,
+        database: _i18.celest.data.cloudAuth,
       );
-      context.put(
-        _i17.CelestCloudAuth.contextKey,
-        $cloudAuth,
-      );
+      context.router.mount('/v1alpha1/auth/', $cloudAuth.handler);
+      context.put(_i17.CelestCloudAuth.contextKey, $cloudAuth);
       if (context.environment == _i15.Environment.local) {
         final $studio = cloudAuth.createStudio();
-        context.router.mount(
-          '/_admin/studio',
-          $studio.call,
-        );
+        context.router.mount('/_admin/studio', $studio.call);
       }
     },
   );

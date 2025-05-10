@@ -101,14 +101,14 @@ final class Command {
 
 extension FlatMap<T> on Stream<T> {
   Stream<S> flatMap<S>(S? Function(T) mapper) => transform(
-        StreamTransformer.fromHandlers(
-          handleData: (value, sink) {
-            if (mapper(value) case final value?) {
-              sink.add(value);
-            }
-          },
-        ),
-      );
+    StreamTransformer.fromHandlers(
+      handleData: (value, sink) {
+        if (mapper(value) case final value?) {
+          sink.add(value);
+        }
+      },
+    ),
+  );
 }
 
 final _logger = Logger('InteractiveCommand');
@@ -129,11 +129,12 @@ extension<T> on Future<T> {
     if (timeout != null) {
       return fut.timeout(
         timeout,
-        onTimeout: () => _fail(
-          '$methodName Timed out',
-          TimeoutException(null, timeout),
-          Chain.current(),
-        ),
+        onTimeout:
+            () => _fail(
+              '$methodName Timed out',
+              TimeoutException(null, timeout),
+              Chain.current(),
+            ),
       );
     }
     return fut;
@@ -142,30 +143,32 @@ extension<T> on Future<T> {
 
 extension on Subject<Future<LogMessage>> {
   Future<void> contains(String text) => this.completes(
-        (it) => it.has((log) => log.message, 'message').contains(text),
-      );
+    (it) => it.has((log) => log.message, 'message').contains(text),
+  );
 }
 
 final class InteractiveCommand {
   InteractiveCommand._(Future<Process> process) {
-    process = process.then((process) {
-      _process = process;
-      process.stderr
-          .transform(utf8.decoder)
-          .transform(const LineSplitter())
-          .forEach(_error);
-      process.exitCode.then((exitCode) {
-        if (_pendingTasks != null) {
-          _fail(
-            'start',
-            'Command exited with code $exitCode while tasks were pending',
-            StackTrace.current,
-          );
-        }
-      });
-      _started = true;
-      return process;
-    }).onError<Object>((e, st) => _fail('start', e, st));
+    process = process
+        .then((process) {
+          _process = process;
+          process.stderr
+              .transform(utf8.decoder)
+              .transform(const LineSplitter())
+              .forEach(_error);
+          process.exitCode.then((exitCode) {
+            if (_pendingTasks != null) {
+              _fail(
+                'start',
+                'Command exited with code $exitCode while tasks were pending',
+                StackTrace.current,
+              );
+            }
+          });
+          _started = true;
+          return process;
+        })
+        .onError<Object>((e, st) => _fail('start', e, st));
     _logs = StreamQueue(
       Stream.fromFuture(process).asyncExpand(
         (process) => process.stdout
