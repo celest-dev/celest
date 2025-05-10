@@ -33,10 +33,9 @@ ENV PORT=8080
 EXPOSE $PORT
 ''');
 
-  // TODO(dnys1): Remove `--platform=linux/amd64` when Celest supports arm64.
   static const String _dartExeTemplate = r'''
 # syntax=docker/dockerfile:1.2
-FROM --platform=linux/amd64 celestdev/runtime:latest
+FROM celestdev/runtime:latest
 
 WORKDIR /app
 COPY --chmod=755 main.exe .
@@ -46,17 +45,16 @@ ENV PORT=8080
 EXPOSE $PORT
 ''';
 
-  // TODO(dnys1): Remove `--platform=linux/amd64` when Celest supports arm64.
   static final Template _flutterTemplate = Template(r'''
 # syntax=docker/dockerfile:1
-FROM --platform=linux/amd64 celestdev/flutter-builder:{{version}} AS build
+FROM celestdev/flutter-builder:{{version}} AS build
 
 WORKDIR /app
 COPY main.aot.dill .
 
 RUN [ "/usr/lib/dart/bin/utils/gen_snapshot", "--snapshot_kind=app-aot-elf", "--elf=/app/main.aot", "/app/main.aot.dill" ]
 
-FROM --platform=linux/amd64 celestdev/flutter-runtime:{{version}}
+FROM celestdev/flutter-runtime:{{version}}
 
 WORKDIR /app
 COPY --from=build /app/main.aot main.aot

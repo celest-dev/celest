@@ -47,10 +47,7 @@ void main() {
     _ => false,
   };
   final includeTests = Platform.environment['INCLUDE_TESTS']?.split(',');
-  final excludeTests = {
-    ...?Platform.environment['EXCLUDE_TESTS']?.split(','),
-    'flutter', // TODO(dnys1): Re-enable on stable release
-  };
+  final excludeTests = Platform.environment['EXCLUDE_TESTS']?.split(',');
   final includeApis = Platform.environment['INCLUDE_APIS']?.split(',');
   final clearCache = Platform.environment['CLEAR_CACHE'] == 'true';
 
@@ -83,7 +80,8 @@ void main() {
         !includeTests.contains(p.basename(testDir.path))) {
       continue;
     }
-    if (excludeTests.contains(p.basename(testDir.path))) {
+    if (excludeTests != null &&
+        excludeTests.contains(p.basename(testDir.path))) {
       continue;
     }
     final testRunner = TestRunner(
