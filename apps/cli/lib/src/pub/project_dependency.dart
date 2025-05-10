@@ -65,6 +65,7 @@ final class ProjectDependency {
   static final Map<String, ProjectDependency> all = {
     celest.name: celest,
     celestAst.name: celestAst,
+    celestAuth.name: celestAuth,
     celestCloudAuth.name: celestCloudAuth,
     celestCore.name: celestCore,
     firebaseAuth.name: firebaseAuth,
@@ -91,6 +92,14 @@ final class ProjectDependency {
     DependencyType.dependency,
     HostedDependency(
       version: VersionConstraint.compatibleWith(Version.parse('0.1.0')),
+    ),
+  );
+
+  static final ProjectDependency celestAuth = ProjectDependency._(
+    'celest_auth',
+    DependencyType.dependency,
+    HostedDependency(
+      version: VersionConstraint.compatibleWith(currentMinorVersion),
     ),
   );
 

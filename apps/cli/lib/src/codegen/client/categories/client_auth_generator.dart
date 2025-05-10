@@ -9,6 +9,7 @@ import 'package:code_builder/code_builder.dart';
 
 final class ClientAuthGenerator {
   ClientAuthGenerator({required this.auth}) {
+    CodegenDependencies.current.add('celest_auth');
     _library = LibraryBuilder()
       ..name = ''
       ..comments.addAll(kClientHeader)
