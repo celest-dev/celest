@@ -1,8 +1,9 @@
-## NEXT
+## 1.0.3
 
 - chore: Update dependencies
-- chore: Re-format with Dart 3.8
 - chore: Update linter/style preferences
+- chore: Bump Dart SDK constraint to `^3.7.0`
+- chore: Re-format with Dart 3.7
 
 ## 1.0.2
 
