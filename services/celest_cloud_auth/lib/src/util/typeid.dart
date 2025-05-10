@@ -7,11 +7,7 @@ import 'package:corks_cedar/corks_cedar.dart';
 
 String typeId<T extends Object>([String? type]) => TypeId<T>(type).encoded;
 
-typedef TypeIdData = ({
-  String type,
-  Uuid uuid,
-  String? encoded,
-});
+typedef TypeIdData = ({String type, Uuid uuid, String? encoded});
 
 extension type const Id<T extends Object>(Object id) {}
 
@@ -20,13 +16,11 @@ extension type TypeId<T extends Object>._(TypeIdData _data) implements Id<T> {
     type ??= _knownTypes[T];
     type ??= '';
     final id = Uuid.v7();
-    return TypeId._(
-      (
-        type: type,
-        uuid: id,
-        encoded: type.isEmpty ? id.encoded : '${type}_${id.encoded}',
-      ),
-    );
+    return TypeId._((
+      type: type,
+      uuid: id,
+      encoded: type.isEmpty ? id.encoded : '${type}_${id.encoded}',
+    ));
   }
 
   factory TypeId.decode(String encoded) {
@@ -42,13 +36,11 @@ extension type TypeId<T extends Object>._(TypeIdData _data) implements Id<T> {
     for (var i = 0; i < codeUnits.length; i++) {
       const divider = 0x5f; // `_`
       if (codeUnits[i] == divider) {
-        return TypeId._(
-          (
-            type: String.fromCharCodes(codeUnits.sublist(0, i)),
-            uuid: _Uuid.decode(codeUnits.sublist(i + 1)),
-            encoded: encoded,
-          ),
-        );
+        return TypeId._((
+          type: String.fromCharCodes(codeUnits.sublist(0, i)),
+          uuid: _Uuid.decode(codeUnits.sublist(i + 1)),
+          encoded: encoded,
+        ));
       }
     }
     return null;
@@ -108,23 +100,29 @@ extension _Uuid on Uuid {
     id[5] = (_dec[bytes[8]] << 5) | _dec[bytes[9]];
 
     // 10 bytes of entropy (80 bits)
-    id[6] = (_dec[bytes[10]] << 3) |
+    id[6] =
+        (_dec[bytes[10]] << 3) |
         (_dec[bytes[11]] >> 2); // First 4 bits are the version
-    id[7] = (_dec[bytes[11]] << 6) |
+    id[7] =
+        (_dec[bytes[11]] << 6) |
         (_dec[bytes[12]] << 1) |
         (_dec[bytes[13]] >> 4);
-    id[8] = (_dec[bytes[13]] << 4) |
+    id[8] =
+        (_dec[bytes[13]] << 4) |
         (_dec[bytes[14]] >> 1); // First 2 bits are the variant
-    id[9] = (_dec[bytes[14]] << 7) |
+    id[9] =
+        (_dec[bytes[14]] << 7) |
         (_dec[bytes[15]] << 2) |
         (_dec[bytes[16]] >> 3);
     id[10] = (_dec[bytes[16]] << 5) | _dec[bytes[17]];
     id[11] = (_dec[bytes[18]] << 3) | _dec[bytes[19]] >> 2;
-    id[12] = (_dec[bytes[19]] << 6) |
+    id[12] =
+        (_dec[bytes[19]] << 6) |
         (_dec[bytes[20]] << 1) |
         (_dec[bytes[21]] >> 4);
     id[13] = (_dec[bytes[21]] << 4) | (_dec[bytes[22]] >> 1);
-    id[14] = (_dec[bytes[22]] << 7) |
+    id[14] =
+        (_dec[bytes[22]] << 7) |
         (_dec[bytes[23]] << 2) |
         (_dec[bytes[24]] >> 3);
     id[15] = (_dec[bytes[24]] << 5) | _dec[bytes[25]];

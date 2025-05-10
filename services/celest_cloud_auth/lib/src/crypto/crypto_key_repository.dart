@@ -2,10 +2,7 @@ import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_auth/src/util/random_bytes.dart';
 import 'package:drift/drift.dart';
 
-typedef _Deps = ({
-  CloudAuthDatabaseMixin db,
-  CryptoKey rootKey,
-});
+typedef _Deps = ({CloudAuthDatabaseMixin db, CryptoKey rootKey});
 
 extension type CryptoKeyRepository._(_Deps _deps) implements Object {
   static Future<CryptoKeyRepository> create({
@@ -18,27 +15,20 @@ extension type CryptoKeyRepository._(_Deps _deps) implements Object {
       keyAlgorithm: KeyAlgorithm.hmacSha256,
       keyMaterial: secureRandomBytes(32),
     );
-    rootKey = (await db.cloudAuth.cloudAuthCoreDrift.createCryptoKey(
-      cryptoKeyId: rootKey.cryptoKeyId,
-      keyPurpose: rootKey.keyPurpose.name,
-      keyAlgorithm: rootKey.keyAlgorithm.name,
-      keyMaterial: rootKey.keyMaterial,
-    ))
-        .first;
-    return CryptoKeyRepository._(
-      (
-        db: db,
-        rootKey: rootKey,
-      ),
-    );
+    rootKey =
+        (await db.cloudAuth.cloudAuthCoreDrift.createCryptoKey(
+          cryptoKeyId: rootKey.cryptoKeyId,
+          keyPurpose: rootKey.keyPurpose.name,
+          keyAlgorithm: rootKey.keyAlgorithm.name,
+          keyMaterial: rootKey.keyMaterial,
+        )).first;
+    return CryptoKeyRepository._((db: db, rootKey: rootKey));
   }
 
   CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
   CryptoKey get rootKey => _deps.rootKey;
 
-  Future<CryptoKey> getKey({
-    required Uint8List cryptoKeyId,
-  }) async {
+  Future<CryptoKey> getKey({required Uint8List cryptoKeyId}) async {
     return _db.cloudAuthCoreDrift
         .getCryptoKey(cryptoKeyId: cryptoKeyId)
         .getSingle();
@@ -58,18 +48,15 @@ extension type CryptoKeyRepository._(_Deps _deps) implements Object {
     return result.first;
   }
 
-  Future<CryptoKey> getOrMintHmacKey({
-    required Uint8List cryptoKeyId,
-  }) async {
-    final key = await _db.cloudAuthCoreDrift
-        .getCryptoKey(cryptoKeyId: cryptoKeyId)
-        .getSingleOrNull();
+  Future<CryptoKey> getOrMintHmacKey({required Uint8List cryptoKeyId}) async {
+    final key =
+        await _db.cloudAuthCoreDrift
+            .getCryptoKey(cryptoKeyId: cryptoKeyId)
+            .getSingleOrNull();
     return key ?? mintHmacKey(cryptoKeyId: cryptoKeyId);
   }
 
-  Future<CryptoKey> mintHmacKey({
-    required Uint8List cryptoKeyId,
-  }) async {
+  Future<CryptoKey> mintHmacKey({required Uint8List cryptoKeyId}) async {
     final key = LocalCryptoKey(
       cryptoKeyId: cryptoKeyId,
       keyPurpose: KeyPurpose.signing,

@@ -32,8 +32,9 @@ void main() {
 
       for (final (:name, :params) in testCases) {
         test('${type.name} $name', () {
-          check(() => const VerificationCodeEmail().render(params))
-              .returnsNormally();
+          check(
+            () => const VerificationCodeEmail().render(params),
+          ).returnsNormally();
         });
       }
     }

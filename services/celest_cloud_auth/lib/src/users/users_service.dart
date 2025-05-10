@@ -23,15 +23,16 @@ import 'package:meta/meta.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-typedef _Deps = ({
-  EntityUid issuer,
-  RouteMap routeMap,
-  CorksRepository corks,
-  CryptoKeyRepository cryptoKeys,
-  UsersRepository users,
-  CloudAuthDatabaseMixin db,
-  Authorizer authorizer,
-});
+typedef _Deps =
+    ({
+      EntityUid issuer,
+      RouteMap routeMap,
+      CorksRepository corks,
+      CryptoKeyRepository cryptoKeys,
+      UsersRepository users,
+      CloudAuthDatabaseMixin db,
+      Authorizer authorizer,
+    });
 
 extension type UsersService._(_Deps _deps) implements Object {
   UsersService({
@@ -42,17 +43,15 @@ extension type UsersService._(_Deps _deps) implements Object {
     required UsersRepository users,
     required CloudAuthDatabaseMixin db,
     required Authorizer authorizer,
-  }) : this._(
-          (
-            issuer: issuer,
-            routeMap: routeMap,
-            corks: corks,
-            cryptoKeys: cryptoKeys,
-            users: users,
-            db: db,
-            authorizer: authorizer,
-          ),
-        );
+  }) : this._((
+         issuer: issuer,
+         routeMap: routeMap,
+         corks: corks,
+         cryptoKeys: cryptoKeys,
+         users: users,
+         db: db,
+         authorizer: authorizer,
+       ));
 
   CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
   Authorizer get _authorizer => _deps.authorizer;
@@ -101,10 +100,7 @@ extension type UsersService._(_Deps _deps) implements Object {
         apiId: apiId,
         functionId: 'ListUsers',
         httpConfig: ResolvedHttpConfig(
-          route: ResolvedHttpRoute(
-            method: 'GET',
-            path: '/v1alpha1/auth/users',
-          ),
+          route: ResolvedHttpRoute(method: 'GET', path: '/v1alpha1/auth/users'),
         ),
       ),
       'UpdateUser': ResolvedCloudFunction(
@@ -157,9 +153,7 @@ extension type UsersService._(_Deps _deps) implements Object {
   }
 
   @visibleForTesting
-  Future<User> getUser({
-    required String userId,
-  }) async {
+  Future<User> getUser({required String userId}) async {
     final user = await _db.getUser(userId: userId);
     if (user == null) {
       throw NotFoundException('User not found. userId=$userId');
@@ -173,7 +167,8 @@ extension type UsersService._(_Deps _deps) implements Object {
       userId: switch (context.routeParameters['name']!.split('/')) {
         ['users', 'me'] when principal != null => principal.id,
         ['users', final userId] => userId,
-        final badName => throw BadRequestException(
+        final badName =>
+          throw BadRequestException(
             'Invalid user: $badName. Expected users/{user_id}',
           ),
       },
@@ -207,48 +202,52 @@ extension type UsersService._(_Deps _deps) implements Object {
       orderByClause = OrderByClause.parse(orderBy);
     }
 
-    final rows = await _db.cloudAuthUsersDrift
-        .listUsers(
-          startTime: startTime,
-          offset: pageOffset,
-          limit: pageSize,
-          order_by: (tbl) => switch (orderByClause) {
-            final orderBy? => OrderBy(orderBy.toOrderingTerms(tbl).toList()),
-            _ => OrderBy([
-                OrderingTerm(
-                  expression: tbl.createTime,
-                  mode: OrderingMode.desc,
-                ),
-              ]),
-          },
-        )
-        .get();
-    final users = rows
-        .map(
-          (row) => User(
-            userId: row.cloudAuthUsersView.userId,
-            givenName: row.cloudAuthUsersView.givenName,
-            familyName: row.cloudAuthUsersView.familyName,
-            languageCode: row.cloudAuthUsersView.languageCode,
-            timeZone: row.cloudAuthUsersView.timeZone,
-            createTime: row.cloudAuthUsersView.createTime,
-            updateTime: row.cloudAuthUsersView.updateTime,
-            emails: row.cloudAuthUsersView.emails,
-            phoneNumbers: row.cloudAuthUsersView.phoneNumbers,
-            roles: row.cloudAuthUsersView.roles,
-          ).toProto(),
-        )
-        .toList();
-    final nextPageToken = rows.isEmpty || rows.length < pageSize
-        ? null
-        : PageToken(
-            startTime: startTime,
-            offset: rows.last.rowNum,
-          ).encode();
-    return pb.ListUsersResponse(
-      users: users,
-      nextPageToken: nextPageToken,
-    );
+    final rows =
+        await _db.cloudAuthUsersDrift
+            .listUsers(
+              startTime: startTime,
+              offset: pageOffset,
+              limit: pageSize,
+              order_by:
+                  (tbl) => switch (orderByClause) {
+                    final orderBy? => OrderBy(
+                      orderBy.toOrderingTerms(tbl).toList(),
+                    ),
+                    _ => OrderBy([
+                      OrderingTerm(
+                        expression: tbl.createTime,
+                        mode: OrderingMode.desc,
+                      ),
+                    ]),
+                  },
+            )
+            .get();
+    final users =
+        rows
+            .map(
+              (row) =>
+                  User(
+                    userId: row.cloudAuthUsersView.userId,
+                    givenName: row.cloudAuthUsersView.givenName,
+                    familyName: row.cloudAuthUsersView.familyName,
+                    languageCode: row.cloudAuthUsersView.languageCode,
+                    timeZone: row.cloudAuthUsersView.timeZone,
+                    createTime: row.cloudAuthUsersView.createTime,
+                    updateTime: row.cloudAuthUsersView.updateTime,
+                    emails: row.cloudAuthUsersView.emails,
+                    phoneNumbers: row.cloudAuthUsersView.phoneNumbers,
+                    roles: row.cloudAuthUsersView.roles,
+                  ).toProto(),
+            )
+            .toList();
+    final nextPageToken =
+        rows.isEmpty || rows.length < pageSize
+            ? null
+            : PageToken(
+              startTime: startTime,
+              offset: rows.last.rowNum,
+            ).encode();
+    return pb.ListUsersResponse(users: users, nextPageToken: nextPageToken);
   }
 
   Future<Response> handleListUsers(Request request) async {
@@ -280,7 +279,8 @@ extension type UsersService._(_Deps _deps) implements Object {
     List<String>? updateMask,
   }) async {
     Value<T> mask<T extends Object?>(String field, T value) {
-      final include = updateMask == null ||
+      final include =
+          updateMask == null ||
           updateMask.isEmpty ||
           updateMask.contains(field);
       if (!include) {
@@ -298,8 +298,7 @@ extension type UsersService._(_Deps _deps) implements Object {
     );
 
     await (_db.update(_db.cloudAuthUsers)
-          ..where((tbl) => tbl.userId.equals(userId)))
-        .write(update);
+      ..where((tbl) => tbl.userId.equals(userId))).write(update);
     final updated = await _db.getUser(userId: userId);
     return updated!;
   }
@@ -314,8 +313,9 @@ extension type UsersService._(_Deps _deps) implements Object {
     );
     final jsonRequest = await JsonUtf8.decodeStream(request.read());
     final pbRequest = pb.User()..mergeFromProto3Json(jsonRequest);
-    final updateMask = request.url.queryParametersAll['updateMask']
-        ?.expand((it) => it.split(','));
+    final updateMask = request.url.queryParametersAll['updateMask']?.expand(
+      (it) => it.split(','),
+    );
     final response = await updateUser(
       userId: resource.id,
       givenName: pbRequest.hasGivenName() ? pbRequest.givenName : null,
@@ -328,10 +328,7 @@ extension type UsersService._(_Deps _deps) implements Object {
   }
 
   @visibleForTesting
-  Future<void> deleteUser({
-    required String userId,
-    String? etag,
-  }) async {
+  Future<void> deleteUser({required String userId, String? etag}) async {
     final user = await _db.getUser(userId: userId);
     if (user == null) {
       throw NotFoundException('User not found. id=$userId');
@@ -342,9 +339,9 @@ extension type UsersService._(_Deps _deps) implements Object {
         throw const FailedPreconditionException('Etag mismatch');
       }
     }
-    final deleteEntities = await (_db.delete(_db.cloudAuthUsers)
-          ..where((t) => t.userId.equals(userId)))
-        .go();
+    final deleteEntities =
+        await (_db.delete(_db.cloudAuthUsers)
+          ..where((t) => t.userId.equals(userId))).go();
     switch (deleteEntities) {
       case 0:
         throw NotFoundException('User not found. id=$userId');

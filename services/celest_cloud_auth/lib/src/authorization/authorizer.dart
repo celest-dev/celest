@@ -42,13 +42,11 @@ class Authorizer {
     EntityUid? action,
     Map<String, Value>? context,
   }) async {
-    final (policySet, closure) = await (
-      _db.effectivePolicySet,
-      _db.computeRequestClosure(
-        principal: principal,
-        resource: resource,
-      ),
-    ).wait;
+    final (policySet, closure) =
+        await (
+          _db.effectivePolicySet,
+          _db.computeRequestClosure(principal: principal, resource: resource),
+        ).wait;
     final request = AuthorizationRequest(
       principal: principal?.uid,
       resource: resource?.uid,
@@ -66,11 +64,12 @@ class Authorizer {
     );
     final response = policySet.isAuthorized(request);
     _logger.finest(() {
-      final buffer = StringBuffer()
-        ..writeln('Request:')
-        ..writeln('  Principal: $principal')
-        ..writeln('  Resource: $resource')
-        ..writeln('  Action: $action');
+      final buffer =
+          StringBuffer()
+            ..writeln('Request:')
+            ..writeln('  Principal: $principal')
+            ..writeln('  Resource: $resource')
+            ..writeln('  Action: $action');
 
       final jsonContext = context?.map((k, v) => MapEntry(k, v.toJson()));
       buffer.writeln('  Context: $jsonContext');

@@ -7,16 +7,16 @@ enum VerificationCodeEmailType {
   generic;
 
   String get type => switch (this) {
-        login => 'login',
-        register => 'registration',
-        generic => 'verification',
-      };
+    login => 'login',
+    register => 'registration',
+    generic => 'verification',
+  };
 
   String get purpose => switch (this) {
-        login => 'log in to',
-        register => 'create an account with',
-        generic => 'verify this email address with',
-      };
+    login => 'log in to',
+    register => 'create an account with',
+    generic => 'verify this email address with',
+  };
 }
 
 final class VerificationCodeEmailParams {
@@ -37,14 +37,14 @@ final class VerificationCodeEmailParams {
   final String? logoUrl;
 
   Map<String, String?> toTemplateParams() => {
-        'email': email,
-        'code': code,
-        'organizationName': organizationName,
-        'name': name,
-        'logoUrl': logoUrl,
-        'type': type.type,
-        'purpose': type.purpose,
-      };
+    'email': email,
+    'code': code,
+    'organizationName': organizationName,
+    'name': name,
+    'logoUrl': logoUrl,
+    'type': type.type,
+    'purpose': type.purpose,
+  };
 }
 
 final class VerificationCodeEmail

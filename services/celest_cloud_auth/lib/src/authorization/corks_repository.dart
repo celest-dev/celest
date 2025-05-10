@@ -12,32 +12,25 @@ import 'package:clock/clock.dart';
 import 'package:corks_cedar/corks_cedar.dart';
 import 'package:drift/drift.dart' as drift;
 
-typedef _Dependencies = ({
-  EntityUid issuer,
-  CloudAuthDatabaseMixin db,
-  CryptoKeyRepository cryptoKeys,
-});
+typedef _Dependencies =
+    ({
+      EntityUid issuer,
+      CloudAuthDatabaseMixin db,
+      CryptoKeyRepository cryptoKeys,
+    });
 
 extension type CorksRepository._(_Dependencies _deps) implements Object {
   CorksRepository({
     required EntityUid issuer,
     required CloudAuthDatabaseMixin db,
     required CryptoKeyRepository cryptoKeys,
-  }) : this._(
-          (
-            issuer: issuer,
-            db: db,
-            cryptoKeys: cryptoKeys,
-          ),
-        );
+  }) : this._((issuer: issuer, db: db, cryptoKeys: cryptoKeys));
 
   EntityUid get issuer => _deps.issuer;
   CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
   CryptoKeyRepository get _cryptoKeys => _deps.cryptoKeys;
 
-  Future<drift.CloudAuthCork?> getCork({
-    required Uint8List corkId,
-  }) async {
+  Future<drift.CloudAuthCork?> getCork({required Uint8List corkId}) async {
     return _db.cloudAuthCoreDrift.getCork(corkId: corkId).getSingleOrNull();
   }
 
@@ -60,69 +53,57 @@ extension type CorksRepository._(_Dependencies _deps) implements Object {
     final expireTime = session.expireTime;
     final sessionEntity = Entity(
       uid: sessionUid,
-      parents: [
-        userEntity.uid,
-      ],
+      parents: [userEntity.uid],
       attributes: {
         'expireTime': Value.integer(expireTime.millisecondsSinceEpoch ~/ 1000),
       },
     );
 
-    final corkBuilder = CedarCork.builder(session.sessionId.uuid.value)
-      ..bearer = sessionEntity.uid
-      ..audience = audience
-      ..issuer = issuer
-      ..claims = sessionEntity;
+    final corkBuilder =
+        CedarCork.builder(session.sessionId.uuid.value)
+          ..bearer = sessionEntity.uid
+          ..audience = audience
+          ..issuer = issuer
+          ..claims = sessionEntity;
     final cork = await corkBuilder.build().sign(cryptoKey.signer);
     await _db.batch((b) async {
       await _db.createEntity(userEntity, b);
       await _db.createEntity(sessionEntity, b);
-      b.insertAllOnConflictUpdate(
-        _db.cloudAuthCorks,
-        [
-          drift.CloudAuthCorksCompanion(
-            corkId: drift.Value(cork.id),
-            cryptoKeyId: drift.Value(cryptoKey.cryptoKeyId),
-            bearerType: drift.Value(sessionUid.type),
-            bearerId: drift.Value(sessionUid.id),
-            audienceType: drift.Value(audience!.type),
-            audienceId: drift.Value(audience.id),
-            issuerType: drift.Value(issuer.type),
-            issuerId: drift.Value(issuer.id),
-            expireTime: drift.Value(expireTime),
-          )
-        ],
-      );
+      b.insertAllOnConflictUpdate(_db.cloudAuthCorks, [
+        drift.CloudAuthCorksCompanion(
+          corkId: drift.Value(cork.id),
+          cryptoKeyId: drift.Value(cryptoKey.cryptoKeyId),
+          bearerType: drift.Value(sessionUid.type),
+          bearerId: drift.Value(sessionUid.id),
+          audienceType: drift.Value(audience!.type),
+          audienceId: drift.Value(audience.id),
+          issuerType: drift.Value(issuer.type),
+          issuerId: drift.Value(issuer.id),
+          expireTime: drift.Value(expireTime),
+        ),
+      ]);
     });
     return CedarCork(cork);
   }
 
   /// Verifies the given [cork].
-  Future<void> verify({
-    required Cork cork,
-  }) async {
+  Future<void> verify({required Cork cork}) async {
     final corkData = await getCork(corkId: cork.id);
     if (corkData == null) {
       throw const UnauthorizedException('Invalid cork');
     }
     recordUse(cork: cork);
-    final corkKey = await _cryptoKeys.getKey(
-      cryptoKeyId: corkData.cryptoKeyId,
-    );
+    final corkKey = await _cryptoKeys.getKey(cryptoKeyId: corkData.cryptoKeyId);
     await cork.verify(corkKey.signer);
   }
 
   /// Records usage of the given [cork] in the database.
-  void recordUse({
-    required Cork cork,
-  }) async {
+  void recordUse({required Cork cork}) async {
     try {
       final query = _db.update(_db.cloudAuthCorks)
         ..where((tbl) => tbl.corkId.equals(cork.id));
       await query.write(
-        drift.CloudAuthCorksCompanion(
-          lastUseTime: drift.Value(clock.now()),
-        ),
+        drift.CloudAuthCorksCompanion(lastUseTime: drift.Value(clock.now())),
       );
     } on Object catch (e, st) {
       context.logger.severe('Failed to update cork', e, st);

@@ -18,15 +18,16 @@ import 'package:corks_cedar/corks_cedar.dart';
 import 'package:meta/meta.dart';
 import 'package:shelf/shelf.dart' show Handler, Request;
 
-typedef _Deps = ({
-  RouteMap routeMap,
-  CorksRepository corks,
-  CryptoKeyRepository cryptoKeys,
-  UsersRepository users,
-  CloudAuthDatabaseMixin db,
-  Authorizer authorizer,
-  EntityUid issuer,
-});
+typedef _Deps =
+    ({
+      RouteMap routeMap,
+      CorksRepository corks,
+      CryptoKeyRepository cryptoKeys,
+      UsersRepository users,
+      CloudAuthDatabaseMixin db,
+      Authorizer authorizer,
+      EntityUid issuer,
+    });
 
 /// {@template celest_cloud_auth.request_authorizer}
 /// A middleware that authorizes requests based on the current policy set.
@@ -41,28 +42,26 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
     required CloudAuthDatabaseMixin db,
     required Authorizer authorizer,
     required EntityUid issuer,
-  }) : this._(
-          (
-            routeMap: routeMap,
-            corks: corks,
-            cryptoKeys: cryptoKeys,
-            users: users,
-            db: db,
-            authorizer: authorizer,
-            issuer: issuer,
-          ),
-        );
+  }) : this._((
+         routeMap: routeMap,
+         corks: corks,
+         cryptoKeys: cryptoKeys,
+         users: users,
+         db: db,
+         authorizer: authorizer,
+         issuer: issuer,
+       ));
 
   RouteMap get _routeMap => _deps.routeMap;
   CorksRepository get _corks => _deps.corks;
   CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
   Authorizer get _authorizer => _deps.authorizer;
   SessionsRepository get _sessions => SessionsRepository(
-        corks: _corks,
-        db: _deps.db,
-        cryptoKeys: _deps.cryptoKeys,
-        users: _deps.users,
-      );
+    corks: _corks,
+    db: _deps.db,
+    cryptoKeys: _deps.cryptoKeys,
+    users: _deps.users,
+  );
 
   Handler call(Handler inner) {
     return (request) async {
@@ -103,9 +102,7 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
       principal: principal,
       action: const EntityUid.of('Celest::Action', 'invoke'),
       resource: route.uid,
-      context: {
-        'ip': Value.string(request.clientIp),
-      },
+      context: {'ip': Value.string(request.clientIp)},
     );
     context.logger.finest('Authorized request');
 
@@ -125,9 +122,10 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
     if (cookies['cork'] case final token?) {
       context.logger.finest('Found cork in cookies');
       cork = CedarCork.parse(token);
-    } else if (request.headers['authorization']?.split(' ')
-        case [final type, final token]
-        when equalsIgnoreAsciiCase(type, 'bearer')) {
+    } else if (request.headers['authorization']?.split(' ') case [
+      final type,
+      final token,
+    ] when equalsIgnoreAsciiCase(type, 'bearer')) {
       context.logger.finest('Found cork in headers');
       cork = CedarCork.parse(token);
     }
@@ -150,9 +148,7 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
           context.logger.severe('Invalid session ID: $sessionId');
           throw const UnauthorizedException('Invalid session ID');
         }
-        final session = await _sessions.getSession(
-          sessionId: sessionTid,
-        );
+        final session = await _sessions.getSession(sessionId: sessionTid);
         if (session == null) {
           throw UnauthorizedException('Invalid session: $sessionId');
         }

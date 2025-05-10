@@ -1,7 +1,9 @@
-## NEXT
+## 0.3.4
 
 - fix: Database checks in debug mode
 - perf: Improve efficiency of several DB operations
+- chore: Bump Dart SDK constraint to `^3.7.0`
+- chore: Reformat with Dart 3.7
 
 ## 0.3.3
 

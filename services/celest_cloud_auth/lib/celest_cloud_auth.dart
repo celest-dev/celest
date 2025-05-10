@@ -28,10 +28,7 @@ export 'package:celest_cloud_auth/src/users/users_service.dart';
 
 /// The Celest authentication and authorization service.
 final class CelestCloudAuth {
-  CelestCloudAuth._({
-    required this.db,
-    required this.cryptoKeys,
-  }) {
+  CelestCloudAuth._({required this.db, required this.cryptoKeys}) {
     celest.context.put(contextKey, this);
   }
 
@@ -77,10 +74,7 @@ final class CelestCloudAuth {
     if (emailProvider != null) {
       celest.context.put(contextKeyEmailOtpProvider, emailProvider);
     }
-    return CelestCloudAuth._(
-      db: database,
-      cryptoKeys: cryptoKeys,
-    );
+    return CelestCloudAuth._(db: database, cryptoKeys: cryptoKeys);
   }
 
   @visibleForTesting
@@ -93,22 +87,19 @@ final class CelestCloudAuth {
       db: db,
       rootKey: rootKey,
     );
-    return CelestCloudAuth._(
-      db: db,
-      cryptoKeys: cryptoKeys,
-    );
+    return CelestCloudAuth._(db: db, cryptoKeys: cryptoKeys);
   }
 
   /// An authorization middleware which can be added to a Shelf pipeline.
   AuthorizationMiddleware get middleware => AuthorizationMiddleware(
-        issuer: context.rootEntity,
-        routeMap: routeMap,
-        corks: corks,
-        cryptoKeys: cryptoKeys,
-        users: users,
-        db: db,
-        authorizer: authorizer,
-      );
+    issuer: context.rootEntity,
+    routeMap: routeMap,
+    corks: corks,
+    cryptoKeys: cryptoKeys,
+    users: users,
+    db: db,
+    authorizer: authorizer,
+  );
 
   @visibleForTesting
   final CloudAuthDatabaseMixin db;
@@ -124,18 +115,18 @@ final class CelestCloudAuth {
 
   @visibleForTesting
   CorksRepository get corks => CorksRepository(
-        issuer: context.rootEntity,
-        db: db,
-        cryptoKeys: cryptoKeys,
-      );
+    issuer: context.rootEntity,
+    db: db,
+    cryptoKeys: cryptoKeys,
+  );
 
   @visibleForTesting
   SessionsRepository get sessions => SessionsRepository(
-        corks: corks,
-        db: db,
-        cryptoKeys: cryptoKeys,
-        users: users,
-      );
+    corks: corks,
+    db: db,
+    cryptoKeys: cryptoKeys,
+    users: users,
+  );
 
   @visibleForTesting
   UsersRepository get users => UsersRepository(db: db);
@@ -147,16 +138,16 @@ final class CelestCloudAuth {
   @visibleForTesting
   late final AuthenticationService authenticationService =
       AuthenticationService(
-    issuer: context.rootEntity,
-    routeMap: routeMap,
-    otp: otp,
-    authorizer: authorizer,
-    corks: corks,
-    cryptoKeys: cryptoKeys,
-    db: db,
-    sessions: sessions,
-    users: users,
-  );
+        issuer: context.rootEntity,
+        routeMap: routeMap,
+        otp: otp,
+        authorizer: authorizer,
+        corks: corks,
+        cryptoKeys: cryptoKeys,
+        db: db,
+        sessions: sessions,
+        users: users,
+      );
 
   @visibleForTesting
   late final UsersService usersService = UsersService(
@@ -170,12 +161,13 @@ final class CelestCloudAuth {
   );
 
   Handler get handler {
-    final pipeline =
-        const Pipeline().addMiddleware(const CloudExceptionMiddleware().call);
-    final cascade = Cascade(statusCodes: [HttpStatus.notFound])
-        .add(authenticationService.handler)
-        .add(usersService.handler)
-        .handler;
+    final pipeline = const Pipeline().addMiddleware(
+      const CloudExceptionMiddleware().call,
+    );
+    final cascade =
+        Cascade(
+          statusCodes: [HttpStatus.notFound],
+        ).add(authenticationService.handler).add(usersService.handler).handler;
     return pipeline.addHandler(cascade);
   }
 

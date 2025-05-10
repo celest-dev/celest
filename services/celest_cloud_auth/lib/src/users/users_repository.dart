@@ -3,21 +3,15 @@ import 'package:celest_cloud_auth/src/database/schema/cloud_auth_users.drift.dar
 import 'package:celest_cloud_auth/src/util/typeid.dart';
 import 'package:drift/drift.dart';
 
-typedef _Deps = ({
-  CloudAuthDatabaseMixin db,
-});
+typedef _Deps = ({CloudAuthDatabaseMixin db});
 
 extension type UsersRepository._(_Deps _deps) {
-  UsersRepository({
-    required CloudAuthDatabaseMixin db,
-  }) : _deps = (db: db);
+  UsersRepository({required CloudAuthDatabaseMixin db}) : _deps = (db: db);
 
   CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
 
   /// Creates a new user, authenticated by the given [factor].
-  Future<User> createUser({
-    required AuthenticationFactor factor,
-  }) async {
+  Future<User> createUser({required AuthenticationFactor factor}) async {
     return _db.createUser(
       user: User(
         userId: typeId<User>(),
@@ -116,9 +110,7 @@ extension type UsersRepository._(_Deps _deps) {
     return user!;
   }
 
-  Future<void> deleteUser({
-    required String userId,
-  }) async {
+  Future<void> deleteUser({required String userId}) async {
     await _db.cedarDrift.deleteEntity(
       entityType: 'Celest::User',
       entityId: userId,

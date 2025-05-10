@@ -47,8 +47,9 @@ mixin CloudAuthDatabaseMixin on GeneratedDatabase {
   };
 
   /// Database accessors for Cloud Auth tables.
-  late final CloudAuthDatabaseAccessors cloudAuth =
-      CloudAuthDatabaseAccessors(this);
+  late final CloudAuthDatabaseAccessors cloudAuth = CloudAuthDatabaseAccessors(
+    this,
+  );
 
   /// Create a migration wrapping over Cloud Auth migrations.
   MigrationStrategy createMigration({
@@ -194,14 +195,8 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   }) async {
     _logger.finer('Seeding database');
 
-    final allCedarTypes = {
-      ...coreTypes,
-      ...additionalCedarTypes,
-    };
-    final allCedarEntities = {
-      ...coreEntities,
-      ...additionalCedarEntities,
-    };
+    final allCedarTypes = {...coreTypes, ...additionalCedarTypes};
+    final allCedarEntities = {...coreEntities, ...additionalCedarEntities};
     await batch((b) async {
       b.insertAllOnConflictUpdate(cedarTypes, [
         for (final type in allCedarTypes) CedarTypesCompanion.insert(fqn: type),
@@ -247,15 +242,17 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
             );
             b.deleteWhere(
               schema.cryptoKeys,
-              (key) => schema.cryptoKeys.cryptoKeyId
-                  .equals(session.read('crypto_key_id')),
+              (key) => schema.cryptoKeys.cryptoKeyId.equals(
+                session.read('crypto_key_id'),
+              ),
             );
             b.deleteWhere(
               schema.cedarEntities,
               (entity) =>
                   schema.cedarEntities.entityType.equals('Celest::Session') &
-                  schema.cedarEntities.entityId
-                      .equals(session.read('session_id')),
+                  schema.cedarEntities.entityId.equals(
+                    session.read('session_id'),
+                  ),
             );
           }
         });
@@ -365,9 +362,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
     // If the table is empty, then the database was just created and thus
     // the schema version is current.
     if (from == null) {
-      await cloudAuthMetaDrift.setSchemaVersion(
-        schemaVersion: schemaVersion,
-      );
+      await cloudAuthMetaDrift.setSchemaVersion(schemaVersion: schemaVersion);
       from = schemaVersion;
     }
 
@@ -405,25 +400,25 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   }
 
   List<TableInfo<Table, dynamic>> get _cloudAuthTables => [
-        cedarAuthorizationLogs,
-        cedarEntities,
-        cedarPolicies,
-        cedarPolicyTemplateLinks,
-        cedarPolicyTemplates,
-        cedarRelationships,
-        cedarTypes,
-        cloudAuthApis,
-        cloudAuthCorks,
-        cloudAuthCryptoKeys,
-        cloudAuthFunctions,
-        cloudAuthMeta,
-        cloudAuthOtpCodes,
-        cloudAuthProjects,
-        cloudAuthSessions,
-        cloudAuthUserEmails,
-        cloudAuthUserPhoneNumbers,
-        cloudAuthUsers,
-      ];
+    cedarAuthorizationLogs,
+    cedarEntities,
+    cedarPolicies,
+    cedarPolicyTemplateLinks,
+    cedarPolicyTemplates,
+    cedarRelationships,
+    cedarTypes,
+    cloudAuthApis,
+    cloudAuthCorks,
+    cloudAuthCryptoKeys,
+    cloudAuthFunctions,
+    cloudAuthMeta,
+    cloudAuthOtpCodes,
+    cloudAuthProjects,
+    cloudAuthSessions,
+    cloudAuthUserEmails,
+    cloudAuthUserPhoneNumbers,
+    cloudAuthUsers,
+  ];
 
   /// Runs [action] in a context without foreign keys enabled.
   @visibleForTesting
@@ -446,7 +441,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
             if (foreignKey.data
                 case {
                       'table': final String table,
-                      'parent': final String parent
+                      'parent': final String parent,
                     } ||
                     {'TABLE': final String table, 'PARENT': final String parent}
                 when cloudAuthTables.contains(table) ||
@@ -459,8 +454,9 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
     return result;
   }
 
-  final _effectivePolicySetCache =
-      AsyncCache<PolicySet>(const Duration(hours: 1));
+  final _effectivePolicySetCache = AsyncCache<PolicySet>(
+    const Duration(hours: 1),
+  );
 
   /// The effective [PolicySet] for the project.
   Future<PolicySet> get effectivePolicySet {
@@ -471,11 +467,12 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   @visibleForTesting
   Future<PolicySet> loadEffectivePolicySet() async {
     _logger.finest('Fetching effective policy set');
-    final (policies, templates, templateLinks) = await (
-      select(cedarDrift.cedarPolicies).get(),
-      select(cedarDrift.cedarPolicyTemplates).get(),
-      select(cedarDrift.cedarPolicyTemplateLinks).get(),
-    ).wait;
+    final (policies, templates, templateLinks) =
+        await (
+          select(cedarDrift.cedarPolicies).get(),
+          select(cedarDrift.cedarPolicyTemplates).get(),
+          select(cedarDrift.cedarPolicyTemplateLinks).get(),
+        ).wait;
     final policySet = PolicySet.build((b) {
       for (final policy in policies) {
         b.policies[policy.id] = policy.policy;
@@ -494,28 +491,36 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
         }
         // TODO(dnys1): Move this logic to `package:cedar`.
         b.policies[link.id] = template.rebuild((b) {
-          if ((link.principalType, link.principalId)
-              case (final type?, final id?)) {
+          if ((link.principalType, link.principalId) case (
+            final type?,
+            final id?,
+          )) {
             final principal = EntityUid.of(type, id);
             b.principal = switch (template.principal) {
               PrincipalAll() => const PrincipalAll(),
               PrincipalIn() => PrincipalIn(principal),
               PrincipalEquals() => PrincipalEquals(principal),
               final PrincipalIs principalIs => principalIs,
-              PrincipalIsIn(:final entityType) =>
-                PrincipalIsIn(entityType, principal),
+              PrincipalIsIn(:final entityType) => PrincipalIsIn(
+                entityType,
+                principal,
+              ),
             };
           }
-          if ((link.resourceType, link.resourceId)
-              case (final type?, final id?)) {
+          if ((link.resourceType, link.resourceId) case (
+            final type?,
+            final id?,
+          )) {
             final resource = EntityUid.of(type, id);
             b.resource = switch (template.resource) {
               ResourceAll() => const ResourceAll(),
               ResourceIn() => ResourceIn(resource),
               ResourceEquals() => ResourceEquals(resource),
               final ResourceIs resourceIs => resourceIs,
-              ResourceIsIn(:final entityType) =>
-                ResourceIsIn(entityType, resource),
+              ResourceIsIn(:final entityType) => ResourceIsIn(
+                entityType,
+                resource,
+              ),
             };
           }
           b.annotations = Annotations({'id': link.policyId});
@@ -523,9 +528,10 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
       }
     });
     _logger.finest(() {
-      final policyIds = policySet.policies.entries
-          .map((pol) => pol.value.id ?? pol.key)
-          .sorted();
+      final policyIds =
+          policySet.policies.entries
+              .map((pol) => pol.value.id ?? pol.key)
+              .sorted();
       return 'Effective policies: $policyIds';
     });
     return policySet;
@@ -539,23 +545,22 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   /// Records the project's AST in the database.
   ///
   /// Returns the new, effective policy set for the project.
-  Future<void> upsertProject({
-    ResolvedProject? project,
-  }) async {
+  Future<void> upsertProject({ResolvedProject? project}) async {
     project ??= context.project;
     _logger.finer('Upserting project: ${project.projectId}');
 
     return transaction(() async {
-      final oldProject = await cloudAuthProjectsDrift
-          .getProject(projectId: project!.projectId)
-          .getSingleOrNull();
-      final newProject = (await cloudAuthProjectsDrift.upsertProject(
-        projectId: project.projectId,
-        version: 'v1',
-        resolvedAst: project,
-        etag: _etag(project.toProto()),
-      ))
-          .single;
+      final oldProject =
+          await cloudAuthProjectsDrift
+              .getProject(projectId: project!.projectId)
+              .getSingleOrNull();
+      final newProject =
+          (await cloudAuthProjectsDrift.upsertProject(
+            projectId: project.projectId,
+            version: 'v1',
+            resolvedAst: project,
+            etag: _etag(project.toProto()),
+          )).single;
       if (oldProject?.etag == newProject.etag) {
         _logger.finer('Project AST is up-to-date. Skipping AST upsert.');
         return;
@@ -726,10 +731,9 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
       'Creating entity: ${entity.uid} with parents: ${entity.parents}',
     );
     await _withBatch(batch, (b) async {
-      b.insertAllOnConflictUpdate(
-        cedarTypes,
-        [CedarTypesCompanion.insert(fqn: entity.uid.type)],
-      );
+      b.insertAllOnConflictUpdate(cedarTypes, [
+        CedarTypesCompanion.insert(fqn: entity.uid.type),
+      ]);
       b.insertAllOnConflictUpdate(cedarEntities, [
         CedarEntitiesCompanion.insert(
           entityType: entity.uid.type,
@@ -774,21 +778,17 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
     final resourceUid = resource?.uid;
     final (principalClosure, resourceClosure) = await transaction(() async {
       final principalClosure = switch (principalUid) {
-        final principal? => cedarDrift
-            .getEntityClosure(
-              type: principal.type,
-              id: principal.id,
-            )
-            .getSingle(),
+        final principal? =>
+          cedarDrift
+              .getEntityClosure(type: principal.type, id: principal.id)
+              .getSingle(),
         _ => Future.value(const <Entity>[]),
       };
       final resourceClosure = switch (resourceUid) {
-        final resource? => cedarDrift
-            .getEntityClosure(
-              type: resource.type,
-              id: resource.id,
-            )
-            .getSingle(),
+        final resource? =>
+          cedarDrift
+              .getEntityClosure(type: resource.type, id: resource.id)
+              .getSingle(),
         _ => Future.value(const <Entity>[]),
       };
       return (principalClosure, resourceClosure).wait;
@@ -806,9 +806,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
   }
 
   /// Creates a new user in the database.
-  Future<User> createUser({
-    required User user,
-  }) {
+  Future<User> createUser({required User user}) {
     _logger.finer('Creating user: ${user.userId}');
     return transaction(() async {
       final newUser = await cloudAuthUsersDrift.createUser(
@@ -820,30 +818,24 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
       );
 
       await batch((b) async {
-        b.insertAllOnConflictUpdate(
-          cloudAuthUserEmails,
-          [
-            for (final email in user.emails)
-              CloudAuthUserEmailsCompanion.insert(
-                userId: newUser.first.id,
-                email: email.email,
-                isVerified: drift.Value(email.isVerified),
-                isPrimary: drift.Value(email.isPrimary),
-              ),
-          ],
-        );
-        b.insertAllOnConflictUpdate(
-          cloudAuthUserPhoneNumbers,
-          [
-            for (final phoneNumber in user.phoneNumbers)
-              CloudAuthUserPhoneNumbersCompanion.insert(
-                userId: newUser.first.id,
-                phoneNumber: phoneNumber.phoneNumber,
-                isVerified: drift.Value(phoneNumber.isVerified),
-                isPrimary: drift.Value(phoneNumber.isPrimary),
-              ),
-          ],
-        );
+        b.insertAllOnConflictUpdate(cloudAuthUserEmails, [
+          for (final email in user.emails)
+            CloudAuthUserEmailsCompanion.insert(
+              userId: newUser.first.id,
+              email: email.email,
+              isVerified: drift.Value(email.isVerified),
+              isPrimary: drift.Value(email.isPrimary),
+            ),
+        ]);
+        b.insertAllOnConflictUpdate(cloudAuthUserPhoneNumbers, [
+          for (final phoneNumber in user.phoneNumbers)
+            CloudAuthUserPhoneNumbersCompanion.insert(
+              userId: newUser.first.id,
+              phoneNumber: phoneNumber.phoneNumber,
+              isVerified: drift.Value(phoneNumber.isVerified),
+              isPrimary: drift.Value(phoneNumber.isPrimary),
+            ),
+        ]);
         await setUserRoles(
           userId: newUser.first.id,
           roles: user.roles,

@@ -12,16 +12,10 @@ class RouteMap extends DelegatingMap<EntityUid, List<(HttpMethod, Route)>> {
   /// Computes the route map for the given [project].
   ///
   /// Optionally, [additionalRoutes] can be provided to be included in the map.
-  factory RouteMap.of(
-    ResolvedProject project, {
-    RouteMap? additionalRoutes,
-  }) {
+  factory RouteMap.of(ResolvedProject project, {RouteMap? additionalRoutes}) {
     final collector = _RouteCollector();
     project.accept(collector);
-    return RouteMap({
-      ...collector._routes,
-      ...?additionalRoutes,
-    });
+    return RouteMap({...collector._routes, ...?additionalRoutes});
   }
 
   /// Lookup index for finding a route ID by path.
@@ -85,12 +79,9 @@ final class _RouteCollector extends ResolvedAstVisitor<void> {
     _routes[function.uid] = [
       for (final route in [
         function.httpConfig.route,
-        ...function.httpConfig.additionalRoutes
+        ...function.httpConfig.additionalRoutes,
       ])
-        (
-          route.method as HttpMethod,
-          Route.parse(route.path),
-        )
+        (route.method as HttpMethod, Route.parse(route.path)),
     ];
   }
 

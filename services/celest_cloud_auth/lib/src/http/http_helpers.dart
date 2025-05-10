@@ -54,9 +54,7 @@ extension GeneratedMessageHelpers on GeneratedMessage {
   Response jsonResponse() {
     return Response.ok(
       JsonUtf8.encode(toProto3Json()),
-      headers: {
-        'content-type': 'application/json',
-      },
+      headers: {'content-type': 'application/json'},
     );
   }
 }

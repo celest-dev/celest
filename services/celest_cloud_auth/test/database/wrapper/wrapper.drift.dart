@@ -8,16 +8,18 @@ import 'package:celest_cloud_auth/src/database/schema/cloud_auth_core.drift.dart
 import 'package:celest_cloud_auth/src/database/schema/cloud_auth_users.drift.dart'
     as i4;
 
-typedef $TestCreateCompanionBuilder = i1.TestCompanion Function({
-  required String userId,
-  required String sessionId,
-  i0.Value<int> rowid,
-});
-typedef $TestUpdateCompanionBuilder = i1.TestCompanion Function({
-  i0.Value<String> userId,
-  i0.Value<String> sessionId,
-  i0.Value<int> rowid,
-});
+typedef $TestCreateCompanionBuilder =
+    i1.TestCompanion Function({
+      required String userId,
+      required String sessionId,
+      i0.Value<int> rowid,
+    });
+typedef $TestUpdateCompanionBuilder =
+    i1.TestCompanion Function({
+      i0.Value<String> userId,
+      i0.Value<String> sessionId,
+      i0.Value<int> rowid,
+    });
 
 class $TestFilterComposer extends i0.Composer<i0.GeneratedDatabase, i1.Test> {
   $TestFilterComposer({
@@ -28,10 +30,14 @@ class $TestFilterComposer extends i0.Composer<i0.GeneratedDatabase, i1.Test> {
     super.$removeJoinBuilderFromRootComposer,
   });
   i0.ColumnFilters<String> get userId => $composableBuilder(
-      column: $table.userId, builder: (column) => i0.ColumnFilters(column));
+    column: $table.userId,
+    builder: (column) => i0.ColumnFilters(column),
+  );
 
   i0.ColumnFilters<String> get sessionId => $composableBuilder(
-      column: $table.sessionId, builder: (column) => i0.ColumnFilters(column));
+    column: $table.sessionId,
+    builder: (column) => i0.ColumnFilters(column),
+  );
 }
 
 class $TestOrderingComposer extends i0.Composer<i0.GeneratedDatabase, i1.Test> {
@@ -43,11 +49,14 @@ class $TestOrderingComposer extends i0.Composer<i0.GeneratedDatabase, i1.Test> {
     super.$removeJoinBuilderFromRootComposer,
   });
   i0.ColumnOrderings<String> get userId => $composableBuilder(
-      column: $table.userId, builder: (column) => i0.ColumnOrderings(column));
+    column: $table.userId,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
 
   i0.ColumnOrderings<String> get sessionId => $composableBuilder(
-      column: $table.sessionId,
-      builder: (column) => i0.ColumnOrderings(column));
+    column: $table.sessionId,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
 }
 
 class $TestAnnotationComposer
@@ -66,73 +75,87 @@ class $TestAnnotationComposer
       $composableBuilder(column: $table.sessionId, builder: (column) => column);
 }
 
-class $TestTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i1.Test,
-    i1.TestData,
-    i1.$TestFilterComposer,
-    i1.$TestOrderingComposer,
-    i1.$TestAnnotationComposer,
-    $TestCreateCompanionBuilder,
-    $TestUpdateCompanionBuilder,
-    (
-      i1.TestData,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.Test, i1.TestData>
-    ),
-    i1.TestData,
-    i0.PrefetchHooks Function()> {
+class $TestTableManager
+    extends
+        i0.RootTableManager<
+          i0.GeneratedDatabase,
+          i1.Test,
+          i1.TestData,
+          i1.$TestFilterComposer,
+          i1.$TestOrderingComposer,
+          i1.$TestAnnotationComposer,
+          $TestCreateCompanionBuilder,
+          $TestUpdateCompanionBuilder,
+          (
+            i1.TestData,
+            i0.BaseReferences<i0.GeneratedDatabase, i1.Test, i1.TestData>,
+          ),
+          i1.TestData,
+          i0.PrefetchHooks Function()
+        > {
   $TestTableManager(i0.GeneratedDatabase db, i1.Test table)
-      : super(i0.TableManagerState(
+    : super(
+        i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () =>
-              i1.$TestFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              i1.$TestOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              i1.$TestAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            i0.Value<String> userId = const i0.Value.absent(),
-            i0.Value<String> sessionId = const i0.Value.absent(),
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.TestCompanion(
-            userId: userId,
-            sessionId: sessionId,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String userId,
-            required String sessionId,
-            i0.Value<int> rowid = const i0.Value.absent(),
-          }) =>
-              i1.TestCompanion.insert(
-            userId: userId,
-            sessionId: sessionId,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
+          createFilteringComposer:
+              () => i1.$TestFilterComposer($db: db, $table: table),
+          createOrderingComposer:
+              () => i1.$TestOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer:
+              () => i1.$TestAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                i0.Value<String> userId = const i0.Value.absent(),
+                i0.Value<String> sessionId = const i0.Value.absent(),
+                i0.Value<int> rowid = const i0.Value.absent(),
+              }) => i1.TestCompanion(
+                userId: userId,
+                sessionId: sessionId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String userId,
+                required String sessionId,
+                i0.Value<int> rowid = const i0.Value.absent(),
+              }) => i1.TestCompanion.insert(
+                userId: userId,
+                sessionId: sessionId,
+                rowid: rowid,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          i0.BaseReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
           prefetchHooksCallback: null,
-        ));
+        ),
+      );
 }
 
-typedef $TestProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i1.Test,
-    i1.TestData,
-    i1.$TestFilterComposer,
-    i1.$TestOrderingComposer,
-    i1.$TestAnnotationComposer,
-    $TestCreateCompanionBuilder,
-    $TestUpdateCompanionBuilder,
-    (
+typedef $TestProcessedTableManager =
+    i0.ProcessedTableManager<
+      i0.GeneratedDatabase,
+      i1.Test,
       i1.TestData,
-      i0.BaseReferences<i0.GeneratedDatabase, i1.Test, i1.TestData>
-    ),
-    i1.TestData,
-    i0.PrefetchHooks Function()>;
+      i1.$TestFilterComposer,
+      i1.$TestOrderingComposer,
+      i1.$TestAnnotationComposer,
+      $TestCreateCompanionBuilder,
+      $TestUpdateCompanionBuilder,
+      (
+        i1.TestData,
+        i0.BaseReferences<i0.GeneratedDatabase, i1.Test, i1.TestData>,
+      ),
+      i1.TestData,
+      i0.PrefetchHooks Function()
+    >;
 
 class Test extends i0.Table with i0.TableInfo<Test, i1.TestData> {
   @override
@@ -140,15 +163,21 @@ class Test extends i0.Table with i0.TableInfo<Test, i1.TestData> {
   final String? _alias;
   Test(this.attachedDatabase, [this._alias]);
   late final i0.GeneratedColumn<String> userId = i0.GeneratedColumn<String>(
-      'user_id', aliasedName, false,
-      type: i0.DriftSqlType.string,
-      requiredDuringInsert: true,
-      $customConstraints: 'NOT NULL');
+    'user_id',
+    aliasedName,
+    false,
+    type: i0.DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: 'NOT NULL',
+  );
   late final i0.GeneratedColumn<String> sessionId = i0.GeneratedColumn<String>(
-      'session_id', aliasedName, false,
-      type: i0.DriftSqlType.string,
-      requiredDuringInsert: true,
-      $customConstraints: 'NOT NULL');
+    'session_id',
+    aliasedName,
+    false,
+    type: i0.DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: 'NOT NULL',
+  );
   @override
   List<i0.GeneratedColumn> get $columns => [userId, sessionId];
   @override
@@ -162,10 +191,16 @@ class Test extends i0.Table with i0.TableInfo<Test, i1.TestData> {
   i1.TestData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.TestData(
-      userId: attachedDatabase.typeMapping
-          .read(i0.DriftSqlType.string, data['${effectivePrefix}user_id'])!,
-      sessionId: attachedDatabase.typeMapping
-          .read(i0.DriftSqlType.string, data['${effectivePrefix}session_id'])!,
+      userId:
+          attachedDatabase.typeMapping.read(
+            i0.DriftSqlType.string,
+            data['${effectivePrefix}user_id'],
+          )!,
+      sessionId:
+          attachedDatabase.typeMapping.read(
+            i0.DriftSqlType.string,
+            data['${effectivePrefix}session_id'],
+          )!,
     );
   }
 
@@ -176,9 +211,9 @@ class Test extends i0.Table with i0.TableInfo<Test, i1.TestData> {
 
   @override
   List<String> get customConstraints => const [
-        'FOREIGN KEY(user_id)REFERENCES cloud_auth_users(user_id)',
-        'FOREIGN KEY(session_id)REFERENCES cloud_auth_sessions(session_id)'
-      ];
+    'FOREIGN KEY(user_id)REFERENCES cloud_auth_users(user_id)',
+    'FOREIGN KEY(session_id)REFERENCES cloud_auth_sessions(session_id)',
+  ];
   @override
   bool get dontWriteConstraints => true;
 }
@@ -198,8 +233,10 @@ class TestData extends i0.DataClass implements i0.Insertable<i1.TestData> {
     return map;
   }
 
-  factory TestData.fromJson(Map<String, dynamic> json,
-      {i0.ValueSerializer? serializer}) {
+  factory TestData.fromJson(
+    Map<String, dynamic> json, {
+    i0.ValueSerializer? serializer,
+  }) {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return TestData(
       userId: serializer.fromJson<String>(json['user_id']),
@@ -216,9 +253,9 @@ class TestData extends i0.DataClass implements i0.Insertable<i1.TestData> {
   }
 
   i1.TestData copyWith({String? userId, String? sessionId}) => i1.TestData(
-        userId: userId ?? this.userId,
-        sessionId: sessionId ?? this.sessionId,
-      );
+    userId: userId ?? this.userId,
+    sessionId: sessionId ?? this.sessionId,
+  );
   TestData copyWithCompanion(i1.TestCompanion data) {
     return TestData(
       userId: data.userId.present ? data.userId.value : this.userId,
@@ -258,8 +295,8 @@ class TestCompanion extends i0.UpdateCompanion<i1.TestData> {
     required String userId,
     required String sessionId,
     this.rowid = const i0.Value.absent(),
-  })  : userId = i0.Value(userId),
-        sessionId = i0.Value(sessionId);
+  }) : userId = i0.Value(userId),
+       sessionId = i0.Value(sessionId);
   static i0.Insertable<i1.TestData> custom({
     i0.Expression<String>? userId,
     i0.Expression<String>? sessionId,
@@ -272,10 +309,11 @@ class TestCompanion extends i0.UpdateCompanion<i1.TestData> {
     });
   }
 
-  i1.TestCompanion copyWith(
-      {i0.Value<String>? userId,
-      i0.Value<String>? sessionId,
-      i0.Value<int>? rowid}) {
+  i1.TestCompanion copyWith({
+    i0.Value<String>? userId,
+    i0.Value<String>? sessionId,
+    i0.Value<int>? rowid,
+  }) {
     return i1.TestCompanion(
       userId: userId ?? this.userId,
       sessionId: sessionId ?? this.sessionId,

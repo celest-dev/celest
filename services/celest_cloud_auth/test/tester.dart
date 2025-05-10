@@ -49,8 +49,10 @@ const apiTest = EntityUid.of('Celest::Api', 'test');
 
 // Functions
 const functionAdmin = EntityUid.of('Celest::Function', 'test/admin');
-const functionAuthenticated =
-    EntityUid.of('Celest::Function', 'test/authenticated');
+const functionAuthenticated = EntityUid.of(
+  'Celest::Function',
+  'test/authenticated',
+);
 const functionPublic = EntityUid.of('Celest::Function', 'test/public');
 
 final defaultProject = ResolvedProject(
@@ -58,10 +60,7 @@ final defaultProject = ResolvedProject(
   environmentId: 'production',
   sdkConfig: SdkConfiguration(
     celest: Version(1, 0, 0),
-    dart: Sdk(
-      type: SdkType.dart,
-      version: Version(3, 5, 0),
-    ),
+    dart: Sdk(type: SdkType.dart, version: Version(3, 5, 0)),
   ),
   apis: {
     AuthenticationService.api.apiId: AuthenticationService.api,
@@ -80,9 +79,7 @@ final defaultProject = ResolvedProject(
               TemplateLink(
                 templateId: 'cloud.functions.admin',
                 newId: 'test/admin',
-                values: {
-                  SlotId.resource: functionAdmin,
-                },
+                values: {SlotId.resource: functionAdmin},
               ),
             ],
           ),
@@ -98,9 +95,7 @@ final defaultProject = ResolvedProject(
               TemplateLink(
                 templateId: 'cloud.functions.authenticated',
                 newId: 'test/authenticated',
-                values: {
-                  SlotId.resource: functionAuthenticated,
-                },
+                values: {SlotId.resource: functionAuthenticated},
               ),
             ],
           ),
@@ -116,9 +111,7 @@ final defaultProject = ResolvedProject(
               TemplateLink(
                 templateId: 'cloud.functions.public',
                 newId: 'test/public',
-                values: {
-                  SlotId.resource: functionPublic,
-                },
+                values: {SlotId.resource: functionPublic},
               ),
             ],
           ),
@@ -178,10 +171,10 @@ final class AuthorizationTester {
   Uri get address => Uri.http('localhost:$port');
 
   CelestCloud cloud({Cork? cork}) => CelestCloud(
-        uri: address,
-        authenticator: Authenticator.static(token: cork?.toString()),
-        clientType: ClientType.HEADLESS,
-      );
+    uri: address,
+    authenticator: Authenticator.static(token: cork?.toString()),
+    clientType: ClientType.HEADLESS,
+  );
 
   Future<void> _createEntities() async {
     for (final entity in [
@@ -202,10 +195,9 @@ final class AuthorizationTester {
         if (api.apiId != AuthenticationService.api.apiId &&
             api.apiId != UsersService.api.apiId)
           for (final function in api.functions.values)
-            function.httpConfig.route.path: _DummyTarget(
-              function.functionId,
-              [Middleware.shelf(middleware.call)],
-            ),
+            function.httpConfig.route.path: _DummyTarget(function.functionId, [
+              Middleware.shelf(middleware.call),
+            ]),
     };
   }
 
@@ -234,14 +226,9 @@ final class AuthorizationTester {
             directory.deleteSync(recursive: true);
           }
           directory.createSync();
-          db = CloudAuthDatabase.localDir(
-            directory,
-            verbose: true,
-          );
+          db = CloudAuthDatabase.localDir(directory, verbose: true);
         } else {
-          db = CloudAuthDatabase.memory(
-            verbose: true,
-          );
+          db = CloudAuthDatabase.memory(verbose: true);
         }
         _authService = await CelestCloudAuth.test(db: db);
 
@@ -279,9 +266,7 @@ final class AuthorizationTester {
       final uri = address.resolve(path).replace(queryParameters: query);
       print('$method $uri');
       final request = http.Request(method, uri)
-        ..headers.addAll({
-          if (cork != null) 'Authorization': 'Bearer $cork',
-        });
+        ..headers.addAll({if (cork != null) 'Authorization': 'Bearer $cork'});
       if (body != null) {
         request.body = jsonEncode(body);
         request.headers['Content-Type'] = 'application/json';
@@ -303,9 +288,7 @@ final class AuthorizationTester {
       user: User(
         userId: userId,
         roles: roles,
-        emails: [
-          Email(email: email, isPrimary: true),
-        ],
+        emails: [Email(email: email, isPrimary: true)],
       ),
     );
     final session = await sessions.createSession(
@@ -313,10 +296,7 @@ final class AuthorizationTester {
       factor: AuthenticationFactorEmailOtp(email: email),
       sessionDuration: SessionsRepository.postAuthSessionDuration,
     );
-    final cork = await corks.createCork(
-      user: user,
-      session: session,
-    );
+    final cork = await corks.createCork(user: user, session: session);
     t.addTearDown(() async {
       await sessions.deleteSession(sessionId: session.sessionId);
       await users.deleteUser(userId: userId!);

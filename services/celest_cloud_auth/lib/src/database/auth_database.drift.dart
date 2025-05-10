@@ -18,26 +18,32 @@ abstract class $CloudAuthDatabase extends i0.GeneratedDatabase {
   late final i1.CloudAuthUsers cloudAuthUsers = i1.CloudAuthUsers(this);
   late final i2.CedarTypes cedarTypes = i2.CedarTypes(this);
   late final i2.CedarEntities cedarEntities = i2.CedarEntities(this);
-  late final i2.CedarRelationships cedarRelationships =
-      i2.CedarRelationships(this);
+  late final i2.CedarRelationships cedarRelationships = i2.CedarRelationships(
+    this,
+  );
   late final i1.CloudAuthUserEmails cloudAuthUserEmails =
       i1.CloudAuthUserEmails(this);
   late final i1.CloudAuthUserPhoneNumbers cloudAuthUserPhoneNumbers =
       i1.CloudAuthUserPhoneNumbers(this);
-  late final i1.CloudAuthUsersView cloudAuthUsersView =
-      i1.CloudAuthUsersView(this);
-  late final i3.CloudAuthProjects cloudAuthProjects =
-      i3.CloudAuthProjects(this);
+  late final i1.CloudAuthUsersView cloudAuthUsersView = i1.CloudAuthUsersView(
+    this,
+  );
+  late final i3.CloudAuthProjects cloudAuthProjects = i3.CloudAuthProjects(
+    this,
+  );
   late final i3.CloudAuthApis cloudAuthApis = i3.CloudAuthApis(this);
-  late final i3.CloudAuthFunctions cloudAuthFunctions =
-      i3.CloudAuthFunctions(this);
+  late final i3.CloudAuthFunctions cloudAuthFunctions = i3.CloudAuthFunctions(
+    this,
+  );
   late final i4.CloudAuthMeta cloudAuthMeta = i4.CloudAuthMeta(this);
   late final i5.CloudAuthCryptoKeys cloudAuthCryptoKeys =
       i5.CloudAuthCryptoKeys(this);
-  late final i5.CloudAuthSessions cloudAuthSessions =
-      i5.CloudAuthSessions(this);
-  late final i5.CloudAuthOtpCodes cloudAuthOtpCodes =
-      i5.CloudAuthOtpCodes(this);
+  late final i5.CloudAuthSessions cloudAuthSessions = i5.CloudAuthSessions(
+    this,
+  );
+  late final i5.CloudAuthOtpCodes cloudAuthOtpCodes = i5.CloudAuthOtpCodes(
+    this,
+  );
   late final i5.CloudAuthCorks cloudAuthCorks = i5.CloudAuthCorks(this);
   late final i2.CedarPolicies cedarPolicies = i2.CedarPolicies(this);
   late final i2.CedarPolicyTemplates cedarPolicyTemplates =
@@ -48,346 +54,403 @@ abstract class $CloudAuthDatabase extends i0.GeneratedDatabase {
       i2.CedarAuthorizationLogs(this);
   i2.CedarDrift get cedarDrift =>
       i6.ReadDatabaseContainer(this).accessor<i2.CedarDrift>(i2.CedarDrift.new);
-  i5.CloudAuthCoreDrift get cloudAuthCoreDrift => i6.ReadDatabaseContainer(this)
-      .accessor<i5.CloudAuthCoreDrift>(i5.CloudAuthCoreDrift.new);
-  i4.CloudAuthMetaDrift get cloudAuthMetaDrift => i6.ReadDatabaseContainer(this)
-      .accessor<i4.CloudAuthMetaDrift>(i4.CloudAuthMetaDrift.new);
+  i5.CloudAuthCoreDrift get cloudAuthCoreDrift => i6.ReadDatabaseContainer(
+    this,
+  ).accessor<i5.CloudAuthCoreDrift>(i5.CloudAuthCoreDrift.new);
+  i4.CloudAuthMetaDrift get cloudAuthMetaDrift => i6.ReadDatabaseContainer(
+    this,
+  ).accessor<i4.CloudAuthMetaDrift>(i4.CloudAuthMetaDrift.new);
   i3.CloudAuthProjectsDrift get cloudAuthProjectsDrift =>
-      i6.ReadDatabaseContainer(this)
-          .accessor<i3.CloudAuthProjectsDrift>(i3.CloudAuthProjectsDrift.new);
-  i1.CloudAuthUsersDrift get cloudAuthUsersDrift =>
-      i6.ReadDatabaseContainer(this)
-          .accessor<i1.CloudAuthUsersDrift>(i1.CloudAuthUsersDrift.new);
+      i6.ReadDatabaseContainer(
+        this,
+      ).accessor<i3.CloudAuthProjectsDrift>(i3.CloudAuthProjectsDrift.new);
+  i1.CloudAuthUsersDrift get cloudAuthUsersDrift => i6.ReadDatabaseContainer(
+    this,
+  ).accessor<i1.CloudAuthUsersDrift>(i1.CloudAuthUsersDrift.new);
   @override
   Iterable<i0.TableInfo<i0.Table, Object?>> get allTables =>
       allSchemaEntities.whereType<i0.TableInfo<i0.Table, Object?>>();
   @override
   List<i0.DatabaseSchemaEntity> get allSchemaEntities => [
-        cloudAuthUsers,
-        cedarTypes,
-        cedarEntities,
-        i1.cloudAuthUsersCreateTrg,
-        cedarRelationships,
-        i1.cloudAuthUsersDeleteTrg,
-        cloudAuthUserEmails,
-        cloudAuthUserPhoneNumbers,
-        cloudAuthUsersView,
-        cloudAuthProjects,
-        cloudAuthApis,
-        i3.cloudAuthApisProjectIdx,
-        i3.cloudAuthApisCreateTrg,
-        i3.cloudAuthApisDeleteTrg,
-        cloudAuthFunctions,
-        i3.cloudAuthFunctionsApiIdx,
-        i3.cloudAuthFunctionsCreateTrg,
-        i3.cloudAuthFunctionsDeleteTrg,
-        cloudAuthMeta,
-        i4.$drift0,
-        cloudAuthCryptoKeys,
-        i5.cloudAuthCryptoKeysExternalCryptoKeyIdIdx,
-        cloudAuthSessions,
-        i5.cloudAuthSessionsUserIdx,
-        i5.cloudAuthSessionsCryptoKeyIdx,
-        i5.cloudAuthSessionsExternalSessionIdIdx,
-        i5.cloudAuthSessionsUpdateTimeTrg,
-        cloudAuthOtpCodes,
-        i5.cloudAuthOtpCodesSessionIdIdx,
-        cloudAuthCorks,
-        i5.cloudAuthCorksCryptoKeyIdx,
-        i5.cloudAuthCorksBearerIdx,
-        i5.cloudAuthCorksAudienceIdx,
-        i5.cloudAuthCorksIssuerIdx,
-        i2.cedarRelationshipsFkEntityIdx,
-        i2.cedarRelationshipsFkParentIdx,
-        cedarPolicies,
-        cedarPolicyTemplates,
-        cedarPolicyTemplateLinks,
-        i2.cedarPolicyTemplateLinksFkTemplateIdIdx,
-        i2.cedarPolicyTemplateLinksFkPrincipalIdx,
-        i2.cedarPolicyTemplateLinksFkResourceIdx,
-        cedarAuthorizationLogs
-      ];
+    cloudAuthUsers,
+    cedarTypes,
+    cedarEntities,
+    i1.cloudAuthUsersCreateTrg,
+    cedarRelationships,
+    i1.cloudAuthUsersDeleteTrg,
+    cloudAuthUserEmails,
+    cloudAuthUserPhoneNumbers,
+    cloudAuthUsersView,
+    cloudAuthProjects,
+    cloudAuthApis,
+    i3.cloudAuthApisProjectIdx,
+    i3.cloudAuthApisCreateTrg,
+    i3.cloudAuthApisDeleteTrg,
+    cloudAuthFunctions,
+    i3.cloudAuthFunctionsApiIdx,
+    i3.cloudAuthFunctionsCreateTrg,
+    i3.cloudAuthFunctionsDeleteTrg,
+    cloudAuthMeta,
+    i4.$drift0,
+    cloudAuthCryptoKeys,
+    i5.cloudAuthCryptoKeysExternalCryptoKeyIdIdx,
+    cloudAuthSessions,
+    i5.cloudAuthSessionsUserIdx,
+    i5.cloudAuthSessionsCryptoKeyIdx,
+    i5.cloudAuthSessionsExternalSessionIdIdx,
+    i5.cloudAuthSessionsUpdateTimeTrg,
+    cloudAuthOtpCodes,
+    i5.cloudAuthOtpCodesSessionIdIdx,
+    cloudAuthCorks,
+    i5.cloudAuthCorksCryptoKeyIdx,
+    i5.cloudAuthCorksBearerIdx,
+    i5.cloudAuthCorksAudienceIdx,
+    i5.cloudAuthCorksIssuerIdx,
+    i2.cedarRelationshipsFkEntityIdx,
+    i2.cedarRelationshipsFkParentIdx,
+    cedarPolicies,
+    cedarPolicyTemplates,
+    cedarPolicyTemplateLinks,
+    i2.cedarPolicyTemplateLinksFkTemplateIdIdx,
+    i2.cedarPolicyTemplateLinksFkPrincipalIdx,
+    i2.cedarPolicyTemplateLinksFkResourceIdx,
+    cedarAuthorizationLogs,
+  ];
   @override
-  i0.StreamQueryUpdateRules get streamUpdateRules =>
-      const i0.StreamQueryUpdateRules(
-        [
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.insert),
-            result: [
-              i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
-              i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_user_emails',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_user_emails',
-                  kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_user_phone_numbers',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_user_phone_numbers',
-                  kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_projects',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_apis', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_projects',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_apis', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_apis',
-                limitUpdateKind: i0.UpdateKind.insert),
-            result: [
-              i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_apis',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
-              i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_apis',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_functions',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_apis',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_functions',
-                  kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_functions',
-                limitUpdateKind: i0.UpdateKind.insert),
-            result: [
-              i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert),
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.insert),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_functions',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
-              i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_crypto_keys',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_crypto_keys',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_sessions',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_sessions',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_otp_codes',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_sessions',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_otp_codes',
-                  kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_crypto_keys',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_crypto_keys',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_policy_templates',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_policy_template_links',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_policy_templates',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cedar_policy_template_links',
-                  kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_policy_template_links',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_policy_template_links',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-        ],
-      );
+  i0.StreamQueryUpdateRules
+  get streamUpdateRules => const i0.StreamQueryUpdateRules([
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.insert,
+      ),
+      result: [i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+        i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_user_emails', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_user_emails', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate(
+          'cloud_auth_user_phone_numbers',
+          kind: i0.UpdateKind.delete,
+        ),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate(
+          'cloud_auth_user_phone_numbers',
+          kind: i0.UpdateKind.update,
+        ),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_projects',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [i0.TableUpdate('cloud_auth_apis', kind: i0.UpdateKind.delete)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_projects',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [i0.TableUpdate('cloud_auth_apis', kind: i0.UpdateKind.update)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_apis',
+        limitUpdateKind: i0.UpdateKind.insert,
+      ),
+      result: [i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_apis',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+        i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_apis',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_functions', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_apis',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_functions', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_functions',
+        limitUpdateKind: i0.UpdateKind.insert,
+      ),
+      result: [
+        i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert),
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.insert),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_functions',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+        i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_crypto_keys',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_crypto_keys',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_sessions',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_sessions',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_otp_codes', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_sessions',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_otp_codes', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_crypto_keys',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_crypto_keys',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_policy_templates',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate(
+          'cedar_policy_template_links',
+          kind: i0.UpdateKind.delete,
+        ),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_policy_templates',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate(
+          'cedar_policy_template_links',
+          kind: i0.UpdateKind.update,
+        ),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate(
+          'cedar_policy_template_links',
+          kind: i0.UpdateKind.delete,
+        ),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate(
+          'cedar_policy_template_links',
+          kind: i0.UpdateKind.delete,
+        ),
+      ],
+    ),
+  ]);
 }
 
 class $CloudAuthDatabaseManager {
@@ -405,7 +468,9 @@ class $CloudAuthDatabaseManager {
       i1.$CloudAuthUserEmailsTableManager(_db, _db.cloudAuthUserEmails);
   i1.$CloudAuthUserPhoneNumbersTableManager get cloudAuthUserPhoneNumbers =>
       i1.$CloudAuthUserPhoneNumbersTableManager(
-          _db, _db.cloudAuthUserPhoneNumbers);
+        _db,
+        _db.cloudAuthUserPhoneNumbers,
+      );
   i3.$CloudAuthProjectsTableManager get cloudAuthProjects =>
       i3.$CloudAuthProjectsTableManager(_db, _db.cloudAuthProjects);
   i3.$CloudAuthApisTableManager get cloudAuthApis =>

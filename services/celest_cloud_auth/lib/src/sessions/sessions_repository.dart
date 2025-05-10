@@ -7,12 +7,13 @@ import 'package:celest_cloud_auth/src/util/typeid.dart';
 import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 
-typedef _Deps = ({
-  CorksRepository corks,
-  CryptoKeyRepository cryptoKeys,
-  CloudAuthDatabaseMixin db,
-  UsersRepository users,
-});
+typedef _Deps =
+    ({
+      CorksRepository corks,
+      CryptoKeyRepository cryptoKeys,
+      CloudAuthDatabaseMixin db,
+      UsersRepository users,
+    });
 
 extension type SessionsRepository._(_Deps _deps) {
   SessionsRepository({
@@ -20,12 +21,7 @@ extension type SessionsRepository._(_Deps _deps) {
     required CloudAuthDatabaseMixin db,
     required CryptoKeyRepository cryptoKeys,
     required UsersRepository users,
-  }) : _deps = (
-          corks: corks,
-          db: db,
-          cryptoKeys: cryptoKeys,
-          users: users,
-        );
+  }) : _deps = (corks: corks, db: db, cryptoKeys: cryptoKeys, users: users);
 
   CorksRepository get _corks => _deps.corks;
   CloudAuthDatabaseAccessors get _db => _deps.db.cloudAuth;
@@ -79,12 +75,11 @@ extension type SessionsRepository._(_Deps _deps) {
     });
   }
 
-  Future<Session?> getSession({
-    required TypeId<Session> sessionId,
-  }) async {
-    final session = await _db.cloudAuthCoreDrift
-        .getSession(sessionId: sessionId.encoded)
-        .getSingleOrNull();
+  Future<Session?> getSession({required TypeId<Session> sessionId}) async {
+    final session =
+        await _db.cloudAuthCoreDrift
+            .getSession(sessionId: sessionId.encoded)
+            .getSingleOrNull();
     if (session == null) {
       return null;
     }
@@ -101,13 +96,13 @@ extension type SessionsRepository._(_Deps _deps) {
     Duration sessionDuration = preAuthSessionDuration,
   }) {
     return _db.transaction(() async {
-      session = (await _db.cloudAuthCoreDrift.updateSession(
-        sessionId: session.sessionId.encoded,
-        state: state ?? session.state,
-        userId: userId ?? session.userId,
-        expireTime: clock.now().add(sessionDuration),
-      ))
-          .first;
+      session =
+          (await _db.cloudAuthCoreDrift.updateSession(
+            sessionId: session.sessionId.encoded,
+            state: state ?? session.state,
+            userId: userId ?? session.userId,
+            expireTime: clock.now().add(sessionDuration),
+          )).first;
       final user = await _users.getUser(userId: session.userId);
       if (user == null) {
         throw InternalServerError('User not found: ${session.userId}');
@@ -123,12 +118,11 @@ extension type SessionsRepository._(_Deps _deps) {
   /// Delete (revoke) the session by removing all records such that existing
   /// corks are invalidated and future attempts to access the session result
   /// in errors.
-  Future<void> deleteSession({
-    required TypeId<Session> sessionId,
-  }) async {
-    final session = await _db.cloudAuthCoreDrift
-        .getSession(sessionId: sessionId.encoded)
-        .getSingleOrNull();
+  Future<void> deleteSession({required TypeId<Session> sessionId}) async {
+    final session =
+        await _db.cloudAuthCoreDrift
+            .getSession(sessionId: sessionId.encoded)
+            .getSingleOrNull();
     if (session == null) {
       return;
     }

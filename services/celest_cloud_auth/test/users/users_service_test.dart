@@ -21,13 +21,12 @@ void main() {
       final route = ('GET', '/v1alpha1/auth/users/$userId');
 
       test('unauthenticated', () async {
-        await tester.httpTest({
-          route: expectStatus(401),
-        });
+        await tester.httpTest({route: expectStatus(401)});
 
         final cloud = tester.cloud();
-        await check(cloud.users.get('users/$userId'))
-            .throws<UnauthorizedException>();
+        await check(
+          cloud.users.get('users/$userId'),
+        ).throws<UnauthorizedException>();
       });
 
       test('anonymous', () async {
@@ -42,8 +41,9 @@ void main() {
         });
 
         final cloud = tester.cloud(cork: cork);
-        await check(cloud.users.get('users/$userId'))
-            .throws<NotFoundException>();
+        await check(
+          cloud.users.get('users/$userId'),
+        ).throws<NotFoundException>();
       });
 
       test('authenticated', () async {
@@ -57,10 +57,11 @@ void main() {
             expectBody({
               'name': 'users/$userId',
               'userId': userId,
-              'createTime': (Subject<Object?> it) => it
-                  .isA<String>()
-                  .has(DateTime.parse, 'DateTime')
-                  .isLessOrEqual(DateTime.now()),
+              'createTime':
+                  (Subject<Object?> it) => it
+                      .isA<String>()
+                      .has(DateTime.parse, 'DateTime')
+                      .isLessOrEqual(DateTime.now()),
               'emails': [user.primaryEmail!.toJson()],
             }),
           ]),
@@ -70,10 +71,11 @@ void main() {
         final me = await cloud.users.get('users/me');
 
         await check(cloud.users.get('users/$userId')).completes(
-          (it) => it
-            ..equals(me)
-            ..has((it) => it.userId, 'userId').equals(userId)
-            ..has((it) => it.emails, 'emails').isNotEmpty(),
+          (it) =>
+              it
+                ..equals(me)
+                ..has((it) => it.userId, 'userId').equals(userId)
+                ..has((it) => it.emails, 'emails').isNotEmpty(),
         );
       });
 
@@ -90,16 +92,13 @@ void main() {
             expectBody({
               'name': 'users/$userId',
               'userId': userId,
-              'createTime': (Subject<Object?> it) => it
-                  .isA<String>()
-                  .has(DateTime.parse, 'DateTime')
-                  .isLessOrEqual(DateTime.now()),
+              'createTime':
+                  (Subject<Object?> it) => it
+                      .isA<String>()
+                      .has(DateTime.parse, 'DateTime')
+                      .isLessOrEqual(DateTime.now()),
               'emails': [
-                {
-                  'email': email,
-                  'isVerified': false,
-                  'isPrimary': true,
-                }
+                {'email': email, 'isVerified': false, 'isPrimary': true},
               ],
             }),
           ]),
@@ -109,19 +108,18 @@ void main() {
         final me = await cloud.users.get('users/me');
 
         await check(cloud.users.get('users/$userId')).completes(
-          (it) => it
-            ..equals(me)
-            ..has((it) => it.userId, 'userId').equals(userId)
-            ..has((it) => it.emails, 'emails').isNotEmpty(),
+          (it) =>
+              it
+                ..equals(me)
+                ..has((it) => it.userId, 'userId').equals(userId)
+                ..has((it) => it.emails, 'emails').isNotEmpty(),
         );
       });
     });
 
     group('listUsers', () {
       const route = ('GET', '/v1alpha1/auth/users');
-      const request = {
-        'pageSize': '10',
-      };
+      const request = {'pageSize': '10'};
 
       group('pagination', () {
         final userIds = List.generate(100, (_) => typeId<User>());
@@ -129,10 +127,7 @@ void main() {
           await Future.wait(
             userIds.map(
               (userId) => tester.db.createUser(
-                user: User(
-                  userId: userId,
-                  roles: const [roleAuthenticated],
-                ),
+                user: User(userId: userId, roles: const [roleAuthenticated]),
               ),
             ),
           );
@@ -150,7 +145,7 @@ void main() {
             final numPages = userIds.length ~/ pageSize + 1;
 
             PageToken? pageToken;
-            for (var page = 1;; page++) {
+            for (var page = 1; ; page++) {
               context.logger.finest('page=$page, pageToken=$pageToken');
               final result = await tester.usersService.listUsers(
                 pageSize: pageSize,
@@ -171,9 +166,9 @@ void main() {
                 break;
               }
               check(result.users).length.equals(pageSize);
-              check(result)
-                  .has((it) => it.hasNextPageToken(), 'hasNextPageToken')
-                  .isTrue();
+              check(
+                result,
+              ).has((it) => it.hasNextPageToken(), 'hasNextPageToken').isTrue();
               pageToken = PageToken.parse(result.nextPageToken);
             }
           });
@@ -196,9 +191,7 @@ void main() {
         setUp(() async {
           final createdUsers = <User>[];
           for (final user in users) {
-            final createdUser = await tester.db.createUser(
-              user: user,
-            );
+            final createdUser = await tester.db.createUser(user: user);
             createdUsers.add(createdUser);
             // Create users in a staggered fashion to ensure that the create
             // time is different for each user.
@@ -207,40 +200,37 @@ void main() {
           users = createdUsers;
 
           expectedByColumn = {
-            'create_time': (users) =>
-                users.sortedBy((user) => user.createTime!),
+            'create_time':
+                (users) => users.sortedBy((user) => user.createTime!),
             'given_name': (users) => users.sortedBy((user) => user.givenName!),
-            'family_name': (users) =>
-                users.sortedBy((user) => user.familyName!),
+            'family_name':
+                (users) => users.sortedBy((user) => user.familyName!),
           };
         });
 
         const columns = ['create_time', 'given_name', 'family_name'];
         for (final column in columns) {
           test('ascending', () async {
-            final result = await tester.usersService.listUsers(
-              orderBy: column,
-            );
-            check(result.users.map((user) => user.toModel()))
-                .deepEquals(expectedByColumn[column]!(users));
+            final result = await tester.usersService.listUsers(orderBy: column);
+            check(
+              result.users.map((user) => user.toModel()),
+            ).deepEquals(expectedByColumn[column]!(users));
           });
 
           test('descending', () async {
             final result = await tester.usersService.listUsers(
               orderBy: '-$column',
             );
-            check(result.users.map((user) => user.toModel())).deepEquals(
-              expectedByColumn[column]!(users).reversed,
-            );
+            check(
+              result.users.map((user) => user.toModel()),
+            ).deepEquals(expectedByColumn[column]!(users).reversed);
           });
         }
       });
 
       group('auth', () {
         test('unauthenticated', () async {
-          await tester.httpTest(query: request, {
-            route: expectStatus(401),
-          });
+          await tester.httpTest(query: request, {route: expectStatus(401)});
         });
 
         test('anonymous', () async {
@@ -287,10 +277,11 @@ void main() {
                     'name': 'users/$userId',
                     'userId': userId,
                     'emails': [user.primaryEmail!.toJson()],
-                    'createTime': (Subject<Object?> it) => it
-                        .isA<String>()
-                        .has(DateTime.parse, 'DateTime')
-                        .isLessOrEqual(DateTime.now()),
+                    'createTime':
+                        (Subject<Object?> it) => it
+                            .isA<String>()
+                            .has(DateTime.parse, 'DateTime')
+                            .isLessOrEqual(DateTime.now()),
                   },
                 ],
               }),
@@ -299,9 +290,10 @@ void main() {
 
           final cloud = tester.cloud(cork: cork);
           await check(cloud.users.list()).completes(
-            (it) => it
-              ..has((it) => it.users, 'users').length.equals(1)
-              ..has((it) => it.users.first.userId, 'userId').equals(userId),
+            (it) =>
+                it
+                  ..has((it) => it.users, 'users').length.equals(1)
+                  ..has((it) => it.users.first.userId, 'userId').equals(userId),
           );
         });
       });
@@ -361,15 +353,10 @@ void main() {
         final otherUserId = typeId<User>();
         final otherRoute = ('PATCH', '/v1alpha1/auth/users/$otherUserId');
 
-        const request = {
-          'givenName': 'John',
-          'familyName': 'Doe',
-        };
+        const request = {'givenName': 'John', 'familyName': 'Doe'};
 
         test('unauthenticated', () async {
-          await tester.httpTest({
-            selfRoute: expectStatus(401),
-          });
+          await tester.httpTest({selfRoute: expectStatus(401)});
 
           final cloud = tester.cloud();
           await check(
@@ -436,9 +423,10 @@ void main() {
               updateMask: pb.FieldMask(paths: ['given_name', 'family_name']),
             ),
           ).completes(
-            (it) => it
-              ..has((it) => it.givenName, 'givenName').equals('John')
-              ..has((it) => it.familyName, 'familyName').equals('Doe'),
+            (it) =>
+                it
+                  ..has((it) => it.givenName, 'givenName').equals('John')
+                  ..has((it) => it.familyName, 'familyName').equals('Doe'),
           );
 
           await check(
@@ -482,9 +470,10 @@ void main() {
               updateMask: pb.FieldMask(paths: ['given_name', 'family_name']),
             ),
           ).completes(
-            (it) => it
-              ..has((it) => it.givenName, 'givenName').equals('John')
-              ..has((it) => it.familyName, 'familyName').equals('Doe'),
+            (it) =>
+                it
+                  ..has((it) => it.givenName, 'givenName').equals('John')
+                  ..has((it) => it.familyName, 'familyName').equals('Doe'),
           );
 
           await check(
@@ -497,9 +486,10 @@ void main() {
               updateMask: pb.FieldMask(paths: ['given_name', 'family_name']),
             ),
           ).completes(
-            (it) => it
-              ..has((it) => it.givenName, 'givenName').equals('John')
-              ..has((it) => it.familyName, 'familyName').equals('Doe'),
+            (it) =>
+                it
+                  ..has((it) => it.givenName, 'givenName').equals('John')
+                  ..has((it) => it.familyName, 'familyName').equals('Doe'),
           );
         });
       });
@@ -516,8 +506,9 @@ void main() {
         final before = await tester.usersService.getUser(userId: userId);
         check(before).equals(user);
         await tester.usersService.deleteUser(userId: userId);
-        await check(tester.usersService.getUser(userId: userId))
-            .throws((it) => it.isA<NotFoundException>());
+        await check(
+          tester.usersService.getUser(userId: userId),
+        ).throws((it) => it.isA<NotFoundException>());
       });
 
       group('auth', () {
@@ -531,13 +522,12 @@ void main() {
         });
 
         test('unauthenticated', () async {
-          await tester.httpTest({
-            selfRoute: expectStatus(401),
-          });
+          await tester.httpTest({selfRoute: expectStatus(401)});
 
           final cloud = tester.cloud();
-          await check(cloud.users.delete('users/$userId'))
-              .throws<UnauthorizedException>();
+          await check(
+            cloud.users.delete('users/$userId'),
+          ).throws<UnauthorizedException>();
         });
 
         test('anonymous', () async {
@@ -546,9 +536,7 @@ void main() {
             roles: const [roleAnonymous],
           );
 
-          await tester.httpTest(cork: cork, {
-            selfRoute: expectStatus(200),
-          });
+          await tester.httpTest(cork: cork, {selfRoute: expectStatus(200)});
         });
 
         test('anonymous (cloud)', () async {
@@ -579,9 +567,7 @@ void main() {
           });
 
           // and then nothing more
-          await tester.httpTest(cork: cork, {
-            selfRoute: expectStatus(401),
-          });
+          await tester.httpTest(cork: cork, {selfRoute: expectStatus(401)});
         });
 
         test('authenticated (cloud)', () async {
@@ -596,15 +582,17 @@ void main() {
 
           final cloud = tester.cloud(cork: cork);
           // Cannot delete others
-          await check(cloud.users.delete('users/$otherUserId'))
-              .throws<PermissionDeniedException>();
+          await check(
+            cloud.users.delete('users/$otherUserId'),
+          ).throws<PermissionDeniedException>();
 
           // and can delete self
           await check(cloud.users.delete('users/$userId')).completes();
 
           // and then nothing more
-          await check(cloud.users.delete('users/$userId'))
-              .throws<UnauthorizedException>();
+          await check(
+            cloud.users.delete('users/$userId'),
+          ).throws<UnauthorizedException>();
         });
 
         test('admin', () async {
@@ -626,9 +614,7 @@ void main() {
           });
 
           // and then nothing more
-          await tester.httpTest(cork: cork, {
-            selfRoute: expectStatus(401),
-          });
+          await tester.httpTest(cork: cork, {selfRoute: expectStatus(401)});
         });
 
         test('admin (cloud)', () async {
@@ -650,8 +636,9 @@ void main() {
           await check(cloud.users.delete('users/$userId')).completes();
 
           // and then nothing more
-          await check(cloud.users.delete('users/$userId'))
-              .throws<UnauthorizedException>();
+          await check(
+            cloud.users.delete('users/$userId'),
+          ).throws<UnauthorizedException>();
         });
       });
     });

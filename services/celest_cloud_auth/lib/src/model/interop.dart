@@ -18,16 +18,11 @@ extension UserInterop on User {
     );
   }
 
-  Entity toEntity({
-    List<EntityUid>? parents,
-  }) {
+  Entity toEntity({List<EntityUid>? parents}) {
     final userUid = EntityUid.of('Celest::User', userId);
     return Entity(
       uid: userUid,
-      parents: {
-        ...roles,
-        ...?parents,
-      }.toList(),
+      parents: {...roles, ...?parents}.toList(),
       attributes: RecordValue.fromJson(toJson()).attributes,
     );
   }
@@ -51,21 +46,13 @@ extension UserProtoInterop on pb.User {
 
 extension EmailInterop on Email {
   pb.Email toProto() {
-    return pb.Email(
-      email: email,
-      isVerified: isVerified,
-      isPrimary: isPrimary,
-    );
+    return pb.Email(email: email, isVerified: isVerified, isPrimary: isPrimary);
   }
 }
 
 extension EmailProtoInterop on pb.Email {
   Email toModel() {
-    return Email(
-      email: email,
-      isVerified: isVerified,
-      isPrimary: isPrimary,
-    );
+    return Email(email: email, isVerified: isVerified, isPrimary: isPrimary);
   }
 }
 

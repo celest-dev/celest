@@ -90,10 +90,7 @@ final class CedarAuthorizationErrorsConverter
       value
           .map(
             // TODO(dnys1): Implement toJson for CedarAuthorizationError
-            (e) => {
-              'policy_id': e.policyId,
-              'message': e.message,
-            },
+            (e) => {'policy_id': e.policyId, 'message': e.message},
           )
           .toList(),
     );

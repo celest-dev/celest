@@ -1,7 +1,4 @@
-typedef Otp = ({
-  String to,
-  String code,
-});
+typedef Otp = ({String to, String code});
 
 extension OtpX on Otp {
   Map<String, Object?> toJson() => {'to': to, 'code': code};
