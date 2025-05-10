@@ -17,12 +17,12 @@ enum PubAction {
   ///
   /// From: https://github.com/dart-lang/pub/blob/f8b23495666acb275016850f6fd4206a38ad0eb5/test/test_pub.dart#L96
   RegExp get matcher => switch (this) {
-        get => RegExp(r'Got dependencies!|Changed \d+ dependenc(y|ies)!'),
-        upgrade => RegExp(r'''
+    get => RegExp(r'Got dependencies!|Changed \d+ dependenc(y|ies)!'),
+    upgrade => RegExp(r'''
 (No dependencies changed\.|Changed \d+ dependenc(y|ies)!)($|
 \d+ packages? (has|have) newer versions incompatible with dependency constraints.
 Try `dart pub outdated` for more information.$)'''),
-      };
+  };
 }
 
 final Logger _logger = Logger('pub');
@@ -50,9 +50,10 @@ Future<void> runPub({
   required String workingDirectory,
   @visibleForTesting bool verbose = false,
 }) async {
-  exe ??= kDebugMode
-      ? Sdk.current.dart
-      : (await celestProject.determineProjectType()).executable;
+  exe ??=
+      kDebugMode
+          ? Sdk.current.dart
+          : (await celestProject.determineProjectType()).executable;
 
   final command = <String>[
     exe,

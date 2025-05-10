@@ -12,14 +12,15 @@ class LocalApiGenerator {
     required this.project,
     required Map<String, Reference> targets,
   }) : // Provides consistent ordering which helps with codegen diffing.
-        // TODO(dnys1): Order by API then definition order.
-        targets = SplayTreeMap.of(targets);
+       // TODO(dnys1): Order by API then definition order.
+       targets = SplayTreeMap.of(targets);
 
   final Project project;
   final SplayTreeMap<String, Reference> targets;
 
   Method get _mainMethod => Method(
-        (m) => m
+    (m) =>
+        m
           ..name = 'main'
           ..returns = DartTypes.core.future(DartTypes.core.void$)
           ..modifier = MethodModifier.async
@@ -50,16 +51,17 @@ return start();
               final unknown => unreachable('Unknown project type: $unknown'),
             },
           ),
-      );
+  );
 
   Method get _setupCallback {
     return Method((m) {
       m
         ..requiredParameters.add(
           Parameter(
-            (p) => p
-              ..name = 'context'
-              ..type = DartTypes.celest.context,
+            (p) =>
+                p
+                  ..name = 'context'
+                  ..type = DartTypes.celest.context,
           ),
         )
         ..modifier = MethodModifier.async
@@ -75,34 +77,37 @@ return start();
       }
 
       final config = database.config as CelestDatabaseConfig;
-      b.addExpression(declareFinal(database.dartName).assign(
-        refer(
-          'CelestDatabase',
-          'package:celest/src/runtime/data/celest_database.dart',
-        ).property('create').call(
-          [refer('context')],
-          {
-            'name': literalString(
-              database.name,
-              raw: database.name.contains(r'$'),
-            ),
-            'factory': database.schema.declaration.property(
-              'new',
-            ),
-            'hostnameVariable':
-                DartTypes.celest.environmentVariable.constInstance([
-              literalString(config.hostname.name),
-            ]),
-            'tokenSecret': DartTypes.celest.secret.constInstance([
-              literalString(config.token.name),
-            ]),
-          },
-        ).awaited,
-      ));
+      b.addExpression(
+        declareFinal(database.dartName).assign(
+          refer(
+                'CelestDatabase',
+                'package:celest/src/runtime/data/celest_database.dart',
+              )
+              .property('create')
+              .call(
+                [refer('context')],
+                {
+                  'name': literalString(
+                    database.name,
+                    raw: database.name.contains(r'$'),
+                  ),
+                  'factory': database.schema.declaration.property('new'),
+                  'hostnameVariable': DartTypes.celest.environmentVariable
+                      .constInstance([literalString(config.hostname.name)]),
+                  'tokenSecret': DartTypes.celest.secret.constInstance([
+                    literalString(config.token.name),
+                  ]),
+                },
+              )
+              .awaited,
+        ),
+      );
       b.addExpression(
         refer('context').property('put').call([
-          refer('CelestData', CloudPaths.data.toString())
-              .property('${database.dartName}\$Key'),
+          refer(
+            'CelestData',
+            CloudPaths.data.toString(),
+          ).property('${database.dartName}\$Key'),
           refer(database.dartName).property('connect').call([]).awaited,
         ]),
       );
@@ -115,9 +120,10 @@ return start();
               'CelestCloudAuth',
               'package:celest_cloud_auth/celest_cloud_auth.dart',
             ).property('create').call([], {
-              'database': refer('celest', CloudPaths.client.toString())
-                  .property('data')
-                  .property(database.dartName),
+              'database': refer(
+                'celest',
+                CloudPaths.client.toString(),
+              ).property('data').property(database.dartName),
             }).awaited,
           ),
         );
@@ -141,28 +147,31 @@ return start();
       // Create the DB studio
       // TODO(dnys1): Consider adding this production where it should work even
       // without Cloud Auth.
-      b.statements.add(Block((b) {
-        b.addExpression(
-          declareFinal(r'$studio').assign(
-            refer(database.dartName).property('createStudio').call([]),
-          ),
-        );
-        b.addExpression(
-          refer('context').property('router').property('mount').call([
-            literalString('/_admin/studio'),
-            refer(r'$studio').property('call'),
-          ]),
-        );
-      }).wrapWithBlockIf(
-        refer('context').property('environment').equalTo(
-              DartTypes.celest.environment.property('local'),
+      b.statements.add(
+        Block((b) {
+          b.addExpression(
+            declareFinal(r'$studio').assign(
+              refer(database.dartName).property('createStudio').call([]),
             ),
-      ));
+          );
+          b.addExpression(
+            refer('context').property('router').property('mount').call([
+              literalString('/_admin/studio'),
+              refer(r'$studio').property('call'),
+            ]),
+          );
+        }).wrapWithBlockIf(
+          refer('context')
+              .property('environment')
+              .equalTo(DartTypes.celest.environment.property('local')),
+        ),
+      );
     });
   }
 
   Method get _startMethod => Method(
-        (m) => m
+    (m) =>
+        m
           ..name = 'start'
           ..returns = DartTypes.core.future(DartTypes.core.void$)
           ..modifier = MethodModifier.async
@@ -196,7 +205,7 @@ return start();
               }).awaited,
             );
           }),
-      );
+  );
 
   List<Method> get body => [_mainMethod, _startMethod];
 

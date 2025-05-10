@@ -40,9 +40,7 @@ import 'package:watcher/watcher.dart';
 enum RestartMode { hotReload, fullRestart }
 
 final class CelestFrontend with CloudRepository {
-  CelestFrontend({
-    required this.stopSignal,
-  }) {
+  CelestFrontend({required this.stopSignal}) {
     // Windows doesn't support listening for SIGUSR1 and SIGUSR2 signals.
     if (!platform.isWindows) {
       _reloadStream = StreamQueue(
@@ -114,10 +112,13 @@ final class CelestFrontend with CloudRepository {
 
   /// Starts a `build_runner watch` daemon and monitors reloads via stdout.
   Future<Stream<void>> _buildRunnerWatch() async {
-    final process = await processManager.start(
-      [Sdk.current.dart, 'run', 'build_runner', 'watch', '-d'],
-      workingDirectory: projectPaths.projectRoot,
-    );
+    final process = await processManager.start([
+      Sdk.current.dart,
+      'run',
+      'build_runner',
+      'watch',
+      '-d',
+    ], workingDirectory: projectPaths.projectRoot);
 
     final output = StreamController<String>(sync: true);
     process
@@ -155,10 +156,13 @@ final class CelestFrontend with CloudRepository {
 
   /// Runs `build_runner` build from the project root.
   Future<void> _buildRunnerBuild() async {
-    final process = await processManager.start(
-      [Sdk.current.dart, 'run', 'build_runner', 'build', '-d'],
-      workingDirectory: projectPaths.projectRoot,
-    );
+    final process = await processManager.start([
+      Sdk.current.dart,
+      'run',
+      'build_runner',
+      'build',
+      '-d',
+    ], workingDirectory: projectPaths.projectRoot);
     process
       ..captureStdout(sink: logger.finest, prefix: 'build_runner: ')
       ..captureStderr(sink: logger.finest, prefix: 'build_runner: ');
@@ -181,9 +185,8 @@ final class CelestFrontend with CloudRepository {
     _watcherSub ??= StreamQueue(
       _watcher!.events
           .tap(
-            (event) => logger.finest(
-              'Watcher event (${event.type}): ${event.path}',
-            ),
+            (event) =>
+                logger.finest('Watcher event (${event.type}): ${event.path}'),
           )
           .let((s) {
             // Buffer build runner passes, e.g. wait for build_runner to
@@ -266,11 +269,12 @@ final class CelestFrontend with CloudRepository {
   // safe, we invalidate all files on every reload. This is not ideal, but
   // it's the safest option for now.
   Future<Set<String>> _invalidateAllProjectFiles() async {
-    final allProjectFiles = await fileSystem
-        .directory(projectPaths.projectRoot)
-        .list(recursive: true)
-        .whereType<File>()
-        .toList();
+    final allProjectFiles =
+        await fileSystem
+            .directory(projectPaths.projectRoot)
+            .list(recursive: true)
+            .whereType<File>()
+            .toList();
     // Invalidate all paths.
     typeHelper.reset();
     final toInvalidate =
@@ -381,10 +385,10 @@ final class CelestFrontend with CloudRepository {
                 environmentId: 'local',
                 resolvedProject: resolvedProject,
                 restartMode: restartMode,
-                port: (await isolatedSecureStorage.getLocalUri(
-                  project.name,
-                ))
-                    .port,
+                port:
+                    (await isolatedSecureStorage.getLocalUri(
+                      project.name,
+                    )).port,
               );
             } on CompilationException catch (e, st) {
               cliLogger.err(
@@ -427,9 +431,7 @@ final class CelestFrontend with CloudRepository {
                 );
               }
               if (verbose) {
-                cliLogger.detail(
-                  'VM Service URI: ${_localApiRunner!.wsUri}',
-                );
+                cliLogger.detail('VM Service URI: ${_localApiRunner!.wsUri}');
               }
             } else {
               currentProgress!.complete('Reloaded project');
@@ -441,13 +443,9 @@ final class CelestFrontend with CloudRepository {
                 when !childProcess.isStarted) {
               logger.info('Running command: ${childProcess.command.join(' ')}');
               await childProcess.start(
-                dartDefines: {
-                  'CELEST_SERVICE_WS_URI': _localApiRunner!.wsUri,
-                },
+                dartDefines: {'CELEST_SERVICE_WS_URI': _localApiRunner!.wsUri},
               );
-              unawaited(
-                stopSignal.future.then(childProcess.stop),
-              );
+              unawaited(stopSignal.future.then(childProcess.stop));
             }
         }
 
@@ -553,8 +551,7 @@ final class CelestFrontend with CloudRepository {
           ast.Region.asiaPacific => const [pb.Region.ASIA_PACIFIC],
           ast.Region.northAmerica ||
           // TODO(dnys1): Get closest region on backend.
-          _ =>
-            const [pb.Region.NORTH_AMERICA],
+          _ => const [pb.Region.NORTH_AMERICA],
         },
       );
       final waiter = CloudCliOperation(
@@ -759,15 +756,14 @@ final class CelestFrontend with CloudRepository {
   /// Analyzes the project and reports if there are any errors.
   Future<CelestAnalysisResult> _analyzeProject({
     required bool migrateProject,
-  }) =>
-      performance.trace('CelestFrontend', 'analyzeProject', () async {
-        logger.fine('Analyzing project...');
-        final result = await analyzer.analyzeProject(
-          migrateProject: migrateProject,
-        );
-        stopSignal.check();
-        return result;
-      });
+  }) => performance.trace('CelestFrontend', 'analyzeProject', () async {
+    logger.fine('Analyzing project...');
+    final result = await analyzer.analyzeProject(
+      migrateProject: migrateProject,
+    );
+    stopSignal.check();
+    return result;
+  });
 
   /// Generates code for [project] and writes to the output directory.
   ///
@@ -775,38 +771,37 @@ final class CelestFrontend with CloudRepository {
   Future<List<String>> _generateBackendCode({
     required ast.Project project,
     required ast.ResolvedProject resolvedProject,
-  }) =>
-      performance.trace('CelestFrontend', 'generateBackendCode', () async {
-        logger.fine('Generating backend code...');
-        final codeGenerator = CloudCodeGenerator(
-          project: project,
-          resolvedProject: resolvedProject,
-        );
-        final outputs = codeGenerator.generate();
-        await (outputs.write(), celestProject.invalidate(outputs.keys)).wait;
-        stopSignal.check();
-        return codeGenerator.fileOutputs.keys.toList();
-      });
+  }) => performance.trace('CelestFrontend', 'generateBackendCode', () async {
+    logger.fine('Generating backend code...');
+    final codeGenerator = CloudCodeGenerator(
+      project: project,
+      resolvedProject: resolvedProject,
+    );
+    final outputs = codeGenerator.generate();
+    await (outputs.write(), celestProject.invalidate(outputs.keys)).wait;
+    stopSignal.check();
+    return codeGenerator.fileOutputs.keys.toList();
+  });
 
   /// Resolves the project AST applying transformations for things such as authorization.
   Future<ResolvedProject> _resolveProject(
     ast.Project project, {
     required String environmentId,
-  }) =>
-      performance.trace('CelestFrontend', 'resolveProject', () async {
-        logger.fine('Resolving configuration values...');
-        final configValues = await ConfigValueSolver(
+  }) => performance.trace('CelestFrontend', 'resolveProject', () async {
+    logger.fine('Resolving configuration values...');
+    final configValues =
+        await ConfigValueSolver(
           project: project,
           environmentId: environmentId,
         ).solveAll();
-        logger.fine('Resolving project...');
-        final projectResolver = ProjectLinker(
-          configValues: configValues,
-          environmentId: environmentId,
-        );
-        project.acceptWithArg(projectResolver, project);
-        return projectResolver.resolvedProject;
-      });
+    logger.fine('Resolving project...');
+    final projectResolver = ProjectLinker(
+      configValues: configValues,
+      environmentId: environmentId,
+    );
+    project.acceptWithArg(projectResolver, project);
+    return projectResolver.resolvedProject;
+  });
 
   Future<EntrypointResult> _writeProjectOutputs({
     required ResolvedProject resolvedProject,
@@ -832,19 +827,16 @@ final class CelestFrontend with CloudRepository {
     // Generate `flutter_assets` for the Flutter app.
     if (resolvedProject.sdkConfig.targetSdk == ast.SdkType.flutter) {
       Future<ProcessResult> createBundle() async {
-        return processManager.run(
-          [
-            Sdk.current.flutter ?? 'flutter',
-            'build',
-            'bundle',
-            '--release',
-            '--packages=${projectPaths.packagesConfig}',
-            '--asset-dir=${p.join(buildOutputs.path, 'flutter_assets')}',
-            '--target=${projectPaths.localApiEntrypoint}',
-            '--target-platform=linux-x64',
-          ],
-          workingDirectory: projectPaths.projectRoot,
-        );
+        return processManager.run([
+          Sdk.current.flutter ?? 'flutter',
+          'build',
+          'bundle',
+          '--release',
+          '--packages=${projectPaths.packagesConfig}',
+          '--asset-dir=${p.join(buildOutputs.path, 'flutter_assets')}',
+          '--target=${projectPaths.localApiEntrypoint}',
+          '--target-platform=linux-x64',
+        ], workingDirectory: projectPaths.projectRoot);
       }
 
       var bundleRes = await createBundle();
@@ -853,8 +845,9 @@ final class CelestFrontend with CloudRepository {
       // TODO(dnys1): https://github.com/flutter/flutter/issues/164149
       if (bundleRes.exitCode != 0) {
         final stderr = bundleRes.stderr as String;
-        final errMatcher =
-            RegExp("Cannot copy file to '([^']*)', path = '([^']*)'");
+        final errMatcher = RegExp(
+          "Cannot copy file to '([^']*)', path = '([^']*)'",
+        );
         if (errMatcher.firstMatch(stderr) case final match?) {
           // Add missing native assets JSON
           final missingManifestPath = match.group(2)!; // absolute path
@@ -882,7 +875,9 @@ final class CelestFrontend with CloudRepository {
         .childFile('Dockerfile')
         .writeAsString(dockerfile.generate());
 
-    await buildOutputs.childFile('celest.json').writeAsString(
+    await buildOutputs
+        .childFile('celest.json')
+        .writeAsString(
           prettyPrintJson(resolvedProject.toProto().toProto3Json()),
         );
 
@@ -948,7 +943,8 @@ final class CelestFrontend with CloudRepository {
   }
 
   Future<pb.ProjectEnvironment> _getOrCreateEnvironment(
-      String projectId) async {
+    String projectId,
+  ) async {
     final environment = await projectEnvironments.get(
       'production',
       projectId: projectId,
@@ -995,80 +991,72 @@ final class CelestFrontend with CloudRepository {
     required String environmentName,
     required String environmentId,
     required ast.ResolvedProject resolvedProject,
-  }) =>
-      performance.trace('CelestFrontend', 'deployProject', () async {
-        final output = await _writeProjectOutputs(
-          resolvedProject: resolvedProject,
-          environmentId: environmentId,
-        );
-        final (flutterAssetBytes, flutterAssetsEtag) =
-            switch (resolvedProject.sdkConfig.targetSdk) {
-          ast.SdkType.flutter => await _tarGzDirectory(
-              p.join(projectPaths.buildDir, 'flutter_assets'),
-            ),
-          _ => (Uint8List(0), ''),
-        };
-        final gzippedOutput = gzip.encode(output.outputDill) as Uint8List;
-        final gzippedDigest = await computeMd5(
-          gzippedOutput.asUnmodifiableView(),
-        );
-        final assets = [
-          pb.ProjectAsset(
-            type: output.type,
-            filename: '${p.basename(output.outputDillPath)}.gz',
-            inline: gzippedOutput,
-            etag: gzippedDigest.toString(),
-          ),
-          if (resolvedProject.sdkConfig.targetSdk == ast.SdkType.flutter)
-            pb.ProjectAsset(
-              type: pb.ProjectAsset_Type.FLUTTER_ASSETS,
-              filename: 'flutter_assets.tar.gz',
-              inline: flutterAssetBytes,
-              etag: flutterAssetsEtag,
-            ),
-        ];
-        final operation = cloud.projects.environments.deploy(
-          environmentName,
-          resolvedProject: resolvedProject.toProto(),
-          assets: assets,
-        );
-        final waiter = CloudCliOperation(
-          operation,
-          resourceType: 'project',
-          logger: logger,
-        );
-        final deployment = await waiter.run(
-          verbs: const (
-            run: 'deploy',
-            running: 'Deploying',
-            completed: 'deployed',
-          ),
-          cancelTrigger: stopSignal.future,
-          resource: pb.DeployProjectEnvironmentResponse(),
-        );
-        final deployedProject =
-            deployment.project.unpackInto(pb.ResolvedProject());
-        logger.fine('Deployed project to ${deployment.uri}: $deployedProject');
-        return (
-          ast.ResolvedProject.fromProto(deployedProject),
-          Uri.parse(deployment.uri),
-        );
-      });
+  }) => performance.trace('CelestFrontend', 'deployProject', () async {
+    final output = await _writeProjectOutputs(
+      resolvedProject: resolvedProject,
+      environmentId: environmentId,
+    );
+    final (flutterAssetBytes, flutterAssetsEtag) = switch (resolvedProject
+        .sdkConfig
+        .targetSdk) {
+      ast.SdkType.flutter => await _tarGzDirectory(
+        p.join(projectPaths.buildDir, 'flutter_assets'),
+      ),
+      _ => (Uint8List(0), ''),
+    };
+    final gzippedOutput = gzip.encode(output.outputDill) as Uint8List;
+    final gzippedDigest = await computeMd5(gzippedOutput.asUnmodifiableView());
+    final assets = [
+      pb.ProjectAsset(
+        type: output.type,
+        filename: '${p.basename(output.outputDillPath)}.gz',
+        inline: gzippedOutput,
+        etag: gzippedDigest.toString(),
+      ),
+      if (resolvedProject.sdkConfig.targetSdk == ast.SdkType.flutter)
+        pb.ProjectAsset(
+          type: pb.ProjectAsset_Type.FLUTTER_ASSETS,
+          filename: 'flutter_assets.tar.gz',
+          inline: flutterAssetBytes,
+          etag: flutterAssetsEtag,
+        ),
+    ];
+    final operation = cloud.projects.environments.deploy(
+      environmentName,
+      resolvedProject: resolvedProject.toProto(),
+      assets: assets,
+    );
+    final waiter = CloudCliOperation(
+      operation,
+      resourceType: 'project',
+      logger: logger,
+    );
+    final deployment = await waiter.run(
+      verbs: const (run: 'deploy', running: 'Deploying', completed: 'deployed'),
+      cancelTrigger: stopSignal.future,
+      resource: pb.DeployProjectEnvironmentResponse(),
+    );
+    final deployedProject = deployment.project.unpackInto(pb.ResolvedProject());
+    logger.fine('Deployed project to ${deployment.uri}: $deployedProject');
+    return (
+      ast.ResolvedProject.fromProto(deployedProject),
+      Uri.parse(deployment.uri),
+    );
+  });
 
   Future<void> _generateClientCode({
     required ast.Project project,
     required ast.ResolvedProject resolvedProject,
     required CelestProjectUris projectUris,
-  }) =>
-      performance.trace('CelestFrontend', 'generateClientCode', () async {
-        logger.fine('Generating client code...');
-        final generator = ClientCodeGenerator(
-          project: project,
-          resolvedProject: resolvedProject,
-          projectUris: projectUris,
-        );
-        await generator.generate().write();
-      });
+  }) => performance.trace('CelestFrontend', 'generateClientCode', () async {
+    logger.fine('Generating client code...');
+    final generator = ClientCodeGenerator(
+      project: project,
+      resolvedProject: resolvedProject,
+      projectUris: projectUris,
+    );
+    await generator.generate().write();
+  });
 
   Future<void> close() =>
       performance.trace('CelestFrontend', 'close', () async {

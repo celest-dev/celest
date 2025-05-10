@@ -33,13 +33,17 @@ void main() {
 
       await celestProject.config.secureSettings.setOrganizationId('org-id');
 
-      expect(await celestProject.config.secureSettings.getOrganizationId(),
-          'org-id');
+      expect(
+        await celestProject.config.secureSettings.getOrganizationId(),
+        'org-id',
+      );
 
       await const CelestUninstaller().uninstall();
 
-      expect(await celestProject.config.secureSettings.getOrganizationId(),
-          isNull);
+      expect(
+        await celestProject.config.secureSettings.getOrganizationId(),
+        isNull,
+      );
     });
 
     group('uninstall AOT', () {

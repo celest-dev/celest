@@ -35,9 +35,9 @@ final class LocalAotTarget extends TestTarget {
 
   @override
   Map<String, String> get environment => {
-        // <root>/apps/cli/ -> <root>/
-        'CELEST_LOCAL_PATH':
-            fileSystem.currentDirectory.parent.parent.absolute.path,
-        'CELEST_TEST': 'true',
-      };
+    // <root>/apps/cli/ -> <root>/
+    'CELEST_LOCAL_PATH':
+        fileSystem.currentDirectory.parent.parent.absolute.path,
+    'CELEST_TEST': 'true',
+  };
 }

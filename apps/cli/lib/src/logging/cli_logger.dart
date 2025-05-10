@@ -149,9 +149,10 @@ class CliLogger implements mason_logger.Logger {
   @override
   String prompt(String? message, {Object? defaultValue, bool hidden = false}) {
     stdout.write('$message ');
-    final input = hidden
-        ? _readLineHiddenSync()
-        : console.readLine(cancelOnBreak: true)?.trim();
+    final input =
+        hidden
+            ? _readLineHiddenSync()
+            : console.readLine(cancelOnBreak: true)?.trim();
     if (input == null) {
       throw const CancellationException();
     }
@@ -238,9 +239,10 @@ class CliLogger implements mason_logger.Logger {
 
 final class _CliProgress implements mason_logger.Progress {
   _CliProgress({required bool useAnsi, required String message})
-      : _progress = useAnsi
-            ? cli_logging.AnsiProgress(cli_logging.Ansi(true), message)
-            : null {
+    : _progress =
+          useAnsi
+              ? cli_logging.AnsiProgress(cli_logging.Ansi(true), message)
+              : null {
     if (!useAnsi) {
       stdout.writeln(message);
     }

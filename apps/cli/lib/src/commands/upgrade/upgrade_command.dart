@@ -40,8 +40,9 @@ final class UpgradeCommand extends CelestCommand {
 
     final upgrader = CelestUpgrader(cliLogger: cliLogger);
 
-    final (latestVersion, latestRelease) =
-        await getLatestVersion(includeDev: includeDev);
+    final (latestVersion, latestRelease) = await getLatestVersion(
+      includeDev: includeDev,
+    );
     logger.fine('Latest published release: $latestVersion');
     if (latestVersion <= Version.parse(version)) {
       cliLogger.success('Celest is already up to date!');
@@ -49,10 +50,10 @@ final class UpgradeCommand extends CelestCommand {
     }
 
     final failureMessage = switch (CliRuntime.current) {
-      CliRuntime.aot => 'Please visit https://celest.dev/download '
-          'to upgrade manually.',
-      CliRuntime.local ||
-      CliRuntime.pubGlobal =>
+      CliRuntime.aot =>
+        'Please visit https://celest.dev/download '
+            'to upgrade manually.',
+      CliRuntime.local || CliRuntime.pubGlobal =>
         'Please run `dart pub global activate celest_cli $latestVersion`.',
     };
 
@@ -79,8 +80,11 @@ final class UpgradeCommand extends CelestCommand {
             'celest_cli',
             latestVersion.toString(),
           ];
-          final ProcessResult(:exitCode, :stdout, :stderr) =
-              await processManager.run(command);
+          final ProcessResult(
+            :exitCode,
+            :stdout,
+            :stderr,
+          ) = await processManager.run(command);
           if (exitCode == 0) {
             progress.complete('Celest has been updated to the latest version!');
           } else {
@@ -95,10 +99,7 @@ final class UpgradeCommand extends CelestCommand {
       }
     } on Object catch (e, st) {
       Error.throwWithStackTrace(
-        CliException(
-          failureMessage,
-          additionalContext: {'error': '$e'},
-        ),
+        CliException(failureMessage, additionalContext: {'error': '$e'}),
         st,
       );
     }

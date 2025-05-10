@@ -11,9 +11,7 @@ void main() {
 
     test('delete clears all storage interfaces', () async {
       ctx.fileSystem = MemoryFileSystem.test();
-      await init(
-        projectRoot: ctx.fileSystem.systemTempDirectory.path,
-      );
+      await init(projectRoot: ctx.fileSystem.systemTempDirectory.path);
 
       expect(
         await celestProject.config.secureSettings.getOrganizationId(),
@@ -25,25 +23,16 @@ void main() {
         'org-id',
       );
 
-      expect(
-        celestProject.config.settings.pubCacheFixDigest,
-        isNull,
-      );
+      expect(celestProject.config.settings.pubCacheFixDigest, isNull);
       celestProject.config.settings.pubCacheFixDigest = 'digest';
-      expect(
-        celestProject.config.settings.pubCacheFixDigest,
-        'digest',
-      );
+      expect(celestProject.config.settings.pubCacheFixDigest, 'digest');
 
       await celestProject.config.delete();
       expect(
         await celestProject.config.secureSettings.getOrganizationId(),
         isNull,
       );
-      expect(
-        celestProject.config.settings.pubCacheFixDigest,
-        isNull,
-      );
+      expect(celestProject.config.settings.pubCacheFixDigest, isNull);
     });
   });
 }

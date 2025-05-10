@@ -12,14 +12,14 @@ final class InstalledTarget extends TestTarget {
 
   @override
   List<String> get executable => [
-        if (platform.isWindows)
-          p.join(
-            platform.environment['LOCALAPPDATA']!,
-            'Microsoft',
-            'WindowsApps',
-            'celest.exe',
-          )
-        else
-          getExecutablePath('celest', null, throwOnFailure: true)!,
-      ];
+    if (platform.isWindows)
+      p.join(
+        platform.environment['LOCALAPPDATA']!,
+        'Microsoft',
+        'WindowsApps',
+        'celest.exe',
+      )
+    else
+      getExecutablePath('celest', null, throwOnFailure: true)!,
+  ];
 }

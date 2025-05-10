@@ -28,14 +28,14 @@ mixin CloudRepository {
       case null:
         return null;
       case pb.LifecycleState.ACTIVE ||
-            pb.LifecycleState.CREATING ||
-            pb.LifecycleState.UPDATING:
+          pb.LifecycleState.CREATING ||
+          pb.LifecycleState.UPDATING:
         return organization;
       case pb.LifecycleState.DELETING || pb.LifecycleState.DELETED:
         throw StateError('Organization has been deleted');
       case pb.LifecycleState.CREATION_FAILED ||
-            pb.LifecycleState.UPDATE_FAILED ||
-            pb.LifecycleState.DELETION_FAILED:
+          pb.LifecycleState.UPDATE_FAILED ||
+          pb.LifecycleState.DELETION_FAILED:
         throw StateError('Organization is in a failed state');
       case pb.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED:
       default:
@@ -43,9 +43,7 @@ mixin CloudRepository {
     }
   }
 
-  Future<pb.Organization> createPrimaryOrg({
-    ast.Region? primaryRegion,
-  }) async {
+  Future<pb.Organization> createPrimaryOrg({ast.Region? primaryRegion}) async {
     var organizationDisplayName = '';
     do {
       organizationDisplayName = cliLogger.prompt(
@@ -80,11 +78,7 @@ mixin CloudRepository {
         logger: logger,
       );
       final organization = await waiter.run(
-        verbs: const (
-          run: 'create',
-          running: 'Creating',
-          completed: 'created',
-        ),
+        verbs: const (run: 'create', running: 'Creating', completed: 'created'),
         cancelTrigger: stopSignal.future,
         resource: pb.Organization(),
       );

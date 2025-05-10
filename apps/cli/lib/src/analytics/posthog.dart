@@ -15,10 +15,10 @@ final class PostHog extends Analytics {
     required NativeStorage storage,
     required PostHogConfig config,
     http.Client? client,
-  })  : _storage = storage,
-        _apiKey = config.apiKey,
-        _apiHost = config.apiHost,
-        _client = client ?? http.Client();
+  }) : _storage = storage,
+       _apiKey = config.apiKey,
+       _apiHost = config.apiHost,
+       _client = client ?? http.Client();
 
   final NativeStorage _storage;
   final String _apiKey;
@@ -108,9 +108,9 @@ final class CaptureResult {
   final Map<String, Object?>? $setOnce;
 
   Map<String, Object?> toJson() => {
-        'event': event,
-        'properties': properties,
-        if ($set != null) r'$set': $set,
-        if ($setOnce != null) r'$set_once': $setOnce,
-      };
+    'event': event,
+    'properties': properties,
+    if ($set != null) r'$set': $set,
+    if ($setOnce != null) r'$set_once': $setOnce,
+  };
 }

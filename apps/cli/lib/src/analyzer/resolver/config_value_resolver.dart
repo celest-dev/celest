@@ -17,23 +17,24 @@ import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 
 typedef ConfigValue = (String name, FileSpan location);
-typedef ConfigValueFactory<T extends ast.ConfigurationVariable> = T Function(
-  String, {
-  String? value,
-  String? dartName,
-  Iterable<String> docs,
-  required FileSpan location,
-});
+typedef ConfigValueFactory<T extends ast.ConfigurationVariable> =
+    T Function(
+      String, {
+      String? value,
+      String? dartName,
+      Iterable<String> docs,
+      required FileSpan location,
+    });
 
 final class ConfigVarSet<T extends ast.ConfigurationVariable>
     extends DelegatingSet<T> {
   ConfigVarSet()
-      : super(
-          LinkedHashSet<T>(
-            equals: (a, b) => a.name == b.name,
-            hashCode: (a) => a.name.hashCode,
-          ),
-        );
+    : super(
+        LinkedHashSet<T>(
+          equals: (a, b) => a.name == b.name,
+          hashCode: (a) => a.name.hashCode,
+        ),
+      );
 
   factory ConfigVarSet.of(Iterable<T> values) {
     return ConfigVarSet()..addAll(values);
@@ -47,12 +48,12 @@ final class ConfigVarMap<T extends ast.ConfigurationVariable>
       ..addEntries(values.map((it) => MapEntry(it, it.name)));
   }
   ConfigVarMap()
-      : super(
-          LinkedHashMap<T, String>(
-            equals: (a, b) => a.name == b.name,
-            hashCode: (a) => a.name.hashCode,
-          ),
-        );
+    : super(
+        LinkedHashMap<T, String>(
+          equals: (a, b) => a.name == b.name,
+          hashCode: (a) => a.name.hashCode,
+        ),
+      );
 
   @override
   ConfigVarSet<T> get keys => ConfigVarSet.of(super.keys);
@@ -84,14 +85,18 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
       );
     }
 
-    final topLevelDefinitions = references
-        .map((ref) => ref.enclosingFragment.element)
-        .whereType<TopLevelVariableElement2>();
-    final topLevelResolutions = <(
-      String dartName,
-      Iterable<String> docs,
-      Future<(String, String?, FileSpan?)?> resolution,
-    )>[];
+    final topLevelDefinitions =
+        references
+            .map((ref) => ref.enclosingFragment.element)
+            .whereType<TopLevelVariableElement2>();
+    final topLevelResolutions =
+        <
+          (
+            String dartName,
+            Iterable<String> docs,
+            Future<(String, String?, FileSpan?)?> resolution,
+          )
+        >[];
     for (final variable in topLevelDefinitions) {
       topLevelResolutions.add((
         variable.name3!,
@@ -120,9 +125,10 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
       }),
     );
 
-    final parameters = references
-        .map((ref) => ref.enclosingFragment.element)
-        .whereType<FormalParameterElement>();
+    final parameters =
+        references
+            .map((ref) => ref.enclosingFragment.element)
+            .whereType<FormalParameterElement>();
     final parameterResolutions = <Future<(String, String?, FileSpan?)?>>[];
     for (final parameter in parameters) {
       for (final metadata in parameter.metadata2.annotations) {
@@ -188,14 +194,14 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
     return switch (argument) {
       SimpleStringLiteral(:final value) => value,
       final unsupported => run(() {
-          _logger.fine('Unsupported argument type: $unsupported');
-          return null;
-        }),
+        _logger.fine('Unsupported argument type: $unsupported');
+        return null;
+      }),
     };
   }
 
   Future<(String name, String? staticValue, FileSpan? location)?>
-      resolveVariable({
+  resolveVariable({
     required Element2 variable,
     required DartObject? value,
     required FileSpan? location,
@@ -204,20 +210,21 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
     String? staticValue;
     if (value != null) {
       _logger.finest('Resolved value: $value');
-      name = (value.getField('name') ??
-              value.getField('(super)')?.getField('name'))
-          ?.toStringValue();
-      staticValue = (value.getField('value') ??
-              value.getField('(super)')?.getField('value'))
-          ?.toStringValue();
+      name =
+          (value.getField('name') ??
+                  value.getField('(super)')?.getField('name'))
+              ?.toStringValue();
+      staticValue =
+          (value.getField('value') ??
+                  value.getField('(super)')?.getField('value'))
+              ?.toStringValue();
       _logger.finest('Resolved name: $name ($staticValue)');
     } else if (variable.library2 case final libraryElement?) {
       // Only resolve variables in the project backend
-      if (libraryElement.firstFragment.source.uri
-          case Uri(
-            scheme: 'package',
-            pathSegments: [!= 'celest_backend', ...],
-          )) {
+      if (libraryElement.firstFragment.source.uri case Uri(
+        scheme: 'package',
+        pathSegments: [!= 'celest_backend', ...],
+      )) {
         _logger.finest('Skipping: $variable');
         return null;
       }
@@ -259,14 +266,14 @@ extension WithEnvironment on ProjectDatabase {
     required String environmentId,
   }) {
     return transaction(() async {
-      if (await projectDrift.lookupEnvironment(id: environmentId).get()
-          case [
-            final environment,
-          ]) {
+      if (await projectDrift.lookupEnvironment(id: environmentId).get() case [
+        final environment,
+      ]) {
         return withEnv(environment);
       }
-      final [environment] =
-          await projectDrift.createEnvironment(id: environmentId);
+      final [environment] = await projectDrift.createEnvironment(
+        id: environmentId,
+      );
       return withEnv(environment);
     });
   }
@@ -280,17 +287,19 @@ extension ResolveConfigurationVariable on ast.ConfigurationVariable {
     ) async {
       switch (this) {
         case ast.Variable(:final name):
-          final value = await db.projectDrift
-              .getEnvironmentVariable(
-                environmentId: environment.id,
-                name: name,
-              )
-              .get();
+          final value =
+              await db.projectDrift
+                  .getEnvironmentVariable(
+                    environmentId: environment.id,
+                    name: name,
+                  )
+                  .get();
           return value.singleOrNull;
         case ast.Secret(:final name):
-          final value = await db.projectDrift
-              .getSecret(environmentId: environment.id, name: name)
-              .get();
+          final value =
+              await db.projectDrift
+                  .getSecret(environmentId: environment.id, name: name)
+                  .get();
           final ref = value.singleOrNull;
           if (ref == null) {
             return null;
@@ -318,22 +327,24 @@ extension ResolveConfigurationVariables<T extends ast.ConfigurationVariable>
       final values = <String, String>{};
       switch (first) {
         case ast.Variable():
-          final dbValues = await db.projectDrift
-              .getEnvironmentVariables(
-                environmentId: environment.id,
-                names: variableNames,
-              )
-              .get();
+          final dbValues =
+              await db.projectDrift
+                  .getEnvironmentVariables(
+                    environmentId: environment.id,
+                    names: variableNames,
+                  )
+                  .get();
           for (final value in dbValues) {
             values[value.name] = value.value;
           }
         case ast.Secret():
-          final dbValues = await db.projectDrift
-              .getSecrets(
-                environmentId: environment.id,
-                names: variableNames,
-              )
-              .get();
+          final dbValues =
+              await db.projectDrift
+                  .getSecrets(
+                    environmentId: environment.id,
+                    names: variableNames,
+                  )
+                  .get();
           for (final secret in dbValues) {
             final [...scope, key] = secret.valueRef.split('/');
             final value = secureStorage.scoped(scope.join('/')).read(key);

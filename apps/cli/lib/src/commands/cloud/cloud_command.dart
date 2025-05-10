@@ -22,7 +22,8 @@ enum CloudCommandType { create, get, list, update, delete }
 typedef CloudVerbs = ({String run, String running, String completed});
 
 abstract base class BaseCloudCommand<R extends GeneratedMessage>
-    extends CelestCommand with Authenticate {
+    extends CelestCommand
+    with Authenticate {
   /// The resource type of the service, e.g. `Project`.
   String get resourceType;
 
@@ -46,27 +47,29 @@ base mixin CloudOperationCommand<R extends GeneratedMessage>
       CloudOperationCommandOptions(argResults!);
 
   @override
-  late final ArgParser argParser = super.argParser
-    ..addFlag(
-      'validate-only',
-      // TODO(dnys1): Needs to be implemented on the backend
-      hide: true,
-      negatable: false,
-      defaultsTo: false,
-      help: 'If set, the command will only validate the request, '
-          'without creating the ${resourceType.toLowerCase()}',
-    )
-    ..addOption(
-      'request-id',
-      // TODO(dnys1): Needs to be implemented on the backend
-      hide: true,
-    )
-    ..addFlag(
-      'wait',
-      negatable: true,
-      defaultsTo: false,
-      help: 'If set, the command will wait for the operation to complete',
-    );
+  late final ArgParser argParser =
+      super.argParser
+        ..addFlag(
+          'validate-only',
+          // TODO(dnys1): Needs to be implemented on the backend
+          hide: true,
+          negatable: false,
+          defaultsTo: false,
+          help:
+              'If set, the command will only validate the request, '
+              'without creating the ${resourceType.toLowerCase()}',
+        )
+        ..addOption(
+          'request-id',
+          // TODO(dnys1): Needs to be implemented on the backend
+          hide: true,
+        )
+        ..addFlag(
+          'wait',
+          negatable: true,
+          defaultsTo: false,
+          help: 'If set, the command will wait for the operation to complete',
+        );
 
   @override
   Future<int> run() async {
@@ -74,13 +77,14 @@ base mixin CloudOperationCommand<R extends GeneratedMessage>
 
     await assertAuthenticated();
 
-    final verbs = options.validateOnly
-        ? const (
-            run: 'validate',
-            running: 'Validating',
-            completed: 'validated',
-          )
-        : this.verbs;
+    final verbs =
+        options.validateOnly
+            ? const (
+              run: 'validate',
+              running: 'Validating',
+              completed: 'validated',
+            )
+            : this.verbs;
 
     final progress = cliLogger.progress('${verbs.running} $resourceType...');
     try {
@@ -218,13 +222,14 @@ final class CloudCliOperation<R extends GeneratedMessage> {
 }
 
 abstract base class CloudCreateCommand<R extends GeneratedMessage>
-    extends BaseCloudCommand<R> with CloudOperationCommand<R> {
+    extends BaseCloudCommand<R>
+    with CloudOperationCommand<R> {
   @override
   CloudVerbs get verbs => const (
-        run: 'create',
-        running: 'Creating',
-        completed: 'created',
-      );
+    run: 'create',
+    running: 'Creating',
+    completed: 'created',
+  );
 
   /// The parent resource type of the service, e.g. `Organization`.
   String? get parentResourceType;
@@ -284,15 +289,10 @@ abstract base class CloudGetCommand<R extends GeneratedMessage>
   }
 }
 
-typedef CloudListResult<R extends GeneratedMessage> = ({
-  List<R> items,
-  String? nextPageToken
-});
+typedef CloudListResult<R extends GeneratedMessage> =
+    ({List<R> items, String? nextPageToken});
 
-enum CloudListMode {
-  raw,
-  table,
-}
+enum CloudListMode { raw, table }
 
 abstract base class CloudListCommand<R extends GeneratedMessage>
     extends BaseCloudCommand<R> {
@@ -404,13 +404,14 @@ abstract base class CloudListCommand<R extends GeneratedMessage>
 }
 
 abstract base class CloudUpdateCommand<R extends GeneratedMessage>
-    extends BaseCloudCommand<R> with CloudOperationCommand<R> {
+    extends BaseCloudCommand<R>
+    with CloudOperationCommand<R> {
   @override
   CloudVerbs get verbs => const (
-        run: 'update',
-        running: 'Updating',
-        completed: 'updated',
-      );
+    run: 'update',
+    running: 'Updating',
+    completed: 'updated',
+  );
 
   @override
   late final ArgParser argParser = () {
@@ -436,16 +437,17 @@ abstract base class CloudUpdateCommand<R extends GeneratedMessage>
 }
 
 abstract base class CloudDeleteCommand<R extends GeneratedMessage>
-    extends BaseCloudCommand<R> with CloudOperationCommand<R> {
+    extends BaseCloudCommand<R>
+    with CloudOperationCommand<R> {
   @override
   R createEmptyResource();
 
   @override
   CloudVerbs get verbs => const (
-        run: 'delete',
-        running: 'Deleting',
-        completed: 'deleted',
-      );
+    run: 'delete',
+    running: 'Deleting',
+    completed: 'deleted',
+  );
 
   @override
   late final ArgParser argParser = () {
@@ -459,7 +461,8 @@ abstract base class CloudDeleteCommand<R extends GeneratedMessage>
         hide: true,
         negatable: false,
         defaultsTo: false,
-        help: 'If set, and the $resource is not found, the command will still '
+        help:
+            'If set, and the $resource is not found, the command will still '
             'succeed',
       )
       ..addFlag(
@@ -467,7 +470,8 @@ abstract base class CloudDeleteCommand<R extends GeneratedMessage>
         abbr: 'f',
         negatable: false,
         defaultsTo: false,
-        help: 'If set, any child resourcess of the $resource will '
+        help:
+            'If set, any child resourcess of the $resource will '
             'also be marked for deletion. Otherwise, the request will only '
             'work if the $resource has no children',
       )

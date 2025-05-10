@@ -99,13 +99,16 @@ dependencies:
       final dependencyMap = <String, YamlNode>{};
       for (final dependency in constraints.keys.sorted()) {
         var hasDependency = true;
-        final currentValue = editor.parseAt(
-          [type.key, dependency],
-          orElse: () {
-            hasDependency = false;
-            return YamlScalar.wrap(null);
-          },
-        ).value;
+        final currentValue =
+            editor
+                .parseAt(
+                  [type.key, dependency],
+                  orElse: () {
+                    hasDependency = false;
+                    return YamlScalar.wrap(null);
+                  },
+                )
+                .value;
 
         // Fixes an issue where if a dependency was specified with a null
         // constraint, e.g. `test:` instead of `test: ^1.0.0`, the edit

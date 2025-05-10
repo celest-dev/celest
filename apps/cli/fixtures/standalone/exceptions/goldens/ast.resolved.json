@@ -187,7 +187,7 @@
   "secrets": [],
   "databases": {},
   "sdkConfig": {
-    "celest": "1.0.12",
+    "celest": "1.0.13",
     "dart": {
       "type": "dart",
       "version": "3.8.0-278.2.beta",

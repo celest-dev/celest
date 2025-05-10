@@ -72,11 +72,11 @@ extension AuthConfigurationValues on Auth {
           case GoogleAuthProvider(:final clientId, :final clientSecret):
             b.addValues(GoogleAuthProvider.$type, [clientId, clientSecret]);
           case AppleAuthProvider(
-              :final clientId,
-              :final teamId,
-              :final keyId,
-              :final privateKey,
-            ):
+            :final clientId,
+            :final teamId,
+            :final keyId,
+            :final privateKey,
+          ):
             b.addValues(AppleAuthProvider.$type, [
               clientId,
               teamId,

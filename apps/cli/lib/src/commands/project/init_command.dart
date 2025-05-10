@@ -22,10 +22,7 @@ final class InitCommand extends CelestCommand
       },
       defaultsTo: 'hello',
     );
-    argParser.addOption(
-      'name',
-      help: 'The project name.',
-    );
+    argParser.addOption('name', help: 'The project name.');
   }
 
   @override

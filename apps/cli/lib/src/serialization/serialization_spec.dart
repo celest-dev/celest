@@ -19,8 +19,8 @@ final class SerializationSpec {
     required this.fromJsonType,
     required this.toJsonType,
     SerializationSpec? representationType,
-  })  : castType = castType ?? wireType,
-        _representationType = representationType;
+  }) : castType = castType ?? wireType,
+       _representationType = representationType;
 
   final DartType type;
 
@@ -92,28 +92,26 @@ final class SerializationSpec {
     List<ParameterSpec>? fromJsonParameters,
     Object? fromJsonType = const Object(),
     Object? toJsonType = const Object(),
-  }) =>
-      SerializationSpec(
-        type: type ?? this.type,
-        wireType: wireType ?? this.wireType,
-        castType: castType ?? this.castType,
-        fields: fields ?? this.fields,
-        wireConstructor: wireConstructor,
-        constructorParameters:
-            constructorParameters ?? this.constructorParameters,
-        fromJsonParameters: fromJsonParameters ?? this.fromJsonParameters,
-        fromJsonType: switch (fromJsonType) {
-          null => null,
-          final DartType type => type,
-          _ => this.fromJsonType,
-        },
-        toJsonType: switch (toJsonType) {
-          null => null,
-          final DartType type => type,
-          _ => this.toJsonType,
-        },
-        representationType: _representationType,
-      );
+  }) => SerializationSpec(
+    type: type ?? this.type,
+    wireType: wireType ?? this.wireType,
+    castType: castType ?? this.castType,
+    fields: fields ?? this.fields,
+    wireConstructor: wireConstructor,
+    constructorParameters: constructorParameters ?? this.constructorParameters,
+    fromJsonParameters: fromJsonParameters ?? this.fromJsonParameters,
+    fromJsonType: switch (fromJsonType) {
+      null => null,
+      final DartType type => type,
+      _ => this.fromJsonType,
+    },
+    toJsonType: switch (toJsonType) {
+      null => null,
+      final DartType type => type,
+      _ => this.toJsonType,
+    },
+    representationType: _representationType,
+  );
 
   @override
   bool operator ==(Object other) {
@@ -143,18 +141,18 @@ final class SerializationSpec {
 
   @override
   int get hashCode => Object.hash(
-        const DartTypeEquality().hash(type),
-        wireType,
-        castType,
-        const ListEquality<FieldSpec>().hash(fields),
-        const ListEquality<ParameterSpec>().hash(constructorParameters),
-        const ListEquality<ParameterSpec>().hash(fromJsonParameters),
-        const DartTypeEquality().hash(fromJsonType),
-        const DartTypeEquality().hash(toJsonType),
-        parent == null ? null : const DartTypeEquality().hash(parent!.type),
-        const ListEquality<SerializationSpec>().hash(subtypes),
-        _representationType,
-      );
+    const DartTypeEquality().hash(type),
+    wireType,
+    castType,
+    const ListEquality<FieldSpec>().hash(fields),
+    const ListEquality<ParameterSpec>().hash(constructorParameters),
+    const ListEquality<ParameterSpec>().hash(fromJsonParameters),
+    const DartTypeEquality().hash(fromJsonType),
+    const DartTypeEquality().hash(toJsonType),
+    parent == null ? null : const DartTypeEquality().hash(parent!.type),
+    const ListEquality<SerializationSpec>().hash(subtypes),
+    _representationType,
+  );
 }
 
 @immutable
@@ -214,10 +212,10 @@ final class ParameterSpec {
 
   @override
   int get hashCode => Object.hash(
-        name,
-        const DartTypeEquality().hash(type),
-        isPositional,
-        isOptional,
-        isNamed,
-      );
+    name,
+    const DartTypeEquality().hash(type),
+    isPositional,
+    isOptional,
+    isNamed,
+  );
 }

@@ -1,8 +1,12 @@
-## NEXT
+## 1.0.13
 
 - feat: Serve DB studio when running locally
+- feat: Add ARM64 Docker images
+- feat: Migrate databases to Turso
 - fix: Don't throw if `analysis_options.yaml` is missing
 - chore: Update codegen for database changes
+- chore: Bump Dart SDK constraint to `^3.7.0`
+- chore: Reformat with Dart 3.7
 
 ## 1.0.12
 

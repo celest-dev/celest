@@ -36,7 +36,7 @@ Future<CelestProject> newProject({
   String? exceptions,
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
-  Map<String, Object /* String | Map<String, Object?>*/ > lib = const {},
+  Map<String, Object /* String | Map<String, Object?>*/> lib = const {},
   String? parentDirectory,
 }) async {
   projectDart ??= _simpleProjectDart(name);
@@ -126,9 +126,10 @@ dependencies:
               'functions': {
                 for (final MapEntry(key: fileName, value: contents)
                     in apis.entries)
-                  fileName: contents.startsWith('@')
-                      ? contents
-                      : '''
+                  fileName:
+                      contents.startsWith('@')
+                          ? contents
+                          : '''
 import 'package:celest/celest.dart';
 import 'package:$name/exceptions.dart';
 import 'package:$name/models.dart';
@@ -181,8 +182,8 @@ Iterable<d.Descriptor> _nestedDescriptor(
       String() => d.file(name, contents),
       Map() => d.dir(name, _nestedDescriptor(contents.cast())),
       final badContents => unreachable(
-          'Bad contents: ${badContents.runtimeType}',
-        ),
+        'Bad contents: ${badContents.runtimeType}',
+      ),
     };
   }
 }
@@ -200,7 +201,7 @@ void testNoErrors({
   Map<String, String> config = const {},
   Map<String, Object> lib = const {},
   void Function(Project)? expectProject,
-  List<Object /* String | Matcher */ > warnings = const [],
+  List<Object /* String | Matcher */> warnings = const [],
 }) {
   testErrors(
     name: name,
@@ -232,8 +233,8 @@ void testErrors({
   Map<String, String> apis = const {},
   Map<String, String> config = const {},
   Map<String, Object> lib = const {},
-  required List<Object /* String | Matcher */ > errors,
-  List<Object /* String | Matcher */ > warnings = const [],
+  required List<Object /* String | Matcher */> errors,
+  List<Object /* String | Matcher */> warnings = const [],
   void Function(Project)? expectProject,
 }) {
   test(name, skip: skip, () async {
@@ -1763,12 +1764,13 @@ class ItemNotFoundException implements Exception {}
           final function = project.apis.values.single.functions.values.single;
 
           hasErrorType(String type, int statusCode) =>
-              (Subject<ApiMetadata> it) => it.isA<ApiHttpError>()
-                ..has((it) => it.type.symbol, 'symbol').equals(type)
-                ..has(
-                  (it) => it.statusCode,
-                  'statusCode',
-                ).equals(statusCode);
+              (Subject<ApiMetadata> it) =>
+                  it.isA<ApiHttpError>()
+                    ..has((it) => it.type.symbol, 'symbol').equals(type)
+                    ..has(
+                      (it) => it.statusCode,
+                      'statusCode',
+                    ).equals(statusCode);
 
           check(function.metadata).containsInOrder([
             hasErrorType('UnauthorizedException', HttpStatus.unauthorized),
@@ -1806,10 +1808,13 @@ String sayHello({
         expectProject: (project) {
           final parameters =
               project.apis.values.single.functions.values.single.parameters;
-          hasHeader(String name) => (Subject<CloudFunctionParameter> it) =>
-              it.has((it) => it.references, 'references').isA<NodeReference>()
-                ..has((it) => it.type, 'type').equals(NodeType.httpHeader)
-                ..has((it) => it.name, 'name').equals(name);
+          hasHeader(String name) =>
+              (Subject<CloudFunctionParameter> it) =>
+                  it
+                      .has((it) => it.references, 'references')
+                      .isA<NodeReference>()
+                    ..has((it) => it.type, 'type').equals(NodeType.httpHeader)
+                    ..has((it) => it.name, 'name').equals(name);
           check(parameters).containsInOrder([
             hasHeader('header'),
             hasHeader('x-custom-string'),
@@ -1874,10 +1879,13 @@ String sayHello({
         expectProject: (project) {
           final parameters =
               project.apis.values.single.functions.values.single.parameters;
-          hasQuery(String name) => (Subject<CloudFunctionParameter> it) =>
-              it.has((it) => it.references, 'references').isA<NodeReference>()
-                ..has((it) => it.type, 'type').equals(NodeType.httpQuery)
-                ..has((it) => it.name, 'name').equals(name);
+          hasQuery(String name) =>
+              (Subject<CloudFunctionParameter> it) =>
+                  it
+                      .has((it) => it.references, 'references')
+                      .isA<NodeReference>()
+                    ..has((it) => it.type, 'type').equals(NodeType.httpQuery)
+                    ..has((it) => it.name, 'name').equals(name);
           check(parameters).containsInOrder([
             hasQuery('query'),
             hasQuery('x-custom-string'),
@@ -2248,7 +2256,9 @@ const auth = Auth(
           );
           expect(
             project
-                .apis['greeting']!.functions['sayHelloPositional']!.parameters
+                .apis['greeting']!
+                .functions['sayHelloPositional']!
+                .parameters
                 .map((param) => param.references),
             unorderedEquals([
               NodeReference(name: 'MY_NAME', type: NodeType.variable),
@@ -2343,9 +2353,9 @@ const auth = Auth(
               .isNotNull()
               .has((it) => it.providers.map((it) => it.type), 'providers')
               .unorderedEquals([
-            EmailAuthProvider.$type,
-            // SmsAuthProvider.$type,
-          ]);
+                EmailAuthProvider.$type,
+                // SmsAuthProvider.$type,
+              ]);
         },
       );
 

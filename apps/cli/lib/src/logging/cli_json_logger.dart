@@ -13,9 +13,7 @@ void _writeLog(LogMessage log) {
 /// which uses JSON input and output.
 class CliJsonLogger extends CliLogger {
   CliJsonLogger()
-      : super(
-          progressOptions: const mason_logger.ProgressOptions(),
-        ) {
+    : super(progressOptions: const mason_logger.ProgressOptions()) {
     level = mason_logger.Level.verbose;
   }
 

@@ -5,11 +5,12 @@ import 'package:celest_cli/src/init/templates/project_template.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 
-typedef ProjectTemplateFactory = ProjectTemplate Function(
-  String projectRoot,
-  String projectName,
-  String projectDisplayName,
-);
+typedef ProjectTemplateFactory =
+    ProjectTemplate Function(
+      String projectRoot,
+      String projectName,
+      String projectDisplayName,
+    );
 
 /// Manages the generation of a new Celest project.
 class ProjectGenerator {
@@ -61,11 +62,10 @@ class ProjectGenerator {
         ),
         ProjectFile.client(projectRoot, projectName),
         template,
-        if (parentProject
-            case ParentProject(
-              path: final appRoot,
-              :final type,
-            )) ...[
+        if (parentProject case ParentProject(
+          path: final appRoot,
+          :final type,
+        )) ...[
           AddAnalyzerPlugin(projectRoot, appRoot),
           if (type == SdkType.flutter) MacOsEntitlements(projectRoot, appRoot),
         ],

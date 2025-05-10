@@ -16,10 +16,8 @@ extension type Storage._(core.NativeStorage _impl)
 extension CelestStorage on core.NativeStorage {
   Future<({String distinctId, String deviceId})> init() async {
     final storage = isolated;
-    var (distinctId, deviceId) = await (
-      storage.read('distinctId'),
-      storage.read('deviceId'),
-    ).wait;
+    var (distinctId, deviceId) =
+        await (storage.read('distinctId'), storage.read('deviceId')).wait;
     if (deviceId == null) {
       deviceId = const Uuid().v7();
       await storage.write('deviceId', deviceId);

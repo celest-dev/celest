@@ -23,10 +23,10 @@ final class DeployProjectEnvironmentCommand
 
   @override
   CloudVerbs get verbs => const (
-        run: 'deploy',
-        running: 'Deploying',
-        completed: 'deployed',
-      );
+    run: 'deploy',
+    running: 'Deploying',
+    completed: 'deployed',
+  );
 
   @override
   CloudOperation<DeployProjectEnvironmentResponse> callService() async* {

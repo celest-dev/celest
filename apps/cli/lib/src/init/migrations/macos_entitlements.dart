@@ -34,15 +34,16 @@ final class MacOsEntitlements extends ProjectMigration {
       _logger.finest('No macos directory. Skipping entitlements update.');
       return const ProjectMigrationSkipped();
     }
-    final entitlementFiles = await macosDir
-        .list()
-        .whereType<Directory>()
-        .asyncExpand(
-          (dir) => dir.list().whereType<File>().where(
+    final entitlementFiles =
+        await macosDir
+            .list()
+            .whereType<Directory>()
+            .asyncExpand(
+              (dir) => dir.list().whereType<File>().where(
                 (file) => p.extension(file.path) == '.entitlements',
               ),
-        )
-        .toList();
+            )
+            .toList();
 
     _logger.finest(() {
       final entitlementFileNames = entitlementFiles

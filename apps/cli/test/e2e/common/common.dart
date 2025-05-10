@@ -120,18 +120,17 @@ mixin TestHelpers {
     List<String> args = const [],
     String? workingDirectory,
     Map<String, String>? environment,
-  }) =>
-      runCommand(
-        [...target.executable, command, '--json', ...args],
-        workingDirectory: workingDirectory,
-        environment: {
-          if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
-          ...defaultCliEnvironment,
-          ...target.environment,
-          ...this.environment,
-          ...?environment,
-        },
-      );
+  }) => runCommand(
+    [...target.executable, command, '--json', ...args],
+    workingDirectory: workingDirectory,
+    environment: {
+      if (logFile case final logFile?) 'CELEST_LOG_FILE': logFile.path,
+      ...defaultCliEnvironment,
+      ...target.environment,
+      ...this.environment,
+      ...?environment,
+    },
+  );
 
   Command celestCommand(
     String command, [
@@ -169,9 +168,11 @@ mixin TestHelpers {
     if (celestLocalPath case final localPath?) {
       return localPath;
     }
-    final gitRootRes = await processManager.run(
-      ['git', 'rev-parse', '--show-toplevel'],
-    );
+    final gitRootRes = await processManager.run([
+      'git',
+      'rev-parse',
+      '--show-toplevel',
+    ]);
     if (gitRootRes.exitCode != 0) {
       throw Exception('Failed to get git root directory: ${gitRootRes.stderr}');
     }

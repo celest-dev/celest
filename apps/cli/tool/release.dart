@@ -39,14 +39,16 @@ final String hostArch = switch (osArch) {
 final String version = packageVersion;
 
 /// The current SHA of the branch being built.
-final String? currentSha = platform.environment.containsKey('CI')
-    ? (processManager.runSync(
-        // <String>['git', 'log', '-1', '--format=format:%H'], ?
-        <String>['git', 'rev-parse', 'HEAD'],
-        stdoutEncoding: utf8,
-      ).stdout as String)
-        .trim()
-    : null;
+final String? currentSha =
+    platform.environment.containsKey('CI')
+        ? (processManager.runSync(
+                  // <String>['git', 'log', '-1', '--format=format:%H'], ?
+                  <String>['git', 'rev-parse', 'HEAD'],
+                  stdoutEncoding: utf8,
+                ).stdout
+                as String)
+            .trim()
+        : null;
 
 /// Whether we're running in CI.
 final isCI = platform.environment['CI'] == 'true';
@@ -56,10 +58,14 @@ final isCI = platform.environment['CI'] == 'true';
 /// This script is used by the GitHub workflow `apps_cli_release.yaml` to create
 /// a zip of the CLI and its dependencies for the current platform.
 Future<void> main(List<String> args) async {
-  final argParser = ArgParser()
-    ..addOption('target-os', allowed: ['linux'], defaultsTo: hostOs)
-    ..addMultiOption('target-arch',
-        allowed: ['arm64', 'x64'], defaultsTo: [hostArch]);
+  final argParser =
+      ArgParser()
+        ..addOption('target-os', allowed: ['linux'], defaultsTo: hostOs)
+        ..addMultiOption(
+          'target-arch',
+          allowed: ['arm64', 'x64'],
+          defaultsTo: [hostArch],
+        );
   final argResults = argParser.parse(args);
 
   final targetOs = argResults.option('target-os')!;
@@ -67,15 +73,14 @@ Future<void> main(List<String> args) async {
 
   final artifacts = <String>[];
   for (final targetArch in targetArchs) {
-    final artifact = await _build(
-      targetOs: targetOs,
-      targetArch: targetArch,
-    );
+    final artifact = await _build(targetOs: targetOs, targetArch: targetArch);
     artifacts.add(artifact);
   }
 
   if (platform.environment['GITHUB_OUTPUT'] case final ciOutput?) {
-    fileSystem.file(ciOutput).writeAsStringSync(
+    fileSystem
+        .file(ciOutput)
+        .writeAsStringSync(
           [
             'version=$version',
             'artifacts<<EOF',
@@ -98,23 +103,19 @@ Future<String> _build({
     buildDir.deleteSync(recursive: true);
   }
   await buildDir.create(recursive: true);
-  await _runProcess(
-    'dart',
-    [
-      if (currentSha case final currentSha?) '--define=gitSha=$currentSha',
-      '--define=version=$version',
-      'compile',
-      'exe',
-      if (targetOs != hostOs || targetArch != hostArch) ...[
-        '--target-os=$targetOs',
-        '--target-arch=$targetArch',
-        '--experimental-cross-compilation',
-      ],
-      '--output=$buildPath/celest.exe',
-      'bin/celest.dart',
+  await _runProcess('dart', [
+    if (currentSha case final currentSha?) '--define=gitSha=$currentSha',
+    '--define=version=$version',
+    'compile',
+    'exe',
+    if (targetOs != hostOs || targetArch != hostArch) ...[
+      '--target-os=$targetOs',
+      '--target-arch=$targetArch',
+      '--experimental-cross-compilation',
     ],
-    workingDirectory: platform.script.resolve('..').toFilePath(),
-  );
+    '--output=$buildPath/celest.exe',
+    'bin/celest.dart',
+  ], workingDirectory: platform.script.resolve('..').toFilePath());
   if (!buildDir.existsSync()) {
     throw StateError('Build directory does not exist');
   }
@@ -147,10 +148,8 @@ abstract class Bundler {
   String get extension;
 
   /// The path to the output file, dependent on the OS/arch.
-  String get outputFilepath => p.join(
-        outputsDir.path,
-        'celest_cli-$os-$arch.$extension',
-      );
+  String get outputFilepath =>
+      p.join(outputsDir.path, 'celest_cli-$os-$arch.$extension');
 
   /// The directory to use for temporary (non-bundled) files.
   final Directory tempDir = fileSystem.systemTempDirectory.createTempSync(
@@ -250,15 +249,11 @@ final class LinuxDebBundler extends Bundler {
     // Print directory structure
     _printFs(debDir);
 
-    await _runProcess(
-      'dpkg-deb',
-      [
-        '--build',
-        debDir.path,
-        outputFilepath,
-      ],
-      workingDirectory: tempDir.path,
-    );
+    await _runProcess('dpkg-deb', [
+      '--build',
+      debDir.path,
+      outputFilepath,
+    ], workingDirectory: tempDir.path);
   }
 }
 

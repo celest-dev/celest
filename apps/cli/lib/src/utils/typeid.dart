@@ -132,11 +132,13 @@ Uuid _decode(String encoded) {
   id[5] = (_dec[bytes[8]] << 5) | _dec[bytes[9]];
 
   // 10 bytes of entropy (80 bits)
-  id[6] = (_dec[bytes[10]] << 3) |
+  id[6] =
+      (_dec[bytes[10]] << 3) |
       (_dec[bytes[11]] >> 2); // First 4 bits are the version
   id[7] =
       (_dec[bytes[11]] << 6) | (_dec[bytes[12]] << 1) | (_dec[bytes[13]] >> 4);
-  id[8] = (_dec[bytes[13]] << 4) |
+  id[8] =
+      (_dec[bytes[13]] << 4) |
       (_dec[bytes[14]] >> 1); // First 2 bits are the variant
   id[9] =
       (_dec[bytes[14]] << 7) | (_dec[bytes[15]] << 2) | (_dec[bytes[16]] >> 3);

@@ -39,10 +39,10 @@ final class CelestReleasesInfo {
 @_serializable
 final class CelestReleaseInfo {
   const CelestReleaseInfo({required this.version, this.installer, this.zip})
-      : assert(
-          installer != null || zip != null,
-          'Either installer or zip must be provided.',
-        );
+    : assert(
+        installer != null || zip != null,
+        'Either installer or zip must be provided.',
+      );
 
   factory CelestReleaseInfo.fromJson(Map<String, Object?> json) =>
       _$CelestReleaseInfoFromJson(json);

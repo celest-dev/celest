@@ -9,12 +9,13 @@ import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 import 'package:stream_channel/isolate_channel.dart';
 
-typedef _EnvRequest = ({
-  int id,
-  String? name,
-  String? value,
-  List<(ast.Variable, String)>? variables,
-});
+typedef _EnvRequest =
+    ({
+      int id,
+      String? name,
+      String? value,
+      List<(ast.Variable, String)>? variables,
+    });
 
 typedef EnvironmentID = String;
 
@@ -118,13 +119,10 @@ final class SingleEnvManager implements EnvLoader {
   Future<void> _spawn() async {
     final port = ReceivePort();
     _channel = IsolateChannel<_EnvRequest>.connectReceive(port);
-    _isolate = await Isolate.spawn(
-        _handleRequests,
-        (
-          port.sendPort,
-          envFile,
-        ),
-        debugName: 'IsolatedEnvManager');
+    _isolate = await Isolate.spawn(_handleRequests, (
+      port.sendPort,
+      envFile,
+    ), debugName: 'IsolatedEnvManager');
   }
 
   static Future<void> _handleRequests(
@@ -227,18 +225,19 @@ final class _IsolatedEnvManager {
   final _changes = <String, String>{};
 
   Map<String, String> get env => _env;
-  List<(ast.Variable, String)> get variables => _env.entries
-      .map(
-        (entry) => (
-          ast.Variable(
-            entry.key,
-            dartName: null,
-            location: _spans[entry.key]!,
-          ),
-          entry.value,
-        ),
-      )
-      .toList();
+  List<(ast.Variable, String)> get variables =>
+      _env.entries
+          .map(
+            (entry) => (
+              ast.Variable(
+                entry.key,
+                dartName: null,
+                location: _spans[entry.key]!,
+              ),
+              entry.value,
+            ),
+          )
+          .toList();
 
   List<(ast.Variable, String)> reload() {
     final (env, spans) = _load();

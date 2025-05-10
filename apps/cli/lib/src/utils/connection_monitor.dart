@@ -36,8 +36,9 @@ final class ConnectionMonitor {
 
   Future<bool> checkConnection() async {
     try {
-      final result =
-          await httpClient.head(_checkUri).timeout(const Duration(seconds: 1));
+      final result = await httpClient
+          .head(_checkUri)
+          .timeout(const Duration(seconds: 1));
       return result.statusCode == 200;
     } on Object {
       return false;
