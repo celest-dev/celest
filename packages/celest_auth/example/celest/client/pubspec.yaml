@@ -3,11 +3,11 @@ description: The Celest client for celest_auth_example.
 publish_to: none
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.7.0
 
 dependencies:
   celest: ^1.0.0
-  celest_auth: any
+  celest_auth: 'any'
   celest_backend:
     path: ../
   celest_core: ^1.0.0

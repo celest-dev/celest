@@ -26,11 +26,12 @@ enum CelestEnvironment {
   production;
 
   Uri get baseUri => switch (this) {
-        local => _$celest.kIsWeb || !Platform.isAndroid
-            ? Uri.parse('http://localhost:7777')
-            : Uri.parse('http://10.0.2.2:7777'),
-        production => Uri.parse('https://tasks-942444.fly.dev'),
-      };
+    local =>
+      _$celest.kIsWeb || !Platform.isAndroid
+          ? Uri.parse('http://localhost:7777')
+          : Uri.parse('http://10.0.2.2:7777'),
+    production => Uri.parse('https://tasks-942444.fly.dev'),
+  };
 }
 
 class Celest with _$celest.CelestBase {
@@ -42,8 +43,9 @@ class Celest with _$celest.CelestBase {
       _$native_storage_native_storage.NativeStorage(scope: 'celest');
 
   @override
-  late _$http_http.Client httpClient =
-      _$celest.CelestHttpClient(secureStorage: nativeStorage.secure);
+  late _$http_http.Client httpClient = _$celest.CelestHttpClient(
+    secureStorage: nativeStorage.secure,
+  );
 
   late Uri _baseUri;
 
@@ -52,7 +54,8 @@ class Celest with _$celest.CelestBase {
   T _checkInitialized<T>(T Function() value) {
     if (!_initialized) {
       throw StateError(
-          'Celest has not been initialized. Make sure to call `celest.init()` at the start of your `main` method.');
+        'Celest has not been initialized. Make sure to call `celest.init()` at the start of your `main` method.',
+      );
     }
     return value();
   }
@@ -66,9 +69,16 @@ class Celest with _$celest.CelestBase {
   CelestFunctions get functions => _checkInitialized(() => _functions);
 
   void init({
-    CelestEnvironment environment = CelestEnvironment.local,
+    CelestEnvironment? environment,
     _$celest.Serializers? serializers,
   }) {
+    if (environment == null) {
+      const environmentOverride = String.fromEnvironment(
+        'CELEST_ENVIRONMENT',
+        defaultValue: 'local',
+      );
+      environment = CelestEnvironment.values.byName(environmentOverride);
+    }
     if (_initialized) {
       _reset();
     }

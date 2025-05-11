@@ -11,35 +11,53 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
-      'title', aliasedName, false,
-      additionalChecks:
-          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 100),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
+    'title',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 100,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   @override
   late final GeneratedColumnWithTypeConverter<Priority, String> priority =
-      GeneratedColumn<String>('priority', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<Priority>($TasksTable.$converterpriority);
-  static const VerificationMeta _completedMeta =
-      const VerificationMeta('completed');
+      GeneratedColumn<String>(
+        'priority',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<Priority>($TasksTable.$converterpriority);
+  static const VerificationMeta _completedMeta = const VerificationMeta(
+    'completed',
+  );
   @override
   late final GeneratedColumn<bool> completed = GeneratedColumn<bool>(
-      'completed', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("completed" IN (0, 1))'),
-      defaultValue: const Constant(false));
+    'completed',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("completed" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   @override
   List<GeneratedColumn> get $columns => [id, title, priority, completed];
   @override
@@ -48,8 +66,10 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
   String get actualTableName => $name;
   static const String $name = 'tasks';
   @override
-  VerificationContext validateIntegrity(Insertable<Task> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<Task> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -57,13 +77,17 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
     }
     if (data.containsKey('title')) {
       context.handle(
-          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
     if (data.containsKey('completed')) {
-      context.handle(_completedMeta,
-          completed.isAcceptableOrUnknown(data['completed']!, _completedMeta));
+      context.handle(
+        _completedMeta,
+        completed.isAcceptableOrUnknown(data['completed']!, _completedMeta),
+      );
     }
     return context;
   }
@@ -74,15 +98,27 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
   Task map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Task(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      title: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
-      priority: $TasksTable.$converterpriority.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}priority'])!),
-      completed: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}completed'])!,
+      id:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}id'],
+          )!,
+      title:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}title'],
+          )!,
+      priority: $TasksTable.$converterpriority.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}priority'],
+        )!,
+      ),
+      completed:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.bool,
+            data['${effectivePrefix}completed'],
+          )!,
     );
   }
 
@@ -100,19 +136,21 @@ class Task extends DataClass implements Insertable<Task> {
   final String title;
   final Priority priority;
   final bool completed;
-  const Task(
-      {required this.id,
-      required this.title,
-      required this.priority,
-      required this.completed});
+  const Task({
+    required this.id,
+    required this.title,
+    required this.priority,
+    required this.completed,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['title'] = Variable<String>(title);
     {
-      map['priority'] =
-          Variable<String>($TasksTable.$converterpriority.toSql(priority));
+      map['priority'] = Variable<String>(
+        $TasksTable.$converterpriority.toSql(priority),
+      );
     }
     map['completed'] = Variable<bool>(completed);
     return map;
@@ -127,14 +165,17 @@ class Task extends DataClass implements Insertable<Task> {
     );
   }
 
-  factory Task.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory Task.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Task(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
-      priority: $TasksTable.$converterpriority
-          .fromJson(serializer.fromJson<String>(json['priority'])),
+      priority: $TasksTable.$converterpriority.fromJson(
+        serializer.fromJson<String>(json['priority']),
+      ),
       completed: serializer.fromJson<bool>(json['completed']),
     );
   }
@@ -144,20 +185,24 @@ class Task extends DataClass implements Insertable<Task> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
-      'priority': serializer
-          .toJson<String>($TasksTable.$converterpriority.toJson(priority)),
+      'priority': serializer.toJson<String>(
+        $TasksTable.$converterpriority.toJson(priority),
+      ),
       'completed': serializer.toJson<bool>(completed),
     };
   }
 
-  Task copyWith(
-          {int? id, String? title, Priority? priority, bool? completed}) =>
-      Task(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        priority: priority ?? this.priority,
-        completed: completed ?? this.completed,
-      );
+  Task copyWith({
+    int? id,
+    String? title,
+    Priority? priority,
+    bool? completed,
+  }) => Task(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    priority: priority ?? this.priority,
+    completed: completed ?? this.completed,
+  );
   Task copyWithCompanion(TasksCompanion data) {
     return Task(
       id: data.id.present ? data.id.value : this.id,
@@ -206,8 +251,8 @@ class TasksCompanion extends UpdateCompanion<Task> {
     required String title,
     required Priority priority,
     this.completed = const Value.absent(),
-  })  : title = Value(title),
-        priority = Value(priority);
+  }) : title = Value(title),
+       priority = Value(priority);
   static Insertable<Task> custom({
     Expression<int>? id,
     Expression<String>? title,
@@ -222,11 +267,12 @@ class TasksCompanion extends UpdateCompanion<Task> {
     });
   }
 
-  TasksCompanion copyWith(
-      {Value<int>? id,
-      Value<String>? title,
-      Value<Priority>? priority,
-      Value<bool>? completed}) {
+  TasksCompanion copyWith({
+    Value<int>? id,
+    Value<String>? title,
+    Value<Priority>? priority,
+    Value<bool>? completed,
+  }) {
     return TasksCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -246,7 +292,8 @@ class TasksCompanion extends UpdateCompanion<Task> {
     }
     if (priority.present) {
       map['priority'] = Variable<String>(
-          $TasksTable.$converterpriority.toSql(priority.value));
+        $TasksTable.$converterpriority.toSql(priority.value),
+      );
     }
     if (completed.present) {
       map['completed'] = Variable<bool>(completed.value);
@@ -277,18 +324,20 @@ abstract class _$TaskDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [tasks];
 }
 
-typedef $$TasksTableCreateCompanionBuilder = TasksCompanion Function({
-  Value<int> id,
-  required String title,
-  required Priority priority,
-  Value<bool> completed,
-});
-typedef $$TasksTableUpdateCompanionBuilder = TasksCompanion Function({
-  Value<int> id,
-  Value<String> title,
-  Value<Priority> priority,
-  Value<bool> completed,
-});
+typedef $$TasksTableCreateCompanionBuilder =
+    TasksCompanion Function({
+      Value<int> id,
+      required String title,
+      required Priority priority,
+      Value<bool> completed,
+    });
+typedef $$TasksTableUpdateCompanionBuilder =
+    TasksCompanion Function({
+      Value<int> id,
+      Value<String> title,
+      Value<Priority> priority,
+      Value<bool> completed,
+    });
 
 class $$TasksTableFilterComposer extends Composer<_$TaskDatabase, $TasksTable> {
   $$TasksTableFilterComposer({
@@ -299,18 +348,25 @@ class $$TasksTableFilterComposer extends Composer<_$TaskDatabase, $TasksTable> {
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get title => $composableBuilder(
-      column: $table.title, builder: (column) => ColumnFilters(column));
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnWithTypeConverterFilters<Priority, Priority, String> get priority =>
       $composableBuilder(
-          column: $table.priority,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
+        column: $table.priority,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
 
   ColumnFilters<bool> get completed => $composableBuilder(
-      column: $table.completed, builder: (column) => ColumnFilters(column));
+    column: $table.completed,
+    builder: (column) => ColumnFilters(column),
+  );
 }
 
 class $$TasksTableOrderingComposer
@@ -323,16 +379,24 @@ class $$TasksTableOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get title => $composableBuilder(
-      column: $table.title, builder: (column) => ColumnOrderings(column));
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get priority => $composableBuilder(
-      column: $table.priority, builder: (column) => ColumnOrderings(column));
+    column: $table.priority,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<bool> get completed => $composableBuilder(
-      column: $table.completed, builder: (column) => ColumnOrderings(column));
+    column: $table.completed,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TasksTableAnnotationComposer
@@ -357,71 +421,85 @@ class $$TasksTableAnnotationComposer
       $composableBuilder(column: $table.completed, builder: (column) => column);
 }
 
-class $$TasksTableTableManager extends RootTableManager<
-    _$TaskDatabase,
-    $TasksTable,
-    Task,
-    $$TasksTableFilterComposer,
-    $$TasksTableOrderingComposer,
-    $$TasksTableAnnotationComposer,
-    $$TasksTableCreateCompanionBuilder,
-    $$TasksTableUpdateCompanionBuilder,
-    (Task, BaseReferences<_$TaskDatabase, $TasksTable, Task>),
-    Task,
-    PrefetchHooks Function()> {
+class $$TasksTableTableManager
+    extends
+        RootTableManager<
+          _$TaskDatabase,
+          $TasksTable,
+          Task,
+          $$TasksTableFilterComposer,
+          $$TasksTableOrderingComposer,
+          $$TasksTableAnnotationComposer,
+          $$TasksTableCreateCompanionBuilder,
+          $$TasksTableUpdateCompanionBuilder,
+          (Task, BaseReferences<_$TaskDatabase, $TasksTable, Task>),
+          Task,
+          PrefetchHooks Function()
+        > {
   $$TasksTableTableManager(_$TaskDatabase db, $TasksTable table)
-      : super(TableManagerState(
+    : super(
+        TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () =>
-              $$TasksTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$TasksTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$TasksTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<String> title = const Value.absent(),
-            Value<Priority> priority = const Value.absent(),
-            Value<bool> completed = const Value.absent(),
-          }) =>
-              TasksCompanion(
-            id: id,
-            title: title,
-            priority: priority,
-            completed: completed,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required String title,
-            required Priority priority,
-            Value<bool> completed = const Value.absent(),
-          }) =>
-              TasksCompanion.insert(
-            id: id,
-            title: title,
-            priority: priority,
-            completed: completed,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
+          createFilteringComposer:
+              () => $$TasksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer:
+              () => $$TasksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer:
+              () => $$TasksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<Priority> priority = const Value.absent(),
+                Value<bool> completed = const Value.absent(),
+              }) => TasksCompanion(
+                id: id,
+                title: title,
+                priority: priority,
+                completed: completed,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String title,
+                required Priority priority,
+                Value<bool> completed = const Value.absent(),
+              }) => TasksCompanion.insert(
+                id: id,
+                title: title,
+                priority: priority,
+                completed: completed,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          BaseReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
           prefetchHooksCallback: null,
-        ));
+        ),
+      );
 }
 
-typedef $$TasksTableProcessedTableManager = ProcessedTableManager<
-    _$TaskDatabase,
-    $TasksTable,
-    Task,
-    $$TasksTableFilterComposer,
-    $$TasksTableOrderingComposer,
-    $$TasksTableAnnotationComposer,
-    $$TasksTableCreateCompanionBuilder,
-    $$TasksTableUpdateCompanionBuilder,
-    (Task, BaseReferences<_$TaskDatabase, $TasksTable, Task>),
-    Task,
-    PrefetchHooks Function()>;
+typedef $$TasksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$TaskDatabase,
+      $TasksTable,
+      Task,
+      $$TasksTableFilterComposer,
+      $$TasksTableOrderingComposer,
+      $$TasksTableAnnotationComposer,
+      $$TasksTableCreateCompanionBuilder,
+      $$TasksTableUpdateCompanionBuilder,
+      (Task, BaseReferences<_$TaskDatabase, $TasksTable, Task>),
+      Task,
+      PrefetchHooks Function()
+    >;
 
 class $TaskDatabaseManager {
   final _$TaskDatabase _db;

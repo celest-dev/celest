@@ -22,13 +22,16 @@ export 'package:celest_backend/models/person.dart' show Person;
 final Celest celest = Celest();
 
 enum CelestEnvironment {
-  local;
+  local,
+  production;
 
   Uri get baseUri => switch (this) {
-        local => _$celest.kIsWeb || !Platform.isAndroid
-            ? Uri.parse('http://localhost:51506')
-            : Uri.parse('http://10.0.2.2:51506'),
-      };
+    local =>
+      _$celest.kIsWeb || !Platform.isAndroid
+          ? Uri.parse('http://localhost:51506')
+          : Uri.parse('http://10.0.2.2:51506'),
+    production => Uri.parse('https://example-401c28.fly.dev'),
+  };
 }
 
 class Celest with _$celest.CelestBase {
@@ -66,9 +69,16 @@ class Celest with _$celest.CelestBase {
   CelestFunctions get functions => _checkInitialized(() => _functions);
 
   void init({
-    CelestEnvironment environment = CelestEnvironment.local,
+    CelestEnvironment? environment,
     _$celest.Serializers? serializers,
   }) {
+    if (environment == null) {
+      const environmentOverride = String.fromEnvironment(
+        'CELEST_ENVIRONMENT',
+        defaultValue: 'local',
+      );
+      environment = CelestEnvironment.values.byName(environmentOverride);
+    }
     if (_initialized) {
       _reset();
     }

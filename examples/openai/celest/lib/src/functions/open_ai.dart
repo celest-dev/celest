@@ -12,10 +12,10 @@ import 'package:chat_gpt_sdk/src/model/chat_complete/response/chat_choice_sse.da
 
 /// Creates an instance of the OpenAI client.
 OpenAI _createOpenAI(String token) => OpenAI.instance.build(
-      token: token,
-      baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
-      enableLog: true,
-    );
+  token: token,
+  baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
+  enableLog: true,
+);
 
 /// Returns a list of available models.
 @cloud
@@ -25,10 +25,7 @@ Future<List<String>> availableModels() async => _availableModels;
 ///
 /// This is maintained on the server and can be updated without updating the
 /// client or Flutter app.
-const _availableModels = [
-  'gpt-4',
-  'gpt-3.5-turbo',
-];
+const _availableModels = ['gpt-4', 'gpt-3.5-turbo'];
 
 /// Prompts the GPT [model] with the given [prompt] and [parameters].
 ///

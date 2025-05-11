@@ -10,9 +10,7 @@ Future<void> main() async {
     url: 'YOUR_SUPABASE_URL',
     anonKey: 'YOUR_SUPABASE_ANON_KEY',
   );
-  celest.init(
-    externalAuth: ExternalAuth.supabase(supabase.client.auth),
-  );
+  celest.init(externalAuth: ExternalAuth.supabase(supabase.client.auth));
   runApp(const MyApp());
 }
 

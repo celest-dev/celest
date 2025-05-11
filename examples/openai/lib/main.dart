@@ -62,9 +62,10 @@ class _OpenAiAppState extends State<OpenAiApp> {
       prompt: _promptController.text,
       model: _selectedModel,
       parameters: ModelParameters(
-        maxTokens: _maxTokensController.text.isNotEmpty
-            ? int.parse(_maxTokensController.text)
-            : null,
+        maxTokens:
+            _maxTokensController.text.isNotEmpty
+                ? int.parse(_maxTokensController.text)
+                : null,
         temperature: _temperatureSliderValue,
       ),
     );
@@ -118,9 +119,10 @@ class _OpenAiAppState extends State<OpenAiApp> {
           _selectedModel = newValue;
         });
       },
-      dropdownMenuEntries: availableModels
-          .map((value) => DropdownMenuEntry(value: value, label: value))
-          .toList(),
+      dropdownMenuEntries:
+          availableModels
+              .map((value) => DropdownMenuEntry(value: value, label: value))
+              .toList(),
     );
   }
 
@@ -129,9 +131,7 @@ class _OpenAiAppState extends State<OpenAiApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('OpenAI'),
-        ),
+        appBar: AppBar(title: const Text('OpenAI')),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -146,17 +146,18 @@ class _OpenAiAppState extends State<OpenAiApp> {
                     // dropdown menu.
                     FutureBuilder<List<String>>(
                       future: _availableModelsFuture,
-                      builder: (context, snapshot) => switch (snapshot) {
-                        // Build the dropdown when data is available
-                        AsyncSnapshot(:final data?) =>
-                          _availableModelsDropdown(data),
+                      builder:
+                          (context, snapshot) => switch (snapshot) {
+                            // Build the dropdown when data is available
+                            AsyncSnapshot(:final data?) =>
+                              _availableModelsDropdown(data),
 
-                        // Handle the error case
-                        AsyncSnapshot(:final error?) => Text('$error'),
+                            // Handle the error case
+                            AsyncSnapshot(:final error?) => Text('$error'),
 
-                        // If waiting, show a progress indicator
-                        _ => const CircularProgressIndicator(),
-                      },
+                            // If waiting, show a progress indicator
+                            _ => const CircularProgressIndicator(),
+                          },
                     ),
                     const SizedBox(width: 20),
                     Expanded(
@@ -232,10 +233,7 @@ class _OpenAiAppState extends State<OpenAiApp> {
                   ),
                 ),
                 const SizedBox(height: 50),
-                Text(
-                  'Answer',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
+                Text('Answer', style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 20),
                 TextField(
                   readOnly: true,

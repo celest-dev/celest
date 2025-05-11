@@ -19,10 +19,7 @@ Future<Task> addTask({
   if (title.trim().isEmpty) {
     throw ServerException('Title cannot be empty');
   }
-  final newTask = TasksCompanion.insert(
-    title: title,
-    priority: priority,
-  );
+  final newTask = TasksCompanion.insert(title: title, priority: priority);
   print('Creating task: $newTask');
   final task = await db.into(db.tasks).insertReturning(newTask);
   print('Task created: $task');
@@ -32,8 +29,9 @@ Future<Task> addTask({
 @cloud
 Future<Task?> deleteTask({required int id}) async {
   print('Removing task: $id');
-  final task =
-      await db.delete(db.tasks).deleteReturning(TasksCompanion(id: Value(id)));
+  final task = await db
+      .delete(db.tasks)
+      .deleteReturning(TasksCompanion(id: Value(id)));
   if (task == null) {
     print('Task not found');
     return null;
@@ -45,8 +43,9 @@ Future<Task?> deleteTask({required int id}) async {
 @cloud
 Future<Task> markAsComplete({required int id}) async {
   print('Marking task as complete: $id');
-  final updated = await (db.update(db.tasks)..where((t) => t.id.equals(id)))
-      .writeReturning(TasksCompanion(completed: Value(true)));
+  final updated = await (db.update(db.tasks)..where(
+    (t) => t.id.equals(id),
+  )).writeReturning(TasksCompanion(completed: Value(true)));
   if (updated.isEmpty) {
     throw const NotFoundException('Task not found');
   }
@@ -57,8 +56,9 @@ Future<Task> markAsComplete({required int id}) async {
 @cloud
 Future<Task> markAsIncomplete({required int id}) async {
   print('Marking task as incomplete: $id');
-  final updated = await (db.update(db.tasks)..where((t) => t.id.equals(id)))
-      .writeReturning(TasksCompanion(completed: Value(false)));
+  final updated = await (db.update(db.tasks)..where(
+    (t) => t.id.equals(id),
+  )).writeReturning(TasksCompanion(completed: Value(false)));
   if (updated.isEmpty) {
     throw const NotFoundException('Task not found');
   }
