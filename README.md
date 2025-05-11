@@ -5,10 +5,6 @@
 
 ## Celest
 
-> [!WARNING]
-> Celest is in the process of being open-sourced. During this process, many of the previously valid links like [celest.dev]() will be
-> unavailable. We expect this process to be completed by the end of April 2025.
-
 Celest is the Flutter cloud platform. We enable Flutter and Dart developers to declaratively define their backend infrastructure in Dart.
 
 And to stay up-to-date on the future of Celest, including full server-side rendered Flutter apps, join our newsletter at [celest.dev](https://www.celest.dev/#stay-up-to-date).
@@ -64,8 +60,8 @@ This function can be called from a Dart project like so:
 import 'package:my_project_client/my_project_client.dart';
 
 Future<void> main() async {
-  celest.init(environment: CelestEnvironment.local);
-  final response = await celest.functions.sayHello('World');
+  celest.init();
+  final response = await celest.functions.greeting.sayHello('World');
   print(response); // Hello, World
 }
 ```
@@ -90,25 +86,23 @@ packages available in this repo.
 
 ## Packages
 
-| Package                                | Description                                                   | Pub                                                                                                                            | Checks                                                                                                                                                                          |
-| -------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [celest](packages/celest/)             | The main package for defining Celest backends.                | <a href="https://pub.dev/packages/celest" target="_blank"> <img src="https://img.shields.io/pub/v/celest.svg"></a>             | [![Celest](https://github.com/celest-dev/celest/actions/workflows/celest.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest.yaml)                   |
-| [celest_ast](packages/celest_ast/)     | A structured representation of Celest projects.               | <a href="https://pub.dev/packages/celest_ast" target="_blank"> <img src="https://img.shields.io/pub/v/celest_ast.svg"></a>     | [![Celest AST](https://github.com/celest-dev/celest/actions/workflows/celest_ast.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_ast.yaml)       |
-| [celest_auth](packages/celest_auth/)   | The authentication and authorization runtimes for Celest.     | <a href="https://pub.dev/packages/celest_auth" target="_blank"> <img src="https://img.shields.io/pub/v/celest_auth.svg"></a>   | [![Celest Auth](https://github.com/celest-dev/celest/actions/workflows/celest_auth.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_auth.yaml)    |
-| [celest_cloud](packages/celest_cloud/) | API contracts and Dart clients for the Celest Cloud platform. | <a href="https://pub.dev/packages/celest_cloud" target="_blank"> <img src="https://img.shields.io/pub/v/celest_cloud.svg"></a> | [![Celest Cloud](https://github.com/celest-dev/celest/actions/workflows/celest_cloud.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_cloud.yaml) |
-| [celest_core](packages/celest_core/)   | Core types and utilities shared between Celest packages.      | <a href="https://pub.dev/packages/celest_core" target="_blank"> <img src="https://img.shields.io/pub/v/celest_core.svg"></a>   | [![Celest Core](https://github.com/celest-dev/celest/actions/workflows/celest_core.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_core.yaml)    |
+| Package                                        | Description                                                   | Pub                                                                                                                                    | Checks                                                                                                                                                                                      |
+| ---------------------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [celest](packages/celest/)                     | The main package for defining Celest backends.                | <a href="https://pub.dev/packages/celest" target="_blank"> <img src="https://img.shields.io/pub/v/celest.svg"></a>                     | [![Celest](https://github.com/celest-dev/celest/actions/workflows/celest.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest.yaml)                               |
+| [celest_ast](packages/celest_ast/)             | A structured representation of Celest projects.               | <a href="https://pub.dev/packages/celest_ast" target="_blank"> <img src="https://img.shields.io/pub/v/celest_ast.svg"></a>             | [![Celest AST](https://github.com/celest-dev/celest/actions/workflows/celest_ast.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_ast.yaml)                   |
+| [celest_auth](packages/celest_auth/)           | The authentication and authorization runtimes for Celest.     | <a href="https://pub.dev/packages/celest_auth" target="_blank"> <img src="https://img.shields.io/pub/v/celest_auth.svg"></a>           | [![Celest Auth](https://github.com/celest-dev/celest/actions/workflows/celest_auth.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_auth.yaml)                |
+| [celest_cloud](packages/celest_cloud/)         | API contracts and Dart clients for the Celest Cloud platform. | <a href="https://pub.dev/packages/celest_cloud" target="_blank"> <img src="https://img.shields.io/pub/v/celest_cloud.svg"></a>         | [![Celest Cloud](https://github.com/celest-dev/celest/actions/workflows/celest_cloud.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_cloud.yaml)             |
+| [celest_core](packages/celest_core/)           | Core types and utilities shared between Celest packages.      | <a href="https://pub.dev/packages/celest_core" target="_blank"> <img src="https://img.shields.io/pub/v/celest_core.svg"></a>           | [![Celest Core](https://github.com/celest-dev/celest/actions/workflows/celest_core.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_core.yaml)                |
+| [celest_db_studio](packages/celest_db_studio/) | A wrapper over Outerbase Studio for Celest databases.         | <a href="https://pub.dev/packages/celest_db_studio" target="_blank"> <img src="https://img.shields.io/pub/v/celest_db_studio.svg"></a> | [![Celest DB Studio](https://github.com/celest-dev/celest/actions/workflows/celest_db_studio.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_db_studio.yaml) |
+| [celest_test](packages/celest_test/)           | Helper package for running integration tests with Celest.     | <a href="https://pub.dev/packages/celest_test" target="_blank"> <img src="https://img.shields.io/pub/v/celest_test.svg"></a>           | [![Celest DB Studio](https://github.com/celest-dev/celest/actions/workflows/celest_test.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_test.yaml)           |
 
 ## Services
 
 | Service                                          | Description                                                                                                                         | Pub                                                                                                                                      | Checks                                                                                                                                                                                         |
 | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [celest_cloud_auth](packages/celest_cloud_auth/) | A Dart-native authentication and authorization solution built on [Cedar](https://github.com/celest-dev/cedar-dart) and Celest Data. | <a href="https://pub.dev/packages/celest_cloud_auth" target="_blank"> <img src="https://img.shields.io/pub/v/celest_cloud_auth.svg"></a> | [![Celest Cloud Auth](https://github.com/celest-dev/celest/actions/workflows/celest_cloud_auth.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_cloud_auth.yaml) |
+| [celest_cloud_hub](packages/celest_cloud_hub/)   | A hub for managing the provisioning and deployment of Celest projects in the cloud.                                                 | <a href="https://pub.dev/packages/celest_cloud_hub" target="_blank"> <img src="https://img.shields.io/pub/v/celest_cloud_hub.svg"></a>   | [![Celest Cloud Auth](https://github.com/celest-dev/celest/actions/workflows/celest_cloud_hub.yaml/badge.svg)](https://github.com/celest-dev/celest/actions/workflows/celest_cloud_hub.yaml)   |
 
 ## License
 
 This repo is licensed under the [BSD-2-Clause-Patent](https://spdx.org/licenses/BSD-2-Clause-Patent.html) license. See [LICENSE.md](LICENSE.md) for the full text.
-
-## Connect with us
-
-- Follow our [Twitter](https://twitter.com/Celest_Dev) account.
-- Schedule a meeting or chat with us live: [Contact](https://celest.dev/contact)
