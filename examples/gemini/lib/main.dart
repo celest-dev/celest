@@ -106,9 +106,10 @@ class _GeminiAppState extends State<GeminiApp> {
           _selectedModel = newValue;
         });
       },
-      dropdownMenuEntries: availableModels
-          .map((value) => DropdownMenuEntry(value: value, label: value))
-          .toList(),
+      dropdownMenuEntries:
+          availableModels
+              .map((value) => DropdownMenuEntry(value: value, label: value))
+              .toList(),
     );
   }
 
@@ -117,9 +118,7 @@ class _GeminiAppState extends State<GeminiApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Gemini AI'),
-        ),
+        appBar: AppBar(title: const Text('Gemini AI')),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -134,17 +133,18 @@ class _GeminiAppState extends State<GeminiApp> {
                     // dropdown menu.
                     FutureBuilder<List<String>>(
                       future: _availableModelsFuture,
-                      builder: (context, snapshot) => switch (snapshot) {
-                        // Build the dropdown when data is available
-                        AsyncSnapshot(:final data?) =>
-                          _availableModelsDropdown(data),
+                      builder:
+                          (context, snapshot) => switch (snapshot) {
+                            // Build the dropdown when data is available
+                            AsyncSnapshot(:final data?) =>
+                              _availableModelsDropdown(data),
 
-                        // Handle the error case
-                        AsyncSnapshot(:final error?) => Text('$error'),
+                            // Handle the error case
+                            AsyncSnapshot(:final error?) => Text('$error'),
 
-                        // If waiting, show a progress indicator
-                        _ => const CircularProgressIndicator(),
-                      },
+                            // If waiting, show a progress indicator
+                            _ => const CircularProgressIndicator(),
+                          },
                     ),
                     const SizedBox(width: 20),
                     Expanded(
@@ -165,10 +165,7 @@ class _GeminiAppState extends State<GeminiApp> {
                   ],
                 ),
                 const SizedBox(height: 50),
-                Text(
-                  'Answer',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
+                Text('Answer', style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 20),
                 TextField(
                   readOnly: true,

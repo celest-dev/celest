@@ -42,18 +42,19 @@ class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Celest Tasks'),
-      ),
+      appBar: AppBar(title: const Text('Celest Tasks')),
       body: Center(
         child: FutureBuilder(
           future: _loadTasks,
-          builder: (context, snapshot) => switch (snapshot) {
-            AsyncSnapshot(connectionState: ConnectionState.done) => _tasksView,
-            AsyncSnapshot(:final error?) =>
-              Text('Failed to fetch tasks: $error'),
-            _ => const CircularProgressIndicator(),
-          },
+          builder:
+              (context, snapshot) => switch (snapshot) {
+                AsyncSnapshot(connectionState: ConnectionState.done) =>
+                  _tasksView,
+                AsyncSnapshot(:final error?) => Text(
+                  'Failed to fetch tasks: $error',
+                ),
+                _ => const CircularProgressIndicator(),
+              },
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -77,8 +78,9 @@ class _TaskListState extends State<TaskList> {
                   return true;
                 } else if (dir == DismissDirection.startToEnd) {
                   final updatedTask = await switch (task.completed) {
-                    true =>
-                      celest.functions.tasks.markAsIncomplete(id: task.id),
+                    true => celest.functions.tasks.markAsIncomplete(
+                      id: task.id,
+                    ),
                     false => celest.functions.tasks.markAsComplete(id: task.id),
                   };
                   if (mounted) {
@@ -104,9 +106,10 @@ class _TaskListState extends State<TaskList> {
                       padding: const EdgeInsets.only(left: 12),
                       alignment: Alignment.centerLeft,
                       color: task.completed ? Colors.red : Colors.green,
-                      child: task.completed
-                          ? const Icon(Icons.cancel, color: Colors.white)
-                          : const Icon(Icons.check, color: Colors.white),
+                      child:
+                          task.completed
+                              ? const Icon(Icons.cancel, color: Colors.white)
+                              : const Icon(Icons.check, color: Colors.white),
                     ),
                   ),
                   Expanded(
@@ -131,9 +134,10 @@ class _TaskListState extends State<TaskList> {
                   task.priority.icon,
                   style: const TextStyle(fontSize: 24),
                 ),
-                trailing: task.completed
-                    ? const Icon(Icons.check, color: Colors.green)
-                    : null,
+                trailing:
+                    task.completed
+                        ? const Icon(Icons.check, color: Colors.green)
+                        : null,
               ),
             ),
         ],
@@ -234,9 +238,10 @@ final class _AddTaskDialogState extends State<AddTaskDialog> {
                     },
                     child: CircleAvatar(
                       radius: 18,
-                      backgroundColor: priority == _selectedImportance
-                          ? const Color.fromARGB(105, 76, 175, 79)
-                          : null,
+                      backgroundColor:
+                          priority == _selectedImportance
+                              ? const Color.fromARGB(105, 76, 175, 79)
+                              : null,
                       child: CircleAvatar(
                         radius: 15,
                         child: Text(priority.icon),
@@ -244,7 +249,7 @@ final class _AddTaskDialogState extends State<AddTaskDialog> {
                     ),
                   ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -256,9 +261,9 @@ final class _AddTaskDialogState extends State<AddTaskDialog> {
         TextButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              Navigator.of(context).pop(
-                (_titleController.text, _selectedImportance),
-              );
+              Navigator.of(
+                context,
+              ).pop((_titleController.text, _selectedImportance));
             }
           },
           child: const Text('Add'),
@@ -272,17 +277,14 @@ void _showError(BuildContext context, String message) {
   ScaffoldMessenger.of(context)
     ..clearSnackBars()
     ..showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.red,
-      ),
+      SnackBar(content: Text(message), backgroundColor: Colors.red),
     );
 }
 
 extension on Priority {
   String get icon => switch (this) {
-        Priority.low => '☁️',
-        Priority.medium => '💪',
-        Priority.high => '🔥',
-      };
+    Priority.low => '☁️',
+    Priority.medium => '💪',
+    Priority.high => '🔥',
+  };
 }

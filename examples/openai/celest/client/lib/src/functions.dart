@@ -20,10 +20,7 @@ class CelestFunctions {
 }
 
 class CelestFunctionsOpenAi {
-  Never _throwError({
-    int? code,
-    required Map<String, Object?> body,
-  }) {
+  Never _throwError({int? code, required Map<String, Object?> body}) {
     final status = body['@status'] as Map<String, Object?>?;
     final message = status?['message'] as String?;
     final details = status?['details'] as _$celest.JsonList?;
@@ -33,9 +30,9 @@ class CelestFunctionsOpenAi {
         final errorDetails as Map<String, Object?>,
         {
           '@type': 'dart.core.StackTrace',
-          'value': final stackTraceValue as String
+          'value': final stackTraceValue as String,
         },
-        ...
+        ...,
       ] =>
         (
           errorDetails['@type'],
@@ -43,17 +40,18 @@ class CelestFunctionsOpenAi {
           StackTrace.fromString(stackTraceValue),
         ),
       [final errorDetails as Map<String, Object?>, ...] => (
-          errorDetails['@type'],
-          errorDetails['value'],
-          StackTrace.empty,
-        ),
+        errorDetails['@type'],
+        errorDetails['value'],
+        StackTrace.empty,
+      ),
     };
 
     switch (errorType) {
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<JsonUnsupportedObjectError>(errorValue),
+          _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.async.AsyncError':
@@ -63,8 +61,9 @@ class CelestFunctionsOpenAi {
         );
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<TimeoutException>(errorValue),
+          _$celest.Serializers.instance.deserialize<TimeoutException>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.core.Error':
@@ -99,14 +98,16 @@ class CelestFunctionsOpenAi {
         );
       case 'dart.core.UnsupportedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<UnsupportedError>(errorValue),
+          _$celest.Serializers.instance.deserialize<UnsupportedError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.core.UnimplementedError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<UnimplementedError>(errorValue),
+          _$celest.Serializers.instance.deserialize<UnimplementedError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.core.StateError':
@@ -122,14 +123,16 @@ class CelestFunctionsOpenAi {
         );
       case 'dart.core.OutOfMemoryError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<OutOfMemoryError>(errorValue),
+          _$celest.Serializers.instance.deserialize<OutOfMemoryError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.core.StackOverflowError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<StackOverflowError>(errorValue),
+          _$celest.Serializers.instance.deserialize<StackOverflowError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.core.Exception':
@@ -139,8 +142,9 @@ class CelestFunctionsOpenAi {
         );
       case 'dart.core.FormatException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<FormatException>(errorValue),
+          _$celest.Serializers.instance.deserialize<FormatException>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'dart.core.IntegerDivisionByZeroException':
@@ -151,8 +155,9 @@ class CelestFunctionsOpenAi {
         );
       case 'celest.core.v1.CloudException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.CloudException>(errorValue),
+          _$celest.Serializers.instance.deserialize<_$celest.CloudException>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.CancelledException':
@@ -163,8 +168,9 @@ class CelestFunctionsOpenAi {
         );
       case 'celest.core.v1.UnknownError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.UnknownError>(errorValue),
+          _$celest.Serializers.instance.deserialize<_$celest.UnknownError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.BadRequestException':
@@ -181,8 +187,9 @@ class CelestFunctionsOpenAi {
         );
       case 'celest.core.v1.NotFoundException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.NotFoundException>(errorValue),
+          _$celest.Serializers.instance.deserialize<_$celest.NotFoundException>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.AlreadyExistsException':
@@ -211,8 +218,9 @@ class CelestFunctionsOpenAi {
         );
       case 'celest.core.v1.AbortedException':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.AbortedException>(errorValue),
+          _$celest.Serializers.instance.deserialize<_$celest.AbortedException>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.OutOfRangeException':
@@ -235,14 +243,16 @@ class CelestFunctionsOpenAi {
         );
       case 'celest.core.v1.UnavailableError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.UnavailableError>(errorValue),
+          _$celest.Serializers.instance.deserialize<_$celest.UnavailableError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.DataLossError':
         Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$celest.DataLossError>(errorValue),
+          _$celest.Serializers.instance.deserialize<_$celest.DataLossError>(
+            errorValue,
+          ),
           stackTrace,
         );
       case 'celest.core.v1.DeadlineExceededError':
@@ -270,10 +280,7 @@ class CelestFunctionsOpenAi {
   }
 
   /// Returns a list of available models.
-  @_$celest.CloudFunction(
-    api: 'open_ai',
-    function: 'availableModels',
-  )
+  @_$celest.CloudFunction(api: 'open_ai', function: 'availableModels')
   Future<List<String>> availableModels() async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/open-ai/available-models'),
@@ -295,22 +302,21 @@ class CelestFunctionsOpenAi {
   /// Prompts the GPT [model] with the given [prompt] and [parameters].
   ///
   /// Returns the generated text.
-  @_$celest.CloudFunction(
-    api: 'open_ai',
-    function: 'openAIRequest',
-  )
+  @_$celest.CloudFunction(api: 'open_ai', function: 'openAIRequest')
   Stream<String> openAiRequest({
     required String model,
     required String prompt,
     ModelParameters parameters = const ModelParameters.new(),
   }) {
-    final $channel = celest.eventClient
-        .connect(celest.baseUri.resolve('/open-ai/open-a-i-request'));
+    final $channel = celest.eventClient.connect(
+      celest.baseUri.resolve('/open-ai/open-a-i-request'),
+    );
     $channel.sink.add({
       r'model': model,
       r'prompt': prompt,
-      r'parameters':
-          _$celest.Serializers.instance.serialize<ModelParameters>(parameters),
+      r'parameters': _$celest.Serializers.instance.serialize<ModelParameters>(
+        parameters,
+      ),
     });
     return $channel.stream.map(($event) {
       if ($event is Map<String, Object?> && $event.containsKey('@status')) {
