@@ -360,6 +360,38 @@ final class ClientGenerator {
 
     final clientInitBody = BlockBuilder();
 
+    // Allow for environment override via Dart defines
+    //
+    // if (environment == null) {
+    //   const environmentOverride = String.fromEnvironment(
+    //     'CELEST_ENVIRONMENT',
+    //     defaultValue: 'local',
+    //   );
+    //   environment = CelestEnvironment.values.byName(environmentOverride);
+    // }
+    clientInitBody.statements.add(
+      Block((b) {
+        b.addExpression(
+          declareConst('environmentOverride').assign(
+            DartTypes.core.string
+                .property('fromEnvironment')
+                .call(
+                  [literalString('CELEST_ENVIRONMENT')],
+                  {'defaultValue': literalString('local')},
+                ),
+          ),
+        );
+        b.addExpression(
+          refer('environment').assign(
+            refer('CelestEnvironment')
+                .property('values')
+                .property('byName')
+                .call([refer('environmentOverride')]),
+          ),
+        );
+      }).wrapWithBlockIf(refer('environment').equalTo(literalNull)),
+    );
+
     // Common setup work
     clientInitBody.statements.add(
       refer('_reset').call([]).wrapWithBlockIf(refer('_initialized')),
@@ -495,10 +527,8 @@ final class ClientGenerator {
                 (p) =>
                     p
                       ..name = 'environment'
-                      ..type = refer('CelestEnvironment')
-                      ..named = true
-                      ..defaultTo =
-                          refer('CelestEnvironment').property('local').code,
+                      ..type = refer('CelestEnvironment').nullable
+                      ..named = true,
               ),
               Parameter(
                 (p) =>

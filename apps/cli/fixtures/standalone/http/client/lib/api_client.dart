@@ -76,9 +76,16 @@ class Celest with _$celest.CelestBase {
   CelestFunctions get functions => _checkInitialized(() => _functions);
 
   void init({
-    CelestEnvironment environment = CelestEnvironment.local,
+    CelestEnvironment? environment,
     _$celest.Serializers? serializers,
   }) {
+    if (environment == null) {
+      const environmentOverride = String.fromEnvironment(
+        'CELEST_ENVIRONMENT',
+        defaultValue: 'local',
+      );
+      environment = CelestEnvironment.values.byName(environmentOverride);
+    }
     if (_initialized) {
       _reset();
     }

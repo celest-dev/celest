@@ -15,18 +15,20 @@ import 'package:drift/internal/modular.dart' as i7;
 import 'package:celest_backend/src/database/task_database.dart' as i8;
 import 'package:drift/src/runtime/query_builder/query_builder.dart' as i9;
 
-typedef $$TasksTableCreateCompanionBuilder = i6.TasksCompanion Function({
-  i0.Value<int> id,
-  required String title,
-  required i8.Priority priority,
-  i0.Value<bool> completed,
-});
-typedef $$TasksTableUpdateCompanionBuilder = i6.TasksCompanion Function({
-  i0.Value<int> id,
-  i0.Value<String> title,
-  i0.Value<i8.Priority> priority,
-  i0.Value<bool> completed,
-});
+typedef $$TasksTableCreateCompanionBuilder =
+    i6.TasksCompanion Function({
+      i0.Value<int> id,
+      required String title,
+      required i8.Priority priority,
+      i0.Value<bool> completed,
+    });
+typedef $$TasksTableUpdateCompanionBuilder =
+    i6.TasksCompanion Function({
+      i0.Value<int> id,
+      i0.Value<String> title,
+      i0.Value<i8.Priority> priority,
+      i0.Value<bool> completed,
+    });
 
 class $$TasksTableFilterComposer
     extends i0.Composer<i0.GeneratedDatabase, i6.$TasksTable> {
@@ -38,18 +40,25 @@ class $$TasksTableFilterComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   i0.ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => i0.ColumnFilters(column));
+    column: $table.id,
+    builder: (column) => i0.ColumnFilters(column),
+  );
 
   i0.ColumnFilters<String> get title => $composableBuilder(
-      column: $table.title, builder: (column) => i0.ColumnFilters(column));
+    column: $table.title,
+    builder: (column) => i0.ColumnFilters(column),
+  );
 
   i0.ColumnWithTypeConverterFilters<i8.Priority, i8.Priority, String>
-      get priority => $composableBuilder(
-          column: $table.priority,
-          builder: (column) => i0.ColumnWithTypeConverterFilters(column));
+  get priority => $composableBuilder(
+    column: $table.priority,
+    builder: (column) => i0.ColumnWithTypeConverterFilters(column),
+  );
 
   i0.ColumnFilters<bool> get completed => $composableBuilder(
-      column: $table.completed, builder: (column) => i0.ColumnFilters(column));
+    column: $table.completed,
+    builder: (column) => i0.ColumnFilters(column),
+  );
 }
 
 class $$TasksTableOrderingComposer
@@ -62,17 +71,24 @@ class $$TasksTableOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   i0.ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => i0.ColumnOrderings(column));
+    column: $table.id,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
 
   i0.ColumnOrderings<String> get title => $composableBuilder(
-      column: $table.title, builder: (column) => i0.ColumnOrderings(column));
+    column: $table.title,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
 
   i0.ColumnOrderings<String> get priority => $composableBuilder(
-      column: $table.priority, builder: (column) => i0.ColumnOrderings(column));
+    column: $table.priority,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
 
   i0.ColumnOrderings<bool> get completed => $composableBuilder(
-      column: $table.completed,
-      builder: (column) => i0.ColumnOrderings(column));
+    column: $table.completed,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
 }
 
 class $$TasksTableAnnotationComposer
@@ -97,71 +113,91 @@ class $$TasksTableAnnotationComposer
       $composableBuilder(column: $table.completed, builder: (column) => column);
 }
 
-class $$TasksTableTableManager extends i0.RootTableManager<
-    i0.GeneratedDatabase,
-    i6.$TasksTable,
-    i6.Task,
-    i6.$$TasksTableFilterComposer,
-    i6.$$TasksTableOrderingComposer,
-    i6.$$TasksTableAnnotationComposer,
-    $$TasksTableCreateCompanionBuilder,
-    $$TasksTableUpdateCompanionBuilder,
-    (i6.Task, i0.BaseReferences<i0.GeneratedDatabase, i6.$TasksTable, i6.Task>),
-    i6.Task,
-    i0.PrefetchHooks Function()> {
+class $$TasksTableTableManager
+    extends
+        i0.RootTableManager<
+          i0.GeneratedDatabase,
+          i6.$TasksTable,
+          i6.Task,
+          i6.$$TasksTableFilterComposer,
+          i6.$$TasksTableOrderingComposer,
+          i6.$$TasksTableAnnotationComposer,
+          $$TasksTableCreateCompanionBuilder,
+          $$TasksTableUpdateCompanionBuilder,
+          (
+            i6.Task,
+            i0.BaseReferences<i0.GeneratedDatabase, i6.$TasksTable, i6.Task>,
+          ),
+          i6.Task,
+          i0.PrefetchHooks Function()
+        > {
   $$TasksTableTableManager(i0.GeneratedDatabase db, i6.$TasksTable table)
-      : super(i0.TableManagerState(
+    : super(
+        i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer: () =>
-              i6.$$TasksTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              i6.$$TasksTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              i6.$$TasksTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            i0.Value<int> id = const i0.Value.absent(),
-            i0.Value<String> title = const i0.Value.absent(),
-            i0.Value<i8.Priority> priority = const i0.Value.absent(),
-            i0.Value<bool> completed = const i0.Value.absent(),
-          }) =>
-              i6.TasksCompanion(
-            id: id,
-            title: title,
-            priority: priority,
-            completed: completed,
-          ),
-          createCompanionCallback: ({
-            i0.Value<int> id = const i0.Value.absent(),
-            required String title,
-            required i8.Priority priority,
-            i0.Value<bool> completed = const i0.Value.absent(),
-          }) =>
-              i6.TasksCompanion.insert(
-            id: id,
-            title: title,
-            priority: priority,
-            completed: completed,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
-              .toList(),
+          createFilteringComposer:
+              () => i6.$$TasksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer:
+              () => i6.$$TasksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer:
+              () => i6.$$TasksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                i0.Value<int> id = const i0.Value.absent(),
+                i0.Value<String> title = const i0.Value.absent(),
+                i0.Value<i8.Priority> priority = const i0.Value.absent(),
+                i0.Value<bool> completed = const i0.Value.absent(),
+              }) => i6.TasksCompanion(
+                id: id,
+                title: title,
+                priority: priority,
+                completed: completed,
+              ),
+          createCompanionCallback:
+              ({
+                i0.Value<int> id = const i0.Value.absent(),
+                required String title,
+                required i8.Priority priority,
+                i0.Value<bool> completed = const i0.Value.absent(),
+              }) => i6.TasksCompanion.insert(
+                id: id,
+                title: title,
+                priority: priority,
+                completed: completed,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          i0.BaseReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
           prefetchHooksCallback: null,
-        ));
+        ),
+      );
 }
 
-typedef $$TasksTableProcessedTableManager = i0.ProcessedTableManager<
-    i0.GeneratedDatabase,
-    i6.$TasksTable,
-    i6.Task,
-    i6.$$TasksTableFilterComposer,
-    i6.$$TasksTableOrderingComposer,
-    i6.$$TasksTableAnnotationComposer,
-    $$TasksTableCreateCompanionBuilder,
-    $$TasksTableUpdateCompanionBuilder,
-    (i6.Task, i0.BaseReferences<i0.GeneratedDatabase, i6.$TasksTable, i6.Task>),
-    i6.Task,
-    i0.PrefetchHooks Function()>;
+typedef $$TasksTableProcessedTableManager =
+    i0.ProcessedTableManager<
+      i0.GeneratedDatabase,
+      i6.$TasksTable,
+      i6.Task,
+      i6.$$TasksTableFilterComposer,
+      i6.$$TasksTableOrderingComposer,
+      i6.$$TasksTableAnnotationComposer,
+      $$TasksTableCreateCompanionBuilder,
+      $$TasksTableUpdateCompanionBuilder,
+      (
+        i6.Task,
+        i0.BaseReferences<i0.GeneratedDatabase, i6.$TasksTable, i6.Task>,
+      ),
+      i6.Task,
+      i0.PrefetchHooks Function()
+    >;
 
 abstract class $TaskDatabase extends i0.GeneratedDatabase {
   $TaskDatabase(i0.QueryExecutor e) : super(e);
@@ -169,26 +205,32 @@ abstract class $TaskDatabase extends i0.GeneratedDatabase {
   late final i1.CloudAuthUsers cloudAuthUsers = i1.CloudAuthUsers(this);
   late final i2.CedarTypes cedarTypes = i2.CedarTypes(this);
   late final i2.CedarEntities cedarEntities = i2.CedarEntities(this);
-  late final i2.CedarRelationships cedarRelationships =
-      i2.CedarRelationships(this);
+  late final i2.CedarRelationships cedarRelationships = i2.CedarRelationships(
+    this,
+  );
   late final i1.CloudAuthUserEmails cloudAuthUserEmails =
       i1.CloudAuthUserEmails(this);
   late final i1.CloudAuthUserPhoneNumbers cloudAuthUserPhoneNumbers =
       i1.CloudAuthUserPhoneNumbers(this);
-  late final i1.CloudAuthUsersView cloudAuthUsersView =
-      i1.CloudAuthUsersView(this);
-  late final i3.CloudAuthProjects cloudAuthProjects =
-      i3.CloudAuthProjects(this);
+  late final i1.CloudAuthUsersView cloudAuthUsersView = i1.CloudAuthUsersView(
+    this,
+  );
+  late final i3.CloudAuthProjects cloudAuthProjects = i3.CloudAuthProjects(
+    this,
+  );
   late final i3.CloudAuthApis cloudAuthApis = i3.CloudAuthApis(this);
-  late final i3.CloudAuthFunctions cloudAuthFunctions =
-      i3.CloudAuthFunctions(this);
+  late final i3.CloudAuthFunctions cloudAuthFunctions = i3.CloudAuthFunctions(
+    this,
+  );
   late final i4.CloudAuthMeta cloudAuthMeta = i4.CloudAuthMeta(this);
   late final i5.CloudAuthCryptoKeys cloudAuthCryptoKeys =
       i5.CloudAuthCryptoKeys(this);
-  late final i5.CloudAuthSessions cloudAuthSessions =
-      i5.CloudAuthSessions(this);
-  late final i5.CloudAuthOtpCodes cloudAuthOtpCodes =
-      i5.CloudAuthOtpCodes(this);
+  late final i5.CloudAuthSessions cloudAuthSessions = i5.CloudAuthSessions(
+    this,
+  );
+  late final i5.CloudAuthOtpCodes cloudAuthOtpCodes = i5.CloudAuthOtpCodes(
+    this,
+  );
   late final i5.CloudAuthCorks cloudAuthCorks = i5.CloudAuthCorks(this);
   late final i2.CedarPolicies cedarPolicies = i2.CedarPolicies(this);
   late final i2.CedarPolicyTemplates cedarPolicyTemplates =
@@ -200,347 +242,404 @@ abstract class $TaskDatabase extends i0.GeneratedDatabase {
   late final i6.$TasksTable tasks = i6.$TasksTable(this);
   i2.CedarDrift get cedarDrift =>
       i7.ReadDatabaseContainer(this).accessor<i2.CedarDrift>(i2.CedarDrift.new);
-  i5.CloudAuthCoreDrift get cloudAuthCoreDrift => i7.ReadDatabaseContainer(this)
-      .accessor<i5.CloudAuthCoreDrift>(i5.CloudAuthCoreDrift.new);
-  i4.CloudAuthMetaDrift get cloudAuthMetaDrift => i7.ReadDatabaseContainer(this)
-      .accessor<i4.CloudAuthMetaDrift>(i4.CloudAuthMetaDrift.new);
+  i5.CloudAuthCoreDrift get cloudAuthCoreDrift => i7.ReadDatabaseContainer(
+    this,
+  ).accessor<i5.CloudAuthCoreDrift>(i5.CloudAuthCoreDrift.new);
+  i4.CloudAuthMetaDrift get cloudAuthMetaDrift => i7.ReadDatabaseContainer(
+    this,
+  ).accessor<i4.CloudAuthMetaDrift>(i4.CloudAuthMetaDrift.new);
   i3.CloudAuthProjectsDrift get cloudAuthProjectsDrift =>
-      i7.ReadDatabaseContainer(this)
-          .accessor<i3.CloudAuthProjectsDrift>(i3.CloudAuthProjectsDrift.new);
-  i1.CloudAuthUsersDrift get cloudAuthUsersDrift =>
-      i7.ReadDatabaseContainer(this)
-          .accessor<i1.CloudAuthUsersDrift>(i1.CloudAuthUsersDrift.new);
+      i7.ReadDatabaseContainer(
+        this,
+      ).accessor<i3.CloudAuthProjectsDrift>(i3.CloudAuthProjectsDrift.new);
+  i1.CloudAuthUsersDrift get cloudAuthUsersDrift => i7.ReadDatabaseContainer(
+    this,
+  ).accessor<i1.CloudAuthUsersDrift>(i1.CloudAuthUsersDrift.new);
   @override
   Iterable<i0.TableInfo<i0.Table, Object?>> get allTables =>
       allSchemaEntities.whereType<i0.TableInfo<i0.Table, Object?>>();
   @override
   List<i0.DatabaseSchemaEntity> get allSchemaEntities => [
-        cloudAuthUsers,
-        cedarTypes,
-        cedarEntities,
-        i1.cloudAuthUsersCreateTrg,
-        cedarRelationships,
-        i1.cloudAuthUsersDeleteTrg,
-        cloudAuthUserEmails,
-        cloudAuthUserPhoneNumbers,
-        cloudAuthUsersView,
-        cloudAuthProjects,
-        cloudAuthApis,
-        i3.cloudAuthApisProjectIdx,
-        i3.cloudAuthApisCreateTrg,
-        i3.cloudAuthApisDeleteTrg,
-        cloudAuthFunctions,
-        i3.cloudAuthFunctionsApiIdx,
-        i3.cloudAuthFunctionsCreateTrg,
-        i3.cloudAuthFunctionsDeleteTrg,
-        cloudAuthMeta,
-        i4.$drift0,
-        cloudAuthCryptoKeys,
-        i5.cloudAuthCryptoKeysExternalCryptoKeyIdIdx,
-        cloudAuthSessions,
-        i5.cloudAuthSessionsUserIdx,
-        i5.cloudAuthSessionsCryptoKeyIdx,
-        i5.cloudAuthSessionsExternalSessionIdIdx,
-        i5.cloudAuthSessionsUpdateTimeTrg,
-        cloudAuthOtpCodes,
-        i5.cloudAuthOtpCodesSessionIdIdx,
-        cloudAuthCorks,
-        i5.cloudAuthCorksCryptoKeyIdx,
-        i5.cloudAuthCorksBearerIdx,
-        i5.cloudAuthCorksAudienceIdx,
-        i5.cloudAuthCorksIssuerIdx,
-        i2.cedarRelationshipsFkEntityIdx,
-        i2.cedarRelationshipsFkParentIdx,
-        cedarPolicies,
-        cedarPolicyTemplates,
-        cedarPolicyTemplateLinks,
-        i2.cedarPolicyTemplateLinksFkTemplateIdIdx,
-        i2.cedarPolicyTemplateLinksFkPrincipalIdx,
-        i2.cedarPolicyTemplateLinksFkResourceIdx,
-        cedarAuthorizationLogs,
-        tasks
-      ];
+    cloudAuthUsers,
+    cedarTypes,
+    cedarEntities,
+    i1.cloudAuthUsersCreateTrg,
+    cedarRelationships,
+    i1.cloudAuthUsersDeleteTrg,
+    cloudAuthUserEmails,
+    cloudAuthUserPhoneNumbers,
+    cloudAuthUsersView,
+    cloudAuthProjects,
+    cloudAuthApis,
+    i3.cloudAuthApisProjectIdx,
+    i3.cloudAuthApisCreateTrg,
+    i3.cloudAuthApisDeleteTrg,
+    cloudAuthFunctions,
+    i3.cloudAuthFunctionsApiIdx,
+    i3.cloudAuthFunctionsCreateTrg,
+    i3.cloudAuthFunctionsDeleteTrg,
+    cloudAuthMeta,
+    i4.$drift0,
+    cloudAuthCryptoKeys,
+    i5.cloudAuthCryptoKeysExternalCryptoKeyIdIdx,
+    cloudAuthSessions,
+    i5.cloudAuthSessionsUserIdx,
+    i5.cloudAuthSessionsCryptoKeyIdx,
+    i5.cloudAuthSessionsExternalSessionIdIdx,
+    i5.cloudAuthSessionsUpdateTimeTrg,
+    cloudAuthOtpCodes,
+    i5.cloudAuthOtpCodesSessionIdIdx,
+    cloudAuthCorks,
+    i5.cloudAuthCorksCryptoKeyIdx,
+    i5.cloudAuthCorksBearerIdx,
+    i5.cloudAuthCorksAudienceIdx,
+    i5.cloudAuthCorksIssuerIdx,
+    i2.cedarRelationshipsFkEntityIdx,
+    i2.cedarRelationshipsFkParentIdx,
+    cedarPolicies,
+    cedarPolicyTemplates,
+    cedarPolicyTemplateLinks,
+    i2.cedarPolicyTemplateLinksFkTemplateIdIdx,
+    i2.cedarPolicyTemplateLinksFkPrincipalIdx,
+    i2.cedarPolicyTemplateLinksFkResourceIdx,
+    cedarAuthorizationLogs,
+    tasks,
+  ];
   @override
-  i0.StreamQueryUpdateRules get streamUpdateRules =>
-      const i0.StreamQueryUpdateRules(
-        [
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.insert),
-            result: [
-              i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
-              i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_user_emails',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_user_emails',
-                  kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_user_phone_numbers',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_user_phone_numbers',
-                  kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_projects',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_apis', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_projects',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_apis', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_apis',
-                limitUpdateKind: i0.UpdateKind.insert),
-            result: [
-              i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_apis',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
-              i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_apis',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_functions',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_apis',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_functions',
-                  kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_functions',
-                limitUpdateKind: i0.UpdateKind.insert),
-            result: [
-              i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert),
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.insert),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_functions',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
-              i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_users',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_crypto_keys',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_crypto_keys',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_sessions',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_sessions',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_otp_codes',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_sessions',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_otp_codes',
-                  kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_crypto_keys',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cloud_auth_crypto_keys',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_policy_templates',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_policy_template_links',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_policy_templates',
-                limitUpdateKind: i0.UpdateKind.update),
-            result: [
-              i0.TableUpdate('cedar_policy_template_links',
-                  kind: i0.UpdateKind.update),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_policy_template_links',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-          i0.WritePropagation(
-            on: i0.TableUpdateQuery.onTableName('cedar_entities',
-                limitUpdateKind: i0.UpdateKind.delete),
-            result: [
-              i0.TableUpdate('cedar_policy_template_links',
-                  kind: i0.UpdateKind.delete),
-            ],
-          ),
-        ],
-      );
+  i0.StreamQueryUpdateRules
+  get streamUpdateRules => const i0.StreamQueryUpdateRules([
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.insert,
+      ),
+      result: [i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+        i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_user_emails', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_user_emails', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate(
+          'cloud_auth_user_phone_numbers',
+          kind: i0.UpdateKind.delete,
+        ),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate(
+          'cloud_auth_user_phone_numbers',
+          kind: i0.UpdateKind.update,
+        ),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_projects',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [i0.TableUpdate('cloud_auth_apis', kind: i0.UpdateKind.delete)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_projects',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [i0.TableUpdate('cloud_auth_apis', kind: i0.UpdateKind.update)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_apis',
+        limitUpdateKind: i0.UpdateKind.insert,
+      ),
+      result: [i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_apis',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+        i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_apis',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_functions', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_apis',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_functions', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_functions',
+        limitUpdateKind: i0.UpdateKind.insert,
+      ),
+      result: [
+        i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.insert),
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.insert),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_functions',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cedar_relationships', kind: i0.UpdateKind.delete),
+        i0.TableUpdate('cedar_entities', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_users',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_crypto_keys',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_crypto_keys',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_sessions',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_sessions', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_sessions',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_otp_codes', kind: i0.UpdateKind.delete),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_sessions',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate('cloud_auth_otp_codes', kind: i0.UpdateKind.update),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_crypto_keys',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cloud_auth_crypto_keys',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.delete)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [i0.TableUpdate('cloud_auth_corks', kind: i0.UpdateKind.update)],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_policy_templates',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate(
+          'cedar_policy_template_links',
+          kind: i0.UpdateKind.delete,
+        ),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_policy_templates',
+        limitUpdateKind: i0.UpdateKind.update,
+      ),
+      result: [
+        i0.TableUpdate(
+          'cedar_policy_template_links',
+          kind: i0.UpdateKind.update,
+        ),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate(
+          'cedar_policy_template_links',
+          kind: i0.UpdateKind.delete,
+        ),
+      ],
+    ),
+    i0.WritePropagation(
+      on: i0.TableUpdateQuery.onTableName(
+        'cedar_entities',
+        limitUpdateKind: i0.UpdateKind.delete,
+      ),
+      result: [
+        i0.TableUpdate(
+          'cedar_policy_template_links',
+          kind: i0.UpdateKind.delete,
+        ),
+      ],
+    ),
+  ]);
 }
 
 class $TaskDatabaseManager {
@@ -558,7 +657,9 @@ class $TaskDatabaseManager {
       i1.$CloudAuthUserEmailsTableManager(_db, _db.cloudAuthUserEmails);
   i1.$CloudAuthUserPhoneNumbersTableManager get cloudAuthUserPhoneNumbers =>
       i1.$CloudAuthUserPhoneNumbersTableManager(
-          _db, _db.cloudAuthUserPhoneNumbers);
+        _db,
+        _db.cloudAuthUserPhoneNumbers,
+      );
   i3.$CloudAuthProjectsTableManager get cloudAuthProjects =>
       i3.$CloudAuthProjectsTableManager(_db, _db.cloudAuthProjects);
   i3.$CloudAuthApisTableManager get cloudAuthApis =>
@@ -595,36 +696,55 @@ class $TasksTable extends i8.Tasks with i0.TableInfo<$TasksTable, i6.Task> {
   static const i0.VerificationMeta _idMeta = const i0.VerificationMeta('id');
   @override
   late final i0.GeneratedColumn<int> id = i0.GeneratedColumn<int>(
-      'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: i0.DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          i0.GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const i0.VerificationMeta _titleMeta =
-      const i0.VerificationMeta('title');
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: i0.DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: i0.GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const i0.VerificationMeta _titleMeta = const i0.VerificationMeta(
+    'title',
+  );
   @override
   late final i0.GeneratedColumn<String> title = i0.GeneratedColumn<String>(
-      'title', aliasedName, false,
-      additionalChecks: i0.GeneratedColumn.checkTextLength(
-          minTextLength: 1, maxTextLength: 100),
-      type: i0.DriftSqlType.string,
-      requiredDuringInsert: true);
+    'title',
+    aliasedName,
+    false,
+    additionalChecks: i0.GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 100,
+    ),
+    type: i0.DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   @override
   late final i0.GeneratedColumnWithTypeConverter<i8.Priority, String> priority =
-      i0.GeneratedColumn<String>('priority', aliasedName, false,
-              type: i0.DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<i8.Priority>(i6.$TasksTable.$converterpriority);
-  static const i0.VerificationMeta _completedMeta =
-      const i0.VerificationMeta('completed');
+      i0.GeneratedColumn<String>(
+        'priority',
+        aliasedName,
+        false,
+        type: i0.DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<i8.Priority>(i6.$TasksTable.$converterpriority);
+  static const i0.VerificationMeta _completedMeta = const i0.VerificationMeta(
+    'completed',
+  );
   @override
   late final i0.GeneratedColumn<bool> completed = i0.GeneratedColumn<bool>(
-      'completed', aliasedName, false,
-      type: i0.DriftSqlType.bool,
-      requiredDuringInsert: false,
-      defaultConstraints: i0.GeneratedColumn.constraintIsAlways(
-          'CHECK ("completed" IN (0, 1))'),
-      defaultValue: const i9.Constant(false));
+    'completed',
+    aliasedName,
+    false,
+    type: i0.DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: i0.GeneratedColumn.constraintIsAlways(
+      'CHECK ("completed" IN (0, 1))',
+    ),
+    defaultValue: const i9.Constant(false),
+  );
   @override
   List<i0.GeneratedColumn> get $columns => [id, title, priority, completed];
   @override
@@ -633,8 +753,10 @@ class $TasksTable extends i8.Tasks with i0.TableInfo<$TasksTable, i6.Task> {
   String get actualTableName => $name;
   static const String $name = 'tasks';
   @override
-  i0.VerificationContext validateIntegrity(i0.Insertable<i6.Task> instance,
-      {bool isInserting = false}) {
+  i0.VerificationContext validateIntegrity(
+    i0.Insertable<i6.Task> instance, {
+    bool isInserting = false,
+  }) {
     final context = i0.VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -642,13 +764,17 @@ class $TasksTable extends i8.Tasks with i0.TableInfo<$TasksTable, i6.Task> {
     }
     if (data.containsKey('title')) {
       context.handle(
-          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
     if (data.containsKey('completed')) {
-      context.handle(_completedMeta,
-          completed.isAcceptableOrUnknown(data['completed']!, _completedMeta));
+      context.handle(
+        _completedMeta,
+        completed.isAcceptableOrUnknown(data['completed']!, _completedMeta),
+      );
     }
     return context;
   }
@@ -659,15 +785,27 @@ class $TasksTable extends i8.Tasks with i0.TableInfo<$TasksTable, i6.Task> {
   i6.Task map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i6.Task(
-      id: attachedDatabase.typeMapping
-          .read(i0.DriftSqlType.int, data['${effectivePrefix}id'])!,
-      title: attachedDatabase.typeMapping
-          .read(i0.DriftSqlType.string, data['${effectivePrefix}title'])!,
-      priority: i6.$TasksTable.$converterpriority.fromSql(attachedDatabase
-          .typeMapping
-          .read(i0.DriftSqlType.string, data['${effectivePrefix}priority'])!),
-      completed: attachedDatabase.typeMapping
-          .read(i0.DriftSqlType.bool, data['${effectivePrefix}completed'])!,
+      id:
+          attachedDatabase.typeMapping.read(
+            i0.DriftSqlType.int,
+            data['${effectivePrefix}id'],
+          )!,
+      title:
+          attachedDatabase.typeMapping.read(
+            i0.DriftSqlType.string,
+            data['${effectivePrefix}title'],
+          )!,
+      priority: i6.$TasksTable.$converterpriority.fromSql(
+        attachedDatabase.typeMapping.read(
+          i0.DriftSqlType.string,
+          data['${effectivePrefix}priority'],
+        )!,
+      ),
+      completed:
+          attachedDatabase.typeMapping.read(
+            i0.DriftSqlType.bool,
+            data['${effectivePrefix}completed'],
+          )!,
     );
   }
 
@@ -685,11 +823,12 @@ class Task extends i0.DataClass implements i0.Insertable<i6.Task> {
   final String title;
   final i8.Priority priority;
   final bool completed;
-  const Task(
-      {required this.id,
-      required this.title,
-      required this.priority,
-      required this.completed});
+  const Task({
+    required this.id,
+    required this.title,
+    required this.priority,
+    required this.completed,
+  });
   @override
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
     final map = <String, i0.Expression>{};
@@ -697,7 +836,8 @@ class Task extends i0.DataClass implements i0.Insertable<i6.Task> {
     map['title'] = i0.Variable<String>(title);
     {
       map['priority'] = i0.Variable<String>(
-          i6.$TasksTable.$converterpriority.toSql(priority));
+        i6.$TasksTable.$converterpriority.toSql(priority),
+      );
     }
     map['completed'] = i0.Variable<bool>(completed);
     return map;
@@ -712,14 +852,17 @@ class Task extends i0.DataClass implements i0.Insertable<i6.Task> {
     );
   }
 
-  factory Task.fromJson(Map<String, dynamic> json,
-      {i0.ValueSerializer? serializer}) {
+  factory Task.fromJson(
+    Map<String, dynamic> json, {
+    i0.ValueSerializer? serializer,
+  }) {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return Task(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
-      priority: i6.$TasksTable.$converterpriority
-          .fromJson(serializer.fromJson<String>(json['priority'])),
+      priority: i6.$TasksTable.$converterpriority.fromJson(
+        serializer.fromJson<String>(json['priority']),
+      ),
       completed: serializer.fromJson<bool>(json['completed']),
     );
   }
@@ -729,20 +872,24 @@ class Task extends i0.DataClass implements i0.Insertable<i6.Task> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
-      'priority': serializer
-          .toJson<String>(i6.$TasksTable.$converterpriority.toJson(priority)),
+      'priority': serializer.toJson<String>(
+        i6.$TasksTable.$converterpriority.toJson(priority),
+      ),
       'completed': serializer.toJson<bool>(completed),
     };
   }
 
-  i6.Task copyWith(
-          {int? id, String? title, i8.Priority? priority, bool? completed}) =>
-      i6.Task(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        priority: priority ?? this.priority,
-        completed: completed ?? this.completed,
-      );
+  i6.Task copyWith({
+    int? id,
+    String? title,
+    i8.Priority? priority,
+    bool? completed,
+  }) => i6.Task(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    priority: priority ?? this.priority,
+    completed: completed ?? this.completed,
+  );
   Task copyWithCompanion(i6.TasksCompanion data) {
     return Task(
       id: data.id.present ? data.id.value : this.id,
@@ -791,8 +938,8 @@ class TasksCompanion extends i0.UpdateCompanion<i6.Task> {
     required String title,
     required i8.Priority priority,
     this.completed = const i0.Value.absent(),
-  })  : title = i0.Value(title),
-        priority = i0.Value(priority);
+  }) : title = i0.Value(title),
+       priority = i0.Value(priority);
   static i0.Insertable<i6.Task> custom({
     i0.Expression<int>? id,
     i0.Expression<String>? title,
@@ -807,11 +954,12 @@ class TasksCompanion extends i0.UpdateCompanion<i6.Task> {
     });
   }
 
-  i6.TasksCompanion copyWith(
-      {i0.Value<int>? id,
-      i0.Value<String>? title,
-      i0.Value<i8.Priority>? priority,
-      i0.Value<bool>? completed}) {
+  i6.TasksCompanion copyWith({
+    i0.Value<int>? id,
+    i0.Value<String>? title,
+    i0.Value<i8.Priority>? priority,
+    i0.Value<bool>? completed,
+  }) {
     return i6.TasksCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -831,7 +979,8 @@ class TasksCompanion extends i0.UpdateCompanion<i6.Task> {
     }
     if (priority.present) {
       map['priority'] = i0.Variable<String>(
-          i6.$TasksTable.$converterpriority.toSql(priority.value));
+        i6.$TasksTable.$converterpriority.toSql(priority.value),
+      );
     }
     if (completed.present) {
       map['completed'] = i0.Variable<bool>(completed.value);

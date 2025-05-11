@@ -1,3 +1,7 @@
+## NEXT
+
+- feat: Allow overriding client environment with Dart define
+
 ## 1.0.13
 
 - feat: Serve DB studio when running locally
