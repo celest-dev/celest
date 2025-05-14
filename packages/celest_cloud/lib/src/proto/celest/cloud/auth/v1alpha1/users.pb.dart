@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/cloud/auth/v1alpha1/users.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -13,9 +13,11 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../../google/protobuf/field_mask.pb.dart' as $13;
+import '../../../../google/protobuf/field_mask.pb.dart' as $12;
 import '../../../../google/protobuf/timestamp.pb.dart' as $9;
 import 'users.pbenum.dart';
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'users.pbenum.dart';
 
@@ -142,7 +144,7 @@ class User extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// The parent of the user.
   @$pb.TagNumber(2)
@@ -155,7 +157,7 @@ class User extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasParent() => $_has(1);
   @$pb.TagNumber(2)
-  void clearParent() => clearField(2);
+  void clearParent() => $_clearField(2);
 
   ///  The unique identifier of the user.
   ///
@@ -170,20 +172,20 @@ class User extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasUserId() => $_has(2);
   @$pb.TagNumber(3)
-  void clearUserId() => clearField(3);
+  void clearUserId() => $_clearField(3);
 
   /// Output only. The time the user was created.
   @$pb.TagNumber(4)
   $9.Timestamp get createTime => $_getN(3);
   @$pb.TagNumber(4)
   set createTime($9.Timestamp v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasCreateTime() => $_has(3);
   @$pb.TagNumber(4)
-  void clearCreateTime() => clearField(4);
+  void clearCreateTime() => $_clearField(4);
   @$pb.TagNumber(4)
   $9.Timestamp ensureCreateTime() => $_ensure(3);
 
@@ -192,13 +194,13 @@ class User extends $pb.GeneratedMessage {
   $9.Timestamp get updateTime => $_getN(4);
   @$pb.TagNumber(5)
   set updateTime($9.Timestamp v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasUpdateTime() => $_has(4);
   @$pb.TagNumber(5)
-  void clearUpdateTime() => clearField(5);
+  void clearUpdateTime() => $_clearField(5);
   @$pb.TagNumber(5)
   $9.Timestamp ensureUpdateTime() => $_ensure(4);
 
@@ -213,7 +215,7 @@ class User extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasGivenName() => $_has(5);
   @$pb.TagNumber(6)
-  void clearGivenName() => clearField(6);
+  void clearGivenName() => $_clearField(6);
 
   /// Optional. The family name of the user.
   @$pb.TagNumber(7)
@@ -226,7 +228,7 @@ class User extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.bool hasFamilyName() => $_has(6);
   @$pb.TagNumber(7)
-  void clearFamilyName() => clearField(7);
+  void clearFamilyName() => $_clearField(7);
 
   ///  Optional. The time zone of the user.
   ///
@@ -241,7 +243,7 @@ class User extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.bool hasTimeZone() => $_has(7);
   @$pb.TagNumber(8)
-  void clearTimeZone() => clearField(8);
+  void clearTimeZone() => $_clearField(8);
 
   ///  Optional. The language code of the user.
   ///
@@ -256,19 +258,19 @@ class User extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $core.bool hasLanguageCode() => $_has(8);
   @$pb.TagNumber(9)
-  void clearLanguageCode() => clearField(9);
+  void clearLanguageCode() => $_clearField(9);
 
   /// Optional. The user's email address.
   @$pb.TagNumber(10)
-  $core.List<Email> get emails => $_getList(9);
+  $pb.PbList<Email> get emails => $_getList(9);
 
   /// Optional. The user's phone number.
   @$pb.TagNumber(11)
-  $core.List<PhoneNumber> get phoneNumbers => $_getList(10);
+  $pb.PbList<PhoneNumber> get phoneNumbers => $_getList(10);
 
   /// Output only. The user's external identities.
   @$pb.TagNumber(12)
-  $core.List<ExternalIdentity> get externalIdentities => $_getList(11);
+  $pb.PbList<ExternalIdentity> get externalIdentities => $_getList(11);
 }
 
 /// A email address used within Celest Cloud.
@@ -340,7 +342,7 @@ class Email extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasEmail() => $_has(0);
   @$pb.TagNumber(1)
-  void clearEmail() => clearField(1);
+  void clearEmail() => $_clearField(1);
 
   /// Whether the email address is verified.
   @$pb.TagNumber(2)
@@ -353,7 +355,7 @@ class Email extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasIsVerified() => $_has(1);
   @$pb.TagNumber(2)
-  void clearIsVerified() => clearField(2);
+  void clearIsVerified() => $_clearField(2);
 
   /// Whether the email address is the primary email.
   @$pb.TagNumber(3)
@@ -366,7 +368,7 @@ class Email extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasIsPrimary() => $_has(2);
   @$pb.TagNumber(3)
-  void clearIsPrimary() => clearField(3);
+  void clearIsPrimary() => $_clearField(3);
 }
 
 /// A phone number used within Celest Cloud.
@@ -439,7 +441,7 @@ class PhoneNumber extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasPhoneNumber() => $_has(0);
   @$pb.TagNumber(1)
-  void clearPhoneNumber() => clearField(1);
+  void clearPhoneNumber() => $_clearField(1);
 
   /// Whether the phone number is verified.
   @$pb.TagNumber(2)
@@ -452,7 +454,7 @@ class PhoneNumber extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasIsVerified() => $_has(1);
   @$pb.TagNumber(2)
-  void clearIsVerified() => clearField(2);
+  void clearIsVerified() => $_clearField(2);
 
   /// Whether the phone number is the primary phone number.
   @$pb.TagNumber(3)
@@ -465,7 +467,7 @@ class PhoneNumber extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasIsPrimary() => $_has(2);
   @$pb.TagNumber(3)
-  void clearIsPrimary() => clearField(3);
+  void clearIsPrimary() => $_clearField(3);
 }
 
 /// An external identity used within Celest Cloud.
@@ -532,13 +534,13 @@ class ExternalIdentity extends $pb.GeneratedMessage {
   IdentityProviderType get provider => $_getN(0);
   @$pb.TagNumber(1)
   set provider(IdentityProviderType v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasProvider() => $_has(0);
   @$pb.TagNumber(1)
-  void clearProvider() => clearField(1);
+  void clearProvider() => $_clearField(1);
 
   /// The identifier of the external identity.
   @$pb.TagNumber(2)
@@ -551,7 +553,7 @@ class ExternalIdentity extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasProviderId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearProviderId() => clearField(2);
+  void clearProviderId() => $_clearField(2);
 }
 
 /// Request message for the `CreateUser` method.
@@ -630,20 +632,20 @@ class CreateUserRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearParent() => $_clearField(1);
 
   /// The user to create.
   @$pb.TagNumber(2)
   User get user => $_getN(1);
   @$pb.TagNumber(2)
   set user(User v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasUser() => $_has(1);
   @$pb.TagNumber(2)
-  void clearUser() => clearField(2);
+  void clearUser() => $_clearField(2);
   @$pb.TagNumber(2)
   User ensureUser() => $_ensure(1);
 
@@ -658,7 +660,7 @@ class CreateUserRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasUserId() => $_has(2);
   @$pb.TagNumber(3)
-  void clearUserId() => clearField(3);
+  void clearUserId() => $_clearField(3);
 
   /// If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(4)
@@ -671,7 +673,7 @@ class CreateUserRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasValidateOnly() => $_has(3);
   @$pb.TagNumber(4)
-  void clearValidateOnly() => clearField(4);
+  void clearValidateOnly() => $_clearField(4);
 }
 
 /// Request message for the `GetUser` method.
@@ -736,7 +738,7 @@ class GetUserRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 }
 
 /// Request message for the `ListUsers` method.
@@ -825,7 +827,7 @@ class ListUsersRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearParent() => $_clearField(1);
 
   /// The maximum number of users to return.
   @$pb.TagNumber(2)
@@ -838,7 +840,7 @@ class ListUsersRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasPageSize() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPageSize() => clearField(2);
+  void clearPageSize() => $_clearField(2);
 
   /// A page token, received from a previous `ListUsers` call.
   @$pb.TagNumber(3)
@@ -851,7 +853,7 @@ class ListUsersRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasPageToken() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPageToken() => clearField(3);
+  void clearPageToken() => $_clearField(3);
 
   /// An optional filter to apply to the users.
   @$pb.TagNumber(4)
@@ -864,7 +866,7 @@ class ListUsersRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasFilter() => $_has(3);
   @$pb.TagNumber(4)
-  void clearFilter() => clearField(4);
+  void clearFilter() => $_clearField(4);
 
   /// The order to sort the results by.
   @$pb.TagNumber(5)
@@ -877,7 +879,7 @@ class ListUsersRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasOrderBy() => $_has(4);
   @$pb.TagNumber(5)
-  void clearOrderBy() => clearField(5);
+  void clearOrderBy() => $_clearField(5);
 }
 
 /// Response message for the `ListUsers` method.
@@ -938,7 +940,7 @@ class ListUsersResponse extends $pb.GeneratedMessage {
 
   /// The users.
   @$pb.TagNumber(1)
-  $core.List<User> get users => $_getList(0);
+  $pb.PbList<User> get users => $_getList(0);
 
   /// A token to retrieve the next page of results.
   @$pb.TagNumber(2)
@@ -951,14 +953,14 @@ class ListUsersResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasNextPageToken() => $_has(1);
   @$pb.TagNumber(2)
-  void clearNextPageToken() => clearField(2);
+  void clearNextPageToken() => $_clearField(2);
 }
 
 /// Request message for the `UpdateUser` method.
 class UpdateUserRequest extends $pb.GeneratedMessage {
   factory UpdateUserRequest({
     User? user,
-    $13.FieldMask? updateMask,
+    $12.FieldMask? updateMask,
     $core.bool? validateOnly,
   }) {
     final $result = create();
@@ -987,8 +989,8 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
     ..aOM<User>(1, _omitFieldNames ? '' : 'user', subBuilder: User.create)
-    ..aOM<$13.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
-        subBuilder: $13.FieldMask.create)
+    ..aOM<$12.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
+        subBuilder: $12.FieldMask.create)
     ..aOB(3, _omitFieldNames ? '' : 'validateOnly')
     ..hasRequiredFields = false;
 
@@ -1020,30 +1022,30 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
   User get user => $_getN(0);
   @$pb.TagNumber(1)
   set user(User v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasUser() => $_has(0);
   @$pb.TagNumber(1)
-  void clearUser() => clearField(1);
+  void clearUser() => $_clearField(1);
   @$pb.TagNumber(1)
   User ensureUser() => $_ensure(0);
 
   /// The fields to update.
   @$pb.TagNumber(2)
-  $13.FieldMask get updateMask => $_getN(1);
+  $12.FieldMask get updateMask => $_getN(1);
   @$pb.TagNumber(2)
-  set updateMask($13.FieldMask v) {
-    setField(2, v);
+  set updateMask($12.FieldMask v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasUpdateMask() => $_has(1);
   @$pb.TagNumber(2)
-  void clearUpdateMask() => clearField(2);
+  void clearUpdateMask() => $_clearField(2);
   @$pb.TagNumber(2)
-  $13.FieldMask ensureUpdateMask() => $_ensure(1);
+  $12.FieldMask ensureUpdateMask() => $_ensure(1);
 
   /// If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(3)
@@ -1056,7 +1058,7 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasValidateOnly() => $_has(2);
   @$pb.TagNumber(3)
-  void clearValidateOnly() => clearField(3);
+  void clearValidateOnly() => $_clearField(3);
 }
 
 /// Request message for the `DeleteUser` method.
@@ -1141,7 +1143,7 @@ class DeleteUserRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// Optional. The etag of the user.
   /// If this is provided, it must match the server's etag.
@@ -1155,7 +1157,7 @@ class DeleteUserRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasEtag() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEtag() => clearField(2);
+  void clearEtag() => $_clearField(2);
 
   /// If set to true, and the user is not found, the request will succeed
   /// but no action will be taken on the server.
@@ -1169,7 +1171,7 @@ class DeleteUserRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasAllowMissing() => $_has(2);
   @$pb.TagNumber(3)
-  void clearAllowMissing() => clearField(3);
+  void clearAllowMissing() => $_clearField(3);
 
   /// If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(4)
@@ -1182,7 +1184,7 @@ class DeleteUserRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasValidateOnly() => $_has(3);
   @$pb.TagNumber(4)
-  void clearValidateOnly() => clearField(4);
+  void clearValidateOnly() => $_clearField(4);
 
   /// If set to true, all children resources of the user will be deleted.
   @$pb.TagNumber(5)
@@ -1195,7 +1197,7 @@ class DeleteUserRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasForce() => $_has(4);
   @$pb.TagNumber(5)
-  void clearForce() => clearField(5);
+  void clearForce() => $_clearField(5);
 }
 
 /// A user's membership to a project or organization.
@@ -1276,7 +1278,7 @@ class UserMembership extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   ///  The resource name of the organization.
   ///
@@ -1292,7 +1294,7 @@ class UserMembership extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasResource() => $_has(1);
   @$pb.TagNumber(2)
-  void clearResource() => clearField(2);
+  void clearResource() => $_clearField(2);
 
   ///  The resource name of the user.
   ///
@@ -1307,7 +1309,7 @@ class UserMembership extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasUser() => $_has(2);
   @$pb.TagNumber(3)
-  void clearUser() => clearField(3);
+  void clearUser() => $_clearField(3);
 
   ///  The role of the user in the resource.
   ///
@@ -1322,7 +1324,7 @@ class UserMembership extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasRole() => $_has(3);
   @$pb.TagNumber(4)
-  void clearRole() => clearField(4);
+  void clearRole() => $_clearField(4);
 }
 
 /// Request message for the `GetUserMembership` method.
@@ -1390,7 +1392,7 @@ class GetUserMembershipRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 }
 
 /// Request message for the `ListUserMemberships` method.
@@ -1473,7 +1475,7 @@ class ListUserMembershipsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearParent() => $_clearField(1);
 
   /// The maximum number of memberships to return.
   @$pb.TagNumber(2)
@@ -1486,7 +1488,7 @@ class ListUserMembershipsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasPageSize() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPageSize() => clearField(2);
+  void clearPageSize() => $_clearField(2);
 
   /// A page token, received from a previous `ListMemberships` call.
   @$pb.TagNumber(3)
@@ -1499,7 +1501,7 @@ class ListUserMembershipsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasPageToken() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPageToken() => clearField(3);
+  void clearPageToken() => $_clearField(3);
 
   /// An optional filter to apply to the memberships.
   @$pb.TagNumber(4)
@@ -1512,7 +1514,7 @@ class ListUserMembershipsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasFilter() => $_has(3);
   @$pb.TagNumber(4)
-  void clearFilter() => clearField(4);
+  void clearFilter() => $_clearField(4);
 }
 
 /// Response message for the `ListMemberships` method.
@@ -1578,7 +1580,7 @@ class ListUserMembershipsResponse extends $pb.GeneratedMessage {
 
   /// The memberships.
   @$pb.TagNumber(1)
-  $core.List<UserMembership> get userMemberships => $_getList(0);
+  $pb.PbList<UserMembership> get userMemberships => $_getList(0);
 
   /// A token to retrieve the next page of results.
   @$pb.TagNumber(2)
@@ -1591,7 +1593,7 @@ class ListUserMembershipsResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasNextPageToken() => $_has(1);
   @$pb.TagNumber(2)
-  void clearNextPageToken() => clearField(2);
+  void clearNextPageToken() => $_clearField(2);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

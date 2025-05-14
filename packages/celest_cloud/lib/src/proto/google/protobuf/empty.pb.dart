@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/protobuf/empty.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -12,6 +12,8 @@
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 ///  A generic empty message that you can re-use to avoid defining duplicated
 ///  empty messages in your APIs. A typical example is to use it as the request

@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: cedar/v3/context.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -13,15 +13,17 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'value.pb.dart' as $2;
+import 'value.pb.dart' as $0;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 class Context extends $pb.GeneratedMessage {
   factory Context({
-    $core.Map<$core.String, $2.Value>? values,
+    $core.Iterable<$core.MapEntry<$core.String, $0.Value>>? values,
   }) {
     final $result = create();
     if (values != null) {
-      $result.values.addAll(values);
+      $result.values.addEntries(values);
     }
     return $result;
   }
@@ -37,12 +39,12 @@ class Context extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'Context',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
-    ..m<$core.String, $2.Value>(1, _omitFieldNames ? '' : 'values',
+    ..m<$core.String, $0.Value>(1, _omitFieldNames ? '' : 'values',
         entryClassName: 'Context.ValuesEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.OM,
-        valueCreator: $2.Value.create,
-        valueDefaultOrMaker: $2.Value.getDefault,
+        valueCreator: $0.Value.create,
+        valueDefaultOrMaker: $0.Value.getDefault,
         packageName: const $pb.PackageName('cedar.v3'))
     ..hasRequiredFields = false;
 
@@ -68,7 +70,7 @@ class Context extends $pb.GeneratedMessage {
   static Context? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.Map<$core.String, $2.Value> get values => $_getMap(0);
+  $pb.PbMap<$core.String, $0.Value> get values => $_getMap(0);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

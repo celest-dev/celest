@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: cedar/v3/entity_uid.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -12,6 +12,8 @@
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 class EntityUid extends $pb.GeneratedMessage {
   factory EntityUid({
@@ -74,7 +76,7 @@ class EntityUid extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearType() => clearField(1);
+  void clearType() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get id => $_getSZ(1);
@@ -86,7 +88,7 @@ class EntityUid extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearId() => clearField(2);
+  void clearId() => $_clearField(2);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

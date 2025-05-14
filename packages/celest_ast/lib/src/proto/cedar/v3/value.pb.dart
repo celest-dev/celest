@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: cedar/v3/value.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -13,8 +13,10 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../google/protobuf/wrappers.pb.dart' as $0;
+import '../../google/protobuf/wrappers.pb.dart' as $3;
 import 'entity_uid.pb.dart' as $1;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 enum Value_Value {
   string,
@@ -30,9 +32,9 @@ enum Value_Value {
 
 class Value extends $pb.GeneratedMessage {
   factory Value({
-    $0.StringValue? string,
-    $0.Int64Value? long,
-    $0.BoolValue? bool_3,
+    $3.StringValue? string,
+    $3.Int64Value? long,
+    $3.BoolValue? bool_3,
     SetValue? set,
     RecordValue? record,
     ExtensionCall? extensionCall,
@@ -90,12 +92,12 @@ class Value extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8])
-    ..aOM<$0.StringValue>(1, _omitFieldNames ? '' : 'string',
-        subBuilder: $0.StringValue.create)
-    ..aOM<$0.Int64Value>(2, _omitFieldNames ? '' : 'long',
-        subBuilder: $0.Int64Value.create)
-    ..aOM<$0.BoolValue>(3, _omitFieldNames ? '' : 'bool',
-        subBuilder: $0.BoolValue.create)
+    ..aOM<$3.StringValue>(1, _omitFieldNames ? '' : 'string',
+        subBuilder: $3.StringValue.create)
+    ..aOM<$3.Int64Value>(2, _omitFieldNames ? '' : 'long',
+        subBuilder: $3.Int64Value.create)
+    ..aOM<$3.BoolValue>(3, _omitFieldNames ? '' : 'bool',
+        subBuilder: $3.BoolValue.create)
     ..aOM<SetValue>(4, _omitFieldNames ? '' : 'set',
         subBuilder: SetValue.create)
     ..aOM<RecordValue>(5, _omitFieldNames ? '' : 'record',
@@ -130,61 +132,61 @@ class Value extends $pb.GeneratedMessage {
   static Value? _defaultInstance;
 
   Value_Value whichValue() => _Value_ValueByTag[$_whichOneof(0)]!;
-  void clearValue() => clearField($_whichOneof(0));
+  void clearValue() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  $0.StringValue get string => $_getN(0);
+  $3.StringValue get string => $_getN(0);
   @$pb.TagNumber(1)
-  set string($0.StringValue v) {
-    setField(1, v);
+  set string($3.StringValue v) {
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasString() => $_has(0);
   @$pb.TagNumber(1)
-  void clearString() => clearField(1);
+  void clearString() => $_clearField(1);
   @$pb.TagNumber(1)
-  $0.StringValue ensureString() => $_ensure(0);
+  $3.StringValue ensureString() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $0.Int64Value get long => $_getN(1);
+  $3.Int64Value get long => $_getN(1);
   @$pb.TagNumber(2)
-  set long($0.Int64Value v) {
-    setField(2, v);
+  set long($3.Int64Value v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasLong() => $_has(1);
   @$pb.TagNumber(2)
-  void clearLong() => clearField(2);
+  void clearLong() => $_clearField(2);
   @$pb.TagNumber(2)
-  $0.Int64Value ensureLong() => $_ensure(1);
+  $3.Int64Value ensureLong() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  $0.BoolValue get bool_3 => $_getN(2);
+  $3.BoolValue get bool_3 => $_getN(2);
   @$pb.TagNumber(3)
-  set bool_3($0.BoolValue v) {
-    setField(3, v);
+  set bool_3($3.BoolValue v) {
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasBool_3() => $_has(2);
   @$pb.TagNumber(3)
-  void clearBool_3() => clearField(3);
+  void clearBool_3() => $_clearField(3);
   @$pb.TagNumber(3)
-  $0.BoolValue ensureBool_3() => $_ensure(2);
+  $3.BoolValue ensureBool_3() => $_ensure(2);
 
   @$pb.TagNumber(4)
   SetValue get set => $_getN(3);
   @$pb.TagNumber(4)
   set set(SetValue v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasSet() => $_has(3);
   @$pb.TagNumber(4)
-  void clearSet() => clearField(4);
+  void clearSet() => $_clearField(4);
   @$pb.TagNumber(4)
   SetValue ensureSet() => $_ensure(3);
 
@@ -192,13 +194,13 @@ class Value extends $pb.GeneratedMessage {
   RecordValue get record => $_getN(4);
   @$pb.TagNumber(5)
   set record(RecordValue v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasRecord() => $_has(4);
   @$pb.TagNumber(5)
-  void clearRecord() => clearField(5);
+  void clearRecord() => $_clearField(5);
   @$pb.TagNumber(5)
   RecordValue ensureRecord() => $_ensure(4);
 
@@ -206,13 +208,13 @@ class Value extends $pb.GeneratedMessage {
   ExtensionCall get extensionCall => $_getN(5);
   @$pb.TagNumber(6)
   set extensionCall(ExtensionCall v) {
-    setField(6, v);
+    $_setField(6, v);
   }
 
   @$pb.TagNumber(6)
   $core.bool hasExtensionCall() => $_has(5);
   @$pb.TagNumber(6)
-  void clearExtensionCall() => clearField(6);
+  void clearExtensionCall() => $_clearField(6);
   @$pb.TagNumber(6)
   ExtensionCall ensureExtensionCall() => $_ensure(5);
 
@@ -220,13 +222,13 @@ class Value extends $pb.GeneratedMessage {
   EntityValue get entity => $_getN(6);
   @$pb.TagNumber(7)
   set entity(EntityValue v) {
-    setField(7, v);
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasEntity() => $_has(6);
   @$pb.TagNumber(7)
-  void clearEntity() => clearField(7);
+  void clearEntity() => $_clearField(7);
   @$pb.TagNumber(7)
   EntityValue ensureEntity() => $_ensure(6);
 
@@ -234,13 +236,13 @@ class Value extends $pb.GeneratedMessage {
   DecimalValue get decimal => $_getN(7);
   @$pb.TagNumber(8)
   set decimal(DecimalValue v) {
-    setField(8, v);
+    $_setField(8, v);
   }
 
   @$pb.TagNumber(8)
   $core.bool hasDecimal() => $_has(7);
   @$pb.TagNumber(8)
-  void clearDecimal() => clearField(8);
+  void clearDecimal() => $_clearField(8);
   @$pb.TagNumber(8)
   DecimalValue ensureDecimal() => $_ensure(7);
 }
@@ -293,16 +295,16 @@ class SetValue extends $pb.GeneratedMessage {
   static SetValue? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<Value> get elements => $_getList(0);
+  $pb.PbList<Value> get elements => $_getList(0);
 }
 
 class RecordValue extends $pb.GeneratedMessage {
   factory RecordValue({
-    $core.Map<$core.String, Value>? attributes,
+    $core.Iterable<$core.MapEntry<$core.String, Value>>? attributes,
   }) {
     final $result = create();
     if (attributes != null) {
-      $result.attributes.addAll(attributes);
+      $result.attributes.addEntries(attributes);
     }
     return $result;
   }
@@ -350,7 +352,7 @@ class RecordValue extends $pb.GeneratedMessage {
   static RecordValue? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.Map<$core.String, Value> get attributes => $_getMap(0);
+  $pb.PbMap<$core.String, Value> get attributes => $_getMap(0);
 }
 
 class ExtensionCall extends $pb.GeneratedMessage {
@@ -416,19 +418,19 @@ class ExtensionCall extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasFn() => $_has(0);
   @$pb.TagNumber(1)
-  void clearFn() => clearField(1);
+  void clearFn() => $_clearField(1);
 
   @$pb.TagNumber(2)
   Value get arg => $_getN(1);
   @$pb.TagNumber(2)
   set arg(Value v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasArg() => $_has(1);
   @$pb.TagNumber(2)
-  void clearArg() => clearField(2);
+  void clearArg() => $_clearField(2);
   @$pb.TagNumber(2)
   Value ensureArg() => $_ensure(1);
 }
@@ -485,13 +487,13 @@ class EntityValue extends $pb.GeneratedMessage {
   $1.EntityUid get uid => $_getN(0);
   @$pb.TagNumber(1)
   set uid($1.EntityUid v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasUid() => $_has(0);
   @$pb.TagNumber(1)
-  void clearUid() => clearField(1);
+  void clearUid() => $_clearField(1);
   @$pb.TagNumber(1)
   $1.EntityUid ensureUid() => $_ensure(0);
 }
@@ -554,7 +556,7 @@ class DecimalValue extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearValue() => $_clearField(1);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

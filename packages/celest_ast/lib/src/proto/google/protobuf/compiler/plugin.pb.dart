@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/protobuf/compiler/plugin.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -14,7 +14,9 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../descriptor.pb.dart' as $3;
+import '../descriptor.pb.dart' as $4;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'plugin.pbenum.dart';
 
@@ -91,7 +93,7 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasMajor() => $_has(0);
   @$pb.TagNumber(1)
-  void clearMajor() => clearField(1);
+  void clearMajor() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.int get minor => $_getIZ(1);
@@ -103,7 +105,7 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasMinor() => $_has(1);
   @$pb.TagNumber(2)
-  void clearMinor() => clearField(2);
+  void clearMinor() => $_clearField(2);
 
   @$pb.TagNumber(3)
   $core.int get patch => $_getIZ(2);
@@ -115,7 +117,7 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasPatch() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPatch() => clearField(3);
+  void clearPatch() => $_clearField(3);
 
   /// A suffix for alpha, beta or rc release, e.g., "alpha-1", "rc2". It should
   /// be empty for mainline stable releases.
@@ -129,7 +131,7 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasSuffix() => $_has(3);
   @$pb.TagNumber(4)
-  void clearSuffix() => clearField(4);
+  void clearSuffix() => $_clearField(4);
 }
 
 /// An encoded CodeGeneratorRequest is written to the plugin's stdin.
@@ -138,8 +140,8 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
     $core.Iterable<$core.String>? fileToGenerate,
     $core.String? parameter,
     Version? compilerVersion,
-    $core.Iterable<$3.FileDescriptorProto>? protoFile,
-    $core.Iterable<$3.FileDescriptorProto>? sourceFileDescriptors,
+    $core.Iterable<$4.FileDescriptorProto>? protoFile,
+    $core.Iterable<$4.FileDescriptorProto>? sourceFileDescriptors,
   }) {
     final $result = create();
     if (fileToGenerate != null) {
@@ -176,12 +178,12 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'parameter')
     ..aOM<Version>(3, _omitFieldNames ? '' : 'compilerVersion',
         subBuilder: Version.create)
-    ..pc<$3.FileDescriptorProto>(
+    ..pc<$4.FileDescriptorProto>(
         15, _omitFieldNames ? '' : 'protoFile', $pb.PbFieldType.PM,
-        subBuilder: $3.FileDescriptorProto.create)
-    ..pc<$3.FileDescriptorProto>(
+        subBuilder: $4.FileDescriptorProto.create)
+    ..pc<$4.FileDescriptorProto>(
         17, _omitFieldNames ? '' : 'sourceFileDescriptors', $pb.PbFieldType.PM,
-        subBuilder: $3.FileDescriptorProto.create);
+        subBuilder: $4.FileDescriptorProto.create);
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -211,7 +213,7 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
   /// code generator should generate code only for these files.  Each file's
   /// descriptor will be included in proto_file, below.
   @$pb.TagNumber(1)
-  $core.List<$core.String> get fileToGenerate => $_getList(0);
+  $pb.PbList<$core.String> get fileToGenerate => $_getList(0);
 
   /// The generator parameter passed on the command-line.
   @$pb.TagNumber(2)
@@ -224,20 +226,20 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasParameter() => $_has(1);
   @$pb.TagNumber(2)
-  void clearParameter() => clearField(2);
+  void clearParameter() => $_clearField(2);
 
   /// The version number of protocol compiler.
   @$pb.TagNumber(3)
   Version get compilerVersion => $_getN(2);
   @$pb.TagNumber(3)
   set compilerVersion(Version v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasCompilerVersion() => $_has(2);
   @$pb.TagNumber(3)
-  void clearCompilerVersion() => clearField(3);
+  void clearCompilerVersion() => $_clearField(3);
   @$pb.TagNumber(3)
   Version ensureCompilerVersion() => $_ensure(2);
 
@@ -261,13 +263,13 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
   ///  Type names of fields and extensions in the FileDescriptorProto are always
   ///  fully qualified.
   @$pb.TagNumber(15)
-  $core.List<$3.FileDescriptorProto> get protoFile => $_getList(3);
+  $pb.PbList<$4.FileDescriptorProto> get protoFile => $_getList(3);
 
   /// File descriptors with all options, including source-retention options.
   /// These descriptors are only provided for the files listed in
   /// files_to_generate.
   @$pb.TagNumber(17)
-  $core.List<$3.FileDescriptorProto> get sourceFileDescriptors => $_getList(4);
+  $pb.PbList<$4.FileDescriptorProto> get sourceFileDescriptors => $_getList(4);
 }
 
 /// Represents a single generated file.
@@ -276,7 +278,7 @@ class CodeGeneratorResponse_File extends $pb.GeneratedMessage {
     $core.String? name,
     $core.String? insertionPoint,
     $core.String? content,
-    $3.GeneratedCodeInfo? generatedCodeInfo,
+    $4.GeneratedCodeInfo? generatedCodeInfo,
   }) {
     final $result = create();
     if (name != null) {
@@ -309,8 +311,8 @@ class CodeGeneratorResponse_File extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOS(2, _omitFieldNames ? '' : 'insertionPoint')
     ..aOS(15, _omitFieldNames ? '' : 'content')
-    ..aOM<$3.GeneratedCodeInfo>(16, _omitFieldNames ? '' : 'generatedCodeInfo',
-        subBuilder: $3.GeneratedCodeInfo.create)
+    ..aOM<$4.GeneratedCodeInfo>(16, _omitFieldNames ? '' : 'generatedCodeInfo',
+        subBuilder: $4.GeneratedCodeInfo.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -360,7 +362,7 @@ class CodeGeneratorResponse_File extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   ///  If non-empty, indicates that the named file should already exist, and the
   ///  content here is to be inserted into that file at a defined insertion
@@ -409,7 +411,7 @@ class CodeGeneratorResponse_File extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasInsertionPoint() => $_has(1);
   @$pb.TagNumber(2)
-  void clearInsertionPoint() => clearField(2);
+  void clearInsertionPoint() => $_clearField(2);
 
   /// The file contents.
   @$pb.TagNumber(15)
@@ -422,24 +424,24 @@ class CodeGeneratorResponse_File extends $pb.GeneratedMessage {
   @$pb.TagNumber(15)
   $core.bool hasContent() => $_has(2);
   @$pb.TagNumber(15)
-  void clearContent() => clearField(15);
+  void clearContent() => $_clearField(15);
 
   /// Information describing the file content being inserted. If an insertion
   /// point is used, this information will be appropriately offset and inserted
   /// into the code generation metadata for the generated files.
   @$pb.TagNumber(16)
-  $3.GeneratedCodeInfo get generatedCodeInfo => $_getN(3);
+  $4.GeneratedCodeInfo get generatedCodeInfo => $_getN(3);
   @$pb.TagNumber(16)
-  set generatedCodeInfo($3.GeneratedCodeInfo v) {
-    setField(16, v);
+  set generatedCodeInfo($4.GeneratedCodeInfo v) {
+    $_setField(16, v);
   }
 
   @$pb.TagNumber(16)
   $core.bool hasGeneratedCodeInfo() => $_has(3);
   @$pb.TagNumber(16)
-  void clearGeneratedCodeInfo() => clearField(16);
+  void clearGeneratedCodeInfo() => $_clearField(16);
   @$pb.TagNumber(16)
-  $3.GeneratedCodeInfo ensureGeneratedCodeInfo() => $_ensure(3);
+  $4.GeneratedCodeInfo ensureGeneratedCodeInfo() => $_ensure(3);
 }
 
 /// The plugin writes an encoded CodeGeneratorResponse to stdout.
@@ -538,7 +540,7 @@ class CodeGeneratorResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasError() => $_has(0);
   @$pb.TagNumber(1)
-  void clearError() => clearField(1);
+  void clearError() => $_clearField(1);
 
   /// A bitmask of supported features that the code generator supports.
   /// This is a bitwise "or" of values from the Feature enum.
@@ -552,7 +554,7 @@ class CodeGeneratorResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasSupportedFeatures() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSupportedFeatures() => clearField(2);
+  void clearSupportedFeatures() => $_clearField(2);
 
   /// The minimum edition this plugin supports.  This will be treated as an
   /// Edition enum, but we want to allow unknown values.  It should be specified
@@ -568,7 +570,7 @@ class CodeGeneratorResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasMinimumEdition() => $_has(2);
   @$pb.TagNumber(3)
-  void clearMinimumEdition() => clearField(3);
+  void clearMinimumEdition() => $_clearField(3);
 
   /// The maximum edition this plugin supports.  This will be treated as an
   /// Edition enum, but we want to allow unknown values.  It should be specified
@@ -584,10 +586,10 @@ class CodeGeneratorResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasMaximumEdition() => $_has(3);
   @$pb.TagNumber(4)
-  void clearMaximumEdition() => clearField(4);
+  void clearMaximumEdition() => $_clearField(4);
 
   @$pb.TagNumber(15)
-  $core.List<CodeGeneratorResponse_File> get file => $_getList(4);
+  $pb.PbList<CodeGeneratorResponse_File> get file => $_getList(4);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/ast/v1/sdks.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -15,6 +15,8 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../../../google/protobuf/struct.pb.dart' as $5;
 import 'sdks.pbenum.dart';
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'sdks.pbenum.dart';
 
@@ -84,32 +86,32 @@ class Sdk extends $pb.GeneratedMessage {
   SdkType get type => $_getN(0);
   @$pb.TagNumber(1)
   set type(SdkType v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearType() => clearField(1);
+  void clearType() => $_clearField(1);
 
   /// The version of the SDK.
   @$pb.TagNumber(2)
   Version get version => $_getN(1);
   @$pb.TagNumber(2)
   set version(Version v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasVersion() => $_has(1);
   @$pb.TagNumber(2)
-  void clearVersion() => clearField(2);
+  void clearVersion() => $_clearField(2);
   @$pb.TagNumber(2)
   Version ensureVersion() => $_ensure(1);
 
   /// The SDK experiments enabled for the project.
   @$pb.TagNumber(3)
-  $core.List<$core.String> get enabledExperiments => $_getList(2);
+  $pb.PbList<$core.String> get enabledExperiments => $_getList(2);
 }
 
 /// A semantic version, broken down by its components.
@@ -197,7 +199,7 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasMajor() => $_has(0);
   @$pb.TagNumber(1)
-  void clearMajor() => clearField(1);
+  void clearMajor() => $_clearField(1);
 
   /// The minor version number: "2" in "1.2.3".
   @$pb.TagNumber(2)
@@ -210,7 +212,7 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasMinor() => $_has(1);
   @$pb.TagNumber(2)
-  void clearMinor() => clearField(2);
+  void clearMinor() => $_clearField(2);
 
   /// The patch version number: "3" in "1.2.3".
   @$pb.TagNumber(3)
@@ -223,7 +225,7 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasPatch() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPatch() => clearField(3);
+  void clearPatch() => $_clearField(3);
 
   ///  The pre-release identifier: "foo" in "1.2.3-foo".
   ///
@@ -231,7 +233,7 @@ class Version extends $pb.GeneratedMessage {
   ///  string or a non-negative integer. It may also be empty, indicating that
   ///  this version has no pre-release identifier.
   @$pb.TagNumber(4)
-  $core.List<$5.Value> get preRelease => $_getList(3);
+  $pb.PbList<$5.Value> get preRelease => $_getList(3);
 
   ///  The build identifier: "foo" in "1.2.3+foo".
   ///
@@ -239,7 +241,7 @@ class Version extends $pb.GeneratedMessage {
   ///  string or a non-negative integer. It may also be empty, indicating that
   ///  this version has no build identifier.
   @$pb.TagNumber(5)
-  $core.List<$5.Value> get build => $_getList(4);
+  $pb.PbList<$5.Value> get build => $_getList(4);
 
   /// The canonicalized version string.
   @$pb.TagNumber(6)
@@ -252,7 +254,7 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasCanonicalizedVersion() => $_has(5);
   @$pb.TagNumber(6)
-  void clearCanonicalizedVersion() => clearField(6);
+  void clearCanonicalizedVersion() => $_clearField(6);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

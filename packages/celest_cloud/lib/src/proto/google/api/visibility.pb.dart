@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/api/visibility.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -12,6 +12,8 @@
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 ///  `Visibility` restricts service consumer's access to service elements,
 ///  such as whether an application can call a visibility-restricted method.
@@ -87,7 +89,7 @@ class Visibility extends $pb.GeneratedMessage {
   ///
   ///  **NOTE:** All service configuration rules follow "last one wins" order.
   @$pb.TagNumber(1)
-  $core.List<VisibilityRule> get rules => $_getList(0);
+  $pb.PbList<VisibilityRule> get rules => $_getList(0);
 }
 
 /// A visibility rule provides visibility configuration for an individual API
@@ -159,7 +161,7 @@ class VisibilityRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasSelector() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSelector() => clearField(1);
+  void clearSelector() => $_clearField(1);
 
   ///  A comma-separated list of visibility labels that apply to the `selector`.
   ///  Any of the listed labels can be used to grant the visibility.
@@ -186,7 +188,7 @@ class VisibilityRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasRestriction() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRestriction() => clearField(2);
+  void clearRestriction() => $_clearField(2);
 }
 
 class VisibilityExt {

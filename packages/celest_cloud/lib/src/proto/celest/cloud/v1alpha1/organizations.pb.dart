@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/cloud/v1alpha1/organizations.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -13,9 +13,11 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/field_mask.pb.dart' as $13;
+import '../../../google/protobuf/field_mask.pb.dart' as $12;
 import '../../../google/protobuf/timestamp.pb.dart' as $9;
-import 'common.pbenum.dart' as $17;
+import 'common.pbenum.dart' as $14;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 /// A root-level organization resource.
 class Organization extends $pb.GeneratedMessage {
@@ -29,10 +31,10 @@ class Organization extends $pb.GeneratedMessage {
     $9.Timestamp? updateTime,
     $9.Timestamp? deleteTime,
     $core.String? etag,
-    $core.Map<$core.String, $core.String>? annotations,
+    $core.Iterable<$core.MapEntry<$core.String, $core.String>>? annotations,
     $core.bool? reconciling,
-    $17.Region? primaryRegion,
-    $17.LifecycleState? state,
+    $14.Region? primaryRegion,
+    $14.LifecycleState? state,
     $9.Timestamp? purgeTime,
   }) {
     final $result = create();
@@ -64,7 +66,7 @@ class Organization extends $pb.GeneratedMessage {
       $result.etag = etag;
     }
     if (annotations != null) {
-      $result.annotations.addAll(annotations);
+      $result.annotations.addEntries(annotations);
     }
     if (reconciling != null) {
       $result.reconciling = reconciling;
@@ -111,16 +113,16 @@ class Organization extends $pb.GeneratedMessage {
         valueFieldType: $pb.PbFieldType.OS,
         packageName: const $pb.PackageName('celest.cloud.v1alpha1'))
     ..aOB(11, _omitFieldNames ? '' : 'reconciling')
-    ..e<$17.Region>(
+    ..e<$14.Region>(
         12, _omitFieldNames ? '' : 'primaryRegion', $pb.PbFieldType.OE,
-        defaultOrMaker: $17.Region.REGION_UNSPECIFIED,
-        valueOf: $17.Region.valueOf,
-        enumValues: $17.Region.values)
-    ..e<$17.LifecycleState>(
+        defaultOrMaker: $14.Region.REGION_UNSPECIFIED,
+        valueOf: $14.Region.valueOf,
+        enumValues: $14.Region.values)
+    ..e<$14.LifecycleState>(
         13, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
-        defaultOrMaker: $17.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
-        valueOf: $17.LifecycleState.valueOf,
-        enumValues: $17.LifecycleState.values)
+        defaultOrMaker: $14.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
+        valueOf: $14.LifecycleState.valueOf,
+        enumValues: $14.LifecycleState.values)
     ..aOM<$9.Timestamp>(14, _omitFieldNames ? '' : 'purgeTime',
         subBuilder: $9.Timestamp.create)
     ..hasRequiredFields = false;
@@ -160,7 +162,7 @@ class Organization extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// A system-generated unique identifier for the organization.
   @$pb.TagNumber(2)
@@ -173,7 +175,7 @@ class Organization extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasUid() => $_has(1);
   @$pb.TagNumber(2)
-  void clearUid() => clearField(2);
+  void clearUid() => $_clearField(2);
 
   /// Optional. The parent of this organization.
   @$pb.TagNumber(3)
@@ -186,7 +188,7 @@ class Organization extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasParent() => $_has(2);
   @$pb.TagNumber(3)
-  void clearParent() => clearField(3);
+  void clearParent() => $_clearField(3);
 
   ///  Immutable. The unique, user-assigned id of the organization.
   ///  It must be 6 to 30 lowercase ASCII letters, digits, or hyphens.
@@ -204,7 +206,7 @@ class Organization extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasOrganizationId() => $_has(3);
   @$pb.TagNumber(4)
-  void clearOrganizationId() => clearField(4);
+  void clearOrganizationId() => $_clearField(4);
 
   /// Required. The display name of the organization.
   @$pb.TagNumber(5)
@@ -217,20 +219,20 @@ class Organization extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasDisplayName() => $_has(4);
   @$pb.TagNumber(5)
-  void clearDisplayName() => clearField(5);
+  void clearDisplayName() => $_clearField(5);
 
   /// Output only. The time the organization was created.
   @$pb.TagNumber(6)
   $9.Timestamp get createTime => $_getN(5);
   @$pb.TagNumber(6)
   set createTime($9.Timestamp v) {
-    setField(6, v);
+    $_setField(6, v);
   }
 
   @$pb.TagNumber(6)
   $core.bool hasCreateTime() => $_has(5);
   @$pb.TagNumber(6)
-  void clearCreateTime() => clearField(6);
+  void clearCreateTime() => $_clearField(6);
   @$pb.TagNumber(6)
   $9.Timestamp ensureCreateTime() => $_ensure(5);
 
@@ -239,13 +241,13 @@ class Organization extends $pb.GeneratedMessage {
   $9.Timestamp get updateTime => $_getN(6);
   @$pb.TagNumber(7)
   set updateTime($9.Timestamp v) {
-    setField(7, v);
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasUpdateTime() => $_has(6);
   @$pb.TagNumber(7)
-  void clearUpdateTime() => clearField(7);
+  void clearUpdateTime() => $_clearField(7);
   @$pb.TagNumber(7)
   $9.Timestamp ensureUpdateTime() => $_ensure(6);
 
@@ -254,13 +256,13 @@ class Organization extends $pb.GeneratedMessage {
   $9.Timestamp get deleteTime => $_getN(7);
   @$pb.TagNumber(8)
   set deleteTime($9.Timestamp v) {
-    setField(8, v);
+    $_setField(8, v);
   }
 
   @$pb.TagNumber(8)
   $core.bool hasDeleteTime() => $_has(7);
   @$pb.TagNumber(8)
-  void clearDeleteTime() => clearField(8);
+  void clearDeleteTime() => $_clearField(8);
   @$pb.TagNumber(8)
   $9.Timestamp ensureDeleteTime() => $_ensure(7);
 
@@ -277,11 +279,11 @@ class Organization extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $core.bool hasEtag() => $_has(8);
   @$pb.TagNumber(9)
-  void clearEtag() => clearField(9);
+  void clearEtag() => $_clearField(9);
 
   /// Optional. Client-provided key-value pairs that are not directly used by the system.
   @$pb.TagNumber(10)
-  $core.Map<$core.String, $core.String> get annotations => $_getMap(9);
+  $pb.PbMap<$core.String, $core.String> get annotations => $_getMap(9);
 
   /// Output only. Indicates whether the organization is currently being reconciled.
   @$pb.TagNumber(11)
@@ -294,48 +296,48 @@ class Organization extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   $core.bool hasReconciling() => $_has(10);
   @$pb.TagNumber(11)
-  void clearReconciling() => clearField(11);
+  void clearReconciling() => $_clearField(11);
 
   ///  Required. The primary region for the organization.
   ///
   ///  Cannot be changed after creation.
   @$pb.TagNumber(12)
-  $17.Region get primaryRegion => $_getN(11);
+  $14.Region get primaryRegion => $_getN(11);
   @$pb.TagNumber(12)
-  set primaryRegion($17.Region v) {
-    setField(12, v);
+  set primaryRegion($14.Region v) {
+    $_setField(12, v);
   }
 
   @$pb.TagNumber(12)
   $core.bool hasPrimaryRegion() => $_has(11);
   @$pb.TagNumber(12)
-  void clearPrimaryRegion() => clearField(12);
+  void clearPrimaryRegion() => $_clearField(12);
 
   /// Output only. The lifecycle state of the organization.
   @$pb.TagNumber(13)
-  $17.LifecycleState get state => $_getN(12);
+  $14.LifecycleState get state => $_getN(12);
   @$pb.TagNumber(13)
-  set state($17.LifecycleState v) {
-    setField(13, v);
+  set state($14.LifecycleState v) {
+    $_setField(13, v);
   }
 
   @$pb.TagNumber(13)
   $core.bool hasState() => $_has(12);
   @$pb.TagNumber(13)
-  void clearState() => clearField(13);
+  void clearState() => $_clearField(13);
 
   /// Output only. The time the organization is scheduled for permanent deletion.
   @$pb.TagNumber(14)
   $9.Timestamp get purgeTime => $_getN(13);
   @$pb.TagNumber(14)
   set purgeTime($9.Timestamp v) {
-    setField(14, v);
+    $_setField(14, v);
   }
 
   @$pb.TagNumber(14)
   $core.bool hasPurgeTime() => $_has(13);
   @$pb.TagNumber(14)
-  void clearPurgeTime() => clearField(14);
+  void clearPurgeTime() => $_clearField(14);
   @$pb.TagNumber(14)
   $9.Timestamp ensurePurgeTime() => $_ensure(13);
 }
@@ -419,7 +421,7 @@ class CreateOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearParent() => $_clearField(1);
 
   /// The unique, user-assigned id of the organization.
   @$pb.TagNumber(2)
@@ -432,20 +434,20 @@ class CreateOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasOrganizationId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearOrganizationId() => clearField(2);
+  void clearOrganizationId() => $_clearField(2);
 
   /// The organization to create.
   @$pb.TagNumber(3)
   Organization get organization => $_getN(2);
   @$pb.TagNumber(3)
   set organization(Organization v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasOrganization() => $_has(2);
   @$pb.TagNumber(3)
-  void clearOrganization() => clearField(3);
+  void clearOrganization() => $_clearField(3);
   @$pb.TagNumber(3)
   Organization ensureOrganization() => $_ensure(2);
 
@@ -460,14 +462,14 @@ class CreateOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasValidateOnly() => $_has(3);
   @$pb.TagNumber(4)
-  void clearValidateOnly() => clearField(4);
+  void clearValidateOnly() => $_clearField(4);
 }
 
 /// Request message for the `UpdateOrganization` method.
 class UpdateOrganizationRequest extends $pb.GeneratedMessage {
   factory UpdateOrganizationRequest({
     Organization? organization,
-    $13.FieldMask? updateMask,
+    $12.FieldMask? updateMask,
     $core.bool? allowMissing,
     $core.bool? validateOnly,
   }) {
@@ -501,8 +503,8 @@ class UpdateOrganizationRequest extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<Organization>(1, _omitFieldNames ? '' : 'organization',
         subBuilder: Organization.create)
-    ..aOM<$13.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
-        subBuilder: $13.FieldMask.create)
+    ..aOM<$12.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
+        subBuilder: $12.FieldMask.create)
     ..aOB(3, _omitFieldNames ? '' : 'allowMissing')
     ..aOB(4, _omitFieldNames ? '' : 'validateOnly')
     ..hasRequiredFields = false;
@@ -537,30 +539,30 @@ class UpdateOrganizationRequest extends $pb.GeneratedMessage {
   Organization get organization => $_getN(0);
   @$pb.TagNumber(1)
   set organization(Organization v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasOrganization() => $_has(0);
   @$pb.TagNumber(1)
-  void clearOrganization() => clearField(1);
+  void clearOrganization() => $_clearField(1);
   @$pb.TagNumber(1)
   Organization ensureOrganization() => $_ensure(0);
 
   /// The update mask applies to the organization.
   @$pb.TagNumber(2)
-  $13.FieldMask get updateMask => $_getN(1);
+  $12.FieldMask get updateMask => $_getN(1);
   @$pb.TagNumber(2)
-  set updateMask($13.FieldMask v) {
-    setField(2, v);
+  set updateMask($12.FieldMask v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasUpdateMask() => $_has(1);
   @$pb.TagNumber(2)
-  void clearUpdateMask() => clearField(2);
+  void clearUpdateMask() => $_clearField(2);
   @$pb.TagNumber(2)
-  $13.FieldMask ensureUpdateMask() => $_ensure(1);
+  $12.FieldMask ensureUpdateMask() => $_ensure(1);
 
   /// If set to true, and the organization is not found, a new organization will be created.
   /// In this situation, `update_mask` is ignored.
@@ -574,7 +576,7 @@ class UpdateOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasAllowMissing() => $_has(2);
   @$pb.TagNumber(3)
-  void clearAllowMissing() => clearField(3);
+  void clearAllowMissing() => $_clearField(3);
 
   /// If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(4)
@@ -587,7 +589,7 @@ class UpdateOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasValidateOnly() => $_has(3);
   @$pb.TagNumber(4)
-  void clearValidateOnly() => clearField(4);
+  void clearValidateOnly() => $_clearField(4);
 }
 
 /// Request message for the `GetOrganization` method.
@@ -654,7 +656,7 @@ class GetOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 }
 
 /// Request message for the `ListOrganizations` method.
@@ -745,7 +747,7 @@ class ListOrganizationsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearParent() => $_clearField(1);
 
   /// The maximum number of organizations to return.
   @$pb.TagNumber(2)
@@ -758,7 +760,7 @@ class ListOrganizationsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasPageSize() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPageSize() => clearField(2);
+  void clearPageSize() => $_clearField(2);
 
   /// A page token, received from a previous `ListOrganizations` call.
   @$pb.TagNumber(3)
@@ -771,7 +773,7 @@ class ListOrganizationsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasPageToken() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPageToken() => clearField(3);
+  void clearPageToken() => $_clearField(3);
 
   /// An optional filter to apply to the organizations.
   @$pb.TagNumber(4)
@@ -784,7 +786,7 @@ class ListOrganizationsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasFilter() => $_has(3);
   @$pb.TagNumber(4)
-  void clearFilter() => clearField(4);
+  void clearFilter() => $_clearField(4);
 
   /// The order to sort the results by.
   @$pb.TagNumber(5)
@@ -797,7 +799,7 @@ class ListOrganizationsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasOrderBy() => $_has(4);
   @$pb.TagNumber(5)
-  void clearOrderBy() => clearField(5);
+  void clearOrderBy() => $_clearField(5);
 
   /// Include soft-deleted organizations in the results.
   @$pb.TagNumber(6)
@@ -810,7 +812,7 @@ class ListOrganizationsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasShowDeleted() => $_has(5);
   @$pb.TagNumber(6)
-  void clearShowDeleted() => clearField(6);
+  void clearShowDeleted() => $_clearField(6);
 }
 
 /// Response message for the `ListOrganizations` method.
@@ -874,7 +876,7 @@ class ListOrganizationsResponse extends $pb.GeneratedMessage {
 
   /// The organizations.
   @$pb.TagNumber(1)
-  $core.List<Organization> get organizations => $_getList(0);
+  $pb.PbList<Organization> get organizations => $_getList(0);
 
   /// A token to retrieve the next page of results.
   @$pb.TagNumber(2)
@@ -887,7 +889,7 @@ class ListOrganizationsResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasNextPageToken() => $_has(1);
   @$pb.TagNumber(2)
-  void clearNextPageToken() => clearField(2);
+  void clearNextPageToken() => $_clearField(2);
 }
 
 /// Request message for the `DeleteOrganization` method.
@@ -975,7 +977,7 @@ class DeleteOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// Optional. If set to true, any resources associated with the organization will also be marked for deletion.
   /// (Otherwise, the request will only work if the organization has no resources.)
@@ -989,7 +991,7 @@ class DeleteOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasForce() => $_has(1);
   @$pb.TagNumber(2)
-  void clearForce() => clearField(2);
+  void clearForce() => $_clearField(2);
 
   /// Optional. The etag of the organization.
   /// If this is provided, it must match the server's etag.
@@ -1003,7 +1005,7 @@ class DeleteOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasEtag() => $_has(2);
   @$pb.TagNumber(3)
-  void clearEtag() => clearField(3);
+  void clearEtag() => $_clearField(3);
 
   /// Optional. If set to true, and the organization is not found, the request will succeed
   /// but no action will be taken on the server.
@@ -1017,7 +1019,7 @@ class DeleteOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasAllowMissing() => $_has(3);
   @$pb.TagNumber(4)
-  void clearAllowMissing() => clearField(4);
+  void clearAllowMissing() => $_clearField(4);
 
   /// Optional. If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(5)
@@ -1030,7 +1032,7 @@ class DeleteOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasValidateOnly() => $_has(4);
   @$pb.TagNumber(5)
-  void clearValidateOnly() => clearField(5);
+  void clearValidateOnly() => $_clearField(5);
 }
 
 /// Request message for the `UndeleteOrganization` method.
@@ -1110,7 +1112,7 @@ class UndeleteOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// Optional. If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(2)
@@ -1123,7 +1125,7 @@ class UndeleteOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasValidateOnly() => $_has(1);
   @$pb.TagNumber(2)
-  void clearValidateOnly() => clearField(2);
+  void clearValidateOnly() => $_clearField(2);
 
   /// Optional. The etag of the organization.
   /// If this is provided, it must match the server's etag.
@@ -1137,7 +1139,7 @@ class UndeleteOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasEtag() => $_has(2);
   @$pb.TagNumber(3)
-  void clearEtag() => clearField(3);
+  void clearEtag() => $_clearField(3);
 }
 
 /// Request message for the `RenameOrganization` operation.
@@ -1219,7 +1221,7 @@ class RenameOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// The new organization identifier.
   @$pb.TagNumber(2)
@@ -1232,7 +1234,7 @@ class RenameOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasOrganizationId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearOrganizationId() => clearField(2);
+  void clearOrganizationId() => $_clearField(2);
 
   /// Optional. The etag of the organization.
   /// If this is provided, it must match the server's etag.
@@ -1246,7 +1248,7 @@ class RenameOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasEtag() => $_has(2);
   @$pb.TagNumber(3)
-  void clearEtag() => clearField(3);
+  void clearEtag() => $_clearField(3);
 
   /// If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(4)
@@ -1259,7 +1261,7 @@ class RenameOrganizationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasValidateOnly() => $_has(3);
   @$pb.TagNumber(4)
-  void clearValidateOnly() => clearField(4);
+  void clearValidateOnly() => $_clearField(4);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

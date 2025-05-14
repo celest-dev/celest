@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/protobuf/wrappers.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -14,6 +14,8 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 import 'package:protobuf/src/protobuf/mixins/well_known.dart' as $mixin;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 ///  Wrapper message for `double`.
 ///
@@ -79,7 +81,7 @@ class DoubleValue extends $pb.GeneratedMessage with $mixin.DoubleValueMixin {
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearValue() => $_clearField(1);
 }
 
 ///  Wrapper message for `float`.
@@ -145,7 +147,7 @@ class FloatValue extends $pb.GeneratedMessage with $mixin.FloatValueMixin {
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearValue() => $_clearField(1);
 }
 
 ///  Wrapper message for `int64`.
@@ -211,7 +213,7 @@ class Int64Value extends $pb.GeneratedMessage with $mixin.Int64ValueMixin {
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearValue() => $_clearField(1);
 }
 
 ///  Wrapper message for `uint64`.
@@ -279,7 +281,7 @@ class UInt64Value extends $pb.GeneratedMessage with $mixin.UInt64ValueMixin {
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearValue() => $_clearField(1);
 }
 
 ///  Wrapper message for `int32`.
@@ -345,7 +347,7 @@ class Int32Value extends $pb.GeneratedMessage with $mixin.Int32ValueMixin {
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearValue() => $_clearField(1);
 }
 
 ///  Wrapper message for `uint32`.
@@ -412,7 +414,7 @@ class UInt32Value extends $pb.GeneratedMessage with $mixin.UInt32ValueMixin {
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearValue() => $_clearField(1);
 }
 
 ///  Wrapper message for `bool`.
@@ -478,7 +480,7 @@ class BoolValue extends $pb.GeneratedMessage with $mixin.BoolValueMixin {
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearValue() => $_clearField(1);
 }
 
 ///  Wrapper message for `string`.
@@ -545,7 +547,7 @@ class StringValue extends $pb.GeneratedMessage with $mixin.StringValueMixin {
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearValue() => $_clearField(1);
 }
 
 ///  Wrapper message for `bytes`.
@@ -612,7 +614,7 @@ class BytesValue extends $pb.GeneratedMessage with $mixin.BytesValueMixin {
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearValue() => $_clearField(1);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/api/http.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -12,6 +12,8 @@
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 /// Defines the HTTP configuration for an API service. It contains a list of
 /// [HttpRule][google.api.HttpRule], each specifying the mapping of an RPC method
@@ -72,7 +74,7 @@ class Http extends $pb.GeneratedMessage {
   ///
   ///  **NOTE:** All service configuration rules follow "last one wins" order.
   @$pb.TagNumber(1)
-  $core.List<HttpRule> get rules => $_getList(0);
+  $pb.PbList<HttpRule> get rules => $_getList(0);
 
   ///  When set to true, URL path parameters will be fully URI-decoded except in
   ///  cases of single segment matches in reserved expansion, where "%2F" will be
@@ -90,7 +92,7 @@ class Http extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasFullyDecodeReservedExpansion() => $_has(1);
   @$pb.TagNumber(2)
-  void clearFullyDecodeReservedExpansion() => clearField(2);
+  void clearFullyDecodeReservedExpansion() => $_clearField(2);
 }
 
 enum HttpRule_Pattern { get, put, post, delete, patch, custom, notSet }
@@ -464,7 +466,7 @@ class HttpRule extends $pb.GeneratedMessage {
   static HttpRule? _defaultInstance;
 
   HttpRule_Pattern whichPattern() => _HttpRule_PatternByTag[$_whichOneof(0)]!;
-  void clearPattern() => clearField($_whichOneof(0));
+  void clearPattern() => $_clearField($_whichOneof(0));
 
   ///  Selects a method to which this rule applies.
   ///
@@ -480,7 +482,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasSelector() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSelector() => clearField(1);
+  void clearSelector() => $_clearField(1);
 
   /// Maps to HTTP GET. Used for listing and getting information about
   /// resources.
@@ -494,7 +496,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasGet() => $_has(1);
   @$pb.TagNumber(2)
-  void clearGet() => clearField(2);
+  void clearGet() => $_clearField(2);
 
   /// Maps to HTTP PUT. Used for replacing a resource.
   @$pb.TagNumber(3)
@@ -507,7 +509,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasPut() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPut() => clearField(3);
+  void clearPut() => $_clearField(3);
 
   /// Maps to HTTP POST. Used for creating a resource or performing an action.
   @$pb.TagNumber(4)
@@ -520,7 +522,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasPost() => $_has(3);
   @$pb.TagNumber(4)
-  void clearPost() => clearField(4);
+  void clearPost() => $_clearField(4);
 
   /// Maps to HTTP DELETE. Used for deleting a resource.
   @$pb.TagNumber(5)
@@ -533,7 +535,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasDelete() => $_has(4);
   @$pb.TagNumber(5)
-  void clearDelete() => clearField(5);
+  void clearDelete() => $_clearField(5);
 
   /// Maps to HTTP PATCH. Used for updating a resource.
   @$pb.TagNumber(6)
@@ -546,7 +548,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasPatch() => $_has(5);
   @$pb.TagNumber(6)
-  void clearPatch() => clearField(6);
+  void clearPatch() => $_clearField(6);
 
   ///  The name of the request field whose value is mapped to the HTTP request
   ///  body, or `*` for mapping all request fields not captured by the path
@@ -564,7 +566,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.bool hasBody() => $_has(6);
   @$pb.TagNumber(7)
-  void clearBody() => clearField(7);
+  void clearBody() => $_clearField(7);
 
   /// The custom pattern is used for specifying an HTTP method that is not
   /// included in the `pattern` field, such as HEAD, or "*" to leave the
@@ -574,13 +576,13 @@ class HttpRule extends $pb.GeneratedMessage {
   CustomHttpPattern get custom => $_getN(7);
   @$pb.TagNumber(8)
   set custom(CustomHttpPattern v) {
-    setField(8, v);
+    $_setField(8, v);
   }
 
   @$pb.TagNumber(8)
   $core.bool hasCustom() => $_has(7);
   @$pb.TagNumber(8)
-  void clearCustom() => clearField(8);
+  void clearCustom() => $_clearField(8);
   @$pb.TagNumber(8)
   CustomHttpPattern ensureCustom() => $_ensure(7);
 
@@ -588,7 +590,7 @@ class HttpRule extends $pb.GeneratedMessage {
   /// not contain an `additional_bindings` field themselves (that is,
   /// the nesting may only be one level deep).
   @$pb.TagNumber(11)
-  $core.List<HttpRule> get additionalBindings => $_getList(8);
+  $pb.PbList<HttpRule> get additionalBindings => $_getList(8);
 
   ///  Optional. The name of the response field whose value is mapped to the HTTP
   ///  response body. When omitted, the entire response message will be used
@@ -606,7 +608,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(12)
   $core.bool hasResponseBody() => $_has(9);
   @$pb.TagNumber(12)
-  void clearResponseBody() => clearField(12);
+  void clearResponseBody() => $_clearField(12);
 }
 
 /// A custom pattern is used for defining custom HTTP verb.
@@ -674,7 +676,7 @@ class CustomHttpPattern extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasKind() => $_has(0);
   @$pb.TagNumber(1)
-  void clearKind() => clearField(1);
+  void clearKind() => $_clearField(1);
 
   /// The path matched by this custom verb.
   @$pb.TagNumber(2)
@@ -687,7 +689,7 @@ class CustomHttpPattern extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasPath() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPath() => clearField(2);
+  void clearPath() => $_clearField(2);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

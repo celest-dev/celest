@@ -1,7 +1,9 @@
 ## NEXT
 
-- chore: Re-format with Dart 3.8
+- chore: Bump Dart SDK constraint to `^3.7.0`
+- chore: Re-format with Dart 3.7
 - chore: Update linter/style preferences
+- chore: Update protobufs
 
 ## 0.1.6
 

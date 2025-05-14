@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: cedar/v3/policy.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -14,24 +14,26 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'entity_uid.pb.dart' as $1;
-import 'expr.pb.dart' as $4;
-import 'expr.pbenum.dart' as $4;
+import 'expr.pb.dart' as $2;
+import 'expr.pbenum.dart' as $2;
 import 'policy.pbenum.dart';
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'policy.pbenum.dart';
 
 class PolicySet extends $pb.GeneratedMessage {
   factory PolicySet({
-    $core.Map<$core.String, Policy>? policies,
-    $core.Map<$core.String, Policy>? templates,
+    $core.Iterable<$core.MapEntry<$core.String, Policy>>? policies,
+    $core.Iterable<$core.MapEntry<$core.String, Policy>>? templates,
     $core.Iterable<TemplateLink>? templateLinks,
   }) {
     final $result = create();
     if (policies != null) {
-      $result.policies.addAll(policies);
+      $result.policies.addEntries(policies);
     }
     if (templates != null) {
-      $result.templates.addAll(templates);
+      $result.templates.addEntries(templates);
     }
     if (templateLinks != null) {
       $result.templateLinks.addAll(templateLinks);
@@ -91,13 +93,13 @@ class PolicySet extends $pb.GeneratedMessage {
   static PolicySet? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.Map<$core.String, Policy> get policies => $_getMap(0);
+  $pb.PbMap<$core.String, Policy> get policies => $_getMap(0);
 
   @$pb.TagNumber(2)
-  $core.Map<$core.String, Policy> get templates => $_getMap(1);
+  $pb.PbMap<$core.String, Policy> get templates => $_getMap(1);
 
   @$pb.TagNumber(3)
-  $core.List<TemplateLink> get templateLinks => $_getList(2);
+  $pb.PbList<TemplateLink> get templateLinks => $_getList(2);
 }
 
 class Policy extends $pb.GeneratedMessage {
@@ -200,31 +202,31 @@ class Policy extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => clearField(1);
+  void clearId() => $_clearField(1);
 
   @$pb.TagNumber(2)
   Effect get effect => $_getN(1);
   @$pb.TagNumber(2)
   set effect(Effect v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasEffect() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEffect() => clearField(2);
+  void clearEffect() => $_clearField(2);
 
   @$pb.TagNumber(3)
   PrincipalConstraint get principal => $_getN(2);
   @$pb.TagNumber(3)
   set principal(PrincipalConstraint v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasPrincipal() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPrincipal() => clearField(3);
+  void clearPrincipal() => $_clearField(3);
   @$pb.TagNumber(3)
   PrincipalConstraint ensurePrincipal() => $_ensure(2);
 
@@ -232,13 +234,13 @@ class Policy extends $pb.GeneratedMessage {
   ActionConstraint get action => $_getN(3);
   @$pb.TagNumber(4)
   set action(ActionConstraint v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasAction() => $_has(3);
   @$pb.TagNumber(4)
-  void clearAction() => clearField(4);
+  void clearAction() => $_clearField(4);
   @$pb.TagNumber(4)
   ActionConstraint ensureAction() => $_ensure(3);
 
@@ -246,30 +248,30 @@ class Policy extends $pb.GeneratedMessage {
   ResourceConstraint get resource => $_getN(4);
   @$pb.TagNumber(5)
   set resource(ResourceConstraint v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasResource() => $_has(4);
   @$pb.TagNumber(5)
-  void clearResource() => clearField(5);
+  void clearResource() => $_clearField(5);
   @$pb.TagNumber(5)
   ResourceConstraint ensureResource() => $_ensure(4);
 
   @$pb.TagNumber(6)
-  $core.List<Condition> get conditions => $_getList(5);
+  $pb.PbList<Condition> get conditions => $_getList(5);
 
   @$pb.TagNumber(7)
   Annotations get annotations => $_getN(6);
   @$pb.TagNumber(7)
   set annotations(Annotations v) {
-    setField(7, v);
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasAnnotations() => $_has(6);
   @$pb.TagNumber(7)
-  void clearAnnotations() => clearField(7);
+  void clearAnnotations() => $_clearField(7);
   @$pb.TagNumber(7)
   Annotations ensureAnnotations() => $_ensure(6);
 
@@ -277,24 +279,24 @@ class Policy extends $pb.GeneratedMessage {
   Position get position => $_getN(7);
   @$pb.TagNumber(8)
   set position(Position v) {
-    setField(8, v);
+    $_setField(8, v);
   }
 
   @$pb.TagNumber(8)
   $core.bool hasPosition() => $_has(7);
   @$pb.TagNumber(8)
-  void clearPosition() => clearField(8);
+  void clearPosition() => $_clearField(8);
   @$pb.TagNumber(8)
   Position ensurePosition() => $_ensure(7);
 }
 
 class Annotations extends $pb.GeneratedMessage {
   factory Annotations({
-    $core.Map<$core.String, $core.String>? annotations,
+    $core.Iterable<$core.MapEntry<$core.String, $core.String>>? annotations,
   }) {
     final $result = create();
     if (annotations != null) {
-      $result.annotations.addAll(annotations);
+      $result.annotations.addEntries(annotations);
     }
     return $result;
   }
@@ -340,7 +342,7 @@ class Annotations extends $pb.GeneratedMessage {
   static Annotations? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.Map<$core.String, $core.String> get annotations => $_getMap(0);
+  $pb.PbMap<$core.String, $core.String> get annotations => $_getMap(0);
 }
 
 class Position extends $pb.GeneratedMessage {
@@ -414,7 +416,7 @@ class Position extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasFilename() => $_has(0);
   @$pb.TagNumber(1)
-  void clearFilename() => clearField(1);
+  void clearFilename() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.int get offset => $_getIZ(1);
@@ -426,7 +428,7 @@ class Position extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasOffset() => $_has(1);
   @$pb.TagNumber(2)
-  void clearOffset() => clearField(2);
+  void clearOffset() => $_clearField(2);
 
   @$pb.TagNumber(3)
   $core.int get line => $_getIZ(2);
@@ -438,7 +440,7 @@ class Position extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasLine() => $_has(2);
   @$pb.TagNumber(3)
-  void clearLine() => clearField(3);
+  void clearLine() => $_clearField(3);
 
   @$pb.TagNumber(4)
   $core.int get column => $_getIZ(3);
@@ -450,7 +452,7 @@ class Position extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasColumn() => $_has(3);
   @$pb.TagNumber(4)
-  void clearColumn() => clearField(4);
+  void clearColumn() => $_clearField(4);
 }
 
 enum PrincipalConstraint_Constraint { all, equals, in_, isIn, is_5, notSet }
@@ -540,19 +542,19 @@ class PrincipalConstraint extends $pb.GeneratedMessage {
 
   PrincipalConstraint_Constraint whichConstraint() =>
       _PrincipalConstraint_ConstraintByTag[$_whichOneof(0)]!;
-  void clearConstraint() => clearField($_whichOneof(0));
+  void clearConstraint() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   PrincipalAll get all => $_getN(0);
   @$pb.TagNumber(1)
   set all(PrincipalAll v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasAll() => $_has(0);
   @$pb.TagNumber(1)
-  void clearAll() => clearField(1);
+  void clearAll() => $_clearField(1);
   @$pb.TagNumber(1)
   PrincipalAll ensureAll() => $_ensure(0);
 
@@ -560,13 +562,13 @@ class PrincipalConstraint extends $pb.GeneratedMessage {
   PrincipalEquals get equals => $_getN(1);
   @$pb.TagNumber(2)
   set equals(PrincipalEquals v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasEquals() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEquals() => clearField(2);
+  void clearEquals() => $_clearField(2);
   @$pb.TagNumber(2)
   PrincipalEquals ensureEquals() => $_ensure(1);
 
@@ -574,13 +576,13 @@ class PrincipalConstraint extends $pb.GeneratedMessage {
   PrincipalIn get in_ => $_getN(2);
   @$pb.TagNumber(3)
   set in_(PrincipalIn v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasIn_() => $_has(2);
   @$pb.TagNumber(3)
-  void clearIn_() => clearField(3);
+  void clearIn_() => $_clearField(3);
   @$pb.TagNumber(3)
   PrincipalIn ensureIn_() => $_ensure(2);
 
@@ -588,13 +590,13 @@ class PrincipalConstraint extends $pb.GeneratedMessage {
   PrincipalIsIn get isIn => $_getN(3);
   @$pb.TagNumber(4)
   set isIn(PrincipalIsIn v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasIsIn() => $_has(3);
   @$pb.TagNumber(4)
-  void clearIsIn() => clearField(4);
+  void clearIsIn() => $_clearField(4);
   @$pb.TagNumber(4)
   PrincipalIsIn ensureIsIn() => $_ensure(3);
 
@@ -602,13 +604,13 @@ class PrincipalConstraint extends $pb.GeneratedMessage {
   PrincipalIs get is_5 => $_getN(4);
   @$pb.TagNumber(5)
   set is_5(PrincipalIs v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasIs_5() => $_has(4);
   @$pb.TagNumber(5)
-  void clearIs_5() => clearField(5);
+  void clearIs_5() => $_clearField(5);
   @$pb.TagNumber(5)
   PrincipalIs ensureIs_5() => $_ensure(4);
 }
@@ -657,7 +659,7 @@ enum PrincipalEquals_Component { slot, entity, notSet }
 
 class PrincipalEquals extends $pb.GeneratedMessage {
   factory PrincipalEquals({
-    $4.SlotId? slot,
+    $2.SlotId? slot,
     $1.EntityUid? entity,
   }) {
     final $result = create();
@@ -688,10 +690,10 @@ class PrincipalEquals extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..e<$4.SlotId>(1, _omitFieldNames ? '' : 'slot', $pb.PbFieldType.OE,
-        defaultOrMaker: $4.SlotId.SLOT_ID_UNSPECIFIED,
-        valueOf: $4.SlotId.valueOf,
-        enumValues: $4.SlotId.values)
+    ..e<$2.SlotId>(1, _omitFieldNames ? '' : 'slot', $pb.PbFieldType.OE,
+        defaultOrMaker: $2.SlotId.SLOT_ID_UNSPECIFIED,
+        valueOf: $2.SlotId.valueOf,
+        enumValues: $2.SlotId.values)
     ..aOM<$1.EntityUid>(2, _omitFieldNames ? '' : 'entity',
         subBuilder: $1.EntityUid.create)
     ..hasRequiredFields = false;
@@ -721,31 +723,31 @@ class PrincipalEquals extends $pb.GeneratedMessage {
 
   PrincipalEquals_Component whichComponent() =>
       _PrincipalEquals_ComponentByTag[$_whichOneof(0)]!;
-  void clearComponent() => clearField($_whichOneof(0));
+  void clearComponent() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  $4.SlotId get slot => $_getN(0);
+  $2.SlotId get slot => $_getN(0);
   @$pb.TagNumber(1)
-  set slot($4.SlotId v) {
-    setField(1, v);
+  set slot($2.SlotId v) {
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasSlot() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSlot() => clearField(1);
+  void clearSlot() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $1.EntityUid get entity => $_getN(1);
   @$pb.TagNumber(2)
   set entity($1.EntityUid v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasEntity() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEntity() => clearField(2);
+  void clearEntity() => $_clearField(2);
   @$pb.TagNumber(2)
   $1.EntityUid ensureEntity() => $_ensure(1);
 }
@@ -754,7 +756,7 @@ enum PrincipalIn_Component { slot, entity, notSet }
 
 class PrincipalIn extends $pb.GeneratedMessage {
   factory PrincipalIn({
-    $4.SlotId? slot,
+    $2.SlotId? slot,
     $1.EntityUid? entity,
   }) {
     final $result = create();
@@ -785,10 +787,10 @@ class PrincipalIn extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..e<$4.SlotId>(1, _omitFieldNames ? '' : 'slot', $pb.PbFieldType.OE,
-        defaultOrMaker: $4.SlotId.SLOT_ID_UNSPECIFIED,
-        valueOf: $4.SlotId.valueOf,
-        enumValues: $4.SlotId.values)
+    ..e<$2.SlotId>(1, _omitFieldNames ? '' : 'slot', $pb.PbFieldType.OE,
+        defaultOrMaker: $2.SlotId.SLOT_ID_UNSPECIFIED,
+        valueOf: $2.SlotId.valueOf,
+        enumValues: $2.SlotId.values)
     ..aOM<$1.EntityUid>(2, _omitFieldNames ? '' : 'entity',
         subBuilder: $1.EntityUid.create)
     ..hasRequiredFields = false;
@@ -817,31 +819,31 @@ class PrincipalIn extends $pb.GeneratedMessage {
 
   PrincipalIn_Component whichComponent() =>
       _PrincipalIn_ComponentByTag[$_whichOneof(0)]!;
-  void clearComponent() => clearField($_whichOneof(0));
+  void clearComponent() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  $4.SlotId get slot => $_getN(0);
+  $2.SlotId get slot => $_getN(0);
   @$pb.TagNumber(1)
-  set slot($4.SlotId v) {
-    setField(1, v);
+  set slot($2.SlotId v) {
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasSlot() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSlot() => clearField(1);
+  void clearSlot() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $1.EntityUid get entity => $_getN(1);
   @$pb.TagNumber(2)
   set entity($1.EntityUid v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasEntity() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEntity() => clearField(2);
+  void clearEntity() => $_clearField(2);
   @$pb.TagNumber(2)
   $1.EntityUid ensureEntity() => $_ensure(1);
 }
@@ -851,7 +853,7 @@ enum PrincipalIsIn_In { slot, entity, notSet }
 class PrincipalIsIn extends $pb.GeneratedMessage {
   factory PrincipalIsIn({
     $core.String? entityType,
-    $4.SlotId? slot,
+    $2.SlotId? slot,
     $1.EntityUid? entity,
   }) {
     final $result = create();
@@ -885,10 +887,10 @@ class PrincipalIsIn extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..oo(0, [2, 3])
     ..aOS(1, _omitFieldNames ? '' : 'entityType')
-    ..e<$4.SlotId>(2, _omitFieldNames ? '' : 'slot', $pb.PbFieldType.OE,
-        defaultOrMaker: $4.SlotId.SLOT_ID_UNSPECIFIED,
-        valueOf: $4.SlotId.valueOf,
-        enumValues: $4.SlotId.values)
+    ..e<$2.SlotId>(2, _omitFieldNames ? '' : 'slot', $pb.PbFieldType.OE,
+        defaultOrMaker: $2.SlotId.SLOT_ID_UNSPECIFIED,
+        valueOf: $2.SlotId.valueOf,
+        enumValues: $2.SlotId.values)
     ..aOM<$1.EntityUid>(3, _omitFieldNames ? '' : 'entity',
         subBuilder: $1.EntityUid.create)
     ..hasRequiredFields = false;
@@ -917,7 +919,7 @@ class PrincipalIsIn extends $pb.GeneratedMessage {
   static PrincipalIsIn? _defaultInstance;
 
   PrincipalIsIn_In whichIn() => _PrincipalIsIn_InByTag[$_whichOneof(0)]!;
-  void clearIn() => clearField($_whichOneof(0));
+  void clearIn() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   $core.String get entityType => $_getSZ(0);
@@ -929,31 +931,31 @@ class PrincipalIsIn extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasEntityType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearEntityType() => clearField(1);
+  void clearEntityType() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $4.SlotId get slot => $_getN(1);
+  $2.SlotId get slot => $_getN(1);
   @$pb.TagNumber(2)
-  set slot($4.SlotId v) {
-    setField(2, v);
+  set slot($2.SlotId v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasSlot() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSlot() => clearField(2);
+  void clearSlot() => $_clearField(2);
 
   @$pb.TagNumber(3)
   $1.EntityUid get entity => $_getN(2);
   @$pb.TagNumber(3)
   set entity($1.EntityUid v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasEntity() => $_has(2);
   @$pb.TagNumber(3)
-  void clearEntity() => clearField(3);
+  void clearEntity() => $_clearField(3);
   @$pb.TagNumber(3)
   $1.EntityUid ensureEntity() => $_ensure(2);
 }
@@ -1015,7 +1017,7 @@ class PrincipalIs extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasEntityType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearEntityType() => clearField(1);
+  void clearEntityType() => $_clearField(1);
 }
 
 enum ActionConstraint_Constraint { all, equals, in_, inSet, notSet }
@@ -1097,19 +1099,19 @@ class ActionConstraint extends $pb.GeneratedMessage {
 
   ActionConstraint_Constraint whichConstraint() =>
       _ActionConstraint_ConstraintByTag[$_whichOneof(0)]!;
-  void clearConstraint() => clearField($_whichOneof(0));
+  void clearConstraint() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   ActionAll get all => $_getN(0);
   @$pb.TagNumber(1)
   set all(ActionAll v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasAll() => $_has(0);
   @$pb.TagNumber(1)
-  void clearAll() => clearField(1);
+  void clearAll() => $_clearField(1);
   @$pb.TagNumber(1)
   ActionAll ensureAll() => $_ensure(0);
 
@@ -1117,13 +1119,13 @@ class ActionConstraint extends $pb.GeneratedMessage {
   ActionEquals get equals => $_getN(1);
   @$pb.TagNumber(2)
   set equals(ActionEquals v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasEquals() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEquals() => clearField(2);
+  void clearEquals() => $_clearField(2);
   @$pb.TagNumber(2)
   ActionEquals ensureEquals() => $_ensure(1);
 
@@ -1131,13 +1133,13 @@ class ActionConstraint extends $pb.GeneratedMessage {
   ActionIn get in_ => $_getN(2);
   @$pb.TagNumber(3)
   set in_(ActionIn v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasIn_() => $_has(2);
   @$pb.TagNumber(3)
-  void clearIn_() => clearField(3);
+  void clearIn_() => $_clearField(3);
   @$pb.TagNumber(3)
   ActionIn ensureIn_() => $_ensure(2);
 
@@ -1145,13 +1147,13 @@ class ActionConstraint extends $pb.GeneratedMessage {
   ActionInSet get inSet => $_getN(3);
   @$pb.TagNumber(4)
   set inSet(ActionInSet v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasInSet() => $_has(3);
   @$pb.TagNumber(4)
-  void clearInSet() => clearField(4);
+  void clearInSet() => $_clearField(4);
   @$pb.TagNumber(4)
   ActionInSet ensureInSet() => $_ensure(3);
 }
@@ -1247,13 +1249,13 @@ class ActionEquals extends $pb.GeneratedMessage {
   $1.EntityUid get entity => $_getN(0);
   @$pb.TagNumber(1)
   set entity($1.EntityUid v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasEntity() => $_has(0);
   @$pb.TagNumber(1)
-  void clearEntity() => clearField(1);
+  void clearEntity() => $_clearField(1);
   @$pb.TagNumber(1)
   $1.EntityUid ensureEntity() => $_ensure(0);
 }
@@ -1309,13 +1311,13 @@ class ActionIn extends $pb.GeneratedMessage {
   $1.EntityUid get entity => $_getN(0);
   @$pb.TagNumber(1)
   set entity($1.EntityUid v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasEntity() => $_has(0);
   @$pb.TagNumber(1)
-  void clearEntity() => clearField(1);
+  void clearEntity() => $_clearField(1);
   @$pb.TagNumber(1)
   $1.EntityUid ensureEntity() => $_ensure(0);
 }
@@ -1369,7 +1371,7 @@ class ActionInSet extends $pb.GeneratedMessage {
   static ActionInSet? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$1.EntityUid> get entities => $_getList(0);
+  $pb.PbList<$1.EntityUid> get entities => $_getList(0);
 }
 
 enum ResourceConstraint_Constraint { all, equals, in_, isIn, is_5, notSet }
@@ -1459,19 +1461,19 @@ class ResourceConstraint extends $pb.GeneratedMessage {
 
   ResourceConstraint_Constraint whichConstraint() =>
       _ResourceConstraint_ConstraintByTag[$_whichOneof(0)]!;
-  void clearConstraint() => clearField($_whichOneof(0));
+  void clearConstraint() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   ResourceAll get all => $_getN(0);
   @$pb.TagNumber(1)
   set all(ResourceAll v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasAll() => $_has(0);
   @$pb.TagNumber(1)
-  void clearAll() => clearField(1);
+  void clearAll() => $_clearField(1);
   @$pb.TagNumber(1)
   ResourceAll ensureAll() => $_ensure(0);
 
@@ -1479,13 +1481,13 @@ class ResourceConstraint extends $pb.GeneratedMessage {
   ResourceEquals get equals => $_getN(1);
   @$pb.TagNumber(2)
   set equals(ResourceEquals v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasEquals() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEquals() => clearField(2);
+  void clearEquals() => $_clearField(2);
   @$pb.TagNumber(2)
   ResourceEquals ensureEquals() => $_ensure(1);
 
@@ -1493,13 +1495,13 @@ class ResourceConstraint extends $pb.GeneratedMessage {
   ResourceIn get in_ => $_getN(2);
   @$pb.TagNumber(3)
   set in_(ResourceIn v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasIn_() => $_has(2);
   @$pb.TagNumber(3)
-  void clearIn_() => clearField(3);
+  void clearIn_() => $_clearField(3);
   @$pb.TagNumber(3)
   ResourceIn ensureIn_() => $_ensure(2);
 
@@ -1507,13 +1509,13 @@ class ResourceConstraint extends $pb.GeneratedMessage {
   ResourceIsIn get isIn => $_getN(3);
   @$pb.TagNumber(4)
   set isIn(ResourceIsIn v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasIsIn() => $_has(3);
   @$pb.TagNumber(4)
-  void clearIsIn() => clearField(4);
+  void clearIsIn() => $_clearField(4);
   @$pb.TagNumber(4)
   ResourceIsIn ensureIsIn() => $_ensure(3);
 
@@ -1521,13 +1523,13 @@ class ResourceConstraint extends $pb.GeneratedMessage {
   ResourceIs get is_5 => $_getN(4);
   @$pb.TagNumber(5)
   set is_5(ResourceIs v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasIs_5() => $_has(4);
   @$pb.TagNumber(5)
-  void clearIs_5() => clearField(5);
+  void clearIs_5() => $_clearField(5);
   @$pb.TagNumber(5)
   ResourceIs ensureIs_5() => $_ensure(4);
 }
@@ -1575,7 +1577,7 @@ enum ResourceEquals_Component { slot, entity, notSet }
 
 class ResourceEquals extends $pb.GeneratedMessage {
   factory ResourceEquals({
-    $4.SlotId? slot,
+    $2.SlotId? slot,
     $1.EntityUid? entity,
   }) {
     final $result = create();
@@ -1606,10 +1608,10 @@ class ResourceEquals extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..e<$4.SlotId>(1, _omitFieldNames ? '' : 'slot', $pb.PbFieldType.OE,
-        defaultOrMaker: $4.SlotId.SLOT_ID_UNSPECIFIED,
-        valueOf: $4.SlotId.valueOf,
-        enumValues: $4.SlotId.values)
+    ..e<$2.SlotId>(1, _omitFieldNames ? '' : 'slot', $pb.PbFieldType.OE,
+        defaultOrMaker: $2.SlotId.SLOT_ID_UNSPECIFIED,
+        valueOf: $2.SlotId.valueOf,
+        enumValues: $2.SlotId.values)
     ..aOM<$1.EntityUid>(2, _omitFieldNames ? '' : 'entity',
         subBuilder: $1.EntityUid.create)
     ..hasRequiredFields = false;
@@ -1639,31 +1641,31 @@ class ResourceEquals extends $pb.GeneratedMessage {
 
   ResourceEquals_Component whichComponent() =>
       _ResourceEquals_ComponentByTag[$_whichOneof(0)]!;
-  void clearComponent() => clearField($_whichOneof(0));
+  void clearComponent() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  $4.SlotId get slot => $_getN(0);
+  $2.SlotId get slot => $_getN(0);
   @$pb.TagNumber(1)
-  set slot($4.SlotId v) {
-    setField(1, v);
+  set slot($2.SlotId v) {
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasSlot() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSlot() => clearField(1);
+  void clearSlot() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $1.EntityUid get entity => $_getN(1);
   @$pb.TagNumber(2)
   set entity($1.EntityUid v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasEntity() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEntity() => clearField(2);
+  void clearEntity() => $_clearField(2);
   @$pb.TagNumber(2)
   $1.EntityUid ensureEntity() => $_ensure(1);
 }
@@ -1672,7 +1674,7 @@ enum ResourceIn_Component { slot, entity, notSet }
 
 class ResourceIn extends $pb.GeneratedMessage {
   factory ResourceIn({
-    $4.SlotId? slot,
+    $2.SlotId? slot,
     $1.EntityUid? entity,
   }) {
     final $result = create();
@@ -1703,10 +1705,10 @@ class ResourceIn extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..e<$4.SlotId>(1, _omitFieldNames ? '' : 'slot', $pb.PbFieldType.OE,
-        defaultOrMaker: $4.SlotId.SLOT_ID_UNSPECIFIED,
-        valueOf: $4.SlotId.valueOf,
-        enumValues: $4.SlotId.values)
+    ..e<$2.SlotId>(1, _omitFieldNames ? '' : 'slot', $pb.PbFieldType.OE,
+        defaultOrMaker: $2.SlotId.SLOT_ID_UNSPECIFIED,
+        valueOf: $2.SlotId.valueOf,
+        enumValues: $2.SlotId.values)
     ..aOM<$1.EntityUid>(2, _omitFieldNames ? '' : 'entity',
         subBuilder: $1.EntityUid.create)
     ..hasRequiredFields = false;
@@ -1734,31 +1736,31 @@ class ResourceIn extends $pb.GeneratedMessage {
 
   ResourceIn_Component whichComponent() =>
       _ResourceIn_ComponentByTag[$_whichOneof(0)]!;
-  void clearComponent() => clearField($_whichOneof(0));
+  void clearComponent() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  $4.SlotId get slot => $_getN(0);
+  $2.SlotId get slot => $_getN(0);
   @$pb.TagNumber(1)
-  set slot($4.SlotId v) {
-    setField(1, v);
+  set slot($2.SlotId v) {
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasSlot() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSlot() => clearField(1);
+  void clearSlot() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $1.EntityUid get entity => $_getN(1);
   @$pb.TagNumber(2)
   set entity($1.EntityUid v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasEntity() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEntity() => clearField(2);
+  void clearEntity() => $_clearField(2);
   @$pb.TagNumber(2)
   $1.EntityUid ensureEntity() => $_ensure(1);
 }
@@ -1768,7 +1770,7 @@ enum ResourceIsIn_In { slot, entity, notSet }
 class ResourceIsIn extends $pb.GeneratedMessage {
   factory ResourceIsIn({
     $core.String? entityType,
-    $4.SlotId? slot,
+    $2.SlotId? slot,
     $1.EntityUid? entity,
   }) {
     final $result = create();
@@ -1802,10 +1804,10 @@ class ResourceIsIn extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..oo(0, [2, 3])
     ..aOS(1, _omitFieldNames ? '' : 'entityType')
-    ..e<$4.SlotId>(2, _omitFieldNames ? '' : 'slot', $pb.PbFieldType.OE,
-        defaultOrMaker: $4.SlotId.SLOT_ID_UNSPECIFIED,
-        valueOf: $4.SlotId.valueOf,
-        enumValues: $4.SlotId.values)
+    ..e<$2.SlotId>(2, _omitFieldNames ? '' : 'slot', $pb.PbFieldType.OE,
+        defaultOrMaker: $2.SlotId.SLOT_ID_UNSPECIFIED,
+        valueOf: $2.SlotId.valueOf,
+        enumValues: $2.SlotId.values)
     ..aOM<$1.EntityUid>(3, _omitFieldNames ? '' : 'entity',
         subBuilder: $1.EntityUid.create)
     ..hasRequiredFields = false;
@@ -1834,7 +1836,7 @@ class ResourceIsIn extends $pb.GeneratedMessage {
   static ResourceIsIn? _defaultInstance;
 
   ResourceIsIn_In whichIn() => _ResourceIsIn_InByTag[$_whichOneof(0)]!;
-  void clearIn() => clearField($_whichOneof(0));
+  void clearIn() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   $core.String get entityType => $_getSZ(0);
@@ -1846,31 +1848,31 @@ class ResourceIsIn extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasEntityType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearEntityType() => clearField(1);
+  void clearEntityType() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $4.SlotId get slot => $_getN(1);
+  $2.SlotId get slot => $_getN(1);
   @$pb.TagNumber(2)
-  set slot($4.SlotId v) {
-    setField(2, v);
+  set slot($2.SlotId v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasSlot() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSlot() => clearField(2);
+  void clearSlot() => $_clearField(2);
 
   @$pb.TagNumber(3)
   $1.EntityUid get entity => $_getN(2);
   @$pb.TagNumber(3)
   set entity($1.EntityUid v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasEntity() => $_has(2);
   @$pb.TagNumber(3)
-  void clearEntity() => clearField(3);
+  void clearEntity() => $_clearField(3);
   @$pb.TagNumber(3)
   $1.EntityUid ensureEntity() => $_ensure(2);
 }
@@ -1931,13 +1933,13 @@ class ResourceIs extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasEntityType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearEntityType() => clearField(1);
+  void clearEntityType() => $_clearField(1);
 }
 
 class Condition extends $pb.GeneratedMessage {
   factory Condition({
     ConditionKind? kind,
-    $4.Expr? body,
+    $2.Expr? body,
   }) {
     final $result = create();
     if (kind != null) {
@@ -1964,7 +1966,7 @@ class Condition extends $pb.GeneratedMessage {
         defaultOrMaker: ConditionKind.CONDITION_KIND_UNSPECIFIED,
         valueOf: ConditionKind.valueOf,
         enumValues: ConditionKind.values)
-    ..aOM<$4.Expr>(2, _omitFieldNames ? '' : 'body', subBuilder: $4.Expr.create)
+    ..aOM<$2.Expr>(2, _omitFieldNames ? '' : 'body', subBuilder: $2.Expr.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1992,34 +1994,34 @@ class Condition extends $pb.GeneratedMessage {
   ConditionKind get kind => $_getN(0);
   @$pb.TagNumber(1)
   set kind(ConditionKind v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasKind() => $_has(0);
   @$pb.TagNumber(1)
-  void clearKind() => clearField(1);
+  void clearKind() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $4.Expr get body => $_getN(1);
+  $2.Expr get body => $_getN(1);
   @$pb.TagNumber(2)
-  set body($4.Expr v) {
-    setField(2, v);
+  set body($2.Expr v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasBody() => $_has(1);
   @$pb.TagNumber(2)
-  void clearBody() => clearField(2);
+  void clearBody() => $_clearField(2);
   @$pb.TagNumber(2)
-  $4.Expr ensureBody() => $_ensure(1);
+  $2.Expr ensureBody() => $_ensure(1);
 }
 
 class TemplateLink extends $pb.GeneratedMessage {
   factory TemplateLink({
     $core.String? templateId,
     $core.String? newId,
-    $core.Map<$core.String, $1.EntityUid>? values,
+    $core.Iterable<$core.MapEntry<$core.String, $1.EntityUid>>? values,
   }) {
     final $result = create();
     if (templateId != null) {
@@ -2029,7 +2031,7 @@ class TemplateLink extends $pb.GeneratedMessage {
       $result.newId = newId;
     }
     if (values != null) {
-      $result.values.addAll(values);
+      $result.values.addEntries(values);
     }
     return $result;
   }
@@ -2089,7 +2091,7 @@ class TemplateLink extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasTemplateId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearTemplateId() => clearField(1);
+  void clearTemplateId() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get newId => $_getSZ(1);
@@ -2101,10 +2103,10 @@ class TemplateLink extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasNewId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearNewId() => clearField(2);
+  void clearNewId() => $_clearField(2);
 
   @$pb.TagNumber(3)
-  $core.Map<$core.String, $1.EntityUid> get values => $_getMap(2);
+  $pb.PbMap<$core.String, $1.EntityUid> get values => $_getMap(2);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

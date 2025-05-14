@@ -40,7 +40,9 @@ extension OrganizationToProto on dto.Organization {
       purgeTime: purgeTime?.toProto(),
       annotations: switch (annotations) {
         final annotations? =>
-          (jsonDecode(annotations) as Map<String, Object?>).cast(),
+          (jsonDecode(annotations) as Map<String, Object?>)
+              .cast<String, String>()
+              .entries,
         _ => null,
       },
     );
@@ -100,7 +102,9 @@ extension ProjectToProto on dto.Project {
       purgeTime: purgeTime?.toProto(),
       annotations: switch (annotations) {
         final annotations? =>
-          (jsonDecode(annotations) as Map<String, Object?>).cast(),
+          (jsonDecode(annotations) as Map<String, Object?>)
+              .cast<String, String>()
+              .entries,
         _ => null,
       },
     );
@@ -123,7 +127,9 @@ extension ProjectEnvironmentToProto on dto.ProjectEnvironment {
       deleteTime: deleteTime?.toProto(),
       annotations: switch (annotations) {
         final annotations? =>
-          (jsonDecode(annotations) as Map<String, Object?>).cast(),
+          (jsonDecode(annotations) as Map<String, Object?>)
+              .cast<String, String>()
+              .entries,
         _ => null,
       },
       uri: switch (state?.domainName) {

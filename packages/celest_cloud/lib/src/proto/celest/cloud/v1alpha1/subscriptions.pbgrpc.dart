@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/cloud/v1alpha1/subscriptions.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -51,10 +51,7 @@ class SubscriptionsClient extends $grpc.Client {
           ($core.List<$core.int> value) =>
               $7.DescribePricingResponse.fromBuffer(value));
 
-  SubscriptionsClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions? options,
-      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options, interceptors: interceptors);
+  SubscriptionsClient(super.channel, {super.options, super.interceptors});
 
   $grpc.ResponseFuture<$7.Subscription> getSubscription(
       $7.GetSubscriptionRequest request,
@@ -136,32 +133,32 @@ abstract class SubscriptionsServiceBase extends $grpc.Service {
         ($7.DescribePricingResponse value) => value.writeToBuffer()));
   }
 
-  $async.Future<$7.Subscription> getSubscription_Pre($grpc.ServiceCall call,
-      $async.Future<$7.GetSubscriptionRequest> request) async {
-    return getSubscription(call, await request);
+  $async.Future<$7.Subscription> getSubscription_Pre($grpc.ServiceCall $call,
+      $async.Future<$7.GetSubscriptionRequest> $request) async {
+    return getSubscription($call, await $request);
   }
 
-  $async.Future<$7.ChangePlanResponse> changePlan_Pre($grpc.ServiceCall call,
-      $async.Future<$7.ChangePlanRequest> request) async {
-    return changePlan(call, await request);
+  $async.Future<$7.ChangePlanResponse> changePlan_Pre($grpc.ServiceCall $call,
+      $async.Future<$7.ChangePlanRequest> $request) async {
+    return changePlan($call, await $request);
   }
 
   $async.Future<$7.PauseSubscriptionResponse> pauseSubscription_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$7.PauseSubscriptionRequest> request) async {
-    return pauseSubscription(call, await request);
+      $grpc.ServiceCall $call,
+      $async.Future<$7.PauseSubscriptionRequest> $request) async {
+    return pauseSubscription($call, await $request);
   }
 
   $async.Future<$7.CancelSubscriptionResponse> cancelSubscription_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$7.CancelSubscriptionRequest> request) async {
-    return cancelSubscription(call, await request);
+      $grpc.ServiceCall $call,
+      $async.Future<$7.CancelSubscriptionRequest> $request) async {
+    return cancelSubscription($call, await $request);
   }
 
   $async.Future<$7.DescribePricingResponse> describePricing_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$7.DescribePricingRequest> request) async {
-    return describePricing(call, await request);
+      $grpc.ServiceCall $call,
+      $async.Future<$7.DescribePricingRequest> $request) async {
+    return describePricing($call, await $request);
   }
 
   $async.Future<$7.Subscription> getSubscription(

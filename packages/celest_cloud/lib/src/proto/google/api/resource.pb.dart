@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/api/resource.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -14,6 +14,8 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'resource.pbenum.dart';
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'resource.pbenum.dart';
 
@@ -170,7 +172,7 @@ class ResourceDescriptor extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearType() => clearField(1);
+  void clearType() => $_clearField(1);
 
   ///  Optional. The relative resource name pattern associated with this resource
   ///  type. The DNS prefix of the full resource name shouldn't be specified here.
@@ -192,7 +194,7 @@ class ResourceDescriptor extends $pb.GeneratedMessage {
   ///  the same component name (e.g. "project") refers to IDs of the same
   ///  type of resource.
   @$pb.TagNumber(2)
-  $core.List<$core.String> get pattern => $_getList(1);
+  $pb.PbList<$core.String> get pattern => $_getList(1);
 
   /// Optional. The field on the resource that designates the resource name
   /// field. If omitted, this is assumed to be "name".
@@ -206,7 +208,7 @@ class ResourceDescriptor extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasNameField() => $_has(2);
   @$pb.TagNumber(3)
-  void clearNameField() => clearField(3);
+  void clearNameField() => $_clearField(3);
 
   ///  Optional. The historical or future-looking state of the resource pattern.
   ///
@@ -227,13 +229,13 @@ class ResourceDescriptor extends $pb.GeneratedMessage {
   ResourceDescriptor_History get history => $_getN(3);
   @$pb.TagNumber(4)
   set history(ResourceDescriptor_History v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasHistory() => $_has(3);
   @$pb.TagNumber(4)
-  void clearHistory() => clearField(4);
+  void clearHistory() => $_clearField(4);
 
   ///  The plural name used in the resource name and permission names, such as
   ///  'projects' for the resource name of 'projects/{project}' and the permission
@@ -258,7 +260,7 @@ class ResourceDescriptor extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasPlural() => $_has(4);
   @$pb.TagNumber(5)
-  void clearPlural() => clearField(5);
+  void clearPlural() => $_clearField(5);
 
   /// The same concept of the `singular` field in k8s CRD spec
   /// https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
@@ -273,13 +275,13 @@ class ResourceDescriptor extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasSingular() => $_has(5);
   @$pb.TagNumber(6)
-  void clearSingular() => clearField(6);
+  void clearSingular() => $_clearField(6);
 
   /// Style flag(s) for this resource.
   /// These indicate that a resource is expected to conform to a given
   /// style. See the specific style flags for additional information.
   @$pb.TagNumber(10)
-  $core.List<ResourceDescriptor_Style> get style => $_getList(6);
+  $pb.PbList<ResourceDescriptor_Style> get style => $_getList(6);
 }
 
 /// Defines a proto annotation that describes a string field that refers to
@@ -367,7 +369,7 @@ class ResourceReference extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearType() => clearField(1);
+  void clearType() => $_clearField(1);
 
   ///  The resource type of a child collection that the annotated field
   ///  references. This is useful for annotating the `parent` field that
@@ -390,7 +392,7 @@ class ResourceReference extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasChildType() => $_has(1);
   @$pb.TagNumber(2)
-  void clearChildType() => clearField(2);
+  void clearChildType() => $_clearField(2);
 }
 
 class Resource {

@@ -20,7 +20,7 @@ final class UpdateOrganizationCommand extends CloudUpdateCommand<Organization> {
     return cloud.organizations.update(
       organization: Organization(
         name: options.resourceId,
-        annotations: options.annotations,
+        annotations: options.annotations?.entries,
         displayName: options.displayName,
       ),
       updateMask: FieldMask(

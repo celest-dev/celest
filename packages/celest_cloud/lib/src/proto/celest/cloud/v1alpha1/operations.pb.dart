@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/cloud/v1alpha1/operations.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -13,9 +13,11 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/any.pb.dart' as $14;
+import '../../../google/protobuf/any.pb.dart' as $13;
 import '../../../google/protobuf/timestamp.pb.dart' as $9;
 import 'operations.pbenum.dart';
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'operations.pbenum.dart';
 
@@ -23,7 +25,7 @@ export 'operations.pbenum.dart';
 class OperationMetadata extends $pb.GeneratedMessage {
   factory OperationMetadata({
     $core.String? parent,
-    $14.Any? resource,
+    $13.Any? resource,
     OperationState? state,
     $core.String? requestId,
     $9.Timestamp? createTime,
@@ -72,8 +74,8 @@ class OperationMetadata extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'parent')
-    ..aOM<$14.Any>(2, _omitFieldNames ? '' : 'resource',
-        subBuilder: $14.Any.create)
+    ..aOM<$13.Any>(2, _omitFieldNames ? '' : 'resource',
+        subBuilder: $13.Any.create)
     ..e<OperationState>(3, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
         defaultOrMaker: OperationState.OPERATION_STATE_UNSPECIFIED,
         valueOf: OperationState.valueOf,
@@ -122,37 +124,37 @@ class OperationMetadata extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearParent() => $_clearField(1);
 
   ///  The resource being operated on.
   ///
   ///  (-- api-linter: core::0146::any=disabled --)
   @$pb.TagNumber(2)
-  $14.Any get resource => $_getN(1);
+  $13.Any get resource => $_getN(1);
   @$pb.TagNumber(2)
-  set resource($14.Any v) {
-    setField(2, v);
+  set resource($13.Any v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasResource() => $_has(1);
   @$pb.TagNumber(2)
-  void clearResource() => clearField(2);
+  void clearResource() => $_clearField(2);
   @$pb.TagNumber(2)
-  $14.Any ensureResource() => $_ensure(1);
+  $13.Any ensureResource() => $_ensure(1);
 
   /// The state of the operation.
   @$pb.TagNumber(3)
   OperationState get state => $_getN(2);
   @$pb.TagNumber(3)
   set state(OperationState v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasState() => $_has(2);
   @$pb.TagNumber(3)
-  void clearState() => clearField(3);
+  void clearState() => $_clearField(3);
 
   /// The request ID used for the triggering request.
   @$pb.TagNumber(4)
@@ -165,20 +167,20 @@ class OperationMetadata extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasRequestId() => $_has(3);
   @$pb.TagNumber(4)
-  void clearRequestId() => clearField(4);
+  void clearRequestId() => $_clearField(4);
 
   /// The time the operation was created.
   @$pb.TagNumber(5)
   $9.Timestamp get createTime => $_getN(4);
   @$pb.TagNumber(5)
   set createTime($9.Timestamp v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasCreateTime() => $_has(4);
   @$pb.TagNumber(5)
-  void clearCreateTime() => clearField(5);
+  void clearCreateTime() => $_clearField(5);
   @$pb.TagNumber(5)
   $9.Timestamp ensureCreateTime() => $_ensure(4);
 
@@ -187,13 +189,13 @@ class OperationMetadata extends $pb.GeneratedMessage {
   $9.Timestamp get startTime => $_getN(5);
   @$pb.TagNumber(6)
   set startTime($9.Timestamp v) {
-    setField(6, v);
+    $_setField(6, v);
   }
 
   @$pb.TagNumber(6)
   $core.bool hasStartTime() => $_has(5);
   @$pb.TagNumber(6)
-  void clearStartTime() => clearField(6);
+  void clearStartTime() => $_clearField(6);
   @$pb.TagNumber(6)
   $9.Timestamp ensureStartTime() => $_ensure(5);
 
@@ -202,13 +204,13 @@ class OperationMetadata extends $pb.GeneratedMessage {
   $9.Timestamp get endTime => $_getN(6);
   @$pb.TagNumber(7)
   set endTime($9.Timestamp v) {
-    setField(7, v);
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasEndTime() => $_has(6);
   @$pb.TagNumber(7)
-  void clearEndTime() => clearField(7);
+  void clearEndTime() => $_clearField(7);
   @$pb.TagNumber(7)
   $9.Timestamp ensureEndTime() => $_ensure(6);
 
@@ -225,7 +227,7 @@ class OperationMetadata extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.bool hasProgress() => $_has(7);
   @$pb.TagNumber(8)
-  void clearProgress() => clearField(8);
+  void clearProgress() => $_clearField(8);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

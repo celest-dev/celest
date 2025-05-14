@@ -98,12 +98,15 @@ abstract class ResolvedProject
     return pb.ResolvedProject(
       projectId: projectId,
       environmentId: environmentId,
-      apis: apis.map((key, value) => MapEntry(key, value.toProto())).toMap(),
+      apis: apis.entries.map(
+        (entry) => MapEntry(entry.key, entry.value.toProto()),
+      ),
       variables: variables.map((e) => e.toProto()),
       secrets: secrets.map((e) => e.toProto()),
       auth: auth?.toProto(),
-      databases:
-          databases.map((key, value) => MapEntry(key, value.toProto())).toMap(),
+      databases: databases.entries.map(
+        (entry) => MapEntry(entry.key, entry.value.toProto()),
+      ),
       sdkConfig: sdkConfig.toProto(),
     );
   }
@@ -166,8 +169,9 @@ abstract class ResolvedApi
   pb.ResolvedApi toProto() {
     return pb.ResolvedApi(
       apiId: apiId,
-      functions:
-          functions.map((key, value) => MapEntry(key, value.toProto())).toMap(),
+      functions: functions.entries.map(
+        (entry) => MapEntry(entry.key, entry.value.toProto()),
+      ),
       policySet: switch (policySet) {
         final cedar.PolicySet policySet? => pb.PolicySet.fromBuffer(
           policySet.toProto().writeToBuffer(),
@@ -332,10 +336,10 @@ abstract class ResolvedHttpConfig
       route: route.toProto(),
       additionalRoutes: additionalRoutes.map((e) => e.toProto()),
       status: status,
-      statusMappings: {
+      statusMappings: [
         for (final entry in statusMappings.entries)
-          entry.key.uriString: entry.value,
-      },
+          MapEntry(entry.key.uriString, entry.value),
+      ],
     );
   }
 }
@@ -1394,7 +1398,11 @@ extension _ProtoValue on ValueMixin {
       bool() => pb.Value(boolValue: o),
       List() => pb.Value(listValue: pb.ListValue(values: o.map(wrap).toList())),
       Map<String, Object?>() => pb.Value(
-        structValue: pb.Struct(fields: o.map((k, v) => MapEntry(k, wrap(v)))),
+        structValue: pb.Struct(
+          fields: o.entries.map(
+            (entry) => MapEntry(entry.key, wrap(entry.value)),
+          ),
+        ),
       ),
       _ => throw ArgumentError.value(o, 'o', 'Invalid value'),
     };
@@ -1418,7 +1426,9 @@ extension on ListValueMixin {
 extension _ProtoStruct on StructMixin {
   static pb.Struct wrap(Map<String, Object?> fields) {
     return pb.Struct(
-      fields: fields.map((k, v) => MapEntry(k, _ProtoValue.wrap(v))),
+      fields: fields.entries.map(
+        (entry) => MapEntry(entry.key, _ProtoValue.wrap(entry.value)),
+      ),
     );
   }
 

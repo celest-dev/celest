@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/api/field_info.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -14,6 +14,8 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'field_info.pbenum.dart';
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'field_info.pbenum.dart';
 
@@ -82,20 +84,20 @@ class FieldInfo extends $pb.GeneratedMessage {
   FieldInfo_Format get format => $_getN(0);
   @$pb.TagNumber(1)
   set format(FieldInfo_Format v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasFormat() => $_has(0);
   @$pb.TagNumber(1)
-  void clearFormat() => clearField(1);
+  void clearFormat() => $_clearField(1);
 
   ///  The type(s) that the annotated, generic field may represent.
   ///
   ///  Currently, this must only be used on fields of type `google.protobuf.Any`.
   ///  Supporting other generic types may be considered in the future.
   @$pb.TagNumber(2)
-  $core.List<TypeReference> get referencedTypes => $_getList(1);
+  $pb.PbList<TypeReference> get referencedTypes => $_getList(1);
 }
 
 /// A reference to a message type, for use in [FieldInfo][google.api.FieldInfo].
@@ -166,7 +168,7 @@ class TypeReference extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasTypeName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearTypeName() => clearField(1);
+  void clearTypeName() => $_clearField(1);
 }
 
 class Field_info {

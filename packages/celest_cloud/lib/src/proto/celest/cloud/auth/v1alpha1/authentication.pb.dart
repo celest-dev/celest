@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/cloud/auth/v1alpha1/authentication.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -14,11 +14,13 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../../../../google/protobuf/empty.pb.dart' as $1;
-import '../../../../google/protobuf/struct.pb.dart' as $15;
+import '../../../../google/protobuf/struct.pb.dart' as $11;
 import '../../../../google/protobuf/timestamp.pb.dart' as $9;
 import 'authentication.pbenum.dart';
-import 'users.pb.dart' as $0;
-import 'users.pbenum.dart' as $0;
+import 'users.pb.dart' as $2;
+import 'users.pbenum.dart' as $2;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'authentication.pbenum.dart';
 
@@ -113,7 +115,7 @@ class Session extends $pb.GeneratedMessage {
   static Session? _defaultInstance;
 
   Session_State whichState() => _Session_StateByTag[$_whichOneof(0)]!;
-  void clearState() => clearField($_whichOneof(0));
+  void clearState() => $_clearField($_whichOneof(0));
 
   /// Required. The parent resource in which the authentication session was created.
   @$pb.TagNumber(1)
@@ -126,7 +128,7 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearParent() => $_clearField(1);
 
   /// Required. The ID of the authentication session.
   @$pb.TagNumber(2)
@@ -139,7 +141,7 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasSessionId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSessionId() => clearField(2);
+  void clearSessionId() => $_clearField(2);
 
   ///  A token to continue the authentication operation.
   ///
@@ -154,20 +156,20 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasSessionToken() => $_has(2);
   @$pb.TagNumber(3)
-  void clearSessionToken() => clearField(3);
+  void clearSessionToken() => $_clearField(3);
 
   /// Required. The time the flow will expire.
   @$pb.TagNumber(4)
   $9.Timestamp get expireTime => $_getN(3);
   @$pb.TagNumber(4)
   set expireTime($9.Timestamp v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasExpireTime() => $_has(3);
   @$pb.TagNumber(4)
-  void clearExpireTime() => clearField(4);
+  void clearExpireTime() => $_clearField(4);
   @$pb.TagNumber(4)
   $9.Timestamp ensureExpireTime() => $_ensure(3);
 
@@ -176,13 +178,13 @@ class Session extends $pb.GeneratedMessage {
   AuthenticationSuccess get success => $_getN(4);
   @$pb.TagNumber(5)
   set success(AuthenticationSuccess v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasSuccess() => $_has(4);
   @$pb.TagNumber(5)
-  void clearSuccess() => clearField(5);
+  void clearSuccess() => $_clearField(5);
   @$pb.TagNumber(5)
   AuthenticationSuccess ensureSuccess() => $_ensure(4);
 
@@ -193,13 +195,13 @@ class Session extends $pb.GeneratedMessage {
   AuthenticationStep get nextStep => $_getN(5);
   @$pb.TagNumber(6)
   set nextStep(AuthenticationStep v) {
-    setField(6, v);
+    $_setField(6, v);
   }
 
   @$pb.TagNumber(6)
   $core.bool hasNextStep() => $_has(5);
   @$pb.TagNumber(6)
-  void clearNextStep() => clearField(6);
+  void clearNextStep() => $_clearField(6);
   @$pb.TagNumber(6)
   AuthenticationStep ensureNextStep() => $_ensure(5);
 
@@ -208,13 +210,13 @@ class Session extends $pb.GeneratedMessage {
   SessionClient get client => $_getN(6);
   @$pb.TagNumber(7)
   set client(SessionClient v) {
-    setField(7, v);
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasClient() => $_has(6);
   @$pb.TagNumber(7)
-  void clearClient() => clearField(7);
+  void clearClient() => $_clearField(7);
   @$pb.TagNumber(7)
   SessionClient ensureClient() => $_ensure(6);
 }
@@ -294,33 +296,33 @@ class SessionClient extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasClientId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearClientId() => clearField(1);
+  void clearClientId() => $_clearField(1);
 
   /// Required. The platform of the client.
   @$pb.TagNumber(2)
   ClientType get clientType => $_getN(1);
   @$pb.TagNumber(2)
   set clientType(ClientType v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasClientType() => $_has(1);
   @$pb.TagNumber(2)
-  void clearClientType() => clearField(2);
+  void clearClientType() => $_clearField(2);
 
   /// Required. If the client is able to receive callbacks.
   @$pb.TagNumber(3)
   SessionCallbacks get callbacks => $_getN(2);
   @$pb.TagNumber(3)
   set callbacks(SessionCallbacks v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasCallbacks() => $_has(2);
   @$pb.TagNumber(3)
-  void clearCallbacks() => clearField(3);
+  void clearCallbacks() => $_clearField(3);
   @$pb.TagNumber(3)
   SessionCallbacks ensureCallbacks() => $_ensure(2);
 }
@@ -391,7 +393,7 @@ class SessionCallbacks extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasSuccessUri() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSuccessUri() => clearField(1);
+  void clearSuccessUri() => $_clearField(1);
 
   ///  Optional. The URI to redirect to upon an error.
   ///
@@ -406,7 +408,7 @@ class SessionCallbacks extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasErrorUri() => $_has(1);
   @$pb.TagNumber(2)
-  void clearErrorUri() => clearField(2);
+  void clearErrorUri() => $_clearField(2);
 }
 
 enum StartSessionRequest_Factor { emailOtp, smsOtp, idp, notSet }
@@ -495,7 +497,7 @@ class StartSessionRequest extends $pb.GeneratedMessage {
 
   StartSessionRequest_Factor whichFactor() =>
       _StartSessionRequest_FactorByTag[$_whichOneof(0)]!;
-  void clearFactor() => clearField($_whichOneof(0));
+  void clearFactor() => $_clearField($_whichOneof(0));
 
   ///  Optional. The parent resource in which the authentication session will be created.
   ///
@@ -512,20 +514,20 @@ class StartSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearParent() => $_clearField(1);
 
   /// Authenticate using an email address and OTP.
   @$pb.TagNumber(2)
   AuthenticationFactorEmailOtp get emailOtp => $_getN(1);
   @$pb.TagNumber(2)
   set emailOtp(AuthenticationFactorEmailOtp v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasEmailOtp() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEmailOtp() => clearField(2);
+  void clearEmailOtp() => $_clearField(2);
   @$pb.TagNumber(2)
   AuthenticationFactorEmailOtp ensureEmailOtp() => $_ensure(1);
 
@@ -534,13 +536,13 @@ class StartSessionRequest extends $pb.GeneratedMessage {
   AuthenticationFactorSmsOtp get smsOtp => $_getN(2);
   @$pb.TagNumber(3)
   set smsOtp(AuthenticationFactorSmsOtp v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasSmsOtp() => $_has(2);
   @$pb.TagNumber(3)
-  void clearSmsOtp() => clearField(3);
+  void clearSmsOtp() => $_clearField(3);
   @$pb.TagNumber(3)
   AuthenticationFactorSmsOtp ensureSmsOtp() => $_ensure(2);
 
@@ -549,13 +551,13 @@ class StartSessionRequest extends $pb.GeneratedMessage {
   AuthenticationFactorIdp get idp => $_getN(3);
   @$pb.TagNumber(4)
   set idp(AuthenticationFactorIdp v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasIdp() => $_has(3);
   @$pb.TagNumber(4)
-  void clearIdp() => clearField(4);
+  void clearIdp() => $_clearField(4);
   @$pb.TagNumber(4)
   AuthenticationFactorIdp ensureIdp() => $_ensure(3);
 
@@ -564,13 +566,13 @@ class StartSessionRequest extends $pb.GeneratedMessage {
   SessionClient get client => $_getN(4);
   @$pb.TagNumber(5)
   set client(SessionClient v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasClient() => $_has(4);
   @$pb.TagNumber(5)
-  void clearClient() => clearField(5);
+  void clearClient() => $_clearField(5);
   @$pb.TagNumber(5)
   SessionClient ensureClient() => $_ensure(4);
 }
@@ -644,20 +646,20 @@ class AuthenticationStep extends $pb.GeneratedMessage {
 
   AuthenticationStep_Step whichStep() =>
       _AuthenticationStep_StepByTag[$_whichOneof(0)]!;
-  void clearStep() => clearField($_whichOneof(0));
+  void clearStep() => $_clearField($_whichOneof(0));
 
   /// Further proof of an authentication factor is required.
   @$pb.TagNumber(3)
   AuthenticationFactor get needsProof => $_getN(0);
   @$pb.TagNumber(3)
   set needsProof(AuthenticationFactor v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasNeedsProof() => $_has(0);
   @$pb.TagNumber(3)
-  void clearNeedsProof() => clearField(3);
+  void clearNeedsProof() => $_clearField(3);
   @$pb.TagNumber(3)
   AuthenticationFactor ensureNeedsProof() => $_ensure(0);
 
@@ -669,13 +671,13 @@ class AuthenticationStep extends $pb.GeneratedMessage {
   AuthenticationPendingConfirmation get pendingConfirmation => $_getN(1);
   @$pb.TagNumber(7)
   set pendingConfirmation(AuthenticationPendingConfirmation v) {
-    setField(7, v);
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasPendingConfirmation() => $_has(1);
   @$pb.TagNumber(7)
-  void clearPendingConfirmation() => clearField(7);
+  void clearPendingConfirmation() => $_clearField(7);
   @$pb.TagNumber(7)
   AuthenticationPendingConfirmation ensurePendingConfirmation() => $_ensure(1);
 }
@@ -751,7 +753,7 @@ class AuthenticationFactorEmailOtp extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasEmail() => $_has(0);
   @$pb.TagNumber(1)
-  void clearEmail() => clearField(1);
+  void clearEmail() => $_clearField(1);
 
   ///  Optional. The OTP code sent to the provided `email`.
   ///
@@ -766,7 +768,7 @@ class AuthenticationFactorEmailOtp extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
-  void clearCode() => clearField(2);
+  void clearCode() => $_clearField(2);
 }
 
 /// An authentication method which sends a one-time passcode (OTP) to a user's
@@ -839,7 +841,7 @@ class AuthenticationFactorSmsOtp extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasPhoneNumber() => $_has(0);
   @$pb.TagNumber(1)
-  void clearPhoneNumber() => clearField(1);
+  void clearPhoneNumber() => $_clearField(1);
 
   ///  Optional. The OTP code sent to the provided `phone_number`.
   ///
@@ -854,13 +856,13 @@ class AuthenticationFactorSmsOtp extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
-  void clearCode() => clearField(2);
+  void clearCode() => $_clearField(2);
 }
 
 /// An authentication method which uses a social provider like Google or Apple.
 class AuthenticationFactorIdp extends $pb.GeneratedMessage {
   factory AuthenticationFactorIdp({
-    $0.IdentityProviderType? provider,
+    $2.IdentityProviderType? provider,
     $core.String? redirectUri,
   }) {
     final $result = create();
@@ -885,12 +887,12 @@ class AuthenticationFactorIdp extends $pb.GeneratedMessage {
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
-    ..e<$0.IdentityProviderType>(
+    ..e<$2.IdentityProviderType>(
         1, _omitFieldNames ? '' : 'provider', $pb.PbFieldType.OE,
         defaultOrMaker:
-            $0.IdentityProviderType.IDENTITY_PROVIDER_TYPE_UNSPECIFIED,
-        valueOf: $0.IdentityProviderType.valueOf,
-        enumValues: $0.IdentityProviderType.values)
+            $2.IdentityProviderType.IDENTITY_PROVIDER_TYPE_UNSPECIFIED,
+        valueOf: $2.IdentityProviderType.valueOf,
+        enumValues: $2.IdentityProviderType.values)
     ..aOS(2, _omitFieldNames ? '' : 'redirectUri')
     ..hasRequiredFields = false;
 
@@ -921,16 +923,16 @@ class AuthenticationFactorIdp extends $pb.GeneratedMessage {
 
   /// Required. The social provider to authenticate with.
   @$pb.TagNumber(1)
-  $0.IdentityProviderType get provider => $_getN(0);
+  $2.IdentityProviderType get provider => $_getN(0);
   @$pb.TagNumber(1)
-  set provider($0.IdentityProviderType v) {
-    setField(1, v);
+  set provider($2.IdentityProviderType v) {
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasProvider() => $_has(0);
   @$pb.TagNumber(1)
-  void clearProvider() => clearField(1);
+  void clearProvider() => $_clearField(1);
 
   /// Optional. The URI the client was redirected to.
   @$pb.TagNumber(2)
@@ -943,7 +945,7 @@ class AuthenticationFactorIdp extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasRedirectUri() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRedirectUri() => clearField(2);
+  void clearRedirectUri() => $_clearField(2);
 }
 
 enum AuthenticationFactor_Factor { emailOtp, smsOtp, idp, notSet }
@@ -1022,20 +1024,20 @@ class AuthenticationFactor extends $pb.GeneratedMessage {
 
   AuthenticationFactor_Factor whichFactor() =>
       _AuthenticationFactor_FactorByTag[$_whichOneof(0)]!;
-  void clearFactor() => clearField($_whichOneof(0));
+  void clearFactor() => $_clearField($_whichOneof(0));
 
   /// Continuation handler for the email OTP authentication session.
   @$pb.TagNumber(3)
   AuthenticationFactorEmailOtp get emailOtp => $_getN(0);
   @$pb.TagNumber(3)
   set emailOtp(AuthenticationFactorEmailOtp v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasEmailOtp() => $_has(0);
   @$pb.TagNumber(3)
-  void clearEmailOtp() => clearField(3);
+  void clearEmailOtp() => $_clearField(3);
   @$pb.TagNumber(3)
   AuthenticationFactorEmailOtp ensureEmailOtp() => $_ensure(0);
 
@@ -1044,13 +1046,13 @@ class AuthenticationFactor extends $pb.GeneratedMessage {
   AuthenticationFactorSmsOtp get smsOtp => $_getN(1);
   @$pb.TagNumber(4)
   set smsOtp(AuthenticationFactorSmsOtp v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasSmsOtp() => $_has(1);
   @$pb.TagNumber(4)
-  void clearSmsOtp() => clearField(4);
+  void clearSmsOtp() => $_clearField(4);
   @$pb.TagNumber(4)
   AuthenticationFactorSmsOtp ensureSmsOtp() => $_ensure(1);
 
@@ -1059,13 +1061,13 @@ class AuthenticationFactor extends $pb.GeneratedMessage {
   AuthenticationFactorIdp get idp => $_getN(2);
   @$pb.TagNumber(5)
   set idp(AuthenticationFactorIdp v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasIdp() => $_has(2);
   @$pb.TagNumber(5)
-  void clearIdp() => clearField(5);
+  void clearIdp() => $_clearField(5);
   @$pb.TagNumber(5)
   AuthenticationFactorIdp ensureIdp() => $_ensure(2);
 }
@@ -1158,7 +1160,7 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
 
   ContinueSessionRequest_Update whichUpdate() =>
       _ContinueSessionRequest_UpdateByTag[$_whichOneof(0)]!;
-  void clearUpdate() => clearField($_whichOneof(0));
+  void clearUpdate() => $_clearField($_whichOneof(0));
 
   /// Required. The ID of the authentication session.
   @$pb.TagNumber(1)
@@ -1171,7 +1173,7 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasSessionId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSessionId() => clearField(1);
+  void clearSessionId() => $_clearField(1);
 
   /// Required. The continuation token returned from a previous `StartSession`
   /// or `ContinueSession` call.
@@ -1185,20 +1187,20 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasSessionToken() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSessionToken() => clearField(2);
+  void clearSessionToken() => $_clearField(2);
 
   /// Proof for an authentication factor.
   @$pb.TagNumber(3)
   AuthenticationFactor get proof => $_getN(2);
   @$pb.TagNumber(3)
   set proof(AuthenticationFactor v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasProof() => $_has(2);
   @$pb.TagNumber(3)
-  void clearProof() => clearField(3);
+  void clearProof() => $_clearField(3);
   @$pb.TagNumber(3)
   AuthenticationFactor ensureProof() => $_ensure(2);
 
@@ -1207,13 +1209,13 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
   AuthenticationPendingConfirmation get confirmation => $_getN(3);
   @$pb.TagNumber(4)
   set confirmation(AuthenticationPendingConfirmation v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasConfirmation() => $_has(3);
   @$pb.TagNumber(4)
-  void clearConfirmation() => clearField(4);
+  void clearConfirmation() => $_clearField(4);
   @$pb.TagNumber(4)
   AuthenticationPendingConfirmation ensureConfirmation() => $_ensure(3);
 
@@ -1222,13 +1224,13 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
   AuthenticationFactor get resend => $_getN(4);
   @$pb.TagNumber(5)
   set resend(AuthenticationFactor v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasResend() => $_has(4);
   @$pb.TagNumber(5)
-  void clearResend() => clearField(5);
+  void clearResend() => $_clearField(5);
   @$pb.TagNumber(5)
   AuthenticationFactor ensureResend() => $_ensure(4);
 }
@@ -1237,7 +1239,7 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
 class AuthenticationSuccess extends $pb.GeneratedMessage {
   factory AuthenticationSuccess({
     $core.String? identityToken,
-    $0.User? user,
+    $2.User? user,
     $core.bool? isNewUser,
   }) {
     final $result = create();
@@ -1266,7 +1268,7 @@ class AuthenticationSuccess extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'identityToken')
-    ..aOM<$0.User>(2, _omitFieldNames ? '' : 'user', subBuilder: $0.User.create)
+    ..aOM<$2.User>(2, _omitFieldNames ? '' : 'user', subBuilder: $2.User.create)
     ..aOB(3, _omitFieldNames ? '' : 'isNewUser')
     ..hasRequiredFields = false;
 
@@ -1306,22 +1308,22 @@ class AuthenticationSuccess extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasIdentityToken() => $_has(0);
   @$pb.TagNumber(1)
-  void clearIdentityToken() => clearField(1);
+  void clearIdentityToken() => $_clearField(1);
 
   /// The user's information.
   @$pb.TagNumber(2)
-  $0.User get user => $_getN(1);
+  $2.User get user => $_getN(1);
   @$pb.TagNumber(2)
-  set user($0.User v) {
-    setField(2, v);
+  set user($2.User v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasUser() => $_has(1);
   @$pb.TagNumber(2)
-  void clearUser() => clearField(2);
+  void clearUser() => $_clearField(2);
   @$pb.TagNumber(2)
-  $0.User ensureUser() => $_ensure(1);
+  $2.User ensureUser() => $_ensure(1);
 
   /// Whether a new user was created or not.
   @$pb.TagNumber(3)
@@ -1334,7 +1336,7 @@ class AuthenticationSuccess extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasIsNewUser() => $_has(2);
   @$pb.TagNumber(3)
-  void clearIsNewUser() => clearField(3);
+  void clearIsNewUser() => $_clearField(3);
 }
 
 enum AuthenticationPendingConfirmation_Pending {
@@ -1346,8 +1348,8 @@ enum AuthenticationPendingConfirmation_Pending {
 /// The authentication operation needs confirmation from the user.
 class AuthenticationPendingConfirmation extends $pb.GeneratedMessage {
   factory AuthenticationPendingConfirmation({
-    $0.User? linkExistingUser,
-    $0.User? registerUser,
+    $2.User? linkExistingUser,
+    $2.User? registerUser,
   }) {
     final $result = create();
     if (linkExistingUser != null) {
@@ -1378,10 +1380,10 @@ class AuthenticationPendingConfirmation extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..aOM<$0.User>(1, _omitFieldNames ? '' : 'linkExistingUser',
-        subBuilder: $0.User.create)
-    ..aOM<$0.User>(2, _omitFieldNames ? '' : 'registerUser',
-        subBuilder: $0.User.create)
+    ..aOM<$2.User>(1, _omitFieldNames ? '' : 'linkExistingUser',
+        subBuilder: $2.User.create)
+    ..aOM<$2.User>(2, _omitFieldNames ? '' : 'registerUser',
+        subBuilder: $2.User.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1414,37 +1416,37 @@ class AuthenticationPendingConfirmation extends $pb.GeneratedMessage {
 
   AuthenticationPendingConfirmation_Pending whichPending() =>
       _AuthenticationPendingConfirmation_PendingByTag[$_whichOneof(0)]!;
-  void clearPending() => clearField($_whichOneof(0));
+  void clearPending() => $_clearField($_whichOneof(0));
 
   /// An existing user was found with the provided identity.
   @$pb.TagNumber(1)
-  $0.User get linkExistingUser => $_getN(0);
+  $2.User get linkExistingUser => $_getN(0);
   @$pb.TagNumber(1)
-  set linkExistingUser($0.User v) {
-    setField(1, v);
+  set linkExistingUser($2.User v) {
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLinkExistingUser() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLinkExistingUser() => clearField(1);
+  void clearLinkExistingUser() => $_clearField(1);
   @$pb.TagNumber(1)
-  $0.User ensureLinkExistingUser() => $_ensure(0);
+  $2.User ensureLinkExistingUser() => $_ensure(0);
 
   /// The user to be registered.
   @$pb.TagNumber(2)
-  $0.User get registerUser => $_getN(1);
+  $2.User get registerUser => $_getN(1);
   @$pb.TagNumber(2)
-  set registerUser($0.User v) {
-    setField(2, v);
+  set registerUser($2.User v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRegisterUser() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRegisterUser() => clearField(2);
+  void clearRegisterUser() => $_clearField(2);
   @$pb.TagNumber(2)
-  $0.User ensureRegisterUser() => $_ensure(1);
+  $2.User ensureRegisterUser() => $_ensure(1);
 }
 
 /// Request message for `EndSession` method.
@@ -1515,7 +1517,7 @@ class EndSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasSessionId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSessionId() => clearField(1);
+  void clearSessionId() => $_clearField(1);
 
   ///  Optional. The session token returned from a previous `StartSession`
   ///  or `ContinueSession` call.
@@ -1531,7 +1533,7 @@ class EndSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasSessionToken() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSessionToken() => clearField(2);
+  void clearSessionToken() => $_clearField(2);
 }
 
 enum EndSessionResponse_Result { success, redirectUri, notSet }
@@ -1606,7 +1608,7 @@ class EndSessionResponse extends $pb.GeneratedMessage {
 
   EndSessionResponse_Result whichResult() =>
       _EndSessionResponse_ResultByTag[$_whichOneof(0)]!;
-  void clearResult() => clearField($_whichOneof(0));
+  void clearResult() => $_clearField($_whichOneof(0));
 
   /// The ID of the authentication session that was ended.
   @$pb.TagNumber(1)
@@ -1619,20 +1621,20 @@ class EndSessionResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasSessionId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSessionId() => clearField(1);
+  void clearSessionId() => $_clearField(1);
 
   /// The authentication session was successfully ended.
   @$pb.TagNumber(2)
   $1.Empty get success => $_getN(1);
   @$pb.TagNumber(2)
   set success($1.Empty v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasSuccess() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSuccess() => clearField(2);
+  void clearSuccess() => $_clearField(2);
   @$pb.TagNumber(2)
   $1.Empty ensureSuccess() => $_ensure(1);
 
@@ -1649,7 +1651,7 @@ class EndSessionResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasRedirectUri() => $_has(2);
   @$pb.TagNumber(3)
-  void clearRedirectUri() => clearField(3);
+  void clearRedirectUri() => $_clearField(3);
 }
 
 ///  The user info of the current user.
@@ -1679,7 +1681,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
     $core.String? locale,
     $core.String? phoneNumber,
     $core.bool? phoneNumberVerified,
-    $15.Value? address,
+    $11.Value? address,
     $core.int? updatedAt,
   }) {
     final $result = create();
@@ -1776,8 +1778,8 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
     ..aOS(16, _omitFieldNames ? '' : 'locale')
     ..aOS(17, _omitFieldNames ? '' : 'phone_number')
     ..aOB(18, _omitFieldNames ? '' : 'phone_number_verified')
-    ..aOM<$15.Value>(19, _omitFieldNames ? '' : 'address',
-        subBuilder: $15.Value.create)
+    ..aOM<$11.Value>(19, _omitFieldNames ? '' : 'address',
+        subBuilder: $11.Value.create)
     ..a<$core.int>(20, _omitFieldNames ? '' : 'updated_at', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
@@ -1815,7 +1817,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasSub() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSub() => clearField(1);
+  void clearSub() => $_clearField(1);
 
   /// Optional. End-User's full name in displayable form including all name parts, possibly
   /// including titles and suffixes, ordered according to the End-User's locale and preferences.
@@ -1829,7 +1831,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasName() => $_has(1);
   @$pb.TagNumber(2)
-  void clearName() => clearField(2);
+  void clearName() => $_clearField(2);
 
   ///  Optional. Given name(s) or first name(s) of the End-User.
   ///
@@ -1845,7 +1847,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasGivenName() => $_has(2);
   @$pb.TagNumber(3)
-  void clearGivenName() => clearField(3);
+  void clearGivenName() => $_clearField(3);
 
   ///  Optional. 	Surname(s) or last name(s) of the End-User.
   ///
@@ -1861,7 +1863,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasFamilyName() => $_has(3);
   @$pb.TagNumber(4)
-  void clearFamilyName() => clearField(4);
+  void clearFamilyName() => $_clearField(4);
 
   ///  Optional. Middle name(s) of the End-User.
   ///
@@ -1879,7 +1881,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasMiddleName() => $_has(4);
   @$pb.TagNumber(5)
-  void clearMiddleName() => clearField(5);
+  void clearMiddleName() => $_clearField(5);
 
   ///  Optional. Casual name of the End-User that may or may not be the same as the given_name.
   ///
@@ -1894,7 +1896,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasNickname() => $_has(5);
   @$pb.TagNumber(6)
-  void clearNickname() => clearField(6);
+  void clearNickname() => $_clearField(6);
 
   ///  Optional. Shorthand name by which the End-User wishes to be referred to at the RP, such as
   ///  janedoe or j.doe.
@@ -1911,7 +1913,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.bool hasPreferredUsername() => $_has(6);
   @$pb.TagNumber(7)
-  void clearPreferredUsername() => clearField(7);
+  void clearPreferredUsername() => $_clearField(7);
 
   ///  Optional. URL of the End-User's profile page.
   ///
@@ -1926,7 +1928,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.bool hasProfile() => $_has(7);
   @$pb.TagNumber(8)
-  void clearProfile() => clearField(8);
+  void clearProfile() => $_clearField(8);
 
   ///  Optional. URL of the End-User's profile picture.
   ///
@@ -1944,7 +1946,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $core.bool hasPicture() => $_has(8);
   @$pb.TagNumber(9)
-  void clearPicture() => clearField(9);
+  void clearPicture() => $_clearField(9);
 
   ///  Optional. URL of the End-User's Web page or blog.
   ///
@@ -1960,7 +1962,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   $core.bool hasWebsite() => $_has(9);
   @$pb.TagNumber(10)
-  void clearWebsite() => clearField(10);
+  void clearWebsite() => $_clearField(10);
 
   ///  Optional. End-User's preferred e-mail address.
   ///
@@ -1976,7 +1978,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   $core.bool hasEmail() => $_has(10);
   @$pb.TagNumber(11)
-  void clearEmail() => clearField(11);
+  void clearEmail() => $_clearField(11);
 
   ///  Optional. True if the End-User's e-mail address has been verified; otherwise false.
   ///
@@ -1994,7 +1996,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(12)
   $core.bool hasEmailVerified() => $_has(11);
   @$pb.TagNumber(12)
-  void clearEmailVerified() => clearField(12);
+  void clearEmailVerified() => $_clearField(12);
 
   ///  Optional. End-User's gender.
   ///
@@ -2010,7 +2012,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(13)
   $core.bool hasGender() => $_has(12);
   @$pb.TagNumber(13)
-  void clearGender() => clearField(13);
+  void clearGender() => $_clearField(13);
 
   ///  Optional. End-User's birthday, represented as an ISO 8601-1 [ISO8601‑1] YYYY-MM-DD format.
   ///
@@ -2028,7 +2030,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(14)
   $core.bool hasBirthdate() => $_has(13);
   @$pb.TagNumber(14)
-  void clearBirthdate() => clearField(14);
+  void clearBirthdate() => $_clearField(14);
 
   ///  Optional. String from IANA Time Zone Database [IANA.time‑zones] representing the End-User's time zone.
   ///
@@ -2043,7 +2045,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(15)
   $core.bool hasZoneinfo() => $_has(14);
   @$pb.TagNumber(15)
-  void clearZoneinfo() => clearField(15);
+  void clearZoneinfo() => $_clearField(15);
 
   ///  Optional. End-User's locale, represented as a BCP47 [RFC5646] language tag.
   ///
@@ -2061,7 +2063,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(16)
   $core.bool hasLocale() => $_has(15);
   @$pb.TagNumber(16)
-  void clearLocale() => clearField(16);
+  void clearLocale() => $_clearField(16);
 
   ///  Optional. End-User's preferred telephone number.
   ///
@@ -2078,7 +2080,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(17)
   $core.bool hasPhoneNumber() => $_has(16);
   @$pb.TagNumber(17)
-  void clearPhoneNumber() => clearField(17);
+  void clearPhoneNumber() => $_clearField(17);
 
   ///  Optional. True if the End-User's phone number has been verified; otherwise false.
   ///
@@ -2097,7 +2099,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(18)
   $core.bool hasPhoneNumberVerified() => $_has(17);
   @$pb.TagNumber(18)
-  void clearPhoneNumberVerified() => clearField(18);
+  void clearPhoneNumberVerified() => $_clearField(18);
 
   ///  Optional. End-User's preferred postal address.
   ///
@@ -2115,18 +2117,18 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   ///  }
   ///  ```
   @$pb.TagNumber(19)
-  $15.Value get address => $_getN(18);
+  $11.Value get address => $_getN(18);
   @$pb.TagNumber(19)
-  set address($15.Value v) {
-    setField(19, v);
+  set address($11.Value v) {
+    $_setField(19, v);
   }
 
   @$pb.TagNumber(19)
   $core.bool hasAddress() => $_has(18);
   @$pb.TagNumber(19)
-  void clearAddress() => clearField(19);
+  void clearAddress() => $_clearField(19);
   @$pb.TagNumber(19)
-  $15.Value ensureAddress() => $_ensure(18);
+  $11.Value ensureAddress() => $_ensure(18);
 
   ///  Optional. Time the End-User's information was last updated.
   ///
@@ -2143,7 +2145,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(20)
   $core.bool hasUpdatedAt() => $_has(19);
   @$pb.TagNumber(20)
-  void clearUpdatedAt() => clearField(20);
+  void clearUpdatedAt() => $_clearField(20);
 }
 
 /// End-User's preferred postal address.
@@ -2232,7 +2234,7 @@ class OpenIdAddress extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasFormatted() => $_has(0);
   @$pb.TagNumber(1)
-  void clearFormatted() => clearField(1);
+  void clearFormatted() => $_clearField(1);
 
   /// Optional. Full street address component, which MAY include house number, street name, P.O. Box, and multi-line extended street address information.
   @$pb.TagNumber(2)
@@ -2245,7 +2247,7 @@ class OpenIdAddress extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasStreetAddress() => $_has(1);
   @$pb.TagNumber(2)
-  void clearStreetAddress() => clearField(2);
+  void clearStreetAddress() => $_clearField(2);
 
   /// Optional. City or locality component.
   @$pb.TagNumber(3)
@@ -2258,7 +2260,7 @@ class OpenIdAddress extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasLocality() => $_has(2);
   @$pb.TagNumber(3)
-  void clearLocality() => clearField(3);
+  void clearLocality() => $_clearField(3);
 
   /// Optional. State, province, prefecture, or region component.
   @$pb.TagNumber(4)
@@ -2271,7 +2273,7 @@ class OpenIdAddress extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasRegion() => $_has(3);
   @$pb.TagNumber(4)
-  void clearRegion() => clearField(4);
+  void clearRegion() => $_clearField(4);
 
   /// Optional. Zip code or postal code component.
   @$pb.TagNumber(5)
@@ -2284,7 +2286,7 @@ class OpenIdAddress extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasPostalCode() => $_has(4);
   @$pb.TagNumber(5)
-  void clearPostalCode() => clearField(5);
+  void clearPostalCode() => $_clearField(5);
 
   /// Optional. Country name component.
   /// (-- api-linter: core::0143::standardized-codes=disabled --)
@@ -2298,7 +2300,7 @@ class OpenIdAddress extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasCountry() => $_has(5);
   @$pb.TagNumber(6)
-  void clearCountry() => clearField(6);
+  void clearCountry() => $_clearField(6);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
