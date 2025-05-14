@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: cedar/v3/expr.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -14,7 +14,9 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'expr.pbenum.dart';
-import 'value.pb.dart' as $2;
+import 'value.pb.dart' as $0;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'expr.pbenum.dart';
 
@@ -324,19 +326,19 @@ class Expr extends $pb.GeneratedMessage {
   static Expr? _defaultInstance;
 
   Expr_Expr whichExpr() => _Expr_ExprByTag[$_whichOneof(0)]!;
-  void clearExpr() => clearField($_whichOneof(0));
+  void clearExpr() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   ExprValue get value => $_getN(0);
   @$pb.TagNumber(1)
   set value(ExprValue v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearValue() => $_clearField(1);
   @$pb.TagNumber(1)
   ExprValue ensureValue() => $_ensure(0);
 
@@ -344,13 +346,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprVariable get variable => $_getN(1);
   @$pb.TagNumber(2)
   set variable(ExprVariable v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasVariable() => $_has(1);
   @$pb.TagNumber(2)
-  void clearVariable() => clearField(2);
+  void clearVariable() => $_clearField(2);
   @$pb.TagNumber(2)
   ExprVariable ensureVariable() => $_ensure(1);
 
@@ -358,13 +360,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprSlot get slot => $_getN(2);
   @$pb.TagNumber(3)
   set slot(ExprSlot v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasSlot() => $_has(2);
   @$pb.TagNumber(3)
-  void clearSlot() => clearField(3);
+  void clearSlot() => $_clearField(3);
   @$pb.TagNumber(3)
   ExprSlot ensureSlot() => $_ensure(2);
 
@@ -372,13 +374,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprUnknown get unknown => $_getN(3);
   @$pb.TagNumber(4)
   set unknown(ExprUnknown v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasUnknown() => $_has(3);
   @$pb.TagNumber(4)
-  void clearUnknown() => clearField(4);
+  void clearUnknown() => $_clearField(4);
   @$pb.TagNumber(4)
   ExprUnknown ensureUnknown() => $_ensure(3);
 
@@ -386,13 +388,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprNot get not => $_getN(4);
   @$pb.TagNumber(5)
   set not(ExprNot v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasNot() => $_has(4);
   @$pb.TagNumber(5)
-  void clearNot() => clearField(5);
+  void clearNot() => $_clearField(5);
   @$pb.TagNumber(5)
   ExprNot ensureNot() => $_ensure(4);
 
@@ -400,13 +402,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprNegate get negate => $_getN(5);
   @$pb.TagNumber(6)
   set negate(ExprNegate v) {
-    setField(6, v);
+    $_setField(6, v);
   }
 
   @$pb.TagNumber(6)
   $core.bool hasNegate() => $_has(5);
   @$pb.TagNumber(6)
-  void clearNegate() => clearField(6);
+  void clearNegate() => $_clearField(6);
   @$pb.TagNumber(6)
   ExprNegate ensureNegate() => $_ensure(5);
 
@@ -414,13 +416,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprEquals get equals => $_getN(6);
   @$pb.TagNumber(7)
   set equals(ExprEquals v) {
-    setField(7, v);
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasEquals() => $_has(6);
   @$pb.TagNumber(7)
-  void clearEquals() => clearField(7);
+  void clearEquals() => $_clearField(7);
   @$pb.TagNumber(7)
   ExprEquals ensureEquals() => $_ensure(6);
 
@@ -428,13 +430,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprNotEquals get notEquals => $_getN(7);
   @$pb.TagNumber(8)
   set notEquals(ExprNotEquals v) {
-    setField(8, v);
+    $_setField(8, v);
   }
 
   @$pb.TagNumber(8)
   $core.bool hasNotEquals() => $_has(7);
   @$pb.TagNumber(8)
-  void clearNotEquals() => clearField(8);
+  void clearNotEquals() => $_clearField(8);
   @$pb.TagNumber(8)
   ExprNotEquals ensureNotEquals() => $_ensure(7);
 
@@ -442,13 +444,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprIn get in_ => $_getN(8);
   @$pb.TagNumber(9)
   set in_(ExprIn v) {
-    setField(9, v);
+    $_setField(9, v);
   }
 
   @$pb.TagNumber(9)
   $core.bool hasIn_() => $_has(8);
   @$pb.TagNumber(9)
-  void clearIn_() => clearField(9);
+  void clearIn_() => $_clearField(9);
   @$pb.TagNumber(9)
   ExprIn ensureIn_() => $_ensure(8);
 
@@ -456,13 +458,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprLessThan get lessThan => $_getN(9);
   @$pb.TagNumber(10)
   set lessThan(ExprLessThan v) {
-    setField(10, v);
+    $_setField(10, v);
   }
 
   @$pb.TagNumber(10)
   $core.bool hasLessThan() => $_has(9);
   @$pb.TagNumber(10)
-  void clearLessThan() => clearField(10);
+  void clearLessThan() => $_clearField(10);
   @$pb.TagNumber(10)
   ExprLessThan ensureLessThan() => $_ensure(9);
 
@@ -470,13 +472,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprLessThanOrEquals get lessThanOrEquals => $_getN(10);
   @$pb.TagNumber(11)
   set lessThanOrEquals(ExprLessThanOrEquals v) {
-    setField(11, v);
+    $_setField(11, v);
   }
 
   @$pb.TagNumber(11)
   $core.bool hasLessThanOrEquals() => $_has(10);
   @$pb.TagNumber(11)
-  void clearLessThanOrEquals() => clearField(11);
+  void clearLessThanOrEquals() => $_clearField(11);
   @$pb.TagNumber(11)
   ExprLessThanOrEquals ensureLessThanOrEquals() => $_ensure(10);
 
@@ -484,13 +486,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprGreaterThan get greaterThan => $_getN(11);
   @$pb.TagNumber(12)
   set greaterThan(ExprGreaterThan v) {
-    setField(12, v);
+    $_setField(12, v);
   }
 
   @$pb.TagNumber(12)
   $core.bool hasGreaterThan() => $_has(11);
   @$pb.TagNumber(12)
-  void clearGreaterThan() => clearField(12);
+  void clearGreaterThan() => $_clearField(12);
   @$pb.TagNumber(12)
   ExprGreaterThan ensureGreaterThan() => $_ensure(11);
 
@@ -498,13 +500,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprGreaterThanOrEquals get greaterThanOrEquals => $_getN(12);
   @$pb.TagNumber(13)
   set greaterThanOrEquals(ExprGreaterThanOrEquals v) {
-    setField(13, v);
+    $_setField(13, v);
   }
 
   @$pb.TagNumber(13)
   $core.bool hasGreaterThanOrEquals() => $_has(12);
   @$pb.TagNumber(13)
-  void clearGreaterThanOrEquals() => clearField(13);
+  void clearGreaterThanOrEquals() => $_clearField(13);
   @$pb.TagNumber(13)
   ExprGreaterThanOrEquals ensureGreaterThanOrEquals() => $_ensure(12);
 
@@ -512,13 +514,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprAnd get and => $_getN(13);
   @$pb.TagNumber(14)
   set and(ExprAnd v) {
-    setField(14, v);
+    $_setField(14, v);
   }
 
   @$pb.TagNumber(14)
   $core.bool hasAnd() => $_has(13);
   @$pb.TagNumber(14)
-  void clearAnd() => clearField(14);
+  void clearAnd() => $_clearField(14);
   @$pb.TagNumber(14)
   ExprAnd ensureAnd() => $_ensure(13);
 
@@ -526,13 +528,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprOr get or => $_getN(14);
   @$pb.TagNumber(15)
   set or(ExprOr v) {
-    setField(15, v);
+    $_setField(15, v);
   }
 
   @$pb.TagNumber(15)
   $core.bool hasOr() => $_has(14);
   @$pb.TagNumber(15)
-  void clearOr() => clearField(15);
+  void clearOr() => $_clearField(15);
   @$pb.TagNumber(15)
   ExprOr ensureOr() => $_ensure(14);
 
@@ -540,13 +542,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprAdd get add => $_getN(15);
   @$pb.TagNumber(16)
   set add(ExprAdd v) {
-    setField(16, v);
+    $_setField(16, v);
   }
 
   @$pb.TagNumber(16)
   $core.bool hasAdd() => $_has(15);
   @$pb.TagNumber(16)
-  void clearAdd() => clearField(16);
+  void clearAdd() => $_clearField(16);
   @$pb.TagNumber(16)
   ExprAdd ensureAdd() => $_ensure(15);
 
@@ -554,13 +556,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprSubt get subtract => $_getN(16);
   @$pb.TagNumber(17)
   set subtract(ExprSubt v) {
-    setField(17, v);
+    $_setField(17, v);
   }
 
   @$pb.TagNumber(17)
   $core.bool hasSubtract() => $_has(16);
   @$pb.TagNumber(17)
-  void clearSubtract() => clearField(17);
+  void clearSubtract() => $_clearField(17);
   @$pb.TagNumber(17)
   ExprSubt ensureSubtract() => $_ensure(16);
 
@@ -568,13 +570,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprMult get multiply => $_getN(17);
   @$pb.TagNumber(18)
   set multiply(ExprMult v) {
-    setField(18, v);
+    $_setField(18, v);
   }
 
   @$pb.TagNumber(18)
   $core.bool hasMultiply() => $_has(17);
   @$pb.TagNumber(18)
-  void clearMultiply() => clearField(18);
+  void clearMultiply() => $_clearField(18);
   @$pb.TagNumber(18)
   ExprMult ensureMultiply() => $_ensure(17);
 
@@ -582,13 +584,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprContains get contains => $_getN(18);
   @$pb.TagNumber(19)
   set contains(ExprContains v) {
-    setField(19, v);
+    $_setField(19, v);
   }
 
   @$pb.TagNumber(19)
   $core.bool hasContains() => $_has(18);
   @$pb.TagNumber(19)
-  void clearContains() => clearField(19);
+  void clearContains() => $_clearField(19);
   @$pb.TagNumber(19)
   ExprContains ensureContains() => $_ensure(18);
 
@@ -596,13 +598,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprContainsAll get containsAll => $_getN(19);
   @$pb.TagNumber(20)
   set containsAll(ExprContainsAll v) {
-    setField(20, v);
+    $_setField(20, v);
   }
 
   @$pb.TagNumber(20)
   $core.bool hasContainsAll() => $_has(19);
   @$pb.TagNumber(20)
-  void clearContainsAll() => clearField(20);
+  void clearContainsAll() => $_clearField(20);
   @$pb.TagNumber(20)
   ExprContainsAll ensureContainsAll() => $_ensure(19);
 
@@ -610,13 +612,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprContainsAny get containsAny => $_getN(20);
   @$pb.TagNumber(21)
   set containsAny(ExprContainsAny v) {
-    setField(21, v);
+    $_setField(21, v);
   }
 
   @$pb.TagNumber(21)
   $core.bool hasContainsAny() => $_has(20);
   @$pb.TagNumber(21)
-  void clearContainsAny() => clearField(21);
+  void clearContainsAny() => $_clearField(21);
   @$pb.TagNumber(21)
   ExprContainsAny ensureContainsAny() => $_ensure(20);
 
@@ -624,13 +626,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprGetAttribute get getAttribute => $_getN(21);
   @$pb.TagNumber(22)
   set getAttribute(ExprGetAttribute v) {
-    setField(22, v);
+    $_setField(22, v);
   }
 
   @$pb.TagNumber(22)
   $core.bool hasGetAttribute() => $_has(21);
   @$pb.TagNumber(22)
-  void clearGetAttribute() => clearField(22);
+  void clearGetAttribute() => $_clearField(22);
   @$pb.TagNumber(22)
   ExprGetAttribute ensureGetAttribute() => $_ensure(21);
 
@@ -638,13 +640,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprHasAttribute get hasAttribute => $_getN(22);
   @$pb.TagNumber(23)
   set hasAttribute(ExprHasAttribute v) {
-    setField(23, v);
+    $_setField(23, v);
   }
 
   @$pb.TagNumber(23)
   $core.bool hasHasAttribute() => $_has(22);
   @$pb.TagNumber(23)
-  void clearHasAttribute() => clearField(23);
+  void clearHasAttribute() => $_clearField(23);
   @$pb.TagNumber(23)
   ExprHasAttribute ensureHasAttribute() => $_ensure(22);
 
@@ -652,13 +654,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprLike get like => $_getN(23);
   @$pb.TagNumber(24)
   set like(ExprLike v) {
-    setField(24, v);
+    $_setField(24, v);
   }
 
   @$pb.TagNumber(24)
   $core.bool hasLike() => $_has(23);
   @$pb.TagNumber(24)
-  void clearLike() => clearField(24);
+  void clearLike() => $_clearField(24);
   @$pb.TagNumber(24)
   ExprLike ensureLike() => $_ensure(23);
 
@@ -666,13 +668,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprIs get is_ => $_getN(24);
   @$pb.TagNumber(25)
   set is_(ExprIs v) {
-    setField(25, v);
+    $_setField(25, v);
   }
 
   @$pb.TagNumber(25)
   $core.bool hasIs_() => $_has(24);
   @$pb.TagNumber(25)
-  void clearIs_() => clearField(25);
+  void clearIs_() => $_clearField(25);
   @$pb.TagNumber(25)
   ExprIs ensureIs_() => $_ensure(24);
 
@@ -680,13 +682,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprIfThenElse get ifThenElse => $_getN(25);
   @$pb.TagNumber(26)
   set ifThenElse(ExprIfThenElse v) {
-    setField(26, v);
+    $_setField(26, v);
   }
 
   @$pb.TagNumber(26)
   $core.bool hasIfThenElse() => $_has(25);
   @$pb.TagNumber(26)
-  void clearIfThenElse() => clearField(26);
+  void clearIfThenElse() => $_clearField(26);
   @$pb.TagNumber(26)
   ExprIfThenElse ensureIfThenElse() => $_ensure(25);
 
@@ -694,13 +696,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprSet get set => $_getN(26);
   @$pb.TagNumber(27)
   set set(ExprSet v) {
-    setField(27, v);
+    $_setField(27, v);
   }
 
   @$pb.TagNumber(27)
   $core.bool hasSet() => $_has(26);
   @$pb.TagNumber(27)
-  void clearSet() => clearField(27);
+  void clearSet() => $_clearField(27);
   @$pb.TagNumber(27)
   ExprSet ensureSet() => $_ensure(26);
 
@@ -708,13 +710,13 @@ class Expr extends $pb.GeneratedMessage {
   ExprRecord get record => $_getN(27);
   @$pb.TagNumber(28)
   set record(ExprRecord v) {
-    setField(28, v);
+    $_setField(28, v);
   }
 
   @$pb.TagNumber(28)
   $core.bool hasRecord() => $_has(27);
   @$pb.TagNumber(28)
-  void clearRecord() => clearField(28);
+  void clearRecord() => $_clearField(28);
   @$pb.TagNumber(28)
   ExprRecord ensureRecord() => $_ensure(27);
 
@@ -722,20 +724,20 @@ class Expr extends $pb.GeneratedMessage {
   ExprExtensionCall get extensionCall => $_getN(28);
   @$pb.TagNumber(29)
   set extensionCall(ExprExtensionCall v) {
-    setField(29, v);
+    $_setField(29, v);
   }
 
   @$pb.TagNumber(29)
   $core.bool hasExtensionCall() => $_has(28);
   @$pb.TagNumber(29)
-  void clearExtensionCall() => clearField(29);
+  void clearExtensionCall() => $_clearField(29);
   @$pb.TagNumber(29)
   ExprExtensionCall ensureExtensionCall() => $_ensure(28);
 }
 
 class ExprValue extends $pb.GeneratedMessage {
   factory ExprValue({
-    $2.Value? value,
+    $0.Value? value,
   }) {
     final $result = create();
     if (value != null) {
@@ -755,8 +757,8 @@ class ExprValue extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ExprValue',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
-    ..aOM<$2.Value>(1, _omitFieldNames ? '' : 'value',
-        subBuilder: $2.Value.create)
+    ..aOM<$0.Value>(1, _omitFieldNames ? '' : 'value',
+        subBuilder: $0.Value.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -781,18 +783,18 @@ class ExprValue extends $pb.GeneratedMessage {
   static ExprValue? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $2.Value get value => $_getN(0);
+  $0.Value get value => $_getN(0);
   @$pb.TagNumber(1)
-  set value($2.Value v) {
-    setField(1, v);
+  set value($0.Value v) {
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
-  void clearValue() => clearField(1);
+  void clearValue() => $_clearField(1);
   @$pb.TagNumber(1)
-  $2.Value ensureValue() => $_ensure(0);
+  $0.Value ensureValue() => $_ensure(0);
 }
 
 class ExprVariable extends $pb.GeneratedMessage {
@@ -850,13 +852,13 @@ class ExprVariable extends $pb.GeneratedMessage {
   Variable get variable => $_getN(0);
   @$pb.TagNumber(1)
   set variable(Variable v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasVariable() => $_has(0);
   @$pb.TagNumber(1)
-  void clearVariable() => clearField(1);
+  void clearVariable() => $_clearField(1);
 }
 
 class ExprSlot extends $pb.GeneratedMessage {
@@ -912,13 +914,13 @@ class ExprSlot extends $pb.GeneratedMessage {
   SlotId get slotId => $_getN(0);
   @$pb.TagNumber(1)
   set slotId(SlotId v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasSlotId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSlotId() => clearField(1);
+  void clearSlotId() => $_clearField(1);
 }
 
 class ExprUnknown extends $pb.GeneratedMessage {
@@ -978,7 +980,7 @@ class ExprUnknown extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 }
 
 class ExprNot extends $pb.GeneratedMessage {
@@ -1031,13 +1033,13 @@ class ExprNot extends $pb.GeneratedMessage {
   Expr get arg => $_getN(0);
   @$pb.TagNumber(1)
   set arg(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasArg() => $_has(0);
   @$pb.TagNumber(1)
-  void clearArg() => clearField(1);
+  void clearArg() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureArg() => $_ensure(0);
 }
@@ -1092,13 +1094,13 @@ class ExprNegate extends $pb.GeneratedMessage {
   Expr get arg => $_getN(0);
   @$pb.TagNumber(1)
   set arg(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasArg() => $_has(0);
   @$pb.TagNumber(1)
-  void clearArg() => clearField(1);
+  void clearArg() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureArg() => $_ensure(0);
 }
@@ -1158,13 +1160,13 @@ class ExprEquals extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -1172,13 +1174,13 @@ class ExprEquals extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -1240,13 +1242,13 @@ class ExprNotEquals extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -1254,13 +1256,13 @@ class ExprNotEquals extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -1320,13 +1322,13 @@ class ExprIn extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -1334,13 +1336,13 @@ class ExprIn extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -1402,13 +1404,13 @@ class ExprLessThan extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -1416,13 +1418,13 @@ class ExprLessThan extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -1485,13 +1487,13 @@ class ExprLessThanOrEquals extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -1499,13 +1501,13 @@ class ExprLessThanOrEquals extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -1567,13 +1569,13 @@ class ExprGreaterThan extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -1581,13 +1583,13 @@ class ExprGreaterThan extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -1651,13 +1653,13 @@ class ExprGreaterThanOrEquals extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -1665,13 +1667,13 @@ class ExprGreaterThanOrEquals extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -1731,13 +1733,13 @@ class ExprAnd extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -1745,13 +1747,13 @@ class ExprAnd extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -1811,13 +1813,13 @@ class ExprOr extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -1825,13 +1827,13 @@ class ExprOr extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -1891,13 +1893,13 @@ class ExprAdd extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -1905,13 +1907,13 @@ class ExprAdd extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -1971,13 +1973,13 @@ class ExprSubt extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -1985,13 +1987,13 @@ class ExprSubt extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -2051,13 +2053,13 @@ class ExprMult extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -2065,13 +2067,13 @@ class ExprMult extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -2133,13 +2135,13 @@ class ExprContains extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -2147,13 +2149,13 @@ class ExprContains extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -2215,13 +2217,13 @@ class ExprContainsAll extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -2229,13 +2231,13 @@ class ExprContainsAll extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -2297,13 +2299,13 @@ class ExprContainsAny extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -2311,13 +2313,13 @@ class ExprContainsAny extends $pb.GeneratedMessage {
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
   set right(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRight() => clearField(2);
+  void clearRight() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureRight() => $_ensure(1);
 }
@@ -2379,13 +2381,13 @@ class ExprGetAttribute extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -2399,7 +2401,7 @@ class ExprGetAttribute extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasAttr() => $_has(1);
   @$pb.TagNumber(2)
-  void clearAttr() => clearField(2);
+  void clearAttr() => $_clearField(2);
 }
 
 class ExprHasAttribute extends $pb.GeneratedMessage {
@@ -2459,13 +2461,13 @@ class ExprHasAttribute extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -2479,7 +2481,7 @@ class ExprHasAttribute extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasAttr() => $_has(1);
   @$pb.TagNumber(2)
-  void clearAttr() => clearField(2);
+  void clearAttr() => $_clearField(2);
 }
 
 class ExprLike extends $pb.GeneratedMessage {
@@ -2537,13 +2539,13 @@ class ExprLike extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -2557,7 +2559,7 @@ class ExprLike extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasPattern() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPattern() => clearField(2);
+  void clearPattern() => $_clearField(2);
 }
 
 class ExprIs extends $pb.GeneratedMessage {
@@ -2620,13 +2622,13 @@ class ExprIs extends $pb.GeneratedMessage {
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
   set left(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLeft() => clearField(1);
+  void clearLeft() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureLeft() => $_ensure(0);
 
@@ -2640,19 +2642,19 @@ class ExprIs extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasEntityType() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEntityType() => clearField(2);
+  void clearEntityType() => $_clearField(2);
 
   @$pb.TagNumber(3)
   Expr get in_ => $_getN(2);
   @$pb.TagNumber(3)
   set in_(Expr v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasIn_() => $_has(2);
   @$pb.TagNumber(3)
-  void clearIn_() => clearField(3);
+  void clearIn_() => $_clearField(3);
   @$pb.TagNumber(3)
   Expr ensureIn_() => $_ensure(2);
 }
@@ -2719,13 +2721,13 @@ class ExprIfThenElse extends $pb.GeneratedMessage {
   Expr get cond => $_getN(0);
   @$pb.TagNumber(1)
   set cond(Expr v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasCond() => $_has(0);
   @$pb.TagNumber(1)
-  void clearCond() => clearField(1);
+  void clearCond() => $_clearField(1);
   @$pb.TagNumber(1)
   Expr ensureCond() => $_ensure(0);
 
@@ -2733,13 +2735,13 @@ class ExprIfThenElse extends $pb.GeneratedMessage {
   Expr get then => $_getN(1);
   @$pb.TagNumber(2)
   set then(Expr v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasThen() => $_has(1);
   @$pb.TagNumber(2)
-  void clearThen() => clearField(2);
+  void clearThen() => $_clearField(2);
   @$pb.TagNumber(2)
   Expr ensureThen() => $_ensure(1);
 
@@ -2747,13 +2749,13 @@ class ExprIfThenElse extends $pb.GeneratedMessage {
   Expr get otherwise => $_getN(2);
   @$pb.TagNumber(3)
   set otherwise(Expr v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasOtherwise() => $_has(2);
   @$pb.TagNumber(3)
-  void clearOtherwise() => clearField(3);
+  void clearOtherwise() => $_clearField(3);
   @$pb.TagNumber(3)
   Expr ensureOtherwise() => $_ensure(2);
 }
@@ -2806,16 +2808,16 @@ class ExprSet extends $pb.GeneratedMessage {
   static ExprSet? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<Expr> get expressions => $_getList(0);
+  $pb.PbList<Expr> get expressions => $_getList(0);
 }
 
 class ExprRecord extends $pb.GeneratedMessage {
   factory ExprRecord({
-    $core.Map<$core.String, Expr>? attributes,
+    $core.Iterable<$core.MapEntry<$core.String, Expr>>? attributes,
   }) {
     final $result = create();
     if (attributes != null) {
-      $result.attributes.addAll(attributes);
+      $result.attributes.addEntries(attributes);
     }
     return $result;
   }
@@ -2862,7 +2864,7 @@ class ExprRecord extends $pb.GeneratedMessage {
   static ExprRecord? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.Map<$core.String, Expr> get attributes => $_getMap(0);
+  $pb.PbMap<$core.String, Expr> get attributes => $_getMap(0);
 }
 
 class ExprExtensionCall extends $pb.GeneratedMessage {
@@ -2929,10 +2931,10 @@ class ExprExtensionCall extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasFn() => $_has(0);
   @$pb.TagNumber(1)
-  void clearFn() => clearField(1);
+  void clearFn() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<Expr> get args => $_getList(1);
+  $pb.PbList<Expr> get args => $_getList(1);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

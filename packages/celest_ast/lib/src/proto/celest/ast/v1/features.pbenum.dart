@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/ast/v1/features.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -15,8 +15,11 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 /// Feature flags available to Celest projects.
 class FeatureFlag extends $pb.ProtobufEnum {
+  /// Unspecified feature flag.
   static const FeatureFlag FEATURE_FLAG_UNSPECIFIED =
       FeatureFlag._(0, _omitEnumNames ? '' : 'FEATURE_FLAG_UNSPECIFIED');
+
+  /// Enables the use of `Stream` types in functions.
   static const FeatureFlag STREAMING =
       FeatureFlag._(1, _omitEnumNames ? '' : 'STREAMING');
 
@@ -29,7 +32,7 @@ class FeatureFlag extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static FeatureFlag? valueOf($core.int value) => _byValue[value];
 
-  const FeatureFlag._($core.int v, $core.String n) : super(v, n);
+  const FeatureFlag._(super.v, super.n);
 }
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

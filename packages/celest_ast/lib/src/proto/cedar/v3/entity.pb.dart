@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: cedar/v3/entity.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -14,13 +14,15 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'entity_uid.pb.dart' as $1;
-import 'value.pb.dart' as $2;
+import 'value.pb.dart' as $0;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 class Entity extends $pb.GeneratedMessage {
   factory Entity({
     $1.EntityUid? uid,
     $core.Iterable<$1.EntityUid>? parents,
-    $core.Map<$core.String, $2.Value>? attributes,
+    $core.Iterable<$core.MapEntry<$core.String, $0.Value>>? attributes,
   }) {
     final $result = create();
     if (uid != null) {
@@ -30,7 +32,7 @@ class Entity extends $pb.GeneratedMessage {
       $result.parents.addAll(parents);
     }
     if (attributes != null) {
-      $result.attributes.addAll(attributes);
+      $result.attributes.addEntries(attributes);
     }
     return $result;
   }
@@ -50,12 +52,12 @@ class Entity extends $pb.GeneratedMessage {
         subBuilder: $1.EntityUid.create)
     ..pc<$1.EntityUid>(2, _omitFieldNames ? '' : 'parents', $pb.PbFieldType.PM,
         subBuilder: $1.EntityUid.create)
-    ..m<$core.String, $2.Value>(3, _omitFieldNames ? '' : 'attributes',
+    ..m<$core.String, $0.Value>(3, _omitFieldNames ? '' : 'attributes',
         entryClassName: 'Entity.AttributesEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.OM,
-        valueCreator: $2.Value.create,
-        valueDefaultOrMaker: $2.Value.getDefault,
+        valueCreator: $0.Value.create,
+        valueDefaultOrMaker: $0.Value.getDefault,
         packageName: const $pb.PackageName('cedar.v3'))
     ..hasRequiredFields = false;
 
@@ -84,21 +86,21 @@ class Entity extends $pb.GeneratedMessage {
   $1.EntityUid get uid => $_getN(0);
   @$pb.TagNumber(1)
   set uid($1.EntityUid v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasUid() => $_has(0);
   @$pb.TagNumber(1)
-  void clearUid() => clearField(1);
+  void clearUid() => $_clearField(1);
   @$pb.TagNumber(1)
   $1.EntityUid ensureUid() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.List<$1.EntityUid> get parents => $_getList(1);
+  $pb.PbList<$1.EntityUid> get parents => $_getList(1);
 
   @$pb.TagNumber(3)
-  $core.Map<$core.String, $2.Value> get attributes => $_getMap(2);
+  $pb.PbMap<$core.String, $0.Value> get attributes => $_getMap(2);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

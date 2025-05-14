@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/protobuf/descriptor.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -15,18 +15,34 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 /// The full set of known editions.
 class Edition extends $pb.ProtobufEnum {
+  /// A placeholder for an unknown edition value.
   static const Edition EDITION_UNKNOWN =
       Edition._(0, _omitEnumNames ? '' : 'EDITION_UNKNOWN');
+
+  /// A placeholder edition for specifying default behaviors *before* a feature
+  /// was first introduced.  This is effectively an "infinite past".
   static const Edition EDITION_LEGACY =
       Edition._(900, _omitEnumNames ? '' : 'EDITION_LEGACY');
+
+  /// Legacy syntax "editions".  These pre-date editions, but behave much like
+  /// distinct editions.  These can't be used to specify the edition of proto
+  /// files, but feature definitions must supply proto2/proto3 defaults for
+  /// backwards compatibility.
   static const Edition EDITION_PROTO2 =
       Edition._(998, _omitEnumNames ? '' : 'EDITION_PROTO2');
   static const Edition EDITION_PROTO3 =
       Edition._(999, _omitEnumNames ? '' : 'EDITION_PROTO3');
+
+  /// Editions that have been released.  The specific values are arbitrary and
+  /// should not be depended on, but they will always be time-ordered for easy
+  /// comparison.
   static const Edition EDITION_2023 =
       Edition._(1000, _omitEnumNames ? '' : 'EDITION_2023');
   static const Edition EDITION_2024 =
       Edition._(1001, _omitEnumNames ? '' : 'EDITION_2024');
+
+  /// Placeholder editions for testing feature resolution.  These should not be
+  /// used or relyed on outside of tests.
   static const Edition EDITION_1_TEST_ONLY =
       Edition._(1, _omitEnumNames ? '' : 'EDITION_1_TEST_ONLY');
   static const Edition EDITION_2_TEST_ONLY =
@@ -37,6 +53,10 @@ class Edition extends $pb.ProtobufEnum {
       Edition._(99998, _omitEnumNames ? '' : 'EDITION_99998_TEST_ONLY');
   static const Edition EDITION_99999_TEST_ONLY =
       Edition._(99999, _omitEnumNames ? '' : 'EDITION_99999_TEST_ONLY');
+
+  /// Placeholder for specifying unbounded edition support.  This should only
+  /// ever be used by plugins that can expect to never require any changes to
+  /// support a new edition.
   static const Edition EDITION_MAX =
       Edition._(2147483647, _omitEnumNames ? '' : 'EDITION_MAX');
 
@@ -59,11 +79,12 @@ class Edition extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static Edition? valueOf($core.int value) => _byValue[value];
 
-  const Edition._($core.int v, $core.String n) : super(v, n);
+  const Edition._(super.v, super.n);
 }
 
 /// The verification state of the extension range.
 class ExtensionRangeOptions_VerificationState extends $pb.ProtobufEnum {
+  /// All the extensions of the range must be declared.
   static const ExtensionRangeOptions_VerificationState DECLARATION =
       ExtensionRangeOptions_VerificationState._(
           0, _omitEnumNames ? '' : 'DECLARATION');
@@ -82,19 +103,26 @@ class ExtensionRangeOptions_VerificationState extends $pb.ProtobufEnum {
   static ExtensionRangeOptions_VerificationState? valueOf($core.int value) =>
       _byValue[value];
 
-  const ExtensionRangeOptions_VerificationState._($core.int v, $core.String n)
-      : super(v, n);
+  const ExtensionRangeOptions_VerificationState._(super.v, super.n);
 }
 
 class FieldDescriptorProto_Type extends $pb.ProtobufEnum {
+  /// 0 is reserved for errors.
+  /// Order is weird for historical reasons.
   static const FieldDescriptorProto_Type TYPE_DOUBLE =
       FieldDescriptorProto_Type._(1, _omitEnumNames ? '' : 'TYPE_DOUBLE');
   static const FieldDescriptorProto_Type TYPE_FLOAT =
       FieldDescriptorProto_Type._(2, _omitEnumNames ? '' : 'TYPE_FLOAT');
+
+  /// Not ZigZag encoded.  Negative numbers take 10 bytes.  Use TYPE_SINT64 if
+  /// negative values are likely.
   static const FieldDescriptorProto_Type TYPE_INT64 =
       FieldDescriptorProto_Type._(3, _omitEnumNames ? '' : 'TYPE_INT64');
   static const FieldDescriptorProto_Type TYPE_UINT64 =
       FieldDescriptorProto_Type._(4, _omitEnumNames ? '' : 'TYPE_UINT64');
+
+  /// Not ZigZag encoded.  Negative numbers take 10 bytes.  Use TYPE_SINT32 if
+  /// negative values are likely.
   static const FieldDescriptorProto_Type TYPE_INT32 =
       FieldDescriptorProto_Type._(5, _omitEnumNames ? '' : 'TYPE_INT32');
   static const FieldDescriptorProto_Type TYPE_FIXED64 =
@@ -105,10 +133,18 @@ class FieldDescriptorProto_Type extends $pb.ProtobufEnum {
       FieldDescriptorProto_Type._(8, _omitEnumNames ? '' : 'TYPE_BOOL');
   static const FieldDescriptorProto_Type TYPE_STRING =
       FieldDescriptorProto_Type._(9, _omitEnumNames ? '' : 'TYPE_STRING');
+
+  /// Tag-delimited aggregate.
+  /// Group type is deprecated and not supported after google.protobuf. However, Proto3
+  /// implementations should still be able to parse the group wire format and
+  /// treat group fields as unknown fields.  In Editions, the group wire format
+  /// can be enabled via the `message_encoding` feature.
   static const FieldDescriptorProto_Type TYPE_GROUP =
       FieldDescriptorProto_Type._(10, _omitEnumNames ? '' : 'TYPE_GROUP');
   static const FieldDescriptorProto_Type TYPE_MESSAGE =
       FieldDescriptorProto_Type._(11, _omitEnumNames ? '' : 'TYPE_MESSAGE');
+
+  /// New in version 2.
   static const FieldDescriptorProto_Type TYPE_BYTES =
       FieldDescriptorProto_Type._(12, _omitEnumNames ? '' : 'TYPE_BYTES');
   static const FieldDescriptorProto_Type TYPE_UINT32 =
@@ -150,14 +186,19 @@ class FieldDescriptorProto_Type extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static FieldDescriptorProto_Type? valueOf($core.int value) => _byValue[value];
 
-  const FieldDescriptorProto_Type._($core.int v, $core.String n) : super(v, n);
+  const FieldDescriptorProto_Type._(super.v, super.n);
 }
 
 class FieldDescriptorProto_Label extends $pb.ProtobufEnum {
+  /// 0 is reserved for errors
   static const FieldDescriptorProto_Label LABEL_OPTIONAL =
       FieldDescriptorProto_Label._(1, _omitEnumNames ? '' : 'LABEL_OPTIONAL');
   static const FieldDescriptorProto_Label LABEL_REPEATED =
       FieldDescriptorProto_Label._(3, _omitEnumNames ? '' : 'LABEL_REPEATED');
+
+  /// The required label is only allowed in google.protobuf.  In proto3 and Editions
+  /// it's explicitly prohibited.  In Editions, the `field_presence` feature
+  /// can be used to get this behavior.
   static const FieldDescriptorProto_Label LABEL_REQUIRED =
       FieldDescriptorProto_Label._(2, _omitEnumNames ? '' : 'LABEL_REQUIRED');
 
@@ -173,13 +214,15 @@ class FieldDescriptorProto_Label extends $pb.ProtobufEnum {
   static FieldDescriptorProto_Label? valueOf($core.int value) =>
       _byValue[value];
 
-  const FieldDescriptorProto_Label._($core.int v, $core.String n) : super(v, n);
+  const FieldDescriptorProto_Label._(super.v, super.n);
 }
 
 /// Generated classes can be optimized for speed or code size.
 class FileOptions_OptimizeMode extends $pb.ProtobufEnum {
   static const FileOptions_OptimizeMode SPEED =
       FileOptions_OptimizeMode._(1, _omitEnumNames ? '' : 'SPEED');
+
+  /// etc.
   static const FileOptions_OptimizeMode CODE_SIZE =
       FileOptions_OptimizeMode._(2, _omitEnumNames ? '' : 'CODE_SIZE');
   static const FileOptions_OptimizeMode LITE_RUNTIME =
@@ -196,12 +239,20 @@ class FileOptions_OptimizeMode extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static FileOptions_OptimizeMode? valueOf($core.int value) => _byValue[value];
 
-  const FileOptions_OptimizeMode._($core.int v, $core.String n) : super(v, n);
+  const FileOptions_OptimizeMode._(super.v, super.n);
 }
 
 class FieldOptions_CType extends $pb.ProtobufEnum {
+  /// Default mode.
   static const FieldOptions_CType STRING =
       FieldOptions_CType._(0, _omitEnumNames ? '' : 'STRING');
+
+  /// The option [ctype=CORD] may be applied to a non-repeated field of type
+  /// "bytes". It indicates that in C++, the data should be stored in a Cord
+  /// instead of a string.  For very large strings, this may reduce memory
+  /// fragmentation. It may also allow better performance when parsing from a
+  /// Cord, or when parsing with aliasing enabled, as the parsed Cord may then
+  /// alias the original buffer.
   static const FieldOptions_CType CORD =
       FieldOptions_CType._(1, _omitEnumNames ? '' : 'CORD');
   static const FieldOptions_CType STRING_PIECE =
@@ -217,14 +268,19 @@ class FieldOptions_CType extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static FieldOptions_CType? valueOf($core.int value) => _byValue[value];
 
-  const FieldOptions_CType._($core.int v, $core.String n) : super(v, n);
+  const FieldOptions_CType._(super.v, super.n);
 }
 
 class FieldOptions_JSType extends $pb.ProtobufEnum {
+  /// Use the default type.
   static const FieldOptions_JSType JS_NORMAL =
       FieldOptions_JSType._(0, _omitEnumNames ? '' : 'JS_NORMAL');
+
+  /// Use JavaScript strings.
   static const FieldOptions_JSType JS_STRING =
       FieldOptions_JSType._(1, _omitEnumNames ? '' : 'JS_STRING');
+
+  /// Use JavaScript numbers.
   static const FieldOptions_JSType JS_NUMBER =
       FieldOptions_JSType._(2, _omitEnumNames ? '' : 'JS_NUMBER');
 
@@ -238,7 +294,7 @@ class FieldOptions_JSType extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static FieldOptions_JSType? valueOf($core.int value) => _byValue[value];
 
-  const FieldOptions_JSType._($core.int v, $core.String n) : super(v, n);
+  const FieldOptions_JSType._(super.v, super.n);
 }
 
 /// If set to RETENTION_SOURCE, the option will be omitted from the binary.
@@ -267,8 +323,7 @@ class FieldOptions_OptionRetention extends $pb.ProtobufEnum {
   static FieldOptions_OptionRetention? valueOf($core.int value) =>
       _byValue[value];
 
-  const FieldOptions_OptionRetention._($core.int v, $core.String n)
-      : super(v, n);
+  const FieldOptions_OptionRetention._(super.v, super.n);
 }
 
 /// This indicates the types of entities that the field may apply to when used
@@ -326,8 +381,7 @@ class FieldOptions_OptionTargetType extends $pb.ProtobufEnum {
   static FieldOptions_OptionTargetType? valueOf($core.int value) =>
       _byValue[value];
 
-  const FieldOptions_OptionTargetType._($core.int v, $core.String n)
-      : super(v, n);
+  const FieldOptions_OptionTargetType._(super.v, super.n);
 }
 
 /// Is this method side-effect-free (or safe in HTTP parlance), or idempotent,
@@ -355,8 +409,7 @@ class MethodOptions_IdempotencyLevel extends $pb.ProtobufEnum {
   static MethodOptions_IdempotencyLevel? valueOf($core.int value) =>
       _byValue[value];
 
-  const MethodOptions_IdempotencyLevel._($core.int v, $core.String n)
-      : super(v, n);
+  const MethodOptions_IdempotencyLevel._(super.v, super.n);
 }
 
 class FeatureSet_FieldPresence extends $pb.ProtobufEnum {
@@ -382,7 +435,7 @@ class FeatureSet_FieldPresence extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static FeatureSet_FieldPresence? valueOf($core.int value) => _byValue[value];
 
-  const FeatureSet_FieldPresence._($core.int v, $core.String n) : super(v, n);
+  const FeatureSet_FieldPresence._(super.v, super.n);
 }
 
 class FeatureSet_EnumType extends $pb.ProtobufEnum {
@@ -403,7 +456,7 @@ class FeatureSet_EnumType extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static FeatureSet_EnumType? valueOf($core.int value) => _byValue[value];
 
-  const FeatureSet_EnumType._($core.int v, $core.String n) : super(v, n);
+  const FeatureSet_EnumType._(super.v, super.n);
 }
 
 class FeatureSet_RepeatedFieldEncoding extends $pb.ProtobufEnum {
@@ -427,8 +480,7 @@ class FeatureSet_RepeatedFieldEncoding extends $pb.ProtobufEnum {
   static FeatureSet_RepeatedFieldEncoding? valueOf($core.int value) =>
       _byValue[value];
 
-  const FeatureSet_RepeatedFieldEncoding._($core.int v, $core.String n)
-      : super(v, n);
+  const FeatureSet_RepeatedFieldEncoding._(super.v, super.n);
 }
 
 class FeatureSet_Utf8Validation extends $pb.ProtobufEnum {
@@ -451,7 +503,7 @@ class FeatureSet_Utf8Validation extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static FeatureSet_Utf8Validation? valueOf($core.int value) => _byValue[value];
 
-  const FeatureSet_Utf8Validation._($core.int v, $core.String n) : super(v, n);
+  const FeatureSet_Utf8Validation._(super.v, super.n);
 }
 
 class FeatureSet_MessageEncoding extends $pb.ProtobufEnum {
@@ -475,7 +527,7 @@ class FeatureSet_MessageEncoding extends $pb.ProtobufEnum {
   static FeatureSet_MessageEncoding? valueOf($core.int value) =>
       _byValue[value];
 
-  const FeatureSet_MessageEncoding._($core.int v, $core.String n) : super(v, n);
+  const FeatureSet_MessageEncoding._(super.v, super.n);
 }
 
 class FeatureSet_JsonFormat extends $pb.ProtobufEnum {
@@ -497,16 +549,21 @@ class FeatureSet_JsonFormat extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static FeatureSet_JsonFormat? valueOf($core.int value) => _byValue[value];
 
-  const FeatureSet_JsonFormat._($core.int v, $core.String n) : super(v, n);
+  const FeatureSet_JsonFormat._(super.v, super.n);
 }
 
 /// Represents the identified object's effect on the element in the original
 /// .proto file.
 class GeneratedCodeInfo_Annotation_Semantic extends $pb.ProtobufEnum {
+  /// There is no effect or the effect is indescribable.
   static const GeneratedCodeInfo_Annotation_Semantic NONE =
       GeneratedCodeInfo_Annotation_Semantic._(0, _omitEnumNames ? '' : 'NONE');
+
+  /// The element is set or otherwise mutated.
   static const GeneratedCodeInfo_Annotation_Semantic SET =
       GeneratedCodeInfo_Annotation_Semantic._(1, _omitEnumNames ? '' : 'SET');
+
+  /// An alias to the element is returned.
   static const GeneratedCodeInfo_Annotation_Semantic ALIAS =
       GeneratedCodeInfo_Annotation_Semantic._(2, _omitEnumNames ? '' : 'ALIAS');
 
@@ -522,8 +579,7 @@ class GeneratedCodeInfo_Annotation_Semantic extends $pb.ProtobufEnum {
   static GeneratedCodeInfo_Annotation_Semantic? valueOf($core.int value) =>
       _byValue[value];
 
-  const GeneratedCodeInfo_Annotation_Semantic._($core.int v, $core.String n)
-      : super(v, n);
+  const GeneratedCodeInfo_Annotation_Semantic._(super.v, super.n);
 }
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

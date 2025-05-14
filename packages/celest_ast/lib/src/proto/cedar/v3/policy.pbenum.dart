@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: cedar/v3/policy.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -31,7 +31,7 @@ class Effect extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static Effect? valueOf($core.int value) => _byValue[value];
 
-  const Effect._($core.int v, $core.String n) : super(v, n);
+  const Effect._(super.v, super.n);
 }
 
 class ConditionKind extends $pb.ProtobufEnum {
@@ -52,7 +52,7 @@ class ConditionKind extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static ConditionKind? valueOf($core.int value) => _byValue[value];
 
-  const ConditionKind._($core.int v, $core.String n) : super(v, n);
+  const ConditionKind._(super.v, super.n);
 }
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: cedar/v3/expr.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -37,7 +37,7 @@ class Variable extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static Variable? valueOf($core.int value) => _byValue[value];
 
-  const Variable._($core.int v, $core.String n) : super(v, n);
+  const Variable._(super.v, super.n);
 }
 
 class SlotId extends $pb.ProtobufEnum {
@@ -58,7 +58,7 @@ class SlotId extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static SlotId? valueOf($core.int value) => _byValue[value];
 
-  const SlotId._($core.int v, $core.String n) : super(v, n);
+  const SlotId._(super.v, super.n);
 }
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

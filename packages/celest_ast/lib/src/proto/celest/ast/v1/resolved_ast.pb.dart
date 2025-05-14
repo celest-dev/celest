@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/ast/v1/resolved_ast.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -13,12 +13,14 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../cedar/v3/policy.pb.dart' as $6;
+import '../../../cedar/v3/policy.pb.dart' as $4;
 import '../../../google/protobuf/struct.pb.dart' as $5;
-import 'features.pbenum.dart' as $8;
+import 'features.pbenum.dart' as $7;
 import 'resolved_ast.pbenum.dart';
-import 'sdks.pb.dart' as $7;
-import 'sdks.pbenum.dart' as $7;
+import 'sdks.pb.dart' as $6;
+import 'sdks.pbenum.dart' as $6;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'resolved_ast.pbenum.dart';
 
@@ -27,11 +29,11 @@ class ResolvedProject extends $pb.GeneratedMessage {
   factory ResolvedProject({
     $core.String? projectId,
     $core.String? environmentId,
-    $core.Map<$core.String, ResolvedApi>? apis,
+    $core.Iterable<$core.MapEntry<$core.String, ResolvedApi>>? apis,
     $core.Iterable<ResolvedVariable>? variables,
     $core.Iterable<ResolvedSecret>? secrets,
     ResolvedAuth? auth,
-    $core.Map<$core.String, ResolvedDatabase>? databases,
+    $core.Iterable<$core.MapEntry<$core.String, ResolvedDatabase>>? databases,
     SdkConfiguration? sdkConfig,
   }) {
     final $result = create();
@@ -42,7 +44,7 @@ class ResolvedProject extends $pb.GeneratedMessage {
       $result.environmentId = environmentId;
     }
     if (apis != null) {
-      $result.apis.addAll(apis);
+      $result.apis.addEntries(apis);
     }
     if (variables != null) {
       $result.variables.addAll(variables);
@@ -54,7 +56,7 @@ class ResolvedProject extends $pb.GeneratedMessage {
       $result.auth = auth;
     }
     if (databases != null) {
-      $result.databases.addAll(databases);
+      $result.databases.addEntries(databases);
     }
     if (sdkConfig != null) {
       $result.sdkConfig = sdkConfig;
@@ -135,7 +137,7 @@ class ResolvedProject extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasProjectId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearProjectId() => clearField(1);
+  void clearProjectId() => $_clearField(1);
 
   /// The ID of the environment this projects resolves to.
   @$pb.TagNumber(2)
@@ -148,51 +150,51 @@ class ResolvedProject extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasEnvironmentId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEnvironmentId() => clearField(2);
+  void clearEnvironmentId() => $_clearField(2);
 
   /// The project's API endpoints, keyed by their `name`.
   @$pb.TagNumber(3)
-  $core.Map<$core.String, ResolvedApi> get apis => $_getMap(2);
+  $pb.PbMap<$core.String, ResolvedApi> get apis => $_getMap(2);
 
   /// The project's environment variables.
   @$pb.TagNumber(4)
-  $core.List<ResolvedVariable> get variables => $_getList(3);
+  $pb.PbList<ResolvedVariable> get variables => $_getList(3);
 
   /// The project's secrets.
   @$pb.TagNumber(5)
-  $core.List<ResolvedSecret> get secrets => $_getList(4);
+  $pb.PbList<ResolvedSecret> get secrets => $_getList(4);
 
   /// The project's auth configuration.
   @$pb.TagNumber(6)
   ResolvedAuth get auth => $_getN(5);
   @$pb.TagNumber(6)
   set auth(ResolvedAuth v) {
-    setField(6, v);
+    $_setField(6, v);
   }
 
   @$pb.TagNumber(6)
   $core.bool hasAuth() => $_has(5);
   @$pb.TagNumber(6)
-  void clearAuth() => clearField(6);
+  void clearAuth() => $_clearField(6);
   @$pb.TagNumber(6)
   ResolvedAuth ensureAuth() => $_ensure(5);
 
   /// The project's databases.
   @$pb.TagNumber(7)
-  $core.Map<$core.String, ResolvedDatabase> get databases => $_getMap(6);
+  $pb.PbMap<$core.String, ResolvedDatabase> get databases => $_getMap(6);
 
   /// Configuration of the Dart, Flutter, and Celest SDKs used to deploy the project.
   @$pb.TagNumber(99)
   SdkConfiguration get sdkConfig => $_getN(7);
   @$pb.TagNumber(99)
   set sdkConfig(SdkConfiguration v) {
-    setField(99, v);
+    $_setField(99, v);
   }
 
   @$pb.TagNumber(99)
   $core.bool hasSdkConfig() => $_has(7);
   @$pb.TagNumber(99)
-  void clearSdkConfig() => clearField(99);
+  void clearSdkConfig() => $_clearField(99);
   @$pb.TagNumber(99)
   SdkConfiguration ensureSdkConfig() => $_ensure(7);
 }
@@ -201,15 +203,15 @@ class ResolvedProject extends $pb.GeneratedMessage {
 class ResolvedApi extends $pb.GeneratedMessage {
   factory ResolvedApi({
     $core.String? apiId,
-    $core.Map<$core.String, ResolvedFunction>? functions,
-    $6.PolicySet? policySet,
+    $core.Iterable<$core.MapEntry<$core.String, ResolvedFunction>>? functions,
+    $4.PolicySet? policySet,
   }) {
     final $result = create();
     if (apiId != null) {
       $result.apiId = apiId;
     }
     if (functions != null) {
-      $result.functions.addAll(functions);
+      $result.functions.addEntries(functions);
     }
     if (policySet != null) {
       $result.policySet = policySet;
@@ -236,8 +238,8 @@ class ResolvedApi extends $pb.GeneratedMessage {
         valueCreator: ResolvedFunction.create,
         valueDefaultOrMaker: ResolvedFunction.getDefault,
         packageName: const $pb.PackageName('celest.ast.v1'))
-    ..aOM<$6.PolicySet>(3, _omitFieldNames ? '' : 'policySet',
-        subBuilder: $6.PolicySet.create)
+    ..aOM<$4.PolicySet>(3, _omitFieldNames ? '' : 'policySet',
+        subBuilder: $4.PolicySet.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -276,28 +278,28 @@ class ResolvedApi extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasApiId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearApiId() => clearField(1);
+  void clearApiId() => $_clearField(1);
 
   /// The functions in the API.
   @$pb.TagNumber(2)
-  $core.Map<$core.String, ResolvedFunction> get functions => $_getMap(1);
+  $pb.PbMap<$core.String, ResolvedFunction> get functions => $_getMap(1);
 
   ///  The policy set declared by the API.
   ///
   ///  This policy set is applied to all functions within the API.
   @$pb.TagNumber(3)
-  $6.PolicySet get policySet => $_getN(2);
+  $4.PolicySet get policySet => $_getN(2);
   @$pb.TagNumber(3)
-  set policySet($6.PolicySet v) {
-    setField(3, v);
+  set policySet($4.PolicySet v) {
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasPolicySet() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPolicySet() => clearField(3);
+  void clearPolicySet() => $_clearField(3);
   @$pb.TagNumber(3)
-  $6.PolicySet ensurePolicySet() => $_ensure(2);
+  $4.PolicySet ensurePolicySet() => $_ensure(2);
 }
 
 /// The resolved AST of a Celest function.
@@ -309,7 +311,7 @@ class ResolvedFunction extends $pb.GeneratedMessage {
     ResolvedStreamConfig? streamConfig,
     $core.Iterable<$core.String>? variables,
     $core.Iterable<$core.String>? secrets,
-    $6.PolicySet? policySet,
+    $4.PolicySet? policySet,
   }) {
     final $result = create();
     if (functionId != null) {
@@ -355,8 +357,8 @@ class ResolvedFunction extends $pb.GeneratedMessage {
         subBuilder: ResolvedStreamConfig.create)
     ..pPS(5, _omitFieldNames ? '' : 'variables')
     ..pPS(6, _omitFieldNames ? '' : 'secrets')
-    ..aOM<$6.PolicySet>(7, _omitFieldNames ? '' : 'policySet',
-        subBuilder: $6.PolicySet.create)
+    ..aOM<$4.PolicySet>(7, _omitFieldNames ? '' : 'policySet',
+        subBuilder: $4.PolicySet.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -396,7 +398,7 @@ class ResolvedFunction extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasFunctionId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearFunctionId() => clearField(1);
+  void clearFunctionId() => $_clearField(1);
 
   /// The ID of the function's parent API.
   @$pb.TagNumber(2)
@@ -409,20 +411,20 @@ class ResolvedFunction extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasParentId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearParentId() => clearField(2);
+  void clearParentId() => $_clearField(2);
 
   /// The resolved HTTP configuration of the function.
   @$pb.TagNumber(3)
   ResolvedHttpConfig get httpConfig => $_getN(2);
   @$pb.TagNumber(3)
   set httpConfig(ResolvedHttpConfig v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasHttpConfig() => $_has(2);
   @$pb.TagNumber(3)
-  void clearHttpConfig() => clearField(3);
+  void clearHttpConfig() => $_clearField(3);
   @$pb.TagNumber(3)
   ResolvedHttpConfig ensureHttpConfig() => $_ensure(2);
 
@@ -431,38 +433,38 @@ class ResolvedFunction extends $pb.GeneratedMessage {
   ResolvedStreamConfig get streamConfig => $_getN(3);
   @$pb.TagNumber(4)
   set streamConfig(ResolvedStreamConfig v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasStreamConfig() => $_has(3);
   @$pb.TagNumber(4)
-  void clearStreamConfig() => clearField(4);
+  void clearStreamConfig() => $_clearField(4);
   @$pb.TagNumber(4)
   ResolvedStreamConfig ensureStreamConfig() => $_ensure(3);
 
   /// The variables required by the function.
   @$pb.TagNumber(5)
-  $core.List<$core.String> get variables => $_getList(4);
+  $pb.PbList<$core.String> get variables => $_getList(4);
 
   /// The secrets required by the function.
   @$pb.TagNumber(6)
-  $core.List<$core.String> get secrets => $_getList(5);
+  $pb.PbList<$core.String> get secrets => $_getList(5);
 
   /// The policy set declared by the function.
   @$pb.TagNumber(7)
-  $6.PolicySet get policySet => $_getN(6);
+  $4.PolicySet get policySet => $_getN(6);
   @$pb.TagNumber(7)
-  set policySet($6.PolicySet v) {
-    setField(7, v);
+  set policySet($4.PolicySet v) {
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasPolicySet() => $_has(6);
   @$pb.TagNumber(7)
-  void clearPolicySet() => clearField(7);
+  void clearPolicySet() => $_clearField(7);
   @$pb.TagNumber(7)
-  $6.PolicySet ensurePolicySet() => $_ensure(6);
+  $4.PolicySet ensurePolicySet() => $_ensure(6);
 }
 
 /// The HTTP configuration of a [ResolvedFunction][].
@@ -471,7 +473,7 @@ class ResolvedHttpConfig extends $pb.GeneratedMessage {
     $core.int? status,
     ResolvedHttpRoute? route,
     $core.Iterable<ResolvedHttpRoute>? additionalRoutes,
-    $core.Map<$core.String, $core.int>? statusMappings,
+    $core.Iterable<$core.MapEntry<$core.String, $core.int>>? statusMappings,
   }) {
     final $result = create();
     if (status != null) {
@@ -484,7 +486,7 @@ class ResolvedHttpConfig extends $pb.GeneratedMessage {
       $result.additionalRoutes.addAll(additionalRoutes);
     }
     if (statusMappings != null) {
-      $result.statusMappings.addAll(statusMappings);
+      $result.statusMappings.addEntries(statusMappings);
     }
     return $result;
   }
@@ -547,26 +549,26 @@ class ResolvedHttpConfig extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasStatus() => $_has(0);
   @$pb.TagNumber(1)
-  void clearStatus() => clearField(1);
+  void clearStatus() => $_clearField(1);
 
   /// The resolved route configuration of the function.
   @$pb.TagNumber(2)
   ResolvedHttpRoute get route => $_getN(1);
   @$pb.TagNumber(2)
   set route(ResolvedHttpRoute v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasRoute() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRoute() => clearField(2);
+  void clearRoute() => $_clearField(2);
   @$pb.TagNumber(2)
   ResolvedHttpRoute ensureRoute() => $_ensure(1);
 
   /// Additional route configurations of the function.
   @$pb.TagNumber(3)
-  $core.List<ResolvedHttpRoute> get additionalRoutes => $_getList(2);
+  $pb.PbList<ResolvedHttpRoute> get additionalRoutes => $_getList(2);
 
   ///  A mapping of Dart types to HTTP status codes.
   ///
@@ -578,7 +580,7 @@ class ResolvedHttpConfig extends $pb.GeneratedMessage {
   ///  - `dart:core#String`
   ///  - `package:celest/functions/greeting.dart#GreetingError`
   @$pb.TagNumber(4)
-  $core.Map<$core.String, $core.int> get statusMappings => $_getMap(3);
+  $pb.PbMap<$core.String, $core.int> get statusMappings => $_getMap(3);
 }
 
 /// A route to an HTTP endpoint.
@@ -646,7 +648,7 @@ class ResolvedHttpRoute extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasMethod() => $_has(0);
   @$pb.TagNumber(1)
-  void clearMethod() => clearField(1);
+  void clearMethod() => $_clearField(1);
 
   /// The path to the HTTP endpoint.
   @$pb.TagNumber(2)
@@ -659,7 +661,7 @@ class ResolvedHttpRoute extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasPath() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPath() => clearField(2);
+  void clearPath() => $_clearField(2);
 }
 
 /// The stream configuration of a [ResolvedFunction][].
@@ -722,13 +724,13 @@ class ResolvedStreamConfig extends $pb.GeneratedMessage {
   ResolvedStreamConfig_Type get type => $_getN(0);
   @$pb.TagNumber(1)
   set type(ResolvedStreamConfig_Type v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearType() => clearField(1);
+  void clearType() => $_clearField(1);
 }
 
 /// An environment variable and its value.
@@ -796,7 +798,7 @@ class ResolvedVariable extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// The value of the environment variable.
   @$pb.TagNumber(2)
@@ -809,7 +811,7 @@ class ResolvedVariable extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasValue() => $_has(1);
   @$pb.TagNumber(2)
-  void clearValue() => clearField(2);
+  void clearValue() => $_clearField(2);
 }
 
 /// A secret value.
@@ -877,7 +879,7 @@ class ResolvedSecret extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// Input only. The value of the secret.
   @$pb.TagNumber(2)
@@ -890,7 +892,7 @@ class ResolvedSecret extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasValue() => $_has(1);
   @$pb.TagNumber(2)
-  void clearValue() => clearField(2);
+  void clearValue() => $_clearField(2);
 }
 
 /// The resolved AST of a Celest project's auth configuration.
@@ -953,11 +955,11 @@ class ResolvedAuth extends $pb.GeneratedMessage {
 
   /// The auth providers of the project.
   @$pb.TagNumber(1)
-  $core.List<ResolvedAuthProvider> get providers => $_getList(0);
+  $pb.PbList<ResolvedAuthProvider> get providers => $_getList(0);
 
   /// The external auth providers of the project.
   @$pb.TagNumber(2)
-  $core.List<ResolvedExternalAuthProvider> get externalProviders =>
+  $pb.PbList<ResolvedExternalAuthProvider> get externalProviders =>
       $_getList(1);
 }
 
@@ -1072,7 +1074,7 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
 
   ResolvedAuthProvider_Config whichConfig() =>
       _ResolvedAuthProvider_ConfigByTag[$_whichOneof(0)]!;
-  void clearConfig() => clearField($_whichOneof(0));
+  void clearConfig() => $_clearField($_whichOneof(0));
 
   /// The ID of the auth provider.
   @$pb.TagNumber(1)
@@ -1085,33 +1087,33 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasAuthProviderId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearAuthProviderId() => clearField(1);
+  void clearAuthProviderId() => $_clearField(1);
 
   /// The type of the auth provider.
   @$pb.TagNumber(2)
   ResolvedAuthProvider_Type get type => $_getN(1);
   @$pb.TagNumber(2)
   set type(ResolvedAuthProvider_Type v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasType() => $_has(1);
   @$pb.TagNumber(2)
-  void clearType() => clearField(2);
+  void clearType() => $_clearField(2);
 
   /// The configuration of an email OTP provider.
   @$pb.TagNumber(3)
   ResolvedEmailOtpProviderConfig get emailOtp => $_getN(2);
   @$pb.TagNumber(3)
   set emailOtp(ResolvedEmailOtpProviderConfig v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasEmailOtp() => $_has(2);
   @$pb.TagNumber(3)
-  void clearEmailOtp() => clearField(3);
+  void clearEmailOtp() => $_clearField(3);
   @$pb.TagNumber(3)
   ResolvedEmailOtpProviderConfig ensureEmailOtp() => $_ensure(2);
 
@@ -1120,13 +1122,13 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
   ResolvedSmsOtpProviderConfig get smsOtp => $_getN(3);
   @$pb.TagNumber(4)
   set smsOtp(ResolvedSmsOtpProviderConfig v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasSmsOtp() => $_has(3);
   @$pb.TagNumber(4)
-  void clearSmsOtp() => clearField(4);
+  void clearSmsOtp() => $_clearField(4);
   @$pb.TagNumber(4)
   ResolvedSmsOtpProviderConfig ensureSmsOtp() => $_ensure(3);
 
@@ -1135,13 +1137,13 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
   ResolvedGoogleOAuthProviderConfig get google => $_getN(4);
   @$pb.TagNumber(5)
   set google(ResolvedGoogleOAuthProviderConfig v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasGoogle() => $_has(4);
   @$pb.TagNumber(5)
-  void clearGoogle() => clearField(5);
+  void clearGoogle() => $_clearField(5);
   @$pb.TagNumber(5)
   ResolvedGoogleOAuthProviderConfig ensureGoogle() => $_ensure(4);
 
@@ -1150,13 +1152,13 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
   ResolvedGitHubOAuthProviderConfig get github => $_getN(5);
   @$pb.TagNumber(6)
   set github(ResolvedGitHubOAuthProviderConfig v) {
-    setField(6, v);
+    $_setField(6, v);
   }
 
   @$pb.TagNumber(6)
   $core.bool hasGithub() => $_has(5);
   @$pb.TagNumber(6)
-  void clearGithub() => clearField(6);
+  void clearGithub() => $_clearField(6);
   @$pb.TagNumber(6)
   ResolvedGitHubOAuthProviderConfig ensureGithub() => $_ensure(5);
 
@@ -1165,13 +1167,13 @@ class ResolvedAuthProvider extends $pb.GeneratedMessage {
   ResolvedAppleOAuthProviderConfig get apple => $_getN(6);
   @$pb.TagNumber(7)
   set apple(ResolvedAppleOAuthProviderConfig v) {
-    setField(7, v);
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasApple() => $_has(6);
   @$pb.TagNumber(7)
-  void clearApple() => clearField(7);
+  void clearApple() => $_clearField(7);
   @$pb.TagNumber(7)
   ResolvedAppleOAuthProviderConfig ensureApple() => $_ensure(6);
 }
@@ -1332,13 +1334,13 @@ class ResolvedGoogleOAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedSecret get clientId => $_getN(0);
   @$pb.TagNumber(1)
   set clientId(ResolvedSecret v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasClientId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearClientId() => clearField(1);
+  void clearClientId() => $_clearField(1);
   @$pb.TagNumber(1)
   ResolvedSecret ensureClientId() => $_ensure(0);
 
@@ -1347,13 +1349,13 @@ class ResolvedGoogleOAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedSecret get clientSecret => $_getN(1);
   @$pb.TagNumber(2)
   set clientSecret(ResolvedSecret v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasClientSecret() => $_has(1);
   @$pb.TagNumber(2)
-  void clearClientSecret() => clearField(2);
+  void clearClientSecret() => $_clearField(2);
   @$pb.TagNumber(2)
   ResolvedSecret ensureClientSecret() => $_ensure(1);
 }
@@ -1424,13 +1426,13 @@ class ResolvedGitHubOAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedSecret get clientId => $_getN(0);
   @$pb.TagNumber(1)
   set clientId(ResolvedSecret v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasClientId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearClientId() => clearField(1);
+  void clearClientId() => $_clearField(1);
   @$pb.TagNumber(1)
   ResolvedSecret ensureClientId() => $_ensure(0);
 
@@ -1439,13 +1441,13 @@ class ResolvedGitHubOAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedSecret get clientSecret => $_getN(1);
   @$pb.TagNumber(2)
   set clientSecret(ResolvedSecret v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasClientSecret() => $_has(1);
   @$pb.TagNumber(2)
-  void clearClientSecret() => clearField(2);
+  void clearClientSecret() => $_clearField(2);
   @$pb.TagNumber(2)
   ResolvedSecret ensureClientSecret() => $_ensure(1);
 }
@@ -1528,13 +1530,13 @@ class ResolvedAppleOAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedSecret get clientId => $_getN(0);
   @$pb.TagNumber(1)
   set clientId(ResolvedSecret v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasClientId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearClientId() => clearField(1);
+  void clearClientId() => $_clearField(1);
   @$pb.TagNumber(1)
   ResolvedSecret ensureClientId() => $_ensure(0);
 
@@ -1543,13 +1545,13 @@ class ResolvedAppleOAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedSecret get teamId => $_getN(1);
   @$pb.TagNumber(2)
   set teamId(ResolvedSecret v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasTeamId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearTeamId() => clearField(2);
+  void clearTeamId() => $_clearField(2);
   @$pb.TagNumber(2)
   ResolvedSecret ensureTeamId() => $_ensure(1);
 
@@ -1558,13 +1560,13 @@ class ResolvedAppleOAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedSecret get keyId => $_getN(2);
   @$pb.TagNumber(3)
   set keyId(ResolvedSecret v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasKeyId() => $_has(2);
   @$pb.TagNumber(3)
-  void clearKeyId() => clearField(3);
+  void clearKeyId() => $_clearField(3);
   @$pb.TagNumber(3)
   ResolvedSecret ensureKeyId() => $_ensure(2);
 
@@ -1573,13 +1575,13 @@ class ResolvedAppleOAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedSecret get privateKey => $_getN(3);
   @$pb.TagNumber(4)
   set privateKey(ResolvedSecret v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasPrivateKey() => $_has(3);
   @$pb.TagNumber(4)
-  void clearPrivateKey() => clearField(4);
+  void clearPrivateKey() => $_clearField(4);
   @$pb.TagNumber(4)
   ResolvedSecret ensurePrivateKey() => $_ensure(3);
 }
@@ -1672,7 +1674,7 @@ class ResolvedExternalAuthProvider extends $pb.GeneratedMessage {
 
   ResolvedExternalAuthProvider_Config whichConfig() =>
       _ResolvedExternalAuthProvider_ConfigByTag[$_whichOneof(0)]!;
-  void clearConfig() => clearField($_whichOneof(0));
+  void clearConfig() => $_clearField($_whichOneof(0));
 
   /// The ID of the external auth provider.
   @$pb.TagNumber(1)
@@ -1685,33 +1687,33 @@ class ResolvedExternalAuthProvider extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasAuthProviderId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearAuthProviderId() => clearField(1);
+  void clearAuthProviderId() => $_clearField(1);
 
   /// The type of the external auth provider.
   @$pb.TagNumber(2)
   ResolvedExternalAuthProvider_Type get type => $_getN(1);
   @$pb.TagNumber(2)
   set type(ResolvedExternalAuthProvider_Type v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasType() => $_has(1);
   @$pb.TagNumber(2)
-  void clearType() => clearField(2);
+  void clearType() => $_clearField(2);
 
   /// The configuration of a Firebase auth provider.
   @$pb.TagNumber(3)
   ResolvedFirebaseExternalAuthProviderConfig get firebase => $_getN(2);
   @$pb.TagNumber(3)
   set firebase(ResolvedFirebaseExternalAuthProviderConfig v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasFirebase() => $_has(2);
   @$pb.TagNumber(3)
-  void clearFirebase() => clearField(3);
+  void clearFirebase() => $_clearField(3);
   @$pb.TagNumber(3)
   ResolvedFirebaseExternalAuthProviderConfig ensureFirebase() => $_ensure(2);
 
@@ -1720,13 +1722,13 @@ class ResolvedExternalAuthProvider extends $pb.GeneratedMessage {
   ResolvedSupabaseExternalAuthProviderConfig get supabase => $_getN(3);
   @$pb.TagNumber(4)
   set supabase(ResolvedSupabaseExternalAuthProviderConfig v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasSupabase() => $_has(3);
   @$pb.TagNumber(4)
-  void clearSupabase() => clearField(4);
+  void clearSupabase() => $_clearField(4);
   @$pb.TagNumber(4)
   ResolvedSupabaseExternalAuthProviderConfig ensureSupabase() => $_ensure(3);
 }
@@ -1793,13 +1795,13 @@ class ResolvedFirebaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedVariable get projectId => $_getN(0);
   @$pb.TagNumber(1)
   set projectId(ResolvedVariable v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasProjectId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearProjectId() => clearField(1);
+  void clearProjectId() => $_clearField(1);
   @$pb.TagNumber(1)
   ResolvedVariable ensureProjectId() => $_ensure(0);
 }
@@ -1872,13 +1874,13 @@ class ResolvedSupabaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedVariable get projectUrl => $_getN(0);
   @$pb.TagNumber(1)
   set projectUrl(ResolvedVariable v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasProjectUrl() => $_has(0);
   @$pb.TagNumber(1)
-  void clearProjectUrl() => clearField(1);
+  void clearProjectUrl() => $_clearField(1);
   @$pb.TagNumber(1)
   ResolvedVariable ensureProjectUrl() => $_ensure(0);
 
@@ -1887,13 +1889,13 @@ class ResolvedSupabaseExternalAuthProviderConfig extends $pb.GeneratedMessage {
   ResolvedSecret get jwtSecret => $_getN(1);
   @$pb.TagNumber(2)
   set jwtSecret(ResolvedSecret v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasJwtSecret() => $_has(1);
   @$pb.TagNumber(2)
-  void clearJwtSecret() => clearField(2);
+  void clearJwtSecret() => $_clearField(2);
   @$pb.TagNumber(2)
   ResolvedSecret ensureJwtSecret() => $_ensure(1);
 }
@@ -1978,7 +1980,7 @@ class ResolvedDatabase extends $pb.GeneratedMessage {
 
   ResolvedDatabase_Config whichConfig() =>
       _ResolvedDatabase_ConfigByTag[$_whichOneof(0)]!;
-  void clearConfig() => clearField($_whichOneof(0));
+  void clearConfig() => $_clearField($_whichOneof(0));
 
   /// The unique identifier of the database within a project.
   @$pb.TagNumber(1)
@@ -1991,33 +1993,33 @@ class ResolvedDatabase extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasDatabaseId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearDatabaseId() => clearField(1);
+  void clearDatabaseId() => $_clearField(1);
 
   /// The type of the database.
   @$pb.TagNumber(2)
   ResolvedDatabase_Type get type => $_getN(1);
   @$pb.TagNumber(2)
   set type(ResolvedDatabase_Type v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasType() => $_has(1);
   @$pb.TagNumber(2)
-  void clearType() => clearField(2);
+  void clearType() => $_clearField(2);
 
   /// The schema of the database.
   @$pb.TagNumber(3)
   ResolvedDatabaseSchema get schema => $_getN(2);
   @$pb.TagNumber(3)
   set schema(ResolvedDatabaseSchema v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasSchema() => $_has(2);
   @$pb.TagNumber(3)
-  void clearSchema() => clearField(3);
+  void clearSchema() => $_clearField(3);
   @$pb.TagNumber(3)
   ResolvedDatabaseSchema ensureSchema() => $_ensure(2);
 
@@ -2026,13 +2028,13 @@ class ResolvedDatabase extends $pb.GeneratedMessage {
   ResolvedCelestDatabaseConfig get celest => $_getN(3);
   @$pb.TagNumber(4)
   set celest(ResolvedCelestDatabaseConfig v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasCelest() => $_has(3);
   @$pb.TagNumber(4)
-  void clearCelest() => clearField(4);
+  void clearCelest() => $_clearField(4);
   @$pb.TagNumber(4)
   ResolvedCelestDatabaseConfig ensureCelest() => $_ensure(3);
 }
@@ -2102,13 +2104,13 @@ class ResolvedCelestDatabaseConfig extends $pb.GeneratedMessage {
   ResolvedVariable get hostname => $_getN(0);
   @$pb.TagNumber(1)
   set hostname(ResolvedVariable v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasHostname() => $_has(0);
   @$pb.TagNumber(1)
-  void clearHostname() => clearField(1);
+  void clearHostname() => $_clearField(1);
   @$pb.TagNumber(1)
   ResolvedVariable ensureHostname() => $_ensure(0);
 
@@ -2117,13 +2119,13 @@ class ResolvedCelestDatabaseConfig extends $pb.GeneratedMessage {
   ResolvedSecret get token => $_getN(1);
   @$pb.TagNumber(2)
   set token(ResolvedSecret v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasToken() => $_has(1);
   @$pb.TagNumber(2)
-  void clearToken() => clearField(2);
+  void clearToken() => $_clearField(2);
   @$pb.TagNumber(2)
   ResolvedSecret ensureToken() => $_ensure(1);
 }
@@ -2205,7 +2207,7 @@ class ResolvedDatabaseSchema extends $pb.GeneratedMessage {
 
   ResolvedDatabaseSchema_Schema whichSchema() =>
       _ResolvedDatabaseSchema_SchemaByTag[$_whichOneof(0)]!;
-  void clearSchema() => clearField($_whichOneof(0));
+  void clearSchema() => $_clearField($_whichOneof(0));
 
   /// The unique identifier of the database schema within a project.
   @$pb.TagNumber(1)
@@ -2218,33 +2220,33 @@ class ResolvedDatabaseSchema extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasDatabaseSchemaId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearDatabaseSchemaId() => clearField(1);
+  void clearDatabaseSchemaId() => $_clearField(1);
 
   /// The type of the database schema.
   @$pb.TagNumber(2)
   ResolvedDatabaseSchema_Type get type => $_getN(1);
   @$pb.TagNumber(2)
   set type(ResolvedDatabaseSchema_Type v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasType() => $_has(1);
   @$pb.TagNumber(2)
-  void clearType() => clearField(2);
+  void clearType() => $_clearField(2);
 
   /// The Drift database schema.
   @$pb.TagNumber(3)
   ResolvedDriftDatabaseSchema get drift => $_getN(2);
   @$pb.TagNumber(3)
   set drift(ResolvedDriftDatabaseSchema v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasDrift() => $_has(2);
   @$pb.TagNumber(3)
-  void clearDrift() => clearField(3);
+  void clearDrift() => $_clearField(3);
   @$pb.TagNumber(3)
   ResolvedDriftDatabaseSchema ensureDrift() => $_ensure(2);
 }
@@ -2319,20 +2321,20 @@ class ResolvedDriftDatabaseSchema extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasVersion() => $_has(0);
   @$pb.TagNumber(1)
-  void clearVersion() => clearField(1);
+  void clearVersion() => $_clearField(1);
 
   /// Required. The Drift schema JSON.
   @$pb.TagNumber(2)
   $5.Struct get schemaJson => $_getN(1);
   @$pb.TagNumber(2)
   set schemaJson($5.Struct v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasSchemaJson() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSchemaJson() => clearField(2);
+  void clearSchemaJson() => $_clearField(2);
   @$pb.TagNumber(2)
   $5.Struct ensureSchemaJson() => $_ensure(1);
 }
@@ -2340,11 +2342,11 @@ class ResolvedDriftDatabaseSchema extends $pb.GeneratedMessage {
 /// Configuration of the SDKs used to deploy the project.
 class SdkConfiguration extends $pb.GeneratedMessage {
   factory SdkConfiguration({
-    $7.Version? celest,
-    $7.Sdk? dart,
-    $7.Sdk? flutter,
-    $7.SdkType? targetSdk,
-    $core.Iterable<$8.FeatureFlag>? featureFlags,
+    $6.Version? celest,
+    $6.Sdk? dart,
+    $6.Sdk? flutter,
+    $6.SdkType? targetSdk,
+    $core.Iterable<$7.FeatureFlag>? featureFlags,
   }) {
     final $result = create();
     if (celest != null) {
@@ -2376,20 +2378,20 @@ class SdkConfiguration extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'SdkConfiguration',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'celest.ast.v1'),
       createEmptyInstance: create)
-    ..aOM<$7.Version>(1, _omitFieldNames ? '' : 'celest',
-        subBuilder: $7.Version.create)
-    ..aOM<$7.Sdk>(2, _omitFieldNames ? '' : 'dart', subBuilder: $7.Sdk.create)
-    ..aOM<$7.Sdk>(3, _omitFieldNames ? '' : 'flutter',
-        subBuilder: $7.Sdk.create)
-    ..e<$7.SdkType>(4, _omitFieldNames ? '' : 'targetSdk', $pb.PbFieldType.OE,
-        defaultOrMaker: $7.SdkType.SDK_TYPE_UNSPECIFIED,
-        valueOf: $7.SdkType.valueOf,
-        enumValues: $7.SdkType.values)
-    ..pc<$8.FeatureFlag>(
+    ..aOM<$6.Version>(1, _omitFieldNames ? '' : 'celest',
+        subBuilder: $6.Version.create)
+    ..aOM<$6.Sdk>(2, _omitFieldNames ? '' : 'dart', subBuilder: $6.Sdk.create)
+    ..aOM<$6.Sdk>(3, _omitFieldNames ? '' : 'flutter',
+        subBuilder: $6.Sdk.create)
+    ..e<$6.SdkType>(4, _omitFieldNames ? '' : 'targetSdk', $pb.PbFieldType.OE,
+        defaultOrMaker: $6.SdkType.SDK_TYPE_UNSPECIFIED,
+        valueOf: $6.SdkType.valueOf,
+        enumValues: $6.SdkType.values)
+    ..pc<$7.FeatureFlag>(
         5, _omitFieldNames ? '' : 'featureFlags', $pb.PbFieldType.KE,
-        valueOf: $8.FeatureFlag.valueOf,
-        enumValues: $8.FeatureFlag.values,
-        defaultEnumValue: $8.FeatureFlag.FEATURE_FLAG_UNSPECIFIED)
+        valueOf: $7.FeatureFlag.valueOf,
+        enumValues: $7.FeatureFlag.values,
+        defaultEnumValue: $7.FeatureFlag.FEATURE_FLAG_UNSPECIFIED)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -2417,65 +2419,65 @@ class SdkConfiguration extends $pb.GeneratedMessage {
 
   /// The Celest version used to deploy the project.
   @$pb.TagNumber(1)
-  $7.Version get celest => $_getN(0);
+  $6.Version get celest => $_getN(0);
   @$pb.TagNumber(1)
-  set celest($7.Version v) {
-    setField(1, v);
+  set celest($6.Version v) {
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasCelest() => $_has(0);
   @$pb.TagNumber(1)
-  void clearCelest() => clearField(1);
+  void clearCelest() => $_clearField(1);
   @$pb.TagNumber(1)
-  $7.Version ensureCelest() => $_ensure(0);
+  $6.Version ensureCelest() => $_ensure(0);
 
   /// The Dart SDK used to deploy the project.
   @$pb.TagNumber(2)
-  $7.Sdk get dart => $_getN(1);
+  $6.Sdk get dart => $_getN(1);
   @$pb.TagNumber(2)
-  set dart($7.Sdk v) {
-    setField(2, v);
+  set dart($6.Sdk v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasDart() => $_has(1);
   @$pb.TagNumber(2)
-  void clearDart() => clearField(2);
+  void clearDart() => $_clearField(2);
   @$pb.TagNumber(2)
-  $7.Sdk ensureDart() => $_ensure(1);
+  $6.Sdk ensureDart() => $_ensure(1);
 
   /// The Flutter SDK used to deploy the project, if any.
   @$pb.TagNumber(3)
-  $7.Sdk get flutter => $_getN(2);
+  $6.Sdk get flutter => $_getN(2);
   @$pb.TagNumber(3)
-  set flutter($7.Sdk v) {
-    setField(3, v);
+  set flutter($6.Sdk v) {
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasFlutter() => $_has(2);
   @$pb.TagNumber(3)
-  void clearFlutter() => clearField(3);
+  void clearFlutter() => $_clearField(3);
   @$pb.TagNumber(3)
-  $7.Sdk ensureFlutter() => $_ensure(2);
+  $6.Sdk ensureFlutter() => $_ensure(2);
 
   /// The target SDK for deployment.
   @$pb.TagNumber(4)
-  $7.SdkType get targetSdk => $_getN(3);
+  $6.SdkType get targetSdk => $_getN(3);
   @$pb.TagNumber(4)
-  set targetSdk($7.SdkType v) {
-    setField(4, v);
+  set targetSdk($6.SdkType v) {
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasTargetSdk() => $_has(3);
   @$pb.TagNumber(4)
-  void clearTargetSdk() => clearField(4);
+  void clearTargetSdk() => $_clearField(4);
 
   /// The feature flags enabled by the project.
   @$pb.TagNumber(5)
-  $core.List<$8.FeatureFlag> get featureFlags => $_getList(4);
+  $pb.PbList<$7.FeatureFlag> get featureFlags => $_getList(4);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
