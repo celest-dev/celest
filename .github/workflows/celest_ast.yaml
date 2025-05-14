@@ -34,3 +34,6 @@ jobs:
       - name: Format
         working-directory: packages/celest_ast
         run: dart format --set-exit-if-changed .
+      - name: Test
+        working-directory: packages/celest_ast
+        run: dart test

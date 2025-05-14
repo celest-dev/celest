@@ -11,12 +11,12 @@ resolution: workspace
 dependencies:
   built_collection: ^5.1.1
   built_value: ^8.9.2
-  cedar: ^0.2.2
+  cedar: ^0.2.6
   code_builder: ^4.10.0
   collection: ^1.18.0
   fixnum: ^1.1.0
   path: ^1.9.0
-  protobuf: ^3.1.0
+  protobuf: ^4.0.0
   pub_semver: ^2.1.4
   recase: ^4.1.0
   source_span: ^1.10.0

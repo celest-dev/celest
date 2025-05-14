@@ -188,8 +188,7 @@ void main() {
               'variables': ['HELLO_WORLD'],
               'secrets': ['HELLO_WORLD_SECRET'],
               'httpConfig': {
-                'method': 'PATCH',
-                'route': {'path': '/greeting/hello-world'},
+                'route': {'method': 'PATCH', 'path': '/greeting/hello-world'},
                 'status': 204,
                 'statusMappings': {
                   'package:celest_core/celest_core.dart#NotFoundException': 404,

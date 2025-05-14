@@ -5,7 +5,7 @@ homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/packages/celest_auth
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.7.0
   flutter: ">=3.24.0"
 resolution: workspace
 
@@ -13,11 +13,11 @@ dependencies:
   async: ^2.11.0
   built_collection: ^5.1.1
   built_value: ^8.9.1
-  cedar: ^0.2.2
+  cedar: ^0.2.6
   celest_cloud: ^0.1.0
   celest_core: ^1.0.0
   chunked_stream: ^1.4.2
-  corks_cedar: ^0.2.1
+  corks_cedar: ^0.2.4
   ffi: ^2.1.2
   http: ^1.2.1
   logging: ^1.2.0
