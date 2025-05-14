@@ -4,8 +4,7 @@ managed:
 inputs:
   - directory: proto
 plugins:
-  # TODO: Bump when issues are fixed in generator
-  - remote: buf.build/protocolbuffers/dart:v21.1.2
+  - remote: buf.build/protocolbuffers/dart:v22.1.0
     out: packages/celest_cloud/lib/src/proto
     include_imports: true
     include_wkt: true

@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/longrunning/operations.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -13,9 +13,11 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../protobuf/any.pb.dart' as $14;
+import '../protobuf/any.pb.dart' as $13;
 import '../protobuf/duration.pb.dart' as $8;
-import '../rpc/status.pb.dart' as $16;
+import '../rpc/status.pb.dart' as $18;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 enum Operation_Result { error, response, notSet }
 
@@ -24,10 +26,10 @@ enum Operation_Result { error, response, notSet }
 class Operation extends $pb.GeneratedMessage {
   factory Operation({
     $core.String? name,
-    $14.Any? metadata,
+    $13.Any? metadata,
     $core.bool? done,
-    $16.Status? error,
-    $14.Any? response,
+    $18.Status? error,
+    $13.Any? response,
   }) {
     final $result = create();
     if (name != null) {
@@ -67,13 +69,13 @@ class Operation extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..oo(0, [4, 5])
     ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..aOM<$14.Any>(2, _omitFieldNames ? '' : 'metadata',
-        subBuilder: $14.Any.create)
+    ..aOM<$13.Any>(2, _omitFieldNames ? '' : 'metadata',
+        subBuilder: $13.Any.create)
     ..aOB(3, _omitFieldNames ? '' : 'done')
-    ..aOM<$16.Status>(4, _omitFieldNames ? '' : 'error',
-        subBuilder: $16.Status.create)
-    ..aOM<$14.Any>(5, _omitFieldNames ? '' : 'response',
-        subBuilder: $14.Any.create)
+    ..aOM<$18.Status>(4, _omitFieldNames ? '' : 'error',
+        subBuilder: $18.Status.create)
+    ..aOM<$13.Any>(5, _omitFieldNames ? '' : 'response',
+        subBuilder: $13.Any.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -98,7 +100,7 @@ class Operation extends $pb.GeneratedMessage {
   static Operation? _defaultInstance;
 
   Operation_Result whichResult() => _Operation_ResultByTag[$_whichOneof(0)]!;
-  void clearResult() => clearField($_whichOneof(0));
+  void clearResult() => $_clearField($_whichOneof(0));
 
   /// The server-assigned name, which is only unique within the same service that
   /// originally returns it. If you use the default HTTP mapping, the
@@ -113,25 +115,25 @@ class Operation extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// Service-specific metadata associated with the operation.  It typically
   /// contains progress information and common metadata such as create time.
   /// Some services might not provide such metadata.  Any method that returns a
   /// long-running operation should document the metadata type, if any.
   @$pb.TagNumber(2)
-  $14.Any get metadata => $_getN(1);
+  $13.Any get metadata => $_getN(1);
   @$pb.TagNumber(2)
-  set metadata($14.Any v) {
-    setField(2, v);
+  set metadata($13.Any v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasMetadata() => $_has(1);
   @$pb.TagNumber(2)
-  void clearMetadata() => clearField(2);
+  void clearMetadata() => $_clearField(2);
   @$pb.TagNumber(2)
-  $14.Any ensureMetadata() => $_ensure(1);
+  $13.Any ensureMetadata() => $_ensure(1);
 
   /// If the value is `false`, it means the operation is still in progress.
   /// If `true`, the operation is completed, and either `error` or `response` is
@@ -146,22 +148,22 @@ class Operation extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasDone() => $_has(2);
   @$pb.TagNumber(3)
-  void clearDone() => clearField(3);
+  void clearDone() => $_clearField(3);
 
   /// The error result of the operation in case of failure or cancellation.
   @$pb.TagNumber(4)
-  $16.Status get error => $_getN(3);
+  $18.Status get error => $_getN(3);
   @$pb.TagNumber(4)
-  set error($16.Status v) {
-    setField(4, v);
+  set error($18.Status v) {
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasError() => $_has(3);
   @$pb.TagNumber(4)
-  void clearError() => clearField(4);
+  void clearError() => $_clearField(4);
   @$pb.TagNumber(4)
-  $16.Status ensureError() => $_ensure(3);
+  $18.Status ensureError() => $_ensure(3);
 
   /// The normal, successful response of the operation.  If the original
   /// method returns no data on success, such as `Delete`, the response is
@@ -172,18 +174,18 @@ class Operation extends $pb.GeneratedMessage {
   /// is `TakeSnapshot()`, the inferred response type is
   /// `TakeSnapshotResponse`.
   @$pb.TagNumber(5)
-  $14.Any get response => $_getN(4);
+  $13.Any get response => $_getN(4);
   @$pb.TagNumber(5)
-  set response($14.Any v) {
-    setField(5, v);
+  set response($13.Any v) {
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasResponse() => $_has(4);
   @$pb.TagNumber(5)
-  void clearResponse() => clearField(5);
+  void clearResponse() => $_clearField(5);
   @$pb.TagNumber(5)
-  $14.Any ensureResponse() => $_ensure(4);
+  $13.Any ensureResponse() => $_ensure(4);
 }
 
 /// The request message for
@@ -248,7 +250,7 @@ class GetOperationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 }
 
 /// The request message for
@@ -330,7 +332,7 @@ class ListOperationsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasFilter() => $_has(0);
   @$pb.TagNumber(1)
-  void clearFilter() => clearField(1);
+  void clearFilter() => $_clearField(1);
 
   /// The standard list page size.
   @$pb.TagNumber(2)
@@ -343,7 +345,7 @@ class ListOperationsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasPageSize() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPageSize() => clearField(2);
+  void clearPageSize() => $_clearField(2);
 
   /// The standard list page token.
   @$pb.TagNumber(3)
@@ -356,7 +358,7 @@ class ListOperationsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasPageToken() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPageToken() => clearField(3);
+  void clearPageToken() => $_clearField(3);
 
   /// The name of the operation's parent resource.
   @$pb.TagNumber(4)
@@ -369,7 +371,7 @@ class ListOperationsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasName() => $_has(3);
   @$pb.TagNumber(4)
-  void clearName() => clearField(4);
+  void clearName() => $_clearField(4);
 }
 
 /// The response message for
@@ -433,7 +435,7 @@ class ListOperationsResponse extends $pb.GeneratedMessage {
 
   /// A list of operations that matches the specified filter in the request.
   @$pb.TagNumber(1)
-  $core.List<Operation> get operations => $_getList(0);
+  $pb.PbList<Operation> get operations => $_getList(0);
 
   /// The standard List next-page token.
   @$pb.TagNumber(2)
@@ -446,7 +448,7 @@ class ListOperationsResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasNextPageToken() => $_has(1);
   @$pb.TagNumber(2)
-  void clearNextPageToken() => clearField(2);
+  void clearNextPageToken() => $_clearField(2);
 }
 
 /// The request message for
@@ -513,7 +515,7 @@ class CancelOperationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 }
 
 /// The request message for
@@ -580,7 +582,7 @@ class DeleteOperationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 }
 
 /// The request message for
@@ -652,7 +654,7 @@ class WaitOperationRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// The maximum duration to wait before timing out. If left blank, the wait
   /// will be at most the time permitted by the underlying HTTP/RPC protocol.
@@ -661,13 +663,13 @@ class WaitOperationRequest extends $pb.GeneratedMessage {
   $8.Duration get timeout => $_getN(1);
   @$pb.TagNumber(2)
   set timeout($8.Duration v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasTimeout() => $_has(1);
   @$pb.TagNumber(2)
-  void clearTimeout() => clearField(2);
+  void clearTimeout() => $_clearField(2);
   @$pb.TagNumber(2)
   $8.Duration ensureTimeout() => $_ensure(1);
 }
@@ -754,7 +756,7 @@ class OperationInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasResponseType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearResponseType() => clearField(1);
+  void clearResponseType() => $_clearField(1);
 
   ///  Required. The message name of the metadata type for this long-running
   ///  operation.
@@ -773,7 +775,7 @@ class OperationInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasMetadataType() => $_has(1);
   @$pb.TagNumber(2)
-  void clearMetadataType() => clearField(2);
+  void clearMetadataType() => $_clearField(2);
 }
 
 class Operations {

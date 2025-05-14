@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/protobuf/field_mask.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -13,6 +13,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 import 'package:protobuf/src/protobuf/mixins/well_known.dart' as $mixin;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 ///  `FieldMask` represents a set of symbolic field paths, for example:
 ///
@@ -264,7 +266,7 @@ class FieldMask extends $pb.GeneratedMessage with $mixin.FieldMaskMixin {
 
   /// The set of field mask paths.
   @$pb.TagNumber(1)
-  $core.List<$core.String> get paths => $_getList(0);
+  $pb.PbList<$core.String> get paths => $_getList(0);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

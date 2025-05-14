@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/cloud/v1alpha1/common.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -19,11 +19,18 @@ import 'package:protobuf/protobuf.dart' as $pb;
 ///  services used are within the boundaries of that region, and all data is
 ///  persisted within that region.
 class Region extends $pb.ProtobufEnum {
+  /// The region is not specified.
   static const Region REGION_UNSPECIFIED =
       Region._(0, _omitEnumNames ? '' : 'REGION_UNSPECIFIED');
+
+  /// North America
   static const Region NORTH_AMERICA =
       Region._(1, _omitEnumNames ? '' : 'NORTH_AMERICA');
+
+  /// Europe
   static const Region EUROPE = Region._(2, _omitEnumNames ? '' : 'EUROPE');
+
+  /// Asia/Pacific
   static const Region ASIA_PACIFIC =
       Region._(3, _omitEnumNames ? '' : 'ASIA_PACIFIC');
 
@@ -38,27 +45,44 @@ class Region extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static Region? valueOf($core.int value) => _byValue[value];
 
-  const Region._($core.int v, $core.String n) : super(v, n);
+  const Region._(super.v, super.n);
 }
 
 /// The lifecycle state of a Celest Cloud resource.
 class LifecycleState extends $pb.ProtobufEnum {
+  /// The state is not specified.
   static const LifecycleState LIFECYCLE_STATE_UNSPECIFIED =
       LifecycleState._(0, _omitEnumNames ? '' : 'LIFECYCLE_STATE_UNSPECIFIED');
+
+  /// The resource is being created.
   static const LifecycleState CREATING =
       LifecycleState._(1, _omitEnumNames ? '' : 'CREATING');
+
+  /// The resource failed to be created.
   static const LifecycleState CREATION_FAILED =
       LifecycleState._(2, _omitEnumNames ? '' : 'CREATION_FAILED');
+
+  /// The resource is active.
   static const LifecycleState ACTIVE =
       LifecycleState._(3, _omitEnumNames ? '' : 'ACTIVE');
+
+  /// The resource is being updated.
   static const LifecycleState UPDATING =
       LifecycleState._(4, _omitEnumNames ? '' : 'UPDATING');
+
+  /// The resource failed to be updated.
   static const LifecycleState UPDATE_FAILED =
       LifecycleState._(5, _omitEnumNames ? '' : 'UPDATE_FAILED');
+
+  /// The resource is being deleted.
   static const LifecycleState DELETING =
       LifecycleState._(6, _omitEnumNames ? '' : 'DELETING');
+
+  /// The resource failed to be deleted.
   static const LifecycleState DELETION_FAILED =
       LifecycleState._(7, _omitEnumNames ? '' : 'DELETION_FAILED');
+
+  /// The resource has been deleted and is waiting to be purged.
   static const LifecycleState DELETED =
       LifecycleState._(8, _omitEnumNames ? '' : 'DELETED');
 
@@ -78,7 +102,7 @@ class LifecycleState extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static LifecycleState? valueOf($core.int value) => _byValue[value];
 
-  const LifecycleState._($core.int v, $core.String n) : super(v, n);
+  const LifecycleState._(super.v, super.n);
 }
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

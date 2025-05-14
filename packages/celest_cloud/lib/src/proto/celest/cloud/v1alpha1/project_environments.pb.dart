@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/cloud/v1alpha1/project_environments.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -13,11 +13,13 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/any.pb.dart' as $14;
-import '../../../google/protobuf/field_mask.pb.dart' as $13;
+import '../../../google/protobuf/any.pb.dart' as $13;
+import '../../../google/protobuf/field_mask.pb.dart' as $12;
 import '../../../google/protobuf/timestamp.pb.dart' as $9;
-import 'common.pbenum.dart' as $17;
+import 'common.pbenum.dart' as $14;
 import 'project_environments.pbenum.dart';
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'project_environments.pbenum.dart';
 
@@ -33,9 +35,9 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
     $9.Timestamp? updateTime,
     $9.Timestamp? deleteTime,
     $core.String? etag,
-    $core.Map<$core.String, $core.String>? annotations,
+    $core.Iterable<$core.MapEntry<$core.String, $core.String>>? annotations,
     $core.bool? reconciling,
-    $17.LifecycleState? state,
+    $14.LifecycleState? state,
     $core.String? uri,
   }) {
     final $result = create();
@@ -67,7 +69,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
       $result.etag = etag;
     }
     if (annotations != null) {
-      $result.annotations.addAll(annotations);
+      $result.annotations.addEntries(annotations);
     }
     if (reconciling != null) {
       $result.reconciling = reconciling;
@@ -111,11 +113,11 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
         valueFieldType: $pb.PbFieldType.OS,
         packageName: const $pb.PackageName('celest.cloud.v1alpha1'))
     ..aOB(11, _omitFieldNames ? '' : 'reconciling')
-    ..e<$17.LifecycleState>(
+    ..e<$14.LifecycleState>(
         12, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
-        defaultOrMaker: $17.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
-        valueOf: $17.LifecycleState.valueOf,
-        enumValues: $17.LifecycleState.values)
+        defaultOrMaker: $14.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
+        valueOf: $14.LifecycleState.valueOf,
+        enumValues: $14.LifecycleState.values)
     ..aOS(13, _omitFieldNames ? '' : 'uri')
     ..hasRequiredFields = false;
 
@@ -154,7 +156,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// Output only. A system-generated unique identifier for the environment.
   @$pb.TagNumber(2)
@@ -167,7 +169,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasUid() => $_has(1);
   @$pb.TagNumber(2)
-  void clearUid() => clearField(2);
+  void clearUid() => $_clearField(2);
 
   /// Required. The parent of the environment.
   @$pb.TagNumber(3)
@@ -180,7 +182,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasParent() => $_has(2);
   @$pb.TagNumber(3)
-  void clearParent() => clearField(3);
+  void clearParent() => $_clearField(3);
 
   /// Immutable. The ID of the environment, typically the git branch associated with
   /// the environment.
@@ -194,7 +196,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasProjectEnvironmentId() => $_has(3);
   @$pb.TagNumber(4)
-  void clearProjectEnvironmentId() => clearField(4);
+  void clearProjectEnvironmentId() => $_clearField(4);
 
   /// Optional. The display name of the environment.
   @$pb.TagNumber(5)
@@ -207,20 +209,20 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasDisplayName() => $_has(4);
   @$pb.TagNumber(5)
-  void clearDisplayName() => clearField(5);
+  void clearDisplayName() => $_clearField(5);
 
   /// Output only. The time the environment was created.
   @$pb.TagNumber(6)
   $9.Timestamp get createTime => $_getN(5);
   @$pb.TagNumber(6)
   set createTime($9.Timestamp v) {
-    setField(6, v);
+    $_setField(6, v);
   }
 
   @$pb.TagNumber(6)
   $core.bool hasCreateTime() => $_has(5);
   @$pb.TagNumber(6)
-  void clearCreateTime() => clearField(6);
+  void clearCreateTime() => $_clearField(6);
   @$pb.TagNumber(6)
   $9.Timestamp ensureCreateTime() => $_ensure(5);
 
@@ -229,13 +231,13 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   $9.Timestamp get updateTime => $_getN(6);
   @$pb.TagNumber(7)
   set updateTime($9.Timestamp v) {
-    setField(7, v);
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasUpdateTime() => $_has(6);
   @$pb.TagNumber(7)
-  void clearUpdateTime() => clearField(7);
+  void clearUpdateTime() => $_clearField(7);
   @$pb.TagNumber(7)
   $9.Timestamp ensureUpdateTime() => $_ensure(6);
 
@@ -244,13 +246,13 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   $9.Timestamp get deleteTime => $_getN(7);
   @$pb.TagNumber(8)
   set deleteTime($9.Timestamp v) {
-    setField(8, v);
+    $_setField(8, v);
   }
 
   @$pb.TagNumber(8)
   $core.bool hasDeleteTime() => $_has(7);
   @$pb.TagNumber(8)
-  void clearDeleteTime() => clearField(8);
+  void clearDeleteTime() => $_clearField(8);
   @$pb.TagNumber(8)
   $9.Timestamp ensureDeleteTime() => $_ensure(7);
 
@@ -267,11 +269,11 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $core.bool hasEtag() => $_has(8);
   @$pb.TagNumber(9)
-  void clearEtag() => clearField(9);
+  void clearEtag() => $_clearField(9);
 
   /// Optional. Client-provided key-value pairs that are not directly used by the system.
   @$pb.TagNumber(10)
-  $core.Map<$core.String, $core.String> get annotations => $_getMap(9);
+  $pb.PbMap<$core.String, $core.String> get annotations => $_getMap(9);
 
   /// Output only. Indicates whether the environment is currently being reconciled.
   @$pb.TagNumber(11)
@@ -284,20 +286,20 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   $core.bool hasReconciling() => $_has(10);
   @$pb.TagNumber(11)
-  void clearReconciling() => clearField(11);
+  void clearReconciling() => $_clearField(11);
 
   /// Output only. The current state of the environment.
   @$pb.TagNumber(12)
-  $17.LifecycleState get state => $_getN(11);
+  $14.LifecycleState get state => $_getN(11);
   @$pb.TagNumber(12)
-  set state($17.LifecycleState v) {
-    setField(12, v);
+  set state($14.LifecycleState v) {
+    $_setField(12, v);
   }
 
   @$pb.TagNumber(12)
   $core.bool hasState() => $_has(11);
   @$pb.TagNumber(12)
-  void clearState() => clearField(12);
+  void clearState() => $_clearField(12);
 
   ///  Output only. The hosted URI of the environment.
   ///
@@ -312,7 +314,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(13)
   $core.bool hasUri() => $_has(12);
   @$pb.TagNumber(13)
-  void clearUri() => clearField(13);
+  void clearUri() => $_clearField(13);
 }
 
 /// Request message for the `CreateProjectEnvironment` method.
@@ -402,20 +404,20 @@ class CreateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearParent() => $_clearField(1);
 
   /// Required. The environment to create.
   @$pb.TagNumber(2)
   ProjectEnvironment get projectEnvironment => $_getN(1);
   @$pb.TagNumber(2)
   set projectEnvironment(ProjectEnvironment v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasProjectEnvironment() => $_has(1);
   @$pb.TagNumber(2)
-  void clearProjectEnvironment() => clearField(2);
+  void clearProjectEnvironment() => $_clearField(2);
   @$pb.TagNumber(2)
   ProjectEnvironment ensureProjectEnvironment() => $_ensure(1);
 
@@ -432,7 +434,7 @@ class CreateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasProjectEnvironmentId() => $_has(2);
   @$pb.TagNumber(3)
-  void clearProjectEnvironmentId() => clearField(3);
+  void clearProjectEnvironmentId() => $_clearField(3);
 
   /// Optional. The request ID to use for the create request. If provided, ensures this
   /// request is idempotent.
@@ -446,7 +448,7 @@ class CreateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasRequestId() => $_has(3);
   @$pb.TagNumber(4)
-  void clearRequestId() => clearField(4);
+  void clearRequestId() => $_clearField(4);
 
   /// Optional. If set to true, the request will not create the environment, but will
   /// validate the request.
@@ -460,7 +462,7 @@ class CreateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasValidateOnly() => $_has(4);
   @$pb.TagNumber(5)
-  void clearValidateOnly() => clearField(5);
+  void clearValidateOnly() => $_clearField(5);
 }
 
 /// Request message for the `GetProjectEnvironment` method.
@@ -528,14 +530,14 @@ class GetProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 }
 
 /// Request message for the `UpdateProjectEnvironment` method.
 class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   factory UpdateProjectEnvironmentRequest({
     ProjectEnvironment? projectEnvironment,
-    $13.FieldMask? updateMask,
+    $12.FieldMask? updateMask,
     $core.String? requestId,
     $core.bool? allowMissing,
     $core.bool? validateOnly,
@@ -573,8 +575,8 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<ProjectEnvironment>(1, _omitFieldNames ? '' : 'projectEnvironment',
         subBuilder: ProjectEnvironment.create)
-    ..aOM<$13.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
-        subBuilder: $13.FieldMask.create)
+    ..aOM<$12.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
+        subBuilder: $12.FieldMask.create)
     ..aOS(3, _omitFieldNames ? '' : 'requestId')
     ..aOB(4, _omitFieldNames ? '' : 'allowMissing')
     ..aOB(5, _omitFieldNames ? '' : 'validateOnly')
@@ -613,30 +615,30 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   ProjectEnvironment get projectEnvironment => $_getN(0);
   @$pb.TagNumber(1)
   set projectEnvironment(ProjectEnvironment v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasProjectEnvironment() => $_has(0);
   @$pb.TagNumber(1)
-  void clearProjectEnvironment() => clearField(1);
+  void clearProjectEnvironment() => $_clearField(1);
   @$pb.TagNumber(1)
   ProjectEnvironment ensureProjectEnvironment() => $_ensure(0);
 
   /// Optional. The update mask to apply to the environment.
   @$pb.TagNumber(2)
-  $13.FieldMask get updateMask => $_getN(1);
+  $12.FieldMask get updateMask => $_getN(1);
   @$pb.TagNumber(2)
-  set updateMask($13.FieldMask v) {
-    setField(2, v);
+  set updateMask($12.FieldMask v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasUpdateMask() => $_has(1);
   @$pb.TagNumber(2)
-  void clearUpdateMask() => clearField(2);
+  void clearUpdateMask() => $_clearField(2);
   @$pb.TagNumber(2)
-  $13.FieldMask ensureUpdateMask() => $_ensure(1);
+  $12.FieldMask ensureUpdateMask() => $_ensure(1);
 
   /// Optional. The request ID to use for the update request. If provided, ensures this
   /// request is idempotent.
@@ -650,7 +652,7 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasRequestId() => $_has(2);
   @$pb.TagNumber(3)
-  void clearRequestId() => clearField(3);
+  void clearRequestId() => $_clearField(3);
 
   /// If set to true, and the environment is not found, a new environment will be created.
   /// In this situation, `update_mask` is ignored.
@@ -664,7 +666,7 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasAllowMissing() => $_has(3);
   @$pb.TagNumber(4)
-  void clearAllowMissing() => clearField(4);
+  void clearAllowMissing() => $_clearField(4);
 
   /// Optional. If set to true, the request will not update the environment, but will
   /// validate the request.
@@ -678,7 +680,7 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasValidateOnly() => $_has(4);
   @$pb.TagNumber(5)
-  void clearValidateOnly() => clearField(5);
+  void clearValidateOnly() => $_clearField(5);
 }
 
 /// Request message for `ListProjectEnvironments`.
@@ -766,7 +768,7 @@ class ListProjectEnvironmentsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearParent() => $_clearField(1);
 
   /// The maximum number of environments to return. The service may return fewer
   /// than this value. If unspecified, at most 100 environments will be returned.
@@ -780,7 +782,7 @@ class ListProjectEnvironmentsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasPageSize() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPageSize() => clearField(2);
+  void clearPageSize() => $_clearField(2);
 
   /// A page token, received from a previous `ListProjectEnvironments` call. Provide this
   /// to retrieve the subsequent page. When paginating, all other parameters
@@ -796,7 +798,7 @@ class ListProjectEnvironmentsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasPageToken() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPageToken() => clearField(3);
+  void clearPageToken() => $_clearField(3);
 
   /// The filter expression.
   @$pb.TagNumber(4)
@@ -809,7 +811,7 @@ class ListProjectEnvironmentsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasFilter() => $_has(3);
   @$pb.TagNumber(4)
-  void clearFilter() => clearField(4);
+  void clearFilter() => $_clearField(4);
 
   /// The order by expression.
   @$pb.TagNumber(5)
@@ -822,7 +824,7 @@ class ListProjectEnvironmentsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasOrderBy() => $_has(4);
   @$pb.TagNumber(5)
-  void clearOrderBy() => clearField(5);
+  void clearOrderBy() => $_clearField(5);
 }
 
 /// Response message for `ListProjectEnvironments`.
@@ -889,7 +891,7 @@ class ListProjectEnvironmentsResponse extends $pb.GeneratedMessage {
 
   /// The list of environments.
   @$pb.TagNumber(1)
-  $core.List<ProjectEnvironment> get projectEnvironments => $_getList(0);
+  $pb.PbList<ProjectEnvironment> get projectEnvironments => $_getList(0);
 
   /// A token to retrieve the next page of results. Pass this value in the
   /// `page_token` field in the subsequent call to `ListProjectEnvironments` method to
@@ -904,7 +906,7 @@ class ListProjectEnvironmentsResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasNextPageToken() => $_has(1);
   @$pb.TagNumber(2)
-  void clearNextPageToken() => clearField(2);
+  void clearNextPageToken() => $_clearField(2);
 }
 
 /// Request message for the `DeleteProjectEnvironment` method.
@@ -993,7 +995,7 @@ class DeleteProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// Optional. The request ID to use for the delete request. If provided, ensures this
   /// request is idempotent.
@@ -1007,7 +1009,7 @@ class DeleteProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasRequestId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRequestId() => clearField(2);
+  void clearRequestId() => $_clearField(2);
 
   /// Optional. The etag of the environment.
   /// If this is provided, it must match the server's etag.
@@ -1021,7 +1023,7 @@ class DeleteProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasEtag() => $_has(2);
   @$pb.TagNumber(3)
-  void clearEtag() => clearField(3);
+  void clearEtag() => $_clearField(3);
 
   /// If set to true, and the environment is not found, the request will succeed
   /// but no action will be taken on the server.
@@ -1035,7 +1037,7 @@ class DeleteProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasAllowMissing() => $_has(3);
   @$pb.TagNumber(4)
-  void clearAllowMissing() => clearField(4);
+  void clearAllowMissing() => $_clearField(4);
 
   /// If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(5)
@@ -1048,7 +1050,7 @@ class DeleteProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasValidateOnly() => $_has(4);
   @$pb.TagNumber(5)
-  void clearValidateOnly() => clearField(5);
+  void clearValidateOnly() => $_clearField(5);
 }
 
 enum ProjectAsset_Asset { inline, notSet }
@@ -1129,20 +1131,20 @@ class ProjectAsset extends $pb.GeneratedMessage {
   static ProjectAsset? _defaultInstance;
 
   ProjectAsset_Asset whichAsset() => _ProjectAsset_AssetByTag[$_whichOneof(0)]!;
-  void clearAsset() => clearField($_whichOneof(0));
+  void clearAsset() => $_clearField($_whichOneof(0));
 
   /// The type of the asset.
   @$pb.TagNumber(1)
   ProjectAsset_Type get type => $_getN(0);
   @$pb.TagNumber(1)
   set type(ProjectAsset_Type v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearType() => clearField(1);
+  void clearType() => $_clearField(1);
 
   /// The file name of the asset.
   @$pb.TagNumber(2)
@@ -1155,7 +1157,7 @@ class ProjectAsset extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasFilename() => $_has(1);
   @$pb.TagNumber(2)
-  void clearFilename() => clearField(2);
+  void clearFilename() => $_clearField(2);
 
   /// Inline asset context.
   @$pb.TagNumber(3)
@@ -1168,7 +1170,7 @@ class ProjectAsset extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasInline() => $_has(2);
   @$pb.TagNumber(3)
-  void clearInline() => clearField(3);
+  void clearInline() => $_clearField(3);
 
   /// A checksum of the asset's content, computed by the client and
   /// verified by the server upon retrieval.
@@ -1182,7 +1184,7 @@ class ProjectAsset extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasEtag() => $_has(3);
   @$pb.TagNumber(4)
-  void clearEtag() => clearField(4);
+  void clearEtag() => $_clearField(4);
 }
 
 /// Request message for the `DeployProjectEnvironment` operation.
@@ -1192,7 +1194,7 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
     $core.String? requestId,
     $core.bool? validateOnly,
     $core.String? etag,
-    $14.Any? resolvedProjectAst,
+    $13.Any? resolvedProjectAst,
     $core.Iterable<ProjectAsset>? assets,
   }) {
     final $result = create();
@@ -1233,8 +1235,8 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'requestId')
     ..aOB(3, _omitFieldNames ? '' : 'validateOnly')
     ..aOS(4, _omitFieldNames ? '' : 'etag')
-    ..aOM<$14.Any>(5, _omitFieldNames ? '' : 'resolvedProjectAst',
-        subBuilder: $14.Any.create)
+    ..aOM<$13.Any>(5, _omitFieldNames ? '' : 'resolvedProjectAst',
+        subBuilder: $13.Any.create)
     ..pc<ProjectAsset>(6, _omitFieldNames ? '' : 'assets', $pb.PbFieldType.PM,
         subBuilder: ProjectAsset.create)
     ..hasRequiredFields = false;
@@ -1278,7 +1280,7 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// Optional. The request ID to use for the delete request. If provided, ensures this
   /// request is idempotent.
@@ -1292,7 +1294,7 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasRequestId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRequestId() => clearField(2);
+  void clearRequestId() => $_clearField(2);
 
   /// If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(3)
@@ -1305,7 +1307,7 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasValidateOnly() => $_has(2);
   @$pb.TagNumber(3)
-  void clearValidateOnly() => clearField(3);
+  void clearValidateOnly() => $_clearField(3);
 
   ///  Optional. The etag of the environment.
   ///
@@ -1320,7 +1322,7 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasEtag() => $_has(3);
   @$pb.TagNumber(4)
-  void clearEtag() => clearField(4);
+  void clearEtag() => $_clearField(4);
 
   ///  Input only. The environment's project AST.
   ///
@@ -1331,29 +1333,29 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
   ///      aip.dev/not-precedent: Since AST protos are maintained separately, this allows
   ///                             independent versioning and publishing of protobuf/Dart code. --)
   @$pb.TagNumber(5)
-  $14.Any get resolvedProjectAst => $_getN(4);
+  $13.Any get resolvedProjectAst => $_getN(4);
   @$pb.TagNumber(5)
-  set resolvedProjectAst($14.Any v) {
-    setField(5, v);
+  set resolvedProjectAst($13.Any v) {
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasResolvedProjectAst() => $_has(4);
   @$pb.TagNumber(5)
-  void clearResolvedProjectAst() => clearField(5);
+  void clearResolvedProjectAst() => $_clearField(5);
   @$pb.TagNumber(5)
-  $14.Any ensureResolvedProjectAst() => $_ensure(4);
+  $13.Any ensureResolvedProjectAst() => $_ensure(4);
 
   /// Input only. The assets of the environment.
   @$pb.TagNumber(6)
-  $core.List<ProjectAsset> get assets => $_getList(5);
+  $pb.PbList<ProjectAsset> get assets => $_getList(5);
 }
 
 /// Response message for the `DeployProjectEnvironment` operation.
 class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
   factory DeployProjectEnvironmentResponse({
     $core.String? uri,
-    $14.Any? project,
+    $13.Any? project,
   }) {
     final $result = create();
     if (uri != null) {
@@ -1378,8 +1380,8 @@ class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'uri')
-    ..aOM<$14.Any>(2, _omitFieldNames ? '' : 'project',
-        subBuilder: $14.Any.create)
+    ..aOM<$13.Any>(2, _omitFieldNames ? '' : 'project',
+        subBuilder: $13.Any.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1421,7 +1423,7 @@ class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasUri() => $_has(0);
   @$pb.TagNumber(1)
-  void clearUri() => clearField(1);
+  void clearUri() => $_clearField(1);
 
   ///  The resolved project of the deployed environment, with any missing values filled in.
   ///
@@ -1431,18 +1433,18 @@ class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
   ///      aip.dev/not-precedent: Since AST protos are maintained separately, this allows
   ///                             independent versioning and publishing of protobuf/Dart code. --)
   @$pb.TagNumber(2)
-  $14.Any get project => $_getN(1);
+  $13.Any get project => $_getN(1);
   @$pb.TagNumber(2)
-  set project($14.Any v) {
-    setField(2, v);
+  set project($13.Any v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasProject() => $_has(1);
   @$pb.TagNumber(2)
-  void clearProject() => clearField(2);
+  void clearProject() => $_clearField(2);
   @$pb.TagNumber(2)
-  $14.Any ensureProject() => $_ensure(1);
+  $13.Any ensureProject() => $_ensure(1);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

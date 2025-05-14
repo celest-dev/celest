@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/cloud/v1alpha1/project_environments.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -15,7 +15,7 @@ import 'dart:core' as $core;
 import 'package:grpc/service_api.dart' as $grpc;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/longrunning/operations.pb.dart' as $3;
+import '../../../google/longrunning/operations.pb.dart' as $4;
 import 'project_environments.pb.dart' as $5;
 
 export 'project_environments.pb.dart';
@@ -23,20 +23,20 @@ export 'project_environments.pb.dart';
 @$pb.GrpcServiceName('celest.cloud.v1alpha1.ProjectEnvironments')
 class ProjectEnvironmentsClient extends $grpc.Client {
   static final _$createProjectEnvironment =
-      $grpc.ClientMethod<$5.CreateProjectEnvironmentRequest, $3.Operation>(
+      $grpc.ClientMethod<$5.CreateProjectEnvironmentRequest, $4.Operation>(
           '/celest.cloud.v1alpha1.ProjectEnvironments/CreateProjectEnvironment',
           ($5.CreateProjectEnvironmentRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $3.Operation.fromBuffer(value));
+          ($core.List<$core.int> value) => $4.Operation.fromBuffer(value));
   static final _$getProjectEnvironment = $grpc.ClientMethod<
           $5.GetProjectEnvironmentRequest, $5.ProjectEnvironment>(
       '/celest.cloud.v1alpha1.ProjectEnvironments/GetProjectEnvironment',
       ($5.GetProjectEnvironmentRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $5.ProjectEnvironment.fromBuffer(value));
   static final _$updateProjectEnvironment =
-      $grpc.ClientMethod<$5.UpdateProjectEnvironmentRequest, $3.Operation>(
+      $grpc.ClientMethod<$5.UpdateProjectEnvironmentRequest, $4.Operation>(
           '/celest.cloud.v1alpha1.ProjectEnvironments/UpdateProjectEnvironment',
           ($5.UpdateProjectEnvironmentRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $3.Operation.fromBuffer(value));
+          ($core.List<$core.int> value) => $4.Operation.fromBuffer(value));
   static final _$listProjectEnvironments = $grpc.ClientMethod<
           $5.ListProjectEnvironmentsRequest,
           $5.ListProjectEnvironmentsResponse>(
@@ -45,22 +45,19 @@ class ProjectEnvironmentsClient extends $grpc.Client {
       ($core.List<$core.int> value) =>
           $5.ListProjectEnvironmentsResponse.fromBuffer(value));
   static final _$deleteProjectEnvironment =
-      $grpc.ClientMethod<$5.DeleteProjectEnvironmentRequest, $3.Operation>(
+      $grpc.ClientMethod<$5.DeleteProjectEnvironmentRequest, $4.Operation>(
           '/celest.cloud.v1alpha1.ProjectEnvironments/DeleteProjectEnvironment',
           ($5.DeleteProjectEnvironmentRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $3.Operation.fromBuffer(value));
+          ($core.List<$core.int> value) => $4.Operation.fromBuffer(value));
   static final _$deployProjectEnvironment =
-      $grpc.ClientMethod<$5.DeployProjectEnvironmentRequest, $3.Operation>(
+      $grpc.ClientMethod<$5.DeployProjectEnvironmentRequest, $4.Operation>(
           '/celest.cloud.v1alpha1.ProjectEnvironments/DeployProjectEnvironment',
           ($5.DeployProjectEnvironmentRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $3.Operation.fromBuffer(value));
+          ($core.List<$core.int> value) => $4.Operation.fromBuffer(value));
 
-  ProjectEnvironmentsClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions? options,
-      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options, interceptors: interceptors);
+  ProjectEnvironmentsClient(super.channel, {super.options, super.interceptors});
 
-  $grpc.ResponseFuture<$3.Operation> createProjectEnvironment(
+  $grpc.ResponseFuture<$4.Operation> createProjectEnvironment(
       $5.CreateProjectEnvironmentRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createProjectEnvironment, request,
@@ -73,7 +70,7 @@ class ProjectEnvironmentsClient extends $grpc.Client {
     return $createUnaryCall(_$getProjectEnvironment, request, options: options);
   }
 
-  $grpc.ResponseFuture<$3.Operation> updateProjectEnvironment(
+  $grpc.ResponseFuture<$4.Operation> updateProjectEnvironment(
       $5.UpdateProjectEnvironmentRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateProjectEnvironment, request,
@@ -87,14 +84,14 @@ class ProjectEnvironmentsClient extends $grpc.Client {
         options: options);
   }
 
-  $grpc.ResponseFuture<$3.Operation> deleteProjectEnvironment(
+  $grpc.ResponseFuture<$4.Operation> deleteProjectEnvironment(
       $5.DeleteProjectEnvironmentRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$deleteProjectEnvironment, request,
         options: options);
   }
 
-  $grpc.ResponseFuture<$3.Operation> deployProjectEnvironment(
+  $grpc.ResponseFuture<$4.Operation> deployProjectEnvironment(
       $5.DeployProjectEnvironmentRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$deployProjectEnvironment, request,
@@ -108,14 +105,14 @@ abstract class ProjectEnvironmentsServiceBase extends $grpc.Service {
 
   ProjectEnvironmentsServiceBase() {
     $addMethod(
-        $grpc.ServiceMethod<$5.CreateProjectEnvironmentRequest, $3.Operation>(
+        $grpc.ServiceMethod<$5.CreateProjectEnvironmentRequest, $4.Operation>(
             'CreateProjectEnvironment',
             createProjectEnvironment_Pre,
             false,
             false,
             ($core.List<$core.int> value) =>
                 $5.CreateProjectEnvironmentRequest.fromBuffer(value),
-            ($3.Operation value) => value.writeToBuffer()));
+            ($4.Operation value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$5.GetProjectEnvironmentRequest,
             $5.ProjectEnvironment>(
         'GetProjectEnvironment',
@@ -126,14 +123,14 @@ abstract class ProjectEnvironmentsServiceBase extends $grpc.Service {
             $5.GetProjectEnvironmentRequest.fromBuffer(value),
         ($5.ProjectEnvironment value) => value.writeToBuffer()));
     $addMethod(
-        $grpc.ServiceMethod<$5.UpdateProjectEnvironmentRequest, $3.Operation>(
+        $grpc.ServiceMethod<$5.UpdateProjectEnvironmentRequest, $4.Operation>(
             'UpdateProjectEnvironment',
             updateProjectEnvironment_Pre,
             false,
             false,
             ($core.List<$core.int> value) =>
                 $5.UpdateProjectEnvironmentRequest.fromBuffer(value),
-            ($3.Operation value) => value.writeToBuffer()));
+            ($4.Operation value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$5.ListProjectEnvironmentsRequest,
             $5.ListProjectEnvironmentsResponse>(
         'ListProjectEnvironments',
@@ -144,71 +141,71 @@ abstract class ProjectEnvironmentsServiceBase extends $grpc.Service {
             $5.ListProjectEnvironmentsRequest.fromBuffer(value),
         ($5.ListProjectEnvironmentsResponse value) => value.writeToBuffer()));
     $addMethod(
-        $grpc.ServiceMethod<$5.DeleteProjectEnvironmentRequest, $3.Operation>(
+        $grpc.ServiceMethod<$5.DeleteProjectEnvironmentRequest, $4.Operation>(
             'DeleteProjectEnvironment',
             deleteProjectEnvironment_Pre,
             false,
             false,
             ($core.List<$core.int> value) =>
                 $5.DeleteProjectEnvironmentRequest.fromBuffer(value),
-            ($3.Operation value) => value.writeToBuffer()));
+            ($4.Operation value) => value.writeToBuffer()));
     $addMethod(
-        $grpc.ServiceMethod<$5.DeployProjectEnvironmentRequest, $3.Operation>(
+        $grpc.ServiceMethod<$5.DeployProjectEnvironmentRequest, $4.Operation>(
             'DeployProjectEnvironment',
             deployProjectEnvironment_Pre,
             false,
             false,
             ($core.List<$core.int> value) =>
                 $5.DeployProjectEnvironmentRequest.fromBuffer(value),
-            ($3.Operation value) => value.writeToBuffer()));
+            ($4.Operation value) => value.writeToBuffer()));
   }
 
-  $async.Future<$3.Operation> createProjectEnvironment_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$5.CreateProjectEnvironmentRequest> request) async {
-    return createProjectEnvironment(call, await request);
+  $async.Future<$4.Operation> createProjectEnvironment_Pre(
+      $grpc.ServiceCall $call,
+      $async.Future<$5.CreateProjectEnvironmentRequest> $request) async {
+    return createProjectEnvironment($call, await $request);
   }
 
   $async.Future<$5.ProjectEnvironment> getProjectEnvironment_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$5.GetProjectEnvironmentRequest> request) async {
-    return getProjectEnvironment(call, await request);
+      $grpc.ServiceCall $call,
+      $async.Future<$5.GetProjectEnvironmentRequest> $request) async {
+    return getProjectEnvironment($call, await $request);
   }
 
-  $async.Future<$3.Operation> updateProjectEnvironment_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$5.UpdateProjectEnvironmentRequest> request) async {
-    return updateProjectEnvironment(call, await request);
+  $async.Future<$4.Operation> updateProjectEnvironment_Pre(
+      $grpc.ServiceCall $call,
+      $async.Future<$5.UpdateProjectEnvironmentRequest> $request) async {
+    return updateProjectEnvironment($call, await $request);
   }
 
   $async.Future<$5.ListProjectEnvironmentsResponse> listProjectEnvironments_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$5.ListProjectEnvironmentsRequest> request) async {
-    return listProjectEnvironments(call, await request);
+      $grpc.ServiceCall $call,
+      $async.Future<$5.ListProjectEnvironmentsRequest> $request) async {
+    return listProjectEnvironments($call, await $request);
   }
 
-  $async.Future<$3.Operation> deleteProjectEnvironment_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$5.DeleteProjectEnvironmentRequest> request) async {
-    return deleteProjectEnvironment(call, await request);
+  $async.Future<$4.Operation> deleteProjectEnvironment_Pre(
+      $grpc.ServiceCall $call,
+      $async.Future<$5.DeleteProjectEnvironmentRequest> $request) async {
+    return deleteProjectEnvironment($call, await $request);
   }
 
-  $async.Future<$3.Operation> deployProjectEnvironment_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$5.DeployProjectEnvironmentRequest> request) async {
-    return deployProjectEnvironment(call, await request);
+  $async.Future<$4.Operation> deployProjectEnvironment_Pre(
+      $grpc.ServiceCall $call,
+      $async.Future<$5.DeployProjectEnvironmentRequest> $request) async {
+    return deployProjectEnvironment($call, await $request);
   }
 
-  $async.Future<$3.Operation> createProjectEnvironment(
+  $async.Future<$4.Operation> createProjectEnvironment(
       $grpc.ServiceCall call, $5.CreateProjectEnvironmentRequest request);
   $async.Future<$5.ProjectEnvironment> getProjectEnvironment(
       $grpc.ServiceCall call, $5.GetProjectEnvironmentRequest request);
-  $async.Future<$3.Operation> updateProjectEnvironment(
+  $async.Future<$4.Operation> updateProjectEnvironment(
       $grpc.ServiceCall call, $5.UpdateProjectEnvironmentRequest request);
   $async.Future<$5.ListProjectEnvironmentsResponse> listProjectEnvironments(
       $grpc.ServiceCall call, $5.ListProjectEnvironmentsRequest request);
-  $async.Future<$3.Operation> deleteProjectEnvironment(
+  $async.Future<$4.Operation> deleteProjectEnvironment(
       $grpc.ServiceCall call, $5.DeleteProjectEnvironmentRequest request);
-  $async.Future<$3.Operation> deployProjectEnvironment(
+  $async.Future<$4.Operation> deployProjectEnvironment(
       $grpc.ServiceCall call, $5.DeployProjectEnvironmentRequest request);
 }

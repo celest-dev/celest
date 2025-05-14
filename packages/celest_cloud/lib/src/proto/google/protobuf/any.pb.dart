@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/protobuf/any.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -13,6 +13,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 import 'package:protobuf/src/protobuf/mixins/well_known.dart' as $mixin;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 ///  `Any` contains an arbitrary serialized protocol buffer message along with a
 ///  URL that describes the type of the serialized message.
@@ -192,7 +194,7 @@ class Any extends $pb.GeneratedMessage with $mixin.AnyMixin {
   @$pb.TagNumber(1)
   $core.bool hasTypeUrl() => $_has(0);
   @$pb.TagNumber(1)
-  void clearTypeUrl() => clearField(1);
+  void clearTypeUrl() => $_clearField(1);
 
   /// Must be a valid serialized protocol buffer of the above specified type.
   @$pb.TagNumber(2)
@@ -205,7 +207,7 @@ class Any extends $pb.GeneratedMessage with $mixin.AnyMixin {
   @$pb.TagNumber(2)
   $core.bool hasValue() => $_has(1);
   @$pb.TagNumber(2)
-  void clearValue() => clearField(2);
+  void clearValue() => $_clearField(2);
 
   /// Creates a new [Any] encoding [message].
   ///

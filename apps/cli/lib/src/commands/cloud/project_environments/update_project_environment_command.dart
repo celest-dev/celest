@@ -22,7 +22,7 @@ final class UpdateProjectEnvironmentCommand
       projectEnvironment: ProjectEnvironment(
         name: options.resourceId,
         displayName: options.displayName,
-        annotations: options.annotations,
+        annotations: options.annotations?.entries,
       ),
       allowMissing: options.allowMissing,
       updateMask: FieldMask(

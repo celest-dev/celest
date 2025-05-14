@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/protobuf/descriptor.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -15,6 +15,8 @@ import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'descriptor.pbenum.dart';
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'descriptor.pbenum.dart';
 
@@ -71,7 +73,7 @@ class FileDescriptorSet extends $pb.GeneratedMessage {
   static FileDescriptorSet? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<FileDescriptorProto> get file => $_getList(0);
+  $pb.PbList<FileDescriptorProto> get file => $_getList(0);
 }
 
 /// Describes a complete .proto file.
@@ -208,7 +210,7 @@ class FileDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get package => $_getSZ(1);
@@ -220,36 +222,36 @@ class FileDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasPackage() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPackage() => clearField(2);
+  void clearPackage() => $_clearField(2);
 
   /// Names of files imported by this file.
   @$pb.TagNumber(3)
-  $core.List<$core.String> get dependency => $_getList(2);
+  $pb.PbList<$core.String> get dependency => $_getList(2);
 
   /// All top-level definitions in this file.
   @$pb.TagNumber(4)
-  $core.List<DescriptorProto> get messageType => $_getList(3);
+  $pb.PbList<DescriptorProto> get messageType => $_getList(3);
 
   @$pb.TagNumber(5)
-  $core.List<EnumDescriptorProto> get enumType => $_getList(4);
+  $pb.PbList<EnumDescriptorProto> get enumType => $_getList(4);
 
   @$pb.TagNumber(6)
-  $core.List<ServiceDescriptorProto> get service => $_getList(5);
+  $pb.PbList<ServiceDescriptorProto> get service => $_getList(5);
 
   @$pb.TagNumber(7)
-  $core.List<FieldDescriptorProto> get extension => $_getList(6);
+  $pb.PbList<FieldDescriptorProto> get extension => $_getList(6);
 
   @$pb.TagNumber(8)
   FileOptions get options => $_getN(7);
   @$pb.TagNumber(8)
   set options(FileOptions v) {
-    setField(8, v);
+    $_setField(8, v);
   }
 
   @$pb.TagNumber(8)
   $core.bool hasOptions() => $_has(7);
   @$pb.TagNumber(8)
-  void clearOptions() => clearField(8);
+  void clearOptions() => $_clearField(8);
   @$pb.TagNumber(8)
   FileOptions ensureOptions() => $_ensure(7);
 
@@ -261,24 +263,24 @@ class FileDescriptorProto extends $pb.GeneratedMessage {
   SourceCodeInfo get sourceCodeInfo => $_getN(8);
   @$pb.TagNumber(9)
   set sourceCodeInfo(SourceCodeInfo v) {
-    setField(9, v);
+    $_setField(9, v);
   }
 
   @$pb.TagNumber(9)
   $core.bool hasSourceCodeInfo() => $_has(8);
   @$pb.TagNumber(9)
-  void clearSourceCodeInfo() => clearField(9);
+  void clearSourceCodeInfo() => $_clearField(9);
   @$pb.TagNumber(9)
   SourceCodeInfo ensureSourceCodeInfo() => $_ensure(8);
 
   /// Indexes of the public imported files in the dependency list above.
   @$pb.TagNumber(10)
-  $core.List<$core.int> get publicDependency => $_getList(9);
+  $pb.PbList<$core.int> get publicDependency => $_getList(9);
 
   /// Indexes of the weak imported files in the dependency list.
   /// For Google-internal migration only. Do not use.
   @$pb.TagNumber(11)
-  $core.List<$core.int> get weakDependency => $_getList(10);
+  $pb.PbList<$core.int> get weakDependency => $_getList(10);
 
   ///  The syntax of the proto file.
   ///  The supported values are "proto2", "proto3", and "editions".
@@ -294,20 +296,20 @@ class FileDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(12)
   $core.bool hasSyntax() => $_has(11);
   @$pb.TagNumber(12)
-  void clearSyntax() => clearField(12);
+  void clearSyntax() => $_clearField(12);
 
   /// The edition of the proto file.
   @$pb.TagNumber(14)
   Edition get edition => $_getN(12);
   @$pb.TagNumber(14)
   set edition(Edition v) {
-    setField(14, v);
+    $_setField(14, v);
   }
 
   @$pb.TagNumber(14)
   $core.bool hasEdition() => $_has(12);
   @$pb.TagNumber(14)
-  void clearEdition() => clearField(14);
+  void clearEdition() => $_clearField(14);
 }
 
 class DescriptorProto_ExtensionRange extends $pb.GeneratedMessage {
@@ -383,7 +385,7 @@ class DescriptorProto_ExtensionRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasStart() => $_has(0);
   @$pb.TagNumber(1)
-  void clearStart() => clearField(1);
+  void clearStart() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.int get end => $_getIZ(1);
@@ -395,19 +397,19 @@ class DescriptorProto_ExtensionRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasEnd() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEnd() => clearField(2);
+  void clearEnd() => $_clearField(2);
 
   @$pb.TagNumber(3)
   ExtensionRangeOptions get options => $_getN(2);
   @$pb.TagNumber(3)
   set options(ExtensionRangeOptions v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasOptions() => $_has(2);
   @$pb.TagNumber(3)
-  void clearOptions() => clearField(3);
+  void clearOptions() => $_clearField(3);
   @$pb.TagNumber(3)
   ExtensionRangeOptions ensureOptions() => $_ensure(2);
 }
@@ -483,7 +485,7 @@ class DescriptorProto_ReservedRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasStart() => $_has(0);
   @$pb.TagNumber(1)
-  void clearStart() => clearField(1);
+  void clearStart() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.int get end => $_getIZ(1);
@@ -495,7 +497,7 @@ class DescriptorProto_ReservedRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasEnd() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEnd() => clearField(2);
+  void clearEnd() => $_clearField(2);
 }
 
 /// Describes a message type.
@@ -617,47 +619,47 @@ class DescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<FieldDescriptorProto> get field => $_getList(1);
+  $pb.PbList<FieldDescriptorProto> get field => $_getList(1);
 
   @$pb.TagNumber(3)
-  $core.List<DescriptorProto> get nestedType => $_getList(2);
+  $pb.PbList<DescriptorProto> get nestedType => $_getList(2);
 
   @$pb.TagNumber(4)
-  $core.List<EnumDescriptorProto> get enumType => $_getList(3);
+  $pb.PbList<EnumDescriptorProto> get enumType => $_getList(3);
 
   @$pb.TagNumber(5)
-  $core.List<DescriptorProto_ExtensionRange> get extensionRange => $_getList(4);
+  $pb.PbList<DescriptorProto_ExtensionRange> get extensionRange => $_getList(4);
 
   @$pb.TagNumber(6)
-  $core.List<FieldDescriptorProto> get extension => $_getList(5);
+  $pb.PbList<FieldDescriptorProto> get extension => $_getList(5);
 
   @$pb.TagNumber(7)
   MessageOptions get options => $_getN(6);
   @$pb.TagNumber(7)
   set options(MessageOptions v) {
-    setField(7, v);
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasOptions() => $_has(6);
   @$pb.TagNumber(7)
-  void clearOptions() => clearField(7);
+  void clearOptions() => $_clearField(7);
   @$pb.TagNumber(7)
   MessageOptions ensureOptions() => $_ensure(6);
 
   @$pb.TagNumber(8)
-  $core.List<OneofDescriptorProto> get oneofDecl => $_getList(7);
+  $pb.PbList<OneofDescriptorProto> get oneofDecl => $_getList(7);
 
   @$pb.TagNumber(9)
-  $core.List<DescriptorProto_ReservedRange> get reservedRange => $_getList(8);
+  $pb.PbList<DescriptorProto_ReservedRange> get reservedRange => $_getList(8);
 
   /// Reserved field names, which may not be used by fields in the same message.
   /// A given name may only be reserved once.
   @$pb.TagNumber(10)
-  $core.List<$core.String> get reservedName => $_getList(9);
+  $pb.PbList<$core.String> get reservedName => $_getList(9);
 }
 
 class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
@@ -745,7 +747,7 @@ class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasNumber() => $_has(0);
   @$pb.TagNumber(1)
-  void clearNumber() => clearField(1);
+  void clearNumber() => $_clearField(1);
 
   /// The fully-qualified name of the extension field. There must be a leading
   /// dot in front of the full name.
@@ -759,7 +761,7 @@ class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasFullName() => $_has(1);
   @$pb.TagNumber(2)
-  void clearFullName() => clearField(2);
+  void clearFullName() => $_clearField(2);
 
   /// The fully-qualified type name of the extension field. Unlike
   /// Metadata.type, Declaration.type must have a leading dot for messages
@@ -774,7 +776,7 @@ class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasType() => $_has(2);
   @$pb.TagNumber(3)
-  void clearType() => clearField(3);
+  void clearType() => $_clearField(3);
 
   /// If true, indicates that the number is reserved in the extension range,
   /// and any extension field with the number will fail to compile. Set this
@@ -789,7 +791,7 @@ class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasReserved() => $_has(3);
   @$pb.TagNumber(5)
-  void clearReserved() => clearField(5);
+  void clearReserved() => $_clearField(5);
 
   /// If true, indicates that the extension must be defined as repeated.
   /// Otherwise the extension must be defined as optional.
@@ -803,7 +805,7 @@ class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasRepeated() => $_has(4);
   @$pb.TagNumber(6)
-  void clearRepeated() => clearField(6);
+  void clearRepeated() => $_clearField(6);
 }
 
 class ExtensionRangeOptions extends $pb.GeneratedMessage {
@@ -885,7 +887,7 @@ class ExtensionRangeOptions extends $pb.GeneratedMessage {
   /// extension declaration and executing internal cleanups before it can be
   /// used externally.
   @$pb.TagNumber(2)
-  $core.List<ExtensionRangeOptions_Declaration> get declaration => $_getList(0);
+  $pb.PbList<ExtensionRangeOptions_Declaration> get declaration => $_getList(0);
 
   /// The verification state of the range.
   /// TODO: flip the default to DECLARATION once all empty ranges
@@ -894,32 +896,32 @@ class ExtensionRangeOptions extends $pb.GeneratedMessage {
   ExtensionRangeOptions_VerificationState get verification => $_getN(1);
   @$pb.TagNumber(3)
   set verification(ExtensionRangeOptions_VerificationState v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasVerification() => $_has(1);
   @$pb.TagNumber(3)
-  void clearVerification() => clearField(3);
+  void clearVerification() => $_clearField(3);
 
   /// Any features defined in the specific edition.
   @$pb.TagNumber(50)
   FeatureSet get features => $_getN(2);
   @$pb.TagNumber(50)
   set features(FeatureSet v) {
-    setField(50, v);
+    $_setField(50, v);
   }
 
   @$pb.TagNumber(50)
   $core.bool hasFeatures() => $_has(2);
   @$pb.TagNumber(50)
-  void clearFeatures() => clearField(50);
+  void clearFeatures() => $_clearField(50);
   @$pb.TagNumber(50)
   FeatureSet ensureFeatures() => $_ensure(2);
 
   /// The parser stores options it doesn't recognize here. See above.
   @$pb.TagNumber(999)
-  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(3);
+  $pb.PbList<UninterpretedOption> get uninterpretedOption => $_getList(3);
 }
 
 /// Describes a field within a message.
@@ -1041,7 +1043,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// For extensions, this is the name of the type being extended.  It is
   /// resolved in the same manner as type_name.
@@ -1055,7 +1057,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasExtendee() => $_has(1);
   @$pb.TagNumber(2)
-  void clearExtendee() => clearField(2);
+  void clearExtendee() => $_clearField(2);
 
   @$pb.TagNumber(3)
   $core.int get number => $_getIZ(2);
@@ -1067,19 +1069,19 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasNumber() => $_has(2);
   @$pb.TagNumber(3)
-  void clearNumber() => clearField(3);
+  void clearNumber() => $_clearField(3);
 
   @$pb.TagNumber(4)
   FieldDescriptorProto_Label get label => $_getN(3);
   @$pb.TagNumber(4)
   set label(FieldDescriptorProto_Label v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasLabel() => $_has(3);
   @$pb.TagNumber(4)
-  void clearLabel() => clearField(4);
+  void clearLabel() => $_clearField(4);
 
   /// If type_name is set, this need not be set.  If both this and type_name
   /// are set, this must be one of TYPE_ENUM, TYPE_MESSAGE or TYPE_GROUP.
@@ -1087,13 +1089,13 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   FieldDescriptorProto_Type get type => $_getN(4);
   @$pb.TagNumber(5)
   set type(FieldDescriptorProto_Type v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasType() => $_has(4);
   @$pb.TagNumber(5)
-  void clearType() => clearField(5);
+  void clearType() => $_clearField(5);
 
   /// For message and enum types, this is the name of the type.  If the name
   /// starts with a '.', it is fully-qualified.  Otherwise, C++-like scoping
@@ -1110,7 +1112,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasTypeName() => $_has(5);
   @$pb.TagNumber(6)
-  void clearTypeName() => clearField(6);
+  void clearTypeName() => $_clearField(6);
 
   /// For numeric types, contains the original text representation of the value.
   /// For booleans, "true" or "false".
@@ -1126,19 +1128,19 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.bool hasDefaultValue() => $_has(6);
   @$pb.TagNumber(7)
-  void clearDefaultValue() => clearField(7);
+  void clearDefaultValue() => $_clearField(7);
 
   @$pb.TagNumber(8)
   FieldOptions get options => $_getN(7);
   @$pb.TagNumber(8)
   set options(FieldOptions v) {
-    setField(8, v);
+    $_setField(8, v);
   }
 
   @$pb.TagNumber(8)
   $core.bool hasOptions() => $_has(7);
   @$pb.TagNumber(8)
-  void clearOptions() => clearField(8);
+  void clearOptions() => $_clearField(8);
   @$pb.TagNumber(8)
   FieldOptions ensureOptions() => $_ensure(7);
 
@@ -1154,7 +1156,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $core.bool hasOneofIndex() => $_has(8);
   @$pb.TagNumber(9)
-  void clearOneofIndex() => clearField(9);
+  void clearOneofIndex() => $_clearField(9);
 
   /// JSON name of this field. The value is set by protocol compiler. If the
   /// user has set a "json_name" option on this field, that option's value
@@ -1170,7 +1172,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   $core.bool hasJsonName() => $_has(9);
   @$pb.TagNumber(10)
-  void clearJsonName() => clearField(10);
+  void clearJsonName() => $_clearField(10);
 
   ///  If true, this is a proto3 "optional". When a proto3 field is optional, it
   ///  tracks presence regardless of field type.
@@ -1203,7 +1205,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(17)
   $core.bool hasProto3Optional() => $_has(10);
   @$pb.TagNumber(17)
-  void clearProto3Optional() => clearField(17);
+  void clearProto3Optional() => $_clearField(17);
 }
 
 /// Describes a oneof.
@@ -1272,19 +1274,19 @@ class OneofDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   @$pb.TagNumber(2)
   OneofOptions get options => $_getN(1);
   @$pb.TagNumber(2)
   set options(OneofOptions v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasOptions() => $_has(1);
   @$pb.TagNumber(2)
-  void clearOptions() => clearField(2);
+  void clearOptions() => $_clearField(2);
   @$pb.TagNumber(2)
   OneofOptions ensureOptions() => $_ensure(1);
 }
@@ -1365,7 +1367,7 @@ class EnumDescriptorProto_EnumReservedRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasStart() => $_has(0);
   @$pb.TagNumber(1)
-  void clearStart() => clearField(1);
+  void clearStart() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.int get end => $_getIZ(1);
@@ -1377,7 +1379,7 @@ class EnumDescriptorProto_EnumReservedRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasEnd() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEnd() => clearField(2);
+  void clearEnd() => $_clearField(2);
 }
 
 /// Describes an enum type.
@@ -1464,22 +1466,22 @@ class EnumDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<EnumValueDescriptorProto> get value => $_getList(1);
+  $pb.PbList<EnumValueDescriptorProto> get value => $_getList(1);
 
   @$pb.TagNumber(3)
   EnumOptions get options => $_getN(2);
   @$pb.TagNumber(3)
   set options(EnumOptions v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasOptions() => $_has(2);
   @$pb.TagNumber(3)
-  void clearOptions() => clearField(3);
+  void clearOptions() => $_clearField(3);
   @$pb.TagNumber(3)
   EnumOptions ensureOptions() => $_ensure(2);
 
@@ -1487,13 +1489,13 @@ class EnumDescriptorProto extends $pb.GeneratedMessage {
   /// by enum values in the same enum declaration. Reserved ranges may not
   /// overlap.
   @$pb.TagNumber(4)
-  $core.List<EnumDescriptorProto_EnumReservedRange> get reservedRange =>
+  $pb.PbList<EnumDescriptorProto_EnumReservedRange> get reservedRange =>
       $_getList(3);
 
   /// Reserved enum value names, which may not be reused. A given name may only
   /// be reserved once.
   @$pb.TagNumber(5)
-  $core.List<$core.String> get reservedName => $_getList(4);
+  $pb.PbList<$core.String> get reservedName => $_getList(4);
 }
 
 /// Describes a value within an enum.
@@ -1568,7 +1570,7 @@ class EnumValueDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.int get number => $_getIZ(1);
@@ -1580,19 +1582,19 @@ class EnumValueDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasNumber() => $_has(1);
   @$pb.TagNumber(2)
-  void clearNumber() => clearField(2);
+  void clearNumber() => $_clearField(2);
 
   @$pb.TagNumber(3)
   EnumValueOptions get options => $_getN(2);
   @$pb.TagNumber(3)
   set options(EnumValueOptions v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasOptions() => $_has(2);
   @$pb.TagNumber(3)
-  void clearOptions() => clearField(3);
+  void clearOptions() => $_clearField(3);
   @$pb.TagNumber(3)
   EnumValueOptions ensureOptions() => $_ensure(2);
 }
@@ -1671,22 +1673,22 @@ class ServiceDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<MethodDescriptorProto> get method => $_getList(1);
+  $pb.PbList<MethodDescriptorProto> get method => $_getList(1);
 
   @$pb.TagNumber(3)
   ServiceOptions get options => $_getN(2);
   @$pb.TagNumber(3)
   set options(ServiceOptions v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasOptions() => $_has(2);
   @$pb.TagNumber(3)
-  void clearOptions() => clearField(3);
+  void clearOptions() => $_clearField(3);
   @$pb.TagNumber(3)
   ServiceOptions ensureOptions() => $_ensure(2);
 }
@@ -1778,7 +1780,7 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// Input and output type names.  These are resolved in the same way as
   /// FieldDescriptorProto.type_name, but must refer to a message type.
@@ -1792,7 +1794,7 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasInputType() => $_has(1);
   @$pb.TagNumber(2)
-  void clearInputType() => clearField(2);
+  void clearInputType() => $_clearField(2);
 
   @$pb.TagNumber(3)
   $core.String get outputType => $_getSZ(2);
@@ -1804,19 +1806,19 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasOutputType() => $_has(2);
   @$pb.TagNumber(3)
-  void clearOutputType() => clearField(3);
+  void clearOutputType() => $_clearField(3);
 
   @$pb.TagNumber(4)
   MethodOptions get options => $_getN(3);
   @$pb.TagNumber(4)
   set options(MethodOptions v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasOptions() => $_has(3);
   @$pb.TagNumber(4)
-  void clearOptions() => clearField(4);
+  void clearOptions() => $_clearField(4);
   @$pb.TagNumber(4)
   MethodOptions ensureOptions() => $_ensure(3);
 
@@ -1831,7 +1833,7 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasClientStreaming() => $_has(4);
   @$pb.TagNumber(5)
-  void clearClientStreaming() => clearField(5);
+  void clearClientStreaming() => $_clearField(5);
 
   /// Identifies if server streams multiple server messages
   @$pb.TagNumber(6)
@@ -1844,7 +1846,7 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasServerStreaming() => $_has(5);
   @$pb.TagNumber(6)
-  void clearServerStreaming() => clearField(6);
+  void clearServerStreaming() => $_clearField(6);
 }
 
 class FileOptions extends $pb.GeneratedMessage {
@@ -2020,7 +2022,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasJavaPackage() => $_has(0);
   @$pb.TagNumber(1)
-  void clearJavaPackage() => clearField(1);
+  void clearJavaPackage() => $_clearField(1);
 
   /// Controls the name of the wrapper Java class generated for the .proto file.
   /// That class will always contain the .proto file's getDescriptor() method as
@@ -2037,19 +2039,19 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.bool hasJavaOuterClassname() => $_has(1);
   @$pb.TagNumber(8)
-  void clearJavaOuterClassname() => clearField(8);
+  void clearJavaOuterClassname() => $_clearField(8);
 
   @$pb.TagNumber(9)
   FileOptions_OptimizeMode get optimizeFor => $_getN(2);
   @$pb.TagNumber(9)
   set optimizeFor(FileOptions_OptimizeMode v) {
-    setField(9, v);
+    $_setField(9, v);
   }
 
   @$pb.TagNumber(9)
   $core.bool hasOptimizeFor() => $_has(2);
   @$pb.TagNumber(9)
-  void clearOptimizeFor() => clearField(9);
+  void clearOptimizeFor() => $_clearField(9);
 
   /// If enabled, then the Java code generator will generate a separate .java
   /// file for each top-level message, enum, and service defined in the .proto
@@ -2067,7 +2069,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   $core.bool hasJavaMultipleFiles() => $_has(3);
   @$pb.TagNumber(10)
-  void clearJavaMultipleFiles() => clearField(10);
+  void clearJavaMultipleFiles() => $_clearField(10);
 
   /// Sets the Go package where structs generated from this .proto will be
   /// placed. If omitted, the Go package will be derived from the following:
@@ -2084,7 +2086,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   $core.bool hasGoPackage() => $_has(4);
   @$pb.TagNumber(11)
-  void clearGoPackage() => clearField(11);
+  void clearGoPackage() => $_clearField(11);
 
   ///  Should generic services be generated in each language?  "Generic" services
   ///  are not specific to any particular RPC system.  They are generated by the
@@ -2106,7 +2108,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(16)
   $core.bool hasCcGenericServices() => $_has(5);
   @$pb.TagNumber(16)
-  void clearCcGenericServices() => clearField(16);
+  void clearCcGenericServices() => $_clearField(16);
 
   @$pb.TagNumber(17)
   $core.bool get javaGenericServices => $_getBF(6);
@@ -2118,7 +2120,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(17)
   $core.bool hasJavaGenericServices() => $_has(6);
   @$pb.TagNumber(17)
-  void clearJavaGenericServices() => clearField(17);
+  void clearJavaGenericServices() => $_clearField(17);
 
   @$pb.TagNumber(18)
   $core.bool get pyGenericServices => $_getBF(7);
@@ -2130,7 +2132,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(18)
   $core.bool hasPyGenericServices() => $_has(7);
   @$pb.TagNumber(18)
-  void clearPyGenericServices() => clearField(18);
+  void clearPyGenericServices() => $_clearField(18);
 
   /// This option does nothing.
   @$core.Deprecated('This field is deprecated.')
@@ -2147,7 +2149,7 @@ class FileOptions extends $pb.GeneratedMessage {
   $core.bool hasJavaGenerateEqualsAndHash() => $_has(8);
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(20)
-  void clearJavaGenerateEqualsAndHash() => clearField(20);
+  void clearJavaGenerateEqualsAndHash() => $_clearField(20);
 
   /// Is this file deprecated?
   /// Depending on the target platform, this can emit Deprecated annotations
@@ -2163,7 +2165,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(23)
   $core.bool hasDeprecated() => $_has(9);
   @$pb.TagNumber(23)
-  void clearDeprecated() => clearField(23);
+  void clearDeprecated() => $_clearField(23);
 
   ///  A proto2 file can set this to true to opt in to UTF-8 checking for Java,
   ///  which will throw an exception if invalid UTF-8 is parsed from the wire or
@@ -2185,7 +2187,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(27)
   $core.bool hasJavaStringCheckUtf8() => $_has(10);
   @$pb.TagNumber(27)
-  void clearJavaStringCheckUtf8() => clearField(27);
+  void clearJavaStringCheckUtf8() => $_clearField(27);
 
   /// Enables the use of arenas for the proto messages in this file. This applies
   /// only to generated classes for C++.
@@ -2199,7 +2201,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(31)
   $core.bool hasCcEnableArenas() => $_has(11);
   @$pb.TagNumber(31)
-  void clearCcEnableArenas() => clearField(31);
+  void clearCcEnableArenas() => $_clearField(31);
 
   /// Sets the objective c class prefix which is prepended to all objective c
   /// generated classes from this .proto. There is no default.
@@ -2213,7 +2215,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(36)
   $core.bool hasObjcClassPrefix() => $_has(12);
   @$pb.TagNumber(36)
-  void clearObjcClassPrefix() => clearField(36);
+  void clearObjcClassPrefix() => $_clearField(36);
 
   /// Namespace for generated classes; defaults to the package.
   @$pb.TagNumber(37)
@@ -2226,7 +2228,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(37)
   $core.bool hasCsharpNamespace() => $_has(13);
   @$pb.TagNumber(37)
-  void clearCsharpNamespace() => clearField(37);
+  void clearCsharpNamespace() => $_clearField(37);
 
   /// By default Swift generators will take the proto package and CamelCase it
   /// replacing '.' with underscore and use that to prefix the types/symbols
@@ -2242,7 +2244,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(39)
   $core.bool hasSwiftPrefix() => $_has(14);
   @$pb.TagNumber(39)
-  void clearSwiftPrefix() => clearField(39);
+  void clearSwiftPrefix() => $_clearField(39);
 
   /// Sets the php class prefix which is prepended to all php generated classes
   /// from this .proto. Default is empty.
@@ -2256,7 +2258,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(40)
   $core.bool hasPhpClassPrefix() => $_has(15);
   @$pb.TagNumber(40)
-  void clearPhpClassPrefix() => clearField(40);
+  void clearPhpClassPrefix() => $_clearField(40);
 
   /// Use this option to change the namespace of php generated classes. Default
   /// is empty. When this option is empty, the package name will be used for
@@ -2271,7 +2273,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(41)
   $core.bool hasPhpNamespace() => $_has(16);
   @$pb.TagNumber(41)
-  void clearPhpNamespace() => clearField(41);
+  void clearPhpNamespace() => $_clearField(41);
 
   /// Use this option to change the namespace of php generated metadata classes.
   /// Default is empty. When this option is empty, the proto file name will be
@@ -2286,7 +2288,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(44)
   $core.bool hasPhpMetadataNamespace() => $_has(17);
   @$pb.TagNumber(44)
-  void clearPhpMetadataNamespace() => clearField(44);
+  void clearPhpMetadataNamespace() => $_clearField(44);
 
   /// Use this option to change the package of ruby generated classes. Default
   /// is empty. When this option is not set, the package name will be used for
@@ -2301,27 +2303,27 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(45)
   $core.bool hasRubyPackage() => $_has(18);
   @$pb.TagNumber(45)
-  void clearRubyPackage() => clearField(45);
+  void clearRubyPackage() => $_clearField(45);
 
   /// Any features defined in the specific edition.
   @$pb.TagNumber(50)
   FeatureSet get features => $_getN(19);
   @$pb.TagNumber(50)
   set features(FeatureSet v) {
-    setField(50, v);
+    $_setField(50, v);
   }
 
   @$pb.TagNumber(50)
   $core.bool hasFeatures() => $_has(19);
   @$pb.TagNumber(50)
-  void clearFeatures() => clearField(50);
+  void clearFeatures() => $_clearField(50);
   @$pb.TagNumber(50)
   FeatureSet ensureFeatures() => $_ensure(19);
 
   /// The parser stores options it doesn't recognize here.
   /// See the documentation for the "Options" section above.
   @$pb.TagNumber(999)
-  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(20);
+  $pb.PbList<UninterpretedOption> get uninterpretedOption => $_getList(20);
 }
 
 class MessageOptions extends $pb.GeneratedMessage {
@@ -2437,7 +2439,7 @@ class MessageOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasMessageSetWireFormat() => $_has(0);
   @$pb.TagNumber(1)
-  void clearMessageSetWireFormat() => clearField(1);
+  void clearMessageSetWireFormat() => $_clearField(1);
 
   /// Disables the generation of the standard "descriptor()" accessor, which can
   /// conflict with a field of the same name.  This is meant to make migration
@@ -2452,7 +2454,7 @@ class MessageOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasNoStandardDescriptorAccessor() => $_has(1);
   @$pb.TagNumber(2)
-  void clearNoStandardDescriptorAccessor() => clearField(2);
+  void clearNoStandardDescriptorAccessor() => $_clearField(2);
 
   /// Is this message deprecated?
   /// Depending on the target platform, this can emit Deprecated annotations
@@ -2468,7 +2470,7 @@ class MessageOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasDeprecated() => $_has(2);
   @$pb.TagNumber(3)
-  void clearDeprecated() => clearField(3);
+  void clearDeprecated() => $_clearField(3);
 
   ///  Whether the message is an automatically generated map entry type for the
   ///  maps field.
@@ -2501,7 +2503,7 @@ class MessageOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.bool hasMapEntry() => $_has(3);
   @$pb.TagNumber(7)
-  void clearMapEntry() => clearField(7);
+  void clearMapEntry() => $_clearField(7);
 
   ///  Enable the legacy handling of JSON field name conflicts.  This lowercases
   ///  and strips underscored from the fields before comparison in proto3 only.
@@ -2527,26 +2529,26 @@ class MessageOptions extends $pb.GeneratedMessage {
   $core.bool hasDeprecatedLegacyJsonFieldConflicts() => $_has(4);
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(11)
-  void clearDeprecatedLegacyJsonFieldConflicts() => clearField(11);
+  void clearDeprecatedLegacyJsonFieldConflicts() => $_clearField(11);
 
   /// Any features defined in the specific edition.
   @$pb.TagNumber(12)
   FeatureSet get features => $_getN(5);
   @$pb.TagNumber(12)
   set features(FeatureSet v) {
-    setField(12, v);
+    $_setField(12, v);
   }
 
   @$pb.TagNumber(12)
   $core.bool hasFeatures() => $_has(5);
   @$pb.TagNumber(12)
-  void clearFeatures() => clearField(12);
+  void clearFeatures() => $_clearField(12);
   @$pb.TagNumber(12)
   FeatureSet ensureFeatures() => $_ensure(5);
 
   /// The parser stores options it doesn't recognize here. See above.
   @$pb.TagNumber(999)
-  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(6);
+  $pb.PbList<UninterpretedOption> get uninterpretedOption => $_getList(6);
 }
 
 class FieldOptions_EditionDefault extends $pb.GeneratedMessage {
@@ -2620,19 +2622,19 @@ class FieldOptions_EditionDefault extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(2)
-  void clearValue() => clearField(2);
+  void clearValue() => $_clearField(2);
 
   @$pb.TagNumber(3)
   Edition get edition => $_getN(1);
   @$pb.TagNumber(3)
   set edition(Edition v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasEdition() => $_has(1);
   @$pb.TagNumber(3)
-  void clearEdition() => clearField(3);
+  void clearEdition() => $_clearField(3);
 }
 
 /// Information about the support window of a feature.
@@ -2722,13 +2724,13 @@ class FieldOptions_FeatureSupport extends $pb.GeneratedMessage {
   Edition get editionIntroduced => $_getN(0);
   @$pb.TagNumber(1)
   set editionIntroduced(Edition v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasEditionIntroduced() => $_has(0);
   @$pb.TagNumber(1)
-  void clearEditionIntroduced() => clearField(1);
+  void clearEditionIntroduced() => $_clearField(1);
 
   /// The edition this feature becomes deprecated in.  Using this after this
   /// edition may trigger warnings.
@@ -2736,13 +2738,13 @@ class FieldOptions_FeatureSupport extends $pb.GeneratedMessage {
   Edition get editionDeprecated => $_getN(1);
   @$pb.TagNumber(2)
   set editionDeprecated(Edition v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasEditionDeprecated() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEditionDeprecated() => clearField(2);
+  void clearEditionDeprecated() => $_clearField(2);
 
   /// The deprecation warning text if this feature is used after the edition it
   /// was marked deprecated in.
@@ -2756,7 +2758,7 @@ class FieldOptions_FeatureSupport extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasDeprecationWarning() => $_has(2);
   @$pb.TagNumber(3)
-  void clearDeprecationWarning() => clearField(3);
+  void clearDeprecationWarning() => $_clearField(3);
 
   /// The edition this feature is no longer available in.  In editions after
   /// this one, the last default assigned will be used, and proto files will
@@ -2765,13 +2767,13 @@ class FieldOptions_FeatureSupport extends $pb.GeneratedMessage {
   Edition get editionRemoved => $_getN(3);
   @$pb.TagNumber(4)
   set editionRemoved(Edition v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasEditionRemoved() => $_has(3);
   @$pb.TagNumber(4)
-  void clearEditionRemoved() => clearField(4);
+  void clearEditionRemoved() => $_clearField(4);
 }
 
 class FieldOptions extends $pb.GeneratedMessage {
@@ -2921,13 +2923,13 @@ class FieldOptions extends $pb.GeneratedMessage {
   FieldOptions_CType get ctype => $_getN(0);
   @$pb.TagNumber(1)
   set ctype(FieldOptions_CType v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasCtype() => $_has(0);
   @$pb.TagNumber(1)
-  void clearCtype() => clearField(1);
+  void clearCtype() => $_clearField(1);
 
   /// The packed option can be enabled for repeated primitive fields to enable
   /// a more efficient representation on the wire. Rather than repeatedly
@@ -2946,7 +2948,7 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasPacked() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPacked() => clearField(2);
+  void clearPacked() => $_clearField(2);
 
   /// Is this field deprecated?
   /// Depending on the target platform, this can emit Deprecated annotations
@@ -2962,7 +2964,7 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasDeprecated() => $_has(2);
   @$pb.TagNumber(3)
-  void clearDeprecated() => clearField(3);
+  void clearDeprecated() => $_clearField(3);
 
   ///  Should this field be parsed lazily?  Lazy applies only to message-type
   ///  fields.  It means that when the outer message is initially parsed, the
@@ -2996,7 +2998,7 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasLazy() => $_has(3);
   @$pb.TagNumber(5)
-  void clearLazy() => clearField(5);
+  void clearLazy() => $_clearField(5);
 
   ///  The jstype option determines the JavaScript type used for values of the
   ///  field.  The option is permitted only for 64 bit integral and fixed types
@@ -3013,13 +3015,13 @@ class FieldOptions extends $pb.GeneratedMessage {
   FieldOptions_JSType get jstype => $_getN(4);
   @$pb.TagNumber(6)
   set jstype(FieldOptions_JSType v) {
-    setField(6, v);
+    $_setField(6, v);
   }
 
   @$pb.TagNumber(6)
   $core.bool hasJstype() => $_has(4);
   @$pb.TagNumber(6)
-  void clearJstype() => clearField(6);
+  void clearJstype() => $_clearField(6);
 
   /// For Google-internal migration only. Do not use.
   @$pb.TagNumber(10)
@@ -3032,7 +3034,7 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   $core.bool hasWeak() => $_has(5);
   @$pb.TagNumber(10)
-  void clearWeak() => clearField(10);
+  void clearWeak() => $_clearField(10);
 
   /// unverified_lazy does no correctness checks on the byte stream. This should
   /// only be used where lazy with verification is prohibitive for performance
@@ -3047,7 +3049,7 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(15)
   $core.bool hasUnverifiedLazy() => $_has(6);
   @$pb.TagNumber(15)
-  void clearUnverifiedLazy() => clearField(15);
+  void clearUnverifiedLazy() => $_clearField(15);
 
   /// Indicate that the field value should not be printed out when using debug
   /// formats, e.g. when the field contains sensitive credentials.
@@ -3061,38 +3063,38 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(16)
   $core.bool hasDebugRedact() => $_has(7);
   @$pb.TagNumber(16)
-  void clearDebugRedact() => clearField(16);
+  void clearDebugRedact() => $_clearField(16);
 
   @$pb.TagNumber(17)
   FieldOptions_OptionRetention get retention => $_getN(8);
   @$pb.TagNumber(17)
   set retention(FieldOptions_OptionRetention v) {
-    setField(17, v);
+    $_setField(17, v);
   }
 
   @$pb.TagNumber(17)
   $core.bool hasRetention() => $_has(8);
   @$pb.TagNumber(17)
-  void clearRetention() => clearField(17);
+  void clearRetention() => $_clearField(17);
 
   @$pb.TagNumber(19)
-  $core.List<FieldOptions_OptionTargetType> get targets => $_getList(9);
+  $pb.PbList<FieldOptions_OptionTargetType> get targets => $_getList(9);
 
   @$pb.TagNumber(20)
-  $core.List<FieldOptions_EditionDefault> get editionDefaults => $_getList(10);
+  $pb.PbList<FieldOptions_EditionDefault> get editionDefaults => $_getList(10);
 
   /// Any features defined in the specific edition.
   @$pb.TagNumber(21)
   FeatureSet get features => $_getN(11);
   @$pb.TagNumber(21)
   set features(FeatureSet v) {
-    setField(21, v);
+    $_setField(21, v);
   }
 
   @$pb.TagNumber(21)
   $core.bool hasFeatures() => $_has(11);
   @$pb.TagNumber(21)
-  void clearFeatures() => clearField(21);
+  void clearFeatures() => $_clearField(21);
   @$pb.TagNumber(21)
   FeatureSet ensureFeatures() => $_ensure(11);
 
@@ -3100,19 +3102,19 @@ class FieldOptions extends $pb.GeneratedMessage {
   FieldOptions_FeatureSupport get featureSupport => $_getN(12);
   @$pb.TagNumber(22)
   set featureSupport(FieldOptions_FeatureSupport v) {
-    setField(22, v);
+    $_setField(22, v);
   }
 
   @$pb.TagNumber(22)
   $core.bool hasFeatureSupport() => $_has(12);
   @$pb.TagNumber(22)
-  void clearFeatureSupport() => clearField(22);
+  void clearFeatureSupport() => $_clearField(22);
   @$pb.TagNumber(22)
   FieldOptions_FeatureSupport ensureFeatureSupport() => $_ensure(12);
 
   /// The parser stores options it doesn't recognize here. See above.
   @$pb.TagNumber(999)
-  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(13);
+  $pb.PbList<UninterpretedOption> get uninterpretedOption => $_getList(13);
 }
 
 class OneofOptions extends $pb.GeneratedMessage {
@@ -3177,19 +3179,19 @@ class OneofOptions extends $pb.GeneratedMessage {
   FeatureSet get features => $_getN(0);
   @$pb.TagNumber(1)
   set features(FeatureSet v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasFeatures() => $_has(0);
   @$pb.TagNumber(1)
-  void clearFeatures() => clearField(1);
+  void clearFeatures() => $_clearField(1);
   @$pb.TagNumber(1)
   FeatureSet ensureFeatures() => $_ensure(0);
 
   /// The parser stores options it doesn't recognize here. See above.
   @$pb.TagNumber(999)
-  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(1);
+  $pb.PbList<UninterpretedOption> get uninterpretedOption => $_getList(1);
 }
 
 class EnumOptions extends $pb.GeneratedMessage {
@@ -3278,7 +3280,7 @@ class EnumOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasAllowAlias() => $_has(0);
   @$pb.TagNumber(2)
-  void clearAllowAlias() => clearField(2);
+  void clearAllowAlias() => $_clearField(2);
 
   /// Is this enum deprecated?
   /// Depending on the target platform, this can emit Deprecated annotations
@@ -3294,7 +3296,7 @@ class EnumOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasDeprecated() => $_has(1);
   @$pb.TagNumber(3)
-  void clearDeprecated() => clearField(3);
+  void clearDeprecated() => $_clearField(3);
 
   /// Enable the legacy handling of JSON field name conflicts.  This lowercases
   /// and strips underscored from the fields before comparison in proto3 only.
@@ -3316,26 +3318,26 @@ class EnumOptions extends $pb.GeneratedMessage {
   $core.bool hasDeprecatedLegacyJsonFieldConflicts() => $_has(2);
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(6)
-  void clearDeprecatedLegacyJsonFieldConflicts() => clearField(6);
+  void clearDeprecatedLegacyJsonFieldConflicts() => $_clearField(6);
 
   /// Any features defined in the specific edition.
   @$pb.TagNumber(7)
   FeatureSet get features => $_getN(3);
   @$pb.TagNumber(7)
   set features(FeatureSet v) {
-    setField(7, v);
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasFeatures() => $_has(3);
   @$pb.TagNumber(7)
-  void clearFeatures() => clearField(7);
+  void clearFeatures() => $_clearField(7);
   @$pb.TagNumber(7)
   FeatureSet ensureFeatures() => $_ensure(3);
 
   /// The parser stores options it doesn't recognize here. See above.
   @$pb.TagNumber(999)
-  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(4);
+  $pb.PbList<UninterpretedOption> get uninterpretedOption => $_getList(4);
 }
 
 class EnumValueOptions extends $pb.GeneratedMessage {
@@ -3426,20 +3428,20 @@ class EnumValueOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasDeprecated() => $_has(0);
   @$pb.TagNumber(1)
-  void clearDeprecated() => clearField(1);
+  void clearDeprecated() => $_clearField(1);
 
   /// Any features defined in the specific edition.
   @$pb.TagNumber(2)
   FeatureSet get features => $_getN(1);
   @$pb.TagNumber(2)
   set features(FeatureSet v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasFeatures() => $_has(1);
   @$pb.TagNumber(2)
-  void clearFeatures() => clearField(2);
+  void clearFeatures() => $_clearField(2);
   @$pb.TagNumber(2)
   FeatureSet ensureFeatures() => $_ensure(1);
 
@@ -3456,26 +3458,26 @@ class EnumValueOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasDebugRedact() => $_has(2);
   @$pb.TagNumber(3)
-  void clearDebugRedact() => clearField(3);
+  void clearDebugRedact() => $_clearField(3);
 
   /// Information about the support window of a feature value.
   @$pb.TagNumber(4)
   FieldOptions_FeatureSupport get featureSupport => $_getN(3);
   @$pb.TagNumber(4)
   set featureSupport(FieldOptions_FeatureSupport v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasFeatureSupport() => $_has(3);
   @$pb.TagNumber(4)
-  void clearFeatureSupport() => clearField(4);
+  void clearFeatureSupport() => $_clearField(4);
   @$pb.TagNumber(4)
   FieldOptions_FeatureSupport ensureFeatureSupport() => $_ensure(3);
 
   /// The parser stores options it doesn't recognize here. See above.
   @$pb.TagNumber(999)
-  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(4);
+  $pb.PbList<UninterpretedOption> get uninterpretedOption => $_getList(4);
 }
 
 class ServiceOptions extends $pb.GeneratedMessage {
@@ -3554,26 +3556,26 @@ class ServiceOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(33)
   $core.bool hasDeprecated() => $_has(0);
   @$pb.TagNumber(33)
-  void clearDeprecated() => clearField(33);
+  void clearDeprecated() => $_clearField(33);
 
   /// Any features defined in the specific edition.
   @$pb.TagNumber(34)
   FeatureSet get features => $_getN(1);
   @$pb.TagNumber(34)
   set features(FeatureSet v) {
-    setField(34, v);
+    $_setField(34, v);
   }
 
   @$pb.TagNumber(34)
   $core.bool hasFeatures() => $_has(1);
   @$pb.TagNumber(34)
-  void clearFeatures() => clearField(34);
+  void clearFeatures() => $_clearField(34);
   @$pb.TagNumber(34)
   FeatureSet ensureFeatures() => $_ensure(1);
 
   /// The parser stores options it doesn't recognize here. See above.
   @$pb.TagNumber(999)
-  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(2);
+  $pb.PbList<UninterpretedOption> get uninterpretedOption => $_getList(2);
 }
 
 class MethodOptions extends $pb.GeneratedMessage {
@@ -3661,38 +3663,38 @@ class MethodOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(33)
   $core.bool hasDeprecated() => $_has(0);
   @$pb.TagNumber(33)
-  void clearDeprecated() => clearField(33);
+  void clearDeprecated() => $_clearField(33);
 
   @$pb.TagNumber(34)
   MethodOptions_IdempotencyLevel get idempotencyLevel => $_getN(1);
   @$pb.TagNumber(34)
   set idempotencyLevel(MethodOptions_IdempotencyLevel v) {
-    setField(34, v);
+    $_setField(34, v);
   }
 
   @$pb.TagNumber(34)
   $core.bool hasIdempotencyLevel() => $_has(1);
   @$pb.TagNumber(34)
-  void clearIdempotencyLevel() => clearField(34);
+  void clearIdempotencyLevel() => $_clearField(34);
 
   /// Any features defined in the specific edition.
   @$pb.TagNumber(35)
   FeatureSet get features => $_getN(2);
   @$pb.TagNumber(35)
   set features(FeatureSet v) {
-    setField(35, v);
+    $_setField(35, v);
   }
 
   @$pb.TagNumber(35)
   $core.bool hasFeatures() => $_has(2);
   @$pb.TagNumber(35)
-  void clearFeatures() => clearField(35);
+  void clearFeatures() => $_clearField(35);
   @$pb.TagNumber(35)
   FeatureSet ensureFeatures() => $_ensure(2);
 
   /// The parser stores options it doesn't recognize here. See above.
   @$pb.TagNumber(999)
-  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(3);
+  $pb.PbList<UninterpretedOption> get uninterpretedOption => $_getList(3);
 }
 
 /// The name of the uninterpreted option.  Each string represents a segment in
@@ -3768,7 +3770,7 @@ class UninterpretedOption_NamePart extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasNamePart() => $_has(0);
   @$pb.TagNumber(1)
-  void clearNamePart() => clearField(1);
+  void clearNamePart() => $_clearField(1);
 
   @$pb.TagNumber(2)
   $core.bool get isExtension => $_getBF(1);
@@ -3780,7 +3782,7 @@ class UninterpretedOption_NamePart extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasIsExtension() => $_has(1);
   @$pb.TagNumber(2)
-  void clearIsExtension() => clearField(2);
+  void clearIsExtension() => $_clearField(2);
 }
 
 /// A message representing a option the parser does not recognize. This only
@@ -3874,7 +3876,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   static UninterpretedOption? _defaultInstance;
 
   @$pb.TagNumber(2)
-  $core.List<UninterpretedOption_NamePart> get name => $_getList(0);
+  $pb.PbList<UninterpretedOption_NamePart> get name => $_getList(0);
 
   /// The value of the uninterpreted option, in whatever type the tokenizer
   /// identified it as during parsing. Exactly one of these should be set.
@@ -3888,7 +3890,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasIdentifierValue() => $_has(1);
   @$pb.TagNumber(3)
-  void clearIdentifierValue() => clearField(3);
+  void clearIdentifierValue() => $_clearField(3);
 
   @$pb.TagNumber(4)
   $fixnum.Int64 get positiveIntValue => $_getI64(2);
@@ -3900,7 +3902,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasPositiveIntValue() => $_has(2);
   @$pb.TagNumber(4)
-  void clearPositiveIntValue() => clearField(4);
+  void clearPositiveIntValue() => $_clearField(4);
 
   @$pb.TagNumber(5)
   $fixnum.Int64 get negativeIntValue => $_getI64(3);
@@ -3912,7 +3914,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasNegativeIntValue() => $_has(3);
   @$pb.TagNumber(5)
-  void clearNegativeIntValue() => clearField(5);
+  void clearNegativeIntValue() => $_clearField(5);
 
   @$pb.TagNumber(6)
   $core.double get doubleValue => $_getN(4);
@@ -3924,7 +3926,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasDoubleValue() => $_has(4);
   @$pb.TagNumber(6)
-  void clearDoubleValue() => clearField(6);
+  void clearDoubleValue() => $_clearField(6);
 
   @$pb.TagNumber(7)
   $core.List<$core.int> get stringValue => $_getN(5);
@@ -3936,7 +3938,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.bool hasStringValue() => $_has(5);
   @$pb.TagNumber(7)
-  void clearStringValue() => clearField(7);
+  void clearStringValue() => $_clearField(7);
 
   @$pb.TagNumber(8)
   $core.String get aggregateValue => $_getSZ(6);
@@ -3948,7 +3950,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.bool hasAggregateValue() => $_has(6);
   @$pb.TagNumber(8)
-  void clearAggregateValue() => clearField(8);
+  void clearAggregateValue() => $_clearField(8);
 }
 
 /// TODO Enums in C++ gencode (and potentially other languages) are
@@ -4058,73 +4060,73 @@ class FeatureSet extends $pb.GeneratedMessage {
   FeatureSet_FieldPresence get fieldPresence => $_getN(0);
   @$pb.TagNumber(1)
   set fieldPresence(FeatureSet_FieldPresence v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasFieldPresence() => $_has(0);
   @$pb.TagNumber(1)
-  void clearFieldPresence() => clearField(1);
+  void clearFieldPresence() => $_clearField(1);
 
   @$pb.TagNumber(2)
   FeatureSet_EnumType get enumType => $_getN(1);
   @$pb.TagNumber(2)
   set enumType(FeatureSet_EnumType v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasEnumType() => $_has(1);
   @$pb.TagNumber(2)
-  void clearEnumType() => clearField(2);
+  void clearEnumType() => $_clearField(2);
 
   @$pb.TagNumber(3)
   FeatureSet_RepeatedFieldEncoding get repeatedFieldEncoding => $_getN(2);
   @$pb.TagNumber(3)
   set repeatedFieldEncoding(FeatureSet_RepeatedFieldEncoding v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasRepeatedFieldEncoding() => $_has(2);
   @$pb.TagNumber(3)
-  void clearRepeatedFieldEncoding() => clearField(3);
+  void clearRepeatedFieldEncoding() => $_clearField(3);
 
   @$pb.TagNumber(4)
   FeatureSet_Utf8Validation get utf8Validation => $_getN(3);
   @$pb.TagNumber(4)
   set utf8Validation(FeatureSet_Utf8Validation v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasUtf8Validation() => $_has(3);
   @$pb.TagNumber(4)
-  void clearUtf8Validation() => clearField(4);
+  void clearUtf8Validation() => $_clearField(4);
 
   @$pb.TagNumber(5)
   FeatureSet_MessageEncoding get messageEncoding => $_getN(4);
   @$pb.TagNumber(5)
   set messageEncoding(FeatureSet_MessageEncoding v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasMessageEncoding() => $_has(4);
   @$pb.TagNumber(5)
-  void clearMessageEncoding() => clearField(5);
+  void clearMessageEncoding() => $_clearField(5);
 
   @$pb.TagNumber(6)
   FeatureSet_JsonFormat get jsonFormat => $_getN(5);
   @$pb.TagNumber(6)
   set jsonFormat(FeatureSet_JsonFormat v) {
-    setField(6, v);
+    $_setField(6, v);
   }
 
   @$pb.TagNumber(6)
   $core.bool hasJsonFormat() => $_has(5);
   @$pb.TagNumber(6)
-  void clearJsonFormat() => clearField(6);
+  void clearJsonFormat() => $_clearField(6);
 }
 
 /// A map from every known edition with a unique set of defaults to its
@@ -4205,26 +4207,26 @@ class FeatureSetDefaults_FeatureSetEditionDefault extends $pb.GeneratedMessage {
   Edition get edition => $_getN(0);
   @$pb.TagNumber(3)
   set edition(Edition v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasEdition() => $_has(0);
   @$pb.TagNumber(3)
-  void clearEdition() => clearField(3);
+  void clearEdition() => $_clearField(3);
 
   /// Defaults of features that can be overridden in this edition.
   @$pb.TagNumber(4)
   FeatureSet get overridableFeatures => $_getN(1);
   @$pb.TagNumber(4)
   set overridableFeatures(FeatureSet v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasOverridableFeatures() => $_has(1);
   @$pb.TagNumber(4)
-  void clearOverridableFeatures() => clearField(4);
+  void clearOverridableFeatures() => $_clearField(4);
   @$pb.TagNumber(4)
   FeatureSet ensureOverridableFeatures() => $_ensure(1);
 
@@ -4233,13 +4235,13 @@ class FeatureSetDefaults_FeatureSetEditionDefault extends $pb.GeneratedMessage {
   FeatureSet get fixedFeatures => $_getN(2);
   @$pb.TagNumber(5)
   set fixedFeatures(FeatureSet v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasFixedFeatures() => $_has(2);
   @$pb.TagNumber(5)
-  void clearFixedFeatures() => clearField(5);
+  void clearFixedFeatures() => $_clearField(5);
   @$pb.TagNumber(5)
   FeatureSet ensureFixedFeatures() => $_ensure(2);
 }
@@ -4315,7 +4317,7 @@ class FeatureSetDefaults extends $pb.GeneratedMessage {
   static FeatureSetDefaults? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<FeatureSetDefaults_FeatureSetEditionDefault> get defaults =>
+  $pb.PbList<FeatureSetDefaults_FeatureSetEditionDefault> get defaults =>
       $_getList(0);
 
   /// The minimum supported edition (inclusive) when this was constructed.
@@ -4324,13 +4326,13 @@ class FeatureSetDefaults extends $pb.GeneratedMessage {
   Edition get minimumEdition => $_getN(1);
   @$pb.TagNumber(4)
   set minimumEdition(Edition v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasMinimumEdition() => $_has(1);
   @$pb.TagNumber(4)
-  void clearMinimumEdition() => clearField(4);
+  void clearMinimumEdition() => $_clearField(4);
 
   /// The maximum known edition (inclusive) when this was constructed. Editions
   /// after this will not have reliable defaults.
@@ -4338,13 +4340,13 @@ class FeatureSetDefaults extends $pb.GeneratedMessage {
   Edition get maximumEdition => $_getN(2);
   @$pb.TagNumber(5)
   set maximumEdition(Edition v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasMaximumEdition() => $_has(2);
   @$pb.TagNumber(5)
-  void clearMaximumEdition() => clearField(5);
+  void clearMaximumEdition() => $_clearField(5);
 }
 
 class SourceCodeInfo_Location extends $pb.GeneratedMessage {
@@ -4442,7 +4444,7 @@ class SourceCodeInfo_Location extends $pb.GeneratedMessage {
   ///  this path refers to the whole field declaration (from the beginning
   ///  of the label to the terminating semicolon).
   @$pb.TagNumber(1)
-  $core.List<$core.int> get path => $_getList(0);
+  $pb.PbList<$core.int> get path => $_getList(0);
 
   /// Always has exactly three or four elements: start line, start column,
   /// end line (optional, otherwise assumed same as start line), end column.
@@ -4450,7 +4452,7 @@ class SourceCodeInfo_Location extends $pb.GeneratedMessage {
   /// and column numbers are zero-based -- typically you will want to add
   /// 1 to each before displaying to a user.
   @$pb.TagNumber(2)
-  $core.List<$core.int> get span => $_getList(1);
+  $pb.PbList<$core.int> get span => $_getList(1);
 
   ///  If this SourceCodeInfo represents a complete declaration, these are any
   ///  comments appearing before and after the declaration which appear to be
@@ -4509,7 +4511,7 @@ class SourceCodeInfo_Location extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasLeadingComments() => $_has(2);
   @$pb.TagNumber(3)
-  void clearLeadingComments() => clearField(3);
+  void clearLeadingComments() => $_clearField(3);
 
   @$pb.TagNumber(4)
   $core.String get trailingComments => $_getSZ(3);
@@ -4521,10 +4523,10 @@ class SourceCodeInfo_Location extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasTrailingComments() => $_has(3);
   @$pb.TagNumber(4)
-  void clearTrailingComments() => clearField(4);
+  void clearTrailingComments() => $_clearField(4);
 
   @$pb.TagNumber(6)
-  $core.List<$core.String> get leadingDetachedComments => $_getList(4);
+  $pb.PbList<$core.String> get leadingDetachedComments => $_getList(4);
 }
 
 /// Encapsulates information about the original source file from which a
@@ -4624,7 +4626,7 @@ class SourceCodeInfo extends $pb.GeneratedMessage {
   ///    ignore those that it doesn't understand, as more types of locations could
   ///    be recorded in the future.
   @$pb.TagNumber(1)
-  $core.List<SourceCodeInfo_Location> get location => $_getList(0);
+  $pb.PbList<SourceCodeInfo_Location> get location => $_getList(0);
 }
 
 class GeneratedCodeInfo_Annotation extends $pb.GeneratedMessage {
@@ -4707,7 +4709,7 @@ class GeneratedCodeInfo_Annotation extends $pb.GeneratedMessage {
   /// Identifies the element in the original source .proto file. This field
   /// is formatted the same as SourceCodeInfo.Location.path.
   @$pb.TagNumber(1)
-  $core.List<$core.int> get path => $_getList(0);
+  $pb.PbList<$core.int> get path => $_getList(0);
 
   /// Identifies the filesystem path to the original source .proto.
   @$pb.TagNumber(2)
@@ -4720,7 +4722,7 @@ class GeneratedCodeInfo_Annotation extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasSourceFile() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSourceFile() => clearField(2);
+  void clearSourceFile() => $_clearField(2);
 
   /// Identifies the starting offset in bytes in the generated code
   /// that relates to the identified object.
@@ -4734,7 +4736,7 @@ class GeneratedCodeInfo_Annotation extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasBegin() => $_has(2);
   @$pb.TagNumber(3)
-  void clearBegin() => clearField(3);
+  void clearBegin() => $_clearField(3);
 
   /// Identifies the ending offset in bytes in the generated code that
   /// relates to the identified object. The end offset should be one past
@@ -4749,19 +4751,19 @@ class GeneratedCodeInfo_Annotation extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasEnd() => $_has(3);
   @$pb.TagNumber(4)
-  void clearEnd() => clearField(4);
+  void clearEnd() => $_clearField(4);
 
   @$pb.TagNumber(5)
   GeneratedCodeInfo_Annotation_Semantic get semantic => $_getN(4);
   @$pb.TagNumber(5)
   set semantic(GeneratedCodeInfo_Annotation_Semantic v) {
-    setField(5, v);
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasSemantic() => $_has(4);
   @$pb.TagNumber(5)
-  void clearSemantic() => clearField(5);
+  void clearSemantic() => $_clearField(5);
 }
 
 /// Describes the relationship between generated code and its original source
@@ -4821,7 +4823,7 @@ class GeneratedCodeInfo extends $pb.GeneratedMessage {
   /// An Annotation connects some span of text in generated code to an element
   /// of its generating .proto file.
   @$pb.TagNumber(1)
-  $core.List<GeneratedCodeInfo_Annotation> get annotation => $_getList(0);
+  $pb.PbList<GeneratedCodeInfo_Annotation> get annotation => $_getList(0);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

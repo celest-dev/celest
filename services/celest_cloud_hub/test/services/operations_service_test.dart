@@ -150,7 +150,7 @@ void main() {
             pb.FieldMask(paths: ['test']).packIntoAny(),
             pb.Empty().packIntoAny(),
             pb.Struct(
-              fields: {'test': pb.Value(stringValue: 'test')},
+              fields: [MapEntry('test', pb.Value(stringValue: 'test'))],
             ).packIntoAny(),
             pb.ListValue(values: [pb.Value(stringValue: 'test')]).packIntoAny(),
             pb.Value(stringValue: 'test').packIntoAny(),

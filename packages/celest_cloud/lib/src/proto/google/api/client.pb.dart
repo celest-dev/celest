@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/api/client.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -15,7 +15,9 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../protobuf/duration.pb.dart' as $8;
 import 'client.pbenum.dart';
-import 'launch_stage.pbenum.dart' as $12;
+import 'launch_stage.pbenum.dart' as $17;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'client.pbenum.dart';
 
@@ -105,24 +107,24 @@ class CommonLanguageSettings extends $pb.GeneratedMessage {
   $core.bool hasReferenceDocsUri() => $_has(0);
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(1)
-  void clearReferenceDocsUri() => clearField(1);
+  void clearReferenceDocsUri() => $_clearField(1);
 
   /// The destination where API teams want this client library to be published.
   @$pb.TagNumber(2)
-  $core.List<ClientLibraryDestination> get destinations => $_getList(1);
+  $pb.PbList<ClientLibraryDestination> get destinations => $_getList(1);
 
   /// Configuration for which RPCs should be generated in the GAPIC client.
   @$pb.TagNumber(3)
   SelectiveGapicGeneration get selectiveGapicGeneration => $_getN(2);
   @$pb.TagNumber(3)
   set selectiveGapicGeneration(SelectiveGapicGeneration v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasSelectiveGapicGeneration() => $_has(2);
   @$pb.TagNumber(3)
-  void clearSelectiveGapicGeneration() => clearField(3);
+  void clearSelectiveGapicGeneration() => $_clearField(3);
   @$pb.TagNumber(3)
   SelectiveGapicGeneration ensureSelectiveGapicGeneration() => $_ensure(2);
 }
@@ -131,7 +133,7 @@ class CommonLanguageSettings extends $pb.GeneratedMessage {
 class ClientLibrarySettings extends $pb.GeneratedMessage {
   factory ClientLibrarySettings({
     $core.String? version,
-    $12.LaunchStage? launchStage,
+    $17.LaunchStage? launchStage,
     $core.bool? restNumericEnums,
     JavaSettings? javaSettings,
     CppSettings? cppSettings,
@@ -191,11 +193,11 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'google.api'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'version')
-    ..e<$12.LaunchStage>(
+    ..e<$17.LaunchStage>(
         2, _omitFieldNames ? '' : 'launchStage', $pb.PbFieldType.OE,
-        defaultOrMaker: $12.LaunchStage.LAUNCH_STAGE_UNSPECIFIED,
-        valueOf: $12.LaunchStage.valueOf,
-        enumValues: $12.LaunchStage.values)
+        defaultOrMaker: $17.LaunchStage.LAUNCH_STAGE_UNSPECIFIED,
+        valueOf: $17.LaunchStage.valueOf,
+        enumValues: $17.LaunchStage.values)
     ..aOB(3, _omitFieldNames ? '' : 'restNumericEnums')
     ..aOM<JavaSettings>(21, _omitFieldNames ? '' : 'javaSettings',
         subBuilder: JavaSettings.create)
@@ -253,20 +255,20 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasVersion() => $_has(0);
   @$pb.TagNumber(1)
-  void clearVersion() => clearField(1);
+  void clearVersion() => $_clearField(1);
 
   /// Launch stage of this version of the API.
   @$pb.TagNumber(2)
-  $12.LaunchStage get launchStage => $_getN(1);
+  $17.LaunchStage get launchStage => $_getN(1);
   @$pb.TagNumber(2)
-  set launchStage($12.LaunchStage v) {
-    setField(2, v);
+  set launchStage($17.LaunchStage v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasLaunchStage() => $_has(1);
   @$pb.TagNumber(2)
-  void clearLaunchStage() => clearField(2);
+  void clearLaunchStage() => $_clearField(2);
 
   /// When using transport=rest, the client request will encode enums as
   /// numbers rather than strings.
@@ -280,20 +282,20 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasRestNumericEnums() => $_has(2);
   @$pb.TagNumber(3)
-  void clearRestNumericEnums() => clearField(3);
+  void clearRestNumericEnums() => $_clearField(3);
 
   /// Settings for legacy Java features, supported in the Service YAML.
   @$pb.TagNumber(21)
   JavaSettings get javaSettings => $_getN(3);
   @$pb.TagNumber(21)
   set javaSettings(JavaSettings v) {
-    setField(21, v);
+    $_setField(21, v);
   }
 
   @$pb.TagNumber(21)
   $core.bool hasJavaSettings() => $_has(3);
   @$pb.TagNumber(21)
-  void clearJavaSettings() => clearField(21);
+  void clearJavaSettings() => $_clearField(21);
   @$pb.TagNumber(21)
   JavaSettings ensureJavaSettings() => $_ensure(3);
 
@@ -302,13 +304,13 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
   CppSettings get cppSettings => $_getN(4);
   @$pb.TagNumber(22)
   set cppSettings(CppSettings v) {
-    setField(22, v);
+    $_setField(22, v);
   }
 
   @$pb.TagNumber(22)
   $core.bool hasCppSettings() => $_has(4);
   @$pb.TagNumber(22)
-  void clearCppSettings() => clearField(22);
+  void clearCppSettings() => $_clearField(22);
   @$pb.TagNumber(22)
   CppSettings ensureCppSettings() => $_ensure(4);
 
@@ -317,13 +319,13 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
   PhpSettings get phpSettings => $_getN(5);
   @$pb.TagNumber(23)
   set phpSettings(PhpSettings v) {
-    setField(23, v);
+    $_setField(23, v);
   }
 
   @$pb.TagNumber(23)
   $core.bool hasPhpSettings() => $_has(5);
   @$pb.TagNumber(23)
-  void clearPhpSettings() => clearField(23);
+  void clearPhpSettings() => $_clearField(23);
   @$pb.TagNumber(23)
   PhpSettings ensurePhpSettings() => $_ensure(5);
 
@@ -332,13 +334,13 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
   PythonSettings get pythonSettings => $_getN(6);
   @$pb.TagNumber(24)
   set pythonSettings(PythonSettings v) {
-    setField(24, v);
+    $_setField(24, v);
   }
 
   @$pb.TagNumber(24)
   $core.bool hasPythonSettings() => $_has(6);
   @$pb.TagNumber(24)
-  void clearPythonSettings() => clearField(24);
+  void clearPythonSettings() => $_clearField(24);
   @$pb.TagNumber(24)
   PythonSettings ensurePythonSettings() => $_ensure(6);
 
@@ -347,13 +349,13 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
   NodeSettings get nodeSettings => $_getN(7);
   @$pb.TagNumber(25)
   set nodeSettings(NodeSettings v) {
-    setField(25, v);
+    $_setField(25, v);
   }
 
   @$pb.TagNumber(25)
   $core.bool hasNodeSettings() => $_has(7);
   @$pb.TagNumber(25)
-  void clearNodeSettings() => clearField(25);
+  void clearNodeSettings() => $_clearField(25);
   @$pb.TagNumber(25)
   NodeSettings ensureNodeSettings() => $_ensure(7);
 
@@ -362,13 +364,13 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
   DotnetSettings get dotnetSettings => $_getN(8);
   @$pb.TagNumber(26)
   set dotnetSettings(DotnetSettings v) {
-    setField(26, v);
+    $_setField(26, v);
   }
 
   @$pb.TagNumber(26)
   $core.bool hasDotnetSettings() => $_has(8);
   @$pb.TagNumber(26)
-  void clearDotnetSettings() => clearField(26);
+  void clearDotnetSettings() => $_clearField(26);
   @$pb.TagNumber(26)
   DotnetSettings ensureDotnetSettings() => $_ensure(8);
 
@@ -377,13 +379,13 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
   RubySettings get rubySettings => $_getN(9);
   @$pb.TagNumber(27)
   set rubySettings(RubySettings v) {
-    setField(27, v);
+    $_setField(27, v);
   }
 
   @$pb.TagNumber(27)
   $core.bool hasRubySettings() => $_has(9);
   @$pb.TagNumber(27)
-  void clearRubySettings() => clearField(27);
+  void clearRubySettings() => $_clearField(27);
   @$pb.TagNumber(27)
   RubySettings ensureRubySettings() => $_ensure(9);
 
@@ -392,13 +394,13 @@ class ClientLibrarySettings extends $pb.GeneratedMessage {
   GoSettings get goSettings => $_getN(10);
   @$pb.TagNumber(28)
   set goSettings(GoSettings v) {
-    setField(28, v);
+    $_setField(28, v);
   }
 
   @$pb.TagNumber(28)
   $core.bool hasGoSettings() => $_has(10);
   @$pb.TagNumber(28)
-  void clearGoSettings() => clearField(28);
+  void clearGoSettings() => $_clearField(28);
   @$pb.TagNumber(28)
   GoSettings ensureGoSettings() => $_ensure(10);
 }
@@ -514,7 +516,7 @@ class Publishing extends $pb.GeneratedMessage {
   /// A list of API method settings, e.g. the behavior for methods that use the
   /// long-running operation pattern.
   @$pb.TagNumber(2)
-  $core.List<MethodSettings> get methodSettings => $_getList(0);
+  $pb.PbList<MethodSettings> get methodSettings => $_getList(0);
 
   /// Link to a *public* URI where users can report issues.  Example:
   /// https://issuetracker.google.com/issues/new?component=190865&template=1161103
@@ -528,7 +530,7 @@ class Publishing extends $pb.GeneratedMessage {
   @$pb.TagNumber(101)
   $core.bool hasNewIssueUri() => $_has(1);
   @$pb.TagNumber(101)
-  void clearNewIssueUri() => clearField(101);
+  void clearNewIssueUri() => $_clearField(101);
 
   /// Link to product home page.  Example:
   /// https://cloud.google.com/asset-inventory/docs/overview
@@ -542,7 +544,7 @@ class Publishing extends $pb.GeneratedMessage {
   @$pb.TagNumber(102)
   $core.bool hasDocumentationUri() => $_has(2);
   @$pb.TagNumber(102)
-  void clearDocumentationUri() => clearField(102);
+  void clearDocumentationUri() => $_clearField(102);
 
   /// Used as a tracking tag when collecting data about the APIs developer
   /// relations artifacts like docs, packages delivered to package managers,
@@ -557,7 +559,7 @@ class Publishing extends $pb.GeneratedMessage {
   @$pb.TagNumber(103)
   $core.bool hasApiShortName() => $_has(3);
   @$pb.TagNumber(103)
-  void clearApiShortName() => clearField(103);
+  void clearApiShortName() => $_clearField(103);
 
   /// GitHub label to apply to issues and pull requests opened for this API.
   @$pb.TagNumber(104)
@@ -570,12 +572,12 @@ class Publishing extends $pb.GeneratedMessage {
   @$pb.TagNumber(104)
   $core.bool hasGithubLabel() => $_has(4);
   @$pb.TagNumber(104)
-  void clearGithubLabel() => clearField(104);
+  void clearGithubLabel() => $_clearField(104);
 
   /// GitHub teams to be added to CODEOWNERS in the directory in GitHub
   /// containing source code for the client libraries for this API.
   @$pb.TagNumber(105)
-  $core.List<$core.String> get codeownerGithubTeams => $_getList(5);
+  $pb.PbList<$core.String> get codeownerGithubTeams => $_getList(5);
 
   /// A prefix used in sample code when demarking regions to be included in
   /// documentation.
@@ -589,26 +591,26 @@ class Publishing extends $pb.GeneratedMessage {
   @$pb.TagNumber(106)
   $core.bool hasDocTagPrefix() => $_has(6);
   @$pb.TagNumber(106)
-  void clearDocTagPrefix() => clearField(106);
+  void clearDocTagPrefix() => $_clearField(106);
 
   /// For whom the client library is being published.
   @$pb.TagNumber(107)
   ClientLibraryOrganization get organization => $_getN(7);
   @$pb.TagNumber(107)
   set organization(ClientLibraryOrganization v) {
-    setField(107, v);
+    $_setField(107, v);
   }
 
   @$pb.TagNumber(107)
   $core.bool hasOrganization() => $_has(7);
   @$pb.TagNumber(107)
-  void clearOrganization() => clearField(107);
+  void clearOrganization() => $_clearField(107);
 
   /// Client library settings.  If the same version string appears multiple
   /// times in this list, then the last one wins.  Settings from earlier
   /// settings with the same version string are discarded.
   @$pb.TagNumber(109)
-  $core.List<ClientLibrarySettings> get librarySettings => $_getList(8);
+  $pb.PbList<ClientLibrarySettings> get librarySettings => $_getList(8);
 
   /// Optional link to proto reference documentation.  Example:
   /// https://cloud.google.com/pubsub/lite/docs/reference/rpc
@@ -622,7 +624,7 @@ class Publishing extends $pb.GeneratedMessage {
   @$pb.TagNumber(110)
   $core.bool hasProtoReferenceDocumentationUri() => $_has(9);
   @$pb.TagNumber(110)
-  void clearProtoReferenceDocumentationUri() => clearField(110);
+  void clearProtoReferenceDocumentationUri() => $_clearField(110);
 
   /// Optional link to REST reference documentation.  Example:
   /// https://cloud.google.com/pubsub/lite/docs/reference/rest
@@ -636,14 +638,15 @@ class Publishing extends $pb.GeneratedMessage {
   @$pb.TagNumber(111)
   $core.bool hasRestReferenceDocumentationUri() => $_has(10);
   @$pb.TagNumber(111)
-  void clearRestReferenceDocumentationUri() => clearField(111);
+  void clearRestReferenceDocumentationUri() => $_clearField(111);
 }
 
 /// Settings for Java client libraries.
 class JavaSettings extends $pb.GeneratedMessage {
   factory JavaSettings({
     $core.String? libraryPackage,
-    $core.Map<$core.String, $core.String>? serviceClassNames,
+    $core.Iterable<$core.MapEntry<$core.String, $core.String>>?
+        serviceClassNames,
     CommonLanguageSettings? common,
   }) {
     final $result = create();
@@ -651,7 +654,7 @@ class JavaSettings extends $pb.GeneratedMessage {
       $result.libraryPackage = libraryPackage;
     }
     if (serviceClassNames != null) {
-      $result.serviceClassNames.addAll(serviceClassNames);
+      $result.serviceClassNames.addEntries(serviceClassNames);
     }
     if (common != null) {
       $result.common = common;
@@ -725,7 +728,7 @@ class JavaSettings extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasLibraryPackage() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLibraryPackage() => clearField(1);
+  void clearLibraryPackage() => $_clearField(1);
 
   ///  Configure the Java class name to use instead of the service's for its
   ///  corresponding generated GAPIC client. Keys are fully-qualified
@@ -742,20 +745,20 @@ class JavaSettings extends $pb.GeneratedMessage {
   ///         - google.pubsub.v1.Publisher: TopicAdmin
   ///         - google.pubsub.v1.Subscriber: SubscriptionAdmin
   @$pb.TagNumber(2)
-  $core.Map<$core.String, $core.String> get serviceClassNames => $_getMap(1);
+  $pb.PbMap<$core.String, $core.String> get serviceClassNames => $_getMap(1);
 
   /// Some settings.
   @$pb.TagNumber(3)
   CommonLanguageSettings get common => $_getN(2);
   @$pb.TagNumber(3)
   set common(CommonLanguageSettings v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasCommon() => $_has(2);
   @$pb.TagNumber(3)
-  void clearCommon() => clearField(3);
+  void clearCommon() => $_clearField(3);
   @$pb.TagNumber(3)
   CommonLanguageSettings ensureCommon() => $_ensure(2);
 }
@@ -814,13 +817,13 @@ class CppSettings extends $pb.GeneratedMessage {
   CommonLanguageSettings get common => $_getN(0);
   @$pb.TagNumber(1)
   set common(CommonLanguageSettings v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasCommon() => $_has(0);
   @$pb.TagNumber(1)
-  void clearCommon() => clearField(1);
+  void clearCommon() => $_clearField(1);
   @$pb.TagNumber(1)
   CommonLanguageSettings ensureCommon() => $_ensure(0);
 }
@@ -879,13 +882,13 @@ class PhpSettings extends $pb.GeneratedMessage {
   CommonLanguageSettings get common => $_getN(0);
   @$pb.TagNumber(1)
   set common(CommonLanguageSettings v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasCommon() => $_has(0);
   @$pb.TagNumber(1)
-  void clearCommon() => clearField(1);
+  void clearCommon() => $_clearField(1);
   @$pb.TagNumber(1)
   CommonLanguageSettings ensureCommon() => $_ensure(0);
 }
@@ -971,7 +974,7 @@ class PythonSettings_ExperimentalFeatures extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasRestAsyncIoEnabled() => $_has(0);
   @$pb.TagNumber(1)
-  void clearRestAsyncIoEnabled() => clearField(1);
+  void clearRestAsyncIoEnabled() => $_clearField(1);
 
   /// Enables generation of protobuf code using new types that are more
   /// Pythonic which are included in `protobuf>=5.29.x`. This feature will be
@@ -987,7 +990,7 @@ class PythonSettings_ExperimentalFeatures extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasProtobufPythonicTypesEnabled() => $_has(1);
   @$pb.TagNumber(2)
-  void clearProtobufPythonicTypesEnabled() => clearField(2);
+  void clearProtobufPythonicTypesEnabled() => $_clearField(2);
 
   /// Disables generation of an unversioned Python package for this client
   /// library. This means that the module names will need to be versioned in
@@ -1003,7 +1006,7 @@ class PythonSettings_ExperimentalFeatures extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasUnversionedPackageDisabled() => $_has(2);
   @$pb.TagNumber(3)
-  void clearUnversionedPackageDisabled() => clearField(3);
+  void clearUnversionedPackageDisabled() => $_clearField(3);
 }
 
 /// Settings for Python client libraries.
@@ -1068,13 +1071,13 @@ class PythonSettings extends $pb.GeneratedMessage {
   CommonLanguageSettings get common => $_getN(0);
   @$pb.TagNumber(1)
   set common(CommonLanguageSettings v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasCommon() => $_has(0);
   @$pb.TagNumber(1)
-  void clearCommon() => clearField(1);
+  void clearCommon() => $_clearField(1);
   @$pb.TagNumber(1)
   CommonLanguageSettings ensureCommon() => $_ensure(0);
 
@@ -1083,13 +1086,13 @@ class PythonSettings extends $pb.GeneratedMessage {
   PythonSettings_ExperimentalFeatures get experimentalFeatures => $_getN(1);
   @$pb.TagNumber(2)
   set experimentalFeatures(PythonSettings_ExperimentalFeatures v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasExperimentalFeatures() => $_has(1);
   @$pb.TagNumber(2)
-  void clearExperimentalFeatures() => clearField(2);
+  void clearExperimentalFeatures() => $_clearField(2);
   @$pb.TagNumber(2)
   PythonSettings_ExperimentalFeatures ensureExperimentalFeatures() =>
       $_ensure(1);
@@ -1150,13 +1153,13 @@ class NodeSettings extends $pb.GeneratedMessage {
   CommonLanguageSettings get common => $_getN(0);
   @$pb.TagNumber(1)
   set common(CommonLanguageSettings v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasCommon() => $_has(0);
   @$pb.TagNumber(1)
-  void clearCommon() => clearField(1);
+  void clearCommon() => $_clearField(1);
   @$pb.TagNumber(1)
   CommonLanguageSettings ensureCommon() => $_ensure(0);
 }
@@ -1165,8 +1168,9 @@ class NodeSettings extends $pb.GeneratedMessage {
 class DotnetSettings extends $pb.GeneratedMessage {
   factory DotnetSettings({
     CommonLanguageSettings? common,
-    $core.Map<$core.String, $core.String>? renamedServices,
-    $core.Map<$core.String, $core.String>? renamedResources,
+    $core.Iterable<$core.MapEntry<$core.String, $core.String>>? renamedServices,
+    $core.Iterable<$core.MapEntry<$core.String, $core.String>>?
+        renamedResources,
     $core.Iterable<$core.String>? ignoredResources,
     $core.Iterable<$core.String>? forcedNamespaceAliases,
     $core.Iterable<$core.String>? handwrittenSignatures,
@@ -1176,10 +1180,10 @@ class DotnetSettings extends $pb.GeneratedMessage {
       $result.common = common;
     }
     if (renamedServices != null) {
-      $result.renamedServices.addAll(renamedServices);
+      $result.renamedServices.addEntries(renamedServices);
     }
     if (renamedResources != null) {
-      $result.renamedResources.addAll(renamedResources);
+      $result.renamedResources.addEntries(renamedResources);
     }
     if (ignoredResources != null) {
       $result.ignoredResources.addAll(ignoredResources);
@@ -1250,13 +1254,13 @@ class DotnetSettings extends $pb.GeneratedMessage {
   CommonLanguageSettings get common => $_getN(0);
   @$pb.TagNumber(1)
   set common(CommonLanguageSettings v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasCommon() => $_has(0);
   @$pb.TagNumber(1)
-  void clearCommon() => clearField(1);
+  void clearCommon() => $_clearField(1);
   @$pb.TagNumber(1)
   CommonLanguageSettings ensureCommon() => $_ensure(0);
 
@@ -1266,7 +1270,7 @@ class DotnetSettings extends $pb.GeneratedMessage {
   /// fully-qualified.)
   /// Example: Subscriber to SubscriberServiceApi.
   @$pb.TagNumber(2)
-  $core.Map<$core.String, $core.String> get renamedServices => $_getMap(1);
+  $pb.PbMap<$core.String, $core.String> get renamedServices => $_getMap(1);
 
   /// Map from full resource types to the effective short name
   /// for the resource. This is used when otherwise resource
@@ -1274,7 +1278,7 @@ class DotnetSettings extends $pb.GeneratedMessage {
   /// Example entry:
   /// "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
   @$pb.TagNumber(3)
-  $core.Map<$core.String, $core.String> get renamedResources => $_getMap(2);
+  $pb.PbMap<$core.String, $core.String> get renamedResources => $_getMap(2);
 
   /// List of full resource types to ignore during generation.
   /// This is typically used for API-specific Location resources,
@@ -1282,18 +1286,18 @@ class DotnetSettings extends $pb.GeneratedMessage {
   /// the common Location resources.
   /// Example entry: "documentai.googleapis.com/Location"
   @$pb.TagNumber(4)
-  $core.List<$core.String> get ignoredResources => $_getList(3);
+  $pb.PbList<$core.String> get ignoredResources => $_getList(3);
 
   /// Namespaces which must be aliased in snippets due to
   /// a known (but non-generator-predictable) naming collision
   @$pb.TagNumber(5)
-  $core.List<$core.String> get forcedNamespaceAliases => $_getList(4);
+  $pb.PbList<$core.String> get forcedNamespaceAliases => $_getList(4);
 
   /// Method signatures (in the form "service.method(signature)")
   /// which are provided separately, so shouldn't be generated.
   /// Snippets *calling* these methods are still generated, however.
   @$pb.TagNumber(6)
-  $core.List<$core.String> get handwrittenSignatures => $_getList(5);
+  $pb.PbList<$core.String> get handwrittenSignatures => $_getList(5);
 }
 
 /// Settings for Ruby client libraries.
@@ -1351,13 +1355,13 @@ class RubySettings extends $pb.GeneratedMessage {
   CommonLanguageSettings get common => $_getN(0);
   @$pb.TagNumber(1)
   set common(CommonLanguageSettings v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasCommon() => $_has(0);
   @$pb.TagNumber(1)
-  void clearCommon() => clearField(1);
+  void clearCommon() => $_clearField(1);
   @$pb.TagNumber(1)
   CommonLanguageSettings ensureCommon() => $_ensure(0);
 }
@@ -1366,14 +1370,14 @@ class RubySettings extends $pb.GeneratedMessage {
 class GoSettings extends $pb.GeneratedMessage {
   factory GoSettings({
     CommonLanguageSettings? common,
-    $core.Map<$core.String, $core.String>? renamedServices,
+    $core.Iterable<$core.MapEntry<$core.String, $core.String>>? renamedServices,
   }) {
     final $result = create();
     if (common != null) {
       $result.common = common;
     }
     if (renamedServices != null) {
-      $result.renamedServices.addAll(renamedServices);
+      $result.renamedServices.addEntries(renamedServices);
     }
     return $result;
   }
@@ -1424,13 +1428,13 @@ class GoSettings extends $pb.GeneratedMessage {
   CommonLanguageSettings get common => $_getN(0);
   @$pb.TagNumber(1)
   set common(CommonLanguageSettings v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasCommon() => $_has(0);
   @$pb.TagNumber(1)
-  void clearCommon() => clearField(1);
+  void clearCommon() => $_clearField(1);
   @$pb.TagNumber(1)
   CommonLanguageSettings ensureCommon() => $_ensure(0);
 
@@ -1443,7 +1447,7 @@ class GoSettings extends $pb.GeneratedMessage {
   ///      renamed_services:
   ///        Publisher: TopicAdmin
   @$pb.TagNumber(2)
-  $core.Map<$core.String, $core.String> get renamedServices => $_getMap(1);
+  $pb.PbMap<$core.String, $core.String> get renamedServices => $_getMap(1);
 }
 
 /// Describes settings to use when generating API methods that use the
@@ -1527,13 +1531,13 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   $8.Duration get initialPollDelay => $_getN(0);
   @$pb.TagNumber(1)
   set initialPollDelay($8.Duration v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasInitialPollDelay() => $_has(0);
   @$pb.TagNumber(1)
-  void clearInitialPollDelay() => clearField(1);
+  void clearInitialPollDelay() => $_clearField(1);
   @$pb.TagNumber(1)
   $8.Duration ensureInitialPollDelay() => $_ensure(0);
 
@@ -1550,7 +1554,7 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasPollDelayMultiplier() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPollDelayMultiplier() => clearField(2);
+  void clearPollDelayMultiplier() => $_clearField(2);
 
   /// Maximum time between two subsequent poll requests.
   /// Default value: 45 seconds.
@@ -1558,13 +1562,13 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   $8.Duration get maxPollDelay => $_getN(2);
   @$pb.TagNumber(3)
   set maxPollDelay($8.Duration v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasMaxPollDelay() => $_has(2);
   @$pb.TagNumber(3)
-  void clearMaxPollDelay() => clearField(3);
+  void clearMaxPollDelay() => $_clearField(3);
   @$pb.TagNumber(3)
   $8.Duration ensureMaxPollDelay() => $_ensure(2);
 
@@ -1574,13 +1578,13 @@ class MethodSettings_LongRunning extends $pb.GeneratedMessage {
   $8.Duration get totalPollTimeout => $_getN(3);
   @$pb.TagNumber(4)
   set totalPollTimeout($8.Duration v) {
-    setField(4, v);
+    $_setField(4, v);
   }
 
   @$pb.TagNumber(4)
   $core.bool hasTotalPollTimeout() => $_has(3);
   @$pb.TagNumber(4)
-  void clearTotalPollTimeout() => clearField(4);
+  void clearTotalPollTimeout() => $_clearField(4);
   @$pb.TagNumber(4)
   $8.Duration ensureTotalPollTimeout() => $_ensure(3);
 }
@@ -1664,7 +1668,7 @@ class MethodSettings extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasSelector() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSelector() => clearField(1);
+  void clearSelector() => $_clearField(1);
 
   ///  Describes settings to use for long-running operations when generating
   ///  API methods for RPCs. Complements RPCs that use the annotations in
@@ -1684,13 +1688,13 @@ class MethodSettings extends $pb.GeneratedMessage {
   MethodSettings_LongRunning get longRunning => $_getN(1);
   @$pb.TagNumber(2)
   set longRunning(MethodSettings_LongRunning v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasLongRunning() => $_has(1);
   @$pb.TagNumber(2)
-  void clearLongRunning() => clearField(2);
+  void clearLongRunning() => $_clearField(2);
   @$pb.TagNumber(2)
   MethodSettings_LongRunning ensureLongRunning() => $_ensure(1);
 
@@ -1706,7 +1710,7 @@ class MethodSettings extends $pb.GeneratedMessage {
   ///         auto_populated_fields:
   ///         - request_id
   @$pb.TagNumber(3)
-  $core.List<$core.String> get autoPopulatedFields => $_getList(2);
+  $pb.PbList<$core.String> get autoPopulatedFields => $_getList(2);
 }
 
 /// This message is used to configure the generation of a subset of the RPCs in
@@ -1769,7 +1773,7 @@ class SelectiveGapicGeneration extends $pb.GeneratedMessage {
   /// An allowlist of the fully qualified names of RPCs that should be included
   /// on public client surfaces.
   @$pb.TagNumber(1)
-  $core.List<$core.String> get methods => $_getList(0);
+  $pb.PbList<$core.String> get methods => $_getList(0);
 
   /// Setting this to true indicates to the client generators that methods
   /// that would be excluded from the generation should instead be generated
@@ -1787,7 +1791,7 @@ class SelectiveGapicGeneration extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasGenerateOmittedAsInternal() => $_has(1);
   @$pb.TagNumber(2)
-  void clearGenerateOmittedAsInternal() => clearField(2);
+  void clearGenerateOmittedAsInternal() => $_clearField(2);
 }
 
 class Client {

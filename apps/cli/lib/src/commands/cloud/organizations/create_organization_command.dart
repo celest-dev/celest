@@ -40,7 +40,7 @@ final class CreateOrganizationCommand extends CloudCreateCommand<Organization> {
     return cloud.organizations.create(
       organizationId: options.resourceId,
       organization: Organization(
-        annotations: options.annotations,
+        annotations: options.annotations.entries,
         displayName: options.displayName,
         primaryRegion: primaryRegion,
       ),

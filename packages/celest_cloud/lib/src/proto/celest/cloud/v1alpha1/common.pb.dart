@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/cloud/v1alpha1/common.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -15,6 +15,8 @@ import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../../../google/protobuf/timestamp.pb.dart' as $9;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'common.pbenum.dart';
 
@@ -92,20 +94,20 @@ class PageToken extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasOffset() => $_has(0);
   @$pb.TagNumber(1)
-  void clearOffset() => clearField(1);
+  void clearOffset() => $_clearField(1);
 
   /// The start time of the pagination window.
   @$pb.TagNumber(2)
   $9.Timestamp get startTime => $_getN(1);
   @$pb.TagNumber(2)
   set startTime($9.Timestamp v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasStartTime() => $_has(1);
   @$pb.TagNumber(2)
-  void clearStartTime() => clearField(2);
+  void clearStartTime() => $_clearField(2);
   @$pb.TagNumber(2)
   $9.Timestamp ensureStartTime() => $_ensure(1);
 
@@ -120,7 +122,7 @@ class PageToken extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasShowDeleted() => $_has(2);
   @$pb.TagNumber(3)
-  void clearShowDeleted() => clearField(3);
+  void clearShowDeleted() => $_clearField(3);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

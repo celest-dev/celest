@@ -20,7 +20,7 @@ final class UpdateProjectCommand extends CloudUpdateCommand<Project> {
     return cloud.projects.update(
       project: Project(
         name: options.resourceId,
-        annotations: options.annotations,
+        annotations: options.annotations?.entries,
         displayName: options.displayName,
       ),
       updateMask: FieldMask(

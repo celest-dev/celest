@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/cloud/v1alpha1/project_environments.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -15,12 +15,19 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 /// The type of project asset.
 class ProjectAsset_Type extends $pb.ProtobufEnum {
+  /// The type is not specified.
   static const ProjectAsset_Type TYPE_UNSPECIFIED =
       ProjectAsset_Type._(0, _omitEnumNames ? '' : 'TYPE_UNSPECIFIED');
+
+  /// The asset is a Dart kernel file.
   static const ProjectAsset_Type DART_KERNEL =
       ProjectAsset_Type._(1, _omitEnumNames ? '' : 'DART_KERNEL');
+
+  /// The asset is a Dart executable, e.g. created with `dart compile exe`.
   static const ProjectAsset_Type DART_EXECUTABLE =
       ProjectAsset_Type._(3, _omitEnumNames ? '' : 'DART_EXECUTABLE');
+
+  /// The asset is a flutter_assets bundle.
   static const ProjectAsset_Type FLUTTER_ASSETS =
       ProjectAsset_Type._(2, _omitEnumNames ? '' : 'FLUTTER_ASSETS');
 
@@ -35,7 +42,7 @@ class ProjectAsset_Type extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static ProjectAsset_Type? valueOf($core.int value) => _byValue[value];
 
-  const ProjectAsset_Type._($core.int v, $core.String n) : super(v, n);
+  const ProjectAsset_Type._(super.v, super.n);
 }
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

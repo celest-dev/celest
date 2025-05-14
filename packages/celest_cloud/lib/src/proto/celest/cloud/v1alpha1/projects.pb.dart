@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: celest/cloud/v1alpha1/projects.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -13,9 +13,11 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/field_mask.pb.dart' as $13;
+import '../../../google/protobuf/field_mask.pb.dart' as $12;
 import '../../../google/protobuf/timestamp.pb.dart' as $9;
-import 'common.pbenum.dart' as $17;
+import 'common.pbenum.dart' as $14;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 /// A project resource.
 class Project extends $pb.GeneratedMessage {
@@ -24,16 +26,16 @@ class Project extends $pb.GeneratedMessage {
     $core.String? uid,
     $core.String? parent,
     $core.String? projectId,
-    $17.LifecycleState? state,
+    $14.LifecycleState? state,
     $core.String? displayName,
     $9.Timestamp? createTime,
     $9.Timestamp? updateTime,
     $9.Timestamp? deleteTime,
     $9.Timestamp? purgeTime,
     $core.String? etag,
-    $core.Map<$core.String, $core.String>? annotations,
+    $core.Iterable<$core.MapEntry<$core.String, $core.String>>? annotations,
     $core.bool? reconciling,
-    $core.Iterable<$17.Region>? regions,
+    $core.Iterable<$14.Region>? regions,
   }) {
     final $result = create();
     if (name != null) {
@@ -70,7 +72,7 @@ class Project extends $pb.GeneratedMessage {
       $result.etag = etag;
     }
     if (annotations != null) {
-      $result.annotations.addAll(annotations);
+      $result.annotations.addEntries(annotations);
     }
     if (reconciling != null) {
       $result.reconciling = reconciling;
@@ -97,11 +99,11 @@ class Project extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'uid')
     ..aOS(3, _omitFieldNames ? '' : 'parent')
     ..aOS(4, _omitFieldNames ? '' : 'projectId')
-    ..e<$17.LifecycleState>(
+    ..e<$14.LifecycleState>(
         5, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
-        defaultOrMaker: $17.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
-        valueOf: $17.LifecycleState.valueOf,
-        enumValues: $17.LifecycleState.values)
+        defaultOrMaker: $14.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
+        valueOf: $14.LifecycleState.valueOf,
+        enumValues: $14.LifecycleState.values)
     ..aOS(6, _omitFieldNames ? '' : 'displayName')
     ..aOM<$9.Timestamp>(7, _omitFieldNames ? '' : 'createTime',
         subBuilder: $9.Timestamp.create)
@@ -118,10 +120,10 @@ class Project extends $pb.GeneratedMessage {
         valueFieldType: $pb.PbFieldType.OS,
         packageName: const $pb.PackageName('celest.cloud.v1alpha1'))
     ..aOB(13, _omitFieldNames ? '' : 'reconciling')
-    ..pc<$17.Region>(14, _omitFieldNames ? '' : 'regions', $pb.PbFieldType.KE,
-        valueOf: $17.Region.valueOf,
-        enumValues: $17.Region.values,
-        defaultEnumValue: $17.Region.REGION_UNSPECIFIED)
+    ..pc<$14.Region>(14, _omitFieldNames ? '' : 'regions', $pb.PbFieldType.KE,
+        valueOf: $14.Region.valueOf,
+        enumValues: $14.Region.values,
+        defaultEnumValue: $14.Region.REGION_UNSPECIFIED)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -157,7 +159,7 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// A system-generated unique identifier for the project.
   @$pb.TagNumber(2)
@@ -170,7 +172,7 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasUid() => $_has(1);
   @$pb.TagNumber(2)
-  void clearUid() => clearField(2);
+  void clearUid() => $_clearField(2);
 
   /// The parent organization of the project.
   @$pb.TagNumber(3)
@@ -183,7 +185,7 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasParent() => $_has(2);
   @$pb.TagNumber(3)
-  void clearParent() => clearField(3);
+  void clearParent() => $_clearField(3);
 
   ///  Immutable. The unique, user-assigned id of the project.
   ///  It must be 6 to 30 lowercase ASCII letters, digits, or hyphens.
@@ -201,20 +203,20 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasProjectId() => $_has(3);
   @$pb.TagNumber(4)
-  void clearProjectId() => clearField(4);
+  void clearProjectId() => $_clearField(4);
 
   /// Output only. The project lifecycle state.
   @$pb.TagNumber(5)
-  $17.LifecycleState get state => $_getN(4);
+  $14.LifecycleState get state => $_getN(4);
   @$pb.TagNumber(5)
-  set state($17.LifecycleState v) {
-    setField(5, v);
+  set state($14.LifecycleState v) {
+    $_setField(5, v);
   }
 
   @$pb.TagNumber(5)
   $core.bool hasState() => $_has(4);
   @$pb.TagNumber(5)
-  void clearState() => clearField(5);
+  void clearState() => $_clearField(5);
 
   /// The display name of the project.
   @$pb.TagNumber(6)
@@ -227,20 +229,20 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasDisplayName() => $_has(5);
   @$pb.TagNumber(6)
-  void clearDisplayName() => clearField(6);
+  void clearDisplayName() => $_clearField(6);
 
   /// Output only. The time the project was created.
   @$pb.TagNumber(7)
   $9.Timestamp get createTime => $_getN(6);
   @$pb.TagNumber(7)
   set createTime($9.Timestamp v) {
-    setField(7, v);
+    $_setField(7, v);
   }
 
   @$pb.TagNumber(7)
   $core.bool hasCreateTime() => $_has(6);
   @$pb.TagNumber(7)
-  void clearCreateTime() => clearField(7);
+  void clearCreateTime() => $_clearField(7);
   @$pb.TagNumber(7)
   $9.Timestamp ensureCreateTime() => $_ensure(6);
 
@@ -249,13 +251,13 @@ class Project extends $pb.GeneratedMessage {
   $9.Timestamp get updateTime => $_getN(7);
   @$pb.TagNumber(8)
   set updateTime($9.Timestamp v) {
-    setField(8, v);
+    $_setField(8, v);
   }
 
   @$pb.TagNumber(8)
   $core.bool hasUpdateTime() => $_has(7);
   @$pb.TagNumber(8)
-  void clearUpdateTime() => clearField(8);
+  void clearUpdateTime() => $_clearField(8);
   @$pb.TagNumber(8)
   $9.Timestamp ensureUpdateTime() => $_ensure(7);
 
@@ -264,13 +266,13 @@ class Project extends $pb.GeneratedMessage {
   $9.Timestamp get deleteTime => $_getN(8);
   @$pb.TagNumber(9)
   set deleteTime($9.Timestamp v) {
-    setField(9, v);
+    $_setField(9, v);
   }
 
   @$pb.TagNumber(9)
   $core.bool hasDeleteTime() => $_has(8);
   @$pb.TagNumber(9)
-  void clearDeleteTime() => clearField(9);
+  void clearDeleteTime() => $_clearField(9);
   @$pb.TagNumber(9)
   $9.Timestamp ensureDeleteTime() => $_ensure(8);
 
@@ -279,13 +281,13 @@ class Project extends $pb.GeneratedMessage {
   $9.Timestamp get purgeTime => $_getN(9);
   @$pb.TagNumber(10)
   set purgeTime($9.Timestamp v) {
-    setField(10, v);
+    $_setField(10, v);
   }
 
   @$pb.TagNumber(10)
   $core.bool hasPurgeTime() => $_has(9);
   @$pb.TagNumber(10)
-  void clearPurgeTime() => clearField(10);
+  void clearPurgeTime() => $_clearField(10);
   @$pb.TagNumber(10)
   $9.Timestamp ensurePurgeTime() => $_ensure(9);
 
@@ -302,11 +304,11 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   $core.bool hasEtag() => $_has(10);
   @$pb.TagNumber(11)
-  void clearEtag() => clearField(11);
+  void clearEtag() => $_clearField(11);
 
   /// Client-provided key-value pairs that are not directly used by the system.
   @$pb.TagNumber(12)
-  $core.Map<$core.String, $core.String> get annotations => $_getMap(11);
+  $pb.PbMap<$core.String, $core.String> get annotations => $_getMap(11);
 
   /// Output only. Indicates whether the project is currently being reconciled.
   @$pb.TagNumber(13)
@@ -319,7 +321,7 @@ class Project extends $pb.GeneratedMessage {
   @$pb.TagNumber(13)
   $core.bool hasReconciling() => $_has(12);
   @$pb.TagNumber(13)
-  void clearReconciling() => clearField(13);
+  void clearReconciling() => $_clearField(13);
 
   ///  Optional. The project region(s) where resources are deployed.
   ///
@@ -328,7 +330,7 @@ class Project extends $pb.GeneratedMessage {
   ///
   ///  **NOTE**: This functionality is only available in enterprise subscriptions.
   @$pb.TagNumber(14)
-  $core.List<$17.Region> get regions => $_getList(13);
+  $pb.PbList<$14.Region> get regions => $_getList(13);
 }
 
 /// Request message for the `CreateProject` method.
@@ -411,7 +413,7 @@ class CreateProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearParent() => $_clearField(1);
 
   ///  Required. The ID of the project to create.
   ///
@@ -426,20 +428,20 @@ class CreateProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasProjectId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearProjectId() => clearField(2);
+  void clearProjectId() => $_clearField(2);
 
   /// The project to create.
   @$pb.TagNumber(3)
   Project get project => $_getN(2);
   @$pb.TagNumber(3)
   set project(Project v) {
-    setField(3, v);
+    $_setField(3, v);
   }
 
   @$pb.TagNumber(3)
   $core.bool hasProject() => $_has(2);
   @$pb.TagNumber(3)
-  void clearProject() => clearField(3);
+  void clearProject() => $_clearField(3);
   @$pb.TagNumber(3)
   Project ensureProject() => $_ensure(2);
 
@@ -454,7 +456,7 @@ class CreateProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasValidateOnly() => $_has(3);
   @$pb.TagNumber(4)
-  void clearValidateOnly() => clearField(4);
+  void clearValidateOnly() => $_clearField(4);
 }
 
 /// Request message for the `GetProject` method.
@@ -519,7 +521,7 @@ class GetProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 }
 
 /// Request message for the `ListProjects` method.
@@ -610,7 +612,7 @@ class ListProjectsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
-  void clearParent() => clearField(1);
+  void clearParent() => $_clearField(1);
 
   /// Optional. The maximum number of projects to return.
   @$pb.TagNumber(2)
@@ -623,7 +625,7 @@ class ListProjectsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasPageSize() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPageSize() => clearField(2);
+  void clearPageSize() => $_clearField(2);
 
   /// A page token, received from a previous `ListProjects` call.
   @$pb.TagNumber(3)
@@ -636,7 +638,7 @@ class ListProjectsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasPageToken() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPageToken() => clearField(3);
+  void clearPageToken() => $_clearField(3);
 
   /// An optional filter to apply to the projects.
   @$pb.TagNumber(4)
@@ -649,7 +651,7 @@ class ListProjectsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasFilter() => $_has(3);
   @$pb.TagNumber(4)
-  void clearFilter() => clearField(4);
+  void clearFilter() => $_clearField(4);
 
   /// The order to sort the results by.
   @$pb.TagNumber(5)
@@ -662,7 +664,7 @@ class ListProjectsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasOrderBy() => $_has(4);
   @$pb.TagNumber(5)
-  void clearOrderBy() => clearField(5);
+  void clearOrderBy() => $_clearField(5);
 
   /// Include soft-deleted projects in the results.
   @$pb.TagNumber(6)
@@ -675,7 +677,7 @@ class ListProjectsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool hasShowDeleted() => $_has(5);
   @$pb.TagNumber(6)
-  void clearShowDeleted() => clearField(6);
+  void clearShowDeleted() => $_clearField(6);
 }
 
 /// Response message for the `ListProjects` method.
@@ -737,7 +739,7 @@ class ListProjectsResponse extends $pb.GeneratedMessage {
 
   /// The projects in the organization.
   @$pb.TagNumber(1)
-  $core.List<Project> get projects => $_getList(0);
+  $pb.PbList<Project> get projects => $_getList(0);
 
   /// A token to retrieve the next page of results.
   @$pb.TagNumber(2)
@@ -750,14 +752,14 @@ class ListProjectsResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasNextPageToken() => $_has(1);
   @$pb.TagNumber(2)
-  void clearNextPageToken() => clearField(2);
+  void clearNextPageToken() => $_clearField(2);
 }
 
 /// Request message for the `UpdateProject` method.
 class UpdateProjectRequest extends $pb.GeneratedMessage {
   factory UpdateProjectRequest({
     Project? project,
-    $13.FieldMask? updateMask,
+    $12.FieldMask? updateMask,
     $core.bool? allowMissing,
     $core.bool? validateOnly,
   }) {
@@ -791,8 +793,8 @@ class UpdateProjectRequest extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<Project>(1, _omitFieldNames ? '' : 'project',
         subBuilder: Project.create)
-    ..aOM<$13.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
-        subBuilder: $13.FieldMask.create)
+    ..aOM<$12.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
+        subBuilder: $12.FieldMask.create)
     ..aOB(3, _omitFieldNames ? '' : 'allowMissing')
     ..aOB(4, _omitFieldNames ? '' : 'validateOnly')
     ..hasRequiredFields = false;
@@ -829,30 +831,30 @@ class UpdateProjectRequest extends $pb.GeneratedMessage {
   Project get project => $_getN(0);
   @$pb.TagNumber(1)
   set project(Project v) {
-    setField(1, v);
+    $_setField(1, v);
   }
 
   @$pb.TagNumber(1)
   $core.bool hasProject() => $_has(0);
   @$pb.TagNumber(1)
-  void clearProject() => clearField(1);
+  void clearProject() => $_clearField(1);
   @$pb.TagNumber(1)
   Project ensureProject() => $_ensure(0);
 
   /// The update mask to apply to the project.
   @$pb.TagNumber(2)
-  $13.FieldMask get updateMask => $_getN(1);
+  $12.FieldMask get updateMask => $_getN(1);
   @$pb.TagNumber(2)
-  set updateMask($13.FieldMask v) {
-    setField(2, v);
+  set updateMask($12.FieldMask v) {
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasUpdateMask() => $_has(1);
   @$pb.TagNumber(2)
-  void clearUpdateMask() => clearField(2);
+  void clearUpdateMask() => $_clearField(2);
   @$pb.TagNumber(2)
-  $13.FieldMask ensureUpdateMask() => $_ensure(1);
+  $12.FieldMask ensureUpdateMask() => $_ensure(1);
 
   /// If set to true, and the project is not found, a new project will be created.
   /// In this situation, `update_mask` is ignored.
@@ -866,7 +868,7 @@ class UpdateProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasAllowMissing() => $_has(2);
   @$pb.TagNumber(3)
-  void clearAllowMissing() => clearField(3);
+  void clearAllowMissing() => $_clearField(3);
 
   /// If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(4)
@@ -879,7 +881,7 @@ class UpdateProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasValidateOnly() => $_has(3);
   @$pb.TagNumber(4)
-  void clearValidateOnly() => clearField(4);
+  void clearValidateOnly() => $_clearField(4);
 }
 
 /// Request message for the `DeleteProject` method.
@@ -966,7 +968,7 @@ class DeleteProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// Optional. If set to true, any resources associated with the project will also be marked for deletion.
   /// (Otherwise, the request will only work if the project has no resources.)
@@ -980,7 +982,7 @@ class DeleteProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasForce() => $_has(1);
   @$pb.TagNumber(2)
-  void clearForce() => clearField(2);
+  void clearForce() => $_clearField(2);
 
   /// Optional. The etag of the project.
   /// If this is provided, it must match the server's etag.
@@ -994,7 +996,7 @@ class DeleteProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasEtag() => $_has(2);
   @$pb.TagNumber(3)
-  void clearEtag() => clearField(3);
+  void clearEtag() => $_clearField(3);
 
   /// Optional. If set to true, and the project is not found, the request will succeed
   /// but no action will be taken on the server.
@@ -1008,7 +1010,7 @@ class DeleteProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasAllowMissing() => $_has(3);
   @$pb.TagNumber(4)
-  void clearAllowMissing() => clearField(4);
+  void clearAllowMissing() => $_clearField(4);
 
   /// Optional. If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(5)
@@ -1021,7 +1023,7 @@ class DeleteProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool hasValidateOnly() => $_has(4);
   @$pb.TagNumber(5)
-  void clearValidateOnly() => clearField(5);
+  void clearValidateOnly() => $_clearField(5);
 }
 
 /// Request message for the `UndeleteProject` method.
@@ -1099,7 +1101,7 @@ class UndeleteProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   /// Optional. If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(2)
@@ -1112,7 +1114,7 @@ class UndeleteProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasValidateOnly() => $_has(1);
   @$pb.TagNumber(2)
-  void clearValidateOnly() => clearField(2);
+  void clearValidateOnly() => $_clearField(2);
 
   /// Optional. The etag of the project.
   /// If this is provided, it must match the server's etag.
@@ -1126,7 +1128,7 @@ class UndeleteProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasEtag() => $_has(2);
   @$pb.TagNumber(3)
-  void clearEtag() => clearField(3);
+  void clearEtag() => $_clearField(3);
 }
 
 /// Request message for the `RenameProject` operation.
@@ -1208,7 +1210,7 @@ class RenameProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearName() => $_clearField(1);
 
   ///  Required. The new project identifier.
   ///
@@ -1223,7 +1225,7 @@ class RenameProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasProjectId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearProjectId() => clearField(2);
+  void clearProjectId() => $_clearField(2);
 
   /// Optional. The etag of the project.
   /// If this is provided, it must match the server's etag.
@@ -1237,7 +1239,7 @@ class RenameProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasEtag() => $_has(2);
   @$pb.TagNumber(3)
-  void clearEtag() => clearField(3);
+  void clearEtag() => $_clearField(3);
 
   /// Optional. If set to true, the request is validated but not actually executed.
   @$pb.TagNumber(4)
@@ -1250,7 +1252,7 @@ class RenameProjectRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool hasValidateOnly() => $_has(3);
   @$pb.TagNumber(4)
-  void clearValidateOnly() => clearField(4);
+  void clearValidateOnly() => $_clearField(4);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');

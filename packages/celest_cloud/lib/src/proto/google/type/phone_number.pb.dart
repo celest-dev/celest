@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/type/phone_number.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
@@ -12,6 +12,8 @@
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
+
+export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 ///  An object representing a short code, which is a phone number that is
 ///  typically much shorter than regular phone numbers and can be used to
@@ -92,7 +94,7 @@ class PhoneNumber_ShortCode extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasRegionCode() => $_has(0);
   @$pb.TagNumber(1)
-  void clearRegionCode() => clearField(1);
+  void clearRegionCode() => $_clearField(1);
 
   /// Required. The short code digits, without a leading plus ('+') or country
   /// calling code, e.g. "611".
@@ -106,7 +108,7 @@ class PhoneNumber_ShortCode extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool hasNumber() => $_has(1);
   @$pb.TagNumber(2)
-  void clearNumber() => clearField(2);
+  void clearNumber() => $_clearField(2);
 }
 
 enum PhoneNumber_Kind { e164Number, shortCode, notSet }
@@ -202,7 +204,7 @@ class PhoneNumber extends $pb.GeneratedMessage {
   static PhoneNumber? _defaultInstance;
 
   PhoneNumber_Kind whichKind() => _PhoneNumber_KindByTag[$_whichOneof(0)]!;
-  void clearKind() => clearField($_whichOneof(0));
+  void clearKind() => $_clearField($_whichOneof(0));
 
   ///  The phone number, represented as a leading plus sign ('+'), followed by a
   ///  phone number that uses a relaxed ITU E.164 format consisting of the
@@ -229,7 +231,7 @@ class PhoneNumber extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool hasE164Number() => $_has(0);
   @$pb.TagNumber(1)
-  void clearE164Number() => clearField(1);
+  void clearE164Number() => $_clearField(1);
 
   ///  A short code.
   ///
@@ -239,13 +241,13 @@ class PhoneNumber extends $pb.GeneratedMessage {
   PhoneNumber_ShortCode get shortCode => $_getN(1);
   @$pb.TagNumber(2)
   set shortCode(PhoneNumber_ShortCode v) {
-    setField(2, v);
+    $_setField(2, v);
   }
 
   @$pb.TagNumber(2)
   $core.bool hasShortCode() => $_has(1);
   @$pb.TagNumber(2)
-  void clearShortCode() => clearField(2);
+  void clearShortCode() => $_clearField(2);
   @$pb.TagNumber(2)
   PhoneNumber_ShortCode ensureShortCode() => $_ensure(1);
 
@@ -268,7 +270,7 @@ class PhoneNumber extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool hasExtension_3() => $_has(2);
   @$pb.TagNumber(3)
-  void clearExtension_3() => clearField(3);
+  void clearExtension_3() => $_clearField(3);
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
