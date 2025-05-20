@@ -17,13 +17,11 @@ concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
   cancel-in-progress: true
 
-# Uncomment if using self-hosted runners for consistency with other workflows which run setup-dart with OIDC enabled.
-# permissions:
-#   contents: read
-#   id-token: write
-
 env:
   CELEST_LOCAL_PATH: ${{ github.workspace }}
+
+permissions:
+  contents: read
 
 jobs:
   test:

@@ -11,6 +11,9 @@ concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || ''}}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   analyze_and_format:
     runs-on: ubuntu-latest
