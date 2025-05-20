@@ -20,6 +20,9 @@ concurrency:
 env:
   CELEST_LOCAL_PATH: ${{ github.workspace }}
 
+permissions:
+  contents: read
+
 jobs:
   test:
     strategy:
