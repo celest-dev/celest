@@ -620,6 +620,10 @@
   },
   "variables": [
     {
+      "name": "MY_RESEND_API_KEY",
+      "value": "sk_test_1234567890abcdef"
+    },
+    {
       "name": "CELEST_ENVIRONMENT",
       "value": "local"
     }
@@ -652,7 +656,7 @@
     "celest": "1.0.13",
     "dart": {
       "type": "dart",
-      "version": "3.8.0-278.2.beta",
+      "version": "3.8.1",
       "enabledExperiments": []
     },
     "targetSdk": "dart",
@@ -661,7 +665,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.32.0-0.3.pre",
+      "version": "3.32.5",
       "enabledExperiments": []
     }
   },

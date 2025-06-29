@@ -429,7 +429,7 @@ class TestRunner {
           'build',
           '-t',
           imageName,
-          if (testName case 'fvm' || 'flutter') '--platform=linux/amd64',
+          '--platform=linux/amd64',
           '.',
         ],
         workingDirectory: outputDir,
@@ -454,7 +454,7 @@ class TestRunner {
           '--rm',
           '-p',
           '$openPort:8080',
-          if (testName case 'fvm' || 'flutter') '--platform=linux/amd64',
+          '--platform=linux/amd64',
           for (final database in project!.databases.values)
             if (database.config case ast.CelestDatabaseConfig(:final hostname))
               '--env=${hostname.name}=file::memory:',
