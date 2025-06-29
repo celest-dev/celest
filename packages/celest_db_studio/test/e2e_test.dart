@@ -193,7 +193,7 @@ void main() {
 
           final WebElement resultCell = await driver.waitForElement(
             const By.cssSelector(
-              r'body > div.flex.h-screen.w-screen.flex-col > div > div:nth-child(3) > div.flex.h-full.w-full.flex-col > div.relative.grow > div > div > div:nth-child(3) > div.flex.h-full.w-full.flex-col > div.relative.grow > div:nth-child(1) > div > div.grow.overflow-hidden > div > div > table > tbody > tr > td.overflow-hidden.border-r.border-b.box-border.hover\:bg-neutral-100.dark\:hover\:bg-neutral-800.bg-transparent',
+              r'body > div.flex.h-screen.w-screen.flex-col > div > div:nth-child(3) > div.flex.h-full.w-full.flex-col > div.relative.grow > div > div > div:nth-child(3) > div.flex.h-full.w-full.flex-col > div.relative.grow > div:nth-child(1) > div > div.grow.overflow-hidden > div > div > table > tbody > tr > td.overflow-hidden.border-r.border-b.box-border.hover\:bg-neutral-100.dark\:hover\:bg-neutral-800.bg-background > div > div > div > span',
             ),
           );
           await expectLater(resultCell.text, completion('1'));
