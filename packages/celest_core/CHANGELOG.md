@@ -1,3 +1,7 @@
+## 1.0.4
+
+- chore: Update dependencies
+
 ## 1.0.3
 
 - chore: Update dependencies

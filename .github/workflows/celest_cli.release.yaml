@@ -29,7 +29,6 @@ jobs:
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046 # 2.19.0
         with:
           cache: true
-          channel: beta # Needed for cross-compilation
 
       - name: Fix pub cache
         run: |

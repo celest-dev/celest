@@ -5,8 +5,8 @@ environment:
   sdk: ^3.5.0
 
 dependencies:
-  drift: '>=2.26.1 <2.27.0'
+  drift: '>=2.27.0 <2.28.0'
 
 dev_dependencies:
   build_runner:
-  drift_dev: '>=2.26.1 <2.27.0'
+  drift_dev: '>=2.27.0 <2.28.0'

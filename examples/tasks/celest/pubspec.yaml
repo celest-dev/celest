@@ -8,7 +8,7 @@ environment:
 dependencies:
   celest: ^1.0.0
   celest_core: ^1.0.0
-  drift: '>=2.26.1 <2.27.0'
+  drift: '>=2.27.0 <2.28.0'
   drift_hrana: ^1.0.5
   meta: ^1.12.0
 
@@ -28,6 +28,6 @@ dependency_overrides:
 
 dev_dependencies:
   build_runner: ^2.4.13
-  drift_dev: '>=2.26.1 <2.27.0'
+  drift_dev: '>=2.27.0 <2.28.0'
   lints: ^5.0.0
   test: ^1.25.0

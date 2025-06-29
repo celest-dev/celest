@@ -364,6 +364,12 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "CancellationException",
+          "url": "package:drift/src/runtime/cancellation_zone.dart",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "DriftWrappedException",
           "url": "package:drift/src/runtime/exceptions.dart",
           "isNullable": false
@@ -576,12 +582,6 @@
           "$": "TypeReference",
           "symbol": "TemplateException",
           "url": "package:mustache_template/src/template_exception.dart",
-          "isNullable": false
-        },
-        {
-          "$": "TypeReference",
-          "symbol": "CancellationException",
-          "url": "package:drift/src/runtime/cancellation_zone.dart",
           "isNullable": false
         },
         {

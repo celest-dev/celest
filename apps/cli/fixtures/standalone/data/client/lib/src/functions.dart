@@ -292,6 +292,14 @@ class CelestFunctionsTasks {
           ),
           stackTrace,
         );
+      case 'drift.CancellationException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$drift_cancellation_zone.CancellationException>(
+                errorValue,
+              ),
+          stackTrace,
+        );
       case 'drift.DriftWrappedException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance
@@ -538,14 +546,6 @@ class CelestFunctionsTasks {
           _$celest.Serializers.instance.deserialize<
             _$mustache_template_template_exception.TemplateException
           >(errorValue),
-          stackTrace,
-        );
-      case 'drift.CancellationException':
-        Error.throwWithStackTrace(
-          _$celest.Serializers.instance
-              .deserialize<_$drift_cancellation_zone.CancellationException>(
-                errorValue,
-              ),
           stackTrace,
         );
       case 'sqlite3.SqliteException':

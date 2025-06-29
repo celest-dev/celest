@@ -1,6 +1,7 @@
 ## NEXT
 
 - feat: Allow overriding client environment with Dart define
+- chore: Update dependencies
 
 ## 1.0.13
 

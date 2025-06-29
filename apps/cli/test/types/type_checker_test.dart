@@ -51,6 +51,9 @@ void main() {
         );
       },
       inputId: AssetId('celest_cli', 'test/example.dart'),
+      nonInputsToReadFromFilesystem: {
+        AssetId('celest_cli', 'test/types/type_checker_test.dart'),
+      },
     );
 
     final staticIterable = core

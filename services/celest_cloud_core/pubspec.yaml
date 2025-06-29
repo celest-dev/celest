@@ -13,7 +13,7 @@ dependencies:
   celest_cloud: ^0.1.8
   celest_core: ^1.0.0
   collection: ^1.18.0
-  drift: '>=2.26.1 <2.27.0'
+  drift: ^2.27.0
   fixnum: ^1.0.0
   meta: ^1.16.0
   petitparser: ^6.0.0

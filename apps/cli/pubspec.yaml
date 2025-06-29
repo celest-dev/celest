@@ -36,7 +36,7 @@ dependencies:
   dart_style: ^3.0.0
   dcli: ^7.0.1
   dcli_terminal: ^7.0.1
-  drift: '>=2.26.1 <2.27.0'
+  drift: '>=2.27.0 <2.28.0'
   email_validator: ^3.0.0
   ffi: ^2.1.4
   file: ^7.0.0
@@ -47,7 +47,7 @@ dependencies:
   html2md: ^1.3.1
   http: ^1.1.2
   http_parser: ^4.0.2
-  intl: ^0.19.0
+  intl: ^0.20.2
   io: ^1.0.4
   json_annotation: ^4.9.0
   libcoder: ^0.0.1
@@ -55,7 +55,7 @@ dependencies:
   mason_logger: ^0.3.0
   meta: ^1.10.0
   mustache_template: ^2.0.0
-  native_storage: ^0.2.2
+  native_storage: ^0.3.0
   os_detect: ^2.0.1
   package_config: ^2.1.0
   path: ^1.8.3
@@ -65,8 +65,8 @@ dependencies:
   protobuf: ^4.0.0
   pub_semver: ^2.1.4
   pubspec_parse: ^1.2.3
-  sentry: ^8.5.0
-  sentry_logging: ^8.13.2
+  sentry: ^9.1.0
+  sentry_logging: ^9.1.0
   shelf: ^1.4.1
   shelf_static: ^1.1.2
   shelf_web_socket: ">=2.0.0 <4.0.0"
@@ -89,17 +89,17 @@ dev_dependencies:
   benchmark_harness: ^2.2.2
   build: ^2.4.1
   build_runner: ^2.4.7
-  build_test: ^2.2.1
+  build_test: ^3.2.1
   built_value_generator: ^8.9.4
   celest_lints:
     path: ../../packages/celest_lints
   celest_test: ^0.1.0
   checks: ^0.3.0
   dart_jsonwebtoken: ^3.1.1
-  drift_dev: '>=2.26.1 <2.27.0'
+  drift_dev: '>=2.27.0 <2.28.0'
   gcloud: ^0.8.13
-  googleapis: ^13.2.0
-  googleapis_auth: ^1.4.1
+  googleapis: ^14.0.0
+  googleapis_auth: ^2.0.0
   jose: ^0.3.4
   json_serializable: ^6.8.0
   mocktail: ^1.0.2

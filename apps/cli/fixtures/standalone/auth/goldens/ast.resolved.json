@@ -620,10 +620,6 @@
   },
   "variables": [
     {
-      "name": "MY_RESEND_API_KEY",
-      "value": "sk_test_1234567890abcdef"
-    },
-    {
       "name": "CELEST_ENVIRONMENT",
       "value": "local"
     }
