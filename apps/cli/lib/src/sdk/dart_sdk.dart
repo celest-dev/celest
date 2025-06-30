@@ -216,15 +216,35 @@ class Sdk {
             'platform_strong.dill',
           );
 
-  String get vmPlatformDill =>
-      p.absolute(sdkPath, 'lib', '_internal', 'vm_platform_strong.dill');
+  String get vmPlatformDill {
+    final dillPath = p.absolute(
+      sdkPath,
+      'lib',
+      '_internal',
+      'vm_platform_strong.dill',
+    );
+    if (_fileSystem.file(dillPath).existsSync()) {
+      return dillPath;
+    }
+    // In newer SDKs, `vm_platform_strong.dill` is replaced with
+    // `vm_platform.dill`.
+    return p.absolute(sdkPath, 'lib', '_internal', 'vm_platform.dill');
+  }
 
-  String get vmPlatformProductDill => p.absolute(
-    sdkPath,
-    'lib',
-    '_internal',
-    'vm_platform_strong_product.dill',
-  );
+  String get vmPlatformProductDill {
+    final dillPath = p.absolute(
+      sdkPath,
+      'lib',
+      '_internal',
+      'vm_platform_strong_product.dill',
+    );
+    if (_fileSystem.file(dillPath).existsSync()) {
+      return dillPath;
+    }
+    // In newer SDKs, `vm_platform_strong_product.dill` is replaced with
+    // `vm_platform_product.dill`.
+    return p.absolute(sdkPath, 'lib', '_internal', 'vm_platform_product.dill');
+  }
 
   /// The version when cross-compilation was introduced.
   static final Version _crossCompilationVersion = Version.parse('3.8.0');

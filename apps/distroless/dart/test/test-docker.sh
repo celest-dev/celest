@@ -19,6 +19,9 @@ echo "DART_VERSION: $DART_VERSION"
 DART="$DART_HOME/bin/dartaotruntime"
 FE_SNAPSHOT="$DART_HOME/bin/snapshots/frontend_server_aot.dart.snapshot"
 VM_PLATFORM="$DART_HOME/lib/_internal/vm_platform_strong_product.dill"
+if [ ! -f "$DART" ]; then
+  VM_PLATFORM="$DART_HOME/lib/_internal/vm_platform_product.dill"
+fi
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
