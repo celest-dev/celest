@@ -873,7 +873,7 @@ class SecretsApi {
       '/apps/$appName/secrets',
       parseResponse:
           (json) =>
-              (json as List)
+              ((json as Map)['secrets'] as List)
                   .map(
                     (item) => ListSecret.fromJson(item as Map<String, Object?>),
                   )
