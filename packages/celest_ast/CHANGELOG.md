@@ -1,4 +1,4 @@
-## NEXT
+## 0.1.7
 
 - chore: Bump Dart SDK constraint to `^3.7.0`
 - chore: Re-format with Dart 3.7

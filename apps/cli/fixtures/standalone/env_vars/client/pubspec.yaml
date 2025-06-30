@@ -11,7 +11,7 @@ dependencies:
     path: ..
   celest_core: ^1.0.0
   http: ^1.0.0
-  native_storage: ^0.2.2
+  native_storage: ^0.3.0
 
 dependency_overrides:
   celest:

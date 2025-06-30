@@ -126,8 +126,8 @@ final class ProjectDependency {
     DependencyType.dependency,
     HostedDependency(
       version: VersionRange(
-        min: Version.parse('2.26.1'),
-        max: Version.parse('2.27.0'),
+        min: Version.parse('2.27.0'),
+        max: Version.parse('2.28.0'),
         includeMin: true,
         includeMax: false,
       ),
@@ -178,7 +178,7 @@ final class ProjectDependency {
     'native_storage',
     DependencyType.dependency,
     HostedDependency(
-      version: VersionConstraint.compatibleWith(Version.parse('0.2.2')),
+      version: VersionConstraint.compatibleWith(Version.parse('0.3.0')),
     ),
   );
 

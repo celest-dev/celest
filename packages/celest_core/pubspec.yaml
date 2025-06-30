@@ -1,6 +1,6 @@
 name: celest_core
 description: Celest types and utilities shared between the client and the cloud.
-version: 1.0.3
+version: 1.0.4
 homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/packages/celest_core
 
@@ -19,7 +19,7 @@ dependencies:
   json_annotation: ^4.7.0
   logging: ^1.2.0
   meta: ^1.10.0
-  native_storage: ^0.2.2
+  native_storage: ^0.3.0
   os_detect: ^2.0.1
   path: ^1.9.0
   protobuf: ^4.0.0
@@ -30,7 +30,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.4.15
-  build_test: ^2.2.3
+  build_test: ^3.2.1
   build_web_compilers: ^4.1.4
   celest_lints: ^1.0.0
   test: ^1.25.0

@@ -19,7 +19,7 @@ echo "DART_VERSION: $DART_VERSION"
 DART="$DART_HOME/bin/dartaotruntime"
 FE_SNAPSHOT="$DART_HOME/bin/snapshots/frontend_server_aot.dart.snapshot"
 VM_PLATFORM="$DART_HOME/lib/_internal/vm_platform_strong_product.dill"
-if [ ! -f "$DART" ]; then
+if [ ! -f "$VM_PLATFORM" ]; then
   VM_PLATFORM="$DART_HOME/lib/_internal/vm_platform_product.dill"
 fi
 
