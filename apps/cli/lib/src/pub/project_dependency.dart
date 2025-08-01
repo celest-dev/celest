@@ -127,7 +127,7 @@ final class ProjectDependency {
     HostedDependency(
       version: VersionRange(
         min: Version.parse('2.27.0'),
-        max: Version.parse('2.28.0'),
+        max: Version.parse('2.29.0'),
         includeMin: true,
         includeMax: false,
       ),
