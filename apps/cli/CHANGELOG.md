@@ -2,6 +2,7 @@
 
 - feat: Allow overriding client environment with Dart define
 - fix: Searching parent directories for a `pubspec.yaml` file always halts now
+- fix: Only cross-compile with non-Flutter Dart SDKs
 - chore: Update dependencies
 
 ## 1.0.13

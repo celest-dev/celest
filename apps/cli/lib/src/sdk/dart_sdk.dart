@@ -251,7 +251,10 @@ class Sdk {
 
   /// Whether or not the current SDK supports cross-compilation.
   bool get supportsCrossCompilation {
-    return version >= _crossCompilationVersion;
+    return version >= _crossCompilationVersion &&
+        // TODO(dnys1): The version of `dart` bundled with the Flutter SDK leads
+        //  to VM snapshot errors when cross-compiling, so we don't support it.
+        sdkType == SdkType.dart;
   }
 }
 
