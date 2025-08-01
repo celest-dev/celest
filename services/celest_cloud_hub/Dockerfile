@@ -1,8 +1,8 @@
-FROM dart:3.7.2 AS build
+FROM dart:3.9.0-333.3.beta AS build
 
 # Set the dependency versions
-ARG FLY_VERSION=0.3.98
-ARG YQ_VERSION=4.45.1
+ARG FLY_VERSION=0.3.164
+ARG YQ_VERSION=4.46.1
 
 # Download and install flyctl based on architecture
 RUN arch=$(uname -m) && \
@@ -45,14 +45,52 @@ RUN yq eval 'del(.environment.flutter)' -i pubspec.yaml
 
 WORKDIR /app/services/celest_cloud_hub
 RUN dart pub get
-RUN dart compile aot-snapshot bin/cloud_hub.dart -o /app/main.aot
+RUN dart --enable-experiment=native-assets \
+        build cli --target=bin/cloud_hub.dart --output=/dist
 
-FROM celestdev/dart-runtime:3.7.2
+# Builds SQLite from Source
+#
+# The version shipped with apt is very outdated (3.40.1). This is the only way
+# it seems to get anything newer.
+FROM debian:12-slim AS sqlite
 
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    tcl-dev \
+    libreadline-dev \
+    wget \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set up build directory
+WORKDIR /sqlite_build
+
+# Download the latest SQLite source
+ARG SQLITE_VERSION=3500400
+RUN wget https://www.sqlite.org/2025/sqlite-autoconf-${SQLITE_VERSION}.tar.gz \
+    && tar xzf sqlite-autoconf-${SQLITE_VERSION}.tar.gz \
+    && cd sqlite-autoconf-${SQLITE_VERSION}
+
+# Build SQLite with default options
+WORKDIR /sqlite_build/sqlite-autoconf-${SQLITE_VERSION}
+RUN CFLAGS='-DSQLITE_ENABLE_FTS5' \
+    ./configure --prefix=/usr \
+    --enable-threadsafe \
+    && make -j$(nproc) \
+    && make install DESTDIR=/sqlite_install
+
+FROM gcr.io/distroless/cc-debian12
+
+COPY --from=build /usr/share/ca-certificates /usr/share/ca-certificates
+COPY --from=build /etc/ssl/certs /etc/ssl/certs
 COPY --from=build /usr/local/bin/flyctl /usr/local/bin/flyctl
-COPY --from=build /app/main.aot /app/main.aot
+COPY --from=sqlite /sqlite_install /
+COPY --from=build /dist/bundle /app
 
 ENV PORT=8080
 EXPOSE $PORT
 
 WORKDIR /tmp
+
+ENTRYPOINT ["/app/bin/cloud_hub"]

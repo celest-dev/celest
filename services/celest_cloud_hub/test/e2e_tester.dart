@@ -42,13 +42,15 @@ class E2ETester {
       }
     });
 
-    _compiledEntrypoint = p.join(tempDir.path, 'cloud_hub.dill');
+    _compiledEntrypoint = p.join(tempDir.path, 'bundle', 'bin', 'cloud_hub');
     final result = await Process.run(Platform.resolvedExecutable, [
-      'compile',
-      'kernel',
+      '--enable-experiment=native-assets',
+      'build',
+      'cli',
+      '--target',
       Directory.current.uri.resolve('./bin/cloud_hub.dart').toFilePath(),
       '--output',
-      _compiledEntrypoint!,
+      tempDir.path,
     ]);
     if (result.exitCode != 0) {
       throw StateError('Failed to compile cloud_hub.dart:\n${result.stderr}');
@@ -73,8 +75,8 @@ class E2ETester {
     cloudAuth = await CelestCloudAuth.create(database: database);
 
     server = await Process.start(
-      Platform.resolvedExecutable,
-      ['run', _compiledEntrypoint!],
+      _compiledEntrypoint!,
+      [],
       environment: {
         'PORT': '0',
         'CLOUD_HUB_DATABASE_HOST': Uri.file(databasePath).toString(),
@@ -90,16 +92,14 @@ class E2ETester {
         await sock.delete();
       }
     });
-    final stdout =
-        server.stdout
-            .transform(utf8.decoder)
-            .transform(const LineSplitter())
-            .asBroadcastStream();
-    final stderr =
-        server.stderr
-            .transform(utf8.decoder)
-            .transform(const LineSplitter())
-            .asBroadcastStream();
+    final stdout = server.stdout
+        .transform(utf8.decoder)
+        .transform(const LineSplitter())
+        .asBroadcastStream();
+    final stderr = server.stderr
+        .transform(utf8.decoder)
+        .transform(const LineSplitter())
+        .asBroadcastStream();
 
     final stdoutListener = stdout.listen((line) {
       print('[server] $line');

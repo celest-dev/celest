@@ -16,7 +16,6 @@ workspace:
   - packages/celest_test
   - services/celest_cloud_auth
   - services/celest_cloud_core
-  - services/celest_cloud_hub
 
 dependencies:
   drift: '>=2.27.0 <2.29.0'
