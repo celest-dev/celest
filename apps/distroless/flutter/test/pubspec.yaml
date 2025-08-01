@@ -6,7 +6,7 @@ environment:
   flutter: '>=3.24.0'
 
 dependencies:
-  drift: '>=2.27.0 <2.28.0'
+  drift: '>=2.27.0 <2.29.0'
   flutter:
     sdk: flutter
   flutter_test:
@@ -14,7 +14,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.4.13
-  drift_dev: '>=2.27.0 <2.28.0'
+  drift_dev: '>=2.27.0 <2.29.0'
 
 flutter:
   uses-material-design: true
