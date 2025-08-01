@@ -185,7 +185,7 @@ base mixin Configure on CelestCommand {
     } else {
       // For other commands, search recursively for the Celest pubspec file.
       while (!pubspecFile.existsSync()) {
-        if (currentDir == currentDir.parent) {
+        if (fileSystem.identicalSync(currentDir.path, currentDir.parent.path)) {
           _throwNoProject();
         }
         currentDir = currentDir.parent;
