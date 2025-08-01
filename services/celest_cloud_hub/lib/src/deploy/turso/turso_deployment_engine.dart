@@ -54,13 +54,12 @@ final class TursoDeploymentEngine {
     );
 
     return db.transaction(() async {
-      final database =
-          (await db.projectEnvironmentsDrift.createTursoDatabase(
-            databaseName: databaseName,
-            databaseGroup: databaseGroup,
-            databaseUrl: 'libsql://${tursoDatabase.hostname}',
-            databaseToken: token,
-          )).first;
+      final database = (await db.projectEnvironmentsDrift.createTursoDatabase(
+        databaseName: databaseName,
+        databaseGroup: databaseGroup,
+        databaseUrl: 'libsql://${tursoDatabase.hostname}',
+        databaseToken: token,
+      )).first;
       currentState =
           (await db.projectEnvironmentsDrift.upsertProjectEnvironmentState(
             projectEnvironmentId: currentState.projectEnvironmentId,

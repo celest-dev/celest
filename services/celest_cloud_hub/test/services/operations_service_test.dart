@@ -235,17 +235,16 @@ void main() {
             ownerId: user.id,
             resourceType: i == 0 ? resource.type : null,
             resourceId: i == 0 ? resource.id : null,
-            response:
-                i == 0
-                    ? jsonEncode(
-                      pb.ProjectEnvironment(
-                        name: 'projects/test/environments/test',
-                        createTime: pb.Timestamp.fromDateTime(
-                          DateTime.timestamp(),
-                        ),
-                      ).packIntoAny().toProto3Json(typeRegistry: typeRegistry),
-                    )
-                    : null,
+            response: i == 0
+                ? jsonEncode(
+                    pb.ProjectEnvironment(
+                      name: 'projects/test/environments/test',
+                      createTime: pb.Timestamp.fromDateTime(
+                        DateTime.timestamp(),
+                      ),
+                    ).packIntoAny().toProto3Json(typeRegistry: typeRegistry),
+                  )
+                : null,
           );
         }
         final unfiltered = await service.listOperations(

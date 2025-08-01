@@ -56,17 +56,15 @@ class Database {
       hostname: json['Hostname'] as String,
       blockReads: json['block_reads'] as bool?,
       blockWrites: json['block_writes'] as bool?,
-      regions:
-          json['regions'] == null
-              ? null
-              : List<String>.from(json['regions'] as List),
+      regions: json['regions'] == null
+          ? null
+          : List<String>.from(json['regions'] as List),
       primaryRegion: json['primaryRegion'] as String?,
       group: json['group'] as String?,
       deleteProtection: json['delete_protection'] as bool?,
-      parent:
-          json['parent'] != null
-              ? DatabaseParent.fromJson(json['parent'] as Map<String, dynamic>)
-              : null,
+      parent: json['parent'] != null
+          ? DatabaseParent.fromJson(json['parent'] as Map<String, dynamic>)
+          : null,
     );
   }
   final String name;

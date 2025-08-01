@@ -105,12 +105,11 @@ void main() {
 
       final state = await deployTestApp(
         db: db,
-        withInitialState:
-            (id) => ProjectEnvironmentStatesCompanion.insert(
-              projectEnvironmentId: id,
-              flyAppName: Value(appName),
-              flyVolumeName: Value(volumeName),
-            ),
+        withInitialState: (id) => ProjectEnvironmentStatesCompanion.insert(
+          projectEnvironmentId: id,
+          flyAppName: Value(appName),
+          flyVolumeName: Value(volumeName),
+        ),
         withTurso: true,
       );
       addTearDown(() async {

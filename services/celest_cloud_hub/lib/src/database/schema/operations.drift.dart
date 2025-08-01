@@ -244,12 +244,12 @@ class $OperationsTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$OperationsFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => i1.$OperationsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => i1.$OperationsAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              i1.$OperationsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$OperationsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$OperationsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<String> id = const i0.Value.absent(),
@@ -302,16 +302,9 @@ class $OperationsTableManager
                 resourceId: resourceId,
                 rowid: rowid,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -574,11 +567,10 @@ class Operations extends i0.Table with i0.TableInfo<Operations, i1.Operation> {
   i1.Operation map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.Operation(
-      id:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
       metadata: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
         data['${effectivePrefix}metadata'],
@@ -591,16 +583,14 @@ class Operations extends i0.Table with i0.TableInfo<Operations, i1.Operation> {
         i0.DriftSqlType.string,
         data['${effectivePrefix}error'],
       ),
-      done:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.bool,
-            data['${effectivePrefix}done'],
-          )!,
-      createTime:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.dateTime,
-            data['${effectivePrefix}create_time'],
-          )!,
+      done: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.bool,
+        data['${effectivePrefix}done'],
+      )!,
+      createTime: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.dateTime,
+        data['${effectivePrefix}create_time'],
+      )!,
       fullResourceName: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
         data['${effectivePrefix}full_resource_name'],
@@ -744,39 +734,31 @@ class Operation extends i0.DataClass implements i0.Insertable<i1.Operation> {
   i1.OperationsCompanion toCompanion(bool nullToAbsent) {
     return i1.OperationsCompanion(
       id: i0.Value(id),
-      metadata:
-          metadata == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(metadata),
-      response:
-          response == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(response),
-      error:
-          error == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(error),
+      metadata: metadata == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(metadata),
+      response: response == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(response),
+      error: error == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(error),
       createTime: i0.Value(createTime),
-      fullResourceName:
-          fullResourceName == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(fullResourceName),
-      ownerType:
-          ownerType == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(ownerType),
-      ownerId:
-          ownerId == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(ownerId),
-      resourceType:
-          resourceType == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(resourceType),
-      resourceId:
-          resourceId == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(resourceId),
+      fullResourceName: fullResourceName == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(fullResourceName),
+      ownerType: ownerType == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(ownerType),
+      ownerId: ownerId == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(ownerId),
+      resourceType: resourceType == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(resourceType),
+      resourceId: resourceId == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(resourceId),
     );
   }
 
@@ -838,10 +820,9 @@ class Operation extends i0.DataClass implements i0.Insertable<i1.Operation> {
     error: error.present ? error.value : this.error,
     done: done ?? this.done,
     createTime: createTime ?? this.createTime,
-    fullResourceName:
-        fullResourceName.present
-            ? fullResourceName.value
-            : this.fullResourceName,
+    fullResourceName: fullResourceName.present
+        ? fullResourceName.value
+        : this.fullResourceName,
     ownerType: ownerType.present ? ownerType.value : this.ownerType,
     ownerId: ownerId.present ? ownerId.value : this.ownerId,
     resourceType: resourceType.present ? resourceType.value : this.resourceType,

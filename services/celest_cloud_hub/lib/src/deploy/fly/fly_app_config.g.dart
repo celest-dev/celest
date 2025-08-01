@@ -13,38 +13,30 @@ FlyAppConfig _$FlyAppConfigFromJson(Map json) => FlyAppConfig(
   killTimeout: json['kill_timeout'] as String?,
   swapSizeMb: (json['swap_size_mb'] as num?)?.toInt(),
   consoleCommand: json['console_command'] as String?,
-  build:
-      json['build'] == null
-          ? null
-          : FlyAppBuildConfig.fromJson(
-            Map<String, Object?>.from(json['build'] as Map),
-          ),
-  deploy:
-      json['deploy'] == null
-          ? null
-          : FlyAppDeployConfig.fromJson(
-            Map<String, Object?>.from(json['deploy'] as Map),
-          ),
+  build: json['build'] == null
+      ? null
+      : FlyAppBuildConfig.fromJson(
+          Map<String, Object?>.from(json['build'] as Map),
+        ),
+  deploy: json['deploy'] == null
+      ? null
+      : FlyAppDeployConfig.fromJson(
+          Map<String, Object?>.from(json['deploy'] as Map),
+        ),
   env: (json['env'] as Map?)?.map((k, e) => MapEntry(k as String, e as String)),
-  mounts:
-      (json['mounts'] as List<dynamic>?)
-          ?.map(
-            (e) =>
-                FlyAppMountConfig.fromJson(Map<String, Object?>.from(e as Map)),
-          )
-          .toList(),
-  httpService:
-      json['http_service'] == null
-          ? null
-          : FlyAppHttpServiceConfig.fromJson(
-            Map<String, Object?>.from(json['http_service'] as Map),
-          ),
-  vms:
-      (json['vm'] as List<dynamic>?)
-          ?.map(
-            (e) => FlyAppVmConfig.fromJson(Map<String, Object?>.from(e as Map)),
-          )
-          .toList(),
+  mounts: (json['mounts'] as List<dynamic>?)
+      ?.map(
+        (e) => FlyAppMountConfig.fromJson(Map<String, Object?>.from(e as Map)),
+      )
+      .toList(),
+  httpService: json['http_service'] == null
+      ? null
+      : FlyAppHttpServiceConfig.fromJson(
+          Map<String, Object?>.from(json['http_service'] as Map),
+        ),
+  vms: (json['vm'] as List<dynamic>?)
+      ?.map((e) => FlyAppVmConfig.fromJson(Map<String, Object?>.from(e as Map)))
+      .toList(),
 );
 
 Map<String, dynamic> _$FlyAppConfigToJson(FlyAppConfig instance) =>
@@ -114,14 +106,13 @@ FlyAppHttpServiceConfig _$FlyAppHttpServiceConfigFromJson(Map json) =>
               ?.map((e) => e as String)
               .toList() ??
           const ['app'],
-      checks:
-          (json['checks'] as List<dynamic>?)
-              ?.map(
-                (e) => FlyAppHttpServiceCheckConfig.fromJson(
-                  Map<String, Object?>.from(e as Map),
-                ),
-              )
-              .toList(),
+      checks: (json['checks'] as List<dynamic>?)
+          ?.map(
+            (e) => FlyAppHttpServiceCheckConfig.fromJson(
+              Map<String, Object?>.from(e as Map),
+            ),
+          )
+          .toList(),
     );
 
 Map<String, dynamic> _$FlyAppHttpServiceConfigToJson(
@@ -170,8 +161,9 @@ FlyAppVmConfig _$FlyAppVmConfigFromJson(Map json) => FlyAppVmConfig(
   cpuKind: json['cpu_kind'] as String?,
   cpus: (json['cpus'] as num?)?.toInt(),
   memoryMb: (json['memory_mb'] as num?)?.toInt(),
-  processes:
-      (json['processes'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  processes: (json['processes'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
 );
 
 Map<String, dynamic> _$FlyAppVmConfigToJson(FlyAppVmConfig instance) =>

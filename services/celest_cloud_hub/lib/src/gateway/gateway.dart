@@ -62,8 +62,8 @@ final class Gateway {
           .addMiddleware(const RootMiddleware().call)
           .addMiddleware(
             CloudExceptionMiddleware(
-              onException:
-                  (e, st) => Sentry.captureException(e, stackTrace: st),
+              onException: (e, st) =>
+                  Sentry.captureException(e, stackTrace: st),
             ).call,
           )
           .addMiddleware(cloudAuth.middleware.call)

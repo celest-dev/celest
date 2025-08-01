@@ -8,10 +8,9 @@ class OrganizationService {
 
   Future<List<Organization>> listOrganizations() async {
     final response = await _client.get('/v1/organizations');
-    final organizations =
-        (response['organizations'] as List)
-            .map((org) => Organization.fromJson(org as Map<String, dynamic>))
-            .toList();
+    final organizations = (response['organizations'] as List)
+        .map((org) => Organization.fromJson(org as Map<String, dynamic>))
+        .toList();
     return organizations;
   }
 
@@ -54,10 +53,9 @@ class DatabaseService {
         if (parent != null) 'parent': parent,
       },
     );
-    final databases =
-        (response['databases'] as List)
-            .map((db) => Database.fromJson(db as Map<String, dynamic>))
-            .toList();
+    final databases = (response['databases'] as List)
+        .map((db) => Database.fromJson(db as Map<String, dynamic>))
+        .toList();
     return databases;
   }
 
@@ -104,12 +102,9 @@ class DatabaseService {
     final response = await _client.get(
       '/v1/organizations/$organizationSlug/databases/$databaseName/instances',
     );
-    final instances =
-        (response['instances'] as List)
-            .map(
-              (instance) => Instance.fromJson(instance as Map<String, dynamic>),
-            )
-            .toList();
+    final instances = (response['instances'] as List)
+        .map((instance) => Instance.fromJson(instance as Map<String, dynamic>))
+        .toList();
     return instances;
   }
 
@@ -169,10 +164,9 @@ class DatabaseService {
     final response = await _client.get(
       '/v1/organizations/$organizationSlug/databases/$databaseName/stats',
     );
-    final stats =
-        (response['top_queries'] as List)
-            .map((stat) => DatabaseStats.fromJson(stat as Map<String, dynamic>))
-            .toList();
+    final stats = (response['top_queries'] as List)
+        .map((stat) => DatabaseStats.fromJson(stat as Map<String, dynamic>))
+        .toList();
     return stats;
   }
 }
@@ -185,10 +179,9 @@ class GroupService {
     final response = await _client.get(
       '/v1/organizations/$organizationSlug/groups',
     );
-    final groups =
-        (response['groups'] as List)
-            .map((group) => Group.fromJson(group as Map<String, dynamic>))
-            .toList();
+    final groups = (response['groups'] as List)
+        .map((group) => Group.fromJson(group as Map<String, dynamic>))
+        .toList();
     return groups;
   }
 
@@ -253,10 +246,9 @@ class MemberService {
     final response = await _client.get(
       '/v1/organizations/$organizationSlug/members',
     );
-    final members =
-        (response['members'] as List)
-            .map((member) => Member.fromJson(member as Map<String, dynamic>))
-            .toList();
+    final members = (response['members'] as List)
+        .map((member) => Member.fromJson(member as Map<String, dynamic>))
+        .toList();
     return members;
   }
 

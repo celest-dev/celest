@@ -186,8 +186,8 @@ class AppsApi {
       'GET',
       '/apps',
       queryParams: {'org_slug': orgSlug},
-      parseResponse:
-          (json) => ListAppsResponse.fromJson(json as Map<String, Object?>),
+      parseResponse: (json) =>
+          ListAppsResponse.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -260,11 +260,9 @@ class MachinesApi {
         'state': state,
         'summary': summary?.toString(),
       },
-      parseResponse:
-          (json) =>
-              (json as List)
-                  .map((item) => Machine.fromJson(item as Map<String, Object?>))
-                  .toList(),
+      parseResponse: (json) => (json as List)
+          .map((item) => Machine.fromJson(item as Map<String, Object?>))
+          .toList(),
     );
   }
 
@@ -385,14 +383,9 @@ class MachinesApi {
     return _client._sendRequest<List<MachineEvent>>(
       'GET',
       '/apps/$appName/machines/$machineId/events',
-      parseResponse:
-          (json) =>
-              (json as List)
-                  .map(
-                    (item) =>
-                        MachineEvent.fromJson(item as Map<String, Object?>),
-                  )
-                  .toList(),
+      parseResponse: (json) => (json as List)
+          .map((item) => MachineEvent.fromJson(item as Map<String, Object?>))
+          .toList(),
     );
   }
 
@@ -414,8 +407,8 @@ class MachinesApi {
       body: request.toJson(),
       // Force Accept header to application/json
       headers: {'Accept': 'application/json'},
-      parseResponse:
-          (json) => Flydv1ExecResponse.fromJson(json as Map<String, Object?>),
+      parseResponse: (json) =>
+          Flydv1ExecResponse.fromJson(json as Map<String, Object?>),
     );
   }
 
@@ -452,10 +445,9 @@ class MachinesApi {
       'POST',
       '/apps/$appName/machines/$machineId/lease',
       body: request.toJson(),
-      headers:
-          flyMachineLeaseNonce != null
-              ? {'fly-machine-lease-nonce': flyMachineLeaseNonce}
-              : null,
+      headers: flyMachineLeaseNonce != null
+          ? {'fly-machine-lease-nonce': flyMachineLeaseNonce}
+          : null,
       parseResponse: (json) => Lease.fromJson(json as Map<String, Object?>),
     );
   }
@@ -551,14 +543,9 @@ class MachinesApi {
       'GET',
       '/apps/$appName/machines/$machineId/ps',
       queryParams: {'sort_by': sortBy, 'order': order},
-      parseResponse:
-          (json) =>
-              (json as List)
-                  .map(
-                    (item) =>
-                        ProcessStat.fromJson(item as Map<String, Object?>),
-                  )
-                  .toList(),
+      parseResponse: (json) => (json as List)
+          .map((item) => ProcessStat.fromJson(item as Map<String, Object?>))
+          .toList(),
     );
   }
 
@@ -665,14 +652,9 @@ class MachinesApi {
     return _client._sendRequest<List<MachineVersion>>(
       'GET',
       '/apps/$appName/machines/$machineId/versions',
-      parseResponse:
-          (json) =>
-              (json as List)
-                  .map(
-                    (item) =>
-                        MachineVersion.fromJson(item as Map<String, Object?>),
-                  )
-                  .toList(),
+      parseResponse: (json) => (json as List)
+          .map((item) => MachineVersion.fromJson(item as Map<String, Object?>))
+          .toList(),
     );
   }
 
@@ -723,11 +705,9 @@ class VolumesApi {
       'GET',
       '/apps/$appName/volumes',
       queryParams: {'summary': summary?.toString()},
-      parseResponse:
-          (json) =>
-              (json as List)
-                  .map((item) => Volume.fromJson(item as Map<String, Object?>))
-                  .toList(),
+      parseResponse: (json) => (json as List)
+          .map((item) => Volume.fromJson(item as Map<String, Object?>))
+          .toList(),
     );
   }
 
@@ -815,8 +795,8 @@ class VolumesApi {
       'PUT',
       '/apps/$appName/volumes/$volumeId/extend',
       body: request.toJson(),
-      parseResponse:
-          (resp) => ExtendVolumeResponse.fromJson(resp as Map<String, Object?>),
+      parseResponse: (resp) =>
+          ExtendVolumeResponse.fromJson(resp as Map<String, Object?>),
     );
   }
 
@@ -832,14 +812,9 @@ class VolumesApi {
     return _client._sendRequest<List<VolumeSnapshot>>(
       'GET',
       '/apps/$appName/volumes/$volumeId/snapshots',
-      parseResponse:
-          (json) =>
-              (json as List)
-                  .map(
-                    (item) =>
-                        VolumeSnapshot.fromJson(item as Map<String, Object?>),
-                  )
-                  .toList(),
+      parseResponse: (json) => (json as List)
+          .map((item) => VolumeSnapshot.fromJson(item as Map<String, Object?>))
+          .toList(),
     );
   }
 
@@ -871,13 +846,9 @@ class SecretsApi {
     return _client._sendRequest<List<ListSecret>>(
       'GET',
       '/apps/$appName/secrets',
-      parseResponse:
-          (json) =>
-              ((json as Map)['secrets'] as List)
-                  .map(
-                    (item) => ListSecret.fromJson(item as Map<String, Object?>),
-                  )
-                  .toList(),
+      parseResponse: (json) => ((json as Map)['secrets'] as List)
+          .map((item) => ListSecret.fromJson(item as Map<String, Object?>))
+          .toList(),
     );
   }
 
@@ -972,12 +943,9 @@ class App {
     return App(
       id: json['id'] as String?,
       name: json['name'] as String?,
-      organization:
-          json['organization'] == null
-              ? null
-              : Organization.fromJson(
-                json['organization'] as Map<String, dynamic>,
-              ),
+      organization: json['organization'] == null
+          ? null
+          : Organization.fromJson(json['organization'] as Map<String, dynamic>),
       status: json['status'] as String?,
     );
   }
@@ -1209,12 +1177,9 @@ class CreateLeaseRequest {
 class CreateMachineRequest {
   factory CreateMachineRequest.fromJson(Map<String, dynamic> json) {
     return CreateMachineRequest(
-      config:
-          json['config'] == null
-              ? null
-              : FlyMachineConfig.fromJson(
-                json['config'] as Map<String, dynamic>,
-              ),
+      config: json['config'] == null
+          ? null
+          : FlyMachineConfig.fromJson(json['config'] as Map<String, dynamic>),
       leaseTtl: json['lease_ttl'] as int?,
       lsvd: json['lsvd'] as bool?,
       name: json['name'] as String?,
@@ -1390,12 +1355,9 @@ class CreateSecretRequest {
 class CreateVolumeRequest {
   factory CreateVolumeRequest.fromJson(Map<String, dynamic> json) {
     return CreateVolumeRequest(
-      compute:
-          json['compute'] == null
-              ? null
-              : FlyMachineGuest.fromJson(
-                json['compute'] as Map<String, dynamic>,
-              ),
+      compute: json['compute'] == null
+          ? null
+          : FlyMachineGuest.fromJson(json['compute'] as Map<String, dynamic>),
       computeImage: json['compute_image'] as String?,
       encrypted: json['encrypted'] as bool?,
       fstype: json['fstype'] as String?,
@@ -1531,15 +1493,13 @@ class CreateVolumeRequest {
 class ErrorResponse {
   factory ErrorResponse.fromJson(Map<String, dynamic> json) {
     return ErrorResponse(
-      details:
-          json['details'] == null
-              ? null
-              : Map<String, dynamic>.from(json['details'] as Map),
+      details: json['details'] == null
+          ? null
+          : Map<String, dynamic>.from(json['details'] as Map),
       error: json['error'] as String?,
-      status:
-          json['status'] == null
-              ? null
-              : MainStatusCode.fromJson(json['status'] as String),
+      status: json['status'] == null
+          ? null
+          : MainStatusCode.fromJson(json['status'] as String),
     );
   }
   const ErrorResponse({this.details, this.error, this.status});
@@ -1625,10 +1585,9 @@ class ExtendVolumeResponse {
   factory ExtendVolumeResponse.fromJson(Map<String, dynamic> json) {
     return ExtendVolumeResponse(
       needsRestart: json['needs_restart'] as bool?,
-      volume:
-          json['volume'] == null
-              ? null
-              : Volume.fromJson(json['volume'] as Map<String, dynamic>),
+      volume: json['volume'] == null
+          ? null
+          : Volume.fromJson(json['volume'] as Map<String, dynamic>),
     );
   }
   const ExtendVolumeResponse({this.needsRestart, this.volume});
@@ -1670,10 +1629,9 @@ class ImageRef {
   factory ImageRef.fromJson(Map<String, dynamic> json) {
     return ImageRef(
       digest: json['digest'] as String?,
-      labels:
-          json['labels'] == null
-              ? null
-              : Map<String, String>.from(json['labels'] as Map),
+      labels: json['labels'] == null
+          ? null
+          : Map<String, String>.from(json['labels'] as Map),
       registry: json['registry'] as String?,
       repository: json['repository'] as String?,
       tag: json['tag'] as String?,
@@ -1898,10 +1856,9 @@ class ListApp {
 class ListAppsResponse {
   factory ListAppsResponse.fromJson(Map<String, dynamic> json) {
     return ListAppsResponse(
-      apps:
-          (json['apps'] as List<dynamic>?)
-              ?.map((e) => ListApp.fromJson(e as Map<String, dynamic>))
-              .toList(),
+      apps: (json['apps'] as List<dynamic>?)
+          ?.map((e) => ListApp.fromJson(e as Map<String, dynamic>))
+          .toList(),
       totalApps: json['total_apps'] as int?,
     );
   }
@@ -1947,8 +1904,9 @@ class ListSecret {
   factory ListSecret.fromJson(Map<String, dynamic> json) {
     return ListSecret(
       label: json['label'] as String?,
-      publickey:
-          (json['publickey'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      publickey: (json['publickey'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList(),
       type: json['type'] as String?,
     );
   }
@@ -2038,36 +1996,28 @@ class ListenSocket {
 class Machine {
   factory Machine.fromJson(Map<String, dynamic> json) {
     return Machine(
-      checks:
-          (json['checks'] as List<dynamic>?)
-              ?.map((e) => CheckStatus.fromJson(e as Map<String, dynamic>))
-              .toList(),
-      config:
-          json['config'] == null
-              ? null
-              : FlyMachineConfig.fromJson(
-                json['config'] as Map<String, dynamic>,
-              ),
+      checks: (json['checks'] as List<dynamic>?)
+          ?.map((e) => CheckStatus.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      config: json['config'] == null
+          ? null
+          : FlyMachineConfig.fromJson(json['config'] as Map<String, dynamic>),
       createdAt: json['created_at'] as String?,
-      events:
-          (json['events'] as List<dynamic>?)
-              ?.map((e) => MachineEvent.fromJson(e as Map<String, dynamic>))
-              .toList(),
-      hostStatus:
-          json['host_status'] == null
-              ? null
-              : MachineHostStatus.fromJson(json['host_status'] as String),
+      events: (json['events'] as List<dynamic>?)
+          ?.map((e) => MachineEvent.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      hostStatus: json['host_status'] == null
+          ? null
+          : MachineHostStatus.fromJson(json['host_status'] as String),
       id: json['id'] as String,
-      imageRef:
-          json['image_ref'] == null
-              ? null
-              : ImageRef.fromJson(json['image_ref'] as Map<String, dynamic>),
-      incompleteConfig:
-          json['incomplete_config'] == null
-              ? null
-              : FlyMachineConfig.fromJson(
-                json['incomplete_config'] as Map<String, dynamic>,
-              ),
+      imageRef: json['image_ref'] == null
+          ? null
+          : ImageRef.fromJson(json['image_ref'] as Map<String, dynamic>),
+      incompleteConfig: json['incomplete_config'] == null
+          ? null
+          : FlyMachineConfig.fromJson(
+              json['incomplete_config'] as Map<String, dynamic>,
+            ),
       instanceId: json['instance_id'] as String?,
       name: json['name'] as String?,
       nonce: json['nonce'] as String?,
@@ -2243,10 +2193,9 @@ class MachineEvent {
   factory MachineEvent.fromJson(Map<String, dynamic> json) {
     return MachineEvent(
       id: json['id'] as String?,
-      request:
-          json['request'] == null
-              ? null
-              : Map<String, dynamic>.from(json['request'] as Map),
+      request: json['request'] == null
+          ? null
+          : Map<String, dynamic>.from(json['request'] as Map),
       source: json['source'] as String?,
       status: json['status'] as String?,
       timestamp: json['timestamp'] as int?,
@@ -2330,8 +2279,9 @@ class MachineExecRequest {
   factory MachineExecRequest.fromJson(Map<String, dynamic> json) {
     return MachineExecRequest(
       cmd: json['cmd'] as String?,
-      command:
-          (json['command'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      command: (json['command'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       container: json['container'] as String?,
       stdin: json['stdin'] as String?,
       timeout: json['timeout'] as int?,
@@ -2407,12 +2357,11 @@ class MachineExecRequest {
 class MachineVersion {
   factory MachineVersion.fromJson(Map<String, dynamic> json) {
     return MachineVersion(
-      userConfig:
-          json['user_config'] == null
-              ? null
-              : FlyMachineConfig.fromJson(
-                json['user_config'] as Map<String, dynamic>,
-              ),
+      userConfig: json['user_config'] == null
+          ? null
+          : FlyMachineConfig.fromJson(
+              json['user_config'] as Map<String, dynamic>,
+            ),
       version: json['version'] as String?,
     );
   }
@@ -2495,10 +2444,9 @@ class ProcessStat {
       command: json['command'] as String?,
       cpu: json['cpu'] as int?,
       directory: json['directory'] as String?,
-      listenSockets:
-          (json['listen_sockets'] as List<dynamic>?)
-              ?.map((e) => ListenSocket.fromJson(e as Map<String, dynamic>))
-              .toList(),
+      listenSockets: (json['listen_sockets'] as List<dynamic>?)
+          ?.map((e) => ListenSocket.fromJson(e as Map<String, dynamic>))
+          .toList(),
       pid: json['pid'] as int?,
       rss: json['rss'] as int?,
       rtime: json['rtime'] as int?,
@@ -2598,10 +2546,9 @@ class ProcessStat {
 class SignalRequest {
   factory SignalRequest.fromJson(Map<String, dynamic> json) {
     return SignalRequest(
-      signal:
-          json['signal'] == null
-              ? null
-              : SignalRequestSignal.fromJson(json['signal'] as String),
+      signal: json['signal'] == null
+          ? null
+          : SignalRequestSignal.fromJson(json['signal'] as String),
     );
   }
   const SignalRequest({this.signal});
@@ -2723,12 +2670,9 @@ class StopRequest {
 class UpdateMachineRequest {
   factory UpdateMachineRequest.fromJson(Map<String, dynamic> json) {
     return UpdateMachineRequest(
-      config:
-          json['config'] == null
-              ? null
-              : FlyMachineConfig.fromJson(
-                json['config'] as Map<String, dynamic>,
-              ),
+      config: json['config'] == null
+          ? null
+          : FlyMachineConfig.fromJson(json['config'] as Map<String, dynamic>),
       currentVersion: json['current_version'] as String?,
       leaseTtl: json['lease_ttl'] as int?,
       lsvd: json['lsvd'] as bool?,
@@ -2891,10 +2835,9 @@ class Volume {
       createdAt: json['created_at'] as String?,
       encrypted: json['encrypted'] as bool?,
       fstype: json['fstype'] as String?,
-      hostStatus:
-          json['host_status'] == null
-              ? null
-              : VolumeHostStatus.fromJson(json['host_status'] as String),
+      hostStatus: json['host_status'] == null
+          ? null
+          : VolumeHostStatus.fromJson(json['host_status'] as String),
       id: json['id'] as String?,
       name: json['name'] as String?,
       region: json['region'] as String?,
@@ -3169,59 +3112,43 @@ class FlyContainerConfig {
   factory FlyContainerConfig.fromJson(Map<String, dynamic> json) {
     return FlyContainerConfig(
       cmd: (json['cmd'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      dependsOn:
-          (json['depends_on'] as List<dynamic>?)
-              ?.map(
-                (e) =>
-                    FlyContainerDependency.fromJson(e as Map<String, dynamic>),
-              )
-              .toList(),
-      entrypoint:
-          (json['entrypoint'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList(),
-      env:
-          json['env'] == null
-              ? null
-              : Map<String, String>.from(json['env'] as Map),
-      envFrom:
-          (json['env_from'] as List<dynamic>?)
-              ?.map((e) => FlyEnvFrom.fromJson(e as Map<String, dynamic>))
-              .toList(),
+      dependsOn: (json['depends_on'] as List<dynamic>?)
+          ?.map(
+            (e) => FlyContainerDependency.fromJson(e as Map<String, dynamic>),
+          )
+          .toList(),
+      entrypoint: (json['entrypoint'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      env: json['env'] == null
+          ? null
+          : Map<String, String>.from(json['env'] as Map),
+      envFrom: (json['env_from'] as List<dynamic>?)
+          ?.map((e) => FlyEnvFrom.fromJson(e as Map<String, dynamic>))
+          .toList(),
       exec: (json['exec'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      files:
-          (json['files'] as List<dynamic>?)
-              ?.map((e) => FlyFile.fromJson(e as Map<String, dynamic>))
-              .toList(),
-      healthchecks:
-          (json['healthchecks'] as List<dynamic>?)
-              ?.map(
-                (e) =>
-                    FlyContainerHealthcheck.fromJson(e as Map<String, dynamic>),
-              )
-              .toList(),
+      files: (json['files'] as List<dynamic>?)
+          ?.map((e) => FlyFile.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      healthchecks: (json['healthchecks'] as List<dynamic>?)
+          ?.map(
+            (e) => FlyContainerHealthcheck.fromJson(e as Map<String, dynamic>),
+          )
+          .toList(),
       image: json['image'] as String?,
-      mounts:
-          (json['mounts'] as List<dynamic>?)
-              ?.map(
-                (e) => FlyContainerMount.fromJson(e as Map<String, dynamic>),
-              )
-              .toList(),
+      mounts: (json['mounts'] as List<dynamic>?)
+          ?.map((e) => FlyContainerMount.fromJson(e as Map<String, dynamic>))
+          .toList(),
       name: json['name'] as String?,
-      restart:
-          json['restart'] == null
-              ? null
-              : FlyMachineRestart.fromJson(
-                json['restart'] as Map<String, dynamic>,
-              ),
-      secrets:
-          (json['secrets'] as List<dynamic>?)
-              ?.map((e) => FlyMachineSecret.fromJson(e as Map<String, dynamic>))
-              .toList(),
-      stop:
-          json['stop'] == null
-              ? null
-              : FlyStopConfig.fromJson(json['stop'] as Map<String, dynamic>),
+      restart: json['restart'] == null
+          ? null
+          : FlyMachineRestart.fromJson(json['restart'] as Map<String, dynamic>),
+      secrets: (json['secrets'] as List<dynamic>?)
+          ?.map((e) => FlyMachineSecret.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      stop: json['stop'] == null
+          ? null
+          : FlyStopConfig.fromJson(json['stop'] as Map<String, dynamic>),
       user: json['user'] as String?,
     );
   }
@@ -3401,12 +3328,11 @@ class FlyContainerConfig {
 class FlyContainerDependency {
   factory FlyContainerDependency.fromJson(Map<String, dynamic> json) {
     return FlyContainerDependency(
-      condition:
-          json['condition'] == null
-              ? null
-              : FlyContainerDependencyCondition.fromJson(
-                json['condition'] as String,
-              ),
+      condition: json['condition'] == null
+          ? null
+          : FlyContainerDependencyCondition.fromJson(
+              json['condition'] as String,
+            ),
       name: json['name'] as String?,
     );
   }
@@ -3471,36 +3397,27 @@ enum FlyContainerDependencyCondition {
 class FlyContainerHealthcheck {
   factory FlyContainerHealthcheck.fromJson(Map<String, dynamic> json) {
     return FlyContainerHealthcheck(
-      exec:
-          json['exec'] == null
-              ? null
-              : FlyExecHealthcheck.fromJson(
-                json['exec'] as Map<String, dynamic>,
-              ),
+      exec: json['exec'] == null
+          ? null
+          : FlyExecHealthcheck.fromJson(json['exec'] as Map<String, dynamic>),
       failureThreshold: json['failure_threshold'] as int?,
       gracePeriod: json['grace_period'] as int?,
-      http:
-          json['http'] == null
-              ? null
-              : FlyHTTPHealthcheck.fromJson(
-                json['http'] as Map<String, dynamic>,
-              ),
+      http: json['http'] == null
+          ? null
+          : FlyHTTPHealthcheck.fromJson(json['http'] as Map<String, dynamic>),
       interval: json['interval'] as int?,
-      kind:
-          json['kind'] == null
-              ? null
-              : FlyContainerHealthcheckKind.fromJson(json['kind'] as String),
+      kind: json['kind'] == null
+          ? null
+          : FlyContainerHealthcheckKind.fromJson(json['kind'] as String),
       name: json['name'] as String?,
       successThreshold: json['success_threshold'] as int?,
-      tcp:
-          json['tcp'] == null
-              ? null
-              : FlyTCPHealthcheck.fromJson(json['tcp'] as Map<String, dynamic>),
+      tcp: json['tcp'] == null
+          ? null
+          : FlyTCPHealthcheck.fromJson(json['tcp'] as Map<String, dynamic>),
       timeout: json['timeout'] as int?,
-      unhealthy:
-          json['unhealthy'] == null
-              ? null
-              : FlyUnhealthyPolicy.fromJson(json['unhealthy'] as String),
+      unhealthy: json['unhealthy'] == null
+          ? null
+          : FlyUnhealthyPolicy.fromJson(json['unhealthy'] as String),
     );
   }
   const FlyContainerHealthcheck({
@@ -3709,26 +3626,20 @@ class FlyContainerMount {
 class FlyDNSConfig {
   factory FlyDNSConfig.fromJson(Map<String, dynamic> json) {
     return FlyDNSConfig(
-      dnsForwardRules:
-          (json['dns_forward_rules'] as List<dynamic>?)
-              ?.map(
-                (e) => FlyDnsForwardRule.fromJson(e as Map<String, dynamic>),
-              )
-              .toList(),
+      dnsForwardRules: (json['dns_forward_rules'] as List<dynamic>?)
+          ?.map((e) => FlyDnsForwardRule.fromJson(e as Map<String, dynamic>))
+          .toList(),
       hostname: json['hostname'] as String?,
       hostnameFqdn: json['hostname_fqdn'] as String?,
-      nameservers:
-          (json['nameservers'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList(),
-      options:
-          (json['options'] as List<dynamic>?)
-              ?.map((e) => FlyDnsOption.fromJson(e as Map<String, dynamic>))
-              .toList(),
-      searches:
-          (json['searches'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList(),
+      nameservers: (json['nameservers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      options: (json['options'] as List<dynamic>?)
+          ?.map((e) => FlyDnsOption.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      searches: (json['searches'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       skipRegistration: json['skip_registration'] as bool?,
     );
   }
@@ -3888,10 +3799,9 @@ class FlyEnvFrom {
   factory FlyEnvFrom.fromJson(Map<String, dynamic> json) {
     return FlyEnvFrom(
       envVar: json['env_var'] as String?,
-      fieldRef:
-          json['field_ref'] == null
-              ? null
-              : FlyEnvFromFieldRef.fromJson(json['field_ref'] as String),
+      fieldRef: json['field_ref'] == null
+          ? null
+          : FlyEnvFromFieldRef.fromJson(json['field_ref'] as String),
     );
   }
   const FlyEnvFrom({this.envVar, this.fieldRef});
@@ -3958,8 +3868,9 @@ enum FlyEnvFromFieldRef {
 class FlyExecHealthcheck {
   factory FlyExecHealthcheck.fromJson(Map<String, dynamic> json) {
     return FlyExecHealthcheck(
-      command:
-          (json['command'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      command: (json['command'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
   }
   const FlyExecHealthcheck({this.command});
@@ -4065,21 +3976,15 @@ class FlyFile {
 class FlyHTTPHealthcheck {
   factory FlyHTTPHealthcheck.fromJson(Map<String, dynamic> json) {
     return FlyHTTPHealthcheck(
-      headers:
-          (json['headers'] as List<dynamic>?)
-              ?.map(
-                (e) => FlyMachineHTTPHeader.fromJson(e as Map<String, dynamic>),
-              )
-              .toList(),
+      headers: (json['headers'] as List<dynamic>?)
+          ?.map((e) => FlyMachineHTTPHeader.fromJson(e as Map<String, dynamic>))
+          .toList(),
       method: json['method'] as String?,
       path: json['path'] as String?,
       port: json['port'] as int?,
-      scheme:
-          json['scheme'] == null
-              ? null
-              : FlyContainerHealthcheckScheme.fromJson(
-                json['scheme'] as String,
-              ),
+      scheme: json['scheme'] == null
+          ? null
+          : FlyContainerHealthcheckScheme.fromJson(json['scheme'] as String),
       tlsServerName: json['tls_server_name'] as String?,
       tlsSkipVerify: json['tls_skip_verify'] as bool?,
     );
@@ -4184,12 +4089,11 @@ class FlyHTTPOptions {
       h2Backend: json['h2_backend'] as bool?,
       headersReadTimeout: json['headers_read_timeout'] as int?,
       idleTimeout: json['idle_timeout'] as int?,
-      response:
-          json['response'] == null
-              ? null
-              : FlyHTTPResponseOptions.fromJson(
-                json['response'] as Map<String, dynamic>,
-              ),
+      response: json['response'] == null
+          ? null
+          : FlyHTTPResponseOptions.fromJson(
+              json['response'] as Map<String, dynamic>,
+            ),
     );
   }
   const FlyHTTPOptions({
@@ -4261,10 +4165,9 @@ class FlyHTTPOptions {
 class FlyHTTPResponseOptions {
   factory FlyHTTPResponseOptions.fromJson(Map<String, dynamic> json) {
     return FlyHTTPResponseOptions(
-      headers:
-          json['headers'] == null
-              ? null
-              : Map<String, dynamic>.from(json['headers'] as Map),
+      headers: json['headers'] == null
+          ? null
+          : Map<String, dynamic>.from(json['headers'] as Map),
       pristine: json['pristine'] as bool?,
     );
   }
@@ -4469,86 +4372,58 @@ class FlyMachineConfig {
         (k, e) =>
             MapEntry(k, FlyMachineCheck.fromJson(e as Map<String, dynamic>)),
       ),
-      containers:
-          (json['containers'] as List<dynamic>?)
-              ?.map(
-                (e) => FlyContainerConfig.fromJson(e as Map<String, dynamic>),
-              )
-              .toList(),
+      containers: (json['containers'] as List<dynamic>?)
+          ?.map((e) => FlyContainerConfig.fromJson(e as Map<String, dynamic>))
+          .toList(),
       disableMachineAutostart: json['disable_machine_autostart'] as bool?,
-      dns:
-          json['dns'] == null
-              ? null
-              : FlyDNSConfig.fromJson(json['dns'] as Map<String, dynamic>),
-      env:
-          json['env'] == null
-              ? null
-              : Map<String, String>.from(json['env'] as Map),
-      files:
-          (json['files'] as List<dynamic>?)
-              ?.map((e) => FlyFile.fromJson(e as Map<String, dynamic>))
-              .toList(),
-      guest:
-          json['guest'] == null
-              ? null
-              : FlyMachineGuest.fromJson(json['guest'] as Map<String, dynamic>),
+      dns: json['dns'] == null
+          ? null
+          : FlyDNSConfig.fromJson(json['dns'] as Map<String, dynamic>),
+      env: json['env'] == null
+          ? null
+          : Map<String, String>.from(json['env'] as Map),
+      files: (json['files'] as List<dynamic>?)
+          ?.map((e) => FlyFile.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      guest: json['guest'] == null
+          ? null
+          : FlyMachineGuest.fromJson(json['guest'] as Map<String, dynamic>),
       image: json['image'] as String?,
-      init:
-          json['init'] == null
-              ? null
-              : FlyMachineInit.fromJson(json['init'] as Map<String, dynamic>),
-      metadata:
-          json['metadata'] == null
-              ? null
-              : Map<String, String>.from(json['metadata'] as Map),
-      metrics:
-          json['metrics'] == null
-              ? null
-              : FlyMachineMetrics.fromJson(
-                json['metrics'] as Map<String, dynamic>,
-              ),
-      mounts:
-          (json['mounts'] as List<dynamic>?)
-              ?.map((e) => FlyMachineMount.fromJson(e as Map<String, dynamic>))
-              .toList(),
-      processes:
-          (json['processes'] as List<dynamic>?)
-              ?.map(
-                (e) => FlyMachineProcess.fromJson(e as Map<String, dynamic>),
-              )
-              .toList(),
-      restart:
-          json['restart'] == null
-              ? null
-              : FlyMachineRestart.fromJson(
-                json['restart'] as Map<String, dynamic>,
-              ),
+      init: json['init'] == null
+          ? null
+          : FlyMachineInit.fromJson(json['init'] as Map<String, dynamic>),
+      metadata: json['metadata'] == null
+          ? null
+          : Map<String, String>.from(json['metadata'] as Map),
+      metrics: json['metrics'] == null
+          ? null
+          : FlyMachineMetrics.fromJson(json['metrics'] as Map<String, dynamic>),
+      mounts: (json['mounts'] as List<dynamic>?)
+          ?.map((e) => FlyMachineMount.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      processes: (json['processes'] as List<dynamic>?)
+          ?.map((e) => FlyMachineProcess.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      restart: json['restart'] == null
+          ? null
+          : FlyMachineRestart.fromJson(json['restart'] as Map<String, dynamic>),
       schedule: json['schedule'] as String?,
-      services:
-          (json['services'] as List<dynamic>?)
-              ?.map(
-                (e) => FlyMachineService.fromJson(e as Map<String, dynamic>),
-              )
-              .toList(),
+      services: (json['services'] as List<dynamic>?)
+          ?.map((e) => FlyMachineService.fromJson(e as Map<String, dynamic>))
+          .toList(),
       size: json['size'] as String?,
-      standbys:
-          (json['standbys'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList(),
-      statics:
-          (json['statics'] as List<dynamic>?)
-              ?.map((e) => FlyStatic.fromJson(e as Map<String, dynamic>))
-              .toList(),
-      stopConfig:
-          json['stop_config'] == null
-              ? null
-              : FlyStopConfig.fromJson(
-                json['stop_config'] as Map<String, dynamic>,
-              ),
-      volumes:
-          (json['volumes'] as List<dynamic>?)
-              ?.map((e) => FlyVolumeConfig.fromJson(e as Map<String, dynamic>))
-              .toList(),
+      standbys: (json['standbys'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      statics: (json['statics'] as List<dynamic>?)
+          ?.map((e) => FlyStatic.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      stopConfig: json['stop_config'] == null
+          ? null
+          : FlyStopConfig.fromJson(json['stop_config'] as Map<String, dynamic>),
+      volumes: (json['volumes'] as List<dynamic>?)
+          ?.map((e) => FlyVolumeConfig.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
   const FlyMachineConfig({
@@ -4763,10 +4638,9 @@ class FlyMachineGuest {
       gpuKind: json['gpu_kind'] as String?,
       gpus: json['gpus'] as int?,
       hostDedicationId: json['host_dedication_id'] as String?,
-      kernelArgs:
-          (json['kernel_args'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList(),
+      kernelArgs: (json['kernel_args'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       memoryMb: json['memory_mb'] as int?,
     );
   }
@@ -4854,8 +4728,9 @@ class FlyMachineHTTPHeader {
   factory FlyMachineHTTPHeader.fromJson(Map<String, dynamic> json) {
     return FlyMachineHTTPHeader(
       name: json['name'] as String?,
-      values:
-          (json['values'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      values: (json['values'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
   }
   const FlyMachineHTTPHeader({this.name, this.values});
@@ -4900,15 +4775,13 @@ class FlyMachineInit {
   factory FlyMachineInit.fromJson(Map<String, dynamic> json) {
     return FlyMachineInit(
       cmd: (json['cmd'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      entrypoint:
-          (json['entrypoint'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList(),
+      entrypoint: (json['entrypoint'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       exec: (json['exec'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      kernelArgs:
-          (json['kernel_args'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList(),
+      kernelArgs: (json['kernel_args'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       swapSizeMb: json['swap_size_mb'] as int?,
       tty: json['tty'] as bool?,
     );
@@ -5138,30 +5011,24 @@ class FlyMachinePort {
     return FlyMachinePort(
       endPort: json['end_port'] as int?,
       forceHttps: json['force_https'] as bool?,
-      handlers:
-          (json['handlers'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList(),
-      httpOptions:
-          json['http_options'] == null
-              ? null
-              : FlyHTTPOptions.fromJson(
-                json['http_options'] as Map<String, dynamic>,
-              ),
+      handlers: (json['handlers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      httpOptions: json['http_options'] == null
+          ? null
+          : FlyHTTPOptions.fromJson(
+              json['http_options'] as Map<String, dynamic>,
+            ),
       port: json['port'] as int?,
-      proxyProtoOptions:
-          json['proxy_proto_options'] == null
-              ? null
-              : FlyProxyProtoOptions.fromJson(
-                json['proxy_proto_options'] as Map<String, dynamic>,
-              ),
+      proxyProtoOptions: json['proxy_proto_options'] == null
+          ? null
+          : FlyProxyProtoOptions.fromJson(
+              json['proxy_proto_options'] as Map<String, dynamic>,
+            ),
       startPort: json['start_port'] as int?,
-      tlsOptions:
-          json['tls_options'] == null
-              ? null
-              : FlyTLSOptions.fromJson(
-                json['tls_options'] as Map<String, dynamic>,
-              ),
+      tlsOptions: json['tls_options'] == null
+          ? null
+          : FlyTLSOptions.fromJson(json['tls_options'] as Map<String, dynamic>),
     );
   }
   const FlyMachinePort({
@@ -5255,24 +5122,20 @@ class FlyMachineProcess {
   factory FlyMachineProcess.fromJson(Map<String, dynamic> json) {
     return FlyMachineProcess(
       cmd: (json['cmd'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      entrypoint:
-          (json['entrypoint'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList(),
-      env:
-          json['env'] == null
-              ? null
-              : Map<String, String>.from(json['env'] as Map),
-      envFrom:
-          (json['env_from'] as List<dynamic>?)
-              ?.map((e) => FlyEnvFrom.fromJson(e as Map<String, dynamic>))
-              .toList(),
+      entrypoint: (json['entrypoint'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      env: json['env'] == null
+          ? null
+          : Map<String, String>.from(json['env'] as Map),
+      envFrom: (json['env_from'] as List<dynamic>?)
+          ?.map((e) => FlyEnvFrom.fromJson(e as Map<String, dynamic>))
+          .toList(),
       exec: (json['exec'] as List<dynamic>?)?.map((e) => e as String).toList(),
       ignoreAppSecrets: json['ignore_app_secrets'] as bool?,
-      secrets:
-          (json['secrets'] as List<dynamic>?)
-              ?.map((e) => FlyMachineSecret.fromJson(e as Map<String, dynamic>))
-              .toList(),
+      secrets: (json['secrets'] as List<dynamic>?)
+          ?.map((e) => FlyMachineSecret.fromJson(e as Map<String, dynamic>))
+          .toList(),
       user: json['user'] as String?,
     );
   }
@@ -5377,10 +5240,9 @@ class FlyMachineRestart {
     return FlyMachineRestart(
       gpuBidPrice: (json['gpu_bid_price'] as num?)?.toDouble(),
       maxRetries: json['max_retries'] as int?,
-      policy:
-          json['policy'] == null
-              ? null
-              : FlyMachineRestartPolicy.fromJson(json['policy'] as String),
+      policy: json['policy'] == null
+          ? null
+          : FlyMachineRestartPolicy.fromJson(json['policy'] as String),
     );
   }
   const FlyMachineRestart({this.gpuBidPrice, this.maxRetries, this.policy});
@@ -5512,33 +5374,29 @@ class FlyMachineService {
     if (autostopValue is String) {
       parsedAutostop = FlyMachineServiceAutostop.fromJson(autostopValue);
     } else if (autostopValue is bool) {
-      parsedAutostop =
-          autostopValue
-              ? FlyMachineServiceAutostop.stop
-              : FlyMachineServiceAutostop.off;
+      parsedAutostop = autostopValue
+          ? FlyMachineServiceAutostop.stop
+          : FlyMachineServiceAutostop.off;
     }
 
     return FlyMachineService(
       autostart: json['autostart'] as bool?,
       autostop: parsedAutostop,
-      checks:
-          (json['checks'] as List<dynamic>?)
-              ?.map((e) => FlyMachineCheck.fromJson(e as Map<String, dynamic>))
-              .toList(),
-      concurrency:
-          json['concurrency'] == null
-              ? null
-              : FlyMachineServiceConcurrency.fromJson(
-                json['concurrency'] as Map<String, dynamic>,
-              ),
+      checks: (json['checks'] as List<dynamic>?)
+          ?.map((e) => FlyMachineCheck.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      concurrency: json['concurrency'] == null
+          ? null
+          : FlyMachineServiceConcurrency.fromJson(
+              json['concurrency'] as Map<String, dynamic>,
+            ),
       forceInstanceDescription: json['force_instance_description'] as String?,
       forceInstanceKey: json['force_instance_key'] as String?,
       internalPort: json['internal_port'] as int?,
       minMachinesRunning: json['min_machines_running'] as int?,
-      ports:
-          (json['ports'] as List<dynamic>?)
-              ?.map((e) => FlyMachinePort.fromJson(e as Map<String, dynamic>))
-              .toList(),
+      ports: (json['ports'] as List<dynamic>?)
+          ?.map((e) => FlyMachinePort.fromJson(e as Map<String, dynamic>))
+          .toList(),
       protocol: json['protocol'] as String?,
     );
   }
@@ -5831,12 +5689,11 @@ class FlyStopConfig {
   factory FlyStopConfig.fromJson(Map<String, dynamic> json) {
     return FlyStopConfig(
       signal: json['signal'] as String?,
-      timeout:
-          json['timeout'] == null
-              ? null
-              : FlyDuration.fromJson(
-                Map<String, dynamic>.from(json['timeout'] as Map),
-              ),
+      timeout: json['timeout'] == null
+          ? null
+          : FlyDuration.fromJson(
+              Map<String, dynamic>.from(json['timeout'] as Map),
+            ),
     );
   }
   const FlyStopConfig({this.signal, this.timeout});
@@ -5911,10 +5768,9 @@ class FlyTLSOptions {
     return FlyTLSOptions(
       alpn: (json['alpn'] as List<dynamic>?)?.map((e) => e as String).toList(),
       defaultSelfSigned: json['default_self_signed'] as bool?,
-      versions:
-          (json['versions'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList(),
+      versions: (json['versions'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
   }
   const FlyTLSOptions({this.alpn, this.defaultSelfSigned, this.versions});
@@ -6032,12 +5888,9 @@ class FlyVolumeConfig {
   factory FlyVolumeConfig.fromJson(Map<String, dynamic> json) {
     return FlyVolumeConfig(
       name: json['name'] as String?,
-      tempDir:
-          json['temp_dir'] == null
-              ? null
-              : FlyTempDirVolume.fromJson(
-                json['temp_dir'] as Map<String, dynamic>,
-              ),
+      tempDir: json['temp_dir'] == null
+          ? null
+          : FlyTempDirVolume.fromJson(json['temp_dir'] as Map<String, dynamic>),
     );
   }
   const FlyVolumeConfig({this.name, this.tempDir});

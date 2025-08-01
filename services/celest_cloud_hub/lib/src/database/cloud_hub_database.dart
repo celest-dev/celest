@@ -107,15 +107,15 @@ final class CloudHubDatabase extends $CloudHubDatabase
       ),
     ),
     beforeOpen: (details) async {
-      final versionRow =
-          await customSelect('SELECT sqlite_version() as version;').getSingle();
+      final versionRow = await customSelect(
+        'SELECT sqlite_version() as version;',
+      ).getSingle();
       final version = versionRow.read<String>('version');
       _logger.config('Using SQLite v$version');
 
-      final rootOrg =
-          await organizationsDrift
-              .getOrganization(id: context.rootOrg.uid.id)
-              .getSingleOrNull();
+      final rootOrg = await organizationsDrift
+          .getOrganization(id: context.rootOrg.uid.id)
+          .getSingleOrNull();
       if (rootOrg == null) {
         _logger.config('Creating root organization');
         await organizationsDrift.createOrganization(
@@ -142,8 +142,9 @@ final class CloudHubDatabase extends $CloudHubDatabase
     } finally {
       if (kDebugMode) {
         // Fail if the action broke foreign keys
-        final wrongForeignKeys =
-            await customSelect('PRAGMA foreign_key_check').get();
+        final wrongForeignKeys = await customSelect(
+          'PRAGMA foreign_key_check',
+        ).get();
         await _dumpBrokenCedarForeignKeys();
         assert(
           wrongForeignKeys.isEmpty,

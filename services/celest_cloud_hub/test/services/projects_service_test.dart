@@ -34,10 +34,9 @@ void main() {
       service = ProjectsService(database, FakeAuthorizer());
 
       // Get the root organization ID
-      final organization =
-          await database.organizationsDrift
-              .getOrganization(id: kRootOrgId)
-              .getSingle();
+      final organization = await database.organizationsDrift
+          .getOrganization(id: kRootOrgId)
+          .getSingle();
       organizationId = organization.id;
 
       // Make `user` owner of the root organization

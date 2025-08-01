@@ -193,13 +193,12 @@ class $UserMembershipsTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$UserMembershipsFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => i1.$UserMembershipsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () =>
-                  i1.$UserMembershipsAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              i1.$UserMembershipsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$UserMembershipsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$UserMembershipsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<String> membershipId = const i0.Value.absent(),
@@ -240,16 +239,9 @@ class $UserMembershipsTableManager
                 updateTime: updateTime,
                 rowid: rowid,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -454,41 +446,34 @@ class UserMemberships extends i0.Table
   i1.UserMembership map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.UserMembership(
-      membershipId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}membership_id'],
-          )!,
-      userId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}user_id'],
-          )!,
-      parentType:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}parent_type'],
-          )!,
-      parentId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}parent_id'],
-          )!,
-      role:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}role'],
-          )!,
-      createTime:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.dateTime,
-            data['${effectivePrefix}create_time'],
-          )!,
-      updateTime:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.dateTime,
-            data['${effectivePrefix}update_time'],
-          )!,
+      membershipId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}membership_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      parentType: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}parent_type'],
+      )!,
+      parentId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}parent_id'],
+      )!,
+      role: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}role'],
+      )!,
+      createTime: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.dateTime,
+        data['${effectivePrefix}create_time'],
+      )!,
+      updateTime: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.dateTime,
+        data['${effectivePrefix}update_time'],
+      )!,
     );
   }
 
@@ -610,19 +595,21 @@ class UserMembership extends i0.DataClass
   );
   UserMembership copyWithCompanion(i1.UserMembershipsCompanion data) {
     return UserMembership(
-      membershipId:
-          data.membershipId.present
-              ? data.membershipId.value
-              : this.membershipId,
+      membershipId: data.membershipId.present
+          ? data.membershipId.value
+          : this.membershipId,
       userId: data.userId.present ? data.userId.value : this.userId,
-      parentType:
-          data.parentType.present ? data.parentType.value : this.parentType,
+      parentType: data.parentType.present
+          ? data.parentType.value
+          : this.parentType,
       parentId: data.parentId.present ? data.parentId.value : this.parentId,
       role: data.role.present ? data.role.value : this.role,
-      createTime:
-          data.createTime.present ? data.createTime.value : this.createTime,
-      updateTime:
-          data.updateTime.present ? data.updateTime.value : this.updateTime,
+      createTime: data.createTime.present
+          ? data.createTime.value
+          : this.createTime,
+      updateTime: data.updateTime.present
+          ? data.updateTime.value
+          : this.updateTime,
     );
   }
 

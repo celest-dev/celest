@@ -39,22 +39,20 @@ void main() {
       await deployTestApp(
         db: db,
         withTurso: false,
-        withInitialState:
-            (id) => ProjectEnvironmentStatesCompanion.insert(
-              projectEnvironmentId: id,
-              flyAppName: Value(appName1),
-            ),
+        withInitialState: (id) => ProjectEnvironmentStatesCompanion.insert(
+          projectEnvironmentId: id,
+          flyAppName: Value(appName1),
+        ),
       );
 
       await context.fly.createApp(appName: appName2);
       await deployTestApp(
         db: db,
         withTurso: false,
-        withInitialState:
-            (id) => ProjectEnvironmentStatesCompanion.insert(
-              projectEnvironmentId: id,
-              flyAppName: Value(appName2),
-            ),
+        withInitialState: (id) => ProjectEnvironmentStatesCompanion.insert(
+          projectEnvironmentId: id,
+          flyAppName: Value(appName2),
+        ),
       );
       addTearDown(() async {
         await context.fly.deleteApp(appName: appName1);
