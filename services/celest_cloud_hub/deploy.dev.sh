@@ -5,10 +5,10 @@ set -e
 # This script deploys the Celest Cloud Hub to Fly.io
 #
 # Usage:
-#   ./deploy.sh [--build]
+#   ./deploy.dev.sh [--build]
 
 if [[ "$1" == "--build" ]]; then
-    ./build.sh latest --push
+    ./build.sh dev --push
 fi
 
-fly deploy --config ./fly.yaml
+fly deploy --config ./fly.dev.yaml

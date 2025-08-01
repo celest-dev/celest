@@ -14,3 +14,10 @@ cedar: lib/src/auth/*.cedar
 
 .PHONY: drift cedar
 all: drift cedar
+
+.PHONY: dev
+dev:
+	@ LOG_LEVEL=ALL \
+	CLOUD_HUB_DATABASE_HOST=libsql://cloud-hub-dev-celest-dev.aws-us-east-1.turso.io \
+	CLOUD_HUB_DATABASE_TOKEN=$(shell turso db tokens create cloud-hub-dev) \
+		dart --enable-experiment=native-assets run bin/cloud_hub.dart
