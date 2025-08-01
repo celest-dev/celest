@@ -134,25 +134,24 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
   ) async {
     final projectId = switch (request.parent.split('/')) {
       ['projects', final projectId] => projectId,
-      _ =>
-        throw GrpcError.invalidArgument(
-          'Invalid parent format. Expected "projects/{project_id}".',
-        ),
+      _ => throw GrpcError.invalidArgument(
+        'Invalid parent format. Expected "projects/{project_id}".',
+      ),
     };
-    final project =
-        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+    final project = await db.projectsDrift
+        .getProject(id: projectId)
+        .getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('Project with ID $projectId not found.');
     }
 
     logger.info('Checking for existing environment');
-    final existingEnvironment =
-        await db.projectEnvironmentsDrift
-            .lookupProjectEnvironment(
-              projectId: project.id,
-              projectEnvironmentId: request.projectEnvironmentId,
-            )
-            .getSingleOrNull();
+    final existingEnvironment = await db.projectEnvironmentsDrift
+        .lookupProjectEnvironment(
+          projectId: project.id,
+          projectEnvironmentId: request.projectEnvironmentId,
+        )
+        .getSingleOrNull();
     if (existingEnvironment != null) {
       throw GrpcError.alreadyExists(
         'Project environment with ID ${request.projectEnvironmentId} already exists.',
@@ -161,14 +160,13 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
 
     final principal = call.expectPrincipal();
 
-    final membership =
-        await db.userMembershipsDrift
-            .findUserMembership(
-              userId: principal.uid.id,
-              parentType: 'Celest::Project',
-              parentId: project.id,
-            )
-            .getSingleOrNull();
+    final membership = await db.userMembershipsDrift
+        .findUserMembership(
+          userId: principal.uid.id,
+          parentType: 'Celest::Project',
+          parentId: project.id,
+        )
+        .getSingleOrNull();
 
     final resource = Entity(
       uid: EntityUid.of('Celest::Project::Environment', 'new'),
@@ -197,10 +195,9 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
             parentId: project.id,
             projectEnvironmentId: request.projectEnvironmentId,
             state: 'ACTIVE',
-            annotations:
-                request.projectEnvironment.annotations.isEmpty
-                    ? null
-                    : jsonEncode(request.projectEnvironment.annotations),
+            annotations: request.projectEnvironment.annotations.isEmpty
+                ? null
+                : jsonEncode(request.projectEnvironment.annotations),
             displayName: request.projectEnvironment.displayName,
           )).first;
 
@@ -236,17 +233,16 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
           )).first;
 
       final operationResponse = environment.toProto(state: state).packIntoAny();
-      final createOperation =
-          (await db.operationsDrift.createOperation(
-            id: typeId('op'),
-            ownerType: principal.uid.type,
-            ownerId: principal.uid.id,
-            resourceType: 'Celest::Project::Environment',
-            resourceId: environment.id,
-            response: jsonEncode(
-              operationResponse.toProto3Json(typeRegistry: typeRegistry),
-            ),
-          )).first;
+      final createOperation = (await db.operationsDrift.createOperation(
+        id: typeId('op'),
+        ownerType: principal.uid.type,
+        ownerId: principal.uid.id,
+        resourceType: 'Celest::Project::Environment',
+        resourceId: environment.id,
+        response: jsonEncode(
+          operationResponse.toProto3Json(typeRegistry: typeRegistry),
+        ),
+      )).first;
 
       return createOperation.toProto();
     });
@@ -262,25 +258,24 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         projectId,
         environmentId,
       ),
-      _ =>
-        throw GrpcError.invalidArgument(
-          'Invalid name format. Expected "projects/{project_id}/environments/{environment_id}".',
-        ),
+      _ => throw GrpcError.invalidArgument(
+        'Invalid name format. Expected "projects/{project_id}/environments/{environment_id}".',
+      ),
     };
 
-    final project =
-        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+    final project = await db.projectsDrift
+        .getProject(id: projectId)
+        .getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('Project with ID $projectId not found.');
     }
 
-    final environment =
-        await db.projectEnvironmentsDrift
-            .lookupProjectEnvironment(
-              projectId: project.id,
-              projectEnvironmentId: environmentId,
-            )
-            .getSingleOrNull();
+    final environment = await db.projectEnvironmentsDrift
+        .lookupProjectEnvironment(
+          projectId: project.id,
+          projectEnvironmentId: environmentId,
+        )
+        .getSingleOrNull();
     if (environment == null) {
       if (request.allowMissing) {
         return Operation(
@@ -292,14 +287,13 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     }
 
     final principal = call.expectPrincipal();
-    final membership =
-        await db.userMembershipsDrift
-            .findUserMembership(
-              userId: principal.uid.id,
-              parentType: 'Celest::Project::Environment',
-              parentId: environment.id,
-            )
-            .getSingleOrNull();
+    final membership = await db.userMembershipsDrift
+        .findUserMembership(
+          userId: principal.uid.id,
+          parentType: 'Celest::Project::Environment',
+          parentId: environment.id,
+        )
+        .getSingleOrNull();
 
     await authorize(
       principal: switch (membership?.membershipId) {
@@ -313,10 +307,9 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       resource: EntityUid.of('Celest::Project::Environment', environment.id),
     );
 
-    final projectEnvironmentStateResult =
-        await db.projectEnvironmentsDrift
-            .getProjectEnvironmentState(projectEnvironmentId: environment.id)
-            .getSingleOrNull();
+    final projectEnvironmentStateResult = await db.projectEnvironmentsDrift
+        .getProjectEnvironmentState(projectEnvironmentId: environment.id)
+        .getSingleOrNull();
     final projectEnvironmentState =
         projectEnvironmentStateResult?.projectEnvironmentStates;
 
@@ -353,10 +346,9 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         return operation?.toProto() ??
             pb.Operation(
               done: true,
-              response:
-                  environment
-                      .toProto(state: projectEnvironmentState)
-                      .packIntoAny(),
+              response: environment
+                  .toProto(state: projectEnvironmentState)
+                  .packIntoAny(),
             );
     }
 
@@ -377,21 +369,19 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
           id: environment.id,
         )).first;
 
-    final operationResponse =
-        deletedEnvironment
-            .toProto(state: projectEnvironmentState)
-            .packIntoAny();
-    final operation =
-        (await db.operationsDrift.createOperation(
-          id: typeId('op'),
-          ownerType: principal.uid.type,
-          ownerId: principal.uid.id,
-          resourceType: 'Celest::Project::Environment',
-          resourceId: environment.id,
-          response: jsonEncode(
-            operationResponse.toProto3Json(typeRegistry: typeRegistry),
-          ),
-        )).first;
+    final operationResponse = deletedEnvironment
+        .toProto(state: projectEnvironmentState)
+        .packIntoAny();
+    final operation = (await db.operationsDrift.createOperation(
+      id: typeId('op'),
+      ownerType: principal.uid.type,
+      ownerId: principal.uid.id,
+      resourceType: 'Celest::Project::Environment',
+      resourceId: environment.id,
+      response: jsonEncode(
+        operationResponse.toProto3Json(typeRegistry: typeRegistry),
+      ),
+    )).first;
 
     return operation.toProto();
   }
@@ -422,25 +412,24 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         projectId,
         environmentId,
       ),
-      _ =>
-        throw GrpcError.invalidArgument(
-          'Invalid name format. Expected "projects/{project_id}/environments/{environment_id}".',
-        ),
+      _ => throw GrpcError.invalidArgument(
+        'Invalid name format. Expected "projects/{project_id}/environments/{environment_id}".',
+      ),
     };
 
-    final project =
-        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+    final project = await db.projectsDrift
+        .getProject(id: projectId)
+        .getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('Project with ID $projectId not found.');
     }
 
-    final environment =
-        await db.projectEnvironmentsDrift
-            .lookupProjectEnvironment(
-              projectId: project.id,
-              projectEnvironmentId: environmentId,
-            )
-            .getSingleOrNull();
+    final environment = await db.projectEnvironmentsDrift
+        .lookupProjectEnvironment(
+          projectId: project.id,
+          projectEnvironmentId: environmentId,
+        )
+        .getSingleOrNull();
     if (environment == null) {
       throw GrpcError.notFound(
         'No environment found with ID $environmentId for project $projectId',
@@ -448,14 +437,13 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     }
 
     final principal = call.expectPrincipal();
-    final membership =
-        await db.userMembershipsDrift
-            .findUserMembership(
-              userId: principal.uid.id,
-              parentType: 'Celest::Project::Environment',
-              parentId: environment.id,
-            )
-            .getSingleOrNull();
+    final membership = await db.userMembershipsDrift
+        .findUserMembership(
+          userId: principal.uid.id,
+          parentType: 'Celest::Project::Environment',
+          parentId: environment.id,
+        )
+        .getSingleOrNull();
 
     await authorize(
       principal: switch (membership?.membershipId) {
@@ -479,14 +467,13 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     final flutterAssetsBundle = assets[pb.ProjectAsset_Type.FLUTTER_ASSETS];
 
     final operationId = typeId('op');
-    final operation =
-        (await db.operationsDrift.createOperation(
-          id: operationId,
-          ownerType: principal.uid.type,
-          ownerId: principal.uid.id,
-          resourceType: 'Celest::Project::Environment',
-          resourceId: environment.id,
-        )).first;
+    final operation = (await db.operationsDrift.createOperation(
+      id: operationId,
+      ownerType: principal.uid.type,
+      ownerId: principal.uid.id,
+      resourceType: 'Celest::Project::Environment',
+      resourceId: environment.id,
+    )).first;
 
     final regions = (jsonDecode(project.regions) as List).cast<String>().map(
       (region) => pb.Region.values.firstWhere((r) => r.name == region),
@@ -542,25 +529,24 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         projectId,
         environmentId,
       ),
-      _ =>
-        throw GrpcError.invalidArgument(
-          'Invalid name format. Expected "projects/{project_id}/environments/{environment_id}".',
-        ),
+      _ => throw GrpcError.invalidArgument(
+        'Invalid name format. Expected "projects/{project_id}/environments/{environment_id}".',
+      ),
     };
 
-    final project =
-        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+    final project = await db.projectsDrift
+        .getProject(id: projectId)
+        .getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('No project found with ID $projectId');
     }
 
-    final environment =
-        await db.projectEnvironmentsDrift
-            .lookupProjectEnvironment(
-              projectId: project.id,
-              projectEnvironmentId: environmentId,
-            )
-            .getSingleOrNull();
+    final environment = await db.projectEnvironmentsDrift
+        .lookupProjectEnvironment(
+          projectId: project.id,
+          projectEnvironmentId: environmentId,
+        )
+        .getSingleOrNull();
     if (environment == null) {
       throw GrpcError.notFound(
         'No environment found with ID $environmentId for project $projectId',
@@ -568,14 +554,13 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
     }
 
     final principal = call.expectPrincipal();
-    final membership =
-        await db.userMembershipsDrift
-            .findUserMembership(
-              userId: principal.uid.id,
-              parentType: 'Celest::Project::Environment',
-              parentId: environment.id,
-            )
-            .getSingleOrNull();
+    final membership = await db.userMembershipsDrift
+        .findUserMembership(
+          userId: principal.uid.id,
+          parentType: 'Celest::Project::Environment',
+          parentId: environment.id,
+        )
+        .getSingleOrNull();
 
     await authorize(
       principal: switch (membership?.membershipId) {
@@ -595,10 +580,9 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       );
     }
 
-    final environmentState =
-        await db.projectEnvironmentsDrift
-            .getProjectEnvironmentState(projectEnvironmentId: environment.id)
-            .getSingleOrNull();
+    final environmentState = await db.projectEnvironmentsDrift
+        .getProjectEnvironmentState(projectEnvironmentId: environment.id)
+        .getSingleOrNull();
 
     return environment.toProto(
       state: environmentState?.projectEnvironmentStates,
@@ -612,27 +596,26 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
   ) async {
     final projectId = switch (request.parent.split('/')) {
       ['projects', final projectId] => projectId,
-      _ =>
-        throw GrpcError.invalidArgument(
-          'Invalid parent format. Expected "projects/{project_id}".',
-        ),
+      _ => throw GrpcError.invalidArgument(
+        'Invalid parent format. Expected "projects/{project_id}".',
+      ),
     };
 
-    final project =
-        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+    final project = await db.projectsDrift
+        .getProject(id: projectId)
+        .getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('No project found with ID $projectId');
     }
 
     final principal = call.expectPrincipal();
-    final membership =
-        await db.userMembershipsDrift
-            .findUserMembership(
-              userId: principal.uid.id,
-              parentType: 'Celest::Project',
-              parentId: project.id,
-            )
-            .getSingleOrNull();
+    final membership = await db.userMembershipsDrift
+        .findUserMembership(
+          userId: principal.uid.id,
+          parentType: 'Celest::Project',
+          parentId: project.id,
+        )
+        .getSingleOrNull();
 
     await authorize(
       principal: switch (membership?.membershipId) {
@@ -652,10 +635,9 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
 
     PageToken? pageData;
     try {
-      pageData =
-          request.pageToken.isNotEmpty
-              ? PageToken.parse(request.pageToken)
-              : null;
+      pageData = request.pageToken.isNotEmpty
+          ? PageToken.parse(request.pageToken)
+          : null;
     } on FormatException {
       throw GrpcError.invalidArgument('Invalid page token');
     }
@@ -676,36 +658,28 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       orderByClause = OrderByClause.parse(request.orderBy);
     }
 
-    final rows =
-        await db.projectEnvironmentsDrift
-            .listProjectEnvironments(
-              userId: principal.uid.id,
-              parentId: project.id,
-              offset: pageOffset,
-              limit: pageSize,
-              startTime: startTime,
-              order_by: switch (orderByClause) {
-                final orderBy? =>
-                  (tbl) => OrderBy(orderBy.toOrderingTerms(tbl).toList()),
-                _ =>
-                  (tbl) => OrderBy([
-                    OrderingTerm(
-                      expression: tbl.createTime,
-                      mode: OrderingMode.desc,
-                    ),
-                  ]),
-              },
-            )
-            .get();
+    final rows = await db.projectEnvironmentsDrift
+        .listProjectEnvironments(
+          userId: principal.uid.id,
+          parentId: project.id,
+          offset: pageOffset,
+          limit: pageSize,
+          startTime: startTime,
+          order_by: switch (orderByClause) {
+            final orderBy? => (tbl) => OrderBy(
+              orderBy.toOrderingTerms(tbl).toList(),
+            ),
+            _ => (tbl) => OrderBy([
+              OrderingTerm(expression: tbl.createTime, mode: OrderingMode.desc),
+            ]),
+          },
+        )
+        .get();
 
     final environments = rows.map((it) => it.projectEnvironments.toProto());
-    final nextPageToken =
-        rows.isEmpty || rows.length < pageSize
-            ? null
-            : PageToken(
-              startTime: startTime,
-              offset: rows.last.rowNum,
-            ).encode();
+    final nextPageToken = rows.isEmpty || rows.length < pageSize
+        ? null
+        : PageToken(startTime: startTime, offset: rows.last.rowNum).encode();
 
     return ListProjectEnvironmentsResponse(
       nextPageToken: nextPageToken,
@@ -724,38 +698,36 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
         projectId,
         environmentId,
       ),
-      _ =>
-        throw GrpcError.invalidArgument(
-          'Invalid name format. Expected "projects/{project_id}/environments/{environment_id}".',
-        ),
+      _ => throw GrpcError.invalidArgument(
+        'Invalid name format. Expected "projects/{project_id}/environments/{environment_id}".',
+      ),
     };
 
-    final project =
-        await db.projectsDrift.getProject(id: projectId).getSingleOrNull();
+    final project = await db.projectsDrift
+        .getProject(id: projectId)
+        .getSingleOrNull();
     if (project == null) {
       throw GrpcError.notFound('Project with ID $projectId not found.');
     }
 
-    var environment =
-        await db.projectEnvironmentsDrift
-            .lookupProjectEnvironment(
-              projectId: project.id,
-              projectEnvironmentId: environmentId,
-            )
-            .getSingleOrNull();
+    var environment = await db.projectEnvironmentsDrift
+        .lookupProjectEnvironment(
+          projectId: project.id,
+          projectEnvironmentId: environmentId,
+        )
+        .getSingleOrNull();
     if (environment == null) {
       throw GrpcError.notFound('No environment found with ID $environmentId');
     }
 
     final principal = call.expectPrincipal();
-    final membership =
-        await db.userMembershipsDrift
-            .findUserMembership(
-              userId: principal.uid.id,
-              parentType: 'Celest::Project::Environment',
-              parentId: environment.id,
-            )
-            .getSingleOrNull();
+    final membership = await db.userMembershipsDrift
+        .findUserMembership(
+          userId: principal.uid.id,
+          parentType: 'Celest::Project::Environment',
+          parentId: environment.id,
+        )
+        .getSingleOrNull();
 
     await authorize(
       principal: switch (membership?.membershipId) {
@@ -778,35 +750,33 @@ final class ProjectEnvironmentsService extends ProjectEnvironmentsServiceBase
       return value;
     }
 
-    environment =
-        (await db.projectEnvironmentsDrift.updateProjectEnvironment(
-          id: environment.id,
-          displayName: mask<String?>(
-            'display_name',
-            request.projectEnvironment.hasDisplayName()
-                ? request.projectEnvironment.displayName
-                : null,
-          ),
-          annotations: mask<String?>(
-            'annotations',
-            request.projectEnvironment.annotations.isEmpty
-                ? null
-                : jsonEncode(request.projectEnvironment.annotations),
-          ),
-        )).first;
+    environment = (await db.projectEnvironmentsDrift.updateProjectEnvironment(
+      id: environment.id,
+      displayName: mask<String?>(
+        'display_name',
+        request.projectEnvironment.hasDisplayName()
+            ? request.projectEnvironment.displayName
+            : null,
+      ),
+      annotations: mask<String?>(
+        'annotations',
+        request.projectEnvironment.annotations.isEmpty
+            ? null
+            : jsonEncode(request.projectEnvironment.annotations),
+      ),
+    )).first;
 
     final operationResponse = environment.toProto().packIntoAny();
-    final operation =
-        (await db.operationsDrift.createOperation(
-          id: typeId('op'),
-          ownerType: principal.uid.type,
-          ownerId: principal.uid.id,
-          resourceType: 'Celest::Project::Environment',
-          resourceId: environment.id,
-          response: jsonEncode(
-            operationResponse.toProto3Json(typeRegistry: typeRegistry),
-          ),
-        )).first;
+    final operation = (await db.operationsDrift.createOperation(
+      id: typeId('op'),
+      ownerType: principal.uid.type,
+      ownerId: principal.uid.id,
+      resourceType: 'Celest::Project::Environment',
+      resourceId: environment.id,
+      response: jsonEncode(
+        operationResponse.toProto3Json(typeRegistry: typeRegistry),
+      ),
+    )).first;
 
     return operation.toProto();
   }
@@ -887,9 +857,8 @@ final class _UpdateProjectEnvironmentGatewayHandler extends GatewayHandler {
       req.validateOnly = validateOnly.toLowerCase() == 'true';
     }
     final json = await JsonUtf8.decodeStream(request.read());
-    req.projectEnvironment =
-        pb.ProjectEnvironment()
-          ..mergeFromProto3Json(json, typeRegistry: typeRegistry);
+    req.projectEnvironment = pb.ProjectEnvironment()
+      ..mergeFromProto3Json(json, typeRegistry: typeRegistry);
     if (routeParameters['name'] case final name?) {
       req.projectEnvironment.name = name;
     }
@@ -972,9 +941,8 @@ final class _CreateProjectEnvironmentGatewayHandler extends GatewayHandler {
       req.validateOnly = validateOnly.toLowerCase() == 'true';
     }
     final json = await JsonUtf8.decodeStream(request.read());
-    req.projectEnvironment =
-        pb.ProjectEnvironment()
-          ..mergeFromProto3Json(json, typeRegistry: typeRegistry);
+    req.projectEnvironment = pb.ProjectEnvironment()
+      ..mergeFromProto3Json(json, typeRegistry: typeRegistry);
     return req;
   }
 }

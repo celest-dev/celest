@@ -12,12 +12,11 @@ import 'package:corks_cedar/corks_cedar.dart';
 import 'package:grpc/grpc.dart';
 import 'package:meta/meta.dart';
 
-typedef _Deps =
-    ({
-      CorksRepository corks,
-      SessionsRepository sessions,
-      CloudAuthDatabaseAccessors db,
-    });
+typedef _Deps = ({
+  CorksRepository corks,
+  SessionsRepository sessions,
+  CloudAuthDatabaseAccessors db,
+});
 
 /// {@template celest_cloud_auth.request_authorizer}
 /// A middleware that authorizes requests based on the current policy set.

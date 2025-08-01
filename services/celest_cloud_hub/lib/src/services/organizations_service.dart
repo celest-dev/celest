@@ -141,10 +141,9 @@ final class OrganizationsService extends OrganizationsServiceBase
     CreateOrganizationRequest request,
   ) async {
     final principal = call.expectPrincipal();
-    final organization =
-        await db.organizationsDrift
-            .getOrganization(id: request.organizationId)
-            .getSingleOrNull();
+    final organization = await db.organizationsDrift
+        .getOrganization(id: request.organizationId)
+        .getSingleOrNull();
     if (organization != null) {
       throw GrpcError.alreadyExists(
         'Organization with ID ${request.organizationId} already exists',
@@ -164,20 +163,18 @@ final class OrganizationsService extends OrganizationsServiceBase
 
     return db.withoutForeignKeys(() async {
       final organizationId = TypeId('org');
-      final organization =
-          (await db.organizationsDrift.createOrganization(
-            id: organizationId.encoded,
-            organizationId: request.organizationId,
-            parentType: parent.uid.type,
-            parentId: parent.uid.id,
-            state: LifecycleState.ACTIVE.name,
-            displayName: request.organization.displayName,
-            annotations:
-                request.organization.annotations.isEmpty
-                    ? null
-                    : jsonEncode(request.organization.annotations),
-            primaryRegion: request.organization.primaryRegion.name,
-          )).first;
+      final organization = (await db.organizationsDrift.createOrganization(
+        id: organizationId.encoded,
+        organizationId: request.organizationId,
+        parentType: parent.uid.type,
+        parentId: parent.uid.id,
+        state: LifecycleState.ACTIVE.name,
+        displayName: request.organization.displayName,
+        annotations: request.organization.annotations.isEmpty
+            ? null
+            : jsonEncode(request.organization.annotations),
+        primaryRegion: request.organization.primaryRegion.name,
+      )).first;
 
       // Add the user as the owner of the organization
       await db.userMembershipsDrift.createUserMembership(
@@ -190,17 +187,16 @@ final class OrganizationsService extends OrganizationsServiceBase
 
       final operationId = TypeId('op');
       final operationResponse = organization.toProto().packIntoAny();
-      final operation =
-          (await db.operationsDrift.createOperation(
-            id: operationId.encoded,
-            ownerType: principal.uid.type,
-            ownerId: principal.uid.id,
-            resourceType: 'Celest::Organization',
-            resourceId: organizationId.encoded,
-            response: jsonEncode(
-              operationResponse.toProto3Json(typeRegistry: typeRegistry),
-            ),
-          )).first;
+      final operation = (await db.operationsDrift.createOperation(
+        id: operationId.encoded,
+        ownerType: principal.uid.type,
+        ownerId: principal.uid.id,
+        resourceType: 'Celest::Organization',
+        resourceId: organizationId.encoded,
+        response: jsonEncode(
+          operationResponse.toProto3Json(typeRegistry: typeRegistry),
+        ),
+      )).first;
 
       return operation.toProto();
     });
@@ -215,24 +211,22 @@ final class OrganizationsService extends OrganizationsServiceBase
       ['organizations', final organizationId] => organizationId,
       _ => throw GrpcError.invalidArgument('Invalid name: "${request.name}"'),
     };
-    final organization =
-        await db.organizationsDrift
-            .getOrganization(id: organizationId)
-            .getSingleOrNull();
+    final organization = await db.organizationsDrift
+        .getOrganization(id: organizationId)
+        .getSingleOrNull();
     if (organization == null) {
       throw GrpcError.notFound('No organization found with ID $organizationId');
     }
 
     // Get membership of user in org
     final principal = call.expectPrincipal();
-    final membership =
-        await db.userMembershipsDrift
-            .findUserMembership(
-              userId: principal.uid.id,
-              parentType: 'Celest::Organization',
-              parentId: organization.id,
-            )
-            .getSingleOrNull();
+    final membership = await db.userMembershipsDrift
+        .findUserMembership(
+          userId: principal.uid.id,
+          parentType: 'Celest::Organization',
+          parentId: organization.id,
+        )
+        .getSingleOrNull();
 
     await authorize(
       principal: switch (membership?.membershipId) {
@@ -290,37 +284,29 @@ final class OrganizationsService extends OrganizationsServiceBase
       orderByClause = OrderByClause.parse(orderBy);
     }
 
-    final rows =
-        await db.organizationsDrift
-            .listOrganizations(
-              userId: principal.uid.id,
-              showDeleted: showDeleted,
-              offset: pageOffset,
-              limit: pageSize,
-              parentId: context.rootOrg.uid.id,
-              startTime: startTime,
-              order_by: switch (orderByClause) {
-                final orderBy? =>
-                  (tbl) => OrderBy(orderBy.toOrderingTerms(tbl).toList()),
-                _ =>
-                  (tbl) => OrderBy([
-                    OrderingTerm(
-                      expression: tbl.createTime,
-                      mode: OrderingMode.desc,
-                    ),
-                  ]),
-              },
-            )
-            .get();
+    final rows = await db.organizationsDrift
+        .listOrganizations(
+          userId: principal.uid.id,
+          showDeleted: showDeleted,
+          offset: pageOffset,
+          limit: pageSize,
+          parentId: context.rootOrg.uid.id,
+          startTime: startTime,
+          order_by: switch (orderByClause) {
+            final orderBy? => (tbl) => OrderBy(
+              orderBy.toOrderingTerms(tbl).toList(),
+            ),
+            _ => (tbl) => OrderBy([
+              OrderingTerm(expression: tbl.createTime, mode: OrderingMode.desc),
+            ]),
+          },
+        )
+        .get();
 
     final organizations = rows.map((it) => it.organizations.toProto());
-    final nextPageToken =
-        rows.isEmpty || rows.length < pageSize
-            ? null
-            : PageToken(
-              startTime: startTime,
-              offset: rows.last.rowNum,
-            ).encode();
+    final nextPageToken = rows.isEmpty || rows.length < pageSize
+        ? null
+        : PageToken(startTime: startTime, offset: rows.last.rowNum).encode();
 
     return ListOrganizationsResponse(
       nextPageToken: nextPageToken,
@@ -337,24 +323,22 @@ final class OrganizationsService extends OrganizationsServiceBase
       ['organizations', final organizationId] => organizationId,
       _ => throw GrpcError.invalidArgument('Invalid name'),
     };
-    var organization =
-        await db.organizationsDrift
-            .getOrganization(id: organizationId)
-            .getSingleOrNull();
+    var organization = await db.organizationsDrift
+        .getOrganization(id: organizationId)
+        .getSingleOrNull();
     if (organization == null) {
       throw GrpcError.notFound('No organization found with ID $organizationId');
     }
 
     // Get membership of user in org
     final principal = call.expectPrincipal();
-    final membership =
-        await db.userMembershipsDrift
-            .findUserMembership(
-              userId: principal.uid.id,
-              parentType: 'Celest::Organization',
-              parentId: organization.id,
-            )
-            .getSingleOrNull();
+    final membership = await db.userMembershipsDrift
+        .findUserMembership(
+          userId: principal.uid.id,
+          parentType: 'Celest::Organization',
+          parentId: organization.id,
+        )
+        .getSingleOrNull();
 
     await authorize(
       principal: switch (membership?.membershipId) {
@@ -377,36 +361,34 @@ final class OrganizationsService extends OrganizationsServiceBase
       return value;
     }
 
-    organization =
-        (await db.organizationsDrift.updateOrganization(
-          id: organization.id,
-          primaryRegion: mask<String?>(
-            'primary_region',
-            request.organization.hasPrimaryRegion()
-                ? request.organization.primaryRegion.name
-                : null,
-          ),
-          displayName: mask<String?>(
-            'display_name',
-            request.organization.hasDisplayName()
-                ? request.organization.displayName
-                : null,
-          ),
-        )).first;
+    organization = (await db.organizationsDrift.updateOrganization(
+      id: organization.id,
+      primaryRegion: mask<String?>(
+        'primary_region',
+        request.organization.hasPrimaryRegion()
+            ? request.organization.primaryRegion.name
+            : null,
+      ),
+      displayName: mask<String?>(
+        'display_name',
+        request.organization.hasDisplayName()
+            ? request.organization.displayName
+            : null,
+      ),
+    )).first;
 
     final operationId = TypeId('op');
     final operationResponse = organization.toProto().packIntoAny();
-    final operation =
-        (await db.operationsDrift.createOperation(
-          id: operationId.encoded,
-          ownerType: principal.uid.type,
-          ownerId: principal.uid.id,
-          resourceType: 'Celest::Organization',
-          resourceId: organization.id,
-          response: jsonEncode(
-            operationResponse.toProto3Json(typeRegistry: typeRegistry),
-          ),
-        )).first;
+    final operation = (await db.operationsDrift.createOperation(
+      id: operationId.encoded,
+      ownerType: principal.uid.type,
+      ownerId: principal.uid.id,
+      resourceType: 'Celest::Organization',
+      resourceId: organization.id,
+      response: jsonEncode(
+        operationResponse.toProto3Json(typeRegistry: typeRegistry),
+      ),
+    )).first;
 
     return operation.toProto();
   }
@@ -514,8 +496,8 @@ final class _UpdateOrganizationGatewayHandler extends GatewayHandler {
       req.validateOnly = validateOnly.toLowerCase() == 'true';
     }
     final body = await JsonUtf8.decodeStream(request.read());
-    req.organization =
-        Organization()..mergeFromProto3Json(body, typeRegistry: typeRegistry);
+    req.organization = Organization()
+      ..mergeFromProto3Json(body, typeRegistry: typeRegistry);
     if (routeParameters['name'] case final name?) {
       req.organization.name = name;
     }
@@ -635,8 +617,8 @@ final class _CreateOrganizationGatewayHandler extends GatewayHandler {
       req.validateOnly = validateOnly.toLowerCase() == 'true';
     }
     final body = await JsonUtf8.decodeStream(request.read());
-    req.organization =
-        Organization()..mergeFromProto3Json(body, typeRegistry: typeRegistry);
+    req.organization = Organization()
+      ..mergeFromProto3Json(body, typeRegistry: typeRegistry);
     return req;
   }
 }

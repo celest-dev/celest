@@ -110,8 +110,9 @@ permit (
       ['operations', final id] => id,
       _ => throw GrpcError.invalidArgument('Invalid operation name'),
     };
-    final operation =
-        await _db.operationsDrift.getOperation(id: id).getSingleOrNull();
+    final operation = await _db.operationsDrift
+        .getOperation(id: id)
+        .getSingleOrNull();
     if (operation == null) {
       throw GrpcError.notFound();
     }
@@ -194,23 +195,18 @@ permit (
       };
     }
 
-    final rows =
-        await _db.operationsDrift
-            .listOperations(
-              filter: (_, operations) => queryFilter(operations),
-              startTime: startTime,
-              offset: pageOffset,
-              limit: pageSize,
-            )
-            .get();
+    final rows = await _db.operationsDrift
+        .listOperations(
+          filter: (_, operations) => queryFilter(operations),
+          startTime: startTime,
+          offset: pageOffset,
+          limit: pageSize,
+        )
+        .get();
     final operations = rows.map((op) => op.operations.toProto()).toList();
-    final nextPageToken =
-        rows.isEmpty || rows.length < pageSize
-            ? null
-            : PageToken(
-              startTime: startTime,
-              offset: rows.last.rowNum,
-            ).encode();
+    final nextPageToken = rows.isEmpty || rows.length < pageSize
+        ? null
+        : PageToken(startTime: startTime, offset: rows.last.rowNum).encode();
 
     return ListOperationsResponse(
       operations: operations,
@@ -239,8 +235,9 @@ permit (
       }
       final result = _db.computeWithDatabase<Result<dto.Operation>>(
         computation: (db) async {
-          final operation =
-              await db.operationsDrift.getOperation(id: id).getSingleOrNull();
+          final operation = await db.operationsDrift
+              .getOperation(id: id)
+              .getSingleOrNull();
           if (operation == null) {
             return Result.error(GrpcError.notFound('Operation not found'));
           }

@@ -45,10 +45,9 @@ query FetchVolumes($appName: String!) {
               (node) => node['name'] == volumeName,
             )['id']
             as String,
-      _ =>
-        throw GrpcError.internal(
-          'Failed to fetch volume id: ${jsonEncode(result.data)}',
-        ),
+      _ => throw GrpcError.internal(
+        'Failed to fetch volume id: ${jsonEncode(result.data)}',
+      ),
     };
   }
 
@@ -76,10 +75,9 @@ query FetchAppInternalNumericId($appName: String!) {
     }
     return switch (result.data) {
       {'app': {'internalNumericId': final num id}} => id.toInt(),
-      _ =>
-        throw GrpcError.internal(
-          'Failed to fetch app internal numeric id: ${jsonEncode(result.data)}',
-        ),
+      _ => throw GrpcError.internal(
+        'Failed to fetch app internal numeric id: ${jsonEncode(result.data)}',
+      ),
     };
   }
 
@@ -142,10 +140,9 @@ query ListSecrets($appName: String!) {
             .cast<Map<Object?, Object?>>()
             .map((secret) => secret['name'] as String)
             .toList(),
-      _ =>
-        throw GrpcError.internal(
-          'Failed to list secrets: ${jsonEncode(result.data)}',
-        ),
+      _ => throw GrpcError.internal(
+        'Failed to list secrets: ${jsonEncode(result.data)}',
+      ),
     };
   }
 }

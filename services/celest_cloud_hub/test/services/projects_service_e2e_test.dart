@@ -37,10 +37,9 @@ void main() {
       service = tester.service;
 
       // Get the root organization ID
-      final organization =
-          await database.organizationsDrift
-              .getOrganization(id: kRootOrgId)
-              .getSingle();
+      final organization = await database.organizationsDrift
+          .getOrganization(id: kRootOrgId)
+          .getSingle();
       organizationId = organization.id;
 
       // Make `user` owner of the root organization
@@ -74,15 +73,14 @@ void main() {
 
     group('createProject', () {
       test('success', () async {
-        final state =
-            await tester.service.projects
-                .create(
-                  parent: 'organizations/$organizationId',
-                  projectId: kCelestTest,
-                  displayName: 'Test Project',
-                  regions: [pb.Region.NORTH_AMERICA],
-                )
-                .first;
+        final state = await tester.service.projects
+            .create(
+              parent: 'organizations/$organizationId',
+              projectId: kCelestTest,
+              displayName: 'Test Project',
+              regions: [pb.Region.NORTH_AMERICA],
+            )
+            .first;
 
         await expectLater(
           state,

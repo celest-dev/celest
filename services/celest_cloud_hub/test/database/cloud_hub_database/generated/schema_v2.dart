@@ -87,11 +87,10 @@ class CloudAuthUsers extends Table
   CloudAuthUsersData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CloudAuthUsersData(
-      userId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}user_id'],
-          )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
       givenName: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}given_name'],
@@ -108,11 +107,10 @@ class CloudAuthUsers extends Table
         DriftSqlType.string,
         data['${effectivePrefix}language_code'],
       ),
-      createTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.double,
-            data['${effectivePrefix}create_time'],
-          )!,
+      createTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}create_time'],
+      )!,
       updateTime: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}update_time'],
@@ -173,27 +171,22 @@ class CloudAuthUsersData extends DataClass
   CloudAuthUsersCompanion toCompanion(bool nullToAbsent) {
     return CloudAuthUsersCompanion(
       userId: Value(userId),
-      givenName:
-          givenName == null && nullToAbsent
-              ? const Value.absent()
-              : Value(givenName),
-      familyName:
-          familyName == null && nullToAbsent
-              ? const Value.absent()
-              : Value(familyName),
-      timeZone:
-          timeZone == null && nullToAbsent
-              ? const Value.absent()
-              : Value(timeZone),
-      languageCode:
-          languageCode == null && nullToAbsent
-              ? const Value.absent()
-              : Value(languageCode),
+      givenName: givenName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(givenName),
+      familyName: familyName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(familyName),
+      timeZone: timeZone == null && nullToAbsent
+          ? const Value.absent()
+          : Value(timeZone),
+      languageCode: languageCode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(languageCode),
       createTime: Value(createTime),
-      updateTime:
-          updateTime == null && nullToAbsent
-              ? const Value.absent()
-              : Value(updateTime),
+      updateTime: updateTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updateTime),
     );
   }
 
@@ -247,17 +240,19 @@ class CloudAuthUsersData extends DataClass
     return CloudAuthUsersData(
       userId: data.userId.present ? data.userId.value : this.userId,
       givenName: data.givenName.present ? data.givenName.value : this.givenName,
-      familyName:
-          data.familyName.present ? data.familyName.value : this.familyName,
+      familyName: data.familyName.present
+          ? data.familyName.value
+          : this.familyName,
       timeZone: data.timeZone.present ? data.timeZone.value : this.timeZone,
-      languageCode:
-          data.languageCode.present
-              ? data.languageCode.value
-              : this.languageCode,
-      createTime:
-          data.createTime.present ? data.createTime.value : this.createTime,
-      updateTime:
-          data.updateTime.present ? data.updateTime.value : this.updateTime,
+      languageCode: data.languageCode.present
+          ? data.languageCode.value
+          : this.languageCode,
+      createTime: data.createTime.present
+          ? data.createTime.value
+          : this.createTime,
+      updateTime: data.updateTime.present
+          ? data.updateTime.value
+          : this.updateTime,
     );
   }
 
@@ -443,11 +438,10 @@ class CedarTypes extends Table with TableInfo<CedarTypes, CedarTypesData> {
   CedarTypesData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CedarTypesData(
-      fqn:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}fqn'],
-          )!,
+      fqn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fqn'],
+      )!,
     );
   }
 
@@ -623,26 +617,22 @@ class CedarEntities extends Table
   CedarEntitiesData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CedarEntitiesData(
-      entityType:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}entity_type'],
-          )!,
-      entityId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}entity_id'],
-          )!,
-      attributeJson:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}attribute_json'],
-          )!,
-      entityJson:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}entity_json'],
-          )!,
+      entityType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_type'],
+      )!,
+      entityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_id'],
+      )!,
+      attributeJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}attribute_json'],
+      )!,
+      entityJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_json'],
+      )!,
     );
   }
 
@@ -906,36 +896,30 @@ class CedarRelationships extends Table
   CedarRelationshipsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CedarRelationshipsData(
-      entityType:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}entity_type'],
-          )!,
-      entityId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}entity_id'],
-          )!,
-      entityJson:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}entity_json'],
-          )!,
-      parentType:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}parent_type'],
-          )!,
-      parentId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}parent_id'],
-          )!,
-      parentJson:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}parent_json'],
-          )!,
+      entityType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_type'],
+      )!,
+      entityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_id'],
+      )!,
+      entityJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_json'],
+      )!,
+      parentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_type'],
+      )!,
+      parentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_id'],
+      )!,
+      parentJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_json'],
+      )!,
     );
   }
 
@@ -1202,26 +1186,22 @@ class CloudAuthUserEmails extends Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CloudAuthUserEmailsData(
-      userId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}user_id'],
-          )!,
-      email:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}email'],
-          )!,
-      isVerified:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.bool,
-            data['${effectivePrefix}is_verified'],
-          )!,
-      isPrimary:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.bool,
-            data['${effectivePrefix}is_primary'],
-          )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      email: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}email'],
+      )!,
+      isVerified: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_verified'],
+      )!,
+      isPrimary: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_primary'],
+      )!,
     );
   }
 
@@ -1310,8 +1290,9 @@ class CloudAuthUserEmailsData extends DataClass
     return CloudAuthUserEmailsData(
       userId: data.userId.present ? data.userId.value : this.userId,
       email: data.email.present ? data.email.value : this.email,
-      isVerified:
-          data.isVerified.present ? data.isVerified.value : this.isVerified,
+      isVerified: data.isVerified.present
+          ? data.isVerified.value
+          : this.isVerified,
       isPrimary: data.isPrimary.present ? data.isPrimary.value : this.isPrimary,
     );
   }
@@ -1477,26 +1458,22 @@ class CloudAuthUserPhoneNumbers extends Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CloudAuthUserPhoneNumbersData(
-      userId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}user_id'],
-          )!,
-      phoneNumber:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}phone_number'],
-          )!,
-      isVerified:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.bool,
-            data['${effectivePrefix}is_verified'],
-          )!,
-      isPrimary:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.bool,
-            data['${effectivePrefix}is_primary'],
-          )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      phoneNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}phone_number'],
+      )!,
+      isVerified: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_verified'],
+      )!,
+      isPrimary: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_primary'],
+      )!,
     );
   }
 
@@ -1586,10 +1563,12 @@ class CloudAuthUserPhoneNumbersData extends DataClass
   ) {
     return CloudAuthUserPhoneNumbersData(
       userId: data.userId.present ? data.userId.value : this.userId,
-      phoneNumber:
-          data.phoneNumber.present ? data.phoneNumber.value : this.phoneNumber,
-      isVerified:
-          data.isVerified.present ? data.isVerified.value : this.isVerified,
+      phoneNumber: data.phoneNumber.present
+          ? data.phoneNumber.value
+          : this.phoneNumber,
+      isVerified: data.isVerified.present
+          ? data.isVerified.value
+          : this.isVerified,
       isPrimary: data.isPrimary.present ? data.isPrimary.value : this.isPrimary,
     );
   }
@@ -1856,11 +1835,10 @@ class CloudAuthUsersView
   CloudAuthUsersViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CloudAuthUsersViewData(
-      userId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}user_id'],
-          )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
       givenName: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}given_name'],
@@ -1877,30 +1855,26 @@ class CloudAuthUsersView
         DriftSqlType.string,
         data['${effectivePrefix}language_code'],
       ),
-      createTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.any,
-            data['${effectivePrefix}create_time'],
-          )!,
+      createTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.any,
+        data['${effectivePrefix}create_time'],
+      )!,
       updateTime: attachedDatabase.typeMapping.read(
         DriftSqlType.any,
         data['${effectivePrefix}update_time'],
       ),
-      emails:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}emails'],
-          )!,
-      phoneNumbers:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}phone_numbers'],
-          )!,
-      roles:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}roles'],
-          )!,
+      emails: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}emails'],
+      )!,
+      phoneNumbers: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}phone_numbers'],
+      )!,
+      roles: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}roles'],
+      )!,
     );
   }
 
@@ -2027,26 +2001,22 @@ class CloudAuthProjects extends Table
   CloudAuthProjectsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CloudAuthProjectsData(
-      projectId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}project_id'],
-          )!,
-      version:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}version'],
-          )!,
-      resolvedAst:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.blob,
-            data['${effectivePrefix}resolved_ast'],
-          )!,
-      etag:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}etag'],
-          )!,
+      projectId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}project_id'],
+      )!,
+      version: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}version'],
+      )!,
+      resolvedAst: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}resolved_ast'],
+      )!,
+      etag: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}etag'],
+      )!,
     );
   }
 
@@ -2128,8 +2098,9 @@ class CloudAuthProjectsData extends DataClass
     return CloudAuthProjectsData(
       projectId: data.projectId.present ? data.projectId.value : this.projectId,
       version: data.version.present ? data.version.value : this.version,
-      resolvedAst:
-          data.resolvedAst.present ? data.resolvedAst.value : this.resolvedAst,
+      resolvedAst: data.resolvedAst.present
+          ? data.resolvedAst.value
+          : this.resolvedAst,
       etag: data.etag.present ? data.etag.value : this.etag,
     );
   }
@@ -2304,26 +2275,22 @@ class CloudAuthApis extends Table
   CloudAuthApisData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CloudAuthApisData(
-      apiId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}api_id'],
-          )!,
-      projectId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}project_id'],
-          )!,
-      resolvedAst:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.blob,
-            data['${effectivePrefix}resolved_ast'],
-          )!,
-      etag:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}etag'],
-          )!,
+      apiId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}api_id'],
+      )!,
+      projectId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}project_id'],
+      )!,
+      resolvedAst: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}resolved_ast'],
+      )!,
+      etag: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}etag'],
+      )!,
     );
   }
 
@@ -2409,8 +2376,9 @@ class CloudAuthApisData extends DataClass
     return CloudAuthApisData(
       apiId: data.apiId.present ? data.apiId.value : this.apiId,
       projectId: data.projectId.present ? data.projectId.value : this.projectId,
-      resolvedAst:
-          data.resolvedAst.present ? data.resolvedAst.value : this.resolvedAst,
+      resolvedAst: data.resolvedAst.present
+          ? data.resolvedAst.value
+          : this.resolvedAst,
       etag: data.etag.present ? data.etag.value : this.etag,
     );
   }
@@ -2580,26 +2548,22 @@ class CloudAuthFunctions extends Table
   CloudAuthFunctionsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CloudAuthFunctionsData(
-      functionId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}function_id'],
-          )!,
-      apiId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}api_id'],
-          )!,
-      resolvedAst:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.blob,
-            data['${effectivePrefix}resolved_ast'],
-          )!,
-      etag:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}etag'],
-          )!,
+      functionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}function_id'],
+      )!,
+      apiId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}api_id'],
+      )!,
+      resolvedAst: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}resolved_ast'],
+      )!,
+      etag: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}etag'],
+      )!,
     );
   }
 
@@ -2683,11 +2647,13 @@ class CloudAuthFunctionsData extends DataClass
   );
   CloudAuthFunctionsData copyWithCompanion(CloudAuthFunctionsCompanion data) {
     return CloudAuthFunctionsData(
-      functionId:
-          data.functionId.present ? data.functionId.value : this.functionId,
+      functionId: data.functionId.present
+          ? data.functionId.value
+          : this.functionId,
       apiId: data.apiId.present ? data.apiId.value : this.apiId,
-      resolvedAst:
-          data.resolvedAst.present ? data.resolvedAst.value : this.resolvedAst,
+      resolvedAst: data.resolvedAst.present
+          ? data.resolvedAst.value
+          : this.resolvedAst,
       etag: data.etag.present ? data.etag.value : this.etag,
     );
   }
@@ -2837,11 +2803,10 @@ class CloudAuthMeta extends Table
   CloudAuthMetaData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CloudAuthMetaData(
-      schemaVersion:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}schema_version'],
-          )!,
+      schemaVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}schema_version'],
+      )!,
     );
   }
 
@@ -2890,10 +2855,9 @@ class CloudAuthMetaData extends DataClass
       CloudAuthMetaData(schemaVersion: schemaVersion ?? this.schemaVersion);
   CloudAuthMetaData copyWithCompanion(CloudAuthMetaCompanion data) {
     return CloudAuthMetaData(
-      schemaVersion:
-          data.schemaVersion.present
-              ? data.schemaVersion.value
-              : this.schemaVersion,
+      schemaVersion: data.schemaVersion.present
+          ? data.schemaVersion.value
+          : this.schemaVersion,
     );
   }
 
@@ -3020,21 +2984,18 @@ class CloudAuthCryptoKeys extends Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CloudAuthCryptoKeysData(
-      cryptoKeyId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.blob,
-            data['${effectivePrefix}crypto_key_id'],
-          )!,
-      keyPurpose:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}key_purpose'],
-          )!,
-      keyAlgorithm:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}key_algorithm'],
-          )!,
+      cryptoKeyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}crypto_key_id'],
+      )!,
+      keyPurpose: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key_purpose'],
+      )!,
+      keyAlgorithm: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key_algorithm'],
+      )!,
       keyMaterial: attachedDatabase.typeMapping.read(
         DriftSqlType.blob,
         data['${effectivePrefix}key_material'],
@@ -3093,14 +3054,12 @@ class CloudAuthCryptoKeysData extends DataClass
       cryptoKeyId: Value(cryptoKeyId),
       keyPurpose: Value(keyPurpose),
       keyAlgorithm: Value(keyAlgorithm),
-      keyMaterial:
-          keyMaterial == null && nullToAbsent
-              ? const Value.absent()
-              : Value(keyMaterial),
-      externalCryptoKeyId:
-          externalCryptoKeyId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(externalCryptoKeyId),
+      keyMaterial: keyMaterial == null && nullToAbsent
+          ? const Value.absent()
+          : Value(keyMaterial),
+      externalCryptoKeyId: externalCryptoKeyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(externalCryptoKeyId),
     );
   }
 
@@ -3142,27 +3101,27 @@ class CloudAuthCryptoKeysData extends DataClass
     keyPurpose: keyPurpose ?? this.keyPurpose,
     keyAlgorithm: keyAlgorithm ?? this.keyAlgorithm,
     keyMaterial: keyMaterial.present ? keyMaterial.value : this.keyMaterial,
-    externalCryptoKeyId:
-        externalCryptoKeyId.present
-            ? externalCryptoKeyId.value
-            : this.externalCryptoKeyId,
+    externalCryptoKeyId: externalCryptoKeyId.present
+        ? externalCryptoKeyId.value
+        : this.externalCryptoKeyId,
   );
   CloudAuthCryptoKeysData copyWithCompanion(CloudAuthCryptoKeysCompanion data) {
     return CloudAuthCryptoKeysData(
-      cryptoKeyId:
-          data.cryptoKeyId.present ? data.cryptoKeyId.value : this.cryptoKeyId,
-      keyPurpose:
-          data.keyPurpose.present ? data.keyPurpose.value : this.keyPurpose,
-      keyAlgorithm:
-          data.keyAlgorithm.present
-              ? data.keyAlgorithm.value
-              : this.keyAlgorithm,
-      keyMaterial:
-          data.keyMaterial.present ? data.keyMaterial.value : this.keyMaterial,
-      externalCryptoKeyId:
-          data.externalCryptoKeyId.present
-              ? data.externalCryptoKeyId.value
-              : this.externalCryptoKeyId,
+      cryptoKeyId: data.cryptoKeyId.present
+          ? data.cryptoKeyId.value
+          : this.cryptoKeyId,
+      keyPurpose: data.keyPurpose.present
+          ? data.keyPurpose.value
+          : this.keyPurpose,
+      keyAlgorithm: data.keyAlgorithm.present
+          ? data.keyAlgorithm.value
+          : this.keyAlgorithm,
+      keyMaterial: data.keyMaterial.present
+          ? data.keyMaterial.value
+          : this.keyMaterial,
+      externalCryptoKeyId: data.externalCryptoKeyId.present
+          ? data.externalCryptoKeyId.value
+          : this.externalCryptoKeyId,
     );
   }
 
@@ -3433,35 +3392,30 @@ class CloudAuthSessions extends Table
   CloudAuthSessionsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CloudAuthSessionsData(
-      rowid:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}rowid'],
-          )!,
-      sessionId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}session_id'],
-          )!,
-      cryptoKeyId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.blob,
-            data['${effectivePrefix}crypto_key_id'],
-          )!,
-      userId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}user_id'],
-          )!,
+      rowid: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rowid'],
+      )!,
+      sessionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}session_id'],
+      )!,
+      cryptoKeyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}crypto_key_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
       clientInfo: attachedDatabase.typeMapping.read(
         DriftSqlType.blob,
         data['${effectivePrefix}client_info'],
       ),
-      authenticationFactor:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.blob,
-            data['${effectivePrefix}authentication_factor'],
-          )!,
+      authenticationFactor: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}authentication_factor'],
+      )!,
       state: attachedDatabase.typeMapping.read(
         DriftSqlType.blob,
         data['${effectivePrefix}state'],
@@ -3474,20 +3428,18 @@ class CloudAuthSessions extends Table
         DriftSqlType.string,
         data['${effectivePrefix}external_session_id'],
       ),
-      createTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.double,
-            data['${effectivePrefix}create_time'],
-          )!,
+      createTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}create_time'],
+      )!,
       updateTime: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}update_time'],
       ),
-      expireTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.double,
-            data['${effectivePrefix}expire_time'],
-          )!,
+      expireTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}expire_time'],
+      )!,
     );
   }
 
@@ -3567,26 +3519,23 @@ class CloudAuthSessionsData extends DataClass
       sessionId: Value(sessionId),
       cryptoKeyId: Value(cryptoKeyId),
       userId: Value(userId),
-      clientInfo:
-          clientInfo == null && nullToAbsent
-              ? const Value.absent()
-              : Value(clientInfo),
+      clientInfo: clientInfo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(clientInfo),
       authenticationFactor: Value(authenticationFactor),
-      state:
-          state == null && nullToAbsent ? const Value.absent() : Value(state),
-      ipAddress:
-          ipAddress == null && nullToAbsent
-              ? const Value.absent()
-              : Value(ipAddress),
-      externalSessionId:
-          externalSessionId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(externalSessionId),
+      state: state == null && nullToAbsent
+          ? const Value.absent()
+          : Value(state),
+      ipAddress: ipAddress == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ipAddress),
+      externalSessionId: externalSessionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(externalSessionId),
       createTime: Value(createTime),
-      updateTime:
-          updateTime == null && nullToAbsent
-              ? const Value.absent()
-              : Value(updateTime),
+      updateTime: updateTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updateTime),
       expireTime: Value(expireTime),
     );
   }
@@ -3658,10 +3607,9 @@ class CloudAuthSessionsData extends DataClass
     authenticationFactor: authenticationFactor ?? this.authenticationFactor,
     state: state.present ? state.value : this.state,
     ipAddress: ipAddress.present ? ipAddress.value : this.ipAddress,
-    externalSessionId:
-        externalSessionId.present
-            ? externalSessionId.value
-            : this.externalSessionId,
+    externalSessionId: externalSessionId.present
+        ? externalSessionId.value
+        : this.externalSessionId,
     createTime: createTime ?? this.createTime,
     updateTime: updateTime.present ? updateTime.value : this.updateTime,
     expireTime: expireTime ?? this.expireTime,
@@ -3670,27 +3618,30 @@ class CloudAuthSessionsData extends DataClass
     return CloudAuthSessionsData(
       rowid: data.rowid.present ? data.rowid.value : this.rowid,
       sessionId: data.sessionId.present ? data.sessionId.value : this.sessionId,
-      cryptoKeyId:
-          data.cryptoKeyId.present ? data.cryptoKeyId.value : this.cryptoKeyId,
+      cryptoKeyId: data.cryptoKeyId.present
+          ? data.cryptoKeyId.value
+          : this.cryptoKeyId,
       userId: data.userId.present ? data.userId.value : this.userId,
-      clientInfo:
-          data.clientInfo.present ? data.clientInfo.value : this.clientInfo,
-      authenticationFactor:
-          data.authenticationFactor.present
-              ? data.authenticationFactor.value
-              : this.authenticationFactor,
+      clientInfo: data.clientInfo.present
+          ? data.clientInfo.value
+          : this.clientInfo,
+      authenticationFactor: data.authenticationFactor.present
+          ? data.authenticationFactor.value
+          : this.authenticationFactor,
       state: data.state.present ? data.state.value : this.state,
       ipAddress: data.ipAddress.present ? data.ipAddress.value : this.ipAddress,
-      externalSessionId:
-          data.externalSessionId.present
-              ? data.externalSessionId.value
-              : this.externalSessionId,
-      createTime:
-          data.createTime.present ? data.createTime.value : this.createTime,
-      updateTime:
-          data.updateTime.present ? data.updateTime.value : this.updateTime,
-      expireTime:
-          data.expireTime.present ? data.expireTime.value : this.expireTime,
+      externalSessionId: data.externalSessionId.present
+          ? data.externalSessionId.value
+          : this.externalSessionId,
+      createTime: data.createTime.present
+          ? data.createTime.value
+          : this.createTime,
+      updateTime: data.updateTime.present
+          ? data.updateTime.value
+          : this.updateTime,
+      expireTime: data.expireTime.present
+          ? data.expireTime.value
+          : this.expireTime,
     );
   }
 
@@ -3989,31 +3940,26 @@ class CloudAuthOtpCodes extends Table
   CloudAuthOtpCodesData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CloudAuthOtpCodesData(
-      rowid:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}rowid'],
-          )!,
-      sessionId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}session_id'],
-          )!,
-      resendAttempt:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}resend_attempt'],
-          )!,
-      verifyAttempt:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}verify_attempt'],
-          )!,
-      updateTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.double,
-            data['${effectivePrefix}update_time'],
-          )!,
+      rowid: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rowid'],
+      )!,
+      sessionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}session_id'],
+      )!,
+      resendAttempt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}resend_attempt'],
+      )!,
+      verifyAttempt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}verify_attempt'],
+      )!,
+      updateTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}update_time'],
+      )!,
     );
   }
 
@@ -4107,16 +4053,15 @@ class CloudAuthOtpCodesData extends DataClass
     return CloudAuthOtpCodesData(
       rowid: data.rowid.present ? data.rowid.value : this.rowid,
       sessionId: data.sessionId.present ? data.sessionId.value : this.sessionId,
-      resendAttempt:
-          data.resendAttempt.present
-              ? data.resendAttempt.value
-              : this.resendAttempt,
-      verifyAttempt:
-          data.verifyAttempt.present
-              ? data.verifyAttempt.value
-              : this.verifyAttempt,
-      updateTime:
-          data.updateTime.present ? data.updateTime.value : this.updateTime,
+      resendAttempt: data.resendAttempt.present
+          ? data.resendAttempt.value
+          : this.resendAttempt,
+      verifyAttempt: data.verifyAttempt.present
+          ? data.verifyAttempt.value
+          : this.verifyAttempt,
+      updateTime: data.updateTime.present
+          ? data.updateTime.value
+          : this.updateTime,
     );
   }
 
@@ -4354,16 +4299,14 @@ class CloudAuthCorks extends Table
   CloudAuthCorksData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CloudAuthCorksData(
-      corkId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.blob,
-            data['${effectivePrefix}cork_id'],
-          )!,
-      cryptoKeyId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.blob,
-            data['${effectivePrefix}crypto_key_id'],
-          )!,
+      corkId: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}cork_id'],
+      )!,
+      cryptoKeyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}crypto_key_id'],
+      )!,
       bearerType: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}bearer_type'],
@@ -4388,11 +4331,10 @@ class CloudAuthCorks extends Table
         DriftSqlType.string,
         data['${effectivePrefix}issuer_id'],
       ),
-      createTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.double,
-            data['${effectivePrefix}create_time'],
-          )!,
+      createTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}create_time'],
+      )!,
       expireTime: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}expire_time'],
@@ -4483,39 +4425,31 @@ class CloudAuthCorksData extends DataClass
     return CloudAuthCorksCompanion(
       corkId: Value(corkId),
       cryptoKeyId: Value(cryptoKeyId),
-      bearerType:
-          bearerType == null && nullToAbsent
-              ? const Value.absent()
-              : Value(bearerType),
-      bearerId:
-          bearerId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(bearerId),
-      audienceType:
-          audienceType == null && nullToAbsent
-              ? const Value.absent()
-              : Value(audienceType),
-      audienceId:
-          audienceId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(audienceId),
-      issuerType:
-          issuerType == null && nullToAbsent
-              ? const Value.absent()
-              : Value(issuerType),
-      issuerId:
-          issuerId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(issuerId),
+      bearerType: bearerType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(bearerType),
+      bearerId: bearerId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(bearerId),
+      audienceType: audienceType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(audienceType),
+      audienceId: audienceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(audienceId),
+      issuerType: issuerType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(issuerType),
+      issuerId: issuerId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(issuerId),
       createTime: Value(createTime),
-      expireTime:
-          expireTime == null && nullToAbsent
-              ? const Value.absent()
-              : Value(expireTime),
-      lastUseTime:
-          lastUseTime == null && nullToAbsent
-              ? const Value.absent()
-              : Value(lastUseTime),
+      expireTime: expireTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(expireTime),
+      lastUseTime: lastUseTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastUseTime),
     );
   }
 
@@ -4584,26 +4518,32 @@ class CloudAuthCorksData extends DataClass
   CloudAuthCorksData copyWithCompanion(CloudAuthCorksCompanion data) {
     return CloudAuthCorksData(
       corkId: data.corkId.present ? data.corkId.value : this.corkId,
-      cryptoKeyId:
-          data.cryptoKeyId.present ? data.cryptoKeyId.value : this.cryptoKeyId,
-      bearerType:
-          data.bearerType.present ? data.bearerType.value : this.bearerType,
+      cryptoKeyId: data.cryptoKeyId.present
+          ? data.cryptoKeyId.value
+          : this.cryptoKeyId,
+      bearerType: data.bearerType.present
+          ? data.bearerType.value
+          : this.bearerType,
       bearerId: data.bearerId.present ? data.bearerId.value : this.bearerId,
-      audienceType:
-          data.audienceType.present
-              ? data.audienceType.value
-              : this.audienceType,
-      audienceId:
-          data.audienceId.present ? data.audienceId.value : this.audienceId,
-      issuerType:
-          data.issuerType.present ? data.issuerType.value : this.issuerType,
+      audienceType: data.audienceType.present
+          ? data.audienceType.value
+          : this.audienceType,
+      audienceId: data.audienceId.present
+          ? data.audienceId.value
+          : this.audienceId,
+      issuerType: data.issuerType.present
+          ? data.issuerType.value
+          : this.issuerType,
       issuerId: data.issuerId.present ? data.issuerId.value : this.issuerId,
-      createTime:
-          data.createTime.present ? data.createTime.value : this.createTime,
-      expireTime:
-          data.expireTime.present ? data.expireTime.value : this.expireTime,
-      lastUseTime:
-          data.lastUseTime.present ? data.lastUseTime.value : this.lastUseTime,
+      createTime: data.createTime.present
+          ? data.createTime.value
+          : this.createTime,
+      expireTime: data.expireTime.present
+          ? data.expireTime.value
+          : this.expireTime,
+      lastUseTime: data.lastUseTime.present
+          ? data.lastUseTime.value
+          : this.lastUseTime,
     );
   }
 
@@ -4877,26 +4817,22 @@ class CedarPolicies extends Table
   CedarPoliciesData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CedarPoliciesData(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
-      policyId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}policy_id'],
-          )!,
-      policy:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}policy'],
-          )!,
-      enforcementLevel:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}enforcement_level'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      policyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}policy_id'],
+      )!,
+      policy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}policy'],
+      )!,
+      enforcementLevel: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}enforcement_level'],
+      )!,
     );
   }
 
@@ -4983,10 +4919,9 @@ class CedarPoliciesData extends DataClass
       id: data.id.present ? data.id.value : this.id,
       policyId: data.policyId.present ? data.policyId.value : this.policyId,
       policy: data.policy.present ? data.policy.value : this.policy,
-      enforcementLevel:
-          data.enforcementLevel.present
-              ? data.enforcementLevel.value
-              : this.enforcementLevel,
+      enforcementLevel: data.enforcementLevel.present
+          ? data.enforcementLevel.value
+          : this.enforcementLevel,
     );
   }
 
@@ -5147,21 +5082,18 @@ class CedarPolicyTemplates extends Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CedarPolicyTemplatesData(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
-      templateId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}template_id'],
-          )!,
-      template:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}template'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      templateId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_id'],
+      )!,
+      template: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template'],
+      )!,
     );
   }
 
@@ -5240,8 +5172,9 @@ class CedarPolicyTemplatesData extends DataClass
   ) {
     return CedarPolicyTemplatesData(
       id: data.id.present ? data.id.value : this.id,
-      templateId:
-          data.templateId.present ? data.templateId.value : this.templateId,
+      templateId: data.templateId.present
+          ? data.templateId.value
+          : this.templateId,
       template: data.template.present ? data.template.value : this.template,
     );
   }
@@ -5441,21 +5374,18 @@ class CedarPolicyTemplateLinks extends Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CedarPolicyTemplateLinksData(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
-      policyId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}policy_id'],
-          )!,
-      templateId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}template_id'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      policyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}policy_id'],
+      )!,
+      templateId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_id'],
+      )!,
       principalType: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}principal_type'],
@@ -5472,11 +5402,10 @@ class CedarPolicyTemplateLinks extends Table
         DriftSqlType.string,
         data['${effectivePrefix}resource_id'],
       ),
-      enforcementLevel:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}enforcement_level'],
-          )!,
+      enforcementLevel: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}enforcement_level'],
+      )!,
     );
   }
 
@@ -5544,22 +5473,18 @@ class CedarPolicyTemplateLinksData extends DataClass
       id: Value(id),
       policyId: Value(policyId),
       templateId: Value(templateId),
-      principalType:
-          principalType == null && nullToAbsent
-              ? const Value.absent()
-              : Value(principalType),
-      principalId:
-          principalId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(principalId),
-      resourceType:
-          resourceType == null && nullToAbsent
-              ? const Value.absent()
-              : Value(resourceType),
-      resourceId:
-          resourceId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(resourceId),
+      principalType: principalType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(principalType),
+      principalId: principalId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(principalId),
+      resourceType: resourceType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resourceType),
+      resourceId: resourceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resourceId),
       enforcementLevel: Value(enforcementLevel),
     );
   }
@@ -5608,8 +5533,9 @@ class CedarPolicyTemplateLinksData extends DataClass
     id: id ?? this.id,
     policyId: policyId ?? this.policyId,
     templateId: templateId ?? this.templateId,
-    principalType:
-        principalType.present ? principalType.value : this.principalType,
+    principalType: principalType.present
+        ? principalType.value
+        : this.principalType,
     principalId: principalId.present ? principalId.value : this.principalId,
     resourceType: resourceType.present ? resourceType.value : this.resourceType,
     resourceId: resourceId.present ? resourceId.value : this.resourceId,
@@ -5621,24 +5547,24 @@ class CedarPolicyTemplateLinksData extends DataClass
     return CedarPolicyTemplateLinksData(
       id: data.id.present ? data.id.value : this.id,
       policyId: data.policyId.present ? data.policyId.value : this.policyId,
-      templateId:
-          data.templateId.present ? data.templateId.value : this.templateId,
-      principalType:
-          data.principalType.present
-              ? data.principalType.value
-              : this.principalType,
-      principalId:
-          data.principalId.present ? data.principalId.value : this.principalId,
-      resourceType:
-          data.resourceType.present
-              ? data.resourceType.value
-              : this.resourceType,
-      resourceId:
-          data.resourceId.present ? data.resourceId.value : this.resourceId,
-      enforcementLevel:
-          data.enforcementLevel.present
-              ? data.enforcementLevel.value
-              : this.enforcementLevel,
+      templateId: data.templateId.present
+          ? data.templateId.value
+          : this.templateId,
+      principalType: data.principalType.present
+          ? data.principalType.value
+          : this.principalType,
+      principalId: data.principalId.present
+          ? data.principalId.value
+          : this.principalId,
+      resourceType: data.resourceType.present
+          ? data.resourceType.value
+          : this.resourceType,
+      resourceId: data.resourceId.present
+          ? data.resourceId.value
+          : this.resourceId,
+      enforcementLevel: data.enforcementLevel.present
+          ? data.enforcementLevel.value
+          : this.enforcementLevel,
     );
   }
 
@@ -5960,16 +5886,14 @@ class CedarAuthorizationLogs extends Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CedarAuthorizationLogsData(
-      rowid:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}rowid'],
-          )!,
-      createTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}create_time'],
-          )!,
+      rowid: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rowid'],
+      )!,
+      createTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}create_time'],
+      )!,
       expireTime: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}expire_time'],
@@ -5998,26 +5922,22 @@ class CedarAuthorizationLogs extends Table
         DriftSqlType.string,
         data['${effectivePrefix}resource_id'],
       ),
-      contextJson:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}context_json'],
-          )!,
-      decision:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.bool,
-            data['${effectivePrefix}decision'],
-          )!,
-      reasonsJson:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}reasons_json'],
-          )!,
-      errorsJson:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}errors_json'],
-          )!,
+      contextJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}context_json'],
+      )!,
+      decision: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}decision'],
+      )!,
+      reasonsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reasons_json'],
+      )!,
+      errorsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}errors_json'],
+      )!,
     );
   }
 
@@ -6097,34 +6017,27 @@ class CedarAuthorizationLogsData extends DataClass
     return CedarAuthorizationLogsCompanion(
       rowid: Value(rowid),
       createTime: Value(createTime),
-      expireTime:
-          expireTime == null && nullToAbsent
-              ? const Value.absent()
-              : Value(expireTime),
-      principalType:
-          principalType == null && nullToAbsent
-              ? const Value.absent()
-              : Value(principalType),
-      principalId:
-          principalId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(principalId),
-      actionType:
-          actionType == null && nullToAbsent
-              ? const Value.absent()
-              : Value(actionType),
-      actionId:
-          actionId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(actionId),
-      resourceType:
-          resourceType == null && nullToAbsent
-              ? const Value.absent()
-              : Value(resourceType),
-      resourceId:
-          resourceId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(resourceId),
+      expireTime: expireTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(expireTime),
+      principalType: principalType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(principalType),
+      principalId: principalId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(principalId),
+      actionType: actionType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(actionType),
+      actionId: actionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(actionId),
+      resourceType: resourceType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resourceType),
+      resourceId: resourceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resourceId),
       contextJson: Value(contextJson),
       decision: Value(decision),
       reasonsJson: Value(reasonsJson),
@@ -6191,8 +6104,9 @@ class CedarAuthorizationLogsData extends DataClass
     rowid: rowid ?? this.rowid,
     createTime: createTime ?? this.createTime,
     expireTime: expireTime.present ? expireTime.value : this.expireTime,
-    principalType:
-        principalType.present ? principalType.value : this.principalType,
+    principalType: principalType.present
+        ? principalType.value
+        : this.principalType,
     principalId: principalId.present ? principalId.value : this.principalId,
     actionType: actionType.present ? actionType.value : this.actionType,
     actionId: actionId.present ? actionId.value : this.actionId,
@@ -6208,32 +6122,38 @@ class CedarAuthorizationLogsData extends DataClass
   ) {
     return CedarAuthorizationLogsData(
       rowid: data.rowid.present ? data.rowid.value : this.rowid,
-      createTime:
-          data.createTime.present ? data.createTime.value : this.createTime,
-      expireTime:
-          data.expireTime.present ? data.expireTime.value : this.expireTime,
-      principalType:
-          data.principalType.present
-              ? data.principalType.value
-              : this.principalType,
-      principalId:
-          data.principalId.present ? data.principalId.value : this.principalId,
-      actionType:
-          data.actionType.present ? data.actionType.value : this.actionType,
+      createTime: data.createTime.present
+          ? data.createTime.value
+          : this.createTime,
+      expireTime: data.expireTime.present
+          ? data.expireTime.value
+          : this.expireTime,
+      principalType: data.principalType.present
+          ? data.principalType.value
+          : this.principalType,
+      principalId: data.principalId.present
+          ? data.principalId.value
+          : this.principalId,
+      actionType: data.actionType.present
+          ? data.actionType.value
+          : this.actionType,
       actionId: data.actionId.present ? data.actionId.value : this.actionId,
-      resourceType:
-          data.resourceType.present
-              ? data.resourceType.value
-              : this.resourceType,
-      resourceId:
-          data.resourceId.present ? data.resourceId.value : this.resourceId,
-      contextJson:
-          data.contextJson.present ? data.contextJson.value : this.contextJson,
+      resourceType: data.resourceType.present
+          ? data.resourceType.value
+          : this.resourceType,
+      resourceId: data.resourceId.present
+          ? data.resourceId.value
+          : this.resourceId,
+      contextJson: data.contextJson.present
+          ? data.contextJson.value
+          : this.contextJson,
       decision: data.decision.present ? data.decision.value : this.decision,
-      reasonsJson:
-          data.reasonsJson.present ? data.reasonsJson.value : this.reasonsJson,
-      errorsJson:
-          data.errorsJson.present ? data.errorsJson.value : this.errorsJson,
+      reasonsJson: data.reasonsJson.present
+          ? data.reasonsJson.value
+          : this.reasonsJson,
+      errorsJson: data.errorsJson.present
+          ? data.errorsJson.value
+          : this.errorsJson,
     );
   }
 
@@ -6552,41 +6472,34 @@ class UserMemberships extends Table
   UserMembershipsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return UserMembershipsData(
-      membershipId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}membership_id'],
-          )!,
-      userId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}user_id'],
-          )!,
-      parentType:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}parent_type'],
-          )!,
-      parentId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}parent_id'],
-          )!,
-      role:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}role'],
-          )!,
-      createTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}create_time'],
-          )!,
-      updateTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}update_time'],
-          )!,
+      membershipId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}membership_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      parentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_type'],
+      )!,
+      parentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_id'],
+      )!,
+      role: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}role'],
+      )!,
+      createTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}create_time'],
+      )!,
+      updateTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}update_time'],
+      )!,
     );
   }
 
@@ -6695,19 +6608,21 @@ class UserMembershipsData extends DataClass
   );
   UserMembershipsData copyWithCompanion(UserMembershipsCompanion data) {
     return UserMembershipsData(
-      membershipId:
-          data.membershipId.present
-              ? data.membershipId.value
-              : this.membershipId,
+      membershipId: data.membershipId.present
+          ? data.membershipId.value
+          : this.membershipId,
       userId: data.userId.present ? data.userId.value : this.userId,
-      parentType:
-          data.parentType.present ? data.parentType.value : this.parentType,
+      parentType: data.parentType.present
+          ? data.parentType.value
+          : this.parentType,
       parentId: data.parentId.present ? data.parentId.value : this.parentId,
       role: data.role.present ? data.role.value : this.role,
-      createTime:
-          data.createTime.present ? data.createTime.value : this.createTime,
-      updateTime:
-          data.updateTime.present ? data.updateTime.value : this.updateTime,
+      createTime: data.createTime.present
+          ? data.createTime.value
+          : this.createTime,
+      updateTime: data.updateTime.present
+          ? data.updateTime.value
+          : this.updateTime,
     );
   }
 
@@ -7028,11 +6943,10 @@ class Organizations extends Table
   OrganizationsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return OrganizationsData(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
       parentType: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}parent_type'],
@@ -7041,31 +6955,26 @@ class Organizations extends Table
         DriftSqlType.string,
         data['${effectivePrefix}parent_id'],
       ),
-      organizationId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}organization_id'],
-          )!,
-      state:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}state'],
-          )!,
-      displayName:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}display_name'],
-          )!,
-      createTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}create_time'],
-          )!,
-      updateTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}update_time'],
-          )!,
+      organizationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}organization_id'],
+      )!,
+      state: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}state'],
+      )!,
+      displayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
+      )!,
+      createTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}create_time'],
+      )!,
+      updateTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}update_time'],
+      )!,
       deleteTime: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}delete_time'],
@@ -7082,16 +6991,14 @@ class Organizations extends Table
         DriftSqlType.string,
         data['${effectivePrefix}primary_region'],
       ),
-      reconciling:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.bool,
-            data['${effectivePrefix}reconciling'],
-          )!,
-      etag:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}etag'],
-          )!,
+      reconciling: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}reconciling'],
+      )!,
+      etag: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}etag'],
+      )!,
     );
   }
 
@@ -7174,35 +7081,29 @@ class OrganizationsData extends DataClass
   OrganizationsCompanion toCompanion(bool nullToAbsent) {
     return OrganizationsCompanion(
       id: Value(id),
-      parentType:
-          parentType == null && nullToAbsent
-              ? const Value.absent()
-              : Value(parentType),
-      parentId:
-          parentId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(parentId),
+      parentType: parentType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parentType),
+      parentId: parentId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parentId),
       organizationId: Value(organizationId),
       state: Value(state),
       displayName: Value(displayName),
       createTime: Value(createTime),
       updateTime: Value(updateTime),
-      deleteTime:
-          deleteTime == null && nullToAbsent
-              ? const Value.absent()
-              : Value(deleteTime),
-      purgeTime:
-          purgeTime == null && nullToAbsent
-              ? const Value.absent()
-              : Value(purgeTime),
-      annotations:
-          annotations == null && nullToAbsent
-              ? const Value.absent()
-              : Value(annotations),
-      primaryRegion:
-          primaryRegion == null && nullToAbsent
-              ? const Value.absent()
-              : Value(primaryRegion),
+      deleteTime: deleteTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deleteTime),
+      purgeTime: purgeTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(purgeTime),
+      annotations: annotations == null && nullToAbsent
+          ? const Value.absent()
+          : Value(annotations),
+      primaryRegion: primaryRegion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(primaryRegion),
       reconciling: Value(reconciling),
     );
   }
@@ -7277,8 +7178,9 @@ class OrganizationsData extends DataClass
     deleteTime: deleteTime.present ? deleteTime.value : this.deleteTime,
     purgeTime: purgeTime.present ? purgeTime.value : this.purgeTime,
     annotations: annotations.present ? annotations.value : this.annotations,
-    primaryRegion:
-        primaryRegion.present ? primaryRegion.value : this.primaryRegion,
+    primaryRegion: primaryRegion.present
+        ? primaryRegion.value
+        : this.primaryRegion,
     reconciling: reconciling ?? this.reconciling,
     etag: etag ?? this.etag,
   );
@@ -7687,45 +7589,38 @@ class Projects extends Table with TableInfo<Projects, ProjectsData> {
   ProjectsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ProjectsData(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
-      parentType:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}parent_type'],
-          )!,
-      parentId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}parent_id'],
-          )!,
-      projectId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}project_id'],
-          )!,
-      state:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}state'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      parentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_type'],
+      )!,
+      parentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_id'],
+      )!,
+      projectId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}project_id'],
+      )!,
+      state: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}state'],
+      )!,
       displayName: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}display_name'],
       ),
-      createTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}create_time'],
-          )!,
-      updateTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}update_time'],
-          )!,
+      createTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}create_time'],
+      )!,
+      updateTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}update_time'],
+      )!,
       deleteTime: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}delete_time'],
@@ -7738,21 +7633,18 @@ class Projects extends Table with TableInfo<Projects, ProjectsData> {
         DriftSqlType.string,
         data['${effectivePrefix}annotations'],
       ),
-      regions:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}regions'],
-          )!,
-      reconciling:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.bool,
-            data['${effectivePrefix}reconciling'],
-          )!,
-      etag:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}etag'],
-          )!,
+      regions: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}regions'],
+      )!,
+      reconciling: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}reconciling'],
+      )!,
+      etag: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}etag'],
+      )!,
     );
   }
 
@@ -7837,24 +7729,20 @@ class ProjectsData extends DataClass implements Insertable<ProjectsData> {
       parentId: Value(parentId),
       projectId: Value(projectId),
       state: Value(state),
-      displayName:
-          displayName == null && nullToAbsent
-              ? const Value.absent()
-              : Value(displayName),
+      displayName: displayName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayName),
       createTime: Value(createTime),
       updateTime: Value(updateTime),
-      deleteTime:
-          deleteTime == null && nullToAbsent
-              ? const Value.absent()
-              : Value(deleteTime),
-      purgeTime:
-          purgeTime == null && nullToAbsent
-              ? const Value.absent()
-              : Value(purgeTime),
-      annotations:
-          annotations == null && nullToAbsent
-              ? const Value.absent()
-              : Value(annotations),
+      deleteTime: deleteTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deleteTime),
+      purgeTime: purgeTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(purgeTime),
+      annotations: annotations == null && nullToAbsent
+          ? const Value.absent()
+          : Value(annotations),
       regions: Value(regions),
       reconciling: Value(reconciling),
     );
@@ -8334,45 +8222,38 @@ class ProjectEnvironments extends Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ProjectEnvironmentsData(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
-      parentType:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}parent_type'],
-          )!,
-      parentId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}parent_id'],
-          )!,
-      projectEnvironmentId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}project_environment_id'],
-          )!,
-      state:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}state'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      parentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_type'],
+      )!,
+      parentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_id'],
+      )!,
+      projectEnvironmentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}project_environment_id'],
+      )!,
+      state: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}state'],
+      )!,
       displayName: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}display_name'],
       ),
-      createTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}create_time'],
-          )!,
-      updateTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}update_time'],
-          )!,
+      createTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}create_time'],
+      )!,
+      updateTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}update_time'],
+      )!,
       deleteTime: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}delete_time'],
@@ -8381,16 +8262,14 @@ class ProjectEnvironments extends Table
         DriftSqlType.string,
         data['${effectivePrefix}annotations'],
       ),
-      reconciling:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.bool,
-            data['${effectivePrefix}reconciling'],
-          )!,
-      etag:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}etag'],
-          )!,
+      reconciling: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}reconciling'],
+      )!,
+      etag: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}etag'],
+      )!,
     );
   }
 
@@ -8467,20 +8346,17 @@ class ProjectEnvironmentsData extends DataClass
       parentId: Value(parentId),
       projectEnvironmentId: Value(projectEnvironmentId),
       state: Value(state),
-      displayName:
-          displayName == null && nullToAbsent
-              ? const Value.absent()
-              : Value(displayName),
+      displayName: displayName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayName),
       createTime: Value(createTime),
       updateTime: Value(updateTime),
-      deleteTime:
-          deleteTime == null && nullToAbsent
-              ? const Value.absent()
-              : Value(deleteTime),
-      annotations:
-          annotations == null && nullToAbsent
-              ? const Value.absent()
-              : Value(annotations),
+      deleteTime: deleteTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deleteTime),
+      annotations: annotations == null && nullToAbsent
+          ? const Value.absent()
+          : Value(annotations),
     );
   }
 
@@ -8824,26 +8700,22 @@ class ProjectEnvironmentAsts extends Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ProjectEnvironmentAstsData(
-      projectEnvironmentId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}project_environment_id'],
-          )!,
-      ast:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.blob,
-            data['${effectivePrefix}ast'],
-          )!,
-      version:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}version'],
-          )!,
-      digest:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}digest'],
-          )!,
+      projectEnvironmentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}project_environment_id'],
+      )!,
+      ast: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}ast'],
+      )!,
+      version: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}version'],
+      )!,
+      digest: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}digest'],
+      )!,
     );
   }
 
@@ -9094,31 +8966,26 @@ class ProjectEnvironmentAssets extends Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ProjectEnvironmentAssetsData(
-      projectEnvironmentId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}project_environment_id'],
-          )!,
-      type:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}type'],
-          )!,
-      bucket:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}bucket'],
-          )!,
-      name:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}name'],
-          )!,
-      etag:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}etag'],
-          )!,
+      projectEnvironmentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}project_environment_id'],
+      )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
+      bucket: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}bucket'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      etag: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}etag'],
+      )!,
     );
   }
 
@@ -9217,10 +9084,9 @@ class ProjectEnvironmentAssetsData extends DataClass
     ProjectEnvironmentAssetsCompanion data,
   ) {
     return ProjectEnvironmentAssetsData(
-      projectEnvironmentId:
-          data.projectEnvironmentId.present
-              ? data.projectEnvironmentId.value
-              : this.projectEnvironmentId,
+      projectEnvironmentId: data.projectEnvironmentId.present
+          ? data.projectEnvironmentId.value
+          : this.projectEnvironmentId,
       type: data.type.present ? data.type.value : this.type,
       bucket: data.bucket.present ? data.bucket.value : this.bucket,
       name: data.name.present ? data.name.value : this.name,
@@ -9404,26 +9270,22 @@ class TursoDatabases extends Table
   TursoDatabasesData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return TursoDatabasesData(
-      databaseName:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}database_name'],
-          )!,
-      databaseGroup:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}database_group'],
-          )!,
-      databaseUrl:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}database_url'],
-          )!,
-      databaseToken:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}database_token'],
-          )!,
+      databaseName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}database_name'],
+      )!,
+      databaseGroup: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}database_group'],
+      )!,
+      databaseUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}database_url'],
+      )!,
+      databaseToken: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}database_token'],
+      )!,
     );
   }
 
@@ -9503,20 +9365,18 @@ class TursoDatabasesData extends DataClass
   );
   TursoDatabasesData copyWithCompanion(TursoDatabasesCompanion data) {
     return TursoDatabasesData(
-      databaseName:
-          data.databaseName.present
-              ? data.databaseName.value
-              : this.databaseName,
-      databaseGroup:
-          data.databaseGroup.present
-              ? data.databaseGroup.value
-              : this.databaseGroup,
-      databaseUrl:
-          data.databaseUrl.present ? data.databaseUrl.value : this.databaseUrl,
-      databaseToken:
-          data.databaseToken.present
-              ? data.databaseToken.value
-              : this.databaseToken,
+      databaseName: data.databaseName.present
+          ? data.databaseName.value
+          : this.databaseName,
+      databaseGroup: data.databaseGroup.present
+          ? data.databaseGroup.value
+          : this.databaseGroup,
+      databaseUrl: data.databaseUrl.present
+          ? data.databaseUrl.value
+          : this.databaseUrl,
+      databaseToken: data.databaseToken.present
+          ? data.databaseToken.value
+          : this.databaseToken,
     );
   }
 
@@ -9712,11 +9572,10 @@ class ProjectEnvironmentStates extends Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ProjectEnvironmentStatesData(
-      projectEnvironmentId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}project_environment_id'],
-          )!,
+      projectEnvironmentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}project_environment_id'],
+      )!,
       flyAppName: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}fly_app_name'],
@@ -9797,26 +9656,21 @@ class ProjectEnvironmentStatesData extends DataClass
   ProjectEnvironmentStatesCompanion toCompanion(bool nullToAbsent) {
     return ProjectEnvironmentStatesCompanion(
       projectEnvironmentId: Value(projectEnvironmentId),
-      flyAppName:
-          flyAppName == null && nullToAbsent
-              ? const Value.absent()
-              : Value(flyAppName),
-      flyVolumeName:
-          flyVolumeName == null && nullToAbsent
-              ? const Value.absent()
-              : Value(flyVolumeName),
-      flyMacaroonToken:
-          flyMacaroonToken == null && nullToAbsent
-              ? const Value.absent()
-              : Value(flyMacaroonToken),
-      domainName:
-          domainName == null && nullToAbsent
-              ? const Value.absent()
-              : Value(domainName),
-      tursoDatabaseName:
-          tursoDatabaseName == null && nullToAbsent
-              ? const Value.absent()
-              : Value(tursoDatabaseName),
+      flyAppName: flyAppName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(flyAppName),
+      flyVolumeName: flyVolumeName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(flyVolumeName),
+      flyMacaroonToken: flyMacaroonToken == null && nullToAbsent
+          ? const Value.absent()
+          : Value(flyMacaroonToken),
+      domainName: domainName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(domainName),
+      tursoDatabaseName: tursoDatabaseName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tursoDatabaseName),
     );
   }
 
@@ -9861,42 +9715,39 @@ class ProjectEnvironmentStatesData extends DataClass
   }) => ProjectEnvironmentStatesData(
     projectEnvironmentId: projectEnvironmentId ?? this.projectEnvironmentId,
     flyAppName: flyAppName.present ? flyAppName.value : this.flyAppName,
-    flyVolumeName:
-        flyVolumeName.present ? flyVolumeName.value : this.flyVolumeName,
-    flyMacaroonToken:
-        flyMacaroonToken.present
-            ? flyMacaroonToken.value
-            : this.flyMacaroonToken,
+    flyVolumeName: flyVolumeName.present
+        ? flyVolumeName.value
+        : this.flyVolumeName,
+    flyMacaroonToken: flyMacaroonToken.present
+        ? flyMacaroonToken.value
+        : this.flyMacaroonToken,
     domainName: domainName.present ? domainName.value : this.domainName,
-    tursoDatabaseName:
-        tursoDatabaseName.present
-            ? tursoDatabaseName.value
-            : this.tursoDatabaseName,
+    tursoDatabaseName: tursoDatabaseName.present
+        ? tursoDatabaseName.value
+        : this.tursoDatabaseName,
   );
   ProjectEnvironmentStatesData copyWithCompanion(
     ProjectEnvironmentStatesCompanion data,
   ) {
     return ProjectEnvironmentStatesData(
-      projectEnvironmentId:
-          data.projectEnvironmentId.present
-              ? data.projectEnvironmentId.value
-              : this.projectEnvironmentId,
-      flyAppName:
-          data.flyAppName.present ? data.flyAppName.value : this.flyAppName,
-      flyVolumeName:
-          data.flyVolumeName.present
-              ? data.flyVolumeName.value
-              : this.flyVolumeName,
-      flyMacaroonToken:
-          data.flyMacaroonToken.present
-              ? data.flyMacaroonToken.value
-              : this.flyMacaroonToken,
-      domainName:
-          data.domainName.present ? data.domainName.value : this.domainName,
-      tursoDatabaseName:
-          data.tursoDatabaseName.present
-              ? data.tursoDatabaseName.value
-              : this.tursoDatabaseName,
+      projectEnvironmentId: data.projectEnvironmentId.present
+          ? data.projectEnvironmentId.value
+          : this.projectEnvironmentId,
+      flyAppName: data.flyAppName.present
+          ? data.flyAppName.value
+          : this.flyAppName,
+      flyVolumeName: data.flyVolumeName.present
+          ? data.flyVolumeName.value
+          : this.flyVolumeName,
+      flyMacaroonToken: data.flyMacaroonToken.present
+          ? data.flyMacaroonToken.value
+          : this.flyMacaroonToken,
+      domainName: data.domainName.present
+          ? data.domainName.value
+          : this.domainName,
+      tursoDatabaseName: data.tursoDatabaseName.present
+          ? data.tursoDatabaseName.value
+          : this.tursoDatabaseName,
     );
   }
 
@@ -10159,11 +10010,10 @@ class Operations extends Table with TableInfo<Operations, OperationsData> {
   OperationsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return OperationsData(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
       metadata: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}metadata'],
@@ -10176,16 +10026,14 @@ class Operations extends Table with TableInfo<Operations, OperationsData> {
         DriftSqlType.string,
         data['${effectivePrefix}error'],
       ),
-      done:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.bool,
-            data['${effectivePrefix}done'],
-          )!,
-      createTime:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}create_time'],
-          )!,
+      done: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}done'],
+      )!,
+      createTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}create_time'],
+      )!,
       fullResourceName: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}full_resource_name'],
@@ -10278,37 +10126,31 @@ class OperationsData extends DataClass implements Insertable<OperationsData> {
   OperationsCompanion toCompanion(bool nullToAbsent) {
     return OperationsCompanion(
       id: Value(id),
-      metadata:
-          metadata == null && nullToAbsent
-              ? const Value.absent()
-              : Value(metadata),
-      response:
-          response == null && nullToAbsent
-              ? const Value.absent()
-              : Value(response),
-      error:
-          error == null && nullToAbsent ? const Value.absent() : Value(error),
+      metadata: metadata == null && nullToAbsent
+          ? const Value.absent()
+          : Value(metadata),
+      response: response == null && nullToAbsent
+          ? const Value.absent()
+          : Value(response),
+      error: error == null && nullToAbsent
+          ? const Value.absent()
+          : Value(error),
       createTime: Value(createTime),
-      fullResourceName:
-          fullResourceName == null && nullToAbsent
-              ? const Value.absent()
-              : Value(fullResourceName),
-      ownerType:
-          ownerType == null && nullToAbsent
-              ? const Value.absent()
-              : Value(ownerType),
-      ownerId:
-          ownerId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(ownerId),
-      resourceType:
-          resourceType == null && nullToAbsent
-              ? const Value.absent()
-              : Value(resourceType),
-      resourceId:
-          resourceId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(resourceId),
+      fullResourceName: fullResourceName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fullResourceName),
+      ownerType: ownerType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ownerType),
+      ownerId: ownerId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ownerId),
+      resourceType: resourceType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resourceType),
+      resourceId: resourceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resourceId),
     );
   }
 
@@ -10368,10 +10210,9 @@ class OperationsData extends DataClass implements Insertable<OperationsData> {
     error: error.present ? error.value : this.error,
     done: done ?? this.done,
     createTime: createTime ?? this.createTime,
-    fullResourceName:
-        fullResourceName.present
-            ? fullResourceName.value
-            : this.fullResourceName,
+    fullResourceName: fullResourceName.present
+        ? fullResourceName.value
+        : this.fullResourceName,
     ownerType: ownerType.present ? ownerType.value : this.ownerType,
     ownerId: ownerId.present ? ownerId.value : this.ownerId,
     resourceType: resourceType.present ? resourceType.value : this.resourceType,

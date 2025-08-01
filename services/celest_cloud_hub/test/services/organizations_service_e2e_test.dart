@@ -53,16 +53,15 @@ void main() {
 
     group('createOrganization', () {
       test('success', () async {
-        final state =
-            await service.organizations
-                .create(
-                  organizationId: 'test',
-                  organization: Organization(
-                    displayName: 'Test Organization',
-                    primaryRegion: pb.Region.NORTH_AMERICA,
-                  ),
-                )
-                .first;
+        final state = await service.organizations
+            .create(
+              organizationId: 'test',
+              organization: Organization(
+                displayName: 'Test Organization',
+                primaryRegion: pb.Region.NORTH_AMERICA,
+              ),
+            )
+            .first;
 
         await expectLater(
           state,

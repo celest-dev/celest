@@ -270,19 +270,12 @@ class $ProjectEnvironmentsTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () =>
-                  i1.$ProjectEnvironmentsFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => i1.$ProjectEnvironmentsOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer:
-              () => i1.$ProjectEnvironmentsAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
+          createFilteringComposer: () =>
+              i1.$ProjectEnvironmentsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$ProjectEnvironmentsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$ProjectEnvironmentsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<String> id = const i0.Value.absent(),
@@ -335,16 +328,9 @@ class $ProjectEnvironmentsTableManager
                 annotations: annotations,
                 rowid: rowid,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -497,18 +483,12 @@ class $ProjectEnvironmentAstsTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$ProjectEnvironmentAstsFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer:
-              () => i1.$ProjectEnvironmentAstsOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer:
-              () => i1.$ProjectEnvironmentAstsAnnotationComposer(
+          createFilteringComposer: () =>
+              i1.$ProjectEnvironmentAstsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () => i1
+              .$ProjectEnvironmentAstsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$ProjectEnvironmentAstsAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
@@ -532,16 +512,9 @@ class $ProjectEnvironmentAstsTableManager
                 ast: ast,
                 version: version,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -711,18 +684,15 @@ class $ProjectEnvironmentAssetsTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$ProjectEnvironmentAssetsFilterComposer(
+          createFilteringComposer: () => i1
+              .$ProjectEnvironmentAssetsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$ProjectEnvironmentAssetsOrderingComposer(
                 $db: db,
                 $table: table,
               ),
-          createOrderingComposer:
-              () => i1.$ProjectEnvironmentAssetsOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer:
-              () => i1.$ProjectEnvironmentAssetsAnnotationComposer(
+          createComputedFieldComposer: () =>
+              i1.$ProjectEnvironmentAssetsAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
@@ -754,16 +724,9 @@ class $ProjectEnvironmentAssetsTableManager
                 name: name,
                 etag: etag,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -958,18 +921,15 @@ class $ProjectEnvironmentStatesTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$ProjectEnvironmentStatesFilterComposer(
+          createFilteringComposer: () => i1
+              .$ProjectEnvironmentStatesFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$ProjectEnvironmentStatesOrderingComposer(
                 $db: db,
                 $table: table,
               ),
-          createOrderingComposer:
-              () => i1.$ProjectEnvironmentStatesOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer:
-              () => i1.$ProjectEnvironmentStatesAnnotationComposer(
+          createComputedFieldComposer: () =>
+              i1.$ProjectEnvironmentStatesAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
@@ -1005,16 +965,9 @@ class $ProjectEnvironmentStatesTableManager
                 domainName: domainName,
                 tursoDatabaseName: tursoDatabaseName,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -1175,13 +1128,12 @@ class $TursoDatabasesTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$TursoDatabasesFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => i1.$TursoDatabasesOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () =>
-                  i1.$TursoDatabasesAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              i1.$TursoDatabasesFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$TursoDatabasesOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$TursoDatabasesAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<String> databaseName = const i0.Value.absent(),
@@ -1210,16 +1162,9 @@ class $TursoDatabasesTableManager
                 databaseToken: databaseToken,
                 rowid: rowid,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -1538,45 +1483,38 @@ class ProjectEnvironments extends i0.Table
   i1.ProjectEnvironment map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.ProjectEnvironment(
-      id:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
-      parentType:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}parent_type'],
-          )!,
-      parentId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}parent_id'],
-          )!,
-      projectEnvironmentId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}project_environment_id'],
-          )!,
-      state:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}state'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      parentType: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}parent_type'],
+      )!,
+      parentId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}parent_id'],
+      )!,
+      projectEnvironmentId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}project_environment_id'],
+      )!,
+      state: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}state'],
+      )!,
       displayName: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
         data['${effectivePrefix}display_name'],
       ),
-      createTime:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.dateTime,
-            data['${effectivePrefix}create_time'],
-          )!,
-      updateTime:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.dateTime,
-            data['${effectivePrefix}update_time'],
-          )!,
+      createTime: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.dateTime,
+        data['${effectivePrefix}create_time'],
+      )!,
+      updateTime: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.dateTime,
+        data['${effectivePrefix}update_time'],
+      )!,
       deleteTime: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.dateTime,
         data['${effectivePrefix}delete_time'],
@@ -1585,16 +1523,14 @@ class ProjectEnvironments extends i0.Table
         i0.DriftSqlType.string,
         data['${effectivePrefix}annotations'],
       ),
-      reconciling:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.bool,
-            data['${effectivePrefix}reconciling'],
-          )!,
-      etag:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}etag'],
-          )!,
+      reconciling: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.bool,
+        data['${effectivePrefix}reconciling'],
+      )!,
+      etag: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}etag'],
+      )!,
     );
   }
 
@@ -1698,20 +1634,17 @@ class ProjectEnvironment extends i0.DataClass
       parentId: i0.Value(parentId),
       projectEnvironmentId: i0.Value(projectEnvironmentId),
       state: i0.Value(state),
-      displayName:
-          displayName == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(displayName),
+      displayName: displayName == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(displayName),
       createTime: i0.Value(createTime),
       updateTime: i0.Value(updateTime),
-      deleteTime:
-          deleteTime == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(deleteTime),
-      annotations:
-          annotations == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(annotations),
+      deleteTime: deleteTime == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(deleteTime),
+      annotations: annotations == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(annotations),
     );
   }
 
@@ -2132,26 +2065,22 @@ class ProjectEnvironmentAsts extends i0.Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.ProjectEnvironmentAst(
-      projectEnvironmentId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}project_environment_id'],
-          )!,
-      ast:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.blob,
-            data['${effectivePrefix}ast'],
-          )!,
-      version:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.int,
-            data['${effectivePrefix}version'],
-          )!,
-      digest:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}digest'],
-          )!,
+      projectEnvironmentId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}project_environment_id'],
+      )!,
+      ast: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.blob,
+        data['${effectivePrefix}ast'],
+      )!,
+      version: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.int,
+        data['${effectivePrefix}version'],
+      )!,
+      digest: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}digest'],
+      )!,
     );
   }
 
@@ -2478,31 +2407,26 @@ class ProjectEnvironmentAssets extends i0.Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.ProjectEnvironmentAsset(
-      projectEnvironmentId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}project_environment_id'],
-          )!,
-      type:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}type'],
-          )!,
-      bucket:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}bucket'],
-          )!,
-      name:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}name'],
-          )!,
-      etag:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}etag'],
-          )!,
+      projectEnvironmentId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}project_environment_id'],
+      )!,
+      type: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
+      bucket: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}bucket'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      etag: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}etag'],
+      )!,
     );
   }
 
@@ -2610,10 +2534,9 @@ class ProjectEnvironmentAsset extends i0.DataClass
     i1.ProjectEnvironmentAssetsCompanion data,
   ) {
     return ProjectEnvironmentAsset(
-      projectEnvironmentId:
-          data.projectEnvironmentId.present
-              ? data.projectEnvironmentId.value
-              : this.projectEnvironmentId,
+      projectEnvironmentId: data.projectEnvironmentId.present
+          ? data.projectEnvironmentId.value
+          : this.projectEnvironmentId,
       type: data.type.present ? data.type.value : this.type,
       bucket: data.bucket.present ? data.bucket.value : this.bucket,
       name: data.name.present ? data.name.value : this.name,
@@ -2899,11 +2822,10 @@ class ProjectEnvironmentStates extends i0.Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.ProjectEnvironmentState(
-      projectEnvironmentId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}project_environment_id'],
-          )!,
+      projectEnvironmentId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}project_environment_id'],
+      )!,
       flyAppName: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
         data['${effectivePrefix}fly_app_name'],
@@ -2995,26 +2917,21 @@ class ProjectEnvironmentState extends i0.DataClass
   i1.ProjectEnvironmentStatesCompanion toCompanion(bool nullToAbsent) {
     return i1.ProjectEnvironmentStatesCompanion(
       projectEnvironmentId: i0.Value(projectEnvironmentId),
-      flyAppName:
-          flyAppName == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(flyAppName),
-      flyVolumeName:
-          flyVolumeName == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(flyVolumeName),
-      flyMacaroonToken:
-          flyMacaroonToken == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(flyMacaroonToken),
-      domainName:
-          domainName == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(domainName),
-      tursoDatabaseName:
-          tursoDatabaseName == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(tursoDatabaseName),
+      flyAppName: flyAppName == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(flyAppName),
+      flyVolumeName: flyVolumeName == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(flyVolumeName),
+      flyMacaroonToken: flyMacaroonToken == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(flyMacaroonToken),
+      domainName: domainName == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(domainName),
+      tursoDatabaseName: tursoDatabaseName == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(tursoDatabaseName),
     );
   }
 
@@ -3061,42 +2978,39 @@ class ProjectEnvironmentState extends i0.DataClass
   }) => i1.ProjectEnvironmentState(
     projectEnvironmentId: projectEnvironmentId ?? this.projectEnvironmentId,
     flyAppName: flyAppName.present ? flyAppName.value : this.flyAppName,
-    flyVolumeName:
-        flyVolumeName.present ? flyVolumeName.value : this.flyVolumeName,
-    flyMacaroonToken:
-        flyMacaroonToken.present
-            ? flyMacaroonToken.value
-            : this.flyMacaroonToken,
+    flyVolumeName: flyVolumeName.present
+        ? flyVolumeName.value
+        : this.flyVolumeName,
+    flyMacaroonToken: flyMacaroonToken.present
+        ? flyMacaroonToken.value
+        : this.flyMacaroonToken,
     domainName: domainName.present ? domainName.value : this.domainName,
-    tursoDatabaseName:
-        tursoDatabaseName.present
-            ? tursoDatabaseName.value
-            : this.tursoDatabaseName,
+    tursoDatabaseName: tursoDatabaseName.present
+        ? tursoDatabaseName.value
+        : this.tursoDatabaseName,
   );
   ProjectEnvironmentState copyWithCompanion(
     i1.ProjectEnvironmentStatesCompanion data,
   ) {
     return ProjectEnvironmentState(
-      projectEnvironmentId:
-          data.projectEnvironmentId.present
-              ? data.projectEnvironmentId.value
-              : this.projectEnvironmentId,
-      flyAppName:
-          data.flyAppName.present ? data.flyAppName.value : this.flyAppName,
-      flyVolumeName:
-          data.flyVolumeName.present
-              ? data.flyVolumeName.value
-              : this.flyVolumeName,
-      flyMacaroonToken:
-          data.flyMacaroonToken.present
-              ? data.flyMacaroonToken.value
-              : this.flyMacaroonToken,
-      domainName:
-          data.domainName.present ? data.domainName.value : this.domainName,
-      tursoDatabaseName:
-          data.tursoDatabaseName.present
-              ? data.tursoDatabaseName.value
-              : this.tursoDatabaseName,
+      projectEnvironmentId: data.projectEnvironmentId.present
+          ? data.projectEnvironmentId.value
+          : this.projectEnvironmentId,
+      flyAppName: data.flyAppName.present
+          ? data.flyAppName.value
+          : this.flyAppName,
+      flyVolumeName: data.flyVolumeName.present
+          ? data.flyVolumeName.value
+          : this.flyVolumeName,
+      flyMacaroonToken: data.flyMacaroonToken.present
+          ? data.flyMacaroonToken.value
+          : this.flyMacaroonToken,
+      domainName: data.domainName.present
+          ? data.domainName.value
+          : this.domainName,
+      tursoDatabaseName: data.tursoDatabaseName.present
+          ? data.tursoDatabaseName.value
+          : this.tursoDatabaseName,
     );
   }
 
@@ -3358,26 +3272,22 @@ class TursoDatabases extends i0.Table
   i1.TursoDatabase map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.TursoDatabase(
-      databaseName:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}database_name'],
-          )!,
-      databaseGroup:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}database_group'],
-          )!,
-      databaseUrl:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}database_url'],
-          )!,
-      databaseToken:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}database_token'],
-          )!,
+      databaseName: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}database_name'],
+      )!,
+      databaseGroup: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}database_group'],
+      )!,
+      databaseUrl: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}database_url'],
+      )!,
+      databaseToken: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}database_token'],
+      )!,
     );
   }
 
@@ -3464,20 +3374,18 @@ class TursoDatabase extends i0.DataClass
   );
   TursoDatabase copyWithCompanion(i1.TursoDatabasesCompanion data) {
     return TursoDatabase(
-      databaseName:
-          data.databaseName.present
-              ? data.databaseName.value
-              : this.databaseName,
-      databaseGroup:
-          data.databaseGroup.present
-              ? data.databaseGroup.value
-              : this.databaseGroup,
-      databaseUrl:
-          data.databaseUrl.present ? data.databaseUrl.value : this.databaseUrl,
-      databaseToken:
-          data.databaseToken.present
-              ? data.databaseToken.value
-              : this.databaseToken,
+      databaseName: data.databaseName.present
+          ? data.databaseName.value
+          : this.databaseName,
+      databaseGroup: data.databaseGroup.present
+          ? data.databaseGroup.value
+          : this.databaseGroup,
+      databaseUrl: data.databaseUrl.present
+          ? data.databaseUrl.value
+          : this.databaseUrl,
+      databaseToken: data.databaseToken.present
+          ? data.databaseToken.value
+          : this.databaseToken,
     );
   }
 

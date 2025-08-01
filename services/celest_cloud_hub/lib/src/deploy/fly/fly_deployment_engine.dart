@@ -114,9 +114,11 @@ final class FlyDeploymentEngine {
     }
 
     if (updates != null) {
-      final result = await (db.projectEnvironmentStates.update()
-            ..where((tbl) => tbl.projectEnvironmentId.equals(environment.id)))
-          .writeReturning(updates);
+      final result =
+          await (db.projectEnvironmentStates.update()..where(
+                (tbl) => tbl.projectEnvironmentId.equals(environment.id),
+              ))
+              .writeReturning(updates);
       currentState = result.first;
     }
 

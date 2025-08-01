@@ -294,12 +294,12 @@ class $ProjectsTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$ProjectsFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => i1.$ProjectsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => i1.$ProjectsAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              i1.$ProjectsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$ProjectsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$ProjectsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<String> id = const i0.Value.absent(),
@@ -364,16 +364,9 @@ class $ProjectsTableManager
                 reconciling: reconciling,
                 rowid: rowid,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -717,45 +710,38 @@ class Projects extends i0.Table with i0.TableInfo<Projects, i1.Project> {
   i1.Project map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.Project(
-      id:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
-      parentType:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}parent_type'],
-          )!,
-      parentId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}parent_id'],
-          )!,
-      projectId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}project_id'],
-          )!,
-      state:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}state'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      parentType: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}parent_type'],
+      )!,
+      parentId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}parent_id'],
+      )!,
+      projectId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}project_id'],
+      )!,
+      state: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}state'],
+      )!,
       displayName: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
         data['${effectivePrefix}display_name'],
       ),
-      createTime:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.dateTime,
-            data['${effectivePrefix}create_time'],
-          )!,
-      updateTime:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.dateTime,
-            data['${effectivePrefix}update_time'],
-          )!,
+      createTime: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.dateTime,
+        data['${effectivePrefix}create_time'],
+      )!,
+      updateTime: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.dateTime,
+        data['${effectivePrefix}update_time'],
+      )!,
       deleteTime: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.dateTime,
         data['${effectivePrefix}delete_time'],
@@ -768,21 +754,18 @@ class Projects extends i0.Table with i0.TableInfo<Projects, i1.Project> {
         i0.DriftSqlType.string,
         data['${effectivePrefix}annotations'],
       ),
-      regions:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}regions'],
-          )!,
-      reconciling:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.bool,
-            data['${effectivePrefix}reconciling'],
-          )!,
-      etag:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}etag'],
-          )!,
+      regions: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}regions'],
+      )!,
+      reconciling: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.bool,
+        data['${effectivePrefix}reconciling'],
+      )!,
+      etag: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}etag'],
+      )!,
     );
   }
 
@@ -898,24 +881,20 @@ class Project extends i0.DataClass implements i0.Insertable<i1.Project> {
       parentId: i0.Value(parentId),
       projectId: i0.Value(projectId),
       state: i0.Value(state),
-      displayName:
-          displayName == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(displayName),
+      displayName: displayName == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(displayName),
       createTime: i0.Value(createTime),
       updateTime: i0.Value(updateTime),
-      deleteTime:
-          deleteTime == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(deleteTime),
-      purgeTime:
-          purgeTime == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(purgeTime),
-      annotations:
-          annotations == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(annotations),
+      deleteTime: deleteTime == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(deleteTime),
+      purgeTime: purgeTime == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(purgeTime),
+      annotations: annotations == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(annotations),
       regions: i0.Value(regions),
       reconciling: i0.Value(reconciling),
     );

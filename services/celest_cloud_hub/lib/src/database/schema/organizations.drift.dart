@@ -301,12 +301,12 @@ class $OrganizationsTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$OrganizationsFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => i1.$OrganizationsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => i1.$OrganizationsAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              i1.$OrganizationsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$OrganizationsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$OrganizationsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<String> id = const i0.Value.absent(),
@@ -371,16 +371,9 @@ class $OrganizationsTableManager
                 reconciling: reconciling,
                 rowid: rowid,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -727,11 +720,10 @@ class Organizations extends i0.Table
   i1.Organization map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.Organization(
-      id:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
       parentType: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
         data['${effectivePrefix}parent_type'],
@@ -740,31 +732,26 @@ class Organizations extends i0.Table
         i0.DriftSqlType.string,
         data['${effectivePrefix}parent_id'],
       ),
-      organizationId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}organization_id'],
-          )!,
-      state:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}state'],
-          )!,
-      displayName:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}display_name'],
-          )!,
-      createTime:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.dateTime,
-            data['${effectivePrefix}create_time'],
-          )!,
-      updateTime:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.dateTime,
-            data['${effectivePrefix}update_time'],
-          )!,
+      organizationId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}organization_id'],
+      )!,
+      state: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}state'],
+      )!,
+      displayName: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
+      )!,
+      createTime: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.dateTime,
+        data['${effectivePrefix}create_time'],
+      )!,
+      updateTime: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.dateTime,
+        data['${effectivePrefix}update_time'],
+      )!,
       deleteTime: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.dateTime,
         data['${effectivePrefix}delete_time'],
@@ -781,16 +768,14 @@ class Organizations extends i0.Table
         i0.DriftSqlType.string,
         data['${effectivePrefix}primary_region'],
       ),
-      reconciling:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.bool,
-            data['${effectivePrefix}reconciling'],
-          )!,
-      etag:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}etag'],
-          )!,
+      reconciling: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.bool,
+        data['${effectivePrefix}reconciling'],
+      )!,
+      etag: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}etag'],
+      )!,
     );
   }
 
@@ -894,35 +879,29 @@ class Organization extends i0.DataClass
   i1.OrganizationsCompanion toCompanion(bool nullToAbsent) {
     return i1.OrganizationsCompanion(
       id: i0.Value(id),
-      parentType:
-          parentType == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(parentType),
-      parentId:
-          parentId == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(parentId),
+      parentType: parentType == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(parentType),
+      parentId: parentId == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(parentId),
       organizationId: i0.Value(organizationId),
       state: i0.Value(state),
       displayName: i0.Value(displayName),
       createTime: i0.Value(createTime),
       updateTime: i0.Value(updateTime),
-      deleteTime:
-          deleteTime == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(deleteTime),
-      purgeTime:
-          purgeTime == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(purgeTime),
-      annotations:
-          annotations == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(annotations),
-      primaryRegion:
-          primaryRegion == null && nullToAbsent
-              ? const i0.Value.absent()
-              : i0.Value(primaryRegion),
+      deleteTime: deleteTime == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(deleteTime),
+      purgeTime: purgeTime == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(purgeTime),
+      annotations: annotations == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(annotations),
+      primaryRegion: primaryRegion == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(primaryRegion),
       reconciling: i0.Value(reconciling),
     );
   }
@@ -997,8 +976,9 @@ class Organization extends i0.DataClass
     deleteTime: deleteTime.present ? deleteTime.value : this.deleteTime,
     purgeTime: purgeTime.present ? purgeTime.value : this.purgeTime,
     annotations: annotations.present ? annotations.value : this.annotations,
-    primaryRegion:
-        primaryRegion.present ? primaryRegion.value : this.primaryRegion,
+    primaryRegion: primaryRegion.present
+        ? primaryRegion.value
+        : this.primaryRegion,
     reconciling: reconciling ?? this.reconciling,
     etag: etag ?? this.etag,
   );

@@ -26,7 +26,8 @@ const corePolicySetCedar = \'\'\'
       ..writeln(policyData.trim());
   }
   policyOutput.write('\'\'\';');
-  final output = '''
+  final output =
+      '''
 // This file is generated. To update, run `dart tool/generate_policy_set.dart`.
 library;
 

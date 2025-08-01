@@ -23,13 +23,12 @@ import 'package:drift/isolate.dart';
 import 'package:grpc/grpc.dart';
 import 'package:logging/logging.dart';
 
-typedef ProjectAsset =
-    ({
-      pb.ProjectAsset_Type type,
-      String filename,
-      Uint8List inline,
-      String? etag,
-    });
+typedef ProjectAsset = ({
+  pb.ProjectAsset_Type type,
+  String filename,
+  Uint8List inline,
+  String? etag,
+});
 
 /// Orchestrates the deployment of a project environment across Fly and Turso.
 final class DeploymentEngine {
@@ -203,14 +202,14 @@ final class DeploymentEngine {
   }
 
   Future<ProjectEnvironmentState> _deployProjectEnvironment() async {
-    final currentStateResult =
-        await db.projectEnvironmentsDrift
-            .getProjectEnvironmentState(projectEnvironmentId: environment.id)
-            .getSingle();
+    final currentStateResult = await db.projectEnvironmentsDrift
+        .getProjectEnvironmentState(projectEnvironmentId: environment.id)
+        .getSingle();
 
-    final (currentState, currentTursoDb) = switch (projectAst
-        .databases
-        .isNotEmpty) {
+    final (
+      currentState,
+      currentTursoDb,
+    ) = switch (projectAst.databases.isNotEmpty) {
       true => await _turso.deploy(
         currentStateResult.projectEnvironmentStates,
         currentStateResult.tursoDatabases,
