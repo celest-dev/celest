@@ -24,6 +24,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@fd55f4c5af5b953cc57a2be44cb082c8f6635e8e # 2.21.0
         with:
+          channel: beta # Remove when Dart 3.9 is stable
           cache: true
       - name: Get Packages
         working-directory: services/celest_cloud_hub
@@ -43,6 +44,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@fd55f4c5af5b953cc57a2be44cb082c8f6635e8e # 2.21.0
         with:
+          channel: beta # Remove when Dart 3.9 is stable
           cache: true
       - name: Setup Fly
         uses: superfly/flyctl-actions/setup-flyctl@63da3ecc5e2793b98a3f2519b3d75d4f4c11cec2 # master

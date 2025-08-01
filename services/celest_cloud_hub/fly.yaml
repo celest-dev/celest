@@ -30,9 +30,9 @@ http_service:
   checks:
     - method: GET
       path: /v1/healthz
-      grace_period: 10s
+      grace_period: 60s
       interval: 10s
-      timeout: 2s
+      timeout: 5s
 
   processes:
     - app

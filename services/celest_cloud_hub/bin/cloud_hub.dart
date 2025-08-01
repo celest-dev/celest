@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:async/async.dart';
 import 'package:cedar/cedar.dart';
@@ -15,6 +17,7 @@ import 'package:celest_cloud_hub/src/auth/auth_interceptor.dart';
 import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/database/db_functions.dart';
+import 'package:celest_cloud_hub/src/database/libsql_native.dart';
 import 'package:celest_cloud_hub/src/gateway/gateway.dart';
 import 'package:celest_cloud_hub/src/project.dart';
 import 'package:celest_cloud_hub/src/services/health_service.dart';
@@ -24,6 +27,7 @@ import 'package:celest_cloud_hub/src/services/project_environments_service.dart'
 import 'package:celest_cloud_hub/src/services/projects_service.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:drift/drift.dart' show driftRuntimeOptions;
+import 'package:ffi/ffi.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:logging/logging.dart';
 import 'package:sentry/sentry.dart';
@@ -66,11 +70,8 @@ Future<void> main() async {
   );
 
   final sentryDsn = context.sentryDsn;
-  if (sentryDsn == null) {
-    return _run();
-  }
-  return Sentry.init(
-    (options) {
+  if (sentryDsn != null) {
+    await Sentry.init((options) {
       options
         ..dsn = sentryDsn
         ..environment = kDebugMode ? 'dev' : 'prod'
@@ -91,21 +92,109 @@ Future<void> main() async {
             minEventLevel: const Level('EVENT', 1500),
           ),
         );
-    },
-    appRunner: _run,
-    // ignore: invalid_use_of_internal_member
-    callAppRunnerInRunZonedGuarded: false,
-  );
+    });
+  }
+
+  return _run();
 }
 
 Future<void> _run() async {
   context.logger.config('Configuring Cloud Hub database');
+
+  const tursoHost = env('CLOUD_HUB_DATABASE_HOST');
+  const tursoAuthToken = secret('CLOUD_HUB_DATABASE_TOKEN');
+
+  final tempDir = await Directory.systemTemp.createTemp('celest_cloud_hub_');
+  final localFile = File.fromUri(tempDir.uri.resolve('CloudHubDatabase.db'));
+  final localPath = localFile.uri.toFilePath();
+
+  void libsqlLogger(libsql_log_t log) {
+    String message;
+    try {
+      message = log.message.cast<Utf8>().toDartString().trim();
+    } on FormatException {
+      message = '';
+    }
+    if (message.isEmpty) {
+      return;
+    }
+    final level = switch (log.level) {
+      libsql_tracing_level_t.LIBSQL_TRACING_LEVEL_ERROR => Level.SEVERE,
+      libsql_tracing_level_t.LIBSQL_TRACING_LEVEL_WARN => Level.WARNING,
+      libsql_tracing_level_t.LIBSQL_TRACING_LEVEL_INFO => Level.INFO,
+      libsql_tracing_level_t.LIBSQL_TRACING_LEVEL_DEBUG => Level.FINE,
+      libsql_tracing_level_t.LIBSQL_TRACING_LEVEL_TRACE => Level.FINEST,
+    };
+    context.logger.log(level, 'libsql: $message');
+  }
+
+  final nativeReplica = using((arena) {
+    final tursoHostValue = context.get(tursoHost);
+    final tursoAuthTokenValue = context.get(tursoAuthToken);
+    if (tursoHostValue == null || tursoAuthTokenValue == null) {
+      return null;
+    }
+
+    final config = arena.allocate<libsql_config_t>(sizeOf<libsql_config_t>());
+    config.ref.logger =
+        NativeCallable<Void Function(libsql_log_t log)>.listener(
+          libsqlLogger,
+        ).nativeFunction;
+    final setupErr = libsql_setup(config.ref);
+    if (setupErr != nullptr) {
+      final errorMessage = libsql_error_message(setupErr);
+      throw StateError(
+        'Failed to set up libsql: '
+        '${errorMessage.cast<Utf8>().toDartString()}',
+      );
+    }
+
+    final desc = arena.allocate<libsql_database_desc_t>(
+      sizeOf<libsql_database_desc_t>(),
+    );
+    desc.ref
+      ..path = localPath.toNativeUtf8().cast()
+      ..url = tursoHostValue.toNativeUtf8().cast()
+      ..auth_token = tursoAuthTokenValue.toNativeUtf8().cast()
+      ..synced = true
+      ..sync_interval = 60 * 1000; // 60 seconds
+    final database = libsql_database_init(desc.ref);
+    if (database.err != nullptr) {
+      final errorMessage = libsql_error_message(database.err);
+      throw StateError(
+        'Failed to initialize libsql database: '
+        '${errorMessage.cast<Utf8>().toDartString()}',
+      );
+    }
+
+    return database;
+  });
+
+  if (nativeReplica != null) {
+    context.logger.config('Syncing native libsql replica at $localPath');
+
+    // Sync once.
+    await Isolate.run(() {
+      final syncResult = libsql_database_sync(nativeReplica);
+      if (syncResult.err != nullptr) {
+        final errorMessage = libsql_error_message(syncResult.err);
+        throw StateError(
+          'Failed to sync libsql database: '
+          '${errorMessage.cast<Utf8>().toDartString()}',
+        );
+      }
+    });
+
+    context.logger.config('Native libsql replica synced successfully');
+  }
+
   final celestDb = await CelestDatabase.create(
     Context.current,
     name: 'CloudHubDatabase',
     factory: CloudHubDatabase.new,
-    hostnameVariable: const env('CLOUD_HUB_DATABASE_HOST'),
-    tokenSecret: const secret('CLOUD_HUB_DATABASE_TOKEN'),
+    hostnameVariable: tursoHost,
+    tokenSecret: tursoAuthToken,
+    path: nativeReplica != null ? localPath : null,
   );
   final db = await celestDb.connect(
     setup: (db) => db.addHelperFunctions(),
@@ -193,16 +282,26 @@ Future<void> _run() async {
 
   print('Serving on http://0.0.0.0:${gateway.port}');
 
-  final signal =
-      await StreamGroup.merge([
-        ProcessSignal.sigint.watch(),
-        ProcessSignal.sigterm.watch(),
-      ]).first;
+  final signal = await StreamGroup.merge([
+    ProcessSignal.sigint.watch(),
+    ProcessSignal.sigterm.watch(),
+  ]).first;
   context.logger.fine('Got $signal');
 
-  await server.shutdown();
-  await gateway.close();
-  await db.close();
+  try {
+    await server.shutdown();
+    await gateway.close();
+    await db.close();
+  } finally {
+    if (nativeReplica != null) {
+      libsql_database_deinit(nativeReplica);
+    }
+    try {
+      await tempDir.delete(recursive: true);
+    } on Object catch (e) {
+      context.logger.warning('Failed to delete temp dir', e);
+    }
+  }
   context.logger.fine('Server stopped');
   exit(0);
 }
