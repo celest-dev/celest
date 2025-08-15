@@ -2,7 +2,7 @@
 ARG DEBIAN_VERSION=12
 
 ## Builds the custom Flutter engine
-FROM ubuntu:focal AS build-engine
+FROM ubuntu:jammy AS build-engine
 
 ARG TARGETPLATFORM
 
@@ -10,8 +10,18 @@ ARG TARGETPLATFORM
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 # Install download dependencies
-RUN apt-get update && apt-get install -y apt-utils
-RUN apt-get install -y curl git python3 python3-pip pkg-config ninja-build
+RUN apt-get update && apt-get install -y \
+    apt-utils \
+    software-properties-common
+RUN apt-add-repository ppa:deadsnakes/ppa
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    python3.10 \
+    pkg-config \
+    ninja-build
+RUN rm -f /usr/bin/python3 && ln -s /usr/bin/python3.10 /usr/bin/python3
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3
 
 # Install Chrome depot tools
 RUN git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
