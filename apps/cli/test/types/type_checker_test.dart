@@ -8,7 +8,6 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:build_test/build_test.dart';
 import 'package:celest_cli/src/types/type_checker.dart';
@@ -35,9 +34,9 @@ void main() {
   late InterfaceType staticMyEnumWithMixin;
 
   setUpAll(() async {
-    late LibraryElement core;
-    late LibraryElement collection;
-    late LibraryElement testSource;
+    late LibraryElement2 core;
+    late LibraryElement2 collection;
+    late LibraryElement2 testSource;
     await resolveSource(
       r'''
       export 'package:celest_cli/celest_cli.dart';
@@ -57,20 +56,20 @@ void main() {
     );
 
     final staticIterable = core
-        .getClass('Iterable')!
+        .getClass2('Iterable')!
         .instantiate(
           typeArguments: [core.typeProvider.dynamicType],
           nullabilitySuffix: NullabilitySuffix.none,
         );
     staticIterableChecker = TypeChecker.fromStatic(staticIterable);
     staticUri = core
-        .getClass('Uri')!
+        .getClass2('Uri')!
         .instantiate(
           typeArguments: [],
           nullabilitySuffix: NullabilitySuffix.none,
         );
     staticMap = core
-        .getClass('Map')!
+        .getClass2('Map')!
         .instantiate(
           typeArguments: [
             core.typeProvider.dynamicType,
@@ -80,7 +79,7 @@ void main() {
         );
     staticMapChecker = TypeChecker.fromStatic(staticMap);
     staticEnum = core
-        .getClass('Enum')!
+        .getClass2('Enum')!
         .instantiate(
           typeArguments: [],
           nullabilitySuffix: NullabilitySuffix.none,
@@ -114,7 +113,7 @@ void main() {
         );
 
     staticHashMap = collection
-        .getClass('HashMap')!
+        .getClass2('HashMap')!
         .instantiate(
           typeArguments: [
             core.typeProvider.dynamicType,
@@ -124,7 +123,7 @@ void main() {
         );
     staticHashMapChecker = TypeChecker.fromStatic(staticHashMap);
     staticUnmodifiableListView = collection
-        .getClass('UnmodifiableListView')!
+        .getClass2('UnmodifiableListView')!
         .instantiate(
           typeArguments: [core.typeProvider.dynamicType],
           nullabilitySuffix: NullabilitySuffix.none,
@@ -282,7 +281,7 @@ void main() {
       @depracated // Intentionally mispelled.
       class X {}
     ''', (resolver) async => (await resolver.findLibraryByName('_test'))!);
-    final classX = library.getClass('X')!.element2;
+    final classX = library.getClass2('X')!;
     const $deprecated = TypeChecker.fromUrl('dart:core#deprecated');
 
     expect(
@@ -349,7 +348,7 @@ void main() {
 
       $A = TypeChecker.fromStatic(
         library
-            .getClass('A')!
+            .getClass2('A')!
             .instantiate(
               typeArguments: [],
               nullabilitySuffix: NullabilitySuffix.none,
@@ -357,7 +356,7 @@ void main() {
       );
       $B = TypeChecker.fromStatic(
         library
-            .getClass('B')!
+            .getClass2('B')!
             .instantiate(
               typeArguments: [],
               nullabilitySuffix: NullabilitySuffix.none,
@@ -365,16 +364,16 @@ void main() {
       );
       $C = TypeChecker.fromStatic(
         library
-            .getClass('C')!
+            .getClass2('C')!
             .instantiate(
               typeArguments: [],
               nullabilitySuffix: NullabilitySuffix.none,
             ),
       );
-      $ExampleOfA = library.getClass('ExampleOfA')!.element2;
-      $ExampleOfMultiA = library.getClass('ExampleOfMultiA')!.element2;
-      $ExampleOfAPlusB = library.getClass('ExampleOfAPlusB')!.element2;
-      $ExampleOfBPlusC = library.getClass('ExampleOfBPlusC')!.element2;
+      $ExampleOfA = library.getClass2('ExampleOfA')!;
+      $ExampleOfMultiA = library.getClass2('ExampleOfMultiA')!;
+      $ExampleOfAPlusB = library.getClass2('ExampleOfAPlusB')!;
+      $ExampleOfBPlusC = library.getClass2('ExampleOfBPlusC')!;
     });
 
     test('of a single @A', () {
@@ -433,20 +432,18 @@ void main() {
     ''', (resolver) async => (await resolver.findLibraryByName('_test'))!);
       $A = TypeChecker.fromStatic(
         library
-            .getClass('A')!
+            .getClass2('A')!
             .instantiate(
               typeArguments: [],
               nullabilitySuffix: NullabilitySuffix.none,
             ),
       );
-      $ExampleOfA = library.getClass('ExampleOfA')!.element2;
+      $ExampleOfA = library.getClass2('ExampleOfA')!;
       $annotatedParameter =
-          library.topLevelElements
-              .whereType<FunctionElement>()
-              .firstWhere((f) => f.name == 'annotatedParameter')
-              .parameters
-              .single
-              .element2;
+          library.topLevelFunctions
+              .firstWhere((f) => f.name3 == 'annotatedParameter')
+              .formalParameters
+              .single;
     });
 
     test('should throw by default', () {
@@ -536,11 +533,3 @@ mixin MyEnumMixin on Enum {
 }
 
 enum MyEnumWithMixin with MyEnumMixin { foo, bar }
-
-extension on ClassElement {
-  ClassElementImpl2 get element2 => (this as ClassElementImpl).element;
-}
-
-extension on ParameterElement {
-  FormalParameterElement get element2 => (this as ParameterElementImpl).element;
-}

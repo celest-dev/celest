@@ -1772,7 +1772,7 @@ class ItemNotFoundException implements Exception {}
                       'statusCode',
                     ).equals(statusCode);
 
-          check(function.metadata).containsInOrder([
+          check(function.metadata).containsMatchingInOrder([
             hasErrorType('UnauthorizedException', HttpStatus.unauthorized),
             hasErrorType('ForbiddenException', HttpStatus.unauthorized),
             hasErrorType('ItemNotFoundException', HttpStatus.notFound),
@@ -1815,7 +1815,7 @@ String sayHello({
                       .isA<NodeReference>()
                     ..has((it) => it.type, 'type').equals(NodeType.httpHeader)
                     ..has((it) => it.name, 'name').equals(name);
-          check(parameters).containsInOrder([
+          check(parameters).containsMatchingInOrder([
             hasHeader('header'),
             hasHeader('x-custom-string'),
             hasHeader('x-custom-bool'),
@@ -1886,7 +1886,7 @@ String sayHello({
                       .isA<NodeReference>()
                     ..has((it) => it.type, 'type').equals(NodeType.httpQuery)
                     ..has((it) => it.name, 'name').equals(name);
-          check(parameters).containsInOrder([
+          check(parameters).containsMatchingInOrder([
             hasQuery('query'),
             hasQuery('x-custom-string'),
             hasQuery('x-custom-bool'),

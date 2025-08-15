@@ -2,9 +2,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i9;
-import 'dart:convert' as _i10;
+import 'dart:convert' as _i11;
+import 'dart:isolate' as _i10;
 
-import 'package:_common/src/models/errors_and_exceptions.dart' as _i12;
+import 'package:_common/src/models/errors_and_exceptions.dart' as _i13;
 import 'package:celest/celest.dart' as _i7;
 import 'package:celest/src/core/context.dart' as _i6;
 import 'package:celest/src/runtime/serve.dart' as _i1;
@@ -12,8 +13,8 @@ import 'package:celest_backend/exceptions/overrides.dart' as _i8;
 import 'package:celest_backend/src/functions/exceptions.dart' as _i3;
 import 'package:celest_core/celest_core.dart' as _i4;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i5;
-import 'package:celest_core/src/exception/serialization_exception.dart' as _i11;
-import 'package:celest_core/src/serialization/json_value.dart' as _i13;
+import 'package:celest_core/src/exception/serialization_exception.dart' as _i12;
+import 'package:celest_core/src/serialization/json_value.dart' as _i14;
 import 'package:shelf/shelf.dart' as _i2;
 
 final class ThrowsNotYetImplementedErrorTarget
@@ -371,7 +372,33 @@ final class ThrowsNotYetImplementedErrorTarget
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i10.JsonUnsupportedObjectError catch (e, st) {
+    } on _i10.IsolateSpawnException catch (e, st) {
+      const statusCode = 400;
+      _i6.context.logger.severe(e.message, e, st);
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.isolate.IsolateSpawnException',
+              'value': _i4.Serializers.instance
+                  .serialize<_i10.IsolateSpawnException>(e),
+            },
+            if (_i6.context.environment != _i7.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i4.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        },
+      };
+      return _i2.Response(
+        statusCode,
+        headers: const {'Content-Type': 'application/json'},
+        body: _i4.JsonUtf8.encode(status),
+      );
+    } on _i11.JsonUnsupportedObjectError catch (e, st) {
       const statusCode = 500;
       _i6.context.logger.severe(e.toString(), e, st);
       final status = {
@@ -382,7 +409,7 @@ final class ThrowsNotYetImplementedErrorTarget
             {
               '@type': 'dart.convert.JsonUnsupportedObjectError',
               'value': _i4.Serializers.instance
-                  .serialize<_i10.JsonUnsupportedObjectError>(e),
+                  .serialize<_i11.JsonUnsupportedObjectError>(e),
             },
             if (_i6.context.environment != _i7.Environment.production)
               {
@@ -627,7 +654,7 @@ final class ThrowsNotYetImplementedErrorTarget
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i11.SerializationException catch (e, st) {
+    } on _i12.SerializationException catch (e, st) {
       const statusCode = 400;
       _i6.context.logger.severe(e.message, e, st);
       final status = {
@@ -638,7 +665,7 @@ final class ThrowsNotYetImplementedErrorTarget
             {
               '@type': 'celest.core.v1.SerializationException',
               'value': _i4.Serializers.instance
-                  .serialize<_i11.SerializationException>(e),
+                  .serialize<_i12.SerializationException>(e),
             },
             if (_i6.context.environment != _i7.Environment.production)
               {
@@ -992,7 +1019,7 @@ final class ThrowsNotYetImplementedErrorTarget
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i12.UserException catch (e, st) {
+    } on _i13.UserException catch (e, st) {
       const statusCode = 400;
       _i6.context.logger.severe(e.toString(), e, st);
       final status = {
@@ -1002,7 +1029,7 @@ final class ThrowsNotYetImplementedErrorTarget
           'details': [
             {
               '@type': '_common.UserException',
-              'value': _i4.Serializers.instance.serialize<_i12.UserException>(
+              'value': _i4.Serializers.instance.serialize<_i13.UserException>(
                 e,
               ),
             },
@@ -1044,7 +1071,7 @@ final class ThrowsNotYetImplementedErrorTarget
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i12.ValidateError catch (e, st) {
+    } on _i13.ValidateError catch (e, st) {
       const statusCode = 500;
       _i6.context.logger.severe(e.toString(), e, st);
       final status = {
@@ -1054,7 +1081,7 @@ final class ThrowsNotYetImplementedErrorTarget
           'details': [
             {
               '@type': '_common.ValidateError',
-              'value': _i4.Serializers.instance.serialize<_i12.ValidateError>(
+              'value': _i4.Serializers.instance.serialize<_i13.ValidateError>(
                 e,
               ),
             },
@@ -1166,7 +1193,7 @@ final class ThrowsNotYetImplementedErrorTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<
-        _i10.JsonUnsupportedObjectError,
+        _i11.JsonUnsupportedObjectError,
         Map<String, Object?>
       >(
         serialize:
@@ -1178,7 +1205,7 @@ final class ThrowsNotYetImplementedErrorTarget
                 r'partialResult': partialResult,
             },
         deserialize: ($serialized) {
-          return _i10.JsonUnsupportedObjectError(
+          return _i11.JsonUnsupportedObjectError(
             $serialized[r'unsupportedObject'],
             cause: $serialized[r'cause'],
             partialResult: ($serialized[r'partialResult'] as String?),
@@ -1374,18 +1401,28 @@ final class ThrowsNotYetImplementedErrorTarget
       ),
     );
     _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i12.UserException, Map<String, dynamic>>(
-        serialize: ($value) => $value.toJson(),
+      _i4.Serializer.define<_i10.IsolateSpawnException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
         deserialize: ($serialized) {
-          return _i12.UserException.fromJson($serialized);
+          return _i10.IsolateSpawnException(
+            ($serialized[r'message'] as String),
+          );
         },
       ),
     );
     _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i12.ValidateError, Map<String, Object?>>(
+      _i4.Serializer.define<_i13.UserException, Map<String, dynamic>>(
+        serialize: ($value) => $value.toJson(),
+        deserialize: ($serialized) {
+          return _i13.UserException.fromJson($serialized);
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i13.ValidateError, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{r'msg': $value.msg},
         deserialize: ($serialized) {
-          return _i12.ValidateError(($serialized[r'msg'] as String));
+          return _i13.ValidateError(($serialized[r'msg'] as String));
         },
       ),
     );
@@ -1401,21 +1438,21 @@ final class ThrowsNotYetImplementedErrorTarget
       _i4.Serializer.define<_i8.AppException, Map<String, Object?>?>(
         serialize:
             ($value) => <String, Object?>{
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.error,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final error?)
                 r'error': error,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.msg,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final msg?)
                 r'msg': msg,
             },
         deserialize: ($serialized) {
-          return (_i12.AppException(
+          return (_i13.AppException(
                 $serialized?[r'msg'],
                 $serialized?[r'error'],
               )
@@ -1428,18 +1465,18 @@ final class ThrowsNotYetImplementedErrorTarget
         serialize:
             ($value) => <String, Object?>{
               r'msg': $value.msg,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.message,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final message?)
                 r'message': message,
             },
         deserialize: ($serialized) {
           return _i8.NotYetImplementedError(
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'message'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
           );
         },
@@ -1453,9 +1490,9 @@ final class ThrowsNotYetImplementedErrorTarget
         serialize:
             ($value) => <String, Object?>{
               if ($value.msg case final msg?) r'msg': msg,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.cause,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final cause?)
                 r'cause': cause,
@@ -1463,9 +1500,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i8.UserException_ShowInConsole(
             msg: ($serialized[r'msg'] as String),
-            cause: _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            cause: _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized[r'cause'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
           );
         },
@@ -1477,9 +1514,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1487,9 +1524,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.AbortedException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1502,9 +1539,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1512,9 +1549,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.AlreadyExistsException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1527,9 +1564,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1537,9 +1574,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.BadRequestException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1552,9 +1589,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1562,9 +1599,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.CancelledException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1577,9 +1614,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1595,9 +1632,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1605,9 +1642,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.DataLossError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1620,9 +1657,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1630,9 +1667,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.DeadlineExceededError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1648,9 +1685,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1658,9 +1695,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.FailedPreconditionException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1673,9 +1710,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1683,9 +1720,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.InternalServerError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1698,9 +1735,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1708,9 +1745,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.NotFoundException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1723,9 +1760,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1733,9 +1770,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.OutOfRangeException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1751,9 +1788,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1761,9 +1798,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.PermissionDeniedException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1779,9 +1816,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1789,9 +1826,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.ResourceExhaustedException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1804,9 +1841,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1814,9 +1851,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.UnauthorizedException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1829,9 +1866,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1839,9 +1876,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.UnavailableError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1854,9 +1891,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1864,9 +1901,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.UnimplementedError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1879,9 +1916,9 @@ final class ThrowsNotYetImplementedErrorTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1889,9 +1926,9 @@ final class ThrowsNotYetImplementedErrorTarget
         deserialize: ($serialized) {
           return _i5.UnknownError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i13.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1899,33 +1936,33 @@ final class ThrowsNotYetImplementedErrorTarget
       ),
     );
     _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i11.SerializationException, Map<String, Object?>>(
+      _i4.Serializer.define<_i12.SerializationException, Map<String, Object?>>(
         serialize:
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
             },
         deserialize: ($serialized) {
-          return _i11.SerializationException(
+          return _i12.SerializationException(
             ($serialized[r'message'] as String?),
           );
         },
       ),
     );
     _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i13.JsonValue, Object>(
+      _i4.Serializer.define<_i14.JsonValue, Object>(
         serialize: ($value) => $value.value,
         deserialize: ($serialized) {
-          return _i13.JsonValue($serialized);
+          return _i14.JsonValue($serialized);
         },
       ),
-      const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+      const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
     );
   }
 }

@@ -2,22 +2,23 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i8;
-import 'dart:convert' as _i9;
+import 'dart:convert' as _i10;
+import 'dart:isolate' as _i9;
 
 import 'package:celest/celest.dart' as _i7;
 import 'package:celest/src/core/context.dart' as _i3;
-import 'package:celest/src/runtime/data/celest_database.dart' as _i13;
+import 'package:celest/src/runtime/data/celest_database.dart' as _i14;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/src/functions/public_lib.dart' as _i4;
-import 'package:celest_backend/src/generated/cloud.celest.dart' as _i16;
-import 'package:celest_backend/src/generated/data.celest.dart' as _i15;
+import 'package:celest_backend/src/generated/cloud.celest.dart' as _i17;
+import 'package:celest_backend/src/generated/data.celest.dart' as _i16;
 import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _i2;
-import 'package:celest_cloud_auth/src/database/auth_database.dart' as _i14;
+import 'package:celest_cloud_auth/src/database/auth_database.dart' as _i15;
 import 'package:celest_core/celest_core.dart' as _i6;
-import 'package:celest_core/src/auth/user.dart' as _i11;
+import 'package:celest_core/src/auth/user.dart' as _i12;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i5;
-import 'package:celest_core/src/exception/serialization_exception.dart' as _i10;
-import 'package:celest_core/src/serialization/json_value.dart' as _i12;
+import 'package:celest_core/src/exception/serialization_exception.dart' as _i11;
+import 'package:celest_core/src/serialization/json_value.dart' as _i13;
 
 final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
   @override
@@ -304,7 +305,29 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         },
       };
       yield status;
-    } on _i9.JsonUnsupportedObjectError catch (e, st) {
+    } on _i9.IsolateSpawnException catch (e, st) {
+      const statusCode = 400;
+      _i3.context.logger.severe(e.message, e, st);
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.isolate.IsolateSpawnException',
+              'value': _i6.Serializers.instance
+                  .serialize<_i9.IsolateSpawnException>(e),
+            },
+            if (_i3.context.environment != _i7.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i6.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        },
+      };
+      yield status;
+    } on _i10.JsonUnsupportedObjectError catch (e, st) {
       const statusCode = 500;
       _i3.context.logger.severe(e.toString(), e, st);
       final status = {
@@ -315,7 +338,7 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             {
               '@type': 'dart.convert.JsonUnsupportedObjectError',
               'value': _i6.Serializers.instance
-                  .serialize<_i9.JsonUnsupportedObjectError>(e),
+                  .serialize<_i10.JsonUnsupportedObjectError>(e),
             },
             if (_i3.context.environment != _i7.Environment.production)
               {
@@ -477,7 +500,7 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         },
       };
       yield status;
-    } on _i10.SerializationException catch (e, st) {
+    } on _i11.SerializationException catch (e, st) {
       const statusCode = 400;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -488,7 +511,7 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             {
               '@type': 'celest.core.v1.SerializationException',
               'value': _i6.Serializers.instance
-                  .serialize<_i10.SerializationException>(e),
+                  .serialize<_i11.SerializationException>(e),
             },
             if (_i3.context.environment != _i7.Environment.production)
               {
@@ -872,7 +895,7 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i6.Serializers.instance.put(
       _i6.Serializer.define<
-        _i9.JsonUnsupportedObjectError,
+        _i10.JsonUnsupportedObjectError,
         Map<String, Object?>
       >(
         serialize:
@@ -884,7 +907,7 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
                 r'partialResult': partialResult,
             },
         deserialize: ($serialized) {
-          return _i9.JsonUnsupportedObjectError(
+          return _i10.JsonUnsupportedObjectError(
             $serialized[r'unsupportedObject'],
             cause: $serialized[r'cause'],
             partialResult: ($serialized[r'partialResult'] as String?),
@@ -1080,10 +1103,18 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i11.User, Map<String, Object?>>(
+      _i6.Serializer.define<_i9.IsolateSpawnException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return _i9.IsolateSpawnException(($serialized[r'message'] as String));
+        },
+      ),
+    );
+    _i6.Serializers.instance.put(
+      _i6.Serializer.define<_i12.User, Map<String, Object?>>(
         serialize: ($value) => $value.toJson(),
         deserialize: ($serialized) {
-          return _i11.User.fromJson($serialized);
+          return _i12.User.fromJson($serialized);
         },
       ),
     );
@@ -1093,9 +1124,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1103,9 +1134,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.AbortedException(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1118,9 +1149,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1128,9 +1159,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.AlreadyExistsException(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1143,9 +1174,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1153,9 +1184,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.BadRequestException(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1168,9 +1199,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1178,9 +1209,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.CancelledException(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1193,9 +1224,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1211,9 +1242,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1221,9 +1252,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.DataLossError(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1236,9 +1267,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1246,9 +1277,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.DeadlineExceededError(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1264,9 +1295,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1274,9 +1305,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.FailedPreconditionException(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1289,9 +1320,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1299,9 +1330,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.InternalServerError(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1314,9 +1345,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1324,9 +1355,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.NotFoundException(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1339,9 +1370,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1349,9 +1380,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.OutOfRangeException(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1367,9 +1398,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1377,9 +1408,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.PermissionDeniedException(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1395,9 +1426,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1405,9 +1436,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.ResourceExhaustedException(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1420,9 +1451,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1430,9 +1461,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.UnauthorizedException(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1445,9 +1476,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1455,9 +1486,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.UnavailableError(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1470,9 +1501,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1480,9 +1511,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.UnimplementedError(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1495,9 +1526,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1505,9 +1536,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         deserialize: ($serialized) {
           return _i5.UnknownError(
             ($serialized?[r'message'] as String?),
-            _i6.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i6.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1515,33 +1546,33 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i10.SerializationException, Map<String, Object?>>(
+      _i6.Serializer.define<_i11.SerializationException, Map<String, Object?>>(
         serialize:
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i6.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i6.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
             },
         deserialize: ($serialized) {
-          return _i10.SerializationException(
+          return _i11.SerializationException(
             ($serialized[r'message'] as String?),
           );
         },
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i12.JsonValue, Object>(
+      _i6.Serializer.define<_i13.JsonValue, Object>(
         serialize: ($value) => $value.value,
         deserialize: ($serialized) {
-          return _i12.JsonValue($serialized);
+          return _i13.JsonValue($serialized);
         },
       ),
-      const _i6.TypeToken<_i12.JsonValue?>('JsonValue'),
+      const _i6.TypeToken<_i13.JsonValue?>('JsonValue'),
     );
   }
 }
@@ -1554,16 +1585,16 @@ Future<void> start() async {
   await _i1.serve(
     targets: {'/': StreamHelloTarget()},
     setup: (_i3.Context context) async {
-      final cloudAuth = await _i13.CelestDatabase.create(
+      final cloudAuth = await _i14.CelestDatabase.create(
         context,
         name: 'CloudAuthDatabase',
-        factory: _i14.CloudAuthDatabase.new,
+        factory: _i15.CloudAuthDatabase.new,
         hostnameVariable: const _i7.env('CLOUD_AUTH_DATABASE_HOST'),
         tokenSecret: const _i7.secret('CLOUD_AUTH_DATABASE_TOKEN'),
       );
-      context.put(_i15.CelestData.cloudAuth$Key, await cloudAuth.connect());
+      context.put(_i16.CelestData.cloudAuth$Key, await cloudAuth.connect());
       final $cloudAuth = await _i2.CelestCloudAuth.create(
-        database: _i16.celest.data.cloudAuth,
+        database: _i17.celest.data.cloudAuth,
       );
       context.router.mount('/v1alpha1/auth/', $cloudAuth.handler);
       context.put(_i2.CelestCloudAuth.contextKey, $cloudAuth);

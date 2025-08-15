@@ -2,22 +2,23 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i8;
-import 'dart:convert' as _i9;
+import 'dart:convert' as _i10;
+import 'dart:isolate' as _i9;
 
 import 'package:celest/celest.dart' as _i7;
 import 'package:celest/src/core/context.dart' as _i4;
-import 'package:celest/src/runtime/data/celest_database.dart' as _i13;
+import 'package:celest/src/runtime/data/celest_database.dart' as _i14;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/src/functions/lib.dart' as _i3;
-import 'package:celest_backend/src/generated/cloud.celest.dart' as _i17;
-import 'package:celest_backend/src/generated/data.celest.dart' as _i15;
-import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _i16;
-import 'package:celest_cloud_auth/src/database/auth_database.dart' as _i14;
+import 'package:celest_backend/src/generated/cloud.celest.dart' as _i18;
+import 'package:celest_backend/src/generated/data.celest.dart' as _i16;
+import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _i17;
+import 'package:celest_cloud_auth/src/database/auth_database.dart' as _i15;
 import 'package:celest_core/celest_core.dart' as _i5;
-import 'package:celest_core/src/auth/user.dart' as _i11;
+import 'package:celest_core/src/auth/user.dart' as _i12;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i6;
-import 'package:celest_core/src/exception/serialization_exception.dart' as _i10;
-import 'package:celest_core/src/serialization/json_value.dart' as _i12;
+import 'package:celest_core/src/exception/serialization_exception.dart' as _i11;
+import 'package:celest_core/src/serialization/json_value.dart' as _i13;
 import 'package:shelf/shelf.dart' as _i2;
 
 final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
@@ -351,7 +352,33 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i5.JsonUtf8.encode(status),
       );
-    } on _i9.JsonUnsupportedObjectError catch (e, st) {
+    } on _i9.IsolateSpawnException catch (e, st) {
+      const statusCode = 400;
+      _i4.context.logger.severe(e.message, e, st);
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.isolate.IsolateSpawnException',
+              'value': _i5.Serializers.instance
+                  .serialize<_i9.IsolateSpawnException>(e),
+            },
+            if (_i4.context.environment != _i7.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i5.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        },
+      };
+      return _i2.Response(
+        statusCode,
+        headers: const {'Content-Type': 'application/json'},
+        body: _i5.JsonUtf8.encode(status),
+      );
+    } on _i10.JsonUnsupportedObjectError catch (e, st) {
       const statusCode = 500;
       _i4.context.logger.severe(e.toString(), e, st);
       final status = {
@@ -362,7 +389,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'dart.convert.JsonUnsupportedObjectError',
               'value': _i5.Serializers.instance
-                  .serialize<_i9.JsonUnsupportedObjectError>(e),
+                  .serialize<_i10.JsonUnsupportedObjectError>(e),
             },
             if (_i4.context.environment != _i7.Environment.production)
               {
@@ -556,7 +583,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i5.JsonUtf8.encode(status),
       );
-    } on _i10.SerializationException catch (e, st) {
+    } on _i11.SerializationException catch (e, st) {
       const statusCode = 400;
       _i4.context.logger.severe(e.message, e, st);
       final status = {
@@ -567,7 +594,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.SerializationException',
               'value': _i5.Serializers.instance
-                  .serialize<_i10.SerializationException>(e),
+                  .serialize<_i11.SerializationException>(e),
             },
             if (_i4.context.environment != _i7.Environment.production)
               {
@@ -1015,7 +1042,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<
-        _i9.JsonUnsupportedObjectError,
+        _i10.JsonUnsupportedObjectError,
         Map<String, Object?>
       >(
         serialize:
@@ -1027,7 +1054,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
                 r'partialResult': partialResult,
             },
         deserialize: ($serialized) {
-          return _i9.JsonUnsupportedObjectError(
+          return _i10.JsonUnsupportedObjectError(
             $serialized[r'unsupportedObject'],
             cause: $serialized[r'cause'],
             partialResult: ($serialized[r'partialResult'] as String?),
@@ -1223,10 +1250,18 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i5.Serializers.instance.put(
-      _i5.Serializer.define<_i11.User, Map<String, Object?>>(
+      _i5.Serializer.define<_i9.IsolateSpawnException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return _i9.IsolateSpawnException(($serialized[r'message'] as String));
+        },
+      ),
+    );
+    _i5.Serializers.instance.put(
+      _i5.Serializer.define<_i12.User, Map<String, Object?>>(
         serialize: ($value) => $value.toJson(),
         deserialize: ($serialized) {
-          return _i11.User.fromJson($serialized);
+          return _i12.User.fromJson($serialized);
         },
       ),
     );
@@ -1236,9 +1271,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1246,9 +1281,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.AbortedException(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1261,9 +1296,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1271,9 +1306,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.AlreadyExistsException(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1286,9 +1321,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1296,9 +1331,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.BadRequestException(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1311,9 +1346,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1321,9 +1356,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.CancelledException(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1336,9 +1371,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1354,9 +1389,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1364,9 +1399,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.DataLossError(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1379,9 +1414,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1389,9 +1424,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.DeadlineExceededError(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1407,9 +1442,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1417,9 +1452,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.FailedPreconditionException(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1432,9 +1467,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1442,9 +1477,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.InternalServerError(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1457,9 +1492,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1467,9 +1502,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.NotFoundException(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1482,9 +1517,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1492,9 +1527,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.OutOfRangeException(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1510,9 +1545,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1520,9 +1555,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.PermissionDeniedException(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1538,9 +1573,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1548,9 +1583,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.ResourceExhaustedException(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1563,9 +1598,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1573,9 +1608,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.UnauthorizedException(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1588,9 +1623,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1598,9 +1633,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.UnavailableError(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1613,9 +1648,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1623,9 +1658,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.UnimplementedError(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1638,9 +1673,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1648,9 +1683,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i6.UnknownError(
             ($serialized?[r'message'] as String?),
-            _i5.Serializers.instance.deserialize<_i12.JsonValue?>(
+            _i5.Serializers.instance.deserialize<_i13.JsonValue?>(
               $serialized?[r'details'],
-              const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1658,33 +1693,33 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i5.Serializers.instance.put(
-      _i5.Serializer.define<_i10.SerializationException, Map<String, Object?>>(
+      _i5.Serializer.define<_i11.SerializationException, Map<String, Object?>>(
         serialize:
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+              if (_i5.Serializers.instance.serialize<_i13.JsonValue?>(
                     $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+                    const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
             },
         deserialize: ($serialized) {
-          return _i10.SerializationException(
+          return _i11.SerializationException(
             ($serialized[r'message'] as String?),
           );
         },
       ),
     );
     _i5.Serializers.instance.put(
-      _i5.Serializer.define<_i12.JsonValue, Object>(
+      _i5.Serializer.define<_i13.JsonValue, Object>(
         serialize: ($value) => $value.value,
         deserialize: ($serialized) {
-          return _i12.JsonValue($serialized);
+          return _i13.JsonValue($serialized);
         },
       ),
-      const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+      const _i5.TypeToken<_i13.JsonValue?>('JsonValue'),
     );
   }
 }
@@ -1697,19 +1732,19 @@ Future<void> start() async {
   await _i1.serve(
     targets: {'/': SayHelloTarget()},
     setup: (_i4.Context context) async {
-      final cloudAuth = await _i13.CelestDatabase.create(
+      final cloudAuth = await _i14.CelestDatabase.create(
         context,
         name: 'CloudAuthDatabase',
-        factory: _i14.CloudAuthDatabase.new,
+        factory: _i15.CloudAuthDatabase.new,
         hostnameVariable: const _i7.env('CLOUD_AUTH_DATABASE_HOST'),
         tokenSecret: const _i7.secret('CLOUD_AUTH_DATABASE_TOKEN'),
       );
-      context.put(_i15.CelestData.cloudAuth$Key, await cloudAuth.connect());
-      final $cloudAuth = await _i16.CelestCloudAuth.create(
-        database: _i17.celest.data.cloudAuth,
+      context.put(_i16.CelestData.cloudAuth$Key, await cloudAuth.connect());
+      final $cloudAuth = await _i17.CelestCloudAuth.create(
+        database: _i18.celest.data.cloudAuth,
       );
       context.router.mount('/v1alpha1/auth/', $cloudAuth.handler);
-      context.put(_i16.CelestCloudAuth.contextKey, $cloudAuth);
+      context.put(_i17.CelestCloudAuth.contextKey, $cloudAuth);
       if (context.environment == _i7.Environment.local) {
         final $studio = cloudAuth.createStudio();
         context.router.mount('/_admin/studio', $studio.call);

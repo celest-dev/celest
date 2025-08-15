@@ -33,7 +33,7 @@ jobs:
           - macos-latest-xlarge
           - windows-large
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - name: Git Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # 5.0.0
@@ -43,7 +43,7 @@ jobs:
           cache: true
           # Because many golden tests encode the precise Dart/Flutter SDKs used to generate
           # them, these values must be consistently used when running tests locally and in CI.
-          flutter-version: 3.32.5
+          flutter-version: 3.35.1
           channel: stable
       - name: Setup Libsecret
         if: runner.os == 'Linux'

@@ -6,6 +6,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:isolate';
 
 import 'package:api_client/api_client.dart';
 import 'package:celest/celest.dart' as _$celest;
@@ -273,6 +274,13 @@ class CelestFunctionsHttpErrors {
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
+            errorValue,
+          ),
+          stackTrace,
+        );
+      case 'dart.isolate.IsolateSpawnException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IsolateSpawnException>(
             errorValue,
           ),
           stackTrace,
@@ -595,6 +603,13 @@ class CelestFunctionsHttpHeader {
           ),
           stackTrace,
         );
+      case 'dart.isolate.IsolateSpawnException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IsolateSpawnException>(
+            errorValue,
+          ),
+          stackTrace,
+        );
       default:
         Error.throwWithStackTrace(
           _$celest.CloudException.http(
@@ -898,6 +913,13 @@ class CelestFunctionsHttpMethod {
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
+            errorValue,
+          ),
+          stackTrace,
+        );
+      case 'dart.isolate.IsolateSpawnException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IsolateSpawnException>(
             errorValue,
           ),
           stackTrace,
@@ -1258,6 +1280,13 @@ class CelestFunctionsHttpQuery {
           ),
           stackTrace,
         );
+      case 'dart.isolate.IsolateSpawnException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IsolateSpawnException>(
+            errorValue,
+          ),
+          stackTrace,
+        );
       default:
         Error.throwWithStackTrace(
           _$celest.CloudException.http(
@@ -1608,6 +1637,13 @@ class CelestFunctionsHttpStatus {
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
+            errorValue,
+          ),
+          stackTrace,
+        );
+      case 'dart.isolate.IsolateSpawnException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IsolateSpawnException>(
             errorValue,
           ),
           stackTrace,

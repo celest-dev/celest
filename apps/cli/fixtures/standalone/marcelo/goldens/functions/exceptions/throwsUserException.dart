@@ -2,9 +2,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i10;
-import 'dart:convert' as _i11;
+import 'dart:convert' as _i12;
+import 'dart:isolate' as _i11;
 
-import 'package:_common/src/models/errors_and_exceptions.dart' as _i13;
+import 'package:_common/src/models/errors_and_exceptions.dart' as _i14;
 import 'package:celest/celest.dart' as _i8;
 import 'package:celest/src/core/context.dart' as _i7;
 import 'package:celest/src/runtime/serve.dart' as _i1;
@@ -12,7 +13,7 @@ import 'package:celest_backend/exceptions/overrides.dart' as _i9;
 import 'package:celest_backend/src/functions/exceptions.dart' as _i3;
 import 'package:celest_core/celest_core.dart' as _i4;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i6;
-import 'package:celest_core/src/exception/serialization_exception.dart' as _i12;
+import 'package:celest_core/src/exception/serialization_exception.dart' as _i13;
 import 'package:celest_core/src/serialization/json_value.dart' as _i5;
 import 'package:shelf/shelf.dart' as _i2;
 
@@ -375,7 +376,33 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i11.JsonUnsupportedObjectError catch (e, st) {
+    } on _i11.IsolateSpawnException catch (e, st) {
+      const statusCode = 400;
+      _i7.context.logger.severe(e.message, e, st);
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.isolate.IsolateSpawnException',
+              'value': _i4.Serializers.instance
+                  .serialize<_i11.IsolateSpawnException>(e),
+            },
+            if (_i7.context.environment != _i8.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i4.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        },
+      };
+      return _i2.Response(
+        statusCode,
+        headers: const {'Content-Type': 'application/json'},
+        body: _i4.JsonUtf8.encode(status),
+      );
+    } on _i12.JsonUnsupportedObjectError catch (e, st) {
       const statusCode = 500;
       _i7.context.logger.severe(e.toString(), e, st);
       final status = {
@@ -386,7 +413,7 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'dart.convert.JsonUnsupportedObjectError',
               'value': _i4.Serializers.instance
-                  .serialize<_i11.JsonUnsupportedObjectError>(e),
+                  .serialize<_i12.JsonUnsupportedObjectError>(e),
             },
             if (_i7.context.environment != _i8.Environment.production)
               {
@@ -631,7 +658,7 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i12.SerializationException catch (e, st) {
+    } on _i13.SerializationException catch (e, st) {
       const statusCode = 400;
       _i7.context.logger.severe(e.message, e, st);
       final status = {
@@ -642,7 +669,7 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.SerializationException',
               'value': _i4.Serializers.instance
-                  .serialize<_i12.SerializationException>(e),
+                  .serialize<_i13.SerializationException>(e),
             },
             if (_i7.context.environment != _i8.Environment.production)
               {
@@ -995,7 +1022,7 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i13.UserException catch (e, st) {
+    } on _i14.UserException catch (e, st) {
       const statusCode = 400;
       _i7.context.logger.severe(e.toString(), e, st);
       final status = {
@@ -1005,7 +1032,7 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': '_common.UserException',
-              'value': _i4.Serializers.instance.serialize<_i13.UserException>(
+              'value': _i4.Serializers.instance.serialize<_i14.UserException>(
                 e,
               ),
             },
@@ -1047,7 +1074,7 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i13.ValidateError catch (e, st) {
+    } on _i14.ValidateError catch (e, st) {
       const statusCode = 500;
       _i7.context.logger.severe(e.toString(), e, st);
       final status = {
@@ -1057,7 +1084,7 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': '_common.ValidateError',
-              'value': _i4.Serializers.instance.serialize<_i13.ValidateError>(
+              'value': _i4.Serializers.instance.serialize<_i14.ValidateError>(
                 e,
               ),
             },
@@ -1169,7 +1196,7 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<
-        _i11.JsonUnsupportedObjectError,
+        _i12.JsonUnsupportedObjectError,
         Map<String, Object?>
       >(
         serialize:
@@ -1181,7 +1208,7 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
                 r'partialResult': partialResult,
             },
         deserialize: ($serialized) {
-          return _i11.JsonUnsupportedObjectError(
+          return _i12.JsonUnsupportedObjectError(
             $serialized[r'unsupportedObject'],
             cause: $serialized[r'cause'],
             partialResult: ($serialized[r'partialResult'] as String?),
@@ -1377,18 +1404,28 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i13.UserException, Map<String, dynamic>>(
-        serialize: ($value) => $value.toJson(),
+      _i4.Serializer.define<_i11.IsolateSpawnException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
         deserialize: ($serialized) {
-          return _i13.UserException.fromJson($serialized);
+          return _i11.IsolateSpawnException(
+            ($serialized[r'message'] as String),
+          );
         },
       ),
     );
     _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i13.ValidateError, Map<String, Object?>>(
+      _i4.Serializer.define<_i14.UserException, Map<String, dynamic>>(
+        serialize: ($value) => $value.toJson(),
+        deserialize: ($serialized) {
+          return _i14.UserException.fromJson($serialized);
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i14.ValidateError, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{r'msg': $value.msg},
         deserialize: ($serialized) {
-          return _i13.ValidateError(($serialized[r'msg'] as String));
+          return _i14.ValidateError(($serialized[r'msg'] as String));
         },
       ),
     );
@@ -1418,7 +1455,7 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
                 r'msg': msg,
             },
         deserialize: ($serialized) {
-          return (_i13.AppException(
+          return (_i14.AppException(
                 $serialized?[r'msg'],
                 $serialized?[r'error'],
               )
@@ -1902,7 +1939,7 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i12.SerializationException, Map<String, Object?>>(
+      _i4.Serializer.define<_i13.SerializationException, Map<String, Object?>>(
         serialize:
             ($value) => <String, Object?>{
               r'code': $value.code,
@@ -1915,7 +1952,7 @@ final class ThrowsUserExceptionTarget extends _i1.CloudFunctionHttpTarget {
                 r'details': details,
             },
         deserialize: ($serialized) {
-          return _i12.SerializationException(
+          return _i13.SerializationException(
             ($serialized[r'message'] as String?),
           );
         },

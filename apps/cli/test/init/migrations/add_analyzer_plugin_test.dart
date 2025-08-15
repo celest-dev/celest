@@ -5,6 +5,8 @@ import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 import 'package:yaml/yaml.dart';
 
+import '../../common.dart';
+
 void main() {
   Future<void> testMigration({
     required String? analysisOptionsContent,
@@ -64,6 +66,8 @@ name: celest_backend
   }
 
   group('AddAnalyzerPlugin', () {
+    setUpAll(initTests);
+
     test('no analysis_options.yaml', () async {
       await testMigration(
         analysisOptionsContent: null,

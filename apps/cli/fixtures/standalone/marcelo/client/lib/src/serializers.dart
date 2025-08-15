@@ -3,6 +3,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async';
 import 'dart:convert';
+import 'dart:isolate';
 
 import 'package:_common/src/models/available_stock.dart'
     as _$_common_available_stock;
@@ -272,6 +273,14 @@ void initSerializers({_$celest.Serializers? serializers}) {
             },
         deserialize: ($serialized) {
           return UnsupportedError(($serialized[r'message'] as String));
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<IsolateSpawnException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return IsolateSpawnException(($serialized[r'message'] as String));
         },
       ),
     );

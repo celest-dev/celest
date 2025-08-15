@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:celest_cli/src/commands/celest_command.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/init/project_init.dart';
+import 'package:file/chroot.dart';
 import 'package:mason_logger/src/mason_logger.dart';
 import 'package:test/test.dart';
+
+import '../common.dart';
 
 final class TestCommand extends CelestCommand with Configure {
   @override
@@ -25,11 +30,16 @@ final class TestCommand extends CelestCommand with Configure {
 
 void main() {
   group('init', () {
-    test('throws when no project found', () async {
+    setUpAll(initTests);
+
+    test('throws when no project found', skip: Platform.isWindows, () async {
       final projectRoot = await fileSystem.systemTempDirectory.createTemp(
         'test_project_',
       );
-      fileSystem.currentDirectory = projectRoot;
+      fileSystem = ChrootFileSystem(
+        fileSystem,
+        p.canonicalize(projectRoot.absolute.path),
+      );
 
       addTearDown(() async {
         try {

@@ -7,9 +7,9 @@ import 'package:test/test.dart';
 import '../common.dart';
 
 void main() {
-  initTests();
-
   group('EnvManager', () {
+    setUpAll(initTests);
+
     test('overlay', () async {
       final projectDir = fileSystem.systemTempDirectory.createTempSync(
         'project',
