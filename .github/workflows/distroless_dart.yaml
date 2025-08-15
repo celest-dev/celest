@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Git Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # 5.0.0
       - name: Setup Flutter
         uses: subosito/flutter-action@fd55f4c5af5b953cc57a2be44cb082c8f6635e8e # 2.21.0
         with:
@@ -65,7 +65,7 @@ jobs:
           echo "Channel: ${{ matrix.sdk.channel }}"
 
       - name: Git Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # 5.0.0
 
       # Set up QEMU for multi-platform builds (needed for ARM on x86 runners)
       - name: Set up QEMU
@@ -168,7 +168,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Git Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # 5.0.0
 
       - name: Setup Dart
         uses: dart-lang/setup-dart@e51d8e571e22473a2ddebf0ef8a2123f0ab2c02c # 1.7.1
