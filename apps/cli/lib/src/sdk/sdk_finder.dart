@@ -86,14 +86,34 @@ final class DartSdkFinder implements SdkFinder {
       fileSystem.isDirectorySync(p.join(sdkPath, 'bin', 'snapshots'));
 
   Future<Sdk> _found(SdkType type, String sdkPath) async {
-    final versionStr =
-        await fileSystem.directory(sdkPath).childFile('version').readAsString();
     final factory = type == SdkType.flutter ? Sdk.flutter : Sdk.dart;
-    return factory(
-      sdkPath,
-      version: Version.parse(versionStr.trim()),
-      fileSystem: fileSystem,
-    );
+    late Version version;
+
+    // Check for new Flutter version JSON and old Flutter `version` file /
+    // current Dart `version` file
+    //
+    // Flutter: https://github.com/flutter/flutter/issues/171900
+    final versionFile = fileSystem
+        .directory(sdkPath)
+        .childDirectory('bin')
+        .childDirectory('cache')
+        .childFile('flutter.version.json');
+    if (versionFile.existsSync()) {
+      final versionJson = await versionFile.readAsString();
+      final versionData = jsonDecode(versionJson) as Map<String, dynamic>;
+      version = Version.parse(versionData['flutterVersion'] as String);
+    } else {
+      final versionFile = fileSystem.directory(sdkPath).childFile('version');
+      if (!versionFile.existsSync()) {
+        throw StateError(
+          'Could not find Dart SDK version file at ${versionFile.path}.',
+        );
+      }
+      final versionStr = await versionFile.readAsString();
+      version = Version.parse(versionStr.trim());
+    }
+
+    return factory(sdkPath, version: version, fileSystem: fileSystem);
   }
 
   final Platform platform;

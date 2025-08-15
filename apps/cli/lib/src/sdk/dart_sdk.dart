@@ -1,5 +1,6 @@
 // Below is modified from Dart SDK `package:dartdev`
 
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 
@@ -89,7 +90,19 @@ class Sdk {
   final FileSystem _fileSystem;
 
   Version _parseVersion(String path) {
-    final versionFile = _fileSystem.file(p.join(path, 'version'));
+    // Flutter version JSON check
+    var versionFile = _fileSystem.file(
+      p.join(path, 'bin', 'cache', 'flutter.version.json'),
+    );
+    if (versionFile.existsSync()) {
+      final versionJson = versionFile.readAsStringSync();
+      final versionData = jsonDecode(versionJson) as Map<String, dynamic>;
+      return Version.parse(versionData['flutterVersion'] as String);
+    }
+
+    // Old Flutter version file / current Dart version file check
+    // Flutter: https://github.com/flutter/flutter/issues/171900
+    versionFile = _fileSystem.file(p.join(path, 'version'));
     if (!versionFile.existsSync()) {
       throw StateError(
         'Could not find Dart SDK version file at ${versionFile.path}.',
