@@ -25,6 +25,7 @@ import 'package:drift/src/remote/communication.dart' as _$drift_communication;
 import 'package:drift/src/runtime/cancellation_zone.dart'
     as _$drift_cancellation_zone;
 import 'package:drift/src/runtime/exceptions.dart' as _$drift_exceptions;
+import 'package:http/src/abortable.dart' as _$http_abortable;
 import 'package:http/src/exception.dart' as _$http_exception;
 import 'package:mustache_template/src/template_exception.dart'
     as _$mustache_template_template_exception;
@@ -1384,6 +1385,27 @@ void initSerializers({_$celest.Serializers? serializers}) {
             cause: $serialized[r'cause'],
             trace: _$celest.Serializers.instance.deserialize<StackTrace?>(
               $serialized[r'trace'],
+            ),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<
+        _$http_abortable.RequestAbortedException,
+        Map<String, Object?>?
+      >(
+        serialize:
+            ($value) => <String, Object?>{
+              r'message': $value.message,
+              if (_$celest.Serializers.instance.serialize<Uri?>($value.uri)
+                  case final uri?)
+                r'uri': uri,
+            },
+        deserialize: ($serialized) {
+          return _$http_abortable.RequestAbortedException(
+            _$celest.Serializers.instance.deserialize<Uri?>(
+              $serialized?[r'uri'],
             ),
           );
         },

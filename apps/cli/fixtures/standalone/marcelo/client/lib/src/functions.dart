@@ -6,6 +6,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:isolate';
 
 import 'package:_common/src/models/available_stock.dart'
     as _$_common_available_stock;
@@ -201,6 +202,13 @@ class CelestFunctionsExceptions {
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
+            errorValue,
+          ),
+          stackTrace,
+        );
+      case 'dart.isolate.IsolateSpawnException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IsolateSpawnException>(
             errorValue,
           ),
           stackTrace,
@@ -677,6 +685,13 @@ class CelestFunctionsModels {
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
+            errorValue,
+          ),
+          stackTrace,
+        );
+      case 'dart.isolate.IsolateSpawnException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IsolateSpawnException>(
             errorValue,
           ),
           stackTrace,

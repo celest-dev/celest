@@ -727,6 +727,12 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "IsolateSpawnException",
+          "url": "dart:isolate",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CloudException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -1489,6 +1495,12 @@
         },
         {
           "$": "TypeReference",
+          "symbol": "IsolateSpawnException",
+          "url": "dart:isolate",
+          "isNullable": false
+        },
+        {
+          "$": "TypeReference",
           "symbol": "CloudException",
           "url": "package:celest_core/src/exception/cloud_exception.dart",
           "isNullable": false
@@ -1620,7 +1632,7 @@
     "celest": "1.0.13",
     "dart": {
       "type": "dart",
-      "version": "3.8.1",
+      "version": "3.9.0",
       "enabledExperiments": []
     },
     "targetSdk": "dart",
@@ -1629,7 +1641,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.32.5",
+      "version": "3.35.1",
       "enabledExperiments": []
     }
   },

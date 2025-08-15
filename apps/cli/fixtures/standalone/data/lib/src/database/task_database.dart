@@ -1,7 +1,7 @@
+import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:drift/drift.dart';
 
 import 'task_database.drift.dart';
-import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 
 export 'task_database.drift.dart';
 

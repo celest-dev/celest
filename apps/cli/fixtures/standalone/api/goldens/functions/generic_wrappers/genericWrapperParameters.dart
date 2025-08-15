@@ -2,7 +2,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i12;
-import 'dart:convert' as _i13;
+import 'dart:convert' as _i14;
+import 'dart:isolate' as _i13;
 
 import 'package:celest/celest.dart' as _i11;
 import 'package:celest/src/core/context.dart' as _i10;
@@ -12,8 +13,8 @@ import 'package:celest_backend/models/parameter_types.dart' as _i6;
 import 'package:celest_backend/src/functions/generic_wrappers.dart' as _i3;
 import 'package:celest_core/celest_core.dart' as _i4;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i9;
-import 'package:celest_core/src/exception/serialization_exception.dart' as _i14;
-import 'package:celest_core/src/serialization/json_value.dart' as _i15;
+import 'package:celest_core/src/exception/serialization_exception.dart' as _i15;
+import 'package:celest_core/src/serialization/json_value.dart' as _i16;
 import 'package:fast_immutable_collections/src/ilist/ilist.dart' as _i5;
 import 'package:fast_immutable_collections/src/imap/imap.dart' as _i7;
 import 'package:shelf/shelf.dart' as _i2;
@@ -405,7 +406,33 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i13.JsonUnsupportedObjectError catch (e, st) {
+    } on _i13.IsolateSpawnException catch (e, st) {
+      const statusCode = 400;
+      _i10.context.logger.severe(e.message, e, st);
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.isolate.IsolateSpawnException',
+              'value': _i4.Serializers.instance
+                  .serialize<_i13.IsolateSpawnException>(e),
+            },
+            if (_i10.context.environment != _i11.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i4.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        },
+      };
+      return _i2.Response(
+        statusCode,
+        headers: const {'Content-Type': 'application/json'},
+        body: _i4.JsonUtf8.encode(status),
+      );
+    } on _i14.JsonUnsupportedObjectError catch (e, st) {
       const statusCode = 500;
       _i10.context.logger.severe(e.toString(), e, st);
       final status = {
@@ -416,7 +443,7 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'dart.convert.JsonUnsupportedObjectError',
               'value': _i4.Serializers.instance
-                  .serialize<_i13.JsonUnsupportedObjectError>(e),
+                  .serialize<_i14.JsonUnsupportedObjectError>(e),
             },
             if (_i10.context.environment != _i11.Environment.production)
               {
@@ -610,7 +637,7 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i14.SerializationException catch (e, st) {
+    } on _i15.SerializationException catch (e, st) {
       const statusCode = 400;
       _i10.context.logger.severe(e.message, e, st);
       final status = {
@@ -621,7 +648,7 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.SerializationException',
               'value': _i4.Serializers.instance
-                  .serialize<_i14.SerializationException>(e),
+                  .serialize<_i15.SerializationException>(e),
             },
             if (_i10.context.environment != _i11.Environment.production)
               {
@@ -1068,7 +1095,7 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<
-        _i13.JsonUnsupportedObjectError,
+        _i14.JsonUnsupportedObjectError,
         Map<String, Object?>
       >(
         serialize:
@@ -1080,7 +1107,7 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
                 r'partialResult': partialResult,
             },
         deserialize: ($serialized) {
-          return _i13.JsonUnsupportedObjectError(
+          return _i14.JsonUnsupportedObjectError(
             $serialized[r'unsupportedObject'],
             cause: $serialized[r'cause'],
             partialResult: ($serialized[r'partialResult'] as String?),
@@ -1276,6 +1303,16 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i13.IsolateSpawnException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return _i13.IsolateSpawnException(
+            ($serialized[r'message'] as String),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
       _i4.Serializer.define<_i8.GenericWrappers, Map<String, Object?>>(
         serialize:
             ($value) => <String, Object?>{
@@ -1404,9 +1441,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1414,9 +1451,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.AbortedException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1429,9 +1466,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1439,9 +1476,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.AlreadyExistsException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1454,9 +1491,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1464,9 +1501,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.BadRequestException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1479,9 +1516,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1489,9 +1526,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.CancelledException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1504,9 +1541,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1522,9 +1559,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1532,9 +1569,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.DataLossError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1547,9 +1584,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1557,9 +1594,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.DeadlineExceededError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1575,9 +1612,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1585,9 +1622,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.FailedPreconditionException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1600,9 +1637,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1610,9 +1647,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.InternalServerError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1625,9 +1662,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1635,9 +1672,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.NotFoundException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1650,9 +1687,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1660,9 +1697,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.OutOfRangeException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1678,9 +1715,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1688,9 +1725,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.PermissionDeniedException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1706,9 +1743,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1716,9 +1753,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.ResourceExhaustedException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1731,9 +1768,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1741,9 +1778,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.UnauthorizedException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1756,9 +1793,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1766,9 +1803,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.UnavailableError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1781,9 +1818,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1791,9 +1828,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.UnimplementedError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1806,9 +1843,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1816,9 +1853,9 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
         deserialize: ($serialized) {
           return _i9.UnknownError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i15.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i16.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1826,44 +1863,33 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i14.SerializationException, Map<String, Object?>>(
+      _i4.Serializer.define<_i15.SerializationException, Map<String, Object?>>(
         serialize:
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i15.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i16.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
             },
         deserialize: ($serialized) {
-          return _i14.SerializationException(
+          return _i15.SerializationException(
             ($serialized[r'message'] as String?),
           );
         },
       ),
     );
     _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i15.JsonValue, Object>(
+      _i4.Serializer.define<_i16.JsonValue, Object>(
         serialize: ($value) => $value.value,
         deserialize: ($serialized) {
-          return _i15.JsonValue($serialized);
+          return _i16.JsonValue($serialized);
         },
       ),
-      const _i4.TypeToken<_i15.JsonValue?>('JsonValue'),
-    );
-    _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i5.IList<String>, dynamic>(
-        serialize: ($value) => $value.toJson((value) => value),
-        deserialize: ($serialized) {
-          return _i5.IList<String>.fromJson(
-            $serialized,
-            (value) => (value as String),
-          );
-        },
-      ),
+      const _i4.TypeToken<_i16.JsonValue?>('JsonValue'),
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.IList<Uri>, dynamic>(
@@ -1939,6 +1965,17 @@ final class GenericWrapperParametersTarget extends _i1.CloudFunctionHttpTarget {
             $serialized,
             (value) => _i4.Serializers.instance
                 .deserialize<_i5.IList<_i6.SimpleClass>>(value),
+          );
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i5.IList<String>, dynamic>(
+        serialize: ($value) => $value.toJson((value) => value),
+        deserialize: ($serialized) {
+          return _i5.IList<String>.fromJson(
+            $serialized,
+            (value) => (value as String),
           );
         },
       ),

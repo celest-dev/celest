@@ -3,6 +3,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async';
 import 'dart:convert';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:_common/_common.dart' as _$_common__common;
@@ -334,6 +335,14 @@ void initSerializers({_$celest.Serializers? serializers}) {
             },
         deserialize: ($serialized) {
           return UnsupportedError(($serialized[r'message'] as String));
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<IsolateSpawnException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return IsolateSpawnException(($serialized[r'message'] as String));
         },
       ),
     );
@@ -1868,6 +1877,23 @@ void initSerializers({_$celest.Serializers? serializers}) {
       const ErrResult_T_ShapeSerializer<Rectangle>(),
     );
     _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<OkResult<Shape>, Map<String, Object?>>(
+        serialize:
+            ($value) => <String, Object?>{
+              r'data': _$celest.Serializers.instance.serialize<Shape>(
+                $value.data,
+              ),
+            },
+        deserialize: ($serialized) {
+          return OkResult<Shape>(
+            _$celest.Serializers.instance.deserialize<Shape>(
+              $serialized[r'data'],
+            ),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
       _$celest.Serializer.define<OkResult<String>, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{r'data': $value.data},
         deserialize: ($serialized) {
@@ -1884,23 +1910,6 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       const OkResult_T_ShapeSerializer<Rectangle>(),
-    );
-    _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<OkResult<Shape>, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'data': _$celest.Serializers.instance.serialize<Shape>(
-                $value.data,
-              ),
-            },
-        deserialize: ($serialized) {
-          return OkResult<Shape>(
-            _$celest.Serializers.instance.deserialize<Shape>(
-              $serialized[r'data'],
-            ),
-          );
-        },
-      ),
     );
     _$celest.Serializers.instance.put(
       const OkResult_E_ShapeExceptionSerializer(),
@@ -1983,68 +1992,6 @@ void initSerializers({_$celest.Serializers? serializers}) {
       ),
     );
     _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<Result<String, Shape>, Map<String, Object?>>(
-        serialize: ($value) {
-          if ($value is OkResult<String>) {
-            return {
-              ...(_$celest.Serializers.instance.serialize<OkResult<String>>(
-                    $value,
-                  )
-                  as Map<String, Object?>),
-              r'$type': r'OkResult',
-            };
-          }
-          if ($value is SwappedResult<Shape, String>) {
-            return {
-              ...(_$celest.Serializers.instance
-                      .serialize<SwappedResult<Shape, String>>($value)
-                  as Map<String, Object?>),
-              r'$type': r'SwappedResult',
-            };
-          }
-          if ($value is ErrResult<Shape>) {
-            return {
-              ...(_$celest.Serializers.instance.serialize<ErrResult<Shape>>(
-                    $value,
-                  )
-                  as Map<String, Object?>),
-              r'$type': r'ErrResult',
-            };
-          }
-          throw _$celest.SerializationException(
-            (StringBuffer('Unknown subtype of ')
-                  ..write(r'Result')
-                  ..write(': ')
-                  ..write($value.runtimeType))
-                .toString(),
-          );
-        },
-        deserialize: ($serialized) {
-          if ($serialized[r'$type'] == r'OkResult') {
-            return _$celest.Serializers.instance.deserialize<OkResult<String>>(
-              $serialized,
-            );
-          }
-          if ($serialized[r'$type'] == r'SwappedResult') {
-            return _$celest.Serializers.instance
-                .deserialize<SwappedResult<Shape, String>>($serialized);
-          }
-          if ($serialized[r'$type'] == r'ErrResult') {
-            return _$celest.Serializers.instance.deserialize<ErrResult<Shape>>(
-              $serialized,
-            );
-          }
-          throw _$celest.SerializationException(
-            (StringBuffer('Unknown subtype of ')
-                  ..write(r'Result')
-                  ..write(': ')
-                  ..write($serialized[r'$type']))
-                .toString(),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
       _$celest.Serializer.define<Result<Shape, String>, Map<String, Object?>>(
         serialize: ($value) {
           if ($value is OkResult<Shape>) {
@@ -2093,6 +2040,68 @@ void initSerializers({_$celest.Serializers? serializers}) {
           }
           if ($serialized[r'$type'] == r'ErrResult') {
             return _$celest.Serializers.instance.deserialize<ErrResult<String>>(
+              $serialized,
+            );
+          }
+          throw _$celest.SerializationException(
+            (StringBuffer('Unknown subtype of ')
+                  ..write(r'Result')
+                  ..write(': ')
+                  ..write($serialized[r'$type']))
+                .toString(),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<Result<String, Shape>, Map<String, Object?>>(
+        serialize: ($value) {
+          if ($value is OkResult<String>) {
+            return {
+              ...(_$celest.Serializers.instance.serialize<OkResult<String>>(
+                    $value,
+                  )
+                  as Map<String, Object?>),
+              r'$type': r'OkResult',
+            };
+          }
+          if ($value is SwappedResult<Shape, String>) {
+            return {
+              ...(_$celest.Serializers.instance
+                      .serialize<SwappedResult<Shape, String>>($value)
+                  as Map<String, Object?>),
+              r'$type': r'SwappedResult',
+            };
+          }
+          if ($value is ErrResult<Shape>) {
+            return {
+              ...(_$celest.Serializers.instance.serialize<ErrResult<Shape>>(
+                    $value,
+                  )
+                  as Map<String, Object?>),
+              r'$type': r'ErrResult',
+            };
+          }
+          throw _$celest.SerializationException(
+            (StringBuffer('Unknown subtype of ')
+                  ..write(r'Result')
+                  ..write(': ')
+                  ..write($value.runtimeType))
+                .toString(),
+          );
+        },
+        deserialize: ($serialized) {
+          if ($serialized[r'$type'] == r'OkResult') {
+            return _$celest.Serializers.instance.deserialize<OkResult<String>>(
+              $serialized,
+            );
+          }
+          if ($serialized[r'$type'] == r'SwappedResult') {
+            return _$celest.Serializers.instance
+                .deserialize<SwappedResult<Shape, String>>($serialized);
+          }
+          if ($serialized[r'$type'] == r'ErrResult') {
+            return _$celest.Serializers.instance.deserialize<ErrResult<Shape>>(
               $serialized,
             );
           }

@@ -2,7 +2,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i8;
-import 'dart:convert' as _i9;
+import 'dart:convert' as _i10;
+import 'dart:isolate' as _i9;
 
 import 'package:celest/celest.dart' as _i7;
 import 'package:celest/src/core/context.dart' as _i6;
@@ -10,8 +11,8 @@ import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/src/functions/records.dart' as _i3;
 import 'package:celest_core/celest_core.dart' as _i4;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _i5;
-import 'package:celest_core/src/exception/serialization_exception.dart' as _i10;
-import 'package:celest_core/src/serialization/json_value.dart' as _i11;
+import 'package:celest_core/src/exception/serialization_exception.dart' as _i11;
+import 'package:celest_core/src/serialization/json_value.dart' as _i12;
 import 'package:shelf/shelf.dart' as _i2;
 
 final class AsyncNonAliasedNamedFieldsTarget
@@ -352,7 +353,33 @@ final class AsyncNonAliasedNamedFieldsTarget
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i9.JsonUnsupportedObjectError catch (e, st) {
+    } on _i9.IsolateSpawnException catch (e, st) {
+      const statusCode = 400;
+      _i6.context.logger.severe(e.message, e, st);
+      final status = {
+        '@status': {
+          'code': statusCode,
+          'message': e.message,
+          'details': [
+            {
+              '@type': 'dart.isolate.IsolateSpawnException',
+              'value': _i4.Serializers.instance
+                  .serialize<_i9.IsolateSpawnException>(e),
+            },
+            if (_i6.context.environment != _i7.Environment.production)
+              {
+                '@type': 'dart.core.StackTrace',
+                'value': _i4.Serializers.instance.serialize<StackTrace>(st),
+              },
+          ],
+        },
+      };
+      return _i2.Response(
+        statusCode,
+        headers: const {'Content-Type': 'application/json'},
+        body: _i4.JsonUtf8.encode(status),
+      );
+    } on _i10.JsonUnsupportedObjectError catch (e, st) {
       const statusCode = 500;
       _i6.context.logger.severe(e.toString(), e, st);
       final status = {
@@ -363,7 +390,7 @@ final class AsyncNonAliasedNamedFieldsTarget
             {
               '@type': 'dart.convert.JsonUnsupportedObjectError',
               'value': _i4.Serializers.instance
-                  .serialize<_i9.JsonUnsupportedObjectError>(e),
+                  .serialize<_i10.JsonUnsupportedObjectError>(e),
             },
             if (_i6.context.environment != _i7.Environment.production)
               {
@@ -557,7 +584,7 @@ final class AsyncNonAliasedNamedFieldsTarget
         headers: const {'Content-Type': 'application/json'},
         body: _i4.JsonUtf8.encode(status),
       );
-    } on _i10.SerializationException catch (e, st) {
+    } on _i11.SerializationException catch (e, st) {
       const statusCode = 400;
       _i6.context.logger.severe(e.message, e, st);
       final status = {
@@ -568,7 +595,7 @@ final class AsyncNonAliasedNamedFieldsTarget
             {
               '@type': 'celest.core.v1.SerializationException',
               'value': _i4.Serializers.instance
-                  .serialize<_i10.SerializationException>(e),
+                  .serialize<_i11.SerializationException>(e),
             },
             if (_i6.context.environment != _i7.Environment.production)
               {
@@ -1031,7 +1058,7 @@ final class AsyncNonAliasedNamedFieldsTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<
-        _i9.JsonUnsupportedObjectError,
+        _i10.JsonUnsupportedObjectError,
         Map<String, Object?>
       >(
         serialize:
@@ -1043,7 +1070,7 @@ final class AsyncNonAliasedNamedFieldsTarget
                 r'partialResult': partialResult,
             },
         deserialize: ($serialized) {
-          return _i9.JsonUnsupportedObjectError(
+          return _i10.JsonUnsupportedObjectError(
             $serialized[r'unsupportedObject'],
             cause: $serialized[r'cause'],
             partialResult: ($serialized[r'partialResult'] as String?),
@@ -1239,14 +1266,22 @@ final class AsyncNonAliasedNamedFieldsTarget
       ),
     );
     _i4.Serializers.instance.put(
+      _i4.Serializer.define<_i9.IsolateSpawnException, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{r'message': $value.message},
+        deserialize: ($serialized) {
+          return _i9.IsolateSpawnException(($serialized[r'message'] as String));
+        },
+      ),
+    );
+    _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.AbortedException, Map<String, Object?>?>(
         serialize:
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1254,9 +1289,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.AbortedException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1269,9 +1304,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1279,9 +1314,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.AlreadyExistsException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1294,9 +1329,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1304,9 +1339,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.BadRequestException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1319,9 +1354,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1329,9 +1364,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.CancelledException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1344,9 +1379,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1362,9 +1397,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1372,9 +1407,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.DataLossError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1387,9 +1422,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1397,9 +1432,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.DeadlineExceededError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1415,9 +1450,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1425,9 +1460,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.FailedPreconditionException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1440,9 +1475,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1450,9 +1485,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.InternalServerError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1465,9 +1500,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1475,9 +1510,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.NotFoundException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1490,9 +1525,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1500,9 +1535,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.OutOfRangeException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1518,9 +1553,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1528,9 +1563,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.PermissionDeniedException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1546,9 +1581,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1556,9 +1591,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.ResourceExhaustedException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1571,9 +1606,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1581,9 +1616,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.UnauthorizedException(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1596,9 +1631,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1606,9 +1641,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.UnavailableError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1621,9 +1656,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1631,9 +1666,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.UnimplementedError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1646,9 +1681,9 @@ final class AsyncNonAliasedNamedFieldsTarget
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
@@ -1656,9 +1691,9 @@ final class AsyncNonAliasedNamedFieldsTarget
         deserialize: ($serialized) {
           return _i5.UnknownError(
             ($serialized?[r'message'] as String?),
-            _i4.Serializers.instance.deserialize<_i11.JsonValue?>(
+            _i4.Serializers.instance.deserialize<_i12.JsonValue?>(
               $serialized?[r'details'],
-              const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+              const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
             ),
             ($serialized?[r'code'] as num?)?.toInt(),
           );
@@ -1666,33 +1701,33 @@ final class AsyncNonAliasedNamedFieldsTarget
       ),
     );
     _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i10.SerializationException, Map<String, Object?>>(
+      _i4.Serializer.define<_i11.SerializationException, Map<String, Object?>>(
         serialize:
             ($value) => <String, Object?>{
               r'code': $value.code,
               r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i11.JsonValue?>(
+              if (_i4.Serializers.instance.serialize<_i12.JsonValue?>(
                     $value.details,
-                    const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+                    const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
                   )
                   case final details?)
                 r'details': details,
             },
         deserialize: ($serialized) {
-          return _i10.SerializationException(
+          return _i11.SerializationException(
             ($serialized[r'message'] as String?),
           );
         },
       ),
     );
     _i4.Serializers.instance.put(
-      _i4.Serializer.define<_i11.JsonValue, Object>(
+      _i4.Serializer.define<_i12.JsonValue, Object>(
         serialize: ($value) => $value.value,
         deserialize: ($serialized) {
-          return _i11.JsonValue($serialized);
+          return _i12.JsonValue($serialized);
         },
       ),
-      const _i4.TypeToken<_i11.JsonValue?>('JsonValue'),
+      const _i4.TypeToken<_i12.JsonValue?>('JsonValue'),
     );
   }
 }

@@ -6,6 +6,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:isolate';
 
 import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_backend/models/person.dart';
@@ -149,6 +150,13 @@ class CelestFunctionsInjected {
       case 'dart.async.TimeoutException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance.deserialize<TimeoutException>(
+            errorValue,
+          ),
+          stackTrace,
+        );
+      case 'dart.isolate.IsolateSpawnException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IsolateSpawnException>(
             errorValue,
           ),
           stackTrace,

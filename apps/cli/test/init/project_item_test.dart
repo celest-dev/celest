@@ -11,6 +11,7 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:test/test.dart';
 
 import '../analyzer/celest_analyzer_test.dart';
+import '../common.dart';
 
 const _projectName = 'celest_backend';
 
@@ -36,10 +37,11 @@ dependencies:
 }
 
 void main() {
-  group('ProjectDependencyUpdater', skip: true, () {
+  group('ProjectDependencyUpdater', skip: 'Needs fix with paths', () {
     late Directory tempDir;
 
     setUpAll(() async {
+      await initTests();
       tempDir = await fileSystem.systemTempDirectory.createTemp('celest_test_');
     });
 
@@ -175,6 +177,7 @@ void main() {
     late Directory tempDir;
 
     setUpAll(() async {
+      await initTests();
       tempDir = await fileSystem.systemTempDirectory.createTemp('celest_test_');
     });
 

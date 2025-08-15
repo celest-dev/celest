@@ -6,6 +6,7 @@ library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:isolate';
 
 import 'package:_common/_common.dart' as _$_common__common;
 import 'package:celest/celest.dart' as _$celest;
@@ -177,6 +178,13 @@ class CelestFunctionsExternal {
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
+            errorValue,
+          ),
+          stackTrace,
+        );
+      case 'dart.isolate.IsolateSpawnException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IsolateSpawnException>(
             errorValue,
           ),
           stackTrace,
@@ -601,6 +609,13 @@ class CelestFunctionsNonthrowing {
           ),
           stackTrace,
         );
+      case 'dart.isolate.IsolateSpawnException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IsolateSpawnException>(
+            errorValue,
+          ),
+          stackTrace,
+        );
       case 'exceptions.v1.BaseException':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance.deserialize<BaseException>(errorValue),
@@ -965,6 +980,13 @@ class CelestFunctionsThrowing {
       case 'dart.convert.JsonUnsupportedObjectError':
         Error.throwWithStackTrace(
           _$celest.Serializers.instance.deserialize<JsonUnsupportedObjectError>(
+            errorValue,
+          ),
+          stackTrace,
+        );
+      case 'dart.isolate.IsolateSpawnException':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance.deserialize<IsolateSpawnException>(
             errorValue,
           ),
           stackTrace,

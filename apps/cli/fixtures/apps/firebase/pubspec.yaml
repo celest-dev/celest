@@ -14,6 +14,14 @@ dependencies:
   flutter:
     sdk: flutter
 
+dependency_overrides:
+  celest:
+    path: ../../../../../packages/celest
+  celest_auth:
+    path: ../../../../../packages/celest_auth
+  celest_core:
+    path: ../../../../../packages/celest_core
+
 dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:
