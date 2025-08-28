@@ -1,6 +1,7 @@
-## NEXT
+## 1.0.7
 
 - chore: Update analyzer plugin dependencies
+- chore: Update dependencies
 
 ## 1.0.6
 
