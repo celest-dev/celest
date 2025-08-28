@@ -1,6 +1,6 @@
 name: celest_test
 description: Helper package for running integration tests with Celest.
-version: 0.1.1-wip
+version: 0.1.1
 homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/packages/celest_test
 
