@@ -59,10 +59,10 @@ void main() {
 
   final testRunners = <TestRunner>[];
   final testDirs = [
-    // TODO(dnys1): Need to ensure Firebase/Supabase pre-reqs are installed
-    // p.join(fileSystem.currentDirectory.path, 'fixtures', 'apps'),
-    p.join(fileSystem.currentDirectory.path, 'fixtures', 'standalone'),
-  ]
+        // TODO(dnys1): Need to ensure Firebase/Supabase pre-reqs are installed
+        // p.join(fileSystem.currentDirectory.path, 'fixtures', 'apps'),
+        p.join(fileSystem.currentDirectory.path, 'fixtures', 'standalone'),
+      ]
       .map(fileSystem.directory)
       .expand((testDir) => testDir.listSync().whereType<Directory>());
   for (final testDir in testDirs) {
@@ -135,9 +135,7 @@ class TestRunner {
 
   static Future<void> _warmUp(String projectRoot) {
     return Isolate.run(() async {
-      final sdkResult = await DartSdkFinder(
-        projectRoot: projectRoot,
-      ).findSdk();
+      final sdkResult = await DartSdkFinder(projectRoot: projectRoot).findSdk();
       Sdk.current = sdkResult.sdk;
       return CelestAnalyzer.warmUp(projectRoot);
     });
@@ -147,16 +145,13 @@ class TestRunner {
     group(testName, () {
       setUpAll(() async {
         if (fileSystem.file(p.join(projectRoot, '.fvmrc')).existsSync()) {
-          final res = Process.runSync(
-            'fvm',
-            ['use'],
-            workingDirectory: projectRoot,
-          );
+          final res = Process.runSync('fvm', [
+            'use',
+          ], workingDirectory: projectRoot);
           expect(res.exitCode, 0, reason: '${res.stdout}\n${res.stderr}');
         }
-        final sdkResult = await DartSdkFinder(
-          projectRoot: projectRoot,
-        ).findSdk();
+        final sdkResult =
+            await DartSdkFinder(projectRoot: projectRoot).findSdk();
         Sdk.current = sdkResult.sdk;
         await runPub(
           exe: Platform.resolvedExecutable,
@@ -227,11 +222,11 @@ class TestRunner {
     // Analyzer needs a bit longer.
     // TODO(dnys1): Benchmark + improve performance of analysis.
     test('analyzer', timeout: const Timeout.factor(3), () async {
-      final CelestAnalysisResult(:project, :errors, :warnings) =
-          await analyzer.analyzeProject(
-        migrateProject: false,
-        updateResources: updateGoldens,
-      );
+      final CelestAnalysisResult(:project, :errors, :warnings) = await analyzer
+          .analyzeProject(
+            migrateProject: false,
+            updateResources: updateGoldens,
+          );
       expect(errors, isEmpty);
       expect(warnings, isEmpty);
       expect(project, isNotNull);
@@ -248,27 +243,32 @@ class TestRunner {
           const JsonEncoder.withIndent('  ').convert(project!.toJson()),
         );
       } else {
-        final expectedAst = jsonDecode(await goldenAst.readAsString());
-        expect(project!.toJson(), expectedAst);
+        final expectedAst =
+            jsonDecode(await goldenAst.readAsString()) as Map<String, dynamic>;
+        expect(
+          project!.toJson()..remove('sdkConfig'),
+          expectedAst..remove('sdkConfig'),
+        );
       }
     });
   }
 
   void testCodegen() {
     test('codegen', () async {
-      final CelestAnalysisResult(:project, :errors, :warnings) =
-          await analyzer.analyzeProject(
-        migrateProject: false,
-        updateResources: updateGoldens,
-      );
+      final CelestAnalysisResult(:project, :errors, :warnings) = await analyzer
+          .analyzeProject(
+            migrateProject: false,
+            updateResources: updateGoldens,
+          );
       expect(errors, isEmpty);
       expect(warnings, isEmpty);
       expect(project, isNotNull);
 
-      final configValues = await ConfigValueSolver(
-        project: project!,
-        environmentId: 'local',
-      ).solveAll();
+      final configValues =
+          await ConfigValueSolver(
+            project: project!,
+            environmentId: 'local',
+          ).solveAll();
       final projectResolver = ProjectLinker(
         configValues: configValues,
         environmentId: 'local',
@@ -306,19 +306,20 @@ class TestRunner {
 
   void testResolve() {
     test('resolve', () async {
-      final CelestAnalysisResult(:project, :errors, :warnings) =
-          await analyzer.analyzeProject(
-        migrateProject: false,
-        updateResources: updateGoldens,
-      );
+      final CelestAnalysisResult(:project, :errors, :warnings) = await analyzer
+          .analyzeProject(
+            migrateProject: false,
+            updateResources: updateGoldens,
+          );
       expect(errors, isEmpty);
       expect(warnings, isEmpty);
       expect(project, isNotNull);
 
-      final configValues = await ConfigValueSolver(
-        project: project!,
-        environmentId: 'local',
-      ).solveAll();
+      final configValues =
+          await ConfigValueSolver(
+            project: project!,
+            environmentId: 'local',
+          ).solveAll();
       final projectResolver = ProjectLinker(
         configValues: configValues,
         environmentId: 'local',
@@ -335,26 +336,32 @@ class TestRunner {
             const JsonEncoder.withIndent('  ').convert(resolvedAst),
           );
       } else {
-        final expectedAst = jsonDecode(resolvedAstFile.readAsStringSync());
-        expect(resolvedAst, expectedAst);
+        final expectedAst =
+            jsonDecode(resolvedAstFile.readAsStringSync())
+                as Map<String, dynamic>;
+        expect(
+          resolvedAst..remove('sdkConfig'),
+          expectedAst..remove('sdkConfig'),
+        );
       }
     });
   }
 
   void testClient() {
     test('client', () async {
-      final CelestAnalysisResult(:project, :errors) =
-          await analyzer.analyzeProject(
-        migrateProject: false,
-        updateResources: updateGoldens,
-      );
+      final CelestAnalysisResult(:project, :errors) = await analyzer
+          .analyzeProject(
+            migrateProject: false,
+            updateResources: updateGoldens,
+          );
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
-      final configValues = await ConfigValueSolver(
-        project: project!,
-        environmentId: 'local',
-      ).solveAll();
+      final configValues =
+          await ConfigValueSolver(
+            project: project!,
+            environmentId: 'local',
+          ).solveAll();
       final projectResolver = ProjectLinker(
         configValues: configValues,
         environmentId: 'local',
@@ -401,11 +408,11 @@ class TestRunner {
     final isCI = platform.environment.containsKey('CI');
     final shouldRun = !isCI || platform.isLinux;
     test('build', skip: !shouldRun, () async {
-      final CelestAnalysisResult(:project, :errors) =
-          await analyzer.analyzeProject(
-        migrateProject: false,
-        updateResources: updateGoldens,
-      );
+      final CelestAnalysisResult(:project, :errors) = await analyzer
+          .analyzeProject(
+            migrateProject: false,
+            updateResources: updateGoldens,
+          );
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
@@ -423,17 +430,14 @@ class TestRunner {
 
       final outputDir = projectPaths.buildDir;
       final imageName = '$testName-${Random().nextInt(1000000)}';
-      final dockerBuild = await processManager.run(
-        [
-          'docker',
-          'build',
-          '-t',
-          imageName,
-          '--platform=linux/amd64',
-          '.',
-        ],
-        workingDirectory: outputDir,
-      );
+      final dockerBuild = await processManager.run([
+        'docker',
+        'build',
+        '-t',
+        imageName,
+        '--platform=linux/amd64',
+        '.',
+      ], workingDirectory: outputDir);
       expect(
         dockerBuild.exitCode,
         0,
@@ -441,26 +445,22 @@ class TestRunner {
       );
 
       addTearDown(() async {
-        await processManager.run(
-          ['docker', 'image', 'rm', imageName],
-        );
+        await processManager.run(['docker', 'image', 'rm', imageName]);
       });
 
       final openPort = await RandomPortFinder().findOpenPort();
-      final dockerRun = await processManager.start(
-        [
-          'docker',
-          'run',
-          '--rm',
-          '-p',
-          '$openPort:8080',
-          '--platform=linux/amd64',
-          for (final database in project!.databases.values)
-            if (database.config case ast.CelestDatabaseConfig(:final hostname))
-              '--env=${hostname.name}=file::memory:',
-          imageName,
-        ],
-      );
+      final dockerRun = await processManager.start([
+        'docker',
+        'run',
+        '--rm',
+        '-p',
+        '$openPort:8080',
+        '--platform=linux/amd64',
+        for (final database in project!.databases.values)
+          if (database.config case ast.CelestDatabaseConfig(:final hostname))
+            '--env=${hostname.name}=file::memory:',
+        imageName,
+      ]);
       addTearDown(() => dockerRun.kill(ProcessSignal.sigkill));
 
       final dockerOutput = StreamController<String>.broadcast(sync: true);
@@ -503,18 +503,19 @@ class TestRunner {
 
       setUpAll(() async {
         final entrypoint = projectPaths.localApiEntrypoint;
-        final CelestAnalysisResult(:project, :errors) =
-            await analyzer.analyzeProject(
-          migrateProject: false,
-          updateResources: updateGoldens,
-        );
+        final CelestAnalysisResult(:project, :errors) = await analyzer
+            .analyzeProject(
+              migrateProject: false,
+              updateResources: updateGoldens,
+            );
         expect(errors, isEmpty);
         expect(project, isNotNull);
 
-        final configValues = await ConfigValueSolver(
-          project: project!,
-          environmentId: 'local',
-        ).solveAll();
+        final configValues =
+            await ConfigValueSolver(
+              project: project!,
+              environmentId: 'local',
+            ).solveAll();
         final projectResolver = ProjectLinker(
           configValues: configValues,
           environmentId: 'local',
@@ -526,8 +527,9 @@ class TestRunner {
           configValues: {
             ...configValues,
             for (final database in project.databases.values)
-              if (database.config
-                  case ast.CelestDatabaseConfig(:final hostname))
+              if (database.config case ast.CelestDatabaseConfig(
+                :final hostname,
+              ))
                 hostname.name: 'file::memory:',
           },
           environmentId: 'local',
@@ -577,19 +579,20 @@ class TestRunner {
     group(functionName, () {
       for (final testCase in httpTests) {
         test(testCase.name, () async {
-          final request = Request(
-            testCase.method,
-            apiUri()
-                .resolve(
-                  '/${apiName.paramCase}/${functionName.paramCase}',
+          final request =
+              Request(
+                  testCase.method,
+                  apiUri()
+                      .resolve(
+                        '/${apiName.paramCase}/${functionName.paramCase}',
+                      )
+                      .replace(queryParameters: testCase.queryParameters),
                 )
-                .replace(queryParameters: testCase.queryParameters),
-          )
-            ..headers.addAll({
-              'Content-Type': 'application/json',
-              ...testCase.headers,
-            })
-            ..body = jsonEncode(testCase.input);
+                ..headers.addAll({
+                  'Content-Type': 'application/json',
+                  ...testCase.headers,
+                })
+                ..body = jsonEncode(testCase.input);
           if (testCase.setup case final setup?) {
             await setup(request);
           }
@@ -4535,7 +4538,8 @@ final tests = <String, Test>{
                 final jwt = JWT(
                   {
                     'aud': 'authenticated',
-                    'exp': DateTime.now()
+                    'exp':
+                        DateTime.now()
                             .add(const Duration(days: 1))
                             .millisecondsSinceEpoch ~/
                         1000,

@@ -1,3 +1,7 @@
+# NEXT
+
+- chore: Fix lint errors
+
 # 0.1.9
 
 - chore: Bump Dart SDK constraint to `^3.7.0`
