@@ -1,3 +1,7 @@
+## 0.3.5
+
+- chore: Update dependencies
+
 ## 0.3.4
 
 - fix: Database checks in debug mode
