@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/api/resource.proto
-//
+// Generated from google/api/resource.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
@@ -19,53 +20,53 @@ export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'resource.pbenum.dart';
 
-///  A simple descriptor of a resource type.
+/// A simple descriptor of a resource type.
 ///
-///  ResourceDescriptor annotates a resource message (either by means of a
-///  protobuf annotation or use in the service config), and associates the
-///  resource's schema, the resource type, and the pattern of the resource name.
+/// ResourceDescriptor annotates a resource message (either by means of a
+/// protobuf annotation or use in the service config), and associates the
+/// resource's schema, the resource type, and the pattern of the resource name.
 ///
-///  Example:
+/// Example:
 ///
-///      message Topic {
-///        // Indicates this message defines a resource schema.
-///        // Declares the resource type in the format of {service}/{kind}.
-///        // For Kubernetes resources, the format is {api group}/{kind}.
-///        option (google.api.resource) = {
-///          type: "pubsub.googleapis.com/Topic"
-///          pattern: "projects/{project}/topics/{topic}"
-///        };
-///      }
+///     message Topic {
+///       // Indicates this message defines a resource schema.
+///       // Declares the resource type in the format of {service}/{kind}.
+///       // For Kubernetes resources, the format is {api group}/{kind}.
+///       option (google.api.resource) = {
+///         type: "pubsub.googleapis.com/Topic"
+///         pattern: "projects/{project}/topics/{topic}"
+///       };
+///     }
 ///
-///  The ResourceDescriptor Yaml config will look like:
+/// The ResourceDescriptor Yaml config will look like:
 ///
-///      resources:
-///      - type: "pubsub.googleapis.com/Topic"
-///        pattern: "projects/{project}/topics/{topic}"
+///     resources:
+///     - type: "pubsub.googleapis.com/Topic"
+///       pattern: "projects/{project}/topics/{topic}"
 ///
-///  Sometimes, resources have multiple patterns, typically because they can
-///  live under multiple parents.
+/// Sometimes, resources have multiple patterns, typically because they can
+/// live under multiple parents.
 ///
-///  Example:
+/// Example:
 ///
-///      message LogEntry {
-///        option (google.api.resource) = {
-///          type: "logging.googleapis.com/LogEntry"
-///          pattern: "projects/{project}/logs/{log}"
-///          pattern: "folders/{folder}/logs/{log}"
-///          pattern: "organizations/{organization}/logs/{log}"
-///          pattern: "billingAccounts/{billing_account}/logs/{log}"
-///        };
-///      }
+///     message LogEntry {
+///       option (google.api.resource) = {
+///         type: "logging.googleapis.com/LogEntry"
+///         pattern: "projects/{project}/logs/{log}"
+///         pattern: "folders/{folder}/logs/{log}"
+///         pattern: "organizations/{organization}/logs/{log}"
+///         pattern: "billingAccounts/{billing_account}/logs/{log}"
+///       };
+///     }
 ///
-///  The ResourceDescriptor Yaml config will look like:
+/// The ResourceDescriptor Yaml config will look like:
 ///
-///      resources:
-///      - type: 'logging.googleapis.com/LogEntry'
-///        pattern: "projects/{project}/logs/{log}"
-///        pattern: "folders/{folder}/logs/{log}"
-///        pattern: "organizations/{organization}/logs/{log}"
-///        pattern: "billingAccounts/{billing_account}/logs/{log}"
+///     resources:
+///     - type: 'logging.googleapis.com/LogEntry'
+///       pattern: "projects/{project}/logs/{log}"
+///       pattern: "folders/{folder}/logs/{log}"
+///       pattern: "organizations/{organization}/logs/{log}"
+///       pattern: "billingAccounts/{billing_account}/logs/{log}"
 class ResourceDescriptor extends $pb.GeneratedMessage {
   factory ResourceDescriptor({
     $core.String? type,
@@ -76,37 +77,25 @@ class ResourceDescriptor extends $pb.GeneratedMessage {
     $core.String? singular,
     $core.Iterable<ResourceDescriptor_Style>? style,
   }) {
-    final $result = create();
-    if (type != null) {
-      $result.type = type;
-    }
-    if (pattern != null) {
-      $result.pattern.addAll(pattern);
-    }
-    if (nameField != null) {
-      $result.nameField = nameField;
-    }
-    if (history != null) {
-      $result.history = history;
-    }
-    if (plural != null) {
-      $result.plural = plural;
-    }
-    if (singular != null) {
-      $result.singular = singular;
-    }
-    if (style != null) {
-      $result.style.addAll(style);
-    }
-    return $result;
+    final result = create();
+    if (type != null) result.type = type;
+    if (pattern != null) result.pattern.addAll(pattern);
+    if (nameField != null) result.nameField = nameField;
+    if (history != null) result.history = history;
+    if (plural != null) result.plural = plural;
+    if (singular != null) result.singular = singular;
+    if (style != null) result.style.addAll(style);
+    return result;
   }
-  ResourceDescriptor._() : super();
-  factory ResourceDescriptor.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ResourceDescriptor.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ResourceDescriptor._();
+
+  factory ResourceDescriptor.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ResourceDescriptor.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ResourceDescriptor',
@@ -129,21 +118,19 @@ class ResourceDescriptor extends $pb.GeneratedMessage {
         defaultEnumValue: ResourceDescriptor_Style.STYLE_UNSPECIFIED)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ResourceDescriptor clone() => ResourceDescriptor()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ResourceDescriptor copyWith(void Function(ResourceDescriptor) updates) =>
       super.copyWith((message) => updates(message as ResourceDescriptor))
           as ResourceDescriptor;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ResourceDescriptor create() => ResourceDescriptor._();
+  @$core.override
   ResourceDescriptor createEmptyInstance() => create();
   static $pb.PbList<ResourceDescriptor> createRepeated() =>
       $pb.PbList<ResourceDescriptor>();
@@ -152,47 +139,44 @@ class ResourceDescriptor extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<ResourceDescriptor>(create);
   static ResourceDescriptor? _defaultInstance;
 
-  ///  The resource type. It must be in the format of
-  ///  {service_name}/{resource_type_kind}. The `resource_type_kind` must be
-  ///  singular and must not include version numbers.
+  /// The resource type. It must be in the format of
+  /// {service_name}/{resource_type_kind}. The `resource_type_kind` must be
+  /// singular and must not include version numbers.
   ///
-  ///  Example: `storage.googleapis.com/Bucket`
+  /// Example: `storage.googleapis.com/Bucket`
   ///
-  ///  The value of the resource_type_kind must follow the regular expression
-  ///  /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
-  ///  should use PascalCase (UpperCamelCase). The maximum number of
-  ///  characters allowed for the `resource_type_kind` is 100.
+  /// The value of the resource_type_kind must follow the regular expression
+  /// /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
+  /// should use PascalCase (UpperCamelCase). The maximum number of
+  /// characters allowed for the `resource_type_kind` is 100.
   @$pb.TagNumber(1)
   $core.String get type => $_getSZ(0);
   @$pb.TagNumber(1)
-  set type($core.String v) {
-    $_setString(0, v);
-  }
-
+  set type($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
   void clearType() => $_clearField(1);
 
-  ///  Optional. The relative resource name pattern associated with this resource
-  ///  type. The DNS prefix of the full resource name shouldn't be specified here.
+  /// Optional. The relative resource name pattern associated with this resource
+  /// type. The DNS prefix of the full resource name shouldn't be specified here.
   ///
-  ///  The path pattern must follow the syntax, which aligns with HTTP binding
-  ///  syntax:
+  /// The path pattern must follow the syntax, which aligns with HTTP binding
+  /// syntax:
   ///
-  ///      Template = Segment { "/" Segment } ;
-  ///      Segment = LITERAL | Variable ;
-  ///      Variable = "{" LITERAL "}" ;
+  ///     Template = Segment { "/" Segment } ;
+  ///     Segment = LITERAL | Variable ;
+  ///     Variable = "{" LITERAL "}" ;
   ///
-  ///  Examples:
+  /// Examples:
   ///
-  ///      - "projects/{project}/topics/{topic}"
-  ///      - "projects/{project}/knowledgeBases/{knowledge_base}"
+  ///     - "projects/{project}/topics/{topic}"
+  ///     - "projects/{project}/knowledgeBases/{knowledge_base}"
   ///
-  ///  The components in braces correspond to the IDs for each resource in the
-  ///  hierarchy. It is expected that, if multiple patterns are provided,
-  ///  the same component name (e.g. "project") refers to IDs of the same
-  ///  type of resource.
+  /// The components in braces correspond to the IDs for each resource in the
+  /// hierarchy. It is expected that, if multiple patterns are provided,
+  /// the same component name (e.g. "project") refers to IDs of the same
+  /// type of resource.
   @$pb.TagNumber(2)
   $pb.PbList<$core.String> get pattern => $_getList(1);
 
@@ -201,62 +185,53 @@ class ResourceDescriptor extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get nameField => $_getSZ(2);
   @$pb.TagNumber(3)
-  set nameField($core.String v) {
-    $_setString(2, v);
-  }
-
+  set nameField($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasNameField() => $_has(2);
   @$pb.TagNumber(3)
   void clearNameField() => $_clearField(3);
 
-  ///  Optional. The historical or future-looking state of the resource pattern.
+  /// Optional. The historical or future-looking state of the resource pattern.
   ///
-  ///  Example:
+  /// Example:
   ///
-  ///      // The InspectTemplate message originally only supported resource
-  ///      // names with organization, and project was added later.
-  ///      message InspectTemplate {
-  ///        option (google.api.resource) = {
-  ///          type: "dlp.googleapis.com/InspectTemplate"
-  ///          pattern:
-  ///          "organizations/{organization}/inspectTemplates/{inspect_template}"
-  ///          pattern: "projects/{project}/inspectTemplates/{inspect_template}"
-  ///          history: ORIGINALLY_SINGLE_PATTERN
-  ///        };
-  ///      }
+  ///     // The InspectTemplate message originally only supported resource
+  ///     // names with organization, and project was added later.
+  ///     message InspectTemplate {
+  ///       option (google.api.resource) = {
+  ///         type: "dlp.googleapis.com/InspectTemplate"
+  ///         pattern:
+  ///         "organizations/{organization}/inspectTemplates/{inspect_template}"
+  ///         pattern: "projects/{project}/inspectTemplates/{inspect_template}"
+  ///         history: ORIGINALLY_SINGLE_PATTERN
+  ///       };
+  ///     }
   @$pb.TagNumber(4)
   ResourceDescriptor_History get history => $_getN(3);
   @$pb.TagNumber(4)
-  set history(ResourceDescriptor_History v) {
-    $_setField(4, v);
-  }
-
+  set history(ResourceDescriptor_History value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasHistory() => $_has(3);
   @$pb.TagNumber(4)
   void clearHistory() => $_clearField(4);
 
-  ///  The plural name used in the resource name and permission names, such as
-  ///  'projects' for the resource name of 'projects/{project}' and the permission
-  ///  name of 'cloudresourcemanager.googleapis.com/projects.get'. One exception
-  ///  to this is for Nested Collections that have stuttering names, as defined
-  ///  in [AIP-122](https://google.aip.dev/122#nested-collections), where the
-  ///  collection ID in the resource name pattern does not necessarily directly
-  ///  match the `plural` value.
+  /// The plural name used in the resource name and permission names, such as
+  /// 'projects' for the resource name of 'projects/{project}' and the permission
+  /// name of 'cloudresourcemanager.googleapis.com/projects.get'. One exception
+  /// to this is for Nested Collections that have stuttering names, as defined
+  /// in [AIP-122](https://google.aip.dev/122#nested-collections), where the
+  /// collection ID in the resource name pattern does not necessarily directly
+  /// match the `plural` value.
   ///
-  ///  It is the same concept of the `plural` field in k8s CRD spec
-  ///  https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
+  /// It is the same concept of the `plural` field in k8s CRD spec
+  /// https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
   ///
-  ///  Note: The plural form is required even for singleton resources. See
-  ///  https://aip.dev/156
+  /// Note: The plural form is required even for singleton resources. See
+  /// https://aip.dev/156
   @$pb.TagNumber(5)
   $core.String get plural => $_getSZ(4);
   @$pb.TagNumber(5)
-  set plural($core.String v) {
-    $_setString(4, v);
-  }
-
+  set plural($core.String value) => $_setString(4, value);
   @$pb.TagNumber(5)
   $core.bool hasPlural() => $_has(4);
   @$pb.TagNumber(5)
@@ -268,10 +243,7 @@ class ResourceDescriptor extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.String get singular => $_getSZ(5);
   @$pb.TagNumber(6)
-  set singular($core.String v) {
-    $_setString(5, v);
-  }
-
+  set singular($core.String value) => $_setString(5, value);
   @$pb.TagNumber(6)
   $core.bool hasSingular() => $_has(5);
   @$pb.TagNumber(6)
@@ -291,22 +263,20 @@ class ResourceReference extends $pb.GeneratedMessage {
     $core.String? type,
     $core.String? childType,
   }) {
-    final $result = create();
-    if (type != null) {
-      $result.type = type;
-    }
-    if (childType != null) {
-      $result.childType = childType;
-    }
-    return $result;
+    final result = create();
+    if (type != null) result.type = type;
+    if (childType != null) result.childType = childType;
+    return result;
   }
-  ResourceReference._() : super();
-  factory ResourceReference.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ResourceReference.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ResourceReference._();
+
+  factory ResourceReference.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ResourceReference.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ResourceReference',
@@ -316,21 +286,19 @@ class ResourceReference extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'childType')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ResourceReference clone() => ResourceReference()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ResourceReference copyWith(void Function(ResourceReference) updates) =>
       super.copyWith((message) => updates(message as ResourceReference))
           as ResourceReference;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ResourceReference create() => ResourceReference._();
+  @$core.override
   ResourceReference createEmptyInstance() => create();
   static $pb.PbList<ResourceReference> createRepeated() =>
       $pb.PbList<ResourceReference>();
@@ -339,56 +307,50 @@ class ResourceReference extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<ResourceReference>(create);
   static ResourceReference? _defaultInstance;
 
-  ///  The resource type that the annotated field references.
+  /// The resource type that the annotated field references.
   ///
-  ///  Example:
+  /// Example:
   ///
-  ///      message Subscription {
-  ///        string topic = 2 [(google.api.resource_reference) = {
-  ///          type: "pubsub.googleapis.com/Topic"
-  ///        }];
-  ///      }
+  ///     message Subscription {
+  ///       string topic = 2 [(google.api.resource_reference) = {
+  ///         type: "pubsub.googleapis.com/Topic"
+  ///       }];
+  ///     }
   ///
-  ///  Occasionally, a field may reference an arbitrary resource. In this case,
-  ///  APIs use the special value * in their resource reference.
+  /// Occasionally, a field may reference an arbitrary resource. In this case,
+  /// APIs use the special value * in their resource reference.
   ///
-  ///  Example:
+  /// Example:
   ///
-  ///      message GetIamPolicyRequest {
-  ///        string resource = 2 [(google.api.resource_reference) = {
-  ///          type: "*"
-  ///        }];
-  ///      }
+  ///     message GetIamPolicyRequest {
+  ///       string resource = 2 [(google.api.resource_reference) = {
+  ///         type: "*"
+  ///       }];
+  ///     }
   @$pb.TagNumber(1)
   $core.String get type => $_getSZ(0);
   @$pb.TagNumber(1)
-  set type($core.String v) {
-    $_setString(0, v);
-  }
-
+  set type($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
   void clearType() => $_clearField(1);
 
-  ///  The resource type of a child collection that the annotated field
-  ///  references. This is useful for annotating the `parent` field that
-  ///  doesn't have a fixed resource type.
+  /// The resource type of a child collection that the annotated field
+  /// references. This is useful for annotating the `parent` field that
+  /// doesn't have a fixed resource type.
   ///
-  ///  Example:
+  /// Example:
   ///
-  ///      message ListLogEntriesRequest {
-  ///        string parent = 1 [(google.api.resource_reference) = {
-  ///          child_type: "logging.googleapis.com/LogEntry"
-  ///        };
-  ///      }
+  ///     message ListLogEntriesRequest {
+  ///       string parent = 1 [(google.api.resource_reference) = {
+  ///         child_type: "logging.googleapis.com/LogEntry"
+  ///       };
+  ///     }
   @$pb.TagNumber(2)
   $core.String get childType => $_getSZ(1);
   @$pb.TagNumber(2)
-  set childType($core.String v) {
-    $_setString(1, v);
-  }
-
+  set childType($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasChildType() => $_has(1);
   @$pb.TagNumber(2)
@@ -424,6 +386,7 @@ class Resource {
   }
 }
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');

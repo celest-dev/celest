@@ -1,182 +1,124 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: buf/validate/validate.proto
-//
+// Generated from buf/validate/validate.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-/// Specifies how FieldConstraints.ignore behaves. See the documentation for
-/// FieldConstraints.required for definitions of "populated" and "nullable".
+/// Specifies how `FieldRules.ignore` behaves, depending on the field's value, and
+/// whether the field tracks presence.
 class Ignore extends $pb.ProtobufEnum {
-  ///  Validation is only skipped if it's an unpopulated nullable fields.
+  /// Ignore rules if the field tracks presence and is unset. This is the default
+  /// behavior.
   ///
-  ///  ```proto
-  ///  syntax="proto3";
+  /// In proto3, only message fields, members of a Protobuf `oneof`, and fields
+  /// with the `optional` label track presence. Consequently, the following fields
+  /// are always validated, whether a value is set or not:
   ///
-  ///  message Request {
-  ///    // The uri rule applies to any value, including the empty string.
-  ///    string foo = 1 [
-  ///      (buf.validate.field).string.uri = true
-  ///    ];
+  /// ```proto
+  /// syntax="proto3";
   ///
-  ///    // The uri rule only applies if the field is set, including if it's
-  ///    // set to the empty string.
-  ///    optional string bar = 2 [
-  ///      (buf.validate.field).string.uri = true
-  ///    ];
+  /// message RulesApply {
+  ///   string email = 1 [
+  ///     (buf.validate.field).string.email = true
+  ///   ];
+  ///   int32 age = 2 [
+  ///     (buf.validate.field).int32.gt = 0
+  ///   ];
+  ///   repeated string labels = 3 [
+  ///     (buf.validate.field).repeated.min_items = 1
+  ///   ];
+  /// }
+  /// ```
   ///
-  ///    // The min_items rule always applies, even if the list is empty.
-  ///    repeated string baz = 3 [
-  ///      (buf.validate.field).repeated.min_items = 3
-  ///    ];
+  /// In contrast, the following fields track presence, and are only validated if
+  /// a value is set:
   ///
-  ///    // The custom CEL rule applies only if the field is set, including if
-  ///    // it's the "zero" value of that message.
-  ///    SomeMessage quux = 4 [
-  ///      (buf.validate.field).cel = {/* ... */}
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// syntax="proto3";
+  ///
+  /// message RulesApplyIfSet {
+  ///   optional string email = 1 [
+  ///     (buf.validate.field).string.email = true
+  ///   ];
+  ///   oneof ref {
+  ///     string reference = 2 [
+  ///       (buf.validate.field).string.uuid = true
+  ///     ];
+  ///     string name = 3 [
+  ///       (buf.validate.field).string.min_len = 4
+  ///     ];
+  ///   }
+  ///   SomeMessage msg = 4 [
+  ///     (buf.validate.field).cel = {/* ... */}
+  ///   ];
+  /// }
+  /// ```
+  ///
+  /// To ensure that such a field is set, add the `required` rule.
+  ///
+  /// To learn which fields track presence, see the
+  /// [Field Presence cheat sheet](https://protobuf.dev/programming-guides/field_presence/#cheat).
   static const Ignore IGNORE_UNSPECIFIED =
       Ignore._(0, _omitEnumNames ? '' : 'IGNORE_UNSPECIFIED');
 
-  ///  Validation is skipped if the field is unpopulated. This rule is redundant
-  ///  if the field is already nullable.
+  /// Ignore rules if the field is unset, or set to the zero value.
   ///
-  ///  ```proto
-  ///  syntax="proto3
+  /// The zero value depends on the field type:
+  /// - For strings, the zero value is the empty string.
+  /// - For bytes, the zero value is empty bytes.
+  /// - For bool, the zero value is false.
+  /// - For numeric types, the zero value is zero.
+  /// - For enums, the zero value is the first defined enum value.
+  /// - For repeated fields, the zero is an empty list.
+  /// - For map fields, the zero is an empty map.
+  /// - For message fields, absence of the message (typically a null-value) is considered zero value.
   ///
-  ///  message Request {
-  ///    // The uri rule applies only if the value is not the empty string.
-  ///    string foo = 1 [
-  ///      (buf.validate.field).string.uri = true,
-  ///      (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED
-  ///    ];
-  ///
-  ///    // IGNORE_IF_UNPOPULATED is equivalent to IGNORE_UNSPECIFIED in this
-  ///    // case: the uri rule only applies if the field is set, including if
-  ///    // it's set to the empty string.
-  ///    optional string bar = 2 [
-  ///      (buf.validate.field).string.uri = true,
-  ///      (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED
-  ///    ];
-  ///
-  ///    // The min_items rule only applies if the list has at least one item.
-  ///    repeated string baz = 3 [
-  ///      (buf.validate.field).repeated.min_items = 3,
-  ///      (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED
-  ///    ];
-  ///
-  ///    // IGNORE_IF_UNPOPULATED is equivalent to IGNORE_UNSPECIFIED in this
-  ///    // case: the custom CEL rule applies only if the field is set, including
-  ///    // if it's the "zero" value of that message.
-  ///    SomeMessage quux = 4 [
-  ///      (buf.validate.field).cel = {/* ... */},
-  ///      (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED
-  ///    ];
-  ///  }
-  ///  ```
-  static const Ignore IGNORE_IF_UNPOPULATED =
-      Ignore._(1, _omitEnumNames ? '' : 'IGNORE_IF_UNPOPULATED');
+  /// For fields that track presence (e.g. adding the `optional` label in proto3),
+  /// this a no-op and behavior is the same as the default `IGNORE_UNSPECIFIED`.
+  static const Ignore IGNORE_IF_ZERO_VALUE =
+      Ignore._(1, _omitEnumNames ? '' : 'IGNORE_IF_ZERO_VALUE');
 
-  ///  Validation is skipped if the field is unpopulated or if it is a nullable
-  ///  field populated with its default value. This is typically the zero or
-  ///  empty value, but proto2 scalars support custom defaults. For messages, the
-  ///  default is a non-null message with all its fields unpopulated.
+  /// Always ignore rules, including the `required` rule.
   ///
-  ///  ```proto
-  ///  syntax="proto3
+  /// This is useful for ignoring the rules of a referenced message, or to
+  /// temporarily ignore rules during development.
   ///
-  ///  message Request {
-  ///    // IGNORE_IF_DEFAULT_VALUE is equivalent to IGNORE_IF_UNPOPULATED in
-  ///    // this case; the uri rule applies only if the value is not the empty
-  ///    // string.
-  ///    string foo = 1 [
-  ///      (buf.validate.field).string.uri = true,
-  ///      (buf.validate.field).ignore = IGNORE_IF_DEFAULT_VALUE
-  ///    ];
-  ///
-  ///    // The uri rule only applies if the field is set to a value other than
-  ///    // the empty string.
-  ///    optional string bar = 2 [
-  ///      (buf.validate.field).string.uri = true,
-  ///      (buf.validate.field).ignore = IGNORE_IF_DEFAULT_VALUE
-  ///    ];
-  ///
-  ///    // IGNORE_IF_DEFAULT_VALUE is equivalent to IGNORE_IF_UNPOPULATED in
-  ///    // this case; the min_items rule only applies if the list has at least
-  ///    // one item.
-  ///    repeated string baz = 3 [
-  ///      (buf.validate.field).repeated.min_items = 3,
-  ///      (buf.validate.field).ignore = IGNORE_IF_DEFAULT_VALUE
-  ///    ];
-  ///
-  ///    // The custom CEL rule only applies if the field is set to a value other
-  ///    // than an empty message (i.e., fields are unpopulated).
-  ///    SomeMessage quux = 4 [
-  ///      (buf.validate.field).cel = {/* ... */},
-  ///      (buf.validate.field).ignore = IGNORE_IF_DEFAULT_VALUE
-  ///    ];
-  ///  }
-  ///  ```
-  ///
-  ///  This rule is affected by proto2 custom default values:
-  ///
-  ///  ```proto
-  ///  syntax="proto2";
-  ///
-  ///  message Request {
-  ///    // The gt rule only applies if the field is set and it's value is not
-  ///    the default (i.e., not -42). The rule even applies if the field is set
-  ///    to zero since the default value differs.
-  ///    optional int32 value = 1 [
-  ///      default = -42,
-  ///      (buf.validate.field).int32.gt = 0,
-  ///      (buf.validate.field).ignore = IGNORE_IF_DEFAULT_VALUE
-  ///    ];
-  ///  }
-  static const Ignore IGNORE_IF_DEFAULT_VALUE =
-      Ignore._(2, _omitEnumNames ? '' : 'IGNORE_IF_DEFAULT_VALUE');
-
-  ///  The validation rules of this field will be skipped and not evaluated. This
-  ///  is useful for situations that necessitate turning off the rules of a field
-  ///  containing a message that may not make sense in the current context, or to
-  ///  temporarily disable constraints during development.
-  ///
-  ///  ```proto
-  ///  message MyMessage {
-  ///    // The field's rules will always be ignored, including any validation's
-  ///    // on value's fields.
-  ///    MyOtherMessage value = 1 [
-  ///      (buf.validate.field).ignore = IGNORE_ALWAYS];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyMessage {
+  ///   // The field's rules will always be ignored, including any validations
+  ///   // on value's fields.
+  ///   MyOtherMessage value = 1 [
+  ///     (buf.validate.field).ignore = IGNORE_ALWAYS];
+  /// }
+  /// ```
   static const Ignore IGNORE_ALWAYS =
       Ignore._(3, _omitEnumNames ? '' : 'IGNORE_ALWAYS');
 
   static const $core.List<Ignore> values = <Ignore>[
     IGNORE_UNSPECIFIED,
-    IGNORE_IF_UNPOPULATED,
-    IGNORE_IF_DEFAULT_VALUE,
+    IGNORE_IF_ZERO_VALUE,
     IGNORE_ALWAYS,
   ];
 
-  static final $core.Map<$core.int, Ignore> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static Ignore? valueOf($core.int value) => _byValue[value];
+  static final $core.List<Ignore?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 3);
+  static Ignore? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const Ignore._(super.v, super.n);
+  const Ignore._(super.value, super.name);
 }
 
-/// WellKnownRegex contain some well-known patterns.
+/// KnownRegex contains some well-known patterns.
 class KnownRegex extends $pb.ProtobufEnum {
   static const KnownRegex KNOWN_REGEX_UNSPECIFIED =
       KnownRegex._(0, _omitEnumNames ? '' : 'KNOWN_REGEX_UNSPECIFIED');
@@ -195,11 +137,13 @@ class KnownRegex extends $pb.ProtobufEnum {
     KNOWN_REGEX_HTTP_HEADER_VALUE,
   ];
 
-  static final $core.Map<$core.int, KnownRegex> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static KnownRegex? valueOf($core.int value) => _byValue[value];
+  static final $core.List<KnownRegex?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
+  static KnownRegex? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const KnownRegex._(super.v, super.n);
+  const KnownRegex._(super.value, super.name);
 }
 
-const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');
+const $core.bool _omitEnumNames =
+    $core.bool.fromEnvironment('protobuf.omit_enum_names');

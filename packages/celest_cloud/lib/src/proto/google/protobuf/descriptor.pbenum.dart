@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/protobuf/descriptor.proto
-//
+// Generated from google/protobuf/descriptor.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
@@ -79,7 +80,7 @@ class Edition extends $pb.ProtobufEnum {
       $pb.ProtobufEnum.initByValue(values);
   static Edition? valueOf($core.int value) => _byValue[value];
 
-  const Edition._(super.v, super.n);
+  const Edition._(super.value, super.name);
 }
 
 /// The verification state of the extension range.
@@ -98,12 +99,12 @@ class ExtensionRangeOptions_VerificationState extends $pb.ProtobufEnum {
     UNVERIFIED,
   ];
 
-  static final $core.Map<$core.int, ExtensionRangeOptions_VerificationState>
-      _byValue = $pb.ProtobufEnum.initByValue(values);
+  static final $core.List<ExtensionRangeOptions_VerificationState?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 1);
   static ExtensionRangeOptions_VerificationState? valueOf($core.int value) =>
-      _byValue[value];
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const ExtensionRangeOptions_VerificationState._(super.v, super.n);
+  const ExtensionRangeOptions_VerificationState._(super.value, super.name);
 }
 
 class FieldDescriptorProto_Type extends $pb.ProtobufEnum {
@@ -182,11 +183,12 @@ class FieldDescriptorProto_Type extends $pb.ProtobufEnum {
     TYPE_SINT64,
   ];
 
-  static final $core.Map<$core.int, FieldDescriptorProto_Type> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static FieldDescriptorProto_Type? valueOf($core.int value) => _byValue[value];
+  static final $core.List<FieldDescriptorProto_Type?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 18);
+  static FieldDescriptorProto_Type? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FieldDescriptorProto_Type._(super.v, super.n);
+  const FieldDescriptorProto_Type._(super.value, super.name);
 }
 
 class FieldDescriptorProto_Label extends $pb.ProtobufEnum {
@@ -209,12 +211,12 @@ class FieldDescriptorProto_Label extends $pb.ProtobufEnum {
     LABEL_REQUIRED,
   ];
 
-  static final $core.Map<$core.int, FieldDescriptorProto_Label> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
+  static final $core.List<FieldDescriptorProto_Label?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 3);
   static FieldDescriptorProto_Label? valueOf($core.int value) =>
-      _byValue[value];
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FieldDescriptorProto_Label._(super.v, super.n);
+  const FieldDescriptorProto_Label._(super.value, super.name);
 }
 
 /// Generated classes can be optimized for speed or code size.
@@ -235,11 +237,12 @@ class FileOptions_OptimizeMode extends $pb.ProtobufEnum {
     LITE_RUNTIME,
   ];
 
-  static final $core.Map<$core.int, FileOptions_OptimizeMode> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static FileOptions_OptimizeMode? valueOf($core.int value) => _byValue[value];
+  static final $core.List<FileOptions_OptimizeMode?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 3);
+  static FileOptions_OptimizeMode? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FileOptions_OptimizeMode._(super.v, super.n);
+  const FileOptions_OptimizeMode._(super.value, super.name);
 }
 
 class FieldOptions_CType extends $pb.ProtobufEnum {
@@ -264,11 +267,12 @@ class FieldOptions_CType extends $pb.ProtobufEnum {
     STRING_PIECE,
   ];
 
-  static final $core.Map<$core.int, FieldOptions_CType> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static FieldOptions_CType? valueOf($core.int value) => _byValue[value];
+  static final $core.List<FieldOptions_CType?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
+  static FieldOptions_CType? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FieldOptions_CType._(super.v, super.n);
+  const FieldOptions_CType._(super.value, super.name);
 }
 
 class FieldOptions_JSType extends $pb.ProtobufEnum {
@@ -290,11 +294,12 @@ class FieldOptions_JSType extends $pb.ProtobufEnum {
     JS_NUMBER,
   ];
 
-  static final $core.Map<$core.int, FieldOptions_JSType> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static FieldOptions_JSType? valueOf($core.int value) => _byValue[value];
+  static final $core.List<FieldOptions_JSType?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
+  static FieldOptions_JSType? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FieldOptions_JSType._(super.v, super.n);
+  const FieldOptions_JSType._(super.value, super.name);
 }
 
 /// If set to RETENTION_SOURCE, the option will be omitted from the binary.
@@ -318,12 +323,12 @@ class FieldOptions_OptionRetention extends $pb.ProtobufEnum {
     RETENTION_SOURCE,
   ];
 
-  static final $core.Map<$core.int, FieldOptions_OptionRetention> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
+  static final $core.List<FieldOptions_OptionRetention?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
   static FieldOptions_OptionRetention? valueOf($core.int value) =>
-      _byValue[value];
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FieldOptions_OptionRetention._(super.v, super.n);
+  const FieldOptions_OptionRetention._(super.value, super.name);
 }
 
 /// This indicates the types of entities that the field may apply to when used
@@ -376,12 +381,12 @@ class FieldOptions_OptionTargetType extends $pb.ProtobufEnum {
     TARGET_TYPE_METHOD,
   ];
 
-  static final $core.Map<$core.int, FieldOptions_OptionTargetType> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
+  static final $core.List<FieldOptions_OptionTargetType?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 9);
   static FieldOptions_OptionTargetType? valueOf($core.int value) =>
-      _byValue[value];
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FieldOptions_OptionTargetType._(super.v, super.n);
+  const FieldOptions_OptionTargetType._(super.value, super.name);
 }
 
 /// Is this method side-effect-free (or safe in HTTP parlance), or idempotent,
@@ -404,12 +409,12 @@ class MethodOptions_IdempotencyLevel extends $pb.ProtobufEnum {
     IDEMPOTENT,
   ];
 
-  static final $core.Map<$core.int, MethodOptions_IdempotencyLevel> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
+  static final $core.List<MethodOptions_IdempotencyLevel?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
   static MethodOptions_IdempotencyLevel? valueOf($core.int value) =>
-      _byValue[value];
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const MethodOptions_IdempotencyLevel._(super.v, super.n);
+  const MethodOptions_IdempotencyLevel._(super.value, super.name);
 }
 
 class FeatureSet_FieldPresence extends $pb.ProtobufEnum {
@@ -431,11 +436,12 @@ class FeatureSet_FieldPresence extends $pb.ProtobufEnum {
     LEGACY_REQUIRED,
   ];
 
-  static final $core.Map<$core.int, FeatureSet_FieldPresence> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static FeatureSet_FieldPresence? valueOf($core.int value) => _byValue[value];
+  static final $core.List<FeatureSet_FieldPresence?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 3);
+  static FeatureSet_FieldPresence? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FeatureSet_FieldPresence._(super.v, super.n);
+  const FeatureSet_FieldPresence._(super.value, super.name);
 }
 
 class FeatureSet_EnumType extends $pb.ProtobufEnum {
@@ -452,11 +458,12 @@ class FeatureSet_EnumType extends $pb.ProtobufEnum {
     CLOSED,
   ];
 
-  static final $core.Map<$core.int, FeatureSet_EnumType> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static FeatureSet_EnumType? valueOf($core.int value) => _byValue[value];
+  static final $core.List<FeatureSet_EnumType?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
+  static FeatureSet_EnumType? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FeatureSet_EnumType._(super.v, super.n);
+  const FeatureSet_EnumType._(super.value, super.name);
 }
 
 class FeatureSet_RepeatedFieldEncoding extends $pb.ProtobufEnum {
@@ -475,12 +482,12 @@ class FeatureSet_RepeatedFieldEncoding extends $pb.ProtobufEnum {
     EXPANDED,
   ];
 
-  static final $core.Map<$core.int, FeatureSet_RepeatedFieldEncoding> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
+  static final $core.List<FeatureSet_RepeatedFieldEncoding?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
   static FeatureSet_RepeatedFieldEncoding? valueOf($core.int value) =>
-      _byValue[value];
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FeatureSet_RepeatedFieldEncoding._(super.v, super.n);
+  const FeatureSet_RepeatedFieldEncoding._(super.value, super.name);
 }
 
 class FeatureSet_Utf8Validation extends $pb.ProtobufEnum {
@@ -499,11 +506,12 @@ class FeatureSet_Utf8Validation extends $pb.ProtobufEnum {
     NONE,
   ];
 
-  static final $core.Map<$core.int, FeatureSet_Utf8Validation> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static FeatureSet_Utf8Validation? valueOf($core.int value) => _byValue[value];
+  static final $core.List<FeatureSet_Utf8Validation?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 3);
+  static FeatureSet_Utf8Validation? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FeatureSet_Utf8Validation._(super.v, super.n);
+  const FeatureSet_Utf8Validation._(super.value, super.name);
 }
 
 class FeatureSet_MessageEncoding extends $pb.ProtobufEnum {
@@ -522,12 +530,12 @@ class FeatureSet_MessageEncoding extends $pb.ProtobufEnum {
     DELIMITED,
   ];
 
-  static final $core.Map<$core.int, FeatureSet_MessageEncoding> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
+  static final $core.List<FeatureSet_MessageEncoding?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
   static FeatureSet_MessageEncoding? valueOf($core.int value) =>
-      _byValue[value];
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FeatureSet_MessageEncoding._(super.v, super.n);
+  const FeatureSet_MessageEncoding._(super.value, super.name);
 }
 
 class FeatureSet_JsonFormat extends $pb.ProtobufEnum {
@@ -545,11 +553,12 @@ class FeatureSet_JsonFormat extends $pb.ProtobufEnum {
     LEGACY_BEST_EFFORT,
   ];
 
-  static final $core.Map<$core.int, FeatureSet_JsonFormat> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static FeatureSet_JsonFormat? valueOf($core.int value) => _byValue[value];
+  static final $core.List<FeatureSet_JsonFormat?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
+  static FeatureSet_JsonFormat? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FeatureSet_JsonFormat._(super.v, super.n);
+  const FeatureSet_JsonFormat._(super.value, super.name);
 }
 
 /// Represents the identified object's effect on the element in the original
@@ -574,12 +583,13 @@ class GeneratedCodeInfo_Annotation_Semantic extends $pb.ProtobufEnum {
     ALIAS,
   ];
 
-  static final $core.Map<$core.int, GeneratedCodeInfo_Annotation_Semantic>
-      _byValue = $pb.ProtobufEnum.initByValue(values);
+  static final $core.List<GeneratedCodeInfo_Annotation_Semantic?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
   static GeneratedCodeInfo_Annotation_Semantic? valueOf($core.int value) =>
-      _byValue[value];
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const GeneratedCodeInfo_Annotation_Semantic._(super.v, super.n);
+  const GeneratedCodeInfo_Annotation_Semantic._(super.value, super.name);
 }
 
-const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');
+const $core.bool _omitEnumNames =
+    $core.bool.fromEnvironment('protobuf.omit_enum_names');

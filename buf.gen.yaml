@@ -4,7 +4,7 @@ managed:
 inputs:
   - directory: proto
 plugins:
-  - remote: buf.build/protocolbuffers/dart:v22.1.0
+  - remote: buf.build/protocolbuffers/dart:v22.5.0
     out: packages/celest_cloud/lib/src/proto
     include_imports: true
     include_wkt: true

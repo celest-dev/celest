@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/api/field_info.proto
-//
+// Generated from google/api/field_info.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
@@ -25,22 +26,20 @@ class FieldInfo extends $pb.GeneratedMessage {
     FieldInfo_Format? format,
     $core.Iterable<TypeReference>? referencedTypes,
   }) {
-    final $result = create();
-    if (format != null) {
-      $result.format = format;
-    }
-    if (referencedTypes != null) {
-      $result.referencedTypes.addAll(referencedTypes);
-    }
-    return $result;
+    final result = create();
+    if (format != null) result.format = format;
+    if (referencedTypes != null) result.referencedTypes.addAll(referencedTypes);
+    return result;
   }
-  FieldInfo._() : super();
-  factory FieldInfo.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FieldInfo.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FieldInfo._();
+
+  factory FieldInfo.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FieldInfo.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FieldInfo',
@@ -56,20 +55,18 @@ class FieldInfo extends $pb.GeneratedMessage {
         subBuilder: TypeReference.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldInfo clone() => FieldInfo()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldInfo copyWith(void Function(FieldInfo) updates) =>
       super.copyWith((message) => updates(message as FieldInfo)) as FieldInfo;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FieldInfo create() => FieldInfo._();
+  @$core.override
   FieldInfo createEmptyInstance() => create();
   static $pb.PbList<FieldInfo> createRepeated() => $pb.PbList<FieldInfo>();
   @$core.pragma('dart2js:noInline')
@@ -83,19 +80,16 @@ class FieldInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   FieldInfo_Format get format => $_getN(0);
   @$pb.TagNumber(1)
-  set format(FieldInfo_Format v) {
-    $_setField(1, v);
-  }
-
+  set format(FieldInfo_Format value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasFormat() => $_has(0);
   @$pb.TagNumber(1)
   void clearFormat() => $_clearField(1);
 
-  ///  The type(s) that the annotated, generic field may represent.
+  /// The type(s) that the annotated, generic field may represent.
   ///
-  ///  Currently, this must only be used on fields of type `google.protobuf.Any`.
-  ///  Supporting other generic types may be considered in the future.
+  /// Currently, this must only be used on fields of type `google.protobuf.Any`.
+  /// Supporting other generic types may be considered in the future.
   @$pb.TagNumber(2)
   $pb.PbList<TypeReference> get referencedTypes => $_getList(1);
 }
@@ -105,19 +99,19 @@ class TypeReference extends $pb.GeneratedMessage {
   factory TypeReference({
     $core.String? typeName,
   }) {
-    final $result = create();
-    if (typeName != null) {
-      $result.typeName = typeName;
-    }
-    return $result;
+    final result = create();
+    if (typeName != null) result.typeName = typeName;
+    return result;
   }
-  TypeReference._() : super();
-  factory TypeReference.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory TypeReference.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  TypeReference._();
+
+  factory TypeReference.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory TypeReference.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'TypeReference',
@@ -126,21 +120,19 @@ class TypeReference extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'typeName')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   TypeReference clone() => TypeReference()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   TypeReference copyWith(void Function(TypeReference) updates) =>
       super.copyWith((message) => updates(message as TypeReference))
           as TypeReference;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static TypeReference create() => TypeReference._();
+  @$core.override
   TypeReference createEmptyInstance() => create();
   static $pb.PbList<TypeReference> createRepeated() =>
       $pb.PbList<TypeReference>();
@@ -149,22 +141,19 @@ class TypeReference extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<TypeReference>(create);
   static TypeReference? _defaultInstance;
 
-  ///  The name of the type that the annotated, generic field may represent.
-  ///  If the type is in the same protobuf package, the value can be the simple
-  ///  message name e.g., `"MyMessage"`. Otherwise, the value must be the
-  ///  fully-qualified message name e.g., `"google.library.v1.Book"`.
+  /// The name of the type that the annotated, generic field may represent.
+  /// If the type is in the same protobuf package, the value can be the simple
+  /// message name e.g., `"MyMessage"`. Otherwise, the value must be the
+  /// fully-qualified message name e.g., `"google.library.v1.Book"`.
   ///
-  ///  If the type(s) are unknown to the service (e.g. the field accepts generic
-  ///  user input), use the wildcard `"*"` to denote this behavior.
+  /// If the type(s) are unknown to the service (e.g. the field accepts generic
+  /// user input), use the wildcard `"*"` to denote this behavior.
   ///
-  ///  See [AIP-202](https://google.aip.dev/202#type-references) for more details.
+  /// See [AIP-202](https://google.aip.dev/202#type-references) for more details.
   @$pb.TagNumber(1)
   $core.String get typeName => $_getSZ(0);
   @$pb.TagNumber(1)
-  set typeName($core.String v) {
-    $_setString(0, v);
-  }
-
+  set typeName($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasTypeName() => $_has(0);
   @$pb.TagNumber(1)
@@ -184,6 +173,7 @@ class Field_info {
   }
 }
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');

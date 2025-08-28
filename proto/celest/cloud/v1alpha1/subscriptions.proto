@@ -174,7 +174,7 @@ message BuilderSubscriptionPlan {
   // If not provided, it will be inferred from the user's location.
   string currency_code = 1 [
     (google.api.field_behavior) = OPTIONAL,
-    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
     (buf.validate.field).cel = {
       id: "valid_currency",
       message: "must be a valid currency code",
@@ -240,7 +240,7 @@ message ChangePlanRequest {
   // Optional. The URI to redirect the client after payment.
   string redirect_uri = 6 [
     (google.api.field_behavior) = OPTIONAL,
-    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
     (buf.validate.field).cel = {
       id: "valid_uri",
       message: "must be a valid URI",
@@ -383,7 +383,7 @@ message DescribePricingRequest {
   // Optional. The region code to get pricing for.
   string region_code = 1 [
     (google.api.field_behavior) = OPTIONAL,
-    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
     (buf.validate.field).cel = {
       id: "valid_region_code",
       message: "must be a valid region code",
@@ -394,7 +394,7 @@ message DescribePricingRequest {
   // Optional. The currency code to get pricing for.
   string currency_code = 2 [
     (google.api.field_behavior) = OPTIONAL,
-    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
     (buf.validate.field).cel = {
       id: "valid_currency",
       message: "must be a valid currency code",

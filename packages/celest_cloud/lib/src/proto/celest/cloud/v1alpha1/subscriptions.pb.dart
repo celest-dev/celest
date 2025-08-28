@@ -1,23 +1,24 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: celest/cloud/v1alpha1/subscriptions.proto
-//
+// Generated from celest/cloud/v1alpha1/subscriptions.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/duration.pb.dart' as $8;
-import '../../../google/protobuf/empty.pb.dart' as $1;
-import '../../../google/protobuf/timestamp.pb.dart' as $9;
-import '../../../google/type/money.pb.dart' as $15;
+import '../../../google/protobuf/duration.pb.dart' as $4;
+import '../../../google/protobuf/empty.pb.dart' as $3;
+import '../../../google/protobuf/timestamp.pb.dart' as $1;
+import '../../../google/type/money.pb.dart' as $2;
 import 'subscriptions.pbenum.dart';
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
@@ -43,60 +44,38 @@ class Subscription extends $pb.GeneratedMessage {
     CommunitySubscriptionPlan? community,
     BuilderSubscriptionPlan? builder,
     EnterpriseSubscriptionPlan? enterprise,
-    $9.Timestamp? createTime,
-    $9.Timestamp? updateTime,
+    $1.Timestamp? createTime,
+    $1.Timestamp? updateTime,
     SubscriptionPaymentRequired? paymentRequired,
     SubscriptionActive? active,
     SubscriptionPaused? paused,
     SubscriptionSuspended? suspended,
     SubscriptionCanceled? canceled,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (parent != null) {
-      $result.parent = parent;
-    }
-    if (community != null) {
-      $result.community = community;
-    }
-    if (builder != null) {
-      $result.builder = builder;
-    }
-    if (enterprise != null) {
-      $result.enterprise = enterprise;
-    }
-    if (createTime != null) {
-      $result.createTime = createTime;
-    }
-    if (updateTime != null) {
-      $result.updateTime = updateTime;
-    }
-    if (paymentRequired != null) {
-      $result.paymentRequired = paymentRequired;
-    }
-    if (active != null) {
-      $result.active = active;
-    }
-    if (paused != null) {
-      $result.paused = paused;
-    }
-    if (suspended != null) {
-      $result.suspended = suspended;
-    }
-    if (canceled != null) {
-      $result.canceled = canceled;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (parent != null) result.parent = parent;
+    if (community != null) result.community = community;
+    if (builder != null) result.builder = builder;
+    if (enterprise != null) result.enterprise = enterprise;
+    if (createTime != null) result.createTime = createTime;
+    if (updateTime != null) result.updateTime = updateTime;
+    if (paymentRequired != null) result.paymentRequired = paymentRequired;
+    if (active != null) result.active = active;
+    if (paused != null) result.paused = paused;
+    if (suspended != null) result.suspended = suspended;
+    if (canceled != null) result.canceled = canceled;
+    return result;
   }
-  Subscription._() : super();
-  factory Subscription.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Subscription.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Subscription._();
+
+  factory Subscription.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Subscription.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, Subscription_Plan> _Subscription_PlanByTag =
       {
@@ -129,10 +108,10 @@ class Subscription extends $pb.GeneratedMessage {
         subBuilder: BuilderSubscriptionPlan.create)
     ..aOM<EnterpriseSubscriptionPlan>(5, _omitFieldNames ? '' : 'enterprise',
         subBuilder: EnterpriseSubscriptionPlan.create)
-    ..aOM<$9.Timestamp>(6, _omitFieldNames ? '' : 'createTime',
-        subBuilder: $9.Timestamp.create)
-    ..aOM<$9.Timestamp>(7, _omitFieldNames ? '' : 'updateTime',
-        subBuilder: $9.Timestamp.create)
+    ..aOM<$1.Timestamp>(6, _omitFieldNames ? '' : 'createTime',
+        subBuilder: $1.Timestamp.create)
+    ..aOM<$1.Timestamp>(7, _omitFieldNames ? '' : 'updateTime',
+        subBuilder: $1.Timestamp.create)
     ..aOM<SubscriptionPaymentRequired>(
         8, _omitFieldNames ? '' : 'paymentRequired',
         subBuilder: SubscriptionPaymentRequired.create)
@@ -146,21 +125,19 @@ class Subscription extends $pb.GeneratedMessage {
         subBuilder: SubscriptionCanceled.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Subscription clone() => Subscription()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Subscription copyWith(void Function(Subscription) updates) =>
       super.copyWith((message) => updates(message as Subscription))
           as Subscription;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Subscription create() => Subscription._();
+  @$core.override
   Subscription createEmptyInstance() => create();
   static $pb.PbList<Subscription> createRepeated() =>
       $pb.PbList<Subscription>();
@@ -175,16 +152,13 @@ class Subscription extends $pb.GeneratedMessage {
   Subscription_State whichState() => _Subscription_StateByTag[$_whichOneof(1)]!;
   void clearState() => $_clearField($_whichOneof(1));
 
-  ///  Identifier. The resource name of the subscription.
+  /// Identifier. The resource name of the subscription.
   ///
-  ///  Format: `users/{user}/subscription`
+  /// Format: `users/{user}/subscription`
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -194,10 +168,7 @@ class Subscription extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get parent => $_getSZ(1);
   @$pb.TagNumber(2)
-  set parent($core.String v) {
-    $_setString(1, v);
-  }
-
+  set parent($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasParent() => $_has(1);
   @$pb.TagNumber(2)
@@ -207,10 +178,7 @@ class Subscription extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   CommunitySubscriptionPlan get community => $_getN(2);
   @$pb.TagNumber(3)
-  set community(CommunitySubscriptionPlan v) {
-    $_setField(3, v);
-  }
-
+  set community(CommunitySubscriptionPlan value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasCommunity() => $_has(2);
   @$pb.TagNumber(3)
@@ -222,10 +190,7 @@ class Subscription extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   BuilderSubscriptionPlan get builder => $_getN(3);
   @$pb.TagNumber(4)
-  set builder(BuilderSubscriptionPlan v) {
-    $_setField(4, v);
-  }
-
+  set builder(BuilderSubscriptionPlan value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasBuilder() => $_has(3);
   @$pb.TagNumber(4)
@@ -237,10 +202,7 @@ class Subscription extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   EnterpriseSubscriptionPlan get enterprise => $_getN(4);
   @$pb.TagNumber(5)
-  set enterprise(EnterpriseSubscriptionPlan v) {
-    $_setField(5, v);
-  }
-
+  set enterprise(EnterpriseSubscriptionPlan value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasEnterprise() => $_has(4);
   @$pb.TagNumber(5)
@@ -250,42 +212,34 @@ class Subscription extends $pb.GeneratedMessage {
 
   /// Output only. The time the subscription was created.
   @$pb.TagNumber(6)
-  $9.Timestamp get createTime => $_getN(5);
+  $1.Timestamp get createTime => $_getN(5);
   @$pb.TagNumber(6)
-  set createTime($9.Timestamp v) {
-    $_setField(6, v);
-  }
-
+  set createTime($1.Timestamp value) => $_setField(6, value);
   @$pb.TagNumber(6)
   $core.bool hasCreateTime() => $_has(5);
   @$pb.TagNumber(6)
   void clearCreateTime() => $_clearField(6);
   @$pb.TagNumber(6)
-  $9.Timestamp ensureCreateTime() => $_ensure(5);
+  $1.Timestamp ensureCreateTime() => $_ensure(5);
 
   /// Output only. The time the subscription was last updated.
   @$pb.TagNumber(7)
-  $9.Timestamp get updateTime => $_getN(6);
+  $1.Timestamp get updateTime => $_getN(6);
   @$pb.TagNumber(7)
-  set updateTime($9.Timestamp v) {
-    $_setField(7, v);
-  }
-
+  set updateTime($1.Timestamp value) => $_setField(7, value);
   @$pb.TagNumber(7)
   $core.bool hasUpdateTime() => $_has(6);
   @$pb.TagNumber(7)
   void clearUpdateTime() => $_clearField(7);
   @$pb.TagNumber(7)
-  $9.Timestamp ensureUpdateTime() => $_ensure(6);
+  $1.Timestamp ensureUpdateTime() => $_ensure(6);
 
   /// The subscription requires payment.
   @$pb.TagNumber(8)
   SubscriptionPaymentRequired get paymentRequired => $_getN(7);
   @$pb.TagNumber(8)
-  set paymentRequired(SubscriptionPaymentRequired v) {
-    $_setField(8, v);
-  }
-
+  set paymentRequired(SubscriptionPaymentRequired value) =>
+      $_setField(8, value);
   @$pb.TagNumber(8)
   $core.bool hasPaymentRequired() => $_has(7);
   @$pb.TagNumber(8)
@@ -297,10 +251,7 @@ class Subscription extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   SubscriptionActive get active => $_getN(8);
   @$pb.TagNumber(9)
-  set active(SubscriptionActive v) {
-    $_setField(9, v);
-  }
-
+  set active(SubscriptionActive value) => $_setField(9, value);
   @$pb.TagNumber(9)
   $core.bool hasActive() => $_has(8);
   @$pb.TagNumber(9)
@@ -312,10 +263,7 @@ class Subscription extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   SubscriptionPaused get paused => $_getN(9);
   @$pb.TagNumber(10)
-  set paused(SubscriptionPaused v) {
-    $_setField(10, v);
-  }
-
+  set paused(SubscriptionPaused value) => $_setField(10, value);
   @$pb.TagNumber(10)
   $core.bool hasPaused() => $_has(9);
   @$pb.TagNumber(10)
@@ -327,10 +275,7 @@ class Subscription extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   SubscriptionSuspended get suspended => $_getN(10);
   @$pb.TagNumber(11)
-  set suspended(SubscriptionSuspended v) {
-    $_setField(11, v);
-  }
-
+  set suspended(SubscriptionSuspended value) => $_setField(11, value);
   @$pb.TagNumber(11)
   $core.bool hasSuspended() => $_has(10);
   @$pb.TagNumber(11)
@@ -342,10 +287,7 @@ class Subscription extends $pb.GeneratedMessage {
   @$pb.TagNumber(12)
   SubscriptionCanceled get canceled => $_getN(11);
   @$pb.TagNumber(12)
-  set canceled(SubscriptionCanceled v) {
-    $_setField(12, v);
-  }
-
+  set canceled(SubscriptionCanceled value) => $_setField(12, value);
   @$pb.TagNumber(12)
   $core.bool hasCanceled() => $_has(11);
   @$pb.TagNumber(12)
@@ -360,22 +302,20 @@ class SubscriptionPaymentRequired extends $pb.GeneratedMessage {
     $core.String? paymentUri,
     $core.String? redirectUri,
   }) {
-    final $result = create();
-    if (paymentUri != null) {
-      $result.paymentUri = paymentUri;
-    }
-    if (redirectUri != null) {
-      $result.redirectUri = redirectUri;
-    }
-    return $result;
+    final result = create();
+    if (paymentUri != null) result.paymentUri = paymentUri;
+    if (redirectUri != null) result.redirectUri = redirectUri;
+    return result;
   }
-  SubscriptionPaymentRequired._() : super();
-  factory SubscriptionPaymentRequired.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SubscriptionPaymentRequired.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SubscriptionPaymentRequired._();
+
+  factory SubscriptionPaymentRequired.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SubscriptionPaymentRequired.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SubscriptionPaymentRequired',
@@ -386,25 +326,23 @@ class SubscriptionPaymentRequired extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'redirectUri')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SubscriptionPaymentRequired clone() =>
       SubscriptionPaymentRequired()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SubscriptionPaymentRequired copyWith(
           void Function(SubscriptionPaymentRequired) updates) =>
       super.copyWith(
               (message) => updates(message as SubscriptionPaymentRequired))
           as SubscriptionPaymentRequired;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SubscriptionPaymentRequired create() =>
       SubscriptionPaymentRequired._();
+  @$core.override
   SubscriptionPaymentRequired createEmptyInstance() => create();
   static $pb.PbList<SubscriptionPaymentRequired> createRepeated() =>
       $pb.PbList<SubscriptionPaymentRequired>();
@@ -417,10 +355,7 @@ class SubscriptionPaymentRequired extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get paymentUri => $_getSZ(0);
   @$pb.TagNumber(1)
-  set paymentUri($core.String v) {
-    $_setString(0, v);
-  }
-
+  set paymentUri($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasPaymentUri() => $_has(0);
   @$pb.TagNumber(1)
@@ -430,10 +365,7 @@ class SubscriptionPaymentRequired extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get redirectUri => $_getSZ(1);
   @$pb.TagNumber(2)
-  set redirectUri($core.String v) {
-    $_setString(1, v);
-  }
-
+  set redirectUri($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasRedirectUri() => $_has(1);
   @$pb.TagNumber(2)
@@ -445,19 +377,19 @@ class SubscriptionActive extends $pb.GeneratedMessage {
   factory SubscriptionActive({
     SubscriptionBillingInfo? billingInfo,
   }) {
-    final $result = create();
-    if (billingInfo != null) {
-      $result.billingInfo = billingInfo;
-    }
-    return $result;
+    final result = create();
+    if (billingInfo != null) result.billingInfo = billingInfo;
+    return result;
   }
-  SubscriptionActive._() : super();
-  factory SubscriptionActive.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SubscriptionActive.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SubscriptionActive._();
+
+  factory SubscriptionActive.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SubscriptionActive.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SubscriptionActive',
@@ -468,21 +400,19 @@ class SubscriptionActive extends $pb.GeneratedMessage {
         subBuilder: SubscriptionBillingInfo.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SubscriptionActive clone() => SubscriptionActive()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SubscriptionActive copyWith(void Function(SubscriptionActive) updates) =>
       super.copyWith((message) => updates(message as SubscriptionActive))
           as SubscriptionActive;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SubscriptionActive create() => SubscriptionActive._();
+  @$core.override
   SubscriptionActive createEmptyInstance() => create();
   static $pb.PbList<SubscriptionActive> createRepeated() =>
       $pb.PbList<SubscriptionActive>();
@@ -495,10 +425,7 @@ class SubscriptionActive extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   SubscriptionBillingInfo get billingInfo => $_getN(0);
   @$pb.TagNumber(1)
-  set billingInfo(SubscriptionBillingInfo v) {
-    $_setField(1, v);
-  }
-
+  set billingInfo(SubscriptionBillingInfo value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasBillingInfo() => $_has(0);
   @$pb.TagNumber(1)
@@ -510,48 +437,46 @@ class SubscriptionActive extends $pb.GeneratedMessage {
 /// Information about the subscription billing.
 class SubscriptionBillingInfo extends $pb.GeneratedMessage {
   factory SubscriptionBillingInfo({
-    $9.Timestamp? nextBillingTime,
+    $1.Timestamp? nextBillingTime,
   }) {
-    final $result = create();
-    if (nextBillingTime != null) {
-      $result.nextBillingTime = nextBillingTime;
-    }
-    return $result;
+    final result = create();
+    if (nextBillingTime != null) result.nextBillingTime = nextBillingTime;
+    return result;
   }
-  SubscriptionBillingInfo._() : super();
-  factory SubscriptionBillingInfo.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SubscriptionBillingInfo.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SubscriptionBillingInfo._();
+
+  factory SubscriptionBillingInfo.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SubscriptionBillingInfo.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SubscriptionBillingInfo',
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
-    ..aOM<$9.Timestamp>(1, _omitFieldNames ? '' : 'nextBillingTime',
-        subBuilder: $9.Timestamp.create)
+    ..aOM<$1.Timestamp>(1, _omitFieldNames ? '' : 'nextBillingTime',
+        subBuilder: $1.Timestamp.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SubscriptionBillingInfo clone() =>
       SubscriptionBillingInfo()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SubscriptionBillingInfo copyWith(
           void Function(SubscriptionBillingInfo) updates) =>
       super.copyWith((message) => updates(message as SubscriptionBillingInfo))
           as SubscriptionBillingInfo;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SubscriptionBillingInfo create() => SubscriptionBillingInfo._();
+  @$core.override
   SubscriptionBillingInfo createEmptyInstance() => create();
   static $pb.PbList<SubscriptionBillingInfo> createRepeated() =>
       $pb.PbList<SubscriptionBillingInfo>();
@@ -562,63 +487,58 @@ class SubscriptionBillingInfo extends $pb.GeneratedMessage {
 
   /// The time when the subscription will be billed next.
   @$pb.TagNumber(1)
-  $9.Timestamp get nextBillingTime => $_getN(0);
+  $1.Timestamp get nextBillingTime => $_getN(0);
   @$pb.TagNumber(1)
-  set nextBillingTime($9.Timestamp v) {
-    $_setField(1, v);
-  }
-
+  set nextBillingTime($1.Timestamp value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasNextBillingTime() => $_has(0);
   @$pb.TagNumber(1)
   void clearNextBillingTime() => $_clearField(1);
   @$pb.TagNumber(1)
-  $9.Timestamp ensureNextBillingTime() => $_ensure(0);
+  $1.Timestamp ensureNextBillingTime() => $_ensure(0);
 }
 
 /// The message for when a subscription is paused.
 class SubscriptionPaused extends $pb.GeneratedMessage {
   factory SubscriptionPaused({
-    $9.Timestamp? resumeTime,
+    $1.Timestamp? resumeTime,
   }) {
-    final $result = create();
-    if (resumeTime != null) {
-      $result.resumeTime = resumeTime;
-    }
-    return $result;
+    final result = create();
+    if (resumeTime != null) result.resumeTime = resumeTime;
+    return result;
   }
-  SubscriptionPaused._() : super();
-  factory SubscriptionPaused.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SubscriptionPaused.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SubscriptionPaused._();
+
+  factory SubscriptionPaused.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SubscriptionPaused.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SubscriptionPaused',
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
-    ..aOM<$9.Timestamp>(1, _omitFieldNames ? '' : 'resumeTime',
-        subBuilder: $9.Timestamp.create)
+    ..aOM<$1.Timestamp>(1, _omitFieldNames ? '' : 'resumeTime',
+        subBuilder: $1.Timestamp.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SubscriptionPaused clone() => SubscriptionPaused()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SubscriptionPaused copyWith(void Function(SubscriptionPaused) updates) =>
       super.copyWith((message) => updates(message as SubscriptionPaused))
           as SubscriptionPaused;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SubscriptionPaused create() => SubscriptionPaused._();
+  @$core.override
   SubscriptionPaused createEmptyInstance() => create();
   static $pb.PbList<SubscriptionPaused> createRepeated() =>
       $pb.PbList<SubscriptionPaused>();
@@ -629,18 +549,15 @@ class SubscriptionPaused extends $pb.GeneratedMessage {
 
   /// The time the subscription is scheduled to resume.
   @$pb.TagNumber(1)
-  $9.Timestamp get resumeTime => $_getN(0);
+  $1.Timestamp get resumeTime => $_getN(0);
   @$pb.TagNumber(1)
-  set resumeTime($9.Timestamp v) {
-    $_setField(1, v);
-  }
-
+  set resumeTime($1.Timestamp value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasResumeTime() => $_has(0);
   @$pb.TagNumber(1)
   void clearResumeTime() => $_clearField(1);
   @$pb.TagNumber(1)
-  $9.Timestamp ensureResumeTime() => $_ensure(0);
+  $1.Timestamp ensureResumeTime() => $_ensure(0);
 }
 
 /// The message for when a subscription is suspended.
@@ -648,19 +565,19 @@ class SubscriptionSuspended extends $pb.GeneratedMessage {
   factory SubscriptionSuspended({
     $core.String? reason,
   }) {
-    final $result = create();
-    if (reason != null) {
-      $result.reason = reason;
-    }
-    return $result;
+    final result = create();
+    if (reason != null) result.reason = reason;
+    return result;
   }
-  SubscriptionSuspended._() : super();
-  factory SubscriptionSuspended.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SubscriptionSuspended.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SubscriptionSuspended._();
+
+  factory SubscriptionSuspended.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SubscriptionSuspended.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SubscriptionSuspended',
@@ -670,23 +587,21 @@ class SubscriptionSuspended extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'reason')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SubscriptionSuspended clone() =>
       SubscriptionSuspended()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SubscriptionSuspended copyWith(
           void Function(SubscriptionSuspended) updates) =>
       super.copyWith((message) => updates(message as SubscriptionSuspended))
           as SubscriptionSuspended;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SubscriptionSuspended create() => SubscriptionSuspended._();
+  @$core.override
   SubscriptionSuspended createEmptyInstance() => create();
   static $pb.PbList<SubscriptionSuspended> createRepeated() =>
       $pb.PbList<SubscriptionSuspended>();
@@ -699,10 +614,7 @@ class SubscriptionSuspended extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get reason => $_getSZ(0);
   @$pb.TagNumber(1)
-  set reason($core.String v) {
-    $_setString(0, v);
-  }
-
+  set reason($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasReason() => $_has(0);
   @$pb.TagNumber(1)
@@ -712,53 +624,49 @@ class SubscriptionSuspended extends $pb.GeneratedMessage {
 /// The message for when a subscription is canceled.
 class SubscriptionCanceled extends $pb.GeneratedMessage {
   factory SubscriptionCanceled({
-    $9.Timestamp? cancelTime,
+    $1.Timestamp? cancelTime,
     CancelSubscriptionDetails? details,
   }) {
-    final $result = create();
-    if (cancelTime != null) {
-      $result.cancelTime = cancelTime;
-    }
-    if (details != null) {
-      $result.details = details;
-    }
-    return $result;
+    final result = create();
+    if (cancelTime != null) result.cancelTime = cancelTime;
+    if (details != null) result.details = details;
+    return result;
   }
-  SubscriptionCanceled._() : super();
-  factory SubscriptionCanceled.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SubscriptionCanceled.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SubscriptionCanceled._();
+
+  factory SubscriptionCanceled.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SubscriptionCanceled.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SubscriptionCanceled',
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
-    ..aOM<$9.Timestamp>(1, _omitFieldNames ? '' : 'cancelTime',
-        subBuilder: $9.Timestamp.create)
+    ..aOM<$1.Timestamp>(1, _omitFieldNames ? '' : 'cancelTime',
+        subBuilder: $1.Timestamp.create)
     ..aOM<CancelSubscriptionDetails>(2, _omitFieldNames ? '' : 'details',
         subBuilder: CancelSubscriptionDetails.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SubscriptionCanceled clone() =>
       SubscriptionCanceled()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SubscriptionCanceled copyWith(void Function(SubscriptionCanceled) updates) =>
       super.copyWith((message) => updates(message as SubscriptionCanceled))
           as SubscriptionCanceled;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SubscriptionCanceled create() => SubscriptionCanceled._();
+  @$core.override
   SubscriptionCanceled createEmptyInstance() => create();
   static $pb.PbList<SubscriptionCanceled> createRepeated() =>
       $pb.PbList<SubscriptionCanceled>();
@@ -769,27 +677,21 @@ class SubscriptionCanceled extends $pb.GeneratedMessage {
 
   /// The time the subscription was canceled.
   @$pb.TagNumber(1)
-  $9.Timestamp get cancelTime => $_getN(0);
+  $1.Timestamp get cancelTime => $_getN(0);
   @$pb.TagNumber(1)
-  set cancelTime($9.Timestamp v) {
-    $_setField(1, v);
-  }
-
+  set cancelTime($1.Timestamp value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasCancelTime() => $_has(0);
   @$pb.TagNumber(1)
   void clearCancelTime() => $_clearField(1);
   @$pb.TagNumber(1)
-  $9.Timestamp ensureCancelTime() => $_ensure(0);
+  $1.Timestamp ensureCancelTime() => $_ensure(0);
 
   /// The details of the cancellation, if provided.
   @$pb.TagNumber(2)
   CancelSubscriptionDetails get details => $_getN(1);
   @$pb.TagNumber(2)
-  set details(CancelSubscriptionDetails v) {
-    $_setField(2, v);
-  }
-
+  set details(CancelSubscriptionDetails value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasDetails() => $_has(1);
   @$pb.TagNumber(2)
@@ -801,13 +703,15 @@ class SubscriptionCanceled extends $pb.GeneratedMessage {
 /// A Community subscription plan.
 class CommunitySubscriptionPlan extends $pb.GeneratedMessage {
   factory CommunitySubscriptionPlan() => create();
-  CommunitySubscriptionPlan._() : super();
-  factory CommunitySubscriptionPlan.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory CommunitySubscriptionPlan.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  CommunitySubscriptionPlan._();
+
+  factory CommunitySubscriptionPlan.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory CommunitySubscriptionPlan.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CommunitySubscriptionPlan',
@@ -816,23 +720,21 @@ class CommunitySubscriptionPlan extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CommunitySubscriptionPlan clone() =>
       CommunitySubscriptionPlan()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CommunitySubscriptionPlan copyWith(
           void Function(CommunitySubscriptionPlan) updates) =>
       super.copyWith((message) => updates(message as CommunitySubscriptionPlan))
           as CommunitySubscriptionPlan;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static CommunitySubscriptionPlan create() => CommunitySubscriptionPlan._();
+  @$core.override
   CommunitySubscriptionPlan createEmptyInstance() => create();
   static $pb.PbList<CommunitySubscriptionPlan> createRepeated() =>
       $pb.PbList<CommunitySubscriptionPlan>();
@@ -848,22 +750,20 @@ class BuilderSubscriptionPlan extends $pb.GeneratedMessage {
     $core.String? currencyCode,
     InstanceType? instanceType,
   }) {
-    final $result = create();
-    if (currencyCode != null) {
-      $result.currencyCode = currencyCode;
-    }
-    if (instanceType != null) {
-      $result.instanceType = instanceType;
-    }
-    return $result;
+    final result = create();
+    if (currencyCode != null) result.currencyCode = currencyCode;
+    if (instanceType != null) result.instanceType = instanceType;
+    return result;
   }
-  BuilderSubscriptionPlan._() : super();
-  factory BuilderSubscriptionPlan.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory BuilderSubscriptionPlan.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  BuilderSubscriptionPlan._();
+
+  factory BuilderSubscriptionPlan.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory BuilderSubscriptionPlan.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'BuilderSubscriptionPlan',
@@ -878,23 +778,21 @@ class BuilderSubscriptionPlan extends $pb.GeneratedMessage {
         enumValues: InstanceType.values)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   BuilderSubscriptionPlan clone() =>
       BuilderSubscriptionPlan()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   BuilderSubscriptionPlan copyWith(
           void Function(BuilderSubscriptionPlan) updates) =>
       super.copyWith((message) => updates(message as BuilderSubscriptionPlan))
           as BuilderSubscriptionPlan;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static BuilderSubscriptionPlan create() => BuilderSubscriptionPlan._();
+  @$core.override
   BuilderSubscriptionPlan createEmptyInstance() => create();
   static $pb.PbList<BuilderSubscriptionPlan> createRepeated() =>
       $pb.PbList<BuilderSubscriptionPlan>();
@@ -903,16 +801,13 @@ class BuilderSubscriptionPlan extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<BuilderSubscriptionPlan>(create);
   static BuilderSubscriptionPlan? _defaultInstance;
 
-  ///  Optional. The preferred currency for payment.
+  /// Optional. The preferred currency for payment.
   ///
-  ///  If not provided, it will be inferred from the user's location.
+  /// If not provided, it will be inferred from the user's location.
   @$pb.TagNumber(1)
   $core.String get currencyCode => $_getSZ(0);
   @$pb.TagNumber(1)
-  set currencyCode($core.String v) {
-    $_setString(0, v);
-  }
-
+  set currencyCode($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasCurrencyCode() => $_has(0);
   @$pb.TagNumber(1)
@@ -922,10 +817,7 @@ class BuilderSubscriptionPlan extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   InstanceType get instanceType => $_getN(1);
   @$pb.TagNumber(2)
-  set instanceType(InstanceType v) {
-    $_setField(2, v);
-  }
-
+  set instanceType(InstanceType value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasInstanceType() => $_has(1);
   @$pb.TagNumber(2)
@@ -935,13 +827,15 @@ class BuilderSubscriptionPlan extends $pb.GeneratedMessage {
 /// An Enterprise subscription plan.
 class EnterpriseSubscriptionPlan extends $pb.GeneratedMessage {
   factory EnterpriseSubscriptionPlan() => create();
-  EnterpriseSubscriptionPlan._() : super();
-  factory EnterpriseSubscriptionPlan.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory EnterpriseSubscriptionPlan.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  EnterpriseSubscriptionPlan._();
+
+  factory EnterpriseSubscriptionPlan.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EnterpriseSubscriptionPlan.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EnterpriseSubscriptionPlan',
@@ -950,24 +844,22 @@ class EnterpriseSubscriptionPlan extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnterpriseSubscriptionPlan clone() =>
       EnterpriseSubscriptionPlan()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnterpriseSubscriptionPlan copyWith(
           void Function(EnterpriseSubscriptionPlan) updates) =>
       super.copyWith(
               (message) => updates(message as EnterpriseSubscriptionPlan))
           as EnterpriseSubscriptionPlan;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static EnterpriseSubscriptionPlan create() => EnterpriseSubscriptionPlan._();
+  @$core.override
   EnterpriseSubscriptionPlan createEmptyInstance() => create();
   static $pb.PbList<EnterpriseSubscriptionPlan> createRepeated() =>
       $pb.PbList<EnterpriseSubscriptionPlan>();
@@ -982,19 +874,19 @@ class GetSubscriptionRequest extends $pb.GeneratedMessage {
   factory GetSubscriptionRequest({
     $core.String? name,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    return result;
   }
-  GetSubscriptionRequest._() : super();
-  factory GetSubscriptionRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory GetSubscriptionRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  GetSubscriptionRequest._();
+
+  factory GetSubscriptionRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory GetSubscriptionRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'GetSubscriptionRequest',
@@ -1004,23 +896,21 @@ class GetSubscriptionRequest extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GetSubscriptionRequest clone() =>
       GetSubscriptionRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GetSubscriptionRequest copyWith(
           void Function(GetSubscriptionRequest) updates) =>
       super.copyWith((message) => updates(message as GetSubscriptionRequest))
           as GetSubscriptionRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static GetSubscriptionRequest create() => GetSubscriptionRequest._();
+  @$core.override
   GetSubscriptionRequest createEmptyInstance() => create();
   static $pb.PbList<GetSubscriptionRequest> createRepeated() =>
       $pb.PbList<GetSubscriptionRequest>();
@@ -1033,10 +923,7 @@ class GetSubscriptionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -1054,31 +941,23 @@ class ChangePlanRequest extends $pb.GeneratedMessage {
     EnterpriseSubscriptionPlan? enterprise,
     $core.String? redirectUri,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (community != null) {
-      $result.community = community;
-    }
-    if (builder != null) {
-      $result.builder = builder;
-    }
-    if (enterprise != null) {
-      $result.enterprise = enterprise;
-    }
-    if (redirectUri != null) {
-      $result.redirectUri = redirectUri;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (community != null) result.community = community;
+    if (builder != null) result.builder = builder;
+    if (enterprise != null) result.enterprise = enterprise;
+    if (redirectUri != null) result.redirectUri = redirectUri;
+    return result;
   }
-  ChangePlanRequest._() : super();
-  factory ChangePlanRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ChangePlanRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ChangePlanRequest._();
+
+  factory ChangePlanRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ChangePlanRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, ChangePlanRequest_Plan>
       _ChangePlanRequest_PlanByTag = {
@@ -1103,21 +982,19 @@ class ChangePlanRequest extends $pb.GeneratedMessage {
     ..aOS(6, _omitFieldNames ? '' : 'redirectUri')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ChangePlanRequest clone() => ChangePlanRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ChangePlanRequest copyWith(void Function(ChangePlanRequest) updates) =>
       super.copyWith((message) => updates(message as ChangePlanRequest))
           as ChangePlanRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ChangePlanRequest create() => ChangePlanRequest._();
+  @$core.override
   ChangePlanRequest createEmptyInstance() => create();
   static $pb.PbList<ChangePlanRequest> createRepeated() =>
       $pb.PbList<ChangePlanRequest>();
@@ -1134,10 +1011,7 @@ class ChangePlanRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -1147,10 +1021,7 @@ class ChangePlanRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   CommunitySubscriptionPlan get community => $_getN(1);
   @$pb.TagNumber(2)
-  set community(CommunitySubscriptionPlan v) {
-    $_setField(2, v);
-  }
-
+  set community(CommunitySubscriptionPlan value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasCommunity() => $_has(1);
   @$pb.TagNumber(2)
@@ -1162,10 +1033,7 @@ class ChangePlanRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   BuilderSubscriptionPlan get builder => $_getN(2);
   @$pb.TagNumber(3)
-  set builder(BuilderSubscriptionPlan v) {
-    $_setField(3, v);
-  }
-
+  set builder(BuilderSubscriptionPlan value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasBuilder() => $_has(2);
   @$pb.TagNumber(3)
@@ -1177,10 +1045,7 @@ class ChangePlanRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   EnterpriseSubscriptionPlan get enterprise => $_getN(3);
   @$pb.TagNumber(4)
-  set enterprise(EnterpriseSubscriptionPlan v) {
-    $_setField(4, v);
-  }
-
+  set enterprise(EnterpriseSubscriptionPlan value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasEnterprise() => $_has(3);
   @$pb.TagNumber(4)
@@ -1192,10 +1057,7 @@ class ChangePlanRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.String get redirectUri => $_getSZ(4);
   @$pb.TagNumber(6)
-  set redirectUri($core.String v) {
-    $_setString(4, v);
-  }
-
+  set redirectUri($core.String value) => $_setString(4, value);
   @$pb.TagNumber(6)
   $core.bool hasRedirectUri() => $_has(4);
   @$pb.TagNumber(6)
@@ -1207,19 +1069,19 @@ class ChangePlanResponse extends $pb.GeneratedMessage {
   factory ChangePlanResponse({
     Subscription? subscription,
   }) {
-    final $result = create();
-    if (subscription != null) {
-      $result.subscription = subscription;
-    }
-    return $result;
+    final result = create();
+    if (subscription != null) result.subscription = subscription;
+    return result;
   }
-  ChangePlanResponse._() : super();
-  factory ChangePlanResponse.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ChangePlanResponse.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ChangePlanResponse._();
+
+  factory ChangePlanResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ChangePlanResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ChangePlanResponse',
@@ -1230,21 +1092,19 @@ class ChangePlanResponse extends $pb.GeneratedMessage {
         subBuilder: Subscription.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ChangePlanResponse clone() => ChangePlanResponse()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ChangePlanResponse copyWith(void Function(ChangePlanResponse) updates) =>
       super.copyWith((message) => updates(message as ChangePlanResponse))
           as ChangePlanResponse;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ChangePlanResponse create() => ChangePlanResponse._();
+  @$core.override
   ChangePlanResponse createEmptyInstance() => create();
   static $pb.PbList<ChangePlanResponse> createRepeated() =>
       $pb.PbList<ChangePlanResponse>();
@@ -1257,10 +1117,7 @@ class ChangePlanResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Subscription get subscription => $_getN(0);
   @$pb.TagNumber(1)
-  set subscription(Subscription v) {
-    $_setField(1, v);
-  }
-
+  set subscription(Subscription value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasSubscription() => $_has(0);
   @$pb.TagNumber(1)
@@ -1273,24 +1130,22 @@ class ChangePlanResponse extends $pb.GeneratedMessage {
 class PauseSubscriptionRequest extends $pb.GeneratedMessage {
   factory PauseSubscriptionRequest({
     $core.String? name,
-    $9.Timestamp? resumeTime,
+    $1.Timestamp? resumeTime,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (resumeTime != null) {
-      $result.resumeTime = resumeTime;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (resumeTime != null) result.resumeTime = resumeTime;
+    return result;
   }
-  PauseSubscriptionRequest._() : super();
-  factory PauseSubscriptionRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory PauseSubscriptionRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  PauseSubscriptionRequest._();
+
+  factory PauseSubscriptionRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory PauseSubscriptionRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'PauseSubscriptionRequest',
@@ -1298,27 +1153,25 @@ class PauseSubscriptionRequest extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..aOM<$9.Timestamp>(2, _omitFieldNames ? '' : 'resumeTime',
-        subBuilder: $9.Timestamp.create)
+    ..aOM<$1.Timestamp>(2, _omitFieldNames ? '' : 'resumeTime',
+        subBuilder: $1.Timestamp.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   PauseSubscriptionRequest clone() =>
       PauseSubscriptionRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   PauseSubscriptionRequest copyWith(
           void Function(PauseSubscriptionRequest) updates) =>
       super.copyWith((message) => updates(message as PauseSubscriptionRequest))
           as PauseSubscriptionRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static PauseSubscriptionRequest create() => PauseSubscriptionRequest._();
+  @$core.override
   PauseSubscriptionRequest createEmptyInstance() => create();
   static $pb.PbList<PauseSubscriptionRequest> createRepeated() =>
       $pb.PbList<PauseSubscriptionRequest>();
@@ -1331,10 +1184,7 @@ class PauseSubscriptionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -1342,18 +1192,15 @@ class PauseSubscriptionRequest extends $pb.GeneratedMessage {
 
   /// Optional. The time to resume the subscription.
   @$pb.TagNumber(2)
-  $9.Timestamp get resumeTime => $_getN(1);
+  $1.Timestamp get resumeTime => $_getN(1);
   @$pb.TagNumber(2)
-  set resumeTime($9.Timestamp v) {
-    $_setField(2, v);
-  }
-
+  set resumeTime($1.Timestamp value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasResumeTime() => $_has(1);
   @$pb.TagNumber(2)
   void clearResumeTime() => $_clearField(2);
   @$pb.TagNumber(2)
-  $9.Timestamp ensureResumeTime() => $_ensure(1);
+  $1.Timestamp ensureResumeTime() => $_ensure(1);
 }
 
 /// The response message for the `PauseSubscription` method.
@@ -1361,19 +1208,19 @@ class PauseSubscriptionResponse extends $pb.GeneratedMessage {
   factory PauseSubscriptionResponse({
     Subscription? subscription,
   }) {
-    final $result = create();
-    if (subscription != null) {
-      $result.subscription = subscription;
-    }
-    return $result;
+    final result = create();
+    if (subscription != null) result.subscription = subscription;
+    return result;
   }
-  PauseSubscriptionResponse._() : super();
-  factory PauseSubscriptionResponse.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory PauseSubscriptionResponse.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  PauseSubscriptionResponse._();
+
+  factory PauseSubscriptionResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory PauseSubscriptionResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'PauseSubscriptionResponse',
@@ -1384,23 +1231,21 @@ class PauseSubscriptionResponse extends $pb.GeneratedMessage {
         subBuilder: Subscription.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   PauseSubscriptionResponse clone() =>
       PauseSubscriptionResponse()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   PauseSubscriptionResponse copyWith(
           void Function(PauseSubscriptionResponse) updates) =>
       super.copyWith((message) => updates(message as PauseSubscriptionResponse))
           as PauseSubscriptionResponse;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static PauseSubscriptionResponse create() => PauseSubscriptionResponse._();
+  @$core.override
   PauseSubscriptionResponse createEmptyInstance() => create();
   static $pb.PbList<PauseSubscriptionResponse> createRepeated() =>
       $pb.PbList<PauseSubscriptionResponse>();
@@ -1413,10 +1258,7 @@ class PauseSubscriptionResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Subscription get subscription => $_getN(0);
   @$pb.TagNumber(1)
-  set subscription(Subscription v) {
-    $_setField(1, v);
-  }
-
+  set subscription(Subscription value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasSubscription() => $_has(0);
   @$pb.TagNumber(1)
@@ -1431,22 +1273,20 @@ class CancelSubscriptionRequest extends $pb.GeneratedMessage {
     $core.String? name,
     CancelSubscriptionDetails? details,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (details != null) {
-      $result.details = details;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (details != null) result.details = details;
+    return result;
   }
-  CancelSubscriptionRequest._() : super();
-  factory CancelSubscriptionRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory CancelSubscriptionRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  CancelSubscriptionRequest._();
+
+  factory CancelSubscriptionRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory CancelSubscriptionRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CancelSubscriptionRequest',
@@ -1458,23 +1298,21 @@ class CancelSubscriptionRequest extends $pb.GeneratedMessage {
         subBuilder: CancelSubscriptionDetails.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CancelSubscriptionRequest clone() =>
       CancelSubscriptionRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CancelSubscriptionRequest copyWith(
           void Function(CancelSubscriptionRequest) updates) =>
       super.copyWith((message) => updates(message as CancelSubscriptionRequest))
           as CancelSubscriptionRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static CancelSubscriptionRequest create() => CancelSubscriptionRequest._();
+  @$core.override
   CancelSubscriptionRequest createEmptyInstance() => create();
   static $pb.PbList<CancelSubscriptionRequest> createRepeated() =>
       $pb.PbList<CancelSubscriptionRequest>();
@@ -1487,10 +1325,7 @@ class CancelSubscriptionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -1500,10 +1335,7 @@ class CancelSubscriptionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   CancelSubscriptionDetails get details => $_getN(1);
   @$pb.TagNumber(2)
-  set details(CancelSubscriptionDetails v) {
-    $_setField(2, v);
-  }
-
+  set details(CancelSubscriptionDetails value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasDetails() => $_has(1);
   @$pb.TagNumber(2)
@@ -1519,25 +1351,21 @@ class CancelSubscriptionDetails extends $pb.GeneratedMessage {
     CancelSubscriptionDetails_Feedback? feedback,
     $core.String? comment,
   }) {
-    final $result = create();
-    if (reason != null) {
-      $result.reason = reason;
-    }
-    if (feedback != null) {
-      $result.feedback = feedback;
-    }
-    if (comment != null) {
-      $result.comment = comment;
-    }
-    return $result;
+    final result = create();
+    if (reason != null) result.reason = reason;
+    if (feedback != null) result.feedback = feedback;
+    if (comment != null) result.comment = comment;
+    return result;
   }
-  CancelSubscriptionDetails._() : super();
-  factory CancelSubscriptionDetails.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory CancelSubscriptionDetails.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  CancelSubscriptionDetails._();
+
+  factory CancelSubscriptionDetails.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory CancelSubscriptionDetails.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CancelSubscriptionDetails',
@@ -1557,23 +1385,21 @@ class CancelSubscriptionDetails extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'comment')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CancelSubscriptionDetails clone() =>
       CancelSubscriptionDetails()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CancelSubscriptionDetails copyWith(
           void Function(CancelSubscriptionDetails) updates) =>
       super.copyWith((message) => updates(message as CancelSubscriptionDetails))
           as CancelSubscriptionDetails;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static CancelSubscriptionDetails create() => CancelSubscriptionDetails._();
+  @$core.override
   CancelSubscriptionDetails createEmptyInstance() => create();
   static $pb.PbList<CancelSubscriptionDetails> createRepeated() =>
       $pb.PbList<CancelSubscriptionDetails>();
@@ -1586,10 +1412,7 @@ class CancelSubscriptionDetails extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   CancelSubscriptionDetails_Reason get reason => $_getN(0);
   @$pb.TagNumber(1)
-  set reason(CancelSubscriptionDetails_Reason v) {
-    $_setField(1, v);
-  }
-
+  set reason(CancelSubscriptionDetails_Reason value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasReason() => $_has(0);
   @$pb.TagNumber(1)
@@ -1599,10 +1422,8 @@ class CancelSubscriptionDetails extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   CancelSubscriptionDetails_Feedback get feedback => $_getN(1);
   @$pb.TagNumber(2)
-  set feedback(CancelSubscriptionDetails_Feedback v) {
-    $_setField(2, v);
-  }
-
+  set feedback(CancelSubscriptionDetails_Feedback value) =>
+      $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasFeedback() => $_has(1);
   @$pb.TagNumber(2)
@@ -1612,10 +1433,7 @@ class CancelSubscriptionDetails extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get comment => $_getSZ(2);
   @$pb.TagNumber(3)
-  set comment($core.String v) {
-    $_setString(2, v);
-  }
-
+  set comment($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasComment() => $_has(2);
   @$pb.TagNumber(3)
@@ -1627,19 +1445,19 @@ class CancelSubscriptionResponse extends $pb.GeneratedMessage {
   factory CancelSubscriptionResponse({
     Subscription? subscription,
   }) {
-    final $result = create();
-    if (subscription != null) {
-      $result.subscription = subscription;
-    }
-    return $result;
+    final result = create();
+    if (subscription != null) result.subscription = subscription;
+    return result;
   }
-  CancelSubscriptionResponse._() : super();
-  factory CancelSubscriptionResponse.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory CancelSubscriptionResponse.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  CancelSubscriptionResponse._();
+
+  factory CancelSubscriptionResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory CancelSubscriptionResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CancelSubscriptionResponse',
@@ -1650,24 +1468,22 @@ class CancelSubscriptionResponse extends $pb.GeneratedMessage {
         subBuilder: Subscription.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CancelSubscriptionResponse clone() =>
       CancelSubscriptionResponse()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CancelSubscriptionResponse copyWith(
           void Function(CancelSubscriptionResponse) updates) =>
       super.copyWith(
               (message) => updates(message as CancelSubscriptionResponse))
           as CancelSubscriptionResponse;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static CancelSubscriptionResponse create() => CancelSubscriptionResponse._();
+  @$core.override
   CancelSubscriptionResponse createEmptyInstance() => create();
   static $pb.PbList<CancelSubscriptionResponse> createRepeated() =>
       $pb.PbList<CancelSubscriptionResponse>();
@@ -1680,10 +1496,7 @@ class CancelSubscriptionResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Subscription get subscription => $_getN(0);
   @$pb.TagNumber(1)
-  set subscription(Subscription v) {
-    $_setField(1, v);
-  }
-
+  set subscription(Subscription value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasSubscription() => $_has(0);
   @$pb.TagNumber(1)
@@ -1699,25 +1512,21 @@ class Quantity extends $pb.GeneratedMessage {
     $fixnum.Int64? units,
     $core.int? nanos,
   }) {
-    final $result = create();
-    if (measure != null) {
-      $result.measure = measure;
-    }
-    if (units != null) {
-      $result.units = units;
-    }
-    if (nanos != null) {
-      $result.nanos = nanos;
-    }
-    return $result;
+    final result = create();
+    if (measure != null) result.measure = measure;
+    if (units != null) result.units = units;
+    if (nanos != null) result.nanos = nanos;
+    return result;
   }
-  Quantity._() : super();
-  factory Quantity.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Quantity.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Quantity._();
+
+  factory Quantity.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Quantity.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'Quantity',
@@ -1732,20 +1541,18 @@ class Quantity extends $pb.GeneratedMessage {
     ..a<$core.int>(3, _omitFieldNames ? '' : 'nanos', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Quantity clone() => Quantity()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Quantity copyWith(void Function(Quantity) updates) =>
       super.copyWith((message) => updates(message as Quantity)) as Quantity;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Quantity create() => Quantity._();
+  @$core.override
   Quantity createEmptyInstance() => create();
   static $pb.PbList<Quantity> createRepeated() => $pb.PbList<Quantity>();
   @$core.pragma('dart2js:noInline')
@@ -1757,10 +1564,7 @@ class Quantity extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Measure get measure => $_getN(0);
   @$pb.TagNumber(1)
-  set measure(Measure v) {
-    $_setField(1, v);
-  }
-
+  set measure(Measure value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasMeasure() => $_has(0);
   @$pb.TagNumber(1)
@@ -1770,10 +1574,7 @@ class Quantity extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $fixnum.Int64 get units => $_getI64(1);
   @$pb.TagNumber(2)
-  set units($fixnum.Int64 v) {
-    $_setInt64(1, v);
-  }
-
+  set units($fixnum.Int64 value) => $_setInt64(1, value);
   @$pb.TagNumber(2)
   $core.bool hasUnits() => $_has(1);
   @$pb.TagNumber(2)
@@ -1785,10 +1586,7 @@ class Quantity extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.int get nanos => $_getIZ(2);
   @$pb.TagNumber(3)
-  set nanos($core.int v) {
-    $_setSignedInt32(2, v);
-  }
-
+  set nanos($core.int value) => $_setSignedInt32(2, value);
   @$pb.TagNumber(3)
   $core.bool hasNanos() => $_has(2);
   @$pb.TagNumber(3)
@@ -1801,22 +1599,20 @@ class DescribePricingRequest extends $pb.GeneratedMessage {
     $core.String? regionCode,
     $core.String? currencyCode,
   }) {
-    final $result = create();
-    if (regionCode != null) {
-      $result.regionCode = regionCode;
-    }
-    if (currencyCode != null) {
-      $result.currencyCode = currencyCode;
-    }
-    return $result;
+    final result = create();
+    if (regionCode != null) result.regionCode = regionCode;
+    if (currencyCode != null) result.currencyCode = currencyCode;
+    return result;
   }
-  DescribePricingRequest._() : super();
-  factory DescribePricingRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory DescribePricingRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  DescribePricingRequest._();
+
+  factory DescribePricingRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory DescribePricingRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'DescribePricingRequest',
@@ -1827,23 +1623,21 @@ class DescribePricingRequest extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'currencyCode')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DescribePricingRequest clone() =>
       DescribePricingRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DescribePricingRequest copyWith(
           void Function(DescribePricingRequest) updates) =>
       super.copyWith((message) => updates(message as DescribePricingRequest))
           as DescribePricingRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DescribePricingRequest create() => DescribePricingRequest._();
+  @$core.override
   DescribePricingRequest createEmptyInstance() => create();
   static $pb.PbList<DescribePricingRequest> createRepeated() =>
       $pb.PbList<DescribePricingRequest>();
@@ -1856,10 +1650,7 @@ class DescribePricingRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get regionCode => $_getSZ(0);
   @$pb.TagNumber(1)
-  set regionCode($core.String v) {
-    $_setString(0, v);
-  }
-
+  set regionCode($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasRegionCode() => $_has(0);
   @$pb.TagNumber(1)
@@ -1869,10 +1660,7 @@ class DescribePricingRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get currencyCode => $_getSZ(1);
   @$pb.TagNumber(2)
-  set currencyCode($core.String v) {
-    $_setString(1, v);
-  }
-
+  set currencyCode($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasCurrencyCode() => $_has(1);
   @$pb.TagNumber(2)
@@ -1886,25 +1674,21 @@ class DescribePricingResponse extends $pb.GeneratedMessage {
     $core.String? currencyCode,
     $core.Iterable<Pricing>? prices,
   }) {
-    final $result = create();
-    if (regionCode != null) {
-      $result.regionCode = regionCode;
-    }
-    if (currencyCode != null) {
-      $result.currencyCode = currencyCode;
-    }
-    if (prices != null) {
-      $result.prices.addAll(prices);
-    }
-    return $result;
+    final result = create();
+    if (regionCode != null) result.regionCode = regionCode;
+    if (currencyCode != null) result.currencyCode = currencyCode;
+    if (prices != null) result.prices.addAll(prices);
+    return result;
   }
-  DescribePricingResponse._() : super();
-  factory DescribePricingResponse.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory DescribePricingResponse.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  DescribePricingResponse._();
+
+  factory DescribePricingResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory DescribePricingResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'DescribePricingResponse',
@@ -1917,23 +1701,21 @@ class DescribePricingResponse extends $pb.GeneratedMessage {
         subBuilder: Pricing.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DescribePricingResponse clone() =>
       DescribePricingResponse()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DescribePricingResponse copyWith(
           void Function(DescribePricingResponse) updates) =>
       super.copyWith((message) => updates(message as DescribePricingResponse))
           as DescribePricingResponse;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DescribePricingResponse create() => DescribePricingResponse._();
+  @$core.override
   DescribePricingResponse createEmptyInstance() => create();
   static $pb.PbList<DescribePricingResponse> createRepeated() =>
       $pb.PbList<DescribePricingResponse>();
@@ -1946,10 +1728,7 @@ class DescribePricingResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get regionCode => $_getSZ(0);
   @$pb.TagNumber(1)
-  set regionCode($core.String v) {
-    $_setString(0, v);
-  }
-
+  set regionCode($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasRegionCode() => $_has(0);
   @$pb.TagNumber(1)
@@ -1959,10 +1738,7 @@ class DescribePricingResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get currencyCode => $_getSZ(1);
   @$pb.TagNumber(2)
-  set currencyCode($core.String v) {
-    $_setString(1, v);
-  }
-
+  set currencyCode($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasCurrencyCode() => $_has(1);
   @$pb.TagNumber(2)
@@ -1981,44 +1757,32 @@ enum Pricing_Promotion_Duration { forever, once, repeating, notSet }
 class Pricing_Promotion extends $pb.GeneratedMessage {
   factory Pricing_Promotion({
     $core.String? couponCode,
-    $15.Money? amount,
+    $2.Money? amount,
     $core.int? percentage,
-    $1.Empty? forever,
-    $1.Empty? once,
-    $8.Duration? repeating,
-    $9.Timestamp? expireTime,
+    $3.Empty? forever,
+    $3.Empty? once,
+    $4.Duration? repeating,
+    $1.Timestamp? expireTime,
   }) {
-    final $result = create();
-    if (couponCode != null) {
-      $result.couponCode = couponCode;
-    }
-    if (amount != null) {
-      $result.amount = amount;
-    }
-    if (percentage != null) {
-      $result.percentage = percentage;
-    }
-    if (forever != null) {
-      $result.forever = forever;
-    }
-    if (once != null) {
-      $result.once = once;
-    }
-    if (repeating != null) {
-      $result.repeating = repeating;
-    }
-    if (expireTime != null) {
-      $result.expireTime = expireTime;
-    }
-    return $result;
+    final result = create();
+    if (couponCode != null) result.couponCode = couponCode;
+    if (amount != null) result.amount = amount;
+    if (percentage != null) result.percentage = percentage;
+    if (forever != null) result.forever = forever;
+    if (once != null) result.once = once;
+    if (repeating != null) result.repeating = repeating;
+    if (expireTime != null) result.expireTime = expireTime;
+    return result;
   }
-  Pricing_Promotion._() : super();
-  factory Pricing_Promotion.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Pricing_Promotion.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Pricing_Promotion._();
+
+  factory Pricing_Promotion.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Pricing_Promotion.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, Pricing_Promotion_Discount>
       _Pricing_Promotion_DiscountByTag = {
@@ -2041,34 +1805,32 @@ class Pricing_Promotion extends $pb.GeneratedMessage {
     ..oo(0, [2, 3])
     ..oo(1, [4, 5, 6])
     ..aOS(1, _omitFieldNames ? '' : 'couponCode')
-    ..aOM<$15.Money>(2, _omitFieldNames ? '' : 'amount',
-        subBuilder: $15.Money.create)
+    ..aOM<$2.Money>(2, _omitFieldNames ? '' : 'amount',
+        subBuilder: $2.Money.create)
     ..a<$core.int>(3, _omitFieldNames ? '' : 'percentage', $pb.PbFieldType.O3)
-    ..aOM<$1.Empty>(4, _omitFieldNames ? '' : 'forever',
-        subBuilder: $1.Empty.create)
-    ..aOM<$1.Empty>(5, _omitFieldNames ? '' : 'once',
-        subBuilder: $1.Empty.create)
-    ..aOM<$8.Duration>(6, _omitFieldNames ? '' : 'repeating',
-        subBuilder: $8.Duration.create)
-    ..aOM<$9.Timestamp>(7, _omitFieldNames ? '' : 'expireTime',
-        subBuilder: $9.Timestamp.create)
+    ..aOM<$3.Empty>(4, _omitFieldNames ? '' : 'forever',
+        subBuilder: $3.Empty.create)
+    ..aOM<$3.Empty>(5, _omitFieldNames ? '' : 'once',
+        subBuilder: $3.Empty.create)
+    ..aOM<$4.Duration>(6, _omitFieldNames ? '' : 'repeating',
+        subBuilder: $4.Duration.create)
+    ..aOM<$1.Timestamp>(7, _omitFieldNames ? '' : 'expireTime',
+        subBuilder: $1.Timestamp.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Pricing_Promotion clone() => Pricing_Promotion()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Pricing_Promotion copyWith(void Function(Pricing_Promotion) updates) =>
       super.copyWith((message) => updates(message as Pricing_Promotion))
           as Pricing_Promotion;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Pricing_Promotion create() => Pricing_Promotion._();
+  @$core.override
   Pricing_Promotion createEmptyInstance() => create();
   static $pb.PbList<Pricing_Promotion> createRepeated() =>
       $pb.PbList<Pricing_Promotion>();
@@ -2089,10 +1851,7 @@ class Pricing_Promotion extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get couponCode => $_getSZ(0);
   @$pb.TagNumber(1)
-  set couponCode($core.String v) {
-    $_setString(0, v);
-  }
-
+  set couponCode($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasCouponCode() => $_has(0);
   @$pb.TagNumber(1)
@@ -2100,27 +1859,21 @@ class Pricing_Promotion extends $pb.GeneratedMessage {
 
   /// The discount amount.
   @$pb.TagNumber(2)
-  $15.Money get amount => $_getN(1);
+  $2.Money get amount => $_getN(1);
   @$pb.TagNumber(2)
-  set amount($15.Money v) {
-    $_setField(2, v);
-  }
-
+  set amount($2.Money value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasAmount() => $_has(1);
   @$pb.TagNumber(2)
   void clearAmount() => $_clearField(2);
   @$pb.TagNumber(2)
-  $15.Money ensureAmount() => $_ensure(1);
+  $2.Money ensureAmount() => $_ensure(1);
 
   /// The discount percentage.
   @$pb.TagNumber(3)
   $core.int get percentage => $_getIZ(2);
   @$pb.TagNumber(3)
-  set percentage($core.int v) {
-    $_setSignedInt32(2, v);
-  }
-
+  set percentage($core.int value) => $_setSignedInt32(2, value);
   @$pb.TagNumber(3)
   $core.bool hasPercentage() => $_has(2);
   @$pb.TagNumber(3)
@@ -2128,63 +1881,51 @@ class Pricing_Promotion extends $pb.GeneratedMessage {
 
   /// The promotion is applied forever.
   @$pb.TagNumber(4)
-  $1.Empty get forever => $_getN(3);
+  $3.Empty get forever => $_getN(3);
   @$pb.TagNumber(4)
-  set forever($1.Empty v) {
-    $_setField(4, v);
-  }
-
+  set forever($3.Empty value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasForever() => $_has(3);
   @$pb.TagNumber(4)
   void clearForever() => $_clearField(4);
   @$pb.TagNumber(4)
-  $1.Empty ensureForever() => $_ensure(3);
+  $3.Empty ensureForever() => $_ensure(3);
 
   /// The promotion is applied once.
   @$pb.TagNumber(5)
-  $1.Empty get once => $_getN(4);
+  $3.Empty get once => $_getN(4);
   @$pb.TagNumber(5)
-  set once($1.Empty v) {
-    $_setField(5, v);
-  }
-
+  set once($3.Empty value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasOnce() => $_has(4);
   @$pb.TagNumber(5)
   void clearOnce() => $_clearField(5);
   @$pb.TagNumber(5)
-  $1.Empty ensureOnce() => $_ensure(4);
+  $3.Empty ensureOnce() => $_ensure(4);
 
   /// The duration of the promotion.
   @$pb.TagNumber(6)
-  $8.Duration get repeating => $_getN(5);
+  $4.Duration get repeating => $_getN(5);
   @$pb.TagNumber(6)
-  set repeating($8.Duration v) {
-    $_setField(6, v);
-  }
-
+  set repeating($4.Duration value) => $_setField(6, value);
   @$pb.TagNumber(6)
   $core.bool hasRepeating() => $_has(5);
   @$pb.TagNumber(6)
   void clearRepeating() => $_clearField(6);
   @$pb.TagNumber(6)
-  $8.Duration ensureRepeating() => $_ensure(5);
+  $4.Duration ensureRepeating() => $_ensure(5);
 
   /// Optional. The time the promotion expires.
   @$pb.TagNumber(7)
-  $9.Timestamp get expireTime => $_getN(6);
+  $1.Timestamp get expireTime => $_getN(6);
   @$pb.TagNumber(7)
-  set expireTime($9.Timestamp v) {
-    $_setField(7, v);
-  }
-
+  set expireTime($1.Timestamp value) => $_setField(7, value);
   @$pb.TagNumber(7)
   $core.bool hasExpireTime() => $_has(6);
   @$pb.TagNumber(7)
   void clearExpireTime() => $_clearField(7);
   @$pb.TagNumber(7)
-  $9.Timestamp ensureExpireTime() => $_ensure(6);
+  $1.Timestamp ensureExpireTime() => $_ensure(6);
 }
 
 enum Pricing_Plan { community, builder, enterprise, notSet }
@@ -2195,34 +1936,26 @@ class Pricing extends $pb.GeneratedMessage {
     CommunitySubscriptionPlan? community,
     BuilderSubscriptionPlan? builder,
     EnterpriseSubscriptionPlan? enterprise,
-    $15.Money? price,
+    $2.Money? price,
     $core.Iterable<Pricing_Promotion>? promotions,
   }) {
-    final $result = create();
-    if (community != null) {
-      $result.community = community;
-    }
-    if (builder != null) {
-      $result.builder = builder;
-    }
-    if (enterprise != null) {
-      $result.enterprise = enterprise;
-    }
-    if (price != null) {
-      $result.price = price;
-    }
-    if (promotions != null) {
-      $result.promotions.addAll(promotions);
-    }
-    return $result;
+    final result = create();
+    if (community != null) result.community = community;
+    if (builder != null) result.builder = builder;
+    if (enterprise != null) result.enterprise = enterprise;
+    if (price != null) result.price = price;
+    if (promotions != null) result.promotions.addAll(promotions);
+    return result;
   }
-  Pricing._() : super();
-  factory Pricing.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Pricing.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Pricing._();
+
+  factory Pricing.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Pricing.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, Pricing_Plan> _Pricing_PlanByTag = {
     1: Pricing_Plan.community,
@@ -2242,27 +1975,25 @@ class Pricing extends $pb.GeneratedMessage {
         subBuilder: BuilderSubscriptionPlan.create)
     ..aOM<EnterpriseSubscriptionPlan>(3, _omitFieldNames ? '' : 'enterprise',
         subBuilder: EnterpriseSubscriptionPlan.create)
-    ..aOM<$15.Money>(4, _omitFieldNames ? '' : 'price',
-        subBuilder: $15.Money.create)
+    ..aOM<$2.Money>(4, _omitFieldNames ? '' : 'price',
+        subBuilder: $2.Money.create)
     ..pc<Pricing_Promotion>(
         5, _omitFieldNames ? '' : 'promotions', $pb.PbFieldType.PM,
         subBuilder: Pricing_Promotion.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Pricing clone() => Pricing()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Pricing copyWith(void Function(Pricing) updates) =>
       super.copyWith((message) => updates(message as Pricing)) as Pricing;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Pricing create() => Pricing._();
+  @$core.override
   Pricing createEmptyInstance() => create();
   static $pb.PbList<Pricing> createRepeated() => $pb.PbList<Pricing>();
   @$core.pragma('dart2js:noInline')
@@ -2277,10 +2008,7 @@ class Pricing extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   CommunitySubscriptionPlan get community => $_getN(0);
   @$pb.TagNumber(1)
-  set community(CommunitySubscriptionPlan v) {
-    $_setField(1, v);
-  }
-
+  set community(CommunitySubscriptionPlan value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasCommunity() => $_has(0);
   @$pb.TagNumber(1)
@@ -2292,10 +2020,7 @@ class Pricing extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   BuilderSubscriptionPlan get builder => $_getN(1);
   @$pb.TagNumber(2)
-  set builder(BuilderSubscriptionPlan v) {
-    $_setField(2, v);
-  }
-
+  set builder(BuilderSubscriptionPlan value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasBuilder() => $_has(1);
   @$pb.TagNumber(2)
@@ -2307,10 +2032,7 @@ class Pricing extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   EnterpriseSubscriptionPlan get enterprise => $_getN(2);
   @$pb.TagNumber(3)
-  set enterprise(EnterpriseSubscriptionPlan v) {
-    $_setField(3, v);
-  }
-
+  set enterprise(EnterpriseSubscriptionPlan value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasEnterprise() => $_has(2);
   @$pb.TagNumber(3)
@@ -2320,24 +2042,22 @@ class Pricing extends $pb.GeneratedMessage {
 
   /// The price of the plan.
   @$pb.TagNumber(4)
-  $15.Money get price => $_getN(3);
+  $2.Money get price => $_getN(3);
   @$pb.TagNumber(4)
-  set price($15.Money v) {
-    $_setField(4, v);
-  }
-
+  set price($2.Money value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasPrice() => $_has(3);
   @$pb.TagNumber(4)
   void clearPrice() => $_clearField(4);
   @$pb.TagNumber(4)
-  $15.Money ensurePrice() => $_ensure(3);
+  $2.Money ensurePrice() => $_ensure(3);
 
   /// Optional. The active promotions for the plan, if any.
   @$pb.TagNumber(5)
   $pb.PbList<Pricing_Promotion> get promotions => $_getList(4);
 }
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');

@@ -204,7 +204,7 @@ message CreateOrganizationRequest {
   string parent = 1 [
     (google.api.field_behavior) = OPTIONAL,
     (google.api.resource_reference) = { child_type: "cloud.celest.dev/Organization" },
-    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
     (buf.validate.field).cel = {
       id: "valid_organization_parent",
       message: "parent must be empty or a valid organization name",
@@ -283,7 +283,7 @@ message ListOrganizationsRequest {
   string parent = 1 [
     (google.api.field_behavior) = OPTIONAL,
     (google.api.resource_reference) = { child_type: "cloud.celest.dev/Organization" },
-    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
     (buf.validate.field).cel = {
       id: "valid_parent",
       message: "parent must be a valid parent",

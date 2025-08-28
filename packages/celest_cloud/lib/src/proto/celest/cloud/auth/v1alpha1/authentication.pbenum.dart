@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: celest/cloud/auth/v1alpha1/authentication.proto
-//
+// Generated from celest/cloud/auth/v1alpha1/authentication.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
@@ -56,11 +57,13 @@ class ClientType extends $pb.ProtobufEnum {
     HEADLESS,
   ];
 
-  static final $core.Map<$core.int, ClientType> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static ClientType? valueOf($core.int value) => _byValue[value];
+  static final $core.List<ClientType?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 7);
+  static ClientType? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const ClientType._(super.v, super.n);
+  const ClientType._(super.value, super.name);
 }
 
-const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');
+const $core.bool _omitEnumNames =
+    $core.bool.fromEnvironment('protobuf.omit_enum_names');

@@ -1,24 +1,25 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/api/field_behavior.proto
-//
+// Generated from google/api/field_behavior.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-///  An indicator of the behavior of a given field (for example, that a field
-///  is required in requests, or given as output but ignored as input).
-///  This **does not** change the behavior in protocol buffers itself; it only
-///  denotes the behavior and may affect how API tooling handles the field.
+/// An indicator of the behavior of a given field (for example, that a field
+/// is required in requests, or given as output but ignored as input).
+/// This **does not** change the behavior in protocol buffers itself; it only
+/// denotes the behavior and may affect how API tooling handles the field.
 ///
-///  Note: This enum **may** receive new values in the future.
+/// Note: This enum **may** receive new values in the future.
 class FieldBehavior extends $pb.ProtobufEnum {
   /// Conventional default for enums. Do not use this.
   static const FieldBehavior FIELD_BEHAVIOR_UNSPECIFIED =
@@ -69,18 +70,18 @@ class FieldBehavior extends $pb.ProtobufEnum {
   static const FieldBehavior NON_EMPTY_DEFAULT =
       FieldBehavior._(7, _omitEnumNames ? '' : 'NON_EMPTY_DEFAULT');
 
-  ///  Denotes that the field in a resource (a message annotated with
-  ///  google.api.resource) is used in the resource name to uniquely identify the
-  ///  resource. For AIP-compliant APIs, this should only be applied to the
-  ///  `name` field on the resource.
+  /// Denotes that the field in a resource (a message annotated with
+  /// google.api.resource) is used in the resource name to uniquely identify the
+  /// resource. For AIP-compliant APIs, this should only be applied to the
+  /// `name` field on the resource.
   ///
-  ///  This behavior should not be applied to references to other resources within
-  ///  the message.
+  /// This behavior should not be applied to references to other resources within
+  /// the message.
   ///
-  ///  The identifier field of resources often have different field behavior
-  ///  depending on the request it is embedded in (e.g. for Create methods name
-  ///  is optional and unused, while for Update methods it is required). Instead
-  ///  of method-specific annotations, only `IDENTIFIER` is required.
+  /// The identifier field of resources often have different field behavior
+  /// depending on the request it is embedded in (e.g. for Create methods name
+  /// is optional and unused, while for Update methods it is required). Instead
+  /// of method-specific annotations, only `IDENTIFIER` is required.
   static const FieldBehavior IDENTIFIER =
       FieldBehavior._(8, _omitEnumNames ? '' : 'IDENTIFIER');
 
@@ -96,11 +97,13 @@ class FieldBehavior extends $pb.ProtobufEnum {
     IDENTIFIER,
   ];
 
-  static final $core.Map<$core.int, FieldBehavior> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static FieldBehavior? valueOf($core.int value) => _byValue[value];
+  static final $core.List<FieldBehavior?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 8);
+  static FieldBehavior? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const FieldBehavior._(super.v, super.n);
+  const FieldBehavior._(super.value, super.name);
 }
 
-const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');
+const $core.bool _omitEnumNames =
+    $core.bool.fromEnvironment('protobuf.omit_enum_names');
