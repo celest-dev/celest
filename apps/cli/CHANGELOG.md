@@ -1,4 +1,4 @@
-## NEXT
+## 1.0.14
 
 - feat: Allow overriding client environment with Dart define
 - fix: Searching parent directories for a `pubspec.yaml` file always halts now

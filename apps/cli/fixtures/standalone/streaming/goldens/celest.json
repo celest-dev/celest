@@ -82,8 +82,8 @@
     "celest": {
       "major": 1,
       "minor": 0,
-      "patch": 13,
-      "canonicalizedVersion": "1.0.13"
+      "patch": 14,
+      "canonicalizedVersion": "1.0.14"
     },
     "dart": {
       "type": "DART",
@@ -91,7 +91,12 @@
         "major": 3,
         "minor": 9,
         "patch": 0,
-        "canonicalizedVersion": "3.9.0"
+        "preRelease": [
+          333.0,
+          2.0,
+          "beta"
+        ],
+        "canonicalizedVersion": "3.9.0-333.2.beta"
       }
     },
     "flutter": {
@@ -99,8 +104,13 @@
       "version": {
         "major": 3,
         "minor": 35,
-        "patch": 1,
-        "canonicalizedVersion": "3.35.1"
+        "patch": 0,
+        "preRelease": [
+          0.0,
+          1.0,
+          "pre"
+        ],
+        "canonicalizedVersion": "3.35.0-0.1.pre"
       }
     },
     "targetSdk": "DART",
