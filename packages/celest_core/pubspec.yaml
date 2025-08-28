@@ -13,7 +13,7 @@ dependencies:
   async: ^2.11.0
   cedar: ^0.2.6
   collection: ^1.18.0
-  grpc: ^4.0.0
+  grpc: '>=4.0.0 <4.2.0'
   http: ^1.0.0
   http_parser: ^4.0.0
   json_annotation: ^4.7.0

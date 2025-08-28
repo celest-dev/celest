@@ -194,8 +194,9 @@ final class LocalApiRunner {
         '--enable-vm-service=$vmServicePort', // Start VM service
         '--no-dds', // We want to talk directly to VM service.
         '--enable-asserts',
-        '--packages',
-        projectPaths.packagesConfig,
+        // TODO(dnys1): VM service reports error with this flag
+        // '--packages',
+        // projectPaths.packagesConfig,
         outputDill,
       ],
       SdkType.flutter => <String>[

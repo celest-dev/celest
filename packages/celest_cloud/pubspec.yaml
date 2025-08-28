@@ -14,7 +14,7 @@ dependencies:
   code_builder: ^4.10.0
   collection: ^1.18.0
   fixnum: ^1.1.0
-  grpc: ^4.0.0
+  grpc: '>=4.0.0 <4.2.0'
   http: ^1.0.0
   json_annotation: ^4.8.0
   logging: ^1.2.0

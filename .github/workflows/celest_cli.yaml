@@ -43,8 +43,8 @@ jobs:
           cache: true
           # Because many golden tests encode the precise Dart/Flutter SDKs used to generate
           # them, these values must be consistently used when running tests locally and in CI.
-          flutter-version: 3.35.1
-          channel: stable
+          flutter-version: 3.36.0-0.3.pre
+          channel: beta # Remove when native assets is available in stable
       - name: Setup Libsecret
         if: runner.os == 'Linux'
         run: tool/setup-ci.sh

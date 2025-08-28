@@ -41,6 +41,7 @@ jobs:
         uses: subosito/flutter-action@fd55f4c5af5b953cc57a2be44cb082c8f6635e8e # 2.21.0
         with:
           cache: true
+          channel: beta # Remove when native assets is available in stable
       - name: Setup Deps
         if: runner.os == 'Linux'
         run: tool/setup-ci.sh

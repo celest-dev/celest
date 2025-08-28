@@ -40,14 +40,21 @@ base mixin TestCloud on E2ETest {
     final gitRoot = await findGitRoot();
     final cloudHubRoot = p.join(gitRoot, 'services', 'celest_cloud_hub');
 
+    await processManager.run([
+      Sdk.current.dart,
+      'pub',
+      'get',
+    ], workingDirectory: cloudHubRoot);
+
     print('Running Cloud Hub...');
     final port = await RandomPortFinder().findOpenPort();
     _cloudHubProcess = await processManager.start(
       [
         Sdk.current.dart,
+        '--enable-experiment=native-assets',
         'run',
         '--observe',
-        p.join(cloudHubRoot, 'bin', 'cloud_hub.dart'),
+        './bin/cloud_hub.dart',
       ],
       environment: {
         'PORT': port.toString(),
@@ -55,7 +62,7 @@ base mixin TestCloud on E2ETest {
         'CLOUD_HUB_DATABASE_HOST': 'file::memory:',
       },
       includeParentEnvironment: true,
-      workingDirectory: tempDir.path,
+      workingDirectory: cloudHubRoot,
     );
     _cloudHubProcess!
       ..captureStdout(sink: log, prefix: '[CloudHub] ')

@@ -27,7 +27,7 @@ dependencies:
   file: ^7.0.1
   fixnum: ^1.1.1
   graphql: ^5.2.1
-  grpc: ^4.0.1
+  grpc: '>=4.0.0 <4.2.0'
   hooks: ^0.20.0
   http: ^1.1.0
   json_annotation: ^4.9.0
