@@ -4,7 +4,7 @@ import 'package:celest_cloud/celest_cloud.dart';
 import 'package:celest_cloud/src/cloud/operations/operations_protocol.dart';
 import 'package:celest_cloud/src/proto/google/longrunning/operations.pb.dart';
 import 'package:celest_cloud/src/proto/google/rpc/status.pb.dart';
-import 'package:grpc/grpc.dart';
+import 'package:grpc/grpc.dart' hide Any; // ignore: undefined_hidden_name
 import 'package:logging/logging.dart';
 import 'package:protobuf/protobuf.dart';
 

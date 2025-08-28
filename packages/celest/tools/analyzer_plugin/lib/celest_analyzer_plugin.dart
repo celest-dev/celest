@@ -8,7 +8,7 @@ import 'package:analyzer/dart/analysis/uri_converter.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/file_system/file_system.dart';
 import 'package:analyzer/file_system/physical_file_system.dart';
 import 'package:analyzer/source/source_range.dart';
@@ -256,7 +256,7 @@ final class CelestNavigationContributor implements NavigationContributor {
     _logger.info('computeNavigation Request: ${request.toDebugString()}');
     final offset = request.offset;
     final length = request.length ?? 0;
-    final targetNode = NodeLocator(
+    final targetNode = NodeLocator2(
       offset,
       offset + length,
     ).searchWithin(request.result.unit);
@@ -269,7 +269,7 @@ final class CelestNavigationContributor implements NavigationContributor {
       '(${targetNode.runtimeType})',
     );
     final libraryPath =
-        request.result.libraryElement2.firstFragment.source.fullName;
+        request.result.libraryElement.firstFragment.source.fullName;
     _logger.info('computeNavigation Library path: $libraryPath');
     final visitor = NavigationVisitor(
       collector,
@@ -304,12 +304,12 @@ final class NavigationVisitor extends RecursiveAstVisitor<void> {
     }
 
     final element = methodInvocation.methodName.element;
-    if (element is! MethodElement2) {
+    if (element is! MethodElement) {
       _logger.severe('Unexpected element: $element (${element.runtimeType})');
       return;
     }
     _logger.info('Element: $element (${element.runtimeType})');
-    final cloudFunctionAnnotation = element.metadata2.annotations
+    final cloudFunctionAnnotation = element.metadata.annotations
         .firstWhereOrNull((annotation) => annotation.isCloudFunction);
     if (cloudFunctionAnnotation == null) {
       _logger.warning('CloudFunction annotation not found');
