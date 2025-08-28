@@ -2,6 +2,11 @@ name: Distroless (Flutter)
 
 on:
   workflow_dispatch:
+    inputs:
+      replace:
+        description: Replace the existing distroless image
+        type: boolean
+        default: false
   pull_request:
     paths:
       - 'apps/distroless/bin/list_sdks.dart'
@@ -125,7 +130,7 @@ jobs:
       - name: Build and Push Image (engine)
         id: build-push-engine
         # Only run if the engine image is needed or if the workflow is triggered manually
-        if: steps.is_needed.outputs.engine == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.is_needed.outputs.engine == 'true' || (github.event_name == 'workflow_dispatch' && inputs.replace == 'true')
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # 6.18.0
         with:
           context: apps/distroless/flutter/build
@@ -140,7 +145,7 @@ jobs:
       - name: Build and Push Image (builder)
         id: build-push-builder
         # Only run if the builder image is needed or if the workflow is triggered manually
-        if: steps.is_needed.outputs.builder == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.is_needed.outputs.builder == 'true' || (github.event_name == 'workflow_dispatch' && inputs.replace == 'true')
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # 6.18.0
         with:
           context: apps/distroless/flutter/build
@@ -155,7 +160,7 @@ jobs:
       - name: Build and Push Image (runtime)
         id: build-push-runtime
         # Only run if the runtime image is needed or if the workflow is triggered manually
-        if: steps.is_needed.outputs.runtime == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.is_needed.outputs.runtime == 'true' || (github.event_name == 'workflow_dispatch' && inputs.replace == 'true')
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # 6.18.0
         with:
           context: apps/distroless/flutter/build
