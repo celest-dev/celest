@@ -6,7 +6,7 @@ environment:
   sdk: ^3.5.0
 
 dependencies: 
-  analyzer: ^7.4.0
+  analyzer: ^8.0.0
   analyzer_plugin: ^0.13.0
   collection: ^1.18.0
   logging: ^1.2.0
@@ -18,4 +18,4 @@ dependencies:
 
 dev_dependencies:
   test: any
-  lints: ^5.0.0
+  lints: ^6.0.0

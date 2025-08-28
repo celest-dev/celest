@@ -1,3 +1,7 @@
+## NEXT
+
+- chore: Update analyzer plugin dependencies
+
 ## 1.0.6
 
 - refactor: Move `connect` method to `CelestDatabase` class
