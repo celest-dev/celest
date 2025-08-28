@@ -164,7 +164,7 @@ packages:
       path: "../../apps/cli"
       relative: true
     source: path
-    version: "1.0.13"
+    version: "1.0.14"
   celest_cloud:
     dependency: "direct main"
     description:

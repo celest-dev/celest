@@ -30,16 +30,18 @@ extension WaitForOperation on Operation {
     return operation.response.unpackInto(response);
   }
 
-  Stream<OperationState<Metadata, Response>>
-  stream<Metadata extends GeneratedMessage, Response extends GeneratedMessage>({
+  Stream<OperationState<TMetadata, TResponse>> stream<
+    TMetadata extends GeneratedMessage,
+    TResponse extends GeneratedMessage
+  >({
     required OperationsProtocol operations,
-    required Metadata metadata,
-    required Response response,
+    required TMetadata metadata,
+    required TResponse response,
     Logger? logger,
   }) {
     if (done) {
       return Stream.value(
-        state<Metadata, Response>(metadata: metadata, response: response),
+        state<TMetadata, TResponse>(metadata: metadata, response: response),
       );
     }
     return OperationWaiter(
@@ -47,32 +49,32 @@ extension WaitForOperation on Operation {
       protocol: operations,
       logger: logger,
     ).stream.map((operation) {
-      return operation.state<Metadata, Response>(
+      return operation.state<TMetadata, TResponse>(
         metadata: metadata,
         response: response,
       );
     });
   }
 
-  OperationState<Metadata, Response> state<
-    Metadata extends GeneratedMessage,
-    Response extends GeneratedMessage
-  >({required Metadata metadata, required Response response}) {
+  OperationState<TMetadata, TResponse> state<
+    TMetadata extends GeneratedMessage,
+    TResponse extends GeneratedMessage
+  >({required TMetadata metadata, required TResponse response}) {
     if (done) {
       if (hasError()) {
-        return OperationFailure<Metadata, Response>(
+        return OperationFailure<TMetadata, TResponse>(
           id: name,
           metadata: hasMetadata() ? metadata.unpack(this.metadata) : metadata,
           error: error.grpcError,
         );
       }
-      return OperationSuccess<Metadata, Response>(
+      return OperationSuccess<TMetadata, TResponse>(
         id: name,
         metadata: hasMetadata() ? metadata.unpack(this.metadata) : metadata,
         response: response.unpack(ensureResponse()),
       );
     }
-    return OperationInProgress<Metadata, Response>(
+    return OperationInProgress<TMetadata, TResponse>(
       id: name,
       metadata: hasMetadata() ? metadata.unpack(this.metadata) : metadata,
     );
@@ -92,24 +94,24 @@ extension<T extends GeneratedMessage> on T {
 }
 
 sealed class OperationState<
-  Metadata extends GeneratedMessage,
-  Response extends GeneratedMessage
+  TMetadata extends GeneratedMessage,
+  TResponse extends GeneratedMessage
 > {
   OperationState({required this.id, required this.metadata});
 
   final String id;
-  final Metadata metadata;
+  final TMetadata metadata;
 
   bool get done => false;
-  Response? get response => null;
+  TResponse? get response => null;
   GrpcError? get error => null;
 }
 
 final class OperationInProgress<
-  Metadata extends GeneratedMessage,
-  Response extends GeneratedMessage
+  TMetadata extends GeneratedMessage,
+  TResponse extends GeneratedMessage
 >
-    extends OperationState<Metadata, Response> {
+    extends OperationState<TMetadata, TResponse> {
   OperationInProgress({required super.id, required super.metadata});
 
   @override
@@ -122,10 +124,10 @@ final class OperationInProgress<
 }
 
 final class OperationSuccess<
-  Metadata extends GeneratedMessage,
-  Response extends GeneratedMessage
+  TMetadata extends GeneratedMessage,
+  TResponse extends GeneratedMessage
 >
-    extends OperationState<Metadata, Response> {
+    extends OperationState<TMetadata, TResponse> {
   OperationSuccess({
     required super.id,
     required super.metadata,
@@ -136,7 +138,7 @@ final class OperationSuccess<
   bool get done => true;
 
   @override
-  final Response response;
+  final TResponse response;
 
   @override
   String toString() {
@@ -149,10 +151,10 @@ final class OperationSuccess<
 }
 
 final class OperationCancelled<
-  Metadata extends GeneratedMessage,
-  Response extends GeneratedMessage
+  TMetadata extends GeneratedMessage,
+  TResponse extends GeneratedMessage
 >
-    extends OperationState<Metadata, Response> {
+    extends OperationState<TMetadata, TResponse> {
   OperationCancelled({required super.id, required super.metadata});
 
   @override
@@ -168,10 +170,10 @@ final class OperationCancelled<
 }
 
 final class OperationFailure<
-  Metadata extends GeneratedMessage,
-  Response extends GeneratedMessage
+  TMetadata extends GeneratedMessage,
+  TResponse extends GeneratedMessage
 >
-    extends OperationState<Metadata, Response> {
+    extends OperationState<TMetadata, TResponse> {
   OperationFailure({
     required super.id,
     required super.metadata,

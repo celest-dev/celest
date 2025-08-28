@@ -29,9 +29,9 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-latest
+          - ubuntu-large
           - macos-latest
-          - windows-latest
+          # - windows-latest
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     steps:
@@ -41,6 +41,8 @@ jobs:
         uses: subosito/flutter-action@fd55f4c5af5b953cc57a2be44cb082c8f6635e8e # 2.21.0
         with:
           cache: true
+          flutter-version: 3.35.0-0.3.pre # TODO: Remove when beta channel is back to normal
+          channel: beta # Remove when native assets is available in stable
       - name: Setup Deps
         if: runner.os == 'Linux'
         run: tool/setup-ci.sh

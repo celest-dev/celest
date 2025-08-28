@@ -21,6 +21,7 @@ void main() {
       'fixes cache',
       timeout: Timeout.none,
       skip: !platform.environment.containsKey('CI'),
+      tags: ['e2e'],
       () async {
         final result = await pubCache.repair();
         expect(

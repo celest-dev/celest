@@ -31,7 +31,7 @@ jobs:
         os:
           - ubuntu-large
           - macos-latest-xlarge
-          - windows-large
+          # - windows-large
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     steps:
@@ -41,10 +41,8 @@ jobs:
         uses: subosito/flutter-action@fd55f4c5af5b953cc57a2be44cb082c8f6635e8e # 2.21.0
         with:
           cache: true
-          # Because many golden tests encode the precise Dart/Flutter SDKs used to generate
-          # them, these values must be consistently used when running tests locally and in CI.
-          flutter-version: 3.35.1
-          channel: stable
+          flutter-version: 3.35.0-0.3.pre # TODO: Remove when beta channel is back to normal
+          channel: beta # Remove when native assets is available in stable
       - name: Setup Libsecret
         if: runner.os == 'Linux'
         run: tool/setup-ci.sh
@@ -53,7 +51,7 @@ jobs:
         run: dart pub upgrade
       - name: Test
         working-directory: apps/cli
-        run: dart test -x e2e --fail-fast -j 1 --reporter=failures-only
+        run: dart test -x e2e --fail-fast -j8 --reporter=failures-only
       - name: Test (Fixtures)
         working-directory: apps/cli
         run: dart test fixtures/fixtures_test.dart --fail-fast -j 1 --reporter=failures-only

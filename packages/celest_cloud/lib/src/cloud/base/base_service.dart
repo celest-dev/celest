@@ -37,23 +37,24 @@ abstract mixin class BaseService {
   }
 
   @protected
-  Stream<OperationState<Metadata, Response>> streamOperation<
-    Metadata extends GeneratedMessage,
-    Response extends GeneratedMessage
+  Stream<OperationState<TMetadata, TResponse>> streamOperation<
+    TMetadata extends GeneratedMessage,
+    TResponse extends GeneratedMessage
   >(
     String name, {
     required Operation operation,
     required OperationsProtocol operations,
-    required Metadata metadata,
-    required Response response,
+    required TMetadata metadata,
+    required TResponse response,
     Logger? logger,
   }) async* {
-    final Stream<OperationState<Metadata, Response>> stream = operation.stream(
-      operations: operations,
-      metadata: metadata,
-      response: response,
-      logger: logger,
-    );
+    final Stream<OperationState<TMetadata, TResponse>> stream = operation
+        .stream(
+          operations: operations,
+          metadata: metadata,
+          response: response,
+          logger: logger,
+        );
     try {
       await for (final state in stream) {
         logger?.fine('[$name.${operation.name}] Operation state:\n$state');

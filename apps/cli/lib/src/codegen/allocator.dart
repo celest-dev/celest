@@ -171,6 +171,8 @@ final class CelestAllocator implements Allocator {
         // But this should be fairly robust and I don't expect we'll see any
         // issues.
         return '_\$${packageName}_${p.url.basenameWithoutExtension(filename)}';
+      case Uri(scheme: 'dart'):
+        return null;
       default:
         _logger.fine('Could not allocate prefix.', 'Unexpected URI: $uri');
     }
