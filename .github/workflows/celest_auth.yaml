@@ -65,6 +65,8 @@ jobs:
       - name: Get Packages (Example)
         working-directory: packages/celest_auth/example
         run: flutter pub get
+      - name: Download iOS Platform
+        run: xcodebuild -downloadPlatform iOS
       - name: Setup iOS Simulator
         id: simulator
         run: |
@@ -100,53 +102,47 @@ jobs:
       # - name: Integration Test (macOS)
       #   working-directory: packages/celest_auth/example
       #   run: dart run $CELEST start --verbose -- flutter test -d macos integration_test
-  # TODO: Keeps timing out on Linux. Fails hard on macOS...
-  # test_android:
-  #   needs: [test]
-  #   runs-on: macos-latest
-  #   timeout-minutes: 30
-  #   steps:
-  #     - name: Git Checkout
-  #       uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # 5.0.0
-  #     - name: Setup Flutter
-  #       uses: subosito/flutter-action@fd55f4c5af5b953cc57a2be44cb082c8f6635e8e # 2.21.0
-  #       with:
-  #         cache: true
-  #     - name: Get Packages
-  #       working-directory: apps/cli
-  #       run: dart pub get
-  #     - name: Get Packages (Example)
-  #       working-directory: packages/celest_auth/example
-  #       run: flutter pub get
-  #     - name: Start Celest
-  #       working-directory: packages/celest_auth/example
-  #       run: dart run $CELEST start --verbose &
-  #     - name: Build APK
-  #       working-directory: packages/celest_auth/example
-  #       run: flutter build apk --debug
-  #     # - name: Enable KVM
-  #     #   run: |
-  #     #     echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-  #     #     sudo udevadm control --reload-rules
-  #     #     sudo udevadm trigger --name-match=kvm
-  #     - name: Test (API 31)
-  #       uses: ReactiveCircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # 2.33.0
-  #       with:
-  #         # Matches `package:jni` compileSdkVersion
-  #         # https://github.com/dart-lang/native/blob/001910c9f40d637cb25c19bb500fb89cebdf7450/pkgs/jni/android/build.gradle#L57C23-L57C25
-  #         api-level: 31
-  #         arch: arm64-v8a
-  #         working-directory: packages/celest_auth/example
-  #         script: flutter test -d emulator integration_test
-  #     - name: Test (API 21)
-  #       uses: ReactiveCircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d # 2.33.0
-  #       with:
-  #         # Minimum supported API level
-  #         # Should match build.gradle: https://github.com/celest-dev/celest/blob/main/packages/native/storage/android/build.gradle#L49
-  #         api-level: 21
-  #         arch: arm64-v8a
-  #         working-directory: packages/celest_auth/example
-  #         script: flutter test -d emulator integration_test
+  test_android:
+    needs: [test]
+    runs-on: ubuntu-large
+    timeout-minutes: 30
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # 5.0.0
+      - name: Setup Flutter
+        uses: subosito/flutter-action@fd55f4c5af5b953cc57a2be44cb082c8f6635e8e # 2.21.0
+        with:
+          cache: true
+      - name: Get Packages
+        working-directory: apps/cli
+        run: dart pub get
+      - name: Get Packages (Example)
+        working-directory: packages/celest/example
+        run: flutter pub get
+      - name: Build APK
+        working-directory: packages/celest/example
+        run: flutter build apk --debug
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Test (API 35)
+        uses: ReactiveCircus/android-emulator-runner@1dcd0090116d15e7c562f8db72807de5e036a4ed # 2.34.0
+        with:
+          # Matches Flutter compileSdkVersion
+          api-level: 35
+          arch: x86_64
+          working-directory: packages/celest/example
+          script: dart run $CELEST start --verbose -- flutter test -d emulator integration_test
+      # - name: Test (API 24)
+      #   uses: ReactiveCircus/android-emulator-runner@1dcd0090116d15e7c562f8db72807de5e036a4ed # 2.34.0
+      #   with:
+      #     # Minimum supported API level
+      #     api-level: 24
+      #     arch: x86_64
+      #     working-directory: packages/celest/example
+      #     script: dart run $CELEST start --verbose -- flutter test -d emulator integration_test
   test_linux:
     needs: [test]
     runs-on: ubuntu-latest

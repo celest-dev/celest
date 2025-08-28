@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "celest_auth_example" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "celest_auth_example" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 dev.celest. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 dev.celest. All rights reserved." "\0"
             VALUE "OriginalFilename", "celest_auth_example.exe" "\0"
             VALUE "ProductName", "celest_auth_example" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
