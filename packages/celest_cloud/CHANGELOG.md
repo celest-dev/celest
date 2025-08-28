@@ -1,4 +1,4 @@
-# NEXT
+# 0.1.10
 
 - chore: Fix lint errors
 - chore: Update protobufs
